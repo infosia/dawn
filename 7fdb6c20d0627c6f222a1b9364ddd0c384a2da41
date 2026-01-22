@@ -50,6 +50,24 @@
       "message": "Note that for these we could use an MTLResidencySet created per bindgroup so that in a single call we can add all the resources used in the BindGroup.\n\nAlternatively  we could iterate over the resources using the PassResourceUsageTracker (as that already contains all the resources that will be used by the pass)",
       "revId": "7fdb6c20d0627c6f222a1b9364ddd0c384a2da41",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3e9fe2a_16a250b0",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T19:17:41Z",
+      "side": 1,
+      "message": "MTLResidencySet requires macOS 15 so I decided to ignore it for now. I did note it in bug 477317116 though. I didn\u0027t think about PassResourceUsageTracker, I\u0027ll note that too.",
+      "parentUuid": "e3e50ab3_5cfa12d1",
+      "revId": "7fdb6c20d0627c6f222a1b9364ddd0c384a2da41",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
