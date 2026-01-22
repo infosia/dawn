@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "431f99a8_18e4990b",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T03:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff9da31e_320dcde5",
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39311af8_bf0a17aa",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ef6cf99_3ef58745",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T03:06:28Z",
+      "side": 1,
+      "message": "Sigh totally forgot to check the Emscripten build. Done",
+      "parentUuid": "39311af8_bf0a17aa",
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b3529a9a_0fbefacb",
@@ -48,6 +84,30 @@
       "writtenOn": "2026-01-21T23:22:22Z",
       "side": 1,
       "message": "```suggestion\n    wgpu::ChainedStruct* instanceChain \u003d togglesChain;\n\n#ifndef __EMSCRIPTEN__\n    dawnProcSetProcs(\u0026dawn::native::GetProcs());\n    \n```\n\nMaybe a bit nicer to merge the ifndefs?",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 22
+      },
+      "revId": "1f66342c61cc947255afde8abc024e02119b8753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b3e3fa9_fe87fdbb",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-22T03:06:28Z",
+      "side": 1,
+      "message": "I didn\u0027t because they seem very unrelated. But looking at this closer, SetProcs and instance creation both feel like they belong much earlier, so since I\u0027m looking at this I decided to just clean things up in another CL.",
+      "parentUuid": "b3529a9a_0fbefacb",
       "range": {
         "startLine": 187,
         "startChar": 0,
