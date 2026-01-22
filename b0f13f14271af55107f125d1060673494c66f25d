@@ -163,6 +163,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c4b9fef_02ebf489",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ff634f_ee10ff9d",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 26
+      },
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83095310_d7014433",
@@ -176,6 +200,24 @@
       "writtenOn": "2026-01-19T19:59:02Z",
       "side": 1,
       "message": "```suggestion\n    // Returns the smallest access size (load/store) in bytes for `var` up to a max of `16` bytes.\n```",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99c152b5_51f4a0aa",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83095310_d7014433",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -300,6 +342,24 @@
       "side": 1,
       "message": "Until 8-bit integers are supported. I left the assert to force whoever does that to make sure it all works. There are likely some extra cases, but the base logic is sound.",
       "parentUuid": "dcf8ee6e_8b512e00",
+      "revId": "b0f13f14271af55107f125d1060673494c66f25d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be95bd89_9f5d5ae8",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0451a804_0b97ccef",
       "revId": "b0f13f14271af55107f125d1060673494c66f25d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "598cff63_93b88e91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Addressing most of the comments. Still need to fix arrayLength and some naming.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b031b5a0_dd8df9a5",
@@ -52,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da822503_ce0a895e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b031b5a0_dd8df9a5",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aca214cc_759c2c07",
@@ -65,6 +100,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "```suggestion\n                    if (inst-\u003eIsAnyOf\u003ccore::ir::Access, core::ir::Let\u003e() || bufferView) {\n```",
+      "range": {
+        "startLine": 270,
+        "startChar": 24,
+        "endLine": 270,
+        "endChar": 95
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee4cca45_11d76ba3",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca214cc_759c2c07",
       "range": {
         "startLine": 270,
         "startChar": 24,
@@ -151,6 +210,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fc3d555_82dfa664",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eaa9168_cb628b58",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 20
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d088720d_17f5a96d",
@@ -164,6 +247,24 @@
       "writtenOn": "2026-01-20T22:58:14Z",
       "side": 1,
       "message": "Maybe we should do this for any read-only var instead of just `uniform`? Avoids some pessimisation for read-only storage buffers for example.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f52a6b03_94a97328",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "I thought about that. It\u0027s unclear to me whether it\u0027s a performance win or not. I\u0027ll let you decide.",
+      "parentUuid": "d088720d_17f5a96d",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -239,6 +340,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed528696_be55bd00",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10827dc2_ba477ade",
+      "range": {
+        "startLine": 299,
+        "startChar": 1,
+        "endLine": 300,
+        "endChar": 34
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f887b5b5_af2ec0f8",
@@ -262,6 +387,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "003d505c_df73f0ef",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "I find that more confusing.",
+      "parentUuid": "f887b5b5_af2ec0f8",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 9
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7adaf593_55040828",
@@ -275,6 +424,24 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "```suggestion\n    // Calculates the index of the vector element containing the byte at (byte_idx % BaseType()-\u003eSize()).\n```",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85f9436d_66b1164a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adaf593_55040828",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -332,6 +499,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "052340b5_2f267ed4",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b59dd9_e555cbb9",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4e8c1c9_d60e5c28",
@@ -368,6 +553,48 @@
       "writtenOn": "2026-01-20T22:58:14Z",
       "side": 1,
       "message": "Nit: I think you can just pass in the `u32()`s here and the builder will do the `b.Constant()` for you.",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e10a91f4_2279fe10",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c869914_36f3ee9e",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "888d89fc_fa988f3a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e8c1c9_d60e5c28",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 83
+      },
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -419,6 +646,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddfd661b_6bc74d85",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8655e601_d61179ff",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 17
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fdec7c7_83bf9ba5",
@@ -436,6 +687,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5998233b_1806c3f0",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fdec7c7_83bf9ba5",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "720f0c95_6cfa0405",
@@ -449,6 +718,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "I think this would be clearer if we flipped it around:\n```suggestion\n                if (i \u003e 0) {\n                    if (auto* cnst \u003d array_idx-\u003eAs\u003cConstant\u003e()) {\n                        array_idx \u003d b.Constant(u32(cnst-\u003eValue()-\u003eValueAs\u003cuint32_t\u003e() + 1));\n                    } else {\n                        array_idx \u003d b.Add(array_idx, b.Constant(1_u))-\u003eResult();\n                    }\n                }\n                \n                auto* access \u003d b.Access(\n                    ty.ptr(var_ty-\u003eAddressSpace(), BaseType(), var_ty-\u003eAccess()), var, array_idx);\n                loads.Push(b.Load(access-\u003eResult())-\u003eResult());\n```",
+      "range": {
+        "startLine": 555,
+        "startChar": 1,
+        "endLine": 564,
+        "endChar": 17
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f600aeb_763112b7",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720f0c95_6cfa0405",
       "range": {
         "startLine": 555,
         "startChar": 1,
@@ -529,6 +822,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7dbf92f_2d53bd2d",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d0e9dc_369861dc",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5517a7f_8feae416",
@@ -542,6 +853,30 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "This seem same as above? Can we pull the load generation to a helper?",
+      "range": {
+        "startLine": 647,
+        "startChar": 7,
+        "endLine": 659,
+        "endChar": 0
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bbba387_dbbb7776",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5517a7f_8feae416",
       "range": {
         "startLine": 647,
         "startChar": 7,
@@ -628,6 +963,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "328e0118_823c9235",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe250288_ecb02b96",
+      "range": {
+        "startLine": 752,
+        "startChar": 1,
+        "endLine": 762,
+        "endChar": 13
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a2c2d6c_5d200731",
@@ -665,6 +1024,30 @@
       "side": 1,
       "message": "Yes probably.",
       "parentUuid": "6a2c2d6c_5d200731",
+      "range": {
+        "startLine": 780,
+        "startChar": 1,
+        "endLine": 783,
+        "endChar": 29
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "074dc8c8_10ab96cf",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e31cbd4a_2f9be565",
       "range": {
         "startLine": 780,
         "startChar": 1,
@@ -786,6 +1169,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d65e946d_d87e25be",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39faa4e1_ad92235c",
+      "range": {
+        "startLine": 980,
+        "startChar": 2,
+        "endLine": 982,
+        "endChar": 28
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5e85368_0cd8c9db",
@@ -844,6 +1251,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b78e1ff1_1272c8dd",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e85368_0cd8c9db",
+      "range": {
+        "startLine": 984,
+        "startChar": 0,
+        "endLine": 988,
+        "endChar": 27
+      },
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48a806db_c1d01972",
@@ -875,6 +1306,24 @@
       "side": 1,
       "message": "Not `reinterpret`, but `view` yes, but assert makes sense.",
       "parentUuid": "48a806db_c1d01972",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a1c7988_22a77443",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cd0678_17797f82",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1002,6 +1451,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf77525_708fd79e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c5ccb9_da7d6c3b",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d9f0162_06298422",
@@ -1019,6 +1486,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef193dc7_167533d5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9f0162_06298422",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "377920b9_1ed67630",
@@ -1032,6 +1517,24 @@
       "writtenOn": "2026-01-20T22:58:14Z",
       "side": 1,
       "message": "Nit: You use `ty.ptr(var_ty-\u003eAddressSpace(), BaseType(), var_ty-\u003eAccess())` a lot so maybe add a `BaseTypePtr()` helper too?",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "812611b8_df93e877",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377920b9_1ed67630",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1067,6 +1570,24 @@
       "side": 1,
       "message": "I can clarify. The statement is generic in how the transform picks a size and then combined with the above we\u0027ve eliminated the smaller size.",
       "parentUuid": "c4d71f4d_e7e0e83b",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "975ae640_27d4d2cc",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e96d4fe_bed06912",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1124,6 +1645,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a453d16_f381fd6e",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a69c0785_31c08c66",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c89b629_eb0db2a2",
@@ -1137,6 +1676,24 @@
       "writtenOn": "2026-01-20T22:06:39Z",
       "side": 1,
       "message": "```suggestion\n    /// Specify whether all variables in the address space should be decomposed.\n```",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50c62727_e604ff37",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c89b629_eb0db2a2",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1189,6 +1746,24 @@
       "writtenOn": "2026-01-21T15:10:19Z",
       "side": 1,
       "message": "Acknowledged",
+      "parentUuid": "c6cb0164_212ce788",
+      "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1d99080_0037ec5c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_uniform_access.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-22T00:20:25Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "c6cb0164_212ce788",
       "revId": "3be88fc1fe222e2abe101cc8fd2d8fec1eee11ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
