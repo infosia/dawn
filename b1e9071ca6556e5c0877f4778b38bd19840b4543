@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c52cddf7_b13a528a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-22T21:33:01Z",
+      "side": 1,
+      "message": "Resolving. There was some discussion about alternatives but nothing is trivial to change so it would need to be done as a follow up.",
+      "parentUuid": "320deb78_364b259a",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 25
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73253c31_a38e1016",
@@ -150,6 +174,30 @@
       "side": 1,
       "message": "There is an assertion that mState \u003d\u003d InsideOperation in MarkUsedInPendingCommands(). This handles changing staging buffer state to InsideOperation and then back to Unmapped later so the assertion doesn\u0027t crash.",
       "parentUuid": "73253c31_a38e1016",
+      "range": {
+        "startLine": 390,
+        "startChar": 26,
+        "endLine": 390,
+        "endChar": 39
+      },
+      "revId": "b1e9071ca6556e5c0877f4778b38bd19840b4543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc48d2cf_2f6d56d8",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-22T21:33:01Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "0e610d6f_7bd501a1",
       "range": {
         "startLine": 390,
         "startChar": 26,

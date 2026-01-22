@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "467cb0e4_679fc9b7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-22T21:33:01Z",
+      "side": 1,
+      "message": "Leaving this for now. I don\u0027t think anything changes for begin/end access.",
+      "parentUuid": "b1a5ef50_66b31c50",
+      "range": {
+        "startLine": 1063,
+        "startChar": 0,
+        "endLine": 1072,
+        "endChar": 1
+      },
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1641891_7db68265",
@@ -201,6 +225,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb670d7_fe74763f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-22T21:33:01Z",
+      "side": 1,
+      "message": "I see tests hitting the assert here now. Added UseInternal().",
+      "parentUuid": "463928f6_e7d44b79",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2fd3c26_f41163cf",
@@ -214,6 +256,24 @@
       "writtenOn": "2026-01-16T19:47:51Z",
       "side": 1,
       "message": "This assert is failing for buffers in mSharedBuffers when ExecutionQueueBase::EnsureCommandsFlushed() runs.\n\nSynchronizeBufferBeforeUseOnGPU() is called for everything in [mSharedBuffers](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandRecordingContext.cpp;l\u003d65;drc\u003db85ce935824810dbc34ccc72de0cb398d8cc9a29). Those should already have mLastUsageSerial \u003d\u003d GetPendingCommandSerial() since mLastUsageSerial was updated when the buffer is added to mSharedBuffers. It seems like the assert and changing mLastUsageSerial isn\u0027t needed for that case so these two lines can be skipped which fixes the crash.\n\nCQ was passing before I added this assertion FWIW.",
+      "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0617e30_251ee600",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-22T21:33:01Z",
+      "side": 1,
+      "message": "Fixed in another CL.",
+      "parentUuid": "e2fd3c26_f41163cf",
       "revId": "8fbbb75bf6a80e75d1491e5377ea2df148fd6f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
