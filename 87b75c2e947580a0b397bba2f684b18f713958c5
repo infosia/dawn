@@ -16,6 +16,24 @@
       "message": "Related to the comment in the previous CL, instead of handling each resource of each bindgroup (which has duplicates, skips over vertex/index/indirect buffers and render targets), we could use the PassResourceUsageTracker to walk all the resources. This is what we do in the Vulkan and D3D12 backends already (for barriers, but also residency in D3D12) and would make Metal look like the them.",
       "revId": "87b75c2e947580a0b397bba2f684b18f713958c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4002004b_891449f2",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T07:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be6db76_d8a7a7cb",
+      "revId": "87b75c2e947580a0b397bba2f684b18f713958c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
