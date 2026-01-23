@@ -70,6 +70,24 @@
       "parentUuid": "955d6612_72aa4f9d",
       "revId": "62c19e7cf4527e1f806e78af935a74d4ba364498",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e40724_a3a82a15",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-01-23T20:36:59Z",
+      "side": 1,
+      "message": "Acknowledged\n\noc\u0027s use in arithmetic is only to define t1 \u003d\u003d 1u \u003c\u003c oc in the unsigned domain. \n\nUsing the WGSL semantics for unsigned shift, it\u0027s a shift modulo the bit width of the LHS.  So this should be ok. (IIRC Tint IR operator semantics are the same as WGSL semantics.)",
+      "parentUuid": "1318567f_eea7e121",
+      "revId": "62c19e7cf4527e1f806e78af935a74d4ba364498",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
