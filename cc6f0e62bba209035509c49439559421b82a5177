@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "632b2d54_8a27f16a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-23T23:42:00Z",
+      "side": 1,
+      "message": "PTAL\n\nAs a note, this will briefly cause us to lose coverage of the Linux/CMake/UBSan fuzzer smoke tests, as they\u0027re currently disabled on ASan. However, we\u0027ve confirmed in [this led build](https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-sws-cmake-asan/1/infra) that either the issue with ASan that caused those tests to be disabled in the first place is fixed or the combination of ASan + UBSan somehow works around it. Once this lands, we can re-enable the tests on ASan, which will cause this combined builder to have coverage again.",
+      "revId": "cc6f0e62bba209035509c49439559421b82a5177",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
