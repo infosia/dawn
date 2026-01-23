@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1811ccb_0e18e399",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:28:55Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "e2eb95413b0b21d16d9f236a8c74920083eea5a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

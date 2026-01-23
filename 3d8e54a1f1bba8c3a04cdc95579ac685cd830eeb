@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a709bb42_56598b74",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:28:55Z",
+      "side": 1,
+      "message": "Gotcha yeah the dual way of setting ExternalTextures here is causing issues. That said I care kinda strongly about `BindGroup` having nothing more than necessary. What about changing (and documenting) that `GetBoundExternalTextures` may contain null entries, adding null checks in the two places that use it in `PassResourceUsageTracker`, then adding a nullptr to the correct index in `mBoundExternalTextures` at [2].",
+      "parentUuid": "937e5409_be0fdfae",
+      "range": {
+        "startLine": 678,
+        "startChar": 0,
+        "endLine": 681,
+        "endChar": 0
+      },
+      "revId": "3d8e54a1f1bba8c3a04cdc95579ac685cd830eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c8424f55_4d1aae0a",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 12
