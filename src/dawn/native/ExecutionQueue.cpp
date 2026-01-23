@@ -92,16 +92,15 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
         }
         return UpdateCompletedSerial();
     } else {
-        // Otherwise, we need to acquire the device lock first.
+        // Serial is already complete.
+        if (waitSerial <= GetCompletedCommandSerial()) {
+            return {};
+        }
+
         auto deviceGuard = GetDevice()->GetGuard();
         if (waitSerial > GetLastSubmittedCommandSerial()) {
             // Serial has not been submitted yet. Submit it now.
             DAWN_TRY(EnsureCommandsFlushed(waitSerial));
-        }
-
-        // Serial is already complete.
-        if (waitSerial <= GetCompletedCommandSerial()) {
-            return UpdateCompletedSerial();
         }
 
         if (timeout > Nanoseconds(0)) {
