@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f5a11a4e_39e468ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-23T15:38:39Z",
+      "side": 1,
+      "message": "Thanks for the quick review!",
+      "revId": "ff846ed38829d6d7d89ffec534a821ecd3ba294f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "648af178_ffdbff8e",
         "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
         "patchSetId": 4
