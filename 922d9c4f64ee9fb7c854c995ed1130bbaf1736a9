@@ -16,6 +16,74 @@
       "message": "PTAL if passing dry run",
       "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e881a7f_39a19250",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:13:23Z",
+      "side": 1,
+      "message": "This will receive the BindGroup visibility directly, see https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PassResourceUsageTracker.cpp;drc\u003dbf712ec1a13783224debb691ba88ad5c15b93194;l\u003d151 so this ASSERT will trigger. I think it\u0027s ok to just skip it.",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70526dad_d4fe6eef",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:13:23Z",
+      "side": 1,
+      "message": "Would `for (Aspect aspect : IterateBitSet(aspects)) {...}` work? This might fix the CQ failure.",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc428af9_352847e0",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:13:23Z",
+      "side": 1,
+      "message": "This is not needed as external texture will have been \"decayed\" to individual bindings in the bindgroup that will have been handled above.",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca48c234_7bebc539",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:13:23Z",
+      "side": 1,
+      "message": "Should we check the toggle here as well like for render passes?",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
