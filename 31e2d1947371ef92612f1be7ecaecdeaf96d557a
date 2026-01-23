@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e2af12e_6746590c",
+        "filename": "src/dawn/tests/unittests/validation/ValidationTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-23T20:29:20Z",
+      "side": 1,
+      "message": "nit. If the logging is a part of the expected result, we could probably make this callback similar to the uncaptured one so that we can directly set expectations on the it?",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 84
+      },
+      "revId": "31e2d1947371ef92612f1be7ecaecdeaf96d557a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
