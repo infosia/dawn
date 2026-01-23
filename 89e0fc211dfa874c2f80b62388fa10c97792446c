@@ -16,6 +16,24 @@
       "message": "since we\u0027re only going to allow kOuterToggles then how about outerDeviceToggles starts empty and then loop through kOuterToggles and see if they are enabled in deviceToggles? Or does that not work.",
       "revId": "89e0fc211dfa874c2f80b62388fa10c97792446c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8853064_98cc4b02",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-23T19:07:13Z",
+      "side": 1,
+      "message": "If I don\u0027t copy ToggleState from deviceToggles, I cannot set InstanceStage toggle like AllowUnsafeAPIs. So yeah that does not work.",
+      "parentUuid": "2dd98052_8148d9f9",
+      "revId": "89e0fc211dfa874c2f80b62388fa10c97792446c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
