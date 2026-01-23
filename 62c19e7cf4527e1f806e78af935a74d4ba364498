@@ -52,6 +52,24 @@
       "parentUuid": "b3c7ec69_b1e93c9b",
       "revId": "62c19e7cf4527e1f806e78af935a74d4ba364498",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1318567f_eea7e121",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-23T14:03:06Z",
+      "side": 1,
+      "message": "I have confidence that this change works and resolves the original bug.",
+      "parentUuid": "955d6612_72aa4f9d",
+      "revId": "62c19e7cf4527e1f806e78af935a74d4ba364498",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
