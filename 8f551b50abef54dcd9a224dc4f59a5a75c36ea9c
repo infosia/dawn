@@ -95,6 +95,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0302cd92_ae61e259",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "All good, wasn\u0027t sure if it would be possible.",
+      "parentUuid": "7f2c9c38_4bc75862",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 26
+      },
+      "revId": "8f551b50abef54dcd9a224dc4f59a5a75c36ea9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2ab280f_d28aa01a",

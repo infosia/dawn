@@ -20,6 +20,137 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c1b36f0a_cfa0b236",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "I know you\u0027re still not done but took the chance to reread the whole thing. LGTM so far",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc45f27f_46f8bbd5",
+        "filename": "src/dawn/native/AttachmentState.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"Attachement\" is a possible misspelling of \"Attachment\".\n\nTo bypass Spellchecker...\n\n\"Attachement\" is a possible misspelling of \"Attachment\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 150,
+        "startChar": 15,
+        "endLine": 150,
+        "endChar": 26
+      },
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc70cbc3_5119555e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "I wonder if `mSampleCount`+`mExplicitSampleCount` could be refactored into something like `mSampleCount`+`mMsrtssAllowed` which would be a bit less confusing. Not sure if possible yet or will have to wait for removing the deprecated thing.",
+      "range": {
+        "startLine": 129,
+        "startChar": 12,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c09f05e_f534c436",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "```suggestion\n                        \"has an explicit sample count (%u).\",\n```",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6a8e41_eddef84a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "this is an existing requirement, must already be validated somewhere else?",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f571375a_d8e0b2e4",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "```suggestion\n                        \"explicit sample count (%u).\",\n```",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7e8ac4_18cacf03",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "```suggestion\n    // because they affect whether or not the MSAARenderToSingleSampled feature is available.\n```",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0c8c22c6_8218f517",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 18
@@ -31,6 +162,46 @@
       "writtenOn": "2026-01-22T22:57:04Z",
       "side": 1,
       "message": "[1]",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24831116_2c7db135",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2001,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "```suggestion\n        \u0026renderPass, testing::HasSubstr(\"does not match the render pass explicit sample count\"));\n```",
+      "range": {
+        "startLine": 2001,
+        "startChar": 72,
+        "endLine": 2001,
+        "endChar": 79
+      },
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7c92374_082c6b3a",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2021,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-23T04:04:36Z",
+      "side": 1,
+      "message": "```suggestion\n        \u0026renderPass, testing::HasSubstr(\"does not match the render pass explicit sample count\"));\n```",
       "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
