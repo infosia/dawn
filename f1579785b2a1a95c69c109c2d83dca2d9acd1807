@@ -16,6 +16,24 @@
       "message": "Maybe we could use this to check that if the period is exactly 1.0 then no conversion is needed? In general while it\u0027s not great to capture internal resources, having a blanket statement \"IsOkay to X\" is a bit non-specific and hard to ensure that it will be added in all the places where it\u0027s appropriate.",
       "revId": "f1579785b2a1a95c69c109c2d83dca2d9acd1807",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "171c23c0_64e73646",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-23T19:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e77a8d3_c920ee56",
+      "revId": "f1579785b2a1a95c69c109c2d83dca2d9acd1807",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
