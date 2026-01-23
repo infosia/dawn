@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7ab9f9_e21d344a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-23T04:20:23Z",
+      "side": 1,
+      "message": "PTAL. Trying to reduce the overall size/complexity of the ast::Builder so pulling these out as they\u0027re pretty much independent.",
+      "revId": "d7a0297a86cd7407e18474d5dba636d7d1453fff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
