@@ -58,8 +58,17 @@ bool CheckMetalValidationEnabled(InstanceBase* instance) {
 }  // anonymous namespace
 
 Backend::Backend(InstanceBase* instance) : BackendConnection(instance, wgpu::BackendType::Metal) {
-    if (GetInstance()->IsBackendValidationEnabled()) {
-        setenv("METAL_DEVICE_WRAPPER_TYPE", "1", 1);
+    switch (GetInstance()->GetBackendValidationLevel()) {
+        case dawn::native::BackendValidationLevel::Full:
+            // See `man MetalValidation` for docs.
+            setenv("MTL_SHADER_VALIDATION", "1", 1);
+            setenv("MTL_SHADER_VALIDATION_REPORT_TO_STDERR", "1", 1);
+            [[fallthrough]];
+        case dawn::native::BackendValidationLevel::Partial:
+            setenv("METAL_DEVICE_WRAPPER_TYPE", "1", 1);
+            break;
+        case dawn::native::BackendValidationLevel::Disabled:
+            break;
     }
 }
 
