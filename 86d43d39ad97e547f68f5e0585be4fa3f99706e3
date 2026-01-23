@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5fe02a6_2458b091",
+        "filename": "src/dawn/native/PhysicalDevice.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-23T07:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efec7b85_458d2615",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "86d43d39ad97e547f68f5e0585be4fa3f99706e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69b5d5e3_50384886",
@@ -54,6 +78,24 @@
       "writtenOn": "2026-01-22T09:29:06Z",
       "side": 1,
       "message": "nit: Maybe describe that the allowed range is `[minExplicitSubgroupSize, maxExplicitSubgroupSize] ([%u, %u])`.",
+      "revId": "86d43d39ad97e547f68f5e0585be4fa3f99706e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c53cfdf3_50772fb8",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-23T07:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b5d5e3_50384886",
       "revId": "86d43d39ad97e547f68f5e0585be4fa3f99706e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
