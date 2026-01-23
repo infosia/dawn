@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b258452d_e7ad774e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T09:09:20Z",
+      "side": 1,
+      "message": "LGTM, but do you have a link to an issue that gives context about this additional piece of metadata?",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
