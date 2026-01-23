@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53cb74b1_98d98a70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:21:46Z",
+      "side": 1,
+      "message": "LGTM so far as well!",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc45f27f_46f8bbd5",
@@ -128,6 +145,23 @@
       "writtenOn": "2026-01-23T04:04:36Z",
       "side": 1,
       "message": "```suggestion\n                        \"explicit sample count (%u).\",\n```",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4172d9d_1bf374c8",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T11:21:46Z",
+      "side": 1,
+      "message": "```suggestion\n    // attachment for the comparison of width and height.\n```",
       "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
