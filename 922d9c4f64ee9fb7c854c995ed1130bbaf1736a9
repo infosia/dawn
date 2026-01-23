@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e48cec3_beadf80f",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-23T12:55:45Z",
+      "side": 1,
+      "message": "It\u0027s intentional because the TODO is handled later, so only what used to be the `else` clause of the code does anything.",
+      "parentUuid": "55da049a_e656766d",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e881a7f_39a19250",
         "filename": "src/dawn/native/metal/UtilsMetal.mm",
         "patchSetId": 11
