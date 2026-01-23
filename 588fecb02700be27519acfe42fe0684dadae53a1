@@ -16,6 +16,24 @@
       "message": "Should we make this a pass list instead of a bypass list? Going down the list of toggles, the only ones relevant to the outer device are\n\n```\nSkipValidation\nDisableBaseVertex\nDisableBindGroupLayoutEntryArraySize\nAllowUnsafeAPIs\nEnableImmediateErrorHandling\n```\n\nI also wonder if this should be encodeded here or in `Toggles.cpp` in `ToggleEnumAndInfo`. Here is good because it\u0027s WGPU only. `ToggleEnumAndInfo` info in `Toogle.cpp` is good because as each toggle is added it can be marked by the person adding the new toggle as \"outer\" or \"inner\". I\u0027m fine with it here though. I\u0027m guessing if a new toggle needs to be applied to the the outer device that it\u0027s likely some tests will fail until it\u0027s added.",
       "revId": "588fecb02700be27519acfe42fe0684dadae53a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1289489_c0b8b059",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-01-23T00:08:15Z",
+      "side": 1,
+      "message": "Done for invert the list \n(+1 for kOuterToggles (invert of bypass) in DeviceWGPU. If new toggles are added and they need to be enabled for webgpu::Device, end2end tests should be able to gate that on dry run.)",
+      "parentUuid": "f7769591_a8436003",
+      "revId": "588fecb02700be27519acfe42fe0684dadae53a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
