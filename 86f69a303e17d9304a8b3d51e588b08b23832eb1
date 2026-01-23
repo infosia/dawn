@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aaa1895_8d2218e8",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-23T18:49:46Z",
+      "side": 1,
+      "message": "Could do in a follow up, but what would it take to move this stuff to use `ExecutionQueue::TrackSerialTask` instead? I think eventually I imagine a world where all serial related tasks are unified to be tracked in one place.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 1
+      },
+      "revId": "86f69a303e17d9304a8b3d51e588b08b23832eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
