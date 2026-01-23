@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4a0182c_7c2c6d9e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-23T02:11:06Z",
+      "side": 1,
+      "message": "Do we expect oc to be clamped as well? It wasn\u0027t before, but it\u0027s still possible for oc to become 64",
+      "revId": "62c19e7cf4527e1f806e78af935a74d4ba364498",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
