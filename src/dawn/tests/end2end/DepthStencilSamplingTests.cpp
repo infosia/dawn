@@ -628,7 +628,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
             float* expected =
                 CompareFunctionPasses(compareRef, compare, textureValue) ? &float1 : &float0;
 
-            EXPECT_BUFFER_U32_EQ(*reinterpret_cast<uint32_t*>(expected), outputBuffer, 0)
+            EXPECT_BUFFER_U32_EQ(std::bit_cast<uint32_t>(*expected), outputBuffer, 0)
                 << "compareRef=" << compareRef << " " << compare
                 << " textureValue=" << textureValue;
         }

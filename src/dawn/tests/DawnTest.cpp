@@ -1440,8 +1440,7 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
     dawn::utils::ComboLimits requiredLimits{};
     GetRequiredLimits(supportedLimits, requiredLimits);
 
-    wgpu::DeviceDescriptor deviceDescriptor =
-        *reinterpret_cast<const wgpu::DeviceDescriptor*>(descriptor);
+    wgpu::DeviceDescriptor deviceDescriptor = std::bit_cast<wgpu::DeviceDescriptor>(*descriptor);
     deviceDescriptor.requiredLimits = requiredLimits.GetLinked();
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();

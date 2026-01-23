@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <bit>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -125,7 +126,7 @@ TEST_P(WireAdapterTests, RequestDeviceCallbackPointers) {
             EXPECT_STREQ(apiDesc->label.data, desc.label.data);
 
             // The callback should not be passed through to the server, and it should be overridden.
-            WGPUDeviceDescriptor& inputDesc = *reinterpret_cast<WGPUDeviceDescriptor*>(&desc);
+            WGPUDeviceDescriptor inputDesc = std::bit_cast<WGPUDeviceDescriptor>(desc);
             ASSERT_NE(apiDesc->deviceLostCallbackInfo.callback,
                       inputDesc.deviceLostCallbackInfo.callback);
             ASSERT_NE(apiDesc->deviceLostCallbackInfo.callback, nullptr);
