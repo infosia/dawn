@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69449773_9717bd9d",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-24T00:27:13Z",
+      "side": 1,
+      "message": "yup, originally I thought I was going to call `useResource` here in `ApplyBindGroup`, but it\u0027s better to do it using usage scopes as Corentin pointed out.",
+      "parentUuid": "0e48cec3_beadf80f",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e881a7f_39a19250",
@@ -66,6 +84,24 @@
       "writtenOn": "2026-01-23T11:13:23Z",
       "side": 1,
       "message": "This will receive the BindGroup visibility directly, see https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PassResourceUsageTracker.cpp;drc\u003dbf712ec1a13783224debb691ba88ad5c15b93194;l\u003d151 so this ASSERT will trigger. I think it\u0027s ok to just skip it.",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710e7563_f09d3c76",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-24T00:27:13Z",
+      "side": 1,
+      "message": "Ah good point. I guess that also means `visibility` could be `None` or `Compute`, in which case we don\u0027t actually need to make the resource resident. Did that.",
+      "parentUuid": "0e881a7f_39a19250",
       "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -89,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e9674e97_71f32179",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-24T00:27:13Z",
+      "side": 1,
+      "message": "Iterating the individual aspects will double up on depth and stencil. Which isn\u0027t that much of a problem but is unnecessary. \n\nAnyway, since I am now checking the toggle in `MetalComputePassMakeResourcesResident`, this code shouldn\u0027t be hit at all on CQ. If there are still issues, I\u0027ll deal with them later when we start running more tests.",
+      "parentUuid": "70526dad_d4fe6eef",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc428af9_352847e0",
         "filename": "src/dawn/native/metal/UtilsMetal.mm",
         "patchSetId": 11
@@ -100,6 +154,24 @@
       "writtenOn": "2026-01-23T11:13:23Z",
       "side": 1,
       "message": "This is not needed as external texture will have been \"decayed\" to individual bindings in the bindgroup that will have been handled above.",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0de019e3_95043a16",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-24T00:27:13Z",
+      "side": 1,
+      "message": "Ah OK. I saw they were in `SyncScopeResourceUsage` after having originally copied logic from `CommandBufferD3D12.cpp`. But seems that\u0027s just used for fences and `ValidateCanUseInSubmitNow`.",
+      "parentUuid": "dc428af9_352847e0",
       "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -117,6 +189,24 @@
       "writtenOn": "2026-01-23T11:13:23Z",
       "side": 1,
       "message": "Should we check the toggle here as well like for render passes?",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01abf8a4_00e9fb3c",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-24T00:27:13Z",
+      "side": 1,
+      "message": "Oops, yes.",
+      "parentUuid": "ca48c234_7bebc539",
       "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
