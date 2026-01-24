@@ -810,11 +810,13 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionWriteAndThenMap) {
 
     std::vector<bool> done = {false, false};
 
-    // With Vulkan Queue::WriteBuffers() doesn't encode any commands which need to be waited on so
-    // MapAsync() can happen immediately. On other platforms that isn't the case.
-    // Similarly, for MapRead buffers, D3D11's Queue::WriteBuffers() also doesn't encode any
-    // commands.
-    bool mapCompletesFirst = (IsVulkan() || IsD3D11()) && !IsWebGPUOnWebGPU();
+    // On Vulkan and D3D11, WriteBuffer() for MapRead buffers doesn't encode GPU commands that need
+    // to be waited on, allowing MapAsync() to complete immediately. Other backends encode commands
+    // that must complete before mapping.
+    // Exception: When "persistent_map_emulation" is enabled, WriteBuffer() marks the buffer as used
+    // on all backends, forcing MapAsync() to wait for the queue serial to complete.
+    bool mapCompletesFirst = (IsVulkan() || IsD3D11()) && !IsWebGPUOnWebGPU() &&
+                             !HasToggleEnabled("persistent_map_emulation");
 
     // 1. submission without using buffer.
     SubmitCommandBuffer({});

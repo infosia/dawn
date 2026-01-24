@@ -171,6 +171,11 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // internally.
     MaybeError Unmap(bool forDestroy = false);
 
+    // Persistent map emulation helpers
+    bool IsPersistentMapEnabled() const { return mIsPersistentMapEnabled; }
+    MaybeError PausePersistMapForQueueUse();
+    MaybeError PersistentMap(bool atCreation, ExecutionSerial intendedSerial);
+
     void DumpMemoryStatistics(dawn::native::MemoryDump* dump, const char* prefix) const;
 
     // Dawn API
@@ -231,6 +236,11 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // `newState` is the state of the buffer after unmap operation completed.
     virtual void UnmapImpl(BufferState oldState, BufferState newState) = 0;
 
+    // Persistent map emulation virtual methods
+    virtual MaybeError PersistentMapImpl(wgpu::MapMode mode, bool atCreation);
+    virtual MaybeError EndPersistentMapImpl();
+    virtual MaybeError FlushMappedDataImpl(uint64_t offset, uint64_t size);
+
     virtual bool IsCPUWritableAtCreation() const = 0;
     MaybeError CopyFromStagingBuffer();
 
@@ -238,6 +248,12 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     MaybeError ValidateUnmap() const;
     bool CanGetMappedRange(bool writable, size_t offset, size_t size) const;
     MaybeError UnmapInternal(bool forDestroy);
+
+    // Initialize mapped buffer data at creation (lazy clear or nonzero clear)
+    MaybeError InitializeMappedData(void* mappedData, bool usingStagingBuffer);
+
+    // Persistent map emulation helper
+    void ScheduleAutoRemap(ExecutionSerial serial);
 
     // Updates internal state to reflect that the buffer is now mapped.
     MaybeError FinalizeMap(BufferState newState);
@@ -250,6 +266,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
     const bool mIsHostMapped = false;
+    const bool mIsPersistentMapEnabled = false;
     bool mIsDataInitialized = false;
 
     Atomic<ExecutionSerial, std::memory_order_relaxed> mLastUsageSerial{ExecutionSerial(0)};
@@ -307,6 +324,10 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
     void* mMappedPointer = nullptr;
+
+    // Persistent map emulation state
+    bool mBufferAutoMapped = false;
+    std::mutex mAutoMapMutex;
 };
 
 }  // namespace dawn::native

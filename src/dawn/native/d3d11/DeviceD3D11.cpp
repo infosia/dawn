@@ -64,6 +64,10 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
+#include "renderdoc_app.h"
+#include <iostream>
+
+
 namespace dawn::native::d3d11 {
 
 size_t Sha3CacheFuncs::operator()(const Sha3_256::Output& key) const {
@@ -81,6 +85,26 @@ bool Sha3CacheFuncs::operator()(const Sha3_256::Output& a, const Sha3_256::Outpu
 namespace {
 
 static constexpr uint64_t kMaxDebugMessagesToPrint = 5;
+
+RENDERDOC_API_1_1_2* GetRenderDocAPI()
+{
+    static RENDERDOC_API_1_1_2 *rdoc_api = NULL;
+    if (rdoc_api) {
+        return rdoc_api;
+    }
+
+    // At init, on windows
+    if(HMODULE mod = GetModuleHandleA("renderdoc.dll"))
+    {
+        pRENDERDOC_GetAPI RENDERDOC_GetAPI =
+            (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+        int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_1_2, (void **)&rdoc_api);
+        assert(ret == 1);
+        (void)ret;
+    }
+
+    return rdoc_api;
+}
 
 bool SkipDebugMessage(const D3D11_MESSAGE& message) {
     // Filter out messages that are not errors.
@@ -212,6 +236,12 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         ToBackend(GetPhysicalDevice())
             ->CreateD3D11Device(GetAdapter()->GetInstance()->IsBackendValidationEnabled()));
     DAWN_ASSERT(mD3d11Device != nullptr);
+
+    auto rdoc = GetRenderDocAPI();
+    if (rdoc) {
+        std::cerr << "Starting frame capture" << std::endl;
+        rdoc->StartFrameCapture(mD3d11Device.Get(), nullptr);
+    }
 
     mIsDebugLayerEnabled = IsDebugLayerEnabled(mD3d11Device);
 
@@ -399,6 +429,13 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
     // D3D11 requires that buffers are unmapped before being used in a copy.
     DAWN_TRY(source->Unmap());
 
+    BufferBase::ScopedUseBuffer scopedUseBuffer = source->UseInternal();
+
+    // End persistent map on source if auto map is enabled
+    if (source->IsPersistentMapEnabled()) {
+        DAWN_TRY(source->PausePersistMapForQueueUse());
+    }
+
     ScopedCommandRecordingContext commandContext;
     DAWN_TRY_ASSIGN(
         commandContext,
@@ -473,6 +510,12 @@ void Device::AppendDeviceLostMessage(ErrorData* error) {
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
+    auto rdoc = GetRenderDocAPI();
+    if (rdoc) {
+        std::cerr << "Ending frame capture" << std::endl;
+        rdoc->EndFrameCapture(mD3d11Device.Get(), nullptr);
+    }
+
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
