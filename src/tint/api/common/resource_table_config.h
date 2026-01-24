@@ -87,6 +87,8 @@ struct ResourceTableConfig {
     //
     std::vector<ResourceType> default_binding_type_order;
 
+    bool operator==(const ResourceTableConfig&) const = default;
+
     TINT_REFLECT(ResourceTableConfig,
                  resource_table_binding,
                  storage_buffer_binding,

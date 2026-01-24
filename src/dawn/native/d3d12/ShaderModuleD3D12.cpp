@@ -34,6 +34,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Pipeline.h"
+#include "dawn/native/ResourceTable.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -167,11 +168,26 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
                                           layout->GetDynamicStorageBufferOffsetsShaderRegister()};
 
+    // The first descriptor table is the one for the resource table if needed and pushes the
+    // bindings for all other bindgroups by 1.
+    BindGroupIndex startOfBindGroups{0};
+    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
+    if (layout->UsesResourceTable()) {
+        startOfBindGroups = BindGroupIndex(1);
+
+        auto bindingTypeOrder = GetDefaultResourceOrder();
+        resourceTableConfig = tint::ResourceTableConfig{
+            .resource_table_binding = tint::BindingPoint(0, 1),
+            .storage_buffer_binding = tint::BindingPoint(0, 0),
+            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+        };
+    }
+
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
             const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
             return tint::BindingPoint{
-                .group = uint32_t(group),
+                .group = uint32_t(startOfBindGroups + group),
                 .binding = bgl->GetShaderRegister(index),
             };
         });
@@ -251,6 +267,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         !device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
 
     req.hlsl.tintOptions.bindings = std::move(bindings);
+    req.hlsl.tintOptions.resource_table = std::move(resourceTableConfig);
     req.hlsl.tintOptions.ignored_by_robustness_transform = std::move(ignored_by_robustness);
 
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
