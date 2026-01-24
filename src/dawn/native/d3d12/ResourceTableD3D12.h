@@ -28,18 +28,35 @@
 #ifndef SRC_DAWN_NATIVE_D3D12_RESOURCETABLED3D12_H_
 #define SRC_DAWN_NATIVE_D3D12_RESOURCETABLED3D12_H_
 
+#include "dawn/common/MutexProtected.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ResourceTable.h"
+#include "dawn/native/d3d12/CPUDescriptorHeapAllocationD3D12.h"
+#include "dawn/native/d3d12/GPUDescriptorHeapAllocationD3D12.h"
 
 namespace dawn::native::d3d12 {
 
 class Device;
 class CommandRecordingContext;
+class ShaderVisibleDescriptorAllocator;
 
 class ResourceTable final : public ResourceTableBase {
   public:
     static ResultOrError<Ref<ResourceTable>> Create(Device* device,
                                                     const ResourceTableDescriptor* descriptor);
+
+    // Apply updates to resources or to the metadata buffers that are pending.
+    MaybeError ApplyPendingUpdates(CommandRecordingContext* recordingContext);
+
+    // Returns true if the ResourceTable was successfully populated (now or on a previous call)
+    // in the current allocator's heap. If false is returned, caller should
+    // AllocateAndSwitchShaderVisibleHeap and populate again.
+    bool PopulateViews(MutexProtected<ShaderVisibleDescriptorAllocator>& viewAllocator);
+
+    // Returns a GPU heap handle handle to the base descriptor of the set of descriptors
+    // that were copied there in PopulateViews. This should be set as a root descriptor table on the
+    // command list to match the definition in the root signature.
+    D3D12_GPU_DESCRIPTOR_HANDLE GetBaseViewDescriptor() const;
 
   protected:
     void DestroyImpl(DestroyReason reason) override;
@@ -50,6 +67,13 @@ class ResourceTable final : public ResourceTableBase {
 
     using ResourceTableBase::ResourceTableBase;
     MaybeError Initialize();
+    MaybeError UpdateMetadataBuffer(CommandRecordingContext* recordingContext,
+                                    const std::vector<MetadataUpdate>& updates);
+    void UpdateResourceBindings(const std::vector<ResourceUpdate>& updates);
+
+    GPUDescriptorHeapAllocation mGPUViewAllocation;
+    CPUDescriptorHeapAllocation mCPUViewAllocation;
+    uint32_t mViewSizeIncrement = 0;
 };
 
 }  // namespace dawn::native::d3d12

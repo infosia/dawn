@@ -99,6 +99,7 @@
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
+#include "src/tint/lang/core/type/resource_table.h"
 #include "src/tint/lang/core/type/void.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
@@ -647,6 +648,9 @@ class Printer : public tint::TextGenerator {
         auto* type_for_register = ptr->StoreType();
         if (auto* arr = type_for_register->As<core::type::BindingArray>()) {
             type_for_register = arr->ElemType();
+        }
+        else if (auto* rt = type_for_register->As<core::type::ResourceTable>()) {
+            type_for_register = rt->GetBindingType();
         }
 
         char register_space = Switch(
@@ -1409,6 +1413,14 @@ class Printer : public tint::TextGenerator {
             },
             [&](const core::type::Sampler* sampler) { EmitSamplerType(out, sampler); },
             [&](const core::type::Texture* tex) { EmitTextureType(out, tex); },
+            [&](const core::type::ResourceTable* rt) {
+                // We want to emit an unbounded array of the internal binding type
+                // e.g. 
+                EmitType(out, rt->GetBindingType());
+                TINT_ASSERT(!name.empty() && name_printed);
+                out << " " << name << "[]";
+                *name_printed = true;
+            },
             TINT_ICE_ON_NO_MATCH);
     }
 

@@ -113,6 +113,12 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
     if (compileFlags & D3DCOMPILE_RESOURCES_MAY_ALIAS) {
         arguments.push_back(L"/res_may_alias");
     }
+    // if (compileFlags & D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES) {
+    //     arguments.push_back(L"/enable_unbounded_descriptor_tables");
+    // }
+    if (compileFlags & D3DCOMPILE_ALL_RESOURCES_BOUND) {
+        arguments.push_back(L"/all_resources_bound");
+    }
 
 #define ASSERT_UNHANDLED(f) DAWN_ASSERT((compileFlags & f) == 0)
     ASSERT_UNHANDLED(D3DCOMPILE_SKIP_VALIDATION);
@@ -125,7 +131,7 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
     ASSERT_UNHANDLED(D3DCOMPILE_RESERVED17);
     ASSERT_UNHANDLED(D3DCOMPILE_WARNINGS_ARE_ERRORS);
     ASSERT_UNHANDLED(D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES);
-    ASSERT_UNHANDLED(D3DCOMPILE_ALL_RESOURCES_BOUND);
+    // ASSERT_UNHANDLED(D3DCOMPILE_ALL_RESOURCES_BOUND);
     ASSERT_UNHANDLED(D3DCOMPILE_DEBUG_NAME_FOR_SOURCE);
     ASSERT_UNHANDLED(D3DCOMPILE_DEBUG_NAME_FOR_BINARY);
 #undef ASSERT_UNHANDLED

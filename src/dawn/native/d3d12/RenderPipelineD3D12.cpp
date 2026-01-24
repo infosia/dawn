@@ -338,6 +338,11 @@ MaybeError RenderPipeline::InitializeImpl() {
         compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
     }
 
+    if (device->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
+        // Allow more than one unbounded resource, which is required for bindless (pre SM 6.6)
+        compileFlags |= D3DCOMPILE_ALL_RESOURCES_BOUND;
+    }
+
     // Tint does matrix multiplication expecting row major matrices
     compileFlags |= D3DCOMPILE_PACK_MATRIX_ROW_MAJOR;
 
