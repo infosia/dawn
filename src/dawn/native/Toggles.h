@@ -198,6 +198,7 @@ enum class Toggle {
     GLAllowContextOnMultiThreads,
     GLDefer,
     DisableTransientAttachment,
+    PersistentMapEmulation,
 
     EnumCount,
     InvalidEnum = EnumCount,
