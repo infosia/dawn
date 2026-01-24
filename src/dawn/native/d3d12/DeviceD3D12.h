@@ -133,6 +133,8 @@ class Device final : public d3d::Device {
 
     SamplerHeapCache* GetSamplerHeapCache();
 
+    MutexProtected<StagingDescriptorAllocator>& GetResourceTableViewAllocator() const;
+
     MutexProtected<StagingDescriptorAllocator>& GetRenderTargetViewAllocator() const;
 
     MutexProtected<StagingDescriptorAllocator>& GetDepthStencilViewAllocator() const;
@@ -267,6 +269,8 @@ class Device final : public d3d::Device {
     std::array<std::unique_ptr<MutexProtected<StagingDescriptorAllocator>>,
                kNumSamplerDescriptorAllocators + 1>
         mSamplerAllocators;
+
+    std::unique_ptr<MutexProtected<StagingDescriptorAllocator>> mResourceTableViewAllocator;
 
     std::unique_ptr<MutexProtected<StagingDescriptorAllocator>> mRenderTargetViewAllocator;
 

@@ -36,6 +36,7 @@
 #include "dawn/native/d3d12/BindGroupLayoutD3D12.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
+#include "dawn/native/d3d12/ResourceTableD3D12.h"  // TODO(amaiorano): Maybe not necessary
 #include "dawn/native/d3d12/UtilsD3D12.h"
 
 using Microsoft::WRL::ComPtr;
@@ -60,6 +61,12 @@ static constexpr uint32_t kDynamicStorageBufferOffsetsBaseRegister = 0;
 static constexpr uint32_t kImmediatesRegisterSpace = kMaxBindGroups + 4;
 static constexpr uint32_t kImmediatesBaseRegister = 0;
 
+// Keep this last we we need a large range of register spaces for resource table descriptors,
+// one per resource type. For example, for all texture types, we need 26 spaces.
+static constexpr uint32_t kBaseResourceTableRegisterSpace = kMaxBindGroups + 5;
+
+static constexpr uint32_t kInvalidResourceTableRootParameterIndex =
+    std::numeric_limits<uint32_t>::max();
 static constexpr uint32_t kInvalidDynamicStorageBufferLengthsParameterIndex =
     std::numeric_limits<uint32_t>::max();
 static constexpr uint32_t kInvalidDynamicStorageBufferOffsetsParameterIndex =
@@ -179,54 +186,124 @@ MaybeError PipelineLayout::Initialize() {
         staticSamplerCount += bindGroupLayout->GetStaticSamplerCount();
     }
 
+    uint32_t resourceTableDefaultResourceCount = static_cast<uint32_t>(GetDefaultResourceCount());
+    if (UsesResourceTable()) {
+        rangesCount += 1 + resourceTableDefaultResourceCount;
+    }
+
     // We are taking pointers to `ranges`, so we cannot let it resize while we're pushing to it.
     std::vector<D3D12_DESCRIPTOR_RANGE1> ranges(rangesCount);
     staticSamplers.reserve(staticSamplerCount);
 
     uint32_t rangeIndex = 0;
 
+    // Set the root descriptor table parameter and copy ranges. Ranges are offset by the
+    // bind group index Returns whether or not the parameter was set. A root parameter is
+    // not set if the number of ranges is 0
+    auto SetRootDescriptorTable = [&](std::span<const D3D12_DESCRIPTOR_RANGE1> descriptorRanges,
+                                      uint32_t registerSpace = kRegisterSpacePlaceholder) -> bool {
+        auto rangeCount = descriptorRanges.size();
+        if (rangeCount == 0) {
+            return false;
+        }
+
+        D3D12_ROOT_PARAMETER1 rootParameter = {};
+        rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+        rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+        rootParameter.DescriptorTable.NumDescriptorRanges = static_cast<uint32_t>(rangeCount);
+        rootParameter.DescriptorTable.pDescriptorRanges = &ranges[rangeIndex];
+
+        for (auto& range : descriptorRanges) {
+            // DAWN_ASSERT(range.RegisterSpace == kRegisterSpacePlaceholder);
+            ranges[rangeIndex] = range;
+            if (range.RegisterSpace == kRegisterSpacePlaceholder) {
+                ranges[rangeIndex].RegisterSpace = registerSpace;  // static_cast<uint32_t>(group);
+            }
+            rangeIndex++;
+        }
+
+        rootParameters.emplace_back(rootParameter);
+        return true;
+    };
+
+    mResourceTableRootParameterIndex = kInvalidResourceTableRootParameterIndex;
+    if (UsesResourceTable()) {
+        // Create the descriptor table for bindless
+
+        // For SM 6.5-, we need to create one descriptor table with multiple overlapping ranges,
+        // each in its own register space, per resource type. This is because HLSL does not allow
+        // overlapping register ranges, and we need separate unbounded array types for each resource
+        // type: HLSL example:
+        //    Texture2D<float4> TextureTable1[] : register(t0, space1);
+        //    Texture2D<uint4> TextureTable2[] : register(t0, space2);
+        //    ...
+        //    float4 color = TextureTable1[MyTextureIndex + 1].Load(int3(0,0,0));
+        //    uint4 data = TextureTable2[MyTextureIndex + 2].Load(int3(0,0,0));
+        //
+        // For SM 6.6+, we don't need any descriptor tables, but only a single shader-visible
+        // descriptor heap to hold the resources, and shaders access the heap via built-in
+        // ResourceDescriptorHeap. HLSL example:
+        //    Texture2D<float4> myTex = ResourceDescriptorHeap[MyTextureIndex + 1];
+        //    Texture2D<uint4> myTex = ResourceDescriptorHeap[MyTextureIndex + 2];
+        //
+        // TODO(crbug.com/480110521): Add support for the SM >= 6.6 path
+
+        // TODO(amaiorano): Move this ranges def to a static function in ResourceTable
+        std::vector<D3D12_DESCRIPTOR_RANGE1> ranges;
+
+        // The metadata storage buffer is bound to (kBaseResourceTableRegisterSpace, 0)
+        ranges.push_back(D3D12_DESCRIPTOR_RANGE1{
+            .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+            .NumDescriptors = 1,
+            .BaseShaderRegister = 0,
+            .RegisterSpace = kBaseResourceTableRegisterSpace,
+            .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
+            .OffsetInDescriptorsFromTableStart = 0,  // Only one in this space
+        });
+
+        // Create multiple overlapping ranges, one per resource type,
+        // bound to (1 + kBaseResourceTableRegisterSpace + i, 0)
+        for (uint32_t i : Range(resourceTableDefaultResourceCount)) {
+            ranges.push_back(D3D12_DESCRIPTOR_RANGE1{
+                .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+                .NumDescriptors = device->GetLimits().resourceTableLimits.maxResourceTableSize +
+                                  resourceTableDefaultResourceCount,
+                // HLSL doesn't allow overlapping register ranges, so each one is in its own space
+                // (group), and starts at register (binding) 0 with no other range bound after it.
+                .BaseShaderRegister = 0,
+                .RegisterSpace = 1 + kBaseResourceTableRegisterSpace + i,
+                // Volatile required for bindless
+                .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
+                // Force the same offset in the descriptor table to overlaps these ranges
+                .OffsetInDescriptorsFromTableStart = 0,
+            });
+        }
+
+        if (SetRootDescriptorTable(ranges)) {
+            mResourceTableRootParameterIndex = static_cast<uint32_t>(rootParameters.size() - 1u);
+        }
+    }
+
     for (BindGroupIndex group : GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bindGroupLayout = ToBackend(GetBindGroupLayout(group));
 
-        // Set the root descriptor table parameter and copy ranges. Ranges are offset by the
-        // bind group index Returns whether or not the parameter was set. A root parameter is
-        // not set if the number of ranges is 0
-        auto SetRootDescriptorTable =
-            [&](const std::vector<D3D12_DESCRIPTOR_RANGE1>& descriptorRanges) -> bool {
-            auto rangeCount = descriptorRanges.size();
-            if (rangeCount == 0) {
-                return false;
-            }
-
-            D3D12_ROOT_PARAMETER1 rootParameter = {};
-            rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-            rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-            rootParameter.DescriptorTable.NumDescriptorRanges = static_cast<uint32_t>(rangeCount);
-            rootParameter.DescriptorTable.pDescriptorRanges = &ranges[rangeIndex];
-
-            for (auto& range : descriptorRanges) {
-                DAWN_ASSERT(range.RegisterSpace == kRegisterSpacePlaceholder);
-                ranges[rangeIndex] = range;
-                ranges[rangeIndex].RegisterSpace = static_cast<uint32_t>(group);
-                rangeIndex++;
-            }
-
-            rootParameters.emplace_back(rootParameter);
-
-            return true;
-        };
-
-        // Note that CbvUavSrvDescriptorRanges includes dynamic storage buffers
-        if (SetRootDescriptorTable(bindGroupLayout->GetCbvUavSrvDescriptorRanges())) {
-            mCbvUavSrvRootParameterInfo[group] = static_cast<uint32_t>(rootParameters.size() - 1u);
+        // Note that CbvUavSrvDescriptorRanges includes dynamic storage buffers.
+        // Also note that if using descriptor tables, we shift the register space (group) by 1. This
+        // is also done in ShaderModule::Compile via the BindingRemapper.
+        if (SetRootDescriptorTable(bindGroupLayout->GetCbvUavSrvDescriptorRanges(),
+                                   static_cast<uint32_t>(group))) {
+            mCbvUavSrvRootParameterIndices[group] =
+                static_cast<uint32_t>(rootParameters.size() - 1u);
         }
-        if (SetRootDescriptorTable(bindGroupLayout->GetSamplerDescriptorRanges())) {
-            mSamplerRootParameterInfo[group] = static_cast<uint32_t>(rootParameters.size() - 1u);
+        if (SetRootDescriptorTable(bindGroupLayout->GetSamplerDescriptorRanges(),
+                                   static_cast<uint32_t>(group))) {
+            mSamplerRootParameterIndices[group] = static_cast<uint32_t>(rootParameters.size() - 1u);
         }
 
         // Combine the static samplers from the all of the bind group layouts to one vector.
         for (auto& samplerDesc : bindGroupLayout->GetStaticSamplers()) {
             auto& newSampler = staticSamplers.emplace_back(samplerDesc);
+
             newSampler.RegisterSpace = static_cast<uint32_t>(group);
         }
 
@@ -441,14 +518,22 @@ void PipelineLayout::DestroyImpl(DestroyReason reason) {
     }
 }
 
+uint32_t PipelineLayout::GetResourceTableRootParameterIndex() const {
+    return mResourceTableRootParameterIndex;
+}
+
+uint32_t PipelineLayout::GetBaseResourceTableRegisterSpace() const {
+    return kBaseResourceTableRegisterSpace;
+}
+
 uint32_t PipelineLayout::GetCbvUavSrvRootParameterIndex(BindGroupIndex group) const {
     DAWN_ASSERT(group < kMaxBindGroupsTyped);
-    return mCbvUavSrvRootParameterInfo[group];
+    return mCbvUavSrvRootParameterIndices[group];
 }
 
 uint32_t PipelineLayout::GetSamplerRootParameterIndex(BindGroupIndex group) const {
     DAWN_ASSERT(group < kMaxBindGroupsTyped);
-    return mSamplerRootParameterInfo[group];
+    return mSamplerRootParameterIndices[group];
 }
 
 ID3D12RootSignature* PipelineLayout::GetRootSignature() const {

@@ -73,6 +73,11 @@ MaybeError ComputePipeline::InitializeImpl() {
         compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
     }
 
+    if (device->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
+        // Necessary for FXC, but enable for DXC as well.
+        compileFlags |= D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES;
+    }
+
     // Tint does matrix multiplication expecting row major matrices
     compileFlags |= D3DCOMPILE_PACK_MATRIX_ROW_MAJOR;
 

@@ -52,12 +52,12 @@ namespace tint {
 //
 // The values used in the `bindings` are from the `u32` conversion of the `ResourceType` enum
 // entries.
-//
 struct ResourceTableConfig {
     // The binding point for the resource_table. This is a post-remapping binding point.
     BindingPoint resource_table_binding;
 
     // The binding point for the supporting storage buffer. This is a post-remapping binding point.
+    // TODO(crbug.com/435317394): Rename to metadata_buffer_binding
     BindingPoint storage_buffer_binding;
 
     // The ordering of default bindings which are placed after the user bindings. These will be used
@@ -91,6 +91,7 @@ struct ResourceTableConfig {
                  resource_table_binding,
                  storage_buffer_binding,
                  default_binding_type_order);
+    TINT_REFLECT_EQUALS(ResourceTableConfig);
 };
 
 }  // namespace tint
