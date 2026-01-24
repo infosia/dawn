@@ -30,6 +30,8 @@
 
 #include "dawn/native/Error.h"
 #include "dawn/native/ResourceTable.h"
+#include "dawn/native/d3d12/CPUDescriptorHeapAllocationD3D12.h"
+#include "dawn/native/d3d12/GPUDescriptorHeapAllocationD3D12.h"
 
 namespace dawn::native::d3d12 {
 
@@ -41,6 +43,9 @@ class ResourceTable final : public ResourceTableBase {
     static ResultOrError<Ref<ResourceTable>> Create(Device* device,
                                                     const ResourceTableDescriptor* descriptor);
 
+    // Apply updates to resources or to the metadata buffers that are pending.
+    MaybeError ApplyPendingUpdates(CommandRecordingContext* recordingContext);
+
   protected:
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
@@ -50,6 +55,12 @@ class ResourceTable final : public ResourceTableBase {
 
     using ResourceTableBase::ResourceTableBase;
     MaybeError Initialize();
+    MaybeError UpdateMetadataBuffer(CommandRecordingContext* recordingContext,
+                                    const std::vector<MetadataUpdate>& updates);
+    void UpdateResourceBindings(const std::vector<ResourceUpdate>& updates);
+
+    GPUDescriptorHeapAllocation mGPUViewAllocation;
+    CPUDescriptorHeapAllocation mCPUViewAllocation;
 };
 
 }  // namespace dawn::native::d3d12
