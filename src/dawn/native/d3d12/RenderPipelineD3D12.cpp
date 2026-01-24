@@ -338,6 +338,13 @@ MaybeError RenderPipeline::InitializeImpl() {
         compileFlags |= D3DCOMPILE_OPTIMIZATION_LEVEL3;
     }
 
+    if (device->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable) &&
+        !device->IsToggleEnabled(Toggle::UseDXC)) {
+        // Necessary for FXC to compile unbounded size descriptor tables that we emit for resource
+        // tables
+        compileFlags |= D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES;
+    }
+
     // Tint does matrix multiplication expecting row major matrices
     compileFlags |= D3DCOMPILE_PACK_MATRIX_ROW_MAJOR;
 

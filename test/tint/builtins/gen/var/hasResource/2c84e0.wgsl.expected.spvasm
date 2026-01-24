@@ -14,9 +14,10 @@
                OpExecutionMode %fragment_main OriginUpperLeft
                OpMemberName %prevent_dce_block 0 "inner"
                OpName %prevent_dce_block "prevent_dce_block"
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 0 "array_length"
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 1 "bindings"
-               OpName %tint_resource_table_buffer_tint_explicit_layout "tint_resource_table_buffer_tint_explicit_layout"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 0 "array_length"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 1 "bindings"
+               OpName %tint_resource_table_metadata_struct_tint_explicit_layout "tint_resource_table_metadata_struct_tint_explicit_layout"
+               OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %hasResource_2c84e0 "hasResource_2c84e0"
                OpName %arg_0 "arg_0"
                OpName %res "res"
@@ -28,13 +29,13 @@
                OpDecorate %1 Coherent
                OpDecorate %5 DescriptorSet 42
                OpDecorate %5 Binding 41
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 0 Offset 0
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 0 Offset 0
                OpDecorate %_runtimearr_uint ArrayStride 4
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 1 Offset 4
-               OpDecorate %tint_resource_table_buffer_tint_explicit_layout Block
-               OpDecorate %9 DescriptorSet 42
-               OpDecorate %9 Binding 42
-               OpDecorate %9 NonWritable
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 1 Offset 4
+               OpDecorate %tint_resource_table_metadata_struct_tint_explicit_layout Block
+               OpDecorate %tint_resource_table_metadata DescriptorSet 42
+               OpDecorate %tint_resource_table_metadata Binding 42
+               OpDecorate %tint_resource_table_metadata NonWritable
         %int = OpTypeInt 32 1
 %prevent_dce_block = OpTypeStruct %int
 %_ptr_StorageBuffer_prevent_dce_block = OpTypePointer StorageBuffer %prevent_dce_block
@@ -45,9 +46,9 @@
           %5 = OpVariable %_ptr_UniformConstant__runtimearr_8 UniformConstant
        %uint = OpTypeInt 32 0
 %_runtimearr_uint = OpTypeRuntimeArray %uint
-%tint_resource_table_buffer_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
-%_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_buffer_tint_explicit_layout
-          %9 = OpVariable %_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout StorageBuffer
+%tint_resource_table_metadata_struct_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
+%_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_metadata_struct_tint_explicit_layout
+%tint_resource_table_metadata = OpVariable %_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout StorageBuffer
          %15 = OpTypeFunction %int
 %_ptr_Function_uint = OpTypePointer Function %uint
      %uint_1 = OpConstant %uint 1
@@ -68,13 +69,13 @@
         %res = OpVariable %_ptr_Function_bool Function
                OpStore %arg_0 %uint_1
          %20 = OpLoad %uint %arg_0 None
-         %21 = OpAccessChain %_ptr_StorageBuffer_uint %9 %uint_0
+         %21 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
          %24 = OpLoad %uint %21 None
          %25 = OpULessThan %bool %20 %24
                OpSelectionMerge %27 None
                OpBranchConditional %25 %28 %29
          %28 = OpLabel
-         %40 = OpAccessChain %_ptr_StorageBuffer_uint %9 %uint_1 %20
+         %40 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %20
          %41 = OpLoad %uint %40 None
          %31 = OpIEqual %bool %41 %uint_5
                OpBranch %27
@@ -111,9 +112,10 @@
                OpExecutionMode %compute_main LocalSize 1 1 1
                OpMemberName %prevent_dce_block 0 "inner"
                OpName %prevent_dce_block "prevent_dce_block"
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 0 "array_length"
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 1 "bindings"
-               OpName %tint_resource_table_buffer_tint_explicit_layout "tint_resource_table_buffer_tint_explicit_layout"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 0 "array_length"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 1 "bindings"
+               OpName %tint_resource_table_metadata_struct_tint_explicit_layout "tint_resource_table_metadata_struct_tint_explicit_layout"
+               OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %hasResource_2c84e0 "hasResource_2c84e0"
                OpName %arg_0 "arg_0"
                OpName %res "res"
@@ -125,13 +127,13 @@
                OpDecorate %1 Coherent
                OpDecorate %5 DescriptorSet 42
                OpDecorate %5 Binding 41
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 0 Offset 0
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 0 Offset 0
                OpDecorate %_runtimearr_uint ArrayStride 4
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 1 Offset 4
-               OpDecorate %tint_resource_table_buffer_tint_explicit_layout Block
-               OpDecorate %9 DescriptorSet 42
-               OpDecorate %9 Binding 42
-               OpDecorate %9 NonWritable
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 1 Offset 4
+               OpDecorate %tint_resource_table_metadata_struct_tint_explicit_layout Block
+               OpDecorate %tint_resource_table_metadata DescriptorSet 42
+               OpDecorate %tint_resource_table_metadata Binding 42
+               OpDecorate %tint_resource_table_metadata NonWritable
         %int = OpTypeInt 32 1
 %prevent_dce_block = OpTypeStruct %int
 %_ptr_StorageBuffer_prevent_dce_block = OpTypePointer StorageBuffer %prevent_dce_block
@@ -142,9 +144,9 @@
           %5 = OpVariable %_ptr_UniformConstant__runtimearr_8 UniformConstant
        %uint = OpTypeInt 32 0
 %_runtimearr_uint = OpTypeRuntimeArray %uint
-%tint_resource_table_buffer_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
-%_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_buffer_tint_explicit_layout
-          %9 = OpVariable %_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout StorageBuffer
+%tint_resource_table_metadata_struct_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
+%_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_metadata_struct_tint_explicit_layout
+%tint_resource_table_metadata = OpVariable %_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout StorageBuffer
          %15 = OpTypeFunction %int
 %_ptr_Function_uint = OpTypePointer Function %uint
      %uint_1 = OpConstant %uint 1
@@ -165,13 +167,13 @@
         %res = OpVariable %_ptr_Function_bool Function
                OpStore %arg_0 %uint_1
          %20 = OpLoad %uint %arg_0 None
-         %21 = OpAccessChain %_ptr_StorageBuffer_uint %9 %uint_0
+         %21 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
          %24 = OpLoad %uint %21 None
          %25 = OpULessThan %bool %20 %24
                OpSelectionMerge %27 None
                OpBranchConditional %25 %28 %29
          %28 = OpLabel
-         %40 = OpAccessChain %_ptr_StorageBuffer_uint %9 %uint_1 %20
+         %40 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %20
          %41 = OpLoad %uint %40 None
          %31 = OpIEqual %bool %41 %uint_5
                OpBranch %27
@@ -205,9 +207,10 @@
                OpExtension "SPV_EXT_descriptor_indexing"
                OpMemoryModel Logical GLSL450
                OpEntryPoint Vertex %vertex_main "vertex_main" %vertex_main_position_Output %vertex_main_loc0_Output %vertex_main___point_size_Output
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 0 "array_length"
-               OpMemberName %tint_resource_table_buffer_tint_explicit_layout 1 "bindings"
-               OpName %tint_resource_table_buffer_tint_explicit_layout "tint_resource_table_buffer_tint_explicit_layout"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 0 "array_length"
+               OpMemberName %tint_resource_table_metadata_struct_tint_explicit_layout 1 "bindings"
+               OpName %tint_resource_table_metadata_struct_tint_explicit_layout "tint_resource_table_metadata_struct_tint_explicit_layout"
+               OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %vertex_main_position_Output "vertex_main_position_Output"
                OpName %vertex_main_loc0_Output "vertex_main_loc0_Output"
                OpName %vertex_main___point_size_Output "vertex_main___point_size_Output"
@@ -222,13 +225,13 @@
                OpName %vertex_main "vertex_main"
                OpDecorate %1 DescriptorSet 42
                OpDecorate %1 Binding 41
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 0 Offset 0
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 0 Offset 0
                OpDecorate %_runtimearr_uint ArrayStride 4
-               OpMemberDecorate %tint_resource_table_buffer_tint_explicit_layout 1 Offset 4
-               OpDecorate %tint_resource_table_buffer_tint_explicit_layout Block
-               OpDecorate %6 DescriptorSet 42
-               OpDecorate %6 Binding 42
-               OpDecorate %6 NonWritable
+               OpMemberDecorate %tint_resource_table_metadata_struct_tint_explicit_layout 1 Offset 4
+               OpDecorate %tint_resource_table_metadata_struct_tint_explicit_layout Block
+               OpDecorate %tint_resource_table_metadata DescriptorSet 42
+               OpDecorate %tint_resource_table_metadata Binding 42
+               OpDecorate %tint_resource_table_metadata NonWritable
                OpDecorate %vertex_main_position_Output BuiltIn Position
                OpDecorate %vertex_main_loc0_Output Location 0
                OpDecorate %vertex_main_loc0_Output Flat
@@ -240,9 +243,9 @@
           %1 = OpVariable %_ptr_UniformConstant__runtimearr_4 UniformConstant
        %uint = OpTypeInt 32 0
 %_runtimearr_uint = OpTypeRuntimeArray %uint
-%tint_resource_table_buffer_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
-%_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_buffer_tint_explicit_layout
-          %6 = OpVariable %_ptr_StorageBuffer_tint_resource_table_buffer_tint_explicit_layout StorageBuffer
+%tint_resource_table_metadata_struct_tint_explicit_layout = OpTypeStruct %uint %_runtimearr_uint
+%_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout = OpTypePointer StorageBuffer %tint_resource_table_metadata_struct_tint_explicit_layout
+%tint_resource_table_metadata = OpVariable %_ptr_StorageBuffer_tint_resource_table_metadata_struct_tint_explicit_layout StorageBuffer
       %float = OpTypeFloat 32
     %v4float = OpTypeVector %float 4
 %_ptr_Output_v4float = OpTypePointer Output %v4float
@@ -278,13 +281,13 @@
         %res = OpVariable %_ptr_Function_bool Function
                OpStore %arg_0 %uint_1
          %25 = OpLoad %uint %arg_0 None
-         %26 = OpAccessChain %_ptr_StorageBuffer_uint %6 %uint_0
+         %26 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
          %29 = OpLoad %uint %26 None
          %30 = OpULessThan %bool %25 %29
                OpSelectionMerge %32 None
                OpBranchConditional %30 %33 %34
          %33 = OpLabel
-         %45 = OpAccessChain %_ptr_StorageBuffer_uint %6 %uint_1 %25
+         %45 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %25
          %46 = OpLoad %uint %45 None
          %36 = OpIEqual %bool %46 %uint_5
                OpBranch %32
