@@ -293,7 +293,7 @@ Result ValidateUsingFXC(const std::string& fxc_path,
     // Match Dawn's compile flags
     // See dawn\src\dawn_native\d3d12\RenderPipelineD3D12.cpp
     UINT compileFlags = D3DCOMPILE_OPTIMIZATION_LEVEL0 | D3DCOMPILE_PACK_MATRIX_ROW_MAJOR |
-                        D3DCOMPILE_IEEE_STRICTNESS;
+                        D3DCOMPILE_IEEE_STRICTNESS | D3DCOMPILE_ENABLE_UNBOUNDED_DESCRIPTOR_TABLES;
 
     CComPtr<ID3DBlob> compiledShader;
     CComPtr<ID3DBlob> errors;
