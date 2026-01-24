@@ -167,6 +167,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
                                           layout->GetDynamicStorageBufferOffsetsShaderRegister()};
 
+    // TODO(amaiorano): Like for VK, handle bumping BindGroup group by 1 if using resource table
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
             const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
