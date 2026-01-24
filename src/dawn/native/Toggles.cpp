@@ -812,6 +812,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::DisableTransientAttachment,
      {"disable_transient_attachment", "Disable TextureUsage TransientAttachment usage.",
       "https://crbug.com/dawn/462620664", ToggleStage::Device}},
+    {Toggle::PersistentMapEmulation,
+     {"persistent_map_emulation",
+      "Emulates persistent buffer mapping by automatically mapping buffers at creation and "
+      "re-mapping after GPU usage. MapAtCreation, MapAsync, and Unmap become no-ops. "
+      "Buffers are automatically unmapped before GPU operations and re-mapped when complete.",
+      "https://crbug.com/dawn/XXXXX", ToggleStage::Device}},
 
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};

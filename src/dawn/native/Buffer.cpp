@@ -116,6 +116,20 @@ class ErrorBuffer final : public BufferBase {
 // GetMappedRange on a zero-sized buffer returns a pointer to this value.
 static uint32_t sZeroSizedMappingData = 0xCAFED00D;
 
+bool ShouldEnablePersistentMapEmulation(DeviceBase* device,
+                                        bool isHostMapped,
+                                        wgpu::BufferUsage internalUsage) {
+    if (isHostMapped) {
+        return false;
+    }
+    if (!device->IsPersistentMapEmulationEnabled()) {
+        return false;
+    }
+    wgpu::BufferUsage mappableUsage = internalUsage & kMappableBufferUsages;
+    // Only enable if buffer has MapRead OR MapWrite, but not both
+    return mappableUsage != wgpu::BufferUsage::None && mappableUsage != kMappableBufferUsages;
+}
+
 }  // anonymous namespace
 
 ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDescriptor(
@@ -427,7 +441,9 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mIsHostMapped(descriptor.Has<BufferHostMappedPointer>()) {
+      mIsHostMapped(descriptor.Has<BufferHostMappedPointer>()),
+      mIsPersistentMapEnabled(
+          ShouldEnablePersistentMapEmulation(device, mIsHostMapped, mInternalUsage)) {
     GetObjectTrackingList()->Track(this);
 }
 
@@ -459,6 +475,22 @@ BufferBase::~BufferBase() {
                 // because then bufferState will just be Destroyed.
                 (state == BufferState::MappedAtCreation &&
                  GetDevice()->GetState() == DeviceBase::State::Destroyed));
+}
+
+// Default implementations for persistent map emulation (backends override these)
+MaybeError BufferBase::PersistentMapImpl(wgpu::MapMode mode, bool atCreation) {
+    DAWN_UNREACHABLE();
+    return DAWN_UNIMPLEMENTED_ERROR("PersistentMapImpl not implemented for this backend");
+}
+
+MaybeError BufferBase::EndPersistentMapImpl() {
+    DAWN_UNREACHABLE();
+    return DAWN_UNIMPLEMENTED_ERROR("EndPersistentMapImpl not implemented for this backend");
+}
+
+MaybeError BufferBase::FlushMappedDataImpl(uint64_t offset, uint64_t size) {
+    DAWN_UNREACHABLE();
+    return DAWN_UNIMPLEMENTED_ERROR("FlushMappedDataImpl not implemented for this backend");
 }
 
 void BufferBase::DestroyImpl(DestroyReason reason) {
@@ -568,19 +600,19 @@ MaybeError BufferBase::FinalizeMap(BufferState newState) {
         mMappedPointer = GetMappedPointerImpl();
     }
 
+    DAWN_TRY(InitializeMappedData(mMappedPointer, /*useStagingBuffer=*/mStagingBuffer != nullptr));
+
     mState.store(newState, std::memory_order::release);
     return {};
 }
 
-MaybeError BufferBase::MapAtCreation() {
-    bool usingStagingBuffer = false;
-    DAWN_TRY_ASSIGN(usingStagingBuffer, MapAtCreationInternal());
-
-    if (GetSize() == 0) {
+MaybeError BufferBase::InitializeMappedData(void* mappedData, bool usingStagingBuffer) {
+    if (GetSize() == 0 || IsInitialized()) {
         return {};
     }
+
+    DAWN_ASSERT(mappedData);
     size_t size = GetAllocatedSize();
-    void* ptr = GetMappedPointer();
 
     DeviceBase* device = GetDevice();
     if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
@@ -589,15 +621,29 @@ MaybeError BufferBase::MapAtCreation() {
         // actually get initialized when the staging data is copied in. (But we mark the main buffer
         // as initialized now.)
         if (!usingStagingBuffer) {
-            memset(ptr, uint8_t(0u), size);
+            memset(mappedData, uint8_t(0u), size);
             device->IncrementLazyClearCountForTesting();
         }
     } else if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-        memset(ptr, uint8_t(1u), size);
+        memset(mappedData, uint8_t(1u), size);
     }
+
+    // Flush mapped data if auto map is enabled
+    if (!usingStagingBuffer && IsPersistentMapEnabled()) {
+        DAWN_TRY(FlushMappedDataImpl(0, size));
+    }
+
     // Mark the buffer as initialized since we don't want to later clear it using the GPU since that
     // would overwrite what the client wrote using the CPU.
     SetInitialized(true);
+
+    return {};
+}
+
+MaybeError BufferBase::MapAtCreation() {
+    DAWN_TRY_ASSIGN(std::ignore, MapAtCreationInternal());
+
+    // Buffer initialization will be done in FinalizeMap()
 
     return {};
 }
@@ -612,7 +658,10 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
         // Mappable buffers don't use a staging buffer and are just as if mapped through
         // MapAsync.
         if (IsCPUWritableAtCreation()) {
-            DAWN_TRY(MapAtCreationImpl());
+            // Skip backend impl if auto map is enabled.
+            if (!IsPersistentMapEnabled()) {
+                DAWN_TRY(MapAtCreationImpl());
+            }
         } else {
             // If any of these fail, the buffer will be deleted and replaced with an error
             // buffer. The staging buffer is used to return mappable data to initialize the
@@ -638,6 +687,103 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
     mStagingBuffer = std::move(stagingBuffer);
     DAWN_TRY(FinalizeMap(BufferState::MappedAtCreation));
     return mStagingBuffer != nullptr;
+}
+
+// Persistent map emulation implementation
+MaybeError BufferBase::PersistentMap(bool atCreation, ExecutionSerial intendedSerial) {
+    std::lock_guard<std::mutex> lock(mAutoMapMutex);
+
+    // Check if this remap has been cancelled (a newer operation occurred)
+    if (!atCreation && mLastUsageSerial > intendedSerial) {
+        // Buffer has been used in a newer operation, skip this remap
+        return {};
+    }
+
+    // Check for MapRead OR MapWrite (but not both)
+    wgpu::BufferUsage mappableUsage = mInternalUsage & kMappableBufferUsages;
+    if (mappableUsage == wgpu::BufferUsage::None || mappableUsage == kMappableBufferUsages) {
+        return {};  // No mappable usage or has both
+    }
+
+    if (mBufferAutoMapped) {
+        // Already mapped.
+        return {};
+    }
+
+    // Determine map mode based on which usage the buffer has
+    wgpu::MapMode mapMode =
+        (mappableUsage & wgpu::BufferUsage::MapWrite) ? wgpu::MapMode::Write : wgpu::MapMode::Read;
+
+    // Buffer should not already be auto-mapped
+    DAWN_ASSERT(!mBufferAutoMapped);
+
+    // Call backend-specific persistent map implementation
+    DAWN_TRY(PersistentMapImpl(mapMode, atCreation));
+
+    // Track that buffer is now auto-mapped
+    mBufferAutoMapped = true;
+
+    return {};
+}
+
+MaybeError BufferBase::PausePersistMapForQueueUse() {
+    std::lock_guard<std::mutex> lock(mAutoMapMutex);
+
+    if (mBufferAutoMapped) {
+        // Call backend-specific end persistent map implementation
+        DAWN_TRY(EndPersistentMapImpl());
+
+        // Track that buffer is no longer auto-mapped
+        mBufferAutoMapped = false;
+    }
+
+    // Get queue's pending serial and mark buffer as used
+    QueueBase* queue = GetDevice()->GetQueue();
+    ExecutionSerial pendingSerial = queue->GetPendingCommandSerial();
+    MarkUsedInPendingCommands();
+
+    // Schedule auto-remap after GPU completes
+    ScheduleAutoRemap(pendingSerial);
+
+    return {};
+}
+
+void BufferBase::ScheduleAutoRemap(ExecutionSerial serial) {
+    // Buffer should have been unmapped before scheduling remap
+    DAWN_ASSERT(!mBufferAutoMapped);
+
+    class AutoRemapEvent final : public EventManager::TrackedEvent {
+      public:
+        AutoRemapEvent(DeviceBase* device, WeakRef<BufferBase> buffer, ExecutionSerial serial)
+            : TrackedEvent(wgpu::CallbackMode::AllowSpontaneous, device->GetQueue(), serial),
+              mBuffer(buffer),
+              mIntendedSerial(serial) {}
+
+        ~AutoRemapEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+
+      private:
+        void Complete(EventCompletionType completionType) override {
+            if (completionType == EventCompletionType::Shutdown) {
+                return;
+            }
+
+            Ref<BufferBase> buf = mBuffer.Promote();
+            if (!buf) {
+                return;  // Buffer destroyed
+            }
+
+            // Re-map the buffer (atCreation = false since this is a remap)
+            // PersistentMap will check if mLastUsageSerial > intendedSerial and skip if cancelled
+            [[maybe_unused]] bool hadError = buf->GetDevice()->ConsumedError(
+                buf->PersistentMap(false, mIntendedSerial), "Re-mapping buffer after GPU usage");
+        }
+
+        WeakRef<BufferBase> mBuffer;
+        ExecutionSerial mIntendedSerial;
+    };
+
+    auto event = AcquireRef(new AutoRemapEvent(GetDevice(), this, serial));
+    GetInstance()->GetEventManager()->TrackEvent(std::move(event));
 }
 
 BufferBase::BufferState BufferBase::GetState() const {
@@ -730,10 +876,18 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
             }
 
             DAWN_TRY(TransitionState(BufferState::Unmapped, BufferState::InUse));
-            DAWN_TRY_WITH_CLEANUP(MapAsyncImpl(mode, offset, size), {
-                // Reset state since an error stopped this from reaching pending map state.
-                mState.store(BufferState::Unmapped, std::memory_order::release);
-            });
+            DAWN_TRY_WITH_CLEANUP(
+                [&]() -> MaybeError {
+                    // Skip backend impl if persistent map is enabled.
+                    if (IsPersistentMapEnabled()) {
+                        return {};
+                    }
+                    return MapAsyncImpl(mode, offset, size);
+                }(),
+                {
+                    // Reset state since an error stopped this from reaching pending map state.
+                    mState.store(BufferState::Unmapped, std::memory_order::release);
+                });
             return {};
         }();
 
@@ -842,8 +996,12 @@ MaybeError BufferBase::Unmap(bool forDestroy) {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
             DAWN_TRY(TransitionState(BufferState::Mapped, BufferState::InUse));
-            UnmapImpl(BufferState::Mapped,
-                      forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+            if (IsPersistentMapEnabled()) {
+                DAWN_TRY(FlushMappedDataImpl(MapOffset(), MapSize()));
+            } else {
+                UnmapImpl(BufferState::Mapped,
+                          forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+            }
             break;
         case BufferState::MappedAtCreation:
             DAWN_TRY(TransitionState(BufferState::MappedAtCreation, BufferState::InUse));
@@ -858,8 +1016,12 @@ MaybeError BufferBase::Unmap(bool forDestroy) {
                 }
             }
             if (mSize != 0 && IsCPUWritableAtCreation()) {
-                UnmapImpl(BufferState::MappedAtCreation,
-                          forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+                if (IsPersistentMapEnabled()) {
+                    DAWN_TRY(FlushMappedDataImpl(0, GetAllocatedSize()));
+                } else {
+                    UnmapImpl(BufferState::MappedAtCreation,
+                              forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+                }
             }
             break;
         case BufferState::InUse:
@@ -909,8 +1071,11 @@ MaybeError BufferBase::UnmapInternal(bool forDestroy) {
 
         if (event) {
             // Continue early unmap after releasing the mutex.
-            UnmapImpl(BufferState::PendingMap,
-                      forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+            // Skip backend impl if auto map is enabled.
+            if (!IsPersistentMapEnabled()) {
+                UnmapImpl(BufferState::PendingMap,
+                          forDestroy ? BufferState::Destroyed : BufferState::Unmapped);
+            }
             mState.store(BufferState::Unmapped, std::memory_order::release);
 
             GetDevice()->DeferIfLocked(
