@@ -49,6 +49,7 @@
 #include "dawn/native/d3d12/QuerySetD3D12.h"
 #include "dawn/native/d3d12/RenderPassBuilderD3D12.h"
 #include "dawn/native/d3d12/RenderPipelineD3D12.h"
+#include "dawn/native/d3d12/ResourceTableD3D12.h"
 #include "dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h"
 #include "dawn/native/d3d12/StagingDescriptorAllocatorD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
@@ -352,7 +353,13 @@ void RecordNumWorkgroupsForDispatch(ID3D12GraphicsCommandList* commandList,
 // UAV are used in the synchronization scope if `passHasUAV` is passed and no errors are hit.
 MaybeError TransitionAndClearForSyncScope(CommandRecordingContext* commandContext,
                                           const SyncScopeResourceUsage& usages,
+                                          ResourceTable* resourceTable,
                                           bool* passHasUAV = nullptr) {
+    // Update the resource table metadata buffers before transitioning resources.
+    if (resourceTable != nullptr) {
+        DAWN_TRY(resourceTable->ApplyPendingUpdates(commandContext));
+    }
+
     std::vector<D3D12_RESOURCE_BARRIER> barriers;
 
     ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
@@ -469,7 +476,13 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     BindGroupStateTracker(Device* device, DescriptorHeapState* heapState)
         : BindGroupTrackerBase(), mDevice(device), mHeapState(heapState) {}
 
+    void OnSetPipeline(PipelineType* pipeline) {
+        Base::OnSetPipeline(pipeline);
+        mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+    }
+
     MaybeError Apply(CommandRecordingContext* commandContext) {
+        mApplyCalled = true;
         BeforeApply();
 
         ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
@@ -485,23 +498,41 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         // the signal to change the bounded heaps.
         // Re-populating all bindgroups after the last one fails causes duplicated allocations
         // to occur on overflow.
-        bool didCreateBindGroupViews = true;
-        bool didCreateBindGroupSamplers = true;
+
+        // When usage of resource table changes between pipelines, we will need to shift the bind
+        // groups by 1 because the resource table uses the first root descriptor table, so we must
+        // dirty all the bind groups.
+        if (mLastUsesResourceTable != mUsesResourceTable) {
+            mDirtyBindGroupsObjectChangedOrIsDynamic |= mBindGroupLayoutsMask;
+            mDirtyBindGroups |= mBindGroupLayoutsMask;
+            mLastUsesResourceTable = mUsesResourceTable;
+        }
+
+        // Assume views/samplers will populate the current GPU heap. If either fail,
+        // we allocate a larger heap and repopulate again.
+        // TODO(amaiorano): Simplify this logic by looping twice, once for PopulateViews, once for
+        // PopulateSamplers.
+        bool populatedViews = true;
+        bool populatedSamplers = true;
+        if (mUsesResourceTable) {
+            DAWN_ASSERT(mResourceTable);
+            populatedViews = populatedViews && mResourceTable->PopulateViews(viewAllocator);
+        }
         for (BindGroupIndex index : mDirtyBindGroups) {
             BindGroup* group = ToBackend(mBindGroups[index]);
-            didCreateBindGroupViews = group->PopulateViews(viewAllocator);
-            didCreateBindGroupSamplers = group->PopulateSamplers(samplerAllocator);
-            if (!didCreateBindGroupViews && !didCreateBindGroupSamplers) {
+            populatedViews = populatedViews && group->PopulateViews(viewAllocator);
+            populatedSamplers = populatedSamplers && group->PopulateSamplers(samplerAllocator);
+            if (!populatedViews && !populatedSamplers) {
                 break;
             }
         }
 
-        if (!didCreateBindGroupViews || !didCreateBindGroupSamplers) {
-            if (!didCreateBindGroupViews) {
+        if (!populatedViews || !populatedSamplers) {
+            if (!populatedViews) {
                 DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
             }
 
-            if (!didCreateBindGroupSamplers) {
+            if (!populatedSamplers) {
                 DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap());
             }
 
@@ -513,10 +544,10 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
             for (BindGroupIndex index : mBindGroupLayoutsMask) {
                 BindGroup* group = ToBackend(mBindGroups[index]);
-                didCreateBindGroupViews = group->PopulateViews(viewAllocator);
-                didCreateBindGroupSamplers = group->PopulateSamplers(samplerAllocator);
-                DAWN_ASSERT(didCreateBindGroupViews);
-                DAWN_ASSERT(didCreateBindGroupSamplers);
+                populatedViews = group->PopulateViews(viewAllocator);
+                populatedSamplers = group->PopulateSamplers(samplerAllocator);
+                DAWN_ASSERT(populatedViews);
+                DAWN_ASSERT(populatedSamplers);
             }
         }
 
@@ -534,6 +565,16 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     void ResetRootSamplerTables() { mBoundRootSamplerTables = {}; }
 
     void SetID3D12DescriptorHeaps(ID3D12GraphicsCommandList* commandList);
+
+    void SetResourceTable(ResourceTable* resourceTable) {
+        // Set only once
+        DAWN_ASSERT(mResourceTable == nullptr);
+        // Expected to be set before Apply is called
+        DAWN_ASSERT(!mApplyCalled);
+        mResourceTable = resourceTable;
+    }
+
+    ResourceTable* GetResourceTable() { return mResourceTable; }
 
   private:
     enum class RootBufferViewType { CBV, SRV, UAV };
@@ -720,6 +761,10 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
     raw_ptr<Device> mDevice;
     raw_ptr<DescriptorHeapState> mHeapState;
+    raw_ptr<ResourceTable> mResourceTable = nullptr;
+    bool mLastUsesResourceTable = false;
+    bool mUsesResourceTable = false;
+    [[maybe_unused]] bool mApplyCalled = false;
 
     PerBindGroup<D3D12_GPU_DESCRIPTOR_HANDLE> mBoundRootSamplerTables = {};
 };
@@ -747,6 +792,11 @@ class DescriptorHeapState {
         // descriptor heaps.
         mComputeBindingTracker.ResetRootSamplerTables();
         mGraphicsBindingTracker.ResetRootSamplerTables();
+    }
+
+    void SetResourceTable(ResourceTable* resourceTable) {
+        mComputeBindingTracker.SetResourceTable(resourceTable);
+        mGraphicsBindingTracker.SetResourceTable(resourceTable);
     }
 
     BindGroupStateTracker<ComputePipeline>* GetComputeBindingTracker() {
@@ -944,6 +994,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 bool passHasUAV;
                 DAWN_TRY(TransitionAndClearForSyncScope(
                     commandContext, GetResourceUsages().renderPasses[nextRenderPassNumber],
+                    descriptorHeapState.GetGraphicsBindingTracker()->GetResourceTable(),
                     &passHasUAV));
 
                 LazyClearRenderPassAttachments(device, beginRenderPassCmd);
@@ -1323,6 +1374,12 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 break;
             }
 
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                descriptorHeapState.SetResourceTable(ToBackend(cmd->table.Get()));
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
         }
@@ -1359,7 +1416,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 }
 
                 DAWN_TRY(TransitionAndClearForSyncScope(
-                    commandContext, resourceUsages.dispatchUsages[currentDispatch]));
+                    commandContext, resourceUsages.dispatchUsages[currentDispatch],
+                    bindingTracker->GetResourceTable()));
                 DAWN_TRY(bindingTracker->Apply(commandContext));
                 immediates.Apply(commandContext);
 
@@ -1373,7 +1431,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 DispatchIndirectCmd* dispatch = mCommands.NextCommand<DispatchIndirectCmd>();
 
                 DAWN_TRY(TransitionAndClearForSyncScope(
-                    commandContext, resourceUsages.dispatchUsages[currentDispatch]));
+                    commandContext, resourceUsages.dispatchUsages[currentDispatch],
+                    bindingTracker->GetResourceTable()));
                 DAWN_TRY(bindingTracker->Apply(commandContext));
                 immediates.Apply(commandContext);
 

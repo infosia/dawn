@@ -134,6 +134,13 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
                 D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER);
     }
 
+    // 1 for the metadata storage descriptor + the rest for resource descriptors
+    const uint8_t kResourceTableDescriptorHeapSize =
+        1 + GetLimits().resourceTableLimits.maxResourceTableSize +
+        uint32_t(GetDefaultResourceCount());
+    mResourceTableViewAllocator = std::make_unique<MutexProtected<StagingDescriptorAllocator>>(
+        this, 1, kResourceTableDescriptorHeapSize, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
     mRenderTargetViewAllocator = std::make_unique<MutexProtected<StagingDescriptorAllocator>>(
         this, 1, kAttachmentDescriptorHeapSize, D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
@@ -377,6 +384,7 @@ MaybeError Device::TickImpl() {
     (*mResourceAllocatorManager)->Tick(completedSerial);
     (*mViewShaderVisibleDescriptorAllocator)->Tick(completedSerial);
     (*mSamplerShaderVisibleDescriptorAllocator)->Tick(completedSerial);
+    (*mResourceTableViewAllocator)->Tick(completedSerial);
     (*mRenderTargetViewAllocator)->Tick(completedSerial);
     (*mDepthStencilViewAllocator)->Tick(completedSerial);
     mUsedComObjectRefs->ClearUpTo(completedSerial);
@@ -821,6 +829,10 @@ MutexProtected<StagingDescriptorAllocator>* Device::GetSamplerStagingDescriptorA
     // This is Log2 of the next power of two, plus 1.
     uint32_t allocatorIndex = Log2Ceil(descriptorCount) + 1;
     return mSamplerAllocators[allocatorIndex].get();
+}
+
+MutexProtected<StagingDescriptorAllocator>& Device::GetResourceTableViewAllocator() const {
+    return *mResourceTableViewAllocator.get();
 }
 
 MutexProtected<StagingDescriptorAllocator>& Device::GetRenderTargetViewAllocator() const {
