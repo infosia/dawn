@@ -34,6 +34,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Pipeline.h"
+#include "dawn/native/ResourceTable.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -167,6 +168,19 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     arrayOffsetFromUniform.ubo_binding = {layout->GetDynamicStorageBufferOffsetsRegisterSpace(),
                                           layout->GetDynamicStorageBufferOffsetsShaderRegister()};
 
+    std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
+    if (layout->UsesResourceTable()) {
+        auto bindingTypeOrder = GetDefaultResourceOrder();
+        uint32_t base_group = layout->GetBaseResourceTableRegisterSpace();
+        resourceTableConfig = tint::ResourceTableConfig{
+            // Tint emits multiple unbounded arrays per type, each in its own group (stage)
+            // starting at base_group + 1, and monotonically increasing.
+            .resource_table_binding = tint::BindingPoint(base_group + 1, 1),
+            .storage_buffer_binding = tint::BindingPoint(base_group, 0),
+            .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+        };
+    }
+
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
             const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
@@ -260,6 +274,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         !device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
 
     req.hlsl.tintOptions.bindings = std::move(bindings);
+    req.hlsl.tintOptions.resource_table = std::move(resourceTableConfig);
     req.hlsl.tintOptions.ignored_by_robustness_transform = std::move(ignored_by_robustness);
 
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
