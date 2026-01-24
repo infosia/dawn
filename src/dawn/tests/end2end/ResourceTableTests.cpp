@@ -273,9 +273,6 @@ TEST_P(ResourceTableTests, PipelineLayoutWithResourceTableCreation) {
 
 // Test that creating pipelines that use resource tables doesn't crash in backends.
 TEST_P(ResourceTableTests, ShaderWithResourceTableCreation) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::ComputePipelineDescriptor csDesc;
 
     // Test compiling a pipeline using only the resource table.
@@ -351,9 +348,6 @@ TEST_P(ResourceTableTests, PinningBalancedInBackends) {
 
 // Test WGSL `hasResource` reflects the state of the resource table.
 TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -377,9 +371,6 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
 
 // Test that calling texture.Destroy() implicitly unpins it.
 TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -403,9 +394,6 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinDestroy) {
 
 // Test that a texture used multiple times in the same table has its availability correctly updated.
 TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -433,9 +421,6 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTimesPinUnpin) {
 // Test that updating a table with an already destroyed texture works, but doesn't show that entry
 // as available.
 TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -452,9 +437,6 @@ TEST_P(ResourceTableTests, HasResourceUpdateWithTextureAlreadyDestroyed) {
 
 // Test that a texture used in multiple resource tables has its availability correctly updated.
 TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -481,9 +463,6 @@ TEST_P(ResourceTableTests, HasResourceSameTextureMultipleTables) {
 
 // Test that texture availabililty is controlled per-texture.
 TEST_P(ResourceTableTests, HasResourceMultipleTexturesTable) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},
@@ -795,9 +774,6 @@ std::vector<TextureDescForTypeIDCase> MakeTextureDescForTypeIDCases() {
 
 // Test that hasResource() works as expected for all supported types in WGSL.
 TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     auto textureCases = MakeTextureDescForTypeIDCases();
 
     // Make a resource table with all of our test texture views.
@@ -820,9 +796,6 @@ TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
 
 // Test that calling hasResource() with values outside of the resource table size returns false.
 TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
@@ -896,8 +869,8 @@ TEST_P(ResourceTableTests, HasResourceOOBIsFalse) {
 // test (that's for the CTS) but tries to check a few different interesting cases (MS, DS, Cube, 2D
 // array).
 TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Create the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
@@ -989,8 +962,8 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 
 // Check that Pin forces zero-initialization of the resources.
 TEST_P(ResourceTableTests, PinDoesZeroInit) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Create the pipeline reading back from the texture.
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
@@ -1197,8 +1170,8 @@ TEST_P(ResourceTableTests, UpdateAfterRemoveRequiresGPUIsFinished_ErrorBindGroup
 
 // Check that Update and InsertBinding make the new binding visible in the resource table.
 TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     wgpu::ResourceTable table = MakeResourceTable(2);
 
@@ -1219,8 +1192,8 @@ TEST_P(ResourceTableTests, UpdateAndInsertBindingMakeBindingVisible) {
 // Check that RemoveBinding instantly makes the binding not visible, both for entries added with
 // Update and InsertBinding.
 TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Fill a resource table with both Update and InsertBinding.
     wgpu::ResourceTable table = MakeResourceTable(2);
@@ -1243,8 +1216,8 @@ TEST_P(ResourceTableTests, RemoveBindingMakeBindingInvalid) {
 
 // Check that removing a binding and adding a different one works.
 TEST_P(ResourceTableTests, ReplaceBinding) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Create the test resource table.
     wgpu::ResourceTable table = MakeResourceTable(1);
@@ -1266,8 +1239,8 @@ TEST_P(ResourceTableTests, ReplaceBinding) {
 
 // Check that removing a binding and adding it back works.
 TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    // TODO(crbug.com/385158827): Fails on older WARP 10.0.19041.5794
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Create the test resource table.
     wgpu::ResourceTable table = MakeResourceTable(1);
@@ -1289,9 +1262,6 @@ TEST_P(ResourceTableTests, ReplaceWithSameBinding) {
 // Check that logic to dirty or reuse VkDescriptorSet takes into account the resource table in the
 // Vulkan backend.
 TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // Swiftshader doesn't support variable count descriptor sets used in draw operations. In
     // vk::DescriptorSet::ParseDescriptors it iterates over all the descriptors to prep various
     // things but iterates over the whole size defined in the vkDescriptorSetLayout instead of
