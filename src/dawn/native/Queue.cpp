@@ -334,6 +334,12 @@ MaybeError QueueBase::WriteBuffer(BufferBase* buffer,
     DAWN_TRY(ValidateWriteBuffer(GetDevice(), buffer, bufferOffset, size));
     BufferBase::ScopedUseBuffer scopedUseBuffer;
     DAWN_TRY_ASSIGN(scopedUseBuffer, buffer->ValidateCanUseOnQueueNow());
+
+    // Auto-unmap if persistent map emulation is enabled
+    if (buffer->IsPersistentMapEnabled()) {
+        DAWN_TRY(buffer->PausePersistMapForQueueUse());
+    }
+
     return WriteBufferImpl(buffer, bufferOffset, data, size);
 }
 
@@ -665,6 +671,16 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
         DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
     }
     DAWN_ASSERT(!IsError());
+
+    // Auto-unmap and schedule remap for buffers if persistent map emulation is enabled
+    if (device->IsPersistentMapEmulationEnabled()) {
+        for (uint32_t i = 0; i < commandCount; ++i) {
+            const CommandBufferResourceUsage& usages = commands[i]->GetResourceUsages();
+            for (BufferBase* buffer : usages.autoMapBuffers) {
+                DAWN_TRY(buffer->PausePersistMapForQueueUse());
+            }
+        }
+    }
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
 

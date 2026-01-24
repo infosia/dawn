@@ -148,6 +148,7 @@ class CommandEncoder final : public ApiObjectBase {
 
     EncodingContext mEncodingContext;
     absl::flat_hash_set<BufferBase*> mTopLevelBuffers;
+    absl::flat_hash_set<BufferBase*> mPersistentMappedBuffers;
     absl::flat_hash_set<TextureBase*> mTopLevelTextures;
     absl::flat_hash_set<QuerySetBase*> mUsedQuerySets;
     absl::flat_hash_set<ResourceTableBase*> mUsedResourceTables;

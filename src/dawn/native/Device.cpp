@@ -1354,6 +1354,18 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
         buffer = BufferBase::MakeError(this, rawDescriptor);
     }
 
+    // Auto-map if persistent map emulation is enabled
+    if (buffer->IsPersistentMapEnabled()) {
+        auto deviceGuard = UseGuardForCreateBuffer();
+        MaybeError persistentMapResult =
+            buffer->PersistentMap(/*atCreation=*/true, ExecutionSerial(0));
+        if (persistentMapResult.IsError()) {
+            auto error = persistentMapResult.AcquireError();
+            EmitLog(wgpu::LoggingType::Error, error->GetFormattedMessage());
+            return nullptr;
+        }
+    }
+
     // 3. Mapping at creation. The buffer may be either valid or ErrorBuffer.
     if (rawDescriptor->mappedAtCreation) {
         // MapAtCreation requires the device lock in case it allocates staging memory.
@@ -2099,6 +2111,11 @@ ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* 
 
     Ref<BufferBase> buffer;
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
+
+    // Auto-map if persistent map emulation is enabled
+    if (buffer->IsPersistentMapEnabled()) {
+        DAWN_TRY(buffer->PersistentMap(/*atCreation=*/true, ExecutionSerial(0)));
+    }
 
     if (descriptor->mappedAtCreation) {
         DAWN_TRY(buffer->MapAtCreation());

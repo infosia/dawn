@@ -116,6 +116,9 @@ struct CommandBufferResourceUsage {
     absl::flat_hash_set<TextureBase*> topLevelTextures;
     absl::flat_hash_set<QuerySetBase*> usedQuerySets;
     absl::flat_hash_set<ResourceTableBase*> usedResourceTables;
+
+    // Buffers that are auto-mapped for persistent map emulation
+    absl::flat_hash_set<BufferBase*> autoMapBuffers;
 };
 
 }  // namespace dawn::native
