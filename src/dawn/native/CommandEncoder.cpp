@@ -1242,12 +1242,44 @@ void CommandEncoder::DestroyImpl(DestroyReason reason) {
 }
 
 CommandBufferResourceUsage CommandEncoder::AcquireResourceUsages() {
-    return CommandBufferResourceUsage{mEncodingContext.AcquireRenderPassUsages(),
-                                      mEncodingContext.AcquireComputePassUsages(),
+    auto renderPasses = mEncodingContext.AcquireRenderPassUsages();
+    auto computePasses = mEncodingContext.AcquireComputePassUsages();
+
+    // Collect auto-mapped buffers if persistent map emulation is enabled
+    if (GetDevice()->IsPersistentMapEmulationEnabled()) {
+        // From render passes
+        for (const auto& renderPass : renderPasses) {
+            for (BufferBase* buffer : renderPass.buffers) {
+                if (buffer->IsPersistentMapEnabled()) {
+                    mPersistentMappedBuffers.insert(buffer);
+                }
+            }
+        }
+
+        // From compute passes
+        for (const auto& computePass : computePasses) {
+            for (BufferBase* buffer : computePass.referencedBuffers) {
+                if (buffer->IsPersistentMapEnabled()) {
+                    mPersistentMappedBuffers.insert(buffer);
+                }
+            }
+        }
+
+        // From top-level buffers
+        for (BufferBase* buffer : mTopLevelBuffers) {
+            if (buffer->IsPersistentMapEnabled()) {
+                mPersistentMappedBuffers.insert(buffer);
+            }
+        }
+    }
+
+    return CommandBufferResourceUsage{std::move(renderPasses),
+                                      std::move(computePasses),
                                       std::move(mTopLevelBuffers),
                                       std::move(mTopLevelTextures),
                                       std::move(mUsedQuerySets),
-                                      std::move(mUsedResourceTables)};
+                                      std::move(mUsedResourceTables),
+                                      std::move(mPersistentMappedBuffers)};
 }
 
 CommandIterator CommandEncoder::AcquireCommands() {

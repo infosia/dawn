@@ -355,6 +355,9 @@ class DeviceBase : public ErrorSink,
     const tint::wgsl::AllowedFeatures& GetWGSLAllowedFeatures() const;
     bool AreTexelBuffersEnabled() const;
     bool IsToggleEnabled(Toggle toggle) const;
+    bool IsPersistentMapEmulationEnabled() const {
+        return IsToggleEnabled(Toggle::PersistentMapEmulation);
+    }
     const TogglesState& GetTogglesState() const;
     const FeaturesSet& GetEnabledFeatures() const;
     bool IsValidationEnabled() const;

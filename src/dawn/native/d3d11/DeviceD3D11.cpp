@@ -399,6 +399,11 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
     // D3D11 requires that buffers are unmapped before being used in a copy.
     DAWN_TRY(source->Unmap());
 
+    // End persistent map on source if auto map is enabled
+    if (source->IsPersistentMapEnabled()) {
+        DAWN_TRY(source->PausePersistMapForQueueUse());
+    }
+
     ScopedCommandRecordingContext commandContext;
     DAWN_TRY_ASSIGN(
         commandContext,

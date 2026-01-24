@@ -186,6 +186,11 @@ class Buffer : public BufferBase {
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
+    // Persistent map emulation
+    MaybeError PersistentMapImpl(wgpu::MapMode mode, bool atCreation) override;
+    MaybeError EndPersistentMapImpl() override;
+    MaybeError FlushMappedDataImpl(uint64_t offset, uint64_t size) override;
+
     MaybeError InitializeToZero(const ScopedCommandRecordingContext* commandContext);
 
     // Internal usage indicating the native buffer supports mapping for read and/or write or not.
@@ -240,6 +245,7 @@ class GPUUsableBuffer final : public Buffer {
     // Dawn API
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
+    bool IsCPUWritableAtCreation() const override;
 
     MaybeError InitializeInternal() override;
     MaybeError MapInternal(const ScopedCommandRecordingContext* commandContext,
