@@ -196,16 +196,15 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    // TODO(crbug.com/425472913): Initialize data with memset() once buffer is mapped.
-    auto deviceGuard = GetDevice()->GetGuard();
-    CommandRecordingContext* commandContext =
-        ToBackend(GetDevice()->GetQueue())->GetPendingCommandContext();
-    EnsureDataInitialized(commandContext);
-
     return {};
 }
 
 MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
+    if (NeedsInitialization() && GetSize() > 0 && newState == BufferState::Mapped) {
+        std::memset(GetMappedPointerImpl(), 0, GetAllocatedSize());
+        GetDevice()->IncrementLazyClearCountForTesting();
+        SetInitialized(true);
+    }
     return {};
 }
 
