@@ -39,6 +39,30 @@
       },
       "revId": "cc6f0e62bba209035509c49439559421b82a5177",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a30e569c_ae6e81b1",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 10364,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-26T18:29:45Z",
+      "side": 1,
+      "message": "I believe it should actually be a net positive for the pool usage. We\u0027re migrating the CMake builders in a 1:1 fashion, but we ended up removing 3 CMake builders (Debug/ASan, Debug/UBSan, Release/UBSan).\n\nI agree that this should be moved to the GPU pools longer term, but I think we might need some more capacity for that.",
+      "parentUuid": "50eb72d0_780ad37d",
+      "range": {
+        "startLine": 10364,
+        "startChar": 24,
+        "endLine": 10364,
+        "endChar": 37
+      },
+      "revId": "cc6f0e62bba209035509c49439559421b82a5177",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
