@@ -141,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fee1abd_e2271281",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-26T08:03:22Z",
+      "side": 1,
+      "message": "Sounds good, we can investigate later now that this is gated under the toggle in all code paths.",
+      "parentUuid": "e9674e97_71f32179",
+      "revId": "922d9c4f64ee9fb7c854c995ed1130bbaf1736a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc428af9_352847e0",
