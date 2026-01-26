@@ -63,6 +63,30 @@
       },
       "revId": "cc6f0e62bba209035509c49439559421b82a5177",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35feb5f4_a13649cd",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 10364,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-26T20:08:35Z",
+      "side": 1,
+      "message": "Ah, nevermind, the old ones were manual-only.",
+      "parentUuid": "a30e569c_ae6e81b1",
+      "range": {
+        "startLine": 10364,
+        "startChar": 24,
+        "endLine": 10364,
+        "endChar": 37
+      },
+      "revId": "cc6f0e62bba209035509c49439559421b82a5177",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
