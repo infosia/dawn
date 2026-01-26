@@ -22,6 +22,30 @@
       },
       "revId": "86f69a303e17d9304a8b3d51e588b08b23832eb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dbd8a30_b43ec4e0",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-26T06:19:58Z",
+      "side": 1,
+      "message": "This is a bit tricky, as the tracked tasks here need a `ScopedCommandRecordingContext`. If we moved the task handlings to `TrackSerialTask` we would have to repeatedly call `GetScopedPendingCommandContext` for each task. That might be undesired in term of perf.",
+      "parentUuid": "8aaa1895_8d2218e8",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 1
+      },
+      "revId": "86f69a303e17d9304a8b3d51e588b08b23832eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
