@@ -267,6 +267,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80cb518e_e15b11a3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-26T19:01:08Z",
+      "side": 1,
+      "message": "\u003e What I\u0027d like to do at this point is land this CL and then follow up with a CL that uses VK_EXT_multisampled_render_to_single_sampled to implement DawnLoadResolveTexture. That would allows the Dynamic Rendering path to be enabled for Graphite,\n\nFWIW I think that this is also sufficient to allow dynamic rendering extension to be used with graphite. Skia would no longer use DawnLoadResolveTexture when MSAAResolveToSingleSampled is available. They both handle unresolving the single sampled attachment on load work.\n\n(It\u0027s possible I\u0027m misunderstanding something about requirements here).\n\nIf you still want to A/B test",
+      "parentUuid": "74e83ff4_a125845f",
+      "revId": "1603d14fa007d7ca1d12693f67986ef3336f9b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa22ce12_f76b97be",

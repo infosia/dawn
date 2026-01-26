@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d18ad6b2_282ebacd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-01-26T19:01:08Z",
+      "side": 1,
+      "message": "I believe MSRTSS was implemented in the Graphite native Vulkan without dynamic rendering [here](https://skia-review.googlesource.com/c/skia/+/991857) so presumably it should work on Pixel 7/8. @syoussefi@chromium.org might have some idea what is wrong here.",
+      "parentUuid": "b0f1fa04_c96d9db0",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc45f27f_46f8bbd5",
