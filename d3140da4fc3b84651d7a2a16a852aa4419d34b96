@@ -16,6 +16,40 @@
       "message": "LGTM, but do you have a link to an issue that gives context about this additional piece of metadata?",
       "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e19ea46_69ad8256",
+        "filename": "README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3599592
+      },
+      "writtenOn": "2026-01-26T22:50:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. AFAIK dawn is autorolled.",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b105b8dd_70ada2cc",
+        "filename": "third_party/spirv-headers/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3599592
+      },
+      "writtenOn": "2026-01-26T22:50:22Z",
+      "side": 1,
+      "message": "Dawn has auto-roller, this dep for example is covered by auto-roller.\n\nCan you check dawn\u0027s DEPS file and confirm the delta in this CL is correct?",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
