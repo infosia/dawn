@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45c2e859_2449d4f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-01-26T19:12:06Z",
+      "side": 1,
+      "message": "MSRTSS works with both legacy and dynamic render passes. Last I checked, graphite/vk doesn\u0027t use dynamic rendering yet, because the fallback to emulate MSAA-render-to-texture needs two render passes. (Unrelated to dawn, when I get the time, my plan is to make that fallback in graphite/vk use two render passes, which would effectively be limited to desktop GPUs)\n\nAs to why it doesn\u0027t work, I can\u0027t tell without debugging. RenderDoc supports VK_EXT_msrtss, you should be able to run your tests through it and check.",
+      "parentUuid": "d18ad6b2_282ebacd",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc45f27f_46f8bbd5",
