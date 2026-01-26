@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60782904_36aec80f",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-26T22:20:44Z",
+      "side": 1,
+      "message": "Nit: there\u0027s no `T` here or in the other new overloads below",
+      "fixSuggestions": [
+        {
+          "fixId": "b0cd573a_3838ce19",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 672,
+                "startChar": 0,
+                "endLine": 673,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x2 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 676,
+                "startChar": 0,
+                "endLine": 677,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x2 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 693,
+                "startChar": 0,
+                "endLine": 694,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x3 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 697,
+                "startChar": 0,
+                "endLine": 698,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x3 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 714,
+                "startChar": 0,
+                "endLine": 715,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x4 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 718,
+                "startChar": 0,
+                "endLine": 719,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 2x4 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 735,
+                "startChar": 0,
+                "endLine": 736,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x2 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 739,
+                "startChar": 0,
+                "endLine": 740,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x2 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 756,
+                "startChar": 0,
+                "endLine": 757,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x3 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 760,
+                "startChar": 0,
+                "endLine": 761,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x3 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 777,
+                "startChar": 0,
+                "endLine": 778,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x4 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 781,
+                "startChar": 0,
+                "endLine": 782,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 3x4 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 798,
+                "startChar": 0,
+                "endLine": 799,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x2 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 802,
+                "startChar": 0,
+                "endLine": 803,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x2 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 819,
+                "startChar": 0,
+                "endLine": 820,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x3 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 823,
+                "startChar": 0,
+                "endLine": 824,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x3 matrix of @p type\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 840,
+                "startChar": 0,
+                "endLine": 841,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x4 matrix\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/ast/builder.h",
+              "range": {
+                "startLine": 844,
+                "startChar": 0,
+                "endLine": 845,
+                "endChar": 0
+              },
+              "replacement": "        /// @return a 4x4 matrix of @p type\n"
+            }
+          ]
+        }
+      ],
+      "revId": "af4f7419c06fd466f663efb00f2bc0d7ab5d173f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
