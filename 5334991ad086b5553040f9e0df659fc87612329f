@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4e31e2ff_d8341ee7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-26T01:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9daef015_ab891e4c",
+      "range": {
+        "startLine": 1406,
+        "startChar": 13,
+        "endLine": 1406,
+        "endChar": 87
+      },
+      "revId": "5334991ad086b5553040f9e0df659fc87612329f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2f53f27d_88c9c641",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
         "patchSetId": 9
