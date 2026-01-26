@@ -16,6 +16,57 @@
       "message": "LGTM",
       "revId": "2a5925201bd48f55bf5d15a87c4f5951b92978ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5483b33_7f589c0b",
+        "filename": "src/dawn/replay/ReplayImpl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-26T18:04:30Z",
+      "side": 1,
+      "message": "nit: these are sorted so far.",
+      "revId": "2a5925201bd48f55bf5d15a87c4f5951b92978ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "763516ca_9fa00230",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2493,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-26T18:04:30Z",
+      "side": 1,
+      "message": "nit: this recorder can move to the line above 2509 like other tests?",
+      "revId": "2a5925201bd48f55bf5d15a87c4f5951b92978ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b0c0e17_f2f3fd8b",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-26T18:04:30Z",
+      "side": 1,
+      "message": "left over?",
+      "revId": "2a5925201bd48f55bf5d15a87c4f5951b92978ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
