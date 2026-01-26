@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e71ed68a_283c2b6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-26T21:13:05Z",
+      "side": 1,
+      "message": "PTAL! I\u0027m not really a fan of having two variants of each wire command, but after playing around with various ways to try and mash both of these paths into a single command this felt like the cleanest route. Let me know if you have other ideas!\n\nFor what it\u0027s worth I updated my tests at https://toji.github.io/webgpu-test/texture-upload-benchmark/ to include more small uploads and I can see some minor improvements with this patch there, but the page that raised this issue (https://aliyah-corp.github.io/, \"3D Perf\") is performing significantly better on my Linux box with this patch in place. Will test on my Windows box when I get home.",
+      "revId": "5e1b6b36b10ffbb23f17df07fefcaebab8f2ea56",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
