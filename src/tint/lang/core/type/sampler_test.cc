@@ -40,23 +40,36 @@ TEST_F(SamplerTest, Creation) {
     auto* a = ty.sampler();
     auto* b = ty.sampler();
     auto* c = ty.comparison_sampler();
+    auto* d = ty.sampler(SamplerFilterable::kFiltering);
+    auto* e = ty.sampler(SamplerFilterable::kFiltering);
+    auto* f = ty.sampler(SamplerFilterable::kNonFiltering);
 
     EXPECT_EQ(a->Kind(), SamplerKind::kSampler);
+    EXPECT_EQ(a->Filterable(), SamplerFilterable::kUnknown);
+
     EXPECT_EQ(c->Kind(), SamplerKind::kComparisonSampler);
+
+    EXPECT_EQ(d->Filterable(), SamplerFilterable::kFiltering);
+    EXPECT_EQ(f->Filterable(), SamplerFilterable::kNonFiltering);
 
     EXPECT_FALSE(a->IsComparison());
     EXPECT_TRUE(c->IsComparison());
 
     EXPECT_EQ(a, b);
     EXPECT_NE(a, c);
+    EXPECT_NE(a, d);
+    EXPECT_EQ(d, e);
+    EXPECT_NE(d, f);
 }
 
 TEST_F(SamplerTest, Hash) {
     Manager ty;
     auto* a = ty.sampler();
     auto* b = ty.sampler();
+    auto* d = ty.sampler(SamplerFilterable::kFiltering);
 
     EXPECT_EQ(a->unique_hash, b->unique_hash);
+    EXPECT_NE(a->unique_hash, d->unique_hash);
 }
 
 TEST_F(SamplerTest, Equals) {
@@ -64,15 +77,26 @@ TEST_F(SamplerTest, Equals) {
     auto* a = ty.sampler();
     auto* b = ty.sampler();
     auto* c = ty.comparison_sampler();
+    auto* d = ty.sampler(SamplerFilterable::kFiltering);
+    auto* e = ty.sampler(SamplerFilterable::kFiltering);
+    auto* f = ty.sampler(SamplerFilterable::kNonFiltering);
 
     EXPECT_TRUE(a->Equals(*b));
     EXPECT_FALSE(a->Equals(*c));
     EXPECT_FALSE(a->Equals(Void{}));
+    EXPECT_FALSE(a->Equals(*d));
+    EXPECT_TRUE(d->Equals(*e));
+    EXPECT_FALSE(d->Equals(*f));
 }
 
 TEST_F(SamplerTest, FriendlyNameSampler) {
     Sampler s{SamplerKind::kSampler};
     EXPECT_EQ(s.FriendlyName(), "sampler");
+}
+
+TEST_F(SamplerTest, FriendlyNameSamplerFilterable) {
+    Sampler s{SamplerKind::kSampler, SamplerFilterable::kFiltering};
+    EXPECT_EQ(s.FriendlyName(), "sampler<filtering>");
 }
 
 TEST_F(SamplerTest, FriendlyNameComparisonSampler) {
@@ -89,6 +113,19 @@ TEST_F(SamplerTest, Clone) {
 
     auto* mt = a->Clone(ctx);
     EXPECT_EQ(mt->Kind(), SamplerKind::kSampler);
+    EXPECT_EQ(mt->Filterable(), SamplerFilterable::kUnknown);
+}
+
+TEST_F(SamplerTest, CloneFiltering) {
+    Manager ty;
+    auto* a = ty.sampler(SamplerFilterable::kNonFiltering);
+
+    core::type::Manager mgr;
+    core::type::CloneContext ctx{{nullptr}, {nullptr, &mgr}};
+
+    auto* mt = a->Clone(ctx);
+    EXPECT_EQ(mt->Kind(), SamplerKind::kSampler);
+    EXPECT_EQ(mt->Filterable(), SamplerFilterable::kNonFiltering);
 }
 
 }  // namespace
