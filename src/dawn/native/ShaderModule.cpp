@@ -28,6 +28,7 @@
 #include "dawn/native/ShaderModule.h"
 
 #include <algorithm>
+#include <bit>
 #include <limits>
 #include <sstream>
 #include <utility>
@@ -40,6 +41,7 @@
 #include "dawn/native/CompilationMessages.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/Pipeline.h"
@@ -823,20 +825,21 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->usedInterStageVariables.resize(maxInterStageShaderVariables);
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
 
-    // Immediate data byte size must be 4-byte aligned.
-    if (entryPoint.immediate_data_size) {
-        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
-        metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
+    auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
+    if (immediateBlockInfo.any()) {
+        uint64_t immediateDataUsedSlots = immediateBlockInfo.to_ullong();
+
+        metadata->immediateBlockDeclaredByteSize = entryPoint.immediate_data_size;
+        metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateDataUsedSlots);
+
+        // Remove trailing padding slots if any.
+        uint32_t immediateDataBlockSize = GetImmediateBlockSize(metadata->immediateDataUsedSlots);
 
         // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
         // as it might cause an assertion in Tint.
-        DAWN_INVALID_IF(
-            entryPoint.immediate_data_size > kMaxExternalImmediateConstantsPerPipeline * 4,
-            "Immediate data size (%u) exceeds the maximum allowed size (%u).",
-            entryPoint.immediate_data_size, kMaxExternalImmediateConstantsPerPipeline * 4);
-
-        auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
-        metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateBlockInfo.to_ullong());
+        DAWN_INVALID_IF(immediateDataBlockSize > kMaxExternalImmediateConstantsPerPipeline * 4,
+                        "Immediate data size (%u) exceeds the maximum allowed size (%u).",
+                        immediateDataBlockSize, kMaxExternalImmediateConstantsPerPipeline * 4);
     }
 
     // Vertex shader specific reflection.
@@ -1666,13 +1669,13 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                     "The entry-point uses a resource table but the pipeline layout doesn't enable "
                     "`usesResourceTable`.");
 
-    // Validate that immediate data used by programmable state are smaller than pipelineLayout
-    // immediate data range bytes.
-    DAWN_INVALID_IF(entryPoint.immediateDataRangeByteSize > layout->GetImmediateDataRangeByteSize(),
+    // Validate that immediate data used by programmable state, removed any tailing padding bytes,
+    // are smaller than pipelineLayout immediate data range bytes.
+    uint32_t immediateDataBlockSize = GetImmediateBlockSize(entryPoint.immediateDataUsedSlots);
+    DAWN_INVALID_IF(immediateDataBlockSize > layout->GetImmediateDataRangeByteSize(),
                     "The entry-point uses more bytes of immediate data (%u) than the reserved "
                     "amount (%u) in %s.",
-                    entryPoint.immediateDataRangeByteSize, layout->GetImmediateDataRangeByteSize(),
-                    layout);
+                    immediateDataBlockSize, layout->GetImmediateDataRangeByteSize(), layout);
 
     return {};
 }

@@ -54,6 +54,7 @@
 #include "dawn/native/Format.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/IntegerTypes.h"
+// #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/LogEmitter.h"
 #include "dawn/native/ObjectBase.h"
@@ -326,7 +327,7 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     X(bool, usesFineDerivativeBuiltin)                                                            \
     X(bool, usesResourceTable)                                                                    \
     /* Immediate Data block byte size */                                                          \
-    X(uint32_t, immediateDataRangeByteSize)                                                       \
+    X(uint32_t, immediateBlockDeclaredByteSize)                                                   \
     /* Immediate Data block used slots */                                                         \
     X(ImmediateConstantMask, immediateDataUsedSlots)
 DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {

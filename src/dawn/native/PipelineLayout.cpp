@@ -461,7 +461,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         // shares the same immediate data block. Pick the max size of immediate data variable from
         // vertex and fragment stage as the pipelineLayout immediate data block size.
         immediateDataRangeByteSize =
-            std::max(immediateDataRangeByteSize, metadata.immediateDataRangeByteSize);
+            std::max(immediateDataRangeByteSize, metadata.immediateBlockDeclaredByteSize);
     }
 
     // Create the bind group layouts, including the empty ones as all the bind group layouts should

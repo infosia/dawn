@@ -130,6 +130,10 @@ std::optional<uint32_t> GetImmediateByteOffsetInPipelineIfAny(
 uint32_t GetImmediateIndexInPipeline(const uint32_t layoutOffset,
                                      const ImmediateConstantMask& pipelineImmediateMask);
 
+// Get the immediate block size of the given mask. The size is calculated by the highest bit set
+// in the mask. Trailing padding bytes are not included in the size.
+uint32_t GetImmediateBlockSize(const ImmediateConstantMask& immediateDataUsedSlots);
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_IMMEDIATECONSTANTSLAYOUT_H_

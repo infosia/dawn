@@ -32,4 +32,9 @@ uint32_t GetImmediateIndexInPipeline(const uint32_t layoutOffset,
                                      const ImmediateConstantMask& pipelineImmediateMask) {
     return (((1u << layoutOffset) - 1u) & pipelineImmediateMask).count();
 }
+
+uint32_t GetImmediateBlockSize(const ImmediateConstantMask& immediateDataUsedSlots) {
+    return static_cast<uint32_t>(GetHighestBitIndexPlusOne(immediateDataUsedSlots)) *
+           kImmediateConstantElementByteSize;
+}
 }  // namespace dawn::native
