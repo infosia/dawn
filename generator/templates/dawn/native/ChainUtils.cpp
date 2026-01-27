@@ -89,6 +89,7 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
         for (typename {{UnpackedPtrT}}::ChainType next = chain->nextInChain;
              next != nullptr;
              next = next->nextInChain) {
+            {% if type.extensions %}
             switch (next->sType) {
                 {% for extension in type.extensions %}
                     {% set Ext = as_cppType(extension.name) %}
@@ -103,16 +104,24 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
                         break;
                     }
                 {% endfor %}
-                default: {
-                    using Unpacker =
-                        AdditionalExtensionUnpacker<
+                    default: {
+                        using Unpacker =
+                          AdditionalExtensionUnpacker<
                             {{T}},
                             {{UnpackedPtrT}},
                             detail::AdditionalExtensions<{{T}}>::List>;
-                    Unpacker::Unpack(result.mUnpacked, result.mBitset, next, nullptr);
-                    break;
-                }
-            }
+                        Unpacker::Unpack(result.mUnpacked, result.mBitset, next, nullptr);
+                        break;
+                    }
+             }
+             {% else %}
+             using Unpacker =
+                 AdditionalExtensionUnpacker<
+                     {{T}},
+                     {{UnpackedPtrT}},
+                     detail::AdditionalExtensions<{{T}}>::List>;
+             Unpacker::Unpack(result.mUnpacked, result.mBitset, next, nullptr);
+             {% endif %}
         }
         return result;
     }
