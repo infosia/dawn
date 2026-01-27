@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a73819_943c877a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-01-27T00:42:54Z",
+      "side": 1,
+      "message": "I\u0027m using the fact that the resolveRect.width will be 0 for whether or not there is a resolve rect, rather than have a separate bool. wdty?",
+      "revId": "3965ca6cb78466a3c439e6b4cc1460c891cabe7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
