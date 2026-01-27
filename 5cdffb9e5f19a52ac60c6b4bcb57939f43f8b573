@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31190d3d_23de9645",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-27T23:23:22Z",
+      "side": 1,
+      "message": "Resolved a bunch of Vulkan Validation Layer errors today, but still have one prominent one (that I know of) left. Note mostly for myself: currently when using CreateRenderPass2 the sample count of the attachment descriptors doesn\u0027t match the sample counts of the framebuffer attachments. This is because we only store a single sample count for the render pass query, but need to indicate which ones are msrtss targets so we can set them appropriately.\n\nAfter I resolve that I suspect that code path will begin working and I\u0027ll address the outstanding comments.",
+      "revId": "5cdffb9e5f19a52ac60c6b4bcb57939f43f8b573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
