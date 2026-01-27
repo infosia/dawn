@@ -65,13 +65,14 @@
     X(v1, Maximum, maxBufferSize, 0x10000000, 0x10000000, 0x40000000, 0x80000000, 0x100000000)
 
 // Tiers for limits related to resource bindings.
+// Note that changing these limits may require updating hard-coded constants common/Constants.h.
 // TODO(crbug.com/dawn/685): Define these better. For now, use two tiers where one
 // offers slightly better than default limits.
 //                                                                     compat      tier0       tier1
 #define LIMITS_RESOURCE_BINDINGS(X)                                                                   \
     X(v1,     Maximum,   maxDynamicUniformBuffersPerPipelineLayout,         8,         8,         10) \
     X(v1,     Maximum,   maxDynamicStorageBuffersPerPipelineLayout,         4,         4,          8) \
-    X(v1,     Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         16) \
+    X(v1,     Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         48) \
     X(v1,     Maximum,                   maxSamplersPerShaderStage,        16,        16,         16) \
     X(v1,     Maximum,            maxStorageTexturesPerShaderStage,         4,         4,          8) \
     X(compat, Maximum,           maxStorageTexturesInFragmentStage,         4,         4,          8) \
