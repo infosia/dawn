@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-01-26 09:01:24AM
+# Last rolled: 2026-01-27 07:42:34AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -3793,6 +3793,7 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_stat
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureDimensions:depth:format="depth24plus-stencil8";aspect="depth-only";samples=1 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,decl,let:type:case="sampler" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,validation,decl,let:type:case="sampler" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,decl,let:type:case="sampler" [ Failure ]
