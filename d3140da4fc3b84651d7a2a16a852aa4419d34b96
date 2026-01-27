@@ -104,6 +104,24 @@
       "parentUuid": "b105b8dd_70ada2cc",
       "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3959d557_1ca51511",
+        "filename": "third_party/spirv-headers/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3599592
+      },
+      "writtenOn": "2026-01-27T05:08:43Z",
+      "side": 1,
+      "message": "There\u0027s a DEPS file in dawn repo. You can refer to that (or check commit in dir)?\n\n\u003e \u0027Update Mechanism\u0027 when the README doesn\u0027t sit directly next to the updated code\n\nNot sure what you meant? \n\nspirv-headers follows the directory structure we want afaik:\n\nthird_party/\n  spirv-headers/\n    README.chromium\n    src/  (git mirror)",
+      "parentUuid": "1124cfcd_d42f2518",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
