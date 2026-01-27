@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ef51cfb_97473452",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-27T22:30:10Z",
+      "side": 1,
+      "message": "This should be `Bug:` and in the \"last paragraph\" of the commit message.\n\n```suggestion\nBug: b/469661778\nChange-Id: I2fbdf1aa0c9f781229a484a8c3e98092fc5deefc\n```",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7719789d_288cfda2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-27T22:30:10Z",
+      "side": 1,
+      "message": "LGTM, sorry I didn\u0027t see that a new patchset had been uploaded (I don\u0027t think Gerrit emails reviewers unless there\u0027s a comment).",
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e440e6b8_4e2fa382",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-27T22:30:10Z",
+      "side": 1,
+      "message": "These license changes create mixed licenses for the project. I believe this will create some extra work on the next Dawn-\u003eg3 import. I don\u0027t remember if there are any other issues.",
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
