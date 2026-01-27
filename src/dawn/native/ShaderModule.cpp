@@ -28,6 +28,7 @@
 #include "dawn/native/ShaderModule.h"
 
 #include <algorithm>
+#include <bit>
 #include <limits>
 #include <sstream>
 #include <utility>
@@ -823,20 +824,25 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->usedInterStageVariables.resize(maxInterStageShaderVariables);
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
 
-    // Immediate data byte size must be 4-byte aligned.
-    if (entryPoint.immediate_data_size) {
-        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
-        metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
+    auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
+    if (immediateBlockInfo.any()) {
+        uint64_t immediateDataUsedSlots = immediateBlockInfo.to_ullong();
+
+        // Remove trailing padding slots if any.
+        uint32_t immediateDataBlockSize =
+            (64 - std::countl_zero(immediateDataUsedSlots)) * kImmediateConstantElementByteSize;
+
+        // Immediate data byte size must be 4-byte aligned.
+        DAWN_ASSERT(IsAligned(immediateDataBlockSize, 4u));
+        metadata->immediateDataRangeByteSize = immediateDataBlockSize;
 
         // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
         // as it might cause an assertion in Tint.
-        DAWN_INVALID_IF(
-            entryPoint.immediate_data_size > kMaxExternalImmediateConstantsPerPipeline * 4,
-            "Immediate data size (%u) exceeds the maximum allowed size (%u).",
-            entryPoint.immediate_data_size, kMaxExternalImmediateConstantsPerPipeline * 4);
+        DAWN_INVALID_IF(immediateDataBlockSize > kMaxExternalImmediateConstantsPerPipeline * 4,
+                        "Immediate data size (%u) exceeds the maximum allowed size (%u).",
+                        immediateDataBlockSize, kMaxExternalImmediateConstantsPerPipeline * 4);
 
-        auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
-        metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateBlockInfo.to_ullong());
+        metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateDataUsedSlots);
     }
 
     // Vertex shader specific reflection.
