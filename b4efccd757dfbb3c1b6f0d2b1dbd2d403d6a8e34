@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d34292_17075f6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-27T22:05:48Z",
+      "side": 1,
+      "message": "PTAL\n\nThis is a slightly different approach than what I initially was planning. I was expecting to port over the ANGLE rules + scripts and fork them, but I found that they didn\u0027t work with ToT mesa + meson, (and were technically for different options than Tint needs so pulled in different dependencies). Additionally I am pretty sure GN has broadly gotten better about this type of wrapping action/templating functionality than when those build rules were originally written.\n\nThis version used actions and templates to build up a meson_target template that can invoke the meson setup and meson install steps. And it has been set to trigger via being an external dependency of the tint fuzzer. It properly kicks out to meson when needed and the outputs appear in a sensible location in the output gen directory.\n\nThe next step will be actually wiring up linking the outputs from the mesa build into the fuzzer binary, but this seemed like a reason stopping point along that journey.",
+      "revId": "b4efccd757dfbb3c1b6f0d2b1dbd2d403d6a8e34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
