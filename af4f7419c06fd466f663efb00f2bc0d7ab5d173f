@@ -204,6 +204,42 @@
       ],
       "revId": "af4f7419c06fd466f663efb00f2bc0d7ab5d173f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbe393a5_5433aff5",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-27T03:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60782904_36aec80f",
+      "revId": "af4f7419c06fd466f663efb00f2bc0d7ab5d173f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b90bd31_6c73f20d",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-27T03:49:55Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "60782904_36aec80f",
+      "revId": "af4f7419c06fd466f663efb00f2bc0d7ab5d173f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
