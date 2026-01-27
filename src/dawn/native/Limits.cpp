@@ -71,7 +71,7 @@
 #define LIMITS_RESOURCE_BINDINGS(X)                                                                   \
     X(v1,     Maximum,   maxDynamicUniformBuffersPerPipelineLayout,         8,         8,         10) \
     X(v1,     Maximum,   maxDynamicStorageBuffersPerPipelineLayout,         4,         4,          8) \
-    X(v1,     Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         16) \
+    X(v1,     Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         48) \
     X(v1,     Maximum,                   maxSamplersPerShaderStage,        16,        16,         16) \
     X(v1,     Maximum,            maxStorageTexturesPerShaderStage,         4,         4,          8) \
     X(compat, Maximum,           maxStorageTexturesInFragmentStage,         4,         4,          8) \
