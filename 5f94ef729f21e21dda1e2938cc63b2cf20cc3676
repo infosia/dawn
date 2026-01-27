@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4220487_2d7a430e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-01-27T03:35:40Z",
+      "side": 1,
+      "message": "Not too familiar with golang standards.",
+      "revId": "5f94ef729f21e21dda1e2938cc63b2cf20cc3676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
