@@ -104,6 +104,30 @@
       },
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8906b6d2_753e4b79",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-27T19:39:21Z",
+      "side": 1,
+      "message": "GN only builds on a single OS (MacOS 15), but testing is done across multiple versions (or at least can be, I think the configs we currently have on MacOS 15 for testing might not be used by Dawn, so there\u0027s only MacOS 14 coverage ATM)",
+      "parentUuid": "5bd24eee_7047b25c",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
