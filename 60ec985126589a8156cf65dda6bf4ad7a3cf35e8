@@ -16,6 +16,23 @@
       "message": "LGTM (I will just duplicate 473886640 to 478890183)",
       "revId": "60ec985126589a8156cf65dda6bf4ad7a3cf35e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a21e2b9b_b8a4b3ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-27T09:04:27Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "60ec985126589a8156cf65dda6bf4ad7a3cf35e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
