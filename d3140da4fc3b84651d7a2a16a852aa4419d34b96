@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d17aa27_632be5eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-27T04:31:23Z",
+      "side": 1,
+      "message": "I added my tracking bug but it doesn\u0027t explain much. We added this to the template[0] a while back to help track freshness. Our long term plan is to build better tooling to help autoroll dependencies, and this helps track how many still require manual effort to roll. We are slowly updating autorollers to set it automatically.\n\n\n\n[0]https://chromium.googlesource.com/chromium/src/+/HEAD/third_party/README.chromium.template#10",
+      "parentUuid": "b258452d_e7ad774e",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e19ea46_69ad8256",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f86a7ec_66a5ed75",
+        "filename": "README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-27T04:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e19ea46_69ad8256",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b105b8dd_70ada2cc",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-01-26T22:50:22Z",
       "side": 1,
       "message": "Dawn has auto-roller, this dep for example is covered by auto-roller.\n\nCan you check dawn\u0027s DEPS file and confirm the delta in this CL is correct?",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1124cfcd_d42f2518",
+        "filename": "third_party/spirv-headers/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-27T04:31:23Z",
+      "side": 1,
+      "message": "Dawn is, but I\u0027m not sure about SPIRV-V Headers. The transitive cases are not captured well in \u0027Update Mechanism\u0027 when the README doesn\u0027t sit directly next to the updated code. This is a bit of a complex edge case so I\u0027m happy to leave it as Manual for now.",
+      "parentUuid": "b105b8dd_70ada2cc",
       "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
