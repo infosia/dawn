@@ -80,6 +80,30 @@
       },
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd24eee_7047b25c",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-27T19:25:38Z",
+      "side": 1,
+      "message": "I don\u0027t remember either. It\u0027s probably fine to run on just one macos version on CI. It\u0027s definitely fine on CQ. The macos SDK is supposed to catch API versioning issues at build time.\n\n(Also I don\u0027t know if the GN builders run on multiple macos versions, but if they do, then definitely no need for cmake to do it too)",
+      "parentUuid": "d3548d21_96a5717b",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
