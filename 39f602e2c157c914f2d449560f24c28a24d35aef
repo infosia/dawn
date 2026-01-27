@@ -56,6 +56,30 @@
       },
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3548d21_96a5717b",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-27T17:28:47Z",
+      "side": 1,
+      "message": "I don\u0027t remember exactly. Unless Kai (CCed) has concerns, I think it\u0027s fine to run on various mac builders since we also have Github CI coverage now.",
+      "parentUuid": "941de490_6e219e81",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
