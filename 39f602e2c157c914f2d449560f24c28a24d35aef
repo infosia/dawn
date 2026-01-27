@@ -16,6 +16,46 @@
       "message": "PTAL",
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ef0a33_c5641916",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-27T16:57:26Z",
+      "side": 1,
+      "message": "Corentin, this restricts Mac CMake testing to the default macOS in our builder pool, currently macOS 15.\nI know that Flex pool has machines with different OS versions, and I remember that you wanted the old versions to be covered as well.\nIs this still the case?",
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "941de490_6e219e81",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-27T16:57:26Z",
+      "side": 1,
+      "message": "We need to confirm this with WebGPU team.\nI know it was important to them to test on older macOS versions, like 12.\nWe might need to split this into several builders, e.g. 12, 13, 14, 15, 26, like blink builders do for example.\n\nMaybe have the default for CQ and others CI+manual.",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
