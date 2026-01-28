@@ -152,6 +152,30 @@
       },
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c3f38e_38760c71",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-28T19:28:10Z",
+      "side": 1,
+      "message": "I vaguely recall discussions around this now. IIRC, supporting older Mac versions was mostly a workaround for the `luci.flex.*` pools, as they had a mix of different MacOS versions. Only targeting MacOS 15 would have resulted in too few machines being available to run builds.\n\nThat should be a non-issue now that these builders run in the luci.chromium.gpu.* pools.",
+      "parentUuid": "368da34c_810b2178",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
