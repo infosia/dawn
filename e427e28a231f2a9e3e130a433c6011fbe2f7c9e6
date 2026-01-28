@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50c9110e_7b2a094a",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-28T15:50:31Z",
+      "side": 1,
+      "message": "I\u0027d prefer gpu_win_gce_stable.\ngpu_ prefix so that all our mixins are grouped together,\nwin_ instead of win10_, since OS version should be part of _stable and _experimental, unless we need to have multiple pools with different OS versions.\n\nWe could also be more specific about the exact Win10 build version in our _stable mixin.",
+      "range": {
+        "startLine": 110,
+        "startChar": 3,
+        "endLine": 110,
+        "endChar": 21
+      },
+      "revId": "e427e28a231f2a9e3e130a433c6011fbe2f7c9e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
