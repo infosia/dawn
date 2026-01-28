@@ -965,19 +965,19 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         metadata->usesSampleIndex = entryPoint.sample_index_used;
 
         struct BoolName {
-            const bool& value;
+            raw_ptr<const bool> value;
             const char* name;
         };
         BoolName boolNames[] = {
-            {entryPoint.front_facing_used, "front_facing"},
-            {entryPoint.input_sample_mask_used, "sample_mask"},
-            {entryPoint.sample_index_used, "sample_index_used"},
-            {entryPoint.primitive_index_used, "primitive_index_used"},
-            {entryPoint.subgroup_invocation_id_used, "subgroup_invocation_id"},
-            {entryPoint.subgroup_size_used, "subgroup_size"},
+            {&entryPoint.front_facing_used, "front_facing"},
+            {&entryPoint.input_sample_mask_used, "sample_mask"},
+            {&entryPoint.sample_index_used, "sample_index_used"},
+            {&entryPoint.primitive_index_used, "primitive_index_used"},
+            {&entryPoint.subgroup_invocation_id_used, "subgroup_invocation_id"},
+            {&entryPoint.subgroup_size_used, "subgroup_size"},
         };
         for (const auto& boolName : boolNames) {
-            if (boolName.value) {
+            if (*boolName.value) {
                 ++totalInterStageShaderVariables;
             }
         }
@@ -996,7 +996,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
                 const char* separator = "";
                 for (const auto& boolName : boolNames) {
-                    if (boolName.value) {
+                    if (*boolName.value) {
                         builtinInfo << separator << boolName.name;
                         separator = "|";
                     }

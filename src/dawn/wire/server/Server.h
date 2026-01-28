@@ -35,6 +35,7 @@
 #include "dawn/wire/ChunkedCommandSerializer.h"
 #include "dawn/wire/server/ServerBase_autogen.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "partition_alloc/pointers/raw_ref.h"
 
 namespace dawn::wire::server {
 
@@ -223,10 +224,10 @@ class Server : public ServerBase {
     class FreeMembers : public Struct {
       public:
         explicit FreeMembers(const DawnProcTable& procs) : Struct({}), mProcs(procs) {}
-        ~FreeMembers() { (mProcs.*WGPUTraits<Struct>::FreeMembers)(*this); }
+        ~FreeMembers() { (mProcs.get().*WGPUTraits<Struct>::FreeMembers)(*this); }
 
       private:
-        const DawnProcTable& mProcs;
+        raw_ref<const DawnProcTable> mProcs;
     };
 
     void SetForwardingDeviceCallbacks(Known<WGPUDevice> device);

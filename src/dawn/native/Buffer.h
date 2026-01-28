@@ -102,7 +102,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
 
         explicit ScopedUseBuffer(BufferBase* buffer);
 
-        BufferBase* mBuffer = nullptr;
+        raw_ptr<BufferBase> mBuffer = nullptr;
     };
 
     // TODO(crbug.com/467247254): See if ConcurrentAccessGuard<T> can be used be implemented and
@@ -306,7 +306,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    void* mMappedPointer = nullptr;
+    raw_ptr<void, DanglingUntriaged> mMappedPointer = nullptr;
 };
 
 }  // namespace dawn::native
