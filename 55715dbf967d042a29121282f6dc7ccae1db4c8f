@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "55715dbf967d042a29121282f6dc7ccae1db4c8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8707999c_84f47fc1",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-28T22:19:17Z",
+      "side": 1,
+      "message": "Nit: filtering ?",
+      "revId": "55715dbf967d042a29121282f6dc7ccae1db4c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f316f30b_d45075c2",
+        "filename": "src/tint/lang/core/type/sampler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-28T22:19:17Z",
+      "side": 1,
+      "message": "Nit: these should all be `filtering` and so on. Sorry.",
+      "revId": "55715dbf967d042a29121282f6dc7ccae1db4c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
