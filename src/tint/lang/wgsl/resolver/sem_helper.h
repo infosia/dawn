@@ -151,6 +151,64 @@ class SemHelper {
 
     /// @param expr the semantic node
     /// @returns nullptr if @p expr is nullptr, or @p expr cast to
+    /// sem::BuiltinEnumExpression<core::TextureFilterable> if the cast is successful, otherwise an
+    /// error diagnostic is raised.
+    sem::BuiltinEnumExpression<core::TextureFilterable>* AsTextureFilterable(
+        sem::Expression* expr) const {
+        if (DAWN_LIKELY(expr)) {
+            auto* enum_expr = expr->As<sem::BuiltinEnumExpression<core::TextureFilterable>>();
+            if (DAWN_LIKELY(enum_expr)) {
+                return enum_expr;
+            }
+            ErrorUnexpectedExprKind(expr, "texture filterable", core::kTextureFilterableStrings);
+        }
+        return nullptr;
+    }
+
+    /// GetTextureFilterable is a helper for obtaining the texture filterability for the given AST
+    /// expression. Raises an error diagnostic and returns core::TextureFilterable::kUndefined if
+    /// the semantic node is not a sem::BuiltinEnumExpression<core::TextureFilterable>
+    /// @param ast the ast node to get the address space
+    /// @returns the sem node for @p ast
+    core::TextureFilterable GetTextureFilterable(const ast::Expression* ast) const {
+        auto* expr = AsTextureFilterable(Get(ast));
+        if (DAWN_LIKELY(expr)) {
+            return expr->Value();
+        }
+        return core::TextureFilterable::kUndefined;
+    }
+
+    /// @param expr the semantic node
+    /// @returns nullptr if @p expr is nullptr, or @p expr cast to
+    /// sem::BuiltinEnumExpression<core::SamplerFilterable> if the cast is successful, otherwise an
+    /// error diagnostic is raised.
+    sem::BuiltinEnumExpression<core::SamplerFilterable>* AsSamplerFilterable(
+        sem::Expression* expr) const {
+        if (DAWN_LIKELY(expr)) {
+            auto* enum_expr = expr->As<sem::BuiltinEnumExpression<core::SamplerFilterable>>();
+            if (DAWN_LIKELY(enum_expr)) {
+                return enum_expr;
+            }
+            ErrorUnexpectedExprKind(expr, "sampler filterable", core::kSamplerFilterableStrings);
+        }
+        return nullptr;
+    }
+
+    /// GetSamplerFilterable is a helper for obtaining the sampler filterability for the given AST
+    /// expression. Raises an error diagnostic and returns core::SamplerFilterable::kUndefined if
+    /// the semantic node is not a sem::BuiltinEnumExpression<core::SamplerFilterable>
+    /// @param ast the ast node to get the address space
+    /// @returns the sem node for @p ast
+    core::SamplerFilterable GetSamplerFilterable(const ast::Expression* ast) const {
+        auto* expr = AsSamplerFilterable(Get(ast));
+        if (DAWN_LIKELY(expr)) {
+            return expr->Value();
+        }
+        return core::SamplerFilterable::kUndefined;
+    }
+
+    /// @param expr the semantic node
+    /// @returns nullptr if @p expr is nullptr, or @p expr cast to
     /// sem::BuiltinEnumExpression<core::type::TexelFormat> if the cast is successful, otherwise an
     /// error diagnostic is raised.
     sem::BuiltinEnumExpression<core::TexelFormat>* AsTexelFormat(sem::Expression* expr) const {
