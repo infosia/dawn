@@ -16,6 +16,24 @@
       "message": "Should this be all IMG instead of just Pixel 10?",
       "revId": "4c7d0f5ecc872898bd236e423fbd2be5f8666992",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b489e5a7_05cc4890",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-28T16:18:29Z",
+      "side": 1,
+      "message": "This was considered. Follow up CL",
+      "parentUuid": "776a7177_44eb4c00",
+      "revId": "4c7d0f5ecc872898bd236e423fbd2be5f8666992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
