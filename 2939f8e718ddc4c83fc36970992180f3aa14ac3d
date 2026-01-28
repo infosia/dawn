@@ -87,6 +87,24 @@
       "parentUuid": "1b314fc4_d59364e3",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91be4da3_53efbf5e",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-01-28T22:17:27Z",
+      "side": 1,
+      "message": "Oof that\u0027s not great. I see the suppression also takes a freeform text, perhaps VVL includes a helpful message about the sample counts mismatching that you could check against?",
+      "parentUuid": "62b76635_a1f309bf",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
