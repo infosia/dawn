@@ -85,6 +85,7 @@
 #include "src/tint/lang/core/type/subgroup_matrix.h"
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/u64.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/core/type/void.h"
 #include "src/tint/lang/spirv/ir/binary.h"
@@ -311,6 +312,13 @@ class Printer {
                                                              U32Operand(SpvMemoryModelGLSL450)});
         }
 
+        // if (options_.extensions.)
+        //  CHECK OPTINS!!!!
+        {
+            module_.PushCapability(SpvCapabilityInt64);
+            module_.PushCapability(SpvCapabilityInt64Atomics);
+        }
+
         // Emit module-scope declarations.
         EmitRootBlock(ir_.root_block);
 
@@ -524,6 +532,9 @@ class Printer {
                 },
                 [&](const core::type::U32*) {
                     module_.PushType(spv::Op::OpTypeInt, {id, 32u, 0u});
+                },
+                [&](const core::type::U64*) {
+                    module_.PushType(spv::Op::OpTypeInt, {id, 64u, 0u});
                 },
                 [&](const core::type::I8*) {
                     module_.PushCapability(SpvCapabilityInt8);
