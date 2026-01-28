@@ -123,6 +123,24 @@
       "parentUuid": "91be4da3_53efbf5e",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bdac6c4_3415cb95",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-28T22:48:59Z",
+      "side": 1,
+      "message": "Kai suggested offline that because object labels are showing up in the string we could tag passes that use MSRTSS with an internal label and filter based on that.",
+      "parentUuid": "9ed37a15_56c473fe",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
