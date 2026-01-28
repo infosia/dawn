@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "70798fa9_c05da2a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-28T05:52:54Z",
+      "side": 1,
+      "message": "Updated. Thanks for pointing out!",
+      "parentUuid": "9ef51cfb_97473452",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7719789d_288cfda2",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 12
@@ -54,6 +78,24 @@
       "writtenOn": "2026-01-27T22:30:10Z",
       "side": 1,
       "message": "These license changes create mixed licenses for the project. I believe this will create some extra work on the next Dawn-\u003eg3 import. I don\u0027t remember if there are any other issues.",
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b224b900_747145c9",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-01-28T05:52:54Z",
+      "side": 1,
+      "message": "The license change is already part of G3 and the Dawn repo. I’ve dry-run the G3 import (cl/856128404) for the changes in this CL and found that nothing specific is needed beyond updating the BUILD config files which was required because we renamed webgpu_json_utility.py and the flag.",
+      "parentUuid": "e440e6b8_4e2fa382",
       "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
