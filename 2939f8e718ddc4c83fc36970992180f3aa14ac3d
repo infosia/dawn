@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4511af8b_1b4dfc7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-28T22:12:33Z",
+      "side": 1,
+      "message": "Everything is working now, but still need to resolve what to do about the CreateRenderPass2 path.",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bab98a9_fb2d10f2",
@@ -50,6 +67,24 @@
       "side": 1,
       "message": "As of around Patchset 17 we are allowing a mix of MSRTSS and non-MSRTSS at Kai\u0027s request.\n\nI\u0027ll give it a try with the validation error suppressed and see how it works out.",
       "parentUuid": "387215cd_2028716b",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b76635_a1f309bf",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-28T22:12:33Z",
+      "side": 1,
+      "message": "So it _does_ work! (At least on the Pixel 7/8 I tried) Unfortunately the relevant VUID is really broad:\n\nVUID-vkCmdDraw-renderPass-02684\nThe current render pass must be compatible with the renderPass member of the VkGraphicsPipelineCreateInfo structure specified when creating the VkPipeline bound to VK_PIPELINE_BIND_POINT_GRAPHICS\nhttps://docs.vulkan.org/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-renderPass-02684\n\nI\u0027ve added a suppression here just to verify that everything is working, but I\u0027m not sure if we want to block that entirely.",
+      "parentUuid": "1b314fc4_d59364e3",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
