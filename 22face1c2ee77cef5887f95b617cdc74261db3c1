@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "173b6f9c_611fe16b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-28T21:47:24Z",
+      "side": 1,
+      "message": "A bunch of new expectations were added for what looks like the new immediate data validation tests added in the PR you reviewed (https://github.com/gpuweb/cts/pull/4547). Adding you as a reviewer as well to take a look that the expectations make sense w.r.t to the change.",
+      "revId": "22face1c2ee77cef5887f95b617cdc74261db3c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
