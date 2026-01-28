@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7df18d0_63c70b5f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-28T23:30:31Z",
+      "side": 1,
+      "message": "```suggestion\n            // a sample count of 1, the resolve mode can\u0027t be VK_RESOLVE_MODE_NONE.\n```",
+      "revId": "3c3cc1246a677d9d973fbc357aae458089d17f4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
