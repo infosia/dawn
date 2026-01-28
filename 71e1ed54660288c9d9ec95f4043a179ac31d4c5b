@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0f7cec_f3b507ee",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-28T18:31:55Z",
+      "side": 1,
+      "message": "I’ve removed the ConsumedError logic from this function, which should resolve the concern about calling it from non-API code. It no longer tries to acquire the command context here. PTAL.\n\nWe could move buffers\u0027 unmaps to `Queue::Submit`. However, currently in D3D11 there are many places the buffers needs to be unmapped outside `Submit` including buffer\u0027s revision synchronizations, `WriteBuffer`, `CopyFromStagingToBuffer`, re-map buffers in `FinalizeMap`, etc. Hence I think it\u0027s better to do the unmaps automatically when `GetScopedPendingCommandContext` is called. I don\u0027t think returning error when getting the context is a problem. Most of callers of it should be failable, (returning `MaybeError`). There are only 2 places that are not failable originally in this CL:\n- `DestroyImpl`: Originally needs the context to unmap, but it\u0027s removed in the latest ps.\n- `ReduceMemoryUsage`: This could be changed to return MaybeError in future.",
+      "parentUuid": "855eb834_09fd851c",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
