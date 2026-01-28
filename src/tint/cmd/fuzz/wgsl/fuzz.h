@@ -53,6 +53,8 @@ struct Options {
     bool verbose = false;
     /// If not empty, load DXC from this path when fuzzing HLSL generation.
     std::string dxc;
+    /// If not empty, load the Vulkan ICD from this path when fuzzing SPIR-V generation.
+    std::string vk_icd;
     /// If true, dump shader input/output text to stdout
     bool dump = false;
 };
