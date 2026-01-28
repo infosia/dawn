@@ -34,6 +34,24 @@
       "parentUuid": "4bab98a9_fb2d10f2",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b314fc4_d59364e3",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-28T21:33:35Z",
+      "side": 1,
+      "message": "As of around Patchset 17 we are allowing a mix of MSRTSS and non-MSRTSS at Kai\u0027s request.\n\nI\u0027ll give it a try with the validation error suppressed and see how it works out.",
+      "parentUuid": "387215cd_2028716b",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
