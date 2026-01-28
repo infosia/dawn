@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ab41a5c_e799c28c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76cde319_f0d27cb6",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "```suggestion\n            // Skip bindings not present for the stage, because GenerateBindingRemapping doesn\u0027t provide a remapping for them, which could lead to collisions between used mappings and unused mappings.\n```",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be597666_94b4ae95",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "```suggestion\n    wgpu::ShaderModule shaderModule \u003d utils::CreateShaderModule(device, cs);\n```",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e370955_5c026e58",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "nit: you can use the ComboRenderPipelineDescriptor to avoid having to chain stuff in manually.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9c8744_1bde5726",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t needed because Dawn deduces that it should use the only fragment entry point of the shader.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8348d611_0cc4d3e5",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "I believe we guarantee at least 4 storage buffers in FS.\n\n```suggestion\n    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage \u003c 2);\n    // TODO(crbug.com/40287156): Remove when test is no longer flaky on Pixel 6\n```",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 897,
+        "endChar": 0
+      },
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff848823_138107fe",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "Note that `IsARM` checks that the GPU is an ARM GPU, note that the CPU is an ARM ISA. AFAIK the Pixel 6 is a Qualcomm GPU.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd5d7796_40eadd0c",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "Same comments (also the raw string can be put directly in the `utils::CreateShaderModule` call).",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aea98e2f_9748a0f7",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:27:02Z",
+      "side": 1,
+      "message": "nit: creation of the renderpass can be moved to be just before it is used.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
