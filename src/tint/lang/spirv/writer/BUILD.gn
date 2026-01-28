@@ -156,6 +156,8 @@ if (tint_build_spv_writer) {
     sources = [ "writer_fuzz.cc" ]
     deps = [
       "${dawn_root}/src/utils",
+      "${dawn_vulkan_headers_dir}:vulkan_headers",
+      "${dawn_vulkan_loader_dir}:libvulkan",
       "${tint_src_dir}/api/common",
       "${tint_src_dir}/api/helpers",
       "${tint_src_dir}/cmd/fuzz/ir:fuzz",
