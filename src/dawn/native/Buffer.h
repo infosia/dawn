@@ -261,7 +261,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
     size_t mMapSize = 0;
-    void* mMappedPointer = nullptr;
+    raw_ptr<void, DanglingUntriaged> mMappedPointer = nullptr;
 };
 
 }  // namespace dawn::native

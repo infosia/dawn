@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "dawn/common/NonMovable.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/WeakRefSupport.h"
 #include "dawn/common/ityp_span.h"
@@ -132,7 +133,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     };
     struct ResourceUpdate {
         ResourceTableSlot slot;
-        TextureViewBase* textureView = nullptr;
+        raw_ptr<TextureViewBase> textureView = nullptr;
     };
     struct Updates {
         std::vector<MetadataUpdate> metadataUpdates;

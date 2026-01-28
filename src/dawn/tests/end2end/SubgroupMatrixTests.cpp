@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "dawn/common/Math.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
@@ -213,7 +214,7 @@ struct Matrix {
     const uint32_t rows;
     const wgpu::SubgroupMatrixComponentType component_type;
     const bool column_major;
-    uint8_t* const data = nullptr;
+    const raw_ptr<uint8_t, AllowPtrArithmetic> data = nullptr;
 
   private:
     template <typename T>
