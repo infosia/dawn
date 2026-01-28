@@ -129,6 +129,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     auto& opt_verbose =
         opts.Add<tint::cli::BoolOption>("verbose", "prints the name of each fuzzer before running");
     auto& opt_dxc = opts.Add<tint::cli::StringOption>("dxc", "path to DXC DLL");
+    auto& opt_vk_icd = opts.Add<tint::cli::StringOption>("vk_icd", "path to Vulkan ICD JSON");
     auto& opt_dump =
         opts.Add<tint::cli::BoolOption>("dump", "dumps shader input/output from fuzzer");
 
@@ -150,6 +151,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     options.run_concurrently = opt_concurrent.value.value_or(false);
     options.verbose = opt_verbose.value.value_or(false);
     options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
+    options.vk_icd = opt_vk_icd.value.value_or("");
     options.dump = opt_dump.value.value_or(false);
 
     print_dxc_path_found(options.dxc);

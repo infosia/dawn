@@ -27,11 +27,22 @@
 
 #include "src/tint/lang/spirv/writer/writer.h"
 
+#include <string>
+#include <vector>
+
 #include "src/tint/api/helpers/generate_bindings.h"
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 #include "src/tint/lang/spirv/writer/printer/printer.h"
+#include "src/tint/utils/macros/defer.h"
+
+#if TINT_BUILD_IS_LINUX
+#include <vulkan/vulkan.h>
+// One of the indirectly included graphics headers here #defines
+// Success, which causes build issues
+#undef Success
+#endif  // TINT_BUILD_IS_LINUX
 
 namespace tint::spirv::writer {
 
@@ -105,8 +116,68 @@ struct FuzzedOptions {
 
 namespace {
 
+#if TINT_BUILD_IS_LINUX
+Result<SuccessType> ValidateUsingVulkan(const std::string& vk_icd_path,
+                                        Slice<const uint32_t> spirv) {
+    setenv("VK_ICD_FILENAMES", vk_icd_path.c_str(), 1);
+
+    VkApplicationInfo app_info = {VK_STRUCTURE_TYPE_APPLICATION_INFO};
+    app_info.apiVersion = VK_API_VERSION_1_1;
+
+    VkInstanceCreateInfo create_info = {VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO};
+    create_info.pApplicationInfo = &app_info;
+
+    VkInstance instance;
+    if (vkCreateInstance(&create_info, nullptr, &instance) != VK_SUCCESS) {
+        return Failure{"Failed to create Vulkan instance"};
+    }
+    TINT_DEFER(vkDestroyInstance(instance, nullptr));
+
+    uint32_t count = 1;
+    VkPhysicalDevice physical_device;
+    VkResult res = vkEnumeratePhysicalDevices(instance, &count, &physical_device);
+    if ((res != VK_SUCCESS && res != VK_INCOMPLETE) || count == 0) {
+        return Failure{"Failed to enumerate physical devices"};
+    }
+
+    float queue_priority = 1.0f;
+    VkDeviceQueueCreateInfo queue_create_info = {VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO};
+    queue_create_info.queueFamilyIndex = 0;
+    queue_create_info.queueCount = 1;
+    queue_create_info.pQueuePriorities = &queue_priority;
+
+    VkDeviceCreateInfo device_create_info = {VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO};
+    device_create_info.queueCreateInfoCount = 1;
+    device_create_info.pQueueCreateInfos = &queue_create_info;
+
+    VkDevice device;
+    if (vkCreateDevice(physical_device, &device_create_info, nullptr, &device) != VK_SUCCESS) {
+        return Failure{"Failed to create Vulkan device"};
+    }
+    TINT_DEFER(vkDestroyDevice(device, nullptr));
+
+    VkShaderModuleCreateInfo shader_module_create_info = {
+        VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO};
+    shader_module_create_info.codeSize = spirv.len * sizeof(uint32_t);
+    shader_module_create_info.pCode = spirv.data;
+
+    VkShaderModule shader_module;
+    if (vkCreateShaderModule(device, &shader_module_create_info, nullptr, &shader_module) !=
+        VK_SUCCESS) {
+        return Failure{"Failed to create shader module"};
+    }
+    vkDestroyShaderModule(device, shader_module, nullptr);
+
+    return Success;
+}
+#else
+Result<SuccessType> ValidateUsingVulkan(const std::string&, Slice<const uint32_t>) {
+    return Failure{"Vulkan fuzzing is only supported on Linux"};
+}
+#endif  // TINT_BUILD_IS_LINUX
+
 Result<SuccessType> IRFuzzer(core::ir::Module& module,
-                             const fuzz::ir::Context&,
+                             const fuzz::ir::Context& context,
                              FuzzedOptions fuzzed_options) {
     // TODO(375388101): We cannot run the backend for every entry point in the module unless we
     // clone the whole module each time, so for now we just generate the first entry point.
@@ -194,6 +265,11 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
                                 << res.Failure() << "\n\n"
                                 << "IR:\n"
                                 << core::ir::Disassembler(module).Plain();
+
+    if (!context.options.vk_icd.empty()) {
+        [[maybe_unused]] auto vk_res =
+            ValidateUsingVulkan(context.options.vk_icd, Slice(spirv.data(), spirv.size()));
+    }
 
     return Success;
 }

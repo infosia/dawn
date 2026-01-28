@@ -33,6 +33,7 @@
 
 #include "spirv-tools/libspirv.hpp"
 #include "src/tint/utils/diagnostic/diagnostic.h"
+#include "src/tint/utils/macros/defer.h"
 
 namespace tint::spirv::validate {
 
