@@ -84,6 +84,16 @@
         ],
         "Condition": "tint_build_glsl_validator"
     },
+    "vulkan-headers": {
+        "IncludePatterns": [
+            "vulkan/**"
+        ],
+    },
+    "libvulkan": {
+        "IncludePatterns": [
+            "vulkan/**"
+        ],
+    },
     "gtest": {
         "IncludePatterns": [
             "gtest/**",
