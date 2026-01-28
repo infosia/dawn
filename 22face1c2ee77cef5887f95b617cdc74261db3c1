@@ -16,6 +16,24 @@
       "message": "A bunch of new expectations were added for what looks like the new immediate data validation tests added in the PR you reviewed (https://github.com/gpuweb/cts/pull/4547). Adding you as a reviewer as well to take a look that the expectations make sense w.r.t to the change.",
       "revId": "22face1c2ee77cef5887f95b617cdc74261db3c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "428eb59e_c9ed7943",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-28T23:09:21Z",
+      "side": 1,
+      "message": "The padding one is a known issue, the compat ones I\u0027m not sure about. I\u0027ve edited this CL to point to appropriate bugs. PTAL and submit",
+      "parentUuid": "173b6f9c_611fe16b",
+      "revId": "22face1c2ee77cef5887f95b617cdc74261db3c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
