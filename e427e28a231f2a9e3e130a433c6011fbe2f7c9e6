@@ -22,6 +22,30 @@
       },
       "revId": "e427e28a231f2a9e3e130a433c6011fbe2f7c9e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56b795f9_a261bd18",
+        "filename": "infra/specs/mixins.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-28T18:13:24Z",
+      "side": 1,
+      "message": "I can see about migrating in follow-up CLs. This was just already available.",
+      "parentUuid": "50c9110e_7b2a094a",
+      "range": {
+        "startLine": 110,
+        "startChar": 3,
+        "endLine": 110,
+        "endChar": 21
+      },
+      "revId": "e427e28a231f2a9e3e130a433c6011fbe2f7c9e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
