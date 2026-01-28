@@ -241,6 +241,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::PolyFillPacked4x8DotProduct);
     req.tintOptions.extensions.use_zero_initialize_workgroup_memory =
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension);
+
+    req.tintOptions.extensions.use_64_bit_int_atomics =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanUse64BitIntAtomics);
     req.tintOptions.extensions.use_uniform_buffers =
         !GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
 

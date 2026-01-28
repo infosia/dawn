@@ -470,6 +470,20 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         !shaderF16Enabled ||
         (mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
 
+    // VkPhysicalDeviceShaderAtomicInt64Features
+    const bool hasAtomic64Support = mDeviceInfo.HasExt(DeviceExt::ShaderBufferInt64Atomics) &&
+                                    mDeviceInfo.shaderAtomicInt64Features.shaderBufferInt64Atomics;
+
+    printf(" I have atomics 64 %d ! \n", hasAtomic64Support);
+    if (!hasAtomic64Support) {
+        printf(" I have atomics %d %d \n",
+               (int)mDeviceInfo.HasExt(DeviceExt::ShaderBufferInt64Atomics),
+               (int)mDeviceInfo.shaderAtomicInt64Features.shaderBufferInt64Atomics);
+
+    } else {
+        printf("ENABLING feature atomic 64");
+        EnableFeature(Feature::ChromiumExperimentalAtomicVec2uMinMax);
+    }
     // Some devices (PowerVR GE8320) can apparently report subgroup size of 1.
     const bool allowSubgroupSizeRanges =
         mSubgroupMinSize >= kDefaultSubgroupMinSize && mSubgroupMaxSize <= kDefaultSubgroupMaxSize;
@@ -1099,6 +1113,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // By default try to initialize workgroup memory with OpConstantNull according to the Vulkan
     // extension VK_KHR_zero_initialize_workgroup_memory.
     deviceToggles->Default(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension, true);
+
+    if (GetDeviceInfo().HasExt(DeviceExt::ShaderBufferInt64Atomics)) {
+        deviceToggles->Default(Toggle::VulkanUse64BitIntAtomics, true);
+    }
 
     // Spirv OpKill does not do demote to helper and has also been deprecated. Use
     // OpDemoteToHelperInvocation where the extension is available to get correct platform demote to

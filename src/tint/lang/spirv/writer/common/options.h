@@ -158,6 +158,9 @@ struct Options {
         /// ...>.
         bool use_uniform_buffers = false;
 
+        /// Set to `true` if the atomic 64 int should be used
+        bool use_64_bit_int_atomics = false;
+
         TINT_REFLECT(Extensions,
                      use_demote_to_helper_invocation,
                      use_storage_input_output_16,
@@ -166,7 +169,8 @@ struct Options {
                      disable_image_robustness,
                      disable_runtime_sized_array_index_clamping,
                      dot_4x8_packed,
-                     use_uniform_buffers);
+                     use_uniform_buffers,
+                     use_64_bit_int_atomics);
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////

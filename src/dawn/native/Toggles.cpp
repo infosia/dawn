@@ -273,6 +273,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Initialize workgroup memory with OpConstantNull on Vulkan when the Vulkan extension "
       "VK_KHR_zero_initialize_workgroup_memory is supported.",
       "https://crbug.com/dawn/1302", ToggleStage::Device}},
+    {Toggle::VulkanUse64BitIntAtomics,
+     {"use_vulkan_64_bit_int_atomics",
+      "xxxxxxxxxxxxx "
+      "  64 bit atomic supported and used",
+      "https://crbug.com/1234", ToggleStage::Device}},
     {Toggle::MetalRenderR8RG8UnormSmallMipToTempTexture,
      {"metal_render_r8_rg8_unorm_small_mip_to_temp_texture",
       "Metal Intel devices have issues with r8unorm and rg8unorm textures where rendering to small "
