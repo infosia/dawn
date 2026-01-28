@@ -128,6 +128,30 @@
       },
       "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "368da34c_810b2178",
+        "filename": "infra/config/global/cmake_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-28T15:25:16Z",
+      "side": 1,
+      "message": "I was thinking specifically about being able to build Dawn on macOS 12, people previously went into some effort to support it, in the context of https://dawn-review.googlesource.com/c/dawn/+/253214.\nIn that CL another option was to support only the Chromium default macOS 15 and choose the builder machines accordingly.",
+      "parentUuid": "8906b6d2_753e4b79",
+      "range": {
+        "startLine": 75,
+        "startChar": 31,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "39f602e2c157c914f2d449560f24c28a24d35aef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
