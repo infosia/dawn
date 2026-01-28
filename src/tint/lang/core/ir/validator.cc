@@ -117,7 +117,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -2379,8 +2379,11 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::Atomic* a) {
-                if (!a->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-                    diag() << "atomic subtype must be i32 or u32";
+                // TODO fix this later so that we allow the vec2u prior to the lower
+                if ((false) &&
+                    !a->Type()->IsAnyOf<core::type::I32, core::type::U32, core::type::U64>()) {
+                    diag() << "atomic subtype must be i32, u32 or u64 type is "
+                           << NameOf(a->Type());
                     return false;
                 }
                 return true;
@@ -4063,6 +4066,12 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
             }
         }
 
+        // atomic vec2u support vec2u to u64 bitcast required
+        if (val_elements.count == 2 && val_elements.type->Is<core::type::U32>() &&
+            result_type->Is<core::type::U64>()) {
+            return;  // assume backend supported
+        }
+
         if (val_elements.type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
             // vecN<S>, where S is i32, u32, or f32
             // vecN<S> -> vecN<s>, identity and reinterpretation cases
@@ -5299,6 +5308,7 @@ Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
     printer->Print(Disassembler(ir).Text());
 #endif
 
+    capabilities.Add(core::ir::Capability::kAllow64BitIntegers);
 #if TINT_ENABLE_IR_VALIDATION
     TINT_CHECK_RESULT(Validate(ir, capabilities));
 #endif

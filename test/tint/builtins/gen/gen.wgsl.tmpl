@@ -318,6 +318,7 @@ fn vertex_main() -> VertexOutput {
 {{-   $overload := $permutation.Overload -}}
 {{-   $builtin_name := $permutation.Intrinsic.Name -}}
 
+{{- /* Maybe do something similar to support your atomicstore */ -}}
 {{- /* Emit 'enable chromium_experimental_subgroup_matrix' if required */ -}}
 {{-   if (HasPrefix $builtin_name "subgroupMatrix")}}
 enable chromium_experimental_subgroup_matrix;

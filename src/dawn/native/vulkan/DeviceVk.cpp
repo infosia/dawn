@@ -589,6 +589,17 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.shaderSubgroupExtendedTypes);
     }
 
+    // Set 64 bit atomics
+    // if (HasFeature(Feature::ShaderF16) && HasFeature(Feature::Subgroups))
+    printf("\ndevicevk has the feature? = %d\n",
+           (int)HasFeature(Feature::ChromiumExperimentalAtomicVec2uMinMax));
+    if (HasFeature(Feature::ChromiumExperimentalAtomicVec2uMinMax) &&
+        mDeviceInfo.shaderAtomicInt64Features.shaderBufferInt64Atomics == VK_TRUE) {
+        printf(" Setting use knob for 64 bit \n");
+        usedKnobs.shaderAtomicInt64Features = mDeviceInfo.shaderAtomicInt64Features;
+        featuresChain.Add(&usedKnobs.shaderAtomicInt64Features);
+    }
+
     if (HasFeature(Feature::DualSourceBlending)) {
         usedKnobs.features.dualSrcBlend = VK_TRUE;
     }
