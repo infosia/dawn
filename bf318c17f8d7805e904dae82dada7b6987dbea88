@@ -16,6 +16,57 @@
       "message": "PTAL, thanks!",
       "revId": "bf318c17f8d7805e904dae82dada7b6987dbea88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f79d36a_f9a8166d",
+        "filename": "src/dawn/common/Math.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:03:49Z",
+      "side": 1,
+      "message": "Does this work or are there precision issues?\n\n```suggestion\n    return powf(2, 127 - 15) * tmp2;\n```",
+      "revId": "bf318c17f8d7805e904dae82dada7b6987dbea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20026fca_0e86ed85",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:03:49Z",
+      "side": 1,
+      "message": "Here and in all the other places in this CL, we can use the `uint32_t` constructor instead of a static cast for less visual noise. Note that this is NOT the C-style cast `(uint32_t) size`, but a call to a constructor.\n\n```suggestion\n            cmd-\u003esize \u003d uint32_t(size);\n```",
+      "revId": "bf318c17f8d7805e904dae82dada7b6987dbea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0679d85_384bfda6",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:03:49Z",
+      "side": 1,
+      "message": "Let\u0027s change the member to uint64_t to match dawn.json",
+      "revId": "bf318c17f8d7805e904dae82dada7b6987dbea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
