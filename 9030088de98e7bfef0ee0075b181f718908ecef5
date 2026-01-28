@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e64dd34_04de0e52",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76cde319_f0d27cb6",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be597666_94b4ae95",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-01-28T13:27:02Z",
       "side": 1,
       "message": "```suggestion\n    wgpu::ShaderModule shaderModule \u003d utils::CreateShaderModule(device, cs);\n```",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f819a54e_b524e9e9",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be597666_94b4ae95",
       "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a3e37e_430b6cd2",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e370955_5c026e58",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a9c8744_1bde5726",
@@ -82,6 +136,24 @@
       "writtenOn": "2026-01-28T13:27:02Z",
       "side": 1,
       "message": "nit: this isn\u0027t needed because Dawn deduces that it should use the only fragment entry point of the shader.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da896c32_3bcb47cf",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a9c8744_1bde5726",
       "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +181,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf14b20_ebf58d5b",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8348d611_0cc4d3e5",
+      "range": {
+        "startLine": 895,
+        "startChar": 0,
+        "endLine": 897,
+        "endChar": 0
+      },
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff848823_138107fe",
@@ -122,6 +218,24 @@
       "writtenOn": "2026-01-28T13:27:02Z",
       "side": 1,
       "message": "Note that `IsARM` checks that the GPU is an ARM GPU, note that the CPU is an ARM ISA. AFAIK the Pixel 6 is a Qualcomm GPU.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d06fa4_b2498a8c",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff848823_138107fe",
       "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -143,6 +257,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b64312a_3825ceab",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5d7796_40eadd0c",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aea98e2f_9748a0f7",
@@ -156,6 +288,24 @@
       "writtenOn": "2026-01-28T13:27:02Z",
       "side": 1,
       "message": "nit: creation of the renderpass can be moved to be just before it is used.",
+      "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cec4220e_3c7efda0",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-01-28T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea98e2f_9748a0f7",
       "revId": "9030088de98e7bfef0ee0075b181f718908ecef5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
