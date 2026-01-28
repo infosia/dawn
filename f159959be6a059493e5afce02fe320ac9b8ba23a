@@ -16,6 +16,29 @@
       "message": "PTAL\n\nCCing the current WebGPU gardener as well",
       "revId": "f159959be6a059493e5afce02fe320ac9b8ba23a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d36a273_b9a51440",
+        "filename": "infra/config/global/gn_standalone_ci.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-28T15:28:31Z",
+      "side": 1,
+      "message": "Why not this one as well?",
+      "range": {
+        "startLine": 788,
+        "startChar": 4,
+        "endLine": 788,
+        "endChar": 51
+      },
+      "revId": "f159959be6a059493e5afce02fe320ac9b8ba23a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
