@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "855eb834_09fd851c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T17:52:21Z",
+      "side": 1,
+      "message": "\u003e If Queue::Submit is never called then the buffer would be sitting around mapped indefinitely, right?\n\nSure, but that\u0027s fine? The memory usage doesn\u0027t really grow from that since the buffer is mapped anyway. When ReduceMemoryUsage is called we could also force flushing the pending commands (which would end up in D3D11 unmapping the buffers).\n\nIt\u0027s just very nice in every backend if we can avoid doing error management when getting the recording context or the equivalent, because that\u0027s done everywhere. That\u0027s why we prepare the *next* command buffer during the end of queue submit in D3D12/Metal/Vulkan.",
+      "parentUuid": "da711447_86066a66",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
