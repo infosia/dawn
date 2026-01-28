@@ -98,6 +98,24 @@
       "parentUuid": "e440e6b8_4e2fa382",
       "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a50a0c39_4dcfa4d0",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-28T20:18:59Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "b224b900_747145c9",
+      "revId": "d1557de227688f9dc8ff9c1392242cbd3fe846c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
