@@ -122,6 +122,24 @@
       "parentUuid": "1124cfcd_d42f2518",
       "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d714d657_fbd0b038",
+        "filename": "third_party/spirv-headers/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-28T02:32:05Z",
+      "side": 1,
+      "message": "upstream --manual--\u003e vulkan-deps --autoroll--\u003e dawn\n\n\n* vulkan-deps contains spriv-* and vulkan-* deps.\n* vulkan-deps/spirv-headers/ has a README.chromium sitting next its src/ dir. I updated it here https://crrev.com/c/7509109. \n* vulkan-deps/* are updated Manually inside vulkan-deps to ensure they play nice with each other.\n* vulkan-deps is autrolled into dawn where an autoroller copies its DEPS file into dawn\u0027s DEPS file but changes the location from third_party/vulkan-deps/*/src into third_party/*/src.\n\nThis means that this README.chromium sits next to spirv-headers src that is autorolled by deps from a manual version in vulkan-deps.\n\nExcept now that I look at it, it seems that the version in vulkan-headers might also be autorolled, which means this complex setup is no longer needed? I guess if it breaks they can fix it in one place and then roll that out, so I\u0027m leaving this as Manual, and this will all be moot when we eventually get the autorollers to set this when they roll.",
+      "parentUuid": "3959d557_1ca51511",
+      "revId": "d3140da4fc3b84651d7a2a16a852aa4419d34b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
