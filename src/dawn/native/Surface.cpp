@@ -355,7 +355,7 @@ Surface::Surface(InstanceBase* instance, const UnpackedPtr<SurfaceDescriptor>& d
             auto* subDesc = descriptor.Get<SurfaceSourceXlibWindow>();
             mType = Type::XlibWindow;
             mXDisplay = subDesc->display;
-            mXWindow = subDesc->window;
+            mXWindow = static_cast<uint32_t>(subDesc->window);
             break;
         }
         default:
