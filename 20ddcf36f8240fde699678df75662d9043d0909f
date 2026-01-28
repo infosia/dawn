@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a547dbe_e2921ac1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:13:38Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "20ddcf36f8240fde699678df75662d9043d0909f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b76c8a9_c118e978",
+        "filename": "src/dawn/common/Mutex.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:13:38Z",
+      "side": 1,
+      "message": "WDYT of putting this in the move constructor of MutexRef such that here we could just have the std::move?",
+      "revId": "20ddcf36f8240fde699678df75662d9043d0909f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
