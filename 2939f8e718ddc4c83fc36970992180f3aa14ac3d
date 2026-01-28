@@ -105,6 +105,24 @@
       "parentUuid": "62b76635_a1f309bf",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed37a15_56c473fe",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-28T22:22:26Z",
+      "side": 1,
+      "message": "The message I was seeing was:\n\n```\nBackend messages:\nC 11:50:43.172   16.559s Main   * vkCmdDraw(): pSubpasses[0].pColorAttachments[0].attachment is incompatible between VkRenderPass 0x4350000000435 (from VkCommandBuffer 0xb400006daa3a6cb0) and VkRenderPass 0x22d000000022d (from VkPipeline 0x22f000000022f[DawnDbg\u003d2;Dawn_RenderPipeline]), pAttachments[0].samples (VK_SAMPLE_COUNT_1_BIT) !\u003d pAttachments[0].samples (VK_SAMPLE_COUNT_4_BIT).\nC 11:50:43.172   16.559s Main  The Vulkan spec states: The current render pass must be compatible with the renderPass member of the VkGraphicsPipelineCreateInfo structure specified when creating the VkPipeline bound to VK_PIPELINE_BIND_POINT_GRAPHICS (https://docs.vulkan.org/spec/latest/chapters/drawing.html#VUID-vkCmdDraw-renderPass-02684)\n```\n\nKinda hard to see a good generic substring to test for, especially given the use of attachment indicies and pipeline labels. Maybe something like \"VK_SAMPLE_COUNT_1_BIT\" would narrow it down a bit, but you\u0027d still catch valid messages with it.",
+      "parentUuid": "91be4da3_53efbf5e",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
