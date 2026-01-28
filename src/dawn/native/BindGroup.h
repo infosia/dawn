@@ -44,6 +44,8 @@
 
 #include "dawn/native/dawn_platform.h"
 
+#include "partition_alloc/pointers/raw_ptr.h"
+
 namespace dawn::native {
 
 class DeviceBase;
@@ -54,7 +56,7 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
     UsageValidationMode mode);
 
 struct BufferBinding {
-    BufferBase* buffer;
+    raw_ptr<BufferBase> buffer;
     uint64_t offset;
     uint64_t size;
 };

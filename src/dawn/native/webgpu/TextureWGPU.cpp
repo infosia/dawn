@@ -51,7 +51,7 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
 Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
     : TextureBase(device, descriptor),
       RecordableObject(schema::ObjectType::Texture),
-      ObjectWGPU(device->wgpu.textureRelease) {
+      ObjectWGPU(device->wgpu->textureRelease) {
     wgpu::TextureUsage actualUsage = GetInternalUsage();
     // Resolve internal usages to regular ones
     if (actualUsage & kReadOnlyStorageTexture) {
@@ -88,13 +88,13 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
         .viewFormats = viewFormats.data(),
     };
 
-    mInnerHandle = device->wgpu.deviceCreateTexture(device->GetInnerHandle(), &desc);
+    mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &desc);
     DAWN_ASSERT(mInnerHandle);
 }
 
 void Texture::DestroyImpl(DestroyReason reason) {
     TextureBase::DestroyImpl(reason);
-    auto& wgpu = ToBackend(GetDevice())->wgpu;
+    auto& wgpu = ToBackend(GetDevice())->wgpu.get();
     wgpu.textureDestroy(mInnerHandle);
 }
 
@@ -112,7 +112,7 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
     auto* desc = ToAPI(*descriptor);
 
     WGPUTextureView innerView =
-        device->wgpu.textureCreateView(ToBackend(texture)->GetInnerHandle(), desc);
+        device->wgpu->textureCreateView(ToBackend(texture)->GetInnerHandle(), desc);
     DAWN_ASSERT(innerView);
 
     return AcquireRef(new TextureView(texture, descriptor, innerView));
@@ -123,7 +123,7 @@ TextureView::TextureView(TextureBase* texture,
                          WGPUTextureView innerView)
     : TextureViewBase(texture, descriptor),
       RecordableObject(schema::ObjectType::TextureView),
-      ObjectWGPU(ToBackend(texture->GetDevice())->wgpu.textureViewRelease) {
+      ObjectWGPU(ToBackend(texture->GetDevice())->wgpu->textureViewRelease) {
     mInnerHandle = innerView;
 }
 
@@ -174,7 +174,7 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
     Device* device = ToBackend(GetDevice());
     WGPUDevice innerDevice = device->GetInnerHandle();
     WGPUQueue queue = ToBackend(device->GetQueue())->GetInnerHandle();
-    auto& wgpu = device->wgpu;
+    auto& wgpu = device->wgpu.get();
 
     // For each mip level, emit a WriteTexture command, for the entire level.
     // Then, copy the texture to a buffer, map it, and write the buffer data for that level.
