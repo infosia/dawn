@@ -35,6 +35,7 @@
 #include "dawn/wire/ChunkedCommandSerializer.h"
 #include "dawn/wire/server/ServerBase_autogen.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "partition_alloc/pointers/raw_ref.h"
 
 namespace dawn::wire::server {
 
