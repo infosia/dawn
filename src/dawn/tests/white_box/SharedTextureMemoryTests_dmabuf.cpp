@@ -39,6 +39,7 @@
 #include "dawn/common/vulkan_platform.h"
 
 #include "dawn/tests/white_box/SharedTextureMemoryTests.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn {
 namespace {
@@ -216,7 +217,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
     }
 
     int mRenderNodeFd = -1;
-    gbm_device* mGbmDevice = nullptr;
+    raw_ptr<gbm_device> mGbmDevice = nullptr;
 };
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(
