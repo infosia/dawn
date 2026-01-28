@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c628d5c5_5dc5988d",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-28T13:44:20Z",
+      "side": 1,
+      "message": "If Queue::Submit is never called then the buffer would be sitting around mapped indefinitely, right?\n\nI saw we already use `ComsumedError` on couple of internal places [[1]](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;drc\u003dbf712ec1a13783224debb691ba88ad5c15b93194;l\u003d2722). I understand this should be avoided as much as possible. But this should happen rarely. Mostly an error would be thrown by an OOM or a driver\u0027s device loss here. We could use `DAWN_CHECK` to crash here. But I feel it\u0027s better to propagate the OOM/device loss error to the client/chrome to handle the OOM properly. Furthermore, since these errors are often systemic, knowing the specific API that triggered them provides little additional value to the caller, I think.",
+      "parentUuid": "e281dcea_a6f48470",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1fd4bd70_76055509",
         "filename": "src/dawn/native/d3d11/DeviceD3D11.cpp",
         "patchSetId": 2
