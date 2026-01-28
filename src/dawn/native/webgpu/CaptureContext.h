@@ -39,6 +39,9 @@
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/Serialization.h"
 
+#include "partition_alloc/pointers/raw_ptr.h"
+#include "partition_alloc/pointers/raw_ref.h"
+
 namespace dawn::native {
 
 class BufferBase;
@@ -81,7 +84,7 @@ class CaptureContext {
 
       private:
         uint64_t mBytesWritten = 0;
-        CaptureContext& mContext;
+        raw_ref<CaptureContext> mContext;
     };
 
     static constexpr uint64_t kCopyBufferSize = 1024 * 1024;
@@ -203,9 +206,9 @@ class CaptureContext {
     // have been written. and compare that to how many have been read when replaying.
     uint64_t mCommandBytesWritten = 0;
 
-    Device* mDevice;
-    std::ostream& mCommandStream;
-    std::ostream& mContentStream;
+    raw_ptr<Device> mDevice;
+    const raw_ref<std::ostream> mCommandStream;
+    const raw_ref<std::ostream> mContentStream;
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
