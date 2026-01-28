@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e281dcea_a6f48470",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:16:38Z",
+      "side": 1,
+      "message": "This is pretty awkward as well. How about explicitly unmapping the buffers only on queue submit so that we don\u0027t need to make `GetScopedPendingCommandContext` faillable?",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd4bd70_76055509",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-28T13:16:38Z",
+      "side": 1,
+      "message": "It\u0027s kinda bad practice to ConsumeError anywhere but at the API boundary. Can we add a TODO to make ReduceMemoryUsageImpl faillable?",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
