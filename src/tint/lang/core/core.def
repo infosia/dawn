@@ -95,6 +95,18 @@ enum interpolation_sampling {
   either
 }
 
+enum sampler_filterable {
+  unknown
+  filtering
+  non_filtering
+}
+
+enum texture_filterable {
+  unknown
+  filterable
+  unfilterable
+}
+
 enum builtin_type {
   // https://www.w3.org/TR/WGSL/#scalar-types
   bool

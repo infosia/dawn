@@ -192,6 +192,64 @@ std::string_view ToString(InterpolationType value) {
     return "<unknown>";
 }
 
+/// ParseSamplerFilterable parses a SamplerFilterable from a string.
+/// @param str the string to parse
+/// @returns the parsed enum, or SamplerFilterable::kUndefined if the string could not be parsed.
+SamplerFilterable ParseSamplerFilterable(std::string_view str) {
+    if (str == "filtering") {
+        return SamplerFilterable::kFiltering;
+    }
+    if (str == "non_filtering") {
+        return SamplerFilterable::kNonFiltering;
+    }
+    if (str == "unknown") {
+        return SamplerFilterable::kUnknown;
+    }
+    return SamplerFilterable::kUndefined;
+}
+std::string_view ToString(SamplerFilterable value) {
+    switch (value) {
+        case SamplerFilterable::kUndefined:
+            return "undefined";
+        case SamplerFilterable::kFiltering:
+            return "filtering";
+        case SamplerFilterable::kNonFiltering:
+            return "non_filtering";
+        case SamplerFilterable::kUnknown:
+            return "unknown";
+    }
+    return "<unknown>";
+}
+
+/// ParseTextureFilterable parses a TextureFilterable from a string.
+/// @param str the string to parse
+/// @returns the parsed enum, or TextureFilterable::kUndefined if the string could not be parsed.
+TextureFilterable ParseTextureFilterable(std::string_view str) {
+    if (str == "filterable") {
+        return TextureFilterable::kFilterable;
+    }
+    if (str == "unfilterable") {
+        return TextureFilterable::kUnfilterable;
+    }
+    if (str == "unknown") {
+        return TextureFilterable::kUnknown;
+    }
+    return TextureFilterable::kUndefined;
+}
+std::string_view ToString(TextureFilterable value) {
+    switch (value) {
+        case TextureFilterable::kUndefined:
+            return "undefined";
+        case TextureFilterable::kFilterable:
+            return "filterable";
+        case TextureFilterable::kUnfilterable:
+            return "unfilterable";
+        case TextureFilterable::kUnknown:
+            return "unknown";
+    }
+    return "<unknown>";
+}
+
 /// ParseSubgroupMatrixKind parses a SubgroupMatrixKind from a string.
 /// @param str the string to parse
 /// @returns the parsed enum, or SubgroupMatrixKind::kUndefined if the string could not be parsed.
