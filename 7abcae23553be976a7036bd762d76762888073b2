@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6af4c5a0_b706dd70",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 2441,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "Ah so long as you are sure ;)",
+      "parentUuid": "c68bea01_95beed9f",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8082ee2c_53bd74cb",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 11
@@ -66,6 +84,29 @@
       "writtenOn": "2026-01-29T16:56:06Z",
       "side": 1,
       "message": "Discussed offline, toggle shouldn\u0027t be needed for this case.",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6da4c85_550d0187",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2383,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "You need to do the equivalent of \n   if (enabled_extensions_.Contains(wgsl::Extension::kChromiumExperimentalAtomicVec2UMinMax)) {\n        if (auto* vec \u003d s-\u003eType()-\u003eAs\u003ccore::type::Vector\u003e()) {\n            if (vec-\u003eWidth() \u003d\u003d 2 \u0026\u0026 vec-\u003eType()-\u003eIs\u003ccore::type::U32\u003e()) {\n                return true;\n            }\n        }\n    }",
+      "range": {
+        "startLine": 2383,
+        "startChar": 16,
+        "endLine": 2383,
+        "endChar": 30
+      },
       "revId": "7abcae23553be976a7036bd762d76762888073b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +128,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7bde9a7_0b25cfb2",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f245301_cd99703c",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1df44a65_2a5886cb",
@@ -104,6 +163,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d669295c_54ce74f3",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df44a65_2a5886cb",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8855628e_0c795e43",
@@ -117,6 +194,47 @@
       "writtenOn": "2026-01-29T16:56:06Z",
       "side": 1,
       "message": "Add capability for the 64-bit atomic here and the `UMin` case below.",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cad278d_fac9b922",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8855628e_0c795e43",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c72fc48_68d50783",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T18:41:18Z",
+      "side": 1,
+      "message": "You will need to fix this!",
+      "range": {
+        "startLine": 269,
+        "startChar": 80,
+        "endLine": 269,
+        "endChar": 95
+      },
       "revId": "7abcae23553be976a7036bd762d76762888073b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
