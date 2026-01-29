@@ -144,6 +144,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf077d82_47bde18f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-29T16:41:16Z",
+      "side": 1,
+      "message": "It\u0027s true that if we emulate the persistent map, we don\u0027t need this deferred unmaps. The buffer would be unmapped automatically by the front-end or the `TrackUsage` approach you mentioned. But I don\u0027t know when we will finish the persistent map impl or do we even follow that path in future (or just simply do eager maps in Skia).\n\nChanging to use `TrackUsage` to unmap certainly needs more changes than this error handling everywhere. We need to:\n1. Use `TrackUsage` instead of `MarkUsedInPendingCommands`\n2. Move `TrackUsage` to before using the buffer on GPU. This is not true on GL and D3D11 atm, a lot of places call `TrackUsage`/`MarkUsed` after the buffer is already used in the GPU commands.\n3. Also we need to verify whether the placements of `TrackUsage` is correct or not. (or missing in some places outside Submit).\n\nThose are a lot more refactors than simply changing the signature of the `GetScoped*Context`, I think.",
+      "parentUuid": "a2c50044_c88ddb9a",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
