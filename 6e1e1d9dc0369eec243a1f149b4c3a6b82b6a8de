@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae6cd55_7d83ffa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-29T18:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb94ca2_f3499b5e",
+      "revId": "6e1e1d9dc0369eec243a1f149b4c3a6b82b6a8de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5d9185c_66b695a2",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-29T16:37:02Z",
       "side": 1,
       "message": "Nit: I think this check is unnecessary because the above `TemplatedIdentifier` call would not allow more than one argument unless the feature was enabled.",
+      "revId": "6e1e1d9dc0369eec243a1f149b4c3a6b82b6a8de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00eeefb8_38113f2d",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3044,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-29T18:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d9185c_66b695a2",
       "revId": "6e1e1d9dc0369eec243a1f149b4c3a6b82b6a8de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
