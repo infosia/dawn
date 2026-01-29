@@ -16,6 +16,46 @@
       "message": "PTAL",
       "revId": "076b89211fc1d6950be4e7ebf416dcf960773b7b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d69f037_0f3c31c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-29T14:25:18Z",
+      "side": 1,
+      "message": "Gardener, FYI.",
+      "revId": "076b89211fc1d6950be4e7ebf416dcf960773b7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "162425cd_7026a071",
+        "filename": "infra/config/global/cmake_try.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-29T14:25:18Z",
+      "side": 1,
+      "message": "Sorry, I missed this in previous reviews, I don\u0027t think CQ bots should have the platform they run on (like SwS) in their names, just the OS.\nThe rationale is that CQ builders can combine multiple platforms together.\nNot the case for CMake bots, which run locally.\nBut, we could move from SwS to LavaPipe/LLVMpipe/MoltenVK (or a combination of these) and the name will need to be changed.\n\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/cmake-mac-dbg doesn\u0027t seem to be using SwiftShader in particular.\nLinux doesn\u0027t seem to be using it either.\nThese only run Tint tests and not Dawn, which maybe not need to use graphics at all.\n\nShould be OK to remove in a follow up.",
+      "range": {
+        "startLine": 163,
+        "startChar": 27,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "076b89211fc1d6950be4e7ebf416dcf960773b7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
