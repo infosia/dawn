@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3a3375c_a1d73a0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-29T02:06:05Z",
+      "side": 1,
+      "message": "Getting a first round of review. The failing test is timing out, and I am wondering whether it might just be a real timeout because it\u0027s doing some sort of exhaustive thing with the number of textures and with 3x the original amount, maybe it\u0027s actually taking too long?",
+      "revId": "29f0b0b3286660c134b38daee63d5f2dd6a0efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
