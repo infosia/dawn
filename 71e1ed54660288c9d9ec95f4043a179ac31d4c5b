@@ -108,6 +108,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba5186b7_cf7e5c46",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-29T15:36:49Z",
+      "side": 1,
+      "message": "This is actually not related to the persistent map emulation. I made this change to support shadow copy for MapAtCreation to avoid acquiring the lock. Since later in Unmap we need to trasfer the shadow copy to the actual buffer, a MaybeError could be return from the deferred unmaps.",
+      "parentUuid": "4a98d617_69521988",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
