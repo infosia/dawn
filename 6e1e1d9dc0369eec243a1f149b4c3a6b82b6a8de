@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb94ca2_f3499b5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:37:02Z",
+      "side": 1,
+      "message": "LGTM using that more \"sampler filterable\"s become \"sampler filtering\"s after the last CL.",
+      "revId": "6e1e1d9dc0369eec243a1f149b4c3a6b82b6a8de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5d9185c_66b695a2",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3044,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:37:02Z",
+      "side": 1,
+      "message": "Nit: I think this check is unnecessary because the above `TemplatedIdentifier` call would not allow more than one argument unless the feature was enabled.",
+      "revId": "6e1e1d9dc0369eec243a1f149b4c3a6b82b6a8de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
