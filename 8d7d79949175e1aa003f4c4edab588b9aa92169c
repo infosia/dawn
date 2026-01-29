@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "8d7d79949175e1aa003f4c4edab588b9aa92169c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3a5d57d_ad42d1e7",
+        "filename": "src/tint/lang/core/ir/transform/resource_table_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T18:11:59Z",
+      "side": 1,
+      "message": "The test is called \"NoModify\" but the IR changes, is that expected?",
+      "revId": "8d7d79949175e1aa003f4c4edab588b9aa92169c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
