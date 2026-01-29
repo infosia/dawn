@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a53d96ef_505acbdd",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-01-29T22:08:58Z",
+      "side": 1,
+      "message": "Please pay special attention to this code, because I have limited experience with setting up Vulkan devices, so this is mostly a mashup of example/tutorial code and gemini suggestions.",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
