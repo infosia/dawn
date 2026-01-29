@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e00c9c_32f25af0",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-29T19:39:45Z",
+      "side": 1,
+      "message": "Is it bad if we look for more? I would prefer for this logic not to rely on the search order, if possible. It seems like the check below for `IsFallbackAdapter` should be sufficient.",
+      "revId": "253505057b9698ce64706c20ded51d1b7f2ab515",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
