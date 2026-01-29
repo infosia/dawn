@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58f98965_5999d761",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-29T18:09:28Z",
+      "side": 1,
+      "message": "Thanks! For some reason I thought the web editor did it on save.",
+      "parentUuid": "f1d406fc_9a1cd806",
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85f0e03b_930c6164",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-01-29T15:22:51Z",
       "side": 1,
       "message": "I _think_ you could check the instructions `GetSideEffects()` before pulling out to the `let`. If the result is `Accesses{}` then you don\u0027t need to pull it out as there are no side effects. (The -\u003eTrue/False should be an InstructionResult value that will give you the source instruction)\n\nThe side-effect check isn\u0027t perfect, I believe it pessimizes in a bunch of cases, but would allow skipping this in some instances.\n\n(You can also file this as a followup if you\u0027d prefer to land this first to get it into Chrome sooner)",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 56
+      },
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ad81919_8e6d6efe",
+        "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-29T18:09:28Z",
+      "side": 1,
+      "message": "Done, and in that case I can now just extract the unevaluated side.",
+      "parentUuid": "85f0e03b_930c6164",
       "range": {
         "startLine": 79,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba32dd92_58cb1a9a",
+        "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-29T18:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6266515_db6a9f22",
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3b906f9_158aafd6",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-01-29T15:22:51Z",
       "side": 1,
       "message": "I think this case would perform no changes in the case we checked side effects.",
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa031ee_e4902568",
+        "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-01-29T18:09:28Z",
+      "side": 1,
+      "message": "Added a new test with a side-effects-ish value.",
+      "parentUuid": "d3b906f9_158aafd6",
       "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
