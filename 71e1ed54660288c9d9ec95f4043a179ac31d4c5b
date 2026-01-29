@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a98d617_69521988",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-29T15:27:01Z",
+      "side": 1,
+      "message": "After reading your DD for the buffer remapping, WDYT of having something in D3D11 like in all the other backends, a method on buffers (and textures most likely) that say \"this will be used on the GPU\" and takes the command recording context. The buffer would then know if is pending an actual unmap and would do whatever is necessary.\n\n+2 because I don\u0027t want to block you too much, but I think this would be a simpler approach and more consistent across backends. We\u0027re surely going to use that \"TrackUsage\" later as well.",
+      "parentUuid": "3f0f7cec_f3b507ee",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
