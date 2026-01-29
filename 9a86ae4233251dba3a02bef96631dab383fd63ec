@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6266515_db6a9f22",
+        "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:03:35Z",
+      "side": 1,
+      "message": "Nit: You could also just replace the operands of the ternary instead of destroying and re-creating it, e.g.:\n```\nternary-\u003eSetOperand(0, new_false);\nternary-\u003eSetOperand(1, new_true);\n```",
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3b906f9_158aafd6",
         "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values_test.cc",
         "patchSetId": 5
