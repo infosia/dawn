@@ -63,14 +63,6 @@ class PipelineLayout final : public PipelineLayoutBase {
     FlatBindingIndex GetInternalTextureBuiltinsUniformBinding() const;
     FlatBindingIndex GetInternalArrayLengthUniformBinding() const;
 
-    enum ImmediateLocation {
-        UserImmediateData = 0,
-        FirstVertex = 16,
-        FirstInstance = 17,
-        MinDepth = 18,
-        MaxDepth = 19,
-    };
-
   private:
     ~PipelineLayout() override = default;
     BindingIndexInfo mIndexInfo;

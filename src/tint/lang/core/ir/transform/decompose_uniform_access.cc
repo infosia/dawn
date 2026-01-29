@@ -627,10 +627,9 @@ Result<SuccessType> DecomposeImmediateAccess(core::ir::Module& ir) {
     TINT_CHECK_RESULT(
         ValidateAndDumpIfNeeded(ir, "core.DecomposeImmediateAccess",
                                 core::ir::Capabilities{
-                                    core::ir::Capability::kAllow8BitIntegers,
-                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
                                     core::ir::Capability::kAllowDuplicateBindings,
-                                    core::ir::Capability::kAllowNonCoreTypes,
+                                    core::ir::Capability::kLoosenValidationForShaderIO,
                                 }));
 
     State{ir, core::AddressSpace::kImmediate}.Process();

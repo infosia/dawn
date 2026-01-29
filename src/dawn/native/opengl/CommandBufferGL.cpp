@@ -740,12 +740,10 @@ class ImmediateConstantTracker : public T {
         ImmediateConstantMask pipelineMask = lastPipeline->GetImmediateMask();
         ImmediateConstantMask uploadBits = this->mDirty & pipelineMask;
         for (auto&& [offset, size] : IterateRanges(uploadBits)) {
-            auto o = static_cast<uint32_t>(offset);
-            auto s = static_cast<uint32_t>(size);
+            auto o = GetImmediateIndexInPipeline(static_cast<uint32_t>(offset), pipelineMask) / 4;
+            auto s = static_cast<uint32_t>(size) / 4;
             auto data = this->mContent.template Get<uint32_t>(o);
-            DAWN_GL_TRY(
-                gl, Uniform4uiv(PipelineLayout::ImmediateLocation::UserImmediateData + o / 4, s / 4,
-                                data));
+            DAWN_GL_TRY(gl, Uniform4uiv(o, s, data));
         }
 
         // Reset all dirty bits after uploading.
@@ -1403,9 +1401,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, draw->firstInstance));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
 
-                if (lastPipeline->UsesInstanceIndex()) {
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&draw->firstInstance), 4);
-                }
+                immediates.SetFirstInstance(draw->firstInstance);
                 DAWN_TRY(immediates.Apply(gl));
                 DAWN_GL_TRY(gl, DrawArraysInstanced(lastPipeline->GetGLPrimitiveTopology(),
                                                     draw->firstVertex, draw->vertexCount,
@@ -1427,12 +1423,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                     DAWN_GL_TRY(gl, Disable(GL_PRIMITIVE_RESTART_FIXED_INDEX));
                 }
 
-                if (lastPipeline->UsesVertexIndex()) {
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstVertex * 4, reinterpret_cast<uint8_t*>(&draw->baseVertex), 4);
-                }
-                if (lastPipeline->UsesInstanceIndex()) {
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&draw->firstInstance), 4);
-                }
+                immediates.SetFirstIndexOffset(draw->baseVertex, draw->firstInstance);
                 DAWN_GL_TRY(gl, DrawElementsInstanced(
                                     topology, draw->indexCount, indexBufferFormat,
                                     reinterpret_cast<void*>(draw->firstIndex * indexFormatSize +
@@ -1443,10 +1434,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
 
             case Command::DrawIndirect: {
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
-                if (lastPipeline->UsesInstanceIndex()) {
-                    uint32_t zero = 0;
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&zero), sizeof(zero));
-                }
+                // TODO(senorblanco): do we need to do this?
+                // immediates.SetFirstIndexOffset(0, 0);
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
                 DAWN_TRY(immediates.Apply(gl));
@@ -1466,10 +1455,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::DrawIndexedIndirect: {
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
-                if (lastPipeline->UsesInstanceIndex()) {
-                    uint32_t zero = 0;
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::FirstInstance * 4, reinterpret_cast<uint8_t*>(&zero), sizeof(zero));
-                }
+                // TODO(senorblanco): do we need to do this?
+                // immediates.SetFirstIndexOffset(0, 0);
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
                 DAWN_TRY(immediates.Apply(gl));
@@ -1510,10 +1497,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
                 bindGroupTracker.OnSetPipeline(lastPipeline);
                 immediates.OnSetPipeline(lastPipeline);
-                if (lastPipeline->UsesFragDepth()) {
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MinDepth * 4, reinterpret_cast<uint8_t*>(&minDepth), 4);
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MaxDepth * 4, reinterpret_cast<uint8_t*>(&maxDepth), 4);
-                }
+                immediates.SetClampFragDepth(minDepth, maxDepth);
                 break;
             }
 
@@ -1547,6 +1531,12 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 break;
             }
 
+            case Command::SetImmediates: {
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
+                uint8_t* values = iter->NextData<uint8_t>(cmd->size);
+                immediates.SetImmediates(cmd->offset, values, cmd->size);
+                break;
+            }
             default:
                 DAWN_UNREACHABLE();
                 break;
@@ -1589,10 +1579,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 minDepth = cmd->minDepth;
                 maxDepth = cmd->maxDepth;
                 DAWN_GL_TRY(gl, DepthRangef(minDepth, maxDepth));
-                if (lastPipeline && lastPipeline->UsesFragDepth()) {
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MinDepth * 4, reinterpret_cast<uint8_t*>(&minDepth), 4);
-                    immediates.SetImmediates(PipelineLayout::ImmediateLocation::MaxDepth * 4, reinterpret_cast<uint8_t*>(&maxDepth), 4);
-                }
+                immediates.SetClampFragDepth(minDepth, maxDepth);
                 break;
             }
 
@@ -1639,13 +1626,6 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
 
             case Command::WriteTimestamp:
                 return DAWN_UNIMPLEMENTED_ERROR("WriteTimestamp unimplemented");
-
-            case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                uint8_t* values = mCommands.NextData<uint8_t>(cmd->size);
-                immediates.SetImmediates(cmd->offset, values, cmd->size);
-                break;
-            }
 
             default: {
                 DAWN_TRY(DoRenderBundleCommand(&mCommands, type));
