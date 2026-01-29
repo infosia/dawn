@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca9cf178_fea3a2a2",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-29T09:03:55Z",
+      "side": 1,
+      "message": "This getter needs to match as well.",
+      "revId": "8fbcdaaf59fdb322426209c192abffca394d3519",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
