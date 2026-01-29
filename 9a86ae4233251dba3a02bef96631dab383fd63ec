@@ -83,6 +83,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d4cdc60_2bb94e06",
+        "filename": "src/tint/lang/hlsl/writer/raise/extract_ternary_values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-29T18:17:30Z",
+      "side": 1,
+      "message": "Oh, nice.",
+      "parentUuid": "9ad81919_8e6d6efe",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 56
+      },
+      "revId": "9a86ae4233251dba3a02bef96631dab383fd63ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6266515_db6a9f22",
