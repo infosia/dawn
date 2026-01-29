@@ -16,6 +16,24 @@
       "message": "Is it bad if we look for more? I would prefer for this logic not to rely on the search order, if possible. It seems like the check below for `IsFallbackAdapter` should be sufficient.",
       "revId": "253505057b9698ce64706c20ded51d1b7f2ab515",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "944a9c38_c49a55db",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-29T19:48:00Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure. I kept it this way for now because it\u0027s more consistent with how we had it before. I actually tried to go back in the history of the code to see why we had it the way it was, but the history eventually disappears because of the big directory renames/moves we did a while back.\n\nI can try to remove the ordering logic and this early out in a follow up?",
+      "parentUuid": "f3e00c9c_32f25af0",
+      "revId": "253505057b9698ce64706c20ded51d1b7f2ab515",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
