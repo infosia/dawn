@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1853dcf1_caa14b23",
+        "filename": "third_party/glslang/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "95889892_11b0e131",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5537ced_db670aab",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-01-28T12:44:23Z",
       "side": 1,
       "message": "```suggestion\nUpdate Mechanism: Autoroll\n```\n\nBy the WebGPU CTS roller.",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ce2d09_0502d737",
+        "filename": "third_party/gn/webgpu-cts/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b5537ced_db670aab",
       "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc573334_e24ef425",
+        "filename": "third_party/libdrm/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "906204cf_f92c2032",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a691ea5c_a9864a34",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-01-28T12:44:23Z",
       "side": 1,
       "message": "```suggestion\nUpdate Mechanism: Autoroll\n```\n\nhttps://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88d9cc53_88a46b06",
+        "filename": "third_party/spirv-headers/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a691ea5c_a9864a34",
       "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa4192ae_9d497845",
+        "filename": "third_party/spirv-tools/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e8c97016_a4bc7063",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a942ba2_64cd917c",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-01-28T12:44:23Z",
       "side": 1,
       "message": "```suggestion\nUpdate Mechanism: Autoroll\n```\n\nhttps://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd6e5436_dc221779",
+        "filename": "third_party/vulkan-headers/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5a942ba2_64cd917c",
       "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "516e8370_753299e7",
+        "filename": "third_party/vulkan-loader/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d37645f6_4985845e",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "444d105d_222f945b",
@@ -133,6 +259,24 @@
       "writtenOn": "2026-01-28T12:44:23Z",
       "side": 1,
       "message": "```suggestion\nUpdate Mechanism: Autoroll\n```\n\nhttps://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5296be26_e2672b0c",
+        "filename": "third_party/vulkan-tools/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "444d105d_222f945b",
       "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -154,6 +298,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af232f49_ff746fc5",
+        "filename": "third_party/vulkan-utility-libraries/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f1d65590_19922f8d",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba89b680_384a981b",
@@ -167,6 +329,24 @@
       "writtenOn": "2026-01-28T12:44:23Z",
       "side": 1,
       "message": "```suggestion\nUpdate Mechanism: Autoroll\n```\n\nhttps://autoroll.skia.org/r/vulkan-deps-dawn-autoroll",
+      "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec60befc_e03696f2",
+        "filename": "third_party/vulkan-validation-layers/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 4240850
+      },
+      "writtenOn": "2026-01-29T02:19:53Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ba89b680_384a981b",
       "revId": "ec07fa403001ab4bea287e2cffc25c4c85453d6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
