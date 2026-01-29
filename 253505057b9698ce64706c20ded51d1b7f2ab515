@@ -34,6 +34,24 @@
       "parentUuid": "f3e00c9c_32f25af0",
       "revId": "253505057b9698ce64706c20ded51d1b7f2ab515",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8481566a_050d4027",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-01-29T21:05:02Z",
+      "side": 1,
+      "message": "Sure, not a high priority though. The comments are clear.",
+      "parentUuid": "944a9c38_c49a55db",
+      "revId": "253505057b9698ce64706c20ded51d1b7f2ab515",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
