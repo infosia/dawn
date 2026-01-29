@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "adb088a6_23cddfa3",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-29T19:55:05Z",
+      "side": 1,
+      "message": "Sounds like the committee decided that clamping was the way to go, so let us know when this is ready for a new round of reviews.",
+      "parentUuid": "bd237c1e_5c3b04a7",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
