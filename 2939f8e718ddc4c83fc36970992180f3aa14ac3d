@@ -141,6 +141,24 @@
       "parentUuid": "9ed37a15_56c473fe",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "454bfdaf_29018c7f",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-29T09:19:38Z",
+      "side": 1,
+      "message": "In the early days of WebGPU we were able to get the Vulkan WG to retroactively change the render pass compatibility to say that for single subpass render passes, the presence of resolve attachment was compatible regardless. (see [issue](https://github.com/KhronosGroup/Vulkan-Docs/issues/835))\n\n\u003e As an additional special case, if two render passes have a single subpass, the resolve attachment reference and depth/stencil resolve mode compatibility requirements are ignored.\n\nLet\u0027s file an issue on [Vulkan-Docs](https://github.com/KhronosGroup/Vulkan-Docs) to also include MSRTSS there as well. In the meantime we can use the overbroad suppression (with a lot of context as to why), and maybe see if we can tweak VVLs to emit a more specific text for the MSRTSS case.",
+      "parentUuid": "3bdac6c4_3415cb95",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
