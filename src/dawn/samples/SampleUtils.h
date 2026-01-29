@@ -33,6 +33,7 @@
 #endif  // __EMSCRIPTEN__
 
 #include <webgpu/webgpu_cpp.h>
+
 #include "partition_alloc/pointers/raw_ptr.h"
 
 bool InitSample(int argc, const char** argv);

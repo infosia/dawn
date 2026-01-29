@@ -475,7 +475,7 @@ MaybeError Buffer::MapInternal(bool isWrite, size_t offset, size_t size, const c
     //
     // https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12resource-map
     void* mappedData = mMappedData;
-    DAWN_TRY(CheckHRESULT(GetD3D12Resource()->Map(0, &range, &mappedData), contextInfo))
+    DAWN_TRY(CheckHRESULT(GetD3D12Resource()->Map(0, &range, &mappedData), contextInfo));
     mMappedData = mappedData;
 
     if (isWrite) {

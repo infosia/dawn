@@ -38,7 +38,6 @@
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/Serialization.h"
-
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "partition_alloc/pointers/raw_ref.h"
 

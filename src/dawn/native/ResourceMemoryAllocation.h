@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_RESOURCEMEMORYALLOCATION_H_
 
 #include <cstdint>
+
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {

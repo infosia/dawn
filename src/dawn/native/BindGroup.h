@@ -43,7 +43,6 @@
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/UsageValidationMode.h"
 #include "dawn/native/dawn_platform.h"
-
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
