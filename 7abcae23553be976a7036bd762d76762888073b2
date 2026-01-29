@@ -16,6 +16,109 @@
       "message": "pretty big change so I am asking for a vibe check before polish",
       "revId": "7abcae23553be976a7036bd762d76762888073b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c68bea01_95beed9f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 2441,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:56:06Z",
+      "side": 1,
+      "message": "Since the committee has already agreed that the proposal is ready for a spec PR I think we can just go straight to the final name to avoid a rename later.\n\n(of course that\u0027s assuming that the name doesn\u0027t get bikeshedded during the spec PR review)",
+      "fixSuggestions": [
+        {
+          "fixId": "8bd50212_a7250993",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/dawn.json",
+              "range": {
+                "startLine": 2441,
+                "startChar": 0,
+                "endLine": 2442,
+                "endChar": 0
+              },
+              "replacement": "            {\"value\": 60, \"name\": \"atomic vec2u min max\", \"tags\": [\"dawn\"]}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8082ee2c_53bd74cb",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:56:06Z",
+      "side": 1,
+      "message": "Discussed offline, toggle shouldn\u0027t be needed for this case.",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f245301_cd99703c",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:56:06Z",
+      "side": 1,
+      "message": "Unneeded now",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df44a65_2a5886cb",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:56:06Z",
+      "side": 1,
+      "message": "Add capability for the Int64 type here.",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8855628e_0c795e43",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T16:56:06Z",
+      "side": 1,
+      "message": "Add capability for the 64-bit atomic here and the `UMin` case below.",
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
