@@ -86,6 +86,7 @@ enum class Toggle {
     TimestampQuantization,
     ClearBufferBeforeResolveQueries,
     VulkanUseZeroInitializeWorkgroupMemoryExtension,
+    VulkanUse64BitIntAtomics,
     MetalRenderR8RG8UnormSmallMipToTempTexture,
     DisableBlobCache,
     D3D12ForceClearCopyableDepthStencilTextureOnCreation,

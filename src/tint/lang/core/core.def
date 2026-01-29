@@ -223,6 +223,8 @@ enum builtin_type {
   __modf_result_vec4_f32
 }
 
+type u64
+
 // https://gpuweb.github.io/gpuweb/wgsl/#attributes
 // Notes:
 //  * `diagnostic` is listed, even though it is a keyword, so it appears in suggested alternatives
@@ -800,6 +802,9 @@ implicit(C: iu32) fn textureStore(texture: texel_buffer<u32_texel_format, read_w
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage) fn atomicXor(ptr<S, atomic<T>, read_write>, T) -> T
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage) fn atomicExchange(ptr<S, atomic<T>, read_write>, T) -> T
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage) fn atomicCompareExchangeWeak(ptr<S, atomic<T>, read_write>, T, T) -> __atomic_compare_exchange_result<T>
+
+@stage("fragment", "compute") implicit(T: u64, S: storage) fn atomicStoreMax(ptr<S, atomic<T>, read_write>, T)
+@stage("fragment", "compute") implicit(T: u64, S: storage) fn atomicStoreMin(ptr<S, atomic<T>, read_write>, T)
 
 @must_use @stage("fragment", "compute") fn subgroupBallot(bool) -> vec4<u32>
 @must_use @stage("fragment", "compute") fn subgroupElect() -> bool
