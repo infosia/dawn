@@ -34,6 +34,24 @@
       "parentUuid": "2c13b71b_c4047bcc",
       "revId": "5b7d88d4c32324813dae651c7b9a86ac914525ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6b03a9d_3e58e7d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-01-29T18:39:43Z",
+      "side": 1,
+      "message": "I\u0027ll investigate today and revert by EoD if I can\u0027t find good solutions to both of those issues. IIRC we aren\u0027t really supposed to add service accounts to OWNERS files, instead using some other mechanism.",
+      "parentUuid": "870c5a4e_386466ed",
+      "revId": "5b7d88d4c32324813dae651c7b9a86ac914525ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
