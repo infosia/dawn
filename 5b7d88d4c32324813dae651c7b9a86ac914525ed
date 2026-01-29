@@ -52,6 +52,24 @@
       "parentUuid": "870c5a4e_386466ed",
       "revId": "5b7d88d4c32324813dae651c7b9a86ac914525ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea682147_61ffcb57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-29T19:01:35Z",
+      "side": 1,
+      "message": "Worked for ANGLE: https://chromium-review.googlesource.com/c/angle/angle/+/3075121",
+      "parentUuid": "a6b03a9d_3e58e7d4",
+      "revId": "5b7d88d4c32324813dae651c7b9a86ac914525ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
