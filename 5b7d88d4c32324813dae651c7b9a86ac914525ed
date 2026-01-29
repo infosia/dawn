@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c13b71b_c4047bcc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-01-29T14:29:22Z",
+      "side": 1,
+      "message": "Seems to be creating CLs fine now, great!\nhttps://dawn-review.googlesource.com/c/dawn/+/287598\n\nBut, looks like it can\u0027t trigger CQ, because the roller is not OWNER of infra/config 😞",
+      "revId": "5b7d88d4c32324813dae651c7b9a86ac914525ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
