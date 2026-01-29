@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d577536f_a9bf8659",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-29T20:18:44Z",
+      "side": 1,
+      "message": "u-nit: these are not suppressions these are variances of expected feature sets",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 29
+      },
+      "revId": "a9618a8cdab7df6f2c9fbc10b8700f983cd198a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
