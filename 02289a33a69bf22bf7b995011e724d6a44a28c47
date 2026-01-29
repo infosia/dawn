@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62a99532_3d9f4a27",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-01-29T06:18:55Z",
+      "side": 1,
+      "message": "It looks like this early check is not thread safe.\nAnother thread might update the completed serial before it fires the tracked events. Leading to `WaitAny` succeeds on one thread but the event is not yet marked as complete.\n\nThis also means the `WaitIsThreadSafe` path might not be truly thread safe.\n\nFYI @kylechar@google.com",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "02289a33a69bf22bf7b995011e724d6a44a28c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
