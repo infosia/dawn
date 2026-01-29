@@ -16,6 +16,40 @@
       "message": "Please pay special attention to this code, because I have limited experience with setting up Vulkan devices, so this is mostly a mashup of example/tutorial code and gemini suggestions.",
       "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "985e831d_6417a691",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T22:39:12Z",
+      "side": 1,
+      "message": "Did you check that this is enough to hit the Mesa functions that were are trying to test? I can imagine that some Vulkan drivers may defer work until a pipeline is created (similar to how Dawn does).",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd2ed8fc_6c131eeb",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-29T22:39:12Z",
+      "side": 1,
+      "message": "What\u0027s the reason to not return the error here? I believe returning an error here will not cause a fuzzer failure, but instead skip the case (and print out why with `--verbose`, which might be useful for debugging).",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
