@@ -33,6 +33,24 @@
       "message": "The test is called \"NoModify\" but the IR changes, is that expected?",
       "revId": "8d7d79949175e1aa003f4c4edab588b9aa92169c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1706ced0_074ba8f6",
+        "filename": "src/tint/lang/core/ir/transform/resource_table_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-01-29T18:14:01Z",
+      "side": 1,
+      "message": "I should fix the test name. Currently the transform assumes if the config files is attached then you need the storage buffer attached (i.e. it assumes if dawn says there is bindless info then the buffer will get attached even if unused).\n\nSo it \"modifies\" when there is no actual function changes as no get/has resource calls.",
+      "parentUuid": "e3a5d57d_ad42d1e7",
+      "revId": "8d7d79949175e1aa003f4c4edab588b9aa92169c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
