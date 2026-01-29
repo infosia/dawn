@@ -326,6 +326,12 @@ enable chromium_experimental_subgroup_matrix;
 enable subgroups;
 {{    end -}}
 
+
+{{- /* Emit enable chromium_experimental_atomic_vec2u_min_max 64 bit atomics*/ -}}
+{{-   if or (HasPrefix $builtin_name "atomicStoreMax") (HasPrefix $builtin_name "atomicStoreMin") }}
+enable chromium_experimental_atomic_vec2u_min_max;
+{{    end -}}
+
 {{- /* Emit 'enable chromium_experimental_resource_table' if required */ -}}
 {{-   if or (HasPrefix $builtin_name "getResource") (HasPrefix $builtin_name "hasResource")}}
 enable chromium_experimental_resource_table;
