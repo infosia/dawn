@@ -16,6 +16,24 @@
       "message": "Getting a first round of review. The failing test is timing out, and I am wondering whether it might just be a real timeout because it\u0027s doing some sort of exhaustive thing with the number of textures and with 3x the original amount, maybe it\u0027s actually taking too long?",
       "revId": "29f0b0b3286660c134b38daee63d5f2dd6a0efb5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9629be7_81046d06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-29T09:13:07Z",
+      "side": 1,
+      "message": "The number of combos is 786 which should be expensive but fine. Maybe add a suppression and assign to Intel to investigate?",
+      "parentUuid": "e3a3375c_a1d73a0d",
+      "revId": "29f0b0b3286660c134b38daee63d5f2dd6a0efb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
