@@ -126,6 +126,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2c50044_c88ddb9a",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-01-29T15:49:31Z",
+      "side": 1,
+      "message": "Sure but the solution suggested with `TrackUsage` is very similar to what would be needed for the remapping DD. If we want to unmap only with the ScopedRecordingContext, then we don\u0027t need to defer to the recording context but can instead do that in TrackUsage(RecordingContext) because each time we use a mappable buffer on a GPU operation, we have a recording context on hand since we are going to use it for the GPU operation.\n\nI don\u0027t have a windows box to give a try at this but I\u0027m 99% sure it would end up simpler than error handling everywhere.",
+      "parentUuid": "ba5186b7_cf7e5c46",
+      "revId": "71e1ed54660288c9d9ec95f4043a179ac31d4c5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd4bd70_76055509",
