@@ -63,7 +63,9 @@ TEST_F(HlslWriterTest, BuiltinSelectScalar) {
 void main() {
   int x = int(1);
   int y = int(2);
-  int w = ((true) ? (y) : (x));
+  int v = x;
+  int v_1 = y;
+  int w = ((true) ? (v_1) : (v));
 }
 
 )");
