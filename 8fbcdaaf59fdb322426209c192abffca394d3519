@@ -16,6 +16,24 @@
       "message": "This getter needs to match as well.",
       "revId": "8fbcdaaf59fdb322426209c192abffca394d3519",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a725f90_94a903b7",
+        "filename": "src/dawn/native/Surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-30T08:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9cf178_fea3a2a2",
+      "revId": "8fbcdaaf59fdb322426209c192abffca394d3519",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
