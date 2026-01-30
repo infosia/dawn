@@ -48,6 +48,26 @@ enum class NeedsDedicatedAllocation {
     Detect,
 };
 
+// Can be chained in RequestAdapterOptions
+struct RequestAdapterAndroidWebViewVulkanOptions : wgpu::ChainedStruct {
+    RequestAdapterAndroidWebViewVulkanOptions();
+
+    VkInstance instance;
+    VkPhysicalDevice physical_device;
+    VkDevice device;
+    VkQueue queue;
+    uint32_t graphics_queue_index;
+    uint32_t api_version;
+    const char* const* enabled_instance_extension_names;
+    uint32_t enabled_instance_extension_names_length;
+    const char* const* enabled_device_extension_names;
+    uint32_t enabled_device_extension_names_length;
+    // Only one of device_features and device_features_2 should be non-null.
+    // If both are null then no features are enabled.
+    VkPhysicalDeviceFeatures* device_features;
+    VkPhysicalDeviceFeatures2* device_features_2;
+};
+
 struct DAWN_NATIVE_EXPORT ExternalImageDescriptorVk : ExternalImageDescriptor {
   public:
     // The following members may be ignored if |ExternalImageDescriptor::isInitialized| is false

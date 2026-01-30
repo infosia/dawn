@@ -33,6 +33,7 @@
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/VulkanBackend.h"
 #include "dawn/native/vulkan/VulkanExtensions.h"
 
 namespace dawn::native::vulkan {
@@ -113,6 +114,7 @@ struct VulkanSurfaceInfo {
 };
 
 ResultOrError<VulkanGlobalInfo> GatherGlobalInfo(const VulkanFunctions& vkFunctions);
+VulkanGlobalInfo GatherGlobalInfoForAndroidWebView(const RequestAdapterAndroidWebViewVulkanOptions& options);
 ResultOrError<std::vector<VkPhysicalDevice>> GatherPhysicalDevices(
     VkInstance instance,
     const VulkanFunctions& vkFunctions);

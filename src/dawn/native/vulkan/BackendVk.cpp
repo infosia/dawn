@@ -330,13 +330,18 @@ const std::vector<VkPhysicalDevice>& VulkanInstance::GetVkPhysicalDevices() cons
 }
 
 // static
-ResultOrError<Ref<VulkanInstance>> VulkanInstance::Create(const InstanceBase* instance, ICD icd) {
+ResultOrError<Ref<VulkanInstance>> VulkanInstance::Create(const InstanceBase* instance, ICD icd,
+                                                          const RequestAdapterAndroidWebViewVulkanOptions* options) {
     Ref<VulkanInstance> vulkanInstance = AcquireRef(new VulkanInstance());
-    DAWN_TRY(vulkanInstance->Initialize(instance, icd));
+    DAWN_TRY(vulkanInstance->Initialize(instance, icd, options));
     return std::move(vulkanInstance);
 }
 
-MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd) {
+MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd,
+                                      const RequestAdapterAndroidWebViewVulkanOptions* androidWebViewOptions) {
+    if (androidWebViewOptions && icd != ICD::None) {
+        return DAWN_FORMAT_INTERNAL_ERROR("Cannot use RequestAdapterAndroidWebViewVulkanOptions and ICD.");
+    }
     // These environment variables need only be set while loading procs and gathering device
     // info.
     ScopedEnvironmentVar vkICDFilenames;
@@ -383,7 +388,11 @@ MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd) {
 
     DAWN_TRY(mFunctions.LoadGlobalProcs(mVulkanLib));
 
-    DAWN_TRY_ASSIGN(mGlobalInfo, GatherGlobalInfo(mFunctions));
+    if (androidWebViewOptions) {
+      mGlobalInfo = GatherGlobalInfoForAndroidWebView(*androidWebViewOptions);
+    } else {
+      DAWN_TRY_ASSIGN(mGlobalInfo, GatherGlobalInfo(mFunctions));
+    }
 
     if (mGlobalInfo.apiVersion < kRequiredVulkanVersion) {
         std::ostringstream versionError;
@@ -393,13 +402,17 @@ MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd) {
         return DAWN_INTERNAL_ERROR(versionError.str());
     }
 
-    VulkanGlobalKnobs usedGlobalKnobs = {};
-    DAWN_TRY_ASSIGN(usedGlobalKnobs, CreateVkInstance(instance));
-    *static_cast<VulkanGlobalKnobs*>(&mGlobalInfo) = usedGlobalKnobs;
+    if (androidWebViewOptions) {
+        mInstance = androidWebViewOptions->instance;
+    } else {
+        VulkanGlobalKnobs usedGlobalKnobs = {};
+        DAWN_TRY_ASSIGN(usedGlobalKnobs, CreateVkInstance(instance));
+        *static_cast<VulkanGlobalKnobs*>(&mGlobalInfo) = usedGlobalKnobs;
+    }
 
     DAWN_TRY(mFunctions.LoadInstanceProcs(mInstance, mGlobalInfo));
 
-    if (usedGlobalKnobs.HasExt(InstanceExt::DebugUtils)) {
+    if (mGlobalInfo.HasExt(InstanceExt::DebugUtils)) {
         DAWN_TRY(RegisterDebugUtils());
     }
 
@@ -554,6 +567,16 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     std::vector<Ref<PhysicalDeviceBase>> physicalDevices;
     InstanceBase* instance = GetInstance();
 
+    const RequestAdapterAndroidWebViewVulkanOptions* androidWebViewOptions =
+        options.Get<RequestAdapterAndroidWebViewVulkanOptions>();
+    if (androidWebViewOptions) {
+        if (options->forceFallbackAdapter) {
+            instance->ConsumedErrorAndWarnOnce(
+                DAWN_VALIDATION_ERROR("RequestAdapterAndroidWebViewVulkanOptions cannot be "
+                                      "combined with forceFallbackAdapter"));
+        }
+    }
+
     auto IsFallbackAdapter = [](const PhysicalDevice* physicalDevice) {
         // Swiftshader is the only fallback adapter that we currently have.
         if (gpu_info::IsGoogleSwiftshader(physicalDevice->GetVendorId(),
@@ -582,7 +605,7 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
                 [[maybe_unused]] bool hadError =
                     instance->ConsumedErrorAndWarnOnce([&]() -> MaybeError {
                         DAWN_TRY_ASSIGN(mVulkanInstances[icd],
-                                        VulkanInstance::Create(instance, icd));
+                                        VulkanInstance::Create(instance, icd, nullptr));
                         return {};
                     }());
             }

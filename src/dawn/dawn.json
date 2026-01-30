@@ -4026,7 +4026,8 @@
             {"value": 79, "name": "request adapter options angle virtualization group", "tags": ["dawn", "native"]},
             {"value": 80, "name": "resource table limits", "tags": ["dawn"]},
             {"value": 81, "name": "pipeline layout resource table", "tags": ["dawn"]},
-            {"value": 82, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]}
+            {"value": 82, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]},
+            {"value": 83, "name": "request adapter Android WebView Vulkan options", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
