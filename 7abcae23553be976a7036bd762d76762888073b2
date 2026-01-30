@@ -147,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da94636e_d9400c71",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2383,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-30T02:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6da4c85_550d0187",
+      "range": {
+        "startLine": 2383,
+        "startChar": 16,
+        "endLine": 2383,
+        "endChar": 30
+      },
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f245301_cd99703c",
@@ -265,6 +289,30 @@
       "writtenOn": "2026-01-29T18:41:18Z",
       "side": 1,
       "message": "You will need to fix this!",
+      "range": {
+        "startLine": 269,
+        "startChar": 80,
+        "endLine": 269,
+        "endChar": 95
+      },
+      "revId": "7abcae23553be976a7036bd762d76762888073b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "669fded7_7ec8e8ea",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-01-30T02:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c72fc48_68d50783",
       "range": {
         "startLine": 269,
         "startChar": 80,
