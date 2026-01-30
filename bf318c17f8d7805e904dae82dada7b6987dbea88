@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "521a4f85_d7c2e496",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-01-30T08:05:24Z",
+      "side": 1,
+      "message": "This generates lots of `ClangTidy\ncheck: modernize-avoid-c-style-cast C-style casts are discouraged; use static_cast (if needed, the cast may be redundant)`.",
+      "parentUuid": "f778a771_cded21fe",
+      "revId": "bf318c17f8d7805e904dae82dada7b6987dbea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0679d85_384bfda6",
