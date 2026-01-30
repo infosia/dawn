@@ -203,16 +203,16 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     // and used in texture copying. The virtual size is the one without paddings, which is not
     // required to be a multiple of the block size and used in texture sampling.
     // TODO(crbug.com/424536624): Return BlockExtent3D for these functions.
-    Extent3D GetMipLevelSingleSubresourcePhysicalSize(uint32_t level, Aspect aspect) const;
-    Extent3D GetMipLevelSingleSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
-    Extent3D ClampToMipLevelVirtualSize(uint32_t level,
-                                        Aspect aspect,
-                                        const Origin3D& origin,
-                                        const Extent3D& extent) const;
+    BlockExtent3D GetMipLevelSingleSubresourcePhysicalSize(uint32_t level, Aspect aspect) const;
+    TexelExtent3D GetMipLevelSingleSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
+    TexelExtent3D ClampToMipLevelVirtualSize(uint32_t level,
+                                             Aspect aspect,
+                                             const TexelOrigin3D& origin,
+                                             const TexelExtent3D& extent) const;
     // For 2d-array textures, these 2 functions keeps the array layers in contrast to
     // GetMipLevelSingleSubresource(Physical/Virtual)Size.
-    Extent3D GetMipLevelSubresourcePhysicalSize(uint32_t level, Aspect aspect) const;
-    Extent3D GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
+    BlockExtent3D GetMipLevelSubresourcePhysicalSize(uint32_t level, Aspect aspect) const;
+    TexelExtent3D GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect aspect) const;
 
     MaybeError Pin(wgpu::TextureUsage usage);
     void Unpin();

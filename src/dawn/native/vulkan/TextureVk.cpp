@@ -1175,10 +1175,10 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                     continue;
                 }
 
-                Extent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, aspects);
+                TexelExtent3D mipSize = GetMipLevelSingleSubresourceVirtualSize(level, aspects);
                 BeginRenderPassCmd beginCmd{};
-                beginCmd.width = mipSize.width;
-                beginCmd.height = mipSize.height;
+                beginCmd.width = uint32_t(mipSize.width);
+                beginCmd.height = uint32_t(mipSize.height);
 
                 TextureViewDescriptor viewDesc = {};
                 viewDesc.label = "Dawn_ClearTexture_View";
@@ -1191,7 +1191,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                         break;
                     case wgpu::TextureDimension::e3D:
                         viewDesc.dimension = wgpu::TextureViewDimension::e3D;
-                        depthSliceCount = mipSize.depthOrArrayLayers;
+                        depthSliceCount = uint32_t(mipSize.depthOrArrayLayers);
                         DAWN_ASSERT(layer == 0);
                         break;
                     case wgpu::TextureDimension::e1D:
@@ -1287,8 +1287,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                     range.aspects == Aspect::Plane1 || range.aspects == Aspect::Plane2);
         const TypedTexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(range.aspects).block;
 
-        BlockExtent3D largestMipSize = blockInfo.ToBlock(
-            GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, range.aspects));
+        BlockExtent3D largestMipSize =
+            GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, range.aspects);
 
         uint64_t bytesPerRow = Align(blockInfo.ToBytes(largestMipSize.width),
                                      device->GetOptimalBytesPerRowAlignment());
@@ -1304,8 +1304,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 std::vector<VkBufferImageCopy> regions;
                 for (uint32_t level = range.baseMipLevel;
                      level < range.baseMipLevel + range.levelCount; ++level) {
-                    BlockExtent3D copySize = blockInfo.ToBlock(
-                        GetMipLevelSingleSubresourcePhysicalSize(level, range.aspects));
+                    BlockExtent3D copySize =
+                        GetMipLevelSingleSubresourcePhysicalSize(level, range.aspects);
                     imageRange.baseMipLevel = level;
                     for (uint32_t layer = range.baseArrayLayer;
                          layer < range.baseArrayLayer + range.layerCount; ++layer) {
