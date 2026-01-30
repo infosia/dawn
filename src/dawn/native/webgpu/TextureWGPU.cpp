@@ -256,8 +256,8 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
         // For each mip level copy the texture to a buffer, map it, and write the buffer data for
         // that level.
         for (uint32_t mipLevel = 0; mipLevel < GetNumMipLevels(); ++mipLevel) {
-            auto size = TexelExtent3D(GetMipLevelSubresourcePhysicalSize(mipLevel, aspect));
-            auto blockSize = blockInfo.ToBlock(size);
+            auto blockSize = GetMipLevelSubresourcePhysicalSize(mipLevel, aspect);
+            auto texelSize = blockInfo.ToTexel(blockSize);
             uint32_t usedBytesPerRow = uint32_t(blockInfo.ToBytes(blockSize.width));
             uint32_t mappableBytesPerRow = RoundUp(usedBytesPerRow, 4);
 
@@ -275,9 +275,9 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
                         .rowsPerImage = uint32_t(blockSize.height),
                     }},
                     .size = {{
-                        .width = uint32_t(size.width),
-                        .height = uint32_t(size.height),
-                        .depthOrArrayLayers = uint32_t(size.depthOrArrayLayers),
+                        .width = uint32_t(texelSize.width),
+                        .height = uint32_t(texelSize.height),
+                        .depthOrArrayLayers = uint32_t(texelSize.depthOrArrayLayers),
                     }},
                     .dataSize = blockInfo.ToBytes(blockSize.width * blockSize.height *
                                                   blockSize.depthOrArrayLayers),
@@ -303,7 +303,7 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
                             {
                                 .x = 0,
                                 .y = uint32_t(blockInfo.ToTexelHeight(y)),
-                                .z = uint32_t(blockInfo.ToTexelHeight(z)),
+                                .z = uint32_t(blockInfo.ToTexelDepth(z)),
                             },
                         .aspect = ToWGPU(aspect),
                     };
@@ -317,7 +317,7 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
                         .buffer = copyBuffer,
                     };
                     WGPUExtent3D copySize{
-                        .width = uint32_t(blockInfo.ToTexelWidth(blockSize.width)),
+                        .width = uint32_t(texelSize.width),
                         .height = uint32_t(blockInfo.ToTexelHeight(blockRows)),
                         .depthOrArrayLayers = 1,
                     };

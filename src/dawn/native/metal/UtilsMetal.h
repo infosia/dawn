@@ -136,8 +136,6 @@ MaybeError EncodeMetalRenderPass(Device* device,
                                  CommandRecordingContext* commandContext,
                                  const RenderPassResourceUsage* resourceUsage,
                                  MTLRenderPassDescriptor* mtlRenderPass,
-                                 uint32_t width,
-                                 uint32_t height,
                                  EncodeInsideRenderPass encodeInside,
                                  BeginRenderPassCmd* renderPassCmd = nullptr);
 
@@ -153,8 +151,7 @@ id<MTLTexture> CreateTextureMtlForPlane(MTLTextureUsage mtlUsage,
 
 MaybeError EncodeEmptyMetalRenderPass(Device* device,
                                       CommandRecordingContext* commandContext,
-                                      MTLRenderPassDescriptor* mtlRenderPass,
-                                      Extent3D size);
+                                      MTLRenderPassDescriptor* mtlRenderPass);
 
 bool SupportCounterSamplingAtCommandBoundary(id<MTLDevice> device);
 bool SupportCounterSamplingAtStageBoundary(id<MTLDevice> device);

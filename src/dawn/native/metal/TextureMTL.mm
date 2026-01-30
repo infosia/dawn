@@ -32,6 +32,7 @@
 #include "dawn/common/IOSurfaceUtils.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
+#include "dawn/common/Range.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
@@ -590,9 +591,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                         }
                     }
 
-                    DAWN_TRY(EncodeEmptyMetalRenderPass(
-                        device, commandContext, descriptor,
-                        GetMipLevelSingleSubresourceVirtualSize(level, range.aspects)));
+                    DAWN_TRY(EncodeEmptyMetalRenderPass(device, commandContext, descriptor));
                 }
             }
         } else if (GetFormat().IsMultiPlanar()) {
@@ -615,16 +614,13 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                     [MTLRenderPassDescriptor renderPassDescriptor];
                 MTLRenderPassDescriptor* descriptor = descriptorRef.Get();
 
-                Extent3D aspectSize = GetMipLevelSingleSubresourcePhysicalSize(0, aspect);
-
                 descriptor.colorAttachments[0].texture = GetMTLTexture(aspect);
                 descriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
                 descriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
                 descriptor.colorAttachments[0].clearColor =
                     MTLClearColorMake(dClearColor, dClearColor, dClearColor, dClearColor);
 
-                DAWN_TRY(
-                    EncodeEmptyMetalRenderPass(device, commandContext, descriptor, aspectSize));
+                DAWN_TRY(EncodeEmptyMetalRenderPass(device, commandContext, descriptor));
             }
 
         } else {
@@ -637,8 +633,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                 NSRef<MTLRenderPassDescriptor> descriptor;
                 uint32_t attachment = 0;
 
-                uint32_t depth = GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
-                                     .depthOrArrayLayers;
+                TexelCount depth = GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
+                                       .depthOrArrayLayers;
 
                 for (uint32_t arrayLayer = range.baseArrayLayer;
                      arrayLayer < range.baseArrayLayer + range.layerCount; arrayLayer++) {
@@ -649,7 +645,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                         continue;
                     }
 
-                    for (uint32_t z = 0; z < depth; ++z) {
+                    for (TexelCount z : Range(depth)) {
                         if (descriptor == nullptr) {
                             // Note that this creates a descriptor that's autoreleased so we
                             // don't use AcquireNSRef
@@ -665,24 +661,21 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                             MTLClearColorMake(dClearColor, dClearColor, dClearColor, dClearColor);
                         [*descriptor colorAttachments][attachment].level = level;
                         [*descriptor colorAttachments][attachment].slice = arrayLayer;
-                        [*descriptor colorAttachments][attachment].depthPlane = z;
+                        [*descriptor colorAttachments][attachment].depthPlane = uint32_t(z);
 
                         attachment++;
 
                         if (attachment == kMaxColorAttachments) {
                             attachment = 0;
-                            DAWN_TRY(EncodeEmptyMetalRenderPass(
-                                device, commandContext, descriptor.Get(),
-                                GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)));
+                            DAWN_TRY(EncodeEmptyMetalRenderPass(device, commandContext,
+                                                                descriptor.Get()));
                             descriptor = nullptr;
                         }
                     }
                 }
 
                 if (descriptor != nullptr) {
-                    DAWN_TRY(EncodeEmptyMetalRenderPass(
-                        device, commandContext, descriptor.Get(),
-                        GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)));
+                    DAWN_TRY(EncodeEmptyMetalRenderPass(device, commandContext, descriptor.Get()));
                 }
             }
         }
@@ -696,8 +689,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
 
             // Computations for the bytes per row / image height are done using the physical size
             // so that enough data is reserved for compressed textures.
-            BlockExtent3D largestMipSize = blockInfo.ToBlock(
-                GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, aspect));
+            BlockExtent3D largestMipSize =
+                GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, aspect);
 
             BlockCount uploadBlocks =
                 largestMipSize.width * largestMipSize.height * largestMipSize.depthOrArrayLayers;
@@ -713,7 +706,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                     id<MTLBuffer> buffer = ToBackend(reservation.buffer)->GetMTLBuffer();
                     for (uint32_t level = range.baseMipLevel;
                          level < range.baseMipLevel + range.levelCount; ++level) {
-                        Extent3D virtualSize =
+                        TexelExtent3D virtualSize =
                             GetMipLevelSingleSubresourceVirtualSize(level, aspect);
 
                         for (uint32_t arrayLayer = range.baseArrayLayer;
@@ -726,19 +719,16 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                             }
 
                             MTLBlitOption blitOption = ComputeMTLBlitOption(aspect);
-                            [commandContext->EnsureBlit()
-                                     copyFromBuffer:buffer
-                                       sourceOffset:reservation.offsetInBuffer
-                                  sourceBytesPerRow:largestMipBytesPerRow
-                                sourceBytesPerImage:largestMipBytesPerImage
-                                         sourceSize:MTLSizeMake(virtualSize.width,
-                                                                virtualSize.height,
-                                                                virtualSize.depthOrArrayLayers)
-                                          toTexture:GetMTLTexture(aspect)
-                                   destinationSlice:arrayLayer
-                                   destinationLevel:level
-                                  destinationOrigin:MTLOriginMake(0, 0, 0)
-                                            options:blitOption];
+                            [commandContext->EnsureBlit() copyFromBuffer:buffer
+                                                            sourceOffset:reservation.offsetInBuffer
+                                                       sourceBytesPerRow:largestMipBytesPerRow
+                                                     sourceBytesPerImage:largestMipBytesPerImage
+                                                              sourceSize:ToMTLSize(virtualSize)
+                                                               toTexture:GetMTLTexture(aspect)
+                                                        destinationSlice:arrayLayer
+                                                        destinationLevel:level
+                                                       destinationOrigin:MTLOriginMake(0, 0, 0)
+                                                                 options:blitOption];
                         }
                     }
 

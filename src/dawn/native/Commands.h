@@ -210,6 +210,7 @@ struct TextureCopy {
 
     Ref<TextureBase> texture;
     uint32_t mipLevel;
+    // TODO(https://issues.chromium.org/424536624): Use BlockCount instead of TexelCount.
     TexelOrigin3D origin;  // Texels / array layer
     Aspect aspect;
 };

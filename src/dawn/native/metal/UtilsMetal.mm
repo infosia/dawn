@@ -803,8 +803,6 @@ MaybeError EncodeMetalRenderPass(Device* device,
                                  CommandRecordingContext* commandContext,
                                  const RenderPassResourceUsage* resourceUsage,
                                  MTLRenderPassDescriptor* mtlRenderPass,
-                                 uint32_t width,
-                                 uint32_t height,
                                  EncodeInsideRenderPass encodeInside,
                                  BeginRenderPassCmd* renderPassCmd) {
     // This function handles multiple workarounds. Because some cases requires multiple
@@ -869,8 +867,8 @@ MaybeError EncodeMetalRenderPass(Device* device,
         }
 
         if (workaroundUsed) {
-            DAWN_TRY(EncodeMetalRenderPass(device, commandContext, nullptr, mtlRenderPass, width,
-                                           height, std::move(encodeInside), renderPassCmd));
+            DAWN_TRY(EncodeMetalRenderPass(device, commandContext, nullptr, mtlRenderPass,
+                                           std::move(encodeInside), renderPassCmd));
 
             for (uint32_t i = 0; i < kMaxColorAttachments; ++i) {
                 if (originalAttachments[i].texture == nullptr) {
@@ -905,8 +903,8 @@ MaybeError EncodeMetalRenderPass(Device* device,
 
         // If we found a store + MSAA resolve we need to resolve in a different render pass.
         if (hasStoreAndMSAAResolve) {
-            DAWN_TRY(EncodeMetalRenderPass(device, commandContext, nullptr, mtlRenderPass, width,
-                                           height, std::move(encodeInside), renderPassCmd));
+            DAWN_TRY(EncodeMetalRenderPass(device, commandContext, nullptr, mtlRenderPass,
+                                           std::move(encodeInside), renderPassCmd));
 
             ResolveInAnotherRenderPass(commandContext, mtlRenderPass, resolveTextures);
             return {};
@@ -934,10 +932,9 @@ void MetalComputePassMakeResourcesResident(DeviceBase* device,
 
 MaybeError EncodeEmptyMetalRenderPass(Device* device,
                                       CommandRecordingContext* commandContext,
-                                      MTLRenderPassDescriptor* mtlRenderPass,
-                                      Extent3D size) {
+                                      MTLRenderPassDescriptor* mtlRenderPass) {
     return EncodeMetalRenderPass(
-        device, commandContext, nullptr, mtlRenderPass, size.width, size.height,
+        device, commandContext, nullptr, mtlRenderPass,
         [&](id<MTLRenderCommandEncoder>, BeginRenderPassCmd*) -> MaybeError { return {}; });
 }
 

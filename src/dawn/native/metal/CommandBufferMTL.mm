@@ -1155,8 +1155,7 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
 
                 EmptyOcclusionQueries emptyOcclusionQueries;
                 DAWN_TRY(EncodeMetalRenderPass(
-                    device, commandContext, &resourceUsage, descriptor.Get(), cmd->width,
-                    cmd->height,
+                    device, commandContext, &resourceUsage, descriptor.Get(),
                     [&](id<MTLRenderCommandEncoder> encoder,
                         BeginRenderPassCmd* cmd) -> MaybeError {
                         return this->EncodeRenderPass(
