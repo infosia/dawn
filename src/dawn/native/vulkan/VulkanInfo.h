@@ -35,6 +35,8 @@
 #include "src/dawn/native/Error.h"
 #include "src/dawn/native/vulkan/VulkanExtensions.h"
 
+#include "dawn/native/VulkanBackend.h"
+
 namespace dawn::native::vulkan {
 
 class PhysicalDevice;
@@ -120,10 +122,12 @@ struct VulkanSurfaceInfo {
 };
 
 ResultOrError<VulkanGlobalInfo> GatherGlobalInfo(const VulkanFunctions& vkFunctions);
+VulkanGlobalInfo GatherGlobalInfoForAndroidWebView(const RequestAdapterAndroidWebViewVulkanOptions& options);
 ResultOrError<std::vector<VkPhysicalDevice>> GatherPhysicalDevices(
     VkInstance instance,
     const VulkanFunctions& vkFunctions);
 ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDevice);
+DeviceExtSet GatherDeviceExtSetForAndroidWebView(const DeviceDescriptorAndroidWebViewVulkanOptions& options);
 ResultOrError<VulkanSurfaceInfo> GatherSurfaceInfo(const PhysicalDevice& physicalDevice,
                                                    VkSurfaceKHR surface);
 }  // namespace dawn::native::vulkan

@@ -51,6 +51,8 @@
 #include "src/dawn/platform/tracing/TraceEvent.h"
 #include "src/utils/compiler.h"
 
+#include "src/utils/log.h"
+
 namespace dawn::native::vulkan {
 
 namespace {
@@ -75,11 +77,13 @@ void DestroyCommandPoolAndBuffer(const VulkanFunctions& fn,
 }  // anonymous namespace
 
 // static
-ResultOrError<Ref<Queue>> Queue::Create(Device* device,
-                                        const QueueDescriptor* descriptor,
-                                        uint32_t family) {
+ResultOrError<Ref<Queue>> Queue::Create(
+    Device* device,
+    const QueueDescriptor* descriptor,
+    uint32_t family,
+    const DeviceDescriptorAndroidWebViewVulkanOptions* androidWebViewOptions) {
     Ref<Queue> queue = AcquireRef(new Queue(device, descriptor, family));
-    DAWN_TRY(queue->Initialize());
+    DAWN_TRY(queue->Initialize(androidWebViewOptions));
     return queue;
 }
 
@@ -88,11 +92,19 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor, uint32_t family)
 
 Queue::~Queue() {}
 
-MaybeError Queue::Initialize() {
+MaybeError Queue::Initialize(
+    const DeviceDescriptorAndroidWebViewVulkanOptions* androidWebViewOptions) {
     Device* device = ToBackend(GetDevice());
-    device->fn.GetDeviceQueue(device->GetVkDevice(), mQueueFamily, 0, &mQueue);
+    if (androidWebViewOptions) {
+        mQueue = androidWebViewOptions->queue;
+        // XXX PrepareRecordingContext
+    } else {
+        device->fn.GetDeviceQueue(device->GetVkDevice(), mQueueFamily, 0, &mQueue);
 
-    DAWN_TRY(PrepareRecordingContext());
+        DAWN_TRY(PrepareRecordingContext());
+    }
+dawn::WarningLog() << "boliu Queue::Initialize webview:" << !!androidWebViewOptions
+                   << " queue:" << mQueue;
 
     SetLabelImpl();
     return {};

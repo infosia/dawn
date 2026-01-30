@@ -69,7 +69,8 @@ class Device;
 // can delete the VkInstances that are not in use to avoid holding the discrete GPU active.
 class VulkanInstance : public RefCounted {
   public:
-    static ResultOrError<Ref<VulkanInstance>> Create(const InstanceBase* instance, ICD icd);
+    static ResultOrError<Ref<VulkanInstance>> Create(const InstanceBase* instance, ICD icd,
+                                                     const RequestAdapterAndroidWebViewVulkanOptions* options);
     ~VulkanInstance() override;
 
     const VulkanFunctions& GetFunctions() const;
@@ -86,7 +87,7 @@ class VulkanInstance : public RefCounted {
   private:
     VulkanInstance();
 
-    MaybeError Initialize(const InstanceBase* instance, ICD icd);
+    MaybeError Initialize(const InstanceBase* instance, ICD icd, const RequestAdapterAndroidWebViewVulkanOptions* options);
     ResultOrError<VulkanGlobalKnobs> CreateVkInstance(const InstanceBase* instance);
 
     MaybeError RegisterDebugUtils();
@@ -94,6 +95,7 @@ class VulkanInstance : public RefCounted {
     DynamicLib mVulkanLib;
     VulkanGlobalInfo mGlobalInfo = {};
     VkInstance mInstance = VK_NULL_HANDLE;
+    bool mUnownedInstance = false;
     VulkanFunctions mFunctions;
 
     VkDebugUtilsMessengerEXT mDebugUtilsMessenger = VK_NULL_HANDLE;

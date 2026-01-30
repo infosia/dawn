@@ -52,6 +52,8 @@ struct RequestAdapterOptionsAngleVirtualizationGroup;
 }
 
 namespace vulkan {
+struct DeviceDescriptorAndroidWebViewVulkanOptions;
+struct RequestAdapterAndroidWebViewVulkanOptions;
 struct YCbCrVulkanDescriptor;
 }
 
@@ -79,6 +81,14 @@ constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsGetGLProc
     wgpu::SType(WGPUSType_RequestAdapterOptionsGetGLProc);
 
 template <>
+constexpr inline wgpu::SType STypeForImpl<vulkan::RequestAdapterAndroidWebViewVulkanOptions> =
+    wgpu::SType(WGPUSType_RequestAdapterAndroidWebViewVulkanOptions);
+
+template <>
+constexpr inline wgpu::SType STypeForImpl<vulkan::DeviceDescriptorAndroidWebViewVulkanOptions> =
+    wgpu::SType(WGPUSType_DeviceDescriptorAndroidWebViewVulkanOptions);
+
+template <>
 constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsAngleVirtualizationGroup> =
     wgpu::SType(WGPUSType_RequestAdapterOptionsAngleVirtualizationGroup);
 
@@ -87,7 +97,13 @@ struct AdditionalExtensions<RequestAdapterOptions> {
     using List = AdditionalExtensionsList<const d3d::RequestAdapterOptionsLUID*,
                                           const d3d11::RequestAdapterOptionsD3D11Device*,
                                           const opengl::RequestAdapterOptionsGetGLProc*,
-                                          const opengl::RequestAdapterOptionsAngleVirtualizationGroup*>;
+                                          const opengl::RequestAdapterOptionsAngleVirtualizationGroup*,
+                                          const vulkan::RequestAdapterAndroidWebViewVulkanOptions*>;
+};
+
+template <>
+struct AdditionalExtensions<DeviceDescriptor> {
+    using List = AdditionalExtensionsList<const vulkan::DeviceDescriptorAndroidWebViewVulkanOptions*>;
 };
 
 template <>

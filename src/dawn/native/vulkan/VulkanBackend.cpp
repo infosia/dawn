@@ -56,6 +56,14 @@ DAWN_NATIVE_EXPORT PFN_vkVoidFunction GetInstanceProcAddr(WGPUDevice device, con
     return (*backendDevice->fn.GetInstanceProcAddr)(backendDevice->GetVkInstance(), pName);
 }
 
+RequestAdapterAndroidWebViewVulkanOptions::RequestAdapterAndroidWebViewVulkanOptions() {
+    sType = wgpu::SType::RequestAdapterAndroidWebViewVulkanOptions;
+}
+
+DeviceDescriptorAndroidWebViewVulkanOptions::DeviceDescriptorAndroidWebViewVulkanOptions() {
+    sType = wgpu::SType::DeviceDescriptorAndroidWebViewVulkanOptions;
+}
+
 #if DAWN_PLATFORM_IS(LINUX)
 ExternalImageDescriptorOpaqueFD::ExternalImageDescriptorOpaqueFD()
     : ExternalImageDescriptorFD(ExternalImageType::OpaqueFD) {}
