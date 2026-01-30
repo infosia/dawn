@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ecb837b_5e038b59",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-01-30T19:01:59Z",
+      "side": 1,
+      "message": "IIUC you need to add the centroid position interpolant both to the output of the vertex shader and the input of the fragment shader.\n\nBy this point in the Tint flow we have stripped the module down to a single entry point, so when processing the vertex shader we are not going to be able to look at the fragment shader to see if this interpolant is required. This suggests to me that we will need Dawn to tell us that this is needed, which is a little awkward but doable. Once Dawn is telling Tint that frag depth clamping is required, that maybe simplifies the tracking a bit since you will know up front that you need to add the input or output.\n\nBut maybe I\u0027ve missed something, because I don\u0027t see anything in this CL that tries to add the interpolated position to the vertex shader output.",
+      "parentUuid": "213ec958_78344e00",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
