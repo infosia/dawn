@@ -831,8 +831,9 @@ TEST_P(Type_AtomicSubType, Test) {
         EXPECT_EQ(res, Success) << res.Failure();
     } else {
         ASSERT_NE(res, Success);
-        EXPECT_THAT(res.Failure().reason,
-                    testing::HasSubstr("error: var: atomic subtype must be i32 or u32"))
+        EXPECT_THAT(
+            res.Failure().reason,
+            testing::HasSubstr("error: var: atomic subtype must be i32, u32 or u64 type is 'f16'"))
             << res.Failure();
     }
 }
