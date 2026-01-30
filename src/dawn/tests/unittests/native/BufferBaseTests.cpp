@@ -39,6 +39,7 @@
 #include "mocks/DawnMockTest.h"
 
 using testing::_;
+using testing::AnyOf;
 using testing::ByMove;
 using testing::Eq;
 using testing::HasSubstr;
@@ -288,13 +289,18 @@ TEST_F(BufferBaseThreadedTest, ConcurrentMapDestroy) {
                 Call(_, wgpu::ErrorType::Validation, HasSubstr(kValidationErrorMessage)))
         .WillOnce([&]() { errorEvent.Signal(); });
 
+    // The MapAsyncEvent will be scheduled so UnmapImpl() will always run. It's possible MapAsync()
+    // is successful, so FinalizeMapImpl() will run and then buffer gets unmapped from destroy.
+    // Alternatively, unmap can be called while the buffer is still PendingMap and MapAsync() is
+    // aborted. The test allows either order.
+    EXPECT_CALL(*mBufferMock.Get(), UnmapImpl);
     EXPECT_CALL(*mBufferMock.Get(), DestroyImpl);
-    // Map shouldn't complete since buffer is destroyed first.
-    EXPECT_CALL(*mBufferMock.Get(), FinalizeMapImpl).Times(0);
 
     std::thread mapThread([&]() {
         MockMapAsyncCallback cb;
-        EXPECT_CALL(cb, Call(Eq(wgpu::MapAsyncStatus::Aborted), _));
+        EXPECT_CALL(
+            cb,
+            Call(AnyOf(Eq(wgpu::MapAsyncStatus::Aborted), Eq(wgpu::MapAsyncStatus::Success)), _));
         mBuffer.MapAsync(wgpu::MapMode::Write, 0, kBufferSize, wgpu::CallbackMode::AllowSpontaneous,
                          cb.Callback());
     });
