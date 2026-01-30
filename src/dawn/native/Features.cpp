@@ -437,6 +437,10 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Support the \"enable chromium_experimental_subgroup_size_control;\" directive in WGSL.",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/tint/extensions/"
       "chromium_experimental_subgroup_size_control.md",
+      FeatureInfo::FeatureState::Experimental}},
+    {Feature::AtomicVec2uMinMax,
+     {"Support for 64-bit atomics via vec2<u32> types",
+      "https://github.com/Kangz/gpuweb/blob/bindless/proposals/atomic-64-min-max.md",
       FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace
