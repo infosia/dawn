@@ -79,6 +79,21 @@
             {"name": "compatible surface", "type": "surface", "optional": true}
         ]
     },
+    "request adapter Android WebView Vulkan options": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["request adapter options"],
+        "tags": ["dawn", "native"],
+        "members": [
+            {"name": "vk instance", "type": "void *"},
+            {"name": "vk physical device", "type": "void *"},
+            {"name": "vk device", "type": "void *"},
+            {"name": "vk queue", "type": "void *"},
+            {"name": "graphics queue index", "type": "uint32_t"},
+            {"name": "vk application info api version", "type": "uint32_t"},
+            {"name": "vk physical device feature2 ptr", "type": "void *"}
+        ]
+    },
     "request adapter WebXR options": {
         "category": "structure",
         "chained": "in",
@@ -4026,7 +4041,8 @@
             {"value": 79, "name": "request adapter options angle virtualization group", "tags": ["dawn", "native"]},
             {"value": 80, "name": "resource table limits", "tags": ["dawn"]},
             {"value": 81, "name": "pipeline layout resource table", "tags": ["dawn"]},
-            {"value": 82, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]}
+            {"value": 82, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]},
+            {"value": 83, "name": "request adapter Android WebView Vulkan options", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
