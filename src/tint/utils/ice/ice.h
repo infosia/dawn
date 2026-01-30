@@ -68,7 +68,7 @@ class InternalCompilerError {
     /// @param arg the argument to append to the ICE message
     /// @returns this object so calls can be chained
     template <typename T>
-    InternalCompilerError& operator<<(T&& arg) {
+    InternalCompilerError& operator<<(T&& arg) [[clang::lifetimebound]] {
         msg_ << std::forward<T>(arg);
         return *this;
     }
