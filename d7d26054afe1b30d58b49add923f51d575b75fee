@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "213ec958_78344e00",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-01-30T15:12:21Z",
+      "side": 1,
+      "message": "Thank you Dan! I\u0027ve rebased this CL so that we can resume properly the review of this file. \n\nFWIW, my previous comment still holds. I\u0027m confused :)",
+      "parentUuid": "adb088a6_23cddfa3",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
