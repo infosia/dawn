@@ -201,6 +201,7 @@ class Device final : public DeviceBase {
 
     VulkanDeviceInfo mDeviceInfo = {};
     VkDevice mVkDevice = VK_NULL_HANDLE;
+    bool mUnownedDevice = false;
     uint32_t mMainQueueFamily = 0;
 
     VkDescriptorSetLayout mResourceTableLayout = VK_NULL_HANDLE;

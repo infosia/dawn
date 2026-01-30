@@ -44,9 +44,11 @@ class Device;
 
 class Queue final : public QueueBase {
   public:
-    static ResultOrError<Ref<Queue>> Create(Device* device,
-                                            const QueueDescriptor* descriptor,
-                                            uint32_t family);
+    static ResultOrError<Ref<Queue>> Create(
+        Device* device,
+        const QueueDescriptor* descriptor,
+        uint32_t family,
+        const DeviceDescriptorAndroidWebViewVulkanOptions* androidWebViewOptions);
 
     VkQueue GetVkQueue() const;
 
@@ -61,7 +63,7 @@ class Queue final : public QueueBase {
     ~Queue() override;
     using QueueBase::QueueBase;
 
-    MaybeError Initialize();
+    MaybeError Initialize(const DeviceDescriptorAndroidWebViewVulkanOptions* androidWebViewOptions);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     bool HasPendingCommands() const override;

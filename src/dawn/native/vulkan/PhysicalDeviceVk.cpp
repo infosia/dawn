@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
@@ -154,6 +155,8 @@ bool PhysicalDevice::IsTextureCompressionASTCSliced3DSupported(VkFormat format) 
 }
 
 MaybeError PhysicalDevice::InitializeImpl() {
+dawn::WarningLog() << "boliu PhysicalDevice::InitializeImpl VkPhysicalDevice:" << mVkPhysicalDevice;
+
     DAWN_TRY_ASSIGN(mDeviceInfo, GatherDeviceInfo(*this));
 
     mDriverVersion = DecodeVulkanDriverVersion(mDeviceInfo.properties.vendorID,

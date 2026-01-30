@@ -100,6 +100,9 @@ Device::Device(AdapterBase* adapter,
       mDebugPrefix(GetNextDeviceDebugPrefix()) {}
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
+    const DeviceDescriptorAndroidWebViewVulkanOptions* androidWebViewOptions =
+        descriptor.Get<DeviceDescriptorAndroidWebViewVulkanOptions>();
+
     if (GetInstance()->IsBackendValidationEnabled() &&
         !IsToggleEnabled(Toggle::UseUserDefinedLabelsInBackend)) {
         // NOTE: If Vulkan backend validation is enabled then these labels must be set to associate
@@ -121,11 +124,18 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     // these two are set up, so that a failed initialization doesn't cause a crash in
     // DestroyImpl()
     {
-        VkPhysicalDevice vkPhysicalDevice = ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice();
-
-        VulkanDeviceKnobs usedDeviceKnobs = {};
-        DAWN_TRY_ASSIGN(usedDeviceKnobs, CreateDevice(vkPhysicalDevice));
-        *static_cast<VulkanDeviceKnobs*>(&mDeviceInfo) = usedDeviceKnobs;
+        if (androidWebViewOptions) {
+          mVkDevice = androidWebViewOptions->device;
+          mUnownedDevice = true;
+          mDeviceInfo.extensions = GatherDeviceExtSetForAndroidWebView(*androidWebViewOptions);
+          // XXX dawn uses universal family
+          mMainQueueFamily = androidWebViewOptions->graphics_queue_index;
+        } else {
+          VkPhysicalDevice vkPhysicalDevice = ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice();
+          VulkanDeviceKnobs usedDeviceKnobs = {};
+          DAWN_TRY_ASSIGN(usedDeviceKnobs, CreateDevice(vkPhysicalDevice));
+          *static_cast<VulkanDeviceKnobs*>(&mDeviceInfo) = usedDeviceKnobs;
+        }
 
         DAWN_TRY(functions->LoadDeviceProcs(GetVkInstance(), mVkDevice, mDeviceInfo));
 
@@ -143,6 +153,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mFramebufferCache = std::make_unique<FramebufferCache>(this);
     mRenderPassCache = std::make_unique<RenderPassCache>(this);
 
+    // XXX
     VkDeviceSize heapBlockSize =
         ResourceMemoryAllocator::GetHeapBlockSize(descriptor.Get<DawnDeviceAllocatorControl>());
     mResourceMemoryAllocator =
@@ -186,7 +197,8 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StartListeningForDeviceMessages(this);
 
     Ref<Queue> queue;
-    DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue, mMainQueueFamily));
+    DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue, mMainQueueFamily,
+                                         androidWebViewOptions));
 
     if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
         DAWN_TRY_ASSIGN(mResourceTableLayout, ResourceTable::MakeDescriptorSetLayout(this));
@@ -981,7 +993,9 @@ void Device::DestroyImpl(DestroyReason reason) {
     // because the function pointers might not have been loaded (and there is nothing to
     // destroy anyway).
     if (mDeleter == nullptr) {
-        fn.DestroyDevice(mVkDevice, nullptr);
+        if (!mUnownedDevice) {
+            fn.DestroyDevice(mVkDevice, nullptr);
+        }
         mVkDevice = VK_NULL_HANDLE;
         return;
     }
@@ -1025,7 +1039,9 @@ void Device::DestroyImpl(DestroyReason reason) {
     // The VkDevice is needed to destroy child objects, so it must be destroyed last after all
     // child objects have been deleted.
     DAWN_ASSERT(mVkDevice != VK_NULL_HANDLE);
-    fn.DestroyDevice(mVkDevice, nullptr);
+    if (!mUnownedDevice) {
+        fn.DestroyDevice(mVkDevice, nullptr);
+    }
     mVkDevice = VK_NULL_HANDLE;
 
     // No additonal Vulkan commands should be done by this device after this function. Check for any

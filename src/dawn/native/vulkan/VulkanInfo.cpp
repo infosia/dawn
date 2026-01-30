@@ -136,6 +136,23 @@ ResultOrError<VulkanGlobalInfo> GatherGlobalInfo(const VulkanFunctions& vkFuncti
     return std::move(info);
 }
 
+VulkanGlobalInfo GatherGlobalInfoForAndroidWebView(const RequestAdapterAndroidWebViewVulkanOptions& options) {
+    VulkanGlobalInfo info = {};
+    info.apiVersion = options.api_version;
+
+    absl::flat_hash_map<std::string, InstanceExt> knownExts = CreateInstanceExtNameMap();
+    for (size_t i = 0; i < options.enabled_instance_extension_names_length; ++i) {
+        const char* name = options.enabled_instance_extension_names[i];
+        auto it = knownExts.find(name);
+        if (it != knownExts.end()) {
+            info.extensions.set(it->second, true);
+        }
+    }
+
+    info.extensions = EnsureDependencies(info.extensions);
+    return info;
+}
+
 ResultOrError<std::vector<VkPhysicalDevice>> GatherPhysicalDevices(
     VkInstance instance,
     const VulkanFunctions& vkFunctions) {
@@ -400,6 +417,18 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
     // TODO(cwallez@chromium.org): gather info about formats
 
     return std::move(info);
+}
+
+DeviceExtSet GatherDeviceExtSetForAndroidWebView(const DeviceDescriptorAndroidWebViewVulkanOptions& options) {
+  DeviceExtSet extensions = {};
+  absl::flat_hash_map<std::string, DeviceExt> knownExts = CreateDeviceExtNameMap();
+  for (size_t i = 0; i < options.enabled_device_extension_names_length; ++i) {
+    auto it = knownExts.find(options.enabled_device_extension_names[i]);
+    if (it != knownExts.end()) {
+      extensions.set(it->second, true);
+    }
+  }
+  return extensions;
 }
 
 ResultOrError<VulkanSurfaceInfo> GatherSurfaceInfo(const PhysicalDevice& device,
