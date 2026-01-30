@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bec7cb3_9e3ac80f",
+        "filename": "src/dawn/tests/unittests/native/BufferBaseTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-01-30T20:58:34Z",
+      "side": 1,
+      "message": "nit. Instead of `EXPECT_CALL`s here, we could instead do `ON_CALL` that sets an enum state or something, then depending on the status in the callback, we can do am expect on that enum?",
+      "range": {
+        "startLine": 296,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 47
+      },
+      "revId": "1fc36a7fcf8752d18526a6902fa9b97e470f301c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
