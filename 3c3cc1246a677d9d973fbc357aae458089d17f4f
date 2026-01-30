@@ -16,6 +16,24 @@
       "message": "```suggestion\n            // a sample count of 1, the resolve mode can\u0027t be VK_RESOLVE_MODE_NONE.\n```",
       "revId": "3c3cc1246a677d9d973fbc357aae458089d17f4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3558a99e_cc59cd99",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-30T18:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7df18d0_63c70b5f",
+      "revId": "3c3cc1246a677d9d973fbc357aae458089d17f4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

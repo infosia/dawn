@@ -234,6 +234,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "814592fb_6c06815d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-30T18:30:31Z",
+      "side": 1,
+      "message": "Done. Validation removed.",
+      "parentUuid": "fc6a8e41_eddef84a",
+      "revId": "ec1768533e2b22c0e26cabbd4a899214eb757abe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f571375a_d8e0b2e4",

@@ -177,6 +177,24 @@
       "parentUuid": "454bfdaf_29018c7f",
       "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ee4b235_b4568273",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-01-30T18:30:31Z",
+      "side": 1,
+      "message": "Expanded the comments on the suppression to explain why, and filed https://gitlab.khronos.org/vulkan/vulkan/-/issues/4662\n\nI don\u0027t really expect it to gain much traction for the reasons Shahbaz gave, but at least we can say we did our due diligence. :)",
+      "parentUuid": "7505c727_8e4086f4",
+      "revId": "2939f8e718ddc4c83fc36970992180f3aa14ac3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
