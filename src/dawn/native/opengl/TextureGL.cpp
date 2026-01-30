@@ -436,7 +436,8 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
             const auto dimension = GetDimension();
             for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
                  ++level) {
-                Extent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
+                TexelExtent3D mipSize =
+                    GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color);
                 for (uint32_t layer = range.baseArrayLayer;
                      layer < range.baseArrayLayer + range.layerCount; ++layer) {
                     if (clearValue == TextureBase::ClearValue::Zero &&
@@ -446,13 +447,15 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                         continue;
                     }
                     if (gl.IsAtLeastGL(4, 4)) {
-                        DAWN_GL_TRY(gl, ClearTexSubImage(mHandle, static_cast<GLint>(level), 0, 0,
-                                                         static_cast<GLint>(layer), mipSize.width,
-                                                         mipSize.height, mipSize.depthOrArrayLayers,
-                                                         glFormat.format, glFormat.type,
-                                                         clearValue == TextureBase::ClearValue::Zero
-                                                             ? kClearColorDataBytes0.data()
-                                                             : kClearColorDataBytes255.data()));
+                        DAWN_GL_TRY(
+                            gl, ClearTexSubImage(mHandle, static_cast<GLint>(level), 0, 0,
+                                                 static_cast<GLint>(layer), uint32_t(mipSize.width),
+                                                 uint32_t(mipSize.height),
+                                                 uint32_t(mipSize.depthOrArrayLayers),
+                                                 glFormat.format, glFormat.type,
+                                                 clearValue == TextureBase::ClearValue::Zero
+                                                     ? kClearColorDataBytes0.data()
+                                                     : kClearColorDataBytes255.data()));
                         continue;
                     }
 
@@ -498,9 +501,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                     };
 
                     if (dimension == wgpu::TextureDimension::e3D) {
-                        uint32_t depth =
-                            GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
-                                .depthOrArrayLayers;
+                        uint32_t depth = uint32_t(mipSize.depthOrArrayLayers);
                         for (GLint z = 0; z < static_cast<GLint>(depth); ++z) {
                             DAWN_GL_TRY(gl, FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
                                                                     GetHandle(), level, z));
@@ -522,30 +523,20 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
         DAWN_ASSERT(range.aspects == Aspect::Color);
 
         // create temp buffer with clear color to copy to the texture image
-        const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
+        const TypedTexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
         DAWN_ASSERT(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
 
-        Extent3D largestMipSize =
+        BlockExtent3D largestMipSize =
             GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, Aspect::Color);
-        uint32_t bytesPerRow =
-            Align((largestMipSize.width / blockInfo.width) * blockInfo.byteSize, 4);
-
-        // Make sure that we are not rounding
-        DAWN_ASSERT(bytesPerRow % blockInfo.byteSize == 0);
-        DAWN_ASSERT(largestMipSize.height % blockInfo.height == 0);
-
-        uint64_t bufferSize64 = static_cast<uint64_t>(bytesPerRow) *
-                                (largestMipSize.height / blockInfo.height) *
-                                largestMipSize.depthOrArrayLayers;
-        if (bufferSize64 > std::numeric_limits<size_t>::max()) {
-            return DAWN_OUT_OF_MEMORY_ERROR("Unable to allocate buffer.");
-        }
-        size_t bufferSize = static_cast<size_t>(bufferSize64);
+        BlockCount uploadBlocks =
+            largestMipSize.width * largestMipSize.height * largestMipSize.depthOrArrayLayers;
+        uint64_t uploadSize = blockInfo.ToBytes(uploadBlocks);
+        uint32_t bytesPerRow = blockInfo.ToBytes(largestMipSize.width);
 
         dawn::native::BufferDescriptor descriptor = {};
         descriptor.mappedAtCreation = true;
         descriptor.usage = wgpu::BufferUsage::CopySrc;
-        descriptor.size = bufferSize;
+        descriptor.size = uploadSize;
 
         // We don't count the lazy clear of srcBuffer because it is an internal buffer.
         // TODO(natlee@microsoft.com): use Dynamic Uploader here for temp buffer
@@ -553,7 +544,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
         DAWN_TRY_ASSIGN(srcBuffer, Buffer::CreateInternalBuffer(device, &descriptor, false));
 
         // Fill the buffer with clear color
-        memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize);
+        memset(srcBuffer->GetMappedRange(0, uploadSize), clearColor, uploadSize);
         DAWN_TRY(srcBuffer->Unmap());
 
         DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, srcBuffer->GetHandle()));
@@ -568,9 +559,10 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
             TexelCopyBufferLayout dataLayout;
             dataLayout.offset = 0;
             dataLayout.bytesPerRow = bytesPerRow;
-            dataLayout.rowsPerImage = largestMipSize.height / blockInfo.height;
+            dataLayout.rowsPerImage =
+                uint32_t(largestMipSize.height);  // RowsPerImage is in blocks.
 
-            Extent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
+            BlockExtent3D mipSize = GetMipLevelSingleSubresourcePhysicalSize(level, Aspect::Color);
 
             for (uint32_t layer = range.baseArrayLayer;
                  layer < range.baseArrayLayer + range.layerCount; ++layer) {
@@ -582,7 +574,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                 }
 
                 textureCopy.origin.z = TexelCount{layer};
-                DAWN_TRY(DoTexSubImage(gl, textureCopy, 0, dataLayout, mipSize));
+                DAWN_TRY(DoTexSubImage(gl, textureCopy, 0, dataLayout, blockInfo.ToTexel(mipSize)));
             }
         }
         DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0));
