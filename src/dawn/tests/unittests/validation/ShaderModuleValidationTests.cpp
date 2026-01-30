@@ -978,6 +978,8 @@ const WGSLExtensionInfo kExtensions[] = {
     {"chromium_experimental_resource_table", true, {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}, {}},
     {"chromium_experimental_subgroup_size_control", true, {wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl}, {"subgroups"}}
 
+    // TODO add a test here?
+    
     // Currently the following WGSL extensions are not enabled under any situation.
     /*
     {"chromium_internal_relaxed_uniform_layout", true, {}},

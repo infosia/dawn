@@ -30,6 +30,7 @@
 #include <limits>
 #include <utility>
 
+#include "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.h"
 #include "src/tint/lang/wgsl/reader/lower/lower.h"
 #include "src/tint/lang/wgsl/reader/parser/parser.h"
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
@@ -59,7 +60,14 @@ Result<core::ir::Module> ProgramToLoweredIR(const Program& program,
     TINT_CHECK_RESULT_UNWRAP(ir, ProgramToIR(program));
     ir.ice_callback = ice_callback;
 
+    // TODO should condition on enabled?
+    auto res2 = AtomicVec2UToU64(ir);
+    if (res2 != Success) {
+        return res2.Failure();
+    }
     // Lower from WGSL-dialect to core-dialect
+
+    auto res = Lower(ir);
     TINT_CHECK_RESULT(Lower(ir));
 
     return ir;
