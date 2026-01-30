@@ -4037,7 +4037,8 @@
             {"value": 80, "name": "resource table limits", "tags": ["dawn"]},
             {"value": 81, "name": "pipeline layout resource table", "tags": ["dawn"]},
             {"value": 82, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]},
-            {"value": 83, "name": "dawn render pass color attachment render to single sampled", "tags": ["dawn", "deprecated"]}
+            {"value": 83, "name": "dawn render pass color attachment render to single sampled", "tags": ["dawn", "deprecated"]},
+            {"value": 84, "name": "request adapter Android WebView Vulkan options", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
