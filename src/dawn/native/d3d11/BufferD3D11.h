@@ -85,9 +85,9 @@ class Buffer : public BufferBase {
                            uint64_t destinationOffset);
 
     // Actually map the buffer when its last usage serial has passed.
-    MaybeError FinalizeMap(ScopedCommandRecordingContext* commandContext,
-                           ExecutionSerial completedSerial,
-                           wgpu::MapMode mode);
+    MaybeError MapReady(ScopedCommandRecordingContext* commandContext,
+                        ExecutionSerial completedSerial,
+                        wgpu::MapMode mode);
 
     bool IsCPUWritable() const;
     bool IsCPUReadable() const;
@@ -156,7 +156,8 @@ class Buffer : public BufferBase {
   protected:
     Buffer(DeviceBase* device,
            const UnpackedPtr<BufferDescriptor>& descriptor,
-           wgpu::BufferUsage internalMappableFlags);
+           wgpu::BufferUsage internalMappableFlags,
+           bool emulatePersistentMap);
     ~Buffer() override;
 
     void DestroyImpl(DestroyReason reason) override;
@@ -194,9 +195,13 @@ class Buffer : public BufferBase {
 
     // Internal usage indicating the native buffer supports mapping for read and/or write or not.
     const wgpu::BufferUsage mInternalMappableFlags;
+    const bool mEmulatePersistentMap;
     ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
     // Temporary storage for MapAtCreation when the lock cannot be acquired.
     std::unique_ptr<uint8_t[]> mMapAtCreationData;
+    // Flag to indicate the mapped data has been modified or not. This is to
+    // avoid copying the shadow copy when unnecessary.
+    bool mMappedDataModified = false;
 };
 
 // Buffer that can be used by GPU. It manages several copies of the buffer, each with its own
@@ -212,7 +217,8 @@ class GPUUsableBuffer final : public Buffer {
   public:
     GPUUsableBuffer(DeviceBase* device,
                     const UnpackedPtr<BufferDescriptor>& descriptor,
-                    D3D11_MAP mapWriteMode);
+                    D3D11_MAP mapWriteMode,
+                    bool emulatePersistentMap);
     ~GPUUsableBuffer() override;
 
     ResultOrError<ID3D11Buffer*> GetD3D11ConstantBuffer(
