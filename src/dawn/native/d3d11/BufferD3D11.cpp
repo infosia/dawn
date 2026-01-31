@@ -231,7 +231,8 @@ class UploadBuffer final : public Buffer {
     MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                              uint64_t offset,
                              const void* data,
-                             size_t size) override {
+                             size_t size,
+                             bool isClearing) override {
         const auto* src = static_cast<const uint8_t*>(data);
         std::copy(src, src + size, mUploadData.get() + offset);
         return {};
@@ -321,6 +322,7 @@ class StagingBuffer final : public Buffer {
                               size_t size,
                               Buffer* destination,
                               uint64_t destinationOffset) override {
+        DAWN_TRY(TrackUsage(commandContext, GetDevice()->GetQueue()->GetPendingCommandSerial()));
         return destination->CopyFromD3DInternal(commandContext, mD3d11Buffer.Get(), sourceOffset,
                                                 size, destinationOffset);
     }
@@ -330,6 +332,8 @@ class StagingBuffer final : public Buffer {
                                    uint64_t sourceOffset,
                                    size_t size,
                                    uint64_t destinationOffset) override {
+        DAWN_TRY(TrackUsage(commandContext, GetDevice()->GetQueue()->GetPendingCommandSerial()));
+
         D3D11_BOX srcBox;
         srcBox.left = static_cast<UINT>(sourceOffset);
         srcBox.top = 0;
@@ -352,7 +356,8 @@ class StagingBuffer final : public Buffer {
     MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                              uint64_t offset,
                              const void* data,
-                             size_t size) override {
+                             size_t size,
+                             bool isClearing) override {
         if (size == 0) {
             return {};
         }
@@ -527,6 +532,17 @@ void Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) 
     UnmapInternal(commandContext);
 }
 
+MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContext,
+                              ExecutionSerial pendingSerial) {
+    if (GetLastUsageSerial() == pendingSerial) {
+        return {};
+    }
+    // We need to unmap buffer before it can be used in the queue.
+    UnmapIfNeeded(commandContext);
+    MarkUsedInPendingCommands(pendingSerial);
+    return {};
+}
+
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
     DAWN_ASSERT((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
                 (mode == wgpu::MapMode::Read && IsCPUReadable()));
@@ -561,6 +577,11 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
                                wgpu::MapMode mode) {
     // Needn't map the buffer if this is for a previous mapAsync that was cancelled.
     if (completedSerial >= mMapReadySerial) {
+        // Trigger any deferred unmaps.
+        // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
+        // the previous map mode is the same as the current map mode.
+        UnmapIfNeeded(commandContext);
+
         // Map then initialize data using mapped pointer.
         // The mapped pointer is always writable because:
         // - If mode is Write, then it's already writable.
@@ -579,9 +600,9 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
 
     mMapReadySerial = kMaxExecutionSerial;
-    if (mMappedData && newState != BufferState::Destroyed) {
-        ToBackend(GetDevice()->GetQueue())->DeferUnmap(this);
-    }
+
+    // The actual unmap will be deferred until the buffer is used by the queue or we need to map
+    // again.
 }
 
 void* Buffer::GetMappedPointerImpl() {
@@ -600,12 +621,6 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl(reason);
 
-    if (reason != DestroyReason::CppDestructor) {
-        // Cancel any deferred unmap on this buffer. We don't need to do this if the buffer is
-        // destroyed in dtor. Because dtor won't be reached if the queue still holds a ref to this
-        // buffer in its pending unmap list.
-        ToBackend(GetDevice()->GetQueue())->CancelDeferredUnmap(this);
-    }
 }
 
 MaybeError Buffer::EnsureDataInitialized(const ScopedCommandRecordingContext* commandContext) {
@@ -699,7 +714,7 @@ MaybeError Buffer::ClearInternal(const ScopedCommandRecordingContext* commandCon
     // TODO(dawn:1705): use a reusable zero staging buffer to clear the buffer to avoid this CPU to
     // GPU copy.
     std::vector<uint8_t> clearData(size, clearValue);
-    return WriteInternal(commandContext, offset, clearData.data(), size);
+    return WriteInternal(commandContext, offset, clearData.data(), size, /*isClearing=*/true);
 }
 
 MaybeError Buffer::ClearPaddingInternal(const ScopedCommandRecordingContext* commandContext) {
@@ -1064,6 +1079,9 @@ MaybeError GPUUsableBuffer::SyncStorage(const ScopedCommandRecordingContext* com
     }
 
     DAWN_ASSERT(commandContext);
+
+    // Must not have pending unmap.
+    DAWN_CHECK(!mMappedData);
 
     if (dstStorage->SupportsCopyDst()) {
         commandContext->CopyResource(dstStorage->GetD3D11Buffer(),
@@ -1461,11 +1479,6 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
                      ->CopyToInternal(commandContext,
                                       /*sourceOffset=*/0,
                                       /*size=*/size, this, offset));
-        // WriteInternal() might not call MarkUsedInPendingCommands() if the staging buffer is
-        // mappable. But we need to mark buffer as being used for CopyToInternal().
-        // TODO(crbug.com/345471009): Consider whether it's OK to change CopyToInternal() to
-        // automatically trigger MarkUsedInPendingCommands().
-        stagingBuffer->MarkUsedInPendingCommands();
     }
     ToBackend(GetDevice())->ReturnStagingBuffer(std::move(stagingBuffer));
 
@@ -1475,26 +1488,33 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
 MaybeError GPUUsableBuffer::WriteInternal(const ScopedCommandRecordingContext* commandContext,
                                           uint64_t offset,
                                           const void* data,
-                                          size_t size) {
+                                          size_t size,
+                                          bool isClearing) {
     if (size == 0) {
         return {};
     }
 
-    // Map the buffer if it is possible, so WriteInternal() can write the mapped memory
+    // Map the buffer if it is possible, so WriteInternal() can clear the mapped memory
     // directly.
-    if (IsCPUWritable() &&
-        GetLastUsageSerial() <= GetDevice()->GetQueue()->GetCompletedCommandSerial()) {
+    // TODO(crbug.com/345471009): Consider mapping the buffer for non-clearing writes when
+    // it's not in use by the GPU. This would avoid allocating additional GPU storage.
+    // However, checking GetLastUsageSerial() is unreliable here because Queue::Submit()
+    // may have already updated it before entering this function. In practice, this is
+    // uncommon for mappable buffers since users typically update them via MapAsync when
+    // they know the buffer is idle.
+    if (IsCPUWritable() && isClearing) {
         ScopedMap scopedMap;
         DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
 
         DAWN_ASSERT(scopedMap.GetMappedData());
         memcpy(scopedMap.GetMappedData() + offset, data, size);
+
         return {};
     }
 
     // Mark the buffer as used in pending commands if the mapping path above wasn't taken.
     // Mapped writes complete synchronously and don't require tracking.
-    MarkUsedInPendingCommands();
+    DAWN_TRY(TrackUsage(commandContext, GetDevice()->GetQueue()->GetPendingCommandSerial()));
 
     // WriteInternal() can be called with GetAllocatedSize(). We treat it as a full buffer write
     // as well.
@@ -1554,6 +1574,8 @@ MaybeError GPUUsableBuffer::CopyToInternal(const ScopedCommandRecordingContext* 
                                            size_t size,
                                            Buffer* destination,
                                            uint64_t destinationOffset) {
+    DAWN_TRY(TrackUsage(commandContext, GetDevice()->GetQueue()->GetPendingCommandSerial()));
+
     ID3D11Buffer* d3d11SourceBuffer = mLastUpdatedStorage->GetD3D11Buffer();
 
     return destination->CopyFromD3DInternal(commandContext, d3d11SourceBuffer, sourceOffset, size,
@@ -1565,6 +1587,8 @@ MaybeError GPUUsableBuffer::CopyFromD3DInternal(const ScopedCommandRecordingCont
                                                 uint64_t sourceOffset,
                                                 size_t size,
                                                 uint64_t destinationOffset) {
+    DAWN_TRY(TrackUsage(commandContext, GetDevice()->GetQueue()->GetPendingCommandSerial()));
+
     D3D11_BOX srcBox;
     srcBox.left = static_cast<UINT>(sourceOffset);
     srcBox.top = 0;
