@@ -357,8 +357,8 @@ MaybeError Queue::CheckAndMapReadyBuffers(ExecutionSerial completedSerial) {
     commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return mPendingMapBuffers.Use([&](auto pendingMapBuffers) -> MaybeError {
         for (const auto& bufferEntry : pendingMapBuffers->IterateUpTo(completedSerial)) {
-            DAWN_TRY(bufferEntry.buffer->FinalizeMap(&commandContext, completedSerial,
-                                                     bufferEntry.mode));
+            DAWN_TRY(
+                bufferEntry.buffer->MapReady(&commandContext, completedSerial, bufferEntry.mode));
         }
         pendingMapBuffers->ClearUpTo(completedSerial);
         return {};

@@ -332,6 +332,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     }
     deviceToggles->Default(Toggle::UseBlitForT2B, true);
     deviceToggles->Default(Toggle::UseBlitForB2T, true);
+    deviceToggles->Default(Toggle::PersistentMapEmulation, true);
 
     auto deviceId = GetDeviceId();
     auto vendorId = GetVendorId();
