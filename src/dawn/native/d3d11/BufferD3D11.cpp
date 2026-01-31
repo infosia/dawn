@@ -505,7 +505,7 @@ bool Buffer::IsCPUReadable() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    DAWN_ASSERT(IsCPUWritable());
+    DAWN_ASSERT(IsCPUWritableAtCreation());
     std::optional<ScopedCommandRecordingContext> maybeCommandContext =
         ToBackend(GetDevice()->GetQueue())
             ->TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
@@ -902,7 +902,15 @@ GPUUsableBuffer::GPUUsableBuffer(DeviceBase* device,
                                  D3D11_MAP mapWriteMode)
     : Buffer(device,
              descriptor,
-             /*internalMappableFlags=*/descriptor->usage & kMappableBufferUsages),
+             /*internalMappableFlags=*/
+             [](const UnpackedPtr<BufferDescriptor>& descriptor) {
+                 wgpu::BufferUsage mappableFlags = descriptor->usage & kMappableBufferUsages;
+                 if (descriptor->usage & wgpu::BufferUsage::MapRead) {
+                     // Staging buffer can be both mapped read & write.
+                     mappableFlags |= wgpu::BufferUsage::MapWrite;
+                 }
+                 return mappableFlags;
+             }(descriptor)),
       mD3DMapWriteMode(mapWriteMode) {}
 
 GPUUsableBuffer::~GPUUsableBuffer() = default;
@@ -1013,6 +1021,7 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
     // Special storage for staging.
     if (IsMappable(usagesToHandle)) {
         DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(StorageType::Staging));
+        mCPUWritableStorage = mLastUpdatedStorage;
     }
 
     return {};
@@ -1197,19 +1206,24 @@ MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* com
 
     D3D11_MAP mapType;
     Storage* storage;
+
     if (mode == wgpu::MapMode::Write) {
-        DAWN_ASSERT(!mCPUWritableStorage->IsStaging());
-        mapType = mD3DMapWriteMode;
         storage = mCPUWritableStorage;
     } else {
+        // If buffer has MapRead usage, a staging storage should already be created in
+        // InitializeInternal().
+        storage = mStorages[StorageType::Staging].Get();
+    }
+
+    if (storage->IsStaging()) {
         // Always map buffer with D3D11_MAP_READ_WRITE if possible even for mapping
         // wgpu::MapMode:Read, because we need write permission to initialize the buffer.
         // TODO(dawn:1705): investigate the performance impact of mapping with
         // D3D11_MAP_READ_WRITE.
         mapType = D3D11_MAP_READ_WRITE;
-        // If buffer has MapRead usage, a staging storage should already be created in
-        // InitializeInternal().
-        storage = mStorages[StorageType::Staging].Get();
+    } else {
+        DAWN_ASSERT(mode == wgpu::MapMode::Write);
+        mapType = mD3DMapWriteMode;
     }
 
     DAWN_ASSERT(storage);
