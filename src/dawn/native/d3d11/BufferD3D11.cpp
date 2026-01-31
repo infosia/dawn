@@ -159,6 +159,15 @@ bool CanUseCPUUploadBuffer(const Device* device, wgpu::BufferUsage usage, size_t
 
 constexpr size_t kConstantBufferUpdateAlignment = 16;
 
+bool ShouldEnablePersistentMapEmulation(DeviceBase* device, wgpu::BufferUsage internalUsage) {
+    if (!device->IsToggleEnabled(Toggle::PersistentMapEmulation)) {
+        return false;
+    }
+    wgpu::BufferUsage mappableUsage = internalUsage & kMappableBufferUsages;
+    // Only enable if buffer has MapRead OR MapWrite, but not both
+    return mappableUsage != wgpu::BufferUsage::None && mappableUsage != kMappableBufferUsages;
+}
+
 }  // namespace
 
 // For CPU-to-GPU upload buffers(CopySrc|MapWrite), they can be emulated in the system memory, and
@@ -168,7 +177,8 @@ class UploadBuffer final : public Buffer {
     UploadBuffer(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor)
         : Buffer(device,
                  descriptor,
-                 /*internalMappableFlags=*/kMappableBufferUsages) {}
+                 /*internalMappableFlags=*/kMappableBufferUsages,
+                 /*emulatePersistentMap=*/false) {}
     ~UploadBuffer() override = default;
 
   private:
@@ -245,8 +255,13 @@ class UploadBuffer final : public Buffer {
 // Buffer that supports mapping and copying.
 class StagingBuffer final : public Buffer {
   public:
-    StagingBuffer(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor)
-        : Buffer(device, descriptor, /*internalMappableFlags=*/kMappableBufferUsages) {}
+    StagingBuffer(DeviceBase* device,
+                  const UnpackedPtr<BufferDescriptor>& descriptor,
+                  bool emulatePersistentMap)
+        : Buffer(device,
+                 descriptor,
+                 /*internalMappableFlags=*/kMappableBufferUsages,
+                 emulatePersistentMap) {}
 
   private:
     void DestroyImpl(DestroyReason reason) override {
@@ -416,11 +431,12 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
         ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size);
     bool useUploadBuffer = allowUploadBufferEmulation;
     useUploadBuffer &= CanUseCPUUploadBuffer(device, actualUsage, descriptor->size);
+    const bool emulatePersistentMap = ShouldEnablePersistentMapEmulation(device, actualUsage);
     Ref<Buffer> buffer;
     if (useUploadBuffer) {
         buffer = AcquireRef(new UploadBuffer(device, descriptor));
     } else if (IsStaging(actualUsage)) {
-        buffer = AcquireRef(new StagingBuffer(device, descriptor));
+        buffer = AcquireRef(new StagingBuffer(device, descriptor, emulatePersistentMap));
     } else {
         const auto& devInfo = ToBackend(device->GetPhysicalDevice())->GetDeviceInfo();
         // Use D3D11_MAP_WRITE_NO_OVERWRITE when possible to guarantee driver that we don't
@@ -429,7 +445,8 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
         D3D11_MAP mapWriteMode = devInfo.supportsMapNoOverwriteDynamicBuffers
                                      ? D3D11_MAP_WRITE_NO_OVERWRITE
                                      : D3D11_MAP_WRITE;
-        buffer = AcquireRef(new GPUUsableBuffer(device, descriptor, mapWriteMode));
+        buffer =
+            AcquireRef(new GPUUsableBuffer(device, descriptor, mapWriteMode, emulatePersistentMap));
     }
     DAWN_TRY(buffer->Initialize(descriptor->mappedAtCreation, commandContext));
     return buffer;
@@ -437,8 +454,11 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
 
 Buffer::Buffer(DeviceBase* device,
                const UnpackedPtr<BufferDescriptor>& descriptor,
-               wgpu::BufferUsage internalMappableFlags)
-    : BufferBase(device, descriptor), mInternalMappableFlags(internalMappableFlags) {}
+               wgpu::BufferUsage internalMappableFlags,
+               bool emulatePersistentMap)
+    : BufferBase(device, descriptor),
+      mInternalMappableFlags(internalMappableFlags),
+      mEmulatePersistentMap(emulatePersistentMap) {}
 
 MaybeError Buffer::Initialize(bool mappedAtCreation,
                               const ScopedCommandRecordingContext* commandContext) {
@@ -570,12 +590,32 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
     // We need to unmap buffer before it can be used in the queue.
     DAWN_TRY(UnmapIfNeeded(commandContext));
     MarkUsedInPendingCommands(pendingSerial);
+
+    // If persistent map emulation is enabled, track the buffer to be re-mapped after GPU usage.
+    if (mEmulatePersistentMap) {
+        // Deduce map mode from buffer's mappable usage.
+        wgpu::MapMode mode = IsCPUWritable() ? wgpu::MapMode::Write : wgpu::MapMode::Read;
+        mMapReadySerial = pendingSerial;
+        ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, pendingSerial);
+    }
+
     return {};
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
     DAWN_ASSERT((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
                 (mode == wgpu::MapMode::Read && IsCPUReadable()));
+
+    // With persistent map emulation, the buffer will be actually mapped/unmapped at queue
+    // boundaries, so MapAsync is a no-op.
+    if (mEmulatePersistentMap) {
+        // Lazily do the 1st map if the buffer is not used in any queue yet.
+        if (GetLastUsageSerial() == kBeginningOfGPUTime && !mMappedData) {
+            DAWN_TRY(MapAtCreationImpl());
+        }
+        return {};
+    }
+
     auto deviceGuard = GetDevice()->GetGuard();
 
     mMapReadySerial = GetLastUsageSerial();
@@ -588,21 +628,39 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     } else {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
                                   ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
-        DAWN_TRY(FinalizeMap(&commandContext, completedSerial, mode));
+        DAWN_TRY(MapReady(&commandContext, completedSerial, mode));
     }
 
     return {};
 }
 
-MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
-    // TODO(crbug.com/440536255): See if FinalizeMap() below can be replaced with this generic
-    // implementation.
-    return {};
-}
+// The difference between FinalizeMapImpl and MapReady is that:
+// - FinalizeMapImpl() is triggered by front-end's serial control.
+//   - It's called after Queue::CheckAndUpdateCompletedSerials() and before user's mapping callback.
+//   - FinalizeMapImpl() will always be called  for each MapAsync regardless of whether persistent
+//   map emulation is enabled or not.
+// - MapReady() is triggered by Queue::CheckAndUpdateCompletedSerials().
+//   - If persistent map is disabled, it's scheduled for each MapAsync.
+//   - else, it's scheduled once after the queue finishes using the buffer.
+MaybeError Buffer::MapReady(ScopedCommandRecordingContext* commandContext,
+                            ExecutionSerial completedSerial,
+                            wgpu::MapMode mode) {
+    // Skip mapping if buffer is already destroyed.
+    // TODO(crbug.com/422741977): This relies on the fact that Destroy and
+    // Queue::CheckAndMapReadyBuffers() are synchronized by the device lock. In future, if we remove
+    // the device lock from Destroy(), we will need a proper synchronization here.
+    if (!IsAlive()) {
+        return {};
+    }
 
-MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
-                               ExecutionSerial completedSerial,
-                               wgpu::MapMode mode) {
+    // If the buffer was used again after the remap was scheduled, skip this remap.
+    // This should only happen with persistent map emulation where the buffer is scheduled to be
+    // re-mapped, but then used again in a subsequent submit before the original serial completed.
+    if (completedSerial < GetLastUsageSerial()) {
+        DAWN_ASSERT(mEmulatePersistentMap);
+        return {};
+    }
+
     // Needn't map the buffer if this is for a previous mapAsync that was cancelled.
     if (completedSerial >= mMapReadySerial) {
         // Trigger any deferred unmaps.
@@ -617,15 +675,31 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
         // D3D11_MAP_READ_WRITE will be used, hence the mapped pointer will also be writable.
         // TODO(dawn:1705): make sure the map call is not blocked by the GPU operations.
         DAWN_TRY(MapInternal(commandContext, mode));
-
-        DAWN_TRY(EnsureDataInitialized(commandContext));
     }
+
+    return {};
+}
+
+MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
+    if (newState == BufferState::MappedAtCreation) {
+        return {};
+    }
+
+    DAWN_ASSERT(mMappedData);
+
+    // Ensure data is initialized after a MapAsync event completes.
+    DAWN_TRY(EnsureDataInitialized(nullptr));
 
     return {};
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
+
+    // With persistent map emulation, the buffer stays mapped, so Unmap is a no-op.
+    if (mEmulatePersistentMap) {
+        return;
+    }
 
     mMapReadySerial = kMaxExecutionSerial;
 
@@ -910,18 +984,21 @@ class GPUUsableBuffer::Storage : public RefCounted, NonCopyable {
 // GPUUsableBuffer
 GPUUsableBuffer::GPUUsableBuffer(DeviceBase* device,
                                  const UnpackedPtr<BufferDescriptor>& descriptor,
-                                 D3D11_MAP mapWriteMode)
-    : Buffer(device,
-             descriptor,
-             /*internalMappableFlags=*/
-             [](const UnpackedPtr<BufferDescriptor>& descriptor) {
-                 wgpu::BufferUsage mappableFlags = descriptor->usage & kMappableBufferUsages;
-                 if (descriptor->usage & wgpu::BufferUsage::MapRead) {
-                     // Staging buffer can be both mapped read & write.
-                     mappableFlags |= wgpu::BufferUsage::MapWrite;
-                 }
-                 return mappableFlags;
-             }(descriptor)),
+                                 D3D11_MAP mapWriteMode,
+                                 bool emulatePersistentMap)
+    : Buffer(
+          device,
+          descriptor,
+          /*internalMappableFlags=*/
+          [](const UnpackedPtr<BufferDescriptor>& descriptor) {
+              wgpu::BufferUsage mappableFlags = descriptor->usage & kMappableBufferUsages;
+              if (descriptor->usage & wgpu::BufferUsage::MapRead) {
+                  // Staging buffer can be both mapped read & write.
+                  mappableFlags |= wgpu::BufferUsage::MapWrite;
+              }
+              return mappableFlags;
+          }(descriptor),
+          emulatePersistentMap),
       mD3DMapWriteMode(mapWriteMode) {}
 
 GPUUsableBuffer::~GPUUsableBuffer() = default;
