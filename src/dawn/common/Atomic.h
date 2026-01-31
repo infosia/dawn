@@ -44,6 +44,9 @@ class Atomic {
   public:
     Atomic() = default;
     explicit Atomic(T value) : mValue(value) {}
+    Atomic(std::nullptr_t)
+        requires std::is_pointer_v<T>
+        : mValue(nullptr) {}
 
     Atomic(const Atomic&) = delete;
 
