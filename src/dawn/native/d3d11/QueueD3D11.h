@@ -46,10 +46,9 @@ class Queue : public d3d::Queue {
   public:
     static ResultOrError<Ref<Queue>> Create(Device* device, const QueueDescriptor* descriptor);
 
-    ResultOrError<ScopedCommandRecordingContext> GetScopedPendingCommandContext(
-        SubmitMode submitMode,
-        bool lockD3D11Scope = true);
-    ResultOrError<ScopedSwapStateCommandRecordingContext> GetScopedSwapStatePendingCommandContext(
+    ScopedCommandRecordingContext GetScopedPendingCommandContext(SubmitMode submitMode,
+                                                                 bool lockD3D11Scope = true);
+    ScopedSwapStateCommandRecordingContext GetScopedSwapStatePendingCommandContext(
         SubmitMode submitMode);
     virtual MaybeError NextSerial() = 0;
 
