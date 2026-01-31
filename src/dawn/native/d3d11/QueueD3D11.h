@@ -62,13 +62,6 @@ class Queue : public d3d::Queue {
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
 
-    // Defer buffer unmap until next time GetScopedPendingCommandContext() or
-    // GetScopedSwapStatePendingCommandContext() is called.
-    void DeferUnmap(Ref<Buffer>&& buffer);
-
-    // Cancel a deferred unmap for the given buffer.
-    void CancelDeferredUnmap(Buffer* buffer);
-
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
   protected:
@@ -104,9 +97,6 @@ class Queue : public d3d::Queue {
     // Check all pending map buffers, and actually map the ready ones.
     MaybeError CheckAndMapReadyBuffers(ExecutionSerial completedSerial);
 
-    // Perform deferred unmaps on pending buffers.
-    void PerformDeferredUnmaps(const ScopedCommandRecordingContext* commandContext);
-
     ComPtr<ID3D11Fence> mFence;
     Ref<SharedFence> mSharedFence;
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
@@ -117,27 +107,7 @@ class Queue : public d3d::Queue {
         wgpu::MapMode mode;
     };
 
-    // Hash and equality functors for Ref<Buffer> with heterogeneous lookup support
-    // This allows erasing using raw Buffer* without creating a Ref<>
-    struct BufferRefHash {
-        using is_transparent = void;
-
-        size_t operator()(const Ref<Buffer>& ref) const { return std::hash<Buffer*>{}(ref.Get()); }
-        size_t operator()(Buffer* ptr) const { return std::hash<Buffer*>{}(ptr); }
-    };
-    struct BufferRefEqual {
-        using is_transparent = void;
-
-        bool operator()(const Ref<Buffer>& a, const Ref<Buffer>& b) const {
-            return a.Get() == b.Get();
-        }
-        bool operator()(const Ref<Buffer>& a, Buffer* b) const { return a.Get() == b; }
-        bool operator()(Buffer* a, const Ref<Buffer>& b) const { return a == b.Get(); }
-    };
-
     MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
-    MutexProtected<absl::flat_hash_set<Ref<Buffer>, BufferRefHash, BufferRefEqual>>
-        mPendingUnmapBuffers;
 };
 
 }  // namespace dawn::native::d3d11

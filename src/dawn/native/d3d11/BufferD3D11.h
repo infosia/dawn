@@ -93,6 +93,9 @@ class Buffer : public BufferBase {
 
     void UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext);
 
+    MaybeError TrackUsage(const ScopedCommandRecordingContext* commandContext,
+                          ExecutionSerial pendingSerial);
+
     // This performs GPU Clear. Unlike Clear(), this will always be affected by ID3D11Predicate.
     // Whereas Clear() might be unaffected by ID3D11Predicate if it's pure CPU clear.
     virtual MaybeError PredicatedClear(const ScopedSwapStateCommandRecordingContext* commandContext,
@@ -105,7 +108,8 @@ class Buffer : public BufferBase {
     virtual MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                                      uint64_t bufferOffset,
                                      const void* data,
-                                     size_t size) = 0;
+                                     size_t size,
+                                     bool isClearing = false) = 0;
     // Copy this buffer to the destination without checking if the buffer is initialized.
     virtual MaybeError CopyToInternal(const ScopedCommandRecordingContext* commandContext,
                                       uint64_t sourceOffset,
@@ -257,7 +261,8 @@ class GPUUsableBuffer final : public Buffer {
     MaybeError WriteInternal(const ScopedCommandRecordingContext* commandContext,
                              uint64_t bufferOffset,
                              const void* data,
-                             size_t size) override;
+                             size_t size,
+                             bool isClearing) override;
 
     ResultOrError<ComPtr<ID3D11ShaderResourceView>> CreateD3D11ShaderResourceViewFromD3DBuffer(
         ID3D11Buffer* d3d11Buffer,
