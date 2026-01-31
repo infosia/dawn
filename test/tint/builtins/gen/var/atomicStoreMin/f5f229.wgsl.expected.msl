@@ -1,0 +1,15 @@
+SKIP: FAILED
+
+../../src/tint/lang/msl/writer/printer/printer.cc:1435 internal compiler error: unhandled atomic type u64
+
+********************************************************************
+*  The tint shader compiler has encountered an unexpected error.   *
+*                                                                  *
+*  Please help us fix this issue by submitting a bug report at     *
+*  crbug.com/tint with the source program that triggered the bug.  *
+********************************************************************
+//
+// fragment_main
+//
+
+tint executable returned error: signal: illegal instruction (core dumped)
