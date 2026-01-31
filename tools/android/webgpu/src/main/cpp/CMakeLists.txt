@@ -37,6 +37,16 @@ set(DAWN_BUILD_MONOLITHIC_LIBRARY STATIC)
 
 set(DAWN_DIR "${webgpu_SOURCE_DIR}/../../../../../..")
 add_subdirectory(${DAWN_DIR} dawn)
+if(TARGET dawn_proc)
+    set_target_properties(dawn_proc PROPERTIES
+            C_VISIBILITY_PRESET default
+            CXX_VISIBILITY_PRESET default
+    )
+
+    # 2. Ensure WGPU_EXPORT expands to "default" visibility
+    target_compile_definitions(dawn_proc PRIVATE WGPU_IMPLEMENTATION)
+    target_compile_definitions(dawn_proc PUBLIC WGPU_SHARED_LIBRARY)
+endif()
 
 list(INSERT CMAKE_MODULE_PATH 0 "${DAWN_DIR}/src/cmake")
 include(DawnCompilerChecks)
@@ -57,19 +67,31 @@ target_sources(webgpu_c_bundled PRIVATE
     JNIContext.cpp
     JNIContext.h
     Util.cpp
+    DawnWebViewLoader.cpp
 )
 
 target_include_directories(webgpu_c_bundled PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(webgpu_c_bundled PRIVATE android webgpu_dawn dawn_common dawn_internal_config)
+target_link_libraries(webgpu_c_bundled PRIVATE android
+        -Wl,--whole-archive
+        dawn_proc
+        -Wl,--no-whole-archive
+        dawn_common dawn_internal_config)
 target_link_options(webgpu_c_bundled PRIVATE "-Wl,-z,max-page-size=16384")
 
 # Copy headers for webgpu_c_bundled over.
-add_custom_command(DEPENDS dawncpp_headers POST_BUILD
+add_custom_target(copy_webgpu_header
                    OUTPUT ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h
                    COMMAND rm -r "${CMAKE_SOURCE_DIR}/gen" || echo
                    COMMAND ${CMAKE_COMMAND} -E copy
                            ${CMAKE_CURRENT_BINARY_DIR}/dawn/gen/include/dawn/webgpu.h
                            ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h)
+
+# Make your library depend on this copy
+add_dependencies(webgpu_c_bundled copy_webgpu_header)
+
+# Ensure the copy waits for Dawn to generate the header
+# We depend on 'dawn_headers' (standard target) or 'dawn_proc' which generates it.
+add_dependencies(copy_webgpu_header dawn_proc)
 
 # Add unit test build configuration
 # To run use the following command:
