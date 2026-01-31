@@ -506,10 +506,17 @@ bool Buffer::IsCPUReadable() const {
 
 MaybeError Buffer::MapAtCreationImpl() {
     DAWN_ASSERT(IsCPUWritable());
-    ScopedCommandRecordingContext commandContext =
+    std::optional<ScopedCommandRecordingContext> maybeCommandContext =
         ToBackend(GetDevice()->GetQueue())
-            ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
-    return MapInternal(&commandContext, wgpu::MapMode::Write);
+            ->TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+    if (maybeCommandContext.has_value()) {
+        return MapInternal(&maybeCommandContext.value(), wgpu::MapMode::Write);
+    }
+
+    // Lock could not be acquired, use temporary storage instead
+    mMapAtCreationData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(GetAllocatedSize()));
+    mMappedData = mMapAtCreationData.get();
+    return {};
 }
 
 MaybeError Buffer::MapInternal(const ScopedCommandRecordingContext* commandContext,
@@ -523,11 +530,24 @@ void Buffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) 
     DAWN_UNREACHABLE();
 }
 
-void Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) {
+MaybeError Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandContext) {
     if (mMappedData == nullptr) {
-        return;
+        return {};
     }
-    UnmapInternal(commandContext);
+
+    if (!mMapAtCreationData) {
+        UnmapInternal(commandContext);
+        return {};
+    }
+
+    // We used temporary storage for MapAtCreation, now copy it to the actual buffer
+    mMappedData = nullptr;
+    ScopedMap scopedMap;
+    DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
+    DAWN_ASSERT(scopedMap.GetMappedData());
+    memcpy(scopedMap.GetMappedData(), mMapAtCreationData.get(), GetAllocatedSize());
+    mMapAtCreationData.reset();
+    return {};
 }
 
 MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContext,
@@ -536,7 +556,7 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
         return {};
     }
     // We need to unmap buffer before it can be used in the queue.
-    UnmapIfNeeded(commandContext);
+    DAWN_TRY(UnmapIfNeeded(commandContext));
     MarkUsedInPendingCommands(pendingSerial);
     return {};
 }
@@ -577,7 +597,7 @@ MaybeError Buffer::FinalizeMap(ScopedCommandRecordingContext* commandContext,
         // Trigger any deferred unmaps.
         // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
         // the previous map mode is the same as the current map mode.
-        UnmapIfNeeded(commandContext);
+        DAWN_TRY(UnmapIfNeeded(commandContext));
 
         // Map then initialize data using mapped pointer.
         // The mapped pointer is always writable because:
@@ -617,6 +637,13 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl(reason);
+
+    if (mMappedData) {
+        auto commandCtx = ToBackend(GetDevice()->GetQueue())
+                              ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
+
+        std::ignore = UnmapIfNeeded(&commandCtx);
+    }
 }
 
 MaybeError Buffer::EnsureDataInitialized(const ScopedCommandRecordingContext* commandContext) {
