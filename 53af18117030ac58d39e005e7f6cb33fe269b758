@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ccf904f_54c6d48b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Thanks, didn\u0027t know about MatchWidth.",
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11614bda_cff8d31a",
@@ -14,6 +31,30 @@
       "writtenOn": "2026-02-02T15:02:36Z",
       "side": 1,
       "message": "```suggestion\n            auto new_ty \u003d ty.MatchWidth(ty.u32(), result_ty);\n            value \u003d b.InsertBitcastIfNeeded(new_ty, from);\n            return b.Convert(result_ty, value)-\u003eResult();\n```",
+      "range": {
+        "startLine": 585,
+        "startChar": 0,
+        "endLine": 591,
+        "endChar": 57
+      },
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2da10394_41aa3a28",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11614bda_cff8d31a",
       "range": {
         "startLine": 585,
         "startChar": 0,
@@ -41,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "182ce552_052c7fd2",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6aa1ca1_6d94318b",
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df290948_ae25ce53",
@@ -54,6 +113,30 @@
       "writtenOn": "2026-02-02T15:02:36Z",
       "side": 1,
       "message": "```suggestion\n            auto new_ty \u003d ty.MatchWidth(ty.u32(), from-\u003eType());\n            value \u003d b.Convert(new_ty, from)-\u003eResult();\n```",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 598,
+        "endChar": 13
+      },
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c26c3af3_914d2fdd",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df290948_ae25ce53",
       "range": {
         "startLine": 593,
         "startChar": 0,
@@ -87,6 +170,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0add4864_dd33704f",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90597a6e_30e248fc",
+      "range": {
+        "startLine": 609,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 46
+      },
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8676a99_ea212fa7",
@@ -104,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c937290_66abbc0c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8676a99_ea212fa7",
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c31d8b2_ac69f253",
@@ -117,6 +242,30 @@
       "writtenOn": "2026-02-02T15:02:36Z",
       "side": 1,
       "message": "```suggestion\n            auto new_ty \u003d ty.MatchWidth(ty.u32(), from-\u003eResult()-\u003eType());\n            inst \u003d b.Convert(new_ty, from);\n```",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 622,
+        "endChar": 13
+      },
+      "revId": "53af18117030ac58d39e005e7f6cb33fe269b758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "204bdde5_15b94295",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-02T19:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c31d8b2_ac69f253",
       "range": {
         "startLine": 617,
         "startChar": 0,
