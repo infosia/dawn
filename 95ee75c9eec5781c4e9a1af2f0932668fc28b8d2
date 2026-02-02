@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1ae89f3_2942ed04",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-02T20:48:25Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t need to recurse into vectors any more.",
+      "revId": "95ee75c9eec5781c4e9a1af2f0932668fc28b8d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
