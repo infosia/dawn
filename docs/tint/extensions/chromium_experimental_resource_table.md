@@ -61,7 +61,7 @@ const kHouseTexture = 0u;
 
 @fragment fn fs() {
     if (hasResource<texture_2d<f32>>(kHouseTexture)) {
-        let tex = textureLoad(getResource<texture_2d<f32>>(kHouseTexture));
+        let tex = textureLoad(getResource<texture_2d<f32, filterable>>(kHouseTexture));
     }
 }
 ```

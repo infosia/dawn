@@ -917,8 +917,8 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
         @compute @workgroup_size(1) fn checkDefault() {
             // Default texture_2d<f32>
             {
-                check(!hasResource<texture_2d<f32>>(0));
-                let t = getResource<texture_2d<f32>>(0);
+                check(!hasResource<texture_2d<f32, filterable>>(0));
+                let t = getResource<texture_2d<f32, filterable>>(0);
                 check(all(textureDimensions(t) == vec2(1)));
                 check(textureNumLevels(t) == 1);
                 check(all(textureLoad(t, vec2(0), 0) == vec4(0, 0, 0, 1)));
