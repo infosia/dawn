@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d02ef99b_71df145c",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:34:55Z",
+      "side": 1,
+      "message": "Can we have a comment explaining why this member is necessary, and MutexProtected?",
+      "revId": "75db2052395d24e3010e3a2e127fedd23dded541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
