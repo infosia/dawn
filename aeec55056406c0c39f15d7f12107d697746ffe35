@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "339e56e0_7d6e8b9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:32:03Z",
+      "side": 1,
+      "message": "LGTM, the changes to MutexProtected were a bit difficult to understand they were necessary and there might be simplifications possible by changing the Trait interface, but that\u0027s not necessary now.",
+      "revId": "aeec55056406c0c39f15d7f12107d697746ffe35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d04682a_15a55ad8",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:32:03Z",
+      "side": 1,
+      "message": "Maybe what\u0027s needed is only that `LockType` be `is_move_constructible`",
+      "range": {
+        "startLine": 252,
+        "startChar": 17,
+        "endLine": 252,
+        "endChar": 88
+      },
+      "revId": "aeec55056406c0c39f15d7f12107d697746ffe35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40cc6b66_0042003f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:32:03Z",
+      "side": 1,
+      "message": "This is an important optimization, so maybe we can detail it a bit more in the comment.",
+      "revId": "aeec55056406c0c39f15d7f12107d697746ffe35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24c2f7ea_55c5238e",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:32:03Z",
+      "side": 1,
+      "message": "```suggestion\n    std::optional\u003cCommandRecordingContext::Guard\u003e guard \u003d mPendingCommands.TryUse();\n    if (!guard) {\n        return {};\n    }\n    return CreateScopedCommandContext\u003cScopedCommandRecordingContext\u003e(submitMode, std::move(*guard),\n                                                                     lockD3D11Scope);\n}\n```",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 1
+      },
+      "revId": "aeec55056406c0c39f15d7f12107d697746ffe35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a073695_2e42f0fd",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T14:32:03Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(https://issues.chromium.org/451928481): multithread support in GL is incomplete\n```",
+      "revId": "aeec55056406c0c39f15d7f12107d697746ffe35",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
