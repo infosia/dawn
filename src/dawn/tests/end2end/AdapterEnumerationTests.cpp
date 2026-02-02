@@ -391,6 +391,54 @@ TEST_F(AdapterEnumerationTests, WebGPUBackend) {
         EXPECT_TRUE(adapters.empty());
     }
 }
+
+// Test enumerating the WebGPU backend with the RequestAdapterWebGPUBackendOptions and
+// DawnTogglesDescriptor. Also check the toggle state.
+TEST_F(AdapterEnumerationTests, WebGPUBackendToggles) {
+    native::Instance instance;
+
+    constexpr const char* kAllowUnsafeAPIToggle = "allow_unsafe_apis";
+    constexpr const char* toggles[] = {kAllowUnsafeAPIToggle};
+    wgpu::DawnTogglesDescriptor togglesDesc = {};
+    togglesDesc.enabledToggleCount = 1;
+    togglesDesc.enabledToggles = toggles;
+
+    wgpu::RequestAdapterWebGPUBackendOptions webgpuBackendOptions = {};
+    wgpu::RequestAdapterOptions adapterOptions = {};
+
+    auto Validate = [&](const wgpu::RequestAdapterOptions* options) {
+        const auto& adapters = instance.EnumerateAdapters(options);
+        for (const auto& nativeAdapter : adapters) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
+            wgpu::AdapterInfo info;
+            adapter.GetInfo(&info);
+
+            EXPECT_EQ(info.backendType, wgpu::BackendType::WebGPU);
+
+            // Validate toggles state.
+            auto togglesUsed = native::GetTogglesUsed(adapter);
+            EXPECT_TRUE(std::find_if(togglesUsed.begin(), togglesUsed.end(), [](const char* name) {
+                            return strcmp(kAllowUnsafeAPIToggle, name) == 0;
+                        }) != togglesUsed.end());
+        }
+    };
+
+    // Test adapterOptions -> webgpuBackendOptions -> DawnTogglesDescriptor
+    {
+        adapterOptions.nextInChain = &webgpuBackendOptions;
+        webgpuBackendOptions.nextInChain = &togglesDesc;
+        togglesDesc.nextInChain = nullptr;
+        Validate(&adapterOptions);
+    }
+
+    // Test adapterOptions -> DawnTogglesDescriptor -> webgpuBackendOptions
+    {
+        adapterOptions.nextInChain = &togglesDesc;
+        togglesDesc.nextInChain = &webgpuBackendOptions;
+        webgpuBackendOptions.nextInChain = nullptr;
+        Validate(&adapterOptions);
+    }
+}
 #endif  // defined(DAWN_ENABLE_BACKEND_WEBGPU)
 
 }  // anonymous namespace
