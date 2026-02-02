@@ -16,6 +16,24 @@
       "message": "Omg, how did you find this? I spent a while (like multiple days) trying to figure out the issues relating to those bugs and never figured it out. Mainly because I couldn\u0027t reliably repro the issues, but this is an amazing find!",
       "revId": "def7405a875642b33681746d5fadb108cdc5ca0e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "186c8e8d_31746537",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-02T21:59:19Z",
+      "side": 1,
+      "message": "I was able to repro on `Win11 FYI arm64 Release (Qualcomm Snapdragon X Elite)` reliably enough using UTR to run gl_tests.",
+      "parentUuid": "8a3883d8_75ed5b62",
+      "revId": "def7405a875642b33681746d5fadb108cdc5ca0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
