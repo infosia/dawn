@@ -232,6 +232,23 @@
       "message": "nit: comment is no longer needed.",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbefad35_0341cedc",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-02T16:44:22Z",
+      "side": 1,
+      "message": "Nit: e.g. ... ?",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
