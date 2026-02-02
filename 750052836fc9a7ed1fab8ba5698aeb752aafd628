@@ -16,6 +16,24 @@
       "message": "LGTM but also seems like you could\u0027ve added overloads for `u32`/`i32`/`AInt` to avoid the extra `Expr()` calls.",
       "revId": "750052836fc9a7ed1fab8ba5698aeb752aafd628",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d6f0432_5bc9e5e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T19:34:08Z",
+      "side": 1,
+      "message": "I could, but this seemed a bit nicer. The Expr call makes it more obvious at the callsite what\u0027s going on I think.",
+      "parentUuid": "dec721ec_fd029419",
+      "revId": "750052836fc9a7ed1fab8ba5698aeb752aafd628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
