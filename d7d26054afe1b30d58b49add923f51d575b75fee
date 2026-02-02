@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60224d4b_46c7fec7",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-02T10:43:13Z",
+      "side": 1,
+      "message": "In order to make progress, I\u0027ve added `config.frag_depth_requires_clamping` defaulted to true for now. I\u0027ll update Dawn/Tint, as part of this CL, to make it conditional.\n\nIn the meantime, I\u0027ve added the interpolated position to the vertex shader output and tried to mimic what was done for `center_pos_vert_idx` but it\u0027s still not clear to me if I\u0027m handling it correctly.",
+      "parentUuid": "8ecb837b_5e038b59",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12

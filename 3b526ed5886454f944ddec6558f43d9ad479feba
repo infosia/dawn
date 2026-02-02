@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5238bc21_2dcfa1ec",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-02T10:43:13Z",
+      "side": 1,
+      "message": "Should I do something for `centroid_pos_vert_idx` as well there?",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed5d1cb2_d94b4d2a",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-02T10:43:13Z",
+      "side": 1,
+      "message": "Is that the right call?",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06de4d6f_ce49c903",
+        "filename": "test/tint/extensions/fragment_depth/position.wgsl",
+        "patchSetId": 15
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-02T10:43:13Z",
+      "side": 1,
+      "message": "1. Is there another/better way to test this?\n2. What would happen in a world where there\u0027s no vertex output position?",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
