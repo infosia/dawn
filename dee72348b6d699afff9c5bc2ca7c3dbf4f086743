@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49860526_97d4544a",
+        "filename": "src/tint/cmd/fuzz/wgsl/fuzz.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Local user/dev safety mostly, this design requires explicit intent from the user to engage this fuzzing, so that the fuzzer doesn\u0027t just start sending garabage to their GPU if the env var is set when doing something like testing a CF test case.\n\nAdditionally this ensures when writting the rules for running things on CF which device is being tested is explicitly set, so the fuzzer doesn\u0027t accidently pick up something like a SwiftShader build used as fallback for something else.\n\n\nThinking on this a bit more it feels slightly more ergonomic (to me) for having it require it being explicitly set as a flag for this use case. I know one can write `VK_ICD_FILENAMES\u003d\u003cpath to mesa\u003e tint_wgsl_fuzzer` when running locally, but when running in GN/CF there will be a setup stage where the env vars are all listed, and then there will be the actual call being run, which will either be later in the log file or depending on the stages are run might be in a different log file. (If we were using this for multiple steps, instead of just running the fuzzer I would be more inclined to use the env var)",
+      "parentUuid": "5a895167_8b9dbd0c",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a53d96ef_505acbdd",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 3
@@ -55,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "091f3a71_b657841f",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "I would be fine with having this being build flag controlled, but lean towards it not being.\n\nThe equivalent implementation for DXC isn\u0027t build flag controlled. You can control if DXC is built and used, but the actual options and logic in the fuzzer isn\u0027t gated on building DXC, so you can in theory provide your own DXC (which may or not be used).\n\nI think for Vulkan being able to build this without it being tied to building Mesa I think is more valuable, since there are other Vulkan implementations that might of interest in the future to test via this code path.\n\nWe could have a seperate build flag that is like TINT_BUILD_VULKAN_FUZZING, that is defaulted to what ever the build Mesa flag is, unless you override it. That in theory would allow for one to build the fuzzers without needing to build the vulkan loader, but I am not sure of if that is a case we really care about?\n\n(My initial implementation had this validation logic in a different file behind a build flag, but that was causing me needing to link in the Vulkan libraries into Tint itself so I moved it out to the fuzzer specific source file. So the dependency on vulkan should be isolated to building the fuzzer binaries. Though I think it should be relatively simple to implement a build flag if we want one.)",
+      "parentUuid": "4493272e_8cf02a07",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca40ee90_13a7e993",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 3
@@ -66,6 +102,24 @@
       "writtenOn": "2026-02-02T15:42:45Z",
       "side": 1,
       "message": "Why not just use this instead of setting it this way?",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60ed0ad5_6e366ef0",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "I think addressed this on the similar comment on the header.",
+      "parentUuid": "ca40ee90_13a7e993",
       "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +137,30 @@
       "writtenOn": "2026-02-02T15:42:45Z",
       "side": 1,
       "message": "```suggestion\n    VkApplicationInfo app_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_APPLICATION_INFO,\n        .apiVersion \u003d VK_API_VERSION_1_1,\n    };\n```",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fd93f4a_7bc4b922",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba6b993_18e362a4",
       "range": {
         "startLine": 124,
         "startChar": 0,
@@ -116,6 +194,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ae16c14_d2c51bce",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b26e14e6_b2630976",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "478d6c3a_b7b7255c",
@@ -129,6 +231,30 @@
       "writtenOn": "2026-02-02T15:42:45Z",
       "side": 1,
       "message": "This isn\u0027t correct. You need to do this in two calls, the first call pass in `\u0026count, nullptr`, then allocate a vector\u003cVkPhysicalDevice\u003e and `resize(count)` and then call again with `\u0026count, vec.data()`.\n\nOtherwise, you\u0027ll write off the end of physical_device if count \u003e 1",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 5
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a981bdd_06d85c1f",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478d6c3a_b7b7255c",
       "range": {
         "startLine": 136,
         "startChar": 0,
@@ -162,6 +288,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56510a56_68c5e8d0",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5084dc66_e3e18a6e",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 57
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efe9c8f0_0aaf1e46",
@@ -175,6 +325,30 @@
       "writtenOn": "2026-02-02T15:42:45Z",
       "side": 1,
       "message": "```suggestion\n    VkDeviceCreateInfo device_create_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,\n        .queueCreateInfoCount \u003d 1,\n        .pQueueCreateInfos \u003d \u0026queue_create_info,\n    };\n```",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 62
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd15dab5_2d430828",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe9c8f0_0aaf1e46",
       "range": {
         "startLine": 149,
         "startChar": 0,
@@ -208,6 +382,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "459f728a_f0d085c9",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77de5f9_5362b672",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 49
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "985e831d_6417a691",
@@ -227,6 +425,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4396b511_988e35f5",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "My understanding of the Mesa code (at a high-level) is that the SPIRV to NIR conversion is run as part of vkCreateShaderModule, performing basic translation and validation, which should be the same for all Mesa based drivers. The conversion from NIR to the GPU specific ISA may be deferred to later, since that is where heavy weight operations like optimization run.\n\nWhen running the fuzzer locally I have seen the coverage log messages getting into LLVM code in Mesa, so I am pretty sure we are hitting the to NIR conversion (and possibly beyon) for lavapipe.\n\n(Mapping onto the Tint design, vkCreateShaderModule should be doing the equilavent of lowering to core IR, and the raising to backend IR may be deferred or run at the same time depending on the specific implementation)\n\n(We may need/want to in the future add more calls, possibly controlled via flags to exercise further into the drivers of interest, but I think for a first step, I think this reaches to were we expect).",
+      "parentUuid": "985e831d_6417a691",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cd2ed8fc_6c131eeb",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 3
@@ -238,6 +454,24 @@
       "writtenOn": "2026-01-29T22:39:12Z",
       "side": 1,
       "message": "What\u0027s the reason to not return the error here? I believe returning an error here will not cause a fuzzer failure, but instead skip the case (and print out why with `--verbose`, which might be useful for debugging).",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "182db7b8_772a8a72",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-02T19:09:10Z",
+      "side": 1,
+      "message": "There is not a good reason, I agree it should be returned.\n\n(I suspect when prototyping I was thinking in the moment it shouldn\u0027t be an assert, so just ignore for now, and never came back to return it)",
+      "parentUuid": "cd2ed8fc_6c131eeb",
       "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
