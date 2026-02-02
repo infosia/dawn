@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3546d18a_0a68c015",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-02T19:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1995eb7_f7f6019b",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e34c5f5d_509dc5bf",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-02-02T09:38:02Z",
       "side": 1,
       "message": "optional nit: Maybe we could have a bitfield already instead of a bool for  `msaaRenderToSingleSampled`.",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7781064c_94759d86",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-02T19:42:36Z",
+      "side": 1,
+      "message": "Gonna defer this one for now, because the bitfield isn\u0027t needed for every render path. (Dynamic Rendering doesn\u0027t care, for example. It just needs the bool.)",
+      "parentUuid": "e34c5f5d_509dc5bf",
       "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b43eb36_3c61756e",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-02T19:42:36Z",
+      "side": 1,
+      "message": "Oops, yeah. Rebase goof. Done.",
+      "parentUuid": "4bb22688_caec5bb4",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cb1fd42_42ae8f48",
@@ -99,6 +153,24 @@
       "writtenOn": "2026-02-02T09:38:02Z",
       "side": 1,
       "message": "nit: this is a bit redundant with the text in BackendVk but also gives less details. Maybe make this one short and have it link to BackendVk\u0027s suppression of that VUID?",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54f6c73f_771a5dee",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-02T19:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb1fd42_42ae8f48",
       "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
