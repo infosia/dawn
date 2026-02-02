@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef66202_96b012b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "```suggestion\n- Added hasPendingCommands parameter to WriteInternal() to enable mapping\n```",
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "accf34c1_349b8bed",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "Why is this overload added? Is it to avoid redundantly fetching the atomic for the pending serial? Eventually with a CommandRecordingContextBase, I\u0027d imagine the pending serial would be stored on the recording context itself.",
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17946b6c_5fe35b03",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "You\u0027ve observed the pointer changing between map modes? That\u0027s wild!",
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb933929_2bad03c0",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "```suggestion\n    // again. This avoids the need to lock the CommandContext here just to call D3D11\u0027s Unmap functions, and instead defers these calls to a moment where the CommandContext is already acquired.\n```",
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece59594_983e89cd",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "Could we make this non-optional? It would help make sure that it is set to the correct value in all call sites.\n\nLooking at the logic, it might be more clear to invert the boolean and have it `isInitialWrite`, WDYT?",
+      "range": {
+        "startLine": 113,
+        "startChar": 60,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdcd8df3_8e8bad1e",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T10:27:29Z",
+      "side": 1,
+      "message": "I believe these lines are redundant with the loop over sync scopes just below. Some buffers/textures might not be used in a sync scope but then it would be fine to just not marked them as used and not clear them.",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 312,
+        "endChar": 17
+      },
+      "revId": "970d835c47304954c5bffdad6d4cfdbb6ed60327",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
