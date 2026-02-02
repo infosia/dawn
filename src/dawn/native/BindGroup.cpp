@@ -679,8 +679,7 @@ MaybeError BindGroupBase::Initialize(const UnpackedPtr<BindGroupDescriptor>& des
                 // the bind group layout are created in this bind group and filled with the external
                 // texture's underlying resources.
                 if (auto* externalTextureBindingEntry = entry.Get<ExternalTextureBindingEntry>()) {
-                    const auto& externalTextureMap =
-                        layout->GetExternalTextureBindingToExternalTextureIndexMap();
+                    const auto& externalTextureMap = layout->GetBoundExternalTextureMap();
                     mBoundExternalTextures[externalTextureMap.at(apiBindingIndex)] =
                         externalTextureBindingEntry->externalTexture;
 
@@ -837,7 +836,7 @@ TexelBufferViewBase* BindGroupBase::GetBindingAsTexelBufferView(BindingIndex bin
     return static_cast<TexelBufferViewBase*>(mBindingData.bindings[bindingIndex].Get());
 }
 
-const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalTextures() const {
+std::span<const Ref<ExternalTextureBase>> BindGroupBase::GetBoundExternalTextures() const {
     DAWN_ASSERT(!IsError());
     return mBoundExternalTextures;
 }
@@ -845,13 +844,10 @@ const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalText
 Ref<ExternalTextureBase> BindGroupBase::GetBoundExternalTexture(
     APIBindingIndex bindingIndex) const {
     DAWN_ASSERT(!IsError());
-    const auto& externalTextureMap =
-        GetLayout()->GetExternalTextureBindingToExternalTextureIndexMap();
-    auto it = externalTextureMap.find(bindingIndex);
-    if (it != externalTextureMap.end()) {
-        return mBoundExternalTextures[it->second];
-    }
-    return {};
+    DAWN_ASSERT(GetLayout()->GetBoundExternalTextureMap().count(bindingIndex) == 1);
+
+    size_t etIndex = GetLayout()->GetBoundExternalTextureMap().at(bindingIndex);
+    return mBoundExternalTextures[etIndex];
 }
 
 void BindGroupBase::ForEachUnverifiedBufferBindingIndex(
