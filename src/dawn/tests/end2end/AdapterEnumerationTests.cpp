@@ -33,6 +33,7 @@
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/dawn_proc.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/DawnNative.h"
 
 #if defined(DAWN_ENABLE_BACKEND_VULKAN)
@@ -389,6 +390,51 @@ TEST_F(AdapterEnumerationTests, WebGPUBackend) {
         adapterOptions.nextInChain = nullptr;
         const auto& adapters = instance.EnumerateAdapters(&adapterOptions);
         EXPECT_TRUE(adapters.empty());
+    }
+}
+
+// Test enumerating the WebGPU backend with the RequestAdapterWebGPUBackendOptions and
+// DawnTogglesDescriptor. Also check the toggle state.
+TEST_F(AdapterEnumerationTests, WebGPUBackendToggles) {
+    native::Instance instance;
+
+    const char* toggles[] = {"allow_unsafe_apis"};
+    wgpu::DawnTogglesDescriptor togglesDesc = {};
+    togglesDesc.enabledToggleCount = 1;
+    togglesDesc.enabledToggles = toggles;
+
+    wgpu::RequestAdapterWebGPUBackendOptions webgpuBackendOptions = {};
+    wgpu::RequestAdapterOptions adapterOptions = {};
+
+    auto Validate = [&](const wgpu::RequestAdapterOptions* options) {
+        const auto& adapters = instance.EnumerateAdapters(options);
+        for (const auto& nativeAdapter : adapters) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
+            wgpu::AdapterInfo info;
+            adapter.GetInfo(&info);
+
+            EXPECT_EQ(info.backendType, wgpu::BackendType::WebGPU);
+
+            // Validate toggles state.
+            const native::AdapterBase* adapterBase = native::FromAPI(nativeAdapter.Get());
+            EXPECT_TRUE(adapterBase->GetTogglesState().IsEnabled(native::Toggle::AllowUnsafeAPIs));
+        }
+    };
+
+    // Test adapterOptions -> webgpuBackendOptions -> DawnTogglesDescriptor
+    {
+        adapterOptions.nextInChain = &webgpuBackendOptions;
+        webgpuBackendOptions.nextInChain = &togglesDesc;
+        togglesDesc.nextInChain = nullptr;
+        Validate(&adapterOptions);
+    }
+
+    // Test adapterOptions -> DawnTogglesDescriptor -> webgpuBackendOptions
+    {
+        adapterOptions.nextInChain = &togglesDesc;
+        togglesDesc.nextInChain = &webgpuBackendOptions;
+        webgpuBackendOptions.nextInChain = nullptr;
+        Validate(&adapterOptions);
     }
 }
 #endif  // defined(DAWN_ENABLE_BACKEND_WEBGPU)
