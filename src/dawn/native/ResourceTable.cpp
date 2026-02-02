@@ -92,21 +92,48 @@ tint::ResourceType ComputeTypeId(const TextureViewBase* view) {
         }
     }
 
-    switch (view->GetFormat().GetAspectInfo(view->GetAspects()).baseType) {
+    auto& aspect_info = view->GetFormat().GetAspectInfo(view->GetAspects());
+    bool unfilterable = (aspect_info.supportedSampleTypes & SampleTypeBit::UnfilterableFloat) ==
+                        SampleTypeBit::UnfilterableFloat;
+    switch (aspect_info.baseType) {
         case TextureComponentType::Float:
             switch (view->GetDimension()) {
-                case wgpu::TextureViewDimension::e1D:
-                    return tint::ResourceType::kTexture1d_f32;
-                case wgpu::TextureViewDimension::e2D:
-                    return tint::ResourceType::kTexture2d_f32;
-                case wgpu::TextureViewDimension::e2DArray:
-                    return tint::ResourceType::kTexture2dArray_f32;
-                case wgpu::TextureViewDimension::Cube:
-                    return tint::ResourceType::kTextureCube_f32;
-                case wgpu::TextureViewDimension::CubeArray:
-                    return tint::ResourceType::kTextureCubeArray_f32;
-                case wgpu::TextureViewDimension::e3D:
-                    return tint::ResourceType::kTexture3d_f32;
+                case wgpu::TextureViewDimension::e1D: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTexture1d_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTexture1d_f32_filterable;
+                }
+                case wgpu::TextureViewDimension::e2D: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTexture2d_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTexture2d_f32_filterable;
+                }
+                case wgpu::TextureViewDimension::e2DArray: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTexture2dArray_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTexture2dArray_f32_filterable;
+                }
+                case wgpu::TextureViewDimension::Cube: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTextureCube_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTextureCube_f32_filterable;
+                }
+                case wgpu::TextureViewDimension::CubeArray: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTextureCubeArray_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTextureCubeArray_f32_filterable;
+                }
+                case wgpu::TextureViewDimension::e3D: {
+                    if (unfilterable) {
+                        return tint::ResourceType::kTexture3d_f32_unfilterable;
+                    }
+                    return tint::ResourceType::kTexture3d_f32_filterable;
+                }
                 default:
                     DAWN_UNREACHABLE();
             }
@@ -195,12 +222,18 @@ MaybeError ValidateBindingResource(const DeviceBase* device, const BindingResour
 
 ityp::span<ResourceTableSlot, const tint::ResourceType> GetDefaultResourceOrder() {
     static constexpr auto kDefaults = std::array{
-        tint::ResourceType::kTexture1d_f32,
-        tint::ResourceType::kTexture2d_f32,
-        tint::ResourceType::kTexture2dArray_f32,
-        tint::ResourceType::kTextureCube_f32,
-        tint::ResourceType::kTextureCubeArray_f32,
-        tint::ResourceType::kTexture3d_f32,
+        tint::ResourceType::kTexture1d_f32_filterable,
+        tint::ResourceType::kTexture1d_f32_unfilterable,
+        tint::ResourceType::kTexture2d_f32_filterable,
+        tint::ResourceType::kTexture2d_f32_unfilterable,
+        tint::ResourceType::kTexture2dArray_f32_filterable,
+        tint::ResourceType::kTexture2dArray_f32_unfilterable,
+        tint::ResourceType::kTextureCube_f32_filterable,
+        tint::ResourceType::kTextureCube_f32_unfilterable,
+        tint::ResourceType::kTextureCubeArray_f32_filterable,
+        tint::ResourceType::kTextureCubeArray_f32_unfilterable,
+        tint::ResourceType::kTexture3d_f32_filterable,
+        tint::ResourceType::kTexture3d_f32_unfilterable,
 
         tint::ResourceType::kTexture1d_u32,
         tint::ResourceType::kTexture2d_u32,
