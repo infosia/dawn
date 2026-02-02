@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c7e2d15_c5883437",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "It looks VERY VERY good :)",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "128f24c2_6cc1c38f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04704968_f5344fdc",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "This might not be needed, because the `false` at [2] means that if the pipeline layout changes, EVERYTHING is invalidated. (in retrospect that move of the logic in the frontend is more confusing than anything) so there might be a way to avoid the need to track that. That said, here we don\u0027t get called when the pipeline layout changes, so we don\u0027t know that the resource table binding should be invalidated (it would be here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupTracker.h;drc\u003d1d1fcea6ebbc1c2c3d04ab5538c74f742c66444f;l\u003d111)\n\nI think right now there might be a bug if we change between two root signatures that use the resource table, ah no it doesn\u0027t happen because at [3] we apply the resource table all the time.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d993a68_ed73a827",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "[3] It would be nice to do this only when the resource table is \"dirty\", similar to bindgroups.",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 30
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6a82569_5df11eda",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "Note that the group decided that the resource table would be set per pass (sad, but needed for composability) so this and [1] might not be needed when we do the change in Dawn.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b0d4cc_04c3f902",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52e00ecd_5fc97bc4",
+        "filename": "src/dawn/native/d3d12/ComputePipelineD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb74ecf1_50db711a",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "IMHO we could have the resource table allocate its heap directly, there are supposed to be only a few or one resource table, each very big, so it might not be worth the complexity to try to suballocate. The Vulkan backend does this as well with a `VkDescriptorPool` per resource table.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b4bf65_9688907c",
+        "filename": "src/dawn/native/d3d12/RenderPipelineD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "FXC supports bindless?? IMHO we should limit the feature to DXC so as to not deal with FXC\u0027s potential weirdness in that code path.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2931f91_089635f1",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be 1 to skip over the metadata buffer at the start?",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91bea3d3_7668504b",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "```suggestion\n        uint32_t baseGroup \u003d layout-\u003eGetBaseResourceTableRegisterSpace();\n```\n\nI know the two different conventions are annyoing :(",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 27
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a07603a1_33b12be1",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "nit: the new heap might not be larger (if we are at the max size)",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f0fce4a_704be55d",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T15:09:18Z",
+      "side": 1,
+      "message": "nit: comment is no longer needed.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
