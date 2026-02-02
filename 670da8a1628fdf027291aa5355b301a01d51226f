@@ -50,6 +50,24 @@
       "message": "```suggestion\n                        workgroupInfo.x, explicitSubgroupSize);\n```",
       "revId": "670da8a1628fdf027291aa5355b301a01d51226f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "704953ee_b02f0a6c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-02-02T12:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a05d30_b7d3b066",
+      "revId": "670da8a1628fdf027291aa5355b301a01d51226f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
