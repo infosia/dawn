@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da953f25_5cb4f7e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T21:52:18Z",
+      "side": 1,
+      "message": "PTAL.\n\ncwallez@ does this mean we should add sampler into the ResourceType enum so we can have `sampler_filtering` and `sampler_nonfiltering`?",
+      "revId": "777cf049475290fe9382e92bc73c153e69c664a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
