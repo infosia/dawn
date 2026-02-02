@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6923cc0_b40864cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-02T23:54:07Z",
+      "side": 1,
+      "message": "I purposefully pushed up my new tests without my fix so that you can see the failures: https://dawn-review.googlesource.com/c/dawn/+/287395?checksPatchset\u003d3\u0026tab\u003dchecks\n\nThe last patchset includes the actual fix.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
