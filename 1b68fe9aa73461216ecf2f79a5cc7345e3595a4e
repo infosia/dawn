@@ -16,6 +16,29 @@
       "message": "Still LGTM",
       "revId": "1b68fe9aa73461216ecf2f79a5cc7345e3595a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88cdd7e9_6bd00106",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-02T21:35:18Z",
+      "side": 1,
+      "message": "nit. I think the logic would be a little easier to follow if it was:\n\n```\nif (mMapAtCreationData) {\n  ... do stuff ...\n}\n\nUnmapInternal();\n```\n\nMaybe same for below in `DestroyImpl`, and early out there as well? The additional negation just makes one indirection away so it\u0027s a little harder to read.",
+      "range": {
+        "startLine": 546,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 14
+      },
+      "revId": "1b68fe9aa73461216ecf2f79a5cc7345e3595a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
