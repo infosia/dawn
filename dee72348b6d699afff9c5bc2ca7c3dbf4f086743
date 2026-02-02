@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a895167_8b9dbd0c",
+        "filename": "src/tint/cmd/fuzz/wgsl/fuzz.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "Why make a string param and not just let the loader use the env variable?",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a53d96ef_505acbdd",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 3
@@ -14,6 +31,179 @@
       "writtenOn": "2026-01-29T22:08:58Z",
       "side": 1,
       "message": "Please pay special attention to this code, because I have limited experience with setting up Vulkan devices, so this is mostly a mashup of example/tutorial code and gemini suggestions.",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4493272e_8cf02a07",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "Do we really want this always enabled on linux or should it be an extra build flag?",
+      "parentUuid": "a53d96ef_505acbdd",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca40ee90_13a7e993",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "Why not just use this instead of setting it this way?",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ba6b993_18e362a4",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "```suggestion\n    VkApplicationInfo app_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_APPLICATION_INFO,\n        .apiVersion \u003d VK_API_VERSION_1_1,\n    };\n```",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b26e14e6_b2630976",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "```suggestion\n    VkInstanceCreateInfo create_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,\n        .pApplicationInfo \u003d \u0026app_info,\n    };\n```",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 45
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478d6c3a_b7b7255c",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "This isn\u0027t correct. You need to do this in two calls, the first call pass in `\u0026count, nullptr`, then allocate a vector\u003cVkPhysicalDevice\u003e and `resize(count)` and then call again with `\u0026count, vec.data()`.\n\nOtherwise, you\u0027ll write off the end of physical_device if count \u003e 1",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 5
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5084dc66_e3e18a6e",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "```suggestion\n    VkDeviceQueueCreateInfo queue_create_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,\n        .queueFamilyIndex \u003d 0,\n        .queueCount \u003d 1,\n        .pQueuePriorities \u003d \u0026queue_priority,\n    };\n```",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 57
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efe9c8f0_0aaf1e46",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "```suggestion\n    VkDeviceCreateInfo device_create_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,\n        .queueCreateInfoCount \u003d 1,\n        .pQueueCreateInfos \u003d \u0026queue_create_info,\n    };\n```",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 62
+      },
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d77de5f9_5362b672",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T15:42:45Z",
+      "side": 1,
+      "message": "```suggestion\n    VkShaderModuleCreateInfo shader_module_create_info \u003d {\n        .sType \u003d VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,\n        .codeSize \u003d spirv.len * sizeof(uint32_t),\n        .pCode \u003d spirv.data,\n    };\n```",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 49
+      },
       "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
