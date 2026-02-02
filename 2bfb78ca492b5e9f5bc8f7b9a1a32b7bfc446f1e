@@ -16,6 +16,24 @@
       "message": "LGTM but can you also add a unit test please? Maybe in `load_test.cc` which has various tests for both swizzles and compound assignment (but not together).",
       "revId": "2bfb78ca492b5e9f5bc8f7b9a1a32b7bfc446f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc5bcc1_dfd9239f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-02-02T18:19:00Z",
+      "side": 1,
+      "message": "Added a unit test",
+      "parentUuid": "63a4176c_585180df",
+      "revId": "2bfb78ca492b5e9f5bc8f7b9a1a32b7bfc446f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
