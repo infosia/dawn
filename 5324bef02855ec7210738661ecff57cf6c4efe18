@@ -16,6 +16,91 @@
       "message": "Okay, I think this is finally ready to land! PTAL.",
       "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d70944bb_f7635be5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T09:38:02Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1995eb7_f7f6019b",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T09:38:02Z",
+      "side": 1,
+      "message": "nit: maybe link to the Vulkan issue you filed as well.",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e34c5f5d_509dc5bf",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T09:38:02Z",
+      "side": 1,
+      "message": "optional nit: Maybe we could have a bitfield already instead of a bool for  `msaaRenderToSingleSampled`.",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb22688_caec5bb4",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T09:38:02Z",
+      "side": 1,
+      "message": "I don\u0027t think you meant to enable WaitIsThreadSafe in this CL. There\u0027s been a patch to enable it then another to revert, so it looks like a rebase conflict that had a small issue.",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cb1fd42_42ae8f48",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-02T09:38:02Z",
+      "side": 1,
+      "message": "nit: this is a bit redundant with the text in BackendVk but also gives less details. Maybe make this one short and have it link to BackendVk\u0027s suppression of that VUID?",
+      "revId": "5324bef02855ec7210738661ecff57cf6c4efe18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
