@@ -1208,6 +1208,59 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->ForceSet(Toggle::UseSpirv14, false);
     }
 
+<<<<<<< PATCH SET (92c5929b81fd17e5ba2ea2b878fe7a0748d6cbd8 Reland "vulkan: Enable WaitIsThreadSafe")
+    // Use dynamic rendering by default if the corresponding extension is available.
+    // Also disable on older Intel devices, which have been observed to have driver issues with
+    // the dynamic rendering path.
+    if (!GetDeviceInfo().HasExt(DeviceExt::DynamicRendering) ||
+        GetDeviceInfo().dynamicRenderingFeatures.dynamicRendering == VK_FALSE ||
+        (gpu_info::IsIntel(GetVendorId()) &&
+         gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
+        deviceToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
+    } else {
+        // TODO(crbug.com/463893794): Defaulted to false until ExpandResolveTexture is supported
+        // when dynamic rendering is enabled.
+        deviceToggles->Default(Toggle::VulkanUseDynamicRendering, false);
+    }
+
+    // Use CreateRenderPass2KHR by default if the corresponding extension is available. Disabled if
+    // dynamic rendering is being used for clarity.
+    if (!GetDeviceInfo().HasExt(DeviceExt::CreateRenderPass2) ||
+        deviceToggles->IsEnabled(Toggle::VulkanUseDynamicRendering)) {
+        deviceToggles->ForceSet(Toggle::VulkanUseCreateRenderPass2, false);
+    } else {
+        deviceToggles->Default(Toggle::VulkanUseCreateRenderPass2, true);
+    }
+
+    // Vulkan waiting is already thread safe.
+    deviceToggles->Default(Toggle::WaitIsThreadSafe, true);
+
+||||||| BASE      (53168a6bd42eaff99e1b795749b94a57a7bb555c Fix FetchMax())
+    // Use dynamic rendering by default if the corresponding extension is available.
+    // Also disable on older Intel devices, which have been observed to have driver issues with
+    // the dynamic rendering path.
+    if (!GetDeviceInfo().HasExt(DeviceExt::DynamicRendering) ||
+        GetDeviceInfo().dynamicRenderingFeatures.dynamicRendering == VK_FALSE ||
+        (gpu_info::IsIntel(GetVendorId()) &&
+         gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
+        deviceToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
+    } else {
+        // TODO(crbug.com/463893794): Defaulted to false until ExpandResolveTexture is supported
+        // when dynamic rendering is enabled.
+        deviceToggles->Default(Toggle::VulkanUseDynamicRendering, false);
+    }
+
+    // Use CreateRenderPass2KHR by default if the corresponding extension is available. Disabled if
+    // dynamic rendering is being used for clarity.
+    if (!GetDeviceInfo().HasExt(DeviceExt::CreateRenderPass2) ||
+        deviceToggles->IsEnabled(Toggle::VulkanUseDynamicRendering)) {
+        deviceToggles->ForceSet(Toggle::VulkanUseCreateRenderPass2, false);
+    } else {
+        deviceToggles->Default(Toggle::VulkanUseCreateRenderPass2, true);
+    }
+
+=======
+>>>>>>> BASE      (56987efeebe8f48bbac57529d245c2272c814efe Add API requirement to MultisampleStateTest)
     // Enable validation of generated SPIR-V by default.
     // Graphite and other native clients may turn this off.
     deviceToggles->Default(Toggle::EnableSpirvValidation, true);
