@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a66f3e6_89d6ec70",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-02T19:20:22Z",
+      "side": 1,
+      "message": "I think `TINT_BUILD_FUZZER_VULKAN_SUPPORT` would work.",
+      "parentUuid": "091f3a71_b657841f",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca40ee90_13a7e993",
         "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
         "patchSetId": 3
