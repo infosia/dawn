@@ -1078,10 +1078,23 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // extension is available. Override the decision if it is not applicable or
     // zeroInitializeWorkgroupMemoryFeatures.shaderZeroInitializeWorkgroupMemory == VK_FALSE.
     // Never use the extension on Mali devices due to a known bug (see crbug.com/tint/2101).
+<<<<<<< HEAD   (fe220ebdc2546fb7dec7b5069ba4b97f72689163 [M145] [native][d3d12] Fix arrayLength/OffsetFromUniform app)
+||||||| BASE   (5136f09ad679d052830e7d0fa4a87084ab443082 [tint] Remove template from alias builder.)
+    // Pixel 10 workgroup zero init does not always work as expected (see crbug.com/479242793).
+=======
+    // Pixel 10 workgroup zero init does not always work as expected (see crbug.com/479242793). We
+    // have conservatively enabled this for all of imagination.
+>>>>>>> CHANGE (6bd414b18f8605bb8a2b30da76dd725af7037d3f [dawn] Conservatively enabled workgroup init for imagination)
     if (!GetDeviceInfo().HasExt(DeviceExt::ZeroInitializeWorkgroupMemory) ||
         GetDeviceInfo().zeroInitializeWorkgroupMemoryFeatures.shaderZeroInitializeWorkgroupMemory ==
             VK_FALSE ||
+<<<<<<< HEAD   (fe220ebdc2546fb7dec7b5069ba4b97f72689163 [M145] [native][d3d12] Fix arrayLength/OffsetFromUniform app)
         IsAndroidARM()) {
+||||||| BASE   (5136f09ad679d052830e7d0fa4a87084ab443082 [tint] Remove template from alias builder.)
+        IsAndroidARM() || IsPixel10()) {
+=======
+        IsAndroidARM() || gpu_info::IsImgTec(GetVendorId())) {
+>>>>>>> CHANGE (6bd414b18f8605bb8a2b30da76dd725af7037d3f [dawn] Conservatively enabled workgroup init for imagination)
         deviceToggles->ForceSet(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension, false);
     }
     // By default try to initialize workgroup memory with OpConstantNull according to the Vulkan
