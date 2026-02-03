@@ -446,7 +446,7 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
 
     // If automatic mapping is enabled, track the buffer to be re-mapped after GPU usage.
     if (mAutoMapMode != wgpu::MapMode::None) {
-        mMapReadySerial = pendingSerial;
+        SetScheduledMapSerial(pendingSerial);
         ToBackend(GetDevice()->GetQueue())
             ->ScheduleBufferMapping({this}, mAutoMapMode, pendingSerial);
     }
@@ -470,13 +470,21 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 
     auto deviceGuard = GetDevice()->GetGuard();
 
-    mMapReadySerial = GetLastUsageSerial();
+    ExecutionSerial mapReadySerial = GetLastUsageSerial();
     const ExecutionSerial completedSerial = GetDevice()->GetQueue()->GetCompletedCommandSerial();
+
+    // Set the scheduled map serial after getting the completed serial. We don't want to hold the
+    // map serial lock for the whole scope because the code below will acquire the Queue's pending
+    // map list lock and command recording context lock, which could potentially cause lock
+    // inversion. The device guard is sufficient to prevent MapAsyncImpl and TryMapNow from running
+    // in parallel.
+    SetScheduledMapSerial(mapReadySerial);
+
     // We may run into map stall in case that the buffer is still being used by previous submitted
     // commands. To avoid that, instead we ask Queue to do the map later when last usage serial has
     // passed.
-    if (mMapReadySerial > completedSerial) {
-        ToBackend(GetDevice()->GetQueue())->ScheduleBufferMapping({this}, mode, mMapReadySerial);
+    if (mapReadySerial > completedSerial) {
+        ToBackend(GetDevice()->GetQueue())->ScheduleBufferMapping({this}, mode, mapReadySerial);
     } else {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
                                   ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
@@ -507,8 +515,16 @@ MaybeError Buffer::TryMapNow(ScopedCommandRecordingContext* commandContext,
 
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
-    // Needn't map the buffer if this is for a previous mapAsync that was cancelled.
-    if (completedSerial >= mMapReadySerial) {
+    // Lock the map serial for the whole scope. Unlike MapAsyncImpl, Destroy, Queue::Submit, and
+    // UnmapImpl which are prevented from running concurrently by the front-end, TryMapNow is not
+    // prevented because it's triggered by Device::Tick, Instance::ProcessEvents, or
+    // Instance::WaitAny. Therefore, we need to hold the lock to prevent races with these methods.
+    return mMapReadySerial.Use([&](auto mapReadySerial) -> MaybeError {
+        // Needn't map the buffer if this is for a previous mapAsync that was cancelled.
+        if (completedSerial < *mapReadySerial) {
+            return {};
+        }
+
         // Trigger any deferred unmaps.
         // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
         // the previous map mode is the same as the current map mode.
@@ -521,9 +537,9 @@ MaybeError Buffer::TryMapNow(ScopedCommandRecordingContext* commandContext,
         // D3D11_MAP_READ_WRITE will be used, hence the mapped pointer will also be writable.
         // TODO(dawn:1705): make sure the map call is not blocked by the GPU operations.
         DAWN_TRY(MapInternal(commandContext, mode));
-    }
 
-    return {};
+        return {};
+    });
 }
 
 MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
@@ -539,6 +555,10 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
+void Buffer::SetScheduledMapSerial(ExecutionSerial serial) {
+    mMapReadySerial.Use([serial](auto mapReadySerial) { *mapReadySerial = serial; });
+}
+
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
 
@@ -547,16 +567,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
         return;
     }
 
-    // device's guard is needed to protect mMapReadySerial. Since the front-end no longer acquires
-    // it. mMapReadySerial are used in:
-    // - MapAsyncImpl()'s non-automatic map path -> protected by the device's guard.
-    // - UnmapImpl()'s non-automatic map path -> protected by the device's guard.
-    // - TryMapNow() which is triggered by CheckAndUpdateCompletedSerials() -> protected by the
-    // device's guard.
-    // - DestroyImpl() -> protected by the device's guard.
-    // TODO(crbug.com/422741977): Find a way to synchronize without the device's lock.
-    auto deviceGuard = GetDevice()->GetGuard();
-    mMapReadySerial = kMaxExecutionSerial;
+    SetScheduledMapSerial(kMaxExecutionSerial);
 
     // The actual unmap will be deferred until the buffer is used by the queue or we need to map
     // again. This avoids the need to lock the CommandContext here just to call D3D11's Unmap
@@ -580,24 +591,30 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl(reason);
 
+    // Cancel any pending remap. Even though front-end guarantees that Destroy() cannot run
+    // in parallel with Queue operations, it doesn't do the same for Device::Tick(),
+    // Instance::ProcessEvents() or WaitAny(). Thus a scheduled remaps triggered by those functions
+    // would race with Destroy() if we don't do a cancel here.
+    if (reason != DestroyReason::CppDestructor && mAutoMapMode != wgpu::MapMode::None) {
+        SetScheduledMapSerial(kMaxExecutionSerial);
+    }
+
     // If buffer is still mapped, we need to unmap it before releasing the D3D11 resource. If we
     // don't do that, there might be some issues on certain drivers such as Intel's.
+    // Note: The front-end guarantees that DestroyImpl cannot run concurrently with MapAsync,
+    // UnmapImpl, or Queue operations, so accessing mMappedData here is safe. Additionally, since
+    // no Queue operation can use this buffer anymore, it won't be scheduled for a remap after a
+    // cancel above.
     if (mMappedData != nullptr && !mMapAtCreationData) {
         // We don't need to unmap if the mapping was done on a shadow copy because no real
         // buffer is mapped yet.
         ToBackend(GetDevice())->DeferUnmapDestroyedBuffer(GetD3D11MappedBuffer());
         mMappedData = nullptr;
     }
+}
 
-    // Cancel any pending remap.
-    // TODO(crbug.com/422741977): This relies on the fact that Destroy and
-    // Queue::CheckScheduledBufferMappings() are synchronized by the device lock, except this is the
-    // last ref. In future, if we remove the device lock from Destroy(), we will need a proper
-    // synchronization here.
-    DAWN_ASSERT(reason == DestroyReason::CppDestructor ||
-                GetDevice()->IsLockedByCurrentThreadIfNeeded());
-
-    mMapReadySerial = kMaxExecutionSerial;
+std::optional<DeviceGuard> Buffer::UseDeviceGuardForDestroy() {
+    return std::nullopt;
 }
 
 MaybeError Buffer::EnsureDataInitialized(const ScopedCommandRecordingContext* commandContext) {
