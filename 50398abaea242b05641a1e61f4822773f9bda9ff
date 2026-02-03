@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "50398abaea242b05641a1e61f4822773f9bda9ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d084892b_fff75d63",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 13042,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-03T13:02:41Z",
+      "side": 1,
+      "message": "wrong pool",
+      "range": {
+        "startLine": 13042,
+        "startChar": 24,
+        "endLine": 13042,
+        "endChar": 37
+      },
+      "revId": "50398abaea242b05641a1e61f4822773f9bda9ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
