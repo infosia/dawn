@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f148d7da_a419530c",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:48:37Z",
+      "side": 1,
+      "message": "nit: I\u0027m curious why return a `span` here? I don\u0027t think there\u0027s any real issue with returning `const vector\u0026`. I think `span` should be used mainly as function parameter type when the API that can accept a contiguous range, be it a vector, an array, or pointer + length. Not saying this is wrong, but am curious about the reasoning.",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
