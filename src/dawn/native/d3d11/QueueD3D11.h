@@ -28,9 +28,13 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <map>
 #include <optional>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
+#include "absl/functional/function_ref.h"
+#include "dawn/common/LinkedList.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -63,6 +67,9 @@ class Queue : public d3d::Queue {
     void ScheduleBufferMapping(Ref<Buffer>&& buffer,
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
+
+    // Cancel a scheduled buffer mapping by removing it from the pending list.
+    void CancelScheduledBufferMapping(Buffer* buffer);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
@@ -110,11 +117,17 @@ class Queue : public d3d::Queue {
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
     std::atomic<bool> mPendingCommandsNeedSubmit = false;
 
-    struct BufferMapEntry {
+    struct BufferMapEntry : public LinkNode<BufferMapEntry> {
         Ref<Buffer> buffer;
         wgpu::MapMode mode;
     };
-    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
+
+    struct BufferMapList {
+        std::map<ExecutionSerial, LinkedList<BufferMapEntry>> serialQueue;
+        absl::flat_hash_map<Buffer*, BufferMapEntry> mapEntries;
+    };
+
+    MutexProtected<BufferMapList> mPendingMapBuffers;
 };
 
 }  // namespace dawn::native::d3d11
