@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-02-02 08:26:29AM
+# Last rolled: 2026-02-03 08:30:32AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1566,6 +1566,7 @@ crbug.com/0000 [ intel mac ] webgpu:api,operation,adapter,requestAdapter:request
 crbug.com/0000 [ android-pixel-4 dawn-no-backend-validation webgpu-service-worker ] webgpu:api,operation,buffers,map_detach:while_mapped: [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,command_buffer,copyBufferToBuffer:single:newSig=false [ Failure ]
 crbug.com/0000 [ apple mac ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="bgra8unorm-srgb";dstFormat="bgra8unorm-srgb";dimension="3d" [ Failure ]
+crbug.com/0000 [ amd mac ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="r32float";dstFormat="r32float";dimension="2d" [ Failure ]
 crbug.com/0000 [ intel mac ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="r8snorm";dstFormat="r8snorm";dimension="3d" [ Failure ]
 crbug.com/0000 [ apple mac ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg11b10ufloat";dstFormat="rg11b10ufloat";dimension="3d" [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth24plus-stencil8" [ Failure ]
@@ -1850,6 +1851,7 @@ crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,capability_checks,limit
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=false;bindingCombination="vertex" [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertex" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertex" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="compute" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="fragment" [ Failure ]
@@ -1965,6 +1967,16 @@ crbug.com/0000 [ android-r ] webgpu:shader,execution,shader_io,vertex_builtins:*
 crbug.com/0000 [ amd-0x7340 mac ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";workgroupSize=[1,1,48];batch__=0 [ Failure ]
+crbug.com/0000 [ android-pixel-4 ] webgpu:shader,validation,expression,call,builtin,faceForward:values:stage="constant";type="vec2%3Cf32%3E" [ Failure ]
+crbug.com/0000 [ amd mac ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ android-pixel-4 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ apple mac ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ intel mac ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ intel win ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ nvidia win ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="bgra8unorm";usage=8 [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="rgba16float";usage=0 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="rgba16float";usage=0 [ Failure ]
@@ -2012,6 +2024,18 @@ crbug.com/0000 [ intel mac webgpu-adapter-swiftshader ] webgpu:web_platform,copy
 crbug.com/0000 [ dawn-backend-validation intel linux webgpu-adapter-default ] webgpu:web_platform,copyToTexture,video:copy_from_video:videoName="four-colors-vp9-bt601-rotate-180.mp4";sourceType="VideoFrame";srcDoFlipYDuringCopy=true;dstColorSpace="display-p3" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,copyToTexture,video:copy_from_video:videoName="four-colors-vp9-bt601-rotate-180.mp4";sourceType="VideoFrame";srcDoFlipYDuringCopy=true;dstColorSpace="srgb" [ Failure ]
 crbug.com/0000 [ intel mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,video:copy_from_video:videoName="four-colors-vp9-bt601.webm";sourceType="VideoFrame";srcDoFlipYDuringCopy=true;dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-hflip.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-hflip.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-180.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-180.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-270.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-270.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-90.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-90.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-vflip.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-vflip.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601.mp4";dstColorSpace="srgb" [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation intel linux webgpu-adapter-swiftshader ] webgpu:web_platform,worker,worker:service_worker: [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation linux no-clang-coverage nvidia webgpu-adapter-swiftshader ] webgpu:web_platform,worker,worker:service_worker: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:web_platform,worker,worker:service_worker: [ Failure ]

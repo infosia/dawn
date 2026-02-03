@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-02-02 08:26:29AM
+# Last rolled: 2026-02-03 08:30:32AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -2566,6 +2566,7 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,operation,command_buffer,copyTextureT
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16sint";dstFormat="rg16sint";dimension="2d" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16sint";dstFormat="rg16sint";dimension="2d" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16sint";dstFormat="rg16sint";dimension="2d" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16sint";dstFormat="rg16sint";dimension="3d" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16uint";dstFormat="rg16uint";dimension="2d" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16uint";dstFormat="rg16uint";dimension="2d" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rg16uint";dstFormat="rg16uint";dimension="2d" [ Failure ]
@@ -3845,6 +3846,9 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_stat
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,encoder_open_state:render_pass_commands:command="setImmediates" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="bgra8unorm";usage=8 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="bgra8unorm";usage=8 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="bgra8unorm";usage=8 [ Failure ]
@@ -3855,6 +3859,8 @@ crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,configure:viewFormats:
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="offscreen";format="rgba16float";viewFormatFeature="_undef_" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="offscreen";format="rgba16float";viewFormatFeature="texture-compression-astc" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="onscreen";format="rgba16float";viewFormatFeature="_undef_" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:configured:canvasType="offscreen" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:configured:canvasType="onscreen" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="rgba8unorm";alphaMode="premultiplied";colorSpace="srgb";webgpuCanvasType="onscreen";canvas2DType="onscreen" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:offscreenCanvas,snapshot:format="rgba16float";alphaMode="premultiplied";colorSpace="display-p3";snapshotType="transferToImageBitmap" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:offscreenCanvas,snapshot:format="rgba8unorm";alphaMode="premultiplied";colorSpace="srgb";snapshotType="transferToImageBitmap" [ Failure ]
@@ -3880,6 +3886,18 @@ crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,c
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="premultiplied";srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="onscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="premultiplied";srcDoFlipYDuringCopy=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-hflip.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-hflip.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-180.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-180.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-270.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-270.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-90.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-rotate-90.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-vflip.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601-vflip.mp4";dstColorSpace="srgb" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601.mp4";dstColorSpace="display-p3" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601.mp4";dstColorSpace="srgb" [ Failure ]
 
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,encoder_open_state:compute_pass_commands:command="dispatchWorkgroups" [ Failure ]
