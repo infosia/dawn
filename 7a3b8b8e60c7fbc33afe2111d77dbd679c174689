@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16b26d36_9afc8e11",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-03T20:38:56Z",
+      "side": 1,
+      "message": "nit. I know that a lot of the other APIs use the C style objects, but I think in an ideal world, it would be best if they could all use the C++ style objects. Would it work to use a `const wgpu::Adapter\u0026` here as the argument instead?",
+      "range": {
+        "startLine": 215,
+        "startChar": 59,
+        "endLine": 215,
+        "endChar": 78
+      },
+      "revId": "7a3b8b8e60c7fbc33afe2111d77dbd679c174689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
