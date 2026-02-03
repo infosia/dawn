@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4de7ca14_646db94c",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T20:58:45Z",
+      "side": 1,
+      "message": "Okay, I understand, however this is close to what the Vulkan backend does, so why is it different for Vulkan? It also updates `mUsesResourceTable` in `OnSetPipeline`, rather than based on whether the pipeline layout changes.",
+      "parentUuid": "04704968_f5344fdc",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d993a68_ed73a827",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 11
@@ -65,6 +83,30 @@
       "writtenOn": "2026-02-02T15:09:18Z",
       "side": 1,
       "message": "[3] It would be nice to do this only when the resource table is \"dirty\", similar to bindgroups.",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 30
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cf6b844_500ceceb",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T20:58:45Z",
+      "side": 1,
+      "message": "Right, I guess this is needed because we need to update the GPU descriptor heap from the CPU one if any changes are made. Is the reason the Vulkan backend doesn\u0027t need to track resource table dirtiness because it doesn\u0027t do the CPU-side staging heap thing?",
+      "parentUuid": "3d993a68_ed73a827",
       "range": {
         "startLine": 517,
         "startChar": 12,
@@ -247,6 +289,24 @@
       "writtenOn": "2026-02-02T16:44:22Z",
       "side": 1,
       "message": "Nit: e.g. ... ?",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90199d2a_e9449a41",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T20:58:45Z",
+      "side": 1,
+      "message": "Added example.",
+      "parentUuid": "fbefad35_0341cedc",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
