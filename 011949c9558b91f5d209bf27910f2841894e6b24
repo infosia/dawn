@@ -33,6 +33,24 @@
       "message": "Won\u0027t we need filtering vs. not filtering here?",
       "revId": "011949c9558b91f5d209bf27910f2841894e6b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcfc004c_3feadfaa",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-03T17:24:01Z",
+      "side": 1,
+      "message": "We will, but this is injected before the filterability CL, so i\u0027ll rebase that on top of this and add it with the texture filterability.",
+      "parentUuid": "cbf5388f_918dfa64",
+      "revId": "011949c9558b91f5d209bf27910f2841894e6b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
