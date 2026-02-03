@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55863a3c_19f6574b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:54:38Z",
+      "side": 1,
+      "message": "For writable buffers, we use `D3D11_MAP_WRITE_NO_OVERWRITE`. It\u0027s probably quite cheap if we don\u0027t write anything between map calls. However, I\u0027m not sure it\u0027s guaranteed. So a toggle allows us to revisit the old path again in future if the architecture of Graphite changes. No to mention the extra book keepings in the Queue when all bufers are eagerly mapped seems like it would add overheads if there are many buffers.",
+      "parentUuid": "53725d1e_7ec6c326",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff3d3c0_c94a7fb9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 17
