@@ -640,6 +640,12 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DynamicRendering));
         usedKnobs.dynamicRenderingFeatures = mDeviceInfo.dynamicRenderingFeatures;
         featuresChain.Add(&usedKnobs.dynamicRenderingFeatures);
+
+        if (usedKnobs.HasExt(DeviceExt::DynamicRenderingLocalRead)) {
+            usedKnobs.dynamicRenderingLocalReadFeatures =
+                mDeviceInfo.dynamicRenderingLocalReadFeatures;
+            featuresChain.Add(&usedKnobs.dynamicRenderingLocalReadFeatures);
+        }
     }
 
     if (HasFeature(Feature::MSAARenderToSingleSampled)) {

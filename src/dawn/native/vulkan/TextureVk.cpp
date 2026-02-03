@@ -732,7 +732,9 @@ VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) 
             if (format.HasDepthOrStencil() && format.IsRenderable()) {
                 return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
             }
-            return VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            return VK_IMAGE_LAYOUT_RENDERING_LOCAL_READ_KHR;
+            // FIXME: Figure out how to make this work for dynamic rendering AND render passes!
+            //return VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
             // Vulkan texture copy functions require the image to be in _one_  known layout.
             // Depending on whether parts of the texture have been transitioned to only CopySrc

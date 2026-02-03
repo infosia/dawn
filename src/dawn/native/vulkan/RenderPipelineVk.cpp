@@ -604,8 +604,6 @@ MaybeError RenderPipeline::InitializeImpl() {
                 pipelineRenderingCreateInfo.stencilAttachmentFormat = vkDsFormat;
             }
         }
-
-        // TODO(crbug.com/463893794): Handle ExpandResolveTexture.
     } else {
         // Get a VkRenderPass that matches the attachment formats for this pipeline.
         // VkRenderPass compatibility rules let us provide placeholder data for a bunch of
