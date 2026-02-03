@@ -87,6 +87,30 @@
       },
       "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "355edb49_bb259b67",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:18:01Z",
+      "side": 1,
+      "message": "Sounds good, reverted that part of the change.",
+      "parentUuid": "03ec56bc_ec120d75",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
