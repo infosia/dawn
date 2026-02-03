@@ -16,6 +16,182 @@
       "message": "I purposefully pushed up my new tests without my fix so that you can see the failures: https://dawn-review.googlesource.com/c/dawn/+/287395?checksPatchset\u003d3\u0026tab\u003dchecks\n\nThe last patchset includes the actual fix.",
       "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d030f88_aa7dcbd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "LGTM! I think that was the final piece of descriptor stuff that you hadn\u0027t looked at in details yet ^^",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f9fb5f4_9dce6de9",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "nit: we already skip calls to `PopulateViews/Samplers` with the `\u0026\u0026` in the lines above, so we don\u0027t need to add an optimization for the unlikely case when we run out of space in heaps. (if anything I think we can remove the early out and turn the `\u0026\u0026` into `\u0026\u003d` even if it means we\u0027ll fail up to 4 times if a heap needs switching, as it will reduce the branching here).",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 13
+      },
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bc07e2c_81a9d8bf",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "nit: this can be moved at [1] since it is only used there.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eefd6310_422cbd3d",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a82b011_6bafa07d",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "```suggestion\n        // AllocateAndSwitchShaderVisibleHeap, but previously didn\u0027t because the failure of the allocation of group 0 was overwritten by the success of group 1.\n```",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c03460bb_94855e84",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "Note: Changing the number of samplers per group works, another option would have been to use different samplers each time but that\u0027s mildly annoying. (maybe the maxLod could help for that as it\u0027s a continuous creation parameter)",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af2133a2_cd91673a",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "WDYT? and ditto below\n\n```suggestion\n    wgpu::RenderPipeline pipeline16Samplers \u003d device.CreateRenderPipeline(\u0026renderPipelineDescriptor);\n```",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5a1de0b_94aa5821",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77ff07f9_ceed8b2e",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "Same comments as for the sampler test just above.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46454b1a_ba51221b",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:43:22Z",
+      "side": 1,
+      "message": "Same comment to clarify what the existing bug was.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
