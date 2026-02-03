@@ -39,6 +39,30 @@
       },
       "revId": "50398abaea242b05641a1e61f4822773f9bda9ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ca2ee9c_aac8aecc",
+        "filename": "infra/config/global/generated/luci/cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 13042,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-03T18:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d084892b_fff75d63",
+      "range": {
+        "startLine": 13042,
+        "startChar": 24,
+        "endLine": 13042,
+        "endChar": 37
+      },
+      "revId": "50398abaea242b05641a1e61f4822773f9bda9ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
