@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e6627c_b2bd8b8d",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:12:21Z",
+      "side": 1,
+      "message": "Since you\u0027ve now added the off-by-default `TINT_BUILD_FUZZER_VULKAN_SUPPORT`, do we still need the `IS_LINUX` guard? I see no reason this path shouldn\u0027t work on macOS for example, which might be useful for developers.\n\nI realize that this codepath wouldn\u0027t currently compile on Windows due to the `setenv` call, but since it\u0027s opt-in I don\u0027t think that\u0027s a problem (and you\u0027d get a runtime error anyway so it just changes runtime-error -\u003e compile-time-error).",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "475b7464efbb3507a2abe4aa462bb288c47e9776",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

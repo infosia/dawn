@@ -477,6 +477,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f066b8cb_a9780df8",
+        "filename": "src/tint/lang/spirv/writer/writer_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:12:21Z",
+      "side": 1,
+      "message": "Great, thanks for confirming!",
+      "parentUuid": "4396b511_988e35f5",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd2ed8fc_6c131eeb",

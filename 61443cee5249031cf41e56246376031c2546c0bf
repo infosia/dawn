@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33753f07_096c15d8",
+        "filename": "src/tint/lang/spirv/validate/validate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:12:21Z",
+      "side": 1,
+      "message": "Nit: unneeded?",
+      "fixSuggestions": [
+        {
+          "fixId": "1c0d4cf6_f07a339a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/validate/validate.cc",
+              "range": {
+                "startLine": 36,
+                "startChar": 0,
+                "endLine": 37,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "61443cee5249031cf41e56246376031c2546c0bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
