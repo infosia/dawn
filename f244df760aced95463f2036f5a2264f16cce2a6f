@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3595267_a071f155",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Agreed on removing the break from the loop, but I\u0027m not sure about `\u0026\u003d` as although it reduces branching in this bit of code, it doesn\u0027t for the branching in PopulateViews/Samplers.",
+      "parentUuid": "0f9fb5f4_9dce6de9",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 13
+      },
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5bc07e2c_81a9d8bf",
@@ -71,6 +95,24 @@
       "writtenOn": "2026-02-03T14:43:22Z",
       "side": 1,
       "message": "nit: this can be moved at [1] since it is only used there.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2fbfb5d_3623a855",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc07e2c_81a9d8bf",
       "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +151,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a129cbf0_4ade6119",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a82b011_6bafa07d",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c03460bb_94855e84",
@@ -122,6 +182,24 @@
       "writtenOn": "2026-02-03T14:43:22Z",
       "side": 1,
       "message": "Note: Changing the number of samplers per group works, another option would have been to use different samplers each time but that\u0027s mildly annoying. (maybe the maxLod could help for that as it\u0027s a continuous creation parameter)",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5b8138f_ccca9df8",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Ah, I had tried calling CreateSampler for each, but that didn\u0027t work. I didn\u0027t think about making each sampler unique that way. Good to know for the future 😊",
+      "parentUuid": "c03460bb_94855e84",
       "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -143,6 +221,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f256a417_8fdde616",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "I like it!",
+      "parentUuid": "af2133a2_cd91673a",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5a1de0b_94aa5821",
@@ -156,6 +252,24 @@
       "writtenOn": "2026-02-03T14:43:22Z",
       "side": 1,
       "message": "ditto",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68d8eb9c_cba864f6",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a1de0b_94aa5821",
       "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -177,6 +291,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "220ada8e_df982c9c",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ff07f9_ceed8b2e",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46454b1a_ba51221b",
@@ -190,6 +322,24 @@
       "writtenOn": "2026-02-03T14:43:22Z",
       "side": 1,
       "message": "Same comment to clarify what the existing bug was.",
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd77382_26b9254c",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46454b1a_ba51221b",
       "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
