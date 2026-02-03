@@ -16,6 +16,24 @@
       "message": "ditto: this can be moved next to `BeginRenderPass`",
       "revId": "c02deba287ce09fdc5f3d933e773909a34e58733",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecaf69e1_57178054",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T16:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "593acb1e_01259b22",
+      "revId": "c02deba287ce09fdc5f3d933e773909a34e58733",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
