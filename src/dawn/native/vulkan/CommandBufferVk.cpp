@@ -619,7 +619,12 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
         renderInfo.pNext = &msrtss;
     }
 
-    device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
+    if (renderPass->attachmentState->GetExpandResolveInfo().attachmentsToExpandResolve.any()) {
+        DAWN_TRY(BeginDynamicRenderingAndExpandResolveTextureWithDraw(device, recordingContext,
+                                                                      renderPass, renderInfo));
+    } else {
+        device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
+    }
 
     return {};
 }

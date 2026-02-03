@@ -949,9 +949,12 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
          gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
         adapterToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
     } else {
-        // TODO(crbug.com/463893794): Defaulted to false until ExpandResolveTexture is supported
-        // when dynamic rendering is enabled.
-        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, false);
+        // Dynamic rendering only defaults to enabled if VK_KHR_dynamic_rendering_local_read is
+        // available, because that's required for ExpandResolveTexture support.
+        bool hasLocalRead =
+            GetDeviceInfo().HasExt(DeviceExt::DynamicRenderingLocalRead) &&
+            GetDeviceInfo().dynamicRenderingLocalReadFeatures.dynamicRenderingLocalRead == VK_TRUE;
+        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, hasLocalRead);
     }
 
     // Use CreateRenderPass2KHR by default if the corresponding extension is available. Disabled if
