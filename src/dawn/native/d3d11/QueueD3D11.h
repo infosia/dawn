@@ -31,6 +31,7 @@
 #include <optional>
 #include <vector>
 
+#include "absl/functional/function_ref.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -63,6 +64,10 @@ class Queue : public d3d::Queue {
     void TrackPendingMapBuffer(Ref<Buffer>&& buffer,
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
+
+    // Synchronize with any pending map operations by locking mPendingMapBuffers
+    // and executing the provided function.
+    void SynchronizeWithPendingMap(absl::FunctionRef<void()> fn);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
