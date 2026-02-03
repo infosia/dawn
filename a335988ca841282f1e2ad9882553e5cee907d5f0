@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53725d1e_7ec6c326",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:40:25Z",
+      "side": 1,
+      "message": "I want to do A/B test to see whether it\u0027s an improvement before we remove the other path. Mapping buffers all the time is not free. What if we map buffer but users never use it. Also in future, Graphite could use a buffer repeatedly in different Queue::Submit, forcing the buffer to map, unmapped constantly for nothing. Unfortunately, D3D11 doesn\u0027t have explicit `FlushMappedRange` function, hence every `Unmap` would result in a flush AFAIK.",
+      "parentUuid": "e47ff4b6_5bd7be81",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff3d3c0_c94a7fb9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 17
@@ -65,6 +83,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "Why don\u0027t we do it for buffers that are both MapRead and MapWrite?",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3392e9df_2280a721",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:40:25Z",
+      "side": 1,
+      "message": "GPUUsableBuffer will allocate different storages for MapRead and MapWrite if it also has GPU usages. It\u0027s tricky to handle this case, on the other hands. Only MapExtendedUsage allows this.",
+      "parentUuid": "f80d6ea8_b30668ac",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +164,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1d16ca5c_31059b58",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:40:25Z",
+      "side": 1,
+      "message": "Do you mean we should eager map when we first create the buffer then ignore this 1st map optimization?\n\nThat would create the shadow copy for nothing. For example, with MapRead buffers, typically the buffers are copied to using GPU then Map for read. If we always mapped it at creation, if there are contentions, a shadow copy would be created but then unused. It\u0027s a waste.\n\nSimilarly, for MapWrite buffers, it\u0027s also the same, some times, users didn\u0027t map it then used in the queue immediately, a shadow copy would be created for nothing. It\u0027s especially expensive for big buffers.",
+      "parentUuid": "a5a5b947_ceff1d64",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 9
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39d233f7_05673bd5",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 17
@@ -179,6 +239,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e5d6c9d_a57b1d24",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:40:25Z",
+      "side": 1,
+      "message": "It\u0027s needed for cancelling the scheduled remap after being destroyed.\n\nExample:\n- Queue.CopyBufferToBuffer()\n  - Buffer.UnmapIfNeeded()\n  - Queue.TrackPendingMapBuffer() --\u003e schedule a remap when this submit completes.\n- Buffer.Destroy()\n  - We need to cancel the above remap otherwise it would access released buffer pointers.\n  - We could also set last usage serial to max value instead of using `mMapReadySerial`. But it\u0027s the same concept, we need a way to cancel.",
+      "parentUuid": "33f763a4_d96fe75e",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdb48c60_c7a74a45",
         "filename": "src/dawn/native/d3d11/BufferD3D11.h",
         "patchSetId": 17
@@ -190,6 +268,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "This makes it sound like we know for sure that the buffer is ready to map, when instead we are just telling it that one batch of commands using it have completed. `TryEagerMap` maybe? And the comment could be updated / made more clear.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30a1b413_1207090f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T14:40:25Z",
+      "side": 1,
+      "message": "This is not only for eager map, but also for the old \"non-emulated\" path, where the buffer schedules to be mapped after a MapAsync to avoid stallings,",
+      "parentUuid": "fdb48c60_c7a74a45",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
