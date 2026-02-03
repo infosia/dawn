@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "159e20d2_3676f90e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-03T14:58:30Z",
+      "side": 0,
+      "message": "Ah I totally missed that this function only cares if the current thread has the lock. Good catch.",
+      "range": {
+        "startLine": 918,
+        "startChar": 25,
+        "endLine": 918,
+        "endChar": 38
+      },
+      "revId": "dd159281ac84837d5767b44d7a6bb865aa008000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
