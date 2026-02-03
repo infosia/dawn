@@ -96,6 +96,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4379114_44cb9867",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-03T02:52:29Z",
+      "side": 1,
+      "message": "So all this question about pixel centers on vulkan is all about emulating the behavior on other platforms. For some reason vulkan does not guarantee that the we will have pixel center anything but on webgpu this is what we want for all samples\n\nHere is some of my documentation on the issue.\nhttps://docs.google.com/document/d/1bEvj-7nSeynmywCUnSetpp06jcIeUjmmFBeOo8-pJLg/edit?ouid\u003d104792888902342253101\u0026usp\u003ddocs_home\u0026ths\u003dtrue",
+      "parentUuid": "cff765f9_3dec64aa",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed5d1cb2_d94b4d2a",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 15
