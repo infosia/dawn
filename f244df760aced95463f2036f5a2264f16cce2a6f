@@ -82,6 +82,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3183cf_de2a27de",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:11:12Z",
+      "side": 1,
+      "message": "When optimizing for the success case it means that right now we have two redundant branching: the check for failing to allocate in `Populate` and the check to skip over if a failure already happened. It\u0027s minor though.",
+      "parentUuid": "e3595267_a071f155",
+      "range": {
+        "startLine": 496,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 13
+      },
+      "revId": "f244df760aced95463f2036f5a2264f16cce2a6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5bc07e2c_81a9d8bf",
