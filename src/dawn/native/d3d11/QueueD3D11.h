@@ -28,9 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <deque>
 #include <optional>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -63,6 +65,9 @@ class Queue : public d3d::Queue {
     void TrackPendingMapBuffer(Ref<Buffer>&& buffer,
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
+
+    // Cancel a pending map operation for a buffer.
+    void CancelPendingMapBuffer(BufferBase* buffer);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
@@ -105,16 +110,43 @@ class Queue : public d3d::Queue {
                                                  CommandRecordingContext::Guard&& commands,
                                                  Args&&... args);
 
+  protected:
+    // Manages pending buffer map operations.
+    class PendingMapReadyList {
+      public:
+        struct Entry {
+            ExecutionSerial serial;
+            uint64_t uniqueID;
+            Ref<Buffer> buffer;
+            wgpu::MapMode mode;
+        };
+
+        // Track a buffer to be mapped when its serial is reached. If the buffer is already
+        // tracked, removes the old entry before adding the new one.
+        void Track(Ref<Buffer>&& buffer, wgpu::MapMode mode, ExecutionSerial serial);
+
+        // Cancel a pending map operation for a buffer.
+        void Cancel(BufferBase* buffer);
+
+        MaybeError ProcessReadyBuffers(ScopedCommandRecordingContext* commandContext,
+                                       ExecutionSerial completedSerial);
+
+      private:
+        // Queue of entries sorted by serial (and uniqueID). Both serial and uniqueID are
+        // monotonically increasing.
+        std::deque<Entry> mSerialQueue;
+        // Buffer -> uniqueID (for fast lookup of which entry a buffer belongs to)
+        absl::flat_hash_map<BufferBase*, uint64_t> mBufferToID;
+        // Counter for generating unique IDs
+        uint64_t mNextID = 0;
+    };
+
     ComPtr<ID3D11Fence> mFence;
     Ref<SharedFence> mSharedFence;
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
     std::atomic<bool> mPendingCommandsNeedSubmit = false;
 
-    struct BufferMapEntry {
-        Ref<Buffer> buffer;
-        wgpu::MapMode mode;
-    };
-    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
+    MutexProtected<PendingMapReadyList> mPendingMapBuffers;
 };
 
 }  // namespace dawn::native::d3d11
