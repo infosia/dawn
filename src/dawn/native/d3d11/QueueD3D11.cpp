@@ -354,11 +354,28 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) {
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return mPendingMapBuffers.Use([&](auto pendingMapBuffers) -> MaybeError {
-        for (const auto& bufferEntry : pendingMapBuffers->IterateUpTo(completedSerial)) {
-            DAWN_TRY(
-                bufferEntry.buffer->TryMapNow(&commandContext, completedSerial, bufferEntry.mode));
+        auto& serialQueue = pendingMapBuffers->serialQueue;
+
+        // Process all serials up to and including completedSerial
+        auto it = serialQueue.begin();
+        while (it != serialQueue.end() && it->first <= completedSerial) {
+            LinkedList<BufferMapEntry>& list = it->second;
+
+            // Process all buffers in this serial's list
+            for (LinkNode<BufferMapEntry>* node : list) {
+                BufferMapEntry* entry = node->value();
+                Buffer* buffer = entry->buffer.Get();
+
+                DAWN_TRY(buffer->TryMapNow(&commandContext, completedSerial, entry->mode));
+
+                // Erase from the lookup map
+                RecycleBufferMapEntry(*pendingMapBuffers, buffer);
+            }
+
+            // Erase this serial's entry and advance iterator
+            it = serialQueue.erase(it);
         }
-        pendingMapBuffers->ClearUpTo(completedSerial);
+
         return {};
     });
 }
@@ -366,7 +383,51 @@ MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) 
 void Queue::ScheduleBufferMapping(Ref<Buffer>&& buffer,
                                   wgpu::MapMode mode,
                                   ExecutionSerial readySerial) {
-    mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        auto& serialQueue = pendingMapBuffers->serialQueue;
+        auto& mapEntries = pendingMapBuffers->mapEntries;
+        auto& recycledEntries = pendingMapBuffers->recycledEntries;
+
+        Buffer* bufferPtr = buffer.Get();
+
+        auto& entry = mapEntries[bufferPtr];
+        if (!entry) {
+            if (!recycledEntries.empty()) {
+                entry = std::move(recycledEntries.back());
+                recycledEntries.pop_back();
+            } else {
+                entry = std::make_unique<BufferMapEntry>();
+            }
+        } else {
+            // One buffer can only be scheduled once. Cancel the old scheduled map entry if it
+            // exists.
+            if (entry->IsInList()) {
+                entry->RemoveFromList();
+            }
+        }
+
+        entry->buffer = std::move(buffer);
+        entry->mode = mode;
+        serialQueue[readySerial].Append(entry.get());
+    });
+}
+
+void Queue::CancelScheduledBufferMapping(Buffer* buffer) {
+    mPendingMapBuffers.Use(
+        [&](auto pendingMapBuffers) { RecycleBufferMapEntry(*pendingMapBuffers, buffer); });
+}
+
+void Queue::RecycleBufferMapEntry(BufferMapList& list, Buffer* buffer) {
+    // Erase from the lookup map and put the Entry into the recycled list to be reused later.
+    auto it = list.mapEntries.find(buffer);
+    if (it != list.mapEntries.end()) {
+        auto& entry = it->second;
+        entry->RemoveFromList();
+        entry->buffer = nullptr;
+        // TODO(crbug.com/402138745): Shrink the recycled list in Device::ReduceMemoryUsage.
+        list.recycledEntries.push_back(std::move(entry));
+        list.mapEntries.erase(it);
+    }
 }
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,

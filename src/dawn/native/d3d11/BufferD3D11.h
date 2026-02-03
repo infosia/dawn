@@ -192,13 +192,13 @@ class Buffer : public BufferBase {
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
+    std::optional<DeviceGuard> UseDeviceGuardForDestroy() override;
 
     MaybeError InitializeToZero(const ScopedCommandRecordingContext* commandContext);
 
     // Internal usage indicating the native buffer supports mapping for read and/or write or not.
     const wgpu::BufferUsage mInternalMappableFlags;
     const wgpu::MapMode mAutoMapMode;
-    ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
     // Temporary storage for MapAtCreation when the lock cannot be acquired.
     std::unique_ptr<uint8_t[]> mMapAtCreationData;
 };
