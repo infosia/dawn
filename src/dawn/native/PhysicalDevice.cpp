@@ -229,4 +229,8 @@ uint32_t PhysicalDeviceBase::GetMaxExplicitComputeSubgroupSize() const {
     return mMaxExplicitComputeSubgroupSize;
 }
 
+uint32_t PhysicalDeviceBase::GetMaxComputeWorkgroupSubgroups() const {
+    return mMaxComputeWorkgroupSubgroups;
+}
+
 }  // namespace dawn::native
