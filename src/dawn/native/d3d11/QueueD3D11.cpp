@@ -354,11 +354,27 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) {
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return mPendingMapBuffers.Use([&](auto pendingMapBuffers) -> MaybeError {
-        for (const auto& bufferEntry : pendingMapBuffers->IterateUpTo(completedSerial)) {
-            DAWN_TRY(
-                bufferEntry.buffer->TryMapNow(&commandContext, completedSerial, bufferEntry.mode));
+        auto& serialQueue = pendingMapBuffers->serialQueue;
+        auto& mapEntries = pendingMapBuffers->mapEntries;
+
+        // Process all serials up to and including completedSerial
+        auto it = serialQueue.begin();
+        while (it != serialQueue.end() && it->first <= completedSerial) {
+            LinkedList<BufferMapEntry>& list = it->second;
+
+            // Process all buffers in this serial's list
+            for (LinkNode<BufferMapEntry>* node : list) {
+                BufferMapEntry* entry = node->value();
+                DAWN_TRY(entry->buffer->TryMapNow(&commandContext, completedSerial, entry->mode));
+
+                // Remove from the lookup map
+                mapEntries.erase(entry->buffer.Get());
+            }
+
+            // Erase this serial's entry and advance iterator
+            it = serialQueue.erase(it);
         }
-        pendingMapBuffers->ClearUpTo(completedSerial);
+
         return {};
     });
 }
@@ -366,7 +382,34 @@ MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) 
 void Queue::ScheduleBufferMapping(Ref<Buffer>&& buffer,
                                   wgpu::MapMode mode,
                                   ExecutionSerial readySerial) {
-    mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        auto& serialQueue = pendingMapBuffers->serialQueue;
+        auto& mapEntries = pendingMapBuffers->mapEntries;
+
+        Buffer* bufferPtr = buffer.Get();
+        auto& entry = mapEntries[bufferPtr];
+
+        if (entry.IsInList()) {
+            entry.RemoveFromList();
+        }
+
+        entry.buffer = std::move(buffer);
+        entry.mode = mode;
+        serialQueue[readySerial].Append(&entry);
+    });
+}
+
+void Queue::CancelScheduledBufferMapping(Buffer* buffer) {
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        auto& mapEntries = pendingMapBuffers->mapEntries;
+
+        auto it = mapEntries.find(buffer);
+        if (it != mapEntries.end()) {
+            BufferMapEntry& entry = it->second;
+            entry.RemoveFromList();
+            mapEntries.erase(it);
+        }
+    });
 }
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
