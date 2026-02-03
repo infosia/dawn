@@ -181,6 +181,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee34af6e_ca6c30ae",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "Related to this: this polyfill is using an additional interstage variable. This means that any use of frag depth greater/lesser will implicitly reduce the number of available interstage variables for the user (see `maxInterStageShaderVariables` validation logic in Dawn).\n\nI don\u0027t believe this was considered when the group decided to go ahead with the polyfill. I don\u0027t know whether this would change our decision.\n@cwallez@chromium.org is this something that we should worry about?",
+      "parentUuid": "60224d4b_46c7fec7",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12

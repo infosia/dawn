@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28ac3aea_0f7f0965",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "I don\u0027t think the position check is right here. You\u0027re not rewriting a user-declared `@builtin(position)` parameter in this case (unlike the one above, where we are). So the index check should be enough.",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5238bc21_2dcfa1ec",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 15
@@ -14,6 +31,24 @@
       "writtenOn": "2026-02-02T10:43:13Z",
       "side": 1,
       "message": "Should I do something for `centroid_pos_vert_idx` as well there?",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c20ab69_8d32d0f5",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "I don\u0027t actually know. Maybe @petermcneeley@google.com can advise since he wrote the polyfill for the position centers.\n\nI guess the question is, if we are passing a user-defined `@interpolate(centroid)` position from the vertex shader to the fragment shader, do we need to do anything to make the depth value \"correct\"?",
+      "parentUuid": "5238bc21_2dcfa1ec",
       "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -37,6 +72,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5eb90806_13834665",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "I think so. I\u0027d recommend adding some unit tests for this feature in shader_io_test.cc and then it\u0027ll probably be easier to see that it\u0027s working correctly.",
+      "parentUuid": "ed5d1cb2_d94b4d2a",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2729b59_2ea6ca51",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "Should default to `false` (I think you said you\u0027ll change it in the other comment but noting this to make sure we\u0027re on the same page).",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06de4d6f_ce49c903",
         "filename": "test/tint/extensions/fragment_depth/position.wgsl",
         "patchSetId": 15
@@ -48,6 +118,24 @@
       "writtenOn": "2026-02-02T10:43:13Z",
       "side": 1,
       "message": "1. Is there another/better way to test this?\n2. What would happen in a world where there\u0027s no vertex output position?",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e6da7aa_8e051ef6",
+        "filename": "test/tint/extensions/fragment_depth/position.wgsl",
+        "patchSetId": 15
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T02:35:58Z",
+      "side": 1,
+      "message": "All vertex shaders must return a position builtin. But I don\u0027t think that matters anyway since you\u0027re added an `@location` output to emulate it right?",
+      "parentUuid": "06de4d6f_ce49c903",
       "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
