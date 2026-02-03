@@ -596,7 +596,7 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
         // Deduce map mode from buffer's mappable usage.
         wgpu::MapMode mode = IsCPUWritable() ? wgpu::MapMode::Write : wgpu::MapMode::Read;
         mMapReadySerial = pendingSerial;
-        ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, pendingSerial);
+        ToBackend(GetDevice()->GetQueue())->TrackBufferForRemap({this}, mode, pendingSerial);
     }
 
     return {};
@@ -624,7 +624,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     // commands. To avoid that, instead we ask Queue to do the map later when last usage serial has
     // passed.
     if (mMapReadySerial > completedSerial) {
-        ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, mMapReadySerial);
+        ToBackend(GetDevice()->GetQueue())->TrackBufferForMapAsync({this}, mode, mMapReadySerial);
     } else {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
                                   ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
@@ -728,24 +728,23 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl(reason);
 
+    // We don't need to cancel pending map operations when called from the C++ destructor
+    // because at that point, the queue no longer holds a ref to the buffer.
+    if (reason != DestroyReason::CppDestructor) {
+        ToBackend(GetDevice()->GetQueue())->CancelBufferRemap(this);
+    }
+
     // If buffer is still mapped, we need to unmap it before releasing the D3D11 resource. If we
     // don't do that, there might be some issues on certain drivers such as Intel's.
+    // Note: The front-end guarantees that DestroyImpl cannot run concurrently with MapAsync,
+    // UnmapImpl, or Queue operations, so accessing mMappedData here is safe. Additionally, since
+    // no Queue operation can use this buffer anymore, it won't be scheduled for a remap.
     if (mMappedData != nullptr && !mMapAtCreationData) {
         // We don't need to unmap if the mapping was done on a shadow copy because no real
         // buffer is mapped yet.
         ToBackend(GetDevice())->DeferUnmapDestroyedBuffer(GetD3D11MappedBuffer());
         mMappedData = nullptr;
     }
-
-    // Cancel any pending remap.
-    // TODO(crbug.com/422741977): This relies on the fact that Destroy and
-    // Queue::CheckAndMapReadyBuffers() are synchronized by the device lock, except this is the last
-    // ref. In future, if we remove the device lock from Destroy(), we will need a proper
-    // synchronization here.
-    DAWN_ASSERT(reason == DestroyReason::CppDestructor ||
-                GetDevice()->IsLockedByCurrentThreadIfNeeded());
-
-    mMapReadySerial = kMaxExecutionSerial;
 }
 
 MaybeError Buffer::EnsureDataInitialized(const ScopedCommandRecordingContext* commandContext) {
