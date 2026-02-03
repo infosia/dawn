@@ -28,9 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <deque>
 #include <optional>
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -59,10 +61,16 @@ class Queue : public d3d::Queue {
     // DeviceBase is fully created.
     MaybeError InitializePendingContext();
 
-    // Register the pending map buffer to be checked.
-    void TrackPendingMapBuffer(Ref<Buffer>&& buffer,
-                               wgpu::MapMode mode,
-                               ExecutionSerial readySerial);
+    // Track a buffer for automatic remapping (persistent map emulation).
+    // Serials are guaranteed to be monotonically increasing.
+    void TrackBufferForRemap(Ref<Buffer>&& buffer, wgpu::MapMode mode, ExecutionSerial serial);
+
+    // Track a buffer for MapAsync completion.
+    // Serials are NOT guaranteed to be monotonically increasing.
+    void TrackBufferForMapAsync(Ref<Buffer>&& buffer, wgpu::MapMode mode, ExecutionSerial serial);
+
+    // Cancel a pending remap operation for a buffer.
+    void CancelBufferRemap(BufferBase* buffer);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
@@ -110,11 +118,46 @@ class Queue : public d3d::Queue {
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
     std::atomic<bool> mPendingCommandsNeedSubmit = false;
 
+    // Common base for buffer map entries.
     struct BufferMapEntry {
         Ref<Buffer> buffer;
         wgpu::MapMode mode;
     };
-    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
+
+    // Pending MapAsync operations (non-monotonic serials)
+    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapAsyncBuffers;
+
+    // Manages pending buffer remap operations for persistent map emulation.
+    // Serials are guaranteed to be monotonically increasing (queue submission order).
+    class PendingRemapList {
+      public:
+        struct Entry : BufferMapEntry {
+            ExecutionSerial serial;
+            uint64_t uniqueID;
+        };
+
+        // Track a buffer to be remapped when its serial is reached. If the buffer is already
+        // tracked, removes the old entry before adding the new one.
+        void Track(Ref<Buffer>&& buffer, wgpu::MapMode mode, ExecutionSerial serial);
+
+        // Cancel a pending remap operation for a buffer.
+        void Cancel(BufferBase* buffer);
+
+        MaybeError ProcessReadyBuffers(ScopedCommandRecordingContext* commandContext,
+                                       ExecutionSerial completedSerial);
+
+      private:
+        // Queue of entries sorted by serial (and uniqueID). Both serial and uniqueID are
+        // monotonically increasing (entries added in queue submission order).
+        std::deque<Entry> mSerialQueue;
+        // Buffer -> uniqueID (for fast lookup of which entry a buffer belongs to)
+        absl::flat_hash_map<BufferBase*, uint64_t> mBufferToID;
+        // Counter for generating unique IDs
+        uint64_t mNextID = 0;
+    };
+
+    // Pending remaps for persistent map emulation (monotonic serials)
+    MutexProtected<PendingRemapList> mPendingRemaps;
 };
 
 }  // namespace dawn::native::d3d11
