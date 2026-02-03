@@ -34,6 +34,24 @@
       ],
       "revId": "61443cee5249031cf41e56246376031c2546c0bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aca05fa2_ddaf214e",
+        "filename": "src/tint/lang/spirv/validate/validate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-03T15:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33753f07_096c15d8",
+      "revId": "61443cee5249031cf41e56246376031c2546c0bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

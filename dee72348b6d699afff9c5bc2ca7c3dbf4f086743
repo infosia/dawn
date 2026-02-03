@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "195f1f06_2fc3b734",
+        "filename": "src/tint/cmd/fuzz/wgsl/fuzz.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-03T15:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49860526_97d4544a",
+      "revId": "dee72348b6d699afff9c5bc2ca7c3dbf4f086743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a53d96ef_505acbdd",
