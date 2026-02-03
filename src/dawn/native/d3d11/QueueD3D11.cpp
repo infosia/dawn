@@ -247,6 +247,20 @@ void Queue::DestroyImpl(DestroyReason reason) {
     // underlying native fence so that we can return a SharedFence on EndAccess after destruction.
     mSharedFence = nullptr;
 
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        for (auto& [serial, list] : *pendingMapBuffers) {
+            while (!list.empty()) {
+                LinkNode<ScheduledMapRequest>* node = list.head();
+                ScheduledMapRequest* request = node->value();
+                request->RemoveFromList();
+                // Clear the buffer ref to avoid memory leaks in case there are some error happened
+                // during CheckScheduledBufferMappings.
+                request->buffer = nullptr;
+            }
+        }
+        pendingMapBuffers->clear();
+    });
+
     mPendingCommands.Use([&](auto pendingCommands) {
         pendingCommands->Destroy();
         mPendingCommandsNeedSubmit.store(false, std::memory_order_release);
@@ -354,11 +368,28 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) {
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return mPendingMapBuffers.Use([&](auto pendingMapBuffers) -> MaybeError {
-        for (const auto& bufferEntry : pendingMapBuffers->IterateUpTo(completedSerial)) {
-            DAWN_TRY(
-                bufferEntry.buffer->TryMapNow(&commandContext, completedSerial, bufferEntry.mode));
+        // Process all serials up to and including completedSerial
+        auto it = pendingMapBuffers->begin();
+        while (it != pendingMapBuffers->end() && it->first <= completedSerial) {
+            LinkedList<ScheduledMapRequest>& list = it->second;
+
+            // Process all buffers in this serial's list
+            while (!list.empty()) {
+                LinkNode<ScheduledMapRequest>* node = list.head();
+                ScheduledMapRequest* request = node->value();
+
+                DAWN_ASSERT(request->buffer);
+                DAWN_TRY(
+                    request->buffer->TryMapNow(&commandContext, completedSerial, request->mode));
+
+                request->buffer = nullptr;
+                request->RemoveFromList();
+            }
+
+            // Erase this serial's entry and advance iterator
+            it = pendingMapBuffers->erase(it);
         }
-        pendingMapBuffers->ClearUpTo(completedSerial);
+
         return {};
     });
 }
@@ -366,7 +397,27 @@ MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) 
 void Queue::ScheduleBufferMapping(Ref<Buffer>&& buffer,
                                   wgpu::MapMode mode,
                                   ExecutionSerial readySerial) {
-    mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
+    ScheduledMapRequest* request = buffer->GetMapRequestPtr();
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        // One buffer can only be scheduled once. Cancel any existing scheduled map entry if it
+        // exists.
+        if (request->IsInList()) {
+            request->RemoveFromList();
+        }
+        request->buffer = std::move(buffer);
+        request->mode = mode;
+        (*pendingMapBuffers)[readySerial].Append(request);
+    });
+}
+
+void Queue::CancelScheduledBufferMapping(Buffer* buffer) {
+    ScheduledMapRequest* request = buffer->GetMapRequestPtr();
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
+        if (request->IsInList()) {
+            request->RemoveFromList();
+        }
+        request->buffer = nullptr;
+    });
 }
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
