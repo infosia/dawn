@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f24242a_ee84561c",
+        "filename": "test/tint/extensions/resource_table/access_as_constant_sampler.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T17:35:20Z",
+      "side": 1,
+      "message": "New E2E tests should do something with the value to avoid DCE please.\n\nFor fragment shaders you could just return the value as a location-decorated thing.",
+      "fixSuggestions": [
+        {
+          "fixId": "f8d66d9c_45bb1b2d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "test/tint/extensions/resource_table/access_as_constant_sampler.wgsl",
+              "range": {
+                "startLine": 3,
+                "startChar": 0,
+                "endLine": 4,
+                "endChar": 0
+              },
+              "replacement": "@fragment fn fs() -\u003e @location(0) vec4f {\n"
+            },
+            {
+              "path": "test/tint/extensions/resource_table/access_as_constant_sampler.wgsl",
+              "range": {
+                "startLine": 6,
+                "startChar": 0,
+                "endLine": 7,
+                "endChar": 0
+              },
+              "replacement": "    return textureSample(t, s, vec2f(0));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6a7770c5b4adf3bbe940dfc5c39e90fd903999d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5de86a68_2ea94781",
+        "filename": "test/tint/extensions/resource_table/has_binding_sampler.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-03T17:35:20Z",
+      "side": 1,
+      "message": "Ditto, please write values out to a storage buffer or something.",
+      "revId": "6a7770c5b4adf3bbe940dfc5c39e90fd903999d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
