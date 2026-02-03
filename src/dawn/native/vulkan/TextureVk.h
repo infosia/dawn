@@ -85,7 +85,8 @@ class Texture : public TextureBase {
     void TransitionUsageNow(CommandRecordingContext* recordingContext,
                             wgpu::TextureUsage usage,
                             wgpu::ShaderStage shaderStages,
-                            const SubresourceRange& range);
+                            const SubresourceRange& range,
+                            VkDependencyFlagBits dependencyFlagBits = VkDependencyFlagBits(0));
     void TransitionUsageForPass(CommandRecordingContext* recordingContext,
                                 const TextureSubresourceSyncInfo& textureSyncInfos,
                                 std::vector<VkImageMemoryBarrier>* imageBarriers,

@@ -1042,7 +1042,8 @@ void Texture::TransitionUsageForPassImpl(
 void Texture::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                  wgpu::TextureUsage usage,
                                  wgpu::ShaderStage shaderStages,
-                                 const SubresourceRange& range) {
+                                 const SubresourceRange& range,
+                                 VkDependencyFlagBits dependencyFlagBits) {
     std::vector<VkImageMemoryBarrier> barriers;
 
     VkPipelineStageFlags srcStages = 0;
@@ -1056,8 +1057,9 @@ void Texture::TransitionUsageNow(CommandRecordingContext* recordingContext,
     if (!barriers.empty()) {
         DAWN_ASSERT(srcStages != 0 && dstStages != 0);
         ToBackend(GetDevice())
-            ->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0,
-                                    nullptr, 0, nullptr, barriers.size(), barriers.data());
+            ->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages,
+                                    dependencyFlagBits, 0, nullptr, 0, nullptr, barriers.size(),
+                                    barriers.data());
     }
 }
 
