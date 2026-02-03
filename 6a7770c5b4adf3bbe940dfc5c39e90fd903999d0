@@ -46,6 +46,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95bc1da5_0a7cca60",
+        "filename": "test/tint/extensions/resource_table/access_as_constant_sampler.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-03T20:16:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f24242a_ee84561c",
+      "revId": "6a7770c5b4adf3bbe940dfc5c39e90fd903999d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de86a68_2ea94781",
@@ -59,6 +77,24 @@
       "writtenOn": "2026-02-03T17:35:20Z",
       "side": 1,
       "message": "Ditto, please write values out to a storage buffer or something.",
+      "revId": "6a7770c5b4adf3bbe940dfc5c39e90fd903999d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d171b90d_406c0d4c",
+        "filename": "test/tint/extensions/resource_table/has_binding_sampler.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-03T20:16:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de86a68_2ea94781",
       "revId": "6a7770c5b4adf3bbe940dfc5c39e90fd903999d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
