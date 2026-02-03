@@ -198,6 +198,7 @@ class Buffer : public BufferBase {
     // Internal usage indicating the native buffer supports mapping for read and/or write or not.
     const wgpu::BufferUsage mInternalMappableFlags;
     const bool mEmulatePersistentMap;
+    // Serial when buffer will be ready for MapAsync (not used for persistent map emulation)
     ExecutionSerial mMapReadySerial = kMaxExecutionSerial;
     // Temporary storage for MapAtCreation when the lock cannot be acquired.
     std::unique_ptr<uint8_t[]> mMapAtCreationData;
