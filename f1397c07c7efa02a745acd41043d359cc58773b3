@@ -39,6 +39,30 @@
       },
       "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f26983fe_4d33ef40",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T15:53:17Z",
+      "side": 1,
+      "message": "I thought it\u0027s nice because it decouple the exact type used to store things internally from the return value (we could use a stack vec or w/e). I also thought it was a modern guideline for how to do C++ but you\u0027re right that it\u0027s more for parameters. Should I revert to vector?",
+      "parentUuid": "f148d7da_a419530c",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
