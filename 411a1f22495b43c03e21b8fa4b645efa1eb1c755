@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cb2d5bd_fd894625",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T13:55:45Z",
+      "side": 1,
+      "message": "LGTM. Looking at the buffer class again, is there any hope to merge GPUUsableBuffer with its staging etc into Buffer, and remove Upload/StagingBuffer? The \"storages\" should take care of these code paths no?",
+      "revId": "411a1f22495b43c03e21b8fa4b645efa1eb1c755",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b58ccba_7a7ba07d",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T13:55:45Z",
+      "side": 1,
+      "message": "Could this be in a `ComputeMappableFlags` static function maybe? It allows a place to",
+      "revId": "411a1f22495b43c03e21b8fa4b645efa1eb1c755",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da7ca183_bfe989cc",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T13:55:45Z",
+      "side": 1,
+      "message": "Why does this check staging, instead of whether the map mode contains Read?",
+      "range": {
+        "startLine": 1229,
+        "startChar": 8,
+        "endLine": 1229,
+        "endChar": 28
+      },
+      "revId": "411a1f22495b43c03e21b8fa4b645efa1eb1c755",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
