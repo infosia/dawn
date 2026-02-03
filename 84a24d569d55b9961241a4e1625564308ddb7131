@@ -16,6 +16,52 @@
       "message": "LGTM!",
       "revId": "84a24d569d55b9961241a4e1625564308ddb7131",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "520246b8_e2eecc81",
+        "filename": "src/dawn/native/metal/BufferMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-03T19:58:08Z",
+      "side": 1,
+      "message": "It\u0027s weird to need to special case this, shouldn\u0027t `NeedsInitialization()` already be false in this case? Or is there some reason we can\u0027t do that?\n\nOr if there\u0027s some reason we can\u0027t do that, is there any way to assert it\u0027s initialized if newState\u003d\u003dMappedAtCreation?",
+      "range": {
+        "startLine": 203,
+        "startChar": 73,
+        "endLine": 204,
+        "endChar": 45
+      },
+      "revId": "84a24d569d55b9961241a4e1625564308ddb7131",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db5a3fc5_814c284b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-03T19:58:08Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 567,
+        "startChar": 73,
+        "endLine": 568,
+        "endChar": 45
+      },
+      "revId": "84a24d569d55b9961241a4e1625564308ddb7131",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
