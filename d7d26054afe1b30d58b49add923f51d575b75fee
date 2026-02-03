@@ -199,6 +199,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fd379c91_70658be4",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T08:36:30Z",
+      "side": 1,
+      "message": "We shouldn\u0027t worry about it for our implementation, but that should be noted in the proposal and eventually the spec.",
+      "parentUuid": "ee34af6e_ca6c30ae",
+      "revId": "d7d26054afe1b30d58b49add923f51d575b75fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ca9a0db_84b1bbfe",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 12
