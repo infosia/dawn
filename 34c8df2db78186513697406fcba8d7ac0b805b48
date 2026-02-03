@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9df360d0_20978d15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-03T17:17:40Z",
+      "side": 1,
+      "message": "The bot issue is that for some reason the bots are building a version of the fuzzers that need to load libvulkan, but are not building it, or atleast not building it somewhere the binary cannot find it.\n\nI have not been able to reproduce this locally, regardless of how I set my flags, but I have noticed as-is there is a dependency on the vulkan libs in the fuzzer even if the feature is turned off, which I assume is the root of the problem.\n\nThis should just be doing unneeded building, not having this runtime issue, but I will see if I can massage the build rules to correctly handle this.",
+      "revId": "34c8df2db78186513697406fcba8d7ac0b805b48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
