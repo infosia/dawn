@@ -369,6 +369,10 @@ void Queue::TrackPendingMapBuffer(Ref<Buffer>&& buffer,
     mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
 }
 
+void Queue::SynchronizeWithPendingMap(absl::FunctionRef<void()> fn) {
+    mPendingMapBuffers.Use([&](auto pendingMapBuffers) { fn(); });
+}
+
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
