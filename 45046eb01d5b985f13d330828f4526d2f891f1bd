@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e684f913_017b98d9",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T12:56:34Z",
+      "side": 1,
+      "message": "Instead of exposing the Vulkan limit in WebGPU, I wonder if instead we could just make sure that the maxWorkgroupSize reported by the Vulkan backend is always at most `maxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize`. How pessimizing is that? It would avoid the need for additional validation and extra limits that the applications have to care about.",
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
