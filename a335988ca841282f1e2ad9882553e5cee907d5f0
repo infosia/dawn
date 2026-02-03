@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0ad5b530_16912523",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:05:06Z",
+      "side": 1,
+      "message": "Mmmmh keeping the code for A/B testing is a bit unfortunate given that it makes things much more complex. But I guess we can have that complexity temporarily for ~3 months.\n\n\u003e What if we map buffer but users never use it.\n\nThat seems fine, the main cost would be CPU cache invalidation of cache lines that we aren\u0027t going to access in this case.\n\n\u003e Also in future, Graphite could use a buffer repeatedly in different Queue::Submit, forcing the buffer to map, unmapped constantly for nothing.\n\nIf it uses it constantly, the check whether we can EagerRemap will fail all the time and no D3D11 calls will happen. It\u0027s a bit unnecessary to keep adding the buffer to a list for nothing, but that cost should be somewhat minimal I\u0027d imagine.\n\n\u003e For writable buffers, we use D3D11_MAP_WRITE_NO_OVERWRITE.\n\nMy understanding is that this flag is used to tell the driver that we promise to not overwrite a buffer that\u0027s already used on the GPU. But since we already guarantee that at the WebGPU level, maybe `D3D11_MAP_WRITE` ends up the same in the D3D11 driver?",
+      "parentUuid": "53725d1e_7ec6c326",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ff3d3c0_c94a7fb9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 17
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "GPUUsableBuffer will allocate different storages for MapRead and MapWrite if it also has GPU usages. It\u0027s tricky to handle this case, on the other hands. Only MapExtendedUsage allows this.",
       "parentUuid": "f80d6ea8_b30668ac",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a443ecaa_a5a7ad66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:05:06Z",
+      "side": 1,
+      "message": "Maybe D3D11 should only support map extended with MapWrite. The problem with eager mapping for MapWrite is that we\u0027ll need to synchronize the staging storage at the end of every queue submit just in case. That\u0027s a bit unfortunate.",
+      "parentUuid": "3392e9df_2280a721",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -206,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8081b2e_618b23ff",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:05:06Z",
+      "side": 1,
+      "message": "Actually I was curious why we need to handle the first map specially here. But it sounds like it is because with eager remapping we expect buffers unused on the GPU to be available immediately for the CPU, including for the first map. But also we don\u0027t want to do that mapping on creation because it might be unnecessary if the buffer ends up being used on the GPU before the first time it is mapped.\n\nOne thing that seems to make this CL difficult is that D3D11 requires a staging buffer for MAP_READ while MAP_WRITE works with the other GPU usable buffers.\n\nThe only ways for a GPUUsableBuffer to be written on the GPU is via QueryResolve, storage-write, and copies from other buffer. (copies from textures actually do a readback right now). If the application does a copy into a MapRead buffer, it seems likely that they will want to readback, so at the end of the submit making the Stagin storage the active one seems like it would make sense.\n\nAnd it would allow support for eager remapping of MapRead|MapWrite. Do you think that\u0027s insane?",
+      "parentUuid": "1d16ca5c_31059b58",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 9
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39d233f7_05673bd5",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 17
@@ -275,6 +335,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94c33dd8_59b86441",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:05:06Z",
+      "side": 1,
+      "message": "Ideally we could check `GetState` of the buffer in `MapReady`, or is there a race as well?",
+      "parentUuid": "1e5d6c9d_a57b1d24",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdb48c60_c7a74a45",
         "filename": "src/dawn/native/d3d11/BufferD3D11.h",
         "patchSetId": 17
@@ -304,6 +382,24 @@
       "side": 1,
       "message": "This is not only for eager map, but also for the old \"non-emulated\" path, where the buffer schedules to be mapped after a MapAsync to avoid stallings,",
       "parentUuid": "fdb48c60_c7a74a45",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c89c6f2d_57399cfa",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:05:06Z",
+      "side": 1,
+      "message": "Yeah I wrote a lot of comments assuming that we would remove the previous path.\n\nThat said in this case, we are still trying to map at the end of a queue submit, it\u0027s just that in the previous code path it should always work. (that\u0027s what the ASSERT tells us) so the rename might still make sense.",
+      "parentUuid": "30a1b413_1207090f",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
