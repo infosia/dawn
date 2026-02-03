@@ -63,6 +63,30 @@
       },
       "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03ec56bc_ec120d75",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-03T16:07:33Z",
+      "side": 1,
+      "message": "I\u0027m still learning myself when to use `std::span`. I found [this reddit post](https://www.reddit.com/r/cpp_questions/comments/18l72qe/returning_const_stdvector_vs_stdspan_in_getters/) interesting. I think I find myself leaning towards returning a const ref to the underlying type to be preferred, mainly because it doesn\u0027t limit the API the caller can use, and `std::span` isn\u0027t totally free (although I\u0027m sure it\u0027s mostly negligible).",
+      "parentUuid": "f26983fe_4d33ef40",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 13
+      },
+      "revId": "f1397c07c7efa02a745acd41043d359cc58773b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
