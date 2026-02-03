@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e6535f5_caef8f6d",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:28:31Z",
+      "side": 1,
+      "message": "Sorry, I started writing this, then changed my mind but forgot to discard (hence the partial text).",
+      "parentUuid": "6a087ef9_5239ad85",
+      "revId": "411a1f22495b43c03e21b8fa4b645efa1eb1c755",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da7ca183_bfe989cc",
