@@ -28,11 +28,12 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <map>
 #include <optional>
 #include <vector>
 
+#include "dawn/common/LinkedList.h"
 #include "dawn/common/MutexProtected.h"
-#include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
@@ -59,10 +60,20 @@ class Queue : public d3d::Queue {
     // DeviceBase is fully created.
     MaybeError InitializePendingContext();
 
+    // The request for buffer mapping.
+    // We make it a linked list node to support O(1) removal when cancelling.
+    struct BufferMapRequest : public LinkNode<BufferMapRequest> {
+        Ref<Buffer> buffer;
+        wgpu::MapMode mode;
+    };
+
     // Schedule a buffer for mapping.
     void ScheduleBufferMapping(Ref<Buffer>&& buffer,
                                wgpu::MapMode mode,
                                ExecutionSerial readySerial);
+
+    // Cancel a scheduled buffer mapping by removing it from the pending list.
+    void CancelScheduledBufferMapping(Buffer* buffer);
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
@@ -110,11 +121,10 @@ class Queue : public d3d::Queue {
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
     std::atomic<bool> mPendingCommandsNeedSubmit = false;
 
-    struct BufferMapEntry {
-        Ref<Buffer> buffer;
-        wgpu::MapMode mode;
-    };
-    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
+    // Map from ExecutionSerial to a list of buffers to be mapped when the serial passes.
+    // The map is used to process the requests in order of serial.
+    // We use LinkedList to allow O(1) removal of an entry when it's cancelled.
+    MutexProtected<std::map<ExecutionSerial, LinkedList<BufferMapRequest>>> mPendingMapBuffers;
 };
 
 }  // namespace dawn::native::d3d11
