@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7bae95a_33879313",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-03T02:55:46Z",
+      "side": 1,
+      "message": "FYI the CTSs for these will be accurate.",
+      "revId": "3b526ed5886454f944ddec6558f43d9ad479feba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e7d2b6f_c8c7bdef",
         "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
         "patchSetId": 15
