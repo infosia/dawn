@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e598359_7064e3cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T15:14:33Z",
+      "side": 1,
+      "message": "There are too many paths going through the GPUUsableBuffer, each path would use different storage, some tests broke certain paths if I merge the subclasses. I\u0027m still looking at them. At least for the CPU buffer, there is no need to acquire the command context, and it doesn\u0027t need a shadow copy either.\n\nThe next CL mostly touches the base `d3d11::Buffer` class, it doesn\u0027t touch the subclasses anw. The dynamic nature of GPUUsableBuffer (allocating different storages for MapWrite \u0026 MapRead) wouldn\u0027t change if we merged the subclasses.",
+      "parentUuid": "86f4f5be_888e472a",
+      "revId": "411a1f22495b43c03e21b8fa4b645efa1eb1c755",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b58ccba_7a7ba07d",
