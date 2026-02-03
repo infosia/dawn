@@ -39,6 +39,30 @@
       },
       "revId": "1b68fe9aa73461216ecf2f79a5cc7345e3595a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a81a9c7_77d8c6e2",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-03T05:50:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88cdd7e9_6bd00106",
+      "range": {
+        "startLine": 546,
+        "startChar": 4,
+        "endLine": 558,
+        "endChar": 14
+      },
+      "revId": "1b68fe9aa73461216ecf2f79a5cc7345e3595a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
