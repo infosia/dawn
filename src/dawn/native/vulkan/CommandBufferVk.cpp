@@ -549,7 +549,11 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
             TextureView* resolveView = ToBackend(attachmentInfo.resolveTarget.Get());
             colorAttachment.resolveMode = VK_RESOLVE_MODE_AVERAGE_BIT;
             colorAttachment.resolveImageView = resolveView->GetHandle();
-            colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+            if (attachmentInfo.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
+                colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_GENERAL;
+            } else {
+                colorAttachment.resolveImageLayout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+            }
         } else if (renderPass->msaaRenderToSingleSampled &&
                    view->GetTexture()->GetSampleCount() == 1) {
             // VUID-VkRenderingAttachmentInfo-None-12256: If MSRTSS is used and the attachment has
@@ -619,7 +623,12 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
         renderInfo.pNext = &msrtss;
     }
 
-    device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
+    if (renderPass->attachmentState->GetExpandResolveInfo().attachmentsToExpandResolve.any()) {
+        DAWN_TRY(BeginDynamicRenderingAndExpandResolveTextureWithDraw(device, recordingContext,
+                                                                      renderPass, renderInfo));
+    } else {
+        device->fn.CmdBeginRenderingKHR(recordingContext->commandBuffer, &renderInfo);
+    }
 
     return {};
 }
