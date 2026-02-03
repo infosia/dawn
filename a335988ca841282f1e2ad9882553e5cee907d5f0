@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "852b5a63_aa71c6ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Could we find a different names for this? Persistent mapping in the D3D12/Vulkan/GL sense is a different feature.\n\nInstead this is an optimization to eagerly remap buffers to allow mapAsync+WaitAny(0) to complete the mapping future without taking locks, if the application previously ensured that all previous GPU operations using the buffer completed.\n\nLet\u0027s also clarify on the linked issue that this is not \"persistent mapping\".",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47ff4b6_5bd7be81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Could we do it unconditionally? It should be cheap.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ff3d3c0_c94a7fb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Since this is not persistent mapping, we should still require the application to call `Buffer::Unmap` before using a buffer in a submit (and that seems to be the case in this CL). What happens is that in a previous CL we made the call to D3D11\u0027s Unmap function deferred until TrackUsage to avoid taking the recording context lock in UnmapImpl.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f80d6ea8_b30668ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Why don\u0027t we do it for buffers that are both MapRead and MapWrite?",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9112a6c0_5a306c26",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "I think all the piping of these values should be possible to remove if we unconditionally do eager mapping for all mappable buffers.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "044062a0_edf70fbe",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "We can get the mode using `BufferBase::MapMode`. And we could always track the pending map buffer as long as it has one of the mappable usages.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5a5b947_ceff1d64",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Why do we need this? It sounds that with eager mapping this whole function should just be a noop.",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 9
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d233f7_05673bd5",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "These comments will need updating because the eager remapping will always happen, for the change to not use the \"persistent map\" concept, etc. Ditto for the comment inside the function.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a679bcb1_85d74252",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Ditto this function should become a noop.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33f763a4_d96fe75e",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "I think with the function that become noop, this might not be needed anymore.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb48c60_c7a74a45",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "This makes it sound like we know for sure that the buffer is ready to map, when instead we are just telling it that one batch of commands using it have completed. `TryEagerMap` maybe? And the comment could be updated / made more clear.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "591b9c7e_8a855c7e",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Can we rename to `TryEagerlyRemappingBuffers` maybe?",
+      "range": {
+        "startLine": 354,
+        "startChar": 18,
+        "endLine": 354,
+        "endChar": 41
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1bc0de_8092ec9f",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T14:18:14Z",
+      "side": 1,
+      "message": "Could we have a test (UNSUPPORTED on wire, and SUPPRESSED with a TODO on OpenGL) that the pattern with using a mappable buffer on the queue, waiting for OnSubmittedWorkDone, then MapAsync+WaitAny(0) works?",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
