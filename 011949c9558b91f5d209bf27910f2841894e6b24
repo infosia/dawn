@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "011949c9558b91f5d209bf27910f2841894e6b24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf5388f_918dfa64",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-03T16:37:02Z",
+      "side": 1,
+      "message": "Won\u0027t we need filtering vs. not filtering here?",
+      "revId": "011949c9558b91f5d209bf27910f2841894e6b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
