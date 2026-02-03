@@ -174,16 +174,21 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateColorBlitPipeline(
     return pipeline;
 }
 
-}  // namespace
+struct ExpandResolveResources {
+    BlitColorToColorWithDrawPipelineKey pipelineKey;
+    Ref<RenderPipelineBase> pipeline;
+    Ref<BindGroupBase> bindGroup;
+};
 
-MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
-                                                          CommandRecordingContext* commandContext,
-                                                          const BeginRenderPassCmd* renderPass,
-                                                          const VkRenderPassBeginInfo& beginInfo) {
+ResultOrError<ExpandResolveResources> GetOrCreateExpandResolveResources(
+    Device* device,
+    CommandRecordingContext* commandContext,
+    const BeginRenderPassCmd* renderPass) {
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
 
+    ExpandResolveResources expandResolve;
+
     // Construct pipeline key
-    BlitColorToColorWithDrawPipelineKey pipelineKey;
     ColorAttachmentIndex colorAttachmentCount =
         GetHighestBitIndexPlusOne(renderPass->attachmentState->GetColorAttachmentsMask());
     for (ColorAttachmentIndex colorIdx : renderPass->attachmentState->GetColorAttachmentsMask()) {
@@ -207,36 +212,34 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
             DAWN_ASSERT(colorAttachment.resolveTarget->GetLayerCount() == 1u);
             DAWN_ASSERT(colorAttachment.resolveTarget->GetDimension() ==
                         wgpu::TextureViewDimension::e2D);
-            pipelineKey.attachmentsToExpandResolve.set(colorIdx);
+            expandResolve.pipelineKey.attachmentsToExpandResolve.set(colorIdx);
         }
-        pipelineKey.resolveTargetsMask.set(colorIdx, colorAttachment.resolveTarget != nullptr);
+        expandResolve.pipelineKey.resolveTargetsMask.set(colorIdx,
+                                                         colorAttachment.resolveTarget != nullptr);
 
-        pipelineKey.colorTargetFormats[colorIdx] = format.format;
-        pipelineKey.sampleCount = view->GetTexture()->GetSampleCount();
+        expandResolve.pipelineKey.colorTargetFormats[colorIdx] = format.format;
+        expandResolve.pipelineKey.sampleCount = view->GetTexture()->GetSampleCount();
     }
 
-    DAWN_ASSERT(pipelineKey.attachmentsToExpandResolve.any());
+    DAWN_ASSERT(expandResolve.pipelineKey.attachmentsToExpandResolve.any());
 
-    pipelineKey.depthStencilFormat = wgpu::TextureFormat::Undefined;
+    expandResolve.pipelineKey.depthStencilFormat = wgpu::TextureFormat::Undefined;
     if (renderPass->depthStencilAttachment.view != nullptr) {
-        pipelineKey.depthStencilFormat =
+        expandResolve.pipelineKey.depthStencilFormat =
             renderPass->depthStencilAttachment.view->GetFormat().format;
     }
 
-    Ref<RenderPipelineBase> pipeline;
-    DAWN_TRY_ASSIGN(pipeline, GetOrCreateColorBlitPipeline(
-                                  device, pipelineKey, static_cast<uint8_t>(colorAttachmentCount)));
-
-    RenderPipeline* pipelineVk = ToBackend(pipeline.Get());
+    DAWN_TRY_ASSIGN(expandResolve.pipeline,
+                    GetOrCreateColorBlitPipeline(device, expandResolve.pipelineKey,
+                                                 static_cast<uint8_t>(colorAttachmentCount)));
 
     // Construct bind group.
     Ref<BindGroupLayoutBase> bgl;
-    DAWN_TRY_ASSIGN(bgl, pipelineVk->GetBindGroupLayout(0));
+    DAWN_TRY_ASSIGN(bgl, expandResolve.pipeline->GetBindGroupLayout(0));
 
-    Ref<BindGroupBase> bindGroup;
     absl::InlinedVector<BindGroupEntry, kMaxColorAttachments> bgEntries = {};
 
-    for (auto colorIdx : pipelineKey.attachmentsToExpandResolve) {
+    for (auto colorIdx : expandResolve.pipelineKey.attachmentsToExpandResolve) {
         const auto& colorAttachment = renderPass->colorAttachments[colorIdx];
         bgEntries.push_back({});
         auto& bgEntry = bgEntries.back();
@@ -254,13 +257,21 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
     bgDesc.layout = bgl.Get();
     bgDesc.entryCount = bgEntries.size();
     bgDesc.entries = bgEntries.data();
-    DAWN_TRY_ASSIGN(bindGroup, device->CreateBindGroup(&bgDesc, UsageValidationMode::Internal));
-    BindGroup* bindGroupVk = ToBackend(bindGroup.Get());
+    DAWN_TRY_ASSIGN(expandResolve.bindGroup,
+                    device->CreateBindGroup(&bgDesc, UsageValidationMode::Internal));
 
-    // Start the render pass
-    VkCommandBuffer commandBuffer = commandContext->commandBuffer;
+    return expandResolve;
+}
 
-    device->fn.CmdBeginRenderPass(commandBuffer, &beginInfo, VK_SUBPASS_CONTENTS_INLINE);
+void PerformExpandResolveDraw(Device* device,
+                              VkCommandBuffer commandBuffer,
+                              const BeginRenderPassCmd* renderPass,
+                              ExpandResolveResources& expandResolve) {
+    RenderPipeline* pipelineVk = ToBackend(expandResolve.pipeline.Get());
+    BindGroup* bindGroupVk = ToBackend(expandResolve.bindGroup.Get());
+
+    DAWN_ASSERT(pipelineVk);
+    DAWN_ASSERT(bindGroupVk);
 
     // Draw to perform the blit.
     VkViewport viewport{};
@@ -284,13 +295,31 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
                                      *pipelineVk->GetVkLayout(), 0, 1, &*bindGroupVk->GetHandle(),
                                      0, nullptr);
     device->fn.CmdDraw(commandBuffer, 3, 1, 0, 0);
+}
+
+}  // namespace
+
+MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
+                                                          CommandRecordingContext* commandContext,
+                                                          const BeginRenderPassCmd* renderPass,
+                                                          const VkRenderPassBeginInfo& beginInfo) {
+    ExpandResolveResources expandResolve;
+    DAWN_TRY_ASSIGN(expandResolve,
+                    GetOrCreateExpandResolveResources(device, commandContext, renderPass));
+
+    // Start the render pass
+    VkCommandBuffer commandBuffer = commandContext->commandBuffer;
+
+    device->fn.CmdBeginRenderPass(commandBuffer, &beginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+    PerformExpandResolveDraw(device, commandBuffer, renderPass, expandResolve);
 
     device->fn.CmdNextSubpass(commandBuffer, VK_SUBPASS_CONTENTS_INLINE);
 
     // Subpass dependency automatically transitions the layouts of the resolve textures
     // to RenderAttachment. So we need to notify TextureVk and don't need to use any explicit
     // barriers.
-    for (auto colorIdx : pipelineKey.attachmentsToExpandResolve) {
+    for (auto colorIdx : expandResolve.pipelineKey.attachmentsToExpandResolve) {
         const auto& colorAttachment = renderPass->colorAttachments[colorIdx];
         auto* textureVk = static_cast<Texture*>(colorAttachment.resolveTarget->GetTexture());
         textureVk->UpdateUsage(wgpu::TextureUsage::RenderAttachment, wgpu::ShaderStage::Fragment,
@@ -299,4 +328,63 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
 
     return {};
 }
+
+MaybeError BeginDynamicRenderingAndExpandResolveTextureWithDraw(
+    Device* device,
+    CommandRecordingContext* commandContext,
+    const BeginRenderPassCmd* renderPass,
+    const VkRenderingInfoKHR& renderInfo) {
+    ExpandResolveResources expandResolve;
+    DAWN_TRY_ASSIGN(expandResolve,
+                    GetOrCreateExpandResolveResources(device, commandContext, renderPass));
+
+    // Start the dynamic rendering pass
+    VkCommandBuffer commandBuffer = commandContext->commandBuffer;
+
+    device->fn.CmdBeginRenderingKHR(commandBuffer, &renderInfo);
+
+    // Define the input attachments
+    ColorAttachmentIndex attachmentCount =
+        GetHighestBitIndexPlusOne(renderPass->attachmentState->GetColorAttachmentsMask());
+    PerColorAttachment<uint32_t> inputIndices;
+    for (auto i : Range(attachmentCount)) {
+        if (expandResolve.pipelineKey.attachmentsToExpandResolve.test(i)) {
+            inputIndices[i] = i;
+        } else {
+            inputIndices[i] = VK_ATTACHMENT_UNUSED;
+        }
+    }
+
+    VkRenderingInputAttachmentIndexInfo inputAttachments = {
+        .sType = VK_STRUCTURE_TYPE_RENDERING_INPUT_ATTACHMENT_INDEX_INFO,
+        .pNext = nullptr,
+        .colorAttachmentCount = attachmentCount,
+        .pColorAttachmentInputIndices = inputIndices.data(),
+        .pDepthInputAttachmentIndex = nullptr,
+        .pStencilInputAttachmentIndex = nullptr,
+    };
+    device->fn.CmdSetRenderingInputAttachmentIndicesKHR(commandBuffer, &inputAttachments);
+
+    // Expand the marked single-sample resolve attachments into their respective MSAA counterparts.
+    PerformExpandResolveDraw(device, commandBuffer, renderPass, expandResolve);
+
+    // Since we are using Dynamic Rendering there's no subpasses. Explicitly insert a barrier to
+    // indicate that we are finished with the input attachments.
+    // Reference from
+    // https://github.com/KhronosGroup/Vulkan-Samples/blob/main/samples/extensions/dynamic_rendering_local_read/dynamic_rendering_local_read.cpp
+    VkMemoryBarrier memoryBarrier{
+        .sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER,
+        .pNext = nullptr,
+        .srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+        .dstAccessMask = VK_ACCESS_INPUT_ATTACHMENT_READ_BIT,
+    };
+
+    device->fn.CmdPipelineBarrier(commandBuffer, VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+                                  VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                  VK_DEPENDENCY_BY_REGION_BIT, 1, &memoryBarrier, 0, nullptr, 0,
+                                  nullptr);
+
+    return {};
+}
+
 }  // namespace dawn::native::vulkan

@@ -208,10 +208,10 @@ void InitializePassInfo(Device* device, const RenderPassCacheQuery& query, InfoT
         resolveAttachmentDesc.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
         if (query.expandResolveMask.test(i)) {
             resolveAttachmentDesc.loadOp = VK_ATTACHMENT_LOAD_OP_LOAD;
-            resolveAttachmentDesc.initialLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            resolveAttachmentDesc.initialLayout = VK_IMAGE_LAYOUT_GENERAL;
 
             passInfo.inputAttachmentRefs[i].attachment = resolveAttachmentRef.attachment;
-            passInfo.inputAttachmentRefs[i].layout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            passInfo.inputAttachmentRefs[i].layout = VK_IMAGE_LAYOUT_GENERAL;
             if constexpr (std::same_as<InfoType, RenderPassCreateInfo2>) {
                 passInfo.inputAttachmentRefs[i].aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
             }

@@ -365,6 +365,12 @@ struct VulkanFunctions {
     VkFn<PFN_vkCmdBeginRenderingKHR> CmdBeginRenderingKHR = nullptr;
     VkFn<PFN_vkCmdEndRenderingKHR> CmdEndRenderingKHR = nullptr;
 
+    // Promoted in 1.4
+
+    // VK_KHR_dynamic_rendering_local_read
+    VkFn<PFN_vkCmdSetRenderingInputAttachmentIndicesKHR> CmdSetRenderingInputAttachmentIndicesKHR =
+        nullptr;
+
     // Not promoted to core in any version
 
     // VK_KHR_external_memory_fd

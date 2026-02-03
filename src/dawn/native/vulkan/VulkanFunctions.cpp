@@ -396,6 +396,11 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
         GET_DEVICE_PROC(CmdEndRenderingKHR);
     }
 
+    // Promoted in 1.4
+    if (deviceInfo.HasExt(DeviceExt::DynamicRenderingLocalRead)) {
+        GET_DEVICE_PROC(CmdSetRenderingInputAttachmentIndicesKHR);
+    }
+
     // Not promoted to core in any version
     if (deviceInfo.HasExt(DeviceExt::ExternalMemoryFD)) {
         GET_DEVICE_PROC(GetMemoryFdKHR);

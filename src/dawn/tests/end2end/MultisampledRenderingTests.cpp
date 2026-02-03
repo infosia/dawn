@@ -2914,22 +2914,27 @@ DAWN_INSTANTIATE_TEST(MultisampledRenderToSingleSampledTest,
                       MetalBackend({"always_resolve_into_zero_level_and_layer",
                                     "emulate_store_and_msaa_resolve"}));
 
-DAWN_INSTANTIATE_TEST(DawnLoadResolveTextureTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      D3D12Backend({}, {"use_d3d12_render_pass"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      WebGPUBackend(),
-                      VulkanBackend(),
-                      VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
-                      VulkanBackend({"resolve_multiple_attachments_in_separate_passes"}),
-                      MetalBackend({"emulate_store_and_msaa_resolve"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer",
-                                    "emulate_store_and_msaa_resolve"}));
+DAWN_INSTANTIATE_TEST(
+    DawnLoadResolveTextureTest,
+    D3D11Backend(),
+    D3D12Backend(),
+    D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+    D3D12Backend({}, {"use_d3d12_render_pass"}),
+    MetalBackend(),
+    OpenGLBackend(),
+    OpenGLESBackend(),
+    WebGPUBackend(),
+    VulkanBackend({"vulkan_use_dynamic_rendering"}, {}),
+    VulkanBackend({}, {"vulkan_use_dynamic_rendering"}),
+    VulkanBackend({"vulkan_use_dynamic_rendering", "always_resolve_into_zero_level_and_layer"}),
+    VulkanBackend({"always_resolve_into_zero_level_and_layer"}, {"vulkan_use_dynamic_rendering"}),
+    VulkanBackend({"vulkan_use_dynamic_rendering",
+                   "resolve_multiple_attachments_in_separate_passes"}),
+    VulkanBackend({"resolve_multiple_attachments_in_separate_passes"},
+                  {"vulkan_use_dynamic_rendering"}),
+    MetalBackend({"emulate_store_and_msaa_resolve"}),
+    MetalBackend({"always_resolve_into_zero_level_and_layer"}),
+    MetalBackend({"always_resolve_into_zero_level_and_layer", "emulate_store_and_msaa_resolve"}));
 
 }  // anonymous namespace
 }  // namespace dawn

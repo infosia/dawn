@@ -195,7 +195,7 @@ MaybeError BindGroup::InitializeImpl() {
 
         auto [writeIndex, write] = AddWrite(i);
         writeImageInfo[writeIndex].imageView = handle;
-        writeImageInfo[writeIndex].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+        writeImageInfo[writeIndex].imageLayout = VK_IMAGE_LAYOUT_GENERAL;
         write->pImageInfo = &writeImageInfo[writeIndex];
     }
 

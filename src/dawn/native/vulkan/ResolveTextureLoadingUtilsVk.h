@@ -47,6 +47,14 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
                                                           const BeginRenderPassCmd* renderPass,
                                                           const VkRenderPassBeginInfo& beginInfo);
 
+// This performs the ExpandResolveTexture load operation for a dynamic render pass by blitting the
+// resolve target to the MSAA attachment.
+MaybeError BeginDynamicRenderingAndExpandResolveTextureWithDraw(
+    Device* device,
+    CommandRecordingContext* commandContext,
+    const BeginRenderPassCmd* renderPass,
+    const VkRenderingInfoKHR& renderInfo);
+
 }  // namespace vulkan
 }  // namespace dawn::native
 
