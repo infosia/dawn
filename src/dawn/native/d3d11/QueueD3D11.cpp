@@ -155,6 +155,82 @@ class DelayFlushQueue final : public Queue {
 
 }  // namespace
 
+// Queue::PendingMapReadyList implementation
+void Queue::PendingMapReadyList::Track(Ref<Buffer>&& buffer,
+                                       wgpu::MapMode mode,
+                                       ExecutionSerial serial) {
+    BufferBase* bufferPtr = buffer.Get();
+    // Cancel any previous entry for this buffer
+    Cancel(bufferPtr);
+
+    // Generate a new unique ID and add entry to the queue
+    uint64_t uniqueID = mNextID++;
+
+#if defined(DAWN_ENABLE_ASSERTS)
+    // Verify monotonically increasing invariants for binary search correctness
+    if (!mSerialQueue.empty()) {
+        const Entry& lastEntry = mSerialQueue.back();
+        DAWN_ASSERT(uniqueID > lastEntry.uniqueID);
+        DAWN_ASSERT(serial >= lastEntry.serial);
+    }
+#endif
+
+    mSerialQueue.push_back({serial, uniqueID, std::move(buffer), mode});
+    mBufferToID[bufferPtr] = uniqueID;
+}
+
+void Queue::PendingMapReadyList::Cancel(BufferBase* buffer) {
+    auto idIt = mBufferToID.find(buffer);
+    if (idIt == mBufferToID.end()) {
+        return;
+    }
+
+    uint64_t targetID = idIt->second;
+
+    // Binary search to find the entry with this uniqueID
+    // Since both serial and uniqueID are monotonically increasing, we can search by uniqueID
+    auto it = std::lower_bound(mSerialQueue.begin(), mSerialQueue.end(), targetID,
+                               [](const Entry& entry, uint64_t id) { return entry.uniqueID < id; });
+
+    if (it != mSerialQueue.end() && it->uniqueID == targetID) {
+        // Mark as cancelled by setting buffer to nullptr
+        it->buffer = nullptr;
+    }
+
+    mBufferToID.erase(idIt);
+}
+
+MaybeError Queue::PendingMapReadyList::ProcessReadyBuffers(
+    ScopedCommandRecordingContext* commandContext,
+    ExecutionSerial completedSerial) {
+    if (mSerialQueue.empty()) {
+        return {};
+    }
+
+    // Binary search to find the last entry with serial <= completedSerial
+    auto it = std::upper_bound(
+        mSerialQueue.begin(), mSerialQueue.end(), completedSerial,
+        [](ExecutionSerial serial, const Entry& entry) { return serial < entry.serial; });
+
+    // Process all entries from the beginning up to (but not including) the iterator
+    for (auto entryIt = mSerialQueue.begin(); entryIt != it; ++entryIt) {
+        // Skip cancelled entries (buffer set to nullptr in Cancel())
+        if (entryIt->buffer == nullptr) [[unlikely]] {
+            continue;
+        }
+
+        BufferBase* bufferPtr = entryIt->buffer.Get();
+        mBufferToID.erase(bufferPtr);
+        DAWN_TRY(entryIt->buffer->MapReady(commandContext, completedSerial, entryIt->mode));
+    }
+
+    // Remove processed entries from the front of the deque
+    mSerialQueue.erase(mSerialQueue.begin(), it);
+
+    return {};
+}
+
+// Queue implementation
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
     const auto& deviceInfo = ToBackend(device->GetPhysicalDevice())->GetDeviceInfo();
     if (device->IsToggleEnabled(Toggle::D3D11DelayFlushToGPU)) {
@@ -354,19 +430,18 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 MaybeError Queue::CheckAndMapReadyBuffers(ExecutionSerial completedSerial) {
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
     return mPendingMapBuffers.Use([&](auto pendingMapBuffers) -> MaybeError {
-        for (const auto& bufferEntry : pendingMapBuffers->IterateUpTo(completedSerial)) {
-            DAWN_TRY(
-                bufferEntry.buffer->MapReady(&commandContext, completedSerial, bufferEntry.mode));
-        }
-        pendingMapBuffers->ClearUpTo(completedSerial);
-        return {};
+        return pendingMapBuffers->ProcessReadyBuffers(&commandContext, completedSerial);
     });
 }
 
 void Queue::TrackPendingMapBuffer(Ref<Buffer>&& buffer,
                                   wgpu::MapMode mode,
                                   ExecutionSerial readySerial) {
-    mPendingMapBuffers->Enqueue({buffer, mode}, readySerial);
+    mPendingMapBuffers->Track(std::move(buffer), mode, readySerial);
+}
+
+void Queue::CancelPendingMapBuffer(BufferBase* buffer) {
+    mPendingMapBuffers->Cancel(buffer);
 }
 
 MaybeError Queue::WriteBufferImpl(BufferBase* buffer,

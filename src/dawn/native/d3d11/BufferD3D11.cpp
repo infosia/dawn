@@ -595,7 +595,6 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
     if (mEmulatePersistentMap) {
         // Deduce map mode from buffer's mappable usage.
         wgpu::MapMode mode = IsCPUWritable() ? wgpu::MapMode::Write : wgpu::MapMode::Read;
-        mMapReadySerial = pendingSerial;
         ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, pendingSerial);
     }
 
@@ -618,13 +617,13 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 
     auto deviceGuard = GetDevice()->GetGuard();
 
-    mMapReadySerial = GetLastUsageSerial();
+    ExecutionSerial mapReadySerial = GetLastUsageSerial();
     const ExecutionSerial completedSerial = GetDevice()->GetQueue()->GetCompletedCommandSerial();
     // We may run into map stall in case that the buffer is still being used by previous submitted
     // commands. To avoid that, instead we ask Queue to do the map later when last usage serial has
     // passed.
-    if (mMapReadySerial > completedSerial) {
-        ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, mMapReadySerial);
+    if (mapReadySerial > completedSerial) {
+        ToBackend(GetDevice()->GetQueue())->TrackPendingMapBuffer({this}, mode, mapReadySerial);
     } else {
         auto commandContext = ToBackend(GetDevice()->GetQueue())
                                   ->GetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
@@ -655,21 +654,18 @@ MaybeError Buffer::MapReady(ScopedCommandRecordingContext* commandContext,
 
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
-    // Needn't map the buffer if this is for a previous mapAsync that was cancelled.
-    if (completedSerial >= mMapReadySerial) {
-        // Trigger any deferred unmaps.
-        // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
-        // the previous map mode is the same as the current map mode.
-        DAWN_TRY(UnmapIfNeeded(commandContext));
+    // Trigger any deferred unmaps.
+    // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
+    // the previous map mode is the same as the current map mode.
+    DAWN_TRY(UnmapIfNeeded(commandContext));
 
-        // Map then initialize data using mapped pointer.
-        // The mapped pointer is always writable because:
-        // - If mode is Write, then it's already writable.
-        // - If mode is Read, it's only possible to map staging buffer. In that case,
-        // D3D11_MAP_READ_WRITE will be used, hence the mapped pointer will also be writable.
-        // TODO(dawn:1705): make sure the map call is not blocked by the GPU operations.
-        DAWN_TRY(MapInternal(commandContext, mode));
-    }
+    // Map then initialize data using mapped pointer.
+    // The mapped pointer is always writable because:
+    // - If mode is Write, then it's already writable.
+    // - If mode is Read, it's only possible to map staging buffer. In that case,
+    // D3D11_MAP_READ_WRITE will be used, hence the mapped pointer will also be writable.
+    // TODO(dawn:1705): make sure the map call is not blocked by the GPU operations.
+    DAWN_TRY(MapInternal(commandContext, mode));
 
     return {};
 }
@@ -695,16 +691,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
         return;
     }
 
-    // device's guard is needed to protect mMapReadySerial. Since the front-end no longer acquires
-    // it. mMapReadySerial are used in:
-    // - MapAsyncImpl()'s non-persistent map path -> protected by the device's guard.
-    // - UnmapImpl()'s non-persistent map path -> protected by the device's guard.
-    // - MapReady() which is triggered by CheckAndUpdateCompletedSerials() -> protected by the
-    // device's guard.
-    // - DestroyImpl() -> protected by the device's guard.
-    // TODO(crbug.com/422741977): Find a way to synchronize without the device's lock.
-    auto deviceGuard = GetDevice()->GetGuard();
-    mMapReadySerial = kMaxExecutionSerial;
+    ToBackend(GetDevice()->GetQueue())->CancelPendingMapBuffer(this);
 
     // The actual unmap will be deferred until the buffer is used by the queue or we need to map
     // again. This avoids the need to lock the CommandContext here just to call D3D11's Unmap
@@ -728,24 +715,23 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl(reason);
 
+    // We don't need to cancel pending map operations when called from the C++ destructor
+    // because at that point, the queue no longer holds a ref to the buffer.
+    if (reason != DestroyReason::CppDestructor) {
+        ToBackend(GetDevice()->GetQueue())->CancelPendingMapBuffer(this);
+    }
+
     // If buffer is still mapped, we need to unmap it before releasing the D3D11 resource. If we
     // don't do that, there might be some issues on certain drivers such as Intel's.
+    // Note: The front-end guarantees that DestroyImpl cannot run concurrently with MapAsync,
+    // UnmapImpl, or Queue operations, so accessing mMappedData here is safe. Additionally, since
+    // no Queue operation can use this buffer anymore, it won't be scheduled for a remap.
     if (mMappedData != nullptr && !mMapAtCreationData) {
         // We don't need to unmap if the mapping was done on a shadow copy because no real
         // buffer is mapped yet.
         ToBackend(GetDevice())->DeferUnmapDestroyedBuffer(GetD3D11MappedBuffer());
         mMappedData = nullptr;
     }
-
-    // Cancel any pending remap.
-    // TODO(crbug.com/422741977): This relies on the fact that Destroy and
-    // Queue::CheckAndMapReadyBuffers() are synchronized by the device lock, except this is the last
-    // ref. In future, if we remove the device lock from Destroy(), we will need a proper
-    // synchronization here.
-    DAWN_ASSERT(reason == DestroyReason::CppDestructor ||
-                GetDevice()->IsLockedByCurrentThreadIfNeeded());
-
-    mMapReadySerial = kMaxExecutionSerial;
 }
 
 MaybeError Buffer::EnsureDataInitialized(const ScopedCommandRecordingContext* commandContext) {
