@@ -163,10 +163,18 @@ const core::type::Type* DedupType(const core::type::Type* ty, core::type::Manage
                 access = core::Access::kRead;
             }
 
+            // Vulkan does not allow the sampled type to be f16 so we need to replace it with f32
+            // here. We keep the f16 in the Tint type because we need to know to apply the
+            // RelaxedPrecision decoration to variables declared with this type.
+            auto* sampled_type = img->GetSampledType();
+            if (sampled_type->Is<core::type::F16>()) {
+                sampled_type = types.Get<core::type::F32>();
+            }
+
             // Depth textures are always declared as sampled textures.
-            return types.Get<type::Image>(
-                img->GetSampledType(), img->GetDim(), type::Depth::kNotDepth, img->GetArrayed(),
-                img->GetMultisampled(), img->GetSampled(), img->GetTexelFormat(), access);
+            return types.Get<type::Image>(sampled_type, img->GetDim(), type::Depth::kNotDepth,
+                                          img->GetArrayed(), img->GetMultisampled(),
+                                          img->GetSampled(), img->GetTexelFormat(), access);
         },
 
         // Dedup a SampledImage if its underlying image will be deduped.
@@ -1760,6 +1768,14 @@ class Printer {
             case BuiltinFn::kSConvert:
                 op = spv::Op::OpSConvert;
                 break;
+            case BuiltinFn::kRelaxedConvert:
+                module_.PushAnnot(spv::Op::OpDecorate,
+                                  {
+                                      Value(builtin->Args()[0]),
+                                      U32Operand(SpvDecorationRelaxedPrecision),
+                                  });
+                op = spv::Op::OpFConvert;
+                break;
             case spirv::BuiltinFn::kNone:
                 TINT_IR_ICE(ir_) << "undefined spirv ir function";
         }
@@ -2762,10 +2778,10 @@ class Printer {
                                   {id, U32Operand(SpvDecorationBinding), bp.binding});
 
                 // Add NonReadable and NonWritable decorations to storage textures and buffers.
-                auto* st = store_ty->As<spirv::type::Image>();
+                auto* img = store_ty->As<spirv::type::Image>();
                 bool is_storage_texture =
-                    st && st->GetTexelFormat() != core::TexelFormat::kUndefined;
-                auto access = is_storage_texture ? st->GetAccess() : ptr->Access();
+                    img && img->GetTexelFormat() != core::TexelFormat::kUndefined;
+                auto access = is_storage_texture ? img->GetAccess() : ptr->Access();
 
                 if (is_storage_texture || ptr->AddressSpace() != core::AddressSpace::kHandle) {
                     if (access == core::Access::kRead) {
@@ -2781,9 +2797,15 @@ class Printer {
                     module_.PushAnnot(spv::Op::OpDecorate, {id, U32Operand(SpvDecorationCoherent)});
                 }
 
+                // Add RelaxedPrecision decorations for textures with f16 sampled types.
+                if (img->GetSampledType()->Is<core::type::F16>()) {
+                    module_.PushAnnot(spv::Op::OpDecorate,
+                                      {id, U32Operand(SpvDecorationRelaxedPrecision)});
+                }
+
                 auto iidx = var->InputAttachmentIndex();
                 if (iidx) {
-                    TINT_IR_ASSERT(ir_, st->GetDim() == type::Dim::kSubpassData);
+                    TINT_IR_ASSERT(ir_, img->GetDim() == type::Dim::kSubpassData);
                     module_.PushAnnot(
                         spv::Op::OpDecorate,
                         {id, U32Operand(SpvDecorationInputAttachmentIndex), iidx.value()});

@@ -150,6 +150,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kGroupNonUniformSMax:
         case BuiltinFn::kSConvert:
         case BuiltinFn::kUConvert:
+        case BuiltinFn::kRelaxedConvert:
             break;
     }
     return core::ir::Instruction::Accesses{};
