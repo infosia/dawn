@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc7186dc_c2626251",
+        "filename": "src/dawn/native/metal/BufferMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-04T00:18:18Z",
+      "side": 1,
+      "message": "Ack, thanks. Seems like maybe we should flatten MapAtCreationInternal and MapAtCreation together but that\u0027s not trivial.",
+      "parentUuid": "5b60bd36_744708d0",
+      "range": {
+        "startLine": 203,
+        "startChar": 73,
+        "endLine": 204,
+        "endChar": 45
+      },
+      "revId": "84a24d569d55b9961241a4e1625564308ddb7131",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db5a3fc5_814c284b",
@@ -78,6 +102,30 @@
       "writtenOn": "2026-02-03T19:58:08Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 567,
+        "startChar": 73,
+        "endLine": 568,
+        "endChar": 45
+      },
+      "revId": "84a24d569d55b9961241a4e1625564308ddb7131",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1702d2c8_95ff8482",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-04T00:18:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "db5a3fc5_814c284b",
       "range": {
         "startLine": 567,
         "startChar": 73,
