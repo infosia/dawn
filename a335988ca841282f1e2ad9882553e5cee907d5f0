@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5116dec_b58dffb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "Thank you for the iteration, it looks much better now (and the end state after finching even better if it is successful).\n\nThe difficulty with \"persistent mapping\" is also that when buffers are persistently mapped, developers expect to be able to write to buffer on worker threads whenever they want, even during the execution of a queue::Submit which wouldn\u0027t be possible here. Thanks for the rename to \"auto map\", it makes the semantic more clear.",
+      "parentUuid": "469864ef_ae085bf0",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e47ff4b6_5bd7be81",
@@ -212,6 +230,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e53db92e_7c2d88e6",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9112a6c0_5a306c26",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "044062a0_edf70fbe",
@@ -243,6 +279,24 @@
       "side": 1,
       "message": "IIUC `BufferBase::MapMode` only reflects the last map mode user chose for `MapAsync`. In our eager mapping mode, we do the map before user even calls `MapAsync`, hence at this point, `BufferBase::MapMode` is none.\n\nAnw, I have changed the map mode for eager mapping to be based on mappable usages which can be computed at creation.",
       "parentUuid": "044062a0_edf70fbe",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a4745b1_f1e32bad",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "Got it, thank you for the explanation.",
+      "parentUuid": "e179797a_9fe67927",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -342,6 +396,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec75eb49_9240114c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "Thank you",
+      "parentUuid": "396be4eb_f2dd3c03",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 9
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39d233f7_05673bd5",
@@ -390,6 +468,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "Ditto this function should become a noop.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d0bb1c6_f87df3e3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "We need to keep this while finching.",
+      "parentUuid": "a679bcb1_85d74252",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -461,6 +557,24 @@
       "side": 1,
       "message": "We could check `IsAlive` or `GetState` in the scheduled map function. However that\u0027s because `Destroy`, `Tick` and `WaitAny` are protected by the device\u0027s lock currently. Thus checking the buffer\u0027s front-end state is safe.\n\nIn future, we might want to remove the device\u0027s lock from the `Destroy` function. At that point,`IsAlive` wouldn\u0027t be relied on here. Because the scheduled mappings are processed by `Device::Tick` or `WaitAny`\u0027s flow. Those functions won\u0027t be prevented from running concurrently with the buffer\u0027s `Destroy`. I already have several solutions for this, it will be handled in an upcoming CL.",
       "parentUuid": "94c33dd8_59b86441",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf7a4d6_0cc058f3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:06:42Z",
+      "side": 1,
+      "message": "Ok thanks for the explanation, LGTM.",
+      "parentUuid": "88319c94_318606c3",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
