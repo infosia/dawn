@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "469864ef_ae085bf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "I have renamed the toggle to \"Auto Map Backend Buffer\".\n\nanw, TBH I still think the \"emulation\" part of the old name already distinguishes itself from the true \"persistent map\" in other APIs. Even if in future we want to expose true \"persistent map\" to users. The emulation here still works, users don\u0027t need to call `MapAsync`, `Unmap`, they only need to call `GetMappedRange` after GPU finishes using the buffer to get the up-to-date mapped pointer. Thus the semantic \"persistent map\" is still somewhat correct minus the mapped ptr part.",
+      "parentUuid": "852b5a63_aa71c6ed",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e47ff4b6_5bd7be81",
@@ -159,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6463015_b94b4568",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "CL now works with MapRead | MapWrite",
+      "parentUuid": "a443ecaa_a5a7ad66",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9112a6c0_5a306c26",
@@ -189,6 +225,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "We can get the mode using `BufferBase::MapMode`. And we could always track the pending map buffer as long as it has one of the mappable usages.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e179797a_9fe67927",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "IIUC `BufferBase::MapMode` only reflects the last map mode user chose for `MapAsync`. In our eager mapping mode, we do the map before user even calls `MapAsync`, hence at this point, `BufferBase::MapMode` is none.\n\nAnw, I have changed the map mode for eager mapping to be based on mappable usages which can be computed at creation.",
+      "parentUuid": "044062a0_edf70fbe",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -264,6 +318,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "396be4eb_f2dd3c03",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "CL has been updated to work with MapRead|MapWrite",
+      "parentUuid": "b8081b2e_618b23ff",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 615,
+        "endChar": 9
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39d233f7_05673bd5",
@@ -277,6 +355,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "These comments will need updating because the eager remapping will always happen, for the change to not use the \"persistent map\" concept, etc. Ditto for the comment inside the function.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eda126b_8575327c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d233f7_05673bd5",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -353,6 +449,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88319c94_318606c3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "We could check `IsAlive` or `GetState` in the scheduled map function. However that\u0027s because `Destroy`, `Tick` and `WaitAny` are protected by the device\u0027s lock currently. Thus checking the buffer\u0027s front-end state is safe.\n\nIn future, we might want to remove the device\u0027s lock from the `Destroy` function. At that point,`IsAlive` wouldn\u0027t be relied on here. Because the scheduled mappings are processed by `Device::Tick` or `WaitAny`\u0027s flow. Those functions won\u0027t be prevented from running concurrently with the buffer\u0027s `Destroy`. I already have several solutions for this, it will be handled in an upcoming CL.",
+      "parentUuid": "94c33dd8_59b86441",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdb48c60_c7a74a45",
         "filename": "src/dawn/native/d3d11/BufferD3D11.h",
         "patchSetId": 17
@@ -404,6 +518,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9243fd80_2fe7a188",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "Renamed to `TryMapNow`.",
+      "parentUuid": "c89c6f2d_57399cfa",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "591b9c7e_8a855c7e",
@@ -427,6 +559,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dc9b907_991132b6",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "Renamed to `CheckScheduledBufferMappings`.",
+      "parentUuid": "591b9c7e_8a855c7e",
+      "range": {
+        "startLine": 354,
+        "startChar": 18,
+        "endLine": 354,
+        "endChar": 41
+      },
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e1bc0de_8092ec9f",
@@ -440,6 +596,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "Could we have a test (UNSUPPORTED on wire, and SUPPRESSED with a TODO on OpenGL) that the pattern with using a mappable buffer on the queue, waiting for OnSubmittedWorkDone, then MapAsync+WaitAny(0) works?",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff4299cb_c2e5196d",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-04T14:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1bc0de_8092ec9f",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
