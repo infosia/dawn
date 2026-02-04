@@ -36,11 +36,13 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
+#include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/texture.h"
+#include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
@@ -162,13 +164,26 @@ struct State {
             auto* src_type = bitcast->Val()->Type();
             auto* dst_type = bitcast->Result()->Type();
             auto* dst_deepest = dst_type->DeepestElement();
+            auto* src_deepest = src_type->DeepestElement();
 
             if (src_type == dst_type) {
                 ReplaceBitcastWithValue(bitcast);
-            } else if (src_type->DeepestElement()->Is<core::type::F16>()) {
+            } else if (src_deepest->Size() == 2 && dst_deepest->Size() == 2) {
+                // 16-bit type bitcasts (f16 <-> u16/i16) can use direct construct
+                // This must be checked before the f16 vector cases below
+                ReplaceBitcastWithConstruct(bitcast);
+            } else if (src_deepest->Is<core::type::F16>() && src_type->Is<core::type::Vector>()) {
+                // f16 vector to other types needs special handling via f32tof16
                 ReplaceBitcastWithFromF16Polyfill(bitcast);
-            } else if (dst_deepest->Is<core::type::F16>()) {
+            } else if (dst_deepest->Is<core::type::F16>() && dst_type->Is<core::type::Vector>()) {
+                // Other types to f16 vector needs special handling via f16tof32
                 ReplaceBitcastWithToF16Polyfill(bitcast);
+            } else if (src_deepest->Size() == 4 && dst_deepest->Size() == 2) {
+                // 32-bit to 16-bit vector bitcast (e.g., u32 -> vec2<u16>)
+                ReplaceBitcastWithToU16Polyfill(bitcast);
+            } else if (src_deepest->Size() == 2 && dst_deepest->Size() == 4) {
+                // 16-bit vector to 32-bit bitcast (e.g., vec2<u16> -> u32)
+                ReplaceBitcastWithFromU16Polyfill(bitcast);
             } else {
                 ReplaceBitcastWithAs(bitcast);
             }
@@ -552,6 +567,27 @@ struct State {
         bitcast->Destroy();
     }
 
+    /// Replaces a bitcast with a 16-bit as function for f16 <-> u16 conversions.
+    /// Uses asuint16 (f16 -> u16) or asfloat16 (u16 -> f16).
+    void ReplaceBitcastWithConstruct(core::ir::Bitcast* bitcast) {
+        auto* dst_type = bitcast->Result()->Type();
+        auto* dst_deepest = dst_type->DeepestElement();
+
+        BuiltinFn fn = BuiltinFn::kNone;
+        if (dst_deepest->Is<core::type::U16>()) {
+            fn = BuiltinFn::kAsuint16;
+        } else if (dst_deepest->Is<core::type::F16>()) {
+            fn = BuiltinFn::kAsfloat16;
+        } else {
+            TINT_IR_ICE(ir) << "unexpected 16-bit bitcast destination type: " << dst_deepest;
+        }
+
+        b.InsertBefore(bitcast, [&] {
+            b.CallWithResult<hlsl::ir::BuiltinCall>(bitcast->DetachResult(), fn, bitcast->Val());
+        });
+        bitcast->Destroy();
+    }
+
     void ReplaceBitcastWithAs(core::ir::Bitcast* bitcast) {
         auto* dst_type = bitcast->Result()->Type();
         auto* dst_deepest = dst_type->DeepestElement();
@@ -784,6 +820,214 @@ struct State {
         auto* dst_type = bitcast->Result()->Type();
 
         auto* f = CreateBitcastToF16(src_type, dst_type);
+        b.InsertBefore(bitcast,
+                       [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
+        bitcast->Destroy();
+    }
+
+    // Bitcast 32-bit types to 16-bit vector types (e.g., u32 -> vec2<u16>)
+    // by extracting the low and high 16-bit portions.
+    core::ir::Function* CreateBitcastToU16(const core::type::Type* src_type,
+                                           const core::type::Type* dst_type) {
+        return bitcast_funcs_.GetOrAdd(
+            BitcastType{{src_type, dst_type}}, [&]() -> core::ir::Function* {
+                auto fn_name = b.ir.symbols.New(std::string("tint_bitcast_to_u16")).Name();
+
+                auto* f = b.Function(fn_name, dst_type);
+                auto* src = b.FunctionParam("src", src_type);
+                f->SetParams({src});
+
+                b.Append(f->Block(), [&] {
+                    auto* dst_vec = dst_type->As<core::type::Vector>();
+                    auto* dst_ele_ty = dst_vec->Type();
+
+                    // First convert source to u32 if needed
+                    const core::type::Type* uint_ty = ty.MatchWidth(ty.u32(), src_type);
+                    core::ir::Value* v = nullptr;
+                    tint::Switch(
+                        src_type->DeepestElement(), [&](const core::type::U32*) { v = src; },
+                        [&](const core::type::I32*) {
+                            v = b.Call<hlsl::ir::BuiltinCall>(uint_ty, BuiltinFn::kAsuint, src)
+                                    ->Result();
+                        },
+                        [&](const core::type::F32*) {
+                            v = b.Call<hlsl::ir::BuiltinCall>(uint_ty, BuiltinFn::kAsuint, src)
+                                    ->Result();
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+
+                    // Strategy: u32 -> vec2<f16> -> vec2<u16>
+                    // Use f16tof32 to convert u32 to vec2<f16>, then asuint16 to get vec2<u16>
+                    //
+                    // f16tof32(u32) returns f32 where the input is treated as containing
+                    // an f16 value in the low 16 bits. So we need to:
+                    // 1. Extract low and high 16 bits
+                    // 2. Use f16tof32 to convert each to f32
+                    // 3. Convert back to f16
+                    // 4. Use asuint16 to get u16
+
+                    auto u32_to_vec2_u16 = [&](core::ir::Value* u32_val) -> core::ir::Value* {
+                        auto* low_u32 = b.And(u32_val, 0xffff_u)->Result();
+                        auto* high_u32 = b.ShiftRight(u32_val, 16_u)->Result();
+
+                        // f16tof32: treats low 16 bits as f16, converts to f32
+                        auto* low_f32 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.f32(), BuiltinFn::kF16Tof32, low_u32);
+                        auto* high_f32 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.f32(), BuiltinFn::kF16Tof32, high_u32);
+
+                        // Convert f32 back to f16 (lossless for valid f16 bit patterns)
+                        auto* low_f16 = b.Convert(ty.f16(), low_f32);
+                        auto* high_f16 = b.Convert(ty.f16(), high_f32);
+
+                        // Construct vec2<f16>
+                        auto* vec2_f16 =
+                            b.Construct(ty.vec2(ty.f16()), low_f16->Result(), high_f16->Result());
+
+                        // Use asuint16 to reinterpret as vec2<u16>
+                        return b
+                            .Call<hlsl::ir::BuiltinCall>(ty.vec2(ty.u16()), BuiltinFn::kAsuint16,
+                                                         vec2_f16)
+                            ->Result();
+                    };
+
+                    core::ir::Value* result = nullptr;
+                    if (src_type->Is<core::type::Scalar>()) {
+                        // Scalar case: u32 -> vec2<u16>
+                        result = u32_to_vec2_u16(v);
+                    } else {
+                        // Vector case: vecN<u32> -> vec(N*2)<u16>
+                        auto* src_vec = src_type->As<core::type::Vector>();
+                        Vector<core::ir::Value*, 4> components;
+                        for (uint32_t i = 0; i < src_vec->Width(); i++) {
+                            auto* elem = b.Swizzle(ty.u32(), v, {i})->Result();
+                            auto* vec2_u16 = u32_to_vec2_u16(elem);
+                            components.Push(b.Swizzle(ty.u16(), vec2_u16, {0})->Result());
+                            components.Push(b.Swizzle(ty.u16(), vec2_u16, {1})->Result());
+                        }
+                        result = b.Construct(ty.vec(ty.u16(), components.Length()), components)
+                                     ->Result();
+                    }
+
+                    // If destination element type is f16, use asfloat16 to convert
+                    if (dst_ele_ty->Is<core::type::F16>()) {
+                        result =
+                            b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsfloat16, result)
+                                ->Result();
+                    }
+
+                    b.Return(f, result);
+                });
+                return f;
+            });
+    }
+
+    /// Replaces a bitcast with a call to the ToU16 polyfill for the given types
+    void ReplaceBitcastWithToU16Polyfill(core::ir::Bitcast* bitcast) {
+        auto* src_type = bitcast->Val()->Type();
+        auto* dst_type = bitcast->Result()->Type();
+
+        auto* f = CreateBitcastToU16(src_type, dst_type);
+        b.InsertBefore(bitcast,
+                       [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
+        bitcast->Destroy();
+    }
+
+    // Bitcast 16-bit vector types to 32-bit types (e.g., vec2<u16> -> u32)
+    // using bit operations: u32 = (high << 16) | (low & 0xFFFF)
+    core::ir::Function* CreateBitcastFromU16(const core::type::Type* src_type,
+                                             const core::type::Type* dst_type) {
+        return bitcast_funcs_.GetOrAdd(
+            BitcastType{{src_type, dst_type}}, [&]() -> core::ir::Function* {
+                auto fn_name = b.ir.symbols.New(std::string("tint_bitcast_from_u16")).Name();
+
+                auto* f = b.Function(fn_name, dst_type);
+                auto* src = b.FunctionParam("src", src_type);
+                f->SetParams({src});
+
+                b.Append(f->Block(), [&] {
+                    auto* src_vec = src_type->As<core::type::Vector>();
+                    TINT_IR_ASSERT(ir, src_vec);
+                    auto* src_ele_ty = src_vec->Type();
+
+                    // If source element type is f16, first convert to u16 using asuint16
+                    core::ir::Value* u16_vec = src;
+                    if (src_ele_ty->Is<core::type::F16>()) {
+                        u16_vec = b.Call<hlsl::ir::BuiltinCall>(ty.vec(ty.u16(), src_vec->Width()),
+                                                                BuiltinFn::kAsuint16, src)
+                                      ->Result();
+                    }
+
+                    // Combine pairs of u16 values into u32 using bit operations.
+                    // For each pair: u32 = uint(low) | (uint(high) << 16)
+                    // We need to zero-extend u16 to u32 first.
+                    Vector<core::ir::Value*, 2> u32_results;
+                    for (uint32_t i = 0; i < src_vec->Width(); i += 2) {
+                        auto* low = b.Swizzle(ty.u16(), u16_vec, {i});
+                        auto* high = b.Swizzle(ty.u16(), u16_vec, {i + 1});
+
+                        // Zero-extend u16 to u32:
+                        // Create a vec2<u16> with the value and zero, then use f32tof16's inverse
+                        // Actually, simpler: use HLSL's implicit conversion in arithmetic
+                        // uint(u16_val) zero-extends in HLSL
+                        // But we can't do Convert in IR... use And with 0xFFFF on the result
+                        // of treating it as u32
+
+                        // Use asfloat16 to interpret u16 as f16, then convert to f32,
+                        // then use f32tof16 to get the bits as u32.
+                        // This preserves the bit pattern: u16 -> f16 (reinterpret) -> f32 -> u32
+                        auto* low_f16 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.f16(), BuiltinFn::kAsfloat16, low);
+                        auto* high_f16 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.f16(), BuiltinFn::kAsfloat16, high);
+
+                        // f32tof16 takes f32 and returns u32 with f16 bits in low 16 bits
+                        auto* low_f32 = b.Convert(ty.f32(), low_f16);
+                        auto* high_f32 = b.Convert(ty.f32(), high_f16);
+
+                        auto* low_u32 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.u32(), BuiltinFn::kF32Tof16, low_f32);
+                        auto* high_u32 =
+                            b.Call<hlsl::ir::BuiltinCall>(ty.u32(), BuiltinFn::kF32Tof16, high_f32);
+
+                        auto* low_part = b.And(low_u32, 0xffff_u);
+                        auto* high_part = b.ShiftLeft(b.And(high_u32, 0xffff_u), 16_u);
+                        auto* combined = b.Or(low_part, high_part);
+                        u32_results.Push(combined->Result());
+                    }
+
+                    core::ir::Value* result = nullptr;
+                    if (u32_results.Length() == 1) {
+                        result = u32_results[0];
+                    } else {
+                        result =
+                            b.Construct(ty.MatchWidth(ty.u32(), dst_type), u32_results)->Result();
+                    }
+
+                    // Convert to destination type if needed
+                    tint::Switch(
+                        dst_type->DeepestElement(),
+                        [&](const core::type::U32*) { b.Return(f, result); },
+                        [&](const core::type::I32*) {
+                            b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsint,
+                                                                      result));
+                        },
+                        [&](const core::type::F32*) {
+                            b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsfloat,
+                                                                      result));
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                });
+                return f;
+            });
+    }
+
+    /// Replaces a bitcast with a call to the FromU16 polyfill for the given types
+    void ReplaceBitcastWithFromU16Polyfill(core::ir::Bitcast* bitcast) {
+        auto* src_type = bitcast->Val()->Type();
+        auto* dst_type = bitcast->Result()->Type();
+
+        auto* f = CreateBitcastFromU16(src_type, dst_type);
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
         bitcast->Destroy();
@@ -1918,6 +2162,8 @@ Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
     TINT_CHECK_RESULT(
         ValidateAndDumpIfNeeded(ir, "hlsl.BuiltinPolyfill",
                                 core::ir::Capabilities{
+                                    core::ir::Capability::kAllow16BitIntegers,
+                                    core::ir::Capability::kAllow16BitIntegers,
                                     core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                                     core::ir::Capability::kAllowDuplicateBindings,
                                     core::ir::Capability::kAllowNonCoreTypes,

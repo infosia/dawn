@@ -171,7 +171,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         // DecomposeAccess must come before BlockDecoratedStructs, which will wrap the
         // uniform variable in a structure. It must come after DirectVariableAccess which removes
         // uniform buffers passed as function parameters.
-        core::ir::transform::DecomposeAccessOptions decompose_config{.uniform = true};
+        core::ir::transform::DecomposeAccessOptions decompose_config{
+            .storage = true, .uniform = true, .workgroup = true};
         TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
     } else {
         TINT_CHECK_RESULT(core::ir::transform::Std140(module));
