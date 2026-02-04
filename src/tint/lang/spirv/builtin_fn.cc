@@ -82,6 +82,8 @@ const char* str(BuiltinFn i) {
             return "image_dref_gather";
         case BuiltinFn::kImageFetch:
             return "image_fetch";
+        case BuiltinFn::kRelaxedConvert:
+            return "relaxed_convert";
         case BuiltinFn::kImageGather:
             return "image_gather";
         case BuiltinFn::kImageQuerySize:
@@ -387,6 +389,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kGroupNonUniformSMax:
         case BuiltinFn::kSConvert:
         case BuiltinFn::kUConvert:
+        case BuiltinFn::kRelaxedConvert:
             break;
     }
     return core::ir::Instruction::Accesses{};

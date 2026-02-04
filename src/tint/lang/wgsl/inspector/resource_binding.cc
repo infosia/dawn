@@ -28,6 +28,7 @@
 #include "src/tint/lang/wgsl/inspector/resource_binding.h"
 
 #include "src/tint/lang/core/type/array.h"
+#include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/i32.h"
 #include "src/tint/lang/core/type/matrix.h"
@@ -72,7 +73,7 @@ ResourceBinding::SampledKind BaseTypeToSampledKind(const core::type::Type* base_
         base_type = vt->Type();
     }
 
-    if (base_type->Is<core::type::F32>()) {
+    if (base_type->IsAnyOf<core::type::F32, core::type::F16>()) {
         return ResourceBinding::SampledKind::kFloat;
     } else if (base_type->Is<core::type::U32>()) {
         return ResourceBinding::SampledKind::kUInt;
