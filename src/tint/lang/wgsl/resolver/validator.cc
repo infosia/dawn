@@ -398,8 +398,10 @@ bool Validator::StorageTexture(const core::type::StorageTexture* t, const Source
 }
 
 bool Validator::SampledTexture(const core::type::SampledTexture* t, const Source& source) const {
-    if (!t->Type()->UnwrapRef()->IsAnyOf<core::type::F32, core::type::I32, core::type::U32>()) {
-        AddError(source) << "texture_2d<type>: type must be f32, i32 or u32";
+    if (!t->Type()
+             ->UnwrapRef()
+             ->IsAnyOf<core::type::F32, core::type::F16, core::type::I32, core::type::U32>()) {
+        AddError(source) << "texture_2d<type>: type must be f32, f16, i32 or u32";
         return false;
     }
 

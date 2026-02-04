@@ -2386,7 +2386,9 @@ void Validator::CheckType(const core::type::Type* root,
                 return true;
             },
             [&](const core::type::SampledTexture* s) {
-                if (!s->Type()->IsAnyOf<core::type::F32, core::type::I32, core::type::U32>()) {
+                if (!s->Type()
+                         ->IsAnyOf<core::type::F32, core::type::F16, core::type::I32,
+                                   core::type::U32>()) {
                     diag() << "invalid sampled texture sample type: " << NameOf(s->Type());
                     return false;
                 }

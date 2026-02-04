@@ -1449,15 +1449,15 @@ implicit(C: iu32)
 implicit(C: iu32)
   fn textureStore(texture: texel_buffer<u32_texel_format, read_write>, coords: C, value: vec4<u32>)
 
-@must_use implicit(T: fiu32, C: iu32, L: iu32)
+@must_use implicit(T: fiu32_f16, C: iu32, L: iu32)
   fn textureLoad(texture: texture_1d<T>, coords: C, level: L) -> vec4<T>
-@must_use implicit(T: fiu32, C: iu32, L: iu32)
+@must_use implicit(T: fiu32_f16, C: iu32, L: iu32)
   fn textureLoad(texture: texture_2d<T>, coords: vec2<C>, level: L) -> vec4<T>
-@must_use implicit(T: fiu32, C: iu32, A: iu32, L: iu32)
+@must_use implicit(T: fiu32_f16, C: iu32, A: iu32, L: iu32)
   fn textureLoad(texture: texture_2d_array<T>, coords: vec2<C>, array_index: A, level: L) -> vec4<T>
-@must_use implicit(T: fiu32, C: iu32, L: iu32)
+@must_use implicit(T: fiu32_f16, C: iu32, L: iu32)
   fn textureLoad(texture: texture_3d<T>, coords: vec3<C>, level: L) -> vec4<T>
-@must_use implicit(T: fiu32, C: iu32, S: iu32)
+@must_use implicit(T: fiu32_f16, C: iu32, S: iu32)
   fn textureLoad(texture: texture_multisampled_2d<T>, coords: vec2<C>, sample_index: S) -> vec4<T>
 @must_use implicit(C: iu32, L: iu32)
   fn textureLoad(texture: texture_depth_2d, coords: vec2<C>, level: L) -> f32

@@ -983,6 +983,15 @@ struct State {
             b.Call<spirv::ir::BuiltinCall>(result_ty, kind, std::move(builtin_args));
         result->InsertBefore(builtin);
 
+        // If we expecting an f16 result, change it to f32 then add a RelaxedPrecision decoration
+        // and convert it back to f16.
+        if (result_ty->DeepestElement()->Is<core::type::F16>()) {
+            result->Result()->SetType(ty.vec4f());
+            result = b.Call<spirv::ir::BuiltinCall>(ty.vec4h(), spirv::BuiltinFn::kRelaxedConvert,
+                                                    result);
+            result->InsertBefore(builtin);
+        }
+
         // If we are expecting a scalar result, extract the first component.
         if (expects_scalar_result) {
             result = b.Access(ty.f32(), result, 0_u);
