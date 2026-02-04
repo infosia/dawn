@@ -324,7 +324,7 @@ class GPUUsableBuffer final : public Buffer {
 
     ResultOrError<Storage*> GetOrCreateStorage(StorageType storageType);
     // Get or create storage supporting CopyDst usage.
-    ResultOrError<Storage*> GetOrCreateDstCopyableStorage();
+    ResultOrError<Storage*> GetOrCreateDstCopyableStorage(bool allowStagingStorage);
 
     void SetStorageLabel(StorageType storageType);
 
