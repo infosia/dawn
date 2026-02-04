@@ -2452,6 +2452,18 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             }
             break;
         }
+        case wgsl::BuiltinFn::kGetResource: {
+            if (!validator_.GetResource(call)) {
+                return nullptr;
+            }
+            break;
+        }
+        case wgsl::BuiltinFn::kHasResource: {
+            if (!validator_.HasResource(call)) {
+                return nullptr;
+            }
+            break;
+        }
 
         default:
             break;

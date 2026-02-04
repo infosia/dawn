@@ -27,8 +27,8 @@
 
 #include "src/tint/lang/wgsl/resolver/validator.h"
 
-#include <algorithm>
 #include <bitset>
+#include <iostream>
 #include <string_view>
 #include <tuple>
 #include <utility>
@@ -46,7 +46,6 @@
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/subgroup_matrix.h"
-#include "src/tint/lang/core/type/swizzle_view.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u8.h"
@@ -60,7 +59,6 @@
 #include "src/tint/lang/wgsl/ast/return_statement.h"
 #include "src/tint/lang/wgsl/ast/subgroup_size_attribute.h"
 #include "src/tint/lang/wgsl/ast/switch_statement.h"
-#include "src/tint/lang/wgsl/ast/traverse_expressions.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
 #include "src/tint/lang/wgsl/sem/array.h"
@@ -81,6 +79,7 @@
 #include "src/tint/lang/wgsl/sem/while_statement.h"
 #include "src/tint/utils/internal_limits.h"
 #include "src/tint/utils/math/math.h"
+#include "src/tint/utils/rtti/switch.h"
 #include "src/tint/utils/text/string.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/text_style.h"
@@ -2209,6 +2208,27 @@ bool Validator::TextureBuiltinFn(const sem::Call* call) const {
 
     return check_const_arg_range(core::ParameterUsage::kOffset, -8, 7) &&
            check_const_arg_range(core::ParameterUsage::kComponent, 0, 3);
+}
+
+bool Validator::GetResource(const sem::Call* call) const {
+    auto* builtin = call->Target()->As<sem::BuiltinFn>();
+    if (!builtin) {
+        return false;
+    }
+
+    std::cerr << builtin->ReturnType()->TypeInfo().name << "\n";
+    std::cerr << builtin->ReturnType()->As<core::type::SampledTexture>()->Filterable() << "\n";
+
+    return true;
+}
+
+bool Validator::HasResource(const sem::Call* call) const {
+    auto* builtin = call->Target()->As<sem::BuiltinFn>();
+    if (!builtin) {
+        return false;
+    }
+
+    return true;
 }
 
 bool Validator::SubgroupBroadcast(const sem::Call* call) const {

@@ -28,28 +28,14 @@
 #include "src/tint/lang/wgsl/resolver/resolver.h"
 
 #include "gmock/gmock.h"
-#include "src/tint/lang/core/type/helper_test.h"
-#include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
-#include "src/tint/lang/wgsl/ast/assignment_statement.h"
-#include "src/tint/lang/wgsl/ast/break_statement.h"
 #include "src/tint/lang/wgsl/ast/builtin_texture_helper_test.h"
-#include "src/tint/lang/wgsl/ast/call_statement.h"
-#include "src/tint/lang/wgsl/ast/continue_statement.h"
-#include "src/tint/lang/wgsl/ast/if_statement.h"
-#include "src/tint/lang/wgsl/ast/loop_statement.h"
-#include "src/tint/lang/wgsl/ast/return_statement.h"
 #include "src/tint/lang/wgsl/ast/stage_attribute.h"
-#include "src/tint/lang/wgsl/ast/switch_statement.h"
-#include "src/tint/lang/wgsl/ast/unary_op_expression.h"
-#include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/resolver/resolver_helper_test.h"
 #include "src/tint/lang/wgsl/sem/call.h"
-#include "src/tint/lang/wgsl/sem/function.h"
 #include "src/tint/lang/wgsl/sem/member_accessor_expression.h"
 #include "src/tint/lang/wgsl/sem/statement.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
-#include "src/tint/utils/text/string.h"
 #include "src/tint/utils/text/string_stream.h"
 
 using ::testing::ElementsAre;
@@ -2778,6 +2764,111 @@ INSTANTIATE_TEST_SUITE_P(
                     BuiltinData{"workgroupBarrier", wgsl::BuiltinFn::kWorkgroupBarrier}));
 
 }  // namespace synchronization_builtin_tests
+
+namespace resource_tests {
+
+using ResolverBuiltinTest_Resources = ResolverTest;
+
+TEST_F(ResolverBuiltinTest_Resources, getResource_SampledTexture_F32_Filterable) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto tex_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
+                                     core::TextureFilterable::kFilterable);
+    auto* ident = Ident("getResource", tex_ty);
+    std::cerr << ident->TypeInfo().name << "\n";
+
+    auto* call = Call(ident, 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+    ASSERT_NE(TypeOf(call), nullptr);
+
+    auto* call_ty = TypeOf(call);
+    EXPECT_TRUE(call_ty->Is<core::type::SampledTexture>());
+    EXPECT_EQ(call_ty->As<core::type::SampledTexture>()->Filterable(),
+              core::TextureFilterable::kFilterable);
+}
+
+TEST_F(ResolverBuiltinTest_Resources, getResource_Sampler_Filtering) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto samp_ty = ty.sampler(core::SamplerFiltering::kNonFiltering);
+    auto* call = Call(Ident("getResource", samp_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+    ASSERT_NE(TypeOf(call), nullptr);
+
+    auto* call_ty = TypeOf(call);
+    EXPECT_TRUE(call_ty->Is<core::type::Sampler>());
+    EXPECT_EQ(call_ty->As<core::type::Sampler>()->Filtering(),
+              core::SamplerFiltering::kNonFiltering);
+}
+
+TEST_F(ResolverBuiltinTest_Resources, hasResource) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto tex_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
+                                     core::TextureFilterable::kFilterable);
+    auto* call = Call(Ident("hasResource", tex_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+    EXPECT_TRUE(TypeOf(call)->Is<core::type::Bool>());
+}
+
+TEST_F(ResolverBuiltinTest_Resources, getResource_SampledTexture_F32_RequriesFilterable) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto tex_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
+    auto* call = Call(Ident("getResource", tex_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(missing filterable)");
+}
+
+TEST_F(ResolverBuiltinTest_Resources, getResource_Sampler_RequiresFiltering) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto samp_ty = ty.sampler(core::type::SamplerKind::kSampler);
+    auto* call = Call(Ident("getResource", samp_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(missing filtering)");
+}
+
+TEST_F(ResolverBuiltinTest_Resources, hasResource_SampledTexture_F32_RequriesFilterable) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto tex_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
+    auto* call = Call(Ident("hasResource", tex_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(missing filterable)");
+}
+
+TEST_F(ResolverBuiltinTest_Resources, hasResource_Sampler_RequiresFiltering) {
+    Enable(wgsl::Extension::kChromiumExperimentalResourceTable);
+
+    auto samp_ty = ty.sampler(core::type::SamplerKind::kSampler);
+    auto* call = Call(Ident("hasResource", samp_ty), 0_u);
+    auto* assign = Assign(Phony(), call);
+    WrapInFunction(assign);
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(missing filtering)");
+}
+
+}  // namespace resource_tests
 
 }  // namespace
 }  // namespace tint::resolver
