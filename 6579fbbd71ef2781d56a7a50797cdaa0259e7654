@@ -16,6 +16,24 @@
       "message": "```suggestion\nused to avoid this problem, so you either need to use a newer version\n```",
       "revId": "6579fbbd71ef2781d56a7a50797cdaa0259e7654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caa1c683_a691b3fe",
+        "filename": "docs/building.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-04T18:27:19Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "46645b0c_bf9cb275",
+      "revId": "6579fbbd71ef2781d56a7a50797cdaa0259e7654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
