@@ -33,6 +33,24 @@
       "message": "Instead of exposing the Vulkan limit in WebGPU, I wonder if instead we could just make sure that the maxWorkgroupSize reported by the Vulkan backend is always at most `maxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize`. How pessimizing is that? It would avoid the need for additional validation and extra limits that the applications have to care about.",
       "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34b74ee2_6649fe13",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-02-04T03:05:31Z",
+      "side": 1,
+      "message": "Then we have to reduce `maxWorkgroupSize` on Vulkan backends. For example, on Intel Gen12_LP:\n\nmaxComputeWorkGroupInvocations \u003d 1024\nminSubgroupSize \u003d 8\nmaxSubgroupSize \u003d 32\nmaxComputeWorkgroupSubgroups \u003d 56\n\nSo when mMinExplicitComputeSubgroupSize  \u003d 8,\nmaxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize \u003d 448 \u003c 1024\n\nWhen mMinExplicitComputeSubgroupSize  \u003d 16\nmaxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize \u003d 896 \u003c 1024",
+      "parentUuid": "e684f913_017b98d9",
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
