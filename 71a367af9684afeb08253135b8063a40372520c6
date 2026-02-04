@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86103dd0_fe09e516",
+        "filename": "src/dawn/tests/end2end/AdapterEnumerationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:39:26Z",
+      "side": 1,
+      "message": "What do we test happens? Can the comment say what we want to happen?",
+      "revId": "71a367af9684afeb08253135b8063a40372520c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaadd6b5_a2633f10",
+        "filename": "src/dawn/tests/end2end/AdapterEnumerationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:39:26Z",
+      "side": 1,
+      "message": "How does this check that we correctly unlink in BackendWGPU? Is there a crash or something else that happens if we don\u0027t?",
+      "revId": "71a367af9684afeb08253135b8063a40372520c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
