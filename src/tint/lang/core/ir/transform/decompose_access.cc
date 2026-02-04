@@ -67,9 +67,26 @@ struct State {
 
     const type::Type* base_ty_ = nullptr;
     const type::Pointer* base_ptr_ty_ = nullptr;
+    bool module_contains_f16_ = false;
 
     /// Process the module.
     void Process() {
+        // First pass: detect if module contains any f16 types
+        for (auto* inst : *ir.root_block) {
+            auto* var = inst->As<core::ir::Var>();
+            if (!var) {
+                continue;
+            }
+            auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
+            if (!var_ty) {
+                continue;
+            }
+            if (ContainsF16Type(var_ty->StoreType())) {
+                module_contains_f16_ = true;
+                break;
+            }
+        }
+
         Vector<core::ir::Var*, 4> var_worklist;
         for (auto* inst : *ir.root_block) {
             // Allow this to run before or after PromoteInitializers by handling non-var root_block
@@ -220,15 +237,34 @@ struct State {
             [&](Default) { return false; });
     }
 
+    bool ContainsF16Type(const type::Type* type) const {
+        return tint::Switch(
+            type, [&](const type::F16*) { return true; },
+            [&](const type::Vector* vec_ty) { return ContainsF16Type(vec_ty->Type()); },
+            [&](const type::Matrix* mat_ty) {
+                return ContainsF16Type(mat_ty->ColumnType()->Type());
+            },
+            [&](const type::Array* array_ty) { return ContainsF16Type(array_ty->ElemType()); },
+            [&](const type::Struct* struct_ty) {
+                for (auto* member : struct_ty->Members()) {
+                    if (ContainsF16Type(member->Type())) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            [&](Default) { return false; });
+    }
+
     uint32_t SmallestElementSize(const type::Type* type) {
         return tint::Switch(
             type,  //
             [&](const type::Scalar* scalar) { return scalar->Size(); },
             [&](const type::Vector* vector) {
-                if (vector->Width() == 3) {
-                    return vector->Type()->Size();
-                }
-                return type->Size();
+                // if (vector->Width() == 3) {
+                //     return vector->Type()->Size();
+                // }
+                return vector->Type()->Size();
             },
             [&](const type::Matrix* matrix) { return SmallestElementSize(matrix->ColumnType()); },
             [&](const type::Array* array) { return SmallestElementSize(array->ElemType()); },
@@ -285,29 +321,16 @@ struct State {
         return std::min(size, 16u);
     }
 
-    // Sets the base type based on the smallest access size.
-    // Possible values are: u16, u32, vec2u, and vec4u.
+    // Sets the base type based on whether the module contains f16 types.
+    // If module has f16: use vec4<f16> for all variables.
+    // Otherwise: use vec4<u32> for all variables.
     void SetBaseEleType(core::ir::Var* var) {
-        uint32_t size = 0;
         auto* var_ty = var->Result()->Type()->As<core::type::Pointer>();
-        if (var_ty->AddressSpace() == AddressSpace::kUniform) {
-            size = 16u;
-        } else {
-            size = SmallestAccessSize(var);
-        }
 
-        if (size == 2 || size == 6) {
-            // 6 == vec3h so we must use a 2-byte type to be safe.
-            base_ty_ = ty.u16();
-        } else if (size < 8 || size == 12) {
-            // 12 == vec3u so we must use a 4-byte type to be safe.
-            base_ty_ = ty.u32();
-        } else if (size < 16) {
-            base_ty_ = ty.vec2u();
-        } else if (size == 16) {
-            base_ty_ = ty.vec4u();
+        if (module_contains_f16_) {
+            base_ty_ = ty.vec4(ty.f16());
         } else {
-            TINT_UNREACHABLE();
+            base_ty_ = ty.vec4u();
         }
 
         base_ptr_ty_ = ty.ptr(var_ty->AddressSpace(), base_ty_, var_ty->Access());
@@ -354,14 +377,14 @@ struct State {
     // correct vector array element in the underlying variable.
     core::ir::Value* CalculateVectorOffset(core::ir::Value* byte_idx, const type::Vector* src_ty) {
         if (auto* byte_cnst = byte_idx->As<core::ir::Constant>()) {
-            return b.Value(
-                u32((byte_cnst->Value()->ValueAs<uint32_t>() % src_ty->Size()) / src_ty->Width()));
+            return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % src_ty->Size()) /
+                               src_ty->Type()->Size()));
         }
         // Note: Using bitwise-and and shift instead of modulo and divide here was necessary to
         // avoid an FXC miscompile. See https://crbug.com/454366353.
         return b
             .ShiftRight(b.And(byte_idx, b.Constant(u32(src_ty->Size() - 1))),
-                        u32(log2(src_ty->Width())))
+                        u32(log2(src_ty->Type()->Size())))
             ->Result();
     }
 
@@ -583,41 +606,81 @@ struct State {
     core::ir::Instruction* MakeScalarLoad(core::ir::Var* var,
                                           const core::type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
-        // Number of array elements needed to load the scalar.
-        auto num_array_eles = NumBaseElements(result_ty);
+        // Base type is always vec4<f16> or vec4<u32>, both are 16 bytes.
+        // Scalars are always smaller than vec4, so we load one vec4 and extract.
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        if (num_array_eles > 1) {
-            // This should only happen when the base type is u16 and a 4-byte scalar is being
-            // loaded.
-            TINT_IR_ASSERT(ir, num_array_eles == 2);
-            auto* vec_ty = ty.vec(BaseEleType(), num_array_eles);
-            auto loads = MakeNLoads(var, array_idx, num_array_eles);
-            auto* construct = b.Construct(vec_ty, loads);
-            return b.Bitcast(result_ty, construct);
-        }
-
         auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
 
-        ir::Instruction* load = nullptr;
-        if (auto* vec_ty = BaseEleType()->As<type::Vector>()) {
-            auto* vec_idx = CalculateVectorOffset(byte_idx, vec_ty);
-            load = b.LoadVectorElement(access, vec_idx);
-        } else {
-            load = b.Load(access);
-        }
+        // BaseEleType is always a vec4
+        auto* vec_ty = BaseEleType()->As<type::Vector>();
+        TINT_IR_ASSERT(ir, vec_ty && vec_ty->Width() == 4);
 
-        if (result_ty->Size() < load->Result()->Type()->Size()) {
-            return ExtractScalar2Bytes(load, result_ty, byte_idx);
+        auto* vec_idx = CalculateVectorOffset(byte_idx, vec_ty);
+        auto* load = b.LoadVectorElement(access, vec_idx);
+        auto* elem_ty = load->Result()->Type();
+
+        // Handle size conversion
+        if (result_ty->Size() == elem_ty->Size()) {
+            // Same size, direct bitcast if needed
+            return b.InsertBitcastIfNeeded(result_ty, load);
+        } else if (result_ty->Size() > elem_ty->Size()) {
+            // Larger result (e.g., f16 -> u32): need to load multiple elements
+            uint32_t ratio = result_ty->Size() / elem_ty->Size();
+            auto* vec_result_ty = ty.vec(elem_ty, ratio);
+
+            // Load multiple consecutive elements
+            Vector<Value*, 4> elements;
+            for (uint32_t i = 0; i < ratio; i++) {
+                Value* idx = vec_idx;
+                if (i > 0) {
+                    if (auto* cnst = vec_idx->As<Constant>()) {
+                        idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + i));
+                    } else {
+                        idx = b.Add(vec_idx, u32(i))->Result();
+                    }
+                }
+                if (i == 0) {
+                    elements.Push(load->Result());
+                } else {
+                    elements.Push(b.LoadVectorElement(access, idx)->Result());
+                }
+            }
+
+            auto* vec_construct = b.Construct(vec_result_ty, elements);
+            return b.Bitcast(result_ty, vec_construct);
+        } else {
+            // Smaller result (e.g., u32 -> u16): bitcast and extract lower bits
+            // This happens when base type is vec4<u32> but loading u16 or f16
+            uint32_t ratio = elem_ty->Size() / result_ty->Size();
+            auto* smaller_vec_ty = ty.vec(result_ty, ratio);
+            auto* cast = b.Bitcast(smaller_vec_ty, load);
+
+            // Extract the appropriate element based on byte offset within the u32
+            Value* element_idx = nullptr;
+            if (auto* cnst = byte_idx->As<Constant>()) {
+                uint32_t byte_offset = cnst->Value()->ValueAs<uint32_t>();
+                uint32_t elem_offset_in_u32 = (byte_offset % elem_ty->Size()) / result_ty->Size();
+                element_idx = b.Constant(u32(elem_offset_in_u32));
+            } else {
+                // Dynamic index: (byte_idx % elem_ty->Size()) / result_ty->Size()
+                auto* mod = b.Modulo(byte_idx, u32(elem_ty->Size()));
+                element_idx = b.Divide(mod, u32(result_ty->Size()))->Result();
+            }
+
+            return b.Access(result_ty, cast, element_idx);
         }
-        return b.InsertBitcastIfNeeded(result_ty, load);
     }
 
-    // Currently this could only be f16, but in the future that will not be true.
+    // Extract a 2-byte element from a vec4 load result.
+    // This is used when loading f16 or u16 from a vec4<f16> base type.
     core::ir::Access* ExtractScalar2Bytes(core::ir::Instruction* load,
                                           const type::Type* result_ty,
                                           core::ir::Value* byte_idx) {
-        // We will bitcast the load to a vector of result_ty and then extract the element that we
-        // want.
+        // Base type is vec4<f16> (16 bytes), extracting 2-byte element.
+        // Result type is 2 bytes, so we can extract from the vec4 directly.
+        TINT_IR_ASSERT(ir, result_ty->Size() == 2);
+        TINT_IR_ASSERT(ir, load->Result()->Type()->Is<type::Vector>());
+
         const uint32_t load_size = load->Result()->Type()->Size();
         uint32_t num_eles = load_size / result_ty->Size();
         const type::Type* vec_ty = ty.vec(result_ty, num_eles);
@@ -669,71 +732,36 @@ struct State {
         uint32_t num_loads = NumBaseElements(result_ty);
         auto loads = MakeNLoadInsts(var, array_idx, num_loads);
 
-        if (BaseEleType()->Size() < result_ty->DeepestElement()->Size()) {
-            TINT_IR_ASSERT(ir, BaseEleType() == ty.u16());
-            // Need to step up the size first.
-            Vector<Instruction*, 4> new_loads;
-            for (uint32_t i = 0; i < num_loads; i += 2) {
-                Vector<Value*, 2> args;
-                args.Push(loads[i]->Result());
-                args.Push(loads[i + 1]->Result());
-                new_loads.Push(
-                    b.Bitcast(ty.u32(), b.Construct(ty.vec2(BaseEleType()), args)->Result()));
-            }
-            std::swap(loads, new_loads);
-            num_loads /= 2;
-        }
+        // Base type is always vec4 (vec4<f16> or vec4<u32>)
+        TINT_IR_ASSERT(ir, loads[0]->Result()->Type()->Is<type::Vector>());
+        TINT_IR_ASSERT(ir, loads[0]->Result()->Type()->As<type::Vector>()->Width() == 4);
 
         Instruction* value = nullptr;
-        Vector<Value*, 4> construct_args;
-        for (auto* l : loads) {
-            construct_args.Push(l->Result());
-        }
-        if (loads[0]->Result()->Type() == ty.u32()) {
-            value = b.Construct(ty.vec(ty.u32(), static_cast<uint32_t>(loads.Length())),
-                                construct_args);
-        } else if (loads[0]->Result()->Type() == ty.vec2u()) {
-            if (loads.Length() > 1) {
-                value = b.Construct(ty.vec4u(), construct_args);
-            } else {
-                value = loads[0];
-            }
-        } else {
-            TINT_IR_ASSERT(ir, loads[0]->Result()->Type() == ty.vec4u());
+        if (loads.Length() == 1) {
             value = loads[0];
+        } else {
+            // Multiple vec4 loads needed for larger types
+            Vector<Value*, 4> construct_args;
+            for (auto* l : loads) {
+                construct_args.Push(l->Result());
+            }
+            // This shouldn't happen with vec4 base type for standard vector types
+            TINT_IR_UNREACHABLE(ir);
         }
 
         TINT_IR_ASSERT(ir, result_ty->DeepestElement()->Size() == 4);
+
+        // Extract the appropriate elements from the vec4
         core::ir::Instruction* load = nullptr;
+        auto* base_vec_ty = BaseEleType()->As<type::Vector>();
+        auto result_vec_ty = ty.vec(base_vec_ty->Type(), result_ty->Width());
+
         if (result_ty->Width() == 4) {
             load = value;
         } else if (result_ty->Width() == 3) {
-            load = b.Swizzle(ty.vec3u(), value, {0, 1, 2});
+            load = b.Swizzle(result_vec_ty, value, {0, 1, 2});
         } else if (result_ty->Width() == 2) {
-            if (value->Result()->Type()->Size() == result_ty->Size()) {
-                load = value;
-            } else {
-                auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());
-                if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                    if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
-                        load = b.Swizzle(ty.vec2u(), value, {2, 3});
-                    } else {
-                        load = b.Swizzle(ty.vec2u(), value, {0, 1});
-                    }
-                } else {
-                    auto* ubo = value;
-                    // if vec_idx == 2 -> zw
-                    auto* sw_lhs = b.Swizzle(ty.vec2u(), ubo, {2, 3});
-                    // else -> xy
-                    auto* sw_rhs = b.Swizzle(ty.vec2u(), ubo, {0, 1});
-                    auto* cond = b.Equal(vec_idx, 2_u);
-
-                    Vector<core::ir::Value*, 3> args{sw_rhs->Result(), sw_lhs->Result(),
-                                                     cond->Result()};
-
-                    load = b.Call(ty.vec2u(), core::BuiltinFn::kSelect, args);
-                }
-            }
+            load = b.Swizzle(result_vec_ty, value, {0, 1});
         } else {
             TINT_IR_UNREACHABLE(ir);
         }
@@ -756,83 +784,24 @@ struct State {
                                              const core::type::Vector* result_ty,
                                              core::ir::Value* byte_idx) {
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        uint32_t num_loads = NumBaseElements(result_ty);
-        auto loads = MakeNLoads(var, array_idx, num_loads);
+        auto loads = MakeNLoads(var, array_idx, 1);
 
-        // Since this vector has 2-byte elements, there are only a few possibilities:
-        // 1. Base type is u16
-        //    - scalar loads equal to number of vector elements
-        // 2. Base type is u32
-        //    - 1 or 2 u32 loads
-        //    - Note: vec3h is not possible here
-        // 3. Base type is vec2u
-        //    - 1 load of vec2u
-        //    - Note: only vec4h possible here
-        // 4. Base type is vec4u
-        //    - 1 load of vec4u
-        //    - Note: vec3h is not possible here, but vec2h is
-        if (BaseEleType() == ty.u16()) {
-            auto* vec_ty = ty.vec(ty.u16(), num_loads);
-            auto* construct = b.Construct(vec_ty, loads);
-            if (vec_ty != result_ty) {
-                return b.Bitcast(result_ty, construct->Result());
-            }
-            return construct;
-        } else if (BaseEleType() == ty.u32()) {
-            if (result_ty->Width() == 2) {
-                return b.Bitcast(result_ty, loads[0]);
-            }
-            TINT_IR_ASSERT(ir, result_ty->Width() == 4);
-            auto* construct = b.Construct(ty.vec2u(), loads);
-            return b.Bitcast(result_ty, construct->Result());
-        } else if (BaseEleType() == ty.vec2u()) {
-            TINT_IR_ASSERT(ir, result_ty->Width() == 4);
-            TINT_IR_ASSERT(ir, (result_ty->DeepestElement()->IsAnyOf<type::F16, type::U16>()));
-            return b.Bitcast(result_ty, loads[0]);
-        }
-        TINT_IR_ASSERT(ir, BaseEleType() == ty.vec4u());
+        // Base type is always vec4<f16> or vec4<u32>
+        auto* base_vec_ty = BaseEleType()->As<type::Vector>();
+        TINT_IR_ASSERT(ir, base_vec_ty && base_vec_ty->Width() == 4);
         TINT_IR_ASSERT(ir, loads.Length() == 1);
 
-        // Vec4 ends up being the same as a bitcast of vec2<u32> to a vec4<f16>.
-        // A vec3 will be stored as a vec4, so we can bitcast as if we're a vec4
-        // and swizzle out the last element.
-        if (result_ty->Width() == 3 || result_ty->Width() == 4) {
-            core::ir::Instruction* load = nullptr;
-            auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());  // 0 or 2
-            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
-                    load = b.Swizzle(ty.vec2u(), loads[0], {2, 3});
-                } else {
-                    load = b.Swizzle(ty.vec2u(), loads[0], {0, 1});
-                }
-            } else {
-                auto* ubo = loads[0];
-                // if vec_idx == 2 -> zw
-                auto* sw_lhs = b.Swizzle(ty.vec2u(), ubo, {2, 3});
-                // else -> xy
-                auto* sw_rhs = b.Swizzle(ty.vec2u(), ubo, {0, 1});
-                auto* cond = b.Equal(vec_idx, 2_u);
-                auto args = Vector{sw_rhs->Result(), sw_lhs->Result(), cond->Result()};
-                load = b.Call(ty.vec2u(), core::BuiltinFn::kSelect, std::move(args));
-            }
-            if (result_ty->Width() == 3) {
-                auto* bc = b.Bitcast(ty.vec4(result_ty->Type()), load);
-                return b.Swizzle(result_ty, bc, {0, 1, 2});
-            }
-            return b.Bitcast(result_ty, load);
-        }
+        // Base type is vec4<f16> or vec4<u32>, result is vector of 2-byte elements
+        // Simply bitcast from vec4 base and extract needed elements
+        auto* base_as_result_ty = ty.vec(result_ty->Type(), 4);
+        auto* bitcast = b.Bitcast(base_as_result_ty, loads[0]);
 
-        // Vec2 ends up being the same as a bitcast u32 to vec2<f16>
-        if (result_ty->Width() == 2) {
-            core::ir::Instruction* load = nullptr;
-            auto* vec_idx = CalculateVectorOffset(byte_idx, ty.vec4u());  // 0, 1, 2, or 3
-            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
-                const auto vec_idx_val = cnst->Value()->ValueAs<uint32_t>();
-                load = b.Swizzle(ty.u32(), loads[0], {vec_idx_val});
-            } else {
-                load = b.Access(ty.u32(), loads[0], vec_idx);
-            }
-            return b.Bitcast(result_ty, load);
+        if (result_ty->Width() == 4) {
+            return bitcast;
+        } else if (result_ty->Width() == 3) {
+            return b.Swizzle(result_ty, bitcast, {0, 1, 2});
+        } else if (result_ty->Width() == 2) {
+            return b.Swizzle(result_ty, bitcast, {0, 1});
         }
 
         TINT_IR_UNREACHABLE(ir);
@@ -1043,42 +1012,112 @@ struct State {
 
     // Store the scalar value `from` at `byte_idx` offset.
     //
-    // The transform should never select a base type that is not an even multiple of the smallest
-    // storage size, so there are two cases here:
-    //
-    // 1. Multiple stores are needed to store `from` (e.g. base type u16 storing a u32).
-    // 2. The base type size matches `from`'s size.
+    // Base type is vec4<f16> or vec4<u32>. We need to store a scalar value
+    // to one element of the vec4.
     void MakeScalarStore(core::ir::Var* var, core::ir::Value* from, core::ir::Value* byte_idx) {
-        auto* st_ty = from->Type();
-        // Number of array elements need to store the scalar.
-        auto num_array_eles = NumBaseElements(st_ty);
+        // Base type is always vec4<f16> or vec4<u32> (16 bytes)
+        // Scalars are always smaller, so we store to a single element of vec4
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
-        if (num_array_eles > 1) {
-            // This should only happen if the base type is u16 and a 4-byte scalar is being stored.
-            TINT_IR_ASSERT(ir, num_array_eles == 2);
-            TINT_IR_ASSERT(ir, BaseEleType()->Is<type::U16>());
-            auto* vec_ty = ty.vec(BaseEleType(), num_array_eles);
+        auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
+
+        auto* base_vec_ty = BaseEleType()->As<type::Vector>();
+        TINT_IR_ASSERT(ir, base_vec_ty && base_vec_ty->Width() == 4);
+
+        auto* vec_idx = CalculateVectorOffset(byte_idx, base_vec_ty);
+        auto* elem_ty = base_vec_ty->Type();
+
+        // Handle size conversion
+        if (from->Type()->Size() == elem_ty->Size()) {
+            // Same size, direct bitcast if needed
+            auto* value = b.InsertBitcastIfNeeded(elem_ty, from);
+            b.StoreVectorElement(access, vec_idx, value);
+        } else if (from->Type()->Size() > elem_ty->Size()) {
+            // Larger source (e.g., u32 -> f16): bitcast to vector and store all elements
+            uint32_t ratio = from->Type()->Size() / elem_ty->Size();
+            auto* vec_ty = ty.vec(elem_ty, ratio);
             auto* cast = b.Bitcast(vec_ty, from);
-            for (uint32_t i = 0; i < num_array_eles; i++) {
-                auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
-                b.Store(access, b.Access(BaseEleType(), cast, u32(i)));
-                if (i < num_array_eles - 1) {
-                    if (auto* cnst = array_idx->As<Constant>()) {
-                        array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
+
+            // Store each element
+            for (uint32_t i = 0; i < ratio; i++) {
+                auto* element = b.Access(elem_ty, cast, u32(i))->Result();
+                Value* idx = vec_idx;
+                if (i > 0) {
+                    if (auto* cnst = vec_idx->As<Constant>()) {
+                        idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + i));
                     } else {
-                        array_idx = b.Add(array_idx, 1_u)->Result();
+                        idx = b.Add(vec_idx, u32(i))->Result();
                     }
                 }
+                b.StoreVectorElement(access, idx, element);
             }
-            return;
-        }
+        } else {
+            // Smaller source (e.g., u16 -> u32): need to pack into larger type
+            // This happens when base type is vec4<u32> but storing u16 or f16
+            // We need to load the current u32, replace the appropriate bytes, and write back
 
-        // For stores, we know that the base type size must be less than or equal to the store size
-        // (or we'd have picked a smaller base type). Above we eliminated the smaller size case.
-        TINT_IR_ASSERT(ir, st_ty->Size() == BaseEleType()->Size());
-        auto* value = b.InsertBitcastIfNeeded(BaseEleType(), from);
-        auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
-        b.Store(access, value);
+            // Load the current u32 value
+            auto* current = b.LoadVectorElement(access, vec_idx);
+
+            // Determine which 2-byte half of the u32 to modify
+            uint32_t ratio = elem_ty->Size() / from->Type()->Size();
+            auto* vec_ty = ty.vec(from->Type(), ratio);
+
+            // Bitcast current u32 to vec of smaller type (e.g., vec2<u16>)
+            auto* cast_current = b.Bitcast(vec_ty, current);
+
+            // Calculate which element in the vec to replace
+            Value* element_idx = nullptr;
+            if (auto* cnst = byte_idx->As<Constant>()) {
+                uint32_t byte_offset = cnst->Value()->ValueAs<uint32_t>();
+                uint32_t elem_offset_in_u32 =
+                    (byte_offset % elem_ty->Size()) / from->Type()->Size();
+                element_idx = b.Constant(u32(elem_offset_in_u32));
+            } else {
+                // Dynamic index: (byte_idx % elem_ty->Size()) / from->Type()->Size()
+                auto* mod = b.Modulo(byte_idx, u32(elem_ty->Size()));
+                element_idx = b.Divide(mod, u32(from->Type()->Size()))->Result();
+            }
+
+            // Build a new vector with the replaced element
+            Vector<Value*, 4> elements;
+            for (uint32_t i = 0; i < ratio; i++) {
+                auto* idx = b.Constant(u32(i));
+                auto* elem = b.Access(from->Type(), cast_current, idx)->Result();
+                elements.Push(elem);
+            }
+
+            // Replace the target element with the new value
+            // We need to use swizzle to reconstruct the vector
+            auto* value = b.InsertBitcastIfNeeded(from->Type(), from);
+
+            // For now, handle common cases (ratio = 2)
+            TINT_IR_ASSERT(ir, ratio == 2);  // u32 = 2 x u16 or 2 x f16
+
+            Value* new_vec = nullptr;
+            if (auto* cnst_idx = element_idx->As<Constant>()) {
+                uint32_t idx_val = cnst_idx->Value()->ValueAs<uint32_t>();
+                if (idx_val == 0) {
+                    // Replace first element: (value, elem[1])
+                    new_vec = b.Construct(vec_ty, value, elements[1])->Result();
+                } else {
+                    // Replace second element: (elem[0], value)
+                    new_vec = b.Construct(vec_ty, elements[0], value)->Result();
+                }
+            } else {
+                // Dynamic selection - use select
+                auto* vec_with_first = b.Construct(vec_ty, value, elements[1]);
+                auto* vec_with_second = b.Construct(vec_ty, elements[0], value);
+                auto* cond = b.Equal(element_idx, 0_u);
+                new_vec = b.Call(vec_ty, core::BuiltinFn::kSelect,
+                                 Vector{vec_with_second->Result(), vec_with_first->Result(),
+                                        cond->Result()})
+                              ->Result();
+            }
+
+            // Bitcast back to elem_ty (u32) and store
+            auto* modified = b.Bitcast(elem_ty, new_vec);
+            b.StoreVectorElement(access, vec_idx, modified);
+        }
     }
 
     // Store the vector `from` at `byte_idx` offset.
@@ -1095,58 +1134,35 @@ struct State {
         auto num_array_eles = NumBaseElements(st_ty);
         auto* array_idx = OffsetValueToArrayIndex(byte_idx);
 
-        // We're storing a vector so we need break down `from` into appropriate `BaseEleType()`
-        // bits. The base type size will be less than or equal to the store size, but may be a
-        // scalar or a vector.
-        if (BaseEleType()->Is<type::Vector>()) {
-            // | Base type | Possible store sizes            | # Array Ele |
-            // | vec2u     | vec2u, vec4u, vec4h (NOT vec3u) | 1 or 2      |
-            // | vec4u     | vec4u                           | 1           |
-            if (num_array_eles == 1) {
-                Value* value = b.InsertBitcastIfNeeded(BaseEleType(), from);
-                auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
-                b.Store(access, value);
-            } else {
-                auto* sub_vec_ty = ty.vec2(st_ty->DeepestElement());
-                Instruction* first = b.Swizzle(sub_vec_ty, from, {0, 1});
-                first = b.InsertBitcastIfNeeded(sub_vec_ty, first);
-                auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
-                b.Store(access, first);
+        // Base type is always vec4<f16> or vec4<u32> (16 bytes)
+        // For vectors, we need to store them into vec4 elements
+        TINT_IR_ASSERT(ir, num_array_eles == 1);
 
-                if (auto* cnst = array_idx->As<Constant>()) {
-                    array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
-                } else {
-                    array_idx = b.Add(array_idx, 1_u)->Result();
-                }
-                Instruction* second = b.Swizzle(sub_vec_ty, from, {2, 3});
-                second = b.InsertBitcastIfNeeded(sub_vec_ty, second);
-                access = b.Access(BaseEleTypePtr(), var, array_idx);
-                b.Store(access, second);
-            }
+        auto* base_vec_ty = BaseEleType()->As<type::Vector>();
+        TINT_IR_ASSERT(ir, base_vec_ty && base_vec_ty->Width() == 4);
+
+        // Construct a vec4 with appropriate padding for vec2/vec3
+        Value* value = nullptr;
+        if (st_ty->Width() == 4) {
+            value = b.InsertBitcastIfNeeded(BaseEleType(), from);
+        } else if (st_ty->Width() == 3) {
+            // vec3 -> vec4 with padding
+            auto result_vec_ty = ty.vec(base_vec_ty->Type(), 3);
+            auto* cast_val = b.InsertBitcastIfNeeded(result_vec_ty, from);
+            value = b.Construct(BaseEleType(), cast_val, b.Zero(base_vec_ty->Type()))->Result();
+        } else if (st_ty->Width() == 2) {
+            // vec2 -> vec4 with padding
+            auto result_vec_ty = ty.vec(base_vec_ty->Type(), 2);
+            auto* cast_val = b.InsertBitcastIfNeeded(result_vec_ty, from);
+            value = b.Construct(BaseEleType(), cast_val, b.Zero(base_vec_ty->Type()),
+                                b.Zero(base_vec_ty->Type()))
+                        ->Result();
         } else {
-            auto* st_ele_ty = st_ty->DeepestElement();
-            uint32_t ratio = st_ele_ty->Size() / BaseEleType()->Size();
-            TINT_IR_ASSERT(ir, ratio == 1 || ratio == 2);
-            for (uint32_t i = 0; i < num_array_eles; i++) {
-                Instruction* value = b.Access(st_ele_ty, from, u32(i / ratio));
-                if (ratio == 2) {
-                    value = b.Bitcast(ty.vec2(BaseEleType()), value);
-                    uint32_t sub_idx = i % 2;
-                    value = b.Access(BaseEleType(), value, u32(sub_idx));
-                } else if (st_ele_ty != BaseEleType()) {
-                    value = b.Bitcast(BaseEleType(), value);
-                }
-                auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
-                b.Store(access, value);
-                if (i < num_array_eles - 1) {
-                    if (auto* cnst = array_idx->As<Constant>()) {
-                        array_idx = b.Constant(u32(cnst->Value()->ValueAs<uint32_t>() + 1));
-                    } else {
-                        array_idx = b.Add(array_idx, 1_u)->Result();
-                    }
-                }
-            }
+            TINT_IR_UNREACHABLE(ir);
         }
+
+        auto* access = b.Access(BaseEleTypePtr(), var, array_idx);
+        b.Store(access, value);
     }
 
     // Generate a store of `from` at `byte_idx` for the appropriate type.
@@ -1194,6 +1210,7 @@ struct State {
             auto* byte_idx = OffsetToValue(offset);
             MakeStore(s, var, s->Value(), byte_idx);
         });
+        s->Destroy();
     }
 
     // Create a store function for the given `var` and `struct` combination. Essentially creates a
