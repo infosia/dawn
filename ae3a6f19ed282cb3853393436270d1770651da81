@@ -337,6 +337,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c39d8e67_d8a0074b",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T16:00:55Z",
+      "side": 1,
+      "message": "As we discussed in the meeting, would it be possible to add a TODO to handle the residency of pinned resources? Technically there are bugs in the current version of the CL because Windows might decide to evict the resource even if WebGPU can reference it via the resource table, but let\u0027s handle that as a follow-up.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbefad35_0341cedc",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 11
