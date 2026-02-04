@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfdb91d7_c9c4d2dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T13:53:59Z",
+      "side": 1,
+      "message": "LGTM, I\u0027m really glad to see one of the buffer subclass merged in the system that uses \"storages\".",
+      "revId": "69f710f7c95317f90b1e0bed8bf146d21fd08e8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
