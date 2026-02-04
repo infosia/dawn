@@ -119,6 +119,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "74fc1c26_4f06c3ff",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:35:30Z",
+      "side": 1,
+      "message": "Yeah that\u0027s an important difference between the two.",
+      "parentUuid": "1cf6b844_500ceceb",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 30
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6a82569_5df11eda",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 11
