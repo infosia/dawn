@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea06811_91d8e8dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-04T02:52:19Z",
+      "side": 1,
+      "message": "I\u0027ve fixed the merge conflict and push the formatting change.",
+      "revId": "ba8fae78842b922af04ffa752008cc212f4115ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
