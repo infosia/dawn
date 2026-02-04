@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e95b9f48_7e7609bd",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T13:41:45Z",
+      "side": 1,
+      "message": "It\u0027s similar to the other comment: it comes from a difference between Vulkan and D3D12, where Vulkan has bound VkDescriptorSet inheritance when D3D12 invalidates the whole root signature when the any part of its layout changes.\n\nIn Vulkan we need to make sure that the root table inserted in VkDescriptor 0 correctly dirties everything between pipelines that use a resource table and those who don\u0027t and that the mechanism that I found to do that. D3D12 needs to dirty everything on pipeline layout change (like between two pipelines, one that has a resource table and one which doesn\u0027t), so individual tracking of `usesResourceTable` could be avoided.\n\nBut also as the comment mentioned, this gets tricky because `BindGroupTracker` forces a separation of logic that adds friction to doing that and in hindsight maybe we shouldn\u0027t have shoehorned all backends to use `BindGroupTracker`.",
+      "parentUuid": "4de7ca14_646db94c",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d993a68_ed73a827",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 11
