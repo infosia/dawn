@@ -137,6 +137,10 @@ const spirv::type::Image* ImageFromTexture(core::type::Manager& ty,
         },
         TINT_ICE_ON_NO_MATCH);
 
+    if (sample_ty->DeepestElement()->Is<core::type::F16>()) {
+        sample_ty = ty.MatchWidth(ty.f32(), sample_ty);
+    }
+
     return ty.Get<type::Image>(sample_ty, dim, depth, arrayed, ms, sampled, fmt, access);
 }
 
@@ -982,6 +986,15 @@ struct State {
         core::ir::Instruction* result =
             b.Call<spirv::ir::BuiltinCall>(result_ty, kind, std::move(builtin_args));
         result->InsertBefore(builtin);
+
+        // If we expecting an f16 result, change it to f32 then add a RelaxedPrecision decoration
+        // and convert it back to f16.
+        if (result_ty->DeepestElement()->Is<core::type::F16>()) {
+            result->Result()->SetType(ty.vec4f());
+            result = b.Call<spirv::ir::BuiltinCall>(ty.vec4h(), spirv::BuiltinFn::kRelaxedConvert,
+                                                    result);
+            result->InsertBefore(builtin);
+        }
 
         // If we are expecting a scalar result, extract the first component.
         if (expects_scalar_result) {

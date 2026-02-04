@@ -69,6 +69,7 @@ enum class BuiltinFn : uint8_t {
     kDot,
     kImageDrefGather,
     kImageFetch,
+    kRelaxedConvert,
     kImageGather,
     kImageQuerySize,
     kImageQuerySizeLod,

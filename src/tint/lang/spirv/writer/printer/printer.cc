@@ -1760,6 +1760,14 @@ class Printer {
             case BuiltinFn::kSConvert:
                 op = spv::Op::OpSConvert;
                 break;
+            case BuiltinFn::kRelaxedConvert:
+                module_.PushAnnot(spv::Op::OpDecorate,
+                                  {
+                                      Value(builtin->Args()[0]),
+                                      U32Operand(SpvDecorationRelaxedPrecision),
+                                  });
+                op = spv::Op::OpFConvert;
+                break;
             case spirv::BuiltinFn::kNone:
                 TINT_IR_ICE(ir_) << "undefined spirv ir function";
         }
