@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c5102ed_b2ef5d04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T12:26:57Z",
+      "side": 1,
+      "message": "LGTM, this and the next CL are really nice cleanups, thank you for pushing it!",
+      "revId": "13f6682d73e7f804fdd6ac7fd7a14b1d39dbc2d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10143a10_0b858d65",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T12:26:57Z",
+      "side": 1,
+      "message": "This sentence encodes the \"history\" of the code which is better in a commit message (and this CL\u0027s commit message does a good job at that). Can we instead describe the current logic of the code?",
+      "revId": "13f6682d73e7f804fdd6ac7fd7a14b1d39dbc2d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
