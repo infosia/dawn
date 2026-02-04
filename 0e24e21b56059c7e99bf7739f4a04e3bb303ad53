@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "0e24e21b56059c7e99bf7739f4a04e3bb303ad53",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2baa6ab7_b0ee0ecb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-04T16:59:58Z",
+      "side": 1,
+      "message": "I noticed this failure on the new builder:\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-sws-msvc-cmake-rel/7/overview\nProbably some problem with GoB, since https://ci.chromium.org/ui/p/dawn/builders/ci/cmake-win-msvc-rel-x64/b8690807455196641073/overview failed similarly.\n\nGardener, FYI.",
+      "revId": "0e24e21b56059c7e99bf7739f4a04e3bb303ad53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
