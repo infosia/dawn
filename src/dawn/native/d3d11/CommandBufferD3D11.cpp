@@ -438,10 +438,10 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
 
                 DAWN_TRY(buffer->EnsureDataInitializedAsDestination(commandContext, copy));
 
+                uint8_t* mappedData = scopedDstMap.GetMappedData();
                 Texture::ReadCallback callback = [&](const uint8_t* data, uint64_t offset,
                                                      uint64_t size) -> MaybeError {
-                    DAWN_TRY(ToBackend(dst.buffer)
-                                 ->Write(commandContext, dst.offset + offset, data, size));
+                    memcpy(mappedData + dst.offset + offset, data, size);
                     return {};
                 };
 
