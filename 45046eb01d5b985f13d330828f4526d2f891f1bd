@@ -20,6 +20,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d04986cc_d59045a6",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:34:50Z",
+      "side": 1,
+      "message": "Instead of having default values for all three here, can we set them in DeviceNull.cpp instead? It\u0027s only used for the null backend.",
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1f6b47f_69b2ea08",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:34:50Z",
+      "side": 1,
+      "message": "```suggestion\n                        \"The total number of workgroup invocations (%u) exceeds the product of\"\n                        \"maxComputeWorkgroupSubgroups and the subgroup_size attribute (%u * %u \u003d %u).\",\n                        numInvocations, maxComputeWorkgroupSubgroups, explicitSubgroupSize, numInvocations);\n    }\n```",
+      "range": {
+        "startLine": 1412,
+        "startChar": 1,
+        "endLine": 1415,
+        "endChar": 0
+      },
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e684f913_017b98d9",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 2
@@ -49,6 +89,24 @@
       "side": 1,
       "message": "Then we have to reduce `maxWorkgroupSize` on Vulkan backends. For example, on Intel Gen12_LP:\n\nmaxComputeWorkGroupInvocations \u003d 1024\nminSubgroupSize \u003d 8\nmaxSubgroupSize \u003d 32\nmaxComputeWorkgroupSubgroups \u003d 56\n\nSo when mMinExplicitComputeSubgroupSize  \u003d 8,\nmaxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize \u003d 448 \u003c 1024\n\nWhen mMinExplicitComputeSubgroupSize  \u003d 16\nmaxComputeWorkgroupSubgroups * mMinExplicitComputeSubgroupSize \u003d 896 \u003c 1024",
       "parentUuid": "e684f913_017b98d9",
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dae3360_0918f8e6",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-04T10:34:50Z",
+      "side": 1,
+      "message": "Ack, I was really hoping that we wouldn\u0027t have to expose yet another limit :(",
+      "parentUuid": "34b74ee2_6649fe13",
       "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
