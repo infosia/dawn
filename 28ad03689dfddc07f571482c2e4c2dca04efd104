@@ -16,6 +16,40 @@
       "message": "Can you vibe check this",
       "revId": "28ad03689dfddc07f571482c2e4c2dca04efd104",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34defb87_c09208f7",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-04T01:42:01Z",
+      "side": 1,
+      "message": "Is the lack of space a function of the current tooling? I\u0027m guessing spaces will end up in these as that\u0027s how folks will natually type things, so can we make it more user friendly?",
+      "revId": "28ad03689dfddc07f571482c2e4c2dca04efd104",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db647c35_a35039c0",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-04T01:42:01Z",
+      "side": 1,
+      "message": "```suggestion\n#          Critical - A significant error that could impact users and needs investigation\n```\n\nIsn\u0027t every non-tag\u0027d item in the list, essentially, `Critical` since any/all of them could be user impacting and they all need investigation?",
+      "revId": "28ad03689dfddc07f571482c2e4c2dca04efd104",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
