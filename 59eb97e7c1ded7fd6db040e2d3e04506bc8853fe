@@ -33,6 +33,24 @@
       "message": "Can we leave the checks in place and comment out the `EnableFeature()` along with the above comment so that it\u0027s clear and trivial how to re-enable again?",
       "revId": "59eb97e7c1ded7fd6db040e2d3e04506bc8853fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d63bd335_d925e332",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-04T18:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0e5d06_a813663a",
+      "revId": "59eb97e7c1ded7fd6db040e2d3e04506bc8853fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
