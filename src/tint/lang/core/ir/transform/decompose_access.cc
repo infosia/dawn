@@ -222,10 +222,10 @@ struct State {
             type,  //
             [&](const type::Scalar* scalar) { return scalar->Size(); },
             [&](const type::Vector* vector) {
-                if (vector->Width() == 3) {
-                    return vector->Type()->Size();
-                }
-                return type->Size();
+                // Always return the element type size, not the vector size.
+                // This ensures that mixed types like struct { u32, mat3x4<f16> }
+                // correctly pick u16 as the base type (for the f16 elements).
+                return vector->Type()->Size();
             },
             [&](const type::Matrix* matrix) { return SmallestElementSize(matrix->ColumnType()); },
             [&](const type::Array* array) { return SmallestElementSize(array->ElemType()); },
@@ -351,14 +351,14 @@ struct State {
     // correct vector array element in the underlying variable.
     core::ir::Value* CalculateVectorOffset(core::ir::Value* byte_idx, const type::Vector* src_ty) {
         if (auto* byte_cnst = byte_idx->As<core::ir::Constant>()) {
-            return b.Value(
-                u32((byte_cnst->Value()->ValueAs<uint32_t>() % src_ty->Size()) / src_ty->Width()));
+            return b.Value(u32((byte_cnst->Value()->ValueAs<uint32_t>() % src_ty->Size()) /
+                               src_ty->Type()->Size()));
         }
         // Note: Using bitwise-and and shift instead of modulo and divide here was necessary to
         // avoid an FXC miscompile. See https://crbug.com/454366353.
         return b
             .ShiftRight(b.And(byte_idx, b.Constant(u32(src_ty->Size() - 1))),
-                        u32(log2(src_ty->Width())))
+                        u32(log2(src_ty->Type()->Size())))
             ->Result();
     }
 
