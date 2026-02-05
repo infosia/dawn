@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361374fe_6a8d96f0",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-05T14:54:54Z",
+      "side": 1,
+      "message": "This seems the wrong place to do this. `SmallestAccessSize` is supposed to find if there are element accesses to the vector. In the test you added, the whole matrix is loaded, why would it be wrong to load a larger type?",
+      "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
