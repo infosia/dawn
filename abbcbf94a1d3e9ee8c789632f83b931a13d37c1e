@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b47e1f0f_3b48a298",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-05T22:35:48Z",
+      "side": 1,
+      "message": "In particular, the reason I\u0027m asking is that the barrier you have after unresolve says \"`dstAccessMask \u003d VK_ACCESS_INPUT_ATTACHMENT_READ_BIT`\", but if framebuffer fetch doesn\u0027t exist, that could have been `VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT`. And if it does exist, then you needed DRLR all along.",
+      "parentUuid": "203f7239_e2e78329",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb83c38b_625bfb18",
