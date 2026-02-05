@@ -28,6 +28,7 @@
 #include "src/tint/lang/wgsl/resolver/resolver.h"
 
 #include <algorithm>
+#include <iostream>
 #include <limits>
 #include <string_view>
 #include <utility>
@@ -2452,6 +2453,18 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             }
             break;
         }
+        case wgsl::BuiltinFn::kGetResource: {
+            if (!validator_.GetResource(call)) {
+                return nullptr;
+            }
+            break;
+        }
+        case wgsl::BuiltinFn::kHasResource: {
+            if (!validator_.HasResource(call)) {
+                return nullptr;
+            }
+            break;
+        }
 
         default:
             break;
@@ -3039,23 +3052,20 @@ const core::type::SampledTexture* Resolver::SampledTexture(const ast::Identifier
     if (DAWN_UNLIKELY(!ty_expr)) {
         return nullptr;
     }
-
+    printf("Setting filterable\n");
     core::TextureFilterable filterable = core::TextureFilterable::kUndefined;
     if (tmpl_ident->arguments.Length() > 1) {
         filterable = sem_.GetTextureFilterable(tmpl_ident->arguments[1]);
         if (DAWN_UNLIKELY(filterable == core::TextureFilterable::kUndefined)) {
             return nullptr;
         }
-
-        if (!ty_expr->IsAnyOf<core::type::F32, core::type::F16>()) {
-            AddError(tmpl_ident->arguments[1]->source)
-                << "texture filterability only applies to float textures, got '"
-                << sem_.TypeNameOf(ty_expr) << "'";
-            return nullptr;
-        }
     }
 
+    std::cout << "SET: " << filterable << "\n";
+
     auto* out = b.create<core::type::SampledTexture>(dim, ty_expr, filterable);
+    std::cout << "NEW TY: " << out->FriendlyName() << "\n";
+
     return validator_.SampledTexture(out, ident->source) ? out : nullptr;
 }
 

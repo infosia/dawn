@@ -29,9 +29,7 @@
 #define SRC_TINT_LANG_WGSL_RESOLVER_VALIDATOR_H_
 
 #include <cstdint>
-#include <set>
 #include <string>
-#include <utility>
 
 #include "src/tint/lang/core/evaluation_stage.h"
 #include "src/tint/lang/core/type/input_attachment.h"
@@ -45,7 +43,6 @@
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/diagnostic/source.h"
 #include "src/tint/utils/math/hash.h"
-#include "src/tint/utils/text/styled_text.h"
 
 // Forward declarations
 namespace tint::ast {
@@ -547,6 +544,16 @@ class Validator {
     /// @param call the builtin call to validate
     /// @returns true on success, false otherwise
     bool SubgroupShuffleFunction(wgsl::BuiltinFn fn, const sem::Call* call) const;
+
+    /// Validates a getResource call
+    /// @param call the builtin call to validate
+    /// @returns true on success, false otherwise
+    bool GetResource(const sem::Call* call) const;
+
+    /// Validates a hasResource call
+    /// @param call the builtin call to validate
+    /// @returns true on success, false otherwise
+    bool HasResource(const sem::Call* call) const;
 
     /// Validates a texture builtin function
     /// @param call the builtin call to validate

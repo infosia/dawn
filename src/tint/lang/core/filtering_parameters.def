@@ -1,0 +1,13 @@
+enum sampler_filtering {
+  filtering
+  non_filtering
+}
+
+enum texture_filterable {
+  filterable
+  unfilterable
+}
+
+match texture_filter: texture_filterable.filterable | texture_filterable.unfilterable
+match sampler_filter: sampler_filtering.filtering | sampler_filtering.non_filtering
+

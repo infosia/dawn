@@ -42,6 +42,7 @@ import "src/tint/lang/core/address_space.def"
 import "src/tint/lang/core/access.def"
 import "src/tint/lang/core/subgroup_matrix_kind.def"
 import "src/tint/lang/core/texel_format.def"
+import "src/tint/lang/core/filtering_parameters.def"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Enumerators                                                                //
@@ -93,16 +94,6 @@ enum interpolation_sampling {
   sample
   first
   either
-}
-
-enum sampler_filtering {
-  filtering
-  non_filtering
-}
-
-enum texture_filterable {
-  filterable
-  unfilterable
 }
 
 enum builtin_type {
