@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e01a95d_7ea67a88",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Removed this function, and query `UsesResourceTable` on the layout as needed.",
+      "parentUuid": "e95b9f48_7e7609bd",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d993a68_ed73a827",
@@ -159,6 +177,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe2affa_0e200612",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "As discussed offline, we\u0027ll always call `PopulateViews` on the `ResourceTable` as it does its own dirty checking in that call. If we want to do something similar to bindgroups in the future, we can certainly move this type of check into `BindGroupTrackerBase` or similar logic.",
+      "parentUuid": "74fc1c26_4f06c3ff",
+      "range": {
+        "startLine": 517,
+        "startChar": 12,
+        "endLine": 517,
+        "endChar": 30
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6a82569_5df11eda",
@@ -172,6 +214,24 @@
       "writtenOn": "2026-02-02T15:09:18Z",
       "side": 1,
       "message": "Note that the group decided that the resource table would be set per pass (sad, but needed for composability) so this and [1] might not be needed when we do the change in Dawn.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b76b83d8_de7c9cdd",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a6a82569_5df11eda",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -210,6 +270,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ee13eb2_2e4dbfa6",
+        "filename": "src/dawn/native/d3d12/ComputePipelineD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e00ecd_5fc97bc4",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb74ecf1_50db711a",
@@ -223,6 +301,24 @@
       "writtenOn": "2026-02-02T15:09:18Z",
       "side": 1,
       "message": "IMHO we could have the resource table allocate its heap directly, there are supposed to be only a few or one resource table, each very big, so it might not be worth the complexity to try to suballocate. The Vulkan backend does this as well with a `VkDescriptorPool` per resource table.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe67128_457dc80d",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Yes, this was a much better idea. I removed the view allocator I had added to Device, and am creating and managing the properly sized one in ResourceTable now.",
+      "parentUuid": "bb74ecf1_50db711a",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -244,6 +340,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ace637c_68ab0f05",
+        "filename": "src/dawn/native/d3d12/RenderPipelineD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Done in `PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl`, although I didn\u0027t find whether we normally add tests to make sure this works as expected. However, running `dawn_end2end_tests` with `--disable-features\u003duse_dxc` does the right thing and skips all the tests because `Feature::ChromiumExperimentalSamplingResourceTable` is not supported.",
+      "parentUuid": "70b4bf65_9688907c",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2931f91_089635f1",
@@ -261,6 +375,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a3524a5_5bf9bf52",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "I had two choices:\n\n1. Make OffsetInDescriptorsFromTableStart\u003d0, and have Tint emit the resource table arrays at binding (register) 1.\n\n2. Make OffsetInDescriptorsFromTableStart\u003d1, and have Tint emit the resource table arrays at binding (register) 0.\n\nI was surprised that option 1 worked, but it did so I left it. But in retrospect, I agree that it\u0027s surprising, especially since `BaseShaderRegister` is explicitly set to 0 here, so I\u0027ve updated the code to do option 2.",
+      "parentUuid": "a2931f91_089635f1",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54ac08e1_e0881db6",
@@ -274,6 +406,24 @@
       "writtenOn": "2026-02-04T15:17:20Z",
       "side": 1,
       "message": "We need to dirty `mGPUViewAllocation` here (we discussed this in the meeting).",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20941d1e_7e339a14",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "As discussed in chat, it turns out we don\u0027t need to because these allocations are already considered dirty after submit: `ShaderVisibleDescriptorAllocator::IsAllocationStillValid` returns false if the sub-alloc\u0027s serial is older than the queue\u0027s pending.\n\nWe also don\u0027t need to worry about catching this in the future if we ever change this behavior, as the current e2e tests would catch it.",
+      "parentUuid": "54ac08e1_e0881db6",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -301,6 +451,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6506dd4_9f6d76e3",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Haha, I usually get this right 😊",
+      "parentUuid": "91bea3d3_7668504b",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 27
+      },
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a07603a1_33b12be1",
@@ -314,6 +488,24 @@
       "writtenOn": "2026-02-02T15:09:18Z",
       "side": 1,
       "message": "nit: the new heap might not be larger (if we are at the max size)",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a7a91d_22169656",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07603a1_33b12be1",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -335,6 +527,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9d1100_7d3eb545",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0fce4a_704be55d",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c39d8e67_d8a0074b",
@@ -348,6 +558,24 @@
       "writtenOn": "2026-02-04T16:00:55Z",
       "side": 1,
       "message": "As we discussed in the meeting, would it be possible to add a TODO to handle the residency of pinned resources? Technically there are bugs in the current version of the CL because Windows might decide to evict the resource even if WebGPU can reference it via the resource table, but let\u0027s handle that as a follow-up.",
+      "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3788d889_7a27ccab",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-05T19:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39d8e67_d8a0074b",
       "revId": "ae3a6f19ed282cb3853393436270d1770651da81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
