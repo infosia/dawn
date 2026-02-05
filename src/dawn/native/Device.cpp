@@ -2493,6 +2493,7 @@ ResultOrError<Ref<TexelBufferViewBase>> DeviceBase::CreateTexelBufferViewImpl(
 // Other implementation details
 
 DynamicUploader* DeviceBase::GetDynamicUploader() const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     return mDynamicUploader.get();
 }
 
