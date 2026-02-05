@@ -186,7 +186,6 @@ class Buffer : public BufferBase {
   private:
     MaybeError Initialize(bool mappedAtCreation,
                           const ScopedCommandRecordingContext* commandContext);
-    MaybeError ClearInitialResource(const ScopedCommandRecordingContext* commandContext);
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     MaybeError FinalizeMapImpl(BufferState newState) override;
     void UnmapImpl(BufferState oldState, BufferState newState) override;
@@ -196,6 +195,7 @@ class Buffer : public BufferBase {
     std::optional<DeviceGuard> UseDeviceGuardForDestroy() override;
 
     MaybeError InitializeToZero(const ScopedCommandRecordingContext* commandContext);
+    MaybeError EnsurePaddingInitialized(const ScopedCommandRecordingContext* commandContext);
 
     void SetScheduledMapSerial(ExecutionSerial serial);
 
@@ -203,6 +203,8 @@ class Buffer : public BufferBase {
     const wgpu::BufferUsage mInternalMappableFlags;
     const wgpu::MapMode mAutoMapMode;
     MutexProtected<ExecutionSerial> mMapReadySerial{kMaxExecutionSerial};
+    // Track whether padding bytes have been cleared to zero.
+    bool mPaddingCleared = false;
     // Temporary storage for MapAtCreation when the lock cannot be acquired.
     std::unique_ptr<uint8_t[]> mMapAtCreationData;
 };
