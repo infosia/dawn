@@ -59,10 +59,20 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
     const Extent2D& value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
+struct TexelExtent2D;
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const TexelExtent2D& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
 
 struct Extent3D;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
     const Extent3D& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
+struct TexelExtent3D;
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const TexelExtent3D& value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
 
@@ -71,10 +81,20 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
     const Origin2D& value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
+struct TexelOrigin2D;
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const TexelOrigin2D& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
 
 struct Origin3D;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
     const Origin3D& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
+struct TexelOrigin3D;
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const TexelOrigin3D& value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
 

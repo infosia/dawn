@@ -46,6 +46,31 @@ namespace dawn::native {
 using TexelCount = dawn::TypedInteger<struct TexelCountTag, uint64_t>;
 using BlockCount = dawn::TypedInteger<struct BlockCountTag, uint64_t>;
 
+// Strong type version of Origin2D, which is always in texel space
+struct TexelOrigin2D {
+    TexelCount x{0};
+    TexelCount y{0};
+
+    // Construct from input values
+    // NOLINTNEXTLINE: allow implicit constructor
+    constexpr TexelOrigin2D(TexelCount x = TexelCount{0}, TexelCount y = TexelCount{0})
+        : x(x), y(y) {}
+
+    // Implicitly convert from Origin3D as Origin3D is always in texel space
+    // NOLINTNEXTLINE: allow implicit constructor
+    // TODO(crbug.com/424536624): Remove once dawn_platform.h uses strong types.
+    constexpr TexelOrigin2D(const Origin2D& o) : x(o.x), y(o.y) {}
+
+    // Convert to Origin3D
+    // TODO(crbug.com/424536624): Remove once strong types are used everywhere.
+    constexpr Origin2D ToOrigin2D() const {
+        return {static_cast<uint32_t>(x), static_cast<uint32_t>(y)};
+    }
+
+    // Comparison operator
+    constexpr bool operator==(const TexelOrigin2D&) const = default;
+};
+
 // Strong type version of Origin3D, which is always in texel space
 struct TexelOrigin3D {
     TexelCount x{0};
@@ -61,6 +86,7 @@ struct TexelOrigin3D {
 
     // Implicitly convert from Origin3D as Origin3D is always in texel space
     // NOLINTNEXTLINE: allow implicit constructor
+    // TODO(crbug.com/424536624): Remove once dawn_platform.h uses strong types.
     constexpr TexelOrigin3D(const Origin3D& o) : x(o.x), y(o.y), z(o.z) {}
 
     // Convert to Origin3D
@@ -88,6 +114,59 @@ struct BlockOrigin3D {
 
     // Comparison operator
     constexpr bool operator==(const BlockOrigin3D&) const = default;
+};
+
+// Strong type version of Extent2D.
+struct TexelExtent2D {
+    TexelCount width;
+    TexelCount height{1};
+
+    // Default constructor
+    constexpr TexelExtent2D() = default;
+
+    // Construct from input values
+    // NOLINTNEXTLINE: allow implicit constructor
+    constexpr TexelExtent2D(TexelCount width, TexelCount height = TexelCount{1})
+        : width(width), height(height) {}
+
+    // Implicitly convert from Extent2D as Extent2D is always in texel space
+    // NOLINTNEXTLINE: allow implicit constructor
+    // TODO(crbug.com/424536624): Remove once dawn_platform.h uses strong types.
+    constexpr TexelExtent2D(const Extent2D& e) : width(e.width), height(e.height) {}
+
+    // Convert to Extent2D
+    // TODO(crbug.com/424536624): Remove once strong types are used everywhere.
+    constexpr Extent2D ToExtent2D() const {
+        return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
+    }
+
+    // Comparison operator
+    constexpr bool operator==(const TexelExtent2D&) const = default;
+
+    // Returns true if any extent is zero
+    bool IsEmpty() const { return width == TexelCount{0} || height == TexelCount{0}; }
+
+    static TexelExtent2D MakeEmpty() { return {TexelCount(0), TexelCount(0)}; }
+};
+
+// Stores an extent in block space
+struct BlockExtent2D {
+    BlockCount width;
+    BlockCount height{1};
+
+    // Default constructor
+    constexpr BlockExtent2D() = default;
+
+    // Construct from input values
+    // NOLINTNEXTLINE: allow implicit constructor
+    constexpr BlockExtent2D(BlockCount width, BlockCount height = BlockCount{1})
+        : width(width), height(height) {}
+
+    // Comparison operator
+    constexpr bool operator==(const BlockExtent2D&) const = default;
+
+    // Returns true if any extent is zero
+    bool IsEmpty() const { return width == BlockCount{0} || height == BlockCount{0}; }
 };
 
 // Strong type version of Extent3D.

@@ -160,8 +160,10 @@ class RenderPassValidationState final : public NonMovable {
                             attachment->GetTexture()->GetSampleCount(), mSampleCount);
         }
 
-        Extent3D renderSize = attachment->GetSingleSubresourceVirtualSize();
-        Extent3D attachmentValidationSize = renderSize;
+        TexelExtent3D attachment3DSize = attachment->GetSingleSubresourceVirtualSize();
+        DAWN_ASSERT(attachment3DSize.depthOrArrayLayers == TexelCount(1));
+        TexelExtent2D renderSize = {attachment3DSize.width, attachment3DSize.height};
+        TexelExtent2D attachmentValidationSize = renderSize;
         if (attachment->GetTexture()->GetFormat().IsMultiPlanar()) {
             // For multi-planar texture, D3D requires depth stencil buffer size must be equal to the
             // size of the plane 0 for the color attachment texture (`attachmentValidationSize`).
@@ -172,9 +174,11 @@ class RenderPassValidationState final : public NonMovable {
             // https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferCreateInfo.html#VUID-VkFramebufferCreateInfo-flags-04533
             // OpenGLES3.0 (https://www.khronos.org/registry/OpenGL/specs/es/3.0/es_spec_3.0.pdf
             // section 4.4.4.2) allows attachments have unequal size.
-            attachmentValidationSize =
+            TexelExtent3D plane0Size =
                 attachment->GetTexture()->GetMipLevelSingleSubresourceVirtualSize(
                     attachment->GetBaseMipLevel(), Aspect::Plane0);
+            DAWN_ASSERT(plane0Size.depthOrArrayLayers == TexelCount(1));
+            attachmentValidationSize = {plane0Size.width, plane0Size.height};
         }
 
         if (mExpandResolveRect) {
@@ -183,46 +187,46 @@ class RenderPassValidationState final : public NonMovable {
                     static_cast<uint64_t>(mExpandResolveRect->colorOffsetX) +
                             static_cast<uint64_t>(mExpandResolveRect->width) >
                         renderSize.width,
-                    "The color's x (%u) and width (%u) of ExpandResolveRect is out of the render "
-                    "area width(%u).",
-                    mExpandResolveRect->colorOffsetX, mExpandResolveRect->width, renderSize.width);
+                    "The color's x (%u) and width (%u) of ExpandResolveRect is out of the render
+                    " " area width(% u)
+                        .", mExpandResolveRect->colorOffsetX,
+                    mExpandResolveRect->width,
+                    renderSize.width);
                 DAWN_INVALID_IF(static_cast<uint64_t>(mExpandResolveRect->colorOffsetY) +
                                         static_cast<uint64_t>(mExpandResolveRect->height) >
                                     renderSize.height,
-                                "The color's y (%u) and height (%u) of ExpandResolveRect is out of "
-                                "the render area "
-                                "height(%u).",
-                                mExpandResolveRect->colorOffsetY, mExpandResolveRect->height,
-                                renderSize.height);
+                                "The color's y (%u) and height (%u) of ExpandResolveRect is out
+                                of " " the render area " " height(% u)
+                                    .",
+                                mExpandResolveRect->colorOffsetY,
+                                mExpandResolveRect->height, renderSize.height);
             } else if (attachmentType == AttachmentType::ResolveTarget) {
                 DAWN_INVALID_IF(static_cast<uint64_t>(mExpandResolveRect->resolveOffsetX) +
                                         static_cast<uint64_t>(mExpandResolveRect->width) >
                                     renderSize.width,
-                                "The resolve's x (%u) and width (%u) of ExpandResolveRect is out "
-                                "of the resolve "
-                                "area width(%u).",
-                                mExpandResolveRect->resolveOffsetX, mExpandResolveRect->width,
-                                renderSize.width);
+                                "The resolve's x (%u) and width (%u) of ExpandResolveRect is out
+                                " " of the resolve " " area width(% u)
+                                    .",
+                                mExpandResolveRect->resolveOffsetX,
+                                mExpandResolveRect->width, renderSize.width);
                 DAWN_INVALID_IF(static_cast<uint64_t>(mExpandResolveRect->resolveOffsetY) +
                                         static_cast<uint64_t>(mExpandResolveRect->height) >
                                     renderSize.height,
-                                "The resolve's y (%u) and height (%u) of ExpandResolveRect is out "
-                                "of the resolve area "
-                                "height(%u).",
-                                mExpandResolveRect->resolveOffsetY, mExpandResolveRect->height,
-                                renderSize.height);
+                                "The resolve's y (%u) and height (%u) of ExpandResolveRect is out
+                                " " of the resolve area " " height(% u)
+                                    .",
+                                mExpandResolveRect->resolveOffsetY,
+                                mExpandResolveRect->height, renderSize.height);
             }
         }
         if (HasAttachment()) {
             switch (attachmentType) {
                 case AttachmentType::ColorAttachment:
                 case AttachmentType::StorageAttachment: {
-                    DAWN_INVALID_IF(
-                        renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
-                        "The %s %s size (width: %u, height: %u) does not match the size of the "
-                        "other attachments (width: %u, height: %u).",
-                        attachmentTypeStr, attachment, renderSize.width, renderSize.height,
-                        mRenderWidth, mRenderHeight);
+                    DAWN_INVALID_IF(renderSize != mRenderSize,
+                                    "The %s %s size %s does not match the size of the other "
+                                    "attachments %s.",
+                                    attachmentTypeStr, attachment, renderSize, mRenderSize);
                     break;
                 }
                 case AttachmentType::ResolveTarget: {
@@ -235,40 +239,31 @@ class RenderPassValidationState final : public NonMovable {
                     // RenderPassDescriptorResolveRect relaxes the requirement for the color
                     // attachment texture size to match the resolve texture size.
                     if (!mExpandResolveRect) {
-                        DAWN_INVALID_IF(
-                            renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
-                            "The resolve target %s size (width: %u, height: %u) does not match the "
-                            "size of the other attachments (width: %u, height: %u).",
-                            attachment, renderSize.width, renderSize.height, mRenderWidth,
-                            mRenderHeight);
+                        DAWN_INVALID_IF(renderSize != mRenderSize,
+                                        "The resolve target %s size %s does not match the size "
+                                        "of the other attachments %s.",
+                                        attachment, renderSize, mRenderSize);
                     }
                     break;
                 }
                 case AttachmentType::DepthStencilAttachment: {
-                    DAWN_INVALID_IF(
-                        attachmentValidationSize.width != mAttachmentValidationWidth ||
-                            attachmentValidationSize.height != mAttachmentValidationHeight,
-                        "The depth stencil attachment %s size (width: %u, height: %u) does not "
-                        "match the size of the other attachments' base plane (width: %u, height: "
-                        "%u).",
-                        attachment, attachmentValidationSize.width, attachmentValidationSize.height,
-                        mAttachmentValidationWidth, mAttachmentValidationHeight);
+                    DAWN_INVALID_IF(attachmentValidationSize != mAttachmentValidationSize,
+                                    "The depth stencil attachment %s size %s does not match the "
+                                    "size of the other attachments' base plane %s.",
+                                    attachment, attachmentValidationSize,
+                                    mAttachmentValidationSize);
                     break;
                 }
             }
         } else {
             DAWN_ASSERT(attachmentType != AttachmentType::ResolveTarget);
-            mRenderWidth = renderSize.width;
-            mRenderHeight = renderSize.height;
-            mAttachmentValidationWidth = attachmentValidationSize.width;
-            mAttachmentValidationHeight = attachmentValidationSize.height;
+            mRenderSize = renderSize;
+            mAttachmentValidationSize = attachmentValidationSize;
             if (!mMsrtssAllowed) {
                 mSampleCount = attachment->GetTexture()->GetSampleCount();
             }
-            DAWN_ASSERT(mRenderWidth != 0);
-            DAWN_ASSERT(mRenderHeight != 0);
-            DAWN_ASSERT(mAttachmentValidationWidth != 0);
-            DAWN_ASSERT(mAttachmentValidationHeight != 0);
+            DAWN_ASSERT(!mRenderSize.IsEmpty());
+            DAWN_ASSERT(!mAttachmentValidationSize.IsEmpty());
             DAWN_ASSERT(mSampleCount != 0);
         }
 
@@ -303,17 +298,15 @@ class RenderPassValidationState final : public NonMovable {
         DAWN_ASSERT(attachment);
         DAWN_ASSERT(attachment->GetLevelCount() == 1);
 
-        Extent3D renderSize = attachment->GetSingleSubresourceVirtualSize();
-        mRenderWidth = renderSize.width;
-        mRenderHeight = renderSize.height;
-        mAttachmentValidationWidth = mRenderWidth;
-        mAttachmentValidationHeight = mRenderHeight;
+        TexelExtent3D attachment3DSize = attachment->GetSingleSubresourceVirtualSize();
+        DAWN_ASSERT(attachment3DSize.depthOrArrayLayers == TexelCount(1));
+        mRenderSize = {attachment3DSize.width, attachment3DSize.height};
+        mAttachmentValidationSize = mRenderSize;
         if (!mMsrtssAllowed) {
             mSampleCount = attachment->GetTexture()->GetSampleCount();
         }
 
-        DAWN_ASSERT(mRenderWidth != 0);
-        DAWN_ASSERT(mRenderHeight != 0);
+        DAWN_ASSERT(!mRenderSize.IsEmpty());
         DAWN_ASSERT(mSampleCount != 0);
 
         RecordedAttachment record;
@@ -324,16 +317,12 @@ class RenderPassValidationState final : public NonMovable {
 
     bool HasAttachment() const { return !mRecords.empty(); }
 
-    bool IsValidState() const {
-        return ((mRenderWidth > 0) && (mRenderHeight > 0) && (mSampleCount > 0));
-    }
+    bool IsValidState() const { return (!mRenderSize.IsEmpty()) && (mSampleCount > 0); }
 
-    uint32_t GetRenderWidth() const { return mRenderWidth; }
-
-    uint32_t GetRenderHeight() const { return mRenderHeight; }
-
+    // TODO(https://issues.chromium.org/424536624): Return TexelCount instead of uint32_t.
+    uint32_t GetRenderWidth() const { return uint32_t(mRenderSize.width); }
+    uint32_t GetRenderHeight() const { return uint32_t(mRenderSize.height); }
     uint32_t GetSampleCount() const { return mSampleCount; }
-
     uint32_t IsMsrtssAllowed() const { return mMsrtssAllowed; }
 
     void SetExplicitSampleCount(uint32_t sampleCount) {
@@ -345,24 +334,41 @@ class RenderPassValidationState final : public NonMovable {
     void SetWillExpandResolveTexture(bool enabled) { mWillExpandResolveTexture = enabled; }
     void SetExpandResolveRect(
         const std::optional<RenderPassDescriptorResolveRect>& expandResolveRect) {
-        mExpandResolveRect = expandResolveRect;
+        // TODO(crbug.com/424536624): Simplify once dawn_platform.h uses strong types.
+        if (!expandResolveRect) {
+            mExpandResolveRect = std::nullopt;
+        } else {
+            TexelExpandResolveRect expand;
+            expand.colorOffset = {TexelCount(expandResolveRect->colorOffsetX),
+                                  TexelCount(expandResolveRect->colorOffsetY)};
+            expand.resolveOffset = {TexelCount(expandResolveRect->resolveOffsetX),
+                                    TexelCount(expandResolveRect->resolveOffsetY)};
+            expand.size = {TexelCount(expandResolveRect->width),
+                           TexelCount(expandResolveRect->height)};
+            mExpandResolveRect = {expand};
+        }
     }
 
   private:
     // The attachment's width, height and sample count.
-    uint32_t mRenderWidth = 0;
-    uint32_t mRenderHeight = 0;
+    TexelExtent2D mRenderSize = TexelExtent2D::MakeEmpty();
     uint32_t mSampleCount = 0;
     bool mMsrtssAllowed = false;
 
-    uint32_t mAttachmentValidationWidth = 0;
-    uint32_t mAttachmentValidationHeight = 0;
+    TexelExtent2D mAttachmentValidationSize = TexelExtent2D::MakeEmpty();
 
     // The records of the attachments that were validated in render pass.
     absl::InlinedVector<RecordedAttachment, kMaxColorAttachments> mRecords;
 
     bool mWillExpandResolveTexture = false;
-    std::optional<RenderPassDescriptorResolveRect> mExpandResolveRect;
+
+    // TODO(crbug.com/424536624): Remove once dawn_platform.h uses strong types.
+    struct TexelExpandResolveRect {
+        TexelOrigin2D colorOffset;
+        TexelOrigin2D resolveOffset;
+        TexelExtent2D size;
+    };
+    std::optional<TexelExpandResolveRect> mExpandResolveRect;
 };
 
 MaybeError ValidateB2BCopyAlignment(uint64_t dataSize, uint64_t srcOffset, uint64_t dstOffset) {
