@@ -22,6 +22,10 @@
 	path = third_party/llvm-libc/src
 	url = https://chromium.googlesource.com/external/github.com/llvm/llvm-project/libc.git
 	gclient-condition = dawn_standalone
+[submodule "third_party/llvm/src"]
+	path = third_party/llvm/src
+	url = https://chromium.googlesource.com/external/github.com/llvm/llvm-project.git
+	gclient-condition = dawn_standalone
 [submodule "third_party/libdrm/src"]
 	path = third_party/libdrm/src
 	url = https://chromium.googlesource.com/chromiumos/third_party/libdrm.git
