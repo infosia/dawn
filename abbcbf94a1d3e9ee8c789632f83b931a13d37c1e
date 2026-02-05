@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "203f7239_e2e78329",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-05T22:34:19Z",
+      "side": 1,
+      "message": "Question: Does webgpu not have a framebuffer-fetch-like functionality? DRLR would be needed for that too, if it does.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb83c38b_625bfb18",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-05T22:34:19Z",
+      "side": 1,
+      "message": "Wait, you\u0027re doing the unresolve in the same pass as the draw calls with dynamic rendering? I didn\u0027t think that was possible. Is syncval enabled and happy with this?\n\nAlso this is using input attachments that are not color attachments IIUC. I think that\u0027s supposed to work in Vulkan and is tested, but I know I didn\u0027t handle it in SwiftShader so expect failures if you run on that.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
