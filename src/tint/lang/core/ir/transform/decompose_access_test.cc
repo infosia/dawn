@@ -6463,5 +6463,268 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_DecomposeAccessTest, Workgroup_Mat3x4h_Struct_StoreVectorElement) {
+    // struct S_mat3x4h_align { x : u32, y : mat3x4<f16> }
+    // Note: mat3x4<f16> has 3 columns of vec4<f16>, each column is 8 bytes, with 8-byte alignment
+    // Struct layout: x at offset 0 (4 bytes), padding to 8-byte alignment, y at offset 8
+    auto* sb =
+        ty.Struct(mod.symbols.New("S_mat3x4h_align"), {
+                                                          {mod.symbols.New("x"), ty.u32()},
+                                                          {mod.symbols.New("y"), ty.mat3x4<f16>()},
+                                                      });
+
+    // @group(0) @binding(0) var<storage, read> in : u32;
+    auto* var_in = b.Var("in", storage, ty.u32(), core::Access::kRead);
+    var_in->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var_in);
+
+    // @group(0) @binding(1) var<storage, read_write> post_out : S_mat3x4h_align;
+    auto* var_post_out = b.Var("post_out", storage, sb, core::Access::kReadWrite);
+    var_post_out->SetBindingPoint(0, 1);
+    b.ir.root_block->Append(var_post_out);
+
+    // var<workgroup> out : S_mat3x4h_align;
+    auto* var_out = b.Var("out", workgroup, sb, core::Access::kReadWrite);
+    b.ir.root_block->Append(var_out);
+
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kCompute);
+    func->SetWorkgroupSize(b.Constant(1_u), b.Constant(1_u), b.Constant(1_u));
+    b.Append(func->Block(), [&] {
+        // out.y[0][0] = f16(in);
+        auto* in_val = b.Load(var_in);
+        auto* f16_val = b.Convert(ty.f16(), in_val);
+        // Access out.y (mat3x4<f16>), then column 0 (vec4<f16>)
+        auto* mat_ptr =
+            b.Access(ty.ptr(workgroup, ty.mat3x4<f16>(), core::Access::kReadWrite), var_out, 1_u);
+        auto* col_ptr =
+            b.Access(ty.ptr(workgroup, ty.vec4<f16>(), core::Access::kReadWrite), mat_ptr, 0_u);
+        b.StoreVectorElement(col_ptr, 0_u, f16_val);
+
+        // workgroupBarrier();
+        b.Call(ty.void_(), core::BuiltinFn::kWorkgroupBarrier);
+
+        // post_out = out;
+        auto* out_val = b.Load(var_out);
+        b.Store(var_post_out, out_val);
+
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S_mat3x4h_align = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat3x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %in:ptr<storage, u32, read> = var undef @binding_point(0, 0)
+  %post_out:ptr<storage, S_mat3x4h_align, read_write> = var undef @binding_point(0, 1)
+  %out:ptr<workgroup, S_mat3x4h_align, read_write> = var undef
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:u32 = load %in
+    %6:f16 = convert %5
+    %7:ptr<workgroup, mat3x4<f16>, read_write> = access %out, 1u
+    %8:ptr<workgroup, vec4<f16>, read_write> = access %7, 0u
+    store_vector_element %8, 0u, %6
+    %9:void = workgroupBarrier
+    %10:S_mat3x4h_align = load %out
+    store %post_out, %10
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+S_mat3x4h_align = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat3x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %in:ptr<storage, array<u32, 1>, read> = var undef @binding_point(0, 0)
+  %post_out:ptr<storage, array<u16, 16>, read_write> = var undef @binding_point(0, 1)
+  %out:ptr<workgroup, array<u16, 16>, read_write> = var undef
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:ptr<storage, u32, read> = access %in, 0u
+    %6:u32 = load %5
+    %7:f16 = convert %6
+    %8:u16 = bitcast %7
+    %9:ptr<workgroup, u16, read_write> = access %out, 4u
+    store %9, %8
+    %10:void = workgroupBarrier
+    %11:S_mat3x4h_align = call %12, 0u
+    %13:void = call %14, 0u, %11
+    ret
+  }
+}
+%14 = func(%start_byte_offset:u32, %object:S_mat3x4h_align):void {
+  $B3: {
+    %17:u32 = access %object, 0u
+    %18:u32 = div %start_byte_offset, 2u
+    %19:vec2<u16> = bitcast %17
+    %20:ptr<storage, u16, read_write> = access %post_out, %18
+    %21:u16 = access %19, 0u
+    store %20, %21
+    %22:u32 = add %18, 1u
+    %23:ptr<storage, u16, read_write> = access %post_out, %22
+    %24:u16 = access %19, 1u
+    store %23, %24
+    %25:u32 = add 8u, %start_byte_offset
+    %26:mat3x4<f16> = access %object, 1u
+    %27:void = call %28, %25, %26
+    ret
+  }
+}
+%28 = func(%start_byte_offset_1:u32, %object_1:mat3x4<f16>):void {  # %start_byte_offset_1: 'start_byte_offset', %object_1: 'object'
+  $B4: {
+    %31:vec4<f16> = access %object_1, 0u
+    %32:u32 = div %start_byte_offset_1, 2u
+    %33:f16 = access %31, 0u
+    %34:u16 = bitcast %33
+    %35:ptr<storage, u16, read_write> = access %post_out, %32
+    store %35, %34
+    %36:u32 = add %32, 1u
+    %37:f16 = access %31, 1u
+    %38:u16 = bitcast %37
+    %39:ptr<storage, u16, read_write> = access %post_out, %36
+    store %39, %38
+    %40:u32 = add %36, 1u
+    %41:f16 = access %31, 2u
+    %42:u16 = bitcast %41
+    %43:ptr<storage, u16, read_write> = access %post_out, %40
+    store %43, %42
+    %44:u32 = add %40, 1u
+    %45:f16 = access %31, 3u
+    %46:u16 = bitcast %45
+    %47:ptr<storage, u16, read_write> = access %post_out, %44
+    store %47, %46
+    %48:u32 = add 8u, %start_byte_offset_1
+    %49:vec4<f16> = access %object_1, 1u
+    %50:u32 = div %48, 2u
+    %51:f16 = access %49, 0u
+    %52:u16 = bitcast %51
+    %53:ptr<storage, u16, read_write> = access %post_out, %50
+    store %53, %52
+    %54:u32 = add %50, 1u
+    %55:f16 = access %49, 1u
+    %56:u16 = bitcast %55
+    %57:ptr<storage, u16, read_write> = access %post_out, %54
+    store %57, %56
+    %58:u32 = add %54, 1u
+    %59:f16 = access %49, 2u
+    %60:u16 = bitcast %59
+    %61:ptr<storage, u16, read_write> = access %post_out, %58
+    store %61, %60
+    %62:u32 = add %58, 1u
+    %63:f16 = access %49, 3u
+    %64:u16 = bitcast %63
+    %65:ptr<storage, u16, read_write> = access %post_out, %62
+    store %65, %64
+    %66:u32 = add 16u, %start_byte_offset_1
+    %67:vec4<f16> = access %object_1, 2u
+    %68:u32 = div %66, 2u
+    %69:f16 = access %67, 0u
+    %70:u16 = bitcast %69
+    %71:ptr<storage, u16, read_write> = access %post_out, %68
+    store %71, %70
+    %72:u32 = add %68, 1u
+    %73:f16 = access %67, 1u
+    %74:u16 = bitcast %73
+    %75:ptr<storage, u16, read_write> = access %post_out, %72
+    store %75, %74
+    %76:u32 = add %72, 1u
+    %77:f16 = access %67, 2u
+    %78:u16 = bitcast %77
+    %79:ptr<storage, u16, read_write> = access %post_out, %76
+    store %79, %78
+    %80:u32 = add %76, 1u
+    %81:f16 = access %67, 3u
+    %82:u16 = bitcast %81
+    %83:ptr<storage, u16, read_write> = access %post_out, %80
+    store %83, %82
+    ret
+  }
+}
+%12 = func(%start_byte_offset_2:u32):S_mat3x4h_align {  # %start_byte_offset_2: 'start_byte_offset'
+  $B5: {
+    %85:u32 = div %start_byte_offset_2, 2u
+    %86:ptr<workgroup, u16, read_write> = access %out, %85
+    %87:u16 = load %86
+    %88:u32 = add %85, 1u
+    %89:ptr<workgroup, u16, read_write> = access %out, %88
+    %90:u16 = load %89
+    %91:vec2<u16> = construct %87, %90
+    %92:u32 = bitcast %91
+    %93:u32 = add 8u, %start_byte_offset_2
+    %94:mat3x4<f16> = call %95, %93
+    %96:S_mat3x4h_align = construct %92, %94
+    ret %96
+  }
+}
+%95 = func(%start_byte_offset_3:u32):mat3x4<f16> {  # %start_byte_offset_3: 'start_byte_offset'
+  $B6: {
+    %98:u32 = div %start_byte_offset_3, 2u
+    %99:ptr<workgroup, u16, read_write> = access %out, %98
+    %100:u16 = load %99
+    %101:u32 = add %98, 1u
+    %102:ptr<workgroup, u16, read_write> = access %out, %101
+    %103:u16 = load %102
+    %104:u32 = add %101, 1u
+    %105:ptr<workgroup, u16, read_write> = access %out, %104
+    %106:u16 = load %105
+    %107:u32 = add %104, 1u
+    %108:ptr<workgroup, u16, read_write> = access %out, %107
+    %109:u16 = load %108
+    %110:vec4<u16> = construct %100, %103, %106, %109
+    %111:vec4<f16> = bitcast %110
+    %112:u32 = add 8u, %start_byte_offset_3
+    %113:u32 = div %112, 2u
+    %114:ptr<workgroup, u16, read_write> = access %out, %113
+    %115:u16 = load %114
+    %116:u32 = add %113, 1u
+    %117:ptr<workgroup, u16, read_write> = access %out, %116
+    %118:u16 = load %117
+    %119:u32 = add %116, 1u
+    %120:ptr<workgroup, u16, read_write> = access %out, %119
+    %121:u16 = load %120
+    %122:u32 = add %119, 1u
+    %123:ptr<workgroup, u16, read_write> = access %out, %122
+    %124:u16 = load %123
+    %125:vec4<u16> = construct %115, %118, %121, %124
+    %126:vec4<f16> = bitcast %125
+    %127:u32 = add 16u, %start_byte_offset_3
+    %128:u32 = div %127, 2u
+    %129:ptr<workgroup, u16, read_write> = access %out, %128
+    %130:u16 = load %129
+    %131:u32 = add %128, 1u
+    %132:ptr<workgroup, u16, read_write> = access %out, %131
+    %133:u16 = load %132
+    %134:u32 = add %131, 1u
+    %135:ptr<workgroup, u16, read_write> = access %out, %134
+    %136:u16 = load %135
+    %137:u32 = add %134, 1u
+    %138:ptr<workgroup, u16, read_write> = access %out, %137
+    %139:u16 = load %138
+    %140:vec4<u16> = construct %130, %133, %136, %139
+    %141:vec4<f16> = bitcast %140
+    %142:mat3x4<f16> = construct %111, %126, %141
+    ret %142
+  }
+}
+)";
+
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    DecomposeAccessOptions options{.storage = true, .workgroup = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform
