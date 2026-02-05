@@ -31,7 +31,7 @@ project(webgpu VERSION 1.1.0 LANGUAGES CXX)
 cmake_minimum_required(VERSION 3.22.1)
 
 # Hide non-public symbols; set before dawn subdirectory is imported.
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET default)
 
 set(DAWN_BUILD_MONOLITHIC_LIBRARY STATIC)
 
@@ -60,15 +60,34 @@ target_sources(webgpu_c_bundled PRIVATE
 )
 
 target_include_directories(webgpu_c_bundled PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(webgpu_c_bundled PRIVATE android webgpu_dawn dawn_common dawn_internal_config)
+target_link_libraries(webgpu_c_bundled PRIVATE
+    android
+    "-Wl,--whole-archive"
+    webgpu_dawn
+    "-Wl,--no-whole-archive"
+    dawn_common
+    dawn_internal_config
+)
 
-# Copy headers for webgpu_c_bundled over.
-add_custom_command(DEPENDS dawncpp_headers POST_BUILD
-                   OUTPUT ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h
-                   COMMAND rm -r "${CMAKE_SOURCE_DIR}/gen" || echo
-                   COMMAND ${CMAKE_COMMAND} -E copy
-                           ${CMAKE_CURRENT_BINARY_DIR}/dawn/gen/include/dawn/webgpu.h
-                           ${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h)
+# 1. Define a new target specifically for the copy operation
+add_custom_target(sync_webgpu_headers
+    # Clean old directory
+    COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_SOURCE_DIR}/gen"
+    # Re-create structure
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/gen/include/dawn"
+    # Copy the file
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_BINARY_DIR}/dawn/gen/include/dawn/webgpu.h"
+            "${CMAKE_SOURCE_DIR}/gen/include/dawn/webgpu.h"
+)
+
+# 2. Create the dependency chain
+# This ensures 'sync_webgpu_headers' waits for 'dawncpp_headers' to finish first
+add_dependencies(sync_webgpu_headers dawncpp_headers)
+
+# 3. Ensure your main library waits for the sync to finish
+# This guarantees the headers are in place before 'webgpu_c_bundled' is considered "done"
+add_dependencies(webgpu_c_bundled sync_webgpu_headers)
 
 # Add unit test build configuration
 # To run use the following command:
