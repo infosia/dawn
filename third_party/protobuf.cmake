@@ -53,6 +53,30 @@ if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR
           -Wno-shadow)
 endif()
 
+if (DAWN_USE_BUILT_STDLIB)
+  # Protoc needs to link against the built stdlib, but since it's a host tool
+  # and we might be cross-compiling, we need to be careful.
+  # However, if we are building the stdlib, we generally want everything to use it.
+  # The issue reported is that protoc-gen-upb needs cxx_static.
+  # We can try to link the imported targets we created.
+  if(TARGET protoc)
+    target_link_libraries(protoc $<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+  endif()
+  if(TARGET libprotoc)
+    target_link_libraries(libprotoc PUBLIC $<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+  endif()
+  if(TARGET libprotobuf)
+    target_link_libraries(libprotobuf PUBLIC $<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+  endif()
+  if(TARGET libprotobuf-lite)
+    target_link_libraries(libprotobuf-lite PUBLIC $<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+  endif()
+  # Also handle upb targets if they exist and are causing issues
+  if(TARGET protoc-gen-upb)
+    target_link_libraries(protoc-gen-upb $<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+  endif()
+endif()
+
 # A simplified version of protobuf_generate()
 function(generate_protos)
   set(OPTIONS APPEND_PATH)

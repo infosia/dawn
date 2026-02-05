@@ -132,6 +132,12 @@ deps = {
     'condition': 'dawn_standalone',
   },
 
+  # Required to build libc++ with CMake
+  'third_party/llvm/src': {
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project.git@152234e9fffb5a9a0a8650ab5c0f31247874510c',
+    'condition': 'dawn_standalone',
+  },
+
   # Required by //build on Linux
   'third_party/libdrm/src': {
     'url': '{chromium_git}/chromiumos/third_party/libdrm.git@369990d9660a387f618d0eedc341eb285016243b',

@@ -201,6 +201,76 @@ set_if_not_defined(DAWN_VULKAN_LOADER_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-loader
 set_if_not_defined(DAWN_VULKAN_UTILITY_LIBRARIES_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-utility-libraries/src" "Directory in which to find Vulkan-Utility-Libraries")
 set_if_not_defined(DAWN_WEBGPU_HEADERS_DIR "${DAWN_THIRD_PARTY_DIR}/webgpu-headers/src" "Directory in which to find webgpu headers")
 
+option(DAWN_USE_BUILT_STDLIB "Build and use local C++ standard library" OFF)
+
+if (DAWN_USE_BUILT_STDLIB)
+    message(STATUS "Configuring built-in C++ standard library")
+
+    # Create a synthetic source tree for the runtimes build
+    set(DAWN_STDLIB_SOURCE_DIR "${CMAKE_BINARY_DIR}/stdlib-source")
+    file(MAKE_DIRECTORY "${DAWN_STDLIB_SOURCE_DIR}")
+
+    function(create_symlink_if_missing source target)
+        if (NOT EXISTS "${target}")
+            file(CREATE_LINK "${source}" "${target}" SYMBOLIC)
+        endif()
+    endfunction()
+
+    # Symlink necessary parts of LLVM
+    create_symlink_if_missing("${DAWN_THIRD_PARTY_DIR}/llvm/src/cmake" "${DAWN_STDLIB_SOURCE_DIR}/cmake")
+    create_symlink_if_missing("${DAWN_THIRD_PARTY_DIR}/llvm/src/llvm" "${DAWN_STDLIB_SOURCE_DIR}/llvm")
+    create_symlink_if_missing("${DAWN_THIRD_PARTY_DIR}/llvm/src/third-party" "${DAWN_STDLIB_SOURCE_DIR}/third-party")
+
+    # Copy runtimes to ensure relative paths work correctly (CMAKE_CURRENT_SOURCE_DIR)
+    if (NOT EXISTS "${DAWN_STDLIB_SOURCE_DIR}/runtimes")
+        file(COPY "${DAWN_THIRD_PARTY_DIR}/llvm/src/runtimes" DESTINATION "${DAWN_STDLIB_SOURCE_DIR}")
+    endif()
+
+    # Copy libc++ and libc++abi sources to the expected locations
+    if (NOT EXISTS "${DAWN_STDLIB_SOURCE_DIR}/libcxx")
+        file(MAKE_DIRECTORY "${DAWN_STDLIB_SOURCE_DIR}/libcxx")
+        file(GLOB LIBCXX_SOURCES "${DAWN_THIRD_PARTY_DIR}/libc++/src/*")
+        file(COPY ${LIBCXX_SOURCES} DESTINATION "${DAWN_STDLIB_SOURCE_DIR}/libcxx")
+    endif()
+
+    if (NOT EXISTS "${DAWN_STDLIB_SOURCE_DIR}/libcxxabi")
+        file(MAKE_DIRECTORY "${DAWN_STDLIB_SOURCE_DIR}/libcxxabi")
+        file(GLOB LIBCXXABI_SOURCES "${DAWN_THIRD_PARTY_DIR}/libc++abi/src/*")
+        file(COPY ${LIBCXXABI_SOURCES} DESTINATION "${DAWN_STDLIB_SOURCE_DIR}/libcxxabi")
+    endif()
+
+    # Configure the runtimes build
+    set(LLVM_ENABLE_RUNTIMES "libcxx;libcxxabi" CACHE STRING "" FORCE)
+    set(LLVM_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
+    set(LLVM_INCLUDE_DOCS OFF CACHE BOOL "" FORCE)
+    set(LLVM_ENABLE_PER_TARGET_RUNTIME_DIR OFF CACHE BOOL "" FORCE)
+
+    set(LIBCXX_INCLUDE_BENCHMARKS OFF CACHE BOOL "" FORCE)
+    set(LIBCXX_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
+    set(LIBCXX_ENABLE_SHARED OFF CACHE BOOL "" FORCE)
+    set(LIBCXX_ENABLE_STATIC ON CACHE BOOL "" FORCE)
+    set(LIBCXX_CXX_ABI "libcxxabi" CACHE STRING "" FORCE)
+
+    set(LIBCXXABI_INCLUDE_TESTS OFF CACHE BOOL "" FORCE)
+    set(LIBCXXABI_ENABLE_SHARED OFF CACHE BOOL "" FORCE)
+    set(LIBCXXABI_ENABLE_STATIC ON CACHE BOOL "" FORCE)
+    set(LIBCXXABI_USE_LLVM_UNWINDER OFF CACHE BOOL "" FORCE)
+
+    # Add the runtimes build
+    add_subdirectory("${DAWN_STDLIB_SOURCE_DIR}/runtimes" "${CMAKE_BINARY_DIR}/stdlib-build")
+
+    # Configure the rest of the project to use the built stdlib
+    set(DAWN_STDLIB_INCLUDE_DIR "${CMAKE_BINARY_DIR}/stdlib-build/include/c++/v1")
+
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-nostdinc++>)
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-isystem${DAWN_STDLIB_INCLUDE_DIR}>)
+
+    add_link_options($<$<COMPILE_LANGUAGE:CXX>:-nostdlib++>)
+
+    # Link against the built stdlib, but wrap in BUILD_INTERFACE to avoid exporting these targets
+    # which would cause CMake export errors since cxx_static/cxxabi_static are not exported.
+    link_libraries($<BUILD_INTERFACE:cxx_static> $<BUILD_INTERFACE:cxxabi_static>)
+endif()
 
 # Handling of the type of monolithic library to build, if any.
 set(DAWN_BUILD_MONOLITHIC_LIBRARY "STATIC" CACHE STRING "Build monolithic library: SHARED, STATIC, or OFF.")
