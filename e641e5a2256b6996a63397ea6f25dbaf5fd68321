@@ -16,6 +16,29 @@
       "message": "I realized this was a potential problem when debugging for https://dawn-review.googlesource.com/c/dawn/+/287995. Skia would never call MapAsync() on a buffer it has started to destroy on a different so it probably can\u0027t happen with current multi-threaded dawn usage so it\u0027s unlikely to occur.",
       "revId": "e641e5a2256b6996a63397ea6f25dbaf5fd68321",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe7e156c_f772a88e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-05T21:54:30Z",
+      "side": 1,
+      "message": "nit. another thread",
+      "range": {
+        "startLine": 478,
+        "startChar": 60,
+        "endLine": 478,
+        "endChar": 63
+      },
+      "revId": "e641e5a2256b6996a63397ea6f25dbaf5fd68321",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
