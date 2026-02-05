@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecfdcb89_89590510",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-02-05T07:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04986cc_d59045a6",
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1f6b47f_69b2ea08",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-02-04T10:34:50Z",
       "side": 1,
       "message": "```suggestion\n                        \"The total number of workgroup invocations (%u) exceeds the product of\"\n                        \"maxComputeWorkgroupSubgroups and the subgroup_size attribute (%u * %u \u003d %u).\",\n                        numInvocations, maxComputeWorkgroupSubgroups, explicitSubgroupSize, numInvocations);\n    }\n```",
+      "range": {
+        "startLine": 1412,
+        "startChar": 1,
+        "endLine": 1415,
+        "endChar": 0
+      },
+      "revId": "45046eb01d5b985f13d330828f4526d2f891f1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9768b8f_6e6cb9a5",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-02-05T07:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1f6b47f_69b2ea08",
       "range": {
         "startLine": 1412,
         "startChar": 1,
