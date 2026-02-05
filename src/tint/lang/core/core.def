@@ -70,6 +70,7 @@ enum builtin_value {
   primitive_index
   @internal __point_size
   @internal __cull_distance
+  @internal __thread_index_in_quadgroup
 }
 
 // https://github.com/gpuweb/gpuweb/blob/main/proposals/fragment-depth.md

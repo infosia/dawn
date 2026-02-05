@@ -389,6 +389,8 @@ class Printer {
                 return SpvBuiltInBaryCoordKHR;
             case core::BuiltinValue::kUndefined:
                 return SpvBuiltInMax;
+            case core::BuiltinValue::kThreadIndexInQuadgroup:
+                TINT_ICE() << "internal builtin only used by msl backend";
         }
         return SpvBuiltInMax;
     }
