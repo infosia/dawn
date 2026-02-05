@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d2b80d_3fd9b66a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-05T20:39:49Z",
+      "side": 1,
+      "message": "Unsure about the approach here, but I think it\u0027s at the right spot to start getting feedback. High level things to look at:\n\n - This is using dynamic_rendering_local_read, but it\u0027s possible that\u0027s not necessary?\n - Corentin has theorized that if the attachments are in VK_IMAGE_LAYOUT_GENERAL we may not need to use DRLR, but I have not tried or validated it here.\n - The CL currently uses VK_IMAGE_LAYOUT_GENERAL for expand resolve targets, but https://docs.vulkan.org/features/latest/features/proposals/VK_KHR_dynamic_rendering_local_read.html#_dynamic_rendering_self_dependencies indicates that VK_IMAGE_LAYOUT_RENDERING_LOCAL_READ_KHR could be used (but only for dynamic rendering?) Unsure about how much difference that makes.\n - If avoiding VK_IMAGE_LAYOUT_GENERAL is desirable we\u0027ll want to start plumbing toggle state through to several utility functions so we can switch on whether or not we\u0027re using Dynamic Rendering.\n - Might also be able to use MSRTSS to implement this but only if use of transient textures is guaranteed for the attachment. That doesn\u0027t seem to be guaranteed by the DawnLoadResolveTexture feature.\n\nIt should also be noted that using Dynamic Rendering is gated by the presence of DRLR in this CL, but we really should be able to use it any time the DawnLoadResolveTexture feature isn\u0027t being used as well. That would require the toggle to be flipped at device creation after features have been evaluated though, while we\u0027re also using whether or not Dynamic Rendering is in use as a factor in deciding whether or not the adapter advertises the MSRTSS feature, so it\u0027s in an odd spot.",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
