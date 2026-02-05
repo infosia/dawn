@@ -321,6 +321,110 @@ MaybeError InitializeTexture(const ReplayImpl& replay,
     return {};
 }
 
+#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID(NAME) schema::BindGroupLayoutEntryType##NAME,
+#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE(...)                  \
+    DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO(                \
+        __VA_ARGS__, DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID, \
+        DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID)(__VA_ARGS__)
+
+using BindGroupLayoutEntryVariant = std::variant<DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES(
+    DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE) std::monostate>;
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID
+
+#define DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_VALID(NAME)    \
+    case schema::BindGroupLayoutEntryType::NAME: {                  \
+        schema::BindGroupLayoutEntryType##NAME data;                \
+        data.variantType = type;                                    \
+        DAWN_TRY(Deserialize(readHead, &data.binding, &data.data)); \
+        *out = std::move(data);                                     \
+        return {};                                                  \
+    }
+#define DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE(...)                  \
+    DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_GET_MACRO(                     \
+        __VA_ARGS__, DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_INVALID, \
+        DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_VALID)(__VA_ARGS__)
+
+MaybeError Deserialize(ReadHead& readHead, BindGroupLayoutEntryVariant* out) {
+    schema::BindGroupLayoutEntryType type;
+    DAWN_TRY(Deserialize(readHead, &type));
+    switch (type) {
+        DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES(DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("unhandled bind group layout entry type");
+    }
+}
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_GET_MACRO
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_INVALID
+#undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_VALID
+
+struct BindGroupLayoutEntryVisitor {
+    wgpu::BindGroupLayoutEntry& entry;
+    wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout;
+
+    template <typename T>
+    MaybeError operator()(const T& data) {
+        entry.binding = data.binding.binding;
+        entry.visibility = data.binding.visibility;
+        entry.bindingArraySize = data.binding.bindingArraySize;
+        return FillEntry(data.data);
+    }
+
+    MaybeError operator()(const std::monostate&) {
+        return DAWN_INTERNAL_ERROR("invalid bind group layout entry");
+    }
+
+  private:
+    MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeBufferBindingData& data) {
+        entry.buffer = {
+            .type = data.type,
+            .hasDynamicOffset = data.hasDynamicOffset,
+            .minBindingSize = data.minBindingSize,
+        };
+        return {};
+    }
+
+    MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeSamplerBindingData& data) {
+        entry.sampler = {.type = data.type};
+        return {};
+    }
+
+    MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeStorageTextureBindingData& data) {
+        entry.storageTexture = {
+            .access = data.access,
+            .format = data.format,
+            .viewDimension = data.viewDimension,
+        };
+        return {};
+    }
+
+    MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeTextureBindingData& data) {
+        entry.texture = {
+            .sampleType = data.sampleType,
+            .viewDimension = data.viewDimension,
+            .multisampled = data.multisampled,
+        };
+        return {};
+    }
+
+    MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeExternalTextureBindingData& data) {
+        entry.nextInChain = &externalTextureBindingLayout;
+        return {};
+    }
+
+    template <typename T>
+    MaybeError FillEntry(const T&) {
+        return {};
+    }
+};
+
 ResultOrError<wgpu::BindGroup> CreateBindGroup(const ReplayImpl& replay,
                                                wgpu::Device device,
                                                ReadHead& readHead,
@@ -428,93 +532,13 @@ ResultOrError<wgpu::BindGroupLayout> CreateBindGroupLayout(const ReplayImpl& rep
     wgpu::ExternalTextureBindingLayout externalTextureBindingLayout;
 
     for (uint32_t i = 0; i < bgl.numEntries; ++i) {
-        schema::BindGroupLayoutEntryType entryType;
-        schema::BindGroupLayoutBinding binding;
-        DAWN_TRY(Deserialize(readHead, &entryType));
-        DAWN_TRY(Deserialize(readHead, &binding));
+        BindGroupLayoutEntryVariant entryVariant;
+        DAWN_TRY(Deserialize(readHead, &entryVariant));
 
-        switch (entryType) {
-            case schema::BindGroupLayoutEntryType::BufferBinding: {
-                schema::BindGroupLayoutEntryTypeBufferBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                entries.push_back({
-                    .binding = binding.binding,
-                    .visibility = binding.visibility,
-                    .bindingArraySize = binding.bindingArraySize,
-                    .buffer =
-                        {
-                            .type = data.type,
-                            .hasDynamicOffset = data.hasDynamicOffset,
-                            .minBindingSize = data.minBindingSize,
-                        },
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::SamplerBinding: {
-                schema::BindGroupLayoutEntryTypeSamplerBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                entries.push_back({
-                    .binding = binding.binding,
-                    .visibility = binding.visibility,
-                    .bindingArraySize = binding.bindingArraySize,
-                    .sampler =
-                        {
-                            .type = data.type,
-                        },
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::StorageTextureBinding: {
-                schema::BindGroupLayoutEntryTypeStorageTextureBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                entries.push_back({
-                    .binding = binding.binding,
-                    .visibility = binding.visibility,
-                    .bindingArraySize = binding.bindingArraySize,
-                    .storageTexture =
-                        {
-                            .access = data.access,
-                            .format = data.format,
-                            .viewDimension = data.viewDimension,
-                        },
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::TextureBinding: {
-                schema::BindGroupLayoutEntryTypeTextureBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                entries.push_back({
-                    .binding = binding.binding,
-                    .visibility = binding.visibility,
-                    .bindingArraySize = binding.bindingArraySize,
-                    .texture =
-                        {
-                            .sampleType = data.sampleType,
-                            .viewDimension = data.viewDimension,
-                            .multisampled = data.multisampled,
-                        },
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::ExternalTextureBinding: {
-                schema::BindGroupLayoutEntryTypeExternalTextureBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                entries.push_back({
-                    .nextInChain = &externalTextureBindingLayout,
-                    .binding = binding.binding,
-                    .visibility = binding.visibility,
-                    .bindingArraySize = binding.bindingArraySize,
-                });
-                break;
-            }
-            default:
-                return DAWN_INTERNAL_ERROR("unhandled bind group layout entry type");
-        }
+        wgpu::BindGroupLayoutEntry entry;
+        DAWN_TRY(std::visit(BindGroupLayoutEntryVisitor{entry, externalTextureBindingLayout},
+                            entryVariant));
+        entries.push_back(entry);
     }
 
     wgpu::BindGroupLayoutDescriptor desc{
