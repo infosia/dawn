@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e9f6a80_9c0bea73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-05T13:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad5b530_16912523",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ff3d3c0_c94a7fb9",
@@ -138,6 +156,24 @@
       "writtenOn": "2026-02-03T14:18:14Z",
       "side": 1,
       "message": "Since this is not persistent mapping, we should still require the application to call `Buffer::Unmap` before using a buffer in a submit (and that seems to be the case in this CL). What happens is that in a previous CL we made the call to D3D11\u0027s Unmap function deferred until TrackUsage to avoid taking the recording context lock in UnmapImpl.",
+      "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98e4934b_7ec0c035",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-05T13:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff3d3c0_c94a7fb9",
       "revId": "a335988ca841282f1e2ad9882553e5cee907d5f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
