@@ -6463,5 +6463,131 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_DecomposeAccessTest, Workgroup_MixedU32AndMatF16_UsesU16BaseType) {
+    auto* sb = ty.Struct(mod.symbols.New("SB"), {
+                                                    {mod.symbols.New("x"), ty.u32()},
+                                                    {mod.symbols.New("y"), ty.mat3x4<f16>()},
+                                                });
+
+    auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        // Load entire struct
+        b.Load(var);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+SB = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat3x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %v:ptr<workgroup, SB, read_write> = var undef
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:SB = load %v
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+SB = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat3x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %v:ptr<workgroup, array<u16, 16>, read_write> = var undef
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:SB = call %4, 0u
+    ret
+  }
+}
+%4 = func(%start_byte_offset:u32):SB {
+  $B3: {
+    %6:u32 = div %start_byte_offset, 2u
+    %7:ptr<workgroup, u16, read_write> = access %v, %6
+    %8:u16 = load %7
+    %9:u32 = add %6, 1u
+    %10:ptr<workgroup, u16, read_write> = access %v, %9
+    %11:u16 = load %10
+    %12:vec2<u16> = construct %8, %11
+    %13:u32 = bitcast %12
+    %14:u32 = add 8u, %start_byte_offset
+    %15:mat3x4<f16> = call %16, %14
+    %17:SB = construct %13, %15
+    ret %17
+  }
+}
+%16 = func(%start_byte_offset_1:u32):mat3x4<f16> {  # %start_byte_offset_1: 'start_byte_offset'
+  $B4: {
+    %19:u32 = div %start_byte_offset_1, 2u
+    %20:ptr<workgroup, u16, read_write> = access %v, %19
+    %21:u16 = load %20
+    %22:u32 = add %19, 1u
+    %23:ptr<workgroup, u16, read_write> = access %v, %22
+    %24:u16 = load %23
+    %25:u32 = add %22, 1u
+    %26:ptr<workgroup, u16, read_write> = access %v, %25
+    %27:u16 = load %26
+    %28:u32 = add %25, 1u
+    %29:ptr<workgroup, u16, read_write> = access %v, %28
+    %30:u16 = load %29
+    %31:vec4<u16> = construct %21, %24, %27, %30
+    %32:vec4<f16> = bitcast %31
+    %33:u32 = add 8u, %start_byte_offset_1
+    %34:u32 = div %33, 2u
+    %35:ptr<workgroup, u16, read_write> = access %v, %34
+    %36:u16 = load %35
+    %37:u32 = add %34, 1u
+    %38:ptr<workgroup, u16, read_write> = access %v, %37
+    %39:u16 = load %38
+    %40:u32 = add %37, 1u
+    %41:ptr<workgroup, u16, read_write> = access %v, %40
+    %42:u16 = load %41
+    %43:u32 = add %40, 1u
+    %44:ptr<workgroup, u16, read_write> = access %v, %43
+    %45:u16 = load %44
+    %46:vec4<u16> = construct %36, %39, %42, %45
+    %47:vec4<f16> = bitcast %46
+    %48:u32 = add 16u, %start_byte_offset_1
+    %49:u32 = div %48, 2u
+    %50:ptr<workgroup, u16, read_write> = access %v, %49
+    %51:u16 = load %50
+    %52:u32 = add %49, 1u
+    %53:ptr<workgroup, u16, read_write> = access %v, %52
+    %54:u16 = load %53
+    %55:u32 = add %52, 1u
+    %56:ptr<workgroup, u16, read_write> = access %v, %55
+    %57:u16 = load %56
+    %58:u32 = add %55, 1u
+    %59:ptr<workgroup, u16, read_write> = access %v, %58
+    %60:u16 = load %59
+    %61:vec4<u16> = construct %51, %54, %57, %60
+    %62:vec4<f16> = bitcast %61
+    %63:mat3x4<f16> = construct %32, %47, %62
+    ret %63
+  }
+}
+)";
+
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    DecomposeAccessOptions options{.workgroup = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform
