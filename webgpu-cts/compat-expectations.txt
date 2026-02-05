@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-02-04 08:09:59AM
+# Last rolled: 2026-02-05 08:08:08AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -3942,6 +3942,18 @@ crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,configure:viewFormats:
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="offscreen";format="rgba16float";viewFormatFeature="_undef_" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="offscreen";format="rgba16float";viewFormatFeature="texture-compression-astc" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,configure:viewFormats:canvasType="onscreen";format="rgba16float";viewFormatFeature="_undef_" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="offscreen";withView=false;asResolveTarget=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="offscreen";withView=false;asResolveTarget=true [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="offscreen";withView=true;asResolveTarget=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="offscreen";withView=true;asResolveTarget=true [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="onscreen";withView=false;asResolveTarget=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="onscreen";withView=false;asResolveTarget=true [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="onscreen";withView=true;asResolveTarget=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:canvasType="onscreen";withView=true;asResolveTarget=true [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_texture_binding:canvasType="onscreen";withView=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_texture_binding:canvasType="onscreen";withView=true [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="rgba8unorm";alphaMode="premultiplied";colorSpace="display-p3";webgpuCanvasType="onscreen";canvas2DType="offscreen" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="rgba8unorm";alphaMode="premultiplied";colorSpace="srgb";webgpuCanvasType="offscreen";canvas2DType="onscreen" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="rgba8unorm";alphaMode="premultiplied";colorSpace="srgb";webgpuCanvasType="onscreen";canvas2DType="onscreen" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:offscreenCanvas,snapshot:format="rgba16float";alphaMode="premultiplied";colorSpace="display-p3";snapshotType="transferToImageBitmap" [ Failure ]
 crbug.com/0000 [ intel-0x4680 linux renderer-skia-vulkan ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:offscreenCanvas,snapshot:format="rgba8unorm";alphaMode="premultiplied";colorSpace="srgb";snapshotType="transferToImageBitmap" [ Failure ]
