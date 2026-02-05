@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82789c1a_7ac15550",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-05T17:16:11Z",
+      "side": 1,
+      "message": "Thread safety is much easier to reason about when it is local, here it works and in isolation with this diff makes sense but it will be very hard to remember and reason about in the future. How about instead making mMapReadySerial MutexProtected? This way we can easily and locally to BufferD3D11 ensure that there are no risks of TryMap and others to conflict.",
+      "revId": "aebec50c77ce81b5479fbc5383e42960e11d7e9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
