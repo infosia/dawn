@@ -89,20 +89,21 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
         for (typename {{UnpackedPtrT}}::ChainType next = chain->nextInChain;
              next != nullptr;
              next = next->nextInChain) {
+            {% if type.extensions %}
             switch (next->sType) {
-                {% for extension in type.extensions %}
-                    {% set Ext = as_cppType(extension.name) %}
-                    case STypeFor<{{Ext}}>: {
-                        using ExtPtrType =
-                            typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
-                        std::get<ExtPtrType>(result.mUnpacked) =
-                            static_cast<ExtPtrType>(next);
-                        result.mBitset.set(
-                            detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
-                        );
-                        break;
-                    }
-                {% endfor %}
+                    {% for extension in type.extensions %}
+                        {% set Ext = as_cppType(extension.name) %}
+                        case STypeFor<{{Ext}}>: {
+                            using ExtPtrType =
+                                typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
+                            std::get<ExtPtrType>(result.mUnpacked) =
+                                static_cast<ExtPtrType>(next);
+                            result.mBitset.set(
+                                detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
+                            );
+                            break;
+                        }
+                    {% endfor %}
                 default: {
                     using Unpacker =
                         AdditionalExtensionUnpacker<
@@ -113,6 +114,14 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
                     break;
                 }
             }
+            {% else %}
+                using Unpacker =
+                    AdditionalExtensionUnpacker<
+                        {{T}},
+                        {{UnpackedPtrT}},
+                        detail::AdditionalExtensions<{{T}}>::List>;
+                    Unpacker::Unpack(result.mUnpacked, result.mBitset, next, nullptr);
+            {% endif %}
         }
         return result;
     }
@@ -124,24 +133,25 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
              next != nullptr;
              next = next->nextInChain) {
             bool duplicate = false;
-            switch (next->sType) {
-                {% for extension in type.extensions %}
-                    {% set Ext = as_cppType(extension.name) %}
-                    case STypeFor<{{Ext}}>: {
-                        using ExtPtrType =
-                            typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
-                        auto& member = std::get<ExtPtrType>(result.mUnpacked);
-                        if (member != nullptr) {
-                            duplicate = true;
-                        } else {
-                            member = static_cast<ExtPtrType>(next);
-                            result.mBitset.set(
-                                detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
-                            );
+            {% if type.extensions %}
+                switch (next->sType) {
+                    {% for extension in type.extensions %}
+                        {% set Ext = as_cppType(extension.name) %}
+                        case STypeFor<{{Ext}}>: {
+                            using ExtPtrType =
+                                typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
+                            auto& member = std::get<ExtPtrType>(result.mUnpacked);
+                            if (member != nullptr) {
+                                duplicate = true;
+                            } else {
+                                member = static_cast<ExtPtrType>(next);
+                                result.mBitset.set(
+                                    detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
+                                );
+                            }
+                            break;
                         }
-                        break;
-                    }
-                {% endfor %}
+                    {% endfor %}
                 default: {
                     using Unpacker =
                         AdditionalExtensionUnpacker<
@@ -170,6 +180,32 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
                     break;
                 }
             }
+            {% else %}
+                using Unpacker =
+                    AdditionalExtensionUnpacker<
+                        {{T}},
+                        {{UnpackedPtrT}},
+                        detail::AdditionalExtensions<{{T}}>::List>;
+                if (!Unpacker::Unpack(result.mUnpacked,
+                                      result.mBitset,
+                                      next,
+                                      &duplicate)) {
+                    if (next->sType == wgpu::SType::DawnInjectedInvalidSType) {
+                        // TODO(crbug.com/399470698): Need to reinterpret cast to base C type
+                        // for now because in/out typing are differentiated in C++ bindings.
+                        auto* ext = reinterpret_cast<const WGPUDawnInjectedInvalidSType*>(next);
+                        return DAWN_VALIDATION_ERROR(
+                            "Unexpected chained struct of type %s found on %s chain.",
+                            wgpu::SType(ext->invalidSType), "{{T}}"
+                        );
+                    } else {
+                        return DAWN_VALIDATION_ERROR(
+                            "Unexpected chained struct of type %s found on %s chain.",
+                            next->sType, "{{T}}"
+                        );
+                    }
+                }
+            {% endif %}
             if (duplicate) {
                 return DAWN_VALIDATION_ERROR(
                     "Duplicate chained struct of type %s found on %s chain.",
