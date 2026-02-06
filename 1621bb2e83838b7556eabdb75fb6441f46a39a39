@@ -52,6 +52,24 @@
       "parentUuid": "c68a0572_7a53523f",
       "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f837f49_e3fd401c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-06T18:46:09Z",
+      "side": 1,
+      "message": "Do we care if DawnLoadResolveTexture works with storeOp\u003dStore or could it be restricted to storeOp\u003dDiscard?",
+      "parentUuid": "a2974f50_c50acf91",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

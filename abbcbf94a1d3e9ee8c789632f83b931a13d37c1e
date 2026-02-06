@@ -56,6 +56,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a09f8a6_a311aebc",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-06T18:46:09Z",
+      "side": 1,
+      "message": "It does appear that VK_EXT_multisampled_render_to_single_sampled is more widely supported than VK_KHR_dynamic_rendering_local_read FWIW. Although Pixel 6+ supports both extensions.\n\n* [VK_KHR_dynamic_rendering](https://vulkan.gpuinfo.org/displayextensiondetail.php?extension\u003dVK_KHR_dynamic_rendering) is supported on 26% of Android devices\n* [VK_KHR_dynamic_rendering_local_read](https://vulkan.gpuinfo.org/displayextensiondetail.php?extension\u003dVK_KHR_dynamic_rendering_local_read) is supported on 9% of Android devices\n* [VK_EXT_multisampled_render_to_single_sampled](https://vulkan.gpuinfo.org/displayextensiondetail.php?extension\u003dVK_EXT_multisampled_render_to_single_sampled) is supported on 19% of Android devices",
+      "range": {
+        "startLine": 957,
+        "startChar": 67,
+        "endLine": 957,
+        "endChar": 79
+      },
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb83c38b_625bfb18",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
@@ -67,6 +90,24 @@
       "writtenOn": "2026-02-05T22:34:19Z",
       "side": 1,
       "message": "Wait, you\u0027re doing the unresolve in the same pass as the draw calls with dynamic rendering? I didn\u0027t think that was possible. Is syncval enabled and happy with this?\n\nAlso this is using input attachments that are not color attachments IIUC. I think that\u0027s supposed to work in Vulkan and is tested, but I know I didn\u0027t handle it in SwiftShader so expect failures if you run on that.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2464b4a7_ca5318f8",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-06T18:46:09Z",
+      "side": 1,
+      "message": "\u003e Wait, you\u0027re doing the unresolve in the same pass as the draw calls with dynamic rendering? I didn\u0027t think that was possible.\n\nJust to understand better here, what was the specific problem you were expecting that wouldn\u0027t make this possible?",
+      "parentUuid": "bb83c38b_625bfb18",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
