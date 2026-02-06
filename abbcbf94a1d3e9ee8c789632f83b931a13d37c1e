@@ -110,6 +110,24 @@
       "parentUuid": "bb83c38b_625bfb18",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca2b1c64_73d66b4b",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-06T18:54:10Z",
+      "side": 1,
+      "message": "I don\u0027t know, just always assumed it\u0027s not possible :-S I know that support for input attachments that are not one of the color/depth/stencil attachments was unintended in Vulkan, but I guess it\u0027s there and working. Given MSRTSS is older than DRLR, please make sure this path is actually tested by forcing MSRTSS off.",
+      "parentUuid": "2464b4a7_ca5318f8",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
