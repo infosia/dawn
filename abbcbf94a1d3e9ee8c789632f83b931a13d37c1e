@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0864e19_07b959c2",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-06T15:57:17Z",
+      "side": 1,
+      "message": "Well WebGPU doesn\u0027t FramebufferFetch right now but it was added as a [Dawn/Tint extension](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/docs/tint/extensions/chromium_experimental_framebuffer_fetch.md;l\u003d3?q\u003dtint%2Fextensions%2Fchromium_experimental_framebuffer_fetch.md\u0026sq\u003dpackage) for use by Graphite. Currently only Dawn/Metal supports the extension.\n\nI\u0027m currently working on the implementation for Dawn/Vulkan but was looking at non-dynamic rendering case first.",
+      "parentUuid": "b47e1f0f_3b48a298",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb83c38b_625bfb18",
