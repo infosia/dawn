@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba5bd09_733b9f89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-06T04:08:09Z",
+      "side": 1,
+      "message": "From the MSL spec (6.9.2):\n\u003e Helper threads may also be active and inactive. For example, if a helper thread finishes\nexecuting, it becomes an inactive helper thread. Helper threads for SIMD-group functions can\nbe active or inactive. Use simd_is_helper_thread() (see Table 6.14) to inspect whether a\nthread is a helper thread.\n\nAlso (in 6.9.3)\n\u003e Helper threads only execute to compute gradients for quad-groups in a fragment shader and\nthen become inactive.\n\nTo me this is ambiguous if helper threads are required to participate in quad operations or not. That is, if there are no subsequent implicit or explicit derivatives, it sounds like the thread may be terminated, which might lead to undefined results. I\u0027m not sure whether CTS coverage is enough for this. The value could happen to be right if the register is calculated before terminating execution.",
+      "revId": "4392852957fdd4cfd05a3facad74ea736722b102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "25154d62_76c36589",
