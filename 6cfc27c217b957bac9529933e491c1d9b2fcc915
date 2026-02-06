@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63aa8fc6_66319d08",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-06T14:54:24Z",
+      "side": 1,
+      "message": "Does this enable it for web?",
+      "range": {
+        "startLine": 1840,
+        "startChar": 44,
+        "endLine": 1840,
+        "endChar": 61
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afe4809d_0dd0c5fc",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-06T14:54:24Z",
+      "side": 1,
+      "message": "Polish",
+      "range": {
+        "startLine": 981,
+        "startChar": 3,
+        "endLine": 981,
+        "endChar": 44
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32bf133b_756505f2",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 29
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-06T14:54:24Z",
+      "side": 1,
+      "message": "Should this be somewhere else like the other types.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2147d6ad_59776faf",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-06T14:54:24Z",
+      "side": 1,
+      "message": "Need a unit tests",
+      "range": {
+        "startLine": 3,
+        "startChar": 47,
+        "endLine": 3,
+        "endChar": 52
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b33c2f0_a96c92c5",
+        "filename": "test/tint/builtins/gen/literal/atomicStoreMin/f5f229.wgsl",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-06T14:54:24Z",
+      "side": 1,
+      "message": "Why is this 25?",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
