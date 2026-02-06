@@ -34,6 +34,24 @@
       "parentUuid": "e2d2b80d_3fd9b66a",
       "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2974f50_c50acf91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-06T16:40:45Z",
+      "side": 1,
+      "message": "DawnLoadResolveTexture doesn\u0027t require that the MSAA texture is memoryless. If it could make things easier, I agree we can add the restriction to the feature. Like \"if the memoryless feature is available then the MSAA attachment must be memoryless\". Though I\u0027m not sure what would happen if the users enable `DawnLoadResolveTexture` but not `TransientAttachments`.\n\nAlternatively, FWIW even if the MSAA attachment is not memoryless but its storeOp is `Discard` we can still use MSRTT. The MSAA attachment is simply ignored (its content is supposed to be undefined afterwards). If storeOp is `Store`, I guess we can use the emulation on the front-end layer [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitColorToColorWithDraw.cpp;drc\u003dbf712ec1a13783224debb691ba88ad5c15b93194;l\u003d318). It can emulate both the load step and the resolve step. The downside is that the emulation manually \"[resolves](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitColorToColorWithDraw.cpp;drc\u003dbf712ec1a13783224debb691ba88ad5c15b93194;l\u003d461)\" the samples using shaders, so it would be slow on Android. But again, on Android, we always use memoryless textures so that path shouldn\u0027t be triggered. It\u0027s just for API completeness.\n\nSo one option is:\n- If the MSAA attachment is memoryless, use MSRTSS.\n- If it\u0027s not memoryless:\n  - If storeOp\u003d`Discard`, use MSRTSS.\n  - If storeOp\u003d`Store`, emulate using the front-end helper. The front-end helper can operate on subset of attachments.\n    - The emulation will split the resolve texture into a separate resolve pass. So in the actual Vk render pass, it won\u0027t appear as a `resolveImageView`.",
+      "parentUuid": "c68a0572_7a53523f",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
