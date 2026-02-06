@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "006fabc5_ad89d631",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-02-06T01:58:36Z",
+      "side": 1,
+      "message": "This patch is not necessary for correctness, but the amount of bloat that ends up in the fwidthFine polyfill-on-a-polyfill seems excessive to me, particularly because the thread id becomes superfluous, and I figure is not the kind of thing that a driver could optimize away. That said, let me know if this seems like overkill or premature optimization.\n\n\nExample WGSL:\n```\n@fragment\nfn frag(@builtin(position) position: vec4f) -\u003e @location(0) vec4u {\n  var input: vec4f;\n  let v \u003d fwidthFine(input);\n  return bitcast\u003cvec4u\u003e(v);\n}\n```\n\nMSL before this change:\n```\n#include \u003cmetal_stdlib\u003e\nusing namespace metal;\n\nstruct tint_module_vars_struct {\n  thread uint* tint_thread_index_in_quadgroup;\n};\n\nstruct frag_outputs {\n  uint4 tint_symbol [[color(0)]];\n};\n\nuint4 frag_inner(float4 position, tint_module_vars_struct tint_module_vars) {\n  float4 input \u003d 0.0f;\n  float4 const v_1 \u003d input;\n  float4 const v_2 \u003d quad_shuffle_xor(v_1, 1u);\n  float4 const v_3 \u003d select((v_2 - v_1), (v_1 - v_2), (((*tint_module_vars.tint_thread_index_in_quadgroup) \u0026 1u) !\u003d 0u));\n  float4 const v_4 \u003d quad_shuffle_xor(v_1, 2u);\n  float4 const v \u003d (abs(v_3) + abs(select((v_4 - v_1), (v_1 - v_4), (((*tint_module_vars.tint_thread_index_in_quadgroup) \u0026 2u) !\u003d 0u))));\n  return as_type\u003cuint4\u003e(v);\n}\n\nfragment frag_outputs frag(float4 position [[position]], uint tint_thread_index_in_quadgroup [[thread_index_in_quadgroup]]) {\n  thread uint tint_thread_index_in_quadgroup_1 \u003d 0u;\n  tint_module_vars_struct const tint_module_vars \u003d tint_module_vars_struct{.tint_thread_index_in_quadgroup\u003d(\u0026tint_thread_index_in_quadgroup_1)};\n  (*tint_module_vars.tint_thread_index_in_quadgroup) \u003d tint_thread_index_in_quadgroup;\n  frag_outputs tint_wrapper_result \u003d {};\n  tint_wrapper_result.tint_symbol \u003d frag_inner(position, tint_module_vars);\n  return tint_wrapper_result;\n}\n```\n\nMSL after this change:\n```\n#include \u003cmetal_stdlib\u003e\nusing namespace metal;\n\nstruct frag_outputs {\n  uint4 tint_symbol [[color(0)]];\n};\n\nuint4 frag_inner(float4 position) {\n  float4 input \u003d 0.0f;\n  float4 const v_1 \u003d input;\n  float4 const v_2 \u003d quad_shuffle_xor(v_1, 1u);\n  float4 const v \u003d (abs((v_1 - v_2)) + abs((v_1 - quad_shuffle_xor(v_1, 2u))));\n  return as_type\u003cuint4\u003e(v);\n}\n\nfragment frag_outputs frag(float4 position [[position]]) {\n  frag_outputs tint_wrapper_result \u003d {};\n  tint_wrapper_result.tint_symbol \u003d frag_inner(position);\n  return tint_wrapper_result;\n}\n```",
+      "revId": "47bd7306a61c4ee59c8b667695f46572a7e7b014",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
