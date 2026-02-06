@@ -1,6 +1,17 @@
   Plan: Refactor Replay to use a Visitor Pattern
 
 
+  1. Add X-Macros that associates each ObjectType with it's corresponding creation data.
+
+  2. Update the Replay::CreateResource code to use the X-Macro to separate
+
+
+  1. Add X-Macros in src/dawn/serialization/Schema.h to associate each command with its corresponding data.
+     * for root commands
+     * for command buffer commands
+
+
+
   1. Define Command Variants
   Introduce std::variant types for RootCommand and CommandBufferCommand in src/dawn/replay/Deserialization.h. This allows a single
   variable to hold any of the possible command types and their associated data.
