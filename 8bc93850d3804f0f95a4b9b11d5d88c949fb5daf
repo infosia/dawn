@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c5b3ed6_805e88b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-06T15:42:02Z",
+      "side": 1,
+      "message": "It\u0027s nice to see the the type safety in action. Eventually, we\u0027ll get rid of all the conversions and it will be so much nicer.",
+      "revId": "8bc93850d3804f0f95a4b9b11d5d88c949fb5daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87a5a8fb_fcae0573",
