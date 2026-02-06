@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25154d62_76c36589",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-02-06T00:32:36Z",
+      "side": 1,
+      "message": "Will do this one in a follow up CL",
+      "range": {
+        "startLine": 510,
+        "startChar": 85,
+        "endLine": 510,
+        "endChar": 95
+      },
+      "revId": "4392852957fdd4cfd05a3facad74ea736722b102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
