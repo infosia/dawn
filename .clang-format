@@ -8,3 +8,16 @@ IndentWidth: 4
 ObjCBlockIndentWidth: 4
 AccessModifierOffset: -2
 InsertBraces: true
+
+WhitespaceSensitiveMacros:
+    # From https://emscripten.org/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#calling-javascript-from-c-c
+    - "EM_ASM"
+    - "EM_JS"
+    - "EM_ASM_INT"
+    - "EM_ASM_DOUBLE"
+    - "EM_ASM_PTR"
+    - "MAIN_THREAD_EM_ASM"
+    - "MAIN_THREAD_EM_ASM_INT"
+    - "MAIN_THREAD_EM_ASM_DOUBLE"
+    - "MAIN_THREAD_EM_ASM_DOUBLE"
+    - "MAIN_THREAD_ASYNC_EM_ASM"
