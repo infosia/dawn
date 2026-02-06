@@ -16,6 +16,24 @@
       "message": "Thread safety is much easier to reason about when it is local, here it works and in isolation with this diff makes sense but it will be very hard to remember and reason about in the future. How about instead making mMapReadySerial MutexProtected? This way we can easily and locally to BufferD3D11 ensure that there are no risks of TryMap and others to conflict.",
       "revId": "aebec50c77ce81b5479fbc5383e42960e11d7e9d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61edb807_588f43fd",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-06T08:24:19Z",
+      "side": 1,
+      "message": "We could do that. However, I think that approach introduces a third mutex to an already complex locking chain. It risks creating lock inversions. By the time `TryMapNow` is called, there are already 2 locks held:\n- First, command recording context\u0027s lock.\n- 2nd, the pending map list\u0027s lock in the queue. Acquired in `CheckScheduledBufferMappings`\n- Then another lock for mMapReadySerial (if we added here)\n\nFurthermore, since the mapping list is \"hot\"—iterating through 10-20 buffers per submission—repeatedly acquiring even uncontended locks forces unnecessary memory barriers. Given that we only need to protect against the occasional `Destroy` race, this adds significant overhead for a rare edge case.\n\nAlternatively, I have implemented a proper `Queue::CancelScheduledMap` method in the latest patchset. It should be self-contained in the Queue class now. PTAL.",
+      "parentUuid": "82789c1a_7ac15550",
+      "revId": "aebec50c77ce81b5479fbc5383e42960e11d7e9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
