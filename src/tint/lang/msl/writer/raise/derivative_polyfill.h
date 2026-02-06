@@ -37,7 +37,7 @@ class Module;
 
 namespace tint::msl::writer::raise {
 
-/// DerivativePolyfill is a transform that polyfills `dpdxFine` and `dpdyFine`
+/// DerivativePolyfill is a transform that polyfills `dpdxFine`, `dpdyFine` and  `fwidthFine`
 /// builtins on Intel Macs, where "fine" derivatives are not guaranteed to actually be fine
 /// (https://github.com/gpuweb/gpuweb/issues/4325).
 ///

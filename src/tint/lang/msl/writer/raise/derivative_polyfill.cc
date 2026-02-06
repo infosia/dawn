@@ -55,7 +55,7 @@ struct State {
     /// The thread_index_in_quadgroup module-scope variable.
     core::ir::Var* thread_index_in_quadgroup = nullptr;
 
-    /// Process the module, polyfilling `dpdxFine` and `dpdyFine` builtins.
+    /// Process the module, polyfilling `dpdxFine`, `dpdyFine` and `fwidthFine` builtins.
     ///
     /// The builtins can be implemented in terms of quad operations, where the neighboring pixel's
     /// value is fetched with a quad swap, and the difference is calculated. For dpdx, the
@@ -79,18 +79,20 @@ struct State {
     ///
     /// dpdyFine(v) = is_bottom_pixel ? v - quadSwapY(v) : quadSwapX(v) - v
     ///   where is_bottom_pixel = (thread_id & 0b10) != 0
+    ///
+    /// Since fwidthFine deals with absolute values of derivatives, there's no need to load the
+    /// thread_id when polyfilling:
+    ///
+    /// fwidthFine(v) = abs(dpdxFine(v)) + abs(dpdyFine(v))
+    ///               = abs(v - quadSwapX(v)) + abs(v - quadSwapY(v))
     void Process() {
-        // Declare the thread_index_in_quadgroup variable in which the builtin value will be stored.
-        b.Append(ir.root_block, [&] {
-            thread_index_in_quadgroup = b.Var<private_, u32>("tint_thread_index_in_quadgroup");
-        });
-
         // Collect all derivative calls.
         tint::Vector<core::ir::CoreBuiltinCall*, 4> derivative_calls;
         for (auto* inst : ir.Instructions()) {
             if (auto* builtin = inst->As<core::ir::CoreBuiltinCall>()) {
                 if (builtin->Func() == core::BuiltinFn::kDpdxFine ||
-                    builtin->Func() == core::BuiltinFn::kDpdyFine) {
+                    builtin->Func() == core::BuiltinFn::kDpdyFine ||
+                    builtin->Func() == core::BuiltinFn::kFwidthFine) {
                     derivative_calls.Push(builtin);
                 }
             }
@@ -98,42 +100,67 @@ struct State {
 
         // Polyfill the derivative calls.
         for (auto* builtin : derivative_calls) {
-            b.InsertBefore(builtin, [&] {
-                bool is_dpdx = builtin->Func() == core::BuiltinFn::kDpdxFine;
-                core::ir::Value* current = builtin->Args()[0];
+            if (builtin->Func() == core::BuiltinFn::kFwidthFine) {
+                b.InsertBefore(builtin, [&] {
+                    core::ir::Value* current = builtin->Args()[0];
 
-                // Get the value from the neighboring pixel in the quad.
-                core::BuiltinFn quad_swap_fn =
-                    is_dpdx ? core::BuiltinFn::kQuadSwapX : core::BuiltinFn::kQuadSwapY;
-                auto* neighbor = b.Call(current->Type(), quad_swap_fn, current);
+                    // Get the values from the neighboring pixels in the quad.
+                    auto* x_neighbor =
+                        b.Call(current->Type(), core::BuiltinFn::kQuadSwapX, current);
+                    auto* y_neighbor =
+                        b.Call(current->Type(), core::BuiltinFn::kQuadSwapY, current);
 
-                // Determine whether to use this pixel's value as the lhs of the subtraction in the
-                // derivative calculation.
-                auto* thread_id = b.Load(thread_index_in_quadgroup);
-                auto* bitmask = b.Constant(u32(is_dpdx ? 0b01 : 0b10));
-                auto* cond = b.NotEqual(b.And(thread_id, bitmask), b.Constant(u32(0)));
+                    // Calculate both derivatives.
+                    auto* dpdx = b.Subtract(current, x_neighbor);
+                    auto* dpdy = b.Subtract(current, y_neighbor);
 
-                // Calculate both potential differences.
-                auto* current_minus_neighbor = b.Subtract(current, neighbor);
-                auto* neighbor_minus_current = b.Subtract(neighbor, current);
+                    // Take the absolute values.
+                    auto* abs_dpdx = b.Call(current->Type(), core::BuiltinFn::kAbs, dpdx);
+                    auto* abs_dpdy = b.Call(current->Type(), core::BuiltinFn::kAbs, dpdy);
 
-                // Select the correct difference.
-                auto* result = b.Call(current->Type(), core::BuiltinFn::kSelect,
-                                      neighbor_minus_current,  // false value
-                                      current_minus_neighbor,  // true value
-                                      cond);
+                    // Sum the absolute values of the derivatives.
+                    b.AddWithResult(builtin->DetachResult(), abs_dpdx, abs_dpdy);
+                });
+            } else {  // kDpdxFine and kDpdyFine
+                // Declare the thread_index_in_quadgroup variable in which the builtin value will be
+                // stored.
+                b.Append(ir.root_block, [&] {
+                    thread_index_in_quadgroup =
+                        b.Var<private_, u32>("tint_thread_index_in_quadgroup");
+                });
 
-                builtin->Result()->ReplaceAllUsesWith(result->Result());
-            });
+                b.InsertBefore(builtin, [&] {
+                    bool is_dpdx = builtin->Func() == core::BuiltinFn::kDpdxFine;
+                    core::ir::Value* current = builtin->Args()[0];
+
+                    // Get the value from the neighboring pixel in the quad.
+                    core::BuiltinFn quad_swap_fn =
+                        is_dpdx ? core::BuiltinFn::kQuadSwapX : core::BuiltinFn::kQuadSwapY;
+                    auto* neighbor = b.Call(current->Type(), quad_swap_fn, current);
+
+                    // Determine whether to use this pixel's value as the lhs of the subtraction in
+                    // the derivative calculation.
+                    auto* thread_id = b.Load(thread_index_in_quadgroup);
+                    auto* bitmask = b.Constant(u32(is_dpdx ? 0b01 : 0b10));
+                    auto* cond = b.NotEqual(b.And(thread_id, bitmask), b.Constant(u32(0)));
+
+                    // Calculate both potential differences.
+                    auto* current_minus_neighbor = b.Subtract(current, neighbor);
+                    auto* neighbor_minus_current = b.Subtract(neighbor, current);
+
+                    // Select the correct difference.
+                    b.CallWithResult(builtin->DetachResult(), core::BuiltinFn::kSelect,
+                                     neighbor_minus_current,  // false value
+                                     current_minus_neighbor,  // true value
+                                     cond);
+                });
+            }
             builtin->Destroy();
         }
 
         // Set the thread_index_in_quadgroup variable from all entry points that use it.
-        core::ir::ReferencedModuleVars<core::ir::Module> refs(ir,
-                                                              [&](const core::ir::Var* var) {  //
-                                                                  return var ==
-                                                                         thread_index_in_quadgroup;
-                                                              });
+        core::ir::ReferencedModuleVars<core::ir::Module> refs(
+            ir, [&](const core::ir::Var* var) { return var == thread_index_in_quadgroup; });
         for (auto func : ir.functions) {
             if (func->IsEntryPoint()) {
                 if (refs.TransitiveReferences(func).Contains(thread_index_in_quadgroup)) {

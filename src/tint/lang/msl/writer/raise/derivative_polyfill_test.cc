@@ -87,6 +87,48 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(MslWriter_DerivativePolyfillTest, FwidthFineScalar) {
+    auto* f = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(f->Block(), [&] {
+        auto* local_var = b.Var("val", ty.ptr(function, ty.f32(), read_write));
+        b.Call<core::ir::CoreBuiltinCall>(ty.f32(), core::BuiltinFn::kFwidthFine,
+                                          b.Load(local_var));
+        b.Return(f);
+    });
+
+    auto* src = R"(
+%foo = @fragment func():void {
+  $B1: {
+    %val:ptr<function, f32, read_write> = var undef
+    %3:f32 = load %val
+    %4:f32 = fwidthFine %3
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = @fragment func():void {
+  $B1: {
+    %val:ptr<function, f32, read_write> = var undef
+    %3:f32 = load %val
+    %4:f32 = quadSwapX %3
+    %5:f32 = quadSwapY %3
+    %6:f32 = sub %3, %4
+    %7:f32 = sub %3, %5
+    %8:f32 = abs %6
+    %9:f32 = abs %7
+    %10:f32 = add %8, %9
+    ret
+  }
+}
+)";
+
+    Run(DerivativePolyfill);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(MslWriter_DerivativePolyfillTest, DpdyFineScalar) {
     auto* f = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(f->Block(), [&] {
