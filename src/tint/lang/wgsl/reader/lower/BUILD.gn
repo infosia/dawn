@@ -45,6 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("lower") {
   sources = [
+    "atomic_vec2u_to_u64.cc",
+    "atomic_vec2u_to_u64.h",
     "lower.cc",
     "lower.h",
   ]
