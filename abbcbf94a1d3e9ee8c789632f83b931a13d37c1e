@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b97dd5ad_87fcb201",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-06T19:46:17Z",
+      "side": 1,
+      "message": "Ugh, meant to send this yesterday but apparently Gerrit had other plans.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "203f7239_e2e78329",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 5
@@ -126,6 +143,24 @@
       "side": 1,
       "message": "I don\u0027t know, just always assumed it\u0027s not possible :-S I know that support for input attachments that are not one of the color/depth/stencil attachments was unintended in Vulkan, but I guess it\u0027s there and working. Given MSRTSS is older than DRLR, please make sure this path is actually tested by forcing MSRTSS off.",
       "parentUuid": "2464b4a7_ca5318f8",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b4b61c6_a49eb054",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-06T19:46:17Z",
+      "side": 1,
+      "message": "To be honest, I\u0027m kinda fumbling my way through this and learning new stuff about Vulkan as I go. 😊 I would not be at all surprised if I\u0027m doing something wrong. \n\nThat said, I thought that doing these kind of operations within a dynamic rendering pass was the entire point of VK_KHR_dynamic_rendering_local_read? Posts like [this one](https://www.khronos.org/blog/streamlining-subpasses) certainly seem to suggest that, anyway.\n\nAs far as whether or not Vulkan is happy with it, at this point running the end2end tests with `--enable-backend-validation\u003dfull` has stopped complaining and the DawnLoadResolveTextureTests are passing, and that\u0027s about as far as I\u0027ve pushed it. (I don\u0027t know if that includes syncval.) I wanted to have exactly this kind of conversation about whether this was the right path or not before going any further! I will also say that I don\u0027t have a lot of faith in this particular batch of end2end tests, since I\u0027m pretty sure I\u0027ve seen them pass when making changes that should have broken them. I\u0027ll work on validating that more soon.",
+      "parentUuid": "bb83c38b_625bfb18",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
