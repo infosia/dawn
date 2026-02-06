@@ -163,6 +163,24 @@
       "parentUuid": "bb83c38b_625bfb18",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef1abbe8_1595e73f",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-06T19:58:40Z",
+      "side": 1,
+      "message": "DRLR was supposed to give you input attachments for your framebuffer attachments, but like I said the fact that it accidentally enabled solely-input attachments was kind of accidental as I understood. That\u0027s why I have doubts here about what happens with input-but-also-resolve attachments. Maybe you\u0027re right and this is all working fine, which would be great because we have this problem with ANGLE and Graphite/Vk too about what to do with MSRTT emulation with dynamic rendering. My plan has been to rely on MSRTSS and for emulation break the render pass because that means only desktop GPUs are affected which wouldn\u0027t care.\n\nI don\u0027t see `DAWN_INSTANTIATE_TEST` in the test trying to disable VK_EXT_msrtss though, which is what I was asking for. It may just so happen that we\u0027re never testing dynamic rendering without VK_EXT_msrtss? I would love to be proven wrong, it\u0027ll simplify my life elsewhere to be able to do this in one pass.`",
+      "parentUuid": "9b4b61c6_a49eb054",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
