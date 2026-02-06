@@ -94,6 +94,8 @@ std::string BuiltinToAttribute(core::BuiltinValue builtin,
             return "primitive_id";
         case core::BuiltinValue::kBarycentricCoord:
             return "barycentric_coord";
+        case core::BuiltinValue::kThreadIndexInQuadgroup:
+            return "thread_index_in_quadgroup";
         default:
             break;
     }
