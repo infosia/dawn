@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "bb5ea6994c7c14a07c52660fa52363ae1701d4dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29423a76_71e0acc2",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-06T19:16:31Z",
+      "side": 1,
+      "message": "nit. This block should be indented one more time now since it\u0027s in an additional if scope. (Same below)",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 13
+      },
+      "revId": "bb5ea6994c7c14a07c52660fa52363ae1701d4dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
