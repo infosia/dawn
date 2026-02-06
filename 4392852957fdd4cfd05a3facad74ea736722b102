@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fea36d0_2c1d529b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-02-06T16:16:45Z",
+      "side": 1,
+      "message": "Pragmatically speaking, testing will show whether this approach works for the legacy devices. \n\nThe question is whether polyfilling will be viable going forward.\n\nIf future devices/platforms resolve the ambiguity so that inactive helper invocations do not participate in quad ops, can we patch things up? I think we always can:\n\n- always insert a subsequent deriviative, using the result of the quad operation as an input, and/or\n- keep the invocation active by ensuring the result of the derivative affects an output somewhere. (It would be nice to have volatile)\n\nThe key is that we have test coverage that will expose the bad case so we can go back and fortify the polyfill.\n\nNote: This discussion should be fed back into the spec issue. https://github.com/gpuweb/gpuweb/issues/4325",
+      "parentUuid": "4ba5bd09_733b9f89",
+      "revId": "4392852957fdd4cfd05a3facad74ea736722b102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "25154d62_76c36589",
