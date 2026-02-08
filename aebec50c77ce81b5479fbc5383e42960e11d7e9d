@@ -34,6 +34,24 @@
       "parentUuid": "82789c1a_7ac15550",
       "revId": "aebec50c77ce81b5479fbc5383e42960e11d7e9d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88edc7a0_8eeade26",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:59:50Z",
+      "side": 1,
+      "message": "Thank you, that works as welL!",
+      "parentUuid": "61edb807_588f43fd",
+      "revId": "aebec50c77ce81b5479fbc5383e42960e11d7e9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

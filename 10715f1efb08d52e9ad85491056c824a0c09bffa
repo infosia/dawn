@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46a95b2c_fa39ccb8",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:59:50Z",
+      "side": 1,
+      "message": "This small if does a lot and could help readers to explain that it handles buffers that were inserted in a previous submit but will certainly not be mapped at the end of it because of the new scheduled map.",
+      "revId": "10715f1efb08d52e9ad85491056c824a0c09bffa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd2a1602_5d784eb6",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:59:50Z",
+      "side": 1,
+      "message": "nit: Maybe comment what this magical data structure is and is used for ^^.",
+      "revId": "10715f1efb08d52e9ad85491056c824a0c09bffa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
