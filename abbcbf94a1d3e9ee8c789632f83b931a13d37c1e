@@ -181,6 +181,58 @@
       "parentUuid": "9b4b61c6_a49eb054",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfd93f3b_9e823f59",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:38:04Z",
+      "side": 1,
+      "message": "I\u0027m still not sure why DRLR would be necessary to the ExpandFromResolve, and this a bit similar to Shahbaz\u0027s question/surprise about input attachment working here. What this CL seem to try to do is to sample the resolve attachment to write it to the MSAA render target, before any of the FS run on the same pixel.\n\nIt seem like we don\u0027t need all the input attachment magic, and instead could have the resolve target in `VK_IMAGE_LAYOUT_GENERAL`, and run `PerformExpandResolveDraw` with normal texture sampling (of the resolve target) (not input attachments), and .. that\u0027s it? No need for DRLR nor barriers, nor input attachments.",
+      "parentUuid": "ef1abbe8_1595e73f",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28cd7e1c_aef10a92",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:38:04Z",
+      "side": 1,
+      "message": "Input attachment aren\u0027t read past this in the render pass, so I\u0027m curious why this was needed instead of having both `src/dstAccessMask` be `VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT`.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b6f39a9_42c20fe4",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:38:04Z",
+      "side": 1,
+      "message": "ditto, both can be `VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT`? What we want is to make sure all color outputs prior happen before all color outputs after.\n\nActually that should be guaranteed by the API, so we might not even need a barrier.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
