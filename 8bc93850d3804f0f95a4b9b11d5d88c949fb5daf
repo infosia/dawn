@@ -56,6 +56,30 @@
       },
       "revId": "8bc93850d3804f0f95a4b9b11d5d88c949fb5daf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "255b0397_8c9806d2",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-08T14:18:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a5a8fb_fcae0573",
+      "range": {
+        "startLine": 696,
+        "startChar": 43,
+        "endLine": 696,
+        "endChar": 69
+      },
+      "revId": "8bc93850d3804f0f95a4b9b11d5d88c949fb5daf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
