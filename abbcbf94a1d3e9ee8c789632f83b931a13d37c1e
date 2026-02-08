@@ -203,6 +203,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9dde1a7b_91dbbe55",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-08T17:23:05Z",
+      "side": 1,
+      "message": "_Pretty_ sure you can\u0027t do that, that\u0027s a feedback loop. Input attachments are specifically the way to make feedback loops work.\n\nIf you implement `ExpandFromResolve` through texture sampling, you\u0027d have to break the render pass before you can write to it as a resolve attachment.",
+      "parentUuid": "dfd93f3b_9e823f59",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
@@ -231,6 +249,24 @@
       "writtenOn": "2026-02-08T14:38:04Z",
       "side": 1,
       "message": "ditto, both can be `VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT`? What we want is to make sure all color outputs prior happen before all color outputs after.\n\nActually that should be guaranteed by the API, so we might not even need a barrier.",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6791eb2a_b4eb9491",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-08T17:23:05Z",
+      "side": 1,
+      "message": "Assuming a future framebuffer functionality will come, there are three pairs that might need synchronization:\n\n* Expand writes to color, real render pass also writes to color. With legacy render pass objects, I see I added a `VkSubpassDependency2` for it in ANGLE but that was because there were two subpasses involved. You\u0027re probably right that you won\u0027t need such a thing here (assuming this usage is correct, which I still doubt because otherwise why couldn\u0027t we do that with legacy RPs in one pass too?).\n* Expand reads from resolve attachment, real render pass writes to resolve attachment. This is a WaR hazard that only needs an execution barrier: FS -\u003e COLOR_ATTACHMENT\n* For framebuffer fetch functionality, Expand writes to color, real render pass reads from color. If `VK_EXT_rasterization_order_attachment_access` is not supported, you\u0027d need a COLOR_ATTACHMENT/WRITE -\u003e FS/READ barrier (which is the one that is written here currently!)",
+      "parentUuid": "2b6f39a9_42c20fe4",
       "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
