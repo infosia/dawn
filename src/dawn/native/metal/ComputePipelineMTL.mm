@@ -27,6 +27,8 @@
 
 #include "dawn/native/metal/ComputePipelineMTL.h"
 
+#include <algorithm>
+
 #include "dawn/common/Math.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
@@ -53,6 +55,11 @@ ComputePipeline::ComputePipeline(DeviceBase* dev,
 ComputePipeline::~ComputePipeline() = default;
 
 MaybeError ComputePipeline::InitializeImpl() {
+    // Metal requires the full immediate block size (including struct alignment padding)
+    // to ensure compile-time and runtime buffer layouts match. See comment in
+    // PipelineBase::Initialize() for details.
+    mSkipImmediateBlockSizeOptimization = true;
+
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
@@ -91,6 +98,7 @@ MaybeError ComputePipeline::InitializeImpl() {
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
+    mImmediateDataAlignment = computeData.immediateDataAlignment;
     return {};
 }
 
@@ -112,6 +120,17 @@ MTLSize ComputePipeline::GetLocalWorkGroupSize() const {
 
 bool ComputePipeline::RequiresStorageBufferLength() const {
     return mRequiresStorageBufferLength;
+}
+
+uint32_t ComputePipeline::GetImmediateDataAlignment() const {
+    // On Metal, Tint emits immediate data as a typed struct
+    // (tint_immediate_data_struct) whose alignment is max(user_type_align, 16).
+    // The 16-byte minimum comes from Metal's constant-address-space buffer alignment
+    // requirement.
+    if (mImmediateDataAlignment == 0) {
+        return 0;
+    }
+    return std::max(mImmediateDataAlignment, uint32_t(16));
 }
 
 }  // namespace dawn::native::metal

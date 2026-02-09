@@ -53,6 +53,7 @@ class ComputePipeline final : public ComputePipelineBase {
     void Encode(id<MTLComputeCommandEncoder> encoder);
     MTLSize GetLocalWorkGroupSize() const;
     bool RequiresStorageBufferLength() const;
+    uint32_t GetImmediateDataAlignment() const;
 
   private:
     using ComputePipelineBase::ComputePipelineBase;
@@ -62,6 +63,7 @@ class ComputePipeline final : public ComputePipelineBase {
     MTLSize mLocalWorkgroupSize;
     bool mRequiresStorageBufferLength;
     std::vector<uint32_t> mWorkgroupAllocations;
+    uint32_t mImmediateDataAlignment = 0;
 };
 
 }  // namespace dawn::native::metal

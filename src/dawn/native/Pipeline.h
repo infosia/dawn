@@ -117,6 +117,17 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     ImmediateConstantMask mImmediateMask = ImmediateConstantMask(0);
     ImmediateConstantMask mUserImmdiateSlots = ImmediateConstantMask(0);
+    uint32_t mImmediateDataBlockByteSize = 0;
+
+    // When true, prevents shrinking the immediate constant mask to exclude trailing
+    // struct alignment padding after InitializeImpl(). This is needed for Metal backend
+    // where immediate data is uploaded as a single buffer via setBytes:length:atIndex:.
+    // On Metal, the buffer_sizes_offset in the compiled shader is derived from
+    // mImmediateMask.count() at compile time. If the mask is shrunk afterwards, the
+    // runtime layout will mismatch the compiled shader layout.
+    // TODO(crbug.com/dawn/2931): Consider a more general solution that doesn't require
+    // backend-specific flags in the common pipeline code.
+    bool mSkipImmediateBlockSizeOptimization = false;
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);
