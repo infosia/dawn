@@ -27,8 +27,6 @@
 
 #include "dawn/native/metal/CommandBufferMTL.h"
 
-#include <tint/tint.h>
-
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"

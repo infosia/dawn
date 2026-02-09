@@ -260,6 +260,29 @@ var<immediate> pc: f32;
 
     // Check that the result only includes the single f32 immediate data.
     EXPECT_EQ(4u, result[0].immediate_data_size);
+    EXPECT_EQ(4u, result[0].immediate_data_block_size);
+}
+
+// Test that immediate_data_size is smaller than block_size when struct has trailing padding.
+TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeWithTrailingPadding) {
+    auto* src = R"(
+struct S {
+  a: vec3<f32>,
+}
+var<immediate> pc: S;
+
+@fragment fn foo() { _ = pc; }
+)";
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetEntryPoints();
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    // vec3<f32> tight size is 12 bytes.
+    EXPECT_EQ(12u, result[0].immediate_data_size);
+    // vec3<f32> aligns to 16 bytes inside struct S, so block size is 16.
+    EXPECT_EQ(16u, result[0].immediate_data_block_size);
 }
 
 TEST_F(InspectorGetEntryPointTest, NonDefaultWorkgroupSize) {
