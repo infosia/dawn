@@ -633,6 +633,75 @@ TEST_F(ImmediateDataTest, ExecuteBundlesResetsImmediateDataState) {
     }
 }
 
+// Test that pipeline layout validation correctly handles immediate data with struct alignment.
+// The required immediate data size should exclude trailing padding.
+TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesWithStructAlignment) {
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
+          struct A { v: vec3<u32> }
+          struct B { v: vec2<u32> }
+          struct Data { a: A, @align(32) b: B, }
+
+        var<immediate> computeConstants: Data;
+        @group(0) @binding(0) var<storage, read_write> output : Data;
+
+        @compute @workgroup_size(1, 1, 1)
+        fn csMain() {
+            output = computeConstants;
+        }
+    )");
+
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        csDesc.layout = CreatePipelineLayout(40);
+        device.CreateComputePipeline(&csDesc);
+    }
+
+    // The tight size is 40 bytes (32 bytes for 'a' and padding + 8 bytes for 'b.v').
+    // The full block size is 64 bytes due to the @align(32) on 'b'.
+    // Validation should pass with 40 bytes, but fail with 36 bytes.
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        csDesc.layout = CreatePipelineLayout(36);
+        ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
+    }
+}
+
+// Test that validation does not require trailing padding bytes.
+TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesWithoutTrailingPadding) {
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
+        struct Data {
+            a: vec3<u32>
+        }
+
+        var<immediate> computeConstants: Data;
+        @group(0) @binding(0) var<storage, read_write> output : Data;
+
+        @compute @workgroup_size(1, 1, 1)
+        fn csMain() {
+            output = computeConstants;
+        }
+    )");
+
+    // The tight size is 12 bytes (vec3<u32>).
+    // The full block size is 16 bytes due to the alignment of vec3<u32>.
+    // Validation should pass with 12 bytes, but fail with 8 bytes.
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        csDesc.layout = CreatePipelineLayout(12);
+        device.CreateComputePipeline(&csDesc);
+    }
+
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        csDesc.layout = CreatePipelineLayout(8);
+        ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
+    }
+}
+
 enum class EncoderType {
     Compute,
     RenderPass,
