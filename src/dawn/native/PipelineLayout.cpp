@@ -164,7 +164,8 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        const UnpackedPtr<PipelineLayoutDescriptor>& descriptor,
                                        ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(device, descriptor->label),
-      mImmediateDataRangeByteSize(descriptor->immediateSize) {
+      mImmediateDataRangeByteSize(descriptor->immediateSize),
+      mImmediateDataBlockByteSize(descriptor->immediateSize) {
     DAWN_ASSERT(descriptor->bindGroupLayoutCount <= kMaxBindGroups);
 
     // According to WebGPU SPEC of CreatePipelineLayout(), if bindGroupLayouts[i] is null or
@@ -409,6 +410,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
 
     bool usesResourceTable = false;
     uint32_t immediateDataRangeByteSize = 0;
+    uint32_t immediateDataBlockByteSize = 0;
 
     // Loops over all the reflected BindGroupLayoutEntries from shaders.
     for (const StageAndDescriptor& stage : stages) {
@@ -462,6 +464,8 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         // vertex and fragment stage as the pipelineLayout immediate data block size.
         immediateDataRangeByteSize =
             std::max(immediateDataRangeByteSize, metadata.immediateDataRangeByteSize);
+        immediateDataBlockByteSize =
+            std::max(immediateDataBlockByteSize, metadata.immediateDataBlockByteSize);
     }
 
     // Create the bind group layouts, including the empty ones as all the bind group layouts should
@@ -502,6 +506,11 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     Ref<PipelineLayoutBase> result;
     DAWN_TRY_ASSIGN(result, device->CreatePipelineLayout(&desc, pipelineCompatibilityToken));
     DAWN_ASSERT(!result->IsError());
+
+    // Set the block size (with trailing padding) for internal immediate offset placement.
+    // This may differ from immediateSize (tight/validation size) when the user immediate data
+    // type has trailing struct padding.
+    result->SetImmediateDataBlockByteSize(immediateDataBlockByteSize);
 
     // Validate that the auto pipeline layout is compatible with the current pipeline.
     // Note: the currently specified rules can generate invalid default layouts.
@@ -593,6 +602,7 @@ size_t PipelineLayoutBase::ComputeContentHash() {
 
     // Hash the immediate data range byte size
     recorder.Record(mImmediateDataRangeByteSize);
+    recorder.Record(mImmediateDataBlockByteSize);
 
     // Hash the resource table state
     recorder.Record(mUsesResourceTable);
@@ -629,6 +639,9 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
     if (a->mImmediateDataRangeByteSize != b->mImmediateDataRangeByteSize) {
         return false;
     }
+    if (a->mImmediateDataBlockByteSize != b->mImmediateDataBlockByteSize) {
+        return false;
+    }
 
     // Check resource table
     if (a->mUsesResourceTable != b->mUsesResourceTable) {
@@ -640,6 +653,14 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
 
 uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
     return mImmediateDataRangeByteSize;
+}
+
+uint32_t PipelineLayoutBase::GetImmediateDataBlockByteSize() const {
+    return mImmediateDataBlockByteSize;
+}
+
+void PipelineLayoutBase::SetImmediateDataBlockByteSize(uint32_t size) {
+    mImmediateDataBlockByteSize = size;
 }
 
 uint32_t PipelineLayoutBase::GetNumStorageBufferBindingsInVertexStage() const {

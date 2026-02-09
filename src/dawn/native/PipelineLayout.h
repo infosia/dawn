@@ -118,6 +118,8 @@ class PipelineLayoutBase : public ApiObjectBase,
     };
 
     uint32_t GetImmediateDataRangeByteSize() const;
+    uint32_t GetImmediateDataBlockByteSize() const;
+    void SetImmediateDataBlockByteSize(uint32_t size);
 
   protected:
     PipelineLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -132,6 +134,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     uint32_t mNumStorageTextureBindingsInFragmentStage = 0;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
     uint32_t mImmediateDataRangeByteSize = 0;
+    uint32_t mImmediateDataBlockByteSize = 0;
     bool mUsesResourceTable = false;
 };
 
