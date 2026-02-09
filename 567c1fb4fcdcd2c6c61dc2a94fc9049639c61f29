@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84c63b82_14e0f497",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-09T20:57:57Z",
+      "side": 1,
+      "message": "Probably, I was trying to couple the mesa build, so that it only loads and runs iff we are doing a tint fuzzer build (I realize now I could double guard it (BUILD_MESA \u0026\u0026 BUILD_FUZZERS) here if we really needed that.\n\nTaking a step back I think it is fine to build mesa even if we are not building the fuzzer, because it is off by default, so if it is ON here, then the user explicitly turned it on.",
+      "parentUuid": "893fbc6e_3f034fa0",
+      "revId": "567c1fb4fcdcd2c6c61dc2a94fc9049639c61f29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88ea4512_10068675",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-02-09T20:29:27Z",
       "side": 1,
       "message": "```suggestion\ninclude(\"${DAWN_THIRD_PARTY_DIR}/meson/CMakeLists.txt\")\n```",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "567c1fb4fcdcd2c6c61dc2a94fc9049639c61f29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac716161_8ff0f10b",
+        "filename": "third_party/mesa/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-09T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ea4512_10068675",
       "range": {
         "startLine": 28,
         "startChar": 11,
