@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/msl/writer/raise/derivative_polyfill.h"
 
+#include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/instruction.h"
@@ -54,6 +55,7 @@ struct State {
 
     /// The thread_index_in_quadgroup module-scope variable.
     core::ir::Var* thread_index_in_quadgroup = nullptr;
+    core::ir::Var* keep_helper_alive = nullptr;
 
     /// Process the module, polyfilling `dpdxFine` and `dpdyFine` builtins.
     ///
@@ -83,6 +85,7 @@ struct State {
         // Declare the thread_index_in_quadgroup variable in which the builtin value will be stored.
         b.Append(ir.root_block, [&] {
             thread_index_in_quadgroup = b.Var<private_, u32>("tint_thread_index_in_quadgroup");
+            keep_helper_alive = b.Var<private_, f32>("tint_keep_helper_thread_alive_usage");
         });
 
         // Collect all derivative calls.
@@ -122,6 +125,10 @@ struct State {
                                       neighbor_minus_current,  // false value
                                       current_minus_neighbor,  // true value
                                       cond);
+
+                // Make a real derivative call to keep the helper thread alive.
+                auto* derivative = b.Call(current->Type(), builtin->Func(), result);
+                b.Store(keep_helper_alive, derivative);
 
                 builtin->Result()->ReplaceAllUsesWith(result->Result());
             });
