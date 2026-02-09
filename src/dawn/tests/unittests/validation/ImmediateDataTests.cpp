@@ -596,6 +596,29 @@ TEST_F(ImmediateDataTest, ExecuteBundlesResetsImmediateDataState) {
     }
 }
 
+TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesWithStructAlignment) {
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
+          struct A { v: vec3<u32> }
+          struct B { v: vec2<u32> }
+          struct Data { a: A, @align(32) b: B, }
+
+        var<immediate> computeConstants: Data;
+        @group(0) @binding(0) var<storage, read_write> output : Data;
+
+        @compute @workgroup_size(1, 1, 1)
+        fn csMain() {
+            output = computeConstants;
+        }
+    )");
+
+    {
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        csDesc.layout = CreatePipelineLayout(40);
+        device.CreateComputePipeline(&csDesc);
+    }
+}
+
 enum class EncoderType {
     Compute,
     RenderPass,

@@ -325,8 +325,10 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     X(bool, usesSubgroupMatrix)                                                                   \
     X(bool, usesFineDerivativeBuiltin)                                                            \
     X(bool, usesResourceTable)                                                                    \
-    /* Immediate Data block byte size */                                                          \
+    /* Immediate Data byte size without trailing padding (for validation) */                      \
     X(uint32_t, immediateDataRangeByteSize)                                                       \
+    /* Immediate Data block byte size including trailing padding */                               \
+    X(uint32_t, immediateDataBlockByteSize)                                                       \
     /* Immediate Data block used slots */                                                         \
     X(ImmediateConstantMask, immediateDataUsedSlots)
 DAWN_SERIALIZABLE(struct, EntryPointMetadata, ENTRY_POINT_METADATA_MEMBER) {

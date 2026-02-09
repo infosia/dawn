@@ -471,6 +471,15 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                                           mslCompilation->localWorkgroupSize.height,
                                           mslCompilation->localWorkgroupSize.depthOrArrayLayers);
 
+    // Query the alignment of the user-declared var<immediate> type from the Tint inspector.
+    // This is needed by the Metal backend to correctly size the setBytes upload to account
+    // for trailing struct alignment padding in the compiled tint_immediate_data_struct.
+    {
+        Ref<TintProgram> tintProgram = GetTintProgram();
+        tint::inspector::Inspector inspector(tintProgram->program);
+        out->immediateDataAlignment = inspector.GetImmediateDataAlignment(entryPointName);
+    }
+
     NSRef<NSString> mslSource =
         AcquireNSRef([[NSString alloc] initWithUTF8String:mslCompilation->msl.c_str()]);
 

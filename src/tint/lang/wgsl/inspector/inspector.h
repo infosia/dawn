@@ -35,6 +35,7 @@
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "src/tint/api/common/override_id.h"
@@ -114,6 +115,11 @@ class Inspector {
     /// may be used by the entry point. Returns an empty bitset if the immediate block is not
     /// referenced.
     std::bitset<kImmediateSlotCount> GetImmediateBlockInfo(const std::string& entry_point);
+
+    /// @param entry_point name of the entry point to get information about
+    /// @returns the alignment in bytes of the user-declared var<immediate> type referenced
+    /// by the entry point. Returns 0 if no immediate data is used.
+    uint32_t GetImmediateDataAlignment(const std::string& entry_point);
 
     /// @returns vector of all valid extension names used by the program. There
     /// will be no duplicated names in the returned vector even if an extension
@@ -217,8 +223,10 @@ class Inspector {
         VectorRef<const ast::Attribute*> attributes) const;
 
     /// @param func the root function of the callgraph to consider for the computation.
-    /// @returns the total size in bytes of all immediate data variables accessed via func.
-    uint32_t ComputeImmediateDataSize(const ast::Function* func) const;
+    /// @returns a pair of {tight_size, block_size} where tight_size is the size without trailing
+    /// padding (for validation) and block_size is the size with trailing padding (for internal
+    /// immediate offset placement).
+    std::pair<uint32_t, uint32_t> ComputeImmediateDataSize(const ast::Function* func) const;
 
     /// @param func the root function of the callgraph to consider for the computation
     /// @returns the list of member types for the `pixel_local` variable accessed via func, if any.
