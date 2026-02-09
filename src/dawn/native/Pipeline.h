@@ -117,6 +117,7 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     ImmediateConstantMask mImmediateMask = ImmediateConstantMask(0);
     ImmediateConstantMask mUserImmdiateSlots = ImmediateConstantMask(0);
+    uint32_t mImmediateDataBlockByteSize = 0;
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);

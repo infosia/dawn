@@ -298,6 +298,8 @@ PipelineBase::PipelineBase(DeviceBase* device,
         }
 
         mUserImmdiateSlots |= metadata.immediateDataUsedSlots;
+        mImmediateDataBlockByteSize =
+            std::max(mImmediateDataBlockByteSize, metadata.immediateDataBlockByteSize);
     }
 }
 
@@ -436,13 +438,24 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
         scopedUsePrograms = UseShaderPrograms();
     }
 
-    // Set immediate constant status. userConstants is the first element in both
-    // RenderImmediateConstants and ComputeImmediateConstants.
-    ImmediateConstantMask userConstantsBits =
-        GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
-    mImmediateMask |= userConstantsBits;
+    // To avoid overlap between user immediate constants and internal immediate constants:
+    // 1. Reserve the full declared size (including padding) first.
+    // 2. Initialize implementation (which may add internal constants).
+    // 3. If no internal constants were added, shrink to the used size (excluding padding)
+    //    to avoid allocating unused padding bytes.
+    ImmediateConstantMask userConstantsDeclaredBits =
+        GetImmediateConstantBlockBits(0, mImmediateDataBlockByteSize);
+    mImmediateMask |= userConstantsDeclaredBits;
 
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing %s", this);
+
+    // If no internal constants were added, we can optimize the user block size to
+    // exclude trailing padding. This strictly matches the used size validation.
+    if (!(mImmediateMask & ~userConstantsDeclaredBits).any()) {
+        mImmediateMask =
+            GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
+    }
+
     return {};
 }
 
