@@ -57,6 +57,7 @@ typedef std::variant<wgpu::BindGroup,
                      wgpu::Sampler,
                      wgpu::ShaderModule,
                      wgpu::Texture,
+                     wgpu::TexelBufferView,
                      wgpu::TextureView>
     Resource;
 
