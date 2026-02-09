@@ -368,3 +368,6 @@ if (TINT_BUILD_TINTD)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/jsoncpp" EXCLUDE_FROM_ALL)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/langsvr" EXCLUDE_FROM_ALL)
 endif()
+
+# add_subdirector(mesa) is intentionally not added here, so that it
+# doesn't get exposed to non-fuzzer builds
