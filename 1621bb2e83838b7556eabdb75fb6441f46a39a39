@@ -70,6 +70,24 @@
       "parentUuid": "a2974f50_c50acf91",
       "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fe4341c_8e9b0658",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-09T14:06:31Z",
+      "side": 1,
+      "message": "I think we don\u0027t care about storeOp\u003dStore in Graphite.",
+      "parentUuid": "2f837f49_e3fd401c",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
