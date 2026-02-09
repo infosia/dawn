@@ -141,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87e53348_7f784e83",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T18:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2147d6ad_59776faf",
+      "range": {
+        "startLine": 3,
+        "startChar": 47,
+        "endLine": 3,
+        "endChar": 52
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b33c2f0_a96c92c5",
@@ -154,6 +178,30 @@
       "writtenOn": "2026-02-06T14:54:24Z",
       "side": 1,
       "message": "Why is this 25?",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fc60bc9_638df56a",
+        "filename": "test/tint/builtins/gen/literal/atomicStoreMin/f5f229.wgsl",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T18:04:49Z",
+      "side": 1,
+      "message": "could be because this was actually started last year.",
+      "parentUuid": "0b33c2f0_a96c92c5",
       "range": {
         "startLine": 1,
         "startChar": 16,
