@@ -16,6 +16,24 @@
       "message": "This seems the wrong place to do this. `SmallestAccessSize` is supposed to find if there are element accesses to the vector. In the test you added, the whole matrix is loaded, why would it be wrong to load a larger type?",
       "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe7ab19f_4e2c94fd",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-02-09T05:07:11Z",
+      "side": 1,
+      "message": "Sorry about the poor example earlier – I’ve fixed it now. The new case involves storing vector elements in a matrix within a struct:\n\nThe struct is defined as:\nS_mat3x4h_align \u003d struct @align(8) { x:u32 @offset(0); y:mat3x4\u003cf16\u003e @offset(8) }\n\nAccording to the original logic, SetBaseEleType(var) picks U32 as the base element type for this struct. In MakeVectorStore, this leads to ratio \u003d st_ele_ty-\u003eSize() / BaseEleType()-\u003eSize() \u003d 2/4 \u003d 0, which fails the TINT_IR_ASSERT(ir, ratio \u003d\u003d 1 || ratio \u003d\u003d 2) check.\n\nAdditionally, using u32 to store f16 may introduce data races for scalar f16 writes – two adjacent f16 values written by different invocations would hit the same u32 value.\n\nI plan to adjust the code logic for selecting the base element type. My current thought is: if the vector contains f16, have SmallestElementSize return 2, so SetBaseEleType can choose u16 as the base element type instead.\n\nDo you have any better suggestions for this fix? Thanks!",
+      "parentUuid": "361374fe_6a8d96f0",
+      "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
