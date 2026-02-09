@@ -68,6 +68,24 @@
       "parentUuid": "0d4bf931_afc18069",
       "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04506b94_be5e57ee",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-09T23:37:39Z",
+      "side": 1,
+      "message": "Those are also fine with me, but I think the pragma would end up being most readable as it doesn\u0027t unnecessarily mess with the template structure.",
+      "parentUuid": "b23dcc5f_ae00755c",
+      "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
