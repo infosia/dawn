@@ -80,6 +80,7 @@ using Mat4x3 = std::array<float, 12>;
     X(Sampler)                      \
     X(ShaderModule)                 \
     X(Texture)                      \
+    X(TexelBufferView)              \
     X(TextureView)
 
 #define DAWN_REPLAY_OBJECT_TYPES_ENUM(X) X(ObjectType, DAWN_REPLAY_OBJECT_TYPES)
@@ -428,6 +429,13 @@ DAWN_REPLAY_SERIALIZABLE(struct, Texture, TEXTURE_CREATION_MEMBER){};
 
 DAWN_REPLAY_SERIALIZABLE(struct, TextureView, TEXTURE_VIEW_CREATION_MEMBER){};
 
+#define TEXEL_BUFFER_VIEW_CREATION_MEMBER(X) \
+    X(wgpu::TextureFormat, format)           \
+    X(uint64_t, offset)                      \
+    X(uint64_t, size)
+
+DAWN_REPLAY_SERIALIZABLE(struct, TexelBufferView, TEXEL_BUFFER_VIEW_CREATION_MEMBER){};
+
 #define QUERYSET_CREATION_MEMBER(X) \
     X(wgpu::QueryType, type)        \
     X(uint32_t, count)
@@ -486,6 +494,25 @@ DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(SamplerBinding, SAMPLER_BIND_GROUP_ENTRY_MEMB
 #define TEXTURE_BIND_GROUP_ENTRY_MEMBER(X) X(ObjectId, textureViewId)
 
 DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(TextureBinding, TEXTURE_BIND_GROUP_ENTRY_MEMBER){};
+
+#define STORAGE_TEXTURE_BIND_GROUP_ENTRY_MEMBER(X) X(ObjectId, textureViewId)
+
+DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(StorageTextureBinding,
+                                   STORAGE_TEXTURE_BIND_GROUP_ENTRY_MEMBER){};
+
+#define TEXEL_BUFFER_BIND_GROUP_ENTRY_MEMBER(X) X(ObjectId, texelBufferViewId)
+
+DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(TexelBufferBinding, TEXEL_BUFFER_BIND_GROUP_ENTRY_MEMBER){};
+
+#define INPUT_ATTACHMENTS_BIND_GROUP_ENTRY_MEMBER(X) X(ObjectId, textureViewId)
+
+DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(InputAttachmentBindingInfo,
+                                   INPUT_ATTACHMENTS_BIND_GROUP_ENTRY_MEMBER){};
+
+#define STATIC_SAMPLER_BIND_GROUP_ENTRY_MEMBER(X)
+
+DAWN_REPLAY_MAKE_BINDGROUP_VARIANT(StaticSamplerBindingInfo,
+                                   STATIC_SAMPLER_BIND_GROUP_ENTRY_MEMBER){};
 
 #define EXTERNAL_TEXTURE_BIND_GROUP_ENTRY_MEMBER(X) \
     X(ObjectId, externalTextureId)                  \
