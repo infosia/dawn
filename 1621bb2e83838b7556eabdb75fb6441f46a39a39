@@ -88,6 +88,24 @@
       "parentUuid": "2f837f49_e3fd401c",
       "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01196318_e1c9d34c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-09T18:44:00Z",
+      "side": 1,
+      "message": "\u003e It should also be noted that using Dynamic Rendering is gated by the presence of DRLR in this CL, but we really should be able to use it any time the DawnLoadResolveTexture feature isn\u0027t being used as well.\n\nActually I guess we could just not request Features::DawnLoadResolveTexture if Features::MSAARenderToSingleSampled is available for Graphite? That is assuming dawn can enable DynamicRendering selectively if supported AND DawnLoadResolveTexture isn\u0027t requested.",
+      "parentUuid": "7fe4341c_8e9b0658",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
