@@ -221,6 +221,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b60f3598_98f7fbba",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-09T11:07:40Z",
+      "side": 1,
+      "message": "Why is there a feedback loop? In layout general there is no transition happening, and for each pixel rendered, the texture sample from the resolve attachment is guaranteed to happen before the resolve step for that same pixel.",
+      "parentUuid": "9dde1a7b_91dbbe55",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
