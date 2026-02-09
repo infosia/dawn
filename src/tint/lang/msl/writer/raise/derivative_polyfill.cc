@@ -27,6 +27,8 @@
 
 #include "src/tint/lang/msl/writer/raise/derivative_polyfill.h"
 
+#include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/instruction.h"
@@ -122,6 +124,12 @@ struct State {
                                       neighbor_minus_current,  // false value
                                       current_minus_neighbor,  // true value
                                       cond);
+
+                // Make a real derivative call to keep the helper thread alive.
+                auto* derivative = b.Call(current->Type(), builtin->Func(), result);
+                auto* keep_alive =
+                    b.Var("tint_keep_helper_thread_alive_usage", private_, current->Type());
+                b.Store(keep_alive, derivative);
 
                 builtin->Result()->ReplaceAllUsesWith(result->Result());
             });

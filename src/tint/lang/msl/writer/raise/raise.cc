@@ -221,9 +221,9 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                                       options.fixed_sample_mask, options.depth_range_offsets}));
     TINT_CHECK_RESULT(raise::PackedVec3(module));
     TINT_CHECK_RESULT(raise::SimdBallot(module));
-    if (options.workarounds.polyfill_derivatives) {
-        TINT_CHECK_RESULT(raise::DerivativePolyfill(module));
-    }
+    // if (options.workarounds.polyfill_derivatives) {
+    TINT_CHECK_RESULT(raise::DerivativePolyfill(module));
+    // }
 
     // ArgumentBuffers must come before ModuleScopeVars
     if (options.use_argument_buffers) {
