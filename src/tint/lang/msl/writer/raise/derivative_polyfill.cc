@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/msl/writer/raise/derivative_polyfill.h"
 
+#include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/instruction.h"
@@ -123,7 +124,13 @@ struct State {
                                       current_minus_neighbor,  // true value
                                       cond);
 
-                builtin->Result()->ReplaceAllUsesWith(result->Result());
+                // Make a silly derivative call, zero it, and add it to the result, just so there's
+                // another derivative call later in execution to keep helper threads alive.
+                auto* dummy = b.Call(current->Type(), core::BuiltinFn::kDpdx, current);
+                auto* zero = b.Multiply(dummy, b.Constant(f32(0)));
+                auto new_result = b.Add(result, zero);
+
+                builtin->Result()->ReplaceAllUsesWith(new_result->Result());
             });
             builtin->Destroy();
         }
