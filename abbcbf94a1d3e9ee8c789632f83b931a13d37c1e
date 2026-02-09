@@ -239,6 +239,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a66087c6_06d1eb0c",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-09T16:20:06Z",
+      "side": 1,
+      "message": "Unless there\u0027s rule specifically saying this should work (which maybe exists and I haven\u0027t noticed), it\u0027s a little more complicated than that because the reads and writes don\u0027t just affect single pixels. There are caches and there is framebuffer compression that make the effect non local.\n\nLike, hypothetically, I could have a terrible GPU that renders one pixel at a time, does framebuffer compression on 2x1 blocks, texture fetch loads 2x pixel data in cache but only partial data for each pixel, but the rest of the pixel (meta)data is uncached. (Ridiculous GPU, but just for the sake of exercise). Then while rendering pixel 0, the device fetches data for pixels 0 and 1 in cache, then resolves into pixel 0, changing the metadata for the 2x1 block. When rendering pixel 1, it reads parts of pixel 1\u0027s data from cache (stale) and parts of it uncached (updated). Then the value for pixel 1 would be wrong.\n\nObviously the reality is a lot more complicated, but as far as I remember (but don\u0027t rely on my memory), there are no exceptions being made for \"if you promise to only fetch from the same pixel you\u0027re resolving into\".",
+      "parentUuid": "b60f3598_98f7fbba",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
