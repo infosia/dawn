@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2db1594_1a529a79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-09T17:52:39Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of the idea that the toggle can effectively be ignored in some cases, but also it\u0027s not that much different than a toggle being force disabled because of a missing extension, so it\u0027s probably fine.\n\nThanks Loko for the discussion about this last Friday.",
+      "revId": "a9dc13832f56721ec360d4cf0e37082fbdb6ca90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
