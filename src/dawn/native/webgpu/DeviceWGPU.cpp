@@ -103,9 +103,15 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
     // TogglesState deviceToggles already has them resolved.
 
     // For outer (this webgpu::Device), we want to disable everything else.
-    std::vector<Toggle> togglesToDisable;
     for (size_t i : deviceToggles.GetEnabledToggles()) {
         Toggle t = static_cast<Toggle>(i);
+        const ToggleInfo* info = TogglesInfo::GetToggleInfo(t);
+
+        if (info->stage != ToggleStage::Device) {
+            // Bypass any force settings if not a device stage toggle.
+            continue;
+        }
+
         bool isOuter = false;
         for (Toggle outer : kOuterToggles) {
             if (t == outer) {
