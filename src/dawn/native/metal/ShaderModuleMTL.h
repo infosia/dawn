@@ -62,6 +62,10 @@ class ShaderModule final : public ShaderModuleBase {
         bool needsStorageBufferLength;
         std::vector<uint32_t> workgroupAllocations;
         MTLSize localWorkgroupSize;
+        // Alignment of the user-declared var<immediate> type, queried from the Tint
+        // inspector. Used by the Metal backend to account for trailing struct alignment
+        // padding in the compiled tint_immediate_data_struct.
+        uint32_t immediateDataAlignment = 0;
     };
 
     MaybeError CreateFunction(SingleShaderStage stage,

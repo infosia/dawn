@@ -27,6 +27,8 @@
 
 #include "dawn/native/metal/CommandBufferMTL.h"
 
+#include <algorithm>
+
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
@@ -569,6 +571,20 @@ class ImmediateConstantTracker : public T {
         // sizes.
         for (auto stage : IterateStages(stages)) {
             dirtySize[stage] = bufferSizeOffset + lengthTracker->dataSize[stage];
+        }
+
+        // On Metal, Tint emits immediate data as a typed struct
+        // (tint_immediate_data_struct) whose size is rounded up to its alignment.
+        // The struct alignment is max(user_type_align, 16). We use the exact
+        // user immediate data alignment reported by the Tint inspector (stored
+        // on the Metal pipeline at creation time) to compute the correct upload
+        // size that matches the compiled struct size.
+        uint32_t alignment = ToBackend(this->mLastPipeline)->GetImmediateDataAlignment();
+        if (alignment > 0) {
+            alignment = std::max(alignment, uint32_t(16));
+            for (auto stage : IterateStages(stages)) {
+                dirtySize[stage] = RoundUp(dirtySize[stage], alignment);
+            }
         }
 
         // Reset StorageBufferLengthTracker dirty stages

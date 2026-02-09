@@ -53,6 +53,11 @@ ComputePipeline::ComputePipeline(DeviceBase* dev,
 ComputePipeline::~ComputePipeline() = default;
 
 MaybeError ComputePipeline::InitializeImpl() {
+    // Metal requires the full immediate block size (including struct alignment padding)
+    // to ensure compile-time and runtime buffer layouts match. See comment in
+    // PipelineBase::Initialize() for details.
+    mSkipImmediateBlockSizeOptimization = true;
+
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
@@ -91,6 +96,7 @@ MaybeError ComputePipeline::InitializeImpl() {
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
+    mImmediateDataAlignment = computeData.immediateDataAlignment;
     return {};
 }
 
@@ -112,6 +118,10 @@ MTLSize ComputePipeline::GetLocalWorkGroupSize() const {
 
 bool ComputePipeline::RequiresStorageBufferLength() const {
     return mRequiresStorageBufferLength;
+}
+
+uint32_t ComputePipeline::GetImmediateDataAlignment() const {
+    return mImmediateDataAlignment;
 }
 
 }  // namespace dawn::native::metal

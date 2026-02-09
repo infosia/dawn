@@ -60,6 +60,7 @@ class RenderPipeline final : public RenderPipelineBase {
     uint32_t GetMtlVertexBufferIndex(VertexBufferSlot slot) const;
 
     wgpu::ShaderStage GetStagesRequiringStorageBufferLength() const;
+    uint32_t GetImmediateDataAlignment() const;
 
     MaybeError InitializeImpl() override;
 
@@ -77,6 +78,7 @@ class RenderPipeline final : public RenderPipelineBase {
     PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
 
     wgpu::ShaderStage mStagesRequiringStorageBufferLength = wgpu::ShaderStage::None;
+    uint32_t mImmediateDataAlignment = 0;
 };
 
 }  // namespace dawn::native::metal

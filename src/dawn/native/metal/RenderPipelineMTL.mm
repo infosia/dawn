@@ -27,6 +27,8 @@
 
 #include "dawn/native/metal/RenderPipelineMTL.h"
 
+#include <algorithm>
+
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Instance.h"
@@ -342,6 +344,11 @@ RenderPipeline::RenderPipeline(DeviceBase* dev, const UnpackedPtr<RenderPipeline
 RenderPipeline::~RenderPipeline() = default;
 
 MaybeError RenderPipeline::InitializeImpl() {
+    // Metal requires the full immediate block size (including struct alignment padding)
+    // to ensure compile-time and runtime buffer layouts match. See comment in
+    // PipelineBase::Initialize() for details.
+    mSkipImmediateBlockSizeOptimization = true;
+
     mMtlPrimitiveTopology = MTLPrimitiveTopology(GetPrimitiveTopology());
     mMtlFrontFace = MTLFrontFace(GetFrontFace());
     mMtlCullMode = ToMTLCullMode(GetCullMode());
@@ -396,6 +403,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     if (vertexData.needsStorageBufferLength) {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
+    mImmediateDataAlignment = std::max(mImmediateDataAlignment, vertexData.immediateDataAlignment);
 
     ShaderModule::MetalFunctionData fragmentData;
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
@@ -410,6 +418,8 @@ MaybeError RenderPipeline::InitializeImpl() {
         if (fragmentData.needsStorageBufferLength) {
             mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Fragment;
         }
+        mImmediateDataAlignment =
+            std::max(mImmediateDataAlignment, fragmentData.immediateDataAlignment);
 
         const auto& fragmentOutputMask = fragmentStage.metadata->fragmentOutputMask;
         for (auto i : GetColorAttachmentsMask()) {
@@ -520,6 +530,10 @@ uint32_t RenderPipeline::GetMtlVertexBufferIndex(VertexBufferSlot slot) const {
 
 wgpu::ShaderStage RenderPipeline::GetStagesRequiringStorageBufferLength() const {
     return mStagesRequiringStorageBufferLength;
+}
+
+uint32_t RenderPipeline::GetImmediateDataAlignment() const {
+    return mImmediateDataAlignment;
 }
 
 NSRef<MTLVertexDescriptor> RenderPipeline::MakeVertexDesc() const {

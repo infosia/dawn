@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 
+#include <algorithm>
 #include <functional>
 #include <unordered_set>
 #include <utility>
@@ -78,6 +79,31 @@ using namespace tint::core::fluent_types;  // NOLINT
 
 namespace tint::inspector {
 namespace {
+
+// Compute the byte size of a type excluding trailing struct padding, recursively.
+// Immediate data types do not contain arrays.
+uint32_t ImmediateMemberTightSize(const core::type::Type* type) {
+    return tint::Switch(
+        type,
+        [&](const sem::Struct* str) -> uint32_t {
+            auto members = str->Members();
+            if (members.IsEmpty()) {
+                return 0;
+            }
+            auto* last = members.Back();
+            return last->Offset() + ImmediateMemberTightSize(last->Type());
+        },
+        [&](const core::type::Matrix* mat) -> uint32_t {
+            return (mat->Columns() - 1) * mat->ColumnStride() +
+                   ImmediateMemberTightSize(mat->ColumnType());
+        },
+        [&](const core::type::Vector*) -> uint32_t { return type->Size(); },
+        [&](const core::type::Scalar*) -> uint32_t { return type->Size(); },
+        [&](Default) -> uint32_t {
+            TINT_UNREACHABLE() << "unexpected type in immediate data struct: "
+                               << type->FriendlyName();
+        });
+}
 
 std::tuple<ComponentType, CompositionType> CalculateComponentAndComposition(
     const core::type::Type* type) {
@@ -339,7 +365,9 @@ EntryPoint Inspector::GetEntryPoint(const tint::ast::Function* func) {
         }
     }
 
-    entry_point.immediate_data_size = ComputeImmediateDataSize(func);
+    auto [tight_size, block_size] = ComputeImmediateDataSize(func);
+    entry_point.immediate_data_size = tight_size;
+    entry_point.immediate_data_block_size = block_size;
 
     for (auto* param : sem->Parameters()) {
         AddEntryPointInOutVariables(
@@ -798,6 +826,22 @@ std::bitset<kImmediateSlotCount> Inspector::GetImmediateBlockInfo(const std::str
     return accessible_slots;
 }
 
+uint32_t Inspector::GetImmediateDataAlignment(const std::string& entry_point) {
+    auto* func = FindEntryPointByName(entry_point);
+    if (!func) {
+        return 0;
+    }
+
+    auto* func_sem = program_.Sem().Get(func);
+    uint32_t alignment = 0;
+    for (const sem::Variable* var : func_sem->TransitivelyReferencedGlobals()) {
+        if (var->AddressSpace() == core::AddressSpace::kImmediate) {
+            alignment = std::max(alignment, var->Type()->UnwrapRef()->Align());
+        }
+    }
+    return alignment;
+}
+
 std::vector<std::string> Inspector::GetUsedExtensionNames() {
     auto& extensions = program_.Sem().Module()->Extensions();
     std::vector<std::string> out;
@@ -966,16 +1010,18 @@ std::tuple<InterpolationType, InterpolationSampling> Inspector::CalculateInterpo
     return {interpolation_type, sampling_type};
 }
 
-uint32_t Inspector::ComputeImmediateDataSize(const ast::Function* func) const {
-    uint32_t size = 0;
+std::pair<uint32_t, uint32_t> Inspector::ComputeImmediateDataSize(const ast::Function* func) const {
+    uint32_t tight_size = 0;
+    uint32_t block_size = 0;
     auto* func_sem = program_.Sem().Get(func);
     for (const sem::Variable* var : func_sem->TransitivelyReferencedGlobals()) {
         if (var->AddressSpace() == core::AddressSpace::kImmediate) {
-            size += var->Type()->UnwrapRef()->Size();
+            tight_size += ImmediateMemberTightSize(var->Type()->UnwrapRef());
+            block_size += var->Type()->UnwrapRef()->Size();
         }
     }
 
-    return size;
+    return {tight_size, block_size};
 }
 
 std::vector<PixelLocalMemberType> Inspector::ComputePixelLocalMemberTypes(
