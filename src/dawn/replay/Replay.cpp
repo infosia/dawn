@@ -374,6 +374,148 @@ MaybeError Deserialize(ReadHead& readHead, BindGroupLayoutEntryVariant* out) {
 #undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_INVALID
 #undef DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_VALID
 
+// These x-macros use DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES to generate
+// an std::variant that includes each type of BindGroupLayoutEntry. This
+// std::variant can then be used in CreateBindGroup below with
+// a visitor to separate deserialization from actual use.
+#define DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_VALID(NAME) schema::BindGroupEntryType##NAME,
+#define DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_BINDGROUP_VARIANT_TYPE(...)                  \
+    DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_GET_MACRO(                \
+        __VA_ARGS__, DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_INVALID, \
+        DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_VALID)(__VA_ARGS__)
+
+#define DAWN_REPLAY_GEN_BINDGROUP_VARIANT(ENUM_NAME, MEMBERS) \
+    using BindGroupEntryVariant =                             \
+        std::variant<MEMBERS(DAWN_REPLAY_BINDGROUP_VARIANT_TYPE) std::monostate>;
+
+DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_VARIANT)
+
+#undef DAWN_REPLAY_GEN_BINDGROUP_VARIANT
+#undef DAWN_REPLAY_BINDGROUP_VARIANT_TYPE
+#undef DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_GET_MACRO
+#undef DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_INVALID
+#undef DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_VALID
+
+// These x-macros use DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES which
+// is a list of all BindGroupLayoutEntry types to auto generate
+// a switch case for each type of BindGroupEntryType that deserializes
+// a capture for that type and converts it to an std::variant entry
+// for that type.
+#define DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID(NAME)          \
+    case schema::BindGroupLayoutEntryType::NAME: {                  \
+        schema::BindGroupEntryType##NAME data;                      \
+        data.variantType = type;                                    \
+        DAWN_TRY(Deserialize(readHead, &data.binding, &data.data)); \
+        *out = std::move(data);                                     \
+        return {};                                                  \
+    }
+#define DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_BINDGROUP_DESERIALIZE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE(...)                  \
+    DAWN_REPLAY_BINDGROUP_DESERIALIZE_GET_MACRO(                     \
+        __VA_ARGS__, DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID, \
+        DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID)(__VA_ARGS__)
+
+#define DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE(ENUM_NAME, MEMBERS)              \
+    MaybeError Deserialize(ReadHead& readHead, BindGroupEntryVariant* out) {   \
+        schema::ENUM_NAME type;                                                \
+        DAWN_TRY(Deserialize(readHead, &type));                                \
+        switch (type) {                                                        \
+            MEMBERS(DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE)                    \
+            default:                                                           \
+                return DAWN_INTERNAL_ERROR("unhandled bind group entry type"); \
+        }                                                                      \
+    }
+
+DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE)
+
+#undef DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE
+#undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE
+#undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_GET_MACRO
+#undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID
+#undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID
+
+struct BindGroupEntryVisitor {
+    const ReplayImpl& replay;
+    std::vector<wgpu::BindGroupEntry>& entries;
+    std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>& externalTextureBindingEntries;
+
+    template <typename T>
+    MaybeError operator()(const T& data) {
+        wgpu::BindGroupEntry entry;
+        entry.binding = data.binding;
+        DAWN_TRY(FillEntry(entry, data.data));
+        entries.push_back(entry);
+        return {};
+    }
+
+    MaybeError operator()(const std::monostate&) {
+        return DAWN_INTERNAL_ERROR("invalid bind group entry");
+    }
+
+  private:
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeBufferBindingData& data) {
+        entry.buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
+        entry.offset = data.offset;
+        entry.size = data.size;
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeSamplerBindingData& data) {
+        entry.sampler = replay.GetObjectById<wgpu::Sampler>(data.samplerId);
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeTextureBindingData& data) {
+        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeStorageTextureBindingData& data) {
+        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeTexelBufferBindingData& data) {
+        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeInputAttachmentBindingInfoData& data) {
+        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        return {};
+    }
+
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry,
+                         const schema::BindGroupEntryTypeExternalTextureBindingData& data) {
+        if (data.externalTextureId != 0) {
+            auto& externalBindingEntryPtr = externalTextureBindingEntries.emplace_back(
+                std::make_unique<wgpu::ExternalTextureBindingEntry>());
+            externalBindingEntryPtr->externalTexture =
+                replay.GetObjectById<wgpu::ExternalTexture>(data.externalTextureId);
+            entry.nextInChain = externalBindingEntryPtr.get();
+        } else {
+            // External texture binding can bind a regular texture view
+            DAWN_ASSERT(data.textureViewId != 0);
+            entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        }
+        return {};
+    }
+
+    template <typename T>
+    MaybeError FillEntry(wgpu::BindGroupEntry& entry, const T&) {
+        return {};
+    }
+};
+
 struct BindGroupLayoutEntryVisitor {
     wgpu::BindGroupLayoutEntry& entry;
     wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout;
@@ -443,74 +585,13 @@ ResultOrError<wgpu::BindGroup> CreateBindGroup(const ReplayImpl& replay,
 
     std::vector<wgpu::BindGroupEntry> entries;
     entries.reserve(bg.numEntries);
-    // To make only the case with ExternalTexture more expensive, use
-    // unique_ptr<wgpu::ExternalTextureBindingEntry> for the vector member. vector::reserve is not
-    // needed since the member itself is pointer and the address would not change on reallocation.
     std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>> externalTextureBindingEntries;
 
     for (uint32_t i = 0; i < bg.numEntries; ++i) {
-        schema::BindGroupLayoutEntryType entryType;
-        uint32_t binding;
-        DAWN_TRY(Deserialize(readHead, &entryType));
-        DAWN_TRY(Deserialize(readHead, &binding));
-
-        switch (entryType) {
-            case schema::BindGroupLayoutEntryType::BufferBinding: {
-                schema::BindGroupEntryTypeBufferBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                entries.push_back(wgpu::BindGroupEntry{
-                    .binding = binding,
-                    .buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId),
-                    .offset = data.offset,
-                    .size = data.size,
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::SamplerBinding: {
-                schema::BindGroupEntryTypeSamplerBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                entries.push_back(wgpu::BindGroupEntry{
-                    .binding = binding,
-                    .sampler = replay.GetObjectById<wgpu::Sampler>(data.samplerId),
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::TextureBinding: {
-                schema::BindGroupEntryTypeTextureBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                entries.push_back(wgpu::BindGroupEntry{
-                    .binding = binding,
-                    .textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId),
-                });
-                break;
-            }
-            case schema::BindGroupLayoutEntryType::ExternalTextureBinding: {
-                schema::BindGroupEntryTypeExternalTextureBindingData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-
-                if (data.externalTextureId != 0) {
-                    auto& externalBindingEntryPtr = externalTextureBindingEntries.emplace_back(
-                        std::make_unique<wgpu::ExternalTextureBindingEntry>());
-                    externalBindingEntryPtr->externalTexture =
-                        replay.GetObjectById<wgpu::ExternalTexture>(data.externalTextureId);
-
-                    entries.push_back(wgpu::BindGroupEntry{
-                        .nextInChain = externalBindingEntryPtr.get(),
-                        .binding = binding,
-                    });
-                } else {
-                    // External texture binding can bind a regular texture view
-                    DAWN_ASSERT(data.textureViewId != 0);
-                    entries.push_back(wgpu::BindGroupEntry{
-                        .binding = binding,
-                        .textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId),
-                    });
-                }
-                break;
-            }
-            default:
-                return DAWN_INTERNAL_ERROR("unsupported bind group entry type");
-        }
+        BindGroupEntryVariant entryVariant;
+        DAWN_TRY(Deserialize(readHead, &entryVariant));
+        DAWN_TRY(std::visit(BindGroupEntryVisitor{replay, entries, externalTextureBindingEntries},
+                            entryVariant));
     }
 
     wgpu::BindGroupDescriptor desc{
