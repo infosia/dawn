@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e1a6122_8021a11d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-09T23:47:27Z",
+      "side": 1,
+      "message": "LGTM for this, but we should probably really try to make the helper function that\u0027s causing this in the generator be less heuristic based... (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;l\u003d97?q\u003djsrepr\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2Fgenerator%2F\u0026start\u003d1)\n\nChecking whether the last char in a chunk being a digit seems really volatile going forwards... In the long run when we have emscripten tests we could probably catch this by just doing a sanity check on all the enums, but in the meantime I don\u0027t really have a better idea tbh...",
+      "revId": "be72e737a7b8577200a99e9dc3d06118c1cc5cfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
