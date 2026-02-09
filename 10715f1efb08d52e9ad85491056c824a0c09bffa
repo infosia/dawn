@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aa4fc0e_1d094ff6",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-09T06:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46a95b2c_fa39ccb8",
+      "revId": "10715f1efb08d52e9ad85491056c824a0c09bffa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd2a1602_5d784eb6",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-08T14:59:50Z",
       "side": 1,
       "message": "nit: Maybe comment what this magical data structure is and is used for ^^.",
+      "revId": "10715f1efb08d52e9ad85491056c824a0c09bffa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a26fc08_a664687c",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-09T06:06:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2a1602_5d784eb6",
       "revId": "10715f1efb08d52e9ad85491056c824a0c09bffa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
