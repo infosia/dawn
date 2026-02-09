@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "893fbc6e_3f034fa0",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-09T20:29:27Z",
+      "side": 1,
+      "message": "Couldn\u0027t you do:\n\n```\nif (TINT_BUILD_MESA)\n    add_dependencies(${TARGET} mesa)\nendif()\n```\n\nthen remove the add_dependency from the section above?",
+      "revId": "567c1fb4fcdcd2c6c61dc2a94fc9049639c61f29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ea4512_10068675",
+        "filename": "third_party/mesa/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-09T20:29:27Z",
+      "side": 1,
+      "message": "```suggestion\ninclude(\"${DAWN_THIRD_PARTY_DIR}/meson/CMakeLists.txt\")\n```",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "567c1fb4fcdcd2c6c61dc2a94fc9049639c61f29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
