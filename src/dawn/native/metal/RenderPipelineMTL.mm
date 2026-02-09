@@ -342,6 +342,11 @@ RenderPipeline::RenderPipeline(DeviceBase* dev, const UnpackedPtr<RenderPipeline
 RenderPipeline::~RenderPipeline() = default;
 
 MaybeError RenderPipeline::InitializeImpl() {
+    // Metal requires the full immediate block size (including struct alignment padding)
+    // to ensure compile-time and runtime buffer layouts match. See comment in
+    // PipelineBase::Initialize() for details.
+    mSkipImmediateBlockSizeOptimization = true;
+
     mMtlPrimitiveTopology = MTLPrimitiveTopology(GetPrimitiveTopology());
     mMtlFrontFace = MTLFrontFace(GetFrontFace());
     mMtlCullMode = ToMTLCullMode(GetCullMode());

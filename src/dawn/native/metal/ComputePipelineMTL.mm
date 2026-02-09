@@ -53,6 +53,11 @@ ComputePipeline::ComputePipeline(DeviceBase* dev,
 ComputePipeline::~ComputePipeline() = default;
 
 MaybeError ComputePipeline::InitializeImpl() {
+    // Metal requires the full immediate block size (including struct alignment padding)
+    // to ensure compile-time and runtime buffer layouts match. See comment in
+    // PipelineBase::Initialize() for details.
+    mSkipImmediateBlockSizeOptimization = true;
+
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
