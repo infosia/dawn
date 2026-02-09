@@ -33,6 +33,23 @@
       "message": "PTAL, thanks!",
       "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d4bf931_afc18069",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-09T23:13:29Z",
+      "side": 1,
+      "message": "I would prefer not to duplicate code, especially this block which is pretty large.\n\nThere\u0027s nothing wrong with the code, the warning is meant to help find possible logic errors but there\u0027s no logic error here. Can we just suppress this with a `#pragma`?",
+      "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
