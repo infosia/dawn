@@ -50,6 +50,24 @@
       "message": "I would prefer not to duplicate code, especially this block which is pretty large.\n\nThere\u0027s nothing wrong with the code, the warning is meant to help find possible logic errors but there\u0027s no logic error here. Can we just suppress this with a `#pragma`?",
       "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b23dcc5f_ae00755c",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-09T23:26:22Z",
+      "side": 1,
+      "message": "If we don\u0027t care about formatting we could also just use a smarter if/else? Something like:\n\n```\nfor (exts) {\n  {% if extensions %}\n  switch (type) {\n     ... for each type ...\n  default:\n  {% endif %} \n  // Do the duplicated code\n  \n  {% if extensions %}\n    } // Probably need to add a closing bracket for the switch.\n  {% endif %}\n}\n```\n\nOr we could split out that part into a helper function and just call it appropriately?",
+      "parentUuid": "0d4bf931_afc18069",
+      "revId": "4b420df0a5a378eacb776b73327644f82ff5bd78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
