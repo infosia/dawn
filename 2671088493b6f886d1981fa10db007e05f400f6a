@@ -16,6 +16,23 @@
       "message": "James, Corentin: PTAL. Thanks!",
       "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cddb1435_ba6f6795",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-09T14:40:17Z",
+      "side": 1,
+      "message": "Note: this is an in/out parameter, in order to allow the driver to clear the mask if the uniform was optimized out (see below).\n\nHappy to change it to something other than a non-const ref (pointer or helper function) if preferred.",
+      "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
