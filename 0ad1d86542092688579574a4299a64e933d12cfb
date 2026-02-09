@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21008bf5_28ef48a2",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T21:33:28Z",
+      "side": 1,
+      "message": "add comment",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 52
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa5dcb8_7f11d5cc",
+        "filename": "src/tint/lang/wgsl/reader/reader.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T21:33:28Z",
+      "side": 1,
+      "message": "if (enabled_extensions_.Contains(wgsl::Extension::kAtomicVec2UMinMax)) {",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 63,
+        "endChar": 55
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd8e3f3f_e9cf5fd0",
+        "filename": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T21:33:28Z",
+      "side": 1,
+      "message": "GTEST_SKIP? or invalid?\nIf we skip many tests they will appear in the list of skipped tests.",
+      "range": {
+        "startLine": 1010,
+        "startChar": 12,
+        "endLine": 1010,
+        "endChar": 22
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fde7767f_8f36ae32",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T21:33:28Z",
+      "side": 1,
+      "message": "We could create a better message here or indicate that you need this feature in order to use vec2u in an atomic.",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 76
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

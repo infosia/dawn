@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3720e650_2ffe68f0",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T21:33:28Z",
+      "side": 1,
+      "message": "I woudnt think so because it is still labeled as experimental",
+      "parentUuid": "63aa8fc6_66319d08",
+      "range": {
+        "startLine": 1840,
+        "startChar": 44,
+        "endLine": 1840,
+        "endChar": 61
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afe4809d_0dd0c5fc",
         "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
         "patchSetId": 29
