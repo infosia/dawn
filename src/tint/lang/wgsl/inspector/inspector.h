@@ -47,6 +47,15 @@
 
 namespace tint::inspector {
 
+/// Holds the computed immediate data sizes for an entry point.
+struct ImmediateDataSize {
+    /// The "tight" size in bytes without trailing struct padding, used for validation.
+    uint32_t no_padding = 0;
+    /// The full block size in bytes including trailing struct padding,
+    /// used for internal immediate offset placement.
+    uint32_t with_padding = 0;
+};
+
 /// A temporary alias to sem::SamplerTexturePair. [DEPRECATED]
 using SamplerTexturePair = sem::SamplerTexturePair;
 
@@ -216,8 +225,8 @@ class Inspector {
         VectorRef<const ast::Attribute*> attributes) const;
 
     /// @param func the root function of the callgraph to consider for the computation.
-    /// @returns the total size in bytes of all immediate data variables accessed via func.
-    uint32_t ComputeImmediateDataSize(const ast::Function* func) const;
+    /// @returns the immediate data sizes (without and with trailing padding).
+    ImmediateDataSize ComputeImmediateDataSize(const ast::Function* func) const;
 
     /// @param func the root function of the callgraph to consider for the computation
     /// @returns the list of member types for the `pixel_local` variable accessed via func, if any.

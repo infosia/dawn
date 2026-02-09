@@ -866,16 +866,22 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
 
     // Immediate data byte size must be 4-byte aligned.
-    if (entryPoint.immediate_data_size) {
-        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
-        metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
+    if (entryPoint.immediate_data_byte_size_no_padding) {
+        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_byte_size_no_padding, 4u));
+        metadata->immediateDataByteSizeNoPadding = entryPoint.immediate_data_byte_size_no_padding;
+
+        // Block size includes trailing padding for correct internal immediate offset placement.
+        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_byte_size_with_padding, 4u));
+        metadata->immediateDataByteSizeWithPadding =
+            entryPoint.immediate_data_byte_size_with_padding;
 
         // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
         // as it might cause an assertion in Tint.
-        DAWN_INVALID_IF(
-            entryPoint.immediate_data_size > kMaxExternalImmediateConstantsPerPipeline * 4,
-            "Immediate data size (%u) exceeds the maximum allowed size (%u).",
-            entryPoint.immediate_data_size, kMaxExternalImmediateConstantsPerPipeline * 4);
+        DAWN_INVALID_IF(entryPoint.immediate_data_byte_size_no_padding >
+                            kMaxExternalImmediateConstantsPerPipeline * 4,
+                        "Immediate data size (%u) exceeds the maximum allowed size (%u).",
+                        entryPoint.immediate_data_byte_size_no_padding,
+                        kMaxExternalImmediateConstantsPerPipeline * 4);
 
         auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
         metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateBlockInfo.to_ullong());
@@ -1712,11 +1718,11 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
 
     // Validate that immediate data used by programmable state are smaller than pipelineLayout
     // immediate data range bytes.
-    DAWN_INVALID_IF(entryPoint.immediateDataRangeByteSize > layout->GetImmediateDataRangeByteSize(),
-                    "The entry-point uses more bytes of immediate data (%u) than the reserved "
-                    "amount (%u) in %s.",
-                    entryPoint.immediateDataRangeByteSize, layout->GetImmediateDataRangeByteSize(),
-                    layout);
+    DAWN_INVALID_IF(
+        entryPoint.immediateDataByteSizeNoPadding > layout->GetImmediateDataRangeByteSize(),
+        "The entry-point uses more bytes of immediate data (%u) than the reserved "
+        "amount (%u) in %s.",
+        entryPoint.immediateDataByteSizeNoPadding, layout->GetImmediateDataRangeByteSize(), layout);
 
     return {};
 }

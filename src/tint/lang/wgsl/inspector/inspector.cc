@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 
+#include <algorithm>
 #include <functional>
 #include <unordered_set>
 #include <utility>
@@ -79,6 +80,38 @@ using namespace tint::core::fluent_types;  // NOLINT
 
 namespace tint::inspector {
 namespace {
+
+// Compute the byte size of a type excluding trailing struct padding, recursively.
+// Immediate data types do not contain arrays.
+uint32_t ImmediateMemberTightSize(const core::type::Type* type) {
+    return tint::Switch(
+        type,
+        [&](const sem::Struct* str) -> uint32_t {
+            auto members = str->Members();
+            if (members.IsEmpty()) {
+                return 0;
+            }
+            auto* last = members.Back();
+            return last->Offset() + ImmediateMemberTightSize(last->Type());
+        },
+        [&](const core::type::Matrix* mat) -> uint32_t {
+            return (mat->Columns() - 1) * mat->ColumnStride() +
+                   ImmediateMemberTightSize(mat->ColumnType());
+        },
+        [&](const core::type::Array* arr) -> uint32_t {
+            if (arr->ConstantCount()) {
+                return (arr->ConstantCount().value() - 1) * arr->ImplicitStride() +
+                       ImmediateMemberTightSize(arr->ElemType());
+            }
+            return 0;
+        },
+        [&](const core::type::Vector*) -> uint32_t { return type->Size(); },
+        [&](const core::type::Scalar*) -> uint32_t { return type->Size(); },
+        [&](Default) -> uint32_t {
+            TINT_UNREACHABLE() << "unexpected type in immediate data struct: "
+                               << type->FriendlyName();
+        });
+}
 
 std::tuple<ComponentType, CompositionType> CalculateComponentAndComposition(
     const core::type::Type* type) {
@@ -342,7 +375,9 @@ EntryPoint Inspector::GetEntryPoint(const tint::ast::Function* func) {
         }
     }
 
-    entry_point.immediate_data_size = ComputeImmediateDataSize(func);
+    auto sizes = ComputeImmediateDataSize(func);
+    entry_point.immediate_data_byte_size_no_padding = sizes.no_padding;
+    entry_point.immediate_data_byte_size_with_padding = sizes.with_padding;
 
     for (auto* param : sem->Parameters()) {
         AddEntryPointInOutVariables(
@@ -969,16 +1004,17 @@ std::tuple<InterpolationType, InterpolationSampling> Inspector::CalculateInterpo
     return {interpolation_type, sampling_type};
 }
 
-uint32_t Inspector::ComputeImmediateDataSize(const ast::Function* func) const {
-    uint32_t size = 0;
+ImmediateDataSize Inspector::ComputeImmediateDataSize(const ast::Function* func) const {
+    ImmediateDataSize result;
     auto* func_sem = program_.Sem().Get(func);
     for (const sem::Variable* var : func_sem->TransitivelyReferencedGlobals()) {
         if (var->AddressSpace() == core::AddressSpace::kImmediate) {
-            size += var->Type()->UnwrapRef()->Size();
+            result.no_padding += ImmediateMemberTightSize(var->Type()->UnwrapRef());
+            result.with_padding += var->Type()->UnwrapRef()->Size();
         }
     }
 
-    return size;
+    return result;
 }
 
 std::vector<PixelLocalMemberType> Inspector::ComputePixelLocalMemberTypes(

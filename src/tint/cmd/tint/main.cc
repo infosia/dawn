@@ -921,7 +921,7 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
     gen_options.colour_index_to_binding_point = colour_binding_points;
 
     // Immediate data Offset must be 4-byte aligned.
-    uint32_t offset = tint::RoundUp(4u, entry_point.immediate_data_size);
+    uint32_t offset = tint::RoundUp(4u, entry_point.immediate_data_byte_size_with_padding);
 
     if (entry_point.frag_depth_used) {
         // Place the RangeOffset immediate data member after user-defined immediate data (if
@@ -1354,7 +1354,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
     auto entry_point = inspector.GetEntryPoint(options.ep_name);
 
     // Immediate data Offset must be 4-byte aligned.
-    uint32_t offset = tint::RoundUp(4u, entry_point.immediate_data_size);
+    uint32_t offset = tint::RoundUp(4u, entry_point.immediate_data_byte_size_with_padding);
 
     if (entry_point.instance_index_used) {
         // Place the first_instance immediate data member after user-defined immediate data (if

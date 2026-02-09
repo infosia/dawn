@@ -184,7 +184,7 @@ TEST_F(InspectorGetEntryPointTest, DefaultWorkgroupSize) {
     EXPECT_EQ(1u, workgroup_size->z);
 }
 
-// Test that immediate_data_size is zero if there are no immediate data.
+// Test that immediate data byte size is zero if there are no immediate data.
 TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeNone) {
     auto* src = R"(
 @fragment fn foo() {}
@@ -195,10 +195,10 @@ TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeNone) {
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
     ASSERT_EQ(1u, result.size());
-    EXPECT_EQ(0u, result[0].immediate_data_size);
+    EXPECT_EQ(0u, result[0].immediate_data_byte_size_no_padding);
 }
 
-// Test that immediate_data_size is 4 (bytes) if there is a single F32 immediate data.
+// Test that immediate data byte size is 4 (bytes) if there is a single F32 immediate data.
 TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeOneWord) {
     auto* src = R"(
 var<immediate> pc: f32;
@@ -211,10 +211,10 @@ var<immediate> pc: f32;
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
     ASSERT_EQ(1u, result.size());
-    EXPECT_EQ(4u, result[0].immediate_data_size);
+    EXPECT_EQ(4u, result[0].immediate_data_byte_size_no_padding);
 }
 
-// Test that immediate_data_size is 12 (bytes) if there is a struct containing one
+// Test that immediate data byte size is 12 (bytes) if there is a struct containing one
 // each of i32, f32 and u32.
 TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeThreeWords) {
     auto* src = R"(
@@ -233,10 +233,10 @@ var<immediate> pc : S;
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
     ASSERT_EQ(1u, result.size());
-    EXPECT_EQ(12u, result[0].immediate_data_size);
+    EXPECT_EQ(12u, result[0].immediate_data_byte_size_no_padding);
 }
 
-// Test that immediate_data_size is 4 (bytes) if there are two immediate data,
+// Test that immediate data byte size is 4 (bytes) if there are two immediate data,
 // one used by the entry point containing an f32, and one unused by the entry
 // point containing a struct of size 12 bytes.
 TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeTwoConstants) {
@@ -259,7 +259,31 @@ var<immediate> pc: f32;
     ASSERT_EQ(1u, result.size());
 
     // Check that the result only includes the single f32 immediate data.
-    EXPECT_EQ(4u, result[0].immediate_data_size);
+    EXPECT_EQ(4u, result[0].immediate_data_byte_size_no_padding);
+    EXPECT_EQ(4u, result[0].immediate_data_byte_size_with_padding);
+}
+
+// Test that immediate_data_byte_size_no_padding is smaller than with_padding when struct has
+// trailing padding.
+TEST_F(InspectorGetEntryPointTest, ImmediateDataSizeWithTrailingPadding) {
+    auto* src = R"(
+struct S {
+  a: vec3<f32>,
+}
+var<immediate> pc: S;
+
+@fragment fn foo() { _ = pc; }
+)";
+    Inspector& inspector = Initialize(src);
+
+    auto result = inspector.GetEntryPoints();
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    // vec3<f32> tight size is 12 bytes.
+    EXPECT_EQ(12u, result[0].immediate_data_byte_size_no_padding);
+    // vec3<f32> aligns to 16 bytes inside struct S, so block size is 16.
+    EXPECT_EQ(16u, result[0].immediate_data_byte_size_with_padding);
 }
 
 TEST_F(InspectorGetEntryPointTest, NonDefaultWorkgroupSize) {

@@ -115,7 +115,7 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
 
     ImmediateConstantMask mImmediateMask = ImmediateConstantMask(0);
-    ImmediateConstantMask mUserImmdiateSlots = ImmediateConstantMask(0);
+    ImmediateConstantMask mUserImmediateSlots = ImmediateConstantMask(0);
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);

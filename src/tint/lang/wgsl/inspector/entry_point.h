@@ -168,7 +168,11 @@ struct EntryPoint {
     /// SubstituteOverride transform before using the inspector.
     std::optional<WorkgroupSize> workgroup_size;
     /// The total size in bytes of all immediate variables accessed by the entry point.
-    uint32_t immediate_data_size = 0;
+    /// This is the "tight" size without trailing struct padding, used for validation.
+    uint32_t immediate_data_byte_size_no_padding = 0;
+    /// The total size in bytes of the immediate data block including trailing struct padding.
+    /// This is used internally for placing internal immediates at correct offsets.
+    uint32_t immediate_data_byte_size_with_padding = 0;
     /// List of the input variable accessed via this entry point.
     std::vector<StageVariable> input_variables;
     /// List of the output variable accessed via this entry point.

@@ -262,6 +262,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
     : ApiObjectBase(device, label), mLayout(layout) {
     DAWN_ASSERT(!stages.empty());
 
+    uint32_t maxImmediateDataByteSizeWithPadding = 0;
     for (const StageAndDescriptor& stage : stages) {
         // Extract argument for this stage.
         SingleShaderStage shaderStage = stage.shaderStage;
@@ -297,8 +298,13 @@ PipelineBase::PipelineBase(DeviceBase* device,
             }
         }
 
-        mUserImmdiateSlots |= metadata.immediateDataUsedSlots;
+        mUserImmediateSlots |= metadata.immediateDataUsedSlots;
+        maxImmediateDataByteSizeWithPadding = std::max(maxImmediateDataByteSizeWithPadding,
+                                                       metadata.immediateDataByteSizeWithPadding);
     }
+
+    // Set the initial mImmediateMask bits for the user-facing immediate data range.
+    mImmediateMask |= GetImmediateConstantBlockBits(0, maxImmediateDataByteSizeWithPadding);
 }
 
 PipelineBase::PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
@@ -436,13 +442,8 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
         scopedUsePrograms = UseShaderPrograms();
     }
 
-    // Set immediate constant status. userConstants is the first element in both
-    // RenderImmediateConstants and ComputeImmediateConstants.
-    ImmediateConstantMask userConstantsBits =
-        GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
-    mImmediateMask |= userConstantsBits;
-
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing %s", this);
+
     return {};
 }
 
@@ -455,7 +456,7 @@ uint32_t PipelineBase::GetImmediateConstantSize() const {
 }
 
 ImmediateConstantMask PipelineBase::GetUserImmediateSlots() const {
-    return mUserImmdiateSlots;
+    return mUserImmediateSlots;
 }
 
 }  // namespace dawn::native
