@@ -870,6 +870,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
         metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
 
+        // Block size includes trailing padding for correct internal immediate offset placement.
+        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_block_size, 4u));
+        metadata->immediateDataBlockByteSize = entryPoint.immediate_data_block_size;
+
         // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
         // as it might cause an assertion in Tint.
         DAWN_INVALID_IF(

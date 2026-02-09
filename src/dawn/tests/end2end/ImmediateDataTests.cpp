@@ -720,6 +720,76 @@ TEST_P(ImmediateDataTests, BundlesDontCarePreviousImmediatesState) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(51, 102, 153, 255), renderPass.color, 0, 0);
 }
 
+// Test that immediate data with struct alignment and padding works correctly.
+// The immediate data size should be calculated without trailing padding.
+TEST_P(ImmediateDataTests, StructAlignment) {
+    wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
+          struct A { v: vec3<u32> }
+          struct B { v: vec2<u32> }
+          struct Data { a: A, @align(32) b: B, }
+
+        var<immediate> computeConstants: Data;
+        @group(0) @binding(0) var<storage, read_write> output : Data;
+
+        @compute @workgroup_size(1, 1, 1)
+        fn csMain() {
+            output = computeConstants;
+        }
+    )");
+
+    wgpu::BindGroupLayout bindGroupLayout = CreateBindGroupLayout();
+
+    wgpu::PipelineLayoutDescriptor pipelineLayoutDesc;
+    pipelineLayoutDesc.bindGroupLayoutCount = 1;
+    pipelineLayoutDesc.bindGroupLayouts = &bindGroupLayout;
+    pipelineLayoutDesc.immediateSize = 40;
+    wgpu::PipelineLayout pipelineLayout = device.CreatePipelineLayout(&pipelineLayoutDesc);
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+    csDesc.layout = pipelineLayout;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    // Re-create storage buffer with correct size 64 (struct size padded to alignment)
+    wgpu::BufferDescriptor bufferDesc;
+    bufferDesc.size = 64;
+    bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage;
+    wgpu::Buffer storageBuffer = device.CreateBuffer(&bufferDesc);
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, bindGroupLayout, {{0, storageBuffer}});
+
+    std::vector<uint32_t> data(10, 0);  // 40 bytes / 4 = 10 uint32s
+
+    // Data layout in uint32s:
+    // A.v is vec3<u32> (12 bytes, align 16).
+    // Struct A size is 16.
+    // Data.a (A) at offset 0.
+    // Data.b (B) at offset 32.
+
+    // indices 0, 1, 2 => A.v.x, A.v.y, A.v.z
+    // index 3 => padding (part of A)
+    // indices 4, 5, 6, 7 => padding (between A and B)
+    // indices 8, 9 => B.v.x, B.v.y
+
+    data[0] = 1;
+    data[1] = 2;
+    data[2] = 3;
+    data[8] = 4;
+    data[9] = 5;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bindGroup);
+    pass.SetImmediates(0, data.data(), data.size() * 4);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_RANGE_EQ(data.data(), storageBuffer, 0, 10);
+}
+
 DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       D3D11Backend(),
                       D3D12Backend(),
