@@ -47,6 +47,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9c08766_05fbd57b",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T02:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afe4809d_0dd0c5fc",
+      "range": {
+        "startLine": 981,
+        "startChar": 3,
+        "endLine": 981,
+        "endChar": 44
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32bf133b_756505f2",
@@ -60,6 +84,30 @@
       "writtenOn": "2026-02-06T14:54:24Z",
       "side": 1,
       "message": "Should this be somewhere else like the other types.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 8
+      },
+      "revId": "6cfc27c217b957bac9529933e491c1d9b2fcc915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9415c44e_ce2b9c48",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 29
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-09T02:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bf133b_756505f2",
       "range": {
         "startLine": 236,
         "startChar": 0,
