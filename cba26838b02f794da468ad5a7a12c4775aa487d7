@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16ac457b_f63b247e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-09T07:42:38Z",
+      "side": 1,
+      "message": "So I want to avoid clearing the buffer\u0027s padding bytes at creation because it would need to acquire the lock at creation.\n\nDisabling `LazyClearResourceOnFirstUse` is not feasible because in chrome there are many shared images\u0027 code that rely on Dawn\u0027s lazy clears for textures.\n\nSo there are 2 options being considered:\n- Add additional \"lazy clear\" code for the padding bytes. Separate from the normal \"lazy clear\". This is what this CL does.\n- Or add additional \"disable padding bytes clear\" toggle for buffers.\n\nPls let me know what would be the better option.",
+      "revId": "cba26838b02f794da468ad5a7a12c4775aa487d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
