@@ -233,6 +233,7 @@ enum builtin_type {
   __modf_result_vec4_f32
 }
 
+
 // https://gpuweb.github.io/gpuweb/wgsl/#attributes
 // Notes:
 //  * `diagnostic` is listed, even though it is a keyword, so it appears in suggested alternatives
@@ -1527,6 +1528,15 @@ implicit(C: iu32)
   fn atomicExchange(ptr<S, atomic<T>, read_write>, T) -> T
 @stage("fragment", "compute") implicit(T: iu32, S: workgroup_or_storage)
   fn atomicCompareExchangeWeak(ptr<S, atomic<T>, read_write>, T, T) -> __atomic_compare_exchange_result<T>
+
+// u64 is an (currently) internal type and not part of WGSL.
+type u64
+
+@stage("fragment", "compute") implicit(T: u64, S: storage)
+  fn atomicStoreMax(ptr<S, atomic<T>, read_write>, T)
+@stage("fragment", "compute") implicit(T: u64, S: storage)
+  fn atomicStoreMin(ptr<S, atomic<T>, read_write>, T)
+
 
 //////////////////////////////////////////
 // subgroups
