@@ -141,6 +141,13 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (attributes.color.has_value()) {
             return Failure("@color attribute is not supported by the SPIR-V backend");
         }
+        if (attributes.builtin == core::BuiltinValue::kGlobalInvocationIndex) {
+            return Failure(
+                "@builtin(global_invocation_index) is not supported by the SPIR-V backend");
+        }
+        if (attributes.builtin == core::BuiltinValue::kWorkgroupIndex) {
+            return Failure("@builtin(workgroup_index) is not supported by the SPIR-V backend");
+        }
         return Success;
     };
     // Check input attributes.
