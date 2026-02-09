@@ -34,6 +34,24 @@
       "parentUuid": "361374fe_6a8d96f0",
       "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bbaad80_78a53669",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-09T16:39:51Z",
+      "side": 1,
+      "message": "Maybe that\u0027s just a bug in MakeVectorStore. We should be able to write a vec4h as 2 u32s (assuming we don\u0027t access the elements individually) so maybe I just didn\u0027t cover that case properly. I seem to have not included tests for this which could explain why. This feels like it could be handled without dropping the size in some cases. If that is an easy fix then it might be worth it.",
+      "parentUuid": "fe7ab19f_4e2c94fd",
+      "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
