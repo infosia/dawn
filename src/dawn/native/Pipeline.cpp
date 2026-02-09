@@ -298,6 +298,8 @@ PipelineBase::PipelineBase(DeviceBase* device,
         }
 
         mUserImmdiateSlots |= metadata.immediateDataUsedSlots;
+        mImmediateDataBlockByteSize =
+            std::max(mImmediateDataBlockByteSize, metadata.immediateDataBlockByteSize);
     }
 }
 
@@ -439,10 +441,11 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
     // Set immediate constant status. userConstants is the first element in both
     // RenderImmediateConstants and ComputeImmediateConstants.
     ImmediateConstantMask userConstantsBits =
-        GetImmediateConstantBlockBits(0, GetLayout()->GetImmediateDataRangeByteSize());
+        GetImmediateConstantBlockBits(0, mImmediateDataBlockByteSize);
     mImmediateMask |= userConstantsBits;
 
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing %s", this);
+
     return {};
 }
 
