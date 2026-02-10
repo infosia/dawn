@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2715774_db5e9b0a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-10T02:10:26Z",
+      "side": 1,
+      "message": "jrprice@: I think with this change (and the similar changes in metal backend ModuleScopeVar transform to have immediate support) we could remove change_immediate_to_uniform transform (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc;drc\u003de63596721df61bbc199c38c4a102597ad81ad154;l\u003d148). Am I right?",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

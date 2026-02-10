@@ -50,6 +50,24 @@
       "message": "Note: this is an in/out parameter, in order to allow the driver to clear the mask if the uniform was optimized out (see below).\n\nHappy to change it to something other than a non-const ref (pointer or helper function) if preferred.",
       "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d56a9304_744d520b",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-10T02:10:26Z",
+      "side": 1,
+      "message": "I think usesVertexIndex/usesInstanceIndex/usesFragDepth reflects from tint inspector is ensure they\u0027re used(e.g. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/inspector/inspector.cc;l\u003d358;drc\u003de63596721df61bbc199c38c4a102597ad81ad154;bpv\u003d1;bpt\u003d1). \nSo the only scenario should be user customer immediates is unused. Could we have an inspector helper to get the usage info from inspector and reset the pipelineImmediateMask before we passed it here(e.g. something like this https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/inspector/inspector.cc;drc\u003de63596721df61bbc199c38c4a102597ad81ad154;l\u003d753)?",
+      "parentUuid": "cddb1435_ba6f6795",
+      "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
