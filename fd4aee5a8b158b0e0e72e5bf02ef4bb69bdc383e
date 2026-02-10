@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bcce614_be588bcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-10T22:06:44Z",
+      "side": 1,
+      "message": "Can\u0027t we just add Vulkan::Headers as a dependency in the right place in order to have it built as needed?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7e1ac32_33767188",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-10T22:06:44Z",
+      "side": 1,
+      "message": "I\u0027m confused as to why this is needed? The `add_subdirectory` on 195 should define `Vulkan::Headers`. Are the VVL and loader not checking for the cmake target before they check for the package?",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
