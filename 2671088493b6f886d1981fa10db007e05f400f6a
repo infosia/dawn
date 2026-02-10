@@ -68,6 +68,24 @@
       "parentUuid": "cddb1435_ba6f6795",
       "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d1d976e_859c92f7",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-10T16:24:29Z",
+      "side": 1,
+      "message": "The problem is that, while Tint knows when an immediate is *referenced* (e.g., a variable with `vertex_index` is declared), it doesn\u0027t know whether it is *used*. The GL driver does a deeper analysis, and knows when it will affect the result.\n\nSee the attached test:\n\n```\nfn v(index : u32) -\u003e vec4f {\n    return vec4f(0.0, 0.0, 0.0, 1.0);\n}\n@vertex fn vs(@builtin(vertex_index) index : u32) -\u003e @builtin(position) vec4f {\n    return v(index);\n}\n@fragment fn fs() -\u003e @location(0) vec4f {\n    return vec4f(1.0, 1.0, 1.0, 1.0);\n}\n```\n\nThis produces the GLSL:\n```\n#version 310 es\n\nlayout(location \u003d 0) uniform uint tint_immediates[4];\nvec4 v_1(uint v_2) {\n  return vec4(0.0f, 0.0f, 0.0f, 1.0f);\n}\nvec4 v_3(uint v_4) {\n  return v_1(v_4);\n}\nvoid main() {\n  uint v_5 \u003d uint(gl_VertexID);\n  vec4 v_6 \u003d v_3((v_5 + tint_immediates[0u]));\n  gl_Position \u003d vec4(v_6.x, -(v_6.y), ((2.0f * v_6.z) - v_6.w), v_6.w);\n  gl_PointSize \u003d 1.0f;\n}\n```\n\nThe driver\u0027s GLSL compiler notices that tint_immediates does not affect the result, and optimizes it out, and calling glUniform*() on it generates an error in ANGLE.",
+      "parentUuid": "d56a9304_744d520b",
+      "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
