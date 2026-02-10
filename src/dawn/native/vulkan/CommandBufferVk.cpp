@@ -160,8 +160,6 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
-    explicit DescriptorSetTracker(ResourceTable* table) : mResourceTable(table) {}
-
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
@@ -175,6 +173,10 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
     }
+
+    void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
+
+    ResourceTable* GetResourceTable() { return mResourceTable; }
 
     void Apply(Device* device,
                CommandRecordingContext* recordingContext,
@@ -836,13 +838,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
-    // Records the necessary barriers for the resource usage pre-computed by the frontend.
-    // And resets the used query sets which are rewritten on the render pass.
-    auto PrepareResourcesForRenderPass =
+    // Resets the used query sets which are rewritten on the render pass.
+    auto ResetUsedQuerySetsOnCurrentRenderPass =
         [](Device* device, CommandRecordingContext* recordingContext,
-           const RenderPassResourceUsage& usages, ResourceTable* resourceTable) -> MaybeError {
-        DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages, resourceTable));
-
+           const RenderPassResourceUsage& usages) -> MaybeError {
         // Reset all query set used on current render pass together before beginning render pass
         // because the reset command must be called outside render pass
         for (size_t i = 0; i < usages.querySets.size(); ++i) {
@@ -854,7 +853,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     size_t nextComputePassNumber = 0;
     size_t nextRenderPassNumber = 0;
-    ResourceTable* currentResourceTable = nullptr;
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -1067,12 +1065,15 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
             case Command::BeginRenderPass: {
                 BeginRenderPassCmd* cmd = mCommands.NextCommand<BeginRenderPassCmd>();
 
-                DAWN_TRY(PrepareResourcesForRenderPass(
+                DAWN_TRY(ResetUsedQuerySetsOnCurrentRenderPass(
                     device, recordingContext,
-                    GetResourceUsages().renderPasses[nextRenderPassNumber], currentResourceTable));
+                    GetResourceUsages().renderPasses[nextRenderPassNumber]));
 
+                // TODO(amaiorano): Does LazyClearRenderPassAttachments require
+                // PrepareResourcesForSyncScope be called before it?
                 LazyClearRenderPassAttachments(device, cmd);
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd, currentResourceTable));
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd,
+                                          GetResourceUsages().renderPasses[nextRenderPassNumber]));
 
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
@@ -1093,9 +1094,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     commands = recordingContext->commandBuffer;
                 }
 
-                DAWN_TRY(RecordComputePass(recordingContext, cmd,
-                                           GetResourceUsages().computePasses[nextComputePassNumber],
-                                           currentResourceTable));
+                DAWN_TRY(
+                    RecordComputePass(recordingContext, cmd,
+                                      GetResourceUsages().computePasses[nextComputePassNumber]));
 
                 nextComputePassNumber++;
                 break;
@@ -1226,12 +1227,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 break;
             }
 
-            case Command::SetResourceTable: {
-                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
-                currentResourceTable = ToBackend(cmd->table.Get());
-                break;
-            }
-
             default:
                 break;
         }
@@ -1242,8 +1237,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
 MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingContext,
                                             BeginComputePassCmd* computePassCmd,
-                                            const ComputePassResourceUsage& resourceUsages,
-                                            ResourceTable* resourceTable) {
+                                            const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
 
     // Write timestamp at the beginning of compute pass if it's set
@@ -1258,7 +1252,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets;
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1283,7 +1277,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
                     device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
-                    resourceTable));
+                    descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatch(commands, dispatch->x, dispatch->y, dispatch->z);
@@ -1297,7 +1291,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
                     device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
-                    resourceTable));
+                    descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatchIndirect(commands, indirectBuffer,
@@ -1398,6 +1392,12 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 break;
             }
 
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                descriptorSets.SetResourceTable(ToBackend(cmd->table.Get()));
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
         }
@@ -1409,7 +1409,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
                                            BeginRenderPassCmd* renderPassCmd,
-                                           ResourceTable* resourceTable) {
+                                           const RenderPassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
@@ -1462,18 +1462,20 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets;
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
     uint32_t workCommandCount = 0;
 
-    auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
+    auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
         switch (type) {
             case Command::Draw: {
                 workCommandCount++;
                 DrawCmd* draw = iter->NextCommand<DrawCmd>();
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
                 device->fn.CmdDraw(commands, draw->vertexCount, draw->instanceCount,
@@ -1485,6 +1487,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 workCommandCount++;
                 DrawIndexedCmd* draw = iter->NextCommand<DrawIndexedCmd>();
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
                 device->fn.CmdDrawIndexed(commands, draw->indexCount, draw->instanceCount,
@@ -1497,6 +1501,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
                 device->fn.CmdDrawIndirect(commands, buffer->GetHandle(),
@@ -1510,6 +1516,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
                 DAWN_ASSERT(buffer != nullptr);
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
                 device->fn.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
@@ -1528,6 +1536,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
 
@@ -1554,6 +1564,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
 
+                DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, resourceUsages,
+                                                      descriptorSets.GetResourceTable()));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
                 immediates.Apply(device, commands);
 
@@ -1677,10 +1689,17 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 break;
             }
 
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                descriptorSets.SetResourceTable(ToBackend(cmd->table.Get()));
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
                 break;
         }
+        return {};
     };
 
     Command type;
@@ -1778,7 +1797,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     CommandIterator* iter = bundles[i]->GetCommands();
                     iter->Reset();
                     while (iter->NextCommandId(&type)) {
-                        EncodeRenderBundleCommand(iter, type);
+                        DAWN_TRY(EncodeRenderBundleCommand(iter, type));
                     }
                 }
                 break;
@@ -1812,7 +1831,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             default: {
-                EncodeRenderBundleCommand(&mCommands, type);
+                DAWN_TRY(EncodeRenderBundleCommand(&mCommands, type));
                 break;
             }
         }

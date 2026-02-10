@@ -77,6 +77,9 @@ class ProgrammableEncoder : public ApiObjectBase {
                         ErrorTag errorTag,
                         StringView label);
 
+    // Called by APISetResourceTable in child classes
+    MaybeError SetResourceTable(ResourceTableBase* table, CommandAllocator* allocator);
+
     raw_ptr<EncodingContext> mEncodingContext = nullptr;
 
     uint64_t mDebugGroupStackSize = 0;
@@ -86,6 +89,9 @@ class ProgrammableEncoder : public ApiObjectBase {
   private:
     const bool mValidationEnabled;
     const bool mNeedsIndirectGPUValidation;
+
+    // An owning Ref<> is part of the CommandAllocator.
+    raw_ptr<ResourceTableBase> mResourceTable = nullptr;
 };
 
 }  // namespace dawn::native
