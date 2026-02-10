@@ -27,12 +27,15 @@
 
 #include "src/tint/lang/msl/writer/raise/derivative_polyfill.h"
 
+#include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/result.h"
 
@@ -54,6 +57,7 @@ struct State {
 
     /// The thread_index_in_quadgroup module-scope variable.
     core::ir::Var* thread_index_in_quadgroup = nullptr;
+    core::ir::Var* keep_alive_var = nullptr;
 
     /// Process the module, polyfilling `dpdxFine` and `dpdyFine` builtins.
     ///
@@ -83,6 +87,9 @@ struct State {
         // Declare the thread_index_in_quadgroup variable in which the builtin value will be stored.
         b.Append(ir.root_block, [&] {
             thread_index_in_quadgroup = b.Var<private_, u32>("tint_thread_index_in_quadgroup");
+            keep_alive_var =
+                b.Var("tint_keep_helper_thread_alive_usage", storage, ty.f32(), read_write);
+            keep_alive_var->SetBindingPoint(5, 5);  // Set group and binding
         });
 
         // Collect all derivative calls.
@@ -122,6 +129,15 @@ struct State {
                                       neighbor_minus_current,  // false value
                                       current_minus_neighbor,  // true value
                                       cond);
+
+                // Make a real derivative call to keep the helper thread alive.
+                auto* derivative = b.Call(current->Type(), builtin->Func(), result);
+                if (current->Type()->Is<core::type::Vector>()) {
+                    auto* single_elem = b.Access(ty.f32(), derivative, b.Constant(u32(0)));
+                    b.Store(keep_alive_var, single_elem);
+                } else {
+                    b.Store(keep_alive_var, derivative);
+                }
 
                 builtin->Result()->ReplaceAllUsesWith(result->Result());
             });
