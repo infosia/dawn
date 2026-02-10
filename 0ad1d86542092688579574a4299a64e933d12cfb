@@ -142,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc8c96e1_1c3e3025",
+        "filename": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b327b3a_7c4c2f26",
+      "range": {
+        "startLine": 1010,
+        "startChar": 12,
+        "endLine": 1010,
+        "endChar": 22
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fde7767f_8f36ae32",

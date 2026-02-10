@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe825481_86b6edd0",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16ede4d_cf25245d",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9633fd51_38e478f2",
@@ -101,6 +119,24 @@
           ]
         }
       ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49a15efc_9cd0f7ba",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "283d0bcb_aea8afd0",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -157,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f48520b8_fedf013c",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd56a00f_6ea85d9d",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eeb8045c_8a565ac3",
@@ -209,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f5010d3_24175fdc",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "copypasta",
+      "parentUuid": "22107d18_2e935368",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fdcadea_6dedfed2",
@@ -222,6 +294,30 @@
       "writtenOn": "2026-02-10T21:08:48Z",
       "side": 1,
       "message": "Because we are early in the compilation flow we need to handle modules with unused functions, which means you could have an unused function with a parameter that is one of these atomics without any root block variables.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6afffce9_d6b73666",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Must include all functions parameters as these will be the roots of the ptr to storage",
+      "parentUuid": "1fdcadea_6dedfed2",
       "range": {
         "startLine": 76,
         "startChar": 0,
@@ -376,6 +472,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c75bac51_88b425ed",
+        "filename": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "So because this is ast we have to create these twice so this is \u0027correct\u0027",
+      "parentUuid": "07df4a51_cfdd4e1f",
+      "range": {
+        "startLine": 1022,
+        "startChar": 0,
+        "endLine": 1023,
+        "endChar": 93
+      },
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35e72263_d3dc8a44",
@@ -407,6 +527,24 @@
           ]
         }
       ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbcb8127_49b7bc74",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35e72263_d3dc8a44",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
