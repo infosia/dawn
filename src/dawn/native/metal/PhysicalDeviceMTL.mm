@@ -514,6 +514,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(
             Toggle::MetalUseBothDepthAndStencilAttachmentsForCombinedDepthStencilFormats, true);
         deviceToggles->Default(Toggle::MetalPolyfillDerivatives, true);
+        deviceToggles->Default(Toggle::DisableDemoteToHelper, false);
         deviceToggles->Default(Toggle::UseBlitForBufferToStencilTextureCopy, true);
         deviceToggles->Default(Toggle::UseBlitForBufferToDepthTextureCopy, true);
         deviceToggles->Default(Toggle::UseBlitForDepthTextureToTextureCopyToNonzeroSubresource,

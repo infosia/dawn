@@ -57,7 +57,7 @@ struct State {
 
     /// The thread_index_in_quadgroup module-scope variable.
     core::ir::Var* thread_index_in_quadgroup = nullptr;
-    core::ir::Var* keep_alive_var = nullptr;
+    // core::ir::Var* keep_alive_var = nullptr;
 
     /// Process the module, polyfilling `dpdxFine` and `dpdyFine` builtins.
     ///
@@ -87,9 +87,9 @@ struct State {
         // Declare the thread_index_in_quadgroup variable in which the builtin value will be stored.
         b.Append(ir.root_block, [&] {
             thread_index_in_quadgroup = b.Var<private_, u32>("tint_thread_index_in_quadgroup");
-            keep_alive_var =
-                b.Var("tint_keep_helper_thread_alive_usage", storage, ty.f32(), read_write);
-            keep_alive_var->SetBindingPoint(5, 5);  // Set group and binding
+            // keep_alive_var =
+            //     b.Var("tint_keep_helper_thread_alive_usage", storage, ty.f32(), read_write);
+            // keep_alive_var->SetBindingPoint(5, 5);  // Set group and binding
         });
 
         // Collect all derivative calls.
@@ -131,13 +131,13 @@ struct State {
                                       cond);
 
                 // Make a real derivative call to keep the helper thread alive.
-                auto* derivative = b.Call(current->Type(), builtin->Func(), result);
-                if (current->Type()->Is<core::type::Vector>()) {
-                    auto* single_elem = b.Access(ty.f32(), derivative, b.Constant(u32(0)));
-                    b.Store(keep_alive_var, single_elem);
-                } else {
-                    b.Store(keep_alive_var, derivative);
-                }
+                // auto* derivative = b.Call(current->Type(), builtin->Func(), result);
+                // if (current->Type()->Is<core::type::Vector>()) {
+                //     auto* single_elem = b.Access(ty.f32(), derivative, b.Constant(u32(0)));
+                //     b.Store(keep_alive_var, single_elem);
+                // } else {
+                //     b.Store(keep_alive_var, derivative);
+                // }
 
                 builtin->Result()->ReplaceAllUsesWith(result->Result());
             });
