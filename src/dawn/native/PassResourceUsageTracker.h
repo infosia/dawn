@@ -92,6 +92,7 @@ class ComputePassResourceUsageTracker {
     void AddDispatch(SyncScopeResourceUsage scope);
     void AddReferencedBuffer(BufferBase* buffer);
     void AddResourcesReferencedByBindGroup(BindGroupBase* group);
+    void AddResourceTableUsage(ResourceTableBase* table);
 
     ComputePassResourceUsage AcquireResourceUsage();
 
@@ -111,6 +112,8 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
     void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
     const QueryAvailabilityMap& GetQueryAvailabilityMap() const;
 
+    void AddResourceTableUsage(ResourceTableBase* table);
+
     RenderPassResourceUsage AcquireResourceUsage();
 
   private:
@@ -120,6 +123,9 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
 
     // Tracks queries used in the render pass to validate that they aren't written twice.
     QueryAvailabilityMap mQueryAvailabilities;
+
+    // absl::flat_hash_set<ResourceTableBase*> mUsedResourceTables;
+    std::vector<ResourceTableBase*> mUsedResourceTables;
 };
 
 }  // namespace dawn::native
