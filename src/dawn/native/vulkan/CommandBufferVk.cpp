@@ -160,8 +160,6 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
-    explicit DescriptorSetTracker(ResourceTable* table) : mResourceTable(table) {}
-
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
@@ -176,16 +174,18 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
     }
 
+    void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
+
     void Apply(Device* device,
                CommandRecordingContext* recordingContext,
                VkPipelineBindPoint bindPoint) {
         BeforeApply();
 
-        // When the usages of the resource table changes between pipelines, all the BindGroups are
-        // shifted by 1 (due to the resource table being in the first VkDescriptorSet) so we dirty
-        // all bind groups.
+        // When the usage of the resource table changes between pipelines, or the resource table is
+        // changed, all the BindGroups are shifted by 1 (due to the resource table being in the
+        // first VkDescriptorSet) so we dirty all bind groups.
         BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
-        if (mLastUsesResourceTable != mUsesResourceTable) {
+        if (mLastUsesResourceTable != mUsesResourceTable || mLastResourceTable != mResourceTable) {
             dirtyBindGroups = mBindGroupLayoutsMask;
 
             // Set the resource table as the first set if it starts being used.
@@ -215,10 +215,12 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
 
         mLastAppliedImmediateConstantSize = mImmediateConstantSize;
         mLastUsesResourceTable = mUsesResourceTable;
+        mLastResourceTable = mResourceTable;
     }
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
-    raw_ptr<ResourceTable> mResourceTable;
+    raw_ptr<ResourceTable> mLastResourceTable = nullptr;
+    raw_ptr<ResourceTable> mResourceTable = nullptr;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
     uint32_t mLastAppliedImmediateConstantSize = 0;
@@ -258,13 +260,7 @@ class ImmediateConstantTracker : public T {
 // data pre-computed in the frontend. Also performs lazy initialization if required.
 MaybeError PrepareResourcesForSyncScope(Device* device,
                                         CommandRecordingContext* recordingContext,
-                                        const SyncScopeResourceUsage& scope,
-                                        ResourceTable* resourceTable) {
-    // Update the resource table metadata buffers before transitioning resources.
-    if (resourceTable != nullptr) {
-        DAWN_TRY(resourceTable->ApplyPendingUpdates(recordingContext));
-    }
-
+                                        const SyncScopeResourceUsage& scope) {
     // Separate barriers with vertex stages in destination stages from all other barriers.
     // This avoids creating unnecessary fragment->vertex dependencies when merging barriers.
     // Eg. merging a compute->vertex barrier and a fragment->fragment barrier would create
@@ -838,10 +834,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     // Records the necessary barriers for the resource usage pre-computed by the frontend.
     // And resets the used query sets which are rewritten on the render pass.
-    auto PrepareResourcesForRenderPass =
-        [](Device* device, CommandRecordingContext* recordingContext,
-           const RenderPassResourceUsage& usages, ResourceTable* resourceTable) -> MaybeError {
-        DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages, resourceTable));
+    auto PrepareResourcesForRenderPass = [](Device* device,
+                                            CommandRecordingContext* recordingContext,
+                                            const RenderPassResourceUsage& usages) -> MaybeError {
+        DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages));
 
         // Reset all query set used on current render pass together before beginning render pass
         // because the reset command must be called outside render pass
@@ -854,7 +850,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     size_t nextComputePassNumber = 0;
     size_t nextRenderPassNumber = 0;
-    ResourceTable* currentResourceTable = nullptr;
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -1067,12 +1062,17 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
             case Command::BeginRenderPass: {
                 BeginRenderPassCmd* cmd = mCommands.NextCommand<BeginRenderPassCmd>();
 
-                DAWN_TRY(PrepareResourcesForRenderPass(
-                    device, recordingContext,
-                    GetResourceUsages().renderPasses[nextRenderPassNumber], currentResourceTable));
+                // Apply pending updates to all resource tables used by the compute pass.
+                // This has to be done before emitting barriers on the table's resources.
+                auto& usages = GetResourceUsages().renderPasses[nextRenderPassNumber];
+                for (auto& resourceTable : usages.usedResourceTables) {
+                    DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(recordingContext));
+                }
+
+                DAWN_TRY(PrepareResourcesForRenderPass(device, recordingContext, usages));
 
                 LazyClearRenderPassAttachments(device, cmd);
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd, currentResourceTable));
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd));
 
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
@@ -1093,9 +1093,14 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     commands = recordingContext->commandBuffer;
                 }
 
-                DAWN_TRY(RecordComputePass(recordingContext, cmd,
-                                           GetResourceUsages().computePasses[nextComputePassNumber],
-                                           currentResourceTable));
+                // Apply pending updates to all resource tables used by the compute pass.
+                // This has to be done before emitting barriers on the table's resources.
+                auto& usages = GetResourceUsages().computePasses[nextComputePassNumber];
+                for (auto& resourceTable : usages.usedResourceTables) {
+                    DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(recordingContext));
+                }
+
+                DAWN_TRY(RecordComputePass(recordingContext, cmd, usages));
 
                 nextComputePassNumber++;
                 break;
@@ -1226,12 +1231,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 break;
             }
 
-            case Command::SetResourceTable: {
-                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
-                currentResourceTable = ToBackend(cmd->table.Get());
-                break;
-            }
-
             default:
                 break;
         }
@@ -1242,8 +1241,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
 MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingContext,
                                             BeginComputePassCmd* computePassCmd,
-                                            const ComputePassResourceUsage& resourceUsages,
-                                            ResourceTable* resourceTable) {
+                                            const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
 
     // Write timestamp at the beginning of compute pass if it's set
@@ -1258,7 +1256,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets;
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1282,8 +1280,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 DispatchCmd* dispatch = mCommands.NextCommand<DispatchCmd>();
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
-                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
-                    resourceTable));
+                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch]));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatch(commands, dispatch->x, dispatch->y, dispatch->z);
@@ -1296,8 +1293,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 VkBuffer indirectBuffer = ToBackend(dispatch->indirectBuffer)->GetHandle();
 
                 DAWN_TRY(PrepareResourcesForSyncScope(
-                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch],
-                    resourceTable));
+                    device, recordingContext, resourceUsages.dispatchUsages[currentDispatch]));
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_COMPUTE);
                 immediates.Apply(device, commands);
                 device->fn.CmdDispatchIndirect(commands, indirectBuffer,
@@ -1398,6 +1394,12 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                 break;
             }
 
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                descriptorSets.SetResourceTable(ToBackend(cmd->table.Get()));
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
         }
@@ -1408,8 +1410,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 }
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
-                                           BeginRenderPassCmd* renderPassCmd,
-                                           ResourceTable* resourceTable) {
+                                           BeginRenderPassCmd* renderPassCmd) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
@@ -1462,7 +1463,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets;
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
@@ -1674,6 +1675,12 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 uint8_t* value = nullptr;
                 value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
+                break;
+            }
+
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                descriptorSets.SetResourceTable(ToBackend(cmd->table.Get()));
                 break;
             }
 

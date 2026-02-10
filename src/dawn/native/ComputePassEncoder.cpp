@@ -130,9 +130,6 @@ ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
     : ProgrammableEncoder(device, descriptor->label, encodingContext),
       mCommandEncoder(commandEncoder) {
     GetObjectTrackingList()->Track(this);
-    if (auto* resourceTable = mCommandEncoder->GetResourceTable()) {
-        mCommandBufferState.SetResourceTable(resourceTable);
-    }
 }
 
 ComputePassEncoder::~ComputePassEncoder() {
@@ -452,6 +449,20 @@ void ComputePassEncoder::APISetPipeline(ComputePipelineBase* pipeline) {
             return {};
         },
         "encoding %s.SetPipeline(%s).", this, pipeline);
+}
+
+void ComputePassEncoder::APISetResourceTable(ResourceTableBase* table) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            DAWN_TRY(ProgrammableEncoder::SetResourceTable(table, allocator));
+            mCommandBufferState.SetResourceTable(table);
+            if (table) {
+                mUsageTracker.AddResourceTableUsage(table);
+            }
+            return {};
+        },
+        "encoding %s.SetResourceTable(%s).", this, table);
 }
 
 void ComputePassEncoder::APISetBindGroup(uint32_t groupIndexIn,

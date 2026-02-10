@@ -286,6 +286,10 @@ void ComputePassResourceUsageTracker::AddResourcesReferencedByBindGroup(BindGrou
     }
 }
 
+void ComputePassResourceUsageTracker::AddResourceTableUsage(ResourceTableBase* table) {
+    mUsage.usedResourceTables.insert(table);
+}
+
 ComputePassResourceUsage ComputePassResourceUsageTracker::AcquireResourceUsage() {
     return std::move(mUsage);
 }
@@ -300,6 +304,10 @@ RenderPassResourceUsageTracker::~RenderPassResourceUsageTracker() = default;
 RenderPassResourceUsageTracker& RenderPassResourceUsageTracker::operator=(
     RenderPassResourceUsageTracker&&) = default;
 
+void RenderPassResourceUsageTracker::AddResourceTableUsage(ResourceTableBase* table) {
+    mUsedResourceTables.insert(table);
+}
+
 RenderPassResourceUsage RenderPassResourceUsageTracker::AcquireResourceUsage() {
     RenderPassResourceUsage result;
     *static_cast<SyncScopeResourceUsage*>(&result) = AcquireSyncScopeUsage();
@@ -312,6 +320,9 @@ RenderPassResourceUsage RenderPassResourceUsageTracker::AcquireResourceUsage() {
         result.queryAvailabilities.push_back(std::move(it.second));
     }
 
+    result.usedResourceTables = std::move(mUsedResourceTables);
+
+    mUsedResourceTables.clear();
     mQueryAvailabilities.clear();
 
     return result;

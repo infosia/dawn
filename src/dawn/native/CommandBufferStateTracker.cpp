@@ -626,7 +626,7 @@ MaybeError CommandBufferStateTracker::CheckMissingAspects(ValidationAspects aspe
     if (aspects[VALIDATION_ASPECT_RESOURCE_TABLES]) {
         return DAWN_VALIDATION_ERROR(
             "The current pipeline (%s) was created with `usesResourceTable` but no resource table "
-            "was set on the command encoder.",
+            "was set on the pass encoder.",
             mLastPipeline);
     }
 
