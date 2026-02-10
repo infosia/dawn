@@ -130,9 +130,6 @@ ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
     : ProgrammableEncoder(device, descriptor->label, encodingContext),
       mCommandEncoder(commandEncoder) {
     GetObjectTrackingList()->Track(this);
-    if (auto* resourceTable = mCommandEncoder->GetResourceTable()) {
-        mCommandBufferState.SetResourceTable(resourceTable);
-    }
 }
 
 ComputePassEncoder::~ComputePassEncoder() {
@@ -249,7 +246,7 @@ void ComputePassEncoder::APIDispatchWorkgroups(uint32_t workgroupCountX,
             }
 
             // Record the synchronization scope for Dispatch, which is just the current
-            // bindgroups.
+            // bindgroups and resource table.
             AddDispatchSyncScope();
 
             DispatchCmd* dispatch = allocator->Allocate<DispatchCmd>(Command::Dispatch);
@@ -454,6 +451,22 @@ void ComputePassEncoder::APISetPipeline(ComputePipelineBase* pipeline) {
         "encoding %s.SetPipeline(%s).", this, pipeline);
 }
 
+void ComputePassEncoder::APISetResourceTable(ResourceTableBase* table) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            DAWN_TRY(ProgrammableEncoder::SetResourceTable(table, allocator));
+            mCommandBufferState.SetResourceTable(table);
+            if (table) {
+                // Add table for submit validation. Note that we add the currently used table to the
+                // usage tracker in AddDispatchSyncScope for command processing.
+                mUsageTracker.AddReferencedResourceTable(table);
+            }
+            return {};
+        },
+        "encoding %s.SetResourceTable(%s).", this, table);
+}
+
 void ComputePassEncoder::APISetBindGroup(uint32_t groupIndexIn,
                                          BindGroupBase* group,
                                          uint32_t dynamicOffsetCount,
@@ -536,6 +549,9 @@ void ComputePassEncoder::AddDispatchSyncScope(SyncScopeUsageTracker scope) {
     PipelineLayoutBase* layout = mCommandBufferState.GetPipelineLayout();
     for (BindGroupIndex i : layout->GetBindGroupLayoutsMask()) {
         scope.AddBindGroup(mCommandBufferState.GetBindGroup(i));
+    }
+    if (auto* table = mCommandBufferState.GetResourceTable()) {
+        scope.AddResourceTableUsage(table);
     }
     mUsageTracker.AddDispatch(scope.AcquireSyncScopeUsage());
 }
