@@ -64,6 +64,10 @@ cc_library(
   ] + select({
     ":tint_build_hlsl_writer": [
       
+    ],
+    "//conditions:default": [],
+  }) + select({
+    ":tint_build_hlsl_writer_or_tint_build_glsl_writer": [
       
     ],
     "//conditions:default": [],
@@ -73,7 +77,20 @@ cc_library(
 )
 
 alias(
+  name = "tint_build_glsl_writer",
+  actual = "//src/tint:tint_build_glsl_writer_true",
+)
+
+alias(
   name = "tint_build_hlsl_writer",
   actual = "//src/tint:tint_build_hlsl_writer_true",
+)
+
+selects.config_setting_group(
+    name = "tint_build_hlsl_writer_or_tint_build_glsl_writer",
+    match_any = [
+        "tint_build_hlsl_writer",
+        "tint_build_glsl_writer",
+    ],
 )
 

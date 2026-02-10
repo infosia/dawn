@@ -12,7 +12,7 @@
         "IncludePatterns": [
             "dlfcn.h"
         ],
-        "Condition": "tint_build_hlsl_writer"
+        "Condition": "tint_build_hlsl_writer || tint_build_glsl_writer"
     },
     "dxc-include": {
         "IncludePatterns": [

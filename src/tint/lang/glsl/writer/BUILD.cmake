@@ -192,4 +192,10 @@ if(TINT_BUILD_GLSL_WRITER)
   )
 endif(TINT_BUILD_GLSL_WRITER)
 
+if(TINT_BUILD_HLSL_WRITER OR TINT_BUILD_GLSL_WRITER)
+  tint_target_add_external_dependencies(tint_lang_glsl_writer_fuzz fuzz
+    "dl"
+  )
+endif(TINT_BUILD_HLSL_WRITER OR TINT_BUILD_GLSL_WRITER)
+
 endif(TINT_BUILD_GLSL_WRITER)

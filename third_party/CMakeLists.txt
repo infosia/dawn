@@ -217,6 +217,11 @@ if (TINT_BUILD_BENCHMARKS OR DAWN_BUILD_BENCHMARKS)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/google_benchmark/src EXCLUDE_FROM_ALL)
 endif()
 
+if (TINT_BUILD_MESA AND NOT TARGET mesa)
+    message(STATUS "Dawn: using Mesa at ${DAWN_THIRD_PARTY_DIR}/mesa")
+    add_subdirectory(${DAWN_THIRD_PARTY_DIR}/mesa "${CMAKE_CURRENT_BINARY_DIR}/mesa")
+endif()
+
 # Include Windows SDK DLL copying utilities
 include("${CMAKE_CURRENT_SOURCE_DIR}/CopyWindowsSDKDLL.cmake")
 
@@ -368,8 +373,3 @@ if (TINT_BUILD_TINTD)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/jsoncpp" EXCLUDE_FROM_ALL)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/langsvr" EXCLUDE_FROM_ALL)
 endif()
-
-if (TINT_BUILD_MESA)
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/mesa" "${CMAKE_CURRENT_BINARY_DIR}/mesa")
-endif()
-

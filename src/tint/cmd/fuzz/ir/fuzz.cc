@@ -111,6 +111,9 @@ void Register(const IRFuzzer& fuzzer) {
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
             ir_context.options.vk_icd = context.options.vk_icd;
 #endif
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+            ir_context.options.gl_driver = context.options.gl_driver;
+#endif
             ir_context.options.dump = context.options.dump;
             auto result = fn(ir.Get(), ir_context, data);
             if (result != Success && context.options.verbose) {

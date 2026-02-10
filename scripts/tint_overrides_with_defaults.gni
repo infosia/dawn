@@ -165,6 +165,11 @@ declare_args() {
   if (!defined(tint_build_fuzzer_vulkan_support)) {
     tint_build_fuzzer_vulkan_support = tint_build_mesa
   }
+
+  # Enable OpenGL support in Tint fuzzers
+  if (!defined(tint_build_fuzzer_opengl_support)) {
+    tint_build_fuzzer_opengl_support = tint_build_mesa
+  }
 }
 
 declare_args() {

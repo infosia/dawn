@@ -132,6 +132,9 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
     auto& opt_vk_icd = opts.Add<tint::cli::StringOption>("vk_icd", "path to Vulkan ICD JSON");
 #endif
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+    auto& opt_gl_driver = opts.Add<tint::cli::StringOption>("gl_driver", "path to OpenGL driver");
+#endif
     auto& opt_dump =
         opts.Add<tint::cli::BoolOption>("dump", "dumps shader input/output from fuzzer");
 
@@ -155,6 +158,9 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
     options.vk_icd = opt_vk_icd.value.value_or("");
+#endif
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+    options.gl_driver = opt_gl_driver.value.value_or("");
 #endif
     options.dump = opt_dump.value.value_or(false);
 

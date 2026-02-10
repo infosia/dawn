@@ -60,6 +60,10 @@ struct Options {
     /// If not empty, load the Vulkan ICD from this path when fuzzing SPIR-V generation.
     std::string vk_icd;
 #endif
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+    /// If not empty, load the OpenGL driver from this path when fuzzing GLSL generation.
+    std::string gl_driver;
+#endif
     /// If true, dump shader input/output text to stdout
     bool dump = false;
 };

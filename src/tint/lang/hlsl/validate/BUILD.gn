@@ -64,10 +64,11 @@ if (tint_build_hlsl_writer) {
     ]
 
     if (tint_build_hlsl_writer) {
-      deps += [
-        "${tint_src_dir}:dl",
-        "${tint_src_dir}:dxc-include",
-      ]
+      deps += [ "${tint_src_dir}:dxc-include" ]
+    }
+
+    if (tint_build_hlsl_writer || tint_build_glsl_writer) {
+      deps += [ "${tint_src_dir}:dl" ]
     }
   }
 }
