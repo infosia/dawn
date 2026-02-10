@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59daebe5_b41cc951",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T14:03:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21008bf5_28ef48a2",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 52
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fa5dcb8_7f11d5cc",
