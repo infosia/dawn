@@ -191,7 +191,37 @@ if (NOT TARGET Vulkan::Headers AND DAWN_ENABLE_VULKAN)
     message(STATUS "Dawn: using Vulkan::Headers at ${DAWN_VULKAN_HEADERS_DIR}")
 
     set(VULKAN_HEADERS_ENABLE_MODULE OFF)
+    set(VULKAN_HEADERS_ENABLE_INSTALL ON CACHE BOOL "" FORCE)
     add_subdirectory(${DAWN_VULKAN_HEADERS_DIR} "${CMAKE_CURRENT_BINARY_DIR}/vulkan-headers/src")
+
+    # The install target cannot be run during configuration, so generating a temporary config file so that other
+    # target's (vulkan-loader, vulkan-utility-libraries) find_package calls during the configure step will succeed.
+
+    # Try to read the version from registry/validusage.json
+    set(VULKAN_VALID_USAGE_JSON "${DAWN_VULKAN_HEADERS_DIR}/registry/validusage.json")
+    if (EXISTS "${VULKAN_VALID_USAGE_JSON}")
+        file(STRINGS "${VULKAN_VALID_USAGE_JSON}" VULKAN_VALID_USAGE_CONTENT REGEX "\"api version\": \"[0-9]+\\.[0-9]+\\.[0-9]+\"")
+        if (VULKAN_VALID_USAGE_CONTENT MATCHES "\"api version\": \"([0-9]+\\.[0-9]+\\.[0-9]+)\"")
+            set(VH_VERSION "${CMAKE_MATCH_1}")
+        endif()
+    endif()
+
+    if (NOT VH_VERSION)
+        message(FATAL_ERROR "Unable to determine the Vulkan::Headers version when making temporary config file...")
+    endif()
+
+    set(VH_CONFIG_DIR "${CMAKE_CURRENT_BINARY_DIR}/vulkan-headers-config")
+    file(MAKE_DIRECTORY "${VH_CONFIG_DIR}")
+    file(WRITE "${VH_CONFIG_DIR}/VulkanHeadersConfig.cmake"
+        "set(VulkanHeaders_FOUND TRUE)\n"
+        "set(VulkanHeaders_INCLUDE_DIRS \"${DAWN_VULKAN_HEADERS_DIR}/include\")\n"
+    )
+    file(WRITE "${VH_CONFIG_DIR}/VulkanHeadersConfigVersion.cmake"
+        "set(PACKAGE_VERSION \"${VH_VERSION}\")\n"
+        "set(PACKAGE_VERSION_COMPATIBLE TRUE)\n"
+        "set(PACKAGE_VERSION_EXACT TRUE)\n"
+    )
+    list(APPEND CMAKE_PREFIX_PATH "${VH_CONFIG_DIR}")
 endif()
 
 if (NOT TARGET Vulkan::Loader AND DAWN_ENABLE_VULKAN AND TINT_BUILD_FUZZER_VULKAN_SUPPORT)
