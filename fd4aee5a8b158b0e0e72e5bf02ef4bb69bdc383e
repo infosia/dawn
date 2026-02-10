@@ -45,6 +45,30 @@
       },
       "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d26f1552_42d35e4a",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-10T22:14:59Z",
+      "side": 1,
+      "message": "When add_subdirectory runs for those targets they use find_packages to find Vulkan::Headers since they are expecting it to already be installed. So they will only find the system version at configure time.",
+      "parentUuid": "c7e1ac32_33767188",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
