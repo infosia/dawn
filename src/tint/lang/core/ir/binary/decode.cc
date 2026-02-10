@@ -951,12 +951,13 @@ struct Decoder {
 
     const type::Type* CreateTypeSampledTexture(const pb::TypeSampledTexture& texture_in) {
         auto dimension = TextureDimension(texture_in.dimension());
+        auto filterable = TextureFilterable(texture_in.filterable());
         auto sub_type = Type(texture_in.sub_type());
         if (!sub_type) {
             err_ << "invalid Sampled texture subtype\n";
             return mod_out_.Types().invalid();
         }
-        return mod_out_.Types().sampled_texture(dimension, sub_type);
+        return mod_out_.Types().sampled_texture(dimension, sub_type, filterable);
     }
 
     const type::Type* CreateTypeMultisampledTexture(const pb::TypeMultisampledTexture& texture_in) {
@@ -1013,7 +1014,12 @@ struct Decoder {
             err_ << "invalid sampler kind, " << std::to_string(sampler_in.kind()) << "\n";
             return nullptr;
         }
-        auto kind = SamplerKind(sampler_in.kind());
+
+        auto kind = core::type::SamplerKind(sampler_in.kind());
+        if (kind == core::type::SamplerKind::kSampler) {
+            auto filtering = SamplerFiltering(sampler_in.filtering());
+            return mod_out_.Types().Get<type::Sampler>(kind, filtering);
+        }
         return mod_out_.Types().Get<type::Sampler>(kind);
     }
 
