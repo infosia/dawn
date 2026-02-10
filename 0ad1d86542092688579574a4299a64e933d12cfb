@@ -120,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b327b3a_7c4c2f26",
+        "filename": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "I think SKIP is fine here.",
+      "parentUuid": "dd8e3f3f_e9cf5fd0",
+      "range": {
+        "startLine": 1010,
+        "startChar": 12,
+        "endLine": 1010,
+        "endChar": 22
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fde7767f_8f36ae32",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 30
@@ -131,6 +155,30 @@
       "writtenOn": "2026-02-09T21:33:28Z",
       "side": 1,
       "message": "We could create a better message here or indicate that you need this feature in order to use vec2u in an atomic.",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 76
+      },
+      "revId": "0ad1d86542092688579574a4299a64e933d12cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90708463_6c34f130",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Yeah mentioning the extension in the error here would be nice.",
+      "parentUuid": "fde7767f_8f36ae32",
       "range": {
         "startLine": 331,
         "startChar": 8,

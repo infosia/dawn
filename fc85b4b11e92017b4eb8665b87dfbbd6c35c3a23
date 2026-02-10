@@ -1,0 +1,431 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4a930fd_922c966c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 31
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: link to issue and more descriptive commit message",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16ede4d_cf25245d",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: use link from main repo:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/atomic-64-min-max.md",
+      "fixSuggestions": [
+        {
+          "fixId": "ba1c15b6_7af12710",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Features.cpp",
+              "range": {
+                "startLine": 444,
+                "startChar": 0,
+                "endLine": 445,
+                "endChar": 0
+              },
+              "replacement": "      \"https://github.com/gpuweb/gpuweb/blob/main/proposals/atomic-64-min-max.md\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9633fd51_38e478f2",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Double check this one since it\u0027s duplicated with the one below.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "283d0bcb_aea8afd0",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: don\u0027t need to use implicit template parameters here since there is only one option",
+      "fixSuggestions": [
+        {
+          "fixId": "40238ceb_808d97be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/core.def",
+              "range": {
+                "startLine": 1534,
+                "startChar": 0,
+                "endLine": 1538,
+                "endChar": 0
+              },
+              "replacement": "@stage(\"fragment\", \"compute\")\n  fn atomicStoreMax(ptr\u003cstorage, atomic\u003cu64\u003e, read_write\u003e, u64)\n@stage(\"fragment\", \"compute\")\n  fn atomicStoreMin(ptr\u003cstorage, atomic\u003cu64\u003e, read_write\u003e, u64)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bfa397a_7b0a13c3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Note: We might have to wrap this in a capability used by the WGSL frontend at some point, as the IR fuzzer will probably start doing this. Can wait until we hit the issue though.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd56a00f_6ea85d9d",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: no need to use templates here since there\u0027s only one option\n(I realize we don\u0027t always do that in other intrinsics...)",
+      "fixSuggestions": [
+        {
+          "fixId": "87101ecc_1734a07b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/spirv.def",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 254,
+                "endChar": 0
+              },
+              "replacement": "@stage(\"fragment\", \"compute\") implicit fn atomic_u_min(ptr\u003cstorage, atomic\u003cu64\u003e, read_write\u003e, u32, u32, u64) -\u003e u64\n@stage(\"fragment\", \"compute\") implicit fn atomic_u_max(ptr\u003cstorage, atomic\u003cu64\u003e, read_write\u003e, u32, u32, u64) -\u003e u64\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeb8045c_8a565ac3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Would be good to add a couple of unit tests for this transform for these builtins.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22107d18_2e935368",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: update comment",
+      "fixSuggestions": [
+        {
+          "fixId": "699cc2ab_429ce856",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+              "range": {
+                "startLine": 71,
+                "startChar": 0,
+                "endLine": 72,
+                "endChar": 0
+              },
+              "replacement": "    /// Map from original type to a new type with atomic\u003cvec2\u003cu32\u003e\u003e rewritten to atomic\u003cu64\u003e.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fdcadea_6dedfed2",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Because we are early in the compilation flow we need to handle modules with unused functions, which means you could have an unused function with a parameter that is one of these atomics without any root block variables.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b4086d_da20e8e6",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "I think you probably simplify this stuff for access/let by just updating the instruction result if necessary.\n\ni.e. `RewriteType(inst-\u003eResult())` and if it changes then just `inst-\u003eResult()-\u003eSetType()` and then replace all usages of it.\n\nHaven\u0027t thought it all the way through but I think that would work and maybe fixes the two crashes I noted below.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02252cf1_9d7d1424",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Please add a unit test that covers `access`. I tried this locally and it crashed this tranform:\n```\nenable atomic_vec2u_min_max;\n\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: array\u003catomic\u003cvec2u\u003e\u003e;\n@group(0) @binding(1)\nvar\u003cstorage, read\u003e other: u32;\n\n@fragment\nfn main() {\n  atomicStoreMin(\u0026a[0], vec2u(0, 0));\n}\n```",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a34deff1_02dcd5c3",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Please add a unit test that covers passing the pointer through a `let`. I tried this locally and it crashed this transform:\n```\nenable atomic_vec2u_min_max;\n\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: atomic\u003cvec2u\u003e;\n\n@fragment\nfn main() {\n  let pa \u003d \u0026a;\n  atomicStoreMin(pa, vec2u(0, 0));\n}\n```",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "582bb9f3_31c087e7",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Need to rewrite the element type for runtime arrays too. Missing unit test for this case.",
+      "fixSuggestions": [
+        {
+          "fixId": "94fcf6dd_7d6b4ef7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+              "range": {
+                "startLine": 162,
+                "startChar": 0,
+                "endLine": 163,
+                "endChar": 0
+              },
+              "replacement": "                        return ty.runtime_array(RewriteType(arr-\u003eElemType()));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50fe39da_081d1d1a",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "You need to handle passing pointers to these atomics through function parameters too, e.g.\n```\nenable atomic_vec2u_min_max;\n\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: atomic\u003cvec2u\u003e;\n\nfn foo(p: ptr\u003cstorage, atomic\u003cvec2u\u003e, read_write\u003e) {\n  atomicStoreMin(p, vec2u(0, 0));\n}\n\n@fragment\nfn main() {\n  foo(\u0026a);\n}\n```\n\nPlease add a unit test for that case.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07df4a51_cfdd4e1f",
+        "filename": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: don\u0027t need to do this twice since the condition and result is the same for both branches.",
+      "range": {
+        "startLine": 1022,
+        "startChar": 0,
+        "endLine": 1023,
+        "endChar": 93
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "76386707_b6ea53d8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/alias_analysis_test.cc",
+              "range": {
+                "startLine": 1015,
+                "startChar": 0,
+                "endLine": 1027,
+                "endChar": 0
+              },
+              "replacement": "            auto type_of_atomic \u003d\n                IsAtomicStoreMinMax(fn1) ? ty.Of\u003catomic\u003cvec2u\u003e\u003e() : ty.Of\u003catomic\u003ci32\u003e\u003e();\n            GlobalVar(\"v1\", address_space, read_write, type_of_atomic,  //\n                      Binding(0_a), Group(0_a));\n            GlobalVar(\"v2\", address_space, read_write, type_of_atomic,  //\n                      Binding(1_a), Group(0_a));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35e72263_d3dc8a44",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 31
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: don\u0027t need to use implicit template parameters here since there\u0027s only one option",
+      "fixSuggestions": [
+        {
+          "fixId": "71c2c0b4_8d6ebe6e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/wgsl.def",
+              "range": {
+                "startLine": 1453,
+                "startChar": 0,
+                "endLine": 1457,
+                "endChar": 0
+              },
+              "replacement": "@stage(\"fragment\", \"compute\")\n  fn atomicStoreMax(ptr\u003cstorage, atomic\u003cvec2\u003cu32\u003e\u003e, read_write\u003e, vec2\u003cu32\u003e)\n@stage(\"fragment\", \"compute\")\n  fn atomicStoreMin(ptr\u003cstorage, atomic\u003cvec2\u003cu32\u003e\u003e, read_write\u003e, vec2\u003cu32\u003e)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d323a57e_4233fb08",
+        "filename": "test/tint/builtins/gen/literal/atomicStoreMax/707bde.wgsl.expected.glsl",
+        "patchSetId": 31
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:08:48Z",
+      "side": 1,
+      "message": "Nit: Add checks to the `CanGenerate` methods in `writer.cc` files for backends that don\u0027t yet have support for the feature otherwise the fuzzers will throw lots of bugs at you (and it makes the errors better here).",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
