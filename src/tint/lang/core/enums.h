@@ -637,6 +637,7 @@ enum class BuiltinValue : uint8_t {
     kUndefined,
     kCullDistance,  // Tint-internal enum entry - not parsed
     kPointSize,  // Tint-internal enum entry - not parsed
+    kThreadIndexInQuadgroup,  // Tint-internal enum entry - not parsed
     kBarycentricCoord,
     kClipDistances,
     kFragDepth,

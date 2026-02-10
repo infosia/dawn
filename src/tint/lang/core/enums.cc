@@ -1093,6 +1093,8 @@ std::string_view ToString(BuiltinValue value) {
             return "__cull_distance";
         case BuiltinValue::kPointSize:
             return "__point_size";
+        case BuiltinValue::kThreadIndexInQuadgroup:
+            return "__thread_index_in_quadgroup";
         case BuiltinValue::kBarycentricCoord:
             return "barycentric_coord";
         case BuiltinValue::kClipDistances:

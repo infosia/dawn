@@ -65,6 +65,7 @@
 #include "src/tint/lang/msl/writer/raise/binary_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/builtin_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/convert_print_to_log.h"
+#include "src/tint/lang/msl/writer/raise/derivative_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/module_constant.h"
 #include "src/tint/lang/msl/writer/raise/module_scope_vars.h"
 #include "src/tint/lang/msl/writer/raise/packed_vec3.h"
@@ -220,6 +221,9 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                                       options.fixed_sample_mask, options.depth_range_offsets}));
     TINT_CHECK_RESULT(raise::PackedVec3(module));
     TINT_CHECK_RESULT(raise::SimdBallot(module));
+    if (options.workarounds.polyfill_derivatives) {
+        TINT_CHECK_RESULT(raise::DerivativePolyfill(module));
+    }
 
     // ArgumentBuffers must come before ModuleScopeVars
     if (options.use_argument_buffers) {

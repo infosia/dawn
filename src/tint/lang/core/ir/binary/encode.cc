@@ -1105,6 +1105,8 @@ struct Encoder {
                 return pb::BuiltinValue::primitive_index;
             case core::BuiltinValue::kBarycentricCoord:
                 return pb::BuiltinValue::barycentric_coord;
+            case core::BuiltinValue::kThreadIndexInQuadgroup:
+                return pb::BuiltinValue::thread_index_in_quadgroup;
             case core::BuiltinValue::kUndefined:
                 break;
         }

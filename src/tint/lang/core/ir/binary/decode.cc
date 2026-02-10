@@ -1740,6 +1740,8 @@ struct Decoder {
                 return core::BuiltinValue::kPrimitiveIndex;
             case pb::BuiltinValue::barycentric_coord:
                 return core::BuiltinValue::kBarycentricCoord;
+            case pb::BuiltinValue::thread_index_in_quadgroup:
+                return core::BuiltinValue::kThreadIndexInQuadgroup;
             case pb::BuiltinValue::BuiltinValue_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::BuiltinValue::BuiltinValue_INT_MAX_SENTINEL_DO_NOT_USE_:
                 break;

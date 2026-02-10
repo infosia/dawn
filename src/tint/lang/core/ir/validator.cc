@@ -645,6 +645,14 @@ constexpr BuiltInChecker kBarycentricCoordChecker{
     .type_error = "must be an vec3<f32>",
 };
 
+constexpr BuiltInChecker kThreadIndexInQuadgroupChecker{
+    .valid_usages = EnumSet<IOAttributeUsage>{IOAttributeUsage::kFragmentInputUsage},
+    .type_check = [](const core::type::Type* ty, const Capabilities&) -> bool {
+        return ty->Is<core::type::U32>();
+    },
+    .type_error = "must be an u32",
+};
+
 /// @returns an appropriate BuiltInCheck for @p builtin, ICEs when one isn't defined
 const BuiltInChecker& BuiltinCheckerFor(BuiltinValue builtin, const Capabilities& capabilities) {
     switch (builtin) {
@@ -693,6 +701,8 @@ const BuiltInChecker& BuiltinCheckerFor(BuiltinValue builtin, const Capabilities
             return kPrimitiveIndexChecker;
         case BuiltinValue::kBarycentricCoord:
             return kBarycentricCoordChecker;
+        case BuiltinValue::kThreadIndexInQuadgroup:
+            return kThreadIndexInQuadgroupChecker;
         default:
             TINT_ICE() << builtin << " is does not have a checker defined for it";
     }
