@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aa616fe_c6015987",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-10T02:44:42Z",
+      "side": 1,
+      "message": "PTAL, thanks.\nP.S. the bots failure is due to both bug in cts(have case to run with array to test dynamic indexing) and missing validation(not allowed array or struct with array in immediate block) in dawn. I\u0027ll handle it seperately.",
+      "revId": "68996927c1e406d5c21864ef09a1c60a376ad55b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
