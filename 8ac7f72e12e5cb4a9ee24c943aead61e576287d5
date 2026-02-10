@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3d1367d_327251c6",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:50:22Z",
+      "side": 1,
+      "message": "These errors are missing the filterability parameters IIUC?\nI thought you fixed that?",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c04a6c8_4e6b8c96",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:50:22Z",
+      "side": 1,
+      "message": "and here, but you didn\u0027t write this...",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e27af6e_f62b4a9e",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:50:22Z",
+      "side": 1,
+      "message": "Nit: UnwrapRef unneeded here",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae68e055_d20375c8",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:50:22Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9d7ca68_8946f29a",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T21:50:22Z",
+      "side": 1,
+      "message": "Is this supposed to do more stuff? Seems unneeded if not?",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
