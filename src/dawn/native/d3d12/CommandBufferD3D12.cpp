@@ -355,13 +355,7 @@ void RecordNumWorkgroupsForDispatch(ID3D12GraphicsCommandList* commandList,
 // UAV are used in the synchronization scope if `passHasUAV` is passed and no errors are hit.
 MaybeError TransitionAndClearForSyncScope(CommandRecordingContext* commandContext,
                                           const SyncScopeResourceUsage& usages,
-                                          ResourceTable* resourceTable,
                                           bool* passHasUAV = nullptr) {
-    // Update the resource table metadata buffers before transitioning resources.
-    if (resourceTable != nullptr) {
-        DAWN_TRY(resourceTable->ApplyPendingUpdates(commandContext));
-    }
-
     std::vector<D3D12_RESOURCE_BARRIER> barriers;
 
     ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
@@ -479,7 +473,6 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         : BindGroupTrackerBase(), mDevice(device), mHeapState(heapState) {}
 
     MaybeError Apply(CommandRecordingContext* commandContext) {
-        mApplyCalled = true;
         BeforeApply();
 
         ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
@@ -567,14 +560,7 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
     void SetID3D12DescriptorHeaps(ID3D12GraphicsCommandList* commandList);
 
-    void SetResourceTable(ResourceTable* resourceTable) {
-        // TODO(crbug.com/474140205): Currently this function is expected to be called once, since
-        // it's set on the CommandEncoder. But when we move it to the pass encoders, this function
-        // may be called multiple times, and after Apply.
-        DAWN_ASSERT(mResourceTable == nullptr);  // Set only once
-        DAWN_ASSERT(!mApplyCalled);              // And before Apply is called
-        mResourceTable = resourceTable;
-    }
+    void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
 
     ResourceTable* GetResourceTable() { return mResourceTable; }
 
@@ -775,7 +761,6 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     raw_ptr<Device> mDevice;
     raw_ptr<DescriptorHeapState> mHeapState;
     raw_ptr<ResourceTable> mResourceTable = nullptr;
-    [[maybe_unused]] bool mApplyCalled = false;
 
     PerBindGroup<D3D12_GPU_DESCRIPTOR_HANDLE> mBoundRootSamplerTables = {};
 };
@@ -803,11 +788,6 @@ class DescriptorHeapState {
         // descriptor heaps.
         mComputeBindingTracker.ResetRootSamplerTables();
         mGraphicsBindingTracker.ResetRootSamplerTables();
-    }
-
-    void SetResourceTable(ResourceTable* resourceTable) {
-        mComputeBindingTracker.SetResourceTable(resourceTable);
-        mGraphicsBindingTracker.SetResourceTable(resourceTable);
     }
 
     BindGroupStateTracker<ComputePipeline>* GetComputeBindingTracker() {
@@ -988,9 +968,15 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
             case Command::BeginComputePass: {
                 BeginComputePassCmd* cmd = mCommands.NextCommand<BeginComputePassCmd>();
 
+                // Apply pending updates to all resource tables used by the compute pass.
+                // This has to be done before emitting barriers on the table's resources.
+                auto& usages = GetResourceUsages().computePasses[nextComputePassNumber];
+                for (auto& resourceTable : usages.usedResourceTables) {
+                    DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(commandContext));
+                }
+
                 DAWN_TRY(RecordComputePass(
-                    commandContext, descriptorHeapState.GetComputeBindingTracker(), cmd,
-                    GetResourceUsages().computePasses[nextComputePassNumber]));
+                    commandContext, descriptorHeapState.GetComputeBindingTracker(), cmd, usages));
 
                 nextComputePassNumber++;
                 break;
@@ -1000,12 +986,18 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 BeginRenderPassCmd* beginRenderPassCmd =
                     mCommands.NextCommand<BeginRenderPassCmd>();
 
+                // Apply pending updates to all resource tables used by the compute pass.
+                // This has to be done before emitting barriers on the table's resources.
+                auto& usages = GetResourceUsages().renderPasses[nextRenderPassNumber];
+                for (auto& resourceTable : usages.usedResourceTables) {
+                    DAWN_TRY(ToBackend(resourceTable)->ApplyPendingUpdates(commandContext));
+                }
+
                 DAWN_TRY(EnsureResolveTargetInitialized(commandContext, beginRenderPassCmd));
 
                 bool passHasUAV;
                 DAWN_TRY(TransitionAndClearForSyncScope(
                     commandContext, GetResourceUsages().renderPasses[nextRenderPassNumber],
-                    descriptorHeapState.GetGraphicsBindingTracker()->GetResourceTable(),
                     &passHasUAV));
 
                 LazyClearRenderPassAttachments(device, beginRenderPassCmd);
@@ -1385,12 +1377,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 break;
             }
 
-            case Command::SetResourceTable: {
-                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
-                descriptorHeapState.SetResourceTable(ToBackend(cmd->table.Get()));
-                break;
-            }
-
             default:
                 DAWN_UNREACHABLE();
         }
@@ -1427,8 +1413,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 }
 
                 DAWN_TRY(TransitionAndClearForSyncScope(
-                    commandContext, resourceUsages.dispatchUsages[currentDispatch],
-                    bindingTracker->GetResourceTable()));
+                    commandContext, resourceUsages.dispatchUsages[currentDispatch]));
                 DAWN_TRY(bindingTracker->Apply(commandContext));
                 immediates.Apply(commandContext);
 
@@ -1442,8 +1427,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 DispatchIndirectCmd* dispatch = mCommands.NextCommand<DispatchIndirectCmd>();
 
                 DAWN_TRY(TransitionAndClearForSyncScope(
-                    commandContext, resourceUsages.dispatchUsages[currentDispatch],
-                    bindingTracker->GetResourceTable()));
+                    commandContext, resourceUsages.dispatchUsages[currentDispatch]));
                 DAWN_TRY(bindingTracker->Apply(commandContext));
                 immediates.Apply(commandContext);
 
@@ -1549,8 +1533,9 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
             }
 
             case Command::SetResourceTable: {
-                // TODO(https://issues.chromium.org/473354062): Add support for resource tables.
-                return DAWN_UNIMPLEMENTED_ERROR("SetResourceTable unimplemented.");
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                bindingTracker->SetResourceTable(ToBackend(cmd->table.Get()));
+                break;
             }
 
             default:
@@ -1721,7 +1706,7 @@ void CommandBuffer::EmulateBeginRenderPass(CommandRecordingContext* commandConte
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandContext,
                                            BindGroupStateTracker<RenderPipeline>* bindingTracker,
                                            BeginRenderPassCmd* renderPass,
-                                           const bool passHasUAV) {
+                                           bool passHasUAV) {
     Device* device = ToBackend(GetDevice());
     const bool useRenderPass = device->IsToggleEnabled(Toggle::UseD3D12RenderPass);
 
@@ -1977,6 +1962,12 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
 
                 vertexBufferTracker.OnSetVertexBuffer(cmd->slot, ToBackend(cmd->buffer.Get()),
                                                       cmd->offset, cmd->size);
+                break;
+            }
+
+            case Command::SetResourceTable: {
+                SetResourceTableCmd* cmd = mCommands.NextCommand<SetResourceTableCmd>();
+                bindingTracker->SetResourceTable(ToBackend(cmd->table.Get()));
                 break;
             }
 
