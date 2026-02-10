@@ -93,6 +93,30 @@
       },
       "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff798b77_39f1bb2b",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-10T22:24:27Z",
+      "side": 1,
+      "message": "find_packages from what I can tell doesn\u0027t use targets in CMake build, it is install cmake packages.\n\nWe have had warnings for a long time about the versions being wrong, which indicated the system version was being used. There is a change that landed for the Loader atleast that now expects an useable version to be found at runtime, functionally turning that warning into a build failure.",
+      "parentUuid": "f37f39eb_0a114e35",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
