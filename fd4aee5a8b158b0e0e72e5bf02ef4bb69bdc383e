@@ -69,6 +69,30 @@
       },
       "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f37f39eb_0a114e35",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-10T22:16:52Z",
+      "side": 1,
+      "message": "But this is adding the vulkan headers, so they _should_ be available. I thought FindPackage checks if the target exists already? In the past I\u0027ve built things this way and it was fine, VVL and loader would use the headers that I added. Is this a recent change where they broke cmake upstream so this doesn\u0027t work anymore?",
+      "parentUuid": "d26f1552_42d35e4a",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
