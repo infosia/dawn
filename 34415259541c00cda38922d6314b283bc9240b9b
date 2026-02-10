@@ -16,6 +16,52 @@
       "message": "PTAL.",
       "revId": "34415259541c00cda38922d6314b283bc9240b9b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c0203d5_474cebe4",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:20:20Z",
+      "side": 1,
+      "message": "nit: is it incorrect or inaccurate?",
+      "range": {
+        "startLine": 471,
+        "startChar": 46,
+        "endLine": 471,
+        "endChar": 55
+      },
+      "revId": "34415259541c00cda38922d6314b283bc9240b9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ec8afb_75a876d0",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-10T22:20:20Z",
+      "side": 1,
+      "message": "Do we have to expose to the fuzzer?",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 30
+      },
+      "revId": "34415259541c00cda38922d6314b283bc9240b9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
