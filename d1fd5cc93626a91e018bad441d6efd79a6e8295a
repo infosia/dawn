@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60e3339d_310cb6da",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T22:49:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this solves all of the potential mismatch cases, unless I\u0027m missing something.\n\nIf the vertex and fragment shaders both use differently sized user immediates, do you not still end up with a mismatch?\n\ne.g. if I pass this to Tint with this CL as currently written:\n```\nvar\u003cimmediate\u003e v_imm: f32;\nvar\u003cimmediate\u003e f_imm: mat4x4f;\n\n@vertex\nfn vert() -\u003e @builtin(position) vec4f {\n  return vec4f(v_imm, 0, 0, 1);\n}\n\n@fragment\nfn frag() -\u003e @location(0) vec4f {\n  return f_imm[3];\n}\n```\n\nI get this output:\n```\n//\n// vert\n//\n#version 310 es\n\nlayout(location \u003d 0) uniform uint tint_immediates[4];\nvec4 vert_inner() {\n  return vec4(uintBitsToFloat(tint_immediates[0u]), 0.0f, 0.0f, 1.0f);\n}\nvoid main() {\n  vec4 v \u003d vert_inner();\n  gl_Position \u003d vec4(v.x, -(v.y), ((2.0f * v.z) - v.w), v.w);\n  gl_PointSize \u003d 1.0f;\n}\n//\n// frag\n//\n#version 310 es\nprecision highp float;\nprecision highp int;\n\nlayout(location \u003d 0) uniform uint tint_immediates[16];\nlayout(location \u003d 0) out vec4 frag_loc0_Output;\nvec4 frag_inner() {\n  return uintBitsToFloat(uvec4(tint_immediates[12u], tint_immediates[13u], tint_immediates[14u], tint_immediates[15u]));\n}\nvoid main() {\n  frag_loc0_Output \u003d frag_inner();\n}\n```\n\nNote the differently sized immediates in the GLSL output.\nThis is why I suggested (in chat) that Dawn probably has to tell Tint what the max size is.\n\nLet me know if I\u0027m missing something.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2715774_db5e9b0a",
         "filename": "src/tint/lang/core/ir/transform/decompose_access.h",
         "patchSetId": 18
@@ -14,6 +31,41 @@
       "writtenOn": "2026-02-10T02:10:26Z",
       "side": 1,
       "message": "jrprice@: I think with this change (and the similar changes in metal backend ModuleScopeVar transform to have immediate support) we could remove change_immediate_to_uniform transform (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc;drc\u003de63596721df61bbc199c38c4a102597ad81ad154;l\u003d148). Am I right?",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e35670c8_29b48b4b",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T22:49:48Z",
+      "side": 1,
+      "message": "Maybe, although that transform also adds a binding point which is needed by both the MSL and HLSL backends, so that information would have to be provided elsewhere.",
+      "parentUuid": "b2715774_db5e9b0a",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c56f2f3e_0399d7d9",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-10T22:49:48Z",
+      "side": 1,
+      "message": "Nit: Please keep the comment about it needing to come after BuiltinPolyfill too.",
       "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
