@@ -52,6 +52,24 @@
       "parentUuid": "fe7ab19f_4e2c94fd",
       "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a978e303_0e68d428",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-02-11T11:18:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5bbaad80_78a53669",
+      "revId": "07536b8f04f0fab8321b42c40e34b4e1c8aa27d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
