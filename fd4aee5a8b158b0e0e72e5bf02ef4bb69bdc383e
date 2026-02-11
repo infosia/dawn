@@ -117,6 +117,30 @@
       },
       "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79079c0a_d3fa2538",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T01:51:23Z",
+      "side": 1,
+      "message": "Doing add_subdirectory is how Amber and VKB both worked, they\u0027d add everything and it worked. It\u0027s possible they changed things recently which broke stuff, but in that case I think we should fix it upstream.\n\nDo you have a bot this fails on where I can se what\u0027s happening? Or some way to check what cmake is doing?",
+      "parentUuid": "ff798b77_39f1bb2b",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
