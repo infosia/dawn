@@ -60,6 +60,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c476c4e2_99049afc",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T21:03:54Z",
+      "side": 1,
+      "message": "Actually since you can\u0027t put `unfilterable` on non-float textures you can drop the F32 check too I think.",
+      "parentUuid": "635fe3de_d666a943",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d73ef1f_b7fedc12",
         "filename": "src/tint/lang/core/type/resource_type.h",
         "patchSetId": 4
