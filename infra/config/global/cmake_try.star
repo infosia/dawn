@@ -87,6 +87,7 @@ def apply_mac_cq_builder_defaults(kwargs):
         |kwargs| with Mac/CMake defaults set.
     """
     kwargs = apply_cq_builder_defaults(kwargs)
+    kwargs.setdefault("caches", [swarming.cache(name = "osx_sdk", path = "osx_sdk")])
     kwargs.setdefault("cpu", cpu.X86_64)
     kwargs.setdefault("os", os.MAC_DEFAULT)
     kwargs.setdefault("pool", "luci.chromium.gpu.try")

@@ -68,6 +68,7 @@ def dawn_ci_mac_cmake_builder(**kwargs):
         **kwargs: Builder arguments to forward on to ci.builder()
     """
     kwargs.setdefault("builderless", "1")
+    kwargs.setdefault("caches", [swarming.cache(name = "osx_sdk", path = "osx_sdk")])
 
     # x64 used for the builders since historically Dawn has tested Mac/CMake on
     # x64 and tests are run on the same machine as compilation.
