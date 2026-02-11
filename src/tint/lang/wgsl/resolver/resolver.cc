@@ -2421,6 +2421,8 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
         case wgsl::BuiltinFn::kAtomicSub:
         case wgsl::BuiltinFn::kAtomicMax:
         case wgsl::BuiltinFn::kAtomicMin:
+        case wgsl::BuiltinFn::kAtomicStoreMax:
+        case wgsl::BuiltinFn::kAtomicStoreMin:
         case wgsl::BuiltinFn::kAtomicAnd:
         case wgsl::BuiltinFn::kAtomicOr:
         case wgsl::BuiltinFn::kAtomicXor:
