@@ -133,9 +133,21 @@ struct State {
 
         b.Append(has_check->True(), [&] {
             auto* type_val = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, idx);
-
             auto* v = b.Load(type_val);
-            auto* eq = b.Equal(v, u32(static_cast<uint32_t>(core::type::TypeToResourceType(type))));
+
+            ResourceType resource_ty = core::type::TypeToResourceType(type);
+
+            core::ir::Value* eq = nullptr;
+            auto conv = core::type::ConvertsFrom(type);
+            if (conv.has_value()) {
+                auto* lhs = b.Construct(ty.vec2<u32>(), v);
+                auto* rhs = b.Construct(ty.vec2<u32>(), u32(uint32_t(resource_ty)),
+                                        u32(uint32_t(conv.value())));
+                auto* cmp = b.Equal(lhs, rhs);
+                eq = b.Call(ty.bool_(), core::BuiltinFn::kAny, cmp)->Result();
+            } else {
+                eq = b.Equal(v, u32(uint32_t(resource_ty)))->Result();
+            }
             b.ExitIf(has_check, eq);
         });
 

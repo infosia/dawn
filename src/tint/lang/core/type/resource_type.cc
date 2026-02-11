@@ -273,4 +273,82 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
         TINT_ICE_ON_NO_MATCH);
 }
 
+std::optional<ResourceType> ConvertsFrom(const core::type::Type* in_type) {
+    return tint::Switch(
+        in_type,
+        [&](const core::type::SampledTexture* sa) {
+            switch (sa->Dim()) {
+                case core::type::TextureDimension::k1d:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTexture1d_f32_filterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::k2d:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTexture2d_f32_filterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::k2dArray:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTexture2dArray_f32_filterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::k3d:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTexture3d_f32_filterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::kCube:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTextureCube_f32_filterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::kCubeArray:
+                    return tint::Switch(
+                        sa->Type(),
+                        [&](const core::type::F32*) -> std::optional<ResourceType> {
+                            if (sa->Filterable() == core::TextureFilterable::kUnfilterable) {
+                                return ResourceType::kTextureCubeArray_f32_unfilterable;
+                            }
+                            return std::nullopt;
+                        },
+                        [](Default) { return std::nullopt; });
+                case core::type::TextureDimension::kNone:
+                    TINT_UNREACHABLE();
+            }
+        },
+        [&](const core::type::Sampler* s) -> std::optional<ResourceType> {
+            if (s->Filtering() == core::SamplerFiltering::kNonFiltering) {
+                return ResourceType::kSampler_filtering;
+            }
+            return std::nullopt;
+        },
+        [](Default) { return std::nullopt; });
+}
+
 }  // namespace tint::core::type
