@@ -16,6 +16,144 @@
       "message": "Geoff, Quyen: PTAL. Thanks!",
       "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c9c9cde_62f58d39",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to work if user calls `Queue.Submit` before writing to the CPU memory.\n\n```\ndesc.mapAtCreation \u003d true;\n\n// This will create the cpu shadow copy and enqueue the code block here.\nwgpu::Buffer buffer \u003d device.CreateBuffer(\u0026desc);\n\n// Get the CPU shadow copy\u0027s pointer\nuint* mappedPointer \u003d (uint*)buffer.GetMappedRange();\n\n// This will flush the enqueued GL commands and copy the unitialized shadow\n// copy\u0027s data to the GL buffer.\nqueue.Submit();\n\n// This writes to a dangling pointer no longer valid because the shadow copy has\n// been clearedd.\n*mappedPointer \u003d 2;\n\n// buffer still doesn\u0027t contain the value 2 written above.\nbuffer.Unmap();\n```\n\n// User",
+      "range": {
+        "startLine": 212,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 19
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b745157b_14a2ab5d",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "I think `resize` doesn\u0027t free the vector\u0027s memory. Are we ok with keeping the shadow copy\u0027s memory around.",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 218,
+        "endChar": 34
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6d6d15a_86560e73",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to work if user uses WaitAny to wait for the map async callback when the buffer is not used by the GPU.\n\nFor example:\n```\n// assuming buffer is not used by the GPU\nauto future \u003d buffer.MapAsync([]{});\n\n// Since there is no GPU usage of this buffer, the front-end might return\n// immediately without flushing any GL command\ninstance.WaitAny(future, UINT64_MAX);\n\n// This will return nullptr\nvoid* mappedPtr \u003d buffer.GetMappedRange();\n```\n\nIf we want `WantAny` to wait for the enqueued GL `MapBufferRange` command to run, we might need to call `TrackUsage` here.\n```suggestion\n    TrackUsage();\n\n    return ToBackend(GetDevice())\n        -\u003eEnqueueGL([this, self \u003d Ref\u003cBuffer\u003e(this), offset, size,\n```",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 19
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaa3727a_325c43a1",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "It might be quite confusing for readers to understand why we have to use DestroyGL here.\n\nAn alternative way is just early return if newState \u003d\u003d Destroyed.\nThe buffer will be implicitly unmapped when it\u0027s destroyed by `glDeleteBuffers` anw.\nAccording to the GL ES 3.0 spec\u0027s `2.10.3.1 Unmapping Buffers` section:\n\u003e Buffers are implicitly unmapped as a side effect of deletion or reinitialization\n(i.e. calling DeleteBuffers or BufferData).\n\n```suggestion\n    if (newState \u003d\u003d Destroyed) {\n    \treturn;\n    }\n    IgnoreErrors(device-\u003eEnqueueGL([this]() { UnmapBuffer(...) }\n```",
+      "range": {
+        "startLine": 276,
+        "startChar": 25,
+        "endLine": 276,
+        "endChar": 41
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3f89fb_1222237e",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "This is redundant because the `ExecuteGL` call below already checks whether GLDefer toggle is disabled or not, if it\u0027s disabled, the lambda will be executed [immediately](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/DeviceGL.h;drc\u003de63596721df61bbc199c38c4a102597ad81ad154;l\u003d92).",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e764051a_511fa0dd",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-11T08:09:48Z",
+      "side": 1,
+      "message": "This will create a buffer with twice the amount of memory.\n- A shadow copy. This won\u0027t be used anyway because `EnqueueGL` triggered by MapAtCreation will execute immediately in a GL scope.\n- a GL buffer.\n\nAre we ok with that?\nMaybe we should just use the CPU memory directly here without creating any `Buffer`.\n`glTexSubImage` should work with a raw CPU pointer.",
+      "range": {
+        "startLine": 556,
+        "startChar": 19,
+        "endLine": 556,
+        "endChar": 36
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
