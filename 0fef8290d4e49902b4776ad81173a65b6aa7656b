@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8ad0bc0_33ba0a92",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T03:28:46Z",
+      "side": 1,
+      "message": "Note, this is correct. This is the `i32`, `u32` overload which does not have filterability. The `f32` entry below requires filterability.",
+      "revId": "0fef8290d4e49902b4776ad81173a65b6aa7656b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
