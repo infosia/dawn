@@ -24,6 +24,47 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eb7c65b_cc28301e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-11T15:50:41Z",
+      "side": 1,
+      "message": "They are doing things with using find_packages to get VulkanHeaders, and then looking at VulkanHeaders_VERSION, which returns \"\" for us, since we didn\u0027t have a version that matched the requirements. I don\u0027t know if this idiomatic CMake or not.",
+      "parentUuid": "3bcce614_be588bcf",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c53c749_23b3a14f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-11T15:50:41Z",
+      "side": 1,
+      "message": "Since I no longer seem to be able to reproduce this, I am going to abandon it for now and focus on other things. If it comes back I guess I will re-open this or something",
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7e1ac32_33767188",
@@ -133,6 +174,30 @@
       "side": 1,
       "message": "Doing add_subdirectory is how Amber and VKB both worked, they\u0027d add everything and it worked. It\u0027s possible they changed things recently which broke stuff, but in that case I think we should fix it upstream.\n\nDo you have a bot this fails on where I can se what\u0027s happening? Or some way to check what cmake is doing?",
       "parentUuid": "ff798b77_39f1bb2b",
+      "range": {
+        "startLine": 197,
+        "startChar": 3,
+        "endLine": 224,
+        "endChar": 53
+      },
+      "revId": "fd4aee5a8b158b0e0e72e5bf02ef4bb69bdc383e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8156e4d7_f9f9aad0",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-11T15:50:41Z",
+      "side": 1,
+      "message": "ok... I seriously cannot reproduce the issue what I was seeing now.\n\nThe vulkan-deps roll that pulled this I thought introduced this has been reverted at ToT, so I needed to check out an older hash (`1e7bfc3a35c47675b1a2711c162ccffb93977d4b~1`) to make sure the changes are there.\n\nPreviously `cmake -GNinja -DCMAKE_C_COMPILER_LAUNCHER\u003dccache -DCMAKE_CXX_COMPILER_LAUNCHER\u003dccache -DCMAKE_CXX_FLAGS\u003d\"--gcc-install-dir\u003d/usr/lib/gcc/x86_64-linux-gnu/14\" -DTINT_BUILD_FUZZERS\u003dON -DTINT_BUILD_MESA\u003dON -DCMAKE_BUILD_TYPE\u003dDebug ../.. \u0026\u0026 ninja` reproduced it consistently.\n\nBut now it doesn\u0027t, so I guess there was something subtly broken about my dev env?\n(I had been using a clean build directory and so forth, so I am really not sure what changed, other then my repo has been updated and sync and rolled back a few times, so I guess something was inconsistent in my repo, maybe? or maybe I had an older vulkan-deps roll and that had a transisent issue?)",
+      "parentUuid": "79079c0a_d3fa2538",
       "range": {
         "startLine": 197,
         "startChar": 3,
