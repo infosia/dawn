@@ -16,6 +16,29 @@
       "message": "PTAL. Just a minor cleanup for a potential footgun.",
       "revId": "b727c68b1cad60e35e981ff346126d69df7788c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdbb937c_2c492439",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-11T21:14:01Z",
+      "side": 1,
+      "message": "nit. Maybe a bit redundant because we already default it, but maybe just add an else clause as well that sets `mRenderPassType \u003d CreateRenderPass` to indicate that that\u0027s the third and last possible option? It makes it a little less mysterious as to what the expected result is if neither of these if clauses hold true.",
+      "range": {
+        "startLine": 650,
+        "startChar": 4,
+        "endLine": 652,
+        "endChar": 66
+      },
+      "revId": "b727c68b1cad60e35e981ff346126d69df7788c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
