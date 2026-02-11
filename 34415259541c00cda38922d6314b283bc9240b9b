@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e5d54c7_c97fb0d0",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:02:03Z",
+      "side": 1,
+      "message": "When I ran without fixing vec\u0027s I was getting `NaN`s which seems incorrect to me.",
+      "parentUuid": "8c0203d5_474cebe4",
+      "range": {
+        "startLine": 471,
+        "startChar": 46,
+        "endLine": 471,
+        "endChar": 55
+      },
+      "revId": "34415259541c00cda38922d6314b283bc9240b9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3ec8afb_75a876d0",
@@ -81,6 +105,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf77963_8977c53e",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:02:03Z",
+      "side": 1,
+      "message": "nice catch. fixed.",
+      "parentUuid": "f3ec8afb_75a876d0",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 30
+      },
+      "revId": "34415259541c00cda38922d6314b283bc9240b9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c7cde09_c04443aa",
@@ -94,6 +142,30 @@
       "writtenOn": "2026-02-10T22:25:17Z",
       "side": 1,
       "message": "This is really strangely worded for what we are doing.",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "34415259541c00cda38922d6314b283bc9240b9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c41e246a_994a29ff",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c7cde09_c04443aa",
       "range": {
         "startLine": 47,
         "startChar": 39,
