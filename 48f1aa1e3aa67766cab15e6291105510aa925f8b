@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a16992c_5c0f4195",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-11T19:25:59Z",
+      "side": 1,
+      "message": "nit. Why can\u0027t this continue to be a `SerialMap`, just from serial to `LinkedList`?",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "48f1aa1e3aa67766cab15e6291105510aa925f8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
