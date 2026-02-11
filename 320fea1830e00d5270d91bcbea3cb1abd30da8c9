@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5ebb398_4f698b30",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T20:11:33Z",
+      "side": 1,
+      "message": "sg, just have to do it after the sampler_comparison check as comparison samplers don\u0027t have filtering.",
+      "parentUuid": "f413f132_f81725f4",
+      "revId": "320fea1830e00d5270d91bcbea3cb1abd30da8c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cf4d37e_10aabd49",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-11T18:58:00Z",
       "side": 1,
       "message": "Do we need to handle de-duping filterability on the texture side too?",
+      "revId": "320fea1830e00d5270d91bcbea3cb1abd30da8c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9586807a_3d2f9eae",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T20:11:33Z",
+      "side": 1,
+      "message": "No, this is a `spirv::type::SampledImage` which does not have filterability attached to it.",
+      "parentUuid": "0cf4d37e_10aabd49",
       "revId": "320fea1830e00d5270d91bcbea3cb1abd30da8c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
