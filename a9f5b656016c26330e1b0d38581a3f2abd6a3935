@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c335c471_87273998",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Good catch, thanks.\n\nI\u0027ve moved the glMapBufferRange() call to UnmapImpl(), leaving MapAtCreationImpl() making no GL calls in the deferred case. That should keep the mMappedData ptr valid (and pointing at the staging buffer) until it is uploaded and set to null in Unmap(). I\u0027ve also added a BufferTest based on your test case.\n\nDoes that fix the problem, or are there other cases I should consider?",
+      "parentUuid": "9c9c9cde_62f58d39",
+      "range": {
+        "startLine": 212,
+        "startChar": 10,
+        "endLine": 212,
+        "endChar": 19
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b745157b_14a2ab5d",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-02-11T08:09:48Z",
       "side": 1,
       "message": "I think `resize` doesn\u0027t free the vector\u0027s memory. Are we ok with keeping the shadow copy\u0027s memory around.",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 218,
+        "endChar": 34
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aec7052f_cb034d46",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "We could optimize it later if required.",
+      "parentUuid": "b745157b_14a2ab5d",
       "range": {
         "startLine": 218,
         "startChar": 28,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef293e43_b4eeea28",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Done.\n\nI don\u0027t have a good sense of the cost here. Should we do this only for deferral?",
+      "parentUuid": "b6d6d15a_86560e73",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 19
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aaa3727a_325c43a1",
@@ -100,6 +172,30 @@
       "writtenOn": "2026-02-11T08:09:48Z",
       "side": 1,
       "message": "It might be quite confusing for readers to understand why we have to use DestroyGL here.\n\nAn alternative way is just early return if newState \u003d\u003d Destroyed.\nThe buffer will be implicitly unmapped when it\u0027s destroyed by `glDeleteBuffers` anw.\nAccording to the GL ES 3.0 spec\u0027s `2.10.3.1 Unmapping Buffers` section:\n\u003e Buffers are implicitly unmapped as a side effect of deletion or reinitialization\n(i.e. calling DeleteBuffers or BufferData).\n\n```suggestion\n    if (newState \u003d\u003d Destroyed) {\n    \treturn;\n    }\n    IgnoreErrors(device-\u003eEnqueueGL([this]() { UnmapBuffer(...) }\n```",
+      "range": {
+        "startLine": 276,
+        "startChar": 25,
+        "endLine": 276,
+        "endChar": 41
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a9ac411_ff0e4526",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Good idea. Done.\n\nNote that, combined with the MappedAtCreation change, this will skip the mapping and memcpy\u0027ing of the CPU staging buffer for mappedAtCreation buffers as well. \nThis seems ok, and in fact, better than attempting to defer it, since we\u0027d \nlikely have to make a copy that outlasts the Buffer.",
+      "parentUuid": "aaa3727a_325c43a1",
       "range": {
         "startLine": 276,
         "startChar": 25,
@@ -133,6 +229,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4699afab_442c75c7",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Good point, removed.",
+      "parentUuid": "ff3f89fb_1222237e",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e38196ac_6ed1e7e8",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ff3f89fb_1222237e",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 9
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e764051a_511fa0dd",
@@ -146,6 +290,30 @@
       "writtenOn": "2026-02-11T08:09:48Z",
       "side": 1,
       "message": "This will create a buffer with twice the amount of memory.\n- A shadow copy. This won\u0027t be used anyway because `EnqueueGL` triggered by MapAtCreation will execute immediately in a GL scope.\n- a GL buffer.\n\nAre we ok with that?\nMaybe we should just use the CPU memory directly here without creating any `Buffer`.\n`glTexSubImage` should work with a raw CPU pointer.",
+      "range": {
+        "startLine": 556,
+        "startChar": 19,
+        "endLine": 556,
+        "endChar": 36
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7732cdcf_2f334066",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-11T17:37:59Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve logged crbug.com/483623916 for this optimization. I\u0027d prefer\nto do it in a followup CL if that\u0027s ok.",
+      "parentUuid": "e764051a_511fa0dd",
       "range": {
         "startLine": 556,
         "startChar": 19,
