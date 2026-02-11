@@ -39,9 +39,11 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "lower",
   srcs = [
+    "atomic_vec2u_to_u64.cc",
     "lower.cc",
   ],
   hdrs = [
+    "atomic_vec2u_to_u64.h",
     "lower.h",
   ],
   deps = [
@@ -73,6 +75,7 @@ cc_library(
   name = "test",
   alwayslink = True,
   srcs = [
+    "atomic_vec2u_to_u64_test.cc",
     "lower_test.cc",
   ],
   deps = [
