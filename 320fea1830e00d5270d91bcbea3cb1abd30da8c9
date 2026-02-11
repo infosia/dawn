@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f413f132_f81725f4",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T18:58:00Z",
+      "side": 1,
+      "message": "Nit: Maybe `TINT_ASSERT(s-\u003eFiltering() !\u003d core::SamplerFiltering::kUndefined);`",
+      "revId": "320fea1830e00d5270d91bcbea3cb1abd30da8c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cf4d37e_10aabd49",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T18:58:00Z",
+      "side": 1,
+      "message": "Do we need to handle de-duping filterability on the texture side too?",
+      "revId": "320fea1830e00d5270d91bcbea3cb1abd30da8c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
