@@ -442,6 +442,48 @@ class Impl {
             return;
         }
 
+        const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
+        if (sem_swizzle && sem_swizzle->Type()->Is<core::type::SwizzleView>()) {
+            auto* swizzle_view = sem_swizzle->Type()->As<core::type::SwizzleView>();
+            auto* elem_ty = swizzle_view->StoreType()->As<core::type::Vector>()->Type();
+
+            // Reserve the result vector which will eventually be stored.
+            tint::Vector<core::ir::Value*, 4> new_vec_args;
+            new_vec_args.Resize(swizzle_view->FromSize());
+
+            auto b = builder_.Append(current_block_);
+
+            // For indices that are referenced in the swizzle, use the appropriate new vals from the
+            // rhs to populate the result vector.
+            core::ir::Value* rhs_val = EmitValueExpression(stmt->rhs);
+            auto swizzle_indices = sem_swizzle->Indices();
+            for (size_t i = 0; i < swizzle_view->ToSize(); i++) {
+                auto* access =
+                    b.Access(elem_ty->Clone(clone_ctx_.type_ctx), rhs_val, b.Constant(u32(i)));
+
+                uint32_t target_index = swizzle_indices[i];
+                new_vec_args[target_index] = access->Result();
+            }
+
+            // For indices which were not referenced in the swizzle, fill in the old vals from the
+            // loaded lhs vector.
+            auto* lhs_ref = EmitValueExpression(sem_swizzle->Object()->Declaration());
+            auto* lhs_val = b.Load(lhs_ref);
+            for (uint32_t i = 0; i < swizzle_view->FromSize(); i++) {
+                if (new_vec_args[i] == nullptr) {
+                    auto* access =
+                        b.Access(elem_ty->Clone(clone_ctx_.type_ctx), lhs_val, b.Constant(u32(i)));
+                    new_vec_args[i] = access->Result();
+                }
+            }
+
+            // Store the result vector.
+            auto* vec_store_ty = sem_swizzle->Object()->Type()->UnwrapPtrOrRef();
+            auto* construct = b.Construct(vec_store_ty->Clone(clone_ctx_.type_ctx), new_vec_args);
+            b.Store(lhs_ref, construct);
+            return;
+        }
+
         auto lhs = EmitExpression(stmt->lhs);
 
         auto rhs = EmitValueExpression(stmt->rhs);
