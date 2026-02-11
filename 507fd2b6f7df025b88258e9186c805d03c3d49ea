@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be048629_879da1ce",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T21:02:05Z",
+      "side": 1,
+      "message": "I think we can/should avoid adding this, see suggestion below.",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc01ee5f_9f361020",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T21:02:05Z",
+      "side": 1,
+      "message": "I think this would be simpler with just an extra `eq` and an `or` instead of constructing two vectors and using `any`, e.g.:\n\n```suggestion\n            ResourceType resource_ty \u003d core::type::TypeToResourceType(type);\n            core::ir::Value* eq \u003d b.Equal(v, u32(resource_ty))-\u003eResult();\n\n            auto conv \u003d core::type::ConvertsFrom(type);\n            if (conv.has_value()) {\n                auto* cmp \u003d b.Equal(v, u32(conv.value()));\n                eq \u003d b.Or(eq, cmp)-\u003eResult();\n            }\n```\n\n(this also avoids the intermediate steps through uint32_t which avoids static_cast vs C-style casts, assuming it works with all compilers)",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 13
+      },
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "635fe3de_d666a943",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T21:02:05Z",
+      "side": 1,
+      "message": "Since the filterability check is always the same regardless of dimension I think you could shorten this a lot by doing that first, e.g.:\n```\nif (!sa-\u003eType()-\u003eIs\u003ccore::type::F32\u003e()) {\n    return std::nullopt;\n}\nif (sa-\u003eFilterable() !\u003d core::TextureFilterable::kUnfilterable) {\n    return std::nullopt;\n}\nswitch (sa-\u003eDim()) {\n    case core::type::TextureDimension::k1d:\n        return ResourceType::kTexture1d_f32_filterable;\n    case core::type::TextureDimension::k2d:\n        return ResourceType::kTexture2d_f32_filterable;\n    ...\n```",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d73ef1f_b7fedc12",
+        "filename": "src/tint/lang/core/type/resource_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-11T21:02:05Z",
+      "side": 1,
+      "message": "Nit: \"converted to\"",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
