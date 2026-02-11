@@ -33,6 +33,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/container/inlined_vector.h"
 #include "dawn/common/BitSetRangeIterator.h"
 #include "dawn/common/WindowsUtils.h"
 #include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
@@ -650,6 +651,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
     // Hold ID3D11RenderTargetView ComPtr to make attachments alive.
     PerColorAttachment<ID3D11RenderTargetView*> d3d11RenderTargetViews = {};
     ColorAttachmentIndex attachmentCount{};
+    absl::InlinedVector<ID3D11View*, 2> viewsToDiscard;
     // TODO(dawn:1815): Shrink the sparse attachments to accommodate more UAVs.
     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         TextureView* colorTextureView = ToBackend(renderPass->colorAttachments[i].view.Get());
@@ -660,6 +662,9 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             std::array<float, 4> clearColor =
                 ConvertToFloatColor(renderPass->colorAttachments[i].clearColor);
             d3d11DeviceContext->ClearRenderTargetView(d3d11RenderTargetViews[i], clearColor.data());
+        }
+        if (renderPass->colorAttachments[i].storeOp == wgpu::StoreOp::Discard) {
+            viewsToDiscard.push_back(d3d11RenderTargetViews[i]);
         }
         attachmentCount = ityp::PlusOne(i);
     }
@@ -688,6 +693,14 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         d3d11DeviceContext->ClearDepthStencilView(d3d11DepthStencilView, clearFlags,
                                                   attachmentInfo->clearDepth,
                                                   attachmentInfo->clearStencil);
+
+        bool discardDepth =
+            !attachmentFormat.HasDepth() || attachmentInfo->depthStoreOp == wgpu::StoreOp::Discard;
+        bool discardStencil = !attachmentFormat.HasStencil() ||
+                              attachmentInfo->stencilStoreOp == wgpu::StoreOp::Discard;
+        if (discardDepth && discardStencil) {
+            viewsToDiscard.push_back(d3d11DepthStencilView);
+        }
     }
 
     d3d11DeviceContext->OMSetRenderTargets(static_cast<uint8_t>(attachmentCount),
@@ -892,35 +905,38 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         switch (type) {
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
+
                 d3d11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 
-                if (renderPass->attachmentState->GetSampleCount() <= 1) {
-                    return {};
+                if (renderPass->attachmentState->GetSampleCount() > 1) {
+                    // Resolve multisampled textures.
+                    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+                        const auto& attachment = renderPass->colorAttachments[i];
+                        if (!attachment.resolveTarget.Get()) {
+                            continue;
+                        }
+
+                        DAWN_ASSERT(attachment.view->GetAspects() == Aspect::Color);
+                        DAWN_ASSERT(attachment.resolveTarget->GetAspects() == Aspect::Color);
+
+                        Texture* resolveTexture = ToBackend(attachment.resolveTarget->GetTexture());
+                        Texture* colorTexture = ToBackend(attachment.view->GetTexture());
+                        uint32_t dstSubresource = resolveTexture->GetSubresourceIndex(
+                            attachment.resolveTarget->GetBaseMipLevel(),
+                            attachment.resolveTarget->GetBaseArrayLayer(), Aspect::Color);
+                        uint32_t srcSubresource = colorTexture->GetSubresourceIndex(
+                            attachment.view->GetBaseMipLevel(),
+                            attachment.view->GetBaseArrayLayer(), Aspect::Color);
+                        d3d11DeviceContext->ResolveSubresource(
+                            resolveTexture->GetD3D11Resource(), dstSubresource,
+                            colorTexture->GetD3D11Resource(), srcSubresource,
+                            d3d::DXGITextureFormat(GetDevice(),
+                                                   attachment.resolveTarget->GetFormat().format));
+                    }
                 }
 
-                // Resolve multisampled textures.
-                for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-                    const auto& attachment = renderPass->colorAttachments[i];
-                    if (!attachment.resolveTarget.Get()) {
-                        continue;
-                    }
-
-                    DAWN_ASSERT(attachment.view->GetAspects() == Aspect::Color);
-                    DAWN_ASSERT(attachment.resolveTarget->GetAspects() == Aspect::Color);
-
-                    Texture* resolveTexture = ToBackend(attachment.resolveTarget->GetTexture());
-                    Texture* colorTexture = ToBackend(attachment.view->GetTexture());
-                    uint32_t dstSubresource = resolveTexture->GetSubresourceIndex(
-                        attachment.resolveTarget->GetBaseMipLevel(),
-                        attachment.resolveTarget->GetBaseArrayLayer(), Aspect::Color);
-                    uint32_t srcSubresource = colorTexture->GetSubresourceIndex(
-                        attachment.view->GetBaseMipLevel(), attachment.view->GetBaseArrayLayer(),
-                        Aspect::Color);
-                    d3d11DeviceContext->ResolveSubresource(
-                        resolveTexture->GetD3D11Resource(), dstSubresource,
-                        colorTexture->GetD3D11Resource(), srcSubresource,
-                        d3d::DXGITextureFormat(GetDevice(),
-                                               attachment.resolveTarget->GetFormat().format));
+                for (auto* view : viewsToDiscard) {
+                    d3d11DeviceContext->DiscardView(view);
                 }
 
                 return {};
