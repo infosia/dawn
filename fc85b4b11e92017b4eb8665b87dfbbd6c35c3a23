@@ -328,6 +328,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a30b1b2_f45c6bd2",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6afffce9_d6b73666",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38b4086d_da20e8e6",
@@ -345,6 +369,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a6275f_3024627c",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b4086d_da20e8e6",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02252cf1_9d7d1424",
@@ -358,6 +400,24 @@
       "writtenOn": "2026-02-10T21:08:48Z",
       "side": 1,
       "message": "Please add a unit test that covers `access`. I tried this locally and it crashed this tranform:\n```\nenable atomic_vec2u_min_max;\n\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: array\u003catomic\u003cvec2u\u003e\u003e;\n@group(0) @binding(1)\nvar\u003cstorage, read\u003e other: u32;\n\n@fragment\nfn main() {\n  atomicStoreMin(\u0026a[0], vec2u(0, 0));\n}\n```",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5238b0c_ffd671b3",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "I think i have a unit test to cover this but now im not sure.",
+      "parentUuid": "02252cf1_9d7d1424",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -414,6 +474,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adab66f0_f8049886",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582bb9f3_31c087e7",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50fe39da_081d1d1a",
@@ -427,6 +505,24 @@
       "writtenOn": "2026-02-10T21:08:48Z",
       "side": 1,
       "message": "You need to handle passing pointers to these atomics through function parameters too, e.g.\n```\nenable atomic_vec2u_min_max;\n\n@group(0) @binding(0)\nvar\u003cstorage, read_write\u003e a: atomic\u003cvec2u\u003e;\n\nfn foo(p: ptr\u003cstorage, atomic\u003cvec2u\u003e, read_write\u003e) {\n  atomicStoreMin(p, vec2u(0, 0));\n}\n\n@fragment\nfn main() {\n  foo(\u0026a);\n}\n```\n\nPlease add a unit test for that case.",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f057625d_536ab731",
+        "filename": "src/tint/lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "This will be fixed via above comment",
+      "parentUuid": "50fe39da_081d1d1a",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -562,6 +658,24 @@
       "writtenOn": "2026-02-10T21:08:48Z",
       "side": 1,
       "message": "Nit: Add checks to the `CanGenerate` methods in `writer.cc` files for backends that don\u0027t yet have support for the feature otherwise the fuzzers will throw lots of bugs at you (and it makes the errors better here).",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c80312c_2765e89e",
+        "filename": "test/tint/builtins/gen/literal/atomicStoreMax/707bde.wgsl.expected.glsl",
+        "patchSetId": 31
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-11T15:37:08Z",
+      "side": 1,
+      "message": "I did this using the unique functions. I could also have done it using the atomic\u003cvec2u\u003e type. I guess the features are not exposed at this level (you mentioned this before as being an intention design decision)",
+      "parentUuid": "d323a57e_4233fb08",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
