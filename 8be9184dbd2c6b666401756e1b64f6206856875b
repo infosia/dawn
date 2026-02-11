@@ -16,6 +16,24 @@
       "message": "Hm... we shouldn\u0027t be using CreateRenderPass2 (or 1, for that matter) if Dynamic Rendering is in use, so it\u0027s a little weird to allow both toggles to be enabled at the same time.\n\nBUT, my most recent change here does have the opportunity to disable dynamic rendering at device creation time (after this code is run) based on the enabled features, in which case we\u0027d definitely want CreateRenderPass2 if it was available. Not sure if that what your intent with this change, but it\u0027s the right move IMO.\n\nBasically we just need to ensure that no future code looks solely at this toggle to determine what render path is being used. I\u0027ll give some thought to how to enforce that.",
       "revId": "8be9184dbd2c6b666401756e1b64f6206856875b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23a3f74e_3b47050d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-11T19:10:06Z",
+      "side": 0,
+      "message": "\u003e BUT, my most recent change here does have the opportunity to disable dynamic rendering at device creation time (after this code is run) based on the enabled features, in which case we\u0027d definitely want CreateRenderPass2 if it was available. Not sure if that what your intent with this change, but it\u0027s the right move IMO.\n\nYep, when VK_EXT_dynamic_rendering is available but dynamic rendering isn\u0027t used CreateRenderPass2 was off. MSRTSS crashes [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/RenderPassCache.cpp;l\u003d415;drc\u003d3e982ddc88a9c945d6fa66335671bac22132b67c) as a result.\n\n\u003e Basically we just need to ensure that no future code looks solely at this toggle to determine what render path is being used. I\u0027ll give some thought to how to enforce that.\n\nSo another thing coming down the pipeline is Feature::FramebufferFetch is only going to be available for the Vulkan backend if dynamic rendering is not used. It\u0027s a similar situation but kind of different.",
+      "parentUuid": "d2eb457e_f0b5028c",
+      "revId": "8be9184dbd2c6b666401756e1b64f6206856875b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
