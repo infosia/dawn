@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2eb457e_f0b5028c",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-11T18:16:16Z",
+      "side": 0,
+      "message": "Hm... we shouldn\u0027t be using CreateRenderPass2 (or 1, for that matter) if Dynamic Rendering is in use, so it\u0027s a little weird to allow both toggles to be enabled at the same time.\n\nBUT, my most recent change here does have the opportunity to disable dynamic rendering at device creation time (after this code is run) based on the enabled features, in which case we\u0027d definitely want CreateRenderPass2 if it was available. Not sure if that what your intent with this change, but it\u0027s the right move IMO.\n\nBasically we just need to ensure that no future code looks solely at this toggle to determine what render path is being used. I\u0027ll give some thought to how to enforce that.",
+      "revId": "8be9184dbd2c6b666401756e1b64f6206856875b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
