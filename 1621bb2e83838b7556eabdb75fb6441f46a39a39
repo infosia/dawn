@@ -106,6 +106,24 @@
       "parentUuid": "7fe4341c_8e9b0658",
       "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ceab650_d5469955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-11T22:22:32Z",
+      "side": 1,
+      "message": "MSAARenderToSingleSampled is enabled again. Once that rolls to Chrome I\u0027m planning to send out https://crrev.com/c/7564355 so Graphite doesn\u0027t enable DawnLoadResolveTexture if MSAARenderToSingleSampled is available. Graphite will start using dynamic rendering without needing VK_KHR_dynamic_rendering_local_read at that point.",
+      "parentUuid": "01196318_e1c9d34c",
+      "revId": "1621bb2e83838b7556eabdb75fb6441f46a39a39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
