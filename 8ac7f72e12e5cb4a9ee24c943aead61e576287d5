@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22a6ab2a_2f5014f0",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2835,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:10:29Z",
+      "side": 1,
+      "message": "Test is DISABLED in this Cl, these have to be here at the moment. They should be removed in the next CL when the non-filterable overloads are removed.",
+      "parentUuid": "c3d1367d_327251c6",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c04a6c8_4e6b8c96",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-10T21:50:22Z",
       "side": 1,
       "message": "and here, but you didn\u0027t write this...",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7baf85_046e23ef",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c04a6c8_4e6b8c96",
       "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "159d05b2_7ffeeb19",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e27af6e_f62b4a9e",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae68e055_d20375c8",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0845a75_08eb0691",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae68e055_d20375c8",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9d7ca68_8946f29a",
@@ -82,6 +154,24 @@
       "writtenOn": "2026-02-10T21:50:22Z",
       "side": 1,
       "message": "Is this supposed to do more stuff? Seems unneeded if not?",
+      "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3210e17_98c61051",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-11T02:10:29Z",
+      "side": 1,
+      "message": "Was used but replaced by intrinsic overloads. Removed.",
+      "parentUuid": "d9d7ca68_8946f29a",
       "revId": "8ac7f72e12e5cb4a9ee24c943aead61e576287d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
