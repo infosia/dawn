@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/dawn/replay/ReplayImplBase.h"
+#include "src/dawn/replay/CaptureWalker.h"
 
 #include <memory>
 #include <utility>
@@ -180,10 +180,6 @@ struct RootCommandDataType<schema::RootCommandCreateResourceCmdData> {
     using Type = CreateResourceData;
 };
 
-// These macros are used with the DAWN_REPLAY_ROOT_COMMANDS x-macro
-// to generate an std::variant of the data for each root command
-// as well as a switch case to deserialize each root command into
-// the corresponding std::variant sub type.
 #define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_VALID(NAME) \
     RootCommandDataType<schema::RootCommand##NAME##CmdData>::Type,
 #define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_INVALID(NAME, VALUE)
@@ -326,10 +322,10 @@ MaybeError RootCommandVisitor::operator()(const std::monostate&) {
     return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
 }
 
-ReplayImplBase::ReplayImplBase(std::unique_ptr<const CaptureImpl> capture)
+CaptureWalker::CaptureWalker(std::unique_ptr<const CaptureImpl> capture)
     : mCapture(std::move(capture)) {}
 
-MaybeError ReplayImplBase::Play(RootCommandVisitor& visitor) {
+MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
     visitor.SetContentReadHead(&contentReadHead);
