@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1c83539_2ac4347e",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:06Z",
+      "side": 1,
+      "message": "Does this actually need to be sorted usages? Unsorted means we don\u0027t have to copy the vector.",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4138fd2_e882d520",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:06Z",
+      "side": 1,
+      "message": "We currently do this with an analysis pass, but could it be a transform instead that actually adds the annotations into the module? Then we\u0027d be able to emit them from the disassembler and see them showup here?",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
