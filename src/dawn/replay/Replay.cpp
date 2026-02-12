@@ -1109,7 +1109,6 @@ ResultOrError<wgpu::TextureView> CreateResource(const DawnRootCommandVisitor& re
     return {textureView};
 }
 
-
 struct DawnComputePassVisitor : DawnCommandVisitor<ComputePassVisitor, wgpu::ComputePassEncoder> {
     using DawnCommandVisitor::DawnCommandVisitor;
 
@@ -1509,12 +1508,12 @@ std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
 }
 
 ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
-    : mVisitor(new DawnRootCommandVisitor(device)), mBase(std::move(capture)) {
+    : mVisitor(new DawnRootCommandVisitor(device)), mWalker(std::move(capture)) {
     mVisitor->AddResource(schema::kDeviceId, "", device);
 }
 
 MaybeError ReplayImpl::Play() {
-    return mBase.Play(*mVisitor);
+    return mWalker.Walk(*mVisitor);
 }
 
 template <typename T>
