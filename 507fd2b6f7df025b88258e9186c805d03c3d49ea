@@ -355,6 +355,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38dcf32d_ee807bd9",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T21:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc58586_1eff272e",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d73ef1f_b7fedc12",
