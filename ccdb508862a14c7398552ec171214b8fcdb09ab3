@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "090070d3_78f30b0a",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T08:28:12Z",
+      "side": 1,
+      "message": "Why do we need to flush the GL commands here? Why isn\u0027t `EnqueueGL` enough?\nIf you flush the GL commands on a non-GL thread, this won\u0027t work.",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 47
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c12cfd2_44f684f4",
+        "filename": "src/dawn/native/opengl/TextureGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T08:28:12Z",
+      "side": 1,
+      "message": "This method doesn\u0027t seem to be used anywhere",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b9092d_13643642",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T08:28:12Z",
+      "side": 1,
+      "message": "This only tests the \"giant lock\" path. It doesn\u0027t test the deferred GL path at all. Is that intended?",
+      "range": {
+        "startLine": 2067,
+        "startChar": 38,
+        "endLine": 2067,
+        "endChar": 71
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

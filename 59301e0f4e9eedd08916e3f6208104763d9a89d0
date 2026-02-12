@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eeda99d_bf822919",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T08:28:12Z",
+      "side": 0,
+      "message": "This method seems to be identical between `ComputePipeline` and `RenderPipeline`. Why do we need to remove it from the base class?",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 35
+      },
+      "revId": "59301e0f4e9eedd08916e3f6208104763d9a89d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
