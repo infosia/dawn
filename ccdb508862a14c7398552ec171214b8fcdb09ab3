@@ -1,6 +1,159 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9242afc2_1a5c78c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "It\u0027s a surprisingly \"small\" change to get everything wired up! (obviously non-trivial to get it this clean ^^)",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c362241b_c43d822b",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n    DAWN_TRY(device-\u003eEnqueueGL([this, keepAlive \u003d Ref\u003cBuffer\u003e(this), size \u003d GetAllocatedSize()](\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab8d26c1_4024e066",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "This is slightly weird, what about having a LockedGL alias that also ASSERTs that we don\u0027t have GLDefer?",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "757919d7_e66b4390",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n        -\u003eEnqueueGL([this, keepAlive \u003d Ref\u003cBuffer\u003e(this), offset, size,\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a21ae85a_7252f962",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n        [this, keepAlive \u003d Ref\u003cBuffer\u003e(this)](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0f07397_f5296984",
+        "filename": "src/dawn/native/opengl/ComputePipelineGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n            [this, keepAlive \u003d Ref\u003cComputePipeline\u003e(this)](const OpenGLFunctions\u0026 gl) -\u003e MaybeError {\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b7a92c_530fca7e",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "We probably need more explanation of why this is needed as future readers will be confused without all the context from CL discussions and design docs.",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97a84439_3610d04b",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n            // “self” is being destroyed; capture data since we cannot access \"self\" after this call.\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9beb879_2cc0e5ff",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "```suggestion\n            // “self” is not being destroyed; capture a reference to “self” to ensure that the data passed to \"work\" contains all the modifications that may be done by other work enqueued prior.\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "090070d3_78f30b0a",
@@ -26,6 +179,131 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d5a0ed4e_1b0e52ab",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "Can we have a multithreaded test for this? Data should be copied here as well, similar to WriteBuffer",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e786f3d0_19072e00",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "unused?\n\nAh no, maybe call it `keepAlive`?",
+      "range": {
+        "startLine": 227,
+        "startChar": 21,
+        "endLine": 227,
+        "endChar": 53
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5182a52c_bfdc89dc",
+        "filename": "src/dawn/native/opengl/SamplerGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "Note that this risks breaking if we add chained structs to this descriptor, but I guess we can deal with that when it happens. Maybe we could have an ASSERT that nextInChain is nullptr with a comment explaining that the capture doesn\u0027t handle the chain?",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672db538_65dc0aa5",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "ditto for the descriptor, see Sampler.cpp",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee2ee062_cc057335",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "same comment as below.",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a6130f0_69c2839e",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "ditto for the descriptor",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b6cf610_8e1b1084",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "Won\u0027t this cause problems if we take the branch of `EnqueueDestroyGL` when !CppDestructor? The handle will get cleared to 0 before the lambda runs.",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c12cfd2_44f684f4",
         "filename": "src/dawn/native/opengl/TextureGL.h",
         "patchSetId": 22
@@ -43,6 +321,40 @@
         "endLine": 61,
         "endChar": 18
       },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e20f0aa6_496cb482",
+        "filename": "src/dawn/native/opengl/TextureGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2629d77f_2eb38c67",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:59:15Z",
+      "side": 1,
+      "message": "Doesn\u0027t this unmap contradict the test name and test comment? Is it specific to GL that the buffer is internally still mapped?",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
