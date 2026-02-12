@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/dawn/replay/ReplayImplBase.h"
+#include "src/dawn/replay/CaptureWalker.h"
 
 #include <memory>
 #include <utility>
@@ -312,10 +312,10 @@ MaybeError RootCommandVisitor::operator()(const std::monostate&) {
     return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
 }
 
-ReplayImplBase::ReplayImplBase(std::unique_ptr<const CaptureImpl> capture)
+CaptureWalker::CaptureWalker(std::unique_ptr<const CaptureImpl> capture)
     : mCapture(std::move(capture)) {}
 
-MaybeError ReplayImplBase::Play(RootCommandVisitor& visitor) {
+MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
     visitor.SetContentReadHead(&contentReadHead);
