@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "7f8da5a6dad5543cb67db1081c48f694c8e536f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c525a8fb_e8b0b050",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2026-02-12T16:24:28Z",
+      "side": 1,
+      "message": "This diagnostic gets properly routed during queue submission.\n(I tried an example exercising the case at line 210, where an override array element countis 0)",
+      "revId": "7f8da5a6dad5543cb67db1081c48f694c8e536f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
