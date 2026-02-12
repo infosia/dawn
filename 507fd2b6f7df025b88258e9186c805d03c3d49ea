@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "586a826d_57ea346d",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532fb324_e26514c6",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d0c013d_dcc1b04f",
@@ -177,6 +195,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ff92eb_481a8d84",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0708274_75e9dd02",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc01ee5f_9f361020",
@@ -224,6 +260,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7814cf7_d8a02945",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:41:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "861d33ef_3283c063",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 13
+      },
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "635fe3de_d666a943",
@@ -261,6 +321,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0134a685_6f086451",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:41:39Z",
+      "side": 1,
+      "message": "This matches more then just `SampledTexture` but also `Sampler` and `DepthTexture`. It could possibly be simplified into `if`s but I don\u0027t know if it would be better.",
+      "parentUuid": "c476c4e2_99049afc",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d73ef1f_b7fedc12",
         "filename": "src/tint/lang/core/type/resource_type.h",
         "patchSetId": 4
@@ -272,6 +350,24 @@
       "writtenOn": "2026-02-11T21:02:05Z",
       "side": 1,
       "message": "Nit: \"converted to\"",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8435aab_5c9a36a1",
+        "filename": "src/tint/lang/core/type/resource_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d73ef1f_b7fedc12",
       "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
