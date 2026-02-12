@@ -22,6 +22,30 @@
       },
       "revId": "48f1aa1e3aa67766cab15e6291105510aa925f8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a606a86c_9072eddc",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T04:49:46Z",
+      "side": 1,
+      "message": "Do you mean why can\u0027t we use `SerialMap\u003cExecutionSerial, LinkedList\u003cBufferMapRequest\u003e\u003e`? SerialMap is a map of vectors. Each serial can contain multiple elements (in this case each element is one `LinkedList`). This not needed since we only want one linked list per serial.",
+      "parentUuid": "2a16992c_5c0f4195",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "48f1aa1e3aa67766cab15e6291105510aa925f8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
