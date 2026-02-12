@@ -33,6 +33,24 @@
       "message": "Nit: Tint uses `PascalCase` for methods/functions.",
       "revId": "434362888253a206a1997b6ab672e0bf8c1fd4a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96bb552d_aba362ed",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T17:46:26Z",
+      "side": 1,
+      "message": "sigh.",
+      "parentUuid": "4a3eeedb_6878e7f8",
+      "revId": "434362888253a206a1997b6ab672e0bf8c1fd4a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
