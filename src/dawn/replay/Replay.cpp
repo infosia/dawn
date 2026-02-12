@@ -778,181 +778,97 @@ ResultOrError<wgpu::QuerySet> CreateResource(const DawnRootCommandVisitor& repla
     return {querySet};
 }
 
-#define AS_VARIANT_TYPE(NAME) schema::CommandBufferCommand##NAME##CmdData,
-
-#define AS_DESERIALIZE_CASE(NAME)                         \
-    case schema::CommandBufferCommand::NAME: {            \
-        schema::CommandBufferCommand##NAME##CmdData data; \
-        DAWN_TRY(Deserialize(readHead, &data));           \
-        *out = std::move(data);                           \
-        return {};                                        \
-    }
-
-template <typename Variant>
-MaybeError DeserializeCommand(ReadHead& readHead, schema::CommandBufferCommand cmd, Variant* out) {
-    return DAWN_INTERNAL_ERROR("Unknown command");
-}
-
-template <typename Variant, typename Visitor>
-MaybeError ProcessCommands(ReadHead& readHead, Visitor&& visitor) {
-    while (!readHead.IsDone()) {
-        schema::CommandBufferCommand cmd;
-        DAWN_TRY(Deserialize(readHead, &cmd));
-
-        Variant v;
-        DAWN_TRY(DeserializeCommand(readHead, cmd, &v));
-        DAWN_TRY(std::visit(std::forward<Visitor>(visitor), v));
-
-        if (std::holds_alternative<schema::CommandBufferCommandEndCmdData>(v)) {
-            return {};
-        }
-    }
-    return DAWN_INTERNAL_ERROR("Missing End command");
-}
-
-template <typename Pass>
-struct CommandVisitorBase {
+template <typename Base, typename Pass>
+struct DawnCommandVisitor : Base {
     const DawnRootCommandVisitor& replay;
     Pass pass;
 
-    CommandVisitorBase(const DawnRootCommandVisitor& r, Pass p) : replay(r), pass(p) {}
+    DawnCommandVisitor(const DawnRootCommandVisitor& r, Pass p) : replay(r), pass(p) {}
 
-    // SHARED_COMMANDS
-    MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) override {
         pass.SetBindGroup(data.index, replay.GetObjectById<wgpu::BindGroup>(data.bindGroupId),
                           data.dynamicOffsets.size(), data.dynamicOffsets.data());
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetImmediatesCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetImmediatesCmdData& data) override {
         pass.SetImmediates(data.offset, data.data.data(), data.data.size());
         return {};
     }
 
-    // DEBUG_COMMANDS
-    MaybeError operator()(const schema::CommandBufferCommandPushDebugGroupCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandPushDebugGroupCmdData& data) override {
         pass.PushDebugGroup(wgpu::StringView(data.groupLabel));
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandInsertDebugMarkerCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandInsertDebugMarkerCmdData& data) override {
         pass.InsertDebugMarker(wgpu::StringView(data.markerLabel));
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandPopDebugGroupCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandPopDebugGroupCmdData& data) override {
         pass.PopDebugGroup();
         return {};
     }
-
-    // Default for other commands
-    template <typename T>
-    MaybeError operator()(const T&) {
-        return DAWN_INTERNAL_ERROR("Command not implemented for this pass");
-    }
-
-    MaybeError operator()(const std::monostate&) { return DAWN_INTERNAL_ERROR("Invalid command"); }
 };
 
-#define SHARED_COMMANDS(X) \
-    X(SetBindGroup)        \
-    X(SetImmediates)
+template <typename Base, typename Pass>
+struct DawnRenderVisitor : DawnCommandVisitor<Base, Pass> {
+    using DawnCommandVisitor<Base, Pass>::DawnCommandVisitor;
+    using DawnCommandVisitor<Base, Pass>::replay;
+    using DawnCommandVisitor<Base, Pass>::pass;
 
-#define DEBUG_COMMANDS(X) \
-    X(PushDebugGroup)     \
-    X(InsertDebugMarker)  \
-    X(PopDebugGroup)
-
-#define RENDER_COMMANDS(X) \
-    X(SetRenderPipeline)   \
-    X(SetVertexBuffer)     \
-    X(SetIndexBuffer)      \
-    X(Draw)                \
-    X(DrawIndexed)         \
-    X(DrawIndirect)        \
-    X(DrawIndexedIndirect) \
-    SHARED_COMMANDS(X)     \
-    DEBUG_COMMANDS(X)
-
-template <typename Pass>
-struct RenderVisitor : CommandVisitorBase<Pass> {
-    using CommandVisitorBase<Pass>::CommandVisitorBase;
-    using CommandVisitorBase<Pass>::operator();
-    using CommandVisitorBase<Pass>::replay;
-    using CommandVisitorBase<Pass>::pass;
-
-    MaybeError operator()(const schema::CommandBufferCommandSetRenderPipelineCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandSetRenderPipelineCmdData& data) override {
         pass.SetPipeline(replay.template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetVertexBufferCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetVertexBufferCmdData& data) override {
         pass.SetVertexBuffer(data.slot, replay.template GetObjectById<wgpu::Buffer>(data.bufferId),
                              data.offset, data.size);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetIndexBufferCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetIndexBufferCmdData& data) override {
         pass.SetIndexBuffer(replay.template GetObjectById<wgpu::Buffer>(data.bufferId), data.format,
                             data.offset, data.size);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDrawCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandDrawCmdData& data) override {
         pass.Draw(data.vertexCount, data.instanceCount, data.firstVertex, data.firstInstance);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDrawIndexedCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandDrawIndexedCmdData& data) override {
         pass.DrawIndexed(data.indexCount, data.instanceCount, data.firstIndex, data.baseVertex,
                          data.firstInstance);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDrawIndirectCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandDrawIndirectCmdData& data) override {
         pass.DrawIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
                           data.indirectOffset);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDrawIndexedIndirectCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandDrawIndexedIndirectCmdData& data) override {
         pass.DrawIndexedIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
                                  data.indirectOffset);
         return {};
     }
 };
 
-#define RENDER_BUNDLE_COMMANDS(X) \
-    RENDER_COMMANDS(X)            \
-    X(End)
+struct DawnRenderBundleVisitor : DawnRenderVisitor<RenderBundleVisitor, wgpu::RenderBundleEncoder> {
+    using DawnRenderVisitor::DawnRenderVisitor;
 
-using RenderBundleVariant = std::variant<RENDER_BUNDLE_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
-
-template <>
-MaybeError DeserializeCommand<RenderBundleVariant>(ReadHead& readHead,
-                                                   schema::CommandBufferCommand cmd,
-                                                   RenderBundleVariant* out) {
-    switch (cmd) {
-        RENDER_BUNDLE_COMMANDS(AS_DESERIALIZE_CASE)
-        default:
-            return DAWN_INTERNAL_ERROR("Unknown command");
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) override {
+        return {};
     }
-}
-
-struct RenderBundleVisitor : RenderVisitor<wgpu::RenderBundleEncoder> {
-    using RenderVisitor<wgpu::RenderBundleEncoder>::RenderVisitor;
-    using RenderVisitor<wgpu::RenderBundleEncoder>::operator();
-
-    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
 };
-
-MaybeError ProcessRenderBundleCommands(const DawnRootCommandVisitor& replay,
-                                       ReadHead& readHead,
-                                       wgpu::Device device,
-                                       wgpu::RenderBundleEncoder pass) {
-    RenderBundleVisitor visitor{replay, pass};
-    return ProcessCommands<RenderBundleVariant>(readHead, visitor);
-}
 
 ResultOrError<wgpu::RenderBundle> CreateResource(const DawnRootCommandVisitor& replay,
                                                  wgpu::Device device,
@@ -967,7 +883,8 @@ ResultOrError<wgpu::RenderBundle> CreateResource(const DawnRootCommandVisitor& r
         .stencilReadOnly = data.bundle.stencilReadOnly,
     };
     wgpu::RenderBundleEncoder encoder = device.CreateRenderBundleEncoder(&desc);
-    DAWN_TRY(ProcessRenderBundleCommands(replay, *data.readHead, device, encoder));
+    DawnRenderBundleVisitor visitor{replay, encoder};
+    DAWN_TRY(ProcessRenderBundleCommands(data.readHead, &visitor));
 
     wgpu::RenderBundleDescriptor bundleDesc{
         .label = wgpu::StringView(label),
@@ -1181,97 +1098,42 @@ ResultOrError<wgpu::TextureView> CreateResource(const DawnRootCommandVisitor& re
     return {textureView};
 }
 
-#define COMPUTE_PASS_COMMANDS(X) \
-    X(SetComputePipeline)        \
-    X(Dispatch)                  \
-    X(DispatchIndirect)          \
-    X(WriteTimestamp)            \
-    SHARED_COMMANDS(X)           \
-    DEBUG_COMMANDS(X)            \
-    X(End)
+struct DawnComputePassVisitor : DawnCommandVisitor<ComputePassVisitor, wgpu::ComputePassEncoder> {
+    using DawnCommandVisitor::DawnCommandVisitor;
 
-using ComputePassVariant = std::variant<COMPUTE_PASS_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
-
-template <>
-MaybeError DeserializeCommand<ComputePassVariant>(ReadHead& readHead,
-                                                  schema::CommandBufferCommand cmd,
-                                                  ComputePassVariant* out) {
-    switch (cmd) {
-        COMPUTE_PASS_COMMANDS(AS_DESERIALIZE_CASE)
-        default:
-            return DAWN_INTERNAL_ERROR("Unknown command");
-    }
-}
-
-struct ComputePassVisitor : CommandVisitorBase<wgpu::ComputePassEncoder> {
-    using CommandVisitorBase<wgpu::ComputePassEncoder>::CommandVisitorBase;
-    using CommandVisitorBase<wgpu::ComputePassEncoder>::operator();
-
-    MaybeError operator()(const schema::CommandBufferCommandSetComputePipelineCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandSetComputePipelineCmdData& data) override {
         pass.SetPipeline(replay.GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDispatchCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandDispatchCmdData& data) override {
         pass.DispatchWorkgroups(data.x, data.y, data.z);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandDispatchIndirectCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandDispatchIndirectCmdData& data) override {
         pass.DispatchWorkgroupsIndirect(replay.GetObjectById<wgpu::Buffer>(data.bufferId),
                                         data.offset);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) override {
         pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) override {
         pass.End();
         return {};
     }
 };
 
-MaybeError ProcessComputePassCommands(const DawnRootCommandVisitor& replay,
-                                      ReadHead& readHead,
-                                      wgpu::Device device,
-                                      wgpu::ComputePassEncoder pass) {
-    ComputePassVisitor visitor{replay, pass};
-    return ProcessCommands<ComputePassVariant>(readHead, visitor);
-}
+struct DawnRenderPassVisitor : DawnRenderVisitor<RenderPassVisitor, wgpu::RenderPassEncoder> {
+    using DawnRenderVisitor::DawnRenderVisitor;
 
-#define RENDER_PASS_COMMANDS(X) \
-    X(ExecuteBundles)           \
-    X(BeginOcclusionQuery)      \
-    X(EndOcclusionQuery)        \
-    X(SetBlendConstant)         \
-    X(SetScissorRect)           \
-    X(SetStencilReference)      \
-    X(SetViewport)              \
-    X(WriteTimestamp)           \
-    RENDER_COMMANDS(X)          \
-    X(End)
-
-using RenderPassVariant = std::variant<RENDER_PASS_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
-
-template <>
-MaybeError DeserializeCommand<RenderPassVariant>(ReadHead& readHead,
-                                                 schema::CommandBufferCommand cmd,
-                                                 RenderPassVariant* out) {
-    switch (cmd) {
-        RENDER_PASS_COMMANDS(AS_DESERIALIZE_CASE)
-        default:
-            return DAWN_INTERNAL_ERROR("Unknown command");
-    }
-}
-
-struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
-    using RenderVisitor<wgpu::RenderPassEncoder>::RenderVisitor;
-    using RenderVisitor<wgpu::RenderPassEncoder>::operator();
-
-    MaybeError operator()(const schema::CommandBufferCommandExecuteBundlesCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandExecuteBundlesCmdData& data) override {
         std::vector<wgpu::RenderBundle> bundles;
         for (auto bundleId : data.bundleIds) {
             bundles.push_back(replay.GetObjectById<wgpu::RenderBundle>(bundleId));
@@ -1280,106 +1142,74 @@ struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandBeginOcclusionQueryCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandBeginOcclusionQueryCmdData& data) override {
         pass.BeginOcclusionQuery(data.queryIndex);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandEndOcclusionQueryCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandEndOcclusionQueryCmdData& data) override {
         pass.EndOcclusionQuery();
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetBlendConstantCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandSetBlendConstantCmdData& data) override {
         wgpu::Color color = ToWGPU(data.color);
         pass.SetBlendConstant(&color);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetScissorRectCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetScissorRectCmdData& data) override {
         pass.SetScissorRect(data.x, data.y, data.width, data.height);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetStencilReferenceCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandSetStencilReferenceCmdData& data) override {
         pass.SetStencilReference(data.reference);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandSetViewportCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandSetViewportCmdData& data) override {
         pass.SetViewport(data.x, data.y, data.width, data.height, data.minDepth, data.maxDepth);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) override {
         pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) override {
         pass.End();
         return {};
     }
 };
 
-MaybeError ProcessRenderPassCommands(const DawnRootCommandVisitor& replay,
-                                     ReadHead& readHead,
-                                     wgpu::Device device,
-                                     wgpu::RenderPassEncoder pass) {
-    RenderPassVisitor visitor{replay, pass};
-    return ProcessCommands<RenderPassVariant>(readHead, visitor);
-}
-
-#define ENCODER_COMMANDS(X) \
-    X(BeginComputePass)     \
-    X(BeginRenderPass)      \
-    X(ClearBuffer)          \
-    X(CopyBufferToBuffer)   \
-    X(CopyBufferToTexture)  \
-    X(CopyTextureToBuffer)  \
-    X(CopyTextureToTexture) \
-    X(ResolveQuerySet)      \
-    X(WriteBuffer)          \
-    X(WriteTimestamp)       \
-    DEBUG_COMMANDS(X)       \
-    X(End)
-
-using EncoderVariant = std::variant<ENCODER_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
-
-template <>
-MaybeError DeserializeCommand<EncoderVariant>(ReadHead& readHead,
-                                              schema::CommandBufferCommand cmd,
-                                              EncoderVariant* out) {
-    switch (cmd) {
-        ENCODER_COMMANDS(AS_DESERIALIZE_CASE)
-        default:
-            return DAWN_INTERNAL_ERROR("Unknown command");
-    }
-}
-
-struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
-    ReadHead& readHead;
+struct DawnEncoderVisitor : EncoderVisitor {
+    const DawnRootCommandVisitor& replay;
+    wgpu::CommandEncoder pass;
     wgpu::Device device;
 
-    EncoderVisitor(const DawnRootCommandVisitor& r,
-                   wgpu::CommandEncoder p,
-                   ReadHead& rh,
-                   wgpu::Device d)
-        : CommandVisitorBase(r, p), readHead(rh), device(d) {}
+    DawnEncoderVisitor(const DawnRootCommandVisitor& r, wgpu::CommandEncoder p, wgpu::Device d)
+        : replay(r), pass(p), device(d) {}
 
-    using CommandVisitorBase<wgpu::CommandEncoder>::operator();
-
-    MaybeError operator()(const schema::CommandBufferCommandBeginComputePassCmdData& data) {
+    ResultOrError<ComputePassVisitor*> BeginComputePass(
+        const schema::CommandBufferCommandBeginComputePassCmdData& data) override {
         wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
         wgpu::ComputePassDescriptor desc{
             .label = wgpu::StringView(data.label),
             .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
         };
-        wgpu::ComputePassEncoder computePass = pass.BeginComputePass(&desc);
-        return ProcessComputePassCommands(replay, readHead, device, computePass);
+        mComputePassEncoder = pass.BeginComputePass(&desc);
+        mComputePassVisitor = std::make_unique<DawnComputePassVisitor>(replay, mComputePassEncoder);
+        return mComputePassVisitor.get();
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandBeginRenderPassCmdData& data) {
+    ResultOrError<RenderPassVisitor*> BeginRenderPass(
+        const schema::CommandBufferCommandBeginRenderPassCmdData& data) override {
         wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
         std::vector<wgpu::RenderPassColorAttachment> colorAttachments;
 
@@ -1414,8 +1244,7 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
             .colorAttachments = colorAttachments.data(),
             .depthStencilAttachment =
                 depthStencilAttachment.view != nullptr ? &depthStencilAttachment : nullptr,
-            .occlusionQuerySet =
-                replay.template GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
+            .occlusionQuerySet = replay.GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
             .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
         };
 
@@ -1430,23 +1259,26 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
             desc.nextInChain = &resolveRect;
         }
 
-        wgpu::RenderPassEncoder renderPass = pass.BeginRenderPass(&desc);
-        return ProcessRenderPassCommands(replay, readHead, device, renderPass);
+        mRenderPassEncoder = pass.BeginRenderPass(&desc);
+        mRenderPassVisitor = std::make_unique<DawnRenderPassVisitor>(replay, mRenderPassEncoder);
+        return mRenderPassVisitor.get();
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandClearBufferCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandClearBufferCmdData& data) override {
         pass.ClearBuffer(replay.GetObjectById<wgpu::Buffer>(data.bufferId), data.offset, data.size);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandCopyBufferToBufferCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandCopyBufferToBufferCmdData& data) override {
         pass.CopyBufferToBuffer(
             replay.GetObjectById<wgpu::Buffer>(data.srcBufferId), data.srcOffset,
             replay.GetObjectById<wgpu::Buffer>(data.dstBufferId), data.dstOffset, data.size);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandCopyBufferToTextureCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandCopyBufferToTextureCmdData& data) override {
         wgpu::TexelCopyBufferInfo src = ToWGPU(replay, data.source);
         wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
@@ -1454,7 +1286,8 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandCopyTextureToBufferCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandCopyTextureToBufferCmdData& data) override {
         wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
         wgpu::TexelCopyBufferInfo dst = ToWGPU(replay, data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
@@ -1462,7 +1295,8 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandCopyTextureToTextureCmdData& data) {
+    MaybeError operator()(
+        const schema::CommandBufferCommandCopyTextureToTextureCmdData& data) override {
         wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
         wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
@@ -1470,34 +1304,50 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandResolveQuerySetCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandResolveQuerySetCmdData& data) override {
         pass.ResolveQuerySet(
             replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.firstQuery, data.queryCount,
             replay.GetObjectById<wgpu::Buffer>(data.destinationId), data.destinationOffset);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandWriteBufferCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandWriteBufferCmdData& data) override {
         wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
         pass.WriteBuffer(buffer, data.bufferOffset, data.data.data(), data.data.size());
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) override {
         pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
         return {};
     }
 
-    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
-};
+    MaybeError operator()(const schema::CommandBufferCommandPushDebugGroupCmdData& data) override {
+        pass.PushDebugGroup(wgpu::StringView(data.groupLabel));
+        return {};
+    }
 
-MaybeError ProcessEncoderCommands(const DawnRootCommandVisitor& replay,
-                                  ReadHead& readHead,
-                                  wgpu::Device device,
-                                  wgpu::CommandEncoder encoder) {
-    EncoderVisitor visitor{replay, encoder, readHead, device};
-    return ProcessCommands<EncoderVariant>(readHead, visitor);
-}
+    MaybeError operator()(
+        const schema::CommandBufferCommandInsertDebugMarkerCmdData& data) override {
+        pass.InsertDebugMarker(wgpu::StringView(data.markerLabel));
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandPopDebugGroupCmdData& data) override {
+        pass.PopDebugGroup();
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) override {
+        return {};
+    }
+
+  private:
+    wgpu::ComputePassEncoder mComputePassEncoder;
+    std::unique_ptr<DawnComputePassVisitor> mComputePassVisitor;
+    wgpu::RenderPassEncoder mRenderPassEncoder;
+    std::unique_ptr<DawnRenderPassVisitor> mRenderPassVisitor;
+};
 
 ResultOrError<wgpu::CommandBuffer> CreateResource(const DawnRootCommandVisitor& replay,
                                                   wgpu::Device device,
@@ -1507,7 +1357,8 @@ ResultOrError<wgpu::CommandBuffer> CreateResource(const DawnRootCommandVisitor& 
         .label = wgpu::StringView(label),
     };
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder(&desc);
-    DAWN_TRY(ProcessEncoderCommands(replay, *data.readHead, device, encoder));
+    DawnEncoderVisitor visitor{replay, encoder, device};
+    DAWN_TRY(ProcessEncoderCommands(data.readHead, &visitor));
     return {encoder.Finish()};
 }
 
