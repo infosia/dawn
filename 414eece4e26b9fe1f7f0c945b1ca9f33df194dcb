@@ -54,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9460f44_c01c6461",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-12T15:24:34Z",
+      "side": 1,
+      "message": "Yes, that would be better. I\u0027ll follow up with that because this is the pattern that was established in the existing code.",
+      "parentUuid": "38849428_4438d447",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "85f2f839_8beb46e1",
         "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
         "patchSetId": 15
@@ -82,6 +100,24 @@
       "writtenOn": "2026-02-12T10:24:36Z",
       "side": 1,
       "message": "I\u0027m a bit surprised that a MutexProtected is passed instead of just a `ShaderVisibleDescriptorAllocator*`. It seems that the mutex for all of the PopulateViews should be acquired for the whole command buffer recording duration.\n\nAnyways we can look at that later.",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c11f8ed_64d1938a",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-12T15:24:34Z",
+      "side": 1,
+      "message": "Yes, especially as there are multiple calls through the `MutexProtected` inside `PopulateViews` (both in `BindGroup` and `ResourceTable`).",
+      "parentUuid": "880e59c3_2d24a609",
       "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
