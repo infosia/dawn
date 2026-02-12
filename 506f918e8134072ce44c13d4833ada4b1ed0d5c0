@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ed7393_e260c915",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7aab992e_374984aa",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c005924_82221199",
@@ -65,6 +83,42 @@
       "writtenOn": "2026-02-12T09:22:48Z",
       "side": 1,
       "message": "```suggestion\n    const auto\u0026 aspect_info \u003d view-\u003eGetFormat().GetAspectInfo(view-\u003eGetAspects());\n```",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "990bccca_9c2cd432",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:59Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4c005924_82221199",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e939f5bf_0ade6261",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c005924_82221199",
       "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ed76da_241961ef",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c49a54_19c8682d",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c8154e6_25b986da",
@@ -99,6 +171,24 @@
       "writtenOn": "2026-02-12T09:22:48Z",
       "side": 1,
       "message": "ditto, your follow up CL will fix this.",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9990ee7_63534308",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T14:58:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9c8154e6_25b986da",
       "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
