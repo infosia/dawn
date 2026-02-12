@@ -16,6 +16,24 @@
       "message": "übernit: That\u0027s camelCase, not PascalCase...\n\n(sorry)",
       "revId": "3ded8182d2d486eb5175991abaebd3d089cbcd55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7c64348_a7347f33",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T17:57:52Z",
+      "side": 1,
+      "message": "I\u0027m GoInG tO rEfAcToR eVeRyThInG tO bE tHiS cAsE.",
+      "parentUuid": "223240c6_72fb8036",
+      "revId": "3ded8182d2d486eb5175991abaebd3d089cbcd55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
