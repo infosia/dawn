@@ -87,6 +87,110 @@ struct BindGroupLayoutData {
 
 class ReadHead;
 
+#define DAWN_REPLAY_SHARED_COMMANDS(X) \
+    X(SetBindGroup)                    \
+    X(SetImmediates)
+
+#define DAWN_REPLAY_DEBUG_COMMANDS(X) \
+    X(PushDebugGroup)                 \
+    X(InsertDebugMarker)              \
+    X(PopDebugGroup)
+
+#define DAWN_REPLAY_RENDER_COMMANDS(X) \
+    X(SetRenderPipeline)               \
+    X(SetVertexBuffer)                 \
+    X(SetIndexBuffer)                  \
+    X(Draw)                            \
+    X(DrawIndexed)                     \
+    X(DrawIndirect)                    \
+    X(DrawIndexedIndirect)             \
+    DAWN_REPLAY_SHARED_COMMANDS(X)     \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)
+
+#define DAWN_REPLAY_RENDER_BUNDLE_COMMANDS(X) \
+    DAWN_REPLAY_RENDER_COMMANDS(X)            \
+    X(End)
+
+#define DAWN_REPLAY_COMPUTE_PASS_COMMANDS(X) \
+    X(SetComputePipeline)                    \
+    X(Dispatch)                              \
+    X(DispatchIndirect)                      \
+    X(WriteTimestamp)                        \
+    DAWN_REPLAY_SHARED_COMMANDS(X)           \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)            \
+    X(End)
+
+#define DAWN_REPLAY_RENDER_PASS_COMMANDS(X) \
+    X(ExecuteBundles)                       \
+    X(BeginOcclusionQuery)                  \
+    X(EndOcclusionQuery)                    \
+    X(SetBlendConstant)                     \
+    X(SetScissorRect)                       \
+    X(SetStencilReference)                  \
+    X(SetViewport)                          \
+    X(WriteTimestamp)                       \
+    DAWN_REPLAY_RENDER_COMMANDS(X)          \
+    X(End)
+
+#define DAWN_REPLAY_ENCODER_ONLY_COMMANDS(X) \
+    X(ClearBuffer)                           \
+    X(CopyBufferToBuffer)                    \
+    X(CopyBufferToTexture)                   \
+    X(CopyTextureToBuffer)                   \
+    X(CopyTextureToTexture)                  \
+    X(ResolveQuerySet)                       \
+    X(WriteBuffer)                           \
+    X(WriteTimestamp)                        \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)            \
+    X(End)
+
+#define DAWN_REPLAY_ENCODER_COMMANDS(X) \
+    X(BeginComputePass)                 \
+    X(BeginRenderPass)                  \
+    DAWN_REPLAY_ENCODER_ONLY_COMMANDS(X)
+
+class ComputePassVisitor {
+  public:
+    virtual ~ComputePassVisitor() = default;
+#define VISITOR_METHOD(NAME) \
+    virtual MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) = 0;
+    DAWN_REPLAY_COMPUTE_PASS_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+class RenderPassVisitor {
+  public:
+    virtual ~RenderPassVisitor() = default;
+#define VISITOR_METHOD(NAME) \
+    virtual MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) = 0;
+    DAWN_REPLAY_RENDER_PASS_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+class RenderBundleVisitor {
+  public:
+    virtual ~RenderBundleVisitor() = default;
+#define VISITOR_METHOD(NAME) \
+    virtual MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) = 0;
+    DAWN_REPLAY_RENDER_BUNDLE_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+class EncoderVisitor {
+  public:
+    virtual ~EncoderVisitor() = default;
+
+    virtual ResultOrError<ComputePassVisitor*> BeginComputePass(
+        const schema::CommandBufferCommandBeginComputePassCmdData& data) = 0;
+    virtual ResultOrError<RenderPassVisitor*> BeginRenderPass(
+        const schema::CommandBufferCommandBeginRenderPassCmdData& data) = 0;
+
+#define VISITOR_METHOD(NAME) \
+    virtual MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) = 0;
+    DAWN_REPLAY_ENCODER_ONLY_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
 struct CommandBufferData {
     ReadHead* readHead;
 };
@@ -165,6 +269,11 @@ class RootCommandVisitor {
     virtual MaybeError operator()(const schema::RootCommandEndCmdData& data) = 0;
     virtual MaybeError operator()(const std::monostate&);
 };
+
+MaybeError ProcessEncoderCommands(ReadHead* readHead, EncoderVisitor* visitor);
+MaybeError ProcessComputePassCommands(ReadHead* readHead, ComputePassVisitor* visitor);
+MaybeError ProcessRenderPassCommands(ReadHead* readHead, RenderPassVisitor* visitor);
+MaybeError ProcessRenderBundleCommands(ReadHead* readHead, RenderBundleVisitor* visitor);
 
 class ReplayImplBase {
   public:
