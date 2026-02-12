@@ -39,6 +39,8 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_wgsl_reader_lower lib
+  lang/wgsl/reader/lower/atomic_vec2u_to_u64.cc
+  lang/wgsl/reader/lower/atomic_vec2u_to_u64.h
   lang/wgsl/reader/lower/lower.cc
   lang/wgsl/reader/lower/lower.h
 )
@@ -74,6 +76,7 @@ tint_target_add_external_dependencies(tint_lang_wgsl_reader_lower lib
 # Kind:      test
 ################################################################################
 tint_add_target(tint_lang_wgsl_reader_lower_test test
+  lang/wgsl/reader/lower/atomic_vec2u_to_u64_test.cc
   lang/wgsl/reader/lower/lower_test.cc
 )
 
