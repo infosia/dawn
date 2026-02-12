@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4500ce7_be34ccbc",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:19:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "69db9981_70337675",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4138fd2_e882d520",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "I originally wrote this as a transform that added them as a new SPIR-V intrinsic that we could insert as builtin calls, but this was annoying to validate in the root block for module-scope variables. Could have added a new instruction type that we\u0027d allow in the root block, but that would also need a new base instruction class in core that the validator would understand.\n\nI thought about annotations directly on the values/instruction too but that feels fragile because you\u0027d have to remember to copy them over any time you replace an instruction in another transform.",
       "parentUuid": "b4138fd2_e882d520",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37356a35_25c8d1f0",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T15:19:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e208972d_a5e87c0c",
       "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
