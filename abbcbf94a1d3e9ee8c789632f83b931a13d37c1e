@@ -257,6 +257,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b52a1b4e_a9d9ae4a",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T12:56:04Z",
+      "side": 1,
+      "message": "https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#_non_overlapping_access_between_resources supports your point, thanks for the detailed answer. So it seems that we need DRLR :/ which has only very little support even on Android.",
+      "parentUuid": "a66087c6_06d1eb0c",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
