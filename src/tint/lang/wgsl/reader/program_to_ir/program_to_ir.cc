@@ -442,7 +442,11 @@ class Impl {
             return;
         }
 
-        auto lhs = EmitExpression(stmt->lhs);
+        const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
+        bool is_swizzle_assignment =
+            sem_swizzle && sem_swizzle->Type()->Is<core::type::SwizzleView>();
+        auto lhs = is_swizzle_assignment ? EmitValueExpression(sem_swizzle->Object()->Declaration())
+                                         : EmitExpression(stmt->lhs);
 
         auto rhs = EmitValueExpression(stmt->rhs);
         if (!rhs) {
@@ -451,6 +455,9 @@ class Impl {
 
         auto b = builder_.Append(current_block_);
         if (auto* v = std::get_if<core::ir::Value*>(&lhs)) {
+            if (is_swizzle_assignment) {
+                rhs = ConstructSwizzleAssignmentRhs(*v, rhs, sem_swizzle);
+            }
             b.Store(*v, rhs);
         } else if (auto ref = std::get_if<VectorRefElementAccess>(&lhs)) {
             b.StoreVectorElement(ref->vector, ref->index, rhs);
@@ -469,11 +476,20 @@ class Impl {
     }
 
     void EmitCompoundAssignment(const ast::CompoundAssignmentStatement* stmt) {
-        auto lhs = EmitExpression(stmt->lhs);
+        const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
+        bool is_swizzle_assignment =
+            sem_swizzle && sem_swizzle->Type()->Is<core::type::SwizzleView>();
+        auto lhs = is_swizzle_assignment ? EmitValueExpression(sem_swizzle->Object()->Declaration())
+                                         : EmitExpression(stmt->lhs);
 
         auto rhs = EmitValueExpression(stmt->rhs);
         if (!rhs) {
             return;
+        }
+
+        if (is_swizzle_assignment) {
+            auto* v = std::get_if<core::ir::Value*>(&lhs);
+            rhs = ConstructSwizzleAssignmentRhs(*v, rhs, sem_swizzle);
         }
 
         EmitCompoundAssignment(lhs, rhs, stmt->op);
@@ -490,6 +506,46 @@ class Impl {
             auto* inst = b.Append(BinaryOp(load->Result(), rhs, op));
             b.StoreVectorElement(ref->vector, ref->index, inst);
         }
+    }
+
+    core::ir::Value* ConstructSwizzleAssignmentRhs(core::ir::Value* lhs,
+                                                   core::ir::Value* rhs,
+                                                   const sem::Swizzle* sem_swizzle) {
+        auto b = builder_.Append(current_block_);
+        auto* swizzle_view = sem_swizzle->Type()->As<core::type::SwizzleView>();
+        auto* elem_ty = swizzle_view->StoreType()->As<core::type::Vector>()->Type();
+
+        // Reserve the result vector which will eventually be stored.
+        tint::Vector<core::ir::Value*, 4> new_vec_args;
+        new_vec_args.Resize(swizzle_view->FromSize());
+
+        // For indices that are referenced in the swizzle, use the appropriate new vals from the
+        // rhs to populate the result vector.
+        for (size_t i = 0; i < swizzle_view->ToSize(); i++) {
+            auto* access = b.Access(elem_ty->Clone(clone_ctx_.type_ctx), rhs, b.Constant(u32(i)));
+
+            uint32_t target_index = sem_swizzle->Indices()[i];
+            new_vec_args[target_index] = access->Result();
+        }
+
+        // For indices which were not referenced in the swizzle, fill in the old vals from the
+        // loaded lhs vector.
+        auto* lhs_val = b.Load(lhs);
+        for (uint32_t i = 0; i < swizzle_view->FromSize(); i++) {
+            if (new_vec_args[i] == nullptr) {
+                auto* access =
+                    b.Access(elem_ty->Clone(clone_ctx_.type_ctx), lhs_val, b.Constant(u32(i)));
+                new_vec_args[i] = access->Result();
+            }
+        }
+
+        // Store the result vector.
+        auto* vec_store_ty = sem_swizzle->Object()->Type()->UnwrapPtrOrRef();
+        if (vec_store_ty->Is<core::type::SwizzleView>()) {
+            TINT_ICE() << "chained swizzle assignment not yet implemented";
+        }
+        auto* result = b.Construct(vec_store_ty->Clone(clone_ctx_.type_ctx), new_vec_args);
+        return result->Result();
     }
 
     void EmitBlock(const ast::BlockStatement* block) {
