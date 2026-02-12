@@ -125,6 +125,7 @@ class Deserializable {
 
 // Helper for X macro for visiting a visitable member.
 #define DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG(type, name, ...) , name
+#define DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG_WITH_NAME(type, name, ...) , #name, name
 
 constexpr int kInternalVisitableUnusedForComma = 0;
 
@@ -148,6 +149,21 @@ constexpr int kInternalVisitableUnusedForComma = 0;
         return [&](int, auto&... ms) {                                                          \
             return visit(ms...);                                                                \
         }(kInternalVisitableUnusedForComma MEMBERS(DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG)); \
+    }                                                                                           \
+                                                                                                \
+    template <typename V>                                                                       \
+    constexpr auto VisitAll(V&& visit) const {                                                  \
+        return [&](int, const auto&... ms) {                                                    \
+            return visit(ms...);                                                                \
+        }(kInternalVisitableUnusedForComma MEMBERS(DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG)); \
+    }                                                                                           \
+                                                                                                \
+    template <typename V>                                                                       \
+    constexpr auto VisitAllWithNames(V&& visit) const {                                         \
+        return [&](int, const auto&... ms) {                                                    \
+            return visit(ms...);                                                                \
+        }(kInternalVisitableUnusedForComma MEMBERS(                                             \
+                   DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_ARG_WITH_NAME));                       \
     }
 
 // Helper macro to define a struct or class along with VisitAll methods to call
@@ -186,6 +202,18 @@ constexpr int kInternalVisitableUnusedForComma = 0;
             return [&](int, auto&... ms) { return visit(ms...); }(                              \
                        kInternalVisitableUnusedForComma, variantType, binding, data);           \
         }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) const {                                              \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                        \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAllWithNames(V&& visit) const {                                     \
+            return [&](int, const auto&... ms) {                                                \
+                return visit(ms...);                                                            \
+            }(kInternalVisitableUnusedForComma, "variantType", variantType, "binding", binding, \
+                   "data", data);                                                               \
+        }                                                                                       \
     };                                                                                          \
     struct BindGroupLayoutEntryType##VariantName                                                \
         : BindGroupLayoutEntryType##VariantName##__Contents,                                    \
@@ -207,26 +235,48 @@ constexpr int kInternalVisitableUnusedForComma = 0;
             return [&](int, auto&... ms) { return visit(ms...); }(                              \
                        kInternalVisitableUnusedForComma, variantType, binding, data);           \
         }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAll(V&& visit) const {                                              \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                        \
+                       kInternalVisitableUnusedForComma, variantType, binding, data);           \
+        }                                                                                       \
+        template <typename V>                                                                   \
+        constexpr auto VisitAllWithNames(V&& visit) const {                                     \
+            return [&](int, const auto&... ms) {                                                \
+                return visit(ms...);                                                            \
+            }(kInternalVisitableUnusedForComma, "variantType", variantType, "binding", binding, \
+                   "data", data);                                                               \
+        }                                                                                       \
     };                                                                                          \
     struct BindGroupEntryType##VariantName                                                      \
         : BindGroupEntryType##VariantName##__Contents,                                          \
           public ::dawn::replay::Deserializable<BindGroupEntryType##VariantName>
 
 // Makes both a CmdData and a Cmd struct for a given command name.
-#define DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(CmdType, CmdName, CMD_MEMBERS)               \
-    DAWN_REPLAY_SERIALIZABLE(struct, CmdType##CmdName##CmdData, CMD_MEMBERS){};        \
-                                                                                       \
-    struct CmdType##CmdName##Cmd##__Contents {                                         \
-        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType, command, CmdType::CmdName) \
-        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType##CmdName##CmdData, data)    \
-                                                                                       \
-        template <typename V>                                                          \
-        constexpr auto VisitAll(V&& visit) {                                           \
-            return [&](int, auto&... ms) { return visit(ms...); }(                     \
-                       kInternalVisitableUnusedForComma, command, data);               \
-        }                                                                              \
-    };                                                                                 \
-    struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents,                  \
+#define DAWN_REPLAY_MAKE_CMD_AND_CMD_DATA(CmdType, CmdName, CMD_MEMBERS)                    \
+    DAWN_REPLAY_SERIALIZABLE(struct, CmdType##CmdName##CmdData, CMD_MEMBERS){};             \
+                                                                                            \
+    struct CmdType##CmdName##Cmd##__Contents {                                              \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType, command, CmdType::CmdName)      \
+        DAWN_REPLAY_INTERNAL_VISITABLE_MEMBER_DECL(CmdType##CmdName##CmdData, data)         \
+                                                                                            \
+        template <typename V>                                                               \
+        constexpr auto VisitAll(V&& visit) {                                                \
+            return [&](int, auto&... ms) { return visit(ms...); }(                          \
+                       kInternalVisitableUnusedForComma, command, data);                    \
+        }                                                                                   \
+        template <typename V>                                                               \
+        constexpr auto VisitAll(V&& visit) const {                                          \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                    \
+                       kInternalVisitableUnusedForComma, command, data);                    \
+        }                                                                                   \
+        template <typename V>                                                               \
+        constexpr auto VisitAllWithNames(V&& visit) const {                                 \
+            return [&](int, const auto&... ms) { return visit(ms...); }(                    \
+                       kInternalVisitableUnusedForComma, "command", command, "data", data); \
+        }                                                                                   \
+    };                                                                                      \
+    struct CmdType##CmdName##Cmd : CmdType##CmdName##Cmd##__Contents,                       \
                                    public ::dawn::replay::Deserializable<CmdType##CmdName##Cmd>
 
 // Makes both a CmdData and a Cmd struct for a given render pass command name.
