@@ -33,12 +33,10 @@
 #include <variant>
 #include <vector>
 
-#include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
+#include "dawn/replay/ReadHead.h"
 
 namespace dawn::replay {
-
-class CaptureImpl;
 
 #define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID(NAME) schema::BindGroupLayoutEntryType##NAME,
 #define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID(NAME, VALUE)
@@ -277,11 +275,12 @@ MaybeError ProcessRenderBundleCommands(ReadHead* readHead, RenderBundleVisitor* 
 
 class CaptureWalker {
   public:
-    explicit CaptureWalker(std::unique_ptr<const CaptureImpl> capture);
+    virtual ~CaptureWalker() = default;
     MaybeError Walk(RootCommandVisitor& visitor);
 
-  private:
-    std::unique_ptr<const CaptureImpl> mCapture;
+  protected:
+    virtual ReadHead GetCommandReadHead() const = 0;
+    virtual ReadHead GetContentReadHead() const = 0;
 };
 
 }  // namespace dawn::replay
