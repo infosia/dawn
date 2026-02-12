@@ -16,6 +16,91 @@
       "message": "LGTM from the Tint side.",
       "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4582d002_d9d60738",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:22:48Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aab992e_374984aa",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:22:48Z",
+      "side": 1,
+      "message": "Note that your follow-up CL will fix this.",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c005924_82221199",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:22:48Z",
+      "side": 1,
+      "message": "```suggestion\n    const auto\u0026 aspect_info \u003d view-\u003eGetFormat().GetAspectInfo(view-\u003eGetAspects());\n```",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c49a54_19c8682d",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:22:48Z",
+      "side": 1,
+      "message": "nit: I know I wrote this code, but I think it would be more readable if the condition were inverted (so `if (filterable) {return filterabletype} return unfilterabletype`)",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c8154e6_25b986da",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:22:48Z",
+      "side": 1,
+      "message": "ditto, your follow up CL will fix this.",
+      "revId": "506f918e8134072ce44c13d4833ada4b1ed0d5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
