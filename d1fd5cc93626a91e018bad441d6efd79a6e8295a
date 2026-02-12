@@ -1,6 +1,57 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d615ff3_37bb78f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:37:35Z",
+      "side": 1,
+      "message": "Do we have any idea what the Pixel4 failure is?",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80ce9e9c_0a4485bb",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:37:35Z",
+      "side": 1,
+      "message": "nit: could we move this just one block down to keep the sampler stuff grouped together?",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995c365f_b33c4848",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:37:35Z",
+      "side": 1,
+      "message": "This works because in `src/dawn/native/Pipeline.h` we have both:\n\n```\n    ImmediateConstantMask mImmediateMask \u003d ImmediateConstantMask(0);\n    ImmediateConstantMask mUserImmdiateSlots \u003d ImmediateConstantMask(0);\n```\n\nCan we add comments to them and getters to make it very clear which one is for use by frontend validation and which one is just for common backend tracking?\n\nAlso `s/mUserImmdiateSlots/mUserImmediateSlots/` (there\u0027s a typo).\n\nThis can be a follow-up.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60e3339d_310cb6da",
@@ -14,6 +65,24 @@
       "writtenOn": "2026-02-10T22:49:48Z",
       "side": 1,
       "message": "I\u0027m not sure that this solves all of the potential mismatch cases, unless I\u0027m missing something.\n\nIf the vertex and fragment shaders both use differently sized user immediates, do you not still end up with a mismatch?\n\ne.g. if I pass this to Tint with this CL as currently written:\n```\nvar\u003cimmediate\u003e v_imm: f32;\nvar\u003cimmediate\u003e f_imm: mat4x4f;\n\n@vertex\nfn vert() -\u003e @builtin(position) vec4f {\n  return vec4f(v_imm, 0, 0, 1);\n}\n\n@fragment\nfn frag() -\u003e @location(0) vec4f {\n  return f_imm[3];\n}\n```\n\nI get this output:\n```\n//\n// vert\n//\n#version 310 es\n\nlayout(location \u003d 0) uniform uint tint_immediates[4];\nvec4 vert_inner() {\n  return vec4(uintBitsToFloat(tint_immediates[0u]), 0.0f, 0.0f, 1.0f);\n}\nvoid main() {\n  vec4 v \u003d vert_inner();\n  gl_Position \u003d vec4(v.x, -(v.y), ((2.0f * v.z) - v.w), v.w);\n  gl_PointSize \u003d 1.0f;\n}\n//\n// frag\n//\n#version 310 es\nprecision highp float;\nprecision highp int;\n\nlayout(location \u003d 0) uniform uint tint_immediates[16];\nlayout(location \u003d 0) out vec4 frag_loc0_Output;\nvec4 frag_inner() {\n  return uintBitsToFloat(uvec4(tint_immediates[12u], tint_immediates[13u], tint_immediates[14u], tint_immediates[15u]));\n}\nvoid main() {\n  frag_loc0_Output \u003d frag_inner();\n}\n```\n\nNote the differently sized immediates in the GLSL output.\nThis is why I suggested (in chat) that Dawn probably has to tell Tint what the max size is.\n\nLet me know if I\u0027m missing something.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5adf03dc_97cc6864",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:37:35Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "60e3339d_310cb6da",
       "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
