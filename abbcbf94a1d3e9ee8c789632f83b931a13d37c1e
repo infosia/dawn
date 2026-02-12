@@ -293,6 +293,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f807d01_eadd2722",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-12T15:22:02Z",
+      "side": 1,
+      "message": "To Kyle\u0027s point, on TBRs you should be able to get MSRTSS in lots of devices (practically, a superset of devices that have DRLR). And on IMRs you don\u0027t actually need DRLR, you can do the unresolve in a separate pass (by texture sampling even), for example on Exynos GPUs or various Android emulators.\n\n---\n\nBy the way, https://registry.khronos.org/vulkan/specs/latest/html/vkspec.html has become excrutiatingly slow to load. There\u0027s a replacement at https://docs.vulkan.org/spec/latest/index.html",
+      "parentUuid": "a32c59cd_5b9a92c2",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
