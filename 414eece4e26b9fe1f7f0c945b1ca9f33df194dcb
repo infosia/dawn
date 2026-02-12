@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75f41ebb_3525b97b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T10:24:36Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa3b3cd_d10bab70",
+        "filename": "src/dawn/common/Math.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T10:24:36Z",
+      "side": 1,
+      "message": "Thanks for all the drive-by comment improvements :)",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38849428_4438d447",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T10:24:36Z",
+      "side": 1,
+      "message": "Instead of getting the parameter index as the last one every time, WDYT of making the lambda return an optional\u003cuint32_t\u003e and doing something like:\n\n```\n        if (auto paramIndex \u003d SetRootDescriptorTable(resourceTableCbvUavSrvDescriptorRanges)) {\n            mResourceTableRootParameterIndex \u003d paramIndex.value();\n        }\n```",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85f2f839_8beb46e1",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T10:24:36Z",
+      "side": 1,
+      "message": "Or a compute shader, see the comment in the Vulkan backend.",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "880e59c3_2d24a609",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T10:24:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised that a MutexProtected is passed instead of just a `ShaderVisibleDescriptorAllocator*`. It seems that the mutex for all of the PopulateViews should be acquired for the whole command buffer recording duration.\n\nAnyways we can look at that later.",
+      "revId": "414eece4e26b9fe1f7f0c945b1ca9f33df194dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
