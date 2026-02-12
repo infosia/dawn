@@ -87,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e90d44ef_9656c836",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Switched to use ScopedMakeCurrent and GetGL() directly, and revert the rest to the old code.\n\nAnother alternative would be to call ExecuteGL(), but it seems superfluous to create a lambda when we know it won\u0027t be deferred.",
+      "parentUuid": "ab8d26c1_4024e066",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "757919d7_e66b4390",
@@ -155,6 +173,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64f61f6c_2c4377e7",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6b7a92c_530fca7e",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97a84439_3610d04b",
@@ -172,6 +208,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79c5b0b1_71179f2f",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a84439_3610d04b",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9beb879_2cc0e5ff",
@@ -185,6 +239,24 @@
       "writtenOn": "2026-02-12T09:59:15Z",
       "side": 1,
       "message": "```suggestion\n            // “self” is not being destroyed; capture a reference to “self” to ensure that the data passed to \"work\" contains all the modifications that may be done by other work enqueued prior.\n```",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fdd1a28_7d683a04",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9beb879_2cc0e5ff",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -242,6 +314,30 @@
       "writtenOn": "2026-02-12T09:59:15Z",
       "side": 1,
       "message": "unused?\n\nAh no, maybe call it `keepAlive`?",
+      "range": {
+        "startLine": 227,
+        "startChar": 21,
+        "endLine": 227,
+        "endChar": 53
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "957155cd_20b2e9f7",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "See above: we should consider getting rid of the \"this\" capture and indirect through \"self\" instead. If consensus is to keep \"this\", I\u0027ll do the rename as requested.",
+      "parentUuid": "e786f3d0_19072e00",
       "range": {
         "startLine": 227,
         "startChar": 21,
@@ -377,6 +473,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3146b863_c0a981c1",
+        "filename": "src/dawn/native/opengl/TextureGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c12cfd2_44f684f4",
+      "range": {
+        "startLine": 61,
+        "startChar": 9,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e74d26c9_a293b414",
+        "filename": "src/dawn/native/opengl/TextureGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20f0aa6_496cb482",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2629d77f_2eb38c67",
@@ -407,6 +545,30 @@
       "writtenOn": "2026-02-12T08:28:12Z",
       "side": 1,
       "message": "This only tests the \"giant lock\" path. It doesn\u0027t test the deferred GL path at all. Is that intended?",
+      "range": {
+        "startLine": 2067,
+        "startChar": 38,
+        "endLine": 2067,
+        "endChar": 71
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "027774ba_b76065ea",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 1,
+      "message": "I honestly don\u0027t remember why I did this, but I don\u0027t think these tests pass on the deferred path yet. They at least pass with the mutex path, so I think it\u0027s worth enabling them here (and removing the individual suppressions) so we at least increase coverage.",
+      "parentUuid": "90b9092d_13643642",
       "range": {
         "startLine": 2067,
         "startChar": 38,

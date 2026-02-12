@@ -22,6 +22,30 @@
       },
       "revId": "59301e0f4e9eedd08916e3f6208104763d9a89d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e3ddf6_7af32e86",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-12T20:06:11Z",
+      "side": 0,
+      "message": "TL;DR: because multiple inheritance.\n\nThe problem is that the type of the \"this\" pointer (T) and the type of the pointer-to-member-function (T::GetData) must match.\n\nIf I cast the \"this\" pointer to PipelineGL* (or explicitly specify EnqueueDestroyGL\u003cPipelineGL\u003e()) and use the original PipelineGL::GetProgramHandle(), then the Ref() call in the EarlyDestroy case fails, because PipelineGL is not derived from RefCounted. RenderPipeline and ComputePipeline are RefCounted (via ObjectBase). PipelineGL is not.",
+      "parentUuid": "8eeda99d_bf822919",
+      "range": {
+        "startLine": 189,
+        "startChar": 19,
+        "endLine": 189,
+        "endChar": 35
+      },
+      "revId": "59301e0f4e9eedd08916e3f6208104763d9a89d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
