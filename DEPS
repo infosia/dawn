@@ -266,7 +266,7 @@ deps = {
   },
   # This is a dependency of //testing
   'third_party/catapult': {
-    'url': '{chromium_git}/catapult.git@59090f1f5e2b3ad9c90e4dc5fc8e79aed9110587',
+    'url': '{chromium_git}/catapult.git@428ec56fc7b4ad6066c6dcdd24da83984740f760',
     'condition': 'dawn_standalone',
   },
   'third_party/google_benchmark/src': {
