@@ -58,19 +58,19 @@ StringStream& operator<<(StringStream& out, CodePoint code_point) {
         // See https://en.cppreference.com/w/cpp/language/escape
         switch (code_point) {
             case '\a':
-                return out << R"('\a')";
+                return out << "'\\a'";
             case '\b':
-                return out << R"('\b')";
+                return out << "'\\b'";
             case '\f':
-                return out << R"('\f')";
+                return out << "'\\f'";
             case '\n':
-                return out << R"('\n')";
+                return out << "'\\n'";
             case '\r':
-                return out << R"('\r')";
+                return out << "'\\r'";
             case '\t':
-                return out << R"('\t')";
+                return out << "'\\t'";
             case '\v':
-                return out << R"('\v')";
+                return out << "'\\v'";
         }
         return out << "'" << static_cast<char>(code_point) << "'";
     }

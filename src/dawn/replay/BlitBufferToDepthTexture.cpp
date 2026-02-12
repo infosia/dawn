@@ -10,7 +10,7 @@ namespace dawn::replay {
 
 namespace {
 
-constexpr std::string_view kShaderSrc = DAWN_MULTILINE(
+constexpr std::string_view kShaderSrc = R"(
     const kPixelSize = 4;
 
     @vertex fn vert_fullscreen_quad(
@@ -41,7 +41,7 @@ constexpr std::string_view kShaderSrc = DAWN_MULTILINE(
 
         return src_buf[srcOffset >> 2];
     }
-);
+)";
 
 ResultOrError<wgpu::RenderPipeline> CreatePipeline(wgpu::Device device,
                                                    wgpu::TextureFormat format) {
