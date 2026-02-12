@@ -140,6 +140,65 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_ENUM)
     X(WriteBuffer)                             \
     X(WriteTimestamp)
 
+#define DAWN_REPLAY_SHARED_PASS_COMMANDS(X) \
+    X(SetBindGroup)                         \
+    X(SetImmediates)
+
+#define DAWN_REPLAY_DEBUG_COMMANDS(X) \
+    X(PushDebugGroup)                 \
+    X(InsertDebugMarker)              \
+    X(PopDebugGroup)
+
+#define DAWN_REPLAY_RENDER_COMMANDS(X)  \
+    X(SetRenderPipeline)                \
+    X(SetVertexBuffer)                  \
+    X(SetIndexBuffer)                   \
+    X(Draw)                             \
+    X(DrawIndexed)                      \
+    X(DrawIndirect)                     \
+    X(DrawIndexedIndirect)              \
+    DAWN_REPLAY_SHARED_PASS_COMMANDS(X) \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)
+
+#define DAWN_REPLAY_RENDER_BUNDLE_COMMANDS(X) \
+    DAWN_REPLAY_RENDER_COMMANDS(X)            \
+    X(End)
+
+#define DAWN_REPLAY_COMPUTE_PASS_COMMANDS(X) \
+    X(SetComputePipeline)                    \
+    X(Dispatch)                              \
+    X(DispatchIndirect)                      \
+    X(WriteTimestamp)                        \
+    DAWN_REPLAY_SHARED_PASS_COMMANDS(X)      \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)            \
+    X(End)
+
+#define DAWN_REPLAY_RENDER_PASS_COMMANDS(X) \
+    X(ExecuteBundles)                       \
+    X(BeginOcclusionQuery)                  \
+    X(EndOcclusionQuery)                    \
+    X(SetBlendConstant)                     \
+    X(SetScissorRect)                       \
+    X(SetStencilReference)                  \
+    X(SetViewport)                          \
+    X(WriteTimestamp)                       \
+    DAWN_REPLAY_RENDER_COMMANDS(X)          \
+    X(End)
+
+#define DAWN_REPLAY_ENCODER_COMMANDS(X) \
+    X(BeginComputePass)                 \
+    X(BeginRenderPass)                  \
+    X(ClearBuffer)                      \
+    X(CopyBufferToBuffer)               \
+    X(CopyBufferToTexture)              \
+    X(CopyTextureToBuffer)              \
+    X(CopyTextureToTexture)             \
+    X(ResolveQuerySet)                  \
+    X(WriteBuffer)                      \
+    X(WriteTimestamp)                   \
+    DAWN_REPLAY_DEBUG_COMMANDS(X)       \
+    X(End)
+
 #define DAWN_REPLAY_COMMAND_BUFFER_COMMANDS_ENUM(X) \
     X(CommandBufferCommand, DAWN_REPLAY_COMMAND_BUFFER_COMMANDS)
 
@@ -768,6 +827,16 @@ DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(BeginOcclusionQuery,
 #define EXECUTE_BUNDLES_CMD_DATA_MEMBER(X) X(std::vector<ObjectId>, bundleIds)
 
 DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(ExecuteBundles, EXECUTE_BUNDLES_CMD_DATA_MEMBER){};
+
+#define END_CMD_DATA_MEMBER(X)
+DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(End, END_CMD_DATA_MEMBER){};
+
+#define POP_DEBUG_GROUP_CMD_DATA_MEMBER(X)
+DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(PopDebugGroup, POP_DEBUG_GROUP_CMD_DATA_MEMBER){};
+
+#define END_OCCLUSION_QUERY_CMD_DATA_MEMBER(X)
+DAWN_REPLAY_MAKE_COMMAND_BUFFER_CMD_AND_CMD_DATA(EndOcclusionQuery,
+                                                 END_OCCLUSION_QUERY_CMD_DATA_MEMBER){};
 
 #define SET_VERTEX_BUFFER_CMD_DATA_MEMBER(X) \
     X(uint32_t, slot)                        \
