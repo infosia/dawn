@@ -32,7 +32,9 @@
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/writer/ast_printer/ast_printer.h"
 #include "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.h"
+#include "src/tint/lang/wgsl/writer/raise/atomic_vec2u_from_u64.h"
 #include "src/tint/lang/wgsl/writer/raise/raise.h"
+#include "src/tint/utils/ice/ice.h"
 
 namespace tint::wgsl::writer {
 
@@ -55,6 +57,8 @@ Result<Output> WgslFromIR(core::ir::Module& module, const Options& options) {
 }
 
 Result<Program> ProgramFromIR(core::ir::Module& module, const Options& options) {
+    TINT_CHECK_RESULT(AtomicVec2UFromU64(module));
+
     // core-dialect -> WGSL-dialect
     TINT_CHECK_RESULT(Raise(module));
 

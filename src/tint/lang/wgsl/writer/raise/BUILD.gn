@@ -45,6 +45,8 @@ if (tint_build_unittests || tint_build_benchmarks) {
 
 libtint_source_set("raise") {
   sources = [
+    "atomic_vec2u_from_u64.cc",
+    "atomic_vec2u_from_u64.h",
     "ptr_to_ref.cc",
     "ptr_to_ref.h",
     "raise.cc",
@@ -79,6 +81,7 @@ libtint_source_set("raise") {
 if (tint_build_unittests) {
   tint_unittests_source_set("unittests") {
     sources = [
+      "atomic_vec2u_from_u64_test.cc",
       "ptr_to_ref_test.cc",
       "raise_test.cc",
       "value_to_let_test.cc",
@@ -93,6 +96,9 @@ if (tint_build_unittests) {
       "${tint_src_dir}/lang/core/ir",
       "${tint_src_dir}/lang/core/ir/transform:unittests",
       "${tint_src_dir}/lang/core/type",
+      "${tint_src_dir}/lang/wgsl",
+      "${tint_src_dir}/lang/wgsl/intrinsic",
+      "${tint_src_dir}/lang/wgsl/ir",
       "${tint_src_dir}/lang/wgsl/writer/raise",
       "${tint_src_dir}/utils",
       "${tint_src_dir}/utils/containers",
