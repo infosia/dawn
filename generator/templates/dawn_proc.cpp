@@ -33,14 +33,15 @@
 // dynamically loaded.
 #include "dawn/common/Compiler.h"
 #include "dawn/common/Log.h"
+#include "dawn/common/Strings.h"
 
 // A fake wgpuCreateInstance that prints a warning so folks know that they are using dawn_procs and
 // should either use a different target to link against, or call dawnProcSetProcs.
 WGPUInstance CreateInstanceThatWarns(const WGPUInstanceDescriptor* desc) {
     dawn::ErrorLog() <<
-        R"(The \"null\" {{metadata.namespace}}CreateInstance from {{prefix}}_proc was called which always returns nullptr. You either need to:
+        DAWN_UNMINIFIED(R"(The \"null\" {{metadata.namespace}}CreateInstance from {{prefix}}_proc was called which always returns nullptr. You either need to:
   - call {{prefix}}ProcSetProcs with a {{Prefix}}ProcTable object retrieved somewhere else, or
-  - (most likely) link against a different target that implements {{metadata.api}} directly, for example {{metadata.api.lower()}}_dawn)";
+  - (most likely) link against a different target that implements {{metadata.api}} directly, for example {{metadata.api.lower()}}_dawn)");
 
     return nullptr;
 }
