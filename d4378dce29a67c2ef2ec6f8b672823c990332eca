@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c5b0d2d_ee3da8f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-12T15:45:45Z",
+      "side": 1,
+      "message": "No, I think. Let me create an issue for it.",
+      "parentUuid": "b4d49d45_c51ebe84",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "fdfd0e27_a34ac601",
