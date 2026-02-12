@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bcfb00c_43c55803",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-12T19:02:17Z",
+      "side": 1,
+      "message": "PTAL\n\nBased on https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-cmake-rel/15/infra vs. https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-mac-x64-sws-cmake-rel/17/infra, the caching change saves ~2.5 minutes on Mac builds",
+      "revId": "36aefae6822d041ee83c595a71f1655439eca610",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
