@@ -75,8 +75,6 @@ DAWN_REPLAY_ROOT_COMMANDS_ENUM(DAWN_REPLAY_ENUM_TO_STRING)
 
 }  // namespace schema
 
-class ReplayImpl;
-
 Replay::~Replay() = default;
 
 std::unique_ptr<Replay> Replay::Create(wgpu::Device device, std::unique_ptr<Capture> capture) {
@@ -125,6 +123,159 @@ template wgpu::TexelBufferView Replay::GetObjectByLabel<wgpu::TexelBufferView>(
     std::string_view label) const;
 template wgpu::TextureView Replay::GetObjectByLabel<wgpu::TextureView>(
     std::string_view label) const;
+
+class DawnResourceVisitor : public ResourceVisitor {
+  public:
+    explicit DawnResourceVisitor(DawnRootCommandVisitor* visitor) : mVisitor(visitor) {}
+
+    MaybeError operator()(const BindGroupData& data) override;
+    MaybeError operator()(const BindGroupLayoutData& data) override;
+    MaybeError operator()(const schema::Buffer& data) override;
+    MaybeError operator()(const CommandBufferData& data) override;
+    MaybeError operator()(const schema::ComputePipeline& data) override;
+    MaybeError operator()(const schema::ExternalTexture& data) override;
+    MaybeError operator()(const schema::PipelineLayout& data) override;
+    MaybeError operator()(const schema::QuerySet& data) override;
+    MaybeError operator()(const RenderBundleData& data) override;
+    MaybeError operator()(const schema::RenderPipeline& data) override;
+    MaybeError operator()(const schema::Sampler& data) override;
+    MaybeError operator()(const schema::ShaderModule& data) override;
+    MaybeError operator()(const schema::TexelBufferView& data) override;
+    MaybeError operator()(const schema::Texture& data) override;
+    MaybeError operator()(const schema::TextureView& data) override;
+    MaybeError operator()(const InvalidData& data) override {
+        return DAWN_INTERNAL_ERROR("Invalid resource data");
+    }
+    MaybeError operator()(const DeviceData& data) override {
+        return DAWN_INTERNAL_ERROR("Device data not expected here");
+    }
+    MaybeError operator()(const std::monostate&) {
+        return DAWN_INTERNAL_ERROR("Invalid resource data (monostate)");
+    }
+
+  private:
+    template <typename T>
+    MaybeError Create(const T& data);
+
+    DawnRootCommandVisitor* mVisitor;
+};
+
+class DawnRootCommandVisitor : public RootCommandVisitor {
+  public:
+    explicit DawnRootCommandVisitor(wgpu::Device device)
+        : mDevice(device), mResourceVisitor(this) {}
+
+    MaybeError operator()(const CreateResourceData& data) override {
+        mCurrentResourceId = data.resource.id;
+        mCurrentResourceLabel = data.resource.label;
+        return std::visit(mResourceVisitor, data.data);
+    }
+
+    MaybeError operator()(const schema::RootCommandWriteBufferCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandWriteTextureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandUnmapBufferCmdData& data) override { return {}; }
+    MaybeError operator()(const schema::RootCommandEndCmdData& data) override { return {}; }
+
+    ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
+
+    wgpu::Device GetDevice() const { return mDevice; }
+    schema::ObjectId GetCurrentResourceId() const { return mCurrentResourceId; }
+    const std::string& GetCurrentResourceLabel() const { return mCurrentResourceLabel; }
+
+    template <typename T>
+    T GetObjectById(schema::ObjectId id) const {
+        if (id == 0) {
+            return nullptr;
+        }
+        auto iter = mResources.find(id);
+        if (iter == mResources.end()) {
+            return nullptr;
+        }
+        const T* p = std::get_if<T>(&iter->second.resource);
+        return p ? *p : nullptr;
+    }
+
+    template <typename T>
+    T GetObjectByLabel(std::string_view label) const {
+        auto isLabel = [label](const LabeledResource& res) { return res.label == label; };
+        auto resourcesWithMachingLabel =
+            mResources | std::views::values | std::views::filter(isLabel);
+        for (const auto& res : resourcesWithMachingLabel) {
+            const T* p = std::get_if<T>(&res.resource);
+            if (p) {
+                return *p;
+            }
+        }
+        return nullptr;
+    }
+
+    template <typename T>
+    const std::string& GetLabel(const T& object) const {
+        if (object == nullptr) {
+            return kNotFound;
+        }
+        return GetLabel(GetObjectId(object));
+    }
+
+    const std::string& GetLabel(schema::ObjectId id) const {
+        auto iter = mResources.find(id);
+        if (iter == mResources.end()) {
+            return kNotFound;
+        }
+        return iter->second.label;
+    }
+
+    template <typename T>
+    schema::ObjectId GetObjectId(const T& object) const {
+        auto iter = mResourceToIdMap.find(object.Get());
+        return iter != mResourceToIdMap.end() ? iter->second : 0;
+    }
+
+    template <typename T>
+    void AddResource(schema::ObjectId id, const std::string& label, T resource) {
+        mResources.emplace(id, LabeledResource{label, resource});
+        mResourceToIdMap.emplace(resource.Get(), id);
+    }
+
+    void AddResource(schema::ObjectId id, const std::string& label, Resource resource) {
+        std::visit(
+            [&](auto& r) {
+                if constexpr (!std::is_same_v<std::decay_t<decltype(r)>, std::monostate>) {
+                    mResources.emplace(id, LabeledResource{label, r});
+                    mResourceToIdMap.emplace(r.Get(), id);
+                }
+            },
+            resource);
+    }
+
+    MaybeError SetLabel(schema::ObjectId id, schema::ObjectType type, const std::string& label);
+
+    BlitBufferToDepthTexture& GetBlitBufferToDepthTexture() { return mBlitBufferToDepthTexture; }
+
+    void SetContentReadHead(ReadHead* readHead) override { mContentReadHead = readHead; }
+
+  private:
+    wgpu::Device mDevice;
+    DawnResourceVisitor mResourceVisitor;
+
+    using IdToResourceMap = absl::flat_hash_map<schema::ObjectId, LabeledResource>;
+    IdToResourceMap mResources;
+
+    using ResourcePtrToIdMap = absl::flat_hash_map<const void*, schema::ObjectId>;
+    ResourcePtrToIdMap mResourceToIdMap;
+
+    BlitBufferToDepthTexture mBlitBufferToDepthTexture;
+
+    schema::ObjectId mCurrentResourceId;
+    std::string mCurrentResourceLabel;
+
+    ReadHead* mContentReadHead = nullptr;
+
+    std::string kNotFound;
+};
 
 namespace {
 
@@ -178,7 +329,8 @@ wgpu::Color ToWGPU(const schema::Color& color) {
     };
 }
 
-wgpu::PassTimestampWrites ToWGPU(const ReplayImpl& replay, const schema::TimestampWrites& writes) {
+wgpu::PassTimestampWrites ToWGPU(const DawnRootCommandVisitor& replay,
+                                 const schema::TimestampWrites& writes) {
     return wgpu::PassTimestampWrites{
         .nextInChain = nullptr,
         .querySet = replay.GetObjectById<wgpu::QuerySet>(writes.querySetId),
@@ -208,7 +360,7 @@ wgpu::TexelCopyBufferLayout ToWGPU(const schema::TexelCopyBufferLayout& info) {
     };
 }
 
-wgpu::TexelCopyBufferInfo ToWGPU(const ReplayImpl& replay,
+wgpu::TexelCopyBufferInfo ToWGPU(const DawnRootCommandVisitor& replay,
                                  const schema::TexelCopyBufferInfo& info) {
     return wgpu::TexelCopyBufferInfo{
         .layout = ToWGPU(info.layout),
@@ -216,7 +368,7 @@ wgpu::TexelCopyBufferInfo ToWGPU(const ReplayImpl& replay,
     };
 }
 
-wgpu::TexelCopyTextureInfo ToWGPU(const ReplayImpl& replay,
+wgpu::TexelCopyTextureInfo ToWGPU(const DawnRootCommandVisitor& replay,
                                   const schema::TexelCopyTextureInfo& info) {
     return wgpu::TexelCopyTextureInfo{
         .texture = replay.GetObjectById<wgpu::Texture>(info.textureId),
@@ -272,7 +424,7 @@ MaybeError ReadContentIntoBuffer(ReadHead& readHead,
     return {};
 }
 
-MaybeError ReadContentIntoTexture(const ReplayImpl& replay,
+MaybeError ReadContentIntoTexture(const DawnRootCommandVisitor& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   const schema::RootCommandWriteTextureCmdData& cmdData) {
@@ -302,7 +454,7 @@ bool TextureFormatNeedsBlit(wgpu::TextureFormat format, wgpu::TextureAspect aspe
     }
 }
 
-MaybeError InitializeTexture(const ReplayImpl& replay,
+MaybeError InitializeTexture(const DawnRootCommandVisitor& replay,
                              BlitBufferToDepthTexture& blitBufferToDepthTexture,
                              ReadHead& readHead,
                              wgpu::Device device,
@@ -324,30 +476,6 @@ MaybeError InitializeTexture(const ReplayImpl& replay,
     return {};
 }
 
-// These x-macros use DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES to generate
-// an std::variant that includes each type of BindGroupLayoutEntry. This
-// std::variant can then be used in CreateBindGroupLayout below with
-// a visitor to separate deserialization from actual use.
-#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID(NAME) schema::BindGroupLayoutEntryType##NAME,
-#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID(NAME, VALUE)
-#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO(_1, _2, NAME, ...) NAME
-#define DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE(...)                  \
-    DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO(                \
-        __VA_ARGS__, DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID, \
-        DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID)(__VA_ARGS__)
-
-using BindGroupLayoutEntryVariant = std::variant<DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES(
-    DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE) std::monostate>;
-#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE
-#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_GET_MACRO
-#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_INVALID
-#undef DAWN_REPLAY_BINDGROUPLAYOUT_VARIANT_TYPE_VALID
-
-// These x-macros use DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES which
-// is a list of all BindGroupLayoutEntry types to auto generate
-// a switch case for each type of BindGroupLayoutEntryType that deserializes
-// a capture for that type and converts it to an std::variant entry
-// for that type.
 #define DAWN_REPLAY_BINDGROUPLAYOUT_DESERIALIZE_CASE_VALID(NAME)    \
     case schema::BindGroupLayoutEntryType::NAME: {                  \
         schema::BindGroupLayoutEntryType##NAME data;                \
@@ -440,36 +568,6 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_DESE
 #undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID
 #undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID
 
-// These structures are used to gather data in a generic way to pass to
-// visitors for resource creation. For example, BindGroupData is used to
-// select the bindGroupEntries that, as serialized are different types,
-// and deserialize them into an std::variant of the types that can then
-// be passed to a visitor in a generic way. BindGroupLayoutData does
-// the same for bindGroupLayoutEntries. For CommandBufferData and
-// RenderBundleData, the deserialization is passed on to lower level
-// functions and visitors. See DAWN_REPLAY_RESOURCE_DATA_MAP below.
-struct InvalidData {};
-struct DeviceData {};
-
-struct BindGroupData {
-    schema::BindGroup bg;
-    std::vector<BindGroupEntryVariant> entries;
-};
-
-struct BindGroupLayoutData {
-    schema::BindGroupLayout bgl;
-    std::vector<BindGroupLayoutEntryVariant> entries;
-};
-
-struct CommandBufferData {
-    ReadHead* readHead;
-};
-
-struct RenderBundleData {
-    schema::RenderBundle bundle;
-    ReadHead* readHead;
-};
-
 MaybeError Deserialize(ReadHead& readHead, BindGroupData* out) {
     DAWN_TRY(Deserialize(readHead, &out->bg));
     out->entries.reserve(out->bg.numEntries);
@@ -504,7 +602,7 @@ MaybeError Deserialize(ReadHead& readHead, RenderBundleData* out) {
 }
 
 struct BindGroupEntryVisitor {
-    const ReplayImpl& replay;
+    const DawnRootCommandVisitor& replay;
     std::vector<wgpu::BindGroupEntry>& entries;
     std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>& externalTextureBindingEntries;
 
@@ -641,7 +739,7 @@ struct BindGroupLayoutEntryVisitor {
     }
 };
 
-ResultOrError<wgpu::BindGroup> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::BindGroup> CreateResource(const DawnRootCommandVisitor& replay,
                                               wgpu::Device device,
                                               const BindGroupData& data,
                                               const std::string& label) {
@@ -664,7 +762,7 @@ ResultOrError<wgpu::BindGroup> CreateResource(const ReplayImpl& replay,
     return {bindGroup};
 }
 
-ResultOrError<wgpu::BindGroupLayout> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::BindGroupLayout> CreateResource(const DawnRootCommandVisitor& replay,
                                                     wgpu::Device device,
                                                     const BindGroupLayoutData& data,
                                                     const std::string& label) {
@@ -694,7 +792,7 @@ ResultOrError<wgpu::BindGroupLayout> CreateResource(const ReplayImpl& replay,
     return {bindGroupLayout};
 }
 
-ResultOrError<wgpu::Buffer> CreateResource(const ReplayImpl&,
+ResultOrError<wgpu::Buffer> CreateResource(const DawnRootCommandVisitor&,
                                            wgpu::Device device,
                                            const schema::Buffer& buf,
                                            const std::string& label) {
@@ -717,7 +815,7 @@ ResultOrError<wgpu::Buffer> CreateResource(const ReplayImpl&,
     return {buffer};
 }
 
-ResultOrError<wgpu::ComputePipeline> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::ComputePipeline> CreateResource(const DawnRootCommandVisitor& replay,
                                                     wgpu::Device device,
                                                     const schema::ComputePipeline& pipeline,
                                                     const std::string& label) {
@@ -738,7 +836,7 @@ ResultOrError<wgpu::ComputePipeline> CreateResource(const ReplayImpl& replay,
     return {computePipeline};
 }
 
-ResultOrError<wgpu::ExternalTexture> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::ExternalTexture> CreateResource(const DawnRootCommandVisitor& replay,
                                                     wgpu::Device device,
                                                     const schema::ExternalTexture& tex,
                                                     const std::string& label) {
@@ -761,7 +859,7 @@ ResultOrError<wgpu::ExternalTexture> CreateResource(const ReplayImpl& replay,
     return {externalTexture};
 }
 
-ResultOrError<wgpu::PipelineLayout> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::PipelineLayout> CreateResource(const DawnRootCommandVisitor& replay,
                                                    wgpu::Device device,
                                                    const schema::PipelineLayout& layout,
                                                    const std::string& label) {
@@ -780,7 +878,7 @@ ResultOrError<wgpu::PipelineLayout> CreateResource(const ReplayImpl& replay,
     return {pipelineLayout};
 }
 
-ResultOrError<wgpu::QuerySet> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::QuerySet> CreateResource(const DawnRootCommandVisitor& replay,
                                              wgpu::Device device,
                                              const schema::QuerySet& querySetData,
                                              const std::string& label) {
@@ -817,10 +915,10 @@ MaybeError ProcessCommands(ReadHead& readHead, Visitor&& visitor) {
 
 template <typename Pass>
 struct CommandVisitorBase {
-    const ReplayImpl& replay;
+    const DawnRootCommandVisitor& replay;
     Pass pass;
 
-    CommandVisitorBase(const ReplayImpl& r, Pass p) : replay(r), pass(p) {}
+    CommandVisitorBase(const DawnRootCommandVisitor& r, Pass p) : replay(r), pass(p) {}
 
     // SHARED_COMMANDS
     MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) {
@@ -944,7 +1042,7 @@ struct RenderBundleVisitor : RenderVisitor<wgpu::RenderBundleEncoder> {
     MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
 };
 
-MaybeError ProcessRenderBundleCommands(const ReplayImpl& replay,
+MaybeError ProcessRenderBundleCommands(const DawnRootCommandVisitor& replay,
                                        ReadHead& readHead,
                                        wgpu::Device device,
                                        wgpu::RenderBundleEncoder pass) {
@@ -952,7 +1050,7 @@ MaybeError ProcessRenderBundleCommands(const ReplayImpl& replay,
     return ProcessCommands<RenderBundleVariant>(readHead, visitor);
 }
 
-ResultOrError<wgpu::RenderBundle> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::RenderBundle> CreateResource(const DawnRootCommandVisitor& replay,
                                                  wgpu::Device device,
                                                  const RenderBundleData& data,
                                                  const std::string& label) {
@@ -974,7 +1072,7 @@ ResultOrError<wgpu::RenderBundle> CreateResource(const ReplayImpl& replay,
     return {renderBundle};
 }
 
-ResultOrError<wgpu::RenderPipeline> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::RenderPipeline> CreateResource(const DawnRootCommandVisitor& replay,
                                                    wgpu::Device device,
                                                    const schema::RenderPipeline& pipeline,
                                                    const std::string& label) {
@@ -1087,7 +1185,7 @@ ResultOrError<wgpu::RenderPipeline> CreateResource(const ReplayImpl& replay,
     return {renderPipeline};
 }
 
-ResultOrError<wgpu::Sampler> CreateResource(const ReplayImpl&,
+ResultOrError<wgpu::Sampler> CreateResource(const DawnRootCommandVisitor&,
                                             wgpu::Device device,
                                             const schema::Sampler& sampler,
                                             const std::string& label) {
@@ -1107,7 +1205,7 @@ ResultOrError<wgpu::Sampler> CreateResource(const ReplayImpl&,
     return {device.CreateSampler(&desc)};
 }
 
-ResultOrError<wgpu::ShaderModule> CreateResource(const ReplayImpl&,
+ResultOrError<wgpu::ShaderModule> CreateResource(const DawnRootCommandVisitor&,
                                                  wgpu::Device device,
                                                  const schema::ShaderModule& mod,
                                                  const std::string& label) {
@@ -1125,14 +1223,14 @@ ResultOrError<wgpu::ShaderModule> CreateResource(const ReplayImpl&,
     return {shaderModule};
 }
 
-ResultOrError<wgpu::TexelBufferView> CreateResource(const ReplayImpl&,
+ResultOrError<wgpu::TexelBufferView> CreateResource(const DawnRootCommandVisitor&,
                                                     wgpu::Device device,
                                                     const schema::TexelBufferView& view,
                                                     const std::string& label) {
     return DAWN_UNIMPLEMENTED_ERROR("TexelBufferView not supported");
 }
 
-ResultOrError<wgpu::Texture> CreateResource(const ReplayImpl&,
+ResultOrError<wgpu::Texture> CreateResource(const DawnRootCommandVisitor&,
                                             wgpu::Device device,
                                             const schema::Texture& tex,
                                             const std::string& label) {
@@ -1156,7 +1254,7 @@ ResultOrError<wgpu::Texture> CreateResource(const ReplayImpl&,
     return {texture};
 }
 
-ResultOrError<wgpu::TextureView> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::TextureView> CreateResource(const DawnRootCommandVisitor& replay,
                                                 wgpu::Device device,
                                                 const schema::TextureView& view,
                                                 const std::string& label) {
@@ -1231,7 +1329,7 @@ struct ComputePassVisitor : CommandVisitorBase<wgpu::ComputePassEncoder> {
     }
 };
 
-MaybeError ProcessComputePassCommands(const ReplayImpl& replay,
+MaybeError ProcessComputePassCommands(const DawnRootCommandVisitor& replay,
                                       ReadHead& readHead,
                                       wgpu::Device device,
                                       wgpu::ComputePassEncoder pass) {
@@ -1308,7 +1406,7 @@ struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
     }
 };
 
-MaybeError ProcessRenderPassCommands(const ReplayImpl& replay,
+MaybeError ProcessRenderPassCommands(const DawnRootCommandVisitor& replay,
                                      ReadHead& readHead,
                                      wgpu::Device device,
                                      wgpu::RenderPassEncoder pass) {
@@ -1333,7 +1431,10 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
     ReadHead& readHead;
     wgpu::Device device;
 
-    EncoderVisitor(const ReplayImpl& r, wgpu::CommandEncoder p, ReadHead& rh, wgpu::Device d)
+    EncoderVisitor(const DawnRootCommandVisitor& r,
+                   wgpu::CommandEncoder p,
+                   ReadHead& rh,
+                   wgpu::Device d)
         : CommandVisitorBase(r, p), readHead(rh), device(d) {}
 
     using CommandVisitorBase<wgpu::CommandEncoder>::operator();
@@ -1460,7 +1561,7 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
     MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
 };
 
-MaybeError ProcessEncoderCommands(const ReplayImpl& replay,
+MaybeError ProcessEncoderCommands(const DawnRootCommandVisitor& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   wgpu::CommandEncoder encoder) {
@@ -1468,7 +1569,7 @@ MaybeError ProcessEncoderCommands(const ReplayImpl& replay,
     return ProcessCommands<EncoderVariant>(readHead, visitor);
 }
 
-ResultOrError<wgpu::CommandBuffer> CreateResource(const ReplayImpl& replay,
+ResultOrError<wgpu::CommandBuffer> CreateResource(const DawnRootCommandVisitor& replay,
                                                   wgpu::Device device,
                                                   const CommandBufferData& data,
                                                   const std::string& label) {
@@ -1479,35 +1580,6 @@ ResultOrError<wgpu::CommandBuffer> CreateResource(const ReplayImpl& replay,
     DAWN_TRY(ProcessEncoderCommands(replay, *data.readHead, device, encoder));
     return {encoder.Finish()};
 }
-
-// This is needed to map a command to a deserialization data type.
-// In particular, BindGroupData, BindGroupLayoutData, have
-// packed variants, meaning, entry has a type enum, and then only
-// the data needed for that particular variant. In order to use
-// std::variant, these need to be expanded to an variant that is
-// padded to the largest type.
-#define DAWN_REPLAY_RESOURCE_DATA_MAP(X)        \
-    X(Invalid, InvalidData)                     \
-    X(BindGroup, BindGroupData)                 \
-    X(BindGroupLayout, BindGroupLayoutData)     \
-    X(Buffer, schema::Buffer)                   \
-    X(CommandBuffer, CommandBufferData)         \
-    X(ComputePipeline, schema::ComputePipeline) \
-    X(Device, DeviceData)                       \
-    X(ExternalTexture, schema::ExternalTexture) \
-    X(PipelineLayout, schema::PipelineLayout)   \
-    X(QuerySet, schema::QuerySet)               \
-    X(RenderBundle, RenderBundleData)           \
-    X(RenderPipeline, schema::RenderPipeline)   \
-    X(Sampler, schema::Sampler)                 \
-    X(ShaderModule, schema::ShaderModule)       \
-    X(TexelBufferView, schema::TexelBufferView) \
-    X(Texture, schema::Texture)                 \
-    X(TextureView, schema::TextureView)
-
-#define AS_DATA_TYPE(NAME, TYPE) TYPE,
-using ResourceData = std::variant<DAWN_REPLAY_RESOURCE_DATA_MAP(AS_DATA_TYPE) std::monostate>;
-#undef AS_DATA_TYPE
 
 MaybeError DeserializeResourceData(ReadHead& readHead, schema::ObjectType type, ResourceData* out) {
     switch (type) {
@@ -1529,42 +1601,10 @@ MaybeError DeserializeResourceData(ReadHead& readHead, schema::ObjectType type, 
     }
 }
 
-struct ResourceVisitor {
-    const ReplayImpl& replay;
-    wgpu::Device device;
-    const std::string& label;
-
-    template <typename T>
-    ResultOrError<Resource> operator()(const T& data) {
-        if constexpr (std::is_same_v<T, std::monostate> || std::is_same_v<T, InvalidData> ||
-                      std::is_same_v<T, DeviceData>) {
-            return DAWN_INTERNAL_ERROR("Invalid resource data");
-        } else {
-            auto res = CreateResource(replay, device, data, label);
-            if (res.IsError()) {
-                return res.AcquireError();
-            }
-            return {Resource(res.AcquireSuccess())};
-        }
-    }
-};
-
-}  // anonymous namespace
-
-// ResourceData is an std::variant of the creation parameters
-// of each type of resource. This can be used with std::visit
-// to handle each type of resource.
-struct CreateResourceData {
-    schema::LabeledResource resource;
-    ResourceData data;
-};
-
 MaybeError Deserialize(ReadHead& readHead, CreateResourceData* out) {
     DAWN_TRY(Deserialize(readHead, &out->resource));
     return DeserializeResourceData(readHead, out->resource.type, &out->data);
 }
-
-namespace {
 
 template <typename T>
 struct RootCommandDataType {
@@ -1616,88 +1656,96 @@ MaybeError DeserializeRootCommand(ReadHead& readHead,
     }
 }
 
-struct RootCommandVisitor {
-    ReplayImpl& replay;
-    wgpu::Device device;
-    ReadHead& contentReadHead;
-    BlitBufferToDepthTexture& blitBufferToDepthTexture;
-
-    MaybeError operator()(const CreateResourceData& data) {
-        return replay.CreateResource(device, data);
-    }
-
-    MaybeError operator()(const schema::RootCommandWriteBufferCmdData& data) {
-        wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
-        return ReadContentIntoBuffer(contentReadHead, device, buffer, data.bufferOffset, data.size);
-    }
-
-    MaybeError operator()(const schema::RootCommandWriteTextureCmdData& data) {
-        return ReadContentIntoTexture(replay, contentReadHead, device, data);
-    }
-
-    MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) {
-        std::vector<wgpu::CommandBuffer> commandBuffers;
-        commandBuffers.reserve(data.commandBuffers.size());
-        for (auto id : data.commandBuffers) {
-            commandBuffers.push_back(replay.GetObjectById<wgpu::CommandBuffer>(id));
-        }
-        device.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
-        return {};
-    }
-
-    MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) {
-        return replay.SetLabel(data.id, data.type, data.label);
-    }
-
-    MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) {
-        return InitializeTexture(replay, blitBufferToDepthTexture, contentReadHead, device, data);
-    }
-
-    MaybeError operator()(const schema::RootCommandUnmapBufferCmdData& data) { return {}; }
-
-    MaybeError operator()(const schema::RootCommandEndCmdData& data) { return {}; }
-
-    template <typename T>
-    MaybeError operator()(const T&) {
-        return DAWN_INTERNAL_ERROR("unimplemented root command");
-    }
-
-    MaybeError operator()(const std::monostate&) { return DAWN_INTERNAL_ERROR("Invalid command"); }
-};
-
 }  // anonymous namespace
 
-std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
-                                               std::unique_ptr<Capture> capture) {
-    auto captureImpl = std::unique_ptr<CaptureImpl>(static_cast<CaptureImpl*>(capture.release()));
-    return std::unique_ptr<ReplayImpl>(new ReplayImpl(device, std::move(captureImpl)));
+MaybeError DawnResourceVisitor::operator()(const BindGroupData& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const BindGroupLayoutData& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::Buffer& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const CommandBufferData& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::ComputePipeline& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::ExternalTexture& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::PipelineLayout& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::QuerySet& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const RenderBundleData& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::RenderPipeline& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::Sampler& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::ShaderModule& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::TexelBufferView& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::Texture& data) {
+    return Create(data);
+}
+MaybeError DawnResourceVisitor::operator()(const schema::TextureView& data) {
+    return Create(data);
 }
 
-ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
-    : mDevice(device), mCapture(std::move(capture)) {
-    AddResource(schema::kDeviceId, "", device);
-}
-
-MaybeError ReplayImpl::CreateResource(wgpu::Device device, const CreateResourceData& data) {
-    Resource res;
-    DAWN_TRY_ASSIGN(res,
-                    std::visit(ResourceVisitor{*this, device, data.resource.label}, data.data));
-
-    std::visit(
-        [&](auto& r) {
-            if constexpr (!std::is_same_v<std::decay_t<decltype(r)>, std::monostate>) {
-                AddResource(data.resource.id, data.resource.label, r);
-            }
-        },
-        res);
+template <typename T>
+MaybeError DawnResourceVisitor::Create(const T& data) {
+    auto res =
+        CreateResource(*mVisitor, mVisitor->GetDevice(), data, mVisitor->GetCurrentResourceLabel());
+    if (res.IsError()) {
+        return res.AcquireError();
+    }
+    mVisitor->AddResource(mVisitor->GetCurrentResourceId(), mVisitor->GetCurrentResourceLabel(),
+                          res.AcquireSuccess());
     return {};
 }
 
-MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
-                                schema::ObjectType type,
-                                const std::string& label) {
-// These macros use the DAWN_REPLAY_OBJECT_TYPES_ENUM x-macro to generate
-// type specific code to update the label of each type of object.
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandWriteBufferCmdData& data) {
+    wgpu::Buffer buffer = GetObjectById<wgpu::Buffer>(data.bufferId);
+    return ReadContentIntoBuffer(*mContentReadHead, mDevice, buffer, data.bufferOffset, data.size);
+}
+
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandWriteTextureCmdData& data) {
+    return ReadContentIntoTexture(*this, *mContentReadHead, mDevice, data);
+}
+
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandQueueSubmitCmdData& data) {
+    std::vector<wgpu::CommandBuffer> commandBuffers;
+    commandBuffers.reserve(data.commandBuffers.size());
+    for (auto id : data.commandBuffers) {
+        commandBuffers.push_back(GetObjectById<wgpu::CommandBuffer>(id));
+    }
+    mDevice.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandSetLabelCmdData& data) {
+    return SetLabel(data.id, data.type, data.label);
+}
+
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandInitTextureCmdData& data) {
+    return InitializeTexture(*this, mBlitBufferToDepthTexture, *mContentReadHead, mDevice, data);
+}
+
+MaybeError DawnRootCommandVisitor::SetLabel(schema::ObjectId id,
+                                            schema::ObjectType type,
+                                            const std::string& label) {
 // We update both the object's label and our own copy of the label
 // as there is no API to get an object's label from WebGPU
 #define DAWN_REPLAY_GET_X_MACRO(_1, _2, NAME, ...) NAME
@@ -1736,17 +1784,13 @@ MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
     return {};
 }
 
-const std::string& ReplayImpl::GetLabel(schema::ObjectId id) const {
-    auto iter = mResources.find(id);
-    if (iter == mResources.end()) {
-        return kNotFound;
-    }
-    return iter->second.label;
-}
+ReplayImplBase::ReplayImplBase(std::unique_ptr<const CaptureImpl> capture)
+    : mCapture(std::move(capture)) {}
 
-MaybeError ReplayImpl::Play() {
+MaybeError ReplayImplBase::Play(RootCommandVisitor& visitor) {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
+    visitor.SetContentReadHead(&contentReadHead);
 
     while (!readHead.IsDone()) {
         schema::RootCommand cmd;
@@ -1755,10 +1799,126 @@ MaybeError ReplayImpl::Play() {
         RootCommandVariant v;
         DAWN_TRY(DeserializeRootCommand(readHead, cmd, &v));
         DAWN_TRY(std::visit(
-            RootCommandVisitor{*this, mDevice, contentReadHead, mBlitBufferToDepthTexture}, v));
+            [&](auto&& arg) -> MaybeError {
+                using T = std::decay_t<decltype(arg)>;
+                if constexpr (std::is_same_v<T, std::monostate>) {
+                    return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
+                } else {
+                    return visitor(arg);
+                }
+            },
+            v));
     }
 
     return {};
 }
+
+std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
+                                               std::unique_ptr<Capture> capture) {
+    auto captureImpl = std::unique_ptr<CaptureImpl>(static_cast<CaptureImpl*>(capture.release()));
+    return std::unique_ptr<ReplayImpl>(new ReplayImpl(device, std::move(captureImpl)));
+}
+
+ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
+    : mVisitor(new DawnRootCommandVisitor(device)), mBase(std::move(capture)) {
+    mVisitor->AddResource(schema::kDeviceId, "", device);
+}
+
+MaybeError ReplayImpl::Play() {
+    return mBase.Play(*mVisitor);
+}
+
+template <typename T>
+T ReplayImpl::GetObjectByLabel(std::string_view label) const {
+    return mVisitor->GetObjectByLabel<T>(label);
+}
+
+template <typename T>
+T ReplayImpl::GetObjectById(schema::ObjectId id) const {
+    return mVisitor->GetObjectById<T>(id);
+}
+
+template <typename T>
+const std::string& ReplayImpl::GetLabel(const T& object) const {
+    return mVisitor->GetLabel(object);
+}
+
+const std::string& ReplayImpl::GetLabel(schema::ObjectId id) const {
+    return mVisitor->GetLabel(id);
+}
+
+template wgpu::BindGroup ReplayImpl::GetObjectByLabel<wgpu::BindGroup>(
+    std::string_view label) const;
+template wgpu::BindGroupLayout ReplayImpl::GetObjectByLabel<wgpu::BindGroupLayout>(
+    std::string_view label) const;
+template wgpu::Buffer ReplayImpl::GetObjectByLabel<wgpu::Buffer>(std::string_view label) const;
+template wgpu::CommandBuffer ReplayImpl::GetObjectByLabel<wgpu::CommandBuffer>(
+    std::string_view label) const;
+template wgpu::ComputePipeline ReplayImpl::GetObjectByLabel<wgpu::ComputePipeline>(
+    std::string_view label) const;
+template wgpu::Device ReplayImpl::GetObjectByLabel<wgpu::Device>(std::string_view label) const;
+template wgpu::PipelineLayout ReplayImpl::GetObjectByLabel<wgpu::PipelineLayout>(
+    std::string_view label) const;
+template wgpu::QuerySet ReplayImpl::GetObjectByLabel<wgpu::QuerySet>(std::string_view label) const;
+template wgpu::RenderBundle ReplayImpl::GetObjectByLabel<wgpu::RenderBundle>(
+    std::string_view label) const;
+template wgpu::RenderPipeline ReplayImpl::GetObjectByLabel<wgpu::RenderPipeline>(
+    std::string_view label) const;
+template wgpu::Sampler ReplayImpl::GetObjectByLabel<wgpu::Sampler>(std::string_view label) const;
+template wgpu::ShaderModule ReplayImpl::GetObjectByLabel<wgpu::ShaderModule>(
+    std::string_view label) const;
+template wgpu::Texture ReplayImpl::GetObjectByLabel<wgpu::Texture>(std::string_view label) const;
+template wgpu::ExternalTexture ReplayImpl::GetObjectByLabel<wgpu::ExternalTexture>(
+    std::string_view label) const;
+template wgpu::TextureView ReplayImpl::GetObjectByLabel<wgpu::TextureView>(
+    std::string_view label) const;
+
+template wgpu::BindGroup ReplayImpl::GetObjectById<wgpu::BindGroup>(schema::ObjectId id) const;
+template wgpu::BindGroupLayout ReplayImpl::GetObjectById<wgpu::BindGroupLayout>(
+    schema::ObjectId id) const;
+template wgpu::Buffer ReplayImpl::GetObjectById<wgpu::Buffer>(schema::ObjectId id) const;
+template wgpu::CommandBuffer ReplayImpl::GetObjectById<wgpu::CommandBuffer>(
+    schema::ObjectId id) const;
+template wgpu::ComputePipeline ReplayImpl::GetObjectById<wgpu::ComputePipeline>(
+    schema::ObjectId id) const;
+template wgpu::Device ReplayImpl::GetObjectById<wgpu::Device>(schema::ObjectId id) const;
+template wgpu::PipelineLayout ReplayImpl::GetObjectById<wgpu::PipelineLayout>(
+    schema::ObjectId id) const;
+template wgpu::QuerySet ReplayImpl::GetObjectById<wgpu::QuerySet>(schema::ObjectId id) const;
+template wgpu::RenderBundle ReplayImpl::GetObjectById<wgpu::RenderBundle>(
+    schema::ObjectId id) const;
+template wgpu::RenderPipeline ReplayImpl::GetObjectById<wgpu::RenderPipeline>(
+    schema::ObjectId id) const;
+template wgpu::Sampler ReplayImpl::GetObjectById<wgpu::Sampler>(schema::ObjectId id) const;
+template wgpu::ShaderModule ReplayImpl::GetObjectById<wgpu::ShaderModule>(
+    schema::ObjectId id) const;
+template wgpu::Texture ReplayImpl::GetObjectById<wgpu::Texture>(schema::ObjectId id) const;
+template wgpu::ExternalTexture ReplayImpl::GetObjectById<wgpu::ExternalTexture>(
+    schema::ObjectId id) const;
+template wgpu::TextureView ReplayImpl::GetObjectById<wgpu::TextureView>(schema::ObjectId id) const;
+
+template const std::string& ReplayImpl::GetLabel<wgpu::BindGroup>(const wgpu::BindGroup&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::BindGroupLayout>(
+    const wgpu::BindGroupLayout&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::Buffer>(const wgpu::Buffer&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::CommandBuffer>(
+    const wgpu::CommandBuffer&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::ComputePipeline>(
+    const wgpu::ComputePipeline&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::Device>(const wgpu::Device&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::PipelineLayout>(
+    const wgpu::PipelineLayout&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::QuerySet>(const wgpu::QuerySet&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::RenderBundle>(
+    const wgpu::RenderBundle&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::RenderPipeline>(
+    const wgpu::RenderPipeline&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::Sampler>(const wgpu::Sampler&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::ShaderModule>(
+    const wgpu::ShaderModule&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::Texture>(const wgpu::Texture&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::ExternalTexture>(
+    const wgpu::ExternalTexture&) const;
+template const std::string& ReplayImpl::GetLabel<wgpu::TextureView>(const wgpu::TextureView&) const;
 
 }  // namespace dawn::replay
