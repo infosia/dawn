@@ -38,6 +38,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d0c013d_dcc1b04f",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:24:01Z",
+      "side": 1,
+      "message": "This should add the unfilterable variants.",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4d3423_0671864f",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:24:01Z",
+      "side": 1,
+      "message": "Which will require updating the compatible WGSL types listed here.",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71206c5c_a1bca306",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 4
