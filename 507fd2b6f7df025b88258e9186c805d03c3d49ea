@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0708274_75e9dd02",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T13:58:29Z",
+      "side": 1,
+      "message": "(and the same for 2d_array, cube and cube_array)",
+      "parentUuid": "66f15a4f_b1700277",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc01ee5f_9f361020",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 4
