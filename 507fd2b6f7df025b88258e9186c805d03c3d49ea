@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4de0d7dc_bca4f0bb",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:18:03Z",
+      "side": 1,
+      "message": "That warning also complains when using the uint32_t constructor to convert, which is not a C-style cast, so it\u0027s overbroad.",
+      "parentUuid": "be048629_879da1ce",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71206c5c_a1bca306",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T09:18:03Z",
+      "side": 1,
+      "message": "Note: `texture_2d\u003cf32, unfilterable \u003e` can be retrieved from 3 different types in the resource table: itself, `texture_2d\u003cf32, filterable\u003e` and `texture_depth_2d`. The latter doesn\u0027t seem handled in this CL.",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc01ee5f_9f361020",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 4
