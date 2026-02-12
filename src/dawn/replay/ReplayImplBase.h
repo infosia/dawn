@@ -144,8 +144,9 @@ class ResourceVisitor {
     virtual MaybeError operator()(const schema::ShaderModule& data) = 0;
     virtual MaybeError operator()(const schema::Texture& data) = 0;
     virtual MaybeError operator()(const schema::TextureView& data) = 0;
-    virtual MaybeError operator()(const InvalidData& data) = 0;
-    virtual MaybeError operator()(const DeviceData& data) = 0;
+    virtual MaybeError operator()(const InvalidData& data);
+    virtual MaybeError operator()(const DeviceData& data);
+    virtual MaybeError operator()(const std::monostate&);
 };
 
 class RootCommandVisitor {
@@ -162,6 +163,7 @@ class RootCommandVisitor {
     virtual MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandUnmapBufferCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandEndCmdData& data) = 0;
+    virtual MaybeError operator()(const std::monostate&);
 };
 
 class ReplayImplBase {

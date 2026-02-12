@@ -145,6 +145,7 @@ struct LabeledResource {
 
 class DawnResourceVisitor : public ResourceVisitor {
   public:
+    using ResourceVisitor::operator();
     explicit DawnResourceVisitor(DawnRootCommandVisitor* visitor) : mVisitor(visitor) {}
 
     MaybeError operator()(const BindGroupData& data) override;
@@ -161,15 +162,6 @@ class DawnResourceVisitor : public ResourceVisitor {
     MaybeError operator()(const schema::ShaderModule& data) override;
     MaybeError operator()(const schema::Texture& data) override;
     MaybeError operator()(const schema::TextureView& data) override;
-    MaybeError operator()(const InvalidData& data) override {
-        return DAWN_INTERNAL_ERROR("Invalid resource data");
-    }
-    MaybeError operator()(const DeviceData& data) override {
-        return DAWN_INTERNAL_ERROR("Device data not expected here");
-    }
-    MaybeError operator()(const std::monostate&) {
-        return DAWN_INTERNAL_ERROR("Invalid resource data (monostate)");
-    }
 
   private:
     template <typename T>
@@ -180,6 +172,7 @@ class DawnResourceVisitor : public ResourceVisitor {
 
 class DawnRootCommandVisitor : public RootCommandVisitor {
   public:
+    using RootCommandVisitor::operator();
     explicit DawnRootCommandVisitor(wgpu::Device device)
         : mDevice(device), mResourceVisitor(this) {}
 

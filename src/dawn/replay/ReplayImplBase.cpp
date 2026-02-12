@@ -208,6 +208,22 @@ MaybeError DeserializeRootCommand(ReadHead& readHead,
 
 }  // anonymous namespace
 
+MaybeError ResourceVisitor::operator()(const InvalidData& data) {
+    return DAWN_INTERNAL_ERROR("Invalid resource data");
+}
+
+MaybeError ResourceVisitor::operator()(const DeviceData& data) {
+    return DAWN_INTERNAL_ERROR("Device data not expected here");
+}
+
+MaybeError ResourceVisitor::operator()(const std::monostate&) {
+    return DAWN_INTERNAL_ERROR("Invalid resource data (monostate)");
+}
+
+MaybeError RootCommandVisitor::operator()(const std::monostate&) {
+    return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
+}
+
 ReplayImplBase::ReplayImplBase(std::unique_ptr<const CaptureImpl> capture)
     : mCapture(std::move(capture)) {}
 
@@ -222,16 +238,7 @@ MaybeError ReplayImplBase::Play(RootCommandVisitor& visitor) {
 
         RootCommandVariant v;
         DAWN_TRY(DeserializeRootCommand(readHead, cmd, &v));
-        DAWN_TRY(std::visit(
-            [&](auto&& arg) -> MaybeError {
-                using T = std::decay_t<decltype(arg)>;
-                if constexpr (std::is_same_v<T, std::monostate>) {
-                    return DAWN_INTERNAL_ERROR("Invalid command (monostate)");
-                } else {
-                    return visitor(arg);
-                }
-            },
-            v));
+        DAWN_TRY(std::visit(visitor, v));
     }
 
     return {};
