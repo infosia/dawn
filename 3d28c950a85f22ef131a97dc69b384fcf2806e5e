@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69db9981_70337675",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-12T15:16:37Z",
+      "side": 1,
+      "message": "These ones do for determinism, otherwise we potentially add the decorations for builtin calls to the list in a different order.",
+      "parentUuid": "a1c83539_2ac4347e",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4138fd2_e882d520",
         "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations_test.cc",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-12T14:58:06Z",
       "side": 1,
       "message": "We currently do this with an analysis pass, but could it be a transform instead that actually adds the annotations into the module? Then we\u0027d be able to emit them from the disassembler and see them showup here?",
+      "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e208972d_a5e87c0c",
+        "filename": "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-12T15:16:37Z",
+      "side": 1,
+      "message": "I originally wrote this as a transform that added them as a new SPIR-V intrinsic that we could insert as builtin calls, but this was annoying to validate in the root block for module-scope variables. Could have added a new instruction type that we\u0027d allow in the root block, but that would also need a new base instruction class in core that the validator would understand.\n\nI thought about annotations directly on the values/instruction too but that feels fragile because you\u0027d have to remember to copy them over any time you replace an instruction in another transform.",
+      "parentUuid": "b4138fd2_e882d520",
       "revId": "3d28c950a85f22ef131a97dc69b384fcf2806e5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
