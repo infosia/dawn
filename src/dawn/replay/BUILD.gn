@@ -31,22 +31,24 @@ import("${dawn_root}/scripts/dawn_component.gni")
 
 static_library("replay") {
   sources = [
+    "${dawn_root}/include/dawn/replay/JSONWalker.h",
     "${dawn_root}/include/dawn/replay/Replay.h",
     "${dawn_root}/include/dawn/replay/dawn_replay_export.h",
     "BlitBufferToDepthTexture.cpp",
     "BlitBufferToDepthTexture.h",
     "Capture.cpp",
     "Capture.h",
+    "CaptureWalker.cpp",
+    "CaptureWalker.h",
     "Deserialization.cpp",
     "Deserialization.h",
     "Error.cpp",
     "Error.h",
+    "JSONWalker.cpp",
     "ReadHead.cpp",
     "ReadHead.h",
     "Replay.cpp",
     "ReplayImpl.h",
-    "CaptureWalker.cpp",
-    "CaptureWalker.h",
   ]
 
   deps = [

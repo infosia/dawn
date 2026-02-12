@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/native/WebGPUBackend.h"
+#include "dawn/replay/JSONWalker.h"
 #include "dawn/replay/Replay.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/tests/MockCallback.h"
@@ -75,6 +76,15 @@ class CaptureAndReplayTests : public DawnTest {
             bool result = replay->Play();
             EXPECT_TRUE(result);
             return replay;
+        }
+
+        bool Walk(replay::RootCommandVisitor& visitor) {
+            std::istringstream commandIStream(mCommandData);
+            std::istringstream contentIStream(mContentData);
+
+            auto capture = replay::Capture::Create(commandIStream, mCommandData.size(),
+                                                   contentIStream, mContentData.size());
+            return capture->Walk(visitor);
         }
 
       private:
@@ -2759,6 +2769,103 @@ TEST_P(CaptureAndReplayTimestampTests, WriteTimestamp) {
     auto replay = capture.Replay(device);
 
     // just expect no errors.
+}
+
+TEST_P(CaptureAndReplayTests, JSONWalker) {
+    auto recorder = Recorder::CreateAndStart(device);
+
+    wgpu::Buffer buffer =
+        CreateBuffer("myBuffer", 4, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex);
+    wgpu::Texture texture =
+        CreateTexture("myTexture", {4}, wgpu::TextureFormat::R8Unorm,
+                      wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopyDst);
+
+    const uint8_t myTexels[] = {0x11, 0x22, 0x33, 0x44};
+    WriteFullTexture(texture, wgpu::TextureFormat::R8Unorm, {4}, myTexels);
+
+    {
+        wgpu::CommandBuffer commands;
+        {
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+            utils::ComboRenderPassDescriptor passDescriptor({texture.CreateView()});
+            passDescriptor.cColorAttachments[0].clearValue = {0x11, 0x22, 0x33, 0x44};
+            wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDescriptor);
+            pass.SetViewport(1, 2, 1, 2, 0, 1);
+            pass.SetScissorRect(0, 0, 2, 1);
+            pass.SetStencilReference(9);
+            pass.SetVertexBuffer(0, buffer);
+            pass.End();
+
+            commands = encoder.Finish();
+        }
+        queue.Submit(1, &commands);
+    }
+
+    auto capture = recorder.Finish();
+    replay::JSONWalker walker;
+    capture.Walk(walker);
+
+    std::string json = walker.GetJSON();
+
+    // Check that we have the expected commands.
+    EXPECT_THAT(json, ::testing::HasSubstr(R"("CreateResource","args":{"type":"Texture")"));
+    EXPECT_THAT(json, ::testing::HasSubstr(R"("CreateResource","args":{"type":"Buffer")"));
+    EXPECT_THAT(json, ::testing::HasSubstr(R"("CreateResource","args":{"type":"CommandBuffer")"));
+    EXPECT_THAT(json, ::testing::HasSubstr("WriteTexture"));
+    EXPECT_THAT(
+        json,
+        ::testing::HasSubstr(
+            R"("SetViewport","args":{"x":1,"y":2,"width":1,"height":2,"minDepth":0,"maxDepth":1})"));
+    EXPECT_THAT(json, ::testing::HasSubstr(
+                          R"("SetScissorRect","args":{"x":0,"y":0,"width":2,"height":1})"));
+    EXPECT_THAT(json, ::testing::HasSubstr(R"("SetStencilReference","args":{"reference":9})"));
+}
+
+TEST_P(CaptureAndReplayTests, JSONWalkerComputePass) {
+    auto recorder = Recorder::CreateAndStart(device);
+
+    {
+        wgpu::CommandBuffer commands;
+        {
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+            wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+            pass.End();
+
+            commands = encoder.Finish();
+        }
+        queue.Submit(1, &commands);
+    }
+
+    auto capture = recorder.Finish();
+    replay::JSONWalker walker;
+    capture.Walk(walker);
+
+    std::string json = walker.GetJSON();
+
+    const char* expected =
+        R"([{"cmd":"CreateResource","args":{"type":"CommandBuffer","id":2,"label":"","args":{"commands":[{"cmd":"BeginComputePass","args":{"label":"","timestampWrites":{"querySetId":0,"beginningOfPassWriteIndex":4294967295,"endOfPassWriteIndex":4294967295},"commands":[{"cmd":"End","args":{}}]}},{"cmd":"End","args":{}}]}}},{"cmd":"QueueSubmit","args":{"commandBuffers":[2]}}])";
+    EXPECT_EQ(json, expected);
+}
+
+TEST_P(CaptureAndReplayTests, JSONWalkerJustBuffer) {
+    auto recorder = Recorder::CreateAndStart(device);
+
+    wgpu::Buffer buffer =
+        CreateBuffer("myBuffer", 4, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Vertex);
+    const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
+    queue.WriteBuffer(buffer, 0, &myData, sizeof(myData));
+
+    auto capture = recorder.Finish();
+    replay::JSONWalker walker;
+    capture.Walk(walker);
+
+    std::string json = walker.GetJSON();
+
+    const char* expected =
+        R"([{"cmd":"CreateResource","args":{"type":"Buffer","id":2,"label":"myBuffer","args":{"size":4,"usage":40}}},{"cmd":"WriteBuffer","args":{"bufferId":2,"bufferOffset":0,"size":4}},{"cmd":"WriteBuffer","args":{"bufferId":2,"bufferOffset":0,"size":4}}])";
+    EXPECT_EQ(json, expected);
 }
 
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTimestampTests, WebGPUBackend());
