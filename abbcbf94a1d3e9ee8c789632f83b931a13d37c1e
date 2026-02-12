@@ -311,6 +311,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64c6e914_49cb9ffe",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-12T22:03:57Z",
+      "side": 1,
+      "message": "The complication with doing a second pass is if provided multisample texture is transient (which I believe all of Graphite\u0027s uses are) then the first pass resolve won\u0027t won\u0027t persist to the second pass. We could silently swap in a non-transient texture on the backend but then we\u0027re defeating the intent behind using the transient texture in the first place.\n\nWe have the opposite problem if using MSRTSS: If the multisample texture provided is _not_ transient then we can\u0027t use MSRTSS to implement, because you wouldn\u0027t get the appropriate content in the multisample target as a side effect of the pass. We could restrict LoadResolveTexture to only use transient textures, but then it\u0027s just MSRTSS with more steps AND still has the problem described above when using a two-pass implementation. 😕",
+      "parentUuid": "2f807d01_eadd2722",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
