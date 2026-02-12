@@ -52,4 +52,8 @@
 //   used to avoid bad formatting.
 #define DAWN_MULTILINE(...) #__VA_ARGS__
 
+// No-op macro for marking a raw string as intentionally unminified to silence
+// the presubmit check.
+#define DAWN_UNMINIFIED(...) __VA_ARGS__
+
 #endif  // SRC_DAWN_COMMON_STRINGS_H_

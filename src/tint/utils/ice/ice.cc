@@ -31,6 +31,7 @@
 #include <sstream>
 #include <string>
 
+#include "src/dawn/common/Strings.h"
 #include "src/tint/utils/ice/debugger.h"
 #include "src/tint/utils/macros/compiler.h"
 
@@ -45,7 +46,7 @@ TINT_BEGIN_DISABLE_WARNING(DESTRUCTOR_NEVER_RETURNS);
 InternalCompilerError::~InternalCompilerError() {
     std::ostringstream err;
     err << Error();
-    err << R"(
+    err << DAWN_UNMINIFIED(R"(
 
 ********************************************************************
 *  The tint shader compiler has encountered an unexpected error.   *
@@ -53,7 +54,7 @@ InternalCompilerError::~InternalCompilerError() {
 *  Please help us fix this issue by submitting a bug report at     *
 *  crbug.com/tint with the source program that triggered the bug.  *
 ********************************************************************
-)";
+)");
 
     // When consuming the ICE, log the error message and never return.
     // Default to stderr unless an ICE callback is provided.
