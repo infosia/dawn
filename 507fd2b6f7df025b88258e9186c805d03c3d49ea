@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "532fb324_e26514c6",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T13:56:19Z",
+      "side": 1,
+      "message": "The thing is, it\u0027s a lie `uint32(2)` is not a c-style cast, it\u0027s a c++ functional style cast. Reading the style guide (https://google.github.io/styleguide/cppguide.html#Casting) I think what I really wanted was `uint32_t{2}` when I did `uint32_t(2)` .\n\n\u003e Use brace initialization to convert arithmetic types (e.g., int64_t{x}). \n\nI\u0027ll try that and see if this still needs to be suppressed.",
+      "parentUuid": "be048629_879da1ce",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d0c013d_dcc1b04f",
         "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
         "patchSetId": 4
@@ -49,6 +67,24 @@
       "writtenOn": "2026-02-12T09:24:01Z",
       "side": 1,
       "message": "This should add the unfilterable variants.",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f657e3b1_17b14514",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T13:56:19Z",
+      "side": 1,
+      "message": "Doing it in a followup as I work through various issues.",
+      "parentUuid": "8d0c013d_dcc1b04f",
       "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -72,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07d89d40_b7fc1987",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T13:56:19Z",
+      "side": 1,
+      "message": "Same, followup Cl to update these tests.",
+      "parentUuid": "4f4d3423_0671864f",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71206c5c_a1bca306",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 4
@@ -89,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66f15a4f_b1700277",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T13:56:19Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize depth_2d also converted to unfilterable. I\u0027ll add that in.",
+      "parentUuid": "71206c5c_a1bca306",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc01ee5f_9f361020",
         "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
         "patchSetId": 4
@@ -100,6 +172,30 @@
       "writtenOn": "2026-02-11T21:02:05Z",
       "side": 1,
       "message": "I think this would be simpler with just an extra `eq` and an `or` instead of constructing two vectors and using `any`, e.g.:\n\n```suggestion\n            ResourceType resource_ty \u003d core::type::TypeToResourceType(type);\n            core::ir::Value* eq \u003d b.Equal(v, u32(resource_ty))-\u003eResult();\n\n            auto conv \u003d core::type::ConvertsFrom(type);\n            if (conv.has_value()) {\n                auto* cmp \u003d b.Equal(v, u32(conv.value()));\n                eq \u003d b.Or(eq, cmp)-\u003eResult();\n            }\n```\n\n(this also avoids the intermediate steps through uint32_t which avoids static_cast vs C-style casts, assuming it works with all compilers)",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 13
+      },
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "861d33ef_3283c063",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-12T13:56:19Z",
+      "side": 1,
+      "message": "Looks like this is going to have to extend to 3 things instead of two, so I think the vec/any version is a bit nicer in that case.",
+      "parentUuid": "dc01ee5f_9f361020",
       "range": {
         "startLine": 138,
         "startChar": 0,
