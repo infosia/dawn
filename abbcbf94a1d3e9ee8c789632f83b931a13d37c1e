@@ -275,6 +275,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a32c59cd_5b9a92c2",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-12T15:07:20Z",
+      "side": 1,
+      "message": "\u003e So it seems that we need DRLR :/ which has only very little support even on Android.\n\nFor \"unresolve\" MSAA logic we need either DRLR or MSRTSS. MSRTSS has better support on Android so it should allow us to use dynamic rendering for most devices that support it.\n\nFor framebufer fetch we probably do need DRLR.",
+      "parentUuid": "b52a1b4e_a9d9ae4a",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
