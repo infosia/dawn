@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4d49d45_c51ebe84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "Did the group explicitly agree that this is the expected behavior?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdfd0e27_a34ac601",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "I didn\u0027t look in details at the dawn::native changes as I\u0027m hoping we can rely on the decompose transform instead.",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6840527d_8779058c",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "WDYT of using the tint transform to decompose immediates to U32 in Metal like we do in the GL CL? It would avoid the need to keep two different sizes.",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "822c95ff_d265ce1a",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "ditto small comment",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc9c368_a5825032",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "Can we have minimal test coverage of the validation not requiring the trailing padding bytes as described in the commit message?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "625d4b74_391e1dab",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "Can we have a small comment explaining what this tries to test?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58e13492_6dfcea49",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "Where is the error case?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a857260d_793ed597",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "Could we have test coverage in inspector_test.cc?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0185a5b_2a8d2e8d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-12T08:50:40Z",
+      "side": 1,
+      "message": "I think we might be reconsidering that and adding array support in https://github.com/gpuweb/gpuweb/issues/5555 so we might as well add it here already.",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
