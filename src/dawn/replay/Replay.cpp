@@ -1551,6 +1551,122 @@ struct ResourceVisitor {
 
 }  // anonymous namespace
 
+// ResourceData is an std::variant of the creation parameters
+// of each type of resource. This can be used with std::visit
+// to handle each type of resource.
+struct CreateResourceData {
+    schema::LabeledResource resource;
+    ResourceData data;
+};
+
+MaybeError Deserialize(ReadHead& readHead, CreateResourceData* out) {
+    DAWN_TRY(Deserialize(readHead, &out->resource));
+    return DeserializeResourceData(readHead, out->resource.type, &out->data);
+}
+
+namespace {
+
+template <typename T>
+struct RootCommandDataType {
+    using Type = T;
+};
+
+template <>
+struct RootCommandDataType<schema::RootCommandCreateResourceCmdData> {
+    using Type = CreateResourceData;
+};
+
+// These macros are used with the DAWN_REPLAY_ROOT_COMMANDS x-macro
+// to generate an std::variant of the data for each root command
+// as well as a switch case to deserialize each root command into
+// the corresponding std::variant sub type.
+#define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_VALID(NAME) \
+    RootCommandDataType<schema::RootCommand##NAME##CmdData>::Type,
+#define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE(...)                  \
+    DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_GET_MACRO(                \
+        __VA_ARGS__, DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_INVALID, \
+        DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE_VALID)(__VA_ARGS__)
+
+using RootCommandVariant =
+    std::variant<DAWN_REPLAY_ROOT_COMMANDS(DAWN_REPLAY_ROOT_COMMAND_VARIANT_TYPE) std::monostate>;
+
+#define DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE_VALID(NAME)               \
+    case schema::RootCommand::NAME: {                                       \
+        RootCommandDataType<schema::RootCommand##NAME##CmdData>::Type data; \
+        DAWN_TRY(Deserialize(readHead, &data));                             \
+        *out = std::move(data);                                             \
+        return {};                                                          \
+    }
+#define DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE_INVALID(NAME, VALUE)
+#define DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_GET_MACRO(_1, _2, NAME, ...) NAME
+#define DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE(...)                  \
+    DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_GET_MACRO(                     \
+        __VA_ARGS__, DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE_INVALID, \
+        DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE_VALID)(__VA_ARGS__)
+
+MaybeError DeserializeRootCommand(ReadHead& readHead,
+                                  schema::RootCommand cmd,
+                                  RootCommandVariant* out) {
+    switch (cmd) {
+        DAWN_REPLAY_ROOT_COMMANDS(DAWN_REPLAY_ROOT_COMMAND_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("unhandled root command");
+    }
+}
+
+struct RootCommandVisitor {
+    ReplayImpl& replay;
+    wgpu::Device device;
+    ReadHead& contentReadHead;
+    BlitBufferToDepthTexture& blitBufferToDepthTexture;
+
+    MaybeError operator()(const CreateResourceData& data) {
+        return replay.CreateResource(device, data);
+    }
+
+    MaybeError operator()(const schema::RootCommandWriteBufferCmdData& data) {
+        wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
+        return ReadContentIntoBuffer(contentReadHead, device, buffer, data.bufferOffset, data.size);
+    }
+
+    MaybeError operator()(const schema::RootCommandWriteTextureCmdData& data) {
+        return ReadContentIntoTexture(replay, contentReadHead, device, data);
+    }
+
+    MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) {
+        std::vector<wgpu::CommandBuffer> commandBuffers;
+        commandBuffers.reserve(data.commandBuffers.size());
+        for (auto id : data.commandBuffers) {
+            commandBuffers.push_back(replay.GetObjectById<wgpu::CommandBuffer>(id));
+        }
+        device.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
+        return {};
+    }
+
+    MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) {
+        return replay.SetLabel(data.id, data.type, data.label);
+    }
+
+    MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) {
+        return InitializeTexture(replay, blitBufferToDepthTexture, contentReadHead, device, data);
+    }
+
+    MaybeError operator()(const schema::RootCommandUnmapBufferCmdData& data) { return {}; }
+
+    MaybeError operator()(const schema::RootCommandEndCmdData& data) { return {}; }
+
+    template <typename T>
+    MaybeError operator()(const T&) {
+        return DAWN_INTERNAL_ERROR("unimplemented root command");
+    }
+
+    MaybeError operator()(const std::monostate&) { return DAWN_INTERNAL_ERROR("Invalid command"); }
+};
+
+}  // anonymous namespace
+
 std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
                                                std::unique_ptr<Capture> capture) {
     auto captureImpl = std::unique_ptr<CaptureImpl>(static_cast<CaptureImpl*>(capture.release()));
@@ -1562,20 +1678,15 @@ ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture
     AddResource(schema::kDeviceId, "", device);
 }
 
-MaybeError ReplayImpl::CreateResource(wgpu::Device device, ReadHead& readHead) {
-    schema::LabeledResource resource;
-    DAWN_TRY(Deserialize(readHead, &resource));
-
-    ResourceData data;
-    DAWN_TRY(DeserializeResourceData(readHead, resource.type, &data));
-
+MaybeError ReplayImpl::CreateResource(wgpu::Device device, const CreateResourceData& data) {
     Resource res;
-    DAWN_TRY_ASSIGN(res, std::visit(ResourceVisitor{*this, device, resource.label}, data));
+    DAWN_TRY_ASSIGN(res,
+                    std::visit(ResourceVisitor{*this, device, data.resource.label}, data.data));
 
     std::visit(
         [&](auto& r) {
             if constexpr (!std::is_same_v<std::decay_t<decltype(r)>, std::monostate>) {
-                AddResource(resource.id, resource.label, r);
+                AddResource(data.resource.id, data.resource.label, r);
             }
         },
         res);
@@ -1636,60 +1747,15 @@ const std::string& ReplayImpl::GetLabel(schema::ObjectId id) const {
 MaybeError ReplayImpl::Play() {
     auto readHead = mCapture->GetCommandReadHead();
     auto contentReadHead = mCapture->GetContentReadHead();
-    schema::RootCommand cmd;
 
     while (!readHead.IsDone()) {
+        schema::RootCommand cmd;
         DAWN_TRY(Deserialize(readHead, &cmd));
-        switch (cmd) {
-            case schema::RootCommand::CreateResource: {
-                DAWN_TRY(CreateResource(mDevice, readHead));
-                break;
-            }
-            case schema::RootCommand::WriteBuffer: {
-                schema::RootCommandWriteBufferCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::Buffer buffer = GetObjectById<wgpu::Buffer>(data.bufferId);
-                DAWN_TRY(ReadContentIntoBuffer(contentReadHead, mDevice, buffer, data.bufferOffset,
-                                               data.size));
-                break;
-            }
-            case schema::RootCommand::WriteTexture: {
-                // TODO(451460573): Support textures with multiple subresources
-                schema::RootCommandWriteTextureCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                DAWN_TRY(ReadContentIntoTexture(*this, contentReadHead, mDevice, data));
-                break;
-            }
-            case schema::RootCommand::QueueSubmit: {
-                schema::RootCommandQueueSubmitCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
 
-                std::vector<wgpu::CommandBuffer> commandBuffers;
-                std::transform(data.commandBuffers.begin(), data.commandBuffers.end(),
-                               std::back_inserter(commandBuffers), [&](const auto id) {
-                                   return GetObjectById<wgpu::CommandBuffer>(id);
-                               });
-
-                mDevice.GetQueue().Submit(commandBuffers.size(), commandBuffers.data());
-                break;
-            }
-            case schema::RootCommand::SetLabel: {
-                schema::RootCommandSetLabelCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                DAWN_TRY(SetLabel(data.id, data.type, data.label));
-                break;
-            }
-            case schema::RootCommand::InitTexture: {
-                schema::RootCommandInitTextureCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                DAWN_TRY(InitializeTexture(*this, mBlitBufferToDepthTexture, contentReadHead,
-                                           mDevice, data));
-                break;
-            }
-            default: {
-                return DAWN_INTERNAL_ERROR("unimplemented root command");
-            }
-        }
+        RootCommandVariant v;
+        DAWN_TRY(DeserializeRootCommand(readHead, cmd, &v));
+        DAWN_TRY(std::visit(
+            RootCommandVisitor{*this, mDevice, contentReadHead, mBlitBufferToDepthTexture}, v));
     }
 
     return {};

@@ -66,6 +66,8 @@ struct LabeledResource {
     Resource resource;
 };
 
+struct CreateResourceData;
+
 // Replays a capture. For now we only support replaying the entire capture.
 // In the future we'd like to be able to replay up to a certain point.
 class ReplayImpl : public Replay {
@@ -113,11 +115,11 @@ class ReplayImpl : public Replay {
 
     const std::string& GetLabel(schema::ObjectId id) const;
 
+    MaybeError CreateResource(wgpu::Device device, const CreateResourceData& data);
+    MaybeError SetLabel(schema::ObjectId id, schema::ObjectType type, const std::string& label);
+
   private:
     ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture);
-
-    MaybeError CreateResource(wgpu::Device device, ReadHead& readHead);
-    MaybeError SetLabel(schema::ObjectId id, schema::ObjectType type, const std::string& label);
 
     template <typename T>
     void AddResource(schema::ObjectId id, const std::string& label, T& resource) {
