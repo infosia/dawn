@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "223240c6_72fb8036",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-12T17:56:13Z",
+      "side": 1,
+      "message": "übernit: That\u0027s camelCase, not PascalCase...\n\n(sorry)",
+      "revId": "3ded8182d2d486eb5175991abaebd3d089cbcd55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
