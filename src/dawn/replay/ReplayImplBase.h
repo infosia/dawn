@@ -35,7 +35,6 @@
 
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
-#include "dawn/webgpu_cpp.h"
 
 namespace dawn::replay {
 
@@ -99,28 +98,6 @@ struct RenderBundleData {
 
 struct InvalidData {};
 struct DeviceData {};
-
-typedef std::variant<wgpu::BindGroup,
-                     wgpu::BindGroupLayout,
-                     wgpu::Buffer,
-                     wgpu::CommandBuffer,
-                     wgpu::ComputePipeline,
-                     wgpu::Device,
-                     wgpu::ExternalTexture,
-                     wgpu::PipelineLayout,
-                     wgpu::QuerySet,
-                     wgpu::RenderBundle,
-                     wgpu::RenderPipeline,
-                     wgpu::Sampler,
-                     wgpu::ShaderModule,
-                     wgpu::Texture,
-                     wgpu::TextureView>
-    Resource;
-
-struct LabeledResource {
-    std::string label;
-    Resource resource;
-};
 
 #define DAWN_REPLAY_RESOURCE_DATA_MAP(X)        \
     X(Invalid, InvalidData)                     \

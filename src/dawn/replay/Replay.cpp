@@ -121,6 +121,28 @@ template wgpu::ExternalTexture Replay::GetObjectByLabel<wgpu::ExternalTexture>(
 template wgpu::TextureView Replay::GetObjectByLabel<wgpu::TextureView>(
     std::string_view label) const;
 
+typedef std::variant<wgpu::BindGroup,
+                     wgpu::BindGroupLayout,
+                     wgpu::Buffer,
+                     wgpu::CommandBuffer,
+                     wgpu::ComputePipeline,
+                     wgpu::Device,
+                     wgpu::ExternalTexture,
+                     wgpu::PipelineLayout,
+                     wgpu::QuerySet,
+                     wgpu::RenderBundle,
+                     wgpu::RenderPipeline,
+                     wgpu::Sampler,
+                     wgpu::ShaderModule,
+                     wgpu::Texture,
+                     wgpu::TextureView>
+    Resource;
+
+struct LabeledResource {
+    std::string label;
+    Resource resource;
+};
+
 class DawnResourceVisitor : public ResourceVisitor {
   public:
     explicit DawnResourceVisitor(DawnRootCommandVisitor* visitor) : mVisitor(visitor) {}
