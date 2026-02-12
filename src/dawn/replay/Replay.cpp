@@ -374,7 +374,8 @@ MaybeError Deserialize(ReadHead& readHead, BindGroupLayoutEntryVariant* out) {
         DAWN_REPLAY_BINDGROUP_VARIANT_TYPE_VALID)(__VA_ARGS__)
 
 #define DAWN_REPLAY_GEN_BINDGROUP_VARIANT(ENUM_NAME, MEMBERS) \
-    using BindGroupEntryVariant = std::variant<MEMBERS(DAWN_REPLAY_BINDGROUP_VARIANT_TYPE) std::monostate>;
+    using BindGroupEntryVariant =                             \
+        std::variant<MEMBERS(DAWN_REPLAY_BINDGROUP_VARIANT_TYPE) std::monostate>;
 
 DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_VARIANT)
 
@@ -399,15 +400,15 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_VARI
         __VA_ARGS__, DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID, \
         DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID)(__VA_ARGS__)
 
-#define DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE(ENUM_NAME, MEMBERS)                   \
-    MaybeError Deserialize(ReadHead& readHead, BindGroupEntryVariant* out) {        \
-        schema::ENUM_NAME type;                                                     \
-        DAWN_TRY(Deserialize(readHead, &type));                                     \
-        switch (type) {                                                             \
-            MEMBERS(DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE)                         \
-            default:                                                                \
-                return DAWN_INTERNAL_ERROR("unhandled bind group entry type");      \
-        }                                                                           \
+#define DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE(ENUM_NAME, MEMBERS)              \
+    MaybeError Deserialize(ReadHead& readHead, BindGroupEntryVariant* out) {   \
+        schema::ENUM_NAME type;                                                \
+        DAWN_TRY(Deserialize(readHead, &type));                                \
+        switch (type) {                                                        \
+            MEMBERS(DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE)                    \
+            default:                                                           \
+                return DAWN_INTERNAL_ERROR("unhandled bind group entry type"); \
+        }                                                                      \
     }
 
 DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_DESERIALIZE)
@@ -571,9 +572,8 @@ ResultOrError<wgpu::BindGroup> CreateBindGroup(const ReplayImpl& replay,
     for (uint32_t i = 0; i < bg.numEntries; ++i) {
         BindGroupEntryVariant entryVariant;
         DAWN_TRY(Deserialize(readHead, &entryVariant));
-        DAWN_TRY(std::visit(
-            BindGroupEntryVisitor{replay, entries, externalTextureBindingEntries},
-            entryVariant));
+        DAWN_TRY(std::visit(BindGroupEntryVisitor{replay, entries, externalTextureBindingEntries},
+                            entryVariant));
     }
 
     wgpu::BindGroupDescriptor desc{
@@ -735,152 +735,180 @@ ResultOrError<wgpu::QuerySet> CreateQuerySet(const ReplayImpl& replay,
     return {querySet};
 }
 
-template <typename T>
-MaybeError ProcessWriteTimestamp(const ReplayImpl& replay, T pass, ReadHead& readHead) {
-    schema::CommandBufferCommandWriteTimestampCmdData data;
-    DAWN_TRY(Deserialize(readHead, &data));
-    pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
-    return {};
+#define AS_VARIANT_TYPE(NAME) schema::CommandBufferCommand##NAME##CmdData,
+
+#define AS_DESERIALIZE_CASE(NAME)                         \
+    case schema::CommandBufferCommand::NAME: {            \
+        schema::CommandBufferCommand##NAME##CmdData data; \
+        DAWN_TRY(Deserialize(readHead, &data));           \
+        *out = std::move(data);                           \
+        return {};                                        \
+    }
+
+template <typename Variant>
+MaybeError DeserializeCommand(ReadHead& readHead, schema::CommandBufferCommand cmd, Variant* out) {
+    return DAWN_INTERNAL_ERROR("Unknown command");
 }
 
-template <typename T>
-MaybeError ProcessSharedCommands(const ReplayImpl& replay,
-                                 T pass,
-                                 schema::CommandBufferCommand cmd,
-                                 ReadHead& readHead) {
-    switch (cmd) {
-        case schema::CommandBufferCommand::SetBindGroup: {
-            schema::CommandBufferCommandSetBindGroupCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.SetBindGroup(data.index, replay.GetObjectById<wgpu::BindGroup>(data.bindGroupId),
-                              data.dynamicOffsets.size(), data.dynamicOffsets.data());
-            break;
+template <typename Variant, typename Visitor>
+MaybeError ProcessCommands(ReadHead& readHead, Visitor&& visitor) {
+    while (!readHead.IsDone()) {
+        schema::CommandBufferCommand cmd;
+        DAWN_TRY(Deserialize(readHead, &cmd));
+
+        Variant v;
+        DAWN_TRY(DeserializeCommand(readHead, cmd, &v));
+        DAWN_TRY(std::visit(std::forward<Visitor>(visitor), v));
+
+        if (std::holds_alternative<schema::CommandBufferCommandEndCmdData>(v)) {
+            return {};
         }
-        case schema::CommandBufferCommand::SetImmediates: {
-            schema::CommandBufferCommandSetImmediatesCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.SetImmediates(data.offset, data.data.data(), data.data.size());
-            break;
-        }
-        default:
-            DAWN_UNREACHABLE();
     }
-    return {};
+    return DAWN_INTERNAL_ERROR("Missing End command");
 }
 
-template <typename T>
-MaybeError ProcessDebugCommands(T pass, schema::CommandBufferCommand cmd, ReadHead& readHead) {
-    switch (cmd) {
-        case schema::CommandBufferCommand::PushDebugGroup: {
-            schema::CommandBufferCommandPushDebugGroupCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.PushDebugGroup(wgpu::StringView(data.groupLabel));
-            break;
-        }
-        case schema::CommandBufferCommand::InsertDebugMarker: {
-            schema::CommandBufferCommandInsertDebugMarkerCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.InsertDebugMarker(wgpu::StringView(data.markerLabel));
-            break;
-        }
-        case schema::CommandBufferCommand::PopDebugGroup: {
-            // PopDebugGroup has no data
-            pass.PopDebugGroup();
-            break;
-        }
-        default:
-            DAWN_UNREACHABLE();
+template <typename Pass>
+struct CommandVisitorBase {
+    const ReplayImpl& replay;
+    Pass pass;
+
+    CommandVisitorBase(const ReplayImpl& r, Pass p) : replay(r), pass(p) {}
+
+    // SHARED_COMMANDS
+    MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) {
+        pass.SetBindGroup(data.index, replay.GetObjectById<wgpu::BindGroup>(data.bindGroupId),
+                          data.dynamicOffsets.size(), data.dynamicOffsets.data());
+        return {};
     }
-    return {};
+
+    MaybeError operator()(const schema::CommandBufferCommandSetImmediatesCmdData& data) {
+        pass.SetImmediates(data.offset, data.data.data(), data.data.size());
+        return {};
+    }
+
+    // DEBUG_COMMANDS
+    MaybeError operator()(const schema::CommandBufferCommandPushDebugGroupCmdData& data) {
+        pass.PushDebugGroup(wgpu::StringView(data.groupLabel));
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandInsertDebugMarkerCmdData& data) {
+        pass.InsertDebugMarker(wgpu::StringView(data.markerLabel));
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandPopDebugGroupCmdData& data) {
+        pass.PopDebugGroup();
+        return {};
+    }
+
+    // Default for other commands
+    template <typename T>
+    MaybeError operator()(const T&) {
+        return DAWN_INTERNAL_ERROR("Command not implemented for this pass");
+    }
+
+    MaybeError operator()(const std::monostate&) { return DAWN_INTERNAL_ERROR("Invalid command"); }
+};
+
+#define SHARED_COMMANDS(X) \
+    X(SetBindGroup)        \
+    X(SetImmediates)
+
+#define DEBUG_COMMANDS(X) \
+    X(PushDebugGroup)     \
+    X(InsertDebugMarker)  \
+    X(PopDebugGroup)
+
+#define RENDER_COMMANDS(X) \
+    X(SetRenderPipeline)   \
+    X(SetVertexBuffer)     \
+    X(SetIndexBuffer)      \
+    X(Draw)                \
+    X(DrawIndexed)         \
+    X(DrawIndirect)        \
+    X(DrawIndexedIndirect) \
+    SHARED_COMMANDS(X)     \
+    DEBUG_COMMANDS(X)
+
+template <typename Pass>
+struct RenderVisitor : CommandVisitorBase<Pass> {
+    using CommandVisitorBase<Pass>::CommandVisitorBase;
+    using CommandVisitorBase<Pass>::operator();
+    using CommandVisitorBase<Pass>::replay;
+    using CommandVisitorBase<Pass>::pass;
+
+    MaybeError operator()(const schema::CommandBufferCommandSetRenderPipelineCmdData& data) {
+        pass.SetPipeline(replay.template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetVertexBufferCmdData& data) {
+        pass.SetVertexBuffer(data.slot, replay.template GetObjectById<wgpu::Buffer>(data.bufferId),
+                             data.offset, data.size);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetIndexBufferCmdData& data) {
+        pass.SetIndexBuffer(replay.template GetObjectById<wgpu::Buffer>(data.bufferId), data.format,
+                            data.offset, data.size);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDrawCmdData& data) {
+        pass.Draw(data.vertexCount, data.instanceCount, data.firstVertex, data.firstInstance);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDrawIndexedCmdData& data) {
+        pass.DrawIndexed(data.indexCount, data.instanceCount, data.firstIndex, data.baseVertex,
+                         data.firstInstance);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDrawIndirectCmdData& data) {
+        pass.DrawIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+                          data.indirectOffset);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDrawIndexedIndirectCmdData& data) {
+        pass.DrawIndexedIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+                                 data.indirectOffset);
+        return {};
+    }
+};
+
+#define RENDER_BUNDLE_COMMANDS(X) \
+    RENDER_COMMANDS(X)            \
+    X(End)
+
+using RenderBundleVariant = std::variant<RENDER_BUNDLE_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
+
+template <>
+MaybeError DeserializeCommand<RenderBundleVariant>(ReadHead& readHead,
+                                                   schema::CommandBufferCommand cmd,
+                                                   RenderBundleVariant* out) {
+    switch (cmd) {
+        RENDER_BUNDLE_COMMANDS(AS_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("Unknown command");
+    }
 }
 
-template <typename T>
-MaybeError ProcessRenderCommand(const ReplayImpl& replay,
-                                ReadHead& readHead,
-                                wgpu::Device device,
-                                schema::CommandBufferCommand cmd,
-                                T pass) {
-    switch (cmd) {
-        case schema::CommandBufferCommand::SetRenderPipeline: {
-            schema::CommandBufferCommandSetRenderPipelineCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.SetPipeline(replay.GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
-            break;
-        }
-        case schema::CommandBufferCommand::SetVertexBuffer: {
-            schema::CommandBufferCommandSetVertexBufferCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.SetVertexBuffer(data.slot, replay.GetObjectById<wgpu::Buffer>(data.bufferId),
-                                 data.offset, data.size);
-            break;
-        }
-        case schema::CommandBufferCommand::SetIndexBuffer: {
-            schema::CommandBufferCommandSetIndexBufferCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.SetIndexBuffer(replay.GetObjectById<wgpu::Buffer>(data.bufferId), data.format,
-                                data.offset, data.size);
-            break;
-        }
-        case schema::CommandBufferCommand::Draw: {
-            schema::CommandBufferCommandDrawCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.Draw(data.vertexCount, data.instanceCount, data.firstVertex, data.firstInstance);
-            break;
-        }
-        case schema::CommandBufferCommand::DrawIndexed: {
-            schema::CommandBufferCommandDrawIndexedCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.DrawIndexed(data.indexCount, data.instanceCount, data.firstIndex, data.baseVertex,
-                             data.firstInstance);
-            break;
-        }
-        case schema::CommandBufferCommand::DrawIndirect: {
-            schema::CommandBufferCommandDrawIndirectCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.DrawIndirect(replay.GetObjectById<wgpu::Buffer>(data.indirectBufferId),
-                              data.indirectOffset);
-            break;
-        }
-        case schema::CommandBufferCommand::DrawIndexedIndirect: {
-            schema::CommandBufferCommandDrawIndexedIndirectCmdData data;
-            DAWN_TRY(Deserialize(readHead, &data));
-            pass.DrawIndexedIndirect(replay.GetObjectById<wgpu::Buffer>(data.indirectBufferId),
-                                     data.indirectOffset);
-            break;
-        }
-        case schema::CommandBufferCommand::SetBindGroup:
-        case schema::CommandBufferCommand::SetImmediates:
-            DAWN_TRY(ProcessSharedCommands(replay, pass, cmd, readHead));
-            break;
-        case schema::CommandBufferCommand::PushDebugGroup:
-        case schema::CommandBufferCommand::InsertDebugMarker:
-        case schema::CommandBufferCommand::PopDebugGroup:
-            DAWN_TRY(ProcessDebugCommands(pass, cmd, readHead));
-            break;
-        default:
-            return DAWN_INTERNAL_ERROR("Render Pass/Bundle Command not implemented");
-    }
-    return {};
-}
+struct RenderBundleVisitor : RenderVisitor<wgpu::RenderBundleEncoder> {
+    using RenderVisitor<wgpu::RenderBundleEncoder>::RenderVisitor;
+    using RenderVisitor<wgpu::RenderBundleEncoder>::operator();
+
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
+};
 
 MaybeError ProcessRenderBundleCommands(const ReplayImpl& replay,
                                        ReadHead& readHead,
                                        wgpu::Device device,
                                        wgpu::RenderBundleEncoder pass) {
-    schema::CommandBufferCommand cmd;
-
-    while (!readHead.IsDone()) {
-        DAWN_TRY(Deserialize(readHead, &cmd));
-        switch (cmd) {
-            case schema::CommandBufferCommand::End: {
-                return {};
-            }
-            default:
-                DAWN_TRY(ProcessRenderCommand(replay, readHead, device, cmd, pass));
-                break;
-        }
-    }
-    return DAWN_INTERNAL_ERROR("Missing RenderBundle End command");
+    RenderBundleVisitor visitor{replay, pass};
+    return ProcessCommands<RenderBundleVariant>(readHead, visitor);
 }
 
 ResultOrError<wgpu::RenderBundle> CreateRenderBundle(const ReplayImpl& replay,
@@ -1124,281 +1152,319 @@ ResultOrError<wgpu::TextureView> CreateTextureView(const ReplayImpl& replay,
     return {textureView};
 }
 
+#define COMPUTE_PASS_COMMANDS(X) \
+    X(SetComputePipeline)        \
+    X(Dispatch)                  \
+    X(DispatchIndirect)          \
+    X(WriteTimestamp)            \
+    SHARED_COMMANDS(X)           \
+    DEBUG_COMMANDS(X)            \
+    X(End)
+
+using ComputePassVariant = std::variant<COMPUTE_PASS_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
+
+template <>
+MaybeError DeserializeCommand<ComputePassVariant>(ReadHead& readHead,
+                                                  schema::CommandBufferCommand cmd,
+                                                  ComputePassVariant* out) {
+    switch (cmd) {
+        COMPUTE_PASS_COMMANDS(AS_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("Unknown command");
+    }
+}
+
+struct ComputePassVisitor : CommandVisitorBase<wgpu::ComputePassEncoder> {
+    using CommandVisitorBase<wgpu::ComputePassEncoder>::CommandVisitorBase;
+    using CommandVisitorBase<wgpu::ComputePassEncoder>::operator();
+
+    MaybeError operator()(const schema::CommandBufferCommandSetComputePipelineCmdData& data) {
+        pass.SetPipeline(replay.GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDispatchCmdData& data) {
+        pass.DispatchWorkgroups(data.x, data.y, data.z);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandDispatchIndirectCmdData& data) {
+        pass.DispatchWorkgroupsIndirect(replay.GetObjectById<wgpu::Buffer>(data.bufferId),
+                                        data.offset);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) {
+        pass.End();
+        return {};
+    }
+};
+
 MaybeError ProcessComputePassCommands(const ReplayImpl& replay,
                                       ReadHead& readHead,
                                       wgpu::Device device,
                                       wgpu::ComputePassEncoder pass) {
-    schema::CommandBufferCommand cmd;
-
-    while (!readHead.IsDone()) {
-        DAWN_TRY(Deserialize(readHead, &cmd));
-        switch (cmd) {
-            case schema::CommandBufferCommand::End: {
-                pass.End();
-                return {};
-            }
-            case schema::CommandBufferCommand::SetComputePipeline: {
-                schema::CommandBufferCommandSetComputePipelineCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.SetPipeline(replay.GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
-                break;
-            }
-            case schema::CommandBufferCommand::Dispatch: {
-                schema::CommandBufferCommandDispatchCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.DispatchWorkgroups(data.x, data.y, data.z);
-                break;
-            }
-            case schema::CommandBufferCommand::DispatchIndirect: {
-                schema::CommandBufferCommandDispatchIndirectCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.DispatchWorkgroupsIndirect(replay.GetObjectById<wgpu::Buffer>(data.bufferId),
-                                                data.offset);
-                break;
-            }
-            case schema::CommandBufferCommand::WriteTimestamp:
-                DAWN_TRY(ProcessWriteTimestamp(replay, pass, readHead));
-                break;
-            case schema::CommandBufferCommand::SetBindGroup:
-            case schema::CommandBufferCommand::SetImmediates:
-                DAWN_TRY(ProcessSharedCommands(replay, pass, cmd, readHead));
-                break;
-            case schema::CommandBufferCommand::PushDebugGroup:
-            case schema::CommandBufferCommand::InsertDebugMarker:
-            case schema::CommandBufferCommand::PopDebugGroup:
-                DAWN_TRY(ProcessDebugCommands(pass, cmd, readHead));
-                break;
-            default:
-                return DAWN_INTERNAL_ERROR("Compute Pass Command not implemented");
-        }
-    }
-    return DAWN_INTERNAL_ERROR("Missing ComputePass End command");
+    ComputePassVisitor visitor{replay, pass};
+    return ProcessCommands<ComputePassVariant>(readHead, visitor);
 }
+
+#define RENDER_PASS_COMMANDS(X) \
+    X(ExecuteBundles)           \
+    X(BeginOcclusionQuery)      \
+    X(EndOcclusionQuery)        \
+    X(SetBlendConstant)         \
+    X(SetScissorRect)           \
+    X(SetStencilReference)      \
+    X(SetViewport)              \
+    X(WriteTimestamp)           \
+    RENDER_COMMANDS(X)          \
+    X(End)
+
+using RenderPassVariant = std::variant<RENDER_PASS_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
+
+template <>
+MaybeError DeserializeCommand<RenderPassVariant>(ReadHead& readHead,
+                                                 schema::CommandBufferCommand cmd,
+                                                 RenderPassVariant* out) {
+    switch (cmd) {
+        RENDER_PASS_COMMANDS(AS_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("Unknown command");
+    }
+}
+
+struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
+    using RenderVisitor<wgpu::RenderPassEncoder>::RenderVisitor;
+    using RenderVisitor<wgpu::RenderPassEncoder>::operator();
+
+    MaybeError operator()(const schema::CommandBufferCommandExecuteBundlesCmdData& data) {
+        std::vector<wgpu::RenderBundle> bundles;
+        for (auto bundleId : data.bundleIds) {
+            bundles.push_back(replay.GetObjectById<wgpu::RenderBundle>(bundleId));
+        }
+        pass.ExecuteBundles(bundles.size(), bundles.data());
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandBeginOcclusionQueryCmdData& data) {
+        pass.BeginOcclusionQuery(data.queryIndex);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandEndOcclusionQueryCmdData& data) {
+        pass.EndOcclusionQuery();
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetBlendConstantCmdData& data) {
+        wgpu::Color color = ToWGPU(data.color);
+        pass.SetBlendConstant(&color);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetScissorRectCmdData& data) {
+        pass.SetScissorRect(data.x, data.y, data.width, data.height);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetStencilReferenceCmdData& data) {
+        pass.SetStencilReference(data.reference);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandSetViewportCmdData& data) {
+        pass.SetViewport(data.x, data.y, data.width, data.height, data.minDepth, data.maxDepth);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) {
+        pass.End();
+        return {};
+    }
+};
 
 MaybeError ProcessRenderPassCommands(const ReplayImpl& replay,
                                      ReadHead& readHead,
                                      wgpu::Device device,
                                      wgpu::RenderPassEncoder pass) {
-    schema::CommandBufferCommand cmd;
-
-    while (!readHead.IsDone()) {
-        DAWN_TRY(Deserialize(readHead, &cmd));
-        switch (cmd) {
-            case schema::CommandBufferCommand::End: {
-                pass.End();
-                return {};
-            }
-            case schema::CommandBufferCommand::ExecuteBundles: {
-                schema::CommandBufferCommandExecuteBundlesCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                std::vector<wgpu::RenderBundle> bundles;
-                for (auto bundleId : data.bundleIds) {
-                    bundles.push_back(replay.GetObjectById<wgpu::RenderBundle>(bundleId));
-                }
-                pass.ExecuteBundles(bundles.size(), bundles.data());
-                break;
-            }
-            case schema::CommandBufferCommand::BeginOcclusionQuery: {
-                schema::CommandBufferCommandBeginOcclusionQueryCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.BeginOcclusionQuery(data.queryIndex);
-                break;
-            }
-            case schema::CommandBufferCommand::EndOcclusionQuery: {
-                pass.EndOcclusionQuery();
-                break;
-            }
-            case schema::CommandBufferCommand::SetBlendConstant: {
-                schema::CommandBufferCommandSetBlendConstantCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::Color color = ToWGPU(data.color);
-                pass.SetBlendConstant(&color);
-                break;
-            }
-            case schema::CommandBufferCommand::SetScissorRect: {
-                schema::CommandBufferCommandSetScissorRectCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.SetScissorRect(data.x, data.y, data.width, data.height);
-                break;
-            }
-            case schema::CommandBufferCommand::SetStencilReference: {
-                schema::CommandBufferCommandSetStencilReferenceCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.SetStencilReference(data.reference);
-                break;
-            }
-            case schema::CommandBufferCommand::SetViewport: {
-                schema::CommandBufferCommandSetViewportCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                pass.SetViewport(data.x, data.y, data.width, data.height, data.minDepth,
-                                 data.maxDepth);
-                break;
-            }
-            case schema::CommandBufferCommand::WriteTimestamp:
-                DAWN_TRY(ProcessWriteTimestamp(replay, pass, readHead));
-                break;
-            default:
-                DAWN_TRY(ProcessRenderCommand(replay, readHead, device, cmd, pass));
-                break;
-        }
-    }
-    return DAWN_INTERNAL_ERROR("Missing RenderPass End command");
+    RenderPassVisitor visitor{replay, pass};
+    return ProcessCommands<RenderPassVariant>(readHead, visitor);
 }
+
+#define ENCODER_COMMANDS(X) \
+    X(BeginComputePass)     \
+    X(BeginRenderPass)      \
+    X(ClearBuffer)          \
+    X(CopyBufferToBuffer)   \
+    X(CopyBufferToTexture)  \
+    X(CopyTextureToBuffer)  \
+    X(CopyTextureToTexture) \
+    X(ResolveQuerySet)      \
+    X(WriteBuffer)          \
+    X(WriteTimestamp)       \
+    DEBUG_COMMANDS(X)       \
+    X(End)
+
+using EncoderVariant = std::variant<ENCODER_COMMANDS(AS_VARIANT_TYPE) std::monostate>;
+
+template <>
+MaybeError DeserializeCommand<EncoderVariant>(ReadHead& readHead,
+                                              schema::CommandBufferCommand cmd,
+                                              EncoderVariant* out) {
+    switch (cmd) {
+        ENCODER_COMMANDS(AS_DESERIALIZE_CASE)
+        default:
+            return DAWN_INTERNAL_ERROR("Unknown command");
+    }
+}
+
+struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
+    ReadHead& readHead;
+    wgpu::Device device;
+
+    EncoderVisitor(const ReplayImpl& r, wgpu::CommandEncoder p, ReadHead& rh, wgpu::Device d)
+        : CommandVisitorBase(r, p), readHead(rh), device(d) {}
+
+    using CommandVisitorBase<wgpu::CommandEncoder>::operator();
+
+    MaybeError operator()(const schema::CommandBufferCommandBeginComputePassCmdData& data) {
+        wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
+        wgpu::ComputePassDescriptor desc{
+            .label = wgpu::StringView(data.label),
+            .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
+        };
+        wgpu::ComputePassEncoder computePass = pass.BeginComputePass(&desc);
+        return ProcessComputePassCommands(replay, readHead, device, computePass);
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandBeginRenderPassCmdData& data) {
+        wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
+        std::vector<wgpu::RenderPassColorAttachment> colorAttachments;
+
+        for (const auto& attachment : data.colorAttachments) {
+            colorAttachments.push_back(wgpu::RenderPassColorAttachment{
+                .nextInChain = nullptr,
+                .view = replay.GetObjectById<wgpu::TextureView>(attachment.viewId),
+                .depthSlice = attachment.depthSlice,
+                .resolveTarget =
+                    replay.GetObjectById<wgpu::TextureView>(attachment.resolveTargetId),
+                .loadOp = attachment.loadOp,
+                .storeOp = attachment.storeOp,
+                .clearValue = ToWGPU(attachment.clearValue),
+            });
+        }
+
+        wgpu::RenderPassDepthStencilAttachment depthStencilAttachment{
+            .view = replay.GetObjectById<wgpu::TextureView>(data.depthStencilAttachment.viewId),
+            .depthLoadOp = data.depthStencilAttachment.depthLoadOp,
+            .depthStoreOp = data.depthStencilAttachment.depthStoreOp,
+            .depthClearValue = data.depthStencilAttachment.depthClearValue,
+            .depthReadOnly = data.depthStencilAttachment.depthReadOnly,
+            .stencilLoadOp = data.depthStencilAttachment.stencilLoadOp,
+            .stencilStoreOp = data.depthStencilAttachment.stencilStoreOp,
+            .stencilClearValue = data.depthStencilAttachment.stencilClearValue,
+            .stencilReadOnly = data.depthStencilAttachment.stencilReadOnly,
+        };
+
+        wgpu::RenderPassDescriptor desc{
+            .label = wgpu::StringView(data.label),
+            .colorAttachmentCount = colorAttachments.size(),
+            .colorAttachments = colorAttachments.data(),
+            .depthStencilAttachment =
+                depthStencilAttachment.view != nullptr ? &depthStencilAttachment : nullptr,
+            .occlusionQuerySet =
+                replay.template GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
+            .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
+        };
+
+        wgpu::RenderPassDescriptorResolveRect resolveRect;
+        if (data.resolveRect.width != 0) {
+            resolveRect.colorOffsetX = data.resolveRect.colorOffsetX;
+            resolveRect.colorOffsetY = data.resolveRect.colorOffsetY;
+            resolveRect.resolveOffsetX = data.resolveRect.resolveOffsetX;
+            resolveRect.resolveOffsetY = data.resolveRect.resolveOffsetY;
+            resolveRect.width = data.resolveRect.width;
+            resolveRect.height = data.resolveRect.height;
+            desc.nextInChain = &resolveRect;
+        }
+
+        wgpu::RenderPassEncoder renderPass = pass.BeginRenderPass(&desc);
+        return ProcessRenderPassCommands(replay, readHead, device, renderPass);
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandClearBufferCmdData& data) {
+        pass.ClearBuffer(replay.GetObjectById<wgpu::Buffer>(data.bufferId), data.offset, data.size);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandCopyBufferToBufferCmdData& data) {
+        pass.CopyBufferToBuffer(
+            replay.GetObjectById<wgpu::Buffer>(data.srcBufferId), data.srcOffset,
+            replay.GetObjectById<wgpu::Buffer>(data.dstBufferId), data.dstOffset, data.size);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandCopyBufferToTextureCmdData& data) {
+        wgpu::TexelCopyBufferInfo src = ToWGPU(replay, data.source);
+        wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
+        wgpu::Extent3D copySize = ToWGPU(data.copySize);
+        pass.CopyBufferToTexture(&src, &dst, &copySize);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandCopyTextureToBufferCmdData& data) {
+        wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
+        wgpu::TexelCopyBufferInfo dst = ToWGPU(replay, data.destination);
+        wgpu::Extent3D copySize = ToWGPU(data.copySize);
+        pass.CopyTextureToBuffer(&src, &dst, &copySize);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandCopyTextureToTextureCmdData& data) {
+        wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
+        wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
+        wgpu::Extent3D copySize = ToWGPU(data.copySize);
+        pass.CopyTextureToTexture(&src, &dst, &copySize);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandResolveQuerySetCmdData& data) {
+        pass.ResolveQuerySet(
+            replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.firstQuery, data.queryCount,
+            replay.GetObjectById<wgpu::Buffer>(data.destinationId), data.destinationOffset);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandWriteBufferCmdData& data) {
+        wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
+        pass.WriteBuffer(buffer, data.bufferOffset, data.data.data(), data.data.size());
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
+        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        return {};
+    }
+
+    MaybeError operator()(const schema::CommandBufferCommandEndCmdData& data) { return {}; }
+};
 
 MaybeError ProcessEncoderCommands(const ReplayImpl& replay,
                                   ReadHead& readHead,
                                   wgpu::Device device,
                                   wgpu::CommandEncoder encoder) {
-    schema::CommandBufferCommand cmd;
-
-    while (!readHead.IsDone()) {
-        DAWN_TRY(Deserialize(readHead, &cmd));
-        switch (cmd) {
-            case schema::CommandBufferCommand::BeginComputePass: {
-                schema::CommandBufferCommandBeginComputePassCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
-                wgpu::ComputePassDescriptor desc{
-                    .label = wgpu::StringView(data.label),
-                    .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
-                };
-                wgpu::ComputePassEncoder pass = encoder.BeginComputePass(&desc);
-                DAWN_TRY(ProcessComputePassCommands(replay, readHead, device, pass));
-                break;
-            }
-            case schema::CommandBufferCommand::BeginRenderPass: {
-                schema::CommandBufferCommandBeginRenderPassCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
-                std::vector<wgpu::RenderPassColorAttachment> colorAttachments;
-
-                for (const auto& attachment : data.colorAttachments) {
-                    colorAttachments.push_back(wgpu::RenderPassColorAttachment{
-                        .nextInChain = nullptr,
-                        .view = replay.GetObjectById<wgpu::TextureView>(attachment.viewId),
-                        .depthSlice = attachment.depthSlice,
-                        .resolveTarget =
-                            replay.GetObjectById<wgpu::TextureView>(attachment.resolveTargetId),
-                        .loadOp = attachment.loadOp,
-                        .storeOp = attachment.storeOp,
-                        .clearValue = ToWGPU(attachment.clearValue),
-                    });
-                }
-
-                wgpu::RenderPassDepthStencilAttachment depthStencilAttachment{
-                    .view =
-                        replay.GetObjectById<wgpu::TextureView>(data.depthStencilAttachment.viewId),
-                    .depthLoadOp = data.depthStencilAttachment.depthLoadOp,
-                    .depthStoreOp = data.depthStencilAttachment.depthStoreOp,
-                    .depthClearValue = data.depthStencilAttachment.depthClearValue,
-                    .depthReadOnly = data.depthStencilAttachment.depthReadOnly,
-                    .stencilLoadOp = data.depthStencilAttachment.stencilLoadOp,
-                    .stencilStoreOp = data.depthStencilAttachment.stencilStoreOp,
-                    .stencilClearValue = data.depthStencilAttachment.stencilClearValue,
-                    .stencilReadOnly = data.depthStencilAttachment.stencilReadOnly,
-                };
-
-                wgpu::RenderPassDescriptor desc{
-                    .label = wgpu::StringView(data.label),
-                    .colorAttachmentCount = colorAttachments.size(),
-                    .colorAttachments = colorAttachments.data(),
-                    .depthStencilAttachment =
-                        depthStencilAttachment.view != nullptr ? &depthStencilAttachment : nullptr,
-                    .occlusionQuerySet =
-                        replay.GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
-                    .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
-                };
-
-                wgpu::RenderPassDescriptorResolveRect resolveRect;
-                if (data.resolveRect.width != 0) {
-                    resolveRect.colorOffsetX = data.resolveRect.colorOffsetX;
-                    resolveRect.colorOffsetY = data.resolveRect.colorOffsetY;
-                    resolveRect.resolveOffsetX = data.resolveRect.resolveOffsetX;
-                    resolveRect.resolveOffsetY = data.resolveRect.resolveOffsetY;
-                    resolveRect.width = data.resolveRect.width;
-                    resolveRect.height = data.resolveRect.height;
-                    desc.nextInChain = &resolveRect;
-                }
-
-                wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&desc);
-                DAWN_TRY(ProcessRenderPassCommands(replay, readHead, device, pass));
-                break;
-            }
-            case schema::CommandBufferCommand::ClearBuffer: {
-                schema::CommandBufferCommandClearBufferCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                encoder.ClearBuffer(replay.GetObjectById<wgpu::Buffer>(data.bufferId), data.offset,
-                                    data.size);
-                break;
-            }
-            case schema::CommandBufferCommand::CopyBufferToBuffer: {
-                schema::CommandBufferCommandCopyBufferToBufferCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                encoder.CopyBufferToBuffer(replay.GetObjectById<wgpu::Buffer>(data.srcBufferId),
-                                           data.srcOffset,
-                                           replay.GetObjectById<wgpu::Buffer>(data.dstBufferId),
-                                           data.dstOffset, data.size);
-                break;
-            }
-            case schema::CommandBufferCommand::CopyBufferToTexture: {
-                schema::CommandBufferCommandCopyBufferToTextureCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::TexelCopyBufferInfo src = ToWGPU(replay, data.source);
-                wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
-                wgpu::Extent3D copySize = ToWGPU(data.copySize);
-                encoder.CopyBufferToTexture(&src, &dst, &copySize);
-                break;
-            }
-            case schema::CommandBufferCommand::CopyTextureToBuffer: {
-                schema::CommandBufferCommandCopyTextureToBufferCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
-                wgpu::TexelCopyBufferInfo dst = ToWGPU(replay, data.destination);
-                wgpu::Extent3D copySize = ToWGPU(data.copySize);
-                encoder.CopyTextureToBuffer(&src, &dst, &copySize);
-                break;
-            }
-            case schema::CommandBufferCommand::CopyTextureToTexture: {
-                schema::CommandBufferCommandCopyTextureToTextureCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
-                wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
-                wgpu::Extent3D copySize = ToWGPU(data.copySize);
-                encoder.CopyTextureToTexture(&src, &dst, &copySize);
-                break;
-            }
-            case schema::CommandBufferCommand::End: {
-                return {};
-            }
-            case schema::CommandBufferCommand::ResolveQuerySet: {
-                schema::CommandBufferCommandResolveQuerySetCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                encoder.ResolveQuerySet(replay.GetObjectById<wgpu::QuerySet>(data.querySetId),
-                                        data.firstQuery, data.queryCount,
-                                        replay.GetObjectById<wgpu::Buffer>(data.destinationId),
-                                        data.destinationOffset);
-                break;
-            }
-            case schema::CommandBufferCommand::WriteBuffer: {
-                schema::CommandBufferCommandWriteBufferCmdData data;
-                DAWN_TRY(Deserialize(readHead, &data));
-                wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
-                encoder.WriteBuffer(buffer, data.bufferOffset, data.data.data(), data.data.size());
-                break;
-            }
-            case schema::CommandBufferCommand::WriteTimestamp:
-                DAWN_TRY(ProcessWriteTimestamp(replay, encoder, readHead));
-                break;
-            case schema::CommandBufferCommand::PushDebugGroup:
-            case schema::CommandBufferCommand::InsertDebugMarker:
-            case schema::CommandBufferCommand::PopDebugGroup:
-                DAWN_TRY(ProcessDebugCommands(encoder, cmd, readHead));
-                break;
-            default:
-                return DAWN_INTERNAL_ERROR("Encoder Command not implemented");
-        }
-    }
-    return DAWN_INTERNAL_ERROR("Missing End command");
+    EncoderVisitor visitor{replay, encoder, readHead, device};
+    return ProcessCommands<EncoderVariant>(readHead, visitor);
 }
 
 ResultOrError<wgpu::CommandBuffer> CreateCommandBuffer(const ReplayImpl& replay,
