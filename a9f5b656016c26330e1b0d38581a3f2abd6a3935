@@ -159,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbd8668d_c374d55c",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-12T08:29:59Z",
+      "side": 1,
+      "message": "Yes, I think we should only do that for `GLDefer`. So that we can avoid the latency for non-deferred path.",
+      "parentUuid": "ef293e43_b4eeea28",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 237,
+        "endChar": 19
+      },
+      "revId": "a9f5b656016c26330e1b0d38581a3f2abd6a3935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aaa3727a_325c43a1",
