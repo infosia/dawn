@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da4dd2f1_8e20eee0",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-12T17:58:27Z",
+      "side": 1,
+      "message": "could you have asked for a 64 here? just curious?",
+      "range": {
+        "startLine": 214,
+        "startChar": 64,
+        "endLine": 214,
+        "endChar": 72
+      },
+      "revId": "3bb27093dc97491901bc61eb3ba289cd4341fdad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
