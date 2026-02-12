@@ -339,6 +339,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abc58586_1eff272e",
+        "filename": "src/tint/lang/core/type/resource_type.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-12T20:38:01Z",
+      "side": 1,
+      "message": "No the outer `tint::Switch` is fine. I\u0027m talking about `tint::Switch` /inside/ the SampledTexture case, which is unnecessary because it\u0027s exactly the same for every case statement of the `switch (sa-\u003eDim())`. The suggested code above is for inside the `SampledTexture` case and works locally for me (and it much shorter/easier to read IMO).",
+      "parentUuid": "0134a685_6f086451",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d73ef1f_b7fedc12",
         "filename": "src/tint/lang/core/type/resource_type.h",
         "patchSetId": 4
