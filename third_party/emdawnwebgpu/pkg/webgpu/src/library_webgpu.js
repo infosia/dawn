@@ -1828,6 +1828,7 @@ var LibraryWebGPU = {
       "dimension": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.dimension, 'TextureDimension') }}},
       "format": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.format, 'TextureFormat') }}},
       "usage": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.usage, 'u32') }}},
+      "textureBindingViewDimension": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.textureBindingViewDimension, 'TextureViewDimension') }}},
     };
 
     var viewFormatCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.viewFormatCount, '*') }}};
