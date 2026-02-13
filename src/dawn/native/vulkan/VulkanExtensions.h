@@ -98,6 +98,7 @@ enum class DeviceExt {
     Maintenance4,
     SubgroupSizeControl,
     DynamicRendering,
+    ExtendedDynamicState,
 
     // Promoted to 1.4
     PipelineRobustness,

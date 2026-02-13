@@ -1321,6 +1321,8 @@ bool RenderPipelineBase::UsesFramebufferFetch() const {
 size_t RenderPipelineBase::ComputeContentHash() {
     ObjectContentHasher recorder;
 
+    DynamicStateFlags dynamic = GetDynamicStateFlags();
+
     // Record modules and layout
     recorder.Record(PipelineBase::ComputeContentHash());
 
@@ -1342,12 +1344,22 @@ size_t RenderPipelineBase::ComputeContentHash() {
 
     if (mAttachmentState->HasDepthStencilAttachment()) {
         const DepthStencilState& desc = mDepthStencil;
-        recorder.Record(desc.depthWriteEnabled, desc.depthCompare);
+
+        if ((dynamic & DynamicStateFlags::DepthWriteEnable) == 0) {
+            recorder.Record(desc.depthWriteEnabled);
+        }
+
+        if ((dynamic & DynamicStateFlags::DepthCompareOp) == 0) {
+            recorder.Record(desc.depthCompare);
+        }
+
         recorder.Record(desc.stencilReadMask, desc.stencilWriteMask);
-        recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
-                        desc.stencilFront.depthFailOp, desc.stencilFront.passOp);
-        recorder.Record(desc.stencilBack.compare, desc.stencilBack.failOp,
-                        desc.stencilBack.depthFailOp, desc.stencilBack.passOp);
+        if ((dynamic & DynamicStateFlags::StencilOp) == 0) {
+            recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
+                            desc.stencilFront.depthFailOp, desc.stencilFront.passOp);
+            recorder.Record(desc.stencilBack.compare, desc.stencilBack.failOp,
+                            desc.stencilBack.depthFailOp, desc.stencilBack.passOp);
+        }
         recorder.Record(desc.depthBias, desc.depthBiasSlopeScale, desc.depthBiasClamp);
     }
 
@@ -1365,8 +1377,16 @@ size_t RenderPipelineBase::ComputeContentHash() {
     }
 
     // Record primitive state
-    recorder.Record(mPrimitive.topology, mPrimitive.stripIndexFormat, mPrimitive.frontFace,
-                    mPrimitive.cullMode, mPrimitive.unclippedDepth);
+    if ((dynamic & DynamicStateFlags::PrimitiveTopology) == 0) {
+        recorder.Record(mPrimitive.topology);
+    }
+    if ((dynamic & DynamicStateFlags::FrontFace) == 0) {
+        recorder.Record(mPrimitive.frontFace);
+    }
+    if ((dynamic & DynamicStateFlags::CullMode) == 0) {
+        recorder.Record(mPrimitive.cullMode);
+    }
+    recorder.Record(mPrimitive.stripIndexFormat, mPrimitive.unclippedDepth);
 
     // Record multisample state
     // Sample count hashed as part of the attachment state
@@ -1387,6 +1407,10 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
     if (a->mAttachmentState.Get() != b->mAttachmentState.Get()) {
         return false;
     }
+
+    // TODO(290915): This should be identical for both pipelines. Maybe indicates it should come
+    // from the device instead?
+    DynamicStateFlags dynamic = a->GetDynamicStateFlags();
 
     if (a->mAttachmentState.Get() != nullptr) {
         for (auto i : a->mAttachmentState->GetColorAttachmentsMask()) {
@@ -1422,24 +1446,32 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
             DAWN_ASSERT(!std::isnan(stateA.depthBiasClamp));
             DAWN_ASSERT(!std::isnan(stateB.depthBiasClamp));
 
-            if (stateA.depthWriteEnabled != stateB.depthWriteEnabled ||
-                stateA.depthCompare != stateB.depthCompare ||
-                stateA.depthBias != stateB.depthBias ||
+            if ((dynamic & DynamicStateFlags::DepthWriteEnable) == 0 &&
+                stateA.depthWriteEnabled != stateB.depthWriteEnabled) {
+                return false;
+            }
+            if ((dynamic & DynamicStateFlags::DepthCompareOp) == 0 &&
+                stateA.depthCompare != stateB.depthCompare) {
+                return false;
+            }
+            if (stateA.depthBias != stateB.depthBias ||
                 stateA.depthBiasSlopeScale != stateB.depthBiasSlopeScale ||
                 stateA.depthBiasClamp != stateB.depthBiasClamp) {
                 return false;
             }
-            if (stateA.stencilFront.compare != stateB.stencilFront.compare ||
-                stateA.stencilFront.failOp != stateB.stencilFront.failOp ||
-                stateA.stencilFront.depthFailOp != stateB.stencilFront.depthFailOp ||
-                stateA.stencilFront.passOp != stateB.stencilFront.passOp) {
-                return false;
-            }
-            if (stateA.stencilBack.compare != stateB.stencilBack.compare ||
-                stateA.stencilBack.failOp != stateB.stencilBack.failOp ||
-                stateA.stencilBack.depthFailOp != stateB.stencilBack.depthFailOp ||
-                stateA.stencilBack.passOp != stateB.stencilBack.passOp) {
-                return false;
+            if ((dynamic & DynamicStateFlags::StencilOp) == 0) {
+                if (stateA.stencilFront.compare != stateB.stencilFront.compare ||
+                    stateA.stencilFront.failOp != stateB.stencilFront.failOp ||
+                    stateA.stencilFront.depthFailOp != stateB.stencilFront.depthFailOp ||
+                    stateA.stencilFront.passOp != stateB.stencilFront.passOp) {
+                    return false;
+                }
+                if (stateA.stencilBack.compare != stateB.stencilBack.compare ||
+                    stateA.stencilBack.failOp != stateB.stencilBack.failOp ||
+                    stateA.stencilBack.depthFailOp != stateB.stencilBack.depthFailOp ||
+                    stateA.stencilBack.passOp != stateB.stencilBack.passOp) {
+                    return false;
+                }
             }
             if (stateA.stencilReadMask != stateB.stencilReadMask ||
                 stateA.stencilWriteMask != stateB.stencilWriteMask) {
@@ -1479,9 +1511,17 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
     {
         const PrimitiveState& stateA = a->mPrimitive;
         const PrimitiveState& stateB = b->mPrimitive;
-        if (stateA.topology != stateB.topology ||
-            stateA.stripIndexFormat != stateB.stripIndexFormat ||
-            stateA.frontFace != stateB.frontFace || stateA.cullMode != stateB.cullMode ||
+        if ((dynamic & DynamicStateFlags::PrimitiveTopology) == 0 &&
+            stateA.topology != stateB.topology) {
+            return false;
+        }
+        if ((dynamic & DynamicStateFlags::FrontFace) == 0 && stateA.frontFace != stateB.frontFace) {
+            return false;
+        }
+        if ((dynamic & DynamicStateFlags::CullMode) == 0 && stateA.cullMode != stateB.cullMode) {
+            return false;
+        }
+        if (stateA.stripIndexFormat != stateB.stripIndexFormat ||
             stateA.unclippedDepth != stateB.unclippedDepth) {
             return false;
         }

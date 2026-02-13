@@ -1701,8 +1701,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 RenderPipeline* pipeline = ToBackend(cmd->pipeline).Get();
 
-                device->fn.CmdBindPipeline(commands, VK_PIPELINE_BIND_POINT_GRAPHICS,
-                                           pipeline->GetHandle());
+                pipeline->Bind(commands, lastPipeline);
                 lastPipeline = pipeline;
 
                 descriptorSets.OnSetPipeline<RenderPipeline>(pipeline);
