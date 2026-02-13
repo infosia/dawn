@@ -437,6 +437,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb30b195_d6396e72",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-13T19:49:03Z",
+      "side": 1,
+      "message": "Currently the Android devices running Graphite are split into three pools:\n1. Devices that support MSRTSS and DR extensions are choosing `Features::MSAARenderToSingleSampled` and using dynamic rendering.\n1. Devices that support MSRTSS but not DR extensions are choosing `Features::MSAARenderToSingleSampled`. They don\u0027t use dynamic rendering.\n1. Devices that don\u0027t support MRTSS are using choosing `Features::DawnLoadResolveTexture`. They don\u0027t use dynamic rendering (even if the extension is supported) and use two subpasses to do the unresolve. \n\nPresumably Skia would create multiple render passes itself if MSAARenderToSingleSampled+DawnLoadResolveTexture wasn\u0027t available? I guess we could stop exposing the feature on IMRs. That isn\u0027t relevant to the device pool we run Graphite/Dawn/Vulkan on today though.",
+      "parentUuid": "994d0dc2_b57ccf5a",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
