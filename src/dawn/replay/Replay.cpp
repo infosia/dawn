@@ -1454,33 +1454,41 @@ MaybeError ReplayImpl::SetLabel(schema::ObjectId id,
                                 const std::string& label) {
 // We update both the object's label and our own copy of the label
 // as there is no API to get an object's label from WebGPU
-#define DAWN_SET_LABEL(type)                                                                \
-    case schema::ObjectType::type: {                                                        \
-        auto iter = mResources.find(id);                                                    \
-        std::get_if<wgpu::type>(&iter->second.resource)->SetLabel(wgpu::StringView(label)); \
-        iter->second.label = label;                                                         \
-        break;                                                                              \
+#define DAWN_REPLAY_GET_X_MACRO(_1, _2, NAME, ...) NAME
+
+#define DAWN_SET_LABEL_CASE_INVALID(NAME, ...) \
+    case schema::ObjectType::NAME:             \
+        break;
+
+#define DAWN_SET_LABEL_CASE_VALID(NAME, ...)                         \
+    case schema::ObjectType::NAME: {                                 \
+        auto iter = mResources.find(id);                             \
+        DAWN_ASSERT(iter != mResources.end());                       \
+        auto* res = std::get_if<wgpu::NAME>(&iter->second.resource); \
+        DAWN_ASSERT(res != nullptr);                                 \
+        res->SetLabel(wgpu::StringView(label));                      \
+        iter->second.label = label;                                  \
+        break;                                                       \
     }
 
+#define DAWN_SET_LABEL_CASE(...)                                                                 \
+    DAWN_REPLAY_GET_X_MACRO(__VA_ARGS__, DAWN_SET_LABEL_CASE_INVALID, DAWN_SET_LABEL_CASE_VALID) \
+    (__VA_ARGS__)
+
+#define DAWN_SET_LABEL_GEN(NAME, MEMBERS) MEMBERS(DAWN_SET_LABEL_CASE)
+
     switch (type) {
-        DAWN_SET_LABEL(BindGroup)
-        DAWN_SET_LABEL(BindGroupLayout)
-        DAWN_SET_LABEL(Buffer)
-        DAWN_SET_LABEL(CommandBuffer)
-        DAWN_SET_LABEL(ComputePipeline)
-        DAWN_SET_LABEL(Device)
-        DAWN_SET_LABEL(ExternalTexture)
-        DAWN_SET_LABEL(PipelineLayout)
-        DAWN_SET_LABEL(QuerySet)
-        DAWN_SET_LABEL(RenderBundle)
-        DAWN_SET_LABEL(RenderPipeline)
-        DAWN_SET_LABEL(Sampler)
-        DAWN_SET_LABEL(ShaderModule)
-        DAWN_SET_LABEL(Texture)
-        DAWN_SET_LABEL(TextureView)
+        DAWN_REPLAY_OBJECT_TYPES_ENUM(DAWN_SET_LABEL_GEN)
         default:
             return DAWN_INTERNAL_ERROR("unhandled resource type");
     }
+
+#undef DAWN_SET_LABEL_GEN
+#undef DAWN_SET_LABEL_CASE
+#undef DAWN_SET_LABEL_CASE_VALID
+#undef DAWN_SET_LABEL_CASE_INVALID
+#undef DAWN_REPLAY_GET_X_MACRO
+
     return {};
 }
 
