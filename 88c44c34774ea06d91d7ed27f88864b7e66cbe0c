@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf6923d_7c3db847",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T13:03:44Z",
+      "side": 1,
+      "message": "Done. Actually I previously wanted to avoid looping through the colorAttachments and another if block for the depth/stencil attachment again. It would make the `EndRenderPass` switch case become too large.",
+      "parentUuid": "e1f3fccc_3122d7e8",
+      "revId": "88c44c34774ea06d91d7ed27f88864b7e66cbe0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0087042f_f2f7771e",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-13T09:40:59Z",
       "side": 1,
       "message": "Do you have any details about what the bug looks like? I don\u0027t see any in the linked issue.",
+      "revId": "88c44c34774ea06d91d7ed27f88864b7e66cbe0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9634f08_9d3b4156",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T13:03:44Z",
+      "side": 1,
+      "message": "The test discards the texture then uses it in a copy. Dawn should clear the texture before the copy. But somehow the clear or some steps didn\u0027t work on Qualcomm.\n\nI don\u0027t have any QC devices to test locally and Graphite is not enabled on QC atm. So I think this is not critical to block or investigate deeper atm. I also asked Microsoft engineers to take a look.",
+      "parentUuid": "0087042f_f2f7771e",
       "revId": "88c44c34774ea06d91d7ed27f88864b7e66cbe0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
