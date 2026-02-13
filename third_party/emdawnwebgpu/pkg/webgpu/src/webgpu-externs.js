@@ -317,6 +317,8 @@ GPUTexture.prototype.dimension;
 GPUTexture.prototype.format;
 /** @type {number} */
 GPUTexture.prototype.usage;
+/** @type {string | undefined} */
+GPUTexture.prototype.textureBindingViewDimension;
 
 /** @constructor */
 function GPUTextureView() {}
