@@ -32,15 +32,18 @@
 
 #if DAWN_PLATFORM_IS(WINDOWS)
 #include <vector>
+
 #include "dawn/common/windows_with_undefs.h"
 #elif DAWN_PLATFORM_IS(LINUX)
 #include <dlfcn.h>
 #include <limits.h>
 #include <unistd.h>
+
 #include <cstdlib>
 #elif DAWN_PLATFORM_IS(MACOS) || DAWN_PLATFORM_IS(IOS)
 #include <dlfcn.h>
 #include <mach-o/dyld.h>
+
 #include <vector>
 #endif
 
