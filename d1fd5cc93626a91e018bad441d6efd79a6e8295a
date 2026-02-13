@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea7cee5_bfc597ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-13T21:23:28Z",
+      "side": 1,
+      "message": "Thanks for your reviews.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80ce9e9c_0a4485bb",
@@ -83,6 +100,24 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "60e3339d_310cb6da",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b028be20_faf21d2c",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-13T21:23:28Z",
+      "side": 1,
+      "message": "Ugh, I didn\u0027t realize that this was valid. I had thought the frag and vert user immediates would have to match at pipeline creation time. Is there a use case for this? Since the immediate data uploaded on the API side is the same for both stages, it seems really weird to allow values to be reinterpreted differently by frag and vert, even up to the variables being different sizes.\n\nAt any rate, it looks like we\u0027re doing shader compilation at pipeline creation time already (I always forget), so this should be easy to fix.",
+      "parentUuid": "5adf03dc_97cc6864",
       "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
