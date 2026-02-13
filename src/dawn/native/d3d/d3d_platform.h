@@ -32,12 +32,12 @@
 // COM interfaces. Otherwise ID3D12InfoQueue::GetMessage would be either GetMessageA or GetMessageW
 // which causes compilation errors.
 // NOLINTNEXTLINE(build/include_order)
-#include "dawn/common/windows_with_undefs.h"
-
 #include <d3d11_4.h>  // NOLINT(build/include_order)
 #include <dxcapi.h>   // NOLINT(build/include_order)
 #include <dxgi1_6.h>  // NOLINT(build/include_order)
 #include <wrl.h>      // NOLINT(build/include_order)
+
+#include "dawn/common/windows_with_undefs.h"
 
 // DXProgrammableCapture.h takes a dependency on other platform header
 // files, so it must be defined after them.

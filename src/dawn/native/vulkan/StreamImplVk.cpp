@@ -27,13 +27,12 @@
 
 #include <cstring>
 #include <map>
+#include <vulkan/utility/vk_struct_helper.hpp>  // NOLINT(build/include_order)
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/stream/Stream.h"
 #include "dawn/native/vulkan/RenderPassCache.h"
-
-#include <vulkan/utility/vk_struct_helper.hpp>  // NOLINT(build/include_order)
 
 namespace dawn::native {
 
