@@ -68,6 +68,24 @@
       "parentUuid": "b07ad7be_46540e9c",
       "revId": "53387828acad8cfbcdc00810ff053b0babffd7b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "597fac21_707294d9",
+        "filename": "src/dawn/native/d3d/d3d_platform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-13T22:57:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b906bde_c8af22cd",
+      "revId": "53387828acad8cfbcdc00810ff053b0babffd7b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
