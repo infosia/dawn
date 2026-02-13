@@ -41,6 +41,10 @@ struct VkPipelineLayoutObject;
 
 class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
   public:
+    struct DynamicState {
+        VkPrimitiveTopology primitiveTopology;
+    };
+
     static Ref<RenderPipeline> CreateUninitialized(
         Device* device,
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
@@ -48,6 +52,9 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
     VkPipeline GetHandle() const;
 
     MaybeError InitializeImpl() override;
+
+    const DynamicState* UpdateDynamicState(VkCommandBuffer& commands,
+                                           const DynamicState* prevState) const;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -66,6 +73,7 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
     VkPipelineDepthStencilStateCreateInfo ComputeDepthStencilDesc();
 
     VkPipeline mHandle = VK_NULL_HANDLE;
+    DynamicState mDynamicState = {};
 
     // Whether the pipeline has any input attachment being used in the frag shader.
     bool mHasInputAttachment = false;

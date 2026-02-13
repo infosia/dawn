@@ -522,17 +522,25 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Tag all state as dynamic but stencil masks and depth bias.
-    VkDynamicState dynamicStates[] = {
+    const uint32_t kMaxDynamicStates = 8;
+    absl::InlinedVector<VkDynamicState, kMaxDynamicStates> dynamicStates = {
         VK_DYNAMIC_STATE_VIEWPORT,     VK_DYNAMIC_STATE_SCISSOR,
         VK_DYNAMIC_STATE_LINE_WIDTH,   VK_DYNAMIC_STATE_BLEND_CONSTANTS,
         VK_DYNAMIC_STATE_DEPTH_BOUNDS, VK_DYNAMIC_STATE_STENCIL_REFERENCE,
     };
+
+    // If ExtendedDynamicState is avaliable tag several other states as dynamic
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        dynamicStates.push_back(VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT);
+        mDynamicState.primitiveTopology = inputAssembly.topology;
+    }
+
     VkPipelineDynamicStateCreateInfo dynamic;
     dynamic.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
     dynamic.pNext = nullptr;
     dynamic.flags = 0;
-    dynamic.dynamicStateCount = sizeof(dynamicStates) / sizeof(dynamicStates[0]);
-    dynamic.pDynamicStates = dynamicStates;
+    dynamic.dynamicStateCount = dynamicStates.size();
+    dynamic.pDynamicStates = dynamicStates.data();
 
     DAWN_TRY(PipelineVk::InitializeBase(layout, mImmediateMask));
 
@@ -708,6 +716,17 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     return {};
+}
+
+const RenderPipeline::DynamicState* RenderPipeline::UpdateDynamicState(
+    VkCommandBuffer& commands,
+    const RenderPipeline::DynamicState* prevState) const {
+    Device* device = ToBackend(GetDevice());
+
+    if (!prevState || prevState->primitiveTopology != mDynamicState.primitiveTopology) {
+        device->fn.CmdSetPrimitiveTopologyEXT(commands, mDynamicState.primitiveTopology);
+    }
+    return &mDynamicState;
 }
 
 void RenderPipeline::SetLabelImpl() {

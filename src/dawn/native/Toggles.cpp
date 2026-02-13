@@ -752,6 +752,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Makes use of VK_KHR_create_renderpass2 when creating VkRenderPass objects. Ignored when "
       "vulkan_use_dynamic_rendering is enabled.",
       "https://crbug.com/chromium/463893793", ToggleStage::Adapter}},
+    {Toggle::VulkanUseExtendedDynamicState,
+     {"vulkan_use_extended_dynamic_state",
+      "Makes use of VK_EXT_extended_dynamic_state to improve pipeline caching.",
+      "https://crbug.com/chromium/463893793", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
