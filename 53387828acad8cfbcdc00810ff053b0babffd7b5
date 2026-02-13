@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "53387828acad8cfbcdc00810ff053b0babffd7b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb3222ca_a717d725",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-13T22:44:01Z",
+      "side": 1,
+      "message": "skimming, this include order looks a lot better than what we had before. I always felt like there was something broken about our include order linter, this explains what it was.",
+      "revId": "53387828acad8cfbcdc00810ff053b0babffd7b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b07ad7be_46540e9c",
+        "filename": "src/dawn/native/d3d/d3d_platform.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-13T22:44:01Z",
+      "side": 1,
+      "message": "We should have a rule to sort this before any dawn headers. I don\u0027t think it technically matters that it be before other _system_ headers (the way we had it), because the undefs will work regardless. We just don\u0027t want the weird #defines in windows.h to mess up dawn code.",
+      "revId": "53387828acad8cfbcdc00810ff053b0babffd7b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
