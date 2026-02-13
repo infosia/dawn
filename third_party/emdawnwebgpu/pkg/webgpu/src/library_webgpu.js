@@ -592,6 +592,11 @@ var LibraryWebGPU = {
       setLimitValueU32('maxComputeWorkgroupSizeZ', {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeZ }}});
       setLimitValueU32('maxComputeWorkgroupsPerDimension', {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupsPerDimension }}});
 
+      setLimitValueU32('maxStorageBuffersInFragmentStage', {{{ C_STRUCTS.WGPULimits.maxStorageBuffersInFragmentStage }}});
+      setLimitValueU32('maxStorageTexturesInFragmentStage', {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInFragmentStage }}});
+      setLimitValueU32('maxStorageBuffersInVertexStage', {{{ C_STRUCTS.WGPULimits.maxStorageBuffersInVertexStage }}});
+      setLimitValueU32('maxStorageTexturesInVertexStage', {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInVertexStage }}});
+
       // Non-standard. If this is undefined, it will correctly just cast to 0.
       if (limits.maxImmediateSize !== undefined) {
         setLimitValueU32('maxImmediateSize', {{{ C_STRUCTS.WGPULimits.maxImmediateSize }}});
@@ -843,6 +848,10 @@ var LibraryWebGPU = {
         setLimitU32IfDefined("maxComputeWorkgroupSizeY", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeY }}});
         setLimitU32IfDefined("maxComputeWorkgroupSizeZ", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeZ }}});
         setLimitU32IfDefined("maxComputeWorkgroupsPerDimension", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupsPerDimension }}});
+        setLimitU32IfDefined('maxStorageBuffersInFragmentStage', {{{ C_STRUCTS.WGPULimits.maxStorageBuffersInFragmentStage }}});
+        setLimitU32IfDefined('maxStorageTexturesInFragmentStage', {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInFragmentStage }}});
+        setLimitU32IfDefined('maxStorageBuffersInVertexStage', {{{ C_STRUCTS.WGPULimits.maxStorageBuffersInVertexStage }}});
+        setLimitU32IfDefined('maxStorageTexturesInVertexStage', {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInVertexStage }}});
 
         // Non-standard. If this is 0, avoid passing it through so it won't cause an error.
         setLimitU32IfDefined("maxImmediateSize", {{{ C_STRUCTS.WGPULimits.maxImmediateSize }}}, true);
@@ -1828,6 +1837,7 @@ var LibraryWebGPU = {
       "dimension": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.dimension, 'TextureDimension') }}},
       "format": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.format, 'TextureFormat') }}},
       "usage": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.usage, 'u32') }}},
+      "textureBindingViewDimension": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.textureBindingViewDimension, 'TextureViewDimension') }}},
     };
 
     var viewFormatCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.viewFormatCount, '*') }}};
