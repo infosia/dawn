@@ -1519,6 +1519,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
     uint32_t workCommandCount = 0;
+    const RenderPipeline::DynamicState* lastDynamicState = nullptr;
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
         switch (type) {
@@ -1704,6 +1705,10 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 device->fn.CmdBindPipeline(commands, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                            pipeline->GetHandle());
                 lastPipeline = pipeline;
+
+                if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+                    lastDynamicState = pipeline->UpdateDynamicState(commands, lastDynamicState);
+                }
 
                 descriptorSets.OnSetPipeline<RenderPipeline>(pipeline);
                 immediates.OnSetPipeline(pipeline);

@@ -524,17 +524,34 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Tag all state as dynamic but stencil masks and depth bias.
-    VkDynamicState dynamicStates[] = {
+    const uint32_t kMaxDynamicStates = 10;
+    absl::InlinedVector<VkDynamicState, kMaxDynamicStates> dynamicStates = {
         VK_DYNAMIC_STATE_VIEWPORT,     VK_DYNAMIC_STATE_SCISSOR,
         VK_DYNAMIC_STATE_LINE_WIDTH,   VK_DYNAMIC_STATE_BLEND_CONSTANTS,
         VK_DYNAMIC_STATE_DEPTH_BOUNDS, VK_DYNAMIC_STATE_STENCIL_REFERENCE,
     };
+
+    // If ExtendedDynamicState is available tag several other states as dynamic
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_TEST_ENABLE_EXT);
+        mDynamicState.depthTestEnable = depthStencilState.depthTestEnable;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_WRITE_ENABLE_EXT);
+        mDynamicState.depthWriteEnable = depthStencilState.depthWriteEnable;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_COMPARE_OP_EXT);
+        mDynamicState.depthCompareOp = depthStencilState.depthCompareOp;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_STENCIL_TEST_ENABLE_EXT);
+        mDynamicState.stencilTestEnable = depthStencilState.stencilTestEnable;
+    }
+
     VkPipelineDynamicStateCreateInfo dynamic;
     dynamic.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
     dynamic.pNext = nullptr;
     dynamic.flags = 0;
-    dynamic.dynamicStateCount = sizeof(dynamicStates) / sizeof(dynamicStates[0]);
-    dynamic.pDynamicStates = dynamicStates;
+    dynamic.dynamicStateCount = dynamicStates.size();
+    dynamic.pDynamicStates = dynamicStates.data();
 
     DAWN_TRY(PipelineVk::InitializeBase(layout, mImmediateMask));
 
@@ -710,6 +727,33 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     return {};
+}
+
+RenderPipelineBase::DynamicStateFlags RenderPipeline::GetDynamicStateFlags() {
+    if (GetDevice()->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        return DynamicStateFlags::DepthWriteEnable | DynamicStateFlags::DepthCompareOp;
+    }
+    return DynamicStateFlags::None;
+}
+
+const RenderPipeline::DynamicState* RenderPipeline::UpdateDynamicState(
+    VkCommandBuffer& commands,
+    const RenderPipeline::DynamicState* prevState) const {
+    Device* device = ToBackend(GetDevice());
+
+    if (!prevState || prevState->depthTestEnable != mDynamicState.depthTestEnable) {
+        device->fn.CmdSetDepthTestEnableEXT(commands, mDynamicState.depthTestEnable);
+    }
+    if (!prevState || prevState->depthWriteEnable != mDynamicState.depthWriteEnable) {
+        device->fn.CmdSetDepthWriteEnableEXT(commands, mDynamicState.depthWriteEnable);
+    }
+    if (!prevState || prevState->depthCompareOp != mDynamicState.depthCompareOp) {
+        device->fn.CmdSetDepthCompareOpEXT(commands, mDynamicState.depthCompareOp);
+    }
+    if (!prevState || prevState->stencilTestEnable != mDynamicState.stencilTestEnable) {
+        device->fn.CmdSetStencilTestEnableEXT(commands, mDynamicState.stencilTestEnable);
+    }
+    return &mDynamicState;
 }
 
 void RenderPipeline::SetLabelImpl() {

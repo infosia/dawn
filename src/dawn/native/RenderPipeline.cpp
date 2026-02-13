@@ -1321,6 +1321,8 @@ bool RenderPipelineBase::UsesFramebufferFetch() const {
 size_t RenderPipelineBase::ComputeContentHash() {
     ObjectContentHasher recorder;
 
+    DynamicStateFlags dynamic = GetDynamicStateFlags();
+
     // Record modules and layout
     recorder.Record(PipelineBase::ComputeContentHash());
 
@@ -1342,7 +1344,16 @@ size_t RenderPipelineBase::ComputeContentHash() {
 
     if (mAttachmentState->HasDepthStencilAttachment()) {
         const DepthStencilState& desc = mDepthStencil;
-        recorder.Record(desc.depthWriteEnabled, desc.depthCompare);
+
+        if ((dynamic & DynamicStateFlags::DepthWriteEnable) == 0) {
+            recorder.Record(desc.depthWriteEnabled);
+        }
+
+        if ((dynamic & DynamicStateFlags::DepthCompareOp) == 0) {
+            recorder.Record(desc.depthCompare);
+        }
+
+        // recorder.Record(desc.depthWriteEnabled, desc.depthCompare);
         recorder.Record(desc.stencilReadMask, desc.stencilWriteMask);
         recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
                         desc.stencilFront.depthFailOp, desc.stencilFront.passOp);

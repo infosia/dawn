@@ -364,6 +364,16 @@ struct VulkanFunctions {
     VkFn<PFN_vkCmdBeginRenderingKHR> CmdBeginRenderingKHR = nullptr;
     VkFn<PFN_vkCmdEndRenderingKHR> CmdEndRenderingKHR = nullptr;
 
+    // VK_EXT_extended_dynamic_state
+    VkFn<PFN_vkCmdSetCullModeEXT> CmdSetCullModeEXT = nullptr;
+    VkFn<PFN_vkCmdSetDepthCompareOpEXT> CmdSetDepthCompareOpEXT = nullptr;
+    VkFn<PFN_vkCmdSetDepthTestEnableEXT> CmdSetDepthTestEnableEXT = nullptr;
+    VkFn<PFN_vkCmdSetDepthWriteEnableEXT> CmdSetDepthWriteEnableEXT = nullptr;
+    VkFn<PFN_vkCmdSetFrontFaceEXT> CmdSetFrontFaceEXT = nullptr;
+    VkFn<PFN_vkCmdSetPrimitiveTopologyEXT> CmdSetPrimitiveTopologyEXT = nullptr;
+    VkFn<PFN_vkCmdSetStencilOpEXT> CmdSetStencilOpEXT = nullptr;
+    VkFn<PFN_vkCmdSetStencilTestEnableEXT> CmdSetStencilTestEnableEXT = nullptr;
+
     // Not promoted to core in any version
 
     // VK_KHR_external_memory_fd
