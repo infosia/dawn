@@ -1,0 +1,423 @@
+// Copyright 2026 The Dawn & Tint Authors
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice, this
+//    list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// 3. Neither the name of the copyright holder nor the names of its
+//    contributors may be used to endorse or promote products derived from
+//    this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#include "src/tint/lang/wgsl/writer/raise/atomic_vec2u_from_u64.h"
+
+#include <utility>
+
+#include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/core/ir/transform/helper_test.h"
+#include "src/tint/lang/core/type/struct.h"
+#include "src/tint/lang/wgsl/enums.h"
+#include "src/tint/lang/wgsl/ir/builtin_call.h"
+
+namespace tint::wgsl::writer::raise {
+namespace {
+
+using namespace tint::core::fluent_types;     // NOLINT
+using namespace tint::core::number_suffixes;  // NOLINT
+
+using AtomicVec2UFromU64Test = core::ir::transform::TransformTest;
+
+TEST_F(AtomicVec2UFromU64Test, NoChange) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u32>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u32>, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = src;
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, Simple) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u64>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u64>, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<vec2<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, Struct) {
+    auto* str_ty = ty.Struct(mod.symbols.New("S"), {
+                                                       {mod.symbols.New("a"), ty.atomic<u64>()},
+                                                   });
+    auto* var = b.Var("v", ty.ptr(storage, str_ty));
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* src = R"(
+S = struct @align(8) {
+  a:atomic<u64> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(8) {
+  a:atomic<u64> @offset(0)
+}
+
+S_a64 = struct @align(8) {
+  a:atomic<vec2<u32>> @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, S_a64, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, Array) {
+    auto* var = b.Var("v", ty.ptr(storage, ty.array(ty.atomic<u64>(), 4)));
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, array<atomic<u64>, 4>, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<atomic<vec2<u32>>, 4>, read_write> = var undef @binding_point(0, 0)
+}
+
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, AtomicStoreMax) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u64>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* val_vec2u = b.Construct(ty.vec2u(), b.Constant(u32(1)));
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMax, var->Result(), val_u64);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u64>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:vec2<u32> = construct 1u
+    %4:u64 = bitcast %3
+    %5:void = atomicStoreMax %v, %4
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<vec2<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:vec2<u32> = construct 1u
+    %4:void = wgsl.atomicStoreMax %v, %3
+    ret
+  }
+}
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, AtomicStoreMin) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u64>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* val_vec2u = b.Construct(ty.vec2u(), b.Constant(u32(1)));
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMin, var->Result(), val_u64);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u64>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:vec2<u32> = construct 1u
+    %4:u64 = bitcast %3
+    %5:void = atomicStoreMin %v, %4
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<vec2<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:vec2<u32> = construct 1u
+    %4:void = wgsl.atomicStoreMin %v, %3
+    ret
+  }
+}
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, ViaLet) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u64>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* let = b.Let("l", var->Result());
+        auto* val_vec2u = b.Construct(ty.vec2u(), b.Constant(u32(1)));
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMax, let->Result(), val_u64);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u64>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %l:ptr<storage, atomic<u64>, read_write> = let %v
+    %4:vec2<u32> = construct 1u
+    %5:u64 = bitcast %4
+    %6:void = atomicStoreMax %l, %5
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<vec2<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %l:ptr<storage, atomic<vec2<u32>>, read_write> = let %v
+    %4:vec2<u32> = construct 1u
+    %5:void = wgsl.atomicStoreMax %l, %4
+    ret
+  }
+}
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, ViaParam) {
+    auto* var = b.Var("v", ty.ptr<storage, atomic<u64>>());
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.Function("f", ty.void_());
+    auto* param = b.FunctionParam("p", ty.ptr<storage, atomic<u64>>());
+    f->SetParams({param});
+    b.Append(f->Block(), [&] {
+        auto* val_vec2u = b.Construct(ty.vec2u(), b.Constant(u32(1)));
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMax, param, val_u64);
+        b.Return(f);
+    });
+
+    auto* main = b.Function("main", ty.void_());
+    b.Append(main->Block(), [&] {
+        b.Call(f, var->Result());
+        b.Return(main);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<u64>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func(%p:ptr<storage, atomic<u64>, read_write>):void {
+  $B2: {
+    %4:vec2<u32> = construct 1u
+    %5:u64 = bitcast %4
+    %6:void = atomicStoreMax %p, %5
+    ret
+  }
+}
+%main = func():void {
+  $B3: {
+    %8:void = call %f, %v
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, atomic<vec2<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func(%p:ptr<storage, atomic<vec2<u32>>, read_write>):void {
+  $B2: {
+    %4:vec2<u32> = construct 1u
+    %5:void = wgsl.atomicStoreMax %p, %4
+    ret
+  }
+}
+%main = func():void {
+  $B3: {
+    %7:void = call %f, %v
+    ret
+  }
+}
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(AtomicVec2UFromU64Test, ArrayAccess) {
+    auto* var = b.Var("v", ty.ptr(storage, ty.array(ty.atomic<u64>(), 4)));
+    var->SetBindingPoint(0, 0);
+    mod.root_block->Append(var);
+
+    auto* f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* access = b.Access(ty.ptr<storage, atomic<u64>>(), var->Result(), 1_u);
+        auto* val_vec2u = b.Construct(ty.vec2u(), b.Constant(u32(1)));
+        auto* val_u64 = b.Bitcast(ty.u64(), val_vec2u);
+        b.Call(ty.void_(), core::BuiltinFn::kAtomicStoreMax, access->Result(), val_u64);
+        b.Return(f);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, array<atomic<u64>, 4>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:ptr<storage, atomic<u64>, read_write> = access %v, 1u
+    %4:vec2<u32> = construct 1u
+    %5:u64 = bitcast %4
+    %6:void = atomicStoreMax %3, %5
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<atomic<vec2<u32>>, 4>, read_write> = var undef @binding_point(0, 0)
+}
+
+%f = func():void {
+  $B2: {
+    %3:ptr<storage, atomic<vec2<u32>>, read_write> = access %v, 1u
+    %4:vec2<u32> = construct 1u
+    %5:void = wgsl.atomicStoreMax %3, %4
+    ret
+  }
+}
+)";
+
+    Run(AtomicVec2UFromU64);
+
+    EXPECT_EQ(expect, str());
+}
+
+}  // namespace
+}  // namespace tint::wgsl::writer::raise

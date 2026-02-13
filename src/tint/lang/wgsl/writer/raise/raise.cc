@@ -40,6 +40,8 @@
 #include "src/tint/lang/wgsl/writer/raise/ptr_to_ref.h"
 #include "src/tint/lang/wgsl/writer/raise/value_to_let.h"
 
+#include "src/tint/lang/wgsl/writer/raise/atomic_vec2u_from_u64.h"
+
 namespace tint::wgsl::writer {
 namespace {
 
@@ -168,6 +170,8 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kAtomicXor)
         CASE(kAtomicExchange)
         CASE(kAtomicCompareExchangeWeak)
+        CASE(kAtomicStoreMin)
+        CASE(kAtomicStoreMax)
         CASE(kSubgroupBallot)
         CASE(kSubgroupElect)
         CASE(kSubgroupBroadcast)
@@ -264,6 +268,8 @@ void ReplaceWorkgroupBarrier(core::ir::Builder& b, core::ir::CoreBuiltinCall* ca
 }  // namespace
 
 Result<SuccessType> Raise(core::ir::Module& mod) {
+    TINT_CHECK_RESULT(raise::AtomicVec2UFromU64(mod));
+
     TINT_CHECK_RESULT(core::ir::transform::RenameConflicts(mod));
 
     core::ir::Builder b{mod};
