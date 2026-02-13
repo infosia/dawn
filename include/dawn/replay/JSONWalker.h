@@ -42,7 +42,7 @@ class ResourceVisitor;
 
 class DAWN_REPLAY_EXPORT JSONWalker : public RootCommandVisitor {
   public:
-    JSONWalker();
+    explicit JSONWalker(bool pretty = false);
     ~JSONWalker() override;
 
     std::string GetJSON() const;

@@ -2858,13 +2858,41 @@ TEST_P(CaptureAndReplayTests, JSONWalkerJustBuffer) {
     queue.WriteBuffer(buffer, 0, &myData, sizeof(myData));
 
     auto capture = recorder.Finish();
-    replay::JSONWalker walker;
+    replay::JSONWalker walker(true);  // Use prettier JSON format
     capture.Walk(walker);
 
     std::string json = walker.GetJSON();
 
-    const char* expected =
-        R"([{"cmd":"CreateResource","args":{"type":"Buffer","id":2,"label":"myBuffer","args":{"size":4,"usage":40}}},{"cmd":"WriteBuffer","args":{"bufferId":2,"bufferOffset":0,"size":4}},{"cmd":"WriteBuffer","args":{"bufferId":2,"bufferOffset":0,"size":4}}])";
+    const char* expected = R"([
+  {
+    "cmd": "CreateResource",
+    "args": {
+      "type": "Buffer",
+      "id": 2,
+      "label": "myBuffer",
+      "args": {
+        "size": 4,
+        "usage": 40
+      }
+    }
+  },
+  {
+    "cmd": "WriteBuffer",
+    "args": {
+      "bufferId": 2,
+      "bufferOffset": 0,
+      "size": 4
+    }
+  },
+  {
+    "cmd": "WriteBuffer",
+    "args": {
+      "bufferId": 2,
+      "bufferOffset": 0,
+      "size": 4
+    }
+  }
+])";
     EXPECT_EQ(json, expected);
 }
 

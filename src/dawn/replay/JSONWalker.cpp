@@ -60,18 +60,25 @@ const char* ObjectTypeToString(schema::ObjectType type) {
 
 class JSONWalker::JSONWriter {
   public:
-    JSONWriter() {
+    explicit JSONWriter(bool pretty) : mPretty(pretty) {
         mFirst.push_back(true);
         mSS << "[";
     }
 
-    std::string GetJSON() const { return mSS.str() + "]"; }
+    std::string GetJSON() const {
+        if (mPretty) {
+            return mSS.str() + "\n]";
+        }
+        return mSS.str() + "]";
+    }
 
     void BeginObject(const char* name = nullptr) {
         Comma();
+        NewLine();
+        Indent();
         if (name) {
             WriteJSONString(name);
-            mSS << ":{";
+            mSS << (mPretty ? ": {" : ":{");
         } else {
             mSS << "{";
         }
@@ -79,15 +86,19 @@ class JSONWalker::JSONWriter {
     }
 
     void EndObject() {
-        mSS << "}";
         mFirst.pop_back();
+        NewLine();
+        Indent();
+        mSS << "}";
     }
 
     void BeginArray(const char* name = nullptr) {
         Comma();
+        NewLine();
+        Indent();
         if (name) {
             WriteJSONString(name);
-            mSS << ":[";
+            mSS << (mPretty ? ": [" : ":[");
         } else {
             mSS << "[";
         }
@@ -95,8 +106,10 @@ class JSONWalker::JSONWriter {
     }
 
     void EndArray() {
-        mSS << "]";
         mFirst.pop_back();
+        NewLine();
+        Indent();
+        mSS << "]";
     }
 
     void BeginCommand(const char* name) {
@@ -115,6 +128,20 @@ class JSONWalker::JSONWriter {
             mSS << ",";
         }
         mFirst.back() = false;
+    }
+
+    void NewLine() {
+        if (mPretty) {
+            mSS << "\n";
+        }
+    }
+
+    void Indent() {
+        if (mPretty) {
+            for (size_t i = 0; i < mFirst.size(); ++i) {
+                mSS << "  ";
+            }
+        }
     }
 
     void WriteJSONString(const std::string& value) {
@@ -160,18 +187,22 @@ class JSONWalker::JSONWriter {
 
     void KeyValue(const char* key, const char* value) {
         Comma();
+        NewLine();
+        Indent();
         if (key) {
             WriteJSONString(key);
-            mSS << ":";
+            mSS << (mPretty ? ": " : ":");
         }
         WriteJSONString(value);
     }
 
     void KeyValue(const char* key, const std::string& value) {
         Comma();
+        NewLine();
+        Indent();
         if (key) {
             WriteJSONString(key);
-            mSS << ":";
+            mSS << (mPretty ? ": " : ":");
         }
         WriteJSONString(value);
     }
@@ -199,9 +230,11 @@ class JSONWalker::JSONWriter {
             KeyValue(key, ObjectTypeToString(value));
         } else if constexpr (std::is_same_v<T, std::monostate>) {
             Comma();
+            NewLine();
+            Indent();
             if (key) {
                 WriteJSONString(key);
-                mSS << ":";
+                mSS << (mPretty ? ": " : ":");
             }
             mSS << "null";
         } else if constexpr (requires { value.VisitAllWithNames([](auto&&...) {}); }) {
@@ -216,24 +249,29 @@ class JSONWalker::JSONWriter {
             EndArray();
         } else if constexpr (std::is_enum_v<T>) {
             Comma();
+            NewLine();
+            Indent();
             if (key) {
                 WriteJSONString(key);
-                mSS << ":";
+                mSS << (mPretty ? ": " : ":");
             }
             mSS << static_cast<uint32_t>(value);
         } else if constexpr (std::is_same_v<T, std::string>) {
             KeyValue(key, value);
         } else {
             Comma();
+            NewLine();
+            Indent();
             if (key) {
                 WriteJSONString(key);
-                mSS << ":";
+                mSS << (mPretty ? ": " : ":");
             }
             mSS << value;
         }
     }
 
   private:
+    bool mPretty;
     std::stringstream mSS;
     std::vector<bool> mFirst;
 };
@@ -513,7 +551,7 @@ class JSONResourceVisitor {
     JSONWalker::JSONWriter* mWriter;
 };
 
-JSONWalker::JSONWalker() : mWriter(std::make_unique<JSONWriter>()) {}
+JSONWalker::JSONWalker(bool pretty) : mWriter(std::make_unique<JSONWriter>(pretty)) {}
 
 JSONWalker::~JSONWalker() = default;
 
