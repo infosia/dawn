@@ -257,6 +257,8 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
                       VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES);
     featuresChain.Add(&info.samplerYCbCrConversionFeatures,
                       VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES);
+    featuresChain.Add(&info.extendedDynamicStateFeatures,
+                      VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT);
 
     if (info.extensions[DeviceExt::ShaderFloat16Int8]) {
         featuresChain.Add(&info.shaderFloat16Int8Features,
