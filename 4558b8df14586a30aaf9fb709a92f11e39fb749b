@@ -22,6 +22,30 @@
       },
       "revId": "4558b8df14586a30aaf9fb709a92f11e39fb749b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9ea90d2_a14d5811",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-13T16:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1ef6270_116e79f4",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 16
+      },
+      "revId": "4558b8df14586a30aaf9fb709a92f11e39fb749b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
