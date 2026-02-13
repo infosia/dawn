@@ -419,6 +419,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "994d0dc2_b57ccf5a",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003806
+      },
+      "writtenOn": "2026-02-13T19:31:39Z",
+      "side": 1,
+      "message": "FWIW, emulating MSRTSS (i.e. `LoadResolveTexture` if I understood the names correctly) with a two-pass legacy render pass is fine for older devices that don\u0027t have the Vulkan extension.\n\nThe only situation both are missing would ideally be on IMRs, in which case transient textures don\u0027t exist and use LOAD/STORE on the attachments is fine.",
+      "parentUuid": "baa0822c_222a81d1",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
