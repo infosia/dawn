@@ -383,6 +383,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7dfde18_350fa444",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T19:15:51Z",
+      "side": 1,
+      "message": "I believe currently if neither MSRTSS nor `LoadResolveTexture` is available, Graphite on Android would be broken. It would be forced to load \u0026 store the MSAA textures from \u0026 to the memory. But on Android, Graphite allocates those textures as transient so the load \u0026 store will be illegal. Since Graphite doesn\u0027t expect that neither of those features is available (yet). \n\nWe could either:\n- change Graphite to not use transient textures if non of the feature is available.\n- Or Dawn stops advertising transient attachments feature.\n- Or emulate  `LoadResolveTexture` with MSRTSS. We can change the spec to disallow colorAttachment\u0027s `storeOp\u003dStore`, requiring that the `storeOp` must be `Discard`. Then it should be easy to use MSRTSS in this case.",
+      "parentUuid": "749c0129_6f590fba",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
