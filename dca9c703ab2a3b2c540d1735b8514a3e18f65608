@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78b89cfa_bd9f725b",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-13T20:53:16Z",
+      "side": 1,
+      "message": "nit. Why not just pass the list of functions directly instead of passing the whole map?",
+      "range": {
+        "startLine": 1186,
+        "startChar": 33,
+        "endLine": 1186,
+        "endChar": 44
+      },
+      "revId": "dca9c703ab2a3b2c540d1735b8514a3e18f65608",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
