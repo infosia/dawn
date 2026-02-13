@@ -55,9 +55,13 @@ class SpotTests : public testing::Test {
         mInstance = wgpu::CreateInstance(&instanceDesc);
 
         wgpu::Adapter adapter;
+
+        wgpu::RequestAdapterOptions options = {};
+        options.featureLevel =
+            UseCompatibilityMode() ? wgpu::FeatureLevel::Compatibility : wgpu::FeatureLevel::Core;
         EXPECT_EQ(wgpu::WaitStatus::Success,
                   mInstance.WaitAny(mInstance.RequestAdapter(
-                                        nullptr, wgpu::CallbackMode::WaitAnyOnly,
+                                        &options, wgpu::CallbackMode::WaitAnyOnly,
                                         [&adapter](wgpu::RequestAdapterStatus, wgpu::Adapter a,
                                                    wgpu::StringView) { adapter = std::move(a); }),
                                     UINT64_MAX));
@@ -66,9 +70,21 @@ class SpotTests : public testing::Test {
         adapter.GetFeatures(&features);
 
         wgpu::DeviceDescriptor deviceDesc;
-        // Enable all available features
-        deviceDesc.requiredFeatureCount = features.featureCount;
-        deviceDesc.requiredFeatures = features.features;
+        if (!UseCompatibilityMode()) {
+            // Enable all available features if not compatibility mode
+            deviceDesc.requiredFeatureCount = features.featureCount;
+            deviceDesc.requiredFeatures = features.features;
+        }
+
+        // Request max adapter limits
+        wgpu::Limits limits;
+        wgpu::CompatibilityModeLimits compatLimits;
+        if (UseCompatibilityMode()) {
+            limits.nextInChain = &compatLimits;
+        }
+        adapter.GetLimits(&limits);
+        deviceDesc.requiredLimits = &limits;
+
         wgpu::Device device;
         EXPECT_EQ(wgpu::WaitStatus::Success,
                   mInstance.WaitAny(
@@ -77,11 +93,22 @@ class SpotTests : public testing::Test {
                                                       wgpu::StringView) { device = std::move(d); }),
                       UINT64_MAX));
         EXPECT_TRUE(device);
+
+        if (UseCompatibilityMode()) {
+            wgpu::SupportedFeatures deviceFeatures;
+            device.GetFeatures(&deviceFeatures);
+            for (uint32_t i = 0; i < deviceFeatures.featureCount; ++i) {
+                EXPECT_NE(deviceFeatures.features[i], wgpu::FeatureName::CoreFeaturesAndLimits);
+            }
+        }
+
         this->mAdapter = adapter;
         this->mDevice = device;
     }
 
   protected:
+    virtual bool UseCompatibilityMode() const { return false; }
+
     wgpu::Instance mInstance;
     wgpu::Adapter mAdapter;
     wgpu::Device mDevice;
@@ -321,6 +348,66 @@ TEST_F(SpotTests, MapReadGetMappedRange) {
                                           buffer.Unmap();
                                       }),
                       UINT64_MAX);
+}
+
+TEST_F(SpotTests, TextureBindingViewDimension) {
+    wgpu::TextureDescriptor textureDesc;
+    textureDesc.size = {1, 1, 1};
+    textureDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+
+    wgpu::TextureBindingViewDimensionDescriptor textureBindingViewDimensionDesc;
+    textureBindingViewDimensionDesc.textureBindingViewDimension =
+        wgpu::TextureViewDimension::e2DArray;
+    textureDesc.nextInChain = &textureBindingViewDimensionDesc;
+    wgpu::Texture texture = mDevice.CreateTexture(&textureDesc);
+
+    ASSERT_TRUE(texture);
+    EXPECT_EQ(wgpu::TextureViewDimension::Undefined, texture.GetTextureBindingViewDimension());
+}
+
+class CompatSpotTests : public SpotTests {
+  protected:
+    bool UseCompatibilityMode() const override { return true; }
+};
+
+TEST_F(CompatSpotTests, TextureBindingViewDimension) {
+    wgpu::TextureDescriptor textureDesc;
+    textureDesc.size = {1, 1, 1};
+    textureDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+
+    wgpu::TextureBindingViewDimensionDescriptor textureBindingViewDimensionDesc;
+    textureBindingViewDimensionDesc.textureBindingViewDimension =
+        wgpu::TextureViewDimension::e2DArray;
+    textureDesc.nextInChain = &textureBindingViewDimensionDesc;
+    wgpu::Texture texture = mDevice.CreateTexture(&textureDesc);
+
+    ASSERT_TRUE(texture);
+    EXPECT_EQ(textureBindingViewDimensionDesc.textureBindingViewDimension,
+              texture.GetTextureBindingViewDimension());
+}
+
+TEST_F(CompatSpotTests, Limits) {
+    wgpu::Limits adapterLimits;
+    wgpu::CompatibilityModeLimits adapterCompatLimits;
+    adapterLimits.nextInChain = &adapterCompatLimits;
+
+    wgpu::Limits deviceLimits;
+    wgpu::CompatibilityModeLimits deviceCompatLimits;
+    deviceLimits.nextInChain = &deviceCompatLimits;
+
+    mAdapter.GetLimits(&adapterLimits);
+    mDevice.GetLimits(&deviceLimits);
+
+    EXPECT_EQ(adapterCompatLimits.maxStorageBuffersInFragmentStage,
+              deviceCompatLimits.maxStorageBuffersInFragmentStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageBuffersInVertexStage,
+              deviceCompatLimits.maxStorageBuffersInVertexStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageTexturesInFragmentStage,
+              deviceCompatLimits.maxStorageTexturesInFragmentStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageTexturesInVertexStage,
+              deviceCompatLimits.maxStorageTexturesInVertexStage);
 }
 
 }  // namespace
