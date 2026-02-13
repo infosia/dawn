@@ -1321,6 +1321,8 @@ bool RenderPipelineBase::UsesFramebufferFetch() const {
 size_t RenderPipelineBase::ComputeContentHash() {
     ObjectContentHasher recorder;
 
+    DynamicStateFlags dynamic = GetDynamicStateFlags();
+
     // Record modules and layout
     recorder.Record(PipelineBase::ComputeContentHash());
 
@@ -1342,12 +1344,22 @@ size_t RenderPipelineBase::ComputeContentHash() {
 
     if (mAttachmentState->HasDepthStencilAttachment()) {
         const DepthStencilState& desc = mDepthStencil;
-        recorder.Record(desc.depthWriteEnabled, desc.depthCompare);
+
+        if ((dynamic & DynamicStateFlags::DepthWriteEnable) == 0) {
+            recorder.Record(desc.depthWriteEnabled);
+        }
+
+        if ((dynamic & DynamicStateFlags::DepthCompareOp) == 0) {
+            recorder.Record(desc.depthCompare);
+        }
+
         recorder.Record(desc.stencilReadMask, desc.stencilWriteMask);
-        recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
-                        desc.stencilFront.depthFailOp, desc.stencilFront.passOp);
-        recorder.Record(desc.stencilBack.compare, desc.stencilBack.failOp,
-                        desc.stencilBack.depthFailOp, desc.stencilBack.passOp);
+        if ((dynamic & DynamicStateFlags::StencilOp) == 0) {
+            recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
+                            desc.stencilFront.depthFailOp, desc.stencilFront.passOp);
+            recorder.Record(desc.stencilBack.compare, desc.stencilBack.failOp,
+                            desc.stencilBack.depthFailOp, desc.stencilBack.passOp);
+        }
         recorder.Record(desc.depthBias, desc.depthBiasSlopeScale, desc.depthBiasClamp);
     }
 
@@ -1365,8 +1377,16 @@ size_t RenderPipelineBase::ComputeContentHash() {
     }
 
     // Record primitive state
-    recorder.Record(mPrimitive.topology, mPrimitive.stripIndexFormat, mPrimitive.frontFace,
-                    mPrimitive.cullMode, mPrimitive.unclippedDepth);
+    if ((dynamic & DynamicStateFlags::PrimitiveTopology) == 0) {
+        recorder.Record(mPrimitive.topology);
+    }
+    if ((dynamic & DynamicStateFlags::FrontFace) == 0) {
+        recorder.Record(mPrimitive.frontFace);
+    }
+    if ((dynamic & DynamicStateFlags::CullMode) == 0) {
+        recorder.Record(mPrimitive.cullMode);
+    }
+    recorder.Record(mPrimitive.stripIndexFormat, mPrimitive.unclippedDepth);
 
     // Record multisample state
     // Sample count hashed as part of the attachment state
