@@ -36,6 +36,7 @@
 #include <array>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "dawn/utils/WGPUHelpers.h"
 
@@ -55,20 +56,43 @@ class SpotTests : public testing::Test {
         mInstance = wgpu::CreateInstance(&instanceDesc);
 
         wgpu::Adapter adapter;
+
+        wgpu::RequestAdapterOptions options = {};
+        options.featureLevel =
+            UseCompatibilityMode() ? wgpu::FeatureLevel::Compatibility : wgpu::FeatureLevel::Core;
         EXPECT_EQ(wgpu::WaitStatus::Success,
                   mInstance.WaitAny(mInstance.RequestAdapter(
-                                        nullptr, wgpu::CallbackMode::WaitAnyOnly,
+                                        &options, wgpu::CallbackMode::WaitAnyOnly,
                                         [&adapter](wgpu::RequestAdapterStatus, wgpu::Adapter a,
                                                    wgpu::StringView) { adapter = std::move(a); }),
                                     UINT64_MAX));
         EXPECT_TRUE(adapter);
-        wgpu::SupportedFeatures features;
-        adapter.GetFeatures(&features);
+        wgpu::SupportedFeatures supportedFeatures;
+        adapter.GetFeatures(&supportedFeatures);
+
+        // Enable all available features, except CoreFeaturesAndLimits if compatibility mode
+        std::vector<wgpu::FeatureName> features;
+        features.reserve(supportedFeatures.featureCount);
+        for (size_t i = 0; i < supportedFeatures.featureCount; ++i) {
+            if (!UseCompatibilityMode() ||
+                supportedFeatures.features[i] != wgpu::FeatureName::CoreFeaturesAndLimits) {
+                features.push_back(supportedFeatures.features[i]);
+            }
+        }
 
         wgpu::DeviceDescriptor deviceDesc;
-        // Enable all available features
-        deviceDesc.requiredFeatureCount = features.featureCount;
-        deviceDesc.requiredFeatures = features.features;
+        deviceDesc.requiredFeatureCount = features.size();
+        deviceDesc.requiredFeatures = features.data();
+
+        // Request max adapter limits
+        wgpu::Limits limits;
+        wgpu::CompatibilityModeLimits compatLimits;
+        if (UseCompatibilityMode()) {
+            limits.nextInChain = &compatLimits;
+        }
+        adapter.GetLimits(&limits);
+        deviceDesc.requiredLimits = &limits;
+
         wgpu::Device device;
         EXPECT_EQ(wgpu::WaitStatus::Success,
                   mInstance.WaitAny(
@@ -82,6 +106,8 @@ class SpotTests : public testing::Test {
     }
 
   protected:
+    virtual bool UseCompatibilityMode() const { return false; }
+
     wgpu::Instance mInstance;
     wgpu::Adapter mAdapter;
     wgpu::Device mDevice;
@@ -321,6 +347,50 @@ TEST_F(SpotTests, MapReadGetMappedRange) {
                                           buffer.Unmap();
                                       }),
                       UINT64_MAX);
+}
+
+class CompatSpotTests : public SpotTests {
+  protected:
+    bool UseCompatibilityMode() const override { return true; }
+};
+
+TEST_F(CompatSpotTests, TextureBindingViewDimension) {
+    wgpu::TextureDescriptor textureDesc;
+    textureDesc.size = {1, 1, 1};
+    textureDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+
+    wgpu::TextureBindingViewDimensionDescriptor textureBindingViewDimensionDesc;
+    textureBindingViewDimensionDesc.textureBindingViewDimension =
+        wgpu::TextureViewDimension::e2DArray;
+    textureDesc.nextInChain = &textureBindingViewDimensionDesc;
+    wgpu::Texture texture = mDevice.CreateTexture(&textureDesc);
+
+    ASSERT_TRUE(texture);
+    EXPECT_EQ(textureBindingViewDimensionDesc.textureBindingViewDimension,
+              texture.GetTextureBindingViewDimension());
+}
+
+TEST_F(CompatSpotTests, Limits) {
+    wgpu::Limits adapterLimits;
+    wgpu::CompatibilityModeLimits adapterCompatLimits;
+    adapterLimits.nextInChain = &adapterCompatLimits;
+
+    wgpu::Limits deviceLimits;
+    wgpu::CompatibilityModeLimits deviceCompatLimits;
+    deviceLimits.nextInChain = &deviceCompatLimits;
+
+    mAdapter.GetLimits(&adapterLimits);
+    mDevice.GetLimits(&deviceLimits);
+
+    EXPECT_EQ(adapterCompatLimits.maxStorageBuffersInFragmentStage,
+              deviceCompatLimits.maxStorageBuffersInFragmentStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageBuffersInVertexStage,
+              deviceCompatLimits.maxStorageBuffersInVertexStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageTexturesInFragmentStage,
+              deviceCompatLimits.maxStorageTexturesInFragmentStage);
+    EXPECT_EQ(adapterCompatLimits.maxStorageTexturesInVertexStage,
+              deviceCompatLimits.maxStorageTexturesInVertexStage);
 }
 
 }  // namespace
