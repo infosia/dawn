@@ -280,8 +280,7 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
     scissor.extent.height = renderPass->height;
     device->fn.CmdSetScissor(commandBuffer, 0, 1, &scissor);
 
-    device->fn.CmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
-                               *pipelineVk->GetHandle());
+    pipelineVk->Bind(commandBuffer, nullptr);
     device->fn.CmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                      *pipelineVk->GetVkLayout(), 0, 1, &*bindGroupVk->GetHandle(),
                                      0, nullptr);

@@ -340,6 +340,15 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
     DAWN_UNREACHABLE();
 }
 
+uint16_t HashStencilState(VkStencilOpState state, VkBool32 enabled) {
+    // Both VkStencilOp and VkCompareOp have values ranging from 0-7, so they fit in 3 bits.
+    // So we can encode the full dynamic stencil state in 12 bits.
+    uint16_t hash = state.failOp | state.passOp << 3 | state.depthFailOp << 6 |
+                    state.compareOp << 9 |
+                    (enabled ? 0x8000 : 0);  // Set high bit if stencil is enabled.
+    return hash;
+}
+
 }  // anonymous namespace
 
 // static
@@ -531,17 +540,51 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Tag all state as dynamic but stencil masks and depth bias.
-    VkDynamicState dynamicStates[] = {
+    const uint32_t kMaxDynamicStates = 14;
+    absl::InlinedVector<VkDynamicState, kMaxDynamicStates> dynamicStates = {
         VK_DYNAMIC_STATE_VIEWPORT,     VK_DYNAMIC_STATE_SCISSOR,
         VK_DYNAMIC_STATE_LINE_WIDTH,   VK_DYNAMIC_STATE_BLEND_CONSTANTS,
         VK_DYNAMIC_STATE_DEPTH_BOUNDS, VK_DYNAMIC_STATE_STENCIL_REFERENCE,
     };
+
+    // If ExtendedDynamicState is available tag several other states as dynamic
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        dynamicStates.push_back(VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT);
+        mDynamicState.primitiveTopology = inputAssembly.topology;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_CULL_MODE_EXT);
+        mDynamicState.cullMode = rasterization.cullMode;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_FRONT_FACE_EXT);
+        mDynamicState.frontFace = rasterization.frontFace;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_TEST_ENABLE_EXT);
+        mDynamicState.depthTestEnable = depthStencilState.depthTestEnable;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_WRITE_ENABLE_EXT);
+        mDynamicState.depthWriteEnable = depthStencilState.depthWriteEnable;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_COMPARE_OP_EXT);
+        mDynamicState.depthCompareOp = depthStencilState.depthCompareOp;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_STENCIL_TEST_ENABLE_EXT);
+        mDynamicState.stencilTestEnable = depthStencilState.stencilTestEnable;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_STENCIL_OP_EXT);
+        mDynamicState.frontStencilHash =
+            HashStencilState(depthStencilState.front, depthStencilState.stencilTestEnable);
+        mDynamicState.frontStencilOp = depthStencilState.front;
+        mDynamicState.backStencilHash =
+            HashStencilState(depthStencilState.back, depthStencilState.stencilTestEnable);
+        mDynamicState.backStencilOp = depthStencilState.back;
+    }
+
     VkPipelineDynamicStateCreateInfo dynamic;
     dynamic.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
     dynamic.pNext = nullptr;
     dynamic.flags = 0;
-    dynamic.dynamicStateCount = sizeof(dynamicStates) / sizeof(dynamicStates[0]);
-    dynamic.pDynamicStates = dynamicStates;
+    dynamic.dynamicStateCount = dynamicStates.size();
+    dynamic.pDynamicStates = dynamicStates.data();
 
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
@@ -716,6 +759,50 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     return {};
 }
+
+#define SetDynamicState(function, state)                       \
+    if (!prevState || prevState->state != mDynamicState.state) \
+    device->fn.function(commands, mDynamicState.state)
+
+void RenderPipeline::Bind(VkCommandBuffer& commands, const RenderPipeline* prevPipeline) const {
+    Device* device = ToBackend(GetDevice());
+
+    device->fn.CmdBindPipeline(commands, VK_PIPELINE_BIND_POINT_GRAPHICS, *GetHandle());
+
+    // If Dynamic state is enabled, apply state changes between this pipeline and the previous one.
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        const RenderPipeline::DynamicState* prevState = nullptr;
+        if (prevPipeline) {
+            prevState = &prevPipeline->mDynamicState;
+        }
+
+        SetDynamicState(CmdSetPrimitiveTopologyEXT, primitiveTopology);
+        SetDynamicState(CmdSetCullModeEXT, cullMode);
+        SetDynamicState(CmdSetFrontFaceEXT, frontFace);
+        SetDynamicState(CmdSetDepthTestEnableEXT, depthTestEnable);
+        SetDynamicState(CmdSetDepthWriteEnableEXT, depthWriteEnable);
+        SetDynamicState(CmdSetDepthCompareOpEXT, depthCompareOp);
+        SetDynamicState(CmdSetStencilTestEnableEXT, stencilTestEnable);
+
+        if (mDynamicState.stencilTestEnable) {
+            if (!prevState || prevState->frontStencilHash != mDynamicState.frontStencilHash) {
+                device->fn.CmdSetStencilOpEXT(
+                    commands, VK_STENCIL_FACE_FRONT_BIT, mDynamicState.frontStencilOp.failOp,
+                    mDynamicState.frontStencilOp.passOp, mDynamicState.frontStencilOp.depthFailOp,
+                    mDynamicState.frontStencilOp.compareOp);
+            }
+
+            if (!prevState || prevState->backStencilHash != mDynamicState.backStencilHash) {
+                device->fn.CmdSetStencilOpEXT(
+                    commands, VK_STENCIL_FACE_BACK_BIT, mDynamicState.backStencilOp.failOp,
+                    mDynamicState.backStencilOp.passOp, mDynamicState.backStencilOp.depthFailOp,
+                    mDynamicState.backStencilOp.compareOp);
+            }
+        }
+    }
+}
+
+#undef SetDynamicState
 
 void RenderPipeline::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_RenderPipeline", GetLabel());
