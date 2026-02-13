@@ -329,6 +329,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "021166d6_ee667363",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-13T03:33:05Z",
+      "side": 1,
+      "message": "\u003e but then we\u0027re defeating the intent behind using the transient texture in the first place\n\nExcept transient textures don\u0027t exist on IMRs to begin with. And FWIW MSRTSS _behavior_ on IMRs is not only useless, it\u0027s hurtful.\n\nIf you have the option, ideally you\u0027d want to _not_ expose MSRTSS behavior where transient memory doesn\u0027t exist and let the application use real MSAA images with STORE_OP_STORE and future LOAD_OP_LOAD. That\u0027ll be faster than adding an unresolve pass and pretending MSAA data is discarded (because it mostly isn\u0027t). Then you never need to bother with a two-pass implementation. If the app needs to turn single sampled into MSAA, it\u0027s able to do it itself.\n\nIf you have to support MSRTSS behavior (because simplicity for application or whatever), then two-pass implementation on IMR is no different from a single-pass implementation with a barrier in the middle.",
+      "parentUuid": "64c6e914_49cb9ffe",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
