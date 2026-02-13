@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c940e845_a5bc0943",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-13T19:17:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b2252987_0b6fdd6a",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab8d26c1_4024e066",
@@ -869,6 +887,30 @@
       "side": 1,
       "message": "It\u0027s a bit weird that this CL implements the deferred path but it has no test coverage. Many of these multi-threaded tests don\u0027t work with deferrals because they use `Queue::Submit` on multiple threads. Whereas our deferred path only expects `Queue::Submit` to run on a single thread (i.e. the GL thread). That\u0027s also the reason why originally I added a lock to the deferred path.\n\nMaybe we should at least add some tests to verify the deferred buffer mappings can work on multiple threads without using `Queue::Submit`. The existing `Buffers_MapInParallel` test uses `Queue::Submit` concurrently, so we cannot enable that.\n\nI think we could also enable some tests like `BufferTests.cpp`, `CopyTests.cpp`, etc for \"gl_defer\" toggle. Those can verify `Queue::WriteBuffer`, `Queue::WriteTexture` implementations. They are single threaded tests and don\u0027t have problem with `Queue::Submit`. \n\nCould do in the follow up CLs as well.",
       "parentUuid": "027774ba_b76065ea",
+      "range": {
+        "startLine": 2067,
+        "startChar": 38,
+        "endLine": 2067,
+        "endChar": 71
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02ad142_82511762",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-13T19:17:29Z",
+      "side": 1,
+      "message": "Agreed about testing. My plan was to enable a run of all the end2end tests on the GL bots with gl_defer enabled in a followup CL. I thought it might be a bit verbose to enable them individually.",
+      "parentUuid": "3a5782ec_bb196b34",
       "range": {
         "startLine": 2067,
         "startChar": 38,
