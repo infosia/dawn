@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed9cdf27_8f53eeab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-13T09:39:02Z",
+      "side": 1,
+      "message": "LGTM, I have some minor concerns about tools like clang-format etc that will try to treat this code as C++ like you mentioned in your commit message but I\u0027m sure we\u0027ll always find a way to work around it.",
+      "revId": "12d573c5314d838874ee3df37aa795c757e13584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4772d1_dd2ba6ae",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-13T09:39:02Z",
+      "side": 1,
+      "message": "This is unused.",
+      "revId": "12d573c5314d838874ee3df37aa795c757e13584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
