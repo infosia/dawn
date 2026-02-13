@@ -88,6 +88,17 @@ struct VertexBufferInfo {
 class RenderPipelineBase : public PipelineBase,
                            public ContentLessObjectCacheable<RenderPipelineBase> {
   public:
+    // States which some backends may set dynamically rather than making part of the pipeline.
+    enum class DynamicStateFlags : uint32_t {
+        None = 0x0000,
+        PrimitiveTopology = 0x0001,
+        CullMode = 0x0002,
+        FrontFace = 0x0004,
+        DepthWriteEnable = 0x0008,
+        DepthCompareOp = 0x0010,
+        StencilOp = 0x0020,
+    };
+
     RenderPipelineBase(DeviceBase* device, const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
     ~RenderPipelineBase() override;
 
@@ -159,6 +170,9 @@ class RenderPipelineBase : public PipelineBase,
   protected:
     void DestroyImpl(DestroyReason reason) override;
 
+    size_t ComputeContentHashWithDynamicState(DynamicStateFlags dynamicState);
+    bool EqualWithDynamicState(const RenderPipelineBase* b, DynamicStateFlags dynamicState) const;
+
   private:
     RenderPipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
 
@@ -196,5 +210,10 @@ class RenderPipelineBase : public PipelineBase,
 };
 
 }  // namespace dawn::native
+
+template <>
+struct wgpu::IsWGPUBitmask<dawn::native::RenderPipelineBase::DynamicStateFlags> {
+    static constexpr bool enable = true;
+};
 
 #endif  // SRC_DAWN_NATIVE_RENDERPIPELINE_H_

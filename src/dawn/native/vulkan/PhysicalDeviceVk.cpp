@@ -1240,8 +1240,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         GetDeviceInfo().extendedDynamicStateFeatures.extendedDynamicState == VK_FALSE) {
         deviceToggles->ForceSet(Toggle::VulkanUseExtendedDynamicState, false);
     } else {
-        // TODO(463893795): Default to true when support is fully implemented.
-        deviceToggles->Default(Toggle::VulkanUseExtendedDynamicState, false);
+        deviceToggles->Default(Toggle::VulkanUseExtendedDynamicState, true);
     }
 }
 
