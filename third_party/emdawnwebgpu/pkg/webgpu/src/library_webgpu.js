@@ -547,6 +547,7 @@ var LibraryWebGPU = {
     fillLimitStruct__deps: ['$writeI53ToI64'],
     fillLimitStruct: (limits, limitsOutPtr) => {
       {{{ gpu.makeCheckDescriptor('limitsOutPtr') }}}
+      var nextInChainPtr = {{{ makeGetValue('limitsOutPtr', C_STRUCTS.WGPULimits.nextInChain, '*') }}};
 
       function setLimitValueU32(name, limitOffset) {
         var limitValue = limits[name];
@@ -591,6 +592,21 @@ var LibraryWebGPU = {
       setLimitValueU32('maxComputeWorkgroupSizeY', {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeY }}});
       setLimitValueU32('maxComputeWorkgroupSizeZ', {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeZ }}});
       setLimitValueU32('maxComputeWorkgroupsPerDimension', {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupsPerDimension }}});
+
+      if (nextInChainPtr !== 0) {
+        var sType = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.sType, 'i32') }}};
+  #if ASSERTIONS
+        assert(sType === {{{ gpu.SType.CompatibilityModeLimits }}});
+        assert(0 === {{{ makeGetValue('nextInChainPtr', gpu.kOffsetOfNextInChainMember, '*') }}});
+  #endif
+        var compatibilityModeLimitsPtr = nextInChainPtr;
+        {{{ gpu.makeCheckDescriptor('compatibilityModeLimitsPtr') }}}
+
+        setLimitValueU32('maxStorageBuffersInFragmentStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPUCompatibilityModeLimits.maxStorageBuffersInFragmentStage }}});
+        setLimitValueU32('maxStorageTexturesInFragmentStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPUCompatibilityModeLimits.maxStorageTexturesInFragmentStage }}});
+        setLimitValueU32('maxStorageBuffersInVertexStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPUCompatibilityModeLimits.maxStorageBuffersInVertexStage }}});
+        setLimitValueU32('maxStorageTexturesInVertexStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPUCompatibilityModeLimits.maxStorageTexturesInVertexStage }}});
+      }
 
       // Non-standard. If this is undefined, it will correctly just cast to 0.
       if (limits.maxImmediateSize !== undefined) {
@@ -795,6 +811,7 @@ var LibraryWebGPU = {
       var limitsPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUDeviceDescriptor.requiredLimits, '*') }}};
       if (limitsPtr) {
         {{{ gpu.makeCheckDescriptor('limitsPtr') }}}
+        var nextInChainPtr = {{{ makeGetValue('limitsPtr', C_STRUCTS.WGPULimits.nextInChain, '*') }}};
         var requiredLimits = {};
         function setLimitU32IfDefined(name, limitOffset, ignoreIfZero=false) {
           var ptr = limitsPtr + limitOffset;
@@ -843,6 +860,20 @@ var LibraryWebGPU = {
         setLimitU32IfDefined("maxComputeWorkgroupSizeY", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeY }}});
         setLimitU32IfDefined("maxComputeWorkgroupSizeZ", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupSizeZ }}});
         setLimitU32IfDefined("maxComputeWorkgroupsPerDimension", {{{ C_STRUCTS.WGPULimits.maxComputeWorkgroupsPerDimension }}});
+
+        if (nextInChainPtr !== 0) {
+          var sType = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.sType, 'i32') }}};
+    #if ASSERTIONS
+          assert(sType === {{{ gpu.SType.CompatibilityModeLimits }}});
+          assert(0 === {{{ makeGetValue('nextInChainPtr', gpu.kOffsetOfNextInChainMember, '*') }}});
+    #endif
+          var compatibilityModeLimitsPtr = nextInChainPtr;
+          {{{ gpu.makeCheckDescriptor('compatibilityModeLimitsPtr') }}}
+          setLimitU32IfDefined('maxStorageBuffersInFragmentStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPUCompatibilityModeLimits.maxStorageBuffersInFragmentStage }}});
+          setLimitU32IfDefined('maxStorageTexturesInFragmentStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInFragmentStage }}});
+          setLimitU32IfDefined('maxStorageBuffersInVertexStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPULimits.maxStorageBuffersInVertexStage }}});
+          setLimitU32IfDefined('maxStorageTexturesInVertexStage', compatibilityModeLimitsPtr + {{{ C_STRUCTS.WGPULimits.maxStorageTexturesInVertexStage }}});
+        }
 
         // Non-standard. If this is 0, avoid passing it through so it won't cause an error.
         setLimitU32IfDefined("maxImmediateSize", {{{ C_STRUCTS.WGPULimits.maxImmediateSize }}}, true);
@@ -1818,6 +1849,20 @@ var LibraryWebGPU = {
   wgpuDeviceCreateTexture__deps: ['emwgpuCreateTexture'],
   wgpuDeviceCreateTexture: (devicePtr, descriptor) => {
     {{{ gpu.makeCheckDescriptor('descriptor') }}}
+    var nextInChainPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.nextInChain, '*') }}};
+
+    var textureBindingViewDimension;
+    if (nextInChainPtr !== 0) {
+      var sType = {{{ makeGetValue('nextInChainPtr', C_STRUCTS.WGPUChainedStruct.sType, 'i32') }}};
+#if ASSERTIONS
+      assert(sType === {{{ gpu.SType.TextureBindingViewDimensionDescriptor }}});
+      assert(0 === {{{ makeGetValue('nextInChainPtr', gpu.kOffsetOfNextInChainMember, '*') }}});
+#endif
+      var textureBindingViewDimensionDescriptor = nextInChainPtr;
+      {{{ gpu.makeCheckDescriptor('textureBindingViewDimensionDescriptor') }}}
+      textureBindingViewDimension = {{{ makeGetValue('textureBindingViewDimensionDescriptor',
+        C_STRUCTS.WGPUTextureBindingViewDimensionDescriptor.textureBindingViewDimension, 'TextureViewDimension') }}};
+    }
 
     var desc = {
       "label": WebGPU.makeStringFromOptionalStringView(
@@ -1828,6 +1873,7 @@ var LibraryWebGPU = {
       "dimension": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.dimension, 'TextureDimension') }}},
       "format": {{{ gpu.makeGetEnum('descriptor', C_STRUCTS.WGPUTextureDescriptor.format, 'TextureFormat') }}},
       "usage": {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.usage, 'u32') }}},
+      "textureBindingViewDimension": textureBindingViewDimension,
     };
 
     var viewFormatCount = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUTextureDescriptor.viewFormatCount, '*') }}};
