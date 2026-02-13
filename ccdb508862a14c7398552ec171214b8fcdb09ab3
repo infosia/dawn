@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2252987_0b6fdd6a",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-13T10:09:19Z",
+      "side": 1,
+      "message": "Using \"self\" sounds good, it\u0027s very clear from the context what it means and the extra verbosity seems like it would be fine. Follow-up sounds good.",
+      "parentUuid": "b7dcb934_7b76d720",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab8d26c1_4024e066",
         "filename": "src/dawn/native/opengl/BufferGL.cpp",
         "patchSetId": 22
@@ -187,6 +205,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "b6b7a92c_530fca7e",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc61c90_23cd7ab0",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-13T10:09:19Z",
+      "side": 1,
+      "message": "This is much more clear thanks!",
+      "parentUuid": "64f61f6c_2c4377e7",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
