@@ -347,6 +347,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "491d3298_13b86ee7",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-13T18:39:23Z",
+      "side": 1,
+      "message": "Sounds like an argument for not supporting LoadResolveTexture at all, and just exposing MSRTSS when the hardware advertises it? (Presumably IMRs won\u0027t advertise an extension that\u0027s harmful on their hardware.)\n\nAs of a couple of days ago Graphite will now use MSRTSS when available (Dawn only reports it when the Vulkan extension is supported), and fall back to using LoadResolveTexture with transient multisample targets when it\u0027s not. (Done currently with CreateRenderPass2 and two subpasses.) Sounds like that\u0027s not helpful on desktop GPUs.\n\nOpen question then is what\u0027s best for TBRs that don\u0027t advertise MSRTSS but still need to load previously written multisample data? We could keep forcing them into the subpass path, but then we may need an internal hueristic to prevent advertising the LoadResolveTexture feature on IMRs. Or we could remove it entirely and hope that newer hardware embraces MSRTSS more? (I know from [this helpful fellow](https://medium.com/androiddevelopers/multisampled-anti-aliasing-for-almost-free-on-tile-based-rendering-hardware-21794c479cb9) that the ideal situation is to not load/store the MSAA target at all and use transient textures, but Graphite can\u0027t always do that.)",
+      "parentUuid": "021166d6_ee667363",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
