@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab8e909_26e8f546",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-13T20:12:44Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "33ba8d423c34945add805c585df6acb85e529f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a8cad3_ba481c09",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-13T20:12:44Z",
+      "side": 1,
+      "message": "I also tried to add a:\n\n```\ncases.push_back({\n    .wgslTypes \u003d {{\"texture_1d\u003cf32, unfiterable\u003e\"}},\n    .format \u003d wgpu::TextureFormat::R16Unorm,\n    .dimension \u003d wgpu::TextureDimension::e1D,\n}),\n```\n\nBut, it seems like it returns true for `texture_1d\u003cf32, filterable\u003e` which I can\u0027t figure out if my setup is wrong or if there is a bug somewhere?",
+      "revId": "33ba8d423c34945add805c585df6acb85e529f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
