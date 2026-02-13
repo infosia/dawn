@@ -365,6 +365,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "749c0129_6f590fba",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-13T18:49:58Z",
+      "side": 1,
+      "message": "Yes, again it depends on whether the application (Graphite) is able to do multisampling without MSRTSS. If it can, it\u0027s best not expose it where it\u0027s hurtful.\n\n\u003e Open question then is what\u0027s best for TBRs that don\u0027t advertise MSRTSS but still need to load previously written multisample data? We could keep forcing them into the subpass path\n\nI don\u0027t think you have any choice _but_ to do that. You\u0027d be hard pressed to find a TBR device that supports VK_KHR_dynamic_rendering_local_read but doesn\u0027t support VK_EXT_multisampled_render_to_single_sampled. Android 16 (effectively) requires MSRTSS, and that predates DRLR: https://github.com/KhronosGroup/Vulkan-Profiles/blob/main/profiles/VP_ANDROID_16_minimums.json\n\n\u003e but then we may need an internal hueristic to prevent advertising the LoadResolveTexture feature on IMRs.\n\nThat\u0027s easy. If a memory type of `VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT` exists, that\u0027s TBR basically.\n\n\u003e I know from this helpful fellow\n\nLooks sketchy, don\u0027t believe everything you see on the internet :P",
+      "parentUuid": "491d3298_13b86ee7",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
