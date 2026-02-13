@@ -153,6 +153,11 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     return {moduleAndSpirv.workgroupSize};
 }
 
+void ComputePipeline::Bind(VkCommandBuffer& commands, const ComputePipeline* prevPipeline) const {
+    Device* device = ToBackend(GetDevice());
+    device->fn.CmdBindPipeline(commands, VK_PIPELINE_BIND_POINT_COMPUTE, *GetHandle());
+}
+
 void ComputePipeline::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_ComputePipeline", GetLabel());
 }
