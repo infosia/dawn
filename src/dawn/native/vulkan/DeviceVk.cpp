@@ -79,6 +79,30 @@ struct NoopDrawFunction<R(VKAPI_PTR*)(Args...)> {
     static R VKAPI_PTR Fun(Args...) {}
 };
 
+ResultOrError<VkDescriptorSetLayout> MakeFramebufferFetchLayout(Device* device) {
+    std::array<VkDescriptorSetLayoutBinding, kMaxColorAttachments> bindings;
+    for (uint32_t i = 0; i < kMaxColorAttachments; ++i) {
+        bindings[i].binding = i;
+        bindings[i].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+        bindings[i].descriptorCount = 1;
+        bindings[i].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+        bindings[i].pImmutableSamplers = nullptr;
+    }
+
+    VkDescriptorSetLayoutCreateInfo createInfo;
+    createInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+    createInfo.pNext = nullptr;
+    createInfo.flags = 0;
+    createInfo.bindingCount = bindings.size();
+    createInfo.pBindings = bindings.data();
+
+    VkDescriptorSetLayout layout = VK_NULL_HANDLE;
+    DAWN_TRY(CheckVkSuccess(
+        device->fn.CreateDescriptorSetLayout(device->GetVkDevice(), &createInfo, nullptr, &*layout),
+        "CreateDescriptorSetLayout"));
+    return layout;
+}
+
 }  // namespace
 
 // static
@@ -190,6 +214,15 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
     if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
         DAWN_TRY_ASSIGN(mResourceTableLayout, ResourceTable::MakeDescriptorSetLayout(this));
+    }
+
+    if (HasFeature(Feature::FramebufferFetch)) {
+        DAWN_TRY_ASSIGN(mFramebufferFetchLayout, MakeFramebufferFetchLayout(this));
+
+        absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
+        descriptorCountPerType[VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT] = kMaxColorAttachments;
+        mFramebufferFetchDescriptorAllocator =
+            DescriptorSetAllocator::Create(this, std::move(descriptorCountPerType));
     }
 
     return DeviceBase::Initialize(descriptor, std::move(queue));
@@ -394,6 +427,56 @@ const VkDescriptorSetLayout& Device::GetResourceTableLayout() const {
     return mResourceTableLayout;
 }
 
+const VkDescriptorSetLayout& Device::GetFramebufferFetchLayout() const {
+    DAWN_ASSERT(HasFeature(Feature::FramebufferFetch));
+    return mFramebufferFetchLayout;
+}
+
+ResultOrError<VkDescriptorSet> Device::GetOrCreateFramebufferFetchDescriptorSet(
+    const CommandRecordingContext* recordingContext,
+    const std::vector<VkImageView>& attachmentViews) {
+    DescriptorSetAllocation allocation;
+    DAWN_TRY_ASSIGN(allocation,
+                    mFramebufferFetchDescriptorAllocator->Allocate(mFramebufferFetchLayout));
+
+    VkDescriptorSet set = allocation.set;
+
+    std::array<VkWriteDescriptorSet, kMaxColorAttachments> writes;
+    std::array<VkDescriptorImageInfo, kMaxColorAttachments> imageInfos;
+
+    uint32_t writeCount = 0;
+    for (uint32_t i = 0; i < attachmentViews.size(); ++i) {
+        if (attachmentViews[i] == VK_NULL_HANDLE) {
+            continue;
+        }
+
+        imageInfos[writeCount].sampler = VK_NULL_HANDLE;
+        imageInfos[writeCount].imageView = attachmentViews[i];
+        imageInfos[writeCount].imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+
+        writes[writeCount].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        writes[writeCount].pNext = nullptr;
+        writes[writeCount].dstSet = set;
+        writes[writeCount].dstBinding = i;
+        writes[writeCount].dstArrayElement = 0;
+        writes[writeCount].descriptorCount = 1;
+        writes[writeCount].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
+        writes[writeCount].pImageInfo = &imageInfos[writeCount];
+        writes[writeCount].pBufferInfo = nullptr;
+        writes[writeCount].pTexelBufferView = nullptr;
+
+        writeCount++;
+    }
+
+    if (writeCount > 0) {
+        fn.UpdateDescriptorSets(mVkDevice, writeCount, writes.data(), 0, nullptr);
+    }
+
+    mFramebufferFetchDescriptorAllocator->Deallocate(&allocation);
+
+    return set;
+}
+
 MutexProtected<FencedDeleter>& Device::GetFencedDeleter() const {
     return *mDeleter;
 }
@@ -511,6 +594,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
         usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
         featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
+    }
+
+    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::RasterizationOrderAttachmentAccess));
+        usedKnobs.rasterizationOrderAttachmentAccessFeatures =
+            mDeviceInfo.rasterizationOrderAttachmentAccessFeatures;
+        featuresChain.Add(&usedKnobs.rasterizationOrderAttachmentAccessFeatures);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
@@ -1008,6 +1098,13 @@ void Device::DestroyImpl(DestroyReason reason) {
         fn.DestroyDescriptorSetLayout(mVkDevice, mResourceTableLayout, nullptr);
         mResourceTableLayout = VK_NULL_HANDLE;
     }
+
+    if (mFramebufferFetchLayout != VK_NULL_HANDLE) {
+        fn.DestroyDescriptorSetLayout(mVkDevice, mFramebufferFetchLayout, nullptr);
+        mFramebufferFetchLayout = VK_NULL_HANDLE;
+    }
+
+    mFramebufferFetchDescriptorAllocator = nullptr;
 
     mDescriptorAllocatorsPendingDeallocation.Use([&](auto pending) {
         for (Ref<DescriptorSetAllocator>& allocator : pending->IterateUpTo(kMaxExecutionSerial)) {

@@ -324,6 +324,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
+    // FramebufferFetch is supported with input attachments and subpass self-dependencies.
+    // The VK_EXT_rasterization_order_attachment_access extension is used for better performance
+    // and coherence when available.
+    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess)) {
+        EnableFeature(Feature::FramebufferFetch);
+    }
+
     if (mDeviceInfo.features.shaderClipDistance == VK_TRUE) {
         EnableFeature(Feature::ClipDistances);
     }
@@ -951,7 +958,8 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
          gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
         adapterToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
     } else {
-        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, true);
+        // TODO(kylechar): Disable dynamic rendering in the relevant test instead.
+        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, false);
     }
 
     // Use CreateRenderPass2KHR by default if the corresponding extension is available.

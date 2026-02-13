@@ -174,6 +174,7 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         mVkLayout = pipeline->GetVkLayout();
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+        mUsesFramebufferFetch = ToBackend(pipeline->GetLayout())->UsesFramebufferFetch();
     }
 
     void Apply(Device* device,
@@ -184,30 +185,41 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         // When the usages of the resource table changes between pipelines, all the BindGroups are
         // shifted by 1 (due to the resource table being in the first VkDescriptorSet) so we dirty
         // all bind groups.
-        BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
-        if (mLastUsesResourceTable != mUsesResourceTable) {
-            dirtyBindGroups = mBindGroupLayoutsMask;
-
+        bool dirtyBindGroups = mLastUsesResourceTable != mUsesResourceTable ||
+                               mLastUsesFramebufferFetch != mUsesFramebufferFetch;
+        if (mUsesResourceTable && (!mLastUsesResourceTable || dirtyBindGroups)) {
             // Set the resource table as the first set if it starts being used.
-            if (mUsesResourceTable) {
-                DAWN_ASSERT(mResourceTable != nullptr);
-                VkDescriptorSet set = mResourceTable->GetHandle();
-                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
-                                                 mVkLayout, 0, 1, &*set, 0, nullptr);
-            }
+            DAWN_ASSERT(mResourceTable != nullptr);
+            VkDescriptorSet set = mResourceTable->GetHandle();
+            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
+                                             0, 1, &*set, 0, nullptr);
         }
         BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
 
-        for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
-            VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
-            uint32_t setIndex = uint32_t(dirtyBGIndex + startOfBindGroups);
+        if (mUsesFramebufferFetch && (!mLastUsesFramebufferFetch || dirtyBindGroups)) {
+            DAWN_ASSERT(recordingContext->framebufferFetchDescriptorSet != VK_NULL_HANDLE);
+            uint32_t setIndex = uint32_t(startOfBindGroups);
+            device->fn.CmdBindDescriptorSets(
+                recordingContext->commandBuffer, bindPoint, mVkLayout, setIndex, 1,
+                &*recordingContext->framebufferFetchDescriptorSet, 0, nullptr);
+        }
+        if (mUsesFramebufferFetch) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
-            const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyBGIndex);
-            uint32_t count = static_cast<uint32_t>(dynamicOffsetSpan.size());
-            const uint32_t* dynamicOffset = count > 0 ? dynamicOffsetSpan.data() : nullptr;
+        if (dirtyBindGroups) {
+            for (BindGroupIndex dirtyBGIndex : mBindGroupLayoutsMask) {
+                VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
+                uint32_t setIndex = uint32_t(dirtyBGIndex + startOfBindGroups);
 
-            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
-                                             setIndex, 1, &*set, count, dynamicOffset);
+                const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyBGIndex);
+                uint32_t count = static_cast<uint32_t>(dynamicOffsetSpan.size());
+                const uint32_t* dynamicOffset = count > 0 ? dynamicOffsetSpan.data() : nullptr;
+
+                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
+                                                 mVkLayout, setIndex, 1, &*set, count,
+                                                 dynamicOffset);
+            }
         }
 
         // Update PipelineLayout
@@ -215,12 +227,15 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
 
         mLastAppliedImmediateConstantSize = mImmediateConstantSize;
         mLastUsesResourceTable = mUsesResourceTable;
+        mLastUsesFramebufferFetch = mUsesFramebufferFetch;
     }
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
     raw_ptr<ResourceTable> mResourceTable;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
+    bool mLastUsesFramebufferFetch = false;
+    bool mUsesFramebufferFetch = false;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -649,6 +664,9 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
 
             query.SetColor(i, attachmentInfo.view->GetFormat().format, attachmentInfo.loadOp,
                            attachmentInfo.storeOp, hasResolveTarget, renderToSingleSampled);
+            // if (device->HasFeature(Feature::FramebufferFetch)) {
+            //     query.SetFramebufferFetch(i);
+            // }
         }
 
         if (renderPass->attachmentState->HasDepthStencilAttachment()) {
@@ -751,6 +769,23 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                                                                 renderPass, beginInfo));
     } else {
         device->fn.CmdBeginRenderPass(commands, &beginInfo, VK_SUBPASS_CONTENTS_INLINE);
+    }
+
+    if (device->HasFeature(Feature::FramebufferFetch)) {
+        std::vector<VkImageView> attachmentViews(kMaxColorAttachments, VK_NULL_HANDLE);
+        for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+            auto& attachmentInfo = renderPass->colorAttachments[i];
+            TextureView* view = ToBackend(attachmentInfo.view.Get());
+            if (view->GetDimension() == wgpu::TextureViewDimension::e3D) {
+                DAWN_TRY_ASSIGN(attachmentViews[static_cast<uint8_t>(i)],
+                                view->GetOrCreate2DViewOn3D(attachmentInfo.depthSlice));
+            } else {
+                attachmentViews[static_cast<uint8_t>(i)] = view->GetHandle();
+            }
+        }
+        DAWN_TRY_ASSIGN(
+            recordingContext->framebufferFetchDescriptorSet,
+            device->GetOrCreateFramebufferFetchDescriptorSet(recordingContext, attachmentViews));
     }
 
     return {};
