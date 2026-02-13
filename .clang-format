@@ -1,10 +1,25 @@
 # http://clang.llvm.org/docs/ClangFormatStyleOptions.html
 BasedOnStyle: Chromium
 
+InsertBraces: true
+InsertNewlineAtEOF: true
+
+# Sort #includes by following
+# https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes
+#
+# ref: https://clang.llvm.org/docs/ClangFormatStyleOptions.html#includeblocks
+IncludeBlocks: Regroup
+IncludeCategories:
+  # vk_struct_helper should appear last. Note the low priority number.
+  - Regex:           'vulkan/utility/vk_struct_helper\.hpp'
+    Priority:        10
+
+## Dawn modifications
+
 ColumnLimit: 100
 
 # Use 4 space indents
 IndentWidth: 4
 ObjCBlockIndentWidth: 4
 AccessModifierOffset: -2
-InsertBraces: true
+

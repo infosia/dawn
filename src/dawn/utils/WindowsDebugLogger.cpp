@@ -34,10 +34,9 @@
 #include <cstdio>
 #include <thread>
 
-#include "dawn/utils/PlatformDebugLogger.h"
-
 #include "dawn/common/Assert.h"
 #include "dawn/common/windows_with_undefs.h"
+#include "dawn/utils/PlatformDebugLogger.h"
 #include "dawn/utils/SystemHandle.h"
 
 namespace dawn::utils {
