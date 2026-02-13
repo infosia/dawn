@@ -401,6 +401,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baa0822c_222a81d1",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T19:16:45Z",
+      "side": 1,
+      "message": "Ugh, nvm. I forget that if MSRTSS is not available then we cannot use it to emulate LoadResolveTexture either. Looks like we have to change skia.",
+      "parentUuid": "d7dfde18_350fa444",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
