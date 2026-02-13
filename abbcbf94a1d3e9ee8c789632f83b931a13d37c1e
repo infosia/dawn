@@ -455,6 +455,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62216d24_5849e69a",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-13T21:59:35Z",
+      "side": 1,
+      "message": "(Bear in mind that AL exists and the GPUs can be IMRs)",
+      "parentUuid": "fb30b195_d6396e72",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
