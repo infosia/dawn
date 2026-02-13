@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d4956af_604c6bdc",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-13T19:02:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f657e3b1_17b14514",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f4d3423_0671864f",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Same, followup Cl to update these tests.",
       "parentUuid": "4f4d3423_0671864f",
+      "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a414ba72_d2f8473d",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-13T19:02:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "07d89d40_b7fc1987",
       "revId": "507fd2b6f7df025b88258e9186c805d03c3d49ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
