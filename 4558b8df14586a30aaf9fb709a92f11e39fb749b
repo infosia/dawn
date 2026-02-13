@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1ef6270_116e79f4",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T14:04:02Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n    // GL calls for objects being destroyed need special handling.\n    // If called from the (C++) destructor (DestroyReason::CppDestructor), we cannot take a\n    // reference on \"self\", so we call GetData() immediately to retrieve the required data (GL\n    // object handles, etc) and capture the data values as part of the lambda\u0027s capture list.\n    // It\u0027s safe to get the handles directly because this is the last ref to\n    // the object thus there shouldn\u0027t be any pending GL commands that could\n    // modify it.\n    // If called from an APIDestroy() call (DestroyReason::EarlyDestroy), the data may not yet be\n    // valid. For example, the GL call to create the object may also be deferred and the handle not\n    // yet initialized. In that case, we capture a ref to the \"self\" object and the GetData()\n    // function, call self-\u003eGetData() from the outer lambda, and pass the data values to the work\n    // function.\n```",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 16
+      },
+      "revId": "4558b8df14586a30aaf9fb709a92f11e39fb749b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

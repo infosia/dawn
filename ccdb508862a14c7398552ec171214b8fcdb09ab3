@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "495416d7_870dc829",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T14:04:02Z",
+      "side": 1,
+      "message": "I remember Corentin mentioned in the past we should remove `GetGL` in future and access gl inside a lambda scope everywhere. So `ExecuteGL` should be fine? Note that the lambda inside `ExecuteGL` will be inlined by the compiler anw.",
+      "parentUuid": "e90d44ef_9656c836",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "757919d7_e66b4390",
         "filename": "src/dawn/native/opengl/BufferGL.cpp",
         "patchSetId": 22
@@ -605,6 +623,30 @@
       "side": 1,
       "message": "I honestly don\u0027t remember why I did this, but I don\u0027t think these tests pass on the deferred path yet. They at least pass with the mutex path, so I think it\u0027s worth enabling them here (and removing the individual suppressions) so we at least increase coverage.",
       "parentUuid": "90b9092d_13643642",
+      "range": {
+        "startLine": 2067,
+        "startChar": 38,
+        "endLine": 2067,
+        "endChar": 71
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a5782ec_bb196b34",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-13T14:04:02Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird that this CL implements the deferred path but it has no test coverage. Many of these multi-threaded tests don\u0027t work with deferrals because they use `Queue::Submit` on multiple threads. Whereas our deferred path only expects `Queue::Submit` to run on a single thread (i.e. the GL thread). That\u0027s also the reason why originally I added a lock to the deferred path.\n\nMaybe we should at least add some tests to verify the deferred buffer mappings can work on multiple threads without using `Queue::Submit`. The existing `Buffers_MapInParallel` test uses `Queue::Submit` concurrently, so we cannot enable that.\n\nI think we could also enable some tests like `BufferTests.cpp`, `CopyTests.cpp`, etc for \"gl_defer\" toggle. Those can verify `Queue::WriteBuffer`, `Queue::WriteTexture` implementations. They are single threaded tests and don\u0027t have problem with `Queue::Submit`. \n\nCould do in the follow up CLs as well.",
+      "parentUuid": "027774ba_b76065ea",
       "range": {
         "startLine": 2067,
         "startChar": 38,
