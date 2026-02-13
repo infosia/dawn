@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5462f9_31fa0eb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-13T01:03:16Z",
+      "side": 1,
+      "message": "I\u0027m seeing some pretty long pending times on the trybot, likely due to the change from n2-standard-8 machines in the luci.flex.try pool to e2-standard-8 machines in the luci.chromium.gpu.try pool. We might have to revert this and hold off on relanding until we get build times under control (likely via RBE).",
+      "revId": "603cda329303520eb5a5c058c446b8ba438a89a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
