@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2996a277_de07f46b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-13T18:14:37Z",
+      "side": 1,
+      "message": "Great, seems to be working now! https://dawn-review.googlesource.com/c/dawn/+/290655\n\nOne nit - still creates a line in commit message even when there is nothing to update: https://dawn-review.googlesource.com/c/dawn/+/290755",
+      "revId": "2f480bc345ab3d121187417a84e6c0a95a8519ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
