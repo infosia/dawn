@@ -48,6 +48,8 @@ class ComputePipeline final : public ComputePipelineBase {
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
 
+    void Bind(VkCommandBuffer& commands, const ComputePipeline* prevPipeline) const;
+
     // Dawn API
     void SetLabelImpl() override;
 

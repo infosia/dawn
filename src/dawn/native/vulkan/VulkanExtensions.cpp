@@ -139,6 +139,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::Maintenance4, "VK_KHR_maintenance4"},
     {DeviceExt::SubgroupSizeControl, "VK_EXT_subgroup_size_control"},
     {DeviceExt::DynamicRendering, "VK_KHR_dynamic_rendering"},
+    {DeviceExt::ExtendedDynamicState, "VK_EXT_extended_dynamic_state"},
 
     // Promoted in 1.4
     {DeviceExt::PipelineRobustness, "VK_EXT_pipeline_robustness"},
@@ -228,6 +229,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::ExternalSemaphoreFD:
             case DeviceExt::ExternalSemaphoreZirconHandle:
             case DeviceExt::QueueFamilyForeign:
+            case DeviceExt::ExtendedDynamicState:
                 hasDependencies = true;
                 break;
 

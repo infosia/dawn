@@ -561,7 +561,7 @@ struct ProgrammablePassState : public StackAllocated {
         VkCommandBuffer commands = recordingContext->commandBuffer;
 
         if (lastAppliedPipeline != lastPipeline) {
-            vk.CmdBindPipeline(commands, PipelineBindPoint, lastPipeline->GetHandle());
+            lastPipeline->Bind(commands, lastAppliedPipeline);
             lastAppliedPipeline = lastPipeline;
         }
 

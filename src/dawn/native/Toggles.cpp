@@ -762,6 +762,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Treat the stride operand for cooperative matrix load and store instructions as matrix "
       "elements instead of a source/dest pointee elements.",
       "https://crbug.com/460209126", ToggleStage::Device}},
+    {Toggle::VulkanUseExtendedDynamicState,
+     {"vulkan_use_extended_dynamic_state",
+      "Makes use of VK_EXT_extended_dynamic_state to improve pipeline caching.",
+      "https://crbug.com/chromium/463893793", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
