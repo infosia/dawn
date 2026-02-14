@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/load.h"
+#include "src/tint/lang/core/ir/transform/atomic_vec2u_to_from_u64.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/wgsl/enums.h"
@@ -168,6 +169,8 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kAtomicXor)
         CASE(kAtomicExchange)
         CASE(kAtomicCompareExchangeWeak)
+        CASE(kAtomicStoreMin)
+        CASE(kAtomicStoreMax)
         CASE(kSubgroupBallot)
         CASE(kSubgroupElect)
         CASE(kSubgroupBroadcast)
@@ -264,6 +267,9 @@ void ReplaceWorkgroupBarrier(core::ir::Builder& b, core::ir::CoreBuiltinCall* ca
 }  // namespace
 
 Result<SuccessType> Raise(core::ir::Module& mod) {
+    TINT_CHECK_RESULT(core::ir::transform::AtomicVec2uToFromU64(
+        mod, core::ir::transform::AtomicVec2uU64Direction::kFromU64));
+
     TINT_CHECK_RESULT(core::ir::transform::RenameConflicts(mod));
 
     core::ir::Builder b{mod};
