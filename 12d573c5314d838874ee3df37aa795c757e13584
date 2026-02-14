@@ -50,6 +50,24 @@
       "message": "This is unused.",
       "revId": "12d573c5314d838874ee3df37aa795c757e13584",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3525d095_b6f23d37",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-14T09:40:24Z",
+      "side": 1,
+      "message": "oops, ended up in the wrong commit in the stack.",
+      "parentUuid": "6e4772d1_dd2ba6ae",
+      "revId": "12d573c5314d838874ee3df37aa795c757e13584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
