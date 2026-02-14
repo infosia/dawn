@@ -43,6 +43,8 @@ tint_add_target(tint_lang_core_ir_transform lib
   lang/core/ir/transform/array_length_from_immediate.h
   lang/core/ir/transform/array_length_from_uniform.cc
   lang/core/ir/transform/array_length_from_uniform.h
+  lang/core/ir/transform/atomic_vec2u_to_from_u64.cc
+  lang/core/ir/transform/atomic_vec2u_to_from_u64.h
   lang/core/ir/transform/bgra8unorm_polyfill.cc
   lang/core/ir/transform/bgra8unorm_polyfill.h
   lang/core/ir/transform/binary_polyfill.cc
@@ -121,6 +123,9 @@ tint_target_add_dependencies(tint_lang_core_ir_transform lib
   tint_lang_core_ir_analysis
   tint_lang_core_ir_type
   tint_lang_core_type
+  tint_lang_wgsl
+  tint_lang_wgsl_intrinsic
+  tint_lang_wgsl_ir
   tint_utils
   tint_utils_containers
   tint_utils_diagnostic
@@ -144,6 +149,7 @@ tint_target_add_external_dependencies(tint_lang_core_ir_transform lib
 tint_add_target(tint_lang_core_ir_transform_test test
   lang/core/ir/transform/array_length_from_immediate_test.cc
   lang/core/ir/transform/array_length_from_uniform_test.cc
+  lang/core/ir/transform/atomic_vec2u_to_from_u64_test.cc
   lang/core/ir/transform/bgra8unorm_polyfill_test.cc
   lang/core/ir/transform/binary_polyfill_test.cc
   lang/core/ir/transform/binding_remapper_test.cc
@@ -187,6 +193,9 @@ tint_target_add_dependencies(tint_lang_core_ir_transform_test test
   tint_lang_core_ir_transform
   tint_lang_core_ir_type
   tint_lang_core_type
+  tint_lang_wgsl
+  tint_lang_wgsl_intrinsic
+  tint_lang_wgsl_ir
   tint_utils
   tint_utils_containers
   tint_utils_diagnostic
