@@ -33,6 +33,24 @@
       "message": "nit: this could use IsAligned from Math.h",
       "revId": "95254bf67813740313c9b38f01d2d0914c8da6e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "653b013c_ab8c9f9b",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-14T15:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30990961_c8ec4bd9",
+      "revId": "95254bf67813740313c9b38f01d2d0914c8da6e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
