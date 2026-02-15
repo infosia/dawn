@@ -124,7 +124,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool isSampled) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -258,6 +259,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {
         req.tintOptions.pass_matrix_by_pointer = true;
     }
+
+    // Set the pixel center polyfill option for multisampled fragment shaders.
+    req.tintOptions.apply_pixel_center_polyfill = isSampled;
 
     // Set internal immediate constant offsets
     if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, pipelineImmediateMask)) {

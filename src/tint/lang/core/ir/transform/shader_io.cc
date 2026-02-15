@@ -147,6 +147,7 @@ struct State {
         if (vertex_point_size_index) {
             backend->SetOutput(wrapper, vertex_point_size_index.value(), b.Constant(1_f));
         }
+        backend->SetBackendOutputs(wrapper, inner_result->Result());
 
         // Return the new result.
         wrapper.Return(wrapper_ep, backend->MakeReturnValue(wrapper));

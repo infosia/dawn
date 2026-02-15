@@ -100,6 +100,12 @@ struct ShaderIOBackendState {
     /// @returns true if a vertex point size builtin should be added
     virtual bool NeedsVertexPointSize() const { return false; }
 
+    /// Set any additional backend-specific outputs after the inner call outputs have been set.
+    /// @param builder the IR builder for new instructions
+    /// @param inner_result the return value from calling the original entry point function
+    virtual void SetBackendOutputs([[maybe_unused]] Builder& builder,
+                                   [[maybe_unused]] Value* inner_result) {}
+
   protected:
     /// The IR module.
     Module& ir;

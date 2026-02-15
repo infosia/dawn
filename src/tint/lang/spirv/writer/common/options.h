@@ -146,6 +146,9 @@ struct Options {
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
+    /// Set to `true` to apply the pixel center polyfill for multisampled fragment shaders.
+    bool apply_pixel_center_polyfill = false;
+
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
 
@@ -185,6 +188,7 @@ struct Options {
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  decompose_uniform_buffers,
+                 apply_pixel_center_polyfill,
                  depth_range_offsets,
                  spirv_version,
                  resource_binding,

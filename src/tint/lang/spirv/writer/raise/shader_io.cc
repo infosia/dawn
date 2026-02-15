@@ -55,12 +55,70 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The configuration options.
     const ShaderIOConfig& config;
 
+    /// Tracks the vertex shader's output position value for the pixel center polyfill.
+    core::ir::Value* vert_out_position = nullptr;
+    /// Index of the center_pos interpolant in vertex outputs.
+    std::optional<uint32_t> center_pos_vert_idx;
+    /// Index of the center_pos interpolant in fragment inputs.
+    std::optional<uint32_t> center_pos_frag_idx;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
         : ShaderIOBackendState(mod, f), config(cfg) {}
 
     /// Destructor
     ~StateImpl() override {}
+
+    /// Find the smallest unused location index among existing entries.
+    /// @param entries the list of IO entries to search
+    /// @returns the smallest unused location index
+    uint32_t FindSmallestUnusedLocation(
+        const Vector<core::type::Manager::StructMemberDesc, 4>& entries) {
+        uint32_t max_loc = 0;
+        for (const auto& entry : entries) {
+            if (entry.attributes.location.has_value()) {
+                max_loc = std::max(max_loc, entry.attributes.location.value() + 1);
+            }
+        }
+        // Find the smallest unused location
+        for (uint32_t loc = 0; loc < max_loc + 1; loc++) {
+            bool used = false;
+            for (const auto& entry : entries) {
+                if (entry.attributes.location.has_value() &&
+                    entry.attributes.location.value() == loc) {
+                    used = true;
+                    break;
+                }
+            }
+            if (!used) {
+                return loc;
+            }
+        }
+        return max_loc;
+    }
+
+    /// Add the center_pos interpolant to the IO entries.
+    /// @param entries the list of IO entries
+    /// @param addrspace the address space (kIn for fragment, kOut for vertex)
+    /// @returns the index of the new interpolant
+    uint32_t AddCenterPosInterpolant(
+        Vector<core::type::Manager::StructMemberDesc, 4>& entries,
+        core::AddressSpace addrspace) {
+        uint32_t loc = FindSmallestUnusedLocation(entries);
+
+        core::IOAttributes attrs;
+        attrs.location = loc;
+        attrs.interpolation = core::Interpolation{
+            core::InterpolationType::kLinear,
+            core::InterpolationSampling::kCenter,
+        };
+
+        if (addrspace == core::AddressSpace::kOut) {
+            return AddOutput(ir.symbols.New("center_pos"), ty.vec4<f32>(), std::move(attrs));
+        } else {
+            return AddInput(ir.symbols.New("center_pos"), ty.vec4<f32>(), std::move(attrs));
+        }
+    }
 
     /// Declare a global variable for each IO entry listed in @p entries.
     /// @param vars the list of variables
@@ -118,12 +176,20 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        // Add the center_pos interpolant for fragment shader inputs if the polyfill is enabled.
+        if (config.apply_pixel_center_polyfill && func->IsFragment()) {
+            center_pos_frag_idx = AddCenterPosInterpolant(inputs, core::AddressSpace::kIn);
+        }
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
+        // Add the center_pos interpolant for vertex shader outputs if the polyfill is enabled.
+        if (config.apply_pixel_center_polyfill && func->IsVertex()) {
+            center_pos_vert_idx = AddCenterPosInterpolant(outputs, core::AddressSpace::kOut);
+        }
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
@@ -146,6 +212,38 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             value = builder.Convert(inputs[idx].type, value)->Result();
         }
 
+        // Apply the pixel center polyfill for @builtin(position) in fragment shaders.
+        if (inputs[idx].attributes.builtin == core::BuiltinValue::kPosition &&
+            center_pos_frag_idx.has_value()) {
+            // Load the hardware position (which may be sample position in per-sample mode).
+            auto* hw_position = value;
+
+            // Swizzle position.xy, floor it, add vec2(0.5) to get pixel-centered xy.
+            auto* pos_xy = builder.Swizzle(ty.vec2<f32>(), hw_position, {0u, 1u})->Result();
+            auto* floored = builder.Call<vec2<f32>>(core::BuiltinFn::kFloor, pos_xy)->Result();
+            auto* half_vec = builder.Construct(ty.vec2<f32>(), 0.5_f, 0.5_f)->Result();
+            auto* pixel_center_xy = builder.Add<vec2<f32>>(floored, half_vec)->Result();
+
+            // Load the center-interpolated vec4 from the new input variable.
+            auto* center_var = input_vars[center_pos_frag_idx.value()];
+            auto* center_val = builder.Load(center_var)->Result();
+
+            // Extract z and w from the center-interpolated variable.
+            auto* center_z = builder.Swizzle(ty.f32(), center_val, {2u})->Result();
+            auto* center_w = builder.Swizzle(ty.f32(), center_val, {3u})->Result();
+
+            // Apply viewport depth mapping to z.
+            auto* mapped_z = ViewportMappedFragDepth(builder, center_z);
+
+            // Compute w = 1.0 / center_w (undo the 1/w from vertex shader).
+            auto* one = builder.Constant(1.0_f);
+            auto* w = builder.Divide<f32>(one, center_w)->Result();
+
+            // Construct the final vec4f(pixel_center_xy, mapped_z, w).
+            value =
+                builder.Construct(ty.vec4<f32>(), pixel_center_xy, mapped_z, w)->Result();
+        }
+
         return value;
     }
 
@@ -160,6 +258,26 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             to = builder.Access(ptr, to, 0_u)->Result();
         }
 
+        // Capture the vertex output position for the pixel center polyfill.
+        if (outputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            vert_out_position = value;
+        }
+
+        // For the center_pos interpolant slot in vertex shader, compute the interpolant value
+        // from the captured position instead of using the raw value.
+        if (center_pos_vert_idx.has_value() && idx == center_pos_vert_idx.value() &&
+            vert_out_position != nullptr) {
+            // Compute (position.xy, position.z / position.w, 1.0 / position.w).
+            auto* pos_xy =
+                builder.Swizzle(ty.vec2<f32>(), vert_out_position, {0u, 1u})->Result();
+            auto* pos_z = builder.Swizzle(ty.f32(), vert_out_position, {2u})->Result();
+            auto* pos_w = builder.Swizzle(ty.f32(), vert_out_position, {3u})->Result();
+            auto* z_over_w = builder.Divide<f32>(pos_z, pos_w)->Result();
+            auto* one = builder.Constant(1.0_f);
+            auto* inv_w = builder.Divide<f32>(one, pos_w)->Result();
+            value = builder.Construct(ty.vec4<f32>(), pos_xy, z_over_w, inv_w)->Result();
+        }
+
         // Clamp frag_depth values if necessary.
         if (outputs[idx].attributes.builtin == core::BuiltinValue::kFragDepth) {
             value = ClampFragDepth(builder, value);
@@ -171,6 +289,40 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+    }
+
+    /// @copydoc ShaderIO::BackendState::SetBackendOutputs
+    void SetBackendOutputs(core::ir::Builder& builder,
+                           [[maybe_unused]] core::ir::Value* inner_result) override {
+        if (center_pos_vert_idx.has_value()) {
+            // Use a dummy value (nullptr) — SetOutput will compute the actual value from
+            // vert_out_position.
+            SetOutput(builder, center_pos_vert_idx.value(), nullptr);
+        }
+    }
+
+    /// Apply viewport depth mapping to a frag_depth value.
+    /// @param builder the builder to use for new instructions
+    /// @param frag_depth the incoming frag_depth value
+    /// @returns the viewport-mapped value
+    core::ir::Value* ViewportMappedFragDepth(core::ir::Builder& builder,
+                                             core::ir::Value* frag_depth) {
+        if (!config.depth_range_offsets) {
+            return frag_depth;
+        }
+
+        auto* immediate_data = config.immediate_data_layout.var;
+        auto min_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->min));
+        auto max_idx = u32(config.immediate_data_layout.IndexOf(config.depth_range_offsets->max));
+        auto* min_val =
+            builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, min_idx))->Result();
+        auto* max_val =
+            builder.Load(builder.Access<ptr<immediate, f32>>(immediate_data, max_idx))->Result();
+
+        // Apply viewport remapping: min + (max - min) * frag_depth
+        auto* range = builder.Subtract<f32>(max_val, min_val)->Result();
+        auto* scaled = builder.Multiply<f32>(range, frag_depth)->Result();
+        return builder.Add<f32>(min_val, scaled)->Result();
     }
 
     /// Clamp a frag_depth builtin value if necessary.

@@ -1023,6 +1023,16 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             ++totalInterStageShaderVariables;
         }
         metadata->usesFragDepth = entryPoint.frag_depth_used;
+        metadata->usesFragPosition = entryPoint.frag_position_used;
+
+        // Check if any inter-stage input uses sample interpolation sampling.
+        for (const auto& inputVar : entryPoint.input_variables) {
+            if (inputVar.interpolation_sampling ==
+                tint::inspector::InterpolationSampling::kSample) {
+                metadata->isFragMultiSampled = true;
+                break;
+            }
+        }
 
         metadata->totalInterStageShaderVariables = totalInterStageShaderVariables;
         if (metadata->totalInterStageShaderVariables > maxInterStageShaderVariables) {

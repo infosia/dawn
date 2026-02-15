@@ -362,8 +362,12 @@ MaybeError RenderPipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
+    // Check if the pixel center polyfill is needed for multisampled fragment shaders.
+    bool isSampled = (GetSampleCount() > 1u) && UsesFragPosition() &&
+                     (IsFragMultiSampled() || UsesSampleIndex());
+
     // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
+    if ((UsesFragDepth() || isSampled) && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -376,9 +380,10 @@ MaybeError RenderPipeline::InitializeImpl() {
                               bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                         ToBackend(programmableStage.module)
+                             ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
+                                                 GetImmediateMask(), isSampled));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

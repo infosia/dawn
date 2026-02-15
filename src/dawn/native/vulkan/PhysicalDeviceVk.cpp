@@ -809,17 +809,23 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
         std::min(vkLimits.maxVertexInputBindingStride - 1, vkLimits.maxVertexInputAttributeOffset) +
         1;
 
-    // Reserve 4 components for the SPIR-V builtin `position`. WebGPU SPEC requires the minimum
-    // value of `maxInterStageShaderVariables` be 16. According to Vulkan SPEC, "the Location value
-    // specifies an interface slot comprised of a 32-bit four-component vector conveyed between
-    // stages". So on any WebGPU Vulkan backend `maxVertexOutputComponents` must be no less than
-    // 68 = (16 * 4 + 4).
-    if (vkLimits.maxVertexOutputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4 ||
-        vkLimits.maxFragmentInputComponents < baseLimits.v1.maxInterStageShaderVariables * 4 + 4) {
+    // Reserve components for the SPIR-V builtin `position` and the emulated pixel center
+    // interpolant used by the multisampled fragment shader polyfill.
+    // 1 slot for position + 1 slot for the emulated pixel center = 2 reserved vec4 slots (8
+    // components). WebGPU SPEC requires the minimum value of `maxInterStageShaderVariables` be 16.
+    // According to Vulkan SPEC, "the Location value specifies an interface slot comprised of a
+    // 32-bit four-component vector conveyed between stages". So on any WebGPU Vulkan backend
+    // `maxVertexOutputComponents` must be no less than 72 = (16 * 4 + 8).
+    auto constexpr kNumReservedVariables = 1 + 1;  // 1 for position + 1 for emulated pixel center
+    if (vkLimits.maxVertexOutputComponents <
+            baseLimits.v1.maxInterStageShaderVariables * 4 + kNumReservedVariables * 4 ||
+        vkLimits.maxFragmentInputComponents <
+            baseLimits.v1.maxInterStageShaderVariables * 4 + kNumReservedVariables * 4) {
         return DAWN_INTERNAL_ERROR("Insufficient Vulkan limits for maxInterStageShaderVariables");
     }
     limits->v1.maxInterStageShaderVariables =
-        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 - 1;
+        std::min(vkLimits.maxVertexOutputComponents, vkLimits.maxFragmentInputComponents) / 4 -
+        kNumReservedVariables;
 
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeSharedMemorySize, maxComputeWorkgroupStorageSize);
     CHECK_AND_SET_V1_MAX_LIMIT(maxComputeWorkGroupInvocations, maxComputeInvocationsPerWorkgroup);
