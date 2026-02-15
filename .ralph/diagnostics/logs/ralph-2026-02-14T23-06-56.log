@@ -1,0 +1,6 @@
+2026-02-15T07:06:56.866288Z  INFO ralph: Creating scratchpad directory: /home/svenzheng/dawn/.ralph/agent
+2026-02-15T07:06:57.013356Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:06:57.013364Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:06:57.013366Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:06:57.013368Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:07:12.476077Z  INFO ralph_tui::app: Ctrl+C detected, signaling main loop

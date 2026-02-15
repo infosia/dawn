@@ -1,0 +1,26 @@
+2026-02-15T07:07:25.267445Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:07:25.267462Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:07:25.267465Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:07:25.267466Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:15.850294Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:42:15.850310Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:42:15.850313Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:42:15.850314Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:17.103480Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:42:17.103498Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:42:17.103501Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:42:17.103503Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:18.296896Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:42:18.296914Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:42:18.296917Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:42:18.296918Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:19.504275Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:42:19.504294Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:42:19.504297Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:42:19.504298Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:20.662195Z  INFO ralph_core::event_loop: Memory injection check: enabled=true, inject=Auto, workspace_root="/home/svenzheng/dawn"
+2026-02-15T07:42:20.662212Z  INFO ralph_core::event_loop: Looking for memories at: "/home/svenzheng/dawn/.ralph/agent/memories.md" (exists: false)
+2026-02-15T07:42:20.662215Z  INFO ralph_core::event_loop: Successfully loaded 0 memories from store
+2026-02-15T07:42:20.662216Z  INFO ralph_core::event_loop: Memory store is empty - no memories to inject
+2026-02-15T07:42:22.013079Z  INFO ralph_core::event_loop: Wrapping up: consecutive_failures. 6 iterations in 34m 56s. reason=consecutive_failures iterations=6 duration=34m 56s
+2026-02-15T07:59:22.877904Z  INFO ralph_tui::app: Ctrl+C detected, signaling main loop
