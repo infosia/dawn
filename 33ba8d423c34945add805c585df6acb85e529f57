@@ -33,6 +33,24 @@
       "message": "I also tried to add a:\n\n```\ncases.push_back({\n    .wgslTypes \u003d {{\"texture_1d\u003cf32, unfiterable\u003e\"}},\n    .format \u003d wgpu::TextureFormat::R16Unorm,\n    .dimension \u003d wgpu::TextureDimension::e1D,\n}),\n```\n\nBut, it seems like it returns true for `texture_1d\u003cf32, filterable\u003e` which I can\u0027t figure out if my setup is wrong or if there is a bug somewhere?",
       "revId": "33ba8d423c34945add805c585df6acb85e529f57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500229f3_eb8d6c44",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-15T20:25:06Z",
+      "side": 1,
+      "message": "Ugh so these formats should have been made unfilterable but haven\u0027t when we implemented texture-formats-tier1. See how they have kAnyFloat in Format.cpp.\n\nFor now let\u0027s have a TODO and fix that later. I\u0027ll file a bug tomorrow as fixing it will be annoying to say the least.",
+      "parentUuid": "71a8cad3_ba481c09",
+      "revId": "33ba8d423c34945add805c585df6acb85e529f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
