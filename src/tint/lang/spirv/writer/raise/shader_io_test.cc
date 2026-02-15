@@ -1349,5 +1349,230 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+// Test pixel center polyfill with @interpolate(linear, sample) input.
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleInterpolation) {
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* color = b.FunctionParam("color", ty.f32());
+    color->SetLocation(0);
+    color->SetInterpolation(core::Interpolation{
+        core::InterpolationType::kLinear,
+        core::InterpolationSampling::kSample,
+    });
+
+    ep->SetParams({pos, color});
+
+    b.Append(ep->Block(), [&] {  //
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%pos:vec4<f32> [@position], %color:f32 [@location(0), @interpolate(linear, sample)]):void {
+  $B1: {
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    // Verify the polyfill adds a @location(1) @interpolate(linear, center) input.
+    auto result = str();
+    EXPECT_NE(result.find("@interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos interpolant in output:\n"
+        << result;
+    // Verify that pixel center reconstruction is performed (floor + add).
+    EXPECT_NE(result.find("floor"), std::string::npos)
+        << "Expected floor call in output:\n"
+        << result;
+}
+
+// Test pixel center polyfill with @builtin(sample_index).
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleIndex) {
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* sample_idx = b.FunctionParam("sample_index", ty.u32());
+    sample_idx->SetBuiltin(core::BuiltinValue::kSampleIndex);
+
+    ep->SetParams({pos, sample_idx});
+
+    b.Append(ep->Block(), [&] {  //
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @fragment func(%pos:vec4<f32> [@position], %sample_index:u32 [@sample_index]):void {
+  $B1: {
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    auto result = str();
+    // Verify the polyfill adds a center interpolant.
+    EXPECT_NE(result.find("@interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos interpolant in output:\n"
+        << result;
+    EXPECT_NE(result.find("floor"), std::string::npos)
+        << "Expected floor call in output:\n"
+        << result;
+}
+
+// Test pixel center polyfill when no sample interpolation or sample_index is used.
+// The polyfill should still apply (it is idempotent).
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_NoModification) {
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    ep->SetParams({pos});
+
+    b.Append(ep->Block(), [&] {  //
+        b.Return(ep);
+    });
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    auto result = str();
+    EXPECT_NE(result.find("@interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos interpolant in output:\n"
+        << result;
+    EXPECT_NE(result.find("floor"), std::string::npos)
+        << "Expected floor call in output:\n"
+        << result;
+}
+
+// Test pixel center polyfill when sample interpolation is in a struct parameter.
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleInterpolation_InStruct) {
+    auto* str_ty =
+        ty.Struct(mod.symbols.New("Inputs"), {
+                                                 {
+                                                     mod.symbols.New("color"),
+                                                     ty.f32(),
+                                                     core::IOAttributes{
+                                                         .location = 1u,
+                                                         .interpolation =
+                                                             core::Interpolation{
+                                                                 core::InterpolationType::kLinear,
+                                                                 core::InterpolationSampling::kSample,
+                                                             },
+                                                     },
+                                                 },
+                                             });
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* inputs = b.FunctionParam("inputs", str_ty);
+
+    ep->SetParams({pos, inputs});
+
+    b.Append(ep->Block(), [&] {  //
+        b.Return(ep);
+    });
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    auto result = str();
+    // Should find an unused location (0) for the center_pos interpolant since struct uses location 1.
+    EXPECT_NE(result.find("@location(0) @interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos at location 0 in output:\n"
+        << result;
+}
+
+// Test pixel center polyfill when sample_index is in a struct parameter.
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_SampleIndex_InStruct) {
+    auto* str_ty = ty.Struct(
+        mod.symbols.New("Inputs"), {
+                                       {
+                                           mod.symbols.New("sample_idx"),
+                                           ty.u32(),
+                                           core::IOAttributes{
+                                               .builtin = core::BuiltinValue::kSampleIndex,
+                                           },
+                                       },
+                                   });
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* inputs = b.FunctionParam("inputs", str_ty);
+
+    ep->SetParams({pos, inputs});
+
+    b.Append(ep->Block(), [&] {  //
+        b.Return(ep);
+    });
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    auto result = str();
+    EXPECT_NE(result.find("@interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos interpolant in output:\n"
+        << result;
+}
+
+// Test that pixel center polyfill still applies even when position is declared but not used.
+TEST_F(SpirvWriter_ShaderIOTest, ForcePixelCenters_PositionNotUsed) {
+    auto* ep = b.Function("foo", ty.void_());
+    ep->SetStage(core::ir::Function::PipelineStage::kFragment);
+
+    auto* pos = b.FunctionParam("pos", ty.vec4<f32>());
+    pos->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* color = b.FunctionParam("color", ty.f32());
+    color->SetLocation(0);
+
+    ep->SetParams({pos, color});
+
+    b.Append(ep->Block(), [&] {
+        // Only use color, not position.
+        b.Return(ep);
+    });
+
+    core::ir::transform::ImmediateDataLayout immediate_data;
+    ShaderIOConfig config{immediate_data};
+    config.apply_pixel_center_polyfill = true;
+    Run(ShaderIO, config);
+
+    auto result = str();
+    EXPECT_NE(result.find("@interpolate(linear, center)"), std::string::npos)
+        << "Expected center_pos interpolant in output:\n"
+        << result;
+}
+
 }  // namespace
 }  // namespace tint::spirv::writer::raise
