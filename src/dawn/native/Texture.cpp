@@ -847,11 +847,16 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
 
     const Format& format = texture->GetFormat();
 
-    //
-    const Format* viewFormat;
-    if (format.IsMultiPlanar() && device->HasFeature(Feature::Unorm16FormatsForExternalTexture) &&
+    // The Unorm16FormatsForExternalTexture feature allows using R/RG16Unorm, only to create views
+    // of multiplanar textures. This is a hack to allow YUV HDR SharedTextureMemory to be used
+    // without enabling R/RG16Unorm for anything else.
+    bool skipFormatCheckForUnorm16 =
+        format.IsMultiPlanar() && device->HasFeature(Feature::Unorm16FormatsForExternalTexture) &&
         (descriptor->format == wgpu::TextureFormat::R16Unorm ||
-         descriptor->format == wgpu::TextureFormat::RG16Unorm)) {
+         descriptor->format == wgpu::TextureFormat::RG16Unorm);
+
+    const Format* viewFormat;
+    if (skipFormatCheckForUnorm16) {
         viewFormat = &device->GetValidInternalFormat(descriptor->format);
     } else {
         DAWN_TRY_ASSIGN(viewFormat, device->GetInternalFormat(descriptor->format));

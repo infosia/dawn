@@ -1039,7 +1039,14 @@ class ExternalTextureUnorm16Test : public ExternalTextureTest {
     }
 };
 
+// Test that with Unorm16FormatsForExternalTexture it is possible to create an ExternalTexture from
+// a YUV HDR biplanar texture that has plane formats that are R/RG16Unorm. Normally this should not
+// be allowed because the formats are not filterable-float, but the Unorm16FormatsForExternalTexture
+// feature bypasses this check.
 TEST_F(ExternalTextureUnorm16Test, CreateMultiPlanarTextureFromHDRYUV) {
+    // Create the YUV HDR texture. Direct creation of the texture requires
+    // MultiPlanarFormatExtendedUsages and the ues of the YUV HDR format requires
+    // MultiPlanarFormatP210.
     wgpu::TextureDescriptor yuvDesc = {
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {kWidth, kHeight},
@@ -1047,6 +1054,8 @@ TEST_F(ExternalTextureUnorm16Test, CreateMultiPlanarTextureFromHDRYUV) {
     };
     wgpu::Texture yuv = device.CreateTexture(&yuvDesc);
 
+    // Create plane views with formats that are not normally allowed, but can be used only when
+    // retreiving the planes.
     wgpu::TextureViewDescriptor plane0Desc = {
         .format = wgpu::TextureFormat::R16Unorm,
         .aspect = wgpu::TextureAspect::Plane0Only,
@@ -1059,10 +1068,11 @@ TEST_F(ExternalTextureUnorm16Test, CreateMultiPlanarTextureFromHDRYUV) {
     };
     wgpu::TextureView plane1 = yuv.CreateView(&plane1Desc);
 
+    // The ExternalTexture creation validation will allow these unfilterable-float formats to be
+    // used.
     wgpu::ExternalTextureDescriptor externalDesc = CreateDefaultExternalTextureDescriptor();
     externalDesc.plane0 = plane0;
     externalDesc.plane1 = plane1;
-
     device.CreateExternalTexture(&externalDesc);
 }
 

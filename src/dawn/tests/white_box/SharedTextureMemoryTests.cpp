@@ -102,7 +102,7 @@ std::vector<wgpu::FeatureName> SharedTextureMemoryTests::GetRequiredFeatures() {
     const wgpu::FeatureName kOptionalFeatures[] = {
         wgpu::FeatureName::MultiPlanarFormatExtendedUsages,
         wgpu::FeatureName::MultiPlanarRenderTargets,
-        wgpu::FeatureName::Unorm16FormatsForExternalTexture,
+        wgpu::FeatureName::TextureFormatsTier1,
         wgpu::FeatureName::BGRA8UnormStorage,
         wgpu::FeatureName::FlexibleTextureViews,
     };

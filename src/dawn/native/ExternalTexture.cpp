@@ -84,9 +84,13 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
         DAWN_INVALID_IF(format.aspects != Aspect::Color, "The format (%s) is not a color format.",
                         format.format);
 
+        // The Unorm16FormatsForExternalTexture feature allows using R/RG16Unorm to create
+        // ExternalTextures even if they are not filterable float. This is a hack to allow YUV HDR
+        // SharedTextureMemory to be used without enabling R/RG16Unorm for anything else.
         bool skipUnorm16 = device->HasFeature(Feature::Unorm16FormatsForExternalTexture) &&
                            (format.format == wgpu::TextureFormat::R16Unorm ||
                             format.format == wgpu::TextureFormat::RG16Unorm);
+
         if (!skipUnorm16) {
             DAWN_INVALID_IF(!IsSubset(SampleTypeBit::Float,
                                       format.GetAspectInfo(Aspect::Color).supportedSampleTypes),
