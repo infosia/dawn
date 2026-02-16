@@ -291,11 +291,6 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
     // relevant features are enabled
     InitialCapsAddedBy(Feature::YCbCrVulkanSamplers, {wgpu::TextureFormat::External}, Cap::None);
 
-    InitialCapsAddedBy(Feature::Unorm16TextureFormats,
-                       {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
-                        wgpu::TextureFormat::RGBA16Unorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve);
-
     InitialCapsAddedBy(Feature::CoreFeaturesAndLimits, {wgpu::TextureFormat::BGRA8UnormSrgb},
                        Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
 
@@ -382,6 +377,11 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
         AddCaps({wgpu::TextureFormat::RG11B10Ufloat},
                 Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
     }
+
+    InitialCapsAddedBy(Feature::Unorm16TextureFormats,
+                       {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
+                        wgpu::TextureFormat::RGBA16Unorm},
+                       Cap::Renderable | Cap::Multisample | Cap::Resolve);
 }
 
 FormatTable BuildFormatTable(const DeviceBase* device) {
@@ -471,6 +471,10 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     SampleTypeBit sampleTypeFor32BitFloatFormats = device->HasFeature(Feature::Float32Filterable)
                                                        ? kAnyFloat
                                                        : SampleTypeBit::UnfilterableFloat;
+    SampleTypeBit sampleTypeForNorm16Formats = device->HasFeature(Feature::Unorm16TextureFormats)
+                                                   ? kAnyFloat
+                                                   : SampleTypeBit::UnfilterableFloat;
+
     // 1 byte
     DefineColorFormat(wgpu::TextureFormat::R8Unorm, ByteSize(1), kAnyFloat, ComponentCount(1),
                       RenderTargetPixelByteCost(1), RenderTargetComponentAlignment(1));
@@ -581,18 +585,24 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
                       RenderTargetPixelByteCost(16), RenderTargetComponentAlignment(4));
 
     // Norm16
-    DefineColorFormat(wgpu::TextureFormat::R16Unorm, ByteSize(2), kAnyFloat, ComponentCount(1),
-                      RenderTargetPixelByteCost(2), RenderTargetComponentAlignment(2));
-    DefineColorFormat(wgpu::TextureFormat::RG16Unorm, ByteSize(4), kAnyFloat, ComponentCount(2),
-                      RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(2));
-    DefineColorFormat(wgpu::TextureFormat::RGBA16Unorm, ByteSize(8), kAnyFloat, ComponentCount(4),
-                      RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(2));
-    DefineColorFormat(wgpu::TextureFormat::R16Snorm, ByteSize(2), kAnyFloat, ComponentCount(1),
-                      RenderTargetPixelByteCost(2), RenderTargetComponentAlignment(2));
-    DefineColorFormat(wgpu::TextureFormat::RG16Snorm, ByteSize(4), kAnyFloat, ComponentCount(2),
-                      RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(2));
-    DefineColorFormat(wgpu::TextureFormat::RGBA16Snorm, ByteSize(8), kAnyFloat, ComponentCount(4),
-                      RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::R16Unorm, ByteSize(2), sampleTypeForNorm16Formats,
+                      ComponentCount(1), RenderTargetPixelByteCost(2),
+                      RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::RG16Unorm, ByteSize(4), sampleTypeForNorm16Formats,
+                      ComponentCount(2), RenderTargetPixelByteCost(4),
+                      RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::RGBA16Unorm, ByteSize(8), sampleTypeForNorm16Formats,
+                      ComponentCount(4), RenderTargetPixelByteCost(8),
+                      RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::R16Snorm, ByteSize(2), sampleTypeForNorm16Formats,
+                      ComponentCount(1), RenderTargetPixelByteCost(2),
+                      RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::RG16Snorm, ByteSize(4), sampleTypeForNorm16Formats,
+                      ComponentCount(2), RenderTargetPixelByteCost(4),
+                      RenderTargetComponentAlignment(2));
+    DefineColorFormat(wgpu::TextureFormat::RGBA16Snorm, ByteSize(8), sampleTypeForNorm16Formats,
+                      ComponentCount(4), RenderTargetPixelByteCost(8),
+                      RenderTargetComponentAlignment(2));
 
     ComputeFormatCapabilities(device, table);
 
