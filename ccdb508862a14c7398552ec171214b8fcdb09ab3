@@ -179,6 +179,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a597a711_12850686",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T09:39:14Z",
+      "side": 1,
+      "message": "Yeah it would be nice to get rid of `GetGL` to make it hard to \"hold it wrong\" in the GL backend. Making it clear that you cannot just \"get\" the GL would be nice but there\u0027s certainly other ways to do it as well.",
+      "parentUuid": "d9a21359_446ac002",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "757919d7_e66b4390",
         "filename": "src/dawn/native/opengl/BufferGL.cpp",
         "patchSetId": 22
@@ -569,6 +587,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f09ceb05_380f67a2",
+        "filename": "src/dawn/native/opengl/SamplerGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T09:39:14Z",
+      "side": 1,
+      "message": "Do you mind in a follow-up adding accessors and using the accessors to initialize the sampler? It\u0027s a longstanding cleanup to make all the backends use that for samplers as they do with every other objects.",
+      "parentUuid": "595c776b_ee6fd8dd",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "672db538_65dc0aa5",
@@ -711,6 +747,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c029481b_a7164a28",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T09:39:14Z",
+      "side": 1,
+      "message": "It should be ok, `DestroyImpl` is called once and exactly once for non-error objects (maybe we should do it for error objects as well), after which no WebGPU calls can be executed that use that object, so it\u0027s ok to leave mHandle to be an invalid handle. Alternatively GetData could return a mutable pointer to a handle, which would be used in the lambda to set it to 0 (in the CppDestructor case we\u0027d pass a pointer to stack allocated data and that\u0027s ok).",
+      "parentUuid": "0343062b_03cfc988",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6c12cfd2_44f684f4",
         "filename": "src/dawn/native/opengl/TextureGL.h",
         "patchSetId": 22
@@ -822,6 +876,24 @@
       "side": 1,
       "message": "The case we\u0027re testing is \"Submit before Unmap\": queue.Submit() is called after GetMappedRange(), but before Unmap(). The pointer should still be valid between the Submit() and the Unmap() (this test was inspired by Quyen\u0027s comment where he pointed out a bug in this call sequence in an earlier CL).",
       "parentUuid": "2629d77f_2eb38c67",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db575a57_70eed1f7",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T09:39:14Z",
+      "side": 1,
+      "message": "Ah my bad, I was focusing on the second submit, not the first one.",
+      "parentUuid": "5587c3c2_7cecaf23",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
