@@ -69,6 +69,24 @@
       "parentUuid": "500229f3_eb8d6c44",
       "revId": "33ba8d423c34945add805c585df6acb85e529f57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4f7041c_8b122ecb",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-16T15:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136a031f_83535e72",
+      "revId": "33ba8d423c34945add805c585df6acb85e529f57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
