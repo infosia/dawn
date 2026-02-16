@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f5b9ea_c532d542",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T16:45:43Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "3de064227846e3ffeed5dbfc7babb96a7a3391d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca615bf_ebcbee12",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T16:45:43Z",
+      "side": 1,
+      "message": "nit: leftover",
+      "revId": "3de064227846e3ffeed5dbfc7babb96a7a3391d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f222af5_09571443",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T16:45:43Z",
+      "side": 1,
+      "message": "nit: it might be slightly more readable to duplicate the loop so the code looks like:\n\n```\nif (useRenderBundles) {\n  setup\n  \n  loop\n  \n  executebundles\n} else {\n  loop\n}\n```",
+      "revId": "3de064227846e3ffeed5dbfc7babb96a7a3391d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dbd6b3c_ab0fd334",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T16:45:43Z",
+      "side": 1,
+      "message": "Why are the resources pushed to a vector? Ah so they stay alive and are not destroyed before we run the test?",
+      "revId": "3de064227846e3ffeed5dbfc7babb96a7a3391d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afef9cef_4ff01e3f",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-16T16:45:43Z",
+      "side": 1,
+      "message": "nit: the entrypoints names are not needed here given that the modules only have on entrypoint of each stage.",
+      "revId": "3de064227846e3ffeed5dbfc7babb96a7a3391d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
