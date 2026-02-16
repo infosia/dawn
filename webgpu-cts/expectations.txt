@@ -374,6 +374,10 @@ crbug.com/41489034 [ dawn-backend-validation intel ubuntu webgpu-adapter-default
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
 
+# norm16 texture formats were marked as "float" instead of "unfilterable-float", suppress tests while the CTS fix rolls in Dawn.
+crbug.com/484770625 webgpu:api,operation,sampling,filter_mode:*16*norm" [ Failure ]
+crbug.com/484770625 webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="*16*norm";* [ Failure ]
+
 # Flaky VUID-VkMemoryAllocateInfo-allocationSize-01742
 crbug.com/408556424 [ dawn-backend-validation intel-0x4680 linux mesa_ge_23.2 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,video:copy_from_video:* [ Failure ]
 crbug.com/408556424 [ dawn-backend-validation linux ] webgpu:web_platform,external_texture,video:* [ RetryOnFailure ]
