@@ -335,6 +335,10 @@ crbug.com/465497437 [ android android-pixel-6 ] webgpu:api,validation,capability
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
 
+# norm16 texture formats were marked as "float" instead of "unfilterable-float", suppress tests while the CTS fix rolls in Dawn.
+crbug.com/484770625 webgpu:api,operation,sampling,filter_mode:*16*norm"
+crbug.com/484770625 webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:format="*16*norm";*
+
 # Generates GL_OUT_OF_MEMORY
 crbug.com/361372970 [ android arm ] webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
 
