@@ -22,6 +22,30 @@
       },
       "revId": "dca9c703ab2a3b2c540d1735b8514a3e18f65608",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af20e502_a9cc8dfc",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-02-16T07:39:25Z",
+      "side": 1,
+      "message": "Agreed. I initially designed it this way to support other categories, but we can stick to the specific list for now and expand it later if needed.",
+      "parentUuid": "78b89cfa_bd9f725b",
+      "range": {
+        "startLine": 1186,
+        "startChar": 33,
+        "endLine": 1186,
+        "endChar": 44
+      },
+      "revId": "dca9c703ab2a3b2c540d1735b8514a3e18f65608",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
