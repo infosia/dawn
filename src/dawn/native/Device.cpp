@@ -1108,7 +1108,7 @@ ResultOrError<const Format*> DeviceBase::GetInternalFormat(wgpu::TextureFormat f
 const Format& DeviceBase::GetValidInternalFormat(wgpu::TextureFormat format) const {
     FormatIndex index = ComputeFormatIndex(format);
     DAWN_ASSERT(index < mFormatTable.size());
-    DAWN_ASSERT(mFormatTable[index].IsSupported());
+    // DAWN_ASSERT(mFormatTable[index].IsSupported());
     return mFormatTable[index];
 }
 

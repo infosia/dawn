@@ -846,8 +846,16 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
     DAWN_TRY(ValidateTextureAspect(descriptor->aspect));
 
     const Format& format = texture->GetFormat();
+
+    //
     const Format* viewFormat;
-    DAWN_TRY_ASSIGN(viewFormat, device->GetInternalFormat(descriptor->format));
+    if (format.IsMultiPlanar() && device->HasFeature(Feature::Unorm16FormatsForExternalTexture) &&
+        (descriptor->format == wgpu::TextureFormat::R16Unorm ||
+         descriptor->format == wgpu::TextureFormat::RG16Unorm)) {
+        viewFormat = &device->GetValidInternalFormat(descriptor->format);
+    } else {
+        DAWN_TRY_ASSIGN(viewFormat, device->GetInternalFormat(descriptor->format));
+    }
 
     DAWN_TRY(ValidateTextureViewUsage(device, texture, descriptor->usage, viewFormat));
 

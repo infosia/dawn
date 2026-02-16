@@ -1000,8 +1000,6 @@ TEST_F(ExternalTextureTest, SubmitTextureViewWithDestroyedTexture) {
 
 class ExternalTextureNorm16Test : public ExternalTextureTest {
   protected:
-    void SetUp() override { ExternalTextureTest::SetUp(); }
-
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::Unorm16TextureFormats};
     }
@@ -1030,6 +1028,42 @@ TEST_F(ExternalTextureNorm16Test, CreateMultiplanarExternalTextureValidation) {
 
         device.CreateExternalTexture(&externalDesc);
     }
+}
+
+class ExternalTextureUnorm16Test : public ExternalTextureTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::Unorm16FormatsForExternalTexture,
+                wgpu::FeatureName::MultiPlanarFormatP210,
+                wgpu::FeatureName::MultiPlanarFormatExtendedUsages};
+    }
+};
+
+TEST_F(ExternalTextureUnorm16Test, CreateMultiPlanarTextureFromHDRYUV) {
+    wgpu::TextureDescriptor yuvDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {kWidth, kHeight},
+        .format = wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm,
+    };
+    wgpu::Texture yuv = device.CreateTexture(&yuvDesc);
+
+    wgpu::TextureViewDescriptor plane0Desc = {
+        .format = wgpu::TextureFormat::R16Unorm,
+        .aspect = wgpu::TextureAspect::Plane0Only,
+    };
+    wgpu::TextureView plane0 = yuv.CreateView(&plane0Desc);
+
+    wgpu::TextureViewDescriptor plane1Desc = {
+        .format = wgpu::TextureFormat::RG16Unorm,
+        .aspect = wgpu::TextureAspect::Plane1Only,
+    };
+    wgpu::TextureView plane1 = yuv.CreateView(&plane1Desc);
+
+    wgpu::ExternalTextureDescriptor externalDesc = CreateDefaultExternalTextureDescriptor();
+    externalDesc.plane0 = plane0;
+    externalDesc.plane1 = plane1;
+
+    device.CreateExternalTexture(&externalDesc);
 }
 
 }  // anonymous namespace

@@ -393,6 +393,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             unorm16Properties.optimalTilingFeatures);
     }
     if (unorm16TextureFormatsSupported) {
+        // XXX add check for filterable as well for
+        // EnableFeature(Feature::Unorm16FormatsForExternalTexture);
         EnableFeature(Feature::Unorm16TextureFormats);
     }
 

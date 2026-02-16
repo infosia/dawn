@@ -83,9 +83,16 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
                                uint32_t requiredComponentCount) -> MaybeError {
         DAWN_INVALID_IF(format.aspects != Aspect::Color, "The format (%s) is not a color format.",
                         format.format);
-        DAWN_INVALID_IF(!IsSubset(SampleTypeBit::Float,
-                                  format.GetAspectInfo(Aspect::Color).supportedSampleTypes),
-                        "The format (%s) is not filterable float.", format.format);
+
+        bool skipUnorm16 = device->HasFeature(Feature::Unorm16FormatsForExternalTexture) &&
+                           (format.format == wgpu::TextureFormat::R16Unorm ||
+                            format.format == wgpu::TextureFormat::RG16Unorm);
+        if (!skipUnorm16) {
+            DAWN_INVALID_IF(!IsSubset(SampleTypeBit::Float,
+                                      format.GetAspectInfo(Aspect::Color).supportedSampleTypes),
+                            "The format (%s) is not filterable float.", format.format);
+        }
+
         DAWN_INVALID_IF(format.componentCount != requiredComponentCount,
                         "The format (%s) component count (%u) is not %u.", format.format,
                         requiredComponentCount, format.componentCount);
