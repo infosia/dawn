@@ -124,34 +124,9 @@ VkQueue Queue::GetVkQueue() const {
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
-    auto deviceGuard = GetDevice()->GetGuard();
-
-    Device* device = ToBackend(GetDevice());
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
-        ExecutionSerial fenceSerial(0);
-        while (!fencesInFlight->empty()) {
-            VkFence fence = fencesInFlight->front().first;
-            ExecutionSerial tentativeSerial = fencesInFlight->front().second;
-            VkResult result = VkResult::WrapUnsafe(INJECT_ERROR_OR_RUN(
-                device->fn.GetFenceStatus(device->GetVkDevice(), fence), VK_ERROR_DEVICE_LOST));
-
-            // Fence are added in order, so we can stop searching as soon
-            // as we see one that's not ready.
-            if (result == VK_NOT_READY) {
-                return fenceSerial;
-            } else {
-                DAWN_TRY(CheckVkSuccess(::VkResult(result), "GetFenceStatus"));
-            }
-
-            // Update fenceSerial since fence is ready.
-            fenceSerial = tentativeSerial;
-
-            mUnusedFences->push_back(fence);
-            fencesInFlight->pop_front();
-        }
-        return fenceSerial;
-    });
+    // Vulkan serials are updated via the long running JobHandle so we don't actually need to do
+    // anything, just return the latest completed serial.
+    return GetCompletedCommandSerial();
 }
 
 void Queue::ForceEventualFlushOfCommands() {
@@ -368,6 +343,60 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     DAWN_TRY(PrepareRecordingContext());
 
     return {};
+}
+
+platform::JobStatus Queue::WaitForNextFenceJobLoop() {
+    // By default wait for 5ms between yielding.
+    static constexpr Nanoseconds kWaitDuration = Nanoseconds(5000000);
+
+    VkFence fence = VK_NULL_HANDLE;
+    ExecutionSerial serial = kWaitSerialTimeout;
+    mFences.Use<NotifyType::None>([&](auto fences) {
+        if (fences.WaitFor(kWaitDuration, [](auto& x) { return !(x.empty()); })) {
+            std::tie(fence, serial) = fences->front();
+        }
+    });
+
+    // If there isn't a fence to wait on right now, just return and loop.
+    if (fence == VK_NULL_HANDLE) {
+        return platform::JobStatus::Continue;
+    }
+    DAWN_ASSERT(fence != VK_NULL_HANDLE);
+
+    Device* device = ToBackend(GetDevice());
+    VkDevice vkDevice = device->GetVkDevice();
+
+    // Wait on the fence by calling into Vulkan API.
+    VkResult waitResult = VkResult::WrapUnsafe(VK_TIMEOUT);
+    if (device->GetState() == Device::State::Disconnected) [[unlikely]] {
+        // If we are waiting on fences while we are Disconnected, it means that the device lost came
+        // from the ErrorInjector and we need to wait without allowing any more error to be
+        // injected. This is because the device lost was "fake" and commands might still be running.
+        waitResult = VkResult::WrapUnsafe(device->fn.WaitForFences(
+            vkDevice, 1, &*fence, true, static_cast<uint64_t>(kWaitDuration)));
+    } else {
+        waitResult = VkResult::WrapUnsafe(
+            INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*fence, true,
+                                                         static_cast<uint64_t>(kWaitDuration)),
+                                VK_ERROR_DEVICE_LOST));
+    }
+
+    // If the wait times out, just return and loop.
+    if (waitResult == VK_TIMEOUT) {
+        return platform::JobStatus::Continue;
+    }
+
+    if (!device->ConsumedError(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"))) {
+        mFences.Use<NotifyType::None>([&](auto fences) {
+            DAWN_ASSERT(fence == fences->front().first);
+            DAWN_ASSERT(VkResult::WrapUnsafe(device->fn.GetFenceStatus(vkDevice, fence)) ==
+                        VK_SUCCESS);
+            fences->pop_front();
+        });
+        mUnusedFences->push_back(fence);
+        UpdateCompletedSerialTo(QueuePriority::All, serial);
+    }
+    return platform::JobStatus::Continue;
 }
 
 ResultOrError<VkFence> Queue::GetUnusedFence() {
