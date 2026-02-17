@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbbd8b3f_134f37e7",
+        "filename": "src/tint/lang/core/ir/transform/BUILD.gn",
+        "patchSetId": 50
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T18:32:23Z",
+      "side": 1,
+      "message": "We like to avoid any dependencies between different `lang/` subdirectories (with the exception of everything depending on `core`), so please move this transform to some subdirectory of `wgsl` (make a new one if needed). Maybe `wgsl/transform`, or `wgsl/ir/`?",
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc4278e6_9e173b5f",
+        "filename": "src/tint/lang/core/ir/transform/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T18:32:23Z",
+      "side": 1,
+      "message": "Still need to remove this check, otherwise we will ICE on a module like this:\n```\nenable atomic_vec2u_min_max;\n\nfn foo(p: ptr\u003cstorage, atomic\u003cvec2u\u003e, read_write\u003e) {\n  atomicStoreMin(p, vec2u(0, 0));\n}\n```\n\nPlease add a unit test for this case (not really suitable as an E2E test since it has no entry point).",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "103004d3_dd1233c8",
+        "filename": "src/tint/lang/core/ir/transform/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T18:32:23Z",
+      "side": 1,
+      "message": "Note: This is fine for roundtripping WGSL-\u003eIR-\u003eWGSL. At some point we\u0027ll probably want to add support for u64 atomic to our SPIR-V reader, which would require us to handle other sources of u64 values here. No action needed here now (unless you feel like adding a comment noting this).",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac321b2_9c9effae",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMax_no_ext.wgsl",
+        "patchSetId": 50
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T18:32:23Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t use E2E tests for frontend validation failures, this should be covered by a resolver/validator unit tests instead (please add one if it\u0027s not already).",
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
