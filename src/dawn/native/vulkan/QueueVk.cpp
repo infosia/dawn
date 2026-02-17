@@ -91,6 +91,11 @@ MaybeError Queue::Initialize() {
 
     DAWN_TRY(PrepareRecordingContext());
 
+    // Spin up a thread to wait on fences.
+    mWaitingJobHandle = device->GetWorkerTaskPool()->PostWorkerJob(
+        [](void* self) { return static_cast<Queue*>(self)->WaitForNextFenceJobLoop(); }, this);
+    DAWN_ASSERT(mWaitingJobHandle);
+
     SetLabelImpl();
     return {};
 }
@@ -124,34 +129,9 @@ VkQueue Queue::GetVkQueue() const {
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
-    auto deviceGuard = GetDevice()->GetGuard();
-
-    Device* device = ToBackend(GetDevice());
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
-        ExecutionSerial fenceSerial(0);
-        while (!fencesInFlight->empty()) {
-            VkFence fence = fencesInFlight->front().first;
-            ExecutionSerial tentativeSerial = fencesInFlight->front().second;
-            VkResult result = VkResult::WrapUnsafe(INJECT_ERROR_OR_RUN(
-                device->fn.GetFenceStatus(device->GetVkDevice(), fence), VK_ERROR_DEVICE_LOST));
-
-            // Fence are added in order, so we can stop searching as soon
-            // as we see one that's not ready.
-            if (result == VK_NOT_READY) {
-                return fenceSerial;
-            } else {
-                DAWN_TRY(CheckVkSuccess(::VkResult(result), "GetFenceStatus"));
-            }
-
-            // Update fenceSerial since fence is ready.
-            fenceSerial = tentativeSerial;
-
-            mUnusedFences->push_back(fence);
-            fencesInFlight->pop_front();
-        }
-        return fenceSerial;
-    });
+    // Vulkan serials are updated via the long running JobHandle so we don't actually need to do
+    // anything, just return the latest completed serial.
+    return GetCompletedCommandSerial();
 }
 
 void Queue::ForceEventualFlushOfCommands() {
@@ -370,6 +350,60 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     return {};
 }
 
+platform::JobStatus Queue::WaitForNextFenceJobLoop() {
+    // By default wait for 5ms between yielding.
+    static constexpr Nanoseconds kWaitDuration = Nanoseconds(5000000);
+
+    VkFence fence = VK_NULL_HANDLE;
+    ExecutionSerial serial = kWaitSerialTimeout;
+    mFencesInFlight.Use<NotifyType::None>([&](auto fences) {
+        if (fences.WaitFor(kWaitDuration, [](auto& x) { return !(x.empty()); })) {
+            std::tie(fence, serial) = fences->front();
+        }
+    });
+
+    // If there isn't a fence to wait on right now, just return and loop.
+    if (fence == VK_NULL_HANDLE) {
+        return platform::JobStatus::Continue;
+    }
+    DAWN_ASSERT(fence != VK_NULL_HANDLE);
+
+    Device* device = ToBackend(GetDevice());
+    VkDevice vkDevice = device->GetVkDevice();
+
+    // Wait on the fence by calling into Vulkan API.
+    VkResult waitResult = VkResult::WrapUnsafe(VK_TIMEOUT);
+    if (device->GetState() == Device::State::Disconnected) [[unlikely]] {
+        // If we are waiting on fences while we are Disconnected, it means that the device lost came
+        // from the ErrorInjector and we need to wait without allowing any more error to be
+        // injected. This is because the device lost was "fake" and commands might still be running.
+        waitResult = VkResult::WrapUnsafe(device->fn.WaitForFences(
+            vkDevice, 1, &*fence, true, static_cast<uint64_t>(kWaitDuration)));
+    } else {
+        waitResult = VkResult::WrapUnsafe(
+            INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*fence, true,
+                                                         static_cast<uint64_t>(kWaitDuration)),
+                                VK_ERROR_DEVICE_LOST));
+    }
+
+    // If the wait times out, just return and loop.
+    if (waitResult == VK_TIMEOUT) {
+        return platform::JobStatus::Continue;
+    }
+
+    if (!device->ConsumedError(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"))) {
+        mFencesInFlight.Use<NotifyType::None>([&](auto fences) {
+            DAWN_ASSERT(fence == fences->front().first);
+            DAWN_ASSERT(VkResult::WrapUnsafe(device->fn.GetFenceStatus(vkDevice, fence)) ==
+                        VK_SUCCESS);
+            fences->pop_front();
+        });
+        mUnusedFences->push_back(fence);
+        UpdateCompletedSerialTo(QueuePriority::Lowest, serial);
+    }
+    return platform::JobStatus::Continue;
+}
+
 ResultOrError<VkFence> Queue::GetUnusedFence() {
     Device* device = ToBackend(GetDevice());
     VkDevice vkDevice = device->GetVkDevice();
@@ -407,6 +441,10 @@ void Queue::DestroyImpl(DestroyReason reason) {
     Device* device = ToBackend(GetDevice());
     VkDevice vkDevice = device->GetVkDevice();
 
+    // Cancel and join the waiting thread now.
+    mWaitingJobHandle->Cancel();
+    mWaitingJobHandle->Join();
+
     // Immediately tag the recording context as unused so we don't try to submit it in Tick.
     mRecordingContext.needsSubmit = false;
     if (mRecordingContext.commandPool != VK_NULL_HANDLE) {
@@ -430,7 +468,7 @@ void Queue::DestroyImpl(DestroyReason reason) {
 
     // Some fences might still be marked as in-flight if we shut down because of a device loss.
     // Delete them since at this point all commands are complete.
-    mFencesInFlight.Use([&](auto fencesInFlight) {
+    mFencesInFlight.Use<NotifyType::None>([&](auto fencesInFlight) {
         while (!fencesInFlight->empty()) {
             device->fn.DestroyFence(vkDevice, *fencesInFlight->front().first, nullptr);
             fencesInFlight->pop_front();
@@ -445,70 +483,6 @@ void Queue::DestroyImpl(DestroyReason reason) {
     });
 
     QueueBase::DestroyImpl(reason);
-}
-
-ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial waitSerial,
-                                                             Nanoseconds timeout) {
-    Device* device = ToBackend(GetDevice());
-    VkDevice vkDevice = device->GetVkDevice();
-    // If the client has passed a finite timeout, the function will eventually return due to
-    // either (1) the fences being signaled, (2) the timeout being reached, or (3) the device
-    // being lost. If the client has passed an infinite timeout, this function might hang forever
-    // if the fences are never signaled (which matches the semantics that the client has
-    // specified).
-    // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further up the
-    // stack.
-    while (1) {
-        ExecutionSerial completedSerial = kWaitSerialTimeout;
-        VkResult waitResult = mFencesInFlight.Use([&](auto fencesInFlight) {
-            // Search from for the first fence >= serial.
-            VkFence waitFence = VK_NULL_HANDLE;
-            for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
-                if (it->second >= waitSerial) {
-                    waitFence = it->first;
-                    completedSerial = it->second;
-                    break;
-                }
-            }
-            if (waitFence == VK_NULL_HANDLE) {
-                // Fence not found. This serial must have already completed.
-                // Return a VK_SUCCESS status.
-                completedSerial = waitSerial;
-                return VkResult::WrapUnsafe(VK_SUCCESS);
-            }
-            // Wait for the fence.
-            if (device->GetState() == Device::State::Disconnected) [[unlikely]] {
-                // If WaitForQueueSerialImpl is called while we are Disconnected, it means that
-                // the device lost came from the ErrorInjector and we need to wait without allowing
-                // any more error to be injected. This is because the device lost was "fake" and
-                // commands might still be running.
-                return VkResult::WrapUnsafe(device->fn.WaitForFences(
-                    vkDevice, 1, &*waitFence, true, static_cast<uint64_t>(timeout)));
-            }
-            return VkResult::WrapUnsafe(
-                INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*waitFence, true,
-                                                             static_cast<uint64_t>(timeout)),
-                                    VK_ERROR_DEVICE_LOST));
-        });
-        if (waitResult == VK_TIMEOUT) {
-            // There is evidence that `VK_TIMEOUT` can get returned even when the
-            // client has specified an infinite timeout (e.g., due to signals). Retry
-            // waiting on the fence in this case in order to satisfy the semantics
-            // that the function should return only when either (a) the fences are
-            // signaled or (b) the passed-in timeout is reached. Note that this can
-            // result in this function busy-looping forever in this case, but the
-            // client has explicitly requested this behavior by passing in an infinite
-            // timeout.
-            // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further
-            // up the stack.
-            if (static_cast<uint64_t>(timeout) == std::numeric_limits<uint64_t>::max()) {
-                continue;
-            }
-            return kWaitSerialTimeout;
-        }
-        DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
-        return completedSerial;
-    }
 }
 
 }  // namespace dawn::native::vulkan
