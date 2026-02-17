@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b793c3a8_33de7ab2",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T15:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf09fa16_c627811b",
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "464839c5_62ba031c",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6ef602f_da3aff7f",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T15:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464839c5_62ba031c",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 81
+      },
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17b16f23_8165bbd3",
@@ -71,6 +113,24 @@
       "writtenOn": "2026-02-17T15:02:09Z",
       "side": 1,
       "message": "This shouldn\u0027t be necessary, all the bindgroups default to the empty layout.",
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "993ccd99_ed78b18b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T15:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17b16f23_8165bbd3",
       "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
