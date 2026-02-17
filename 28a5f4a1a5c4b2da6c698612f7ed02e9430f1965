@@ -16,6 +16,40 @@
       "message": "LGTM - Alan please take a look as well.",
       "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9935f9da_184f8dd5",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-17T21:11:47Z",
+      "side": 1,
+      "message": "vec3\u003cf16\u003e should force a u16 base type already. I think this could just be an assert that width is divisible by 2.",
+      "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "878aa853_321eae83",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 5222,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-17T21:11:47Z",
+      "side": 1,
+      "message": "Would be good to cover vec2h and vec3h if they aren\u0027t elsewhere,",
+      "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
