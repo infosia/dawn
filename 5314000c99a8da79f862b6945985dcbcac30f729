@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86eada6f_be618e1b",
+        "filename": "src/tint/lang/core/ir/transform/BUILD.gn",
+        "patchSetId": 50
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-17T22:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbd8b3f_134f37e7",
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc4278e6_9e173b5f",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-02-17T18:32:23Z",
       "side": 1,
       "message": "Still need to remove this check, otherwise we will ICE on a module like this:\n```\nenable atomic_vec2u_min_max;\n\nfn foo(p: ptr\u003cstorage, atomic\u003cvec2u\u003e, read_write\u003e) {\n  atomicStoreMin(p, vec2u(0, 0));\n}\n```\n\nPlease add a unit test for this case (not really suitable as an E2E test since it has no entry point).",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "078d7732_d56ca22f",
+        "filename": "src/tint/lang/core/ir/transform/atomic_vec2u_to_from_u64.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-17T22:49:07Z",
+      "side": 1,
+      "message": "Added a function only test (no root params)",
+      "parentUuid": "dc4278e6_9e173b5f",
       "range": {
         "startLine": 74,
         "startChar": 0,
@@ -77,6 +119,24 @@
       "writtenOn": "2026-02-17T18:32:23Z",
       "side": 1,
       "message": "Nit: We don\u0027t use E2E tests for frontend validation failures, this should be covered by a resolver/validator unit tests instead (please add one if it\u0027s not already).",
+      "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a12cb7_c84efb68",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMax_no_ext.wgsl",
+        "patchSetId": 50
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-17T22:49:07Z",
+      "side": 1,
+      "message": "Ah yes. I keep wanting to do this and others do not want this.",
+      "parentUuid": "5ac321b2_9c9effae",
       "revId": "5314000c99a8da79f862b6945985dcbcac30f729",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

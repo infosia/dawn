@@ -299,6 +299,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e46c27f8_99c06091",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-17T22:49:07Z",
+      "side": 1,
+      "message": "I thought it was mixed. I will restore.",
+      "parentUuid": "728a2859_6cb607cc",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22107d18_2e935368",
