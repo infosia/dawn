@@ -485,8 +485,7 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     }
 
     DAWN_ASSERT(GetPlatform() != nullptr);
-    mWorkerTaskPool = GetPlatform()->CreateWorkerTaskPool();
-    mAsyncTaskManager = std::make_unique<AsyncTaskManager>(mWorkerTaskPool.get());
+    mAsyncTaskManager = std::make_unique<AsyncTaskManager>(GetWorkerTaskPool());
 
     // Starting from now the backend can start doing reentrant calls so the device is marked as
     // alive.
@@ -2561,7 +2560,11 @@ CallbackTaskManager* DeviceBase::GetCallbackTaskManager() const {
     return mCallbackTaskManager.Get();
 }
 
-dawn::platform::WorkerTaskPool* DeviceBase::GetWorkerTaskPool() const {
+dawn::platform::WorkerTaskPool* DeviceBase::GetWorkerTaskPool() {
+    // Lazily create the WorkerTaskPool when needed.
+    if (!mWorkerTaskPool) {
+        mWorkerTaskPool = GetPlatform()->CreateWorkerTaskPool();
+    }
     return mWorkerTaskPool.get();
 }
 
