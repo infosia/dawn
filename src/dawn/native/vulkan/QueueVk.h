@@ -74,7 +74,14 @@ class Queue final : public QueueBase {
     // Dawn API
     void SetLabelImpl() override;
 
+    platform::JobStatus WaitForNextFenceJobLoop();
     ResultOrError<VkFence> GetUnusedFence();
+
+    // We track which operations are in flight on the GPU with an increasing serial.
+    // This works only because we have a single queue. Each submit to a queue is associated
+    // to a serial and a fence, such that when the fence is "ready" we know the operations
+    // have finished.
+    MutexCondVarProtected<std::deque<std::pair<VkFence, ExecutionSerial>>> mFences;
 
     // We track which operations are in flight on the GPU with an increasing serial.
     // This works only because we have a single queue. Each submit to a queue is associated
