@@ -184,20 +184,6 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     return {};
 }
 
-// Tasks may execute synchronously if the given serial has already passed or during device
-// destruction. As a result, callers should ensure that the calling thread releases any locks that
-// will be taken by the task prior to calling TrackSerialTask.
-void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
-    {
-        std::lock_guard<std::mutex> lock(mMutex);
-        if (!mAssumeCompleted && serial > GetCompletedCommandSerial()) {
-            mWaitingTasks.Enqueue(std::move(task), serial);
-            return;
-        }
-    }
-    task();
-}
-
 void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
     UpdateCompletedSerialToInternal(completedSerial);
 }

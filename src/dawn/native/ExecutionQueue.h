@@ -31,7 +31,10 @@
 #include <atomic>
 #include <condition_variable>
 #include <functional>
+#include <memory>
 #include <mutex>
+#include <type_traits>
+#include <utility>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
@@ -97,7 +100,32 @@ class ExecutionQueueBase : public ApiObjectBase {
     MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
 
     // Tracks new tasks to complete when |serial| is reached.
-    void TrackSerialTask(ExecutionSerial serial, Task&& task);
+    // Currently, we need to use a template function here because std::function must be copyable so
+    // we need to do an allocation and use a raw pointer to call move-only callbacks. Also note that
+    // tasks may execute synchronously if the given serial has already passed or during device
+    // destruction. As a result, callers should ensure that the calling thread releases any locks
+    // that will be taken by the task prior to calling TrackSerialTask.
+    template <std::convertible_to<Task> F>
+    void TrackSerialTask(ExecutionSerial serial, F task) {
+        if constexpr (std::is_copy_constructible_v<F>) {
+            {
+                std::lock_guard<std::mutex> lock(mMutex);
+                if (!mAssumeCompleted && serial > GetCompletedCommandSerial()) {
+                    mWaitingTasks.Enqueue(std::move(task), serial);
+                    return;
+                }
+            }
+            task();
+        } else {
+            // Otherwise, we use a raw_pointer to hold the function and call it in a helper.
+            raw_ptr<F> funcPtr = std::make_unique<F>(std::move(task)).release();
+            TrackSerialTask(serial, [funcPtr]() mutable {
+                DAWN_ASSERT(funcPtr);
+                std::unique_ptr<F> func(funcPtr.ExtractAsDangling());
+                (*func)();
+            });
+        }
+    }
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
     // However in the 'Passive' mode, the submission will be postponed as late as possible, for
