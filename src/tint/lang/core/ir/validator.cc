@@ -5290,16 +5290,10 @@ const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* in
 
 }  // namespace
 
-Result<SuccessType> Validate(const Module& mod, Capabilities capabilities) {
-    Validator v(mod, capabilities);
-    TINT_CHECK_RESULT(v.Run());
-    return Success;
-}
-
-Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
-                                            [[maybe_unused]] const char* msg,
-                                            [[maybe_unused]] Capabilities capabilities,
-                                            [[maybe_unused]] std::string_view timing) {
+Result<SuccessType> Validate(const Module& mod,
+                             Capabilities capabilities,
+                             [[maybe_unused]] const char* msg,
+                             [[maybe_unused]] std::string_view timing) {
 #if TINT_DUMP_IR_WHEN_VALIDATING
     auto printer = StyledTextPrinter::Create(stdout);
     std::cout << "=========================================================\n";
@@ -5308,11 +5302,39 @@ Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
     printer->Print(Disassembler(ir).Text());
 #endif
 
-#if TINT_ENABLE_IR_VALIDATION
-    TINT_CHECK_RESULT(Validate(ir, capabilities));
-#endif
-
+    Validator v(mod, capabilities);
+    TINT_CHECK_RESULT(v.Run());
     return Success;
+}
+
+Result<SuccessType> ValidateBefore(const Module& mod, Capabilities capabilities, const char* msg) {
+    return Validate(mod, capabilities, msg, "before");
+}
+
+Result<SuccessType> ValidateAfter(const Module& mod, Capabilities capabilities, const char* msg) {
+    return Validate(mod, capabilities, msg, "after");
+}
+
+Result<SuccessType> ValidateIfNeeded([[maybe_unused]] const Module& ir,
+                                     [[maybe_unused]] Capabilities capabilities,
+                                     [[maybe_unused]] const char* msg,
+                                     [[maybe_unused]] std::string_view timing) {
+#if TINT_ENABLE_IR_VALIDATION
+    TINT_CHECK_RESULT(Validate(ir, capabilities, msg, timing));
+#endif
+    return Success;
+}
+
+Result<SuccessType> ValidateBeforeIfNeeded(const Module& mod,
+                                           Capabilities capabilities,
+                                           const char* msg) {
+    return ValidateIfNeeded(mod, capabilities, msg, "before");
+}
+
+Result<SuccessType> ValidateAfterIfNeeded(const Module& mod,
+                                          Capabilities capabilities,
+                                          const char* msg) {
+    return ValidateIfNeeded(mod, capabilities, msg, "after");
 }
 
 }  // namespace tint::core::ir
