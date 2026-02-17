@@ -768,6 +768,24 @@
       "parentUuid": "d323a57e_4233fb08",
       "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "062cecb5_c8c7f3ab",
+        "filename": "test/tint/builtins/gen/literal/atomicStoreMax/707bde.wgsl.expected.glsl",
+        "patchSetId": 31
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-17T03:39:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c80312c_2765e89e",
+      "revId": "fc85b4b11e92017b4eb8665b87dfbbd6c35c3a23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
