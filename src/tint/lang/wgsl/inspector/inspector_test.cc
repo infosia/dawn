@@ -1919,7 +1919,8 @@ fn ep_func() {
     EXPECT_EQ(1u, result[5].binding);
     EXPECT_FALSE(result[5].array_size.has_value());
 
-    EXPECT_EQ(ResourceBinding::ResourceType::kComparisonSampler, result[6].resource_type);
+    EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[6].resource_type);
+    EXPECT_EQ(ResourceBinding::SamplerType::kComparison, result[6].sampler_type);
     EXPECT_EQ(3u, result[6].bind_group);
     EXPECT_EQ(2u, result[6].binding);
     EXPECT_FALSE(result[6].array_size.has_value());
@@ -2538,7 +2539,8 @@ var<private> foo_depth: f32;
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
     ASSERT_EQ(2u, result.size());
-    EXPECT_EQ(ResourceBinding::ResourceType::kComparisonSampler, result[1].resource_type);
+    EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[1].resource_type);
+    EXPECT_EQ(ResourceBinding::SamplerType::kComparison, result[1].sampler_type);
     EXPECT_EQ(0u, result[1].bind_group);
     EXPECT_EQ(0u, result[1].binding);
 }
