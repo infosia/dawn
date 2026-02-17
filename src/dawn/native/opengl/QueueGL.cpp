@@ -173,10 +173,9 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
 
     return device->EnqueueGL(
         data, dataSize,
-        [ensureInitialized, dest = Ref<Texture>(ToBackend(destination.texture)), range,
-         textureCopy = TextureCopy(textureCopy), dataLayout = TexelCopyBufferLayout(dataLayout),
-         writeSizePixel = Extent3D(writeSizePixel)](const OpenGLFunctions& gl, const void* data,
-                                                    size_t dataSize) -> MaybeError {
+        [ensureInitialized, dest = Ref<Texture>(ToBackend(destination.texture)), range, textureCopy,
+         dataLayout = TexelCopyBufferLayout(dataLayout), writeSizePixel = Extent3D(writeSizePixel)](
+            const OpenGLFunctions& gl, const void* data, size_t dataSize) -> MaybeError {
             if (ensureInitialized) {
                 DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
             }
