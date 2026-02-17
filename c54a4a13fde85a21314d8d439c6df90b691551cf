@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7b324a1_3c8bc459",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-17T15:02:09Z",
+      "side": 1,
+      "message": "Dawn side LGTM!",
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf09fa16_c627811b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-17T15:02:09Z",
+      "side": 1,
+      "message": "net: Maybe mention which parts of this array will be used by the shader and what for. (the start two to position the triangle inside the framebuffer space, the last vector for the color output that has to match at the end).",
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "464839c5_62ba031c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-17T15:02:09Z",
+      "side": 1,
+      "message": "The default layout (`layout \u003d nullptr`, the default) should work and do the max size used by the shader so we don\u0027t really need this block.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 81
+      },
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b16f23_8165bbd3",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-17T15:02:09Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary, all the bindgroups default to the empty layout.",
+      "revId": "c54a4a13fde85a21314d8d439c6df90b691551cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
