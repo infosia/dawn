@@ -1898,9 +1898,7 @@ sem::ValueExpression* Resolver::IndexAccessor(const ast::IndexAccessorExpression
         return nullptr;
     }
 
-    // If we're extracting from a memory view, we return a reference.
-    // TODO(crbug.com/477280751): The swizzle view exception preserves some existing buggy behavior
-    // in single element swizzle of a swizzle assignment, but this should be fixed in a follow up.
+    // If we're extracting from a memory view that will need to be loaded, we return a reference.
     if (memory_view && !memory_view->Is<core::type::SwizzleView>()) {
         ty =
             b.create<core::type::Reference>(memory_view->AddressSpace(), ty, memory_view->Access());
@@ -3647,11 +3645,11 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
             if (size == 1) {
                 // A single element swizzle is just the type of the vector.
                 ty = vec->Type();
-                // If we're extracting from a memory view, we return a reference.
-                // TODO(crbug.com/477280751): The swizzle view exception preserves some existing
-                // buggy behavior in single element swizzle of a swizzle assignment, but this should
-                // be fixed in a follow up.
-                if (memory_view && !memory_view->Is<core::type::SwizzleView>()) {
+
+                // If we're extracting from a memory view that will need to be loaded, we return a
+                // reference. Likewise if we're indexing into a swizzle view, it will need to be a
+                // "reference" so we know it can be stored to.
+                if (memory_view) {
                     ty = b.create<core::type::Reference>(memory_view->AddressSpace(), ty,
                                                          memory_view->Access());
                 }
@@ -4782,7 +4780,14 @@ sem::Statement* Resolver::AssignmentStatement(const ast::AssignmentStatement* st
         }
 
         if (!is_phony_assignment) {
-            rhs = Materialize(rhs, lhs->Type()->UnwrapRef());
+            const core::type::Type* lhs_type = nullptr;
+            if (lhs->Type()->Is<core::type::SwizzleView>() &&
+                allowed_features_.features.count(wgsl::LanguageFeature::kSwizzleAssignment) == 1u) {
+                lhs_type = lhs->Type()->As<core::type::SwizzleView>()->StoreType();
+            } else {
+                lhs_type = lhs->Type()->UnwrapRef();
+            }
+            rhs = Materialize(rhs, lhs_type);
             if (!rhs) {
                 return false;
             }
@@ -4862,8 +4867,18 @@ sem::Statement* Resolver::CompoundAssignmentStatement(
         } else {
             rhs_type = rhs_type->UnwrapRef();
         }
-        auto overload =
-            intrinsic_table_.Lookup(stmt->op, lhs->Type()->UnwrapRef(), rhs_type, stage, true);
+
+        auto* lhs_type = lhs->Type();
+        if (auto* lhs_swizzle_view = lhs_type->As<core::type::SwizzleView>();
+            lhs_swizzle_view &&
+            allowed_features_.features.count(wgsl::LanguageFeature::kSwizzleAssignment)) {
+            // Use the swizzle target type as the arg type for intrinsic lookup.
+            lhs_type = lhs_swizzle_view->StoreType();
+        } else {
+            lhs_type = lhs_type->UnwrapRef();
+        }
+
+        auto overload = intrinsic_table_.Lookup(stmt->op, lhs_type, rhs_type, stage, true);
         if (overload != Success) {
             AddError(stmt->source) << overload.Failure();
             return false;

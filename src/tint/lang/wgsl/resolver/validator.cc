@@ -38,6 +38,7 @@
 #include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/i8.h"
 #include "src/tint/lang/core/type/input_attachment.h"
+#include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
@@ -45,6 +46,7 @@
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/subgroup_matrix.h"
+#include "src/tint/lang/core/type/swizzle_view.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u8.h"
@@ -3175,9 +3177,29 @@ bool Validator::Assignment(const ast::Statement* a, const core::type::Type* rhs_
     auto const* lhs_sem = sem_.GetVal(lhs);
     auto const* lhs_ty = lhs_sem->Type();
 
-    auto* lhs_ref = lhs_ty->As<core::type::Reference>();
+    const core::type::MemoryView* lhs_ref = lhs_ty->As<core::type::Reference>();
+    if (!lhs_ref &&
+        allowed_features_.features.count(wgsl::LanguageFeature::kSwizzleAssignment) == 1u) {
+        // Allow lhs_ref to be a swizzle view
+        lhs_ref = lhs_ty->As<core::type::SwizzleView>();
+
+        // Check whether swizzle components are duplicated on the lhs.
+        auto* swizzle = lhs_sem->As<sem::Swizzle>();
+        while (swizzle) {
+            tint::Hashset<uint32_t, 4> seen_indices;
+            for (auto index : swizzle->Indices()) {
+                if (!seen_indices.Add(index)) {
+                    AddError(lhs->source) << "cannot assign to vector swizzle with "
+                                             "duplicate target components";
+                    return false;
+                }
+            }
+            swizzle = swizzle->Object()->As<sem::Swizzle>();
+        }
+    }
+
     if (!lhs_ref) {
-        // LHS is not a reference, so it has no storage.
+        // LHS is not a reference or swizzle view, so it has no storage.
         AddError(lhs->source) << "cannot assign to " << sem_.Describe(lhs_sem);
 
         auto* expr = lhs;
