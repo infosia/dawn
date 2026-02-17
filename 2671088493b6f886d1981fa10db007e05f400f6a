@@ -104,6 +104,24 @@
       "parentUuid": "9d1d976e_859c92f7",
       "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e320298_9882ee52",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-17T15:20:40Z",
+      "side": 1,
+      "message": "Sure, I should mark this as Ack. Sry.",
+      "parentUuid": "160d4496_2a0650ff",
+      "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
