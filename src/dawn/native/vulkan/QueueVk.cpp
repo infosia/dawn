@@ -370,6 +370,61 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     return {};
 }
 
+platform::JobStatus Queue::WaitForNextFenceJobLoop() {
+    // By default wait for 5ms between yielding.
+    static constexpr Nanoseconds kWaitDuration = Nanoseconds(5000000);
+
+    VkFence fence = VK_NULL_HANDLE;
+    ExecutionSerial serial = kWaitSerialTimeout;
+    mFences.Use<NotifyType::NotifyNone>([&](auto fences) {
+        if (fences.WaitFor(kWaitDuration, [](auto& x) { return !(x.used.empty()); })) {
+            std::tie(fence, serial) = fences->used.front();
+        }
+    });
+
+    // If there isn't a fence to wait on right now, just return and loop.
+    if (fence == VK_NULL_HANDLE) {
+        return platform::JobStatus::Continue;
+    }
+    DAWN_ASSERT(fence != VK_NULL_HANDLE);
+
+    Device* device = ToBackend(GetDevice());
+    VkDevice vkDevice = device->GetVkDevice();
+
+    // Wait on the fence by calling into Vulkan API.
+    VkResult waitResult = VkResult::WrapUnsafe(VK_TIMEOUT);
+    if (device->GetState() == Device::State::Disconnected) [[unlikely]] {
+        // If we are waiting on fences while we are Disconnected, it means that the device lost came
+        // from the ErrorInjector and we need to wait without allowing any more error to be
+        // injected. This is because the device lost was "fake" and commands might still be running.
+        waitResult = VkResult::WrapUnsafe(device->fn.WaitForFences(
+            vkDevice, 1, &*fence, true, static_cast<uint64_t>(kWaitDuration)));
+    } else {
+        waitResult = VkResult::WrapUnsafe(
+            INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*fence, true,
+                                                         static_cast<uint64_t>(kWaitDuration)),
+                                VK_ERROR_DEVICE_LOST));
+    }
+
+    // If the wait times out, just return and loop.
+    if (waitResult == VK_TIMEOUT) {
+        return platform::JobStatus::Continue;
+    }
+
+    if (!device->ConsumedError(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"))) {
+        mFences.Use<NotifyType::NotifyNone>([&](auto fences) {
+            DAWN_ASSERT(fence == fences->used.front().first);
+            DAWN_ASSERT(VkResult::WrapUnsafe(device->fn.GetFenceStatus(vkDevice, fence)) ==
+                        VK_SUCCESS);
+
+            fences->unused.push_back(fence);
+            fences->used.pop_front();
+        });
+        UpdateCompletedSerialTo(serial);
+    }
+    return platform::JobStatus::Continue;
+}
+
 ResultOrError<VkFence> Queue::GetUnusedFence() {
     Device* device = ToBackend(GetDevice());
     VkDevice vkDevice = device->GetVkDevice();
