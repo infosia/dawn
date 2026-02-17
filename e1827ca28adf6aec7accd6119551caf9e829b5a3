@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcf51fbb_8872b310",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5296,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T22:00:50Z",
+      "side": 1,
+      "message": "übernit: It looks like \"timing\" is only every used to prefix `msg`, so instead of having the before/after functions couldn\u0027t we just have the callers add it to the string they pass in?\n\ne.g. instead of\n```\nValidateBeforeIfNeeded(mod, capabilities, \"core.MyAwesomeTransform\");\n```\nyou could just write:\n```\nValidateIfNeeded(mod, capabilities, \"before core.MyAwesomeTransform\");\n\n```\nand then we don\u0027t need the different overloads?\n\nNot really a big deal and probably annoying to change all of this again now, so feel free to ignore.",
+      "revId": "e1827ca28adf6aec7accd6119551caf9e829b5a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eb0896a_80383faf",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5323,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-17T22:00:50Z",
+      "side": 1,
+      "message": "This means that if you enable dumping but do not have validation enabled, you will not get the dumps, which I think is a behavioral change from today.\nIt\u0027s kinda awkward that validation and dumping are intertwined like that, but also kinda useful to not have to call two different methods.\n\nCould we maybe split the dumping part out of Validate and then call it from both `Validate` and `ValidateIfNeeded`?",
+      "revId": "e1827ca28adf6aec7accd6119551caf9e829b5a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
