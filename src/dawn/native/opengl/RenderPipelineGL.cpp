@@ -223,17 +223,17 @@ RenderPipeline::RenderPipeline(Device* device,
 
 MaybeError RenderPipeline::InitializeImpl() {
     return ToBackend(GetDevice())
-        ->EnqueueGL([this,
-                     self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
+        ->EnqueueGL([self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
             VertexAttributeMask bgraSwizzleAttributes = {};
-            for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
+            for (VertexAttributeLocation i : self->GetAttributeLocationsUsed()) {
                 bgraSwizzleAttributes.set(
-                    i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
+                    i, self->GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
             }
 
-            DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), UsesVertexIndex(),
-                                    UsesInstanceIndex(), UsesFragDepth(), bgraSwizzleAttributes));
-            DAWN_TRY(CreateVAOForVertexState(gl));
+            DAWN_TRY(self->InitializeBase(gl, ToBackend(self->GetLayout()), self->GetAllStages(),
+                                          self->UsesVertexIndex(), self->UsesInstanceIndex(),
+                                          self->UsesFragDepth(), bgraSwizzleAttributes));
+            DAWN_TRY(self->CreateVAOForVertexState(gl));
             return {};
         });
 }
