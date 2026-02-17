@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd9136cc_8cc5b875",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-02-17T21:25:59Z",
+      "side": 1,
+      "message": "Asserting that the thread has completed seems like a stronger requirement for the user. If the tests and use cases are already doing that, let\u0027s leave it as is. Easier to loosen the requirement later than the other way around.",
+      "parentUuid": "9a86645a_cf328545",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "527b45d5_ef54bea3",
