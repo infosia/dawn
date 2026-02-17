@@ -276,10 +276,11 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BitcastPolyfill(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(ValidateAndDumpIfNeeded(
-        ir, "glsl.BitcastPolyfill",
+    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(
+        ir,
         core::ir::Capabilities{core::ir::Capability::kAllowHandleVarsWithoutBindings,
-                               core::ir::Capability::kAllowDuplicateBindings}));
+                               core::ir::Capability::kAllowDuplicateBindings},
+        "glsl.BitcastPolyfill"));
 
     State{ir}.Process();
 
