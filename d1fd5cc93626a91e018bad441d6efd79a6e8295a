@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77546fdc_735057d2",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80ce9e9c_0a4485bb",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "995c365f_b33c4848",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-02-12T09:37:35Z",
       "side": 1,
       "message": "This works because in `src/dawn/native/Pipeline.h` we have both:\n\n```\n    ImmediateConstantMask mImmediateMask \u003d ImmediateConstantMask(0);\n    ImmediateConstantMask mUserImmdiateSlots \u003d ImmediateConstantMask(0);\n```\n\nCan we add comments to them and getters to make it very clear which one is for use by frontend validation and which one is just for common backend tracking?\n\nAlso `s/mUserImmdiateSlots/mUserImmediateSlots/` (there\u0027s a typo).\n\nThis can be a follow-up.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb3cde4d_f44aa09b",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "995c365f_b33c4848",
       "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b91b7f_3710a661",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Fixed by adding a minimum_immediate_size to the GLSL writer options, passed in\nopengl::ShaderModule\u0027s constructor.\n\nThe RoundUp() is still required for alignment, but it is moved to the Dawn side.",
+      "parentUuid": "b028be20_faf21d2c",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2715774_db5e9b0a",
@@ -157,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2338fd96_eefe3b1f",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e35670c8_29b48b4b",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c56f2f3e_0399d7d9",
@@ -170,6 +242,24 @@
       "writtenOn": "2026-02-10T22:49:48Z",
       "side": 1,
       "message": "Nit: Please keep the comment about it needing to come after BuiltinPolyfill too.",
+      "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eddeca8_138a8080",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c56f2f3e_0399d7d9",
       "revId": "d1fd5cc93626a91e018bad441d6efd79a6e8295a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -86,6 +86,24 @@
       "parentUuid": "d56a9304_744d520b",
       "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "160d4496_2a0650ff",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T14:51:53Z",
+      "side": 1,
+      "message": "Marking as resolved (please re-open if there\u0027s still an issue.)",
+      "parentUuid": "9d1d976e_859c92f7",
+      "revId": "2671088493b6f886d1981fa10db007e05f400f6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
