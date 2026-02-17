@@ -213,24 +213,6 @@ void ExecutionQueueBase::RegisterSerialProcessor(QueuePriority priority,
     });
 }
 
-// Tasks may execute synchronously if the given serial has already passed or during device
-// destruction. As a result, callers should ensure that the calling thread releases any locks that
-// will be taken by the task prior to calling TrackSerialTask.
-void ExecutionQueueBase::TrackSerialTask(QueuePriority priority,
-                                         ExecutionSerial serial,
-                                         Task&& task) {
-    bool tracked = mState.Use<NotifyType::None>([&](auto state) {
-        if (!state->mAssumeCompleted && serial > GetCompletedCommandSerial()) {
-            state->mWaitingTasks[priority].Enqueue(std::move(task), serial);
-            return true;
-        }
-        return false;
-    });
-    if (!tracked) {
-        task();
-    }
-}
-
 void ExecutionQueueBase::UpdateCompletedSerialTo(QueuePriority priority,
                                                  ExecutionSerial completedSerial) {
     UpdateCompletedSerialToInternal(priority, completedSerial);

@@ -31,7 +31,10 @@
 #include <atomic>
 #include <condition_variable>
 #include <functional>
+#include <memory>
 #include <mutex>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "dawn/common/MutexProtected.h"
@@ -133,7 +136,45 @@ class ExecutionQueueBase : public ApiObjectBase {
     void RegisterSerialProcessor(QueuePriority priority, Ref<SerialProcessor>&& serialProcessor);
 
     // Tracks new tasks to complete when |serial| is reached.
-    void TrackSerialTask(QueuePriority priority, ExecutionSerial serial, Task&& task);
+    // Currently, we need to use a template function here because std::function must be copyable so
+    // we need to do an allocation and use a raw pointer to call move-only callbacks. Also note that
+    // tasks may execute synchronously if the given serial has already passed or during device
+    // destruction. As a result, callers should ensure that the calling thread releases any locks
+    // that will be taken by the task prior to calling TrackSerialTask.
+    template <std::convertible_to<Task> F>
+    void TrackSerialTask(QueuePriority priority, ExecutionSerial serial, F task) {
+        if constexpr (std::is_copy_constructible_v<F>) {
+            bool tracked = mState.Use<NotifyType::None>([&](auto state) {
+                if (!state->mAssumeCompleted && serial > GetCompletedCommandSerial()) {
+                    state->mWaitingTasks[priority].Enqueue(std::move(task), serial);
+                    return true;
+                }
+                return false;
+            });
+            if (!tracked) {
+                task();
+            }
+        } else {
+            // Otherwise, we use a raw_pointer to hold the function and call it in a helper.
+            bool tracked = mState.Use<NotifyType::None>([&](auto state) {
+                if (!state->mAssumeCompleted && serial > GetCompletedCommandSerial()) {
+                    raw_ptr<F> funcPtr = std::make_unique<F>(std::move(task)).release();
+                    state->mWaitingTasks[priority].Enqueue(
+                        [funcPtr]() mutable {
+                            DAWN_ASSERT(funcPtr);
+                            std::unique_ptr<F> func(funcPtr.ExtractAsDangling());
+                            (*func)();
+                        },
+                        serial);
+                    return true;
+                }
+                return false;
+            });
+            if (!tracked) {
+                task();
+            }
+        }
+    }
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
     // However in the 'Passive' mode, the submission will be postponed as late as possible, for
