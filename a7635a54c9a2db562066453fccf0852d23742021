@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ebd79da_85ecba01",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-02-17T15:41:35Z",
+      "side": 1,
+      "message": "std::thread normally joins on destruction, we could do that here too and call Join and not track `mJoined` state. It\u0027s a design choice though, if we expect it\u0027s an error to not cancel/complete before here, the assert is good.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527b45d5_ef54bea3",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-02-17T15:41:35Z",
+      "side": 1,
+      "message": "Given the early return when `handles.size() \u003d\u003d mMaxTaskThreads` above, this condition can be removed (or asserted).",
+      "range": {
+        "startLine": 171,
+        "startChar": 51,
+        "endLine": 171,
+        "endChar": 87
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8985cb83_f015e716",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-02-17T15:41:35Z",
+      "side": 1,
+      "message": "I like how you wrapped the task management in the new job api itself.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 19
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dcf825e_af61fc4b",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-02-17T15:41:35Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see this referenced.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
