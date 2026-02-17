@@ -35,6 +35,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76bb8c6c_4c9241ae",
+        "filename": "src/tint/lang/glsl/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-17T14:44:16Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "93794b4d_ebc149ea",
+      "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78059d04_70e8821d",
+        "filename": "src/tint/lang/glsl/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-17T14:44:16Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "93794b4d_ebc149ea",
+      "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0bc8310_57cc0dec",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-02-17T14:20:15Z",
       "side": 1,
       "message": "```suggestion\n            return Failure(\"@builtin(workgroup_index) is not supported by the GLSL backend\");\n```",
+      "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f81ddcf9_9fd637af",
+        "filename": "src/tint/lang/glsl/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-17T14:44:16Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d0bc8310_57cc0dec",
       "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
