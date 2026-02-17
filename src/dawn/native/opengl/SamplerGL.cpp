@@ -121,35 +121,38 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     // Chained structs are not supported by the copying capture below.
     DAWN_ASSERT(descriptor->nextInChain == nullptr);
 
-    return device->EnqueueGL([this, descriptor = *descriptor, maxAnisotropy,
-                              self = Ref<Sampler>(this)](const OpenGLFunctions& gl) -> MaybeError {
-        DAWN_GL_TRY(gl, GenSamplers(1, &mHandle));
+    return device->EnqueueGL([self = Ref<Sampler>(this), descriptor = *descriptor,
+                              maxAnisotropy](const OpenGLFunctions& gl) -> MaybeError {
+        GLuint handle;
+        DAWN_GL_TRY(gl, GenSamplers(1, &handle));
 
-        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAG_FILTER,
+        self->mHandle = handle;
+
+        DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_MAG_FILTER,
                                           MagFilterMode(descriptor.magFilter)));
         DAWN_GL_TRY(
-            gl, SamplerParameteri(mHandle, GL_TEXTURE_MIN_FILTER,
+            gl, SamplerParameteri(handle, GL_TEXTURE_MIN_FILTER,
                                   MinFilterMode(descriptor.minFilter, descriptor.mipmapFilter)));
 
         DAWN_GL_TRY(
-            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_R, WrapMode(descriptor.addressModeW)));
+            gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_R, WrapMode(descriptor.addressModeW)));
         DAWN_GL_TRY(
-            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_S, WrapMode(descriptor.addressModeU)));
+            gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_S, WrapMode(descriptor.addressModeU)));
         DAWN_GL_TRY(
-            gl, SamplerParameteri(mHandle, GL_TEXTURE_WRAP_T, WrapMode(descriptor.addressModeV)));
+            gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_T, WrapMode(descriptor.addressModeV)));
 
-        DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MIN_LOD, descriptor.lodMinClamp));
-        DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MAX_LOD, descriptor.lodMaxClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(handle, GL_TEXTURE_MIN_LOD, descriptor.lodMinClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(handle, GL_TEXTURE_MAX_LOD, descriptor.lodMaxClamp));
 
         if (descriptor.compare != wgpu::CompareFunction::Undefined) {
             DAWN_GL_TRY(
-                gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
-            DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_FUNC,
+                gl, SamplerParameteri(handle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
+            DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_COMPARE_FUNC,
                                               ToOpenGLCompareFunction(descriptor.compare)));
         }
 
         if (HasAnisotropicFiltering(gl)) {
-            DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy));
+            DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy));
         }
 
         return {};

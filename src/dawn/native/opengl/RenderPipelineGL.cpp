@@ -235,19 +235,18 @@ MaybeError RenderPipeline::InitializeImpl() {
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
     return ToBackend(GetDevice())
-        ->EnqueueGL(
-            [this, self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
-                VertexAttributeMask bgraSwizzleAttributes = {};
-                for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
-                    bgraSwizzleAttributes.set(
-                        i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
-                }
+        ->EnqueueGL([self = Ref<RenderPipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
+            VertexAttributeMask bgraSwizzleAttributes = {};
+            for (VertexAttributeLocation i : self->GetAttributeLocationsUsed()) {
+                bgraSwizzleAttributes.set(
+                    i, self->GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
+            }
 
-                DAWN_TRY(InitializeBase(gl, ToBackend(GetLayout()), GetAllStages(), mImmediateMask,
-                                        bgraSwizzleAttributes));
-                DAWN_TRY(CreateVAOForVertexState(gl));
-                return {};
-            });
+            DAWN_TRY(self->InitializeBase(gl, ToBackend(self->GetLayout()), self->GetAllStages(),
+                                          self->mImmediateMask, bgraSwizzleAttributes));
+            DAWN_TRY(self->CreateVAOForVertexState(gl));
+            return {};
+        });
 }
 
 RenderPipeline::~RenderPipeline() = default;
