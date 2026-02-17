@@ -195,6 +195,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "317cc981_401f06b9",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T19:12:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a597a711_12850686",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "757919d7_e66b4390",
@@ -505,6 +523,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebe4f34d_4c42cd01",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T19:12:17Z",
+      "side": 1,
+      "message": "Actually, there already are multithreaded tests that use WriteTexture. The trouble is, none of the multithreaded tests yet pass with deferral enabled, since they assuming multithread capabilities that deferral doesn\u0027t claim to support (e.g., calling ProcessEvents()/Queue.Submit() from an arbitrary thread, not a single \"playback thread\" as in Graphite). They do pass with the \"big lock\" mode (\"gl_allow_context_on_multi_threads\") in GL, though, so I\u0027ve enabled them in that mode in this change.\n\nI\u0027ll look into writing some deferral-friendly multithread tests as a followup.",
+      "parentUuid": "2435334b_9c8b9e16",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e786f3d0_19072e00",
@@ -759,6 +795,24 @@
       "side": 1,
       "message": "It should be ok, `DestroyImpl` is called once and exactly once for non-error objects (maybe we should do it for error objects as well), after which no WebGPU calls can be executed that use that object, so it\u0027s ok to leave mHandle to be an invalid handle. Alternatively GetData could return a mutable pointer to a handle, which would be used in the lambda to set it to 0 (in the CppDestructor case we\u0027d pass a pointer to stack allocated data and that\u0027s ok).",
       "parentUuid": "0343062b_03cfc988",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "240f937a_eb1064a0",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-17T19:12:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c029481b_a7164a28",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
