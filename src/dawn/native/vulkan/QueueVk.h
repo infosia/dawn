@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_VULKAN_QUEUEVK_H_
 
 #include <deque>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -53,9 +54,6 @@ class Queue final : public QueueBase {
     CommandRecordingContext* GetPendingRecordingContext(SubmitMode submitMode = SubmitMode::Normal);
     MaybeError SplitRecordingContext(CommandRecordingContext* recordingContext);
 
-    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
-                                                          Nanoseconds timeout) override;
-
   private:
     Queue(Device* device, const QueueDescriptor* descriptor, uint32_t family);
     ~Queue() override;
@@ -74,13 +72,15 @@ class Queue final : public QueueBase {
     // Dawn API
     void SetLabelImpl() override;
 
+    platform::JobStatus WaitForNextFenceJobLoop();
     ResultOrError<VkFence> GetUnusedFence();
 
     // We track which operations are in flight on the GPU with an increasing serial.
     // This works only because we have a single queue. Each submit to a queue is associated
     // to a serial and a fence, such that when the fence is "ready" we know the operations
     // have finished.
-    MutexProtected<std::deque<std::pair<VkFence, ExecutionSerial>>> mFencesInFlight;
+    MutexCondVarProtected<std::deque<std::pair<VkFence, ExecutionSerial>>> mFencesInFlight;
+
     // Fences in the unused list aren't reset yet.
     MutexProtected<std::vector<VkFence>> mUnusedFences;
 
@@ -94,6 +94,11 @@ class Queue final : public QueueBase {
 
     uint32_t mQueueFamily = 0;
     VkQueue mQueue = VK_NULL_HANDLE;
+
+    // In Vulkan at the moment, we need a dedicated thread per device to wait on fences because the
+    // WaitForFences API is per device. Since device and queue mapping is currently 1:1, own the
+    // long running job handle here.
+    std::unique_ptr<platform::JobHandle> mWaitingJobHandle = nullptr;
 };
 
 }  // namespace dawn::native::vulkan

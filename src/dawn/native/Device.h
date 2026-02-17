@@ -422,7 +422,7 @@ class DeviceBase : public ErrorSink,
 
     AsyncTaskManager* GetAsyncTaskManager() const;
     CallbackTaskManager* GetCallbackTaskManager() const;
-    dawn::platform::WorkerTaskPool* GetWorkerTaskPool() const;
+    dawn::platform::WorkerTaskPool* GetWorkerTaskPool();
 
     PipelineCompatibilityToken GetNextPipelineCompatibilityToken();
 
