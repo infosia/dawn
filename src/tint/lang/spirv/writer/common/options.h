@@ -143,6 +143,10 @@ struct Options {
     /// Set to `true` if handles should be transformed by direct variable access.
     bool dva_transform_handle = false;
 
+    /// Set to `true` to polyfill the `position` builtin in fragment shaders to ensure pixel-centered
+    /// coordinates when multi-sampling is enabled (Vulkan).
+    bool polyfill_position = false;
+
     /// Set to `true` to decompose uniform buffers into array<vec4u, ...>.
     bool decompose_uniform_buffers = true;
 
@@ -184,6 +188,7 @@ struct Options {
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
                  dva_transform_handle,
+                 polyfill_position,
                  decompose_uniform_buffers,
                  depth_range_offsets,
                  spirv_version,

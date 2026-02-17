@@ -124,7 +124,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const ImmediateConstantMask& pipelineImmediateMask,
+    bool polyfillPosition) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -253,6 +254,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::DecomposeUniformBuffers);
     req.tintOptions.dva_transform_handle =
         GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle);
+    req.tintOptions.polyfill_position = polyfillPosition;
     // Pass matrices to user functions by pointer on Qualcomm devices to workaround a known bug.
     // See crbug.com/tint/2045.
     if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {

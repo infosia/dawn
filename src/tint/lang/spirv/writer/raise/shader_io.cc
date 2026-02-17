@@ -139,7 +139,13 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             from = builder.Access(ptr, input_vars[idx], 0_u)->Result();
         }
 
-        auto* value = builder.Load(from)->Result();
+        core::ir::Value* value = builder.Load(from)->Result();
+
+        // Polyfill position for pixel-centered coordinates when multi-sampling is enabled.
+        if (config.polyfill_position &&
+            inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
+            value = PolyfillPosition(builder, value);
+        }
 
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
@@ -171,6 +177,29 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         builder.Store(to, value);
+    }
+
+    /// Polyfill the position builtin to produce pixel-centered coordinates.
+    /// Replaces pos.xy with floor(pos.xy) + 0.5, preserving z and w.
+    /// @param builder the builder to use for new instructions
+    /// @param position the incoming position value (vec4f)
+    /// @returns the polyfilled position value
+    core::ir::Value* PolyfillPosition(core::ir::Builder& builder, core::ir::Value* position) {
+        // Extract xy, z, w
+        auto* xy = builder.Swizzle(ty.vec2<f32>(), position, {0u, 1u})->Result();
+        auto* z = builder.Swizzle(ty.f32(), position, {2u})->Result();
+        auto* w = builder.Swizzle(ty.f32(), position, {3u})->Result();
+
+        // Compute floor(xy) + 0.5
+        auto* floored = builder.Call<vec2<f32>>(core::BuiltinFn::kFloor, xy)->Result();
+        auto* half = b.Splat(ty.vec2<f32>(), b.Constant(0.5_f));
+        auto* snapped =
+            builder.Binary(core::BinaryOp::kAdd, ty.vec2<f32>(), floored, half)->Result();
+
+        // Reconstruct vec4f(snapped.x, snapped.y, z, w)
+        auto* new_x = builder.Swizzle(ty.f32(), snapped, {0u})->Result();
+        auto* new_y = builder.Swizzle(ty.f32(), snapped, {1u})->Result();
+        return builder.Construct(ty.vec4<f32>(), new_x, new_y, z, w)->Result();
     }
 
     /// Clamp a frag_depth builtin value if necessary.

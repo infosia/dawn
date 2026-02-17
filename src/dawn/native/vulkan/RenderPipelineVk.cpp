@@ -372,13 +372,23 @@ MaybeError RenderPipeline::InitializeImpl() {
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
 
+    // Determine if position polyfill is needed for multisampled fragment shaders.
+    bool needsPositionPolyfill = false;
+    if (GetSampleCount() > 1 && (GetStageMask() & wgpu::ShaderStage::Fragment)) {
+        const auto& fragmentMetadata = *GetStage(SingleShaderStage::Fragment).metadata;
+        needsPositionPolyfill = fragmentMetadata.usesPosition;
+    }
+
     auto AddShaderStage = [&](SingleShaderStage stage, VkShaderStageFlagBits vkStage,
                               bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
+        bool polyfillPosition =
+            needsPositionPolyfill && stage == SingleShaderStage::Fragment;
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, GetImmediateMask()));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                         ToBackend(programmableStage.module)
+                             ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
+                                                 GetImmediateMask(), polyfillPosition));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
