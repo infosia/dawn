@@ -16,6 +16,40 @@
       "message": "Tested the MSL patch against draft CTS tests",
       "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93794b4d_ebc149ea",
+        "filename": "src/tint/lang/glsl/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-17T14:20:15Z",
+      "side": 1,
+      "message": "```suggestion\n                \"@builtin(global_invocation_index) is not supported by the GLSL backend\");\n```",
+      "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0bc8310_57cc0dec",
+        "filename": "src/tint/lang/glsl/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-17T14:20:15Z",
+      "side": 1,
+      "message": "```suggestion\n            return Failure(\"@builtin(workgroup_index) is not supported by the GLSL backend\");\n```",
+      "revId": "54b2a40bdd5835034e650c1a00b18473ebd36759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
