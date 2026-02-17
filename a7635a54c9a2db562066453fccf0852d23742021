@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a86645a_cf328545",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-17T21:04:07Z",
+      "side": 1,
+      "message": "Yea, actually, when I first implemented this, I actually did what you suggested and had the `Cancel` and `Join` calls in the dtor also. I only later changed it because when I went to implement the API in Chromium (https://chromium-review.googlesource.com/c/chromium/src/+/7585134), I saw that over there the `JobHandle` object that I was basing this design off of (https://source.chromium.org/chromium/chromium/src/+/main:base/task/post_job.cc;l\u003d84;drc\u003d6d3e2ca997ca3ef995f719b22a1658a250a22d1e;bpv\u003d1;bpt\u003d1) doesn\u0027t explicitly join on destruction and expects the user to do it, so I just kind of copied it.\n\nI don\u0027t really feel too strongly about it either way tbh. Fine with either way depending on what we feel makes most sense for us.",
+      "parentUuid": "2ebd79da_85ecba01",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "527b45d5_ef54bea3",
         "filename": "src/dawn/platform/WorkerThread.cpp",
         "patchSetId": 8
@@ -37,6 +61,30 @@
       "writtenOn": "2026-02-17T15:41:35Z",
       "side": 1,
       "message": "Given the early return when `handles.size() \u003d\u003d mMaxTaskThreads` above, this condition can be removed (or asserted).",
+      "range": {
+        "startLine": 171,
+        "startChar": 51,
+        "endLine": 171,
+        "endChar": 87
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2347f297_fb26c62f",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-17T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527b45d5_ef54bea3",
       "range": {
         "startLine": 171,
         "startChar": 51,
@@ -83,6 +131,30 @@
       "writtenOn": "2026-02-17T15:41:35Z",
       "side": 1,
       "message": "nit: I don\u0027t see this referenced.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "a7635a54c9a2db562066453fccf0852d23742021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98d3a368_63ca66cf",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-17T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dcf825e_af61fc4b",
       "range": {
         "startLine": 91,
         "startChar": 4,
