@@ -3646,26 +3646,30 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
                 // A single element swizzle is just the type of the vector.
                 ty = vec->Type();
 
-                // If we're extracting from a memory view that will need to be loaded, we return a
-                // reference.
+                // If we're extracting from a memory view that will need to be loaded, we
+                // return a reference.
                 if (memory_view && !memory_view->Is<core::type::SwizzleView>()) {
                     ty = b.create<core::type::Reference>(memory_view->AddressSpace(), ty,
                                                          memory_view->Access());
+                } else if (memory_view && memory_view->Is<core::type::SwizzleView>() &&
+                           allowed_features_.features.count(
+                               wgsl::LanguageFeature::kSwizzleAssignment) == 1u) {
+                    ty = b.create<core::type::SwizzleView>(memory_view->AddressSpace(), ty,
+                                                           memory_view->Access(), vec->Width(),
+                                                           static_cast<uint32_t>(size));
                 }
             } else {
+                // The vector will have a number of components equal to the length of
+                // the swizzle.
+                ty = b.create<core::type::Vector>(vec->Type(), static_cast<uint32_t>(size));
+
                 if (memory_view) {
-                    auto* vec_ty =
-                        b.create<core::type::Vector>(vec->Type(), static_cast<uint32_t>(size));
-                    ty = b.create<core::type::SwizzleView>(memory_view->AddressSpace(), vec_ty,
+                    ty = b.create<core::type::SwizzleView>(memory_view->AddressSpace(), ty,
                                                            memory_view->Access(), vec->Width(),
                                                            static_cast<uint32_t>(size));
                     // The object being swizzled will be loaded during IR generation, so we register
                     // the load ahead of time here for the purpose of alias analysis.
                     RegisterLoad(object);
-                } else {
-                    // The vector will have a number of components equal to the length of
-                    // the swizzle.
-                    ty = b.create<core::type::Vector>(vec->Type(), static_cast<uint32_t>(size));
                 }
             }
             const core::constant::Value* val = nullptr;
@@ -4779,7 +4783,14 @@ sem::Statement* Resolver::AssignmentStatement(const ast::AssignmentStatement* st
         }
 
         if (!is_phony_assignment) {
-            rhs = Materialize(rhs, lhs->Type()->UnwrapRef());
+            const core::type::Type* lhs_type = nullptr;
+            if (lhs->Type()->Is<core::type::SwizzleView>() &&
+                allowed_features_.features.count(wgsl::LanguageFeature::kSwizzleAssignment) == 1u) {
+                lhs_type = lhs->Type()->As<core::type::SwizzleView>()->StoreType();
+            } else {
+                lhs_type = lhs->Type()->UnwrapRef();
+            }
+            rhs = Materialize(rhs, lhs_type);
             if (!rhs) {
                 return false;
             }
@@ -4859,8 +4870,18 @@ sem::Statement* Resolver::CompoundAssignmentStatement(
         } else {
             rhs_type = rhs_type->UnwrapRef();
         }
-        auto overload =
-            intrinsic_table_.Lookup(stmt->op, lhs->Type()->UnwrapRef(), rhs_type, stage, true);
+
+        auto* lhs_type = lhs->Type();
+        if (auto* lhs_swizzle_view = lhs_type->As<core::type::SwizzleView>();
+            lhs_swizzle_view &&
+            allowed_features_.features.count(wgsl::LanguageFeature::kSwizzleAssignment)) {
+            // Use the swizzle target type as the arg type for intrinsic lookup.
+            lhs_type = lhs_swizzle_view->StoreType();
+        } else {
+            lhs_type = lhs_type->UnwrapRef();
+        }
+
+        auto overload = intrinsic_table_.Lookup(stmt->op, lhs_type, rhs_type, stage, true);
         if (overload != Success) {
             AddError(stmt->source) << overload.Failure();
             return false;
