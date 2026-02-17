@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a474caaf_ab4f6832",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-17T14:44:51Z",
+      "side": 1,
+      "message": "Went with this approach because Unorm16 formats require TextureFormatsTier1 that Swiftshader doesn\u0027t support.",
+      "revId": "6d0e73899c5545546c9b84edf7edcd8b03c85c0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
