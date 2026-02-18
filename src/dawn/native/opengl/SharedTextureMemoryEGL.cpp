@@ -60,7 +60,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemoryEGL::Create(
 
     // If the format of the AHB is unknown due to not having an equivalent wgpu::TextureFormat or
     // being an unknowable Android video format, disable all usages except sampling.
-    if (properties.format == wgpu::TextureFormat::External) {
+    if (properties.format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
         properties.usage &= wgpu::TextureUsage::TextureBinding;
     }
 

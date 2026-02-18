@@ -529,7 +529,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                 "AHardwareBuffer with external sampler must have non-zero external format.");
             vkFormat = VK_FORMAT_UNDEFINED;
             externalFormatAndroid.externalFormat = bufferFormatProperties.externalFormat;
-            properties.format = wgpu::TextureFormat::External;
+            properties.format = wgpu::TextureFormat::OpaqueYCbCrAndroid;
         } else {
             vkFormat = bufferFormatProperties.format;
             externalFormatAndroid.externalFormat = 0;
@@ -993,9 +993,10 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
     const UnpackedPtr<BeginAccessDescriptor>& descriptor) {
     // TODO(dawn/2276): support concurrent read access.
     DAWN_INVALID_IF(descriptor->concurrentRead, "Vulkan backend doesn't support concurrent read.");
-    DAWN_INVALID_IF(
-        texture->GetFormat().format == wgpu::TextureFormat::External && !descriptor->initialized,
-        "BeginAccess with Texture format (%s) must be initialized", texture->GetFormat().format);
+    DAWN_INVALID_IF(texture->GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid &&
+                        !descriptor->initialized,
+                    "BeginAccess with Texture format (%s) must be initialized",
+                    texture->GetFormat().format);
 
     wgpu::SType type;
     DAWN_TRY_ASSIGN(

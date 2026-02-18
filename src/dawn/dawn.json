@@ -4313,8 +4313,7 @@
             {"value": 4, "name": "R8 BG8 biplanar 444 unorm", "tags": ["dawn"]},
             {"value": 5, "name": "R10X6 BG10X6 biplanar 422 unorm", "tags": ["dawn"]},
             {"value": 6, "name": "R10X6 BG10X6 biplanar 444 unorm", "tags": ["dawn"]},
-            {"value": 7, "name": "external", "tags": ["dawn", "deprecated"], "enum_value_conflict": true},
-            {"value": 7, "name": "opaque y cb cr android", "tags": ["dawn"], "enum_value_conflict": true}
+            {"value": 7, "name": "opaque y cb cr android", "tags": ["dawn"]}
         ]
     },
     "texture usage": {
