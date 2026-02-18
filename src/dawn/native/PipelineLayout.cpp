@@ -28,7 +28,6 @@
 #include "dawn/native/PipelineLayout.h"
 
 #include <algorithm>
-#include <map>
 #include <memory>
 #include <utility>
 
@@ -37,9 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Numeric.h"
 #include "dawn/common/Range.h"
-#include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"

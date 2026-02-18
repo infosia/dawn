@@ -33,6 +33,7 @@
 #include <string>
 
 #include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/type.h"
 
@@ -60,7 +61,21 @@ struct ResourceBinding {
 
     /// Component type of the texture's data. Same as the Sampled Type parameter
     /// in SPIR-V OpTypeImage.
-    enum class SampledKind : uint8_t { kFloat, kUInt, kSInt, kUnknown };
+    enum class SampledKind : uint8_t {
+        kFloat,
+        kUInt,
+        kSInt,
+        kFilterable,
+        kUnfilterable,
+        kUnknown,
+    };
+
+    enum class SamplerType : uint8_t {
+        kComparison,
+        kFiltering,
+        kNonFiltering,
+        kUnknown,
+    };
 
     /// Enumerator of texel image formats
     enum class TexelFormat : uint8_t {
@@ -113,7 +128,6 @@ struct ResourceBinding {
         kStorageBuffer,
         kReadOnlyStorageBuffer,
         kSampler,
-        kComparisonSampler,
         kSampledTexture,
         kMultisampledTexture,
         kWriteOnlyStorageTexture,
@@ -146,6 +160,8 @@ struct ResourceBinding {
     TextureDimension dim;
     /// Kind of data being sampled, if defined.
     SampledKind sampled_kind;
+    /// Sampler information, if defined
+    SamplerType sampler_type;
     /// Format of data, if defined.
     TexelFormat image_format;
     /// Variable name of the binding.
@@ -158,6 +174,11 @@ struct ResourceBinding {
 /// @returns the publicly visible equivalent
 ResourceBinding::TextureDimension TypeTextureDimensionToResourceBindingTextureDimension(
     const core::type::TextureDimension& type_dim);
+
+/// Infer ResourceBinding::SampledKind for a given core::type::SampledTexture
+/// @param tex the texture
+/// @returns the publicly visible equivalent
+ResourceBinding::SampledKind ToFilterableSampledKind(const core::type::SampledTexture* tex);
 
 /// Infer ResourceBinding::SampledKind for a given core::type::Type
 /// @param base_type internal type to infer from

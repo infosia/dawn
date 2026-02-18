@@ -164,18 +164,29 @@ ResourceBinding ConvertHandleToResourceBinding(const tint::sem::GlobalVariable* 
         handle_type,
 
         [&](const core::type::Sampler* sampler) {
+            result.resource_type = ResourceBinding::ResourceType::kSampler;
+
             if (sampler->Kind() == core::type::SamplerKind::kSampler) {
-                result.resource_type = ResourceBinding::ResourceType::kSampler;
+                switch (sampler->Filtering()) {
+                    case core::SamplerFiltering::kFiltering:
+                        result.sampler_type = ResourceBinding::SamplerType::kFiltering;
+                        break;
+                    case core::SamplerFiltering::kNonFiltering:
+                        result.sampler_type = ResourceBinding::SamplerType::kNonFiltering;
+                        break;
+                    default:
+                        result.sampler_type = ResourceBinding::SamplerType::kUnknown;
+                }
             } else {
                 TINT_ASSERT(sampler->Kind() == core::type::SamplerKind::kComparisonSampler);
-                result.resource_type = ResourceBinding::ResourceType::kComparisonSampler;
+                result.sampler_type = ResourceBinding::SamplerType::kComparison;
             }
         },
 
         [&](const core::type::SampledTexture* tex) {
             result.resource_type = ResourceBinding::ResourceType::kSampledTexture;
             result.dim = TypeTextureDimensionToResourceBindingTextureDimension(tex->Dim());
-            result.sampled_kind = BaseTypeToSampledKind(tex->Type());
+            result.sampled_kind = ToFilterableSampledKind(tex);
         },
         [&](const core::type::MultisampledTexture* tex) {
             result.resource_type = ResourceBinding::ResourceType::kMultisampledTexture;

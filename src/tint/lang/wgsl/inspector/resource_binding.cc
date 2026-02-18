@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/inspector/resource_binding.h"
 
+#include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/i32.h"
@@ -57,6 +58,24 @@ ResourceBinding::TextureDimension TypeTextureDimensionToResourceBindingTextureDi
             return ResourceBinding::TextureDimension::kNone;
     }
     return ResourceBinding::TextureDimension::kNone;
+}
+
+ResourceBinding::SampledKind ToFilterableSampledKind(const core::type::SampledTexture* tex) {
+    switch (tex->Filterable()) {
+        case core::TextureFilterable::kFilterable:
+            return ResourceBinding::SampledKind::kFilterable;
+        case core::TextureFilterable::kUnfilterable:
+            return ResourceBinding::SampledKind::kUnfilterable;
+        default:
+            break;
+    }
+    // We don't want to say `float` in this case, we want `unknown` to signify the unknown
+    // filterablity.
+    if (tex->Type()->Is<core::type::F32>()) {
+        return ResourceBinding::SampledKind::kUnknown;
+    }
+
+    return BaseTypeToSampledKind(tex->Type());
 }
 
 ResourceBinding::SampledKind BaseTypeToSampledKind(const core::type::Type* base_type) {

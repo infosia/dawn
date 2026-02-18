@@ -389,6 +389,10 @@ std::string SampledKindToString(tint::inspector::ResourceBinding::SampledKind ki
             return "UInt";
         case tint::inspector::ResourceBinding::SampledKind::kSInt:
             return "SInt";
+        case tint::inspector::ResourceBinding::SampledKind::kFilterable:
+            return "Filterable";
+        case tint::inspector::ResourceBinding::SampledKind::kUnfilterable:
+            return "Unfilterable";
         case tint::inspector::ResourceBinding::SampledKind::kUnknown:
             break;
     }
@@ -494,8 +498,6 @@ std::string ResourceTypeToString(tint::inspector::ResourceBinding::ResourceType 
             return "ReadOnlyStorageBuffer";
         case tint::inspector::ResourceBinding::ResourceType::kSampler:
             return "Sampler";
-        case tint::inspector::ResourceBinding::ResourceType::kComparisonSampler:
-            return "ComparisonSampler";
         case tint::inspector::ResourceBinding::ResourceType::kSampledTexture:
             return "SampledTexture";
         case tint::inspector::ResourceBinding::ResourceType::kMultisampledTexture:
