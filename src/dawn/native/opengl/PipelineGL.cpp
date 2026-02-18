@@ -55,7 +55,9 @@ PipelineGL::~PipelineGL() = default;
 MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                                       const PipelineLayout* layout,
                                       const PerStage<ProgrammableStage>& stages,
-                                      ImmediateConstantMask& pipelineImmediateMask,
+                                      bool usesVertexIndex,
+                                      bool usesInstanceIndex,
+                                      bool usesFragDepth,
                                       VertexAttributeMask bgraSwizzleAttributes) {
     mProgram = DAWN_GL_TRY(gl, CreateProgram());
 
@@ -78,9 +80,10 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         std::vector<CombinedSampler> stageCombinedSamplers;
         GLuint shader;
         DAWN_TRY_ASSIGN(
-            shader, module->CompileShader(gl, stages[stage], stage, pipelineImmediateMask,
-                                          bgraSwizzleAttributes, &stageCombinedSamplers, layout,
-                                          &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
+            shader,
+            module->CompileShader(gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
+                                  usesFragDepth, bgraSwizzleAttributes, &stageCombinedSamplers,
+                                  layout, &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
 
         mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
         combinedSamplers.insert(stageCombinedSamplers.begin(), stageCombinedSamplers.end());
@@ -157,16 +160,6 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         Ref<SamplerBase> sampler;
         DAWN_TRY_ASSIGN(sampler, layout->GetDevice()->CreateSampler());
         mPlaceholderSampler = ToBackend(std::move(sampler));
-    }
-
-    // If the pipeline declares immediates but the GL driver determines that they are unused and
-    // optimizes out the uniform variable, reset the mask. This prevents a GL_INVALID_VALUE error
-    // when trying to update it via glUniform*().
-    if (pipelineImmediateMask.any()) {
-        auto location = DAWN_GL_TRY(gl, GetUniformLocation(mProgram, "tint_immediates"));
-        if (location == -1) {
-            pipelineImmediateMask.reset();
-        }
     }
 
     for (GLuint glShader : glShaders) {

@@ -95,7 +95,9 @@ class PipelineGL {
     MaybeError InitializeBase(const OpenGLFunctions& gl,
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
-                              ImmediateConstantMask& pipelineImmediateMask,
+                              bool usesVertexIndex,
+                              bool usesInstanceIndex,
+                              bool usesFragDepth,
                               VertexAttributeMask bgraSwizzleAttributes);
     void DeleteProgram(const OpenGLFunctions& gl);
 

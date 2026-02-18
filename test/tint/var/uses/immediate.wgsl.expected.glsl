@@ -3,9 +3,14 @@
 //
 #version 310 es
 
-layout(location = 0) uniform uint tint_immediates[1];
+
+struct tint_immediate_struct {
+  int inner;
+};
+
+layout(location = 0) uniform tint_immediate_struct tint_immediates;
 void uses_a() {
-  int foo = int(tint_immediates[0u]);
+  int foo = tint_immediates.inner;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -16,9 +21,14 @@ void main() {
 //
 #version 310 es
 
-layout(location = 0) uniform uint tint_immediates[1];
+
+struct tint_immediate_struct {
+  int inner;
+};
+
+layout(location = 0) uniform tint_immediate_struct tint_immediates;
 void uses_a() {
-  int foo = int(tint_immediates[0u]);
+  int foo = tint_immediates.inner;
 }
 void uses_uses_a() {
   uses_a();
@@ -32,9 +42,14 @@ void main() {
 //
 #version 310 es
 
-layout(location = 0) uniform uint tint_immediates[1];
+
+struct tint_immediate_struct {
+  int inner;
+};
+
+layout(location = 0) uniform tint_immediate_struct tint_immediates;
 void uses_b() {
-  int foo = int(tint_immediates[0u]);
+  int foo = tint_immediates.inner;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
