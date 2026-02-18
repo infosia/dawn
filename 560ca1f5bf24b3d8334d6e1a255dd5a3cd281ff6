@@ -52,6 +52,24 @@
       "parentUuid": "d6d55e14_cb3139c0",
       "revId": "560ca1f5bf24b3d8334d6e1a255dd5a3cd281ff6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de040f07_8dbca830",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T15:25:04Z",
+      "side": 1,
+      "message": "The OP in the issue said the issue happens for \"a buffer exceeding 2GB - 4 bytes\", which implies to me that it would trigger for a 2GB buffer.\n\nAn E2E test would be great if it\u0027s easy to do. I can help test on a couple of NVIDIA devices if the farm doesn\u0027t catch it.",
+      "parentUuid": "13ae8135_aedf9c2a",
+      "revId": "560ca1f5bf24b3d8334d6e1a255dd5a3cd281ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
