@@ -126,12 +126,6 @@ class ErrorQueue : public QueueBase {
 
 }  // namespace
 
-// TrackTaskCallback
-
-void TrackTaskCallback::SetFinishedSerial(ExecutionSerial serial) {
-    mSerial = serial;
-}
-
 // QueueBase
 
 QueueBase::QueueBase(DeviceBase* device, const QueueDescriptor* descriptor)
@@ -142,9 +136,7 @@ QueueBase::QueueBase(DeviceBase* device, const QueueDescriptor* descriptor)
 QueueBase::QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
     : ExecutionQueueBase(device, tag, label) {}
 
-QueueBase::~QueueBase() {
-    DAWN_ASSERT(mTasksInFlight->Empty());
-}
+QueueBase::~QueueBase() = default;
 
 void QueueBase::DestroyImpl(DestroyReason reason) {}
 
@@ -249,67 +241,6 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
     FutureID futureID = GetInstance()->GetEventManager()->TrackEvent(std::move(event));
 
     return {futureID};
-}
-
-void QueueBase::TrackTask(std::unique_ptr<TrackTaskCallback> task, ExecutionSerial serial) {
-    // If the task depends on a serial which is not submitted yet, force a flush.
-    if (serial > GetLastSubmittedCommandSerial()) {
-        ForceEventualFlushOfCommands();
-    }
-
-    DAWN_ASSERT(serial <= GetScheduledWorkDoneSerial());
-
-    // If the serial indicated command has been completed, the task will be moved to callback task
-    // manager.
-    if (serial <= GetCompletedCommandSerial()) {
-        task->SetFinishedSerial(GetCompletedCommandSerial());
-        GetDevice()->GetCallbackTaskManager()->AddCallbackTask(std::move(task));
-    } else {
-        mTasksInFlight->Enqueue(std::move(task), serial);
-    }
-}
-
-void QueueBase::TrackTaskAfterEventualFlush(std::unique_ptr<TrackTaskCallback> task) {
-    ForceEventualFlushOfCommands();
-    TrackTask(std::move(task), GetScheduledWorkDoneSerial());
-}
-
-void QueueBase::TrackPendingTask(std::unique_ptr<TrackTaskCallback> task) {
-    mTasksInFlight->Enqueue(std::move(task), GetPendingCommandSerial());
-}
-
-void QueueBase::Tick(ExecutionSerial finishedSerial) {
-    // If a user calls Queue::Submit inside a task, for example in a Buffer::MapAsync callback,
-    // then the device will be ticked, which in turns ticks the queue, causing reentrance here.
-    // To prevent the reentrant call from invalidating mTasksInFlight while in use by the first
-    // call, we remove the tasks to finish from the queue, update mTasksInFlight, then run the
-    // callbacks.
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "Queue::Tick", "finishedSerial",
-                 uint64_t(finishedSerial));
-
-    std::vector<std::unique_ptr<TrackTaskCallback>> tasks;
-    mTasksInFlight.Use([&](auto tasksInFlight) {
-        for (auto& task : tasksInFlight->IterateUpTo(finishedSerial)) {
-            tasks.push_back(std::move(task));
-        }
-        tasksInFlight->ClearUpTo(finishedSerial);
-    });
-    // Tasks' serials have passed. Move them to the callback task manager. They
-    // are ready to be called.
-    for (auto& task : tasks) {
-        task->SetFinishedSerial(finishedSerial);
-        GetDevice()->GetCallbackTaskManager()->AddCallbackTask(std::move(task));
-    }
-}
-
-void QueueBase::HandleDeviceLoss() {
-    mTasksInFlight.Use([&](auto tasksInFlight) {
-        for (auto& task : tasksInFlight->IterateAll()) {
-            task->OnDeviceLoss();
-            GetDevice()->GetCallbackTaskManager()->AddCallbackTask(std::move(task));
-        }
-        tasksInFlight->Clear();
-    });
 }
 
 void QueueBase::APIWriteBuffer(BufferBase* buffer,

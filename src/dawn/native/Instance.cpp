@@ -36,7 +36,6 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/common/WGSLFeatureMapping.h"
-#include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ErrorData.h"
@@ -230,18 +229,7 @@ void InstanceBase::DeleteThis() {
     do {
         devices.clear();
         mDevicesList.Use([&](auto deviceList) { devices.swap(*deviceList); });
-        for (auto device : devices) {
-            device->GetCallbackTaskManager()->HandleShutDown();
-            do {
-                device->GetCallbackTaskManager()->Flush();
-            } while (!device->GetCallbackTaskManager()->IsEmpty());
-        }
     } while (!devices.empty());
-
-    mCallbackTaskManager->HandleShutDown();
-    do {
-        mCallbackTaskManager->Flush();
-    } while (!mCallbackTaskManager->IsEmpty());
 
     RefCounted::DeleteThis();
 }
@@ -287,7 +275,6 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
         mInstanceFeatures = {features.begin(), features.end()};
     }
 
-    mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
     DAWN_TRY(mEventManager.Initialize(descriptor));
     GatherWGSLFeatures(descriptor.Get<DawnWGSLBlocklist>());
 
@@ -609,7 +596,6 @@ bool InstanceBase::ProcessEvents() {
         processedEvents |= device->APITick();
     }
 
-    mCallbackTaskManager->Flush();
     processedEvents |= mEventManager.ProcessPollEvents();
     return processedEvents;
 }
@@ -626,10 +612,6 @@ wgpu::WaitStatus InstanceBase::APIWaitAny(size_t count,
 
 const std::vector<std::string>& InstanceBase::GetRuntimeSearchPaths() const {
     return mRuntimeSearchPaths;
-}
-
-const Ref<CallbackTaskManager>& InstanceBase::GetCallbackTaskManager() const {
-    return mCallbackTaskManager;
 }
 
 EventManager* InstanceBase::GetEventManager() {
