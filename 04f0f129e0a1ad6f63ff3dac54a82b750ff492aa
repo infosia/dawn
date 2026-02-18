@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed79782_81d93cc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-18T21:23:14Z",
+      "side": 1,
+      "message": "Thanks for your review.",
+      "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b852b42_e846fe32",
@@ -41,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "401c472a_d23fa7dd",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-18T21:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b852b42_e846fe32",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 68
+      },
+      "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66f1d46e_8e08e6c3",
@@ -54,6 +95,30 @@
       "writtenOn": "2026-02-18T21:08:31Z",
       "side": 1,
       "message": "nit. Inaccurate comment?",
+      "range": {
+        "startLine": 332,
+        "startChar": 3,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45f517cd_b81c40ea",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-18T21:23:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f1d46e_8e08e6c3",
       "range": {
         "startLine": 332,
         "startChar": 3,
