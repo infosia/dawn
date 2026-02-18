@@ -39,6 +39,7 @@
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -46,10 +47,20 @@ namespace dawn::native::webgpu {
 // static
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
-    return AcquireRef(new Texture(device, descriptor));
+    return AcquireRef(new Texture(device, descriptor, nullptr));
 }
 
-Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
+// static
+ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
+    const SharedTextureMemory* memory,
+    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    Device* device = ToBackend(memory->GetDevice());
+    return AcquireRef(new Texture(device, descriptor, memory));
+}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 const SharedTextureMemory* memory)
     : TextureBase(device, descriptor),
       RecordableObject(schema::ObjectType::Texture),
       ObjectWGPU(device->wgpu->textureRelease) {
@@ -89,7 +100,14 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
         .viewFormats = viewFormats.data(),
     };
 
-    mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &desc);
+    if (memory) {
+        mInnerHandle =
+            device->wgpu->sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &desc);
+        mSharedResourceMemoryContents = memory->GetContents();
+    } else {
+        mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &desc);
+    }
+
     DAWN_ASSERT(mInnerHandle);
 }
 
@@ -101,6 +119,19 @@ void Texture::DestroyImpl(DestroyReason reason) {
 
 void Texture::SetLabelImpl() {
     ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
+}
+
+void Texture::SynchronizeTextureBeforeUse() {
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+    if (contents != nullptr) {
+        // Just acquiring the pending fences but not waiting on them is enough.
+        // The inner backend handles the synchronizations.
+        SharedTextureMemoryBase::PendingFenceList fences;
+        contents->AcquirePendingFences(&fences);
+    }
+
+    // Update the last serial to sync frontend state.
+    mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 }
 
 // TextureView
@@ -140,6 +171,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         const Format& viewFormat = device->GetValidInternalFormat(i);
         viewFormats.emplace_back(viewFormat.format);
     }
+
     schema::Texture tex{{
         .usage = GetUsage(),
         .dimension = GetDimension(),
