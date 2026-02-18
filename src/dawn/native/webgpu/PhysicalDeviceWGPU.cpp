@@ -30,6 +30,7 @@
 #include <string>
 #include <utility>
 
+#include "dawn/common/Platform.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Features_autogen.h"
@@ -86,7 +87,8 @@ Backend* PhysicalDevice::GetBackend() const {
 }
 
 bool PhysicalDevice::SupportsExternalImages() const {
-    return false;
+    native::Adapter nativeAdapter = FromAPI(mInnerAdapter);
+    return nativeAdapter.SupportsExternalImages();
 }
 
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
@@ -120,6 +122,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
     EnableFeature(Feature::AdapterPropertiesWGPU);
+
+#if DAWN_PLATFORM_IS(MACOS)
+    if (mInnerBackendType == WGPUBackendType_Metal) {
+        EnableFeature(Feature::SharedTextureMemoryIOSurface);
+        EnableFeature(Feature::SharedFenceMTLSharedEvent);
+    }
+#endif
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {

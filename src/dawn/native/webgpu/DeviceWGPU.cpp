@@ -32,6 +32,7 @@
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/Log.h"
+#include "dawn/common/Platform.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/BackendConnection.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -63,6 +64,8 @@
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "tint/tint.h"
@@ -285,6 +288,36 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);
+}
+
+ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImpl(
+    const SharedTextureMemoryDescriptor* baseDescriptor) {
+    UnpackedPtr<SharedTextureMemoryDescriptor> unpacked;
+    DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(baseDescriptor));
+
+#if DAWN_PLATFORM_IS(MACOS)
+    if (unpacked.Get<SharedTextureMemoryIOSurfaceDescriptor>()) {
+        auto feature = Feature::SharedTextureMemoryIOSurface;
+        DAWN_INVALID_IF(!HasFeature(feature), "%s is not enabled.", ToAPI(feature));
+    }
+#endif
+
+    return SharedTextureMemory::Create(this, baseDescriptor->label, unpacked);
+}
+
+ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
+    const SharedFenceDescriptor* baseDescriptor) {
+    UnpackedPtr<SharedFenceDescriptor> unpacked;
+    DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(baseDescriptor));
+
+#if DAWN_PLATFORM_IS(MACOS)
+    if (unpacked.Get<SharedFenceMTLSharedEventDescriptor>()) {
+        auto feature = Feature::SharedFenceMTLSharedEvent;
+        DAWN_INVALID_IF(!HasFeature(feature), "%s is not enabled.", ToAPI(feature));
+    }
+#endif
+
+    return SharedFence::Create(this, baseDescriptor->label, baseDescriptor);
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
