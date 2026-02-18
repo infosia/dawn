@@ -39,6 +39,7 @@
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -47,6 +48,40 @@ namespace dawn::native::webgpu {
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
     return AcquireRef(new Texture(device, descriptor));
+}
+
+// static
+ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
+    SharedTextureMemory* memory,
+    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    Device* device = ToBackend(memory->GetDevice());
+
+    std::vector<WGPUTextureFormat> viewFormats;
+    viewFormats.reserve(descriptor->viewFormatCount);
+    for (size_t i = 0; i < descriptor->viewFormatCount; ++i) {
+        viewFormats.push_back(ToAPI(descriptor->viewFormats[i]));
+    }
+
+    WGPUTextureDescriptor desc = {
+        .nextInChain = nullptr,
+        .label = ToOutputStringView(descriptor->label),
+        .usage = ToAPI(descriptor->usage),
+        .dimension = ToAPI(descriptor->dimension),
+        .size = ToWGPU(descriptor->size),
+        .format = ToAPI(descriptor->format),
+        .mipLevelCount = descriptor->mipLevelCount,
+        .sampleCount = descriptor->sampleCount,
+        .viewFormatCount = static_cast<uint32_t>(viewFormats.size()),
+        .viewFormats = viewFormats.data(),
+    };
+
+    WGPUTexture innerHandle =
+        device->wgpu->sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &desc);
+    DAWN_ASSERT(innerHandle);
+
+    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, innerHandle));
+    texture->mSharedResourceMemoryContents = memory->GetContents();
+    return texture;
 }
 
 Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
@@ -93,7 +128,24 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
     DAWN_ASSERT(mInnerHandle);
 }
 
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 WGPUTexture innerHandle)
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu->textureRelease) {
+    mInnerHandle = innerHandle;
+}
+
 void Texture::DestroyImpl(DestroyReason reason) {
+    // if (HasAccess()) {
+    //     SharedTextureMemory* memory = static_cast<SharedTextureMemory*>(
+    //         GetSharedResourceMemoryContents()->GetSharedResourceMemory().Promote().Get());
+    //     DAWN_ASSERT(memory != nullptr);
+    //     [[maybe_unused]] bool hadError =
+    //         GetDevice()->ConsumedError(memory->EndAccess(this), "calling %s.EndAccess()",
+    //         memory);
+    // }
     TextureBase::DestroyImpl(reason);
     auto& wgpu = ToBackend(GetDevice())->wgpu.get();
     wgpu.textureDestroy(mInnerHandle);
@@ -101,6 +153,19 @@ void Texture::DestroyImpl(DestroyReason reason) {
 
 void Texture::SetLabelImpl() {
     ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
+}
+
+void Texture::SynchronizeTextureBeforeUse() {
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+    if (contents != nullptr) {
+        // Just acquiring the pending fences but not waiting on them is enough.
+        // The inner backend handles the synchronizations.
+        SharedTextureMemoryBase::PendingFenceList fences;
+        contents->AcquirePendingFences(&fences);
+    }
+
+    // Update the last serial to sync frontend state.
+    mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 }
 
 // TextureView
@@ -140,6 +205,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         const Format& viewFormat = device->GetValidInternalFormat(i);
         viewFormats.emplace_back(viewFormat.format);
     }
+
     schema::Texture tex{{
         .usage = GetUsage(),
         .dimension = GetDimension(),
