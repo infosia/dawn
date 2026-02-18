@@ -890,12 +890,12 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
     if (descriptor.Get<YCbCrVkDescriptor>()) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
                         wgpu::FeatureName::YCbCrVulkanSamplers);
-        DAWN_INVALID_IF(format.format != wgpu::TextureFormat::External,
+        DAWN_INVALID_IF(format.format != wgpu::TextureFormat::OpaqueYCbCrAndroid,
                         "Texture format (%s) is not (%s).", format.format,
-                        wgpu::TextureFormat::External);
-    } else if (format.format == wgpu::TextureFormat::External) {
+                        wgpu::TextureFormat::OpaqueYCbCrAndroid);
+    } else if (format.format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
         return DAWN_VALIDATION_ERROR("Invalid TextureViewDescriptor with Texture format (%s).",
-                                     wgpu::TextureFormat::External);
+                                     wgpu::TextureFormat::OpaqueYCbCrAndroid);
     }
 
     DAWN_TRY(ValidateCanViewTextureAs(device, texture, *viewFormat, descriptor->aspect));
