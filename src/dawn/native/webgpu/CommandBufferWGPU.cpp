@@ -31,6 +31,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/native/CommandBuffer.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/webgpu/BindGroupWGPU.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
@@ -184,10 +185,6 @@ void EncodeRenderPass(const Device* device,
     size_t colorAttachmentCount = 0;
     for (auto i : renderPassCmd->attachmentState->GetColorAttachmentsMask()) {
         auto& colorAttachment = renderPassCmd->colorAttachments[i];
-        colorAttachment.view->GetTexture()->SetInitialized(true);
-        if (colorAttachment.resolveTarget != nullptr) {
-            colorAttachment.resolveTarget->GetTexture()->SetInitialized(true);
-        }
         colorAttachments[i] = ToWGPU(colorAttachment);
         colorAttachmentCount = static_cast<size_t>(i) + 1;
     }
@@ -205,7 +202,6 @@ void EncodeRenderPass(const Device* device,
     };
     WGPURenderPassDepthStencilAttachment depthStencilAttachment;
     if (renderPassCmd->attachmentState->HasDepthStencilAttachment()) {
-        renderPassCmd->depthStencilAttachment.view->GetTexture()->SetInitialized(true);
         depthStencilAttachment = ToWGPU(renderPassCmd->depthStencilAttachment);
         passDescriptor.depthStencilAttachment = &depthStencilAttachment;
     }
@@ -979,11 +975,32 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
 WGPUCommandBuffer CommandBuffer::Encode() {
     auto& wgpu = ToBackend(GetDevice())->wgpu;
 
+    auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> void {
+        for (size_t i = 0; i < scope.textures.size(); i++) {
+            Texture* texture = ToBackend(scope.textures[i]);
+
+            // Clear subresources that are not render attachments. Render attachments will be
+            // cleared in RecordBeginRenderPass by setting the loadop to clear when the texture
+            // subresource has not been initialized before the render pass.
+            scope.textureSyncInfos[i].Iterate(
+                [&](const SubresourceRange& range, const TextureSyncInfo& syncInfo) -> void {
+                    if (syncInfo.usage & ~wgpu::TextureUsage::RenderAttachment) {
+                        texture->SetInitialized(true);
+                    }
+                });
+        }
+
+        for (BufferBase* bufferBase : scope.buffers) {
+            bufferBase->SetInitialized(true);
+        }
+    };
+
     // TODO(crbug.com/413053623): Use stored command encoder descriptor
     WGPUCommandEncoder innerEncoder =
         wgpu.deviceCreateCommandEncoder(ToBackend(GetDevice())->GetInnerHandle(), nullptr);
 
     size_t nextComputePassNumber = 0;
+    size_t nextRenderPassNumber = 0;
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -997,7 +1014,11 @@ WGPUCommandBuffer CommandBuffer::Encode() {
             }
             case Command::BeginRenderPass: {
                 auto cmd = mCommands.NextCommand<BeginRenderPassCmd>();
+                // Call Lazy* instead of manually set every texture with SetInitialized(true) to properly manage intializatino state especially for imported shared texture.
+                LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]);
+                LazyClearRenderPassAttachments(GetDevice(), cmd);
                 EncodeRenderPass(ToBackend(GetDevice()), innerEncoder, mCommands, cmd);
+                ++nextRenderPassNumber;
                 break;
             }
             case Command::CopyBufferToBuffer: {
