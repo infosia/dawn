@@ -16,6 +16,23 @@
       "message": "PTAL. This fixes the issue when we release a language feature we need to move it to before the dawn entries and rename down the chain, the values need to match the webgpu header values. This spaces the dawn entries further down the enum range to give a bunch of padding for adding extensions.",
       "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0c8540f_6cdb36d5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4508,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T18:51:56Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed: we could start them at 0 because the are in the Dawn namespace. See https://source.chromium.org/chromium/chromium/src/+/main:out/chromeos-Debug/gen/third_party/dawn/include/dawn/webgpu.h;drc\u003d76867610ec5afa320c0e0a07d0ee12376b201727;l\u003d1154 that shows the namespacing.",
+      "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
