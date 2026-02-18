@@ -28,14 +28,18 @@
 #include "dawn/native/webgpu/QueueWGPU.h"
 
 #include <limits>
+#include <utility>
+#include <variant>
 #include <vector>
 
-#include "dawn/native/Error.h"
+#include "dawn/native/EventManager.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
@@ -43,6 +47,20 @@
 namespace dawn::native::webgpu {
 
 // static
+namespace {
+class CommandsScheduledEvent final : public EventManager::TrackedEvent {
+  public:
+    explicit CommandsScheduledEvent(wgpu::CallbackMode callbackMode,
+                                    Queue* queue,
+                                    ExecutionSerial serial)
+        : TrackedEvent(callbackMode, queue, serial) {}
+    ~CommandsScheduledEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+
+  private:
+    void Complete(EventCompletionType completionType) override {}
+};
+}  // namespace
+
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
     return AcquireRef(new Queue(device, descriptor));
 }
@@ -50,6 +68,26 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor)
     : QueueBase(device, descriptor), ObjectWGPU(device->wgpu->queueRelease) {
     mInnerHandle = device->wgpu->deviceGetQueue(device->GetInnerHandle());
+}
+
+wgpu::Future Queue::GetCommandsScheduledFuture() {
+    if (GetDevice()->ConsumedError(SubmitPendingCommands())) {
+        return {kNullFutureID};
+    }
+    auto event = AcquireRef(new CommandsScheduledEvent(wgpu::CallbackMode::WaitAnyOnly, this,
+                                                       GetLastSubmittedCommandSerial()));
+    FutureID futureID = GetDevice()->GetInstance()->GetEventManager()->TrackEvent(event);
+    return {futureID};
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(WGPUSharedFence innerFence) {
+    if (mSharedFence) {
+        return mSharedFence;
+    }
+
+    mSharedFence = SharedFence::CreateFromHandle(ToBackend(GetDevice()),
+                                                 "WebGPU SharedFence Wrapper", innerFence);
+    return mSharedFence;
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -135,6 +173,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         .rowsPerImage = dataLayout.rowsPerImage,
     };
     WGPUExtent3D writeSize = ToWGPU(writeSizePixel);
+    ToBackend(destination.texture)->SynchronizeTextureBeforeUse();
     ToBackend(GetDevice())
         ->wgpu->queueWriteTexture(mInnerHandle, &dest, data, dataSize, &layout, &writeSize);
     destination.texture->SetInitialized(true);
@@ -163,6 +202,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 
             futuresInFlight->pop_front();
         }
+
         return fenceSerial;
     });
 }
@@ -251,6 +291,10 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
     });
     mHasPendingCommands = false;
     return {};
+}
+
+void Queue::DestroyImpl(DestroyReason reason) {
+    mSharedFence = nullptr;
 }
 
 bool Queue::IsCapturing() const {
