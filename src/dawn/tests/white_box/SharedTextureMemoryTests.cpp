@@ -90,6 +90,8 @@ SharedTextureMemoryTestVulkanBackend::ChainBeginState(
 void SharedTextureMemoryNoFeatureTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
+    // TODO(crbug.com/483147423): Implement Capture.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
     GetParam().mBackend->SetUp(device);
 }
 
@@ -123,6 +125,8 @@ void SharedTextureMemoryTests::SetUp() {
     // TODO(crbug.com/342213634): Crashes on ChromeOS volteer devices.
     // TODO(crbug.com/407561933): Triggers dawn validation errors
     DAWN_SUPPRESS_TEST_IF(IsChromeOS() && IsVulkan() && IsIntel());
+    // TODO(crbug.com/483147423): Implement Capture.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
     // Compat cannot create 2D texture view from a 2D array texture.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
