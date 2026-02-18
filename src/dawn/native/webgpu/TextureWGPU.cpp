@@ -39,6 +39,7 @@
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -47,6 +48,40 @@ namespace dawn::native::webgpu {
 ResultOrError<Ref<Texture>> Texture::Create(Device* device,
                                             const UnpackedPtr<TextureDescriptor>& descriptor) {
     return AcquireRef(new Texture(device, descriptor));
+}
+
+// static
+ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
+    SharedTextureMemory* memory,
+    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    Device* device = ToBackend(memory->GetDevice());
+
+    std::vector<WGPUTextureFormat> viewFormats;
+    viewFormats.reserve(descriptor->viewFormatCount);
+    for (size_t i = 0; i < descriptor->viewFormatCount; ++i) {
+        viewFormats.push_back(ToAPI(descriptor->viewFormats[i]));
+    }
+
+    WGPUTextureDescriptor desc = {
+        .nextInChain = nullptr,
+        .label = ToOutputStringView(descriptor->label),
+        .usage = ToAPI(descriptor->usage),
+        .dimension = ToAPI(descriptor->dimension),
+        .size = ToWGPU(descriptor->size),
+        .format = ToAPI(descriptor->format),
+        .mipLevelCount = descriptor->mipLevelCount,
+        .sampleCount = descriptor->sampleCount,
+        .viewFormatCount = static_cast<uint32_t>(viewFormats.size()),
+        .viewFormats = viewFormats.data(),
+    };
+
+    WGPUTexture innerHandle =
+        device->wgpu.sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &desc);
+    DAWN_ASSERT(innerHandle);
+
+    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, innerHandle));
+    texture->mSharedResourceMemoryContents = memory->GetContents();
+    return texture;
 }
 
 Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
@@ -91,6 +126,15 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
 
     mInnerHandle = device->wgpu.deviceCreateTexture(device->GetInnerHandle(), &desc);
     DAWN_ASSERT(mInnerHandle);
+}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 WGPUTexture innerHandle)
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu.textureRelease) {
+    mInnerHandle = innerHandle;
 }
 
 void Texture::DestroyImpl(DestroyReason reason) {
@@ -140,6 +184,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         const Format& viewFormat = device->GetValidInternalFormat(i);
         viewFormats.emplace_back(viewFormat.format);
     }
+
     schema::Texture tex{{
         .usage = GetUsage(),
         .dimension = GetDimension(),

@@ -56,6 +56,8 @@ typedef std::variant<wgpu::BindGroup,
                      wgpu::RenderPipeline,
                      wgpu::Sampler,
                      wgpu::ShaderModule,
+                     wgpu::SharedFence,
+                     wgpu::SharedTextureMemory,
                      wgpu::TexelBufferView,
                      wgpu::Texture,
                      wgpu::TextureView>

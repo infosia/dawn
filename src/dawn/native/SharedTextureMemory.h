@@ -73,6 +73,10 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
 
     MaybeError GetProperties(SharedTextureMemoryProperties* properties) const;
 
+    wgpu::TextureUsage GetUsage() const { return mProperties.usage; }
+    const Extent3D& GetSize() const { return mProperties.size; }
+    wgpu::TextureFormat GetFormat() const { return mProperties.format; }
+
   private:
     ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor);
 
