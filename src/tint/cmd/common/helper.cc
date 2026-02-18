@@ -103,6 +103,7 @@ void PrintBindings(tint::inspector::Inspector& inspector, const std::string& ep_
                   << "\t\t resource_type = " << ResourceTypeToString(binding.resource_type) << "\n"
                   << "\t\t dim = " << TextureDimensionToString(binding.dim) << "\n"
                   << "\t\t sampled_kind = " << SampledKindToString(binding.sampled_kind) << "\n"
+                  << "\t\t sampler_type = " << SamplerTypeToString(binding.sampler_type) << "\n"
                   << "\t\t image_format = " << TexelFormatToString(binding.image_format) << "\n\n";
     }
 }
@@ -389,11 +390,33 @@ std::string SampledKindToString(tint::inspector::ResourceBinding::SampledKind ki
             return "UInt";
         case tint::inspector::ResourceBinding::SampledKind::kSInt:
             return "SInt";
+        case tint::inspector::ResourceBinding::SampledKind::kFilterable:
+            return "Filterable";
+        case tint::inspector::ResourceBinding::SampledKind::kUnfilterable:
+            return "Unfilterable";
+        case tint::inspector::ResourceBinding::SampledKind::kUnknownFilterable:
+            return "unknown-filterable";
         case tint::inspector::ResourceBinding::SampledKind::kUnknown:
             break;
     }
 
     return "Unknown";
+}
+
+std::string SamplerTypeToString(tint::inspector::ResourceBinding::SamplerType type) {
+    switch (type) {
+        case inspector::ResourceBinding::SamplerType::kComparison:
+            return "comparison";
+        case inspector::ResourceBinding::SamplerType::kFiltering:
+            return "filtering";
+        case inspector::ResourceBinding::SamplerType::kNonFiltering:
+            return "non-filtering";
+        case inspector::ResourceBinding::SamplerType::kUnknownFiltering:
+            return "unknown-filtering";
+        case inspector::ResourceBinding::SamplerType::kUnknown:
+            break;
+    }
+    return "unknown";
 }
 
 std::string TexelFormatToString(tint::inspector::ResourceBinding::TexelFormat format) {
@@ -494,8 +517,6 @@ std::string ResourceTypeToString(tint::inspector::ResourceBinding::ResourceType 
             return "ReadOnlyStorageBuffer";
         case tint::inspector::ResourceBinding::ResourceType::kSampler:
             return "Sampler";
-        case tint::inspector::ResourceBinding::ResourceType::kComparisonSampler:
-            return "ComparisonSampler";
         case tint::inspector::ResourceBinding::ResourceType::kSampledTexture:
             return "SampledTexture";
         case tint::inspector::ResourceBinding::ResourceType::kMultisampledTexture:
