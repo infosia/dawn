@@ -1058,6 +1058,8 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             // on the extension.
             DAWN_ASSERT(deviceInfo.features.IsEnabled(Feature::FramebufferFetch));
 
+            metadata->usesFramebufferFetch = true;
+
             EntryPointMetadata::FragmentRenderAttachmentInfo variable;
             DAWN_TRY_ASSIGN(variable.baseType,
                             TintComponentTypeToTextureComponentType(inputVar.component_type));

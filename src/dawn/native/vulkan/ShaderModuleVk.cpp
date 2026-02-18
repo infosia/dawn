@@ -152,6 +152,14 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         };
     }
 
+    std::unordered_map<uint32_t, tint::BindingPoint> framebuffer_fetch_bindings;
+    if (layout->UsesFramebufferFetch()) {
+        for (uint32_t i = 0; i < kMaxColorAttachments; ++i) {
+            framebuffer_fetch_bindings[i] = {(uint32_t)startOfBindGroups, i};
+        }
+        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
+    }
+
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
             return tint::BindingPoint{
@@ -203,6 +211,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     };
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.resource_table = std::move(resourceTableConfig);
+    req.tintOptions.colour_index_to_binding_point = std::move(framebuffer_fetch_bindings);
 
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.disable_workgroup_init =

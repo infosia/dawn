@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "absl/container/inlined_vector.h"
+#include "dawn/common/Assert.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/HashUtils.h"
 #include "dawn/common/Log.h"
@@ -62,6 +63,7 @@ class RenderPassCreateInfo {
             colorAttachmentRefs[i] = defaultRef;
             resolveAttachmentRefs[i] = defaultRef;
             inputAttachmentRefs[i] = defaultRef;
+            framebufferFetchAttachmentRefs[i] = defaultRef;
         }
         depthStencilAttachmentRef = defaultRef;
 
@@ -72,6 +74,7 @@ class RenderPassCreateInfo {
     PerColorAttachment<VkAttachmentReference> colorAttachmentRefs;
     PerColorAttachment<VkAttachmentReference> resolveAttachmentRefs;
     PerColorAttachment<VkAttachmentReference> inputAttachmentRefs;
+    PerColorAttachment<VkAttachmentReference> framebufferFetchAttachmentRefs;
     VkAttachmentReference depthStencilAttachmentRef;
 
     std::array<VkAttachmentDescription, kMaxAttachmentCount> attachmentDescs = {};
@@ -98,6 +101,7 @@ class RenderPassCreateInfo2 {
             colorAttachmentRefs[i] = defaultRef;
             resolveAttachmentRefs[i] = defaultRef;
             inputAttachmentRefs[i] = defaultRef;
+            framebufferFetchAttachmentRefs[i] = defaultRef;
         }
         depthStencilAttachmentRef = defaultRef;
 
@@ -127,6 +131,7 @@ class RenderPassCreateInfo2 {
     PerColorAttachment<VkAttachmentReference2> colorAttachmentRefs;
     PerColorAttachment<VkAttachmentReference2> resolveAttachmentRefs;
     PerColorAttachment<VkAttachmentReference2> inputAttachmentRefs;
+    PerColorAttachment<VkAttachmentReference2> framebufferFetchAttachmentRefs;
     VkAttachmentReference2 depthStencilAttachmentRef;
 
     std::array<VkAttachmentDescription2, kMaxAttachmentCount> attachmentDescs = {};
@@ -149,6 +154,9 @@ void InitializePassInfo(Device* device, const RenderPassCacheQuery& query, InfoT
         auto& attachmentDesc = passInfo.attachmentDescs[attachmentCount];
 
         attachmentRef.attachment = attachmentCount;
+        // According to b/42241389, we should use VK_IMAGE_LAYOUT_GENERAL for color attachment
+        // reference to avoid validation layer complaints when it's also used as an input
+        // attachment.
         attachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
         attachmentDesc.flags = 0;
@@ -272,8 +280,33 @@ void InitializePassInfo(Device* device, const RenderPassCacheQuery& query, InfoT
     auto& subpassDesc = passInfo.subpassDescs[subpassCount];
     subpassDesc.flags = 0;
     subpassDesc.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-    subpassDesc.inputAttachmentCount = 0;
-    subpassDesc.pInputAttachments = nullptr;
+
+    if (device->HasFeature(Feature::FramebufferFetch)) {
+        for (auto i : query.colorMask) {
+            auto& attachmentRef = passInfo.colorAttachmentRefs[i];
+
+            auto& inputRef = passInfo.framebufferFetchAttachmentRefs[i];
+            inputRef.attachment = attachmentRef.attachment;
+            inputRef.layout = VK_IMAGE_LAYOUT_GENERAL;
+            if constexpr (std::same_as<InfoType, RenderPassCreateInfo2>) {
+                inputRef.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            }
+        }
+
+        subpassDesc.inputAttachmentCount = static_cast<uint8_t>(highestColorAttachmentIndexPlusOne);
+        subpassDesc.pInputAttachments = passInfo.framebufferFetchAttachmentRefs.data();
+
+        DAWN_ASSERT(device->GetDeviceInfo().HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
+                    device->GetDeviceInfo()
+                        .rasterizationOrderAttachmentAccessFeatures
+                        .rasterizationOrderColorAttachmentAccess);
+
+        subpassDesc.flags |=
+            VK_SUBPASS_DESCRIPTION_RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_BIT_EXT;
+    } else {
+        subpassDesc.inputAttachmentCount = 0;
+        subpassDesc.pInputAttachments = nullptr;
+    }
     subpassDesc.colorAttachmentCount = static_cast<uint8_t>(highestColorAttachmentIndexPlusOne);
     subpassDesc.pColorAttachments = passInfo.colorAttachmentRefs.data();
 

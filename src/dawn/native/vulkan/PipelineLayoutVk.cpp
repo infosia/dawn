@@ -57,8 +57,13 @@ ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> PipelineLayout::CreateV
     // The first VkDescriptorSetLayout is the one for the resource table if needed.
     BindGroupIndex startOfBindGroups{0};
     if (UsesResourceTable()) {
-        startOfBindGroups = BindGroupIndex(1);
-        setLayouts[BindGroupIndex(0)] = ToBackend(GetDevice())->GetResourceTableLayout();
+        setLayouts[startOfBindGroups] = ToBackend(GetDevice())->GetResourceTableLayout();
+        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
+    }
+
+    if (UsesFramebufferFetch()) {
+        setLayouts[startOfBindGroups] = ToBackend(GetDevice())->GetFramebufferFetchLayout();
+        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
     }
 
     // The all the descriptor sets for BindGroupLayouts, including the empty BGLs.
@@ -169,6 +174,11 @@ void PipelineLayout::SetLabelImpl() {
             SetDebugName(device, vkLayout->Get(), "Dawn_PipelineLayout", label);
         }
     });
+}
+
+bool PipelineLayout::UsesFramebufferFetch() const {
+    // TODO(kylechar): Only use FBF if fragment shader contains color attribute.
+    return GetDevice()->HasFeature(Feature::FramebufferFetch);
 }
 
 }  // namespace dawn::native::vulkan
