@@ -289,7 +289,8 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
 
     // Initialize the format capabilities and add the pre-initialized format capabilities when
     // relevant features are enabled
-    InitialCapsAddedBy(Feature::YCbCrVulkanSamplers, {wgpu::TextureFormat::External}, Cap::None);
+    InitialCapsAddedBy(Feature::YCbCrVulkanSamplers, {wgpu::TextureFormat::OpaqueYCbCrAndroid},
+                       Cap::None);
 
     InitialCapsAddedBy(Feature::Unorm16TextureFormats,
                        {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
@@ -547,7 +548,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     DefineColorFormat(wgpu::TextureFormat::RG11B10Ufloat, ByteSize(4), kAnyFloat, ComponentCount(3),
                       RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(4));
     DefineColorFormat(wgpu::TextureFormat::RGB9E5Ufloat, ByteSize(4), kAnyFloat, ComponentCount(3));
-    DefineColorFormat(wgpu::TextureFormat::External, ByteSize(1), SampleTypeBit::External,
+    DefineColorFormat(wgpu::TextureFormat::OpaqueYCbCrAndroid, ByteSize(1), SampleTypeBit::External,
                       ComponentCount(0));
 
     // 8 bytes
