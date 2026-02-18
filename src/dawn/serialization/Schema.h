@@ -73,6 +73,8 @@ using Mat4x3 = std::array<float, 12>;
     X(RenderPipeline)               \
     X(Sampler)                      \
     X(ShaderModule)                 \
+    X(SharedFence)                  \
+    X(SharedTextureMemory)          \
     X(Texture)                      \
     X(TexelBufferView)              \
     X(TextureView)

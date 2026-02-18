@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_WEBGPU_QUEUEWGPU_H_
 
 #include <deque>
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -41,6 +42,7 @@ namespace dawn::native::webgpu {
 
 class CaptureContext;
 class Device;
+class SharedFence;
 
 class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
   public:
@@ -49,6 +51,17 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     bool IsCapturing() const;
     MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
     CaptureContext* GetCaptureContext() const;
+
+    // Returns a SharedFence for the given execution serial and type.
+    ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
+                                                           wgpu::SharedFenceType type);
+
+    // Manually add a SharedFence to be tracked by the queue at a specific execution serial.
+    void AddSharedFence(ExecutionSerial lastUsageSerial, Ref<SharedFence> fence);
+
+    // Returns a wgpu::Future that can be used to wait for commands up to the current point to be
+    // scheduled on the inner device.
+    wgpu::Future GetCommandsScheduledFuture();
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
@@ -72,6 +85,9 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     MaybeError SubmitFutureSync();
 
     MutexProtected<std::deque<std::pair<WGPUFuture, ExecutionSerial>>> mFuturesInFlight;
+    // Map used to reuse fences for the same serial and to provide fences for external
+    // synchronization.
+    std::map<ExecutionSerial, Ref<SharedFence>> mSharedFences;
     bool mHasPendingCommands = false;
 
     std::unique_ptr<CaptureContext> mCaptureContext;

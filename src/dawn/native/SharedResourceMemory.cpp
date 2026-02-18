@@ -238,6 +238,10 @@ bool SharedResourceMemory::APIIsDeviceLost() const {
     return GetDevice()->IsLost();
 }
 
+bool SharedResourceMemory::ShouldAlwaysCallEndAccessImpl() const {
+    return false;
+}
+
 template <typename Resource, typename EndAccessState>
 MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* state) {
     DAWN_TRY(GetDevice()->ValidateObject(resource));
@@ -293,7 +297,7 @@ MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* s
     // This is separated out because writing the output state must happen regardless of whether
     // or not EndAccessInternal succeeds.
     MaybeError err;
-    if (lastUsageSerial != kBeginningOfGPUTime) {
+    if (lastUsageSerial != kBeginningOfGPUTime || ShouldAlwaysCallEndAccessImpl()) {
         ResultOrError<FenceAndSignalValue> result =
             EndAccessInternal(lastUsageSerial, resource, state);
         if (result.IsSuccess()) {

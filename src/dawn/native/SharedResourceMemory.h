@@ -104,6 +104,10 @@ class SharedResourceMemory : public ApiObjectBase, public WeakRefSupport<SharedR
     SharedResourceMemory(DeviceBase* device, ObjectBase::ErrorTag, StringView label);
     using ApiObjectBase::ApiObjectBase;
 
+    // Override this so that EndAccessInternal is called regardless of lastUsageSerial.
+    // This is made for the WebGPU passthrough backend.
+    virtual bool ShouldAlwaysCallEndAccessImpl() const;
+
   private:
     virtual Ref<SharedResourceMemoryContents> CreateContents();
 

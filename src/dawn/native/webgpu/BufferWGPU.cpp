@@ -92,6 +92,10 @@ Buffer::Buffer(Device* device,
     mAllocatedSize = GetSize();
 }
 
+void Buffer::SynchronizeBufferBeforeUse() {
+    MarkUsedInPendingCommands();
+}
+
 bool Buffer::IsCPUWritableAtCreation() const {
     return ToBackend(GetDevice())->wgpu->bufferGetMapState(mInnerHandle) ==
            WGPUBufferMapState_Mapped;

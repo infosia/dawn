@@ -86,7 +86,8 @@ Backend* PhysicalDevice::GetBackend() const {
 }
 
 bool PhysicalDevice::SupportsExternalImages() const {
-    return false;
+    native::Adapter nativeAdapter = FromAPI(mInnerAdapter);
+    return nativeAdapter.SupportsExternalImages();
 }
 
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
@@ -120,6 +121,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
     EnableFeature(Feature::AdapterPropertiesWGPU);
+
+    if (mInnerBackendType == WGPUBackendType_Metal) {
+        EnableFeature(Feature::SharedTextureMemoryIOSurface);
+        EnableFeature(Feature::SharedFenceMTLSharedEvent);
+    }
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
