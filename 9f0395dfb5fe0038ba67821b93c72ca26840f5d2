@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52e1c1da_b3392e45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T15:00:12Z",
+      "side": 1,
+      "message": "The renumber was not as trivial as I thought, I should have ran unittests even for the \"trivial\" CL.",
+      "revId": "9f0395dfb5fe0038ba67821b93c72ca26840f5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
