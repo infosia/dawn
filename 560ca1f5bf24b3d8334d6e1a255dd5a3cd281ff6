@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f338b94_e211150f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T15:06:47Z",
+      "side": 1,
+      "message": "Have we been able to reproduce this, and confirm that issue is for sizes strictly greater than 2GB and not equal to 2GB?",
+      "revId": "560ca1f5bf24b3d8334d6e1a255dd5a3cd281ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
