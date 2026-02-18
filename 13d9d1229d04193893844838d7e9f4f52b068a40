@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c74849ee_7121ef09",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dd0dbcf6_fc30551b",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43b57e19_e5671903",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "It could possibly be an ASSERT, but given it\u0027s changing the existing behaviour i\u0027ll do it as a followup.",
       "parentUuid": "43b57e19_e5671903",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "161136e5_028d78b8",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e66ca5_62d8f5aa",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -135,6 +171,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a6a3a0_7a90bbbb",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeb496a3_6f1b52ff",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 5
+      },
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a167029_bef21bd7",
@@ -170,6 +230,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4811fa66_69b445c5",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6980242b_f5ebc2e9",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99a0ec2e_b3a4b64c",
@@ -201,6 +279,24 @@
       "side": 1,
       "message": "Will investigate in a follouwp.",
       "parentUuid": "99a0ec2e_b3a4b64c",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d1923df_42b0b064",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed223ac8_879d605e",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -290,6 +386,24 @@
       "side": 1,
       "message": "Ah, if there is no other use for `Float` then multisampled I can switch MS to use `unfilterable-float` and drop `float`",
       "parentUuid": "0f6325b5_77efcd1c",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b45ba1d9_d630682d",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T21:17:09Z",
+      "side": 1,
+      "message": "Turns out, `input_attachment` is also returned here which is a `Float`. We could possibly use `UnfilteredFloat` but that still seems weird?\n\nWe also use `Float` for the storage texture formats so `Rg32Float` is set to `Float`",
+      "parentUuid": "4ad35079_137425ac",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
