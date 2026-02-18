@@ -478,7 +478,6 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
 
     mCaches = std::make_unique<DeviceBase::Caches>();
     mDynamicUploader = std::make_unique<DynamicUploader>(this);
-    mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
     mInternalPipelineStore = std::make_unique<InternalPipelineStore>(this);
     if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
         mResourceTableDefaultResources = std::make_unique<ResourceTableDefaultResources>();
@@ -558,13 +557,6 @@ void DeviceBase::WillDropLastExternalRef() {
         Destroy(DestroyReason::EarlyDestroy);
     }
 
-    // Flush last remaining callback tasks.
-    if (mCallbackTaskManager) {
-        do {
-            FlushCallbackTaskQueue();
-        } while (!mCallbackTaskManager->IsEmpty());
-    }
-
     auto deviceGuard = GetGuard();
     // Drop the device's reference to the queue. Because the application dropped the last external
     // reference, it's UB if they try to get the queue from APIGetQueue().
@@ -579,10 +571,6 @@ void DeviceBase::WillDropLastExternalRef() {
     }
 
     GetInstance()->RemoveDevice(this);
-
-    // Once last external ref dropped, all callbacks should be forwarded to Instance's callback
-    // queue instead.
-    mCallbackTaskManager = GetInstance()->GetCallbackTaskManager();
 }
 
 void DeviceBase::DestroyObjects() {
@@ -645,11 +633,8 @@ void DeviceBase::Destroy(DestroyReason reason) {
     // This function may be called re-entrantly inside APITick(). Tick triggers callbacks
     // inside which the application may destroy the device. Thus, we should be careful not
     // to delete objects that are needed inside Tick after callbacks have been called.
-    //  - mCallbackTaskManager is not deleted since we flush the callback queue at the end
-    // of Tick(). Note: that flush should always be empty since all callbacks are drained
-    // inside Destroy() so there should be no outstanding tasks holding objects alive.
-    //  - Similarly, mAsyncTaskManager is not deleted since we use it to return a status
-    // from Tick() whether or not there is any more pending work.
+    //  - mAsyncTaskManager is not deleted since we use it to return a status from Tick() whether
+    //    or not there is any more pending work.
 
     // Skip handling device facilities if they haven't even been created (or failed doing so)
     if (state != State::BeingCreated) {
@@ -659,7 +644,6 @@ void DeviceBase::Destroy(DestroyReason reason) {
         // Call all the callbacks immediately as the device is about to shut down.
         // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
         mAsyncTaskManager->WaitAllPendingTasks();
-        mCallbackTaskManager->HandleShutDown();
 
         // Finish destroying all objects owned by the device. Note that this must be done before
         // DestroyImpl() as it may relinquish resources that will be freed by backends in the
@@ -704,7 +688,6 @@ void DeviceBase::Destroy(DestroyReason reason) {
         // The GPU timeline is finished.
         mQueue->AssumeCommandsComplete();
         DAWN_ASSERT(mQueue->GetCompletedCommandSerial() >= mQueue->GetLastSubmittedCommandSerial());
-        mQueue->Tick(mQueue->GetCompletedCommandSerial());
     }
 
     // At this point GPU operations are always finished, so we are in the disconnected state.
@@ -805,15 +788,10 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
 
     const std::string messageStr = error->GetFormattedMessage();
     if (type == InternalErrorType::DeviceLost) {
-        // The device was lost, schedule the application callback's execution.
-        // Note: we don't invoke the callbacks directly here because it could cause re-entrances ->
-        // possible deadlock.
         HandleDeviceLost(lostReason, messageStr);
-        mQueue->HandleDeviceLoss();
 
         // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
         mAsyncTaskManager->WaitAllPendingTasks();
-        mCallbackTaskManager->HandleDeviceLoss();
     }
 
     // Pass the error to the error scope stack and call the uncaptured error callback
@@ -1082,7 +1060,7 @@ ResourceTableDefaultResources* DeviceBase::GetResourceTableDefaultResources() {
 }
 
 bool DeviceBase::HasPendingTasks() {
-    return mAsyncTaskManager->HasPendingTasks() || !mCallbackTaskManager->IsEmpty();
+    return mAsyncTaskManager->HasPendingTasks();
 }
 
 bool DeviceBase::IsDeviceIdle() {
@@ -1671,10 +1649,6 @@ bool DeviceBase::APITick() {
         tickError = ConsumedError(Tick());
     }
 
-    // We have to check callback tasks in every APITick because it is not related to any global
-    // serials.
-    FlushCallbackTaskQueue();
-
     if (tickError) {
         return false;
     }
@@ -1707,7 +1681,6 @@ MaybeError DeviceBase::Tick() {
     // tick the dynamic uploader before the backend resource allocators. This would allow
     // reclaiming resources one tick earlier.
     mDynamicUploader->Deallocate(mQueue->GetCompletedCommandSerial());
-    mQueue->Tick(mQueue->GetCompletedCommandSerial());
 
     return {};
 }
@@ -2529,36 +2502,12 @@ void DeviceBase::ForceEnableFeatureForTesting(Feature feature) {
     mFormatTable = BuildFormatTable(this);
 }
 
-void DeviceBase::FlushCallbackTaskQueue() {
-    // Callbacks might cause re-entrances. Mutex shouldn't be locked. So we expect there is no
-    // locked mutex before entering this method.
-    DAWN_ASSERT(mMutex == nullptr || !mMutex->IsLockedByCurrentThread());
-
-    Ref<CallbackTaskManager> callbackTaskManager;
-
-    {
-        // This is a data race with the assignment to InstanceBase's callback queue manager in
-        // WillDropLastExternalRef(). Need to protect with a lock and keep the old
-        // mCallbackTaskManager alive.
-        // TODO(crbug.com/dawn/752): In future, all devices should use InstanceBase's callback queue
-        // manager from the start. So we won't need to care about data race at that point.
-        auto deviceGuard = GetGuard();
-        callbackTaskManager = mCallbackTaskManager;
-    }
-
-    callbackTaskManager->Flush();
-}
-
 const CombinedLimits& DeviceBase::GetLimits() const {
     return mLimits;
 }
 
 AsyncTaskManager* DeviceBase::GetAsyncTaskManager() const {
     return mAsyncTaskManager.get();
-}
-
-CallbackTaskManager* DeviceBase::GetCallbackTaskManager() const {
-    return mCallbackTaskManager.Get();
 }
 
 dawn::platform::WorkerTaskPool* DeviceBase::GetWorkerTaskPool() const {
