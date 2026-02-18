@@ -700,7 +700,7 @@ bool Converter::Convert(interop::GPUTextureFormat& out, wgpu::TextureFormat in) 
         case wgpu::TextureFormat::R10X6BG10X6Biplanar420Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm:
-        case wgpu::TextureFormat::External:
+        case wgpu::TextureFormat::OpaqueYCbCrAndroid:
 
         case wgpu::TextureFormat::Undefined:
             return false;

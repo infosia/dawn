@@ -40,7 +40,7 @@ constexpr uint32_t kHeight = 32u;
 constexpr uint32_t kDefaultMipLevels = 1u;
 constexpr uint32_t kDefaultLayerCount = 1u;
 constexpr uint32_t kDefaultSampleCount = 1u;
-constexpr wgpu::TextureFormat kDefaultTextureFormat = wgpu::TextureFormat::External;
+constexpr wgpu::TextureFormat kDefaultTextureFormat = wgpu::TextureFormat::OpaqueYCbCrAndroid;
 
 wgpu::Texture Create2DTexture(wgpu::Device& device,
                               wgpu::TextureFormat format = kDefaultTextureFormat) {

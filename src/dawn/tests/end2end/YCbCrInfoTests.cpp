@@ -43,7 +43,7 @@ namespace {
 
 constexpr uint32_t kDefaultMipLevels = 1u;
 constexpr uint32_t kDefaultLayerCount = 1u;
-constexpr wgpu::TextureFormat kDefaultTextureFormat = wgpu::TextureFormat::External;
+constexpr wgpu::TextureFormat kDefaultTextureFormat = wgpu::TextureFormat::OpaqueYCbCrAndroid;
 
 wgpu::Texture Create2DTexture(wgpu::Device& device) {
 #if DAWN_PLATFORM_IS(ANDROID)
@@ -276,7 +276,7 @@ TEST_P(YCbCrInfoTest, YCbCrTextureViewInvalidWithNoFormat) {
 }
 
 // Test that it is NOT possible to create texture view from texture created with
-// TextureFormat::External but NO ycbcr vulkan descriptor passed.
+// TextureFormat::OpaqueYCbCrAndroid but NO ycbcr vulkan descriptor passed.
 TEST_P(YCbCrInfoTest, YCbCrTextureViewInvalidWithNoYCbCrDescriptor) {
     wgpu::Texture texture = Create2DTexture(device);
 

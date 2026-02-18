@@ -669,7 +669,7 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
     descriptor.size.height = 4;
     descriptor.size.depthOrArrayLayers = 1u;
     descriptor.sampleCount = 1u;
-    descriptor.format = wgpu::TextureFormat::External;
+    descriptor.format = wgpu::TextureFormat::OpaqueYCbCrAndroid;
     descriptor.mipLevelCount = 1u;
     descriptor.usage = wgpu::TextureUsage::TextureBinding;
     auto texture = memory.CreateTexture(&descriptor);

@@ -664,7 +664,7 @@ uint32_t GetTexelBlockSizeInBytes(wgpu::TextureFormat textureFormat) {
         case wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm:
         case wgpu::TextureFormat::R8BG8A8Triplanar420Unorm:
-        case wgpu::TextureFormat::External:
+        case wgpu::TextureFormat::OpaqueYCbCrAndroid:
 #endif  // __EMSCRIPTEN__
 
         case wgpu::TextureFormat::Undefined:
@@ -799,7 +799,7 @@ uint32_t GetTextureFormatBlockWidth(wgpu::TextureFormat textureFormat) {
         case wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm:
         case wgpu::TextureFormat::R8BG8A8Triplanar420Unorm:
-        case wgpu::TextureFormat::External:
+        case wgpu::TextureFormat::OpaqueYCbCrAndroid:
 #endif  // __EMSCRIPTEN__
 
         case wgpu::TextureFormat::Undefined:
@@ -934,7 +934,7 @@ uint32_t GetTextureFormatBlockHeight(wgpu::TextureFormat textureFormat) {
         case wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm:
         case wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm:
         case wgpu::TextureFormat::R8BG8A8Triplanar420Unorm:
-        case wgpu::TextureFormat::External:
+        case wgpu::TextureFormat::OpaqueYCbCrAndroid:
 #endif  // __EMSCRIPTEN__
 
         case wgpu::TextureFormat::Undefined:
