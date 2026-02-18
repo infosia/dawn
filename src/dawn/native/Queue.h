@@ -34,7 +34,6 @@
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/WeakRefSupport.h"
-#include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/DawnNative.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ExecutionQueue.h"
@@ -46,21 +45,6 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
-
-// For the commands with async callback like 'MapAsync' and 'OnSubmittedWorkDone', we track the
-// execution serials of completion in the queue for them. This implements 'CallbackTask' so that the
-// aysnc callback can be fired by 'CallbackTaskManager' in a unified way. This also caches the
-// finished serial, as the callback needs to use it in the trace event.
-struct TrackTaskCallback : CallbackTask {
-    explicit TrackTaskCallback(dawn::platform::Platform* platform) : mPlatform(platform) {}
-    void SetFinishedSerial(ExecutionSerial serial);
-    ~TrackTaskCallback() override = default;
-
-  protected:
-    raw_ptr<dawn::platform::Platform> mPlatform = nullptr;
-    // The serial by which time the callback can be fired.
-    ExecutionSerial mSerial = kMaxExecutionSerial;
-};
 
 class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
   public:
@@ -95,21 +79,6 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size);
-
-    // Ensure a flush occurs if needed, and track this task as complete after the
-    // scheduled work is complete.
-    void TrackTaskAfterEventualFlush(std::unique_ptr<TrackTaskCallback> task);
-    // Track a task as complete after the serial has passed. If the serial is in the future,
-    // a flush is forced.
-    void TrackTask(std::unique_ptr<TrackTaskCallback> task, ExecutionSerial serial);
-    // Track a task as eventually complete after the pending command serial passes.
-    // This is only needed because other parts of Dawn use pending command serial extensively.
-    // TODO(crbug.com/dawn/1413): It should be removed after ExecutionQueue for better tracking
-    // of completion.
-    void TrackPendingTask(std::unique_ptr<TrackTaskCallback> task);
-
-    void Tick(ExecutionSerial finishedSerial);
-    void HandleDeviceLoss();
 
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
@@ -152,8 +121,6 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                                     const Extent3D* writeSize) const;
 
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
-
-    MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
 };
 
 }  // namespace dawn::native

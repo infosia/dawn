@@ -77,14 +77,12 @@ class AttachmentState;
 class AttachmentStateBlueprint;
 class Blob;
 class BlobCache;
-class CallbackTaskManager;
 class DynamicUploader;
 class ErrorScope;
 class ErrorScopeStack;
 class OwnedCompilationMessages;
 class ResourceTableDefaultResources;
 class SharedTextureMemoryBase;
-struct CallbackTask;
 struct InternalPipelineStore;
 struct ShaderModuleParseResult;
 
@@ -420,7 +418,6 @@ class DeviceBase : public ErrorSink,
     const CombinedLimits& GetLimits() const;
 
     AsyncTaskManager* GetAsyncTaskManager() const;
-    CallbackTaskManager* GetCallbackTaskManager() const;
     dawn::platform::WorkerTaskPool* GetWorkerTaskPool() const;
 
     PipelineCompatibilityToken GetNextPipelineCompatibilityToken();
@@ -568,7 +565,6 @@ class DeviceBase : public ErrorSink,
     virtual std::optional<DeviceGuard> UseGuardForCreateTexture();
 
     virtual MaybeError TickImpl() = 0;
-    void FlushCallbackTaskQueue();
 
     ResultOrError<Ref<BindGroupLayoutBase>> CreateEmptyBindGroupLayout();
     ResultOrError<Ref<PipelineLayoutBase>> CreateEmptyPipelineLayout();
@@ -670,7 +666,6 @@ class DeviceBase : public ErrorSink,
     std::unique_ptr<InternalPipelineStore> mInternalPipelineStore;
     Ref<BufferBase> mTemporaryUniformBuffer;
 
-    Ref<CallbackTaskManager> mCallbackTaskManager;
     std::unique_ptr<dawn::platform::WorkerTaskPool> mWorkerTaskPool;
 
     // Ensure `mAsyncTaskManager` is always destroyed before mWorkerTaskPool
