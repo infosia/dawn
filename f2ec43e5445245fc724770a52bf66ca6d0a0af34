@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e86d287f_cd17a2da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T18:37:00Z",
+      "side": 1,
+      "message": "PTAL. This fixes the issue when we release a language feature we need to move it to before the dawn entries and rename down the chain, the values need to match the webgpu header values. This spaces the dawn entries further down the enum range to give a bunch of padding for adding extensions.",
+      "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
