@@ -85,9 +85,18 @@ SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
 SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
                                                  StringView label,
                                                  const SharedTextureMemoryProperties& properties)
-    : SharedResourceMemory(device, label), mProperties(properties) {
+    : SharedResourceMemory(device, label) {
+    SetProperties(properties);
+    GetObjectTrackingList()->Track(this);
+}
+
+void SharedTextureMemoryBase::SetProperties(const SharedTextureMemoryProperties& properties) {
+    mProperties = properties;
+    if (mProperties.format == wgpu::TextureFormat::Undefined) {
+        return;
+    }
     // Reify properties to ensure we don't expose capabilities not supported by the device.
-    const Format& internalFormat = device->GetValidInternalFormat(mProperties.format);
+    const Format& internalFormat = GetDevice()->GetValidInternalFormat(mProperties.format);
     if (internalFormat.format != wgpu::TextureFormat::OpaqueYCbCrAndroid) {
         bool supportsStorageUsage = internalFormat.SupportsReadOnlyStorageUsage() ||
                                     internalFormat.SupportsWriteOnlyStorageUsage();
@@ -96,16 +105,14 @@ SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
         }
         if (!internalFormat.IsRenderable() ||
             (internalFormat.IsMultiPlanar() &&
-             !device->HasFeature(Feature::MultiPlanarRenderTargets))) {
+             !GetDevice()->HasFeature(Feature::MultiPlanarRenderTargets))) {
             mProperties.usage = mProperties.usage & ~wgpu::TextureUsage::RenderAttachment;
         }
         if (internalFormat.IsMultiPlanar() &&
-            !device->HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
+            !GetDevice()->HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
             mProperties.usage = mProperties.usage & ~wgpu::TextureUsage::CopyDst;
         }
     }
-
-    GetObjectTrackingList()->Track(this);
 }
 
 ObjectType SharedTextureMemoryBase::GetType() const {
