@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a05dab2c_fd38f54c",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3931,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:40:28Z",
+      "side": 1,
+      "message": "Stephen, there seems to be an issue on the experimental Linux Intel bots:\n\nhttps://chromium-swarm.appspot.com/task?id\u003d76881d5323d86c10\u0026w\u003dtrue\n\n```\n - While handling unexpected error type Internal when allowed errors are (Validation|DeviceLost).\n    at CheckError (../../third_party/dawn/src/dawn/native/opengl/UtilsGL.cpp:253)\n    at Apply (../../third_party/dawn/src/dawn/native/opengl/CommandBufferGL.cpp:749)\n    at operator() (../../third_party/dawn/src/dawn/native/opengl/CommandBufferGL.cpp:1408)\n    at ExecuteRenderPass (../../third_party/dawn/src/dawn/native/opengl/CommandBufferGL.cpp:1635)\n    at Execute (../../third_party/dawn/src/dawn/native/opengl/CommandBufferGL.cpp:817)\n    at operator() (../../third_party/dawn/src/dawn/native/opengl/QueueGL.cpp:83)\n    at EnqueueAndFlushGL (../../third_party/dawn/src/dawn/native/opengl/DeviceGL.h:119)\n    at SubmitInternal (../../third_party/dawn/src/dawn/native/Queue.cpp:672)\n```",
+      "revId": "d20a0d8e71120ad58f02592d8affcfcbe8f688ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
