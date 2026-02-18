@@ -63,6 +63,8 @@
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "tint/tint.h"
@@ -285,6 +287,89 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);
+}
+
+ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImpl(
+    const SharedTextureMemoryDescriptor* baseDescriptor) {
+    UnpackedPtr<SharedTextureMemoryDescriptor> unpacked;
+    DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(baseDescriptor));
+
+    // TODO(crbug.com/483147423): Handle all possible chained structures.
+    if (unpacked.Get<SharedTextureMemoryIOSurfaceDescriptor>()) {
+        auto feature = Feature::SharedTextureMemoryIOSurface;
+        DAWN_INVALID_IF(!HasFeature(feature), "%s is not enabled.", ToAPI(feature));
+    } else if (unpacked.Get<SharedTextureMemoryAHardwareBufferDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryDXGISharedHandleDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryEGLImageDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryOpaqueFDDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryVkDedicatedAllocationDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryZirconHandleDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedTextureMemoryDmaBufDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedTextureMemory in WebGPU backend has not been implemented for all platforms.");
+    } else {
+        return DAWN_VALIDATION_ERROR("SharedTextureMemory chain is missing.");
+    }
+
+    // ValidateSubset pass for none, fail for invalid if exists.
+    DAWN_TRY((unpacked.ValidateSubset<
+              SharedTextureMemoryIOSurfaceDescriptor, SharedTextureMemoryAHardwareBufferDescriptor,
+              SharedTextureMemoryDXGISharedHandleDescriptor, SharedTextureMemoryEGLImageDescriptor,
+              SharedTextureMemoryOpaqueFDDescriptor,
+              SharedTextureMemoryVkDedicatedAllocationDescriptor,
+              SharedTextureMemoryZirconHandleDescriptor, SharedTextureMemoryDmaBufDescriptor>()));
+
+    return SharedTextureMemory::Create(this, unpacked);
+}
+
+ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
+    const SharedFenceDescriptor* baseDescriptor) {
+    UnpackedPtr<SharedFenceDescriptor> unpacked;
+    DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(baseDescriptor));
+
+    // TODO(crbug.com/483147423): Handle all possible chained structures.
+    if (unpacked.Get<SharedFenceMTLSharedEventDescriptor>()) {
+        auto feature = Feature::SharedFenceMTLSharedEvent;
+        DAWN_INVALID_IF(!HasFeature(feature), "%s is not enabled.", ToAPI(feature));
+    } else if (unpacked.Get<SharedFenceDXGISharedHandleDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedFence in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedFenceEGLSyncDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedFence in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedFenceSyncFDDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedFence in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedFenceVkSemaphoreOpaqueFDDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedFence in WebGPU backend has not been implemented for all platforms.");
+    } else if (unpacked.Get<SharedFenceVkSemaphoreZirconHandleDescriptor>()) {
+        return DAWN_UNIMPLEMENTED_ERROR(
+            "SharedFence in WebGPU backend has not been implemented for all platforms.");
+    } else {
+        return DAWN_VALIDATION_ERROR("SharedFence chain is missing.");
+    }
+
+    // ValidateSubset pass for none, fail for invalid if exists.
+    DAWN_TRY((
+        unpacked.ValidateSubset<SharedFenceMTLSharedEventDescriptor,
+                                SharedFenceDXGISharedHandleDescriptor, SharedFenceEGLSyncDescriptor,
+                                SharedFenceVkSemaphoreOpaqueFDDescriptor,
+                                SharedFenceVkSemaphoreZirconHandleDescriptor>()));
+
+    return SharedFence::Create(this, unpacked);
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
