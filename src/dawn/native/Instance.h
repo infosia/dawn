@@ -58,7 +58,6 @@ class Platform;
 
 namespace dawn::native {
 
-class CallbackTaskManager;
 class DeviceBase;
 class Surface;
 class X11Functions;
@@ -136,7 +135,6 @@ class InstanceBase final : public ErrorSink, public RefCounted {
 
     const std::vector<std::string>& GetRuntimeSearchPaths() const;
 
-    const Ref<CallbackTaskManager>& GetCallbackTaskManager() const;
     EventManager* GetEventManager();
 
     // Get backend-independent libraries that need to be loaded dynamically.
@@ -216,7 +214,6 @@ class InstanceBase final : public ErrorSink, public RefCounted {
     std::unique_ptr<X11Functions> mX11Functions;
 #endif  // defined(DAWN_USE_X11)
 
-    Ref<CallbackTaskManager> mCallbackTaskManager;
     EventManager mEventManager;
 
     struct DeprecationWarnings;
