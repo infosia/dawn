@@ -89,6 +89,9 @@ struct CommandRecordingContext {
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;
 
+    // The descriptor set used for framebuffer fetch in the current render pass.
+    VkDescriptorSet framebufferFetchDescriptorSet = VK_NULL_HANDLE;
+
     // If `buffer` is mappable and the requested `usage` is not a map usage, this ensures the buffer
     // is transitioned back to map usage(s) at the end of the submit.
     void CheckBufferNeedsEagerTransition(Buffer* buffer, wgpu::BufferUsage usage);
