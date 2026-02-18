@@ -124,6 +124,10 @@ class EventManager::TrackedEvent : public RefCounted {
     // EventCompletionType::Shutdown.
     ~TrackedEvent() override;
 
+    // Create and track a TrackedEvent that is already completed.
+    static Ref<TrackedEvent> CreateAlreadyCompletedEvent(EventManager* eventManager,
+                                                         wgpu::CallbackMode callbackMode);
+
     Future GetFuture() const;
 
     bool IsProgressing() const { return mIsProgressing; }

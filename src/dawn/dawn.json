@@ -2186,6 +2186,12 @@
         "tags": ["dawn", "native"],
         "methods": [
             {
+                "name": "set label",
+                "args": [
+                    {"name": "label", "type": "string view"}
+                ]
+            },
+            {
                 "name": "export info",
                 "args": [
                     {"name": "info", "type": "shared fence export info", "annotation": "*"}
