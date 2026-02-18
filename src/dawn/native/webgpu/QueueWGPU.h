@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_WEBGPU_QUEUEWGPU_H_
 
 #include <deque>
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -41,6 +42,7 @@ namespace dawn::native::webgpu {
 
 class CaptureContext;
 class Device;
+class SharedFence;
 
 class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
   public:
@@ -49,6 +51,11 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     bool IsCapturing() const;
     MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
     CaptureContext* GetCaptureContext() const;
+
+    ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
+                                                           wgpu::SharedFenceType type);
+
+    void AddSharedFence(ExecutionSerial lastUsageSerial, Ref<SharedFence> fence);
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
@@ -72,6 +79,7 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     MaybeError SubmitFutureSync();
 
     MutexProtected<std::deque<std::pair<WGPUFuture, ExecutionSerial>>> mFuturesInFlight;
+    std::map<ExecutionSerial, Ref<SharedFence>> mSharedFences;
     bool mHasPendingCommands = false;
 
     std::unique_ptr<CaptureContext> mCaptureContext;

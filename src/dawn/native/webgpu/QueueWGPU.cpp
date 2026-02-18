@@ -36,6 +36,7 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
@@ -50,6 +51,27 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor)
     : QueueBase(device, descriptor), ObjectWGPU(device->wgpu->queueRelease) {
     mInnerHandle = device->wgpu->deviceGetQueue(device->GetInnerHandle());
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
+                                                              wgpu::SharedFenceType type) {
+    auto it = mSharedFences.find(lastUsageSerial);
+    if (it != mSharedFences.end()) {
+        return it->second;
+    }
+
+    // For now, just create a new SharedFence.
+    // In a real implementation, we might want to cache these or associate them with futures.
+    SharedFenceDescriptor desc;
+    Ref<SharedFence> fence;
+    DAWN_TRY_ASSIGN(fence,
+                    SharedFence::Create(ToBackend(GetDevice()), "Internal SharedFence", &desc));
+    mSharedFences[lastUsageSerial] = fence;
+    return fence;
+}
+
+void Queue::AddSharedFence(ExecutionSerial lastUsageSerial, Ref<SharedFence> fence) {
+    mSharedFences[lastUsageSerial] = std::move(fence);
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -135,6 +157,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         .rowsPerImage = dataLayout.rowsPerImage,
     };
     WGPUExtent3D writeSize = ToWGPU(writeSizePixel);
+    ToBackend(destination.texture)->SynchronizeTextureBeforeUse();
     ToBackend(GetDevice())
         ->wgpu->queueWriteTexture(mInnerHandle, &dest, data, dataSize, &layout, &writeSize);
     destination.texture->SetInitialized(true);
