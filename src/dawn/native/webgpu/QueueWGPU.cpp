@@ -30,12 +30,14 @@
 #include <limits>
 #include <vector>
 
-#include "dawn/native/Error.h"
+#include "dawn/native/EventManager.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
@@ -50,6 +52,31 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor)
     : QueueBase(device, descriptor), ObjectWGPU(device->wgpu->queueRelease) {
     mInnerHandle = device->wgpu->deviceGetQueue(device->GetInnerHandle());
+}
+
+wgpu::Future Queue::GetCommandsScheduledFuture() {
+    // TODO(crbug.com/483147423) This is needed for SharedTextureMemoryMTL::EndAccess which expects
+    // a future that is ready when the commands are scheduled on the GPU. Since there is no public
+    // API to get a scheduled future from a WGPUQueue, we use the future returned from
+    // wgpuQueueOnSubmittedWorkDone as a conservative proxy.
+    if (GetDevice()->ConsumedError(SubmitPendingCommands())) {
+        return {kNullFutureID};
+    }
+    WGPUQueueWorkDoneCallbackInfo callbackInfo = {};
+    callbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+    // We need a callback even if it does nothing because APIOnSubmittedWorkDone requires one.
+    callbackInfo.callback = [](WGPUQueueWorkDoneStatus, WGPUStringView, void*, void*) {};
+    return {APIOnSubmittedWorkDone(callbackInfo).id};
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(WGPUSharedFence innerFence) {
+    if (mSharedFence) {
+        return mSharedFence;
+    }
+
+    mSharedFence = SharedFence::CreateFromHandle(ToBackend(GetDevice()),
+                                                 "WebGPU SharedFence Wrapper", innerFence);
+    return mSharedFence;
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -135,9 +162,11 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         .rowsPerImage = dataLayout.rowsPerImage,
     };
     WGPUExtent3D writeSize = ToWGPU(writeSizePixel);
+    ToBackend(destination.texture)->SynchronizeTextureBeforeUse();
     ToBackend(GetDevice())
         ->wgpu->queueWriteTexture(mInnerHandle, &dest, data, dataSize, &layout, &writeSize);
-    destination.texture->SetInitialized(true);
+    destination.texture->SetIsSubresourceContentInitialized(
+        true, destination.texture->GetAllSubresources());
 
     return {};
 }
@@ -163,6 +192,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 
             futuresInFlight->pop_front();
         }
+
         return fenceSerial;
     });
 }
@@ -251,6 +281,10 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
     });
     mHasPendingCommands = false;
     return {};
+}
+
+void Queue::DestroyImpl(DestroyReason reason) {
+    mSharedFence = nullptr;
 }
 
 bool Queue::IsCapturing() const {
