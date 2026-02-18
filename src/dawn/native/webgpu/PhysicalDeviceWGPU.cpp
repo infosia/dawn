@@ -86,7 +86,8 @@ Backend* PhysicalDevice::GetBackend() const {
 }
 
 bool PhysicalDevice::SupportsExternalImages() const {
-    return false;
+    native::Adapter nativeAdapter = FromAPI(mInnerAdapter);
+    return nativeAdapter.SupportsExternalImages();
 }
 
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,

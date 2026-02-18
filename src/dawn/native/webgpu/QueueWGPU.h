@@ -50,6 +50,9 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
     CaptureContext* GetCaptureContext() const;
 
+    ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
+                                                           wgpu::SharedFenceType type);
+
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;

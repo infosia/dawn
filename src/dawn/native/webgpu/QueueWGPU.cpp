@@ -36,6 +36,7 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
@@ -50,6 +51,14 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor)
     : QueueBase(device, descriptor), ObjectWGPU(device->wgpu.queueRelease) {
     mInnerHandle = device->wgpu.deviceGetQueue(device->GetInnerHandle());
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial lastUsageSerial,
+                                                              wgpu::SharedFenceType type) {
+    // For now, just create a new SharedFence.
+    // In a real implementation, we might want to cache these or associate them with futures.
+    SharedFenceDescriptor desc;
+    return SharedFence::Create(ToBackend(GetDevice()), "Internal SharedFence", &desc);
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
