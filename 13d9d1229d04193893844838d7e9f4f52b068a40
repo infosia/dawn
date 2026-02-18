@@ -86,6 +86,24 @@
       "parentUuid": "f6234b4e_8c5ae187",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e38b9778_10162af0",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T19:38:39Z",
+      "side": 1,
+      "message": "Aaaah yeah forgot about this, maybe comment that this one is for multisampled and the others for sampled.",
+      "parentUuid": "39fe4889_481f17a3",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
