@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a553a64_ab48cf5e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T19:34:17Z",
+      "side": 1,
+      "message": "nit: assign the TODO to a bug and not a persion. ditto below",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6234b4e_8c5ae187",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T19:34:17Z",
+      "side": 1,
+      "message": "Isn\u0027t float redundant with the last 3 options?",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
