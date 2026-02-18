@@ -210,6 +210,11 @@ TEST_P(DepthStencilLoadOpTests, ClearMip0) {
 
 // Check that clearing a non-zero mip level works at all.
 TEST_P(DepthStencilLoadOpTests, ClearMip1) {
+    // NVIDIA Vulkan driver bug: stencil clear/readback broken at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() &&
+                          (GetParam().mCheck == Check::CopyStencil ||
+                           GetParam().mCheck == Check::StencilTest));
+
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     encoder.BeginRenderPass(&renderPassDescriptors[1]).End();
     wgpu::CommandBuffer commandBuffer = encoder.Finish();
@@ -225,6 +230,11 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip0Then1) {
 
     // TODO(42242119): fail on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
+
+    // NVIDIA Vulkan driver bug: stencil clear/readback broken at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() &&
+                          (GetParam().mCheck == Check::CopyStencil ||
+                           GetParam().mCheck == Check::StencilTest));
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     encoder.BeginRenderPass(&renderPassDescriptors[0]).End();
@@ -243,6 +253,11 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip1Then0) {
 
     // TODO(42242119): fail on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
+
+    // NVIDIA Vulkan driver bug: stencil clear/readback broken at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() &&
+                          (GetParam().mCheck == Check::CopyStencil ||
+                           GetParam().mCheck == Check::StencilTest));
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     encoder.BeginRenderPass(&renderPassDescriptors[1]).End();

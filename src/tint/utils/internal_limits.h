@@ -50,8 +50,9 @@ constexpr int64_t kMaxSubgroupSize = 128;
 // A quad (fragment) is composed of four invocations.
 constexpr int64_t kQuadSize = 4;
 
-// A @size attribute maximum size
-constexpr int64_t kMaxStructMemberPadding = 10 * 1024 * 1024;
+// A @size attribute maximum size. Must be large enough to accommodate the maximum uniform buffer
+// binding size which can be up to 2^31 + 8 bytes on some GPUs.
+constexpr int64_t kMaxStructMemberPadding = int64_t(2) * 1024 * 1024 * 1024 + 16;
 
 }  // namespace tint::internal_limits
 

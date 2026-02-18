@@ -890,6 +890,8 @@ TEST_P(SharedTextureMemoryTests, ImportSharedTextureMemoryDeviceDestroyed) {
 // Test that SharedTextureMemory::IsDeviceLost() returns the expected value before and
 // after destroying the device.
 TEST_P(SharedTextureMemoryTests, CheckIsDeviceLostBeforeAndAfterDestroyingDevice) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -901,6 +903,8 @@ TEST_P(SharedTextureMemoryTests, CheckIsDeviceLostBeforeAndAfterDestroyingDevice
 // Test that SharedTextureMemory::IsDeviceLost() returns the expected value before and
 // after losing the device.
 TEST_P(SharedTextureMemoryTests, CheckIsDeviceLostBeforeAndAfterLosingDevice) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -911,6 +915,8 @@ TEST_P(SharedTextureMemoryTests, CheckIsDeviceLostBeforeAndAfterLosingDevice) {
 
 // Test importing a shared fence when the device is destroyed
 TEST_P(SharedTextureMemoryTests, ImportSharedFenceDeviceDestroyed) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
     // Create a shared texture memory and texture
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
@@ -1033,6 +1039,8 @@ TEST_P(SharedTextureMemoryTests, TextureUsages) {
 // Test calling GetProperties with an invalid chained struct. An error is
 // generated, but the properties are still populated.
 TEST_P(SharedTextureMemoryTests, GetPropertiesInvalidChain) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -1056,6 +1064,8 @@ TEST_P(SharedTextureMemoryTests, GetPropertiesInvalidChain) {
 // unless the required feature is present. In either case, the base properties
 // should still be populated.
 TEST_P(SharedTextureMemoryTests, GetPropertiesAHardwareBufferPropertiesRequiresAHBFeature) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 

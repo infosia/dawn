@@ -367,6 +367,8 @@ TEST_P(DepthStencilCopyTests, T2TBothAspectsThenCopyNonRenderableNonZeroMipStenc
     DAWN_SUPPRESS_TEST_IF(IsIntel() && IsD3D11() &&
                           GetParam().mTextureFormat == wgpu::TextureFormat::Depth24PlusStencil8 &&
                           HasToggleEnabled("use_packed_depth24_unorm_stencil8_format"));
+    // NVIDIA Vulkan driver bug with stencil copy at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
     wgpu::Texture texture = CreateInitializeDepthStencilTextureAndCopyT2T(
         0.1f, 0.3f, 1u, 3u, 9, 9, wgpu::TextureUsage::CopySrc, 1);
@@ -1206,6 +1208,9 @@ TEST_P(StencilCopyTests, FromNonZeroMipStencilAspect) {
     // TODO(42242119): hang/crash on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
 
+    // NVIDIA Vulkan driver bug with VK_FORMAT_S8_UINT at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && HasToggleEnabled("vulkan_use_s8"));
+
     constexpr uint32_t kWidth = 9;
     constexpr uint32_t kHeight = 9;
     constexpr uint32_t kBufferCopyOffset = 0;
@@ -1346,6 +1351,9 @@ TEST_P(StencilCopyTests, ToStencilAspectAtNonZeroOffset) {
 TEST_P(StencilCopyTests, CopyNonzeroMipThenReadWithStencilTest) {
     // Copies to a single aspect are unsupported on OpenGL.
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
+
+    // NVIDIA Vulkan driver bug with VK_FORMAT_S8_UINT at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && HasToggleEnabled("vulkan_use_s8"));
 
     // Create a stencil texture
     constexpr uint32_t kWidth = 4;

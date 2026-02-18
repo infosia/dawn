@@ -530,6 +530,9 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // NVIDIA Vulkan driver bug with cooperative matrix + Vulkan memory model.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
+
     MatrixOp op = GetParam().mMatrixOp;
     bool columnMajor = GetParam().mColumnMajor;
 
@@ -732,6 +735,9 @@ TEST_P(SubgroupMatrix_MatrixScalarArithmeticTest, MatrixScalar) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // NVIDIA Vulkan driver bug with cooperative matrix + Vulkan memory model.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
+
     MatrixOp op = GetParam().mMatrixOp;
     bool columnMajor = GetParam().mColumnMajor;
 
@@ -901,6 +907,9 @@ TEST_P(SubgroupMatrix_MatrixStoreTest, MatrixStoreWithOffset) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // NVIDIA Vulkan driver bug with cooperative matrix + Vulkan memory model.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
+
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;
     wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
@@ -1059,6 +1068,9 @@ fn main() {
 TEST_P(SubgroupMatrix_MatrixConstructorTest, MatrixConstruct) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+
+    // NVIDIA Vulkan driver bug with cooperative matrix + Vulkan memory model.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;

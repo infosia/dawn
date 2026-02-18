@@ -176,6 +176,8 @@ TEST_P(SubresourceRenderAttachmentTest, StencilTexture) {
     // TODO(crbug.com/352360580): Investigate failures.
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsANGLED3D11());
+    // NVIDIA Vulkan driver bug: stencil readback from non-zero mip levels is broken.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
     DoTest(Type::Stencil);
 }
 
