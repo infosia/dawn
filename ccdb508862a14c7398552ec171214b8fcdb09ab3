@@ -541,6 +541,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e30685ae_0020bbbb",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:22:51Z",
+      "side": 1,
+      "message": "Would it make sense to have Queue::Submit take a lock and make the context in deferral mode? It\u0027s the only place that would need to make the GL context current between threads and I think it would make the GL backend \"full multithreaded\". (I don\u0027t know what\u0027s missing for the same thing for ProcessEvents though). So maybe we don\u0027t need to write multithreaded tests specifically for deferral, but can add just a bit of implementation.",
+      "parentUuid": "ebe4f34d_4c42cd01",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e786f3d0_19072e00",
