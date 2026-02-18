@@ -51,6 +51,24 @@
       "parentUuid": "b0c8540f_6cdb36d5",
       "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228336c3_8d1b0459",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4508,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T18:55:01Z",
+      "side": 1,
+      "message": "It\u0027s weird but eventually if we expose stable Dawn-only WGSL language features, we\u0027ll want to start at 0. IMHO two blocks starting at 0 separated by an empty line make it clear.",
+      "parentUuid": "859182cb_11e858ef",
+      "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
