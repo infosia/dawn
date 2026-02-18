@@ -33,6 +33,29 @@
       "message": "Thanks!",
       "revId": "9f0395dfb5fe0038ba67821b93c72ca26840f5d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "539ca5c7_f3785581",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-18T21:01:47Z",
+      "side": 1,
+      "message": "😮 nice catch!",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 47
+      },
+      "revId": "9f0395dfb5fe0038ba67821b93c72ca26840f5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
