@@ -16,6 +16,23 @@
       "message": "PTAL, I\u0027m renaming this enum as part of the work in https://docs.google.com/document/d/1sD4Dg1-ZDuPzdDBE6UOtsZuZAr0xOMk6-P8X98wQcfw/edit?tab\u003dt.0#heading\u003dh.g6ne1k605fla",
       "revId": "e0203cbdf9ac40f14ab9aca99853dd123096bdc1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b663dcf2_da8aee78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2026-02-18T14:39:10Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "e0203cbdf9ac40f14ab9aca99853dd123096bdc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
