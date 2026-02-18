@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8282edb6_940e5aa4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5296,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-18T16:05:01Z",
+      "side": 1,
+      "message": "I can see your point on wanting to simplify the params/reduce the number of overloads. I personally prefer the current form a little, since it avoids drift in the code, where people use slightly different forms for the logging messages, but that is a style preference.\n\nBut as you alluded to, I think the larger blocking issue to doing this is that it would require non-trivial effort.\n\n(Most of the ValidateBeforeIfNeeded(...) calls are formatted over multiple lines, so simple regex tools like sed fail to properly change things)",
+      "parentUuid": "dcf51fbb_8872b310",
+      "revId": "e1827ca28adf6aec7accd6119551caf9e829b5a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2eb0896a_80383faf",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-17T22:00:50Z",
       "side": 1,
       "message": "This means that if you enable dumping but do not have validation enabled, you will not get the dumps, which I think is a behavioral change from today.\nIt\u0027s kinda awkward that validation and dumping are intertwined like that, but also kinda useful to not have to call two different methods.\n\nCould we maybe split the dumping part out of Validate and then call it from both `Validate` and `ValidateIfNeeded`?",
+      "revId": "e1827ca28adf6aec7accd6119551caf9e829b5a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8af1fac_ef9b048c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5323,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-18T16:05:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb0896a_80383faf",
       "revId": "e1827ca28adf6aec7accd6119551caf9e829b5a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
