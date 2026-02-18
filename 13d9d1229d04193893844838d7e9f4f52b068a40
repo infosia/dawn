@@ -406,6 +406,24 @@
       "parentUuid": "4ad35079_137425ac",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09a7a54d_98e4a0cf",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T23:02:21Z",
+      "side": 1,
+      "message": "Acknowledged, maybe a comment explaining this would be useful for future us.",
+      "parentUuid": "b45ba1d9_d630682d",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
