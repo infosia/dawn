@@ -87,6 +87,9 @@ class VulkanImageWrappingTestBase : public DawnTestWithParams<ImageWrappingParam
         // TODO(crbug.com/342213634): Crashes on ChromeOS volteer devices.
         DAWN_SUPPRESS_TEST_IF(IsChromeOS() && IsIntel() && IsBackendValidationEnabled());
 
+        // llvmpipe doesn't support external memory/semaphore extensions.
+        DAWN_SUPPRESS_TEST_IF(IsMesaSoftware());
+
         switch (GetParam().mExternalImageType) {
             case ExternalImageType::OpaqueFD:
                 mBackend = CreateOpaqueFDBackend(device);

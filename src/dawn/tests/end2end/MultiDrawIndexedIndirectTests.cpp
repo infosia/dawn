@@ -219,6 +219,8 @@ TEST_P(MultiDrawIndexedIndirectTest, IndirectOffset) {
 TEST_P(MultiDrawIndexedIndirectTest, DrawCount) {
     // TODO(crbug.com/356461286): NVIDIA Drivers for Vulkan Linux are drawing more than specified.
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+    // llvmpipe does not correctly honor the drawCount from the count buffer.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsMesaSoftware());
 
     utils::RGBA8 filled(0, 255, 0, 255);
     utils::RGBA8 notFilled(0, 0, 0, 0);
@@ -369,6 +371,8 @@ TEST_P(MultiDrawIndexedIndirectTest, ValidateEncodeMultipleThenSubmitAtOnce) {
 TEST_P(MultiDrawIndexedIndirectTest, ValidateMultiDrawMixed) {
     // It doesn't make sense to test invalid inputs when validation is disabled.
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
+    // llvmpipe does not correctly honor the drawCount from the count buffer.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsMesaSoftware());
 
     utils::RGBA8 filled(0, 255, 0, 255);
     utils::RGBA8 notFilled(0, 0, 0, 0);
