@@ -33,7 +33,9 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Constants.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
@@ -851,6 +853,14 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     } else {
         limits->v1.maxBufferSize = mDeviceInfo.propertiesMaintenance3.maxMemoryAllocationSize;
     }
+
+    // OpArrayLength returns 0 for buffers > 2GB for some NVIDIA devices.
+    // There is an open bug with NVIDIA to resolve.
+    // See: crbug.com/435684920
+    if (gpu_info::IsNvidia(GetVendorId())) {
+        limits->v1.maxBufferSize = std::min(limits->v1.maxBufferSize, kAssumedMaxBufferSize);
+    }
+
     if (limits->v1.maxBufferSize < baseLimits.v1.maxBufferSize) {
         return DAWN_INTERNAL_ERROR("Insufficient Vulkan maxBufferSize limit");
     }
