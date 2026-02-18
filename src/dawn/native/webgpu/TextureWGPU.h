@@ -38,11 +38,17 @@
 namespace dawn::native::webgpu {
 
 class Device;
+class SharedTextureMemory;
 
 class Texture final : public TextureBase, public RecordableObject, public ObjectWGPU<WGPUTexture> {
   public:
     static ResultOrError<Ref<Texture>> Create(Device* device,
                                               const UnpackedPtr<TextureDescriptor>& descriptor);
+    static ResultOrError<Ref<Texture>> CreateFromSharedTextureMemory(
+        SharedTextureMemory* memory,
+        const UnpackedPtr<TextureDescriptor>& descriptor);
+
+    void SynchronizeTextureBeforeUse();
 
     MaybeError AddReferenced(CaptureContext& captureContext) override;
     MaybeError CaptureCreationParameters(CaptureContext& context) override;
@@ -52,6 +58,9 @@ class Texture final : public TextureBase, public RecordableObject, public Object
 
   private:
     Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            WGPUTexture innerHandle);
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
 };

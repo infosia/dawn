@@ -43,6 +43,8 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
     Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, WGPUBuffer innerBuffer);
 
+    void SynchronizeBufferBeforeUse();
+
     MaybeError AddReferenced(CaptureContext& captureContext) override;
     MaybeError CaptureCreationParameters(CaptureContext& context) override;
     MaybeError CaptureContentIfNeeded(CaptureContext& context,

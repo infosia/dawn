@@ -1700,6 +1700,9 @@ TEST_P(SharedTextureMemoryTests, UninitializedOnEndAccess) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // TODO(crbug.com/483147423): Review all manual SetInitialized(true)
+    DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
+
     // It is not possible to run these tests for multiplanar formats for
     // multiple reasons:
     // * Test basic begin+end access exports the state as uninitialized
