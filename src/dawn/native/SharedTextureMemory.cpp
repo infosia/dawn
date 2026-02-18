@@ -88,7 +88,7 @@ SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
     : SharedResourceMemory(device, label), mProperties(properties) {
     // Reify properties to ensure we don't expose capabilities not supported by the device.
     const Format& internalFormat = device->GetValidInternalFormat(mProperties.format);
-    if (internalFormat.format != wgpu::TextureFormat::External) {
+    if (internalFormat.format != wgpu::TextureFormat::OpaqueYCbCrAndroid) {
         bool supportsStorageUsage = internalFormat.SupportsReadOnlyStorageUsage() ||
                                     internalFormat.SupportsWriteOnlyStorageUsage();
         if (!supportsStorageUsage || internalFormat.IsMultiPlanar()) {

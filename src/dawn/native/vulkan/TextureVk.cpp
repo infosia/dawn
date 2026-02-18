@@ -590,8 +590,9 @@ VkFormat VulkanImageFormat(const Device* device, wgpu::TextureFormat format) {
                 return VulkanImageFormat(device, wgpu::TextureFormat::Depth24PlusStencil8);
             }
 
-        case wgpu::TextureFormat::External:
-            // The VkFormat is Undefined when TextureFormat::External is passed for YCbCr samplers.
+        case wgpu::TextureFormat::OpaqueYCbCrAndroid:
+            // The VkFormat is Undefined when TextureFormat::OpaqueYCbCrAndroid is passed for YCbCr
+            // samplers.
             return VK_FORMAT_UNDEFINED;
 
         // R8BG8A8Triplanar420Unorm format is only supported on macOS.
