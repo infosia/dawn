@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683117bf_197d9db0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Could we have a link to the design doc here? The one in the issue doesn\u0027t work anymore.\n\nAlso what are the changes since the design doc? Maybe note them in the doc?",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c93f0282_252fba70",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "With the namespace wrapping a lot of namespace qualifiers can be removed here and below. (search for dawn::)\n\n```suggestion\nclass AsyncWaitableEvent final : public WaitableEvent,\n```",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2004080_1d6dfee1",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Why use inheritance here and for AsyncWaitableEvent instead of composition?",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b82bc584_9718341a",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Isn\u0027t std::move sufficient since they are the same type?",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db74de85_f7080b77",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t Join implicitly Cancel?",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb7700cf_e9d67a3c",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "This could be counter, then we don\u0027t need to track handles for tasks which would mean there is only one vector of jobs to handle on destruction.",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e49cecb4_8e6d36c8",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Now unused as far as I can tell.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31dcef60_8fac16e5",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "```suggestion\n        std::vector\u003cdawn::Ref\u003cAsyncJobHandleImpl\u003e\u003e jobs;\n```",
+      "range": {
+        "startLine": 121,
+        "startChar": 51,
+        "endLine": 121,
+        "endChar": 58
+      },
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b1d945_bf55de08",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T12:35:18Z",
+      "side": 1,
+      "message": "Maybe explain in a comment that we use \"Jobs\" to implement the thread pool for tasks.",
+      "revId": "9b35154061f03dcdc4f7e2bf56068aae10928fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
