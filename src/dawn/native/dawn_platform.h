@@ -119,6 +119,14 @@ static constexpr wgpu::BufferBindingType kInternalReadOnlyStorageBufferBinding =
 static constexpr wgpu::TextureSampleType kInternalResolveAttachmentSampleType =
     static_cast<wgpu::TextureSampleType>(~0u);
 
+// Extra TextureSampleType for unknown-filterability.
+static constexpr wgpu::TextureSampleType kInternalUnknownFilterabilitySampleType =
+    static_cast<wgpu::TextureSampleType>(~0u - 1);
+
+// Extra TextureSampleType for sampling from a resolve attachment.
+static constexpr wgpu::SamplerBindingType kInternalUnknownFilteringSamplerBindingType =
+    static_cast<wgpu::SamplerBindingType>(~0u);
+
 // Extra TextureViewDimension for input attachment.
 static constexpr wgpu::TextureViewDimension kInternalInputAttachmentDim =
     static_cast<wgpu::TextureViewDimension>(~0u);
