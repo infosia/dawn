@@ -80,6 +80,24 @@
       "message": "Let\u0027s land this?",
       "revId": "bc844b3d2e60ac0662464778e6f2c313021527e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3729660f_2632f6e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T14:52:37Z",
+      "side": 1,
+      "message": "As long as your other CL lands soon which flips the ordering. This will flip it so the Unorm gets reported when it shoudl be TextureTier1, but your other cl fixes that so should be fine.",
+      "parentUuid": "abebc0d0_9ab99090",
+      "revId": "bc844b3d2e60ac0662464778e6f2c313021527e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
