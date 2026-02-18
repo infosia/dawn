@@ -192,14 +192,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         // Compute floor(xy) + 0.5
         auto* floored = builder.Call<vec2<f32>>(core::BuiltinFn::kFloor, xy)->Result();
-        auto* half = b.Splat(ty.vec2<f32>(), b.Constant(0.5_f));
+        auto* half = builder.Splat(ty.vec2<f32>(), builder.Constant(0.5_f));
         auto* snapped =
             builder.Binary(core::BinaryOp::kAdd, ty.vec2<f32>(), floored, half)->Result();
 
         // Reconstruct vec4f(snapped.x, snapped.y, z, w)
-        auto* new_x = builder.Swizzle(ty.f32(), snapped, {0u})->Result();
-        auto* new_y = builder.Swizzle(ty.f32(), snapped, {1u})->Result();
-        return builder.Construct(ty.vec4<f32>(), new_x, new_y, z, w)->Result();
+        return builder.Construct(ty.vec4<f32>(), snapped, z, w)->Result();
     }
 
     /// Clamp a frag_depth builtin value if necessary.
