@@ -473,6 +473,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54b7bb2b_b61dec00",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-02-18T06:18:49Z",
+      "side": 1,
+      "message": "So I raised this with the WG https://gitlab.khronos.org/vulkan/vulkan/-/issues/4687 and got confirmation that, although this usage of DRLR was not thought of, it\u0027s _supposed_ to work.\n\nI ended up writing tests for it here: https://gerrit.khronos.org/c/vk-gl-cts/+/19613, which fails on RADV due to some depth/stencil related driver bug I believe, but does pass for color.\n\nTL;DR, the algorithm is fine, but if the new tests expose a driver bug about it, you\u0027d need to disable the path for those older drivers.",
+      "parentUuid": "62216d24_5849e69a",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
