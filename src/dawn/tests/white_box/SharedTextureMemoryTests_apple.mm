@@ -311,6 +311,10 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoInvalidChainedStruct) {
 }
 
 TEST_P(SharedTextureMemoryTests, DisallowStorageBinding) {
+    // The following white_box test casts to metal backend directly so webgpu backend is not
+    // supported.
+    DAWN_TEST_UNSUPPORTED_IF(IsWebGPUOnWebGPU());
+
     wgpu::SharedTextureMemory memory =
         CreateSharedTextureMemoryHelper(device, /*allowStorageBinding=*/false);
 
@@ -402,13 +406,13 @@ TEST_P(SharedTextureMemoryTests, CommandsScheduledFutureNoWork) {
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(Metal,
                                  SharedTextureMemoryNoFeatureTests,
-                                 {MetalBackend()},
+                                 {MetalBackend(), WebGPUBackend()},
                                  {Backend::GetInstance()},
                                  {1});
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(Metal,
                                  SharedTextureMemoryTests,
-                                 {MetalBackend()},
+                                 {MetalBackend(), WebGPUBackend()},
                                  {Backend::GetInstance()},
                                  {1});
 

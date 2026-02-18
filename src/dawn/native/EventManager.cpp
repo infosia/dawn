@@ -254,6 +254,13 @@ auto PrepareReadyCallbacks(std::vector<TrackedFutureWaitInfo>& futures) {
     return endOfReady;
 }
 
+struct AlreadyCompletedEvent final : public EventManager::TrackedEvent {
+    explicit AlreadyCompletedEvent(wgpu::CallbackMode callbackMode)
+        : TrackedEvent(callbackMode, TrackedEvent::Completed{}) {}
+    ~AlreadyCompletedEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+    void Complete(EventCompletionType) override {}
+};
+
 }  // namespace
 
 // EventManager
@@ -521,6 +528,14 @@ ExecutionSerial QueueAndSerial::GetCompletedSerial() const {
 }
 
 // EventManager::TrackedEvent
+
+Ref<EventManager::TrackedEvent> EventManager::TrackedEvent::CreateAlreadyCompletedEvent(
+    EventManager* eventManager,
+    wgpu::CallbackMode callbackMode) {
+    Ref<TrackedEvent> event = AcquireRef(new AlreadyCompletedEvent(callbackMode));
+    eventManager->TrackEvent(Ref<TrackedEvent>(event));
+    return event;
+}
 
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
                                          Ref<WaitListEvent> completionEvent)

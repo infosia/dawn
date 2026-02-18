@@ -30,12 +30,14 @@
 #include <limits>
 #include <vector>
 
-#include "dawn/native/Error.h"
+#include "dawn/native/EventManager.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
@@ -50,6 +52,16 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor)
     : QueueBase(device, descriptor), ObjectWGPU(device->wgpu->queueRelease) {
     mInnerHandle = device->wgpu->deviceGetQueue(device->GetInnerHandle());
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(WGPUSharedFence innerFence) {
+    if (mSharedFence) {
+        return mSharedFence;
+    }
+
+    mSharedFence = SharedFence::CreateFromHandle(ToBackend(GetDevice()),
+                                                 "WebGPU SharedFence Wrapper", innerFence);
+    return mSharedFence;
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -122,22 +134,24 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
                                                            writeSizePixel));
     }
 
-    auto innerTexture = ToBackend(destination.texture)->GetInnerHandle();
-    WGPUTexelCopyTextureInfo dest = {
-        .texture = innerTexture,
-        .mipLevel = destination.mipLevel,
-        .origin = ToWGPU(destination.origin),
-        .aspect = ToAPI(destination.aspect),
-    };
+    TextureCopy copy;
+    copy.texture = destination.texture;
+    copy.mipLevel = destination.mipLevel;
+    copy.origin = destination.origin;
+    copy.aspect = ConvertAspect(destination.texture->GetFormat(), destination.aspect);
+
+    WGPUTexelCopyTextureInfo dest = ToWGPU(copy);
     WGPUTexelCopyBufferLayout layout = {
         .offset = dataLayout.offset,
         .bytesPerRow = dataLayout.bytesPerRow,
         .rowsPerImage = dataLayout.rowsPerImage,
     };
     WGPUExtent3D writeSize = ToWGPU(writeSizePixel);
+    ToBackend(destination.texture)->SynchronizeTextureBeforeUse();
     ToBackend(GetDevice())
         ->wgpu->queueWriteTexture(mInnerHandle, &dest, data, dataSize, &layout, &writeSize);
-    destination.texture->SetInitialized(true);
+    destination.texture->SetIsSubresourceContentInitialized(
+        true, GetSubresourcesAffectedByCopy(copy, writeSizePixel));
 
     return {};
 }
@@ -163,6 +177,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 
             futuresInFlight->pop_front();
         }
+
         return fenceSerial;
     });
 }
@@ -251,6 +266,10 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
     });
     mHasPendingCommands = false;
     return {};
+}
+
+void Queue::DestroyImpl(DestroyReason reason) {
+    mSharedFence = nullptr;
 }
 
 bool Queue::IsCapturing() const {

@@ -38,7 +38,8 @@
 #include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
-#include "dawn/native/webgpu/Serialization.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -49,48 +50,84 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
     return AcquireRef(new Texture(device, descriptor));
 }
 
+// static
+ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
+    const SharedTextureMemory* memory,
+    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    Device* device = ToBackend(memory->GetDevice());
+    return AcquireRef(new Texture(device, descriptor, memory));
+}
+
+struct ComboTextureDescriptor {
+    WGPUTextureDescriptor desc = {};
+    std::vector<WGPUTextureFormat> viewFormats;
+    std::string label;
+
+    explicit ComboTextureDescriptor(const Texture* texture) {
+        Device* device = ToBackend(texture->GetDevice());
+
+        wgpu::TextureUsage actualUsage = texture->GetInternalUsage();
+        // Resolve internal usages to regular ones
+        if (actualUsage & kReadOnlyStorageTexture) {
+            actualUsage &= ~kReadOnlyStorageTexture;
+        }
+        if (actualUsage & kWriteOnlyStorageTexture) {
+            actualUsage &= ~kWriteOnlyStorageTexture;
+        }
+        if (actualUsage & kReadOnlyRenderAttachment) {
+            actualUsage &= ~kReadOnlyRenderAttachment;
+        }
+        if (actualUsage & kResolveAttachmentLoadingUsage) {
+            actualUsage &= ~kResolveAttachmentLoadingUsage;
+        }
+        if (!(actualUsage & wgpu::TextureUsage::TransientAttachment)) {
+            actualUsage |= wgpu::TextureUsage::CopySrc;
+        }
+
+        viewFormats.reserve(texture->GetViewFormats().size());
+        for (FormatIndex i : texture->GetViewFormats()) {
+            viewFormats.push_back(ToAPI(device->GetValidInternalFormat(i).format));
+        }
+
+        label = texture->GetLabel();
+        desc = {
+            .nextInChain = nullptr,
+            .label = ToOutputStringView(label),
+            .usage = ToAPI(actualUsage),
+            .dimension = ToAPI(texture->GetDimension()),
+            .size = ToWGPU(texture->GetBaseSize()),
+            .format = ToAPI(texture->GetFormat().format),
+            .mipLevelCount = texture->GetNumMipLevels(),
+            .sampleCount = texture->GetSampleCount(),
+            .viewFormatCount = static_cast<uint32_t>(viewFormats.size()),
+            .viewFormats = viewFormats.data(),
+        };
+    }
+};
+
 Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
     : TextureBase(device, descriptor),
       RecordableObject(schema::ObjectType::Texture),
       ObjectWGPU(device->wgpu->textureRelease) {
-    wgpu::TextureUsage actualUsage = GetInternalUsage();
-    // Resolve internal usages to regular ones
-    if (actualUsage & kReadOnlyStorageTexture) {
-        actualUsage &= ~kReadOnlyStorageTexture;
-    }
-    if (actualUsage & kWriteOnlyStorageTexture) {
-        actualUsage &= ~kWriteOnlyStorageTexture;
-    }
-    if (actualUsage & kReadOnlyRenderAttachment) {
-        actualUsage &= ~kReadOnlyRenderAttachment;
-    }
-    if (actualUsage & kResolveAttachmentLoadingUsage) {
-        actualUsage &= ~kResolveAttachmentLoadingUsage;
-    }
-    if (!(actualUsage & wgpu::TextureUsage::TransientAttachment)) {
-        actualUsage |= wgpu::TextureUsage::CopySrc;
-    }
-    std::vector<WGPUTextureFormat> viewFormats;
-    viewFormats.reserve(GetViewFormats().size());
-    for (FormatIndex i : GetViewFormats()) {
-        viewFormats.push_back(ToAPI(device->GetValidInternalFormat(i).format));
-    }
+    ComboTextureDescriptor comboDesc(this);
 
-    std::string label = GetLabel();
-    WGPUTextureDescriptor desc = {
-        .nextInChain = nullptr,
-        .label = ToOutputStringView(label),
-        .usage = ToAPI(actualUsage),
-        .dimension = ToAPI(GetDimension()),
-        .size = ToWGPU(GetBaseSize()),
-        .format = ToAPI(GetFormat().format),
-        .mipLevelCount = GetNumMipLevels(),
-        .sampleCount = GetSampleCount(),
-        .viewFormatCount = viewFormats.size(),
-        .viewFormats = viewFormats.data(),
-    };
+    mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &comboDesc.desc);
 
-    mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &desc);
+    DAWN_ASSERT(mInnerHandle);
+}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 const SharedTextureMemory* memory)
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu->textureRelease) {
+    ComboTextureDescriptor comboDesc(this);
+
+    mInnerHandle =
+        device->wgpu->sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &comboDesc.desc);
+    mSharedResourceMemoryContents = memory->GetContents();
+
     DAWN_ASSERT(mInnerHandle);
 }
 
@@ -102,6 +139,57 @@ void Texture::DestroyImpl(DestroyReason reason) {
 
 void Texture::SetLabelImpl() {
     ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
+}
+
+ExecutionSerial Texture::OnEndAccess() {
+    mPendingBeginAccess = false;
+    return TextureBase::OnEndAccess();
+}
+
+void Texture::SynchronizeTextureBeforeUse() {
+    if (SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents()) {
+        SharedTextureMemoryBase::PendingFenceList fences;
+        contents->AcquirePendingFences(&fences);
+
+        if (mPendingBeginAccess) {
+            auto srm = contents->GetSharedResourceMemory().Promote();
+            DAWN_ASSERT(srm != nullptr);
+            auto* stm = static_cast<SharedTextureMemory*>(srm.Get());
+
+            WGPUSharedTextureMemoryBeginAccessDescriptor innerDesc =
+                WGPU_SHARED_TEXTURE_MEMORY_BEGIN_ACCESS_DESCRIPTOR_INIT;
+            innerDesc.concurrentRead = mPendingConcurrentRead;
+            innerDesc.initialized = mPendingInitialized;
+
+            std::vector<WGPUSharedFence> innerFences;
+            std::vector<uint64_t> signaledValues;
+            innerFences.reserve(fences.size());
+            signaledValues.reserve(fences.size());
+            for (const auto& fence : fences) {
+                innerFences.push_back(ToBackend(fence.object)->GetInnerHandle());
+                signaledValues.push_back(fence.signaledValue);
+            }
+            innerDesc.fenceCount = innerFences.size();
+            innerDesc.fences = innerFences.data();
+            innerDesc.signaledValues = signaledValues.data();
+
+            const DawnProcTable& wgpu = ToBackend(GetDevice())->wgpu.get();
+            WGPUStatus status = wgpu.sharedTextureMemoryBeginAccess(stm->GetInnerHandle(),
+                                                                    GetInnerHandle(), &innerDesc);
+            DAWN_ASSERT(status == WGPUStatus_Success);
+
+            mPendingBeginAccess = false;
+        }
+    }
+
+    // Update the last serial to sync frontend state.
+    mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
+}
+
+void Texture::SetPendingBeginAccess(bool concurrentRead, bool initialized) {
+    mPendingBeginAccess = true;
+    mPendingConcurrentRead = concurrentRead;
+    mPendingInitialized = initialized;
 }
 
 // TextureView

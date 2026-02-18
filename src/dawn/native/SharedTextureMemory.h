@@ -73,6 +73,8 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
                             const SharedTextureMemoryDescriptor* descriptor,
                             ObjectBase::ErrorTag tag);
 
+    void SetProperties(const SharedTextureMemoryProperties& properties);
+
     MaybeError GetProperties(SharedTextureMemoryProperties* properties) const;
 
   private:
