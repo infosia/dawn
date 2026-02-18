@@ -107,6 +107,7 @@ Backend* PhysicalDevice::GetBackend() const {
 }
 
 bool PhysicalDevice::SupportsExternalImages() const {
+    // TODO(crbug.com/494307326): remove the function.
     return false;
 }
 

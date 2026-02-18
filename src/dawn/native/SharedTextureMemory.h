@@ -66,12 +66,17 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
     SharedTextureMemoryContents* GetContents() const;
 
   protected:
+    // Constructor without properties, made for webgpu::SharedTextureMemory which will call
+    // SetProperties later from inner handle info.
+    SharedTextureMemoryBase(DeviceBase* device, StringView label);
     SharedTextureMemoryBase(DeviceBase* device,
                             StringView label,
                             const SharedTextureMemoryProperties& properties);
     SharedTextureMemoryBase(DeviceBase* device,
                             const SharedTextureMemoryDescriptor* descriptor,
                             ObjectBase::ErrorTag tag);
+
+    void SetProperties(const SharedTextureMemoryProperties& properties);
 
     MaybeError GetProperties(SharedTextureMemoryProperties* properties) const;
 
