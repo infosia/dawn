@@ -293,6 +293,7 @@ MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* s
     // This is separated out because writing the output state must happen regardless of whether
     // or not EndAccessInternal succeeds.
     MaybeError err;
+    // if (lastUsageSerial != kBeginningOfGPUTime || isWebGPUBackend) {
     if (lastUsageSerial != kBeginningOfGPUTime) {
         ResultOrError<FenceAndSignalValue> result =
             EndAccessInternal(lastUsageSerial, resource, state);

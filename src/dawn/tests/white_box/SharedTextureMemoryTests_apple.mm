@@ -319,6 +319,9 @@ TEST_P(SharedTextureMemoryTests, DisallowStorageBinding) {
 
     EXPECT_FALSE(properties.usage & wgpu::TextureUsage::StorageBinding);
 
+    // The following white_box test casts to metal backend directly so webgpu backend is not supported.
+    DAWN_TEST_UNSUPPORTED_IF(IsWebGPUOnWebGPU());
+
     const dawn::native::metal::SharedTextureMemory* memoryMtl =
         dawn::native::metal::ToBackend(dawn::native::FromAPI(memory.Get()));
 
@@ -402,15 +405,27 @@ TEST_P(SharedTextureMemoryTests, CommandsScheduledFutureNoWork) {
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(Metal,
                                  SharedTextureMemoryNoFeatureTests,
-                                 {MetalBackend()},
+                                 {MetalBackend(), WebGPUBackend()},
                                  {Backend::GetInstance()},
                                  {1});
 
+// DAWN_INSTANTIATE_PREFIXED_TEST_P(WebGPU,
+//                                  SharedTextureMemoryNoFeatureTests,
+//                                  {WebGPUBackend()},
+//                                  {Backend::GetInstance()},
+//                                  {1});
+
 DAWN_INSTANTIATE_PREFIXED_TEST_P(Metal,
                                  SharedTextureMemoryTests,
-                                 {MetalBackend()},
+                                 {MetalBackend(), WebGPUBackend()},
                                  {Backend::GetInstance()},
                                  {1});
+
+// DAWN_INSTANTIATE_PREFIXED_TEST_P(WebGPU,
+//                                  SharedTextureMemoryTests,
+//                                  {WebGPUBackend()},
+//                                  {Backend::GetInstance()},
+//                                  {1});
 
 }  // anonymous namespace
 }  // namespace dawn
