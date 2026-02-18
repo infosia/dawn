@@ -1404,6 +1404,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, draw->firstInstance));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
 
+                immediates.SetFirstVertex(0);
                 immediates.SetFirstInstance(draw->firstInstance);
                 DAWN_TRY(immediates.Apply(gl));
                 DAWN_GL_TRY(gl, DrawArraysInstanced(lastPipeline->GetGLPrimitiveTopology(),
@@ -1438,6 +1439,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
 
             case Command::DrawIndirect: {
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
+                immediates.SetFirstVertex(0);
                 immediates.SetFirstInstance(0);
                 DAWN_TRY(immediates.Apply(gl));
 
@@ -1459,6 +1461,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::DrawIndexedIndirect: {
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
+                immediates.SetFirstVertex(0);
                 immediates.SetFirstInstance(0);
                 DAWN_TRY(immediates.Apply(gl));
 
