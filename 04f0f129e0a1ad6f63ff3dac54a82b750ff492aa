@@ -16,6 +16,52 @@
       "message": "Loko: PTAL. Thanks!",
       "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b852b42_e846fe32",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-18T21:08:31Z",
+      "side": 1,
+      "message": "nit. Existing but outdated comment?",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 68
+      },
+      "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66f1d46e_8e08e6c3",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-18T21:08:31Z",
+      "side": 1,
+      "message": "nit. Inaccurate comment?",
+      "range": {
+        "startLine": 332,
+        "startChar": 3,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "04f0f129e0a1ad6f63ff3dac54a82b750ff492aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
