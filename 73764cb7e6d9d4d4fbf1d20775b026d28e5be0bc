@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72864191_a365c6ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-18T19:21:30Z",
+      "side": 1,
+      "message": "Apparently -Wno-documentation doesn\u0027t actually supersede -Wno-documentation-unknown-command, inspite of what the docs say... Possibly difference in behaviour between ToT clang and older versions.",
+      "revId": "73764cb7e6d9d4d4fbf1d20775b026d28e5be0bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
