@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3baf5984_caca4b66",
+        "filename": "src/tint/lang/wgsl/resolver/atomic_vec2u_min_max_extension_test.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T16:11:40Z",
+      "side": 1,
+      "message": "Would be nice to render the type as `atomic\u003cvec2\u003e` instead of `atomicvec2u`.",
+      "revId": "d2658201c8b1ef70396dc57af3861dfad3480683",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4cd2d56_880491ca",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T16:11:40Z",
+      "side": 1,
+      "message": "```suggestion\n                    \u003c\u003c \" The type \" \u003c\u003c style::Type(\"atomic\u003cvec2u\u003e\")\n```",
+      "revId": "d2658201c8b1ef70396dc57af3861dfad3480683",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd5dbdc_4abee121",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 3467,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-18T16:11:40Z",
+      "side": 1,
+      "message": "This doesn\u0027t work because the store type is not the atomic store type. e.g. this is still accepted (please add a unit test for it):\n```\nvar\u003cworkgroup\u003e a: array\u003catomic\u003cvec2u\u003e, 4\u003e;\n```\n\nI think you need to do this validation in `ApplyAddressSpaceUsageToType()` for now (yes it\u0027s awkward that we have two different functions to do very similar types of validation, it\u0027s a TODO to clean this up).",
+      "revId": "d2658201c8b1ef70396dc57af3861dfad3480683",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
