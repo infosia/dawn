@@ -1208,8 +1208,8 @@ TEST_P(StencilCopyTests, FromNonZeroMipStencilAspect) {
     // TODO(42242119): hang/crash on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
 
-    // NVIDIA Vulkan driver bug with VK_FORMAT_S8_UINT at non-zero mip levels.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && HasToggleEnabled("vulkan_use_s8"));
+    // NVIDIA Vulkan driver bug with stencil at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
     constexpr uint32_t kWidth = 9;
     constexpr uint32_t kHeight = 9;
@@ -1352,8 +1352,8 @@ TEST_P(StencilCopyTests, CopyNonzeroMipThenReadWithStencilTest) {
     // Copies to a single aspect are unsupported on OpenGL.
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
 
-    // NVIDIA Vulkan driver bug with VK_FORMAT_S8_UINT at non-zero mip levels.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia() && HasToggleEnabled("vulkan_use_s8"));
+    // NVIDIA Vulkan driver bug with stencil at non-zero mip levels.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
     // Create a stencil texture
     constexpr uint32_t kWidth = 4;

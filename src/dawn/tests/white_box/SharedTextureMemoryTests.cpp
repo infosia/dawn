@@ -1251,6 +1251,7 @@ TEST_P(SharedTextureMemoryTests, DimensionValidation) {
 
 // Test that it is an error to call BeginAccess twice in a row on the same texture and memory.
 TEST_P(SharedTextureMemoryTests, DoubleBeginAccess) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
     wgpu::Texture texture = memory.CreateTexture();
@@ -1269,6 +1270,7 @@ TEST_P(SharedTextureMemoryTests, DoubleBeginAccess) {
 // Test that it is an error to call BeginAccess concurrently on a write texture
 // followed by a read texture on a single SharedTextureMemory.
 TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesWriteRead) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -1311,6 +1313,7 @@ TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesWriteConcurren
 // Test that it is an error to call BeginAccess concurrently on a read texture
 // followed by a write texture on a single SharedTextureMemory.
 TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesReadWrite) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -1353,6 +1356,7 @@ TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesConcurrentRead
 // Test that it is an error to call BeginAccess concurrently on two write textures on a single
 // SharedTextureMemory.
 TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesWriteWrite) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -1372,6 +1376,7 @@ TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesWriteWrite) {
 // Test that it is valid to call BeginAccess concurrently on two read textures on a single
 // SharedTextureMemory.
 TEST_P(SharedTextureMemoryTests, DoubleBeginAccessSeparateTexturesReadRead) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
@@ -1480,6 +1485,7 @@ TEST_P(SharedTextureMemoryTests, ConcurrentWrite) {
 
 // Test that it is an error to call EndAccess twice in a row on the same memory.
 TEST_P(SharedTextureMemoryTests, DoubleEndAccess) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
     wgpu::Texture texture = memory.CreateTexture();
@@ -1503,6 +1509,7 @@ TEST_P(SharedTextureMemoryTests, DoubleEndAccess) {
 // Test that it is an error to call EndAccess on a texture that was not the one BeginAccess was
 // called on.
 TEST_P(SharedTextureMemoryTests, BeginThenEndOnDifferentTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
     wgpu::Texture texture1 = memory.CreateTexture();
@@ -1523,6 +1530,7 @@ TEST_P(SharedTextureMemoryTests, BeginThenEndOnDifferentTexture) {
 
 // Test that it is an error to call EndAccess without a preceding BeginAccess.
 TEST_P(SharedTextureMemoryTests, EndAccessWithoutBegin) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
     wgpu::Texture texture = memory.CreateTexture();
@@ -1535,6 +1543,7 @@ TEST_P(SharedTextureMemoryTests, EndAccessWithoutBegin) {
 
 // Test that it is an error to use the texture on the queue without a preceding BeginAccess.
 TEST_P(SharedTextureMemoryTests, UseWithoutBegin) {
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
     wgpu::SharedTextureMemory memory =
