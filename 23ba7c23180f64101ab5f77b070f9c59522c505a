@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "23ba7c23180f64101ab5f77b070f9c59522c505a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2fbe795_c043216e",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T14:40:38Z",
+      "side": 1,
+      "message": "You\u0027ll probably want https://dawn-review.git.corp.google.com/c/dawn/+/290338 if you\u0027re going to move this. The way the current error logic works is it takes the _last_ one seen. So, before it would take textureFormatsTier1 because it came after Unorm16TextureFormats. But, with this move it will take this one as the error message instead.",
+      "revId": "23ba7c23180f64101ab5f77b070f9c59522c505a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
