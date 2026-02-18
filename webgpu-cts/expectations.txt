@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-02-13 07:28:20AM
+# Last rolled: 2026-02-18 05:12:48AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -757,7 +757,6 @@ crbug.com/407076133 [ android-pixel-6 ] webgpu:shader,execution,expression,call,
 crbug.com/407076134 [ asan dawn-no-backend-validation intel-0x9bc5 no-clang-coverage release-x64 target-cpu-64 webgpu-dxc-disabled win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ]
 crbug.com/407076134 [ asan dawn-no-backend-validation intel-0x9bc5 no-clang-coverage release-x64 target-cpu-64 webgpu-dxc-enabled win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ]
 crbug.com/407076134 [ intel no-asan no-clang-coverage win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ]
-
 
 # textureSampleBias failures on Mac AMD
 crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:* [ Failure ]
