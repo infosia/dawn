@@ -33,6 +33,24 @@
       "message": "This shouldn\u0027t be needed: we could start them at 0 because the are in the Dawn namespace. See https://source.chromium.org/chromium/chromium/src/+/main:out/chromeos-Debug/gen/third_party/dawn/include/dawn/webgpu.h;drc\u003d76867610ec5afa320c0e0a07d0ee12376b201727;l\u003d1154 that shows the namespacing.",
       "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "859182cb_11e858ef",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4508,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T18:53:38Z",
+      "side": 1,
+      "message": "It isn\u0027t technically needed but it feels weird to have the overlap with the values (at least to me). This also makes them a bit more grouped together.",
+      "parentUuid": "b0c8540f_6cdb36d5",
+      "revId": "f2ec43e5445245fc724770a52bf66ca6d0a0af34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
