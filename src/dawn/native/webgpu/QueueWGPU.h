@@ -41,6 +41,7 @@ namespace dawn::native::webgpu {
 
 class CaptureContext;
 class Device;
+class SharedFence;
 
 class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
   public:
@@ -49,6 +50,13 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     bool IsCapturing() const;
     MaybeError SetCaptureContext(std::unique_ptr<CaptureContext> captureContext);
     CaptureContext* GetCaptureContext() const;
+
+    // Returns a SharedFence wrapping the inner SharedFence handle.
+    ResultOrError<Ref<SharedFence>> GetOrCreateSharedFence(WGPUSharedFence innerFence);
+
+    // Returns a wgpu::Future that can be used to wait for commands up to the current point to be
+    // scheduled on the inner device.
+    wgpu::Future GetCommandsScheduledFuture();
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
@@ -69,9 +77,11 @@ class Queue final : public QueueBase, public ObjectWGPU<WGPUQueue> {
     ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
                                                           Nanoseconds timeout) override;
     MaybeError WaitForIdleForDestructionImpl() override;
+    void DestroyImpl(DestroyReason reason) override;
     MaybeError SubmitFutureSync();
 
     MutexProtected<std::deque<std::pair<WGPUFuture, ExecutionSerial>>> mFuturesInFlight;
+    Ref<SharedFence> mSharedFence;
     bool mHasPendingCommands = false;
 
     std::unique_ptr<CaptureContext> mCaptureContext;
