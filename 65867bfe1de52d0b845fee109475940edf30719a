@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28207595_7133e675",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "I assume that the pipeline defaulting will be in another CL?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a97c01a1_b872ad17",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "It would be easier to list the cases that don\u0027t need this validation (with ideas of names):\n\n - bool unknownFloatSampleTypeInShader: shader: Unknown (float) + required: Float or UnfilterableFloat\n - bool shaderSampleTypeConvertsToRequiredFloat: shader: unfilterable + required: Float.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a124490_93fd019f",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "We need to make the error message output \"unspecified float\" or something like that when sampleType is Unknown. We might need to add an internal enum value to dawn_platform.h that extends wgpu::TextureSampleType, and update the comment here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindingInfo.h;drc\u003dd11ac50b16a71e96e242989f6ea53183f7eddcdd;l\u003d85",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "509da6ce_761c33de",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "nit: can the rename be in a pre-CL to reduce the diff size and make changes more clear?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc0a6c9b_77cb634e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "Instead of having comparison and samplers as separated booleans, could we have just a `SamplerBindingType` that\u0027s the required on and the shader one?, then the logic would be pretty similar to the one for sampled textures.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20b96f8_691ff30e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "Maybe explicitly list kUnknown?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f6ab80d_d2ed42ce",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "We have a lot of tests for these in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp;l\u003d3460?q\u003dBindGroupLayoutCompatibil\u0026sq\u003d",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "649170b1_eeb657a9",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "You can use utils::MakeBindGroupLayout.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d1936e3_d1440428",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "And utils::MakeBasicPipelineLayout.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c08ccd6_d3144845",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "We don\u0027t seem to have tests checking that filtering is used only with filtering, but given the structure of the code I think that\u0027s ok: the information is already given by the BGL and at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.cpp;drc\u003dd11ac50b16a71e96e242989f6ea53183f7eddcdd;l\u003d1573 we check only against the BGLs and without the shader reflection. What will be a bit tricky is the layout defaulting but that\u0027s in the next CL.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1810ad2b_7f2e016b",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "We should really parametrize these, or at least have them in a loop with testcases in a single test.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abd01feb_fe5e6d3b",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t kFloat disappear into kFloat[Un]filterable/Unknown?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f9f9df4_aef4704a",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-18T09:17:30Z",
+      "side": 1,
+      "message": "```suggestion\n        kFilteringUnknown,\n```",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
