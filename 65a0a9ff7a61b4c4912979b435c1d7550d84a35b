@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca53c173_8c287edc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-18T18:54:15Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"Supress\" is a possible misspelling of \"Suppress\".\n\nTo bypass Spellchecker, add ...\n\n\"Supress\" is a possible misspelling of \"Suppress\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "65a0a9ff7a61b4c4912979b435c1d7550d84a35b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
