@@ -311,6 +311,7 @@ using OverridesMap = absl::flat_hash_map<std::string, Override>;
     X(absl::flat_hash_set<std::string>, initializedOverrides)                                     \
     /* Reflection information about potential `pixel_local` variable use. */                      \
     X(bool, usesPixelLocal)                                                                       \
+    X(bool, usesFramebufferFetch)                                                                 \
     X(size_t, pixelLocalBlockSize)                                                                \
     X(std::vector<PixelLocalMemberType>, pixelLocalMembers)                                       \
     X(bool, usesFragDepth)                                                                        \

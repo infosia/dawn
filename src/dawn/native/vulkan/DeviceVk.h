@@ -85,6 +85,10 @@ class Device final : public DeviceBase {
     VkDevice GetVkDevice() const;
     uint32_t GetGraphicsQueueFamily() const;
     const VkDescriptorSetLayout& GetResourceTableLayout() const;
+    const VkDescriptorSetLayout& GetFramebufferFetchLayout() const;
+    ResultOrError<VkDescriptorSet> GetOrCreateFramebufferFetchDescriptorSet(
+        const CommandRecordingContext* recordingContext,
+        const std::vector<VkImageView>& attachmentViews);
 
     MutexProtected<FencedDeleter>& GetFencedDeleter() const;
     FramebufferCache* GetFramebufferCache() const;
@@ -215,6 +219,8 @@ class Device final : public DeviceBase {
     uint32_t mMainQueueFamily = 0;
 
     VkDescriptorSetLayout mResourceTableLayout = VK_NULL_HANDLE;
+    VkDescriptorSetLayout mFramebufferFetchLayout = VK_NULL_HANDLE;
+    Ref<DescriptorSetAllocator> mFramebufferFetchDescriptorAllocator;
 
     // Entries can be appended without holding the device mutex.
     MutexProtected<SerialQueue<ExecutionSerial, Ref<DescriptorSetAllocator>>>
