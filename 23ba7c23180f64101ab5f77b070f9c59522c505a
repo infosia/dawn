@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8861310_8428b4ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T09:04:10Z",
+      "side": 1,
+      "message": "PTAL this one",
+      "revId": "23ba7c23180f64101ab5f77b070f9c59522c505a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2fbe795_c043216e",
@@ -66,6 +83,30 @@
       "writtenOn": "2026-02-18T20:59:44Z",
       "side": 1,
       "message": "nit. Add a `SCOPED_TRACE(absl::StrFormat(\"Test format: %s\", format));` or equivalent in the loop so if it fails we know which format failed. Same below.",
+      "range": {
+        "startLine": 1301,
+        "startChar": 4,
+        "endLine": 1301,
+        "endChar": 62
+      },
+      "revId": "23ba7c23180f64101ab5f77b070f9c59522c505a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfabca42_3fd97b97",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T09:04:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b85e054c_6ebf43a5",
       "range": {
         "startLine": 1301,
         "startChar": 4,
