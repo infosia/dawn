@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "679aab58_6da73f46",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T20:31:42Z",
+      "side": 1,
+      "message": "I don\u0027t think WIP is useful? Seems like it\u0027s just overhead for the folks working on bugs.",
+      "parentUuid": "9e5aedd0_52e3d4b5",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 19
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ebb2e1c7_b4006df6",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2026-02-19T20:23:41Z",
       "side": 1,
       "message": "I can get rid of these sections once we confirm they are fully redundant due to the categorization.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7e376ce_6b3502b5",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T20:31:42Z",
+      "side": 1,
+      "message": "Using a section for Permanent skip seems better then a tag?",
+      "parentUuid": "ebb2e1c7_b4006df6",
       "range": {
         "startLine": 118,
         "startChar": 2,
