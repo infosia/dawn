@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6cd582a_07b0b43a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T16:52:39Z",
+      "side": 1,
+      "message": "What im suggesting is that by having end2end tests we might be providing useful data to the fuzzer.",
+      "parentUuid": "ab8204dc_a0f4169f",
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5997ef69_fda010da",
         "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
         "patchSetId": 1
