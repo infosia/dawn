@@ -34,6 +34,24 @@
       "parentUuid": "e9f11493_38c486bd",
       "revId": "df0cec6a0c7dcef558fdaf9254dd09f765de6a92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418e89ae_4b9f69d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T15:59:11Z",
+      "side": 1,
+      "message": "Discussed offline, James is going to make a similar change doing it as WGSL reader unittests to see how it compares. This CL will block to see what that one looks like.",
+      "parentUuid": "ad04d2c1_699eee73",
+      "revId": "df0cec6a0c7dcef558fdaf9254dd09f765de6a92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
