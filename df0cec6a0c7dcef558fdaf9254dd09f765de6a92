@@ -16,6 +16,24 @@
       "message": "I\u0027m trying to understand the main motivation for this change. Is the core issue that people want to able to write WGSL instead of ProgramBuilder code for validation tests? If so, then we could just set up a WGSL reader test suite in the unit tests to do that. That also gives us the ability to parameterize these tests.\n\nIs there another reason to want these as E2E tests? I can maybe see fuzzer corpus seeding as a benefit but beyond that I\u0027m not sure.",
       "revId": "df0cec6a0c7dcef558fdaf9254dd09f765de6a92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad04d2c1_699eee73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T15:26:12Z",
+      "side": 1,
+      "message": "Personally I find this easier then dealing with the unitest setup. You create the file and you\u0027re done. No, creating `TEST` methods, or copy/pasting test bodies.\n\nParameterization, maybe, but if it\u0027s heavily parameterized we could just leave it as a unittest. This is another way to do it which, I think, is simpler then gtest unittests.",
+      "parentUuid": "e9f11493_38c486bd",
+      "revId": "df0cec6a0c7dcef558fdaf9254dd09f765de6a92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
