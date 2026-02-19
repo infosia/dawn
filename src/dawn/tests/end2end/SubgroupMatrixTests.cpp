@@ -33,6 +33,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn {
 namespace {
@@ -213,7 +214,8 @@ struct Matrix {
     const uint32_t rows;
     const wgpu::SubgroupMatrixComponentType component_type;
     const bool column_major;
-    uint8_t* const data = nullptr;
+    // TODO(crbug.com/485825675): Investigate why this pointer is dangling.
+    const raw_ptr<uint8_t, DanglingUntriaged | AllowPtrArithmetic> data = nullptr;
 
   private:
     template <typename T>
