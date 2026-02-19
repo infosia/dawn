@@ -322,7 +322,6 @@ TEST_P(FramebufferFetchTests, LoadAndStoreOpsReallyItsLoadAndDiscard) {
     EXPECT_TEXTURE_EQ(uint32_t(10 + 1789), texture1, {0, 0});
 }
 
-
 TEST_P(FramebufferFetchTests, MultisamplingNoSampleRasterization) {
     wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
         device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Storage}});
@@ -370,8 +369,7 @@ TEST_P(FramebufferFetchTests, MultisamplingNoSampleRasterization) {
     queue.Submit(1, &commands);
 
     EXPECT_BUFFER_U32_EQ(1, invocationBuffer, 0);
-    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve,
-                      {0, 0});
+    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve, {0, 0});
 }
 
 TEST_P(FramebufferFetchTests, MultisamplingRunOnceWorks) {
@@ -426,8 +424,7 @@ TEST_P(FramebufferFetchTests, MultisamplingRunOnceWorks) {
     queue.Submit(1, &commands);
 
     EXPECT_BUFFER_U32_EQ(4, invocationBuffer, 0);
-    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve,
-                      {0, 0});
+    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve, {0, 0});
 }
 
 TEST_P(FramebufferFetchTests, MultisamplingRunOnceFails) {
@@ -479,8 +476,7 @@ TEST_P(FramebufferFetchTests, MultisamplingRunOnceFails) {
 
     EXPECT_BUFFER_U32_EQ(4, invocationBuffer, 0);
     // This fails as buffer is RGBA8(2, 2, 2, 2) for some reason.
-    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve,
-                      {0, 0});
+    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve, {0, 0});
 }
 
 // Test the behavior with multisampling.

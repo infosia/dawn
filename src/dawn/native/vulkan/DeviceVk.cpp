@@ -441,35 +441,38 @@ ResultOrError<VkDescriptorSet> Device::GetOrCreateFramebufferFetchDescriptorSet(
 
     VkDescriptorSet set = allocation.set;
 
-    std::array<VkWriteDescriptorSet, kMaxColorAttachments> writes;
-    std::array<VkDescriptorImageInfo, kMaxColorAttachments> imageInfos;
+    std::vector<VkWriteDescriptorSet> writes;
+    writes.reserve(attachmentViews.size());
+    std::vector<VkDescriptorImageInfo> imageInfos;
+    imageInfos.reserve(attachmentViews.size());
 
-    uint32_t writeCount = 0;
     for (uint32_t i = 0; i < attachmentViews.size(); ++i) {
         if (attachmentViews[i] == VK_NULL_HANDLE) {
             continue;
         }
 
-        imageInfos[writeCount].sampler = VK_NULL_HANDLE;
-        imageInfos[writeCount].imageView = attachmentViews[i];
-        imageInfos[writeCount].imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+        imageInfos.emplace_back(VkDescriptorImageInfo{
+            .sampler = VK_NULL_HANDLE,
+            .imageView = attachmentViews[i],
+            .imageLayout = VK_IMAGE_LAYOUT_GENERAL,
+        });
 
-        writes[writeCount].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        writes[writeCount].pNext = nullptr;
-        writes[writeCount].dstSet = set;
-        writes[writeCount].dstBinding = i;
-        writes[writeCount].dstArrayElement = 0;
-        writes[writeCount].descriptorCount = 1;
-        writes[writeCount].descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT;
-        writes[writeCount].pImageInfo = &imageInfos[writeCount];
-        writes[writeCount].pBufferInfo = nullptr;
-        writes[writeCount].pTexelBufferView = nullptr;
-
-        writeCount++;
+        writes.emplace_back(VkWriteDescriptorSet{
+            .sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
+            .pNext = nullptr,
+            .dstSet = set,
+            .dstBinding = i,
+            .dstArrayElement = 0,
+            .descriptorCount = 1,
+            .descriptorType = VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT,
+            .pImageInfo = &(imageInfos.back()),
+            .pBufferInfo = nullptr,
+            .pTexelBufferView = nullptr,
+        });
     }
 
-    if (writeCount > 0) {
-        fn.UpdateDescriptorSets(mVkDevice, writeCount, writes.data(), 0, nullptr);
+    if (!writes.empty()) {
+        fn.UpdateDescriptorSets(mVkDevice, writes.size(), writes.data(), 0, nullptr);
     }
 
     mFramebufferFetchDescriptorAllocator->Deallocate(&allocation);

@@ -33,6 +33,7 @@
 #include <set>
 #include <utility>
 
+#include "spirv/unified1/spirv.h"
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
@@ -41,6 +42,7 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
+#include "src/tint/lang/spirv/ir/literal_operand.h"
 #include "src/tint/lang/spirv/type/image.h"
 #include "src/tint/utils/ice/ice.h"
 
@@ -176,7 +178,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 auto sample_ty = store_type->DeepestElement();
                 store_type = ty.Get<spirv::type::Image>(
                     sample_ty, type::Dim::kSubpassData, type::Depth::kNotDepth,
-                    type::Arrayed::kNonArrayed, type::Multisampled::kSingleSampled,
+                    type::Arrayed::kNonArrayed,
+                    // TODO(dsinclair): This should be a differnet option ...
+                    // config.polyfill_pixel_center ?
+                    type::Multisampled::kMultisampled,
+                    // type::Multisampled::kSingleSampled,
                     type::Sampled::kReadWriteOpCompatible, core::TexelFormat::kUndefined, access);
 
                 new_addrspace = core::AddressSpace::kHandle;
@@ -236,6 +242,14 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             Vector<core::ir::Value*, 8> builtin_args;
             builtin_args.Push(value);
             builtin_args.Push(coords);
+
+            // TODO(dsinclair): Should be same option as above
+            //           if (config.polyfill_pixel_center) {
+            builtin_args.Push(builder.ir.CreateValue<spirv::ir::LiteralOperand>(
+                builder.ConstantValue(u32(SpvImageOperandsSampleMask))));
+            // TODO(dsinclair): This should be the sample_index I think
+            builtin_args.Push(builder.Constant(u32(0)));
+            //            }
 
             // Call the builtin.
             value = builder
