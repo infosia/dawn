@@ -339,8 +339,8 @@ class Resolver {
     ///   reference type.
     /// @returns true on success, false on failure.
     template <size_t N>
-    bool MaybeMaterializeAndLoadArguments(Vector<const sem::ValueExpression*, N>& args,
-                                          const sem::CallTarget* target);
+    bool MaterializeArguments(Vector<const sem::ValueExpression*, N>& args,
+                              const sem::CallTarget* target);
 
     /// @returns true if an argument of an abstract numeric type, passed to a parameter of type
     /// `parameter_ty` should be materialized.

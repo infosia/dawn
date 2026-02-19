@@ -1776,8 +1776,8 @@ const sem::ValueExpression* Resolver::Materialize(
 }
 
 template <size_t N>
-bool Resolver::MaybeMaterializeAndLoadArguments(Vector<const sem::ValueExpression*, N>& args,
-                                                const sem::CallTarget* target) {
+bool Resolver::MaterializeArguments(Vector<const sem::ValueExpression*, N>& args,
+                                    const sem::CallTarget* target) {
     for (size_t i = 0, n = std::min(args.Length(), target->Parameters().Length()); i < n; i++) {
         const auto* param_ty = target->Parameters()[i]->Type();
         if (ShouldMaterializeArgument(param_ty)) {
@@ -1786,13 +1786,6 @@ bool Resolver::MaybeMaterializeAndLoadArguments(Vector<const sem::ValueExpressio
                 return false;
             }
             args[i] = materialized;
-        }
-        if (!param_ty->Is<core::type::Reference>()) {
-            auto* load = Load(args[i]);
-            if (!load) {
-                return false;
-            }
-            args[i] = load;
         }
     }
     return true;
@@ -1939,7 +1932,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
     args.Reserve(expr->args.Length());
     auto args_stage = core::EvaluationStage::kConstant;
     for (size_t i = 0; i < expr->args.Length(); i++) {
-        auto* arg = sem_.GetVal(expr->args[i]);
+        const auto* arg = Load(sem_.GetVal(expr->args[i]));
         if (!arg) {
             return nullptr;
         }
@@ -1951,13 +1944,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
     // sem::ValueConversion call for a CtorConvIntrinsic with an optional template argument type.
     auto ctor_or_conv = [&](CtorConvIntrinsic ty,
                             VectorRef<const core::type::Type*> template_args) -> sem::Call* {
-        auto arg_tys = tint::Transform(args, [&](auto* arg) -> const core::type::Type* {
-            // Use the swizzle result type as the arg type for intrinsic lookup.
-            if (auto* swizzle_view = arg->Type()->template As<core::type::SwizzleView>()) {
-                return swizzle_view->StoreType();
-            }
-            return arg->Type()->UnwrapRef();
-        });
+        auto arg_tys = tint::Transform(args, [&](auto* arg) { return arg->Type(); });
 
         auto match = intrinsic_table_.Lookup(ty, template_args, arg_tys, args_stage);
         if (match != Success) {
@@ -1990,7 +1977,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
             });
         }
 
-        if (!MaybeMaterializeAndLoadArguments(args, target_sem)) {
+        if (!MaterializeArguments(args, target_sem)) {
             return nullptr;
         }
 
@@ -2084,7 +2071,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
                         return b.create<sem::ValueConstructor>(arr, std::move(params), args_stage);
                     });
 
-                if (DAWN_UNLIKELY(!MaybeMaterializeAndLoadArguments(args, call_target))) {
+                if (DAWN_UNLIKELY(!MaterializeArguments(args, call_target))) {
                     return nullptr;
                 }
 
@@ -2109,7 +2096,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
                         return b.create<sem::ValueConstructor>(str, std::move(params), args_stage);
                     });
 
-                if (DAWN_UNLIKELY(!MaybeMaterializeAndLoadArguments(args, call_target))) {
+                if (DAWN_UNLIKELY(!MaterializeArguments(args, call_target))) {
                     return nullptr;
                 }
 
@@ -2139,7 +2126,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
                                                                core::EvaluationStage::kRuntime);
                     });
 
-                if (DAWN_UNLIKELY(!MaybeMaterializeAndLoadArguments(args, call_target))) {
+                if (DAWN_UNLIKELY(!MaterializeArguments(args, call_target))) {
                     return nullptr;
                 }
 
@@ -2193,8 +2180,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
             case core::BuiltinType::kArray: {
                 auto el_count =
                     b.create<core::type::ConstantArrayCount>(static_cast<uint32_t>(args.Length()));
-                auto arg_tys =
-                    tint::Transform(args, [](auto* arg) { return arg->Type()->UnwrapRef(); });
+                auto arg_tys = tint::Transform(args, [](auto* arg) { return arg->Type(); });
                 auto el_ty = core::type::Type::Common(arg_tys);
                 if (DAWN_UNLIKELY(!el_ty)) {
                     AddError(expr->source)
@@ -2276,13 +2262,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
         }
     }
 
-    auto arg_tys = tint::Transform(args, [&](auto* arg) -> const core::type::Type* {
-        // Use the swizzle result type as the arg type for intrinsic lookup.
-        if (auto* swizzle_view = arg->Type()->template As<core::type::SwizzleView>()) {
-            return swizzle_view->StoreType();
-        }
-        return arg->Type()->UnwrapRef();
-    });
+    auto arg_tys = tint::Transform(args, [&](auto* arg) { return arg->Type(); });
 
     auto overload = intrinsic_table_.Lookup(fn, tmpl_args, arg_tys, arg_stage);
     if (overload != Success) {
@@ -2319,7 +2299,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
         }
     } else {
         // Materialize arguments if the parameter type is not abstract
-        if (!MaybeMaterializeAndLoadArguments(args, target)) {
+        if (!MaterializeArguments(args, target)) {
             return nullptr;
         }
     }
@@ -3255,7 +3235,7 @@ sem::Call* Resolver::FunctionCall(const ast::CallExpression* expr,
                                   sem::Function* target,
                                   VectorRef<const sem::ValueExpression*> args_in) {
     Vector<const sem::ValueExpression*, 8> args = std::move(args_in);
-    if (!MaybeMaterializeAndLoadArguments(args, target)) {
+    if (!MaterializeArguments(args, target)) {
         return nullptr;
     }
 
@@ -3707,8 +3687,7 @@ sem::ValueExpression* Resolver::Binary(const ast::BinaryExpression* expr) {
     }
 
     auto stage = core::EarliestStage(lhs->Stage(), rhs->Stage());
-    auto overload = intrinsic_table_.Lookup(expr->op, lhs->Type()->UnwrapRef(),
-                                            rhs->Type()->UnwrapRef(), stage, false);
+    auto overload = intrinsic_table_.Lookup(expr->op, lhs->Type(), rhs->Type(), stage, false);
     if (overload != Success) {
         AddError(expr->source) << overload.Failure();
         return nullptr;
@@ -3833,13 +3812,12 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
             break;
 
         default: {
-            stage = expr->Stage();
-            auto* arg_ty = expr_ty->UnwrapRef();
-            // Use the swizzle result type as the arg type for intrinsic lookup.
-            if (auto* swizzle_view = expr_ty->As<core::type::SwizzleView>()) {
-                arg_ty = swizzle_view->StoreType();
+            expr = Load(expr);
+            if (!expr) {
+                return nullptr;
             }
-            auto overload = intrinsic_table_.Lookup(unary->op, arg_ty, stage);
+
+            auto overload = intrinsic_table_.Lookup(unary->op, expr->Type(), expr->Stage());
             if (overload != Success) {
                 AddError(unary->source) << overload.Failure();
                 return nullptr;
@@ -3851,12 +3829,6 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
                 if (!expr) {
                     return nullptr;
                 }
-            }
-
-            // Load expr if it is a reference
-            expr = Load(expr);
-            if (!expr) {
-                return nullptr;
             }
 
             stage = expr->Stage();
@@ -4781,15 +4753,15 @@ sem::Statement* Resolver::AssignmentStatement(const ast::AssignmentStatement* st
         }
 
         if (!is_phony_assignment) {
-            rhs = Materialize(rhs, lhs->Type()->UnwrapRef());
+            rhs = Materialize(Load(rhs), lhs->Type()->UnwrapRef());
             if (!rhs) {
                 return false;
             }
-        }
-
-        rhs = Load(rhs);
-        if (!rhs) {
-            return false;
+        } else {
+            rhs = Load(rhs);
+            if (!rhs) {
+                return false;
+            }
         }
 
         if (!is_phony_assignment) {
@@ -4843,7 +4815,7 @@ sem::Statement* Resolver::CompoundAssignmentStatement(
             return false;
         }
 
-        const auto* rhs = ValueExpression(stmt->rhs);
+        const auto* rhs = Load(ValueExpression(stmt->rhs));
         if (!rhs) {
             return false;
         }
@@ -4852,24 +4824,14 @@ sem::Statement* Resolver::CompoundAssignmentStatement(
 
         auto stage = core::EarliestStage(lhs->Stage(), rhs->Stage());
 
-        // TODO(crbug.com/477255032): See if this can be cleaned up by improving the consistency of
-        // resolver subexpression loading.
-        auto* rhs_type = rhs->Type();
-        if (auto* swizzle_view = rhs_type->As<core::type::SwizzleView>()) {
-            // Use the swizzle result type as the arg type for intrinsic lookup.
-            rhs_type = swizzle_view->StoreType();
-        } else {
-            rhs_type = rhs_type->UnwrapRef();
-        }
         auto overload =
-            intrinsic_table_.Lookup(stmt->op, lhs->Type()->UnwrapRef(), rhs_type, stage, true);
+            intrinsic_table_.Lookup(stmt->op, lhs->Type()->UnwrapRef(), rhs->Type(), stage, true);
         if (overload != Success) {
             AddError(stmt->source) << overload.Failure();
             return false;
         }
 
-        // Load or materialize the RHS if necessary.
-        rhs = Load(Materialize(rhs, overload->parameters[1].type));
+        rhs = Materialize(rhs, overload->parameters[1].type);
         if (!rhs) {
             return false;
         }
