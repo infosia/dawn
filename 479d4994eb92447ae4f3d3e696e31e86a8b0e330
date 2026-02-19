@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e04b5b06_653ea37d",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n        CollapsedSwizzle res{\n            .indices \u003d swizzle-\u003eIndices(),\n            .vector \u003d swizzle-\u003eObject(),\n        };\n```",
+      "range": {
+        "startLine": 539,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 39
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a173820_17e727b1",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "This could probably use a comment. Would be nice to include that the inner swizzle size must always be smaller or equal to the number of elements in the outer swizzle because you can\u0027t repeat letters.",
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a52028c_3a83125c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n        auto* vec_ty \u003d lhs-\u003eType()-\u003eUnwrapPtrOrRef()-\u003eAs\u003ccore::type::Vector\u003e();\n        TINT_ASSERT(vec_ty);\n```",
+      "range": {
+        "startLine": 557,
+        "startChar": 8,
+        "endLine": 559,
+        "endChar": 56
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23dd7eb3_91a59b2b",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n        return b.Construct(vec_ty-\u003eClone(clone_ctx_.type_ctx), new_vec_args)-\u003eResult();\n```",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 588,
+        "endChar": 32
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd0225c_edbbdb40",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3658,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n                           allowed_features_.features.contains(\n                               wgsl::LanguageFeature::kSwizzleAssignment)) {\n```",
+      "range": {
+        "startLine": 3657,
+        "startChar": 27,
+        "endLine": 3658,
+        "endChar": 79
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "259a95df_ee5c9dc2",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4794,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n                allowed_features_.features.contains(wgsl::LanguageFeature::kSwizzleAssignment)) {\n```",
+      "range": {
+        "startLine": 4794,
+        "startChar": 16,
+        "endLine": 4794,
+        "endChar": 97
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df07af53_65e7b15f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4883,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n            allowed_features_.features.contains(wgsl::LanguageFeature::kSwizzleAssignment)) {\n```",
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a2458e5_987a53ce",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3200,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:11:12Z",
+      "side": 1,
+      "message": "```suggestion\n        allowed_features_.features.contains(wgsl::LanguageFeature::kSwizzleAssignment)) {\n```",
+      "range": {
+        "startLine": 3200,
+        "startChar": 8,
+        "endLine": 3200,
+        "endChar": 89
+      },
+      "revId": "479d4994eb92447ae4f3d3e696e31e86a8b0e330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
