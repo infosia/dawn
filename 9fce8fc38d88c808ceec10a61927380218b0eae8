@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab8204dc_a0f4169f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T16:35:29Z",
+      "side": 1,
+      "message": "I also noticed that our fuzzer seems to read the end2end tests. Perhaps as a dictionary or a starting point?",
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5997ef69_fda010da",
         "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
         "patchSetId": 1
