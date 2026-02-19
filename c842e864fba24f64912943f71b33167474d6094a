@@ -16,6 +16,29 @@
       "message": "Thoughts?",
       "revId": "c842e864fba24f64912943f71b33167474d6094a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f0c2137_d6a6123e",
+        "filename": "test/tint/validation/extensions/atomic_vec2u_min_max/atomic_vec2u_min_max_missing_extension.error.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T03:04:35Z",
+      "side": 1,
+      "message": "Debate here about if we should specify the full error or not.\nThe same issue with the unit tests but there we use the \u0027fix-tests\u0027",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "c842e864fba24f64912943f71b33167474d6094a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
