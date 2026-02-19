@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e5aedd0_52e3d4b5",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T20:23:41Z",
+      "side": 1,
+      "message": "We need some other categories.\nWip - work in progress. (pixel 10 or say burndown)\nSpurious - failures are due to some practical limitation. These are like Spurious wgsl failures",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 19
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebb2e1c7_b4006df6",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T20:23:41Z",
+      "side": 1,
+      "message": "I can get rid of these sections once we confirm they are fully redundant due to the categorization.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
