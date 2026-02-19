@@ -373,8 +373,8 @@ bool Validator::Pointer(const ast::TemplatedIdentifier* a, const core::type::Poi
 bool Validator::StorageTexture(const core::type::StorageTexture* t, const Source& source) const {
     switch (t->Access()) {
         case core::Access::kRead:
-            if (allowed_features_.features.count(
-                    wgsl::LanguageFeature::kReadonlyAndReadwriteStorageTextures) == 0u) {
+            if (!allowed_features_.features.contains(
+                    wgsl::LanguageFeature::kReadonlyAndReadwriteStorageTextures)) {
                 AddError(source) << "read-only storage textures require the "
                                     "readonly_and_readwrite_storage_textures language feature, "
                                     "which is not allowed in the current environment";
@@ -382,8 +382,8 @@ bool Validator::StorageTexture(const core::type::StorageTexture* t, const Source
             }
             break;
         case core::Access::kReadWrite:
-            if (allowed_features_.features.count(
-                    wgsl::LanguageFeature::kReadonlyAndReadwriteStorageTextures) == 0u) {
+            if (!allowed_features_.features.contains(
+                    wgsl::LanguageFeature::kReadonlyAndReadwriteStorageTextures)) {
                 AddError(source) << "read-write storage textures require the "
                                     "readonly_and_readwrite_storage_textures language feature, "
                                     "which is not allowed in the current environment";
@@ -481,7 +481,7 @@ bool Validator::InputAttachmentIndexAttribute(const ast::InputAttachmentIndexAtt
 }
 
 bool Validator::BindingArray(const core::type::BindingArray* t, const Source& source) const {
-    if (allowed_features_.features.count(wgsl::LanguageFeature::kSizedBindingArray) == 0) {
+    if (!allowed_features_.features.contains(wgsl::LanguageFeature::kSizedBindingArray)) {
         AddError(source) << "use of " << style::Type("binding_array") << " requires the "
                          << style::Code("sized_binding_array")
                          << "language feature, which is not allowed in the current environment";
@@ -519,7 +519,7 @@ bool Validator::SubgroupMatrix(const core::type::SubgroupMatrix* t, const Source
 }
 
 bool Validator::Buffer(const core::type::Buffer*, const Source& source) const {
-    if (!allowed_features_.features.count(wgsl::LanguageFeature::kBufferView)) {
+    if (!allowed_features_.features.contains(wgsl::LanguageFeature::kBufferView)) {
         AddError(source) << "use of " << style::Type("buffer")
                          << " requires the buffer_view language feature, which is not allowed in "
                             "the current environment";
@@ -530,7 +530,7 @@ bool Validator::Buffer(const core::type::Buffer*, const Source& source) const {
 }
 
 bool Validator::TexelBuffer(const core::type::TexelBuffer* t, const Source& source) const {
-    if (!allowed_features_.features.count(wgsl::LanguageFeature::kTexelBuffers)) {
+    if (!allowed_features_.features.contains(wgsl::LanguageFeature::kTexelBuffers)) {
         AddError(source) << "use of " << style::Type("texel_buffer")
                          << " requires the texel_buffer language feature, which is not allowed "
                             "in the current environment";
@@ -1012,8 +1012,8 @@ bool Validator::Parameter(const sem::Variable* var) const {
             case core::AddressSpace::kStorage:
             case core::AddressSpace::kUniform:
             case core::AddressSpace::kWorkgroup:
-                ok = allowed_features_.features.count(
-                         wgsl::LanguageFeature::kUnrestrictedPointerParameters) != 0;
+                ok = allowed_features_.features.contains(
+                    wgsl::LanguageFeature::kUnrestrictedPointerParameters);
                 break;
             default:
                 break;
@@ -2062,7 +2062,7 @@ bool Validator::BuiltinCall(const sem::Call* call) const {
     // The `print()` builtin requires the chromium_print language feature to be available.
     if (auto* fn = call->Target()->As<sem::BuiltinFn>()) {
         if (fn->Fn() == wgsl::BuiltinFn::kPrint) {
-            if (!allowed_features_.features.count(wgsl::LanguageFeature::kChromiumPrint)) {
+            if (!allowed_features_.features.contains(wgsl::LanguageFeature::kChromiumPrint)) {
                 AddError(call->Declaration()->source) << "the 'chromium_print' language feature is "
                                                          "not allowed in the current environment";
                 return false;
@@ -2351,7 +2351,7 @@ bool Validator::RequiredFeaturesForBuiltinFn(const sem::Call* call) const {
 
     const auto feature = builtin->RequiredLanguageFeature();
     if (feature != wgsl::LanguageFeature::kUndefined) {
-        if (!allowed_features_.features.count(feature)) {
+        if (!allowed_features_.features.contains(feature)) {
             AddError(call->Declaration()->source)
                 << "built-in function " << style::Function(builtin->Fn()) << " requires the "
                 << style::Code(wgsl::ToString(feature))
@@ -2462,8 +2462,8 @@ bool Validator::FunctionCall(const sem::Call* call, sem::Statement* current_stat
         }
 
         if (param_type->Is<core::type::Pointer>() &&
-            (allowed_features_.features.count(
-                 wgsl::LanguageFeature::kUnrestrictedPointerParameters) == 0u)) {
+            !allowed_features_.features.contains(
+                wgsl::LanguageFeature::kUnrestrictedPointerParameters)) {
             // https://gpuweb.github.io/gpuweb/wgsl/#function-restriction
             // Each argument of pointer type to a user-defined function must have the same memory
             // view as its root identifier.
@@ -3402,8 +3402,8 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
             }
             break;
         case core::AddressSpace::kImmediate:
-            if (DAWN_UNLIKELY(allowed_features_.features.count(
-                                  wgsl::LanguageFeature::kImmediateAddressSpace) == 0u)) {
+            if (DAWN_UNLIKELY(!allowed_features_.features.contains(
+                    wgsl::LanguageFeature::kImmediateAddressSpace))) {
                 AddError(source) << "use of variable address space " << style::Enum("immediate")
                                  << " requires the immediate_address_space language feature, which "
                                     "is not allowed in the current environment";
