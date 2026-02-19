@@ -39,6 +39,23 @@
       },
       "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a678c3_55342ac2",
+        "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T16:36:50Z",
+      "side": 1,
+      "message": "Did it drop the line/column or did you remove it? Seems weird it\u0027s missing?",
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
