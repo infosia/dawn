@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4560a32a_d68480b1",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:53:35Z",
+      "side": 1,
+      "message": "ditto to have an issue for DanglingUntriaged.",
+      "revId": "0ab8ef00688cd2fce0aa658b7e702c2c898d8c24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc77e0b0_f54927b9",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:53:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0ab8ef00688cd2fce0aa658b7e702c2c898d8c24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
