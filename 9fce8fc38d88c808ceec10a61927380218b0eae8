@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5997ef69_fda010da",
+        "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T16:23:46Z",
+      "side": 1,
+      "message": "What additional errors are we missing. After parsing there are potentially still user errors. I know for sure in substitute overrides. Are there others?",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
