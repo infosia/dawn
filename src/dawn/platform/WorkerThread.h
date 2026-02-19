@@ -37,7 +37,6 @@
 
 #include "dawn/common/NonCopyable.h"
 #include "dawn/platform/DawnPlatform.h"
-#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::platform {
 
@@ -57,7 +56,7 @@ class AsyncWaitableEventImpl {
 
 struct AsyncWorkerThreadPoolTask {
     dawn::platform::PostWorkerTaskCallback callback;
-    raw_ptr<void, DanglingUntriaged> userdata;
+    void* userdata;
     std::shared_ptr<AsyncWaitableEventImpl> waitableEventImpl;
 };
 

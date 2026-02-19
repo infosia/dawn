@@ -34,7 +34,6 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Platform.h"
-#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn {
 
@@ -73,7 +72,7 @@ class DynamicLib {
     }
 
   private:
-    raw_ptr<void, DanglingUntriaged> mHandle = nullptr;
+    void* mHandle = nullptr;
     bool mNeedsClose = false;
 };
 

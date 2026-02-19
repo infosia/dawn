@@ -206,7 +206,7 @@ enum class ScopedHistogramTiming { kMicrosecondTimes, kMediumTimes, kLongTimes }
         }                                                                                   \
                                                                                             \
       private:                                                                              \
-        raw_ptr<Platform> platform_;                                                        \
+        Platform* platform_;                                                                \
         double constructed_;                                                                \
     } scoped_histogram_timer_##key(platform)
 
