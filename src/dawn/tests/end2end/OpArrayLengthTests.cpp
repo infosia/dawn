@@ -48,6 +48,12 @@ class OpArrayLengthTest : public DawnTest {
     void SetUp() override {
         DawnTest::SetUp();
 
+        // Will fail with 'VK_ERROR_OUT_OF_DEVICE_MEMORY' due to the maxStorageBufferBindingSize
+        // portion of the test
+        DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
+        DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
+        DAWN_TEST_UNSUPPORTED_IF(IsANGLESwiftShader());
+        DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES());
         // Create buffers of various size to check the length() implementation
         wgpu::BufferDescriptor bufferDesc;
         bufferDesc.size = 4;
@@ -59,6 +65,10 @@ class OpArrayLengthTest : public DawnTest {
 
         bufferDesc.size = 512 + 256;
         mStorageBuffer512 = device.CreateBuffer(&bufferDesc);
+
+        const auto& limits = GetSupportedLimits();
+        bufferDesc.size = (limits.maxStorageBufferBindingSize / 4) * 4;
+        mStorageBufferMax = device.CreateBuffer(&bufferDesc);
 
         // Common shader code to use these buffers in shaders, assuming they are in bindgroup index
         // 0.
@@ -85,10 +95,14 @@ class OpArrayLengthTest : public DawnTest {
                 data : array<Buffer3Data>,
             }
             @group(0) @binding(2) var<storage, read> buffer3 : Buffer3;
+
+            // Length should be max size of storage buffer divided by 4.
+            @group(0) @binding(3) var<storage, read> buffer4 : array<u32>;
         )";
 
         // See comments in the shader for an explanation of these values
-        mExpectedLengths = {1, 64, 56};
+        mExpectedLengths = {1, 64, 56,
+                            static_cast<uint32_t>(limits.maxStorageBufferBindingSize / 4)};
     }
 
     wgpu::BindGroupLayout MakeBindGroupLayout(wgpu::ShaderStage stages) {
@@ -96,7 +110,8 @@ class OpArrayLengthTest : public DawnTest {
         return utils::MakeBindGroupLayout(device,
                                           {{0, stages, wgpu::BufferBindingType::ReadOnlyStorage},
                                            {1, stages, wgpu::BufferBindingType::ReadOnlyStorage},
-                                           {2, stages, wgpu::BufferBindingType::ReadOnlyStorage}});
+                                           {2, stages, wgpu::BufferBindingType::ReadOnlyStorage},
+                                           {3, stages, wgpu::BufferBindingType::ReadOnlyStorage}});
     }
 
     wgpu::BindGroup MakeBindGroup(wgpu::BindGroupLayout bindGroupLayout) {
@@ -105,15 +120,17 @@ class OpArrayLengthTest : public DawnTest {
                                         {0, mStorageBuffer4, 0, 4},
                                         {1, mStorageBuffer256, 0, wgpu::kWholeSize},
                                         {2, mStorageBuffer512, 256, wgpu::kWholeSize},
+                                        {3, mStorageBufferMax, 0, wgpu::kWholeSize},
                                     });
     }
 
     wgpu::Buffer mStorageBuffer4;
     wgpu::Buffer mStorageBuffer256;
     wgpu::Buffer mStorageBuffer512;
+    wgpu::Buffer mStorageBufferMax;
 
     std::string mShaderInterface;
-    std::array<uint32_t, 3> mExpectedLengths;
+    std::array<uint32_t, 4> mExpectedLengths;
 };
 
 // Test OpArrayLength in the compute stage
