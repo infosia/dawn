@@ -2327,6 +2327,14 @@ ResultOrError<Ref<ResourceTableBase>> DeviceBase::CreateResourceTable(
                          descriptor);
     }
 
+    if (descriptor->size > kMaxResourceTableSize) {
+        auto error = DAWN_VALIDATION_ERROR(
+            "Resource table size (%u) is larger than the maximum resource table size (%u)",
+            descriptor->size, kMaxResourceTableSize);
+        EmitLog(wgpu::LoggingType::Error, error->GetFormattedMessage());
+        return nullptr;
+    }
+
     return CreateResourceTableImpl(descriptor);
 }
 
