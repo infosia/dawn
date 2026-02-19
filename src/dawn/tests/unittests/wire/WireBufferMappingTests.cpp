@@ -77,10 +77,6 @@ class WireBufferMappingTests : public WireBufferMappingTestBase {
     void SetUp() override {
         WireBufferMappingTestBase::SetUp();
         apiBuffer = api.GetNewBuffer();
-
-        if (GetParam().mMapMode) {
-            SetupBuffer(GetMapMode());
-        }
     }
 
     void TearDown() override {
@@ -142,6 +138,7 @@ class WireBufferMappingTests : public WireBufferMappingTestBase {
                                const char* expectedMessage,
                                bool calledInCancelFn) {
         wgpu::MapMode mapMode = GetMapMode();
+        SetupBuffer(mapMode);
         MapAsync(mapMode, 0, kBufferSize);
 
         uint32_t bufferContent = 31337;
@@ -185,6 +182,7 @@ class WireBufferMappingTests : public WireBufferMappingTestBase {
                                     const char* expectedMessage,
                                     bool calledInCancelFn) {
         wgpu::MapMode mapMode = GetMapMode();
+        SetupBuffer(mapMode);
         MapAsync(mapMode, 0, kBufferSize);
 
         EXPECT_CALL(
@@ -228,6 +226,7 @@ class WireBufferMappingTests : public WireBufferMappingTestBase {
     template <typename CancelFn, typename ExpFn>
     void TestCancelInCallback(CancelFn cancelMapping, ExpFn addExpectations) {
         wgpu::MapMode mapMode = GetMapMode();
+        SetupBuffer(mapMode);
         MapAsync(mapMode, 0, kBufferSize);
 
         uint32_t bufferContent = 31337;
@@ -272,6 +271,7 @@ DAWN_INSTANTIATE_WIRE_FUTURE_TEST_P(WireBufferMappingTests,
 // Check that things work correctly when a validation error happens when mapping the buffer.
 TEST_P(WireBufferMappingTests, ErrorWhileMapping) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     MapAsync(mapMode, 0, kBufferSize);
 
     EXPECT_CALL(api,
@@ -379,10 +379,6 @@ TEST_P(WireBufferMappingTests, DestroyInsideMapCallback) {
 // Test that the callback isn't fired twice when Release() is called inside the callback with the
 // last ref.
 TEST_P(WireBufferMappingTests, ReleaseInsideMapCallback) {
-    // TODO(dawn:1621): Suppressed because the mapping handling still touches the buffer after it is
-    // destroyed triggering an ASAN error when in MapWrite mode.
-    DAWN_SKIP_TEST_IF(GetMapMode() == wgpu::MapMode::Write);
-
     TestCancelInCallback([&]() { buffer = nullptr; },
                          [&]() { EXPECT_CALL(api, BufferRelease(apiBuffer)); });
 }
@@ -564,13 +560,7 @@ TEST_P(WireBufferMappingWriteTests, MappingErrorWhileAlreadyMapped) {
 }
 
 // Tests specific to mapped at creation.
-class WireBufferMappedAtCreationTests : public WireBufferMappingTests {
-  protected:
-    void SetUp() override {
-        WireBufferMappingTestBase::SetUp();
-        apiBuffer = api.GetNewBuffer();
-    }
-};
+class WireBufferMappedAtCreationTests : public WireBufferMappingTests {};
 
 DAWN_INSTANTIATE_WIRE_FUTURE_TEST_P(WireBufferMappedAtCreationTests);
 
@@ -687,6 +677,48 @@ TEST_P(WireBufferMappedAtCreationTests, MapFailure) {
     FlushClient();
 }
 
+// Tests that releasing a buffer created after the client has already disconnected doesn't crash.
+// This is a regression test for crbug.com/479440916.
+TEST_F(WireBufferMappedAtCreationTests, DisconnectThenCreateRelease) {
+    GetWireClient()->Disconnect();
+
+    wgpu::BufferDescriptor descriptor = {};
+    descriptor.size = kBufferSize;
+    descriptor.mappedAtCreation = true;
+
+    buffer = device.CreateBuffer(&descriptor);
+    buffer = nullptr;
+    FlushClient();
+}
+
+// Tests that destroying a buffer created after the client has already disconnected doesn't crash.
+// This is a regression test for crbug.com/479440916.
+TEST_F(WireBufferMappedAtCreationTests, DisconnectThenCreateDestroy) {
+    GetWireClient()->Disconnect();
+
+    wgpu::BufferDescriptor descriptor = {};
+    descriptor.size = kBufferSize;
+    descriptor.mappedAtCreation = true;
+
+    buffer = device.CreateBuffer(&descriptor);
+    buffer.Destroy();
+    FlushClient();
+}
+
+// Tests that unmapping a buffer created after the client has already disconnected doesn't crash.
+// This is a regression test for crbug.com/479440916.
+TEST_F(WireBufferMappedAtCreationTests, DisconnectThenCreateUnmap) {
+    GetWireClient()->Disconnect();
+
+    wgpu::BufferDescriptor descriptor = {};
+    descriptor.size = kBufferSize;
+    descriptor.mappedAtCreation = true;
+
+    buffer = device.CreateBuffer(&descriptor);
+    buffer.Unmap();
+    FlushClient();
+}
+
 // Check that trying to create a buffer of size MAX_SIZE_T won't get OOM error at the client side.
 TEST_F(WireBufferMappingTests, MaxSizeMappableBufferOOMDirectly) {
     size_t kOOMSize = std::numeric_limits<size_t>::max();
@@ -731,6 +763,7 @@ TEST_F(WireBufferMappingTests, MaxSizeMappableBufferOOMDirectly) {
 // CallbackCancelled.
 TEST_P(WireBufferMappingTests, MapThenDisconnect) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     MapAsync(mapMode, 0, kBufferSize);
 
     uint32_t bufferContent = 0;
@@ -754,6 +787,7 @@ TEST_P(WireBufferMappingTests, MapThenDisconnect) {
 // CallbackCancelled.
 TEST_P(WireBufferMappingTests, MapAfterDisconnect) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     GetWireClient()->Disconnect();
 
     ExpectWireCallbacksWhen([&](auto& mockCb) {
@@ -766,6 +800,7 @@ TEST_P(WireBufferMappingTests, MapAfterDisconnect) {
 // Test that mapping again while pending map cause an error on the callback.
 TEST_P(WireBufferMappingTests, PendingMapImmediateError) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     MapAsync(mapMode, 0, kBufferSize);
 
     // Calls for the first successful map.
@@ -815,6 +850,7 @@ TEST_P(WireBufferMappingTests, PendingMapImmediateError) {
 // Test that GetMapState() returns map state as expected
 TEST_P(WireBufferMappingTests, GetMapState) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     uint32_t bufferContent = 31337;
 
     // Server-side success case
@@ -897,6 +933,7 @@ TEST_P(WireBufferMappingTests, GetMapState) {
 // Test that requests inside user callbacks before disconnect are called.
 TEST_P(WireBufferMappingTests, MapInsideCallbackBeforeDisconnect) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     MapAsync(mapMode, 0, kBufferSize);
 
     uint32_t bufferContent = 0;
@@ -928,6 +965,7 @@ TEST_P(WireBufferMappingTests, MapInsideCallbackBeforeDisconnect) {
 // Test that requests inside user callbacks before buffer destroy are called.
 TEST_P(WireBufferMappingTests, MapInsideCallbackBeforeDestroy) {
     wgpu::MapMode mapMode = GetMapMode();
+    SetupBuffer(mapMode);
     MapAsync(mapMode, 0, kBufferSize);
 
     uint32_t bufferContent = 0;
