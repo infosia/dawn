@@ -39,7 +39,6 @@
 #include "dawn/common/RefCounted.h"
 #include "dawn/common/egl_platform.h"
 #include "dawn/native/opengl/EGLFunctions.h"
-
 #include "partition_alloc/pointers/raw_ref.h"
 
 namespace dawn::native::opengl {
