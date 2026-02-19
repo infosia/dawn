@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
+#include <array>
 #include <functional>
 #include <limits>
 #include <string>
@@ -36,6 +37,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "partition_alloc/pointers/raw_ref.h"
 
 namespace dawn {
 namespace {
@@ -1038,22 +1040,22 @@ class MaxInterStageShaderVariablesLimitTests : public MaxLimitTests {
                                          const MaxInterStageLimitTestsSpec& spec) {
         std::stringstream stream;
         struct BoolTypeName {
-            const bool& value;
+            raw_ref<const bool> value;
             const char* type;
             const char* name;
         };
         BoolTypeName builtins[] = {
-            {spec.hasFrontFacing, "bool", "front_facing"},
-            {spec.hasSampleIndex, "u32", "sample_index"},
-            {spec.hasSampleMask, "u32", "sample_mask"},
-            {spec.hasPrimitiveIndex, "u32", "primitive_index"},
-            {spec.hasSubgroupInvocationId, "u32", "subgroup_invocation_id"},
-            {spec.hasSubgroupSize, "u32", "subgroup_size"},
+            {raw_ref(spec.hasFrontFacing), "bool", "front_facing"},
+            {raw_ref(spec.hasSampleIndex), "u32", "sample_index"},
+            {raw_ref(spec.hasSampleMask), "u32", "sample_mask"},
+            {raw_ref(spec.hasPrimitiveIndex), "u32", "primitive_index"},
+            {raw_ref(spec.hasSubgroupInvocationId), "u32", "subgroup_invocation_id"},
+            {raw_ref(spec.hasSubgroupSize), "u32", "subgroup_size"},
         };
 
         stream << "@fragment fn fs_main(input: FragmentInput";
         for (const auto& builtin : builtins) {
-            if (builtin.value) {
+            if (builtin.value.get()) {
                 stream << ",\n  @builtin(" << builtin.name << ") b_" << builtin.name << " : "
                        << builtin.type;
             }
@@ -1062,7 +1064,7 @@ class MaxInterStageShaderVariablesLimitTests : public MaxLimitTests {
         // optimized out..
         stream << ") -> @location(0) vec4f {\nreturn input.pos";
         for (const auto& builtin : builtins) {
-            if (builtin.value) {
+            if (builtin.value.get()) {
                 stream << "\n   + vec4f(f32(b_" << builtin.name << "), 0, 0, 1)";
             }
         }
