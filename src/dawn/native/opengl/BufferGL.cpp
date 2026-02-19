@@ -204,20 +204,19 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    if (GetDevice()->IsToggleEnabled(Toggle::GLDefer)) {
+    auto device = ToBackend(GetDevice());
+    if (device->IsToggleEnabled(Toggle::GLDefer)) {
         mCPUStaging.resize(GetSize());
         mMappedData = mCPUStaging.data();
         return {};
     }
-    auto device = ToBackend(GetDevice());
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, device->GetContext()->MakeCurrent());
-
-    const OpenGLFunctions& gl = device->GetGL();
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
-    mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-        gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
-    return {};
+    return device->ExecuteGL(
+        ExecutionQueueBase::SubmitMode::Normal, [this](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
+            mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
+            return {};
+        });
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {

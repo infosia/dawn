@@ -142,6 +142,22 @@ class Device final : public DeviceBase {
         return EnqueueGL(ExecutionQueueBase::SubmitMode::Normal, std::forward<Fn>(work));
     }
 
+    template <typename Fn>
+    MaybeError EnqueueVectorDataGL(const void* data, size_t size, Fn work) {
+        if (IsToggleEnabled(Toggle::GLDefer)) {
+            // call is deferred; must copy data
+            auto* d = static_cast<const char*>(data);
+            return EnqueueGL([data = std::vector<char>(d, d + size),
+                              work](const OpenGLFunctions& gl) -> MaybeError {
+                return work(gl, data.data(), data.size());
+            });
+        } else {
+            return EnqueueGL([data, size, work](const OpenGLFunctions& gl) -> MaybeError {
+                return work(gl, data, size);
+            });
+        }
+    }
+
     // Flush any pending GL commands enqueued via EnqueueGL().
     MaybeError FlushPendingGLCommands();
 
