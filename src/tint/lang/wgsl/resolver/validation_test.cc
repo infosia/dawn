@@ -73,61 +73,63 @@ class FakeExpr final : public Castable<FakeExpr, ast::Expression> {
 };
 
 TEST_F(ResolverValidationTest, WorkgroupMemoryUsedInVertexStage) {
-    GlobalVar(Source{{1, 2}}, "wg", ty.vec4<f32>(), core::AddressSpace::kWorkgroup);
-    GlobalVar("dst", ty.vec4<f32>(), core::AddressSpace::kPrivate);
-    auto* stmt = Assign(Expr("dst"), Expr(Source{{3, 4}}, "wg"));
+    ExpectError(
+        R"(
+var<workgroup> wg: vec4<f32>;
 
-    Func(Source{{9, 10}}, "f0", tint::Empty, ty.vec4<f32>(),
-         Vector{
-             stmt,
-             Return(Expr("dst")),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kVertex),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kPosition),
-         });
+@vertex
+fn f0() -> @builtin(position) vec4f {
+  return wg;
+}
+)",
+        R"(
+input.wgsl:6:10 error: var with 'workgroup' address space cannot be used by vertex pipeline stage
+  return wg;
+         ^^
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(3:4 error: var with 'workgroup' address space cannot be used by vertex pipeline stage
-1:2 note: variable is declared here)");
+input.wgsl:2:1 note: variable is declared here
+var<workgroup> wg: vec4<f32>;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)");
 }
 
 TEST_F(ResolverValidationTest, WorkgroupMemoryUsedInFragmentStage) {
-    // var<workgroup> wg : vec4<f32>;
-    // var<workgroup> dst : vec4<f32>;
-    // fn f2(){ dst = wg; }
-    // fn f1() { f2(); }
-    // @fragment
-    // fn f0() {
-    //  f1();
-    //}
+    ExpectError(
+        R"(
+var<workgroup> wg: vec4<f32>;
+var<workgroup> dst: vec4<f32>;
+fn f2() { dst = wg; }
+fn f1() { f2(); }
+@fragment
+fn f0() {
+ f1();
+}
+)",
+        R"(
+input.wgsl:4:11 error: var with 'workgroup' address space cannot be used by fragment pipeline stage
+fn f2() { dst = wg; }
+          ^^^
 
-    GlobalVar(Source{{1, 2}}, "wg", ty.vec4<f32>(), core::AddressSpace::kWorkgroup);
-    GlobalVar("dst", ty.vec4<f32>(), core::AddressSpace::kPrivate);
-    auto* stmt = Assign(Expr("dst"), Expr(Source{{3, 4}}, "wg"));
+input.wgsl:3:1 note: variable is declared here
+var<workgroup> dst: vec4<f32>;
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Func(Source{{5, 6}}, "f2", tint::Empty, ty.void_(), Vector{stmt});
-    Func(Source{{7, 8}}, "f1", tint::Empty, ty.void_(),
-         Vector{
-             CallStmt(Call("f2")),
-         });
-    Func(Source{{9, 10}}, "f0", tint::Empty, ty.void_(), Vector{CallStmt(Call("f1"))},
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
+input.wgsl:4:1 note: called by function 'f2'
+fn f2() { dst = wg; }
+^^^^^^^^^^^^^^^^^^^^^
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(3:4 error: var with 'workgroup' address space cannot be used by fragment pipeline stage
-1:2 note: variable is declared here
-5:6 note: called by function 'f2'
-7:8 note: called by function 'f1'
-9:10 note: called by entry point 'f0')");
+input.wgsl:5:1 note: called by function 'f1'
+fn f1() { f2(); }
+^^^^^^^^^^^^^^^^^
+
+input.wgsl:7:1 note: called by entry point 'f0'
+fn f0() {
+^^^^^^^^^
+ f1();
+^^^^^^
+}
+^
+)");
 }
 
 TEST_F(ResolverValidationTest, RWStorageBufferUsedInVertexStage) {
