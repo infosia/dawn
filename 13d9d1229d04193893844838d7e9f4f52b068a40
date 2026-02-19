@@ -424,6 +424,24 @@
       "parentUuid": "b45ba1d9_d630682d",
       "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cac54c4b_347077c7",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T18:23:13Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "09a7a54d_98e4a0cf",
+      "revId": "13d9d1229d04193893844838d7e9f4f52b068a40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
