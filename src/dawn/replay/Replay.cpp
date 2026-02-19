@@ -118,6 +118,10 @@ template wgpu::RenderPipeline Replay::GetObjectByLabel<wgpu::RenderPipeline>(
 template wgpu::Sampler Replay::GetObjectByLabel<wgpu::Sampler>(std::string_view label) const;
 template wgpu::ShaderModule Replay::GetObjectByLabel<wgpu::ShaderModule>(
     std::string_view label) const;
+template wgpu::SharedFence Replay::GetObjectByLabel<wgpu::SharedFence>(
+    std::string_view label) const;
+template wgpu::SharedTextureMemory Replay::GetObjectByLabel<wgpu::SharedTextureMemory>(
+    std::string_view label) const;
 template wgpu::Texture Replay::GetObjectByLabel<wgpu::Texture>(std::string_view label) const;
 template wgpu::ExternalTexture Replay::GetObjectByLabel<wgpu::ExternalTexture>(
     std::string_view label) const;
@@ -1097,7 +1101,47 @@ ResultOrError<wgpu::ShaderModule> CreateShaderModule(wgpu::Device device,
     return {shaderModule};
 }
 
-ResultOrError<wgpu::Texture> CreateTexture(wgpu::Device device,
+ResultOrError<wgpu::SharedFence> CreateSharedFence(const ReplayImpl& replay,
+                                                   wgpu::Device device,
+                                                   ReadHead& readHead,
+                                                   const std::string& label) {
+    schema::SharedFence fence;
+    DAWN_TRY(Deserialize(readHead, &fence));
+
+    if (fence.type == wgpu::SharedFenceType::MTLSharedEvent) {
+        wgpu::SharedFenceMTLSharedEventDescriptor mtlDesc;
+        mtlDesc.sharedEvent = reinterpret_cast<void*>(fence.handle);
+
+        wgpu::SharedFenceDescriptor desc;
+        desc.nextInChain = &mtlDesc;
+        desc.label = wgpu::StringView(label);
+        return device.ImportSharedFence(&desc);
+    }
+
+    return DAWN_INTERNAL_ERROR("CreateSharedFence not fully implemented for this type");
+}
+
+ResultOrError<wgpu::SharedTextureMemory> CreateSharedTextureMemory(const ReplayImpl& replay,
+                                                                   wgpu::Device device,
+                                                                   ReadHead& readHead,
+                                                                   const std::string& label) {
+    schema::SharedTextureMemory stm;
+    DAWN_TRY(Deserialize(readHead, &stm));
+
+    // For now we only handle IOSurface as it is used in tests on macOS.
+    wgpu::SharedTextureMemoryIOSurfaceDescriptor ioSurfaceDesc;
+    ioSurfaceDesc.ioSurface = reinterpret_cast<void*>(stm.handle);
+    ioSurfaceDesc.allowStorageBinding = stm.allowStorageBinding;
+
+    wgpu::SharedTextureMemoryDescriptor desc;
+    desc.nextInChain = &ioSurfaceDesc;
+    desc.label = wgpu::StringView(label);
+
+    return device.ImportSharedTextureMemory(&desc);
+}
+
+ResultOrError<wgpu::Texture> CreateTexture(const ReplayImpl& replay,
+                                           wgpu::Device device,
                                            ReadHead& readHead,
                                            const std::string& label) {
     schema::Texture tex;
@@ -1116,9 +1160,17 @@ ResultOrError<wgpu::Texture> CreateTexture(wgpu::Device device,
         .format = tex.format,
         .mipLevelCount = tex.mipLevelCount,
         .sampleCount = tex.sampleCount,
-        .viewFormatCount = tex.viewFormats.size(),
+        .viewFormatCount = static_cast<uint32_t>(tex.viewFormats.size()),
         .viewFormats = tex.viewFormats.data(),
     };
+
+    if (tex.memoryId != 0) {
+        wgpu::SharedTextureMemory memory =
+            replay.GetObjectById<wgpu::SharedTextureMemory>(tex.memoryId);
+        wgpu::Texture texture = memory.CreateTexture(&desc);
+        return {texture};
+    }
+
     wgpu::Texture texture = device.CreateTexture(&desc);
     return {texture};
 }
@@ -1562,9 +1614,25 @@ MaybeError ReplayImpl::CreateResource(wgpu::Device device, ReadHead& readHead) {
             return {};
         }
 
+        case schema::ObjectType::SharedFence: {
+            wgpu::SharedFence sharedFence;
+            DAWN_TRY_ASSIGN(sharedFence,
+                            CreateSharedFence(*this, device, readHead, resource.label));
+            AddResource(resource.id, resource.label, sharedFence);
+            return {};
+        }
+
+        case schema::ObjectType::SharedTextureMemory: {
+            wgpu::SharedTextureMemory sharedTextureMemory;
+            DAWN_TRY_ASSIGN(sharedTextureMemory,
+                            CreateSharedTextureMemory(*this, device, readHead, resource.label));
+            AddResource(resource.id, resource.label, sharedTextureMemory);
+            return {};
+        }
+
         case schema::ObjectType::Texture: {
             wgpu::Texture texture;
-            DAWN_TRY_ASSIGN(texture, CreateTexture(device, readHead, resource.label));
+            DAWN_TRY_ASSIGN(texture, CreateTexture(*this, device, readHead, resource.label));
             AddResource(resource.id, resource.label, texture);
             return {};
         }
@@ -1683,6 +1751,41 @@ MaybeError ReplayImpl::Play() {
                 DAWN_TRY(Deserialize(readHead, &data));
                 DAWN_TRY(InitializeTexture(*this, mBlitBufferToDepthTexture, contentReadHead,
                                            mDevice, data));
+                break;
+            }
+            case schema::RootCommand::SharedTextureMemoryBeginAccess: {
+                schema::RootCommandSharedTextureMemoryBeginAccessCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+
+                wgpu::SharedTextureMemory memory =
+                    GetObjectById<wgpu::SharedTextureMemory>(data.memoryId);
+                wgpu::Texture texture = GetObjectById<wgpu::Texture>(data.textureId);
+
+                std::vector<wgpu::SharedFence> fences;
+                for (auto fenceId : data.fenceIds) {
+                    fences.push_back(GetObjectById<wgpu::SharedFence>(fenceId));
+                }
+
+                wgpu::SharedTextureMemoryBeginAccessDescriptor desc{
+                    .concurrentRead = data.concurrentRead,
+                    .initialized = data.initialized,
+                    .fenceCount = fences.size(),
+                    .fences = fences.data(),
+                    .signaledValues = data.signaledValues.data(),
+                };
+                memory.BeginAccess(texture, &desc);
+                break;
+            }
+            case schema::RootCommand::SharedTextureMemoryEndAccess: {
+                schema::RootCommandSharedTextureMemoryEndAccessCmdData data;
+                DAWN_TRY(Deserialize(readHead, &data));
+
+                wgpu::SharedTextureMemory memory =
+                    GetObjectById<wgpu::SharedTextureMemory>(data.memoryId);
+                wgpu::Texture texture = GetObjectById<wgpu::Texture>(data.textureId);
+
+                wgpu::SharedTextureMemoryEndAccessState state;
+                memory.EndAccess(texture, &state);
                 break;
             }
             default: {

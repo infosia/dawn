@@ -150,6 +150,12 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
         return DAWN_INTERNAL_ERROR("sharedTextureMemoryBeginAccess failed");
     }
 
+    Queue* q = ToBackend(GetDevice()->GetQueue());
+    if (q->IsCapturing()) {
+        DAWN_TRY(q->GetCaptureContext()->CaptureSharedTextureMemoryBeginAccess(this, texture,
+                                                                               descriptor));
+    }
+
     return {};
 }
 
@@ -178,6 +184,11 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
 
     if (auto* mtlEndStateChain = state.Get<SharedTextureMemoryMetalEndAccessState>()) {
         mtlEndStateChain->commandsScheduledFuture = {mtlEndState.commandsScheduledFuture.id};
+    }
+
+    Queue* q = ToBackend(GetDevice()->GetQueue());
+    if (q->IsCapturing()) {
+        DAWN_TRY(q->GetCaptureContext()->CaptureSharedTextureMemoryEndAccess(this, texture, state));
     }
 
     // TODO(451310574): Handle multiple fences returned from innerState.
@@ -226,14 +237,14 @@ MaybeError SharedTextureMemory::AddReferenced(CaptureContext& captureContext) {
 }
 
 MaybeError SharedTextureMemory::CaptureCreationParameters(CaptureContext& captureContext) {
-    // schema::SharedTextureMemory data{{
-    //     .usage = GetUsage(),
-    //     .size = {{GetSize().width, GetSize().height, GetSize().depthOrArrayLayers}},
-    //     .format = GetFormat(),
-    //     .handle = reinterpret_cast<uint64_t>(mSharedResourceHandle),
-    //     .allowStorageBinding = mIOSurfaceDesc.allowStorageBinding,
-    // }};
-    // Serialize(captureContext, data);
+    schema::SharedTextureMemory data{{
+        .usage = GetUsage(),
+        .size = {{GetSize().width, GetSize().height, GetSize().depthOrArrayLayers}},
+        .format = GetFormat(),
+        .handle = reinterpret_cast<uint64_t>(mSharedResourceHandle),
+        .allowStorageBinding = mIOSurfaceDesc.allowStorageBinding,
+    }};
+    Serialize(captureContext, data);
     return {};
 }
 

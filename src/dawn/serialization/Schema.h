@@ -216,15 +216,17 @@ DAWN_REPLAY_COMMAND_BUFFER_COMMANDS_ENUM(DAWN_REPLAY_ENUM)
 
 DAWN_REPLAY_EXPAND_RESOLVE_MODES_ENUM(DAWN_REPLAY_ENUM)
 
-#define DAWN_REPLAY_ROOT_COMMANDS(X) \
-    X(Invalid, 0)                    \
-    X(CreateResource)                \
-    X(QueueSubmit)                   \
-    X(WriteBuffer)                   \
-    X(WriteTexture)                  \
-    X(UnmapBuffer)                   \
-    X(SetLabel)                      \
-    X(InitTexture)                   \
+#define DAWN_REPLAY_ROOT_COMMANDS(X)  \
+    X(Invalid, 0)                     \
+    X(CreateResource)                 \
+    X(QueueSubmit)                    \
+    X(WriteBuffer)                    \
+    X(WriteTexture)                   \
+    X(UnmapBuffer)                    \
+    X(SetLabel)                       \
+    X(InitTexture)                    \
+    X(SharedTextureMemoryBeginAccess) \
+    X(SharedTextureMemoryEndAccess)   \
     X(End)
 
 #define DAWN_REPLAY_ROOT_COMMANDS_ENUM(X) X(RootCommand, DAWN_REPLAY_ROOT_COMMANDS)
@@ -465,14 +467,15 @@ DAWN_REPLAY_SERIALIZABLE(struct, Sampler, SAMPLER_CREATION_MEMBER){};
 
 DAWN_REPLAY_SERIALIZABLE(struct, RenderBundle, RENDER_BUNDLE_CREATION_MEMBER){};
 
-#define TEXTURE_CREATION_MEMBER(X)       \
-    X(wgpu::TextureUsage, usage)         \
-    X(wgpu::TextureDimension, dimension) \
-    X(Extent3D, size)                    \
-    X(wgpu::TextureFormat, format)       \
-    X(uint32_t, mipLevelCount)           \
-    X(uint32_t, sampleCount)             \
-    X(std::vector<wgpu::TextureFormat>, viewFormats)
+#define TEXTURE_CREATION_MEMBER(X)                   \
+    X(wgpu::TextureUsage, usage)                     \
+    X(wgpu::TextureDimension, dimension)             \
+    X(Extent3D, size)                                \
+    X(wgpu::TextureFormat, format)                   \
+    X(uint32_t, mipLevelCount)                       \
+    X(uint32_t, sampleCount)                         \
+    X(std::vector<wgpu::TextureFormat>, viewFormats) \
+    X(ObjectId, memoryId)
 
 DAWN_REPLAY_SERIALIZABLE(struct, Texture, TEXTURE_CREATION_MEMBER){};
 
@@ -530,6 +533,21 @@ DAWN_REPLAY_SERIALIZABLE(struct, ShaderModule, SHADER_MODULE_CREATION_MEMBER){};
     X(ProgrammableStage, compute)
 
 DAWN_REPLAY_SERIALIZABLE(struct, ComputePipeline, COMPUTE_PIPELINE_CREATION_MEMBER){};
+
+#define SHARED_TEXTURE_MEMORY_CREATION_MEMBER(X) \
+    X(wgpu::TextureUsage, usage)                 \
+    X(Extent3D, size)                            \
+    X(wgpu::TextureFormat, format)               \
+    X(uint64_t, handle)                          \
+    X(bool, allowStorageBinding)
+
+DAWN_REPLAY_SERIALIZABLE(struct, SharedTextureMemory, SHARED_TEXTURE_MEMORY_CREATION_MEMBER){};
+
+#define SHARED_FENCE_CREATION_MEMBER(X) \
+    X(wgpu::SharedFenceType, type)      \
+    X(uint64_t, handle)
+
+DAWN_REPLAY_SERIALIZABLE(struct, SharedFence, SHARED_FENCE_CREATION_MEMBER){};
 
 #define RENDER_PIPELINE_CREATION_MEMBER(X) \
     X(ObjectId, layoutId)                  \
@@ -691,6 +709,25 @@ DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(WriteTexture, WRITE_TEXTURE_CMD_DATA_MEMB
     X(uint64_t, dataSize)
 
 DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(InitTexture, INIT_TEXTURE_CMD_DATA_MEMBER){};
+
+#define SHARED_TEXTURE_MEMORY_BEGIN_ACCESS_CMD_DATA_MEMBER(X) \
+    X(ObjectId, memoryId)                                     \
+    X(ObjectId, textureId)                                    \
+    X(bool, concurrentRead)                                   \
+    X(bool, initialized)                                      \
+    X(std::vector<ObjectId>, fenceIds)                        \
+    X(std::vector<uint64_t>, signaledValues)
+
+DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(SharedTextureMemoryBeginAccess,
+                                       SHARED_TEXTURE_MEMORY_BEGIN_ACCESS_CMD_DATA_MEMBER){};
+
+#define SHARED_TEXTURE_MEMORY_END_ACCESS_CMD_DATA_MEMBER(X) \
+    X(ObjectId, memoryId)                                   \
+    X(ObjectId, textureId)                                  \
+    X(bool, initialized)
+
+DAWN_REPLAY_MAKE_ROOT_CMD_AND_CMD_DATA(SharedTextureMemoryEndAccess,
+                                       SHARED_TEXTURE_MEMORY_END_ACCESS_CMD_DATA_MEMBER){};
 
 #define QUEUE_SUBMIT_CMD_DATA_MEMBER(X) X(std::vector<ObjectId>, commandBuffers)
 

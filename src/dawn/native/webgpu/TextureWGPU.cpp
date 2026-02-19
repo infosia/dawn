@@ -185,6 +185,16 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         viewFormats.emplace_back(viewFormat.format);
     }
 
+    schema::ObjectId memoryId = 0;
+    if (mSharedResourceMemoryContents != nullptr) {
+        auto sharedResourceMemory =
+            mSharedResourceMemoryContents->GetSharedResourceMemory().Promote();
+        if (sharedResourceMemory != nullptr) {
+            memoryId = captureContext.GetId(
+                ToBackend(static_cast<SharedTextureMemoryBase*>(sharedResourceMemory.Get())));
+        }
+    }
+
     schema::Texture tex{{
         .usage = GetUsage(),
         .dimension = GetDimension(),
@@ -193,6 +203,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         .mipLevelCount = GetNumMipLevels(),
         .sampleCount = GetSampleCount(),
         .viewFormats = viewFormats,
+        .memoryId = memoryId,
     }};
     Serialize(captureContext, tex);
     return {};

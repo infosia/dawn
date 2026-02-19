@@ -118,13 +118,13 @@ MaybeError SharedFence::AddReferenced(CaptureContext& captureContext) {
 }
 
 MaybeError SharedFence::CaptureCreationParameters(CaptureContext& captureContext) {
-    // SharedFenceExportInfo info;
-    // DAWN_TRY(ExportInfo(&info));
-    // schema::SharedFence data{{
-    //     .type = info.type,
-    //     .handle = reinterpret_cast<uint64_t>(mSharedResourceHandle),
-    // }};
-    // Serialize(captureContext, data);
+    SharedFenceExportInfo info;
+    DAWN_TRY(ExportInfo(&info));
+    schema::SharedFence data{{
+        .type = info.type,
+        .handle = reinterpret_cast<uint64_t>(mSharedResourceHandle),
+    }};
+    Serialize(captureContext, data);
     return {};
 }
 
