@@ -44,6 +44,7 @@
 #include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
+#include "partition_alloc/pointers/raw_ref.h"
 #include "src/dawn/common/StackAllocated.h"
 #include "src/dawn/replay/ReplayImpl.h"
 
@@ -796,13 +797,13 @@ ResultOrError<wgpu::QuerySet> CreateResource(const DawnRootCommandVisitor& repla
 
 template <typename Base, typename Pass>
 struct DawnCommandVisitor : Base {
-    const DawnRootCommandVisitor& replay;
+    const raw_ref<const DawnRootCommandVisitor> replay;
     Pass pass;
 
     DawnCommandVisitor(const DawnRootCommandVisitor& r, Pass p) : replay(r), pass(p) {}
 
     MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) override {
-        pass.SetBindGroup(data.index, replay.GetObjectById<wgpu::BindGroup>(data.bindGroupId),
+        pass.SetBindGroup(data.index, replay->GetObjectById<wgpu::BindGroup>(data.bindGroupId),
                           data.dynamicOffsets.size(), data.dynamicOffsets.data());
         return {};
     }
@@ -837,19 +838,19 @@ struct DawnRenderVisitor : DawnCommandVisitor<Base, Pass> {
 
     MaybeError operator()(
         const schema::CommandBufferCommandSetRenderPipelineCmdData& data) override {
-        pass.SetPipeline(replay.template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
+        pass.SetPipeline(replay->template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandSetVertexBufferCmdData& data) override {
-        pass.SetVertexBuffer(data.slot, replay.template GetObjectById<wgpu::Buffer>(data.bufferId),
+        pass.SetVertexBuffer(data.slot, replay->template GetObjectById<wgpu::Buffer>(data.bufferId),
                              data.offset, data.size);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandSetIndexBufferCmdData& data) override {
-        pass.SetIndexBuffer(replay.template GetObjectById<wgpu::Buffer>(data.bufferId), data.format,
-                            data.offset, data.size);
+        pass.SetIndexBuffer(replay->template GetObjectById<wgpu::Buffer>(data.bufferId),
+                            data.format, data.offset, data.size);
         return {};
     }
 
@@ -865,15 +866,16 @@ struct DawnRenderVisitor : DawnCommandVisitor<Base, Pass> {
     }
 
     MaybeError operator()(const schema::CommandBufferCommandDrawIndirectCmdData& data) override {
-        pass.DrawIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+        pass.DrawIndirect(replay->template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
                           data.indirectOffset);
         return {};
     }
 
     MaybeError operator()(
         const schema::CommandBufferCommandDrawIndexedIndirectCmdData& data) override {
-        pass.DrawIndexedIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
-                                 data.indirectOffset);
+        pass.DrawIndexedIndirect(
+            replay->template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+            data.indirectOffset);
         return {};
     }
 };
@@ -1126,7 +1128,7 @@ struct DawnComputePassVisitor : DawnCommandVisitor<ComputePassVisitor, wgpu::Com
 
     MaybeError operator()(
         const schema::CommandBufferCommandSetComputePipelineCmdData& data) override {
-        pass.SetPipeline(replay.GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
+        pass.SetPipeline(replay->GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
         return {};
     }
 
@@ -1137,13 +1139,14 @@ struct DawnComputePassVisitor : DawnCommandVisitor<ComputePassVisitor, wgpu::Com
 
     MaybeError operator()(
         const schema::CommandBufferCommandDispatchIndirectCmdData& data) override {
-        pass.DispatchWorkgroupsIndirect(replay.GetObjectById<wgpu::Buffer>(data.bufferId),
+        pass.DispatchWorkgroupsIndirect(replay->GetObjectById<wgpu::Buffer>(data.bufferId),
                                         data.offset);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) override {
-        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        pass.WriteTimestamp(replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                            data.queryIndex);
         return {};
     }
 
@@ -1159,7 +1162,7 @@ struct DawnRenderPassVisitor : DawnRenderVisitor<RenderPassVisitor, wgpu::Render
     MaybeError operator()(const schema::CommandBufferCommandExecuteBundlesCmdData& data) override {
         std::vector<wgpu::RenderBundle> bundles;
         for (auto bundleId : data.bundleIds) {
-            bundles.push_back(replay.GetObjectById<wgpu::RenderBundle>(bundleId));
+            bundles.push_back(replay->GetObjectById<wgpu::RenderBundle>(bundleId));
         }
         pass.ExecuteBundles(bundles.size(), bundles.data());
         return {};
@@ -1201,7 +1204,8 @@ struct DawnRenderPassVisitor : DawnRenderVisitor<RenderPassVisitor, wgpu::Render
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) override {
-        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        pass.WriteTimestamp(replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                            data.queryIndex);
         return {};
     }
 
@@ -1211,7 +1215,7 @@ struct DawnRenderPassVisitor : DawnRenderVisitor<RenderPassVisitor, wgpu::Render
     }
 };
 
-struct DawnEncoderVisitor : EncoderVisitor {
+struct DawnEncoderVisitor : EncoderVisitor, StackAllocated {
     const DawnRootCommandVisitor& replay;
     wgpu::CommandEncoder pass;
     wgpu::Device device;
