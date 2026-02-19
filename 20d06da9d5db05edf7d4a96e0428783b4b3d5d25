@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec4674c2_c0421e33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-02-19T18:59:21Z",
+      "side": 1,
+      "message": "Obligatory cargo culting follow up",
+      "revId": "20d06da9d5db05edf7d4a96e0428783b4b3d5d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
