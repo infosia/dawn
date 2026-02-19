@@ -33,6 +33,29 @@
       "message": "Is it expected that `raw_ref` would require the use of `-\u003e`? It\u0027s a bit weird given it is supposed to be a ref. What\u0027s the use of `raw_ref` compared to `raw_ptr` in that case?",
       "revId": "a7e0f14e7acf55b134e9f22022855f1c645d95ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f1013e2_f06d81da",
+        "filename": "src/dawn/native/opengl/DisplayEGL.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-19T14:52:09Z",
+      "side": 1,
+      "message": "I can remove this and add `const EGLFunctions\u0026 GetEGL() { return mFunctions; }` if you believe this is better than this `-\u003eegl-\u003eget()`.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "a7e0f14e7acf55b134e9f22022855f1c645d95ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
