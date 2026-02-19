@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cb84060_173e4a08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-19T14:13:29Z",
+      "side": 1,
+      "message": "Hi @cwallez@chromium.org,\nCould you please take a look?\n\nI will have to wait for a MiraclePtr refresh to land before landing this:\n- [MiraclePtr: OpenGL](https://dawn-review.googlesource.com/c/291959)\n- [MiraclePtr: WebGPU and remaining native core](https://dawn-review.googlesource.com/c/291962)\n- [MiraclePtr: isolated native core](https://dawn-review.googlesource.com/c/291961)\n- [MiraclePtr: common and platform](https://dawn-review.googlesource.com/c/291958)\n- [MiraclePtr: D3D and D3D12](https://dawn-review.googlesource.com/c/291960)\n- [MiraclePtr: tests](https://dawn-review.googlesource.com/c/291963)\n\n\nIf you are interested. Happy to get a code review now.",
+      "revId": "18a01e542400380cd3f4643a602031c280ec8ce1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
