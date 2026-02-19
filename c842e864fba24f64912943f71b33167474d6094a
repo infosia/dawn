@@ -39,6 +39,30 @@
       },
       "revId": "c842e864fba24f64912943f71b33167474d6094a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a504385c_728da725",
+        "filename": "test/tint/validation/extensions/atomic_vec2u_min_max/atomic_vec2u_min_max_missing_extension.error.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T03:13:46Z",
+      "side": 1,
+      "message": "In theory we could try to create a --generate-validation to update them but I haven\u0027t done it yet.\n\nI don\u0027t really see these changing too terribly often at this point, so I think this would be ok. It also means we can see exactly what it will say and how it matches up to the code below.",
+      "parentUuid": "8f0c2137_d6a6123e",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "c842e864fba24f64912943f71b33167474d6094a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
