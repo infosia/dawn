@@ -16,6 +16,57 @@
       "message": "Hi @cwallez@chromium.org,\nCould you please take a look?\n\nI will have to wait for a MiraclePtr refresh to land before landing this:\n- [MiraclePtr: OpenGL](https://dawn-review.googlesource.com/c/291959)\n- [MiraclePtr: WebGPU and remaining native core](https://dawn-review.googlesource.com/c/291962)\n- [MiraclePtr: isolated native core](https://dawn-review.googlesource.com/c/291961)\n- [MiraclePtr: common and platform](https://dawn-review.googlesource.com/c/291958)\n- [MiraclePtr: D3D and D3D12](https://dawn-review.googlesource.com/c/291960)\n- [MiraclePtr: tests](https://dawn-review.googlesource.com/c/291963)\n\n\nIf you are interested. Happy to get a code review now.",
       "revId": "18a01e542400380cd3f4643a602031c280ec8ce1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29beb030_08509970",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:48:14Z",
+      "side": 1,
+      "message": "Could we have a link to the place where the plugin flags are defined? Just in case we need to find the plugin\u0027s code in the future.",
+      "revId": "18a01e542400380cd3f4643a602031c280ec8ce1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f562da22_ccc5480a",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:48:14Z",
+      "side": 1,
+      "message": "These could use raw_ptr most likely. Did you hit a blocker for that?",
+      "revId": "18a01e542400380cd3f4643a602031c280ec8ce1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93f7783f_b6065a1d",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:48:14Z",
+      "side": 1,
+      "message": "Sure, why not.",
+      "revId": "18a01e542400380cd3f4643a602031c280ec8ce1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
