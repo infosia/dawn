@@ -206,7 +206,8 @@ enum class ScopedHistogramTiming { kMicrosecondTimes, kMediumTimes, kLongTimes }
         }                                                                                   \
                                                                                             \
       private:                                                                              \
-        raw_ptr<Platform> platform_;                                                        \
+        // TODO(crbug.com/485825675): Investigate this dangling pointers.                   \
+        raw_ptr<Platform, DanglingUntriaged> platform_;                                     \
         double constructed_;                                                                \
     } scoped_histogram_timer_##key(platform)
 
