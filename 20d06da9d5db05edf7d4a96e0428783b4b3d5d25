@@ -16,6 +16,23 @@
       "message": "Obligatory cargo culting follow up",
       "revId": "20d06da9d5db05edf7d4a96e0428783b4b3d5d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79f2b69f_6a6cef8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T19:00:25Z",
+      "side": 1,
+      "message": "Awesome, thank you. I was going to add that to my list of things todo, heh.",
+      "revId": "20d06da9d5db05edf7d4a96e0428783b4b3d5d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
