@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3da04de4_b6a90927",
+        "filename": "src/dawn/tests/perf_tests/UniformBufferUpdatePerf.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:57:30Z",
+      "side": 0,
+      "message": "[1]",
+      "revId": "b21d133dcc050371beccf01e63c86360b3f850d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

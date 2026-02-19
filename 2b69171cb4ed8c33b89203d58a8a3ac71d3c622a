@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "618623e4_0f400756",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:57:30Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "2b69171cb4ed8c33b89203d58a8a3ac71d3c622a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51249e73_b38167ae",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:57:30Z",
+      "side": 1,
+      "message": "Why is this one needed?",
+      "revId": "2b69171cb4ed8c33b89203d58a8a3ac71d3c622a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15876ec4_1698cc0e",
+        "filename": "src/dawn/tests/perf_tests/UniformBufferUpdatePerf.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:57:30Z",
+      "side": 1,
+      "message": "nit: unused after the removal at [1]?",
+      "revId": "2b69171cb4ed8c33b89203d58a8a3ac71d3c622a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
