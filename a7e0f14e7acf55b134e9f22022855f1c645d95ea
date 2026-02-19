@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a4cfd42_398edfe7",
+        "filename": "src/dawn/native/opengl/DisplayEGL.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-19T15:10:06Z",
+      "side": 1,
+      "message": "Yes. `raw_ref` is a bit unfortunate. \nThe reason is that you can\u0027t define some `operator.`\n\nA `raw_ref` is a non null raw_ptr`.",
+      "parentUuid": "f370d7b2_fd0411b8",
+      "revId": "a7e0f14e7acf55b134e9f22022855f1c645d95ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f1013e2_f06d81da",
