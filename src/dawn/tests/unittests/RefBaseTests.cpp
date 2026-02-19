@@ -30,6 +30,7 @@
 
 #include "dawn/common/RefBase.h"
 #include "gmock/gmock.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn {
 namespace {
@@ -94,7 +95,7 @@ struct RefTracker {
     bool operator==(const RefTracker& other) const = default;
 
     Id mId;
-    Events* mEvents;
+    raw_ptr<Events> mEvents;
 };
 
 struct RefTrackerTraits {
