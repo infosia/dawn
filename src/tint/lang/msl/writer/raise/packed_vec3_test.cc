@@ -38,7 +38,11 @@ using namespace tint::core::number_suffixes;  // NOLINT
 namespace tint::msl::writer::raise {
 namespace {
 
-using MslWriter_PackedVec3Test = core::ir::transform::TransformTest;
+class MslWriter_PackedVec3Test : public core::ir::transform::TransformTest {
+  protected:
+    FixTypeLayoutOptions options;
+    void Run() { core::ir::transform::TransformTest::Run(PackedVec3, options); }
+};
 
 TEST_F(MslWriter_PackedVec3Test, NoModify_PrivateVar) {
     auto* var = b.Var<private_, vec3<u32>>("v");
@@ -65,7 +69,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -96,7 +100,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -127,7 +131,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -158,7 +162,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -200,7 +204,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -243,7 +247,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -286,7 +290,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -334,7 +338,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -380,7 +384,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -431,7 +435,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -486,7 +490,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -560,7 +564,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -630,7 +634,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -694,7 +698,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -764,7 +768,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -830,7 +834,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -881,7 +885,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -939,7 +943,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1015,7 +1019,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1073,7 +1077,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1129,7 +1133,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1191,7 +1195,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1267,7 +1271,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1325,7 +1329,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1381,7 +1385,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1439,7 +1443,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1509,7 +1513,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1596,7 +1600,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1656,7 +1660,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1732,7 +1736,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1820,7 +1824,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1878,7 +1882,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -1983,7 +1987,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2089,7 +2093,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2206,7 +2210,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2295,7 +2299,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2424,7 +2428,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2566,7 +2570,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2711,7 +2715,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -2790,7 +2794,7 @@ $B1: {  # root
 
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3026,7 +3030,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3091,7 +3095,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3181,7 +3185,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3294,7 +3298,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3341,7 +3345,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3445,7 +3449,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3525,7 +3529,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3642,7 +3646,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3736,7 +3740,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3801,7 +3805,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3868,7 +3872,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3918,7 +3922,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -3967,7 +3971,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }
@@ -4032,7 +4036,7 @@ $B1: {  # root
 }
 )";
 
-    Run(PackedVec3);
+    Run();
 
     EXPECT_EQ(expect, str());
 }

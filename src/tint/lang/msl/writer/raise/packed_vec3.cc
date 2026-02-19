@@ -49,6 +49,9 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    /// The transform options.
+    const FixTypeLayoutOptions options;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -169,6 +172,12 @@ struct State {
                         return ty.packed_vec(el_ty, 3);
                     }
                     return vec;
+                },
+                [&](const core::type::Bool*) -> const core::type::Type* {  //
+                    if (options.replace_bool_with_u32) {
+                        return ty.u32();
+                    }
+                    return type;
                 },
                 [&](Default) {
                     // This type cannot contain a vec3, so no changes needed.
@@ -438,6 +447,7 @@ struct State {
                         ->Result();
                 }
             },
+            [&](const core::type::Bool*) { return b.Convert<bool>(b.Load(from))->Result(); },
             TINT_ICE_ON_NO_MATCH);
     }
 
@@ -583,6 +593,7 @@ struct State {
                         b.Call<msl::ir::BuiltinCall>(packed_type, msl::BuiltinFn::kConvert, value)
                             ->Result());
             },
+            [&](const core::type::Bool*) { b.Store(to, b.Convert<u32>(value)); },
             TINT_ICE_ON_NO_MATCH);
     }
 
@@ -677,7 +688,7 @@ struct State {
 
 }  // namespace
 
-Result<SuccessType> PackedVec3(core::ir::Module& ir) {
+Result<SuccessType> PackedVec3(core::ir::Module& ir, const FixTypeLayoutOptions& options) {
     TINT_CHECK_RESULT(
         ValidateBeforeIfNeeded(ir,
                                tint::core::ir::Capabilities{
@@ -688,7 +699,7 @@ Result<SuccessType> PackedVec3(core::ir::Module& ir) {
                                },
                                "msl.PackedVec3"));
 
-    State{ir}.Process();
+    State{ir, options}.Process();
 
     return Success;
 }

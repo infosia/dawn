@@ -37,6 +37,12 @@ class Module;
 
 namespace tint::msl::writer::raise {
 
+/// Configuration options for the FixTypeLayout transform.
+struct FixTypeLayoutOptions {
+    /// If `true`, replace bool types in workgroup storage with u32.
+    bool replace_bool_with_u32 = false;
+};
+
 /// This transform is necessary in order to emit vec3 types with the correct size (so that scalars
 /// can follow them in structures), and also to ensure that padding bytes are preserved when writing
 /// to a vec3, an array of vec3 elements, or a matrix with vec3 column type.
@@ -51,8 +57,9 @@ namespace tint::msl::writer::raise {
 ///   them from memory, and the vice versa before storing values to memory.
 ///
 /// @param module the module to transform
+/// @param options the transform options
 /// @returns success or failure
-Result<SuccessType> PackedVec3(core::ir::Module& module);
+Result<SuccessType> PackedVec3(core::ir::Module& module, const FixTypeLayoutOptions& options);
 
 }  // namespace tint::msl::writer::raise
 

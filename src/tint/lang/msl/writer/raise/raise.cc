@@ -219,7 +219,12 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     TINT_CHECK_RESULT(raise::ShaderIO(
         module, raise::ShaderIOConfig{immediate_data_layout, options.emit_vertex_point_size,
                                       options.fixed_sample_mask, options.depth_range_offsets}));
-    TINT_CHECK_RESULT(raise::PackedVec3(module));
+
+    raise::FixTypeLayoutOptions fix_type_layout_options{
+        .replace_bool_with_u32 = options.workarounds.replace_workgroup_bool_with_u32,
+    };
+    TINT_CHECK_RESULT(raise::PackedVec3(module, fix_type_layout_options));
+
     TINT_CHECK_RESULT(raise::SimdBallot(module));
 
     // ArgumentBuffers must come before ModuleScopeVars
