@@ -41,6 +41,8 @@
 #include "dawn/native/webgpu/QuerySetWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/Serialization.h"
+#include "dawn/native/webgpu/SharedFenceWGPU.h"
+#include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 
 namespace dawn::native::webgpu {
@@ -147,6 +149,54 @@ MaybeError CaptureContext::CaptureQueueWriteTexture(const TexelCopyTextureInfo& 
 
     CaptureContext::ScopedContentWriter writer(*this);
     writer.WriteContentBytes(data, dataSize);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSharedTextureMemoryBeginAccess(
+    SharedTextureMemory* memory,
+    TextureBase* texture,
+    const UnpackedPtr<SharedTextureMemoryBeginAccessDescriptor>& descriptor) {
+    DAWN_TRY(AddResource(memory));
+    DAWN_TRY(AddResource(ToBackend(texture)));
+
+    std::vector<schema::ObjectId> fenceIds;
+    std::vector<uint64_t> signaledValues;
+    for (size_t i = 0; i < descriptor->fenceCount; ++i) {
+        schema::ObjectId fenceId;
+        DAWN_TRY_ASSIGN(fenceId, AddResourceAndGetId(ToBackend(descriptor->fences[i])));
+        fenceIds.push_back(fenceId);
+        signaledValues.push_back(descriptor->signaledValues[i]);
+    }
+
+    schema::RootCommandSharedTextureMemoryBeginAccessCmd cmd{{
+        .data = {{
+            .memoryId = GetId(memory),
+            .textureId = GetId(ToBackend(texture)),
+            .concurrentRead = descriptor->concurrentRead,
+            .initialized = descriptor->initialized,
+            .fenceIds = std::move(fenceIds),
+            .signaledValues = std::move(signaledValues),
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSharedTextureMemoryEndAccess(
+    SharedTextureMemory* memory,
+    TextureBase* texture,
+    const UnpackedPtr<SharedTextureMemoryEndAccessState>& state) {
+    DAWN_TRY(AddResource(memory));
+    DAWN_TRY(AddResource(ToBackend(texture)));
+
+    schema::RootCommandSharedTextureMemoryEndAccessCmd cmd{{
+        .data = {{
+            .memoryId = GetId(memory),
+            .textureId = GetId(ToBackend(texture)),
+            .initialized = state->initialized,
+        }},
+    }};
+    Serialize(*this, cmd);
     return {};
 }
 

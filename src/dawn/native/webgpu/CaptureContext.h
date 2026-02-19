@@ -185,6 +185,15 @@ class CaptureContext {
                                         const TexelCopyBufferLayout& dataLayout,
                                         const TexelExtent3D& writeSizePixel);
 
+    MaybeError CaptureSharedTextureMemoryBeginAccess(
+        SharedTextureMemory* memory,
+        TextureBase* texture,
+        const UnpackedPtr<SharedTextureMemoryBeginAccessDescriptor>& descriptor);
+    MaybeError CaptureSharedTextureMemoryEndAccess(
+        SharedTextureMemory* memory,
+        TextureBase* texture,
+        const UnpackedPtr<SharedTextureMemoryEndAccessState>& state);
+
     WGPUBuffer GetCopyBuffer();
     WGPUBuffer GetBlitTextureToBufferBuffer();
 

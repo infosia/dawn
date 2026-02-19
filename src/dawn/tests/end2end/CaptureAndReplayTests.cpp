@@ -41,8 +41,41 @@
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
 
+#if DAWN_PLATFORM_IS(MACOS)
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreVideo/CVPixelBuffer.h>
+#include <IOSurface/IOSurface.h>
+
+#include "dawn/common/CoreFoundationRef.h"
+#endif
+
 namespace dawn {
 namespace {
+
+#if DAWN_PLATFORM_IS(MACOS)
+void AddIntegerValue(CFMutableDictionaryRef dictionary, const CFStringRef key, int32_t value) {
+    auto number = AcquireCFRef(CFNumberCreate(nullptr, kCFNumberSInt32Type, &value));
+    CFDictionaryAddValue(dictionary, key, number.Get());
+}
+
+wgpu::SharedTextureMemory CreateSharedTextureMemoryHelper(const wgpu::Device& device) {
+    auto dict = AcquireCFRef(CFDictionaryCreateMutable(
+        kCFAllocatorDefault, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks));
+    AddIntegerValue(dict.Get(), kIOSurfaceWidth, 16);
+    AddIntegerValue(dict.Get(), kIOSurfaceHeight, 16);
+    AddIntegerValue(dict.Get(), kIOSurfacePixelFormat, kCVPixelFormatType_32RGBA);
+    AddIntegerValue(dict.Get(), kIOSurfaceBytesPerElement, 4);
+
+    wgpu::SharedTextureMemoryIOSurfaceDescriptor ioSurfaceDesc;
+    ioSurfaceDesc.ioSurface = IOSurfaceCreate(dict.Get());
+    ioSurfaceDesc.allowStorageBinding = true;
+
+    wgpu::SharedTextureMemoryDescriptor desc;
+    desc.nextInChain = &ioSurfaceDesc;
+
+    return device.ImportSharedTextureMemory(&desc);
+}
+#endif
 
 class CaptureAndReplayTests : public DawnTest {
   public:
@@ -2762,6 +2795,61 @@ TEST_P(CaptureAndReplayTimestampTests, WriteTimestamp) {
 }
 
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTimestampTests, WebGPUBackend());
+
+#if DAWN_PLATFORM_IS(MACOS)
+class CaptureAndReplaySharedTextureMemoryTests : public CaptureAndReplayTests {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> features = CaptureAndReplayTests::GetRequiredFeatures();
+        if (SupportsFeatures({wgpu::FeatureName::SharedTextureMemoryIOSurface})) {
+            features.push_back(wgpu::FeatureName::SharedTextureMemoryIOSurface);
+        }
+        return features;
+    }
+};
+
+// Test that capturing and replaying a SharedTextureMemory works.
+TEST_P(CaptureAndReplaySharedTextureMemoryTests, SharedTextureMemory) {
+    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::SharedTextureMemoryIOSurface));
+
+    wgpu::SharedTextureMemory memory = CreateSharedTextureMemoryHelper(device);
+    wgpu::Texture texture = memory.CreateTexture();
+    texture.SetLabel("sharedTexture");
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::SharedTextureMemoryBeginAccessDescriptor beginDesc = {};
+        memory.BeginAccess(texture, &beginDesc);
+
+        // Do some work on the texture.
+        utils::ComboRenderPassDescriptor passDescriptor({texture.CreateView()});
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDescriptor);
+        pass.End();
+
+        wgpu::SharedTextureMemoryEndAccessState endState = {};
+        memory.EndAccess(texture, &endState);
+
+        commands = encoder.Finish();
+    }
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(device);
+
+    queue.Submit(1, &commands);
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    // Expect no errors.
+    // Verify that the shared texture exists in the replayed device.
+    auto replayedTexture = replay->GetObjectByLabel<wgpu::Texture>("sharedTexture");
+    EXPECT_NE(replayedTexture, nullptr);
+}
+
+DAWN_INSTANTIATE_TEST(CaptureAndReplaySharedTextureMemoryTests, WebGPUBackend());
+#endif
 
 }  // anonymous namespace
 }  // namespace dawn
