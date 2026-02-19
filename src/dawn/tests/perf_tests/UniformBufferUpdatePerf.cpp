@@ -147,11 +147,6 @@ class UniformBufferUpdatePerf : public DawnPerfTestWithParams<UniformBufferUpdat
     void SetUpPerfTest() override;
 
   private:
-    // Data needed for buffer returning.
-    struct CallbackData {
-        UniformBufferUpdatePerf* self;
-        wgpu::Buffer buffer;
-    };
     void Step() override;
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override;
 
