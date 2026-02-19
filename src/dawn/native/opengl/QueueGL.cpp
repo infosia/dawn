@@ -95,26 +95,15 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   size_t size) {
     DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
     buffer->MarkUsedInPendingCommands();
-    if (GetDevice()->IsToggleEnabled(Toggle::GLDefer)) {
-        auto* d = static_cast<const char*>(data);
-        auto b = Ref<Buffer>(ToBackend(buffer));
-        return ToBackend(GetDevice())
-            ->EnqueueGL([buffer = b, bufferOffset, data = std::vector<char>(d, d + size)](
-                            const OpenGLFunctions& gl) -> MaybeError {
+    return ToBackend(GetDevice())
+        ->EnqueueVectorDataGL(
+            data, size,
+            [buffer = Ref<Buffer>(ToBackend(buffer)), bufferOffset](
+                const OpenGLFunctions& gl, const void* data, size_t size) -> MaybeError {
                 DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, buffer->GetHandle()));
-                DAWN_GL_TRY(gl,
-                            BufferSubData(GL_ARRAY_BUFFER, bufferOffset, data.size(), data.data()));
+                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
                 return {};
             });
-    }
-    auto device = ToBackend(GetDevice());
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, device->GetContext()->MakeCurrent());
-    const OpenGLFunctions& gl = device->GetGL();
-
-    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
-    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
-    return {};
 }
 
 MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
@@ -183,29 +172,17 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
         ensureInitialized = true;
     }
 
-    if (device->IsToggleEnabled(Toggle::GLDefer)) {
-        auto* d = static_cast<const char*>(data);
-        return device->EnqueueGL(
-            [ensureInitialized, dest = Ref<Texture>(ToBackend(destination.texture)), range,
-             textureCopy = TextureCopy(textureCopy), data = std::vector<char>(d, d + dataSize),
-             dataLayout = TexelCopyBufferLayout(dataLayout),
-             writeSizePixel = Extent3D(writeSizePixel)](const OpenGLFunctions& gl) -> MaybeError {
-                if (ensureInitialized) {
-                    DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
-                }
-                return DoTexSubImage(gl, textureCopy, data.data(), dataLayout, writeSizePixel);
-            });
-    }
-
-    ContextEGL::ScopedMakeCurrent scopedCurrentContext;
-    DAWN_TRY_ASSIGN(scopedCurrentContext, device->GetContext()->MakeCurrent());
-
-    const OpenGLFunctions& gl = device->GetGL();
-
-    if (ensureInitialized) {
-        DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(gl, range));
-    }
-    return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+    return device->EnqueueVectorDataGL(
+        data, dataSize,
+        [ensureInitialized, dest = Ref<Texture>(ToBackend(destination.texture)), range,
+         textureCopy = TextureCopy(textureCopy), dataLayout = TexelCopyBufferLayout(dataLayout),
+         writeSizePixel = Extent3D(writeSizePixel)](const OpenGLFunctions& gl, const void* data,
+                                                    size_t dataSize) -> MaybeError {
+            if (ensureInitialized) {
+                DAWN_TRY(dest->EnsureSubresourceContentInitialized(gl, range));
+            }
+            return DoTexSubImage(gl, textureCopy, data, dataLayout, writeSizePixel);
+        });
 }
 
 void Queue::SetNeedsFenceSync() {
