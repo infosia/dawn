@@ -33,6 +33,24 @@
       "message": "It shouldn\u0027t be necessary to pass in the current value of mMappedData as `Map` takes it as an output only pointer. (it doesn\u0027t read its value)",
       "revId": "6711d744bc944c5666d8df5967f24cbeb5dc1d7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33f3c68e_592e0edd",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-19T15:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea43f02_92a75175",
+      "revId": "6711d744bc944c5666d8df5967f24cbeb5dc1d7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
