@@ -134,6 +134,9 @@ config("internal_config") {
 
   cflags = []
 
+  # Instrumentation: add all the debug symbols.
+  cflags += [ "-g" ]
+
   if (is_clang) {
     # We use __builtin_assume liberally in DAWN_ASSERT, allow ignoring side-effects there.
     cflags += [ "-Wno-assume" ]
