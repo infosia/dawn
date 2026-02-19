@@ -285,6 +285,30 @@
       },
       "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e871d27b_8183f46d",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T21:57:02Z",
+      "side": 1,
+      "message": "I have removed perma skip and we will use the section.",
+      "parentUuid": "281a1e53_b1b41c8c",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
