@@ -328,7 +328,6 @@ crbug.com/407088838 [ win10 ] webgpu:shader,execution,expression,call,builtin,te
 
 crbug.com/408244895 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords:* [ Skip ]
 crbug.com/408244895 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:* [ Skip ]
-crbug.com/407109060 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:stage="c";*offset=true [ Skip ]
 
 crbug.com/364595481 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:* [ Skip ]
 crbug.com/364595481 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:* [ Skip ]
@@ -343,7 +342,6 @@ crbug.com/414842427 [ dawn-no-backend-validation intel-0x3e9b mac ] webgpu:shade
 crbug.com/414842427 [ dawn-no-backend-validation intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Skip ]
 
 # textureSampleLevel is broken on Intel Mac unless you use argument buffers.
-crbug.com/372283570 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords,lodClamp:*;filt="linear" [ Skip ]
 crbug.com/372283570 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords,lodClamp:*;filt="linear" [ Skip ]
 crbug.com/372283570 [ dawn-no-backend-validation intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords,lodClamp:*;filt="linear" [ Skip ]
 crbug.com/372283570 [ dawn-no-backend-validation intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords,lodClamp:*;filt="linear" [ Skip ]
@@ -649,7 +647,6 @@ crbug.com/407088850 [ dawn-backend-validation intel-0x9bc5 linux ] webgpu:shader
 crbug.com/407088850 [ intel-0x4680 win ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Failure ]
 crbug.com/407088850 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Failure ]
 crbug.com/407088850 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:stage="*";format="depth24plus-stencil8";* [ Failure ]
-crbug.com/407088850 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:stage="*";format="depth24plus";* [ Failure ]
 crbug.com/407088850 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:stage="*";format="depth32float-stencil8";* [ Failure ]
 crbug.com/407088850 [ angle-d3d11 desktop graphite-enabled intel-0x4680 no-asan no-clang-coverage release-x64 renderer-skia-gl target-cpu-64 win10 ] webgpu:shader,execution,expression,call,builtin,textureGatherCompare:* [ Failure ]
 crbug.com/407088850 [ desktop graphite-enabled intel-gen-9 no-clang-coverage release renderer-skia-gl ] webgpu:shader,execution,expression,call,builtin,textureGatherCompare:* [ Failure ]
@@ -742,7 +739,6 @@ crbug.com/407076127 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,ca
 crbug.com/407076127 [ intel-0x9bc5 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_2d_coords:stage="*";format="astc-8x6-unorm";* [ Failure ]
 
 # textureLoad:multisampled failures on Windows FXC
-crbug.com/407088851 [ nvidia-0x2184 webgpu-dxc-disabled win ] webgpu:shader,execution,expression,call,builtin,textureLoad:multisampled:* [ Failure ]
 crbug.com/407088851 [ angle-d3d11 desktop graphite-enabled no-clang-coverage release-x64 renderer-skia-gl webgpu-dxc-disabled win ] webgpu:shader,execution,expression,call,builtin,textureLoad:multisampled:stage="*";texture_type="texture_depth_multisampled_2d";* [ Failure ]
 
 # One case of textureSampleGrad fails on NVIDIA (Linux/Win)
@@ -750,7 +746,6 @@ crbug.com/407088852 [ linux nvidia ] webgpu:shader,execution,expression,call,bui
 crbug.com/407088852 [ nvidia win ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:stage="c";format="rgba16float";filt="linear";modeU="r";modeV="m";offset=false [ Failure ]
 
 # All textureSample/textureGather tests marked failing on Pixel 6
-crbug.com/407076133 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ]
 crbug.com/407076133 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:* [ Failure ]
 
 # All textureGather tests marked failing on Windows
@@ -759,7 +754,6 @@ crbug.com/407076134 [ asan dawn-no-backend-validation intel-0x9bc5 no-clang-cove
 crbug.com/407076134 [ intel no-asan no-clang-coverage win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ]
 
 # textureSampleBias failures on Mac AMD
-crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:* [ Failure ]
 crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:format="bc7-rgba-unorm-srgb";filt="linear";modeU="c";modeV="r";offset=true [ Failure ]
 
 # All textureSampleBias tests marked failing on Mac M2
@@ -783,7 +777,6 @@ crbug.com/407147670 [ amd-0x67ef sonoma ] webgpu:shader,execution,expression,cal
 crbug.com/407147670 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube-array";sampleCount=1 [ Failure ]
 crbug.com/407147670 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/407147670 [ amd-0x67ef sonoma ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
-crbug.com/407147670 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
 
 # Some AbstractFloat matrix arithmetic tests failing on Win (mostly Intel, some NVIDIA)
 crbug.com/407159836 [ dawn-no-backend-validation intel no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_addition:matrix:inputSource="const";cols=4;rows=4 [ Failure ]
