@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5110bdff_24530966",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T20:58:23Z",
+      "side": 1,
+      "message": "Yea, it just seems like it\u0027s going to get out of date, or not get added, doesn\u0027t seem reliable.",
+      "parentUuid": "01ef6dfa_42e62f17",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 19
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ebb2e1c7_b4006df6",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 3
@@ -157,6 +181,30 @@
       "side": 1,
       "message": "I think it could be better because looking at the file you can assume \"I can ignore all these lines\"\n\nThe only downside i can see is in automation for visualization. Which tbh should be trivial.",
       "parentUuid": "eca7a71f_c3e73dc0",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87f7cdc7_fd275d5a",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T20:58:23Z",
+      "side": 1,
+      "message": "Grouping is the main thing, you can just skip the entire section and it isn\u0027t interleaved with other issues. Automation can just look for the block and add those as permaskip, doesn\u0027t seem too bad?",
+      "parentUuid": "ef1dfba9_6f48c47b",
       "range": {
         "startLine": 118,
         "startChar": 2,
