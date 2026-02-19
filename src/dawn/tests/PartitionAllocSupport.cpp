@@ -35,6 +35,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wgnu-statement-expression-from-macro-expansion"
 #pragma GCC diagnostic ignored "-Wzero-length-array"
+#include "partition_alloc/partition_alloc_base/notreached.h"
 #include "partition_alloc/shim/allocator_shim.h"
 #include "partition_alloc/shim/allocator_shim_default_dispatch_to_partition_alloc.h"
 #pragma GCC diagnostic pop
@@ -64,6 +65,7 @@ void InitializeDanglingPointerDetectorForTesting() {
         ErrorLog() << "                         Documentation: "
                       "https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/"
                       "docs/dangling-pointer-detector.md";
+        PA_NOTREACHED();
         DAWN_CHECK(false);
     });
 #endif
