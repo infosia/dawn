@@ -29,11 +29,25 @@
 
 #include <memory>
 
+#include "src/tint/lang/wgsl/reader/reader.h"
+
 namespace tint::resolver {
 
 TestHelper::TestHelper()
     : resolver_(std::make_unique<Resolver>(this, wgsl::AllowedFeatures::Everything())) {}
 
 TestHelper::~TestHelper() = default;
+
+void TestHelper::ExpectError(std::string_view wgsl, std::string_view error) {
+    auto file = std::make_unique<Source::File>("input.wgsl", wgsl);
+    auto result = wgsl::reader::Parse(file.get());
+    ASSERT_TRUE(result.Diagnostics().ContainsErrors());
+
+    // Strip a single leading newline to allow expected errors to start with a newline.
+    if (error.length() && error[0] == '\n') {
+        error = error.substr(1);
+    }
+    EXPECT_EQ(result.Diagnostics().Str(), error);
+}
 
 }  // namespace tint::resolver
