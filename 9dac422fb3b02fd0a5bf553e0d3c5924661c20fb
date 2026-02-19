@@ -16,6 +16,24 @@
       "message": "Failure looks to be infra: `MBErr: Builder group name \"try\" not found in \"C:\\b\\s\\w\\ir\\cache\\builder\\dawn\\infra\\specs\\mb_config.pyl\"` ?",
       "revId": "9dac422fb3b02fd0a5bf553e0d3c5924661c20fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f25a4d7_9fbb508b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-19T22:02:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5c77e1b4_8e36c210",
+      "revId": "9dac422fb3b02fd0a5bf553e0d3c5924661c20fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
