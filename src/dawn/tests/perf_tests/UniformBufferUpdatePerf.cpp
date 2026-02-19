@@ -32,6 +32,7 @@
 #include "dawn/tests/perf_tests/DawnPerfTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 // This is for developers only to ensure the triangle color drawn is as expected.
 // #define PIXEL_CHECK 1
@@ -147,11 +148,6 @@ class UniformBufferUpdatePerf : public DawnPerfTestWithParams<UniformBufferUpdat
     void SetUpPerfTest() override;
 
   private:
-    // Data needed for buffer returning.
-    struct CallbackData {
-        UniformBufferUpdatePerf* self;
-        wgpu::Buffer buffer;
-    };
     void Step() override;
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override;
 

@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
+#include <array>
 #include <functional>
 #include <limits>
 #include <string>
@@ -33,6 +34,7 @@
 
 #include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
+#include "dawn/common/StackAllocated.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -1038,17 +1040,17 @@ class MaxInterStageShaderVariablesLimitTests : public MaxLimitTests {
                                          const MaxInterStageLimitTestsSpec& spec) {
         std::stringstream stream;
         struct BoolTypeName {
-            const bool& value;
+            raw_ptr<const bool> value;
             const char* type;
             const char* name;
         };
         BoolTypeName builtins[] = {
-            {spec.hasFrontFacing, "bool", "front_facing"},
-            {spec.hasSampleIndex, "u32", "sample_index"},
-            {spec.hasSampleMask, "u32", "sample_mask"},
-            {spec.hasPrimitiveIndex, "u32", "primitive_index"},
-            {spec.hasSubgroupInvocationId, "u32", "subgroup_invocation_id"},
-            {spec.hasSubgroupSize, "u32", "subgroup_size"},
+            {&spec.hasFrontFacing, "bool", "front_facing"},
+            {&spec.hasSampleIndex, "u32", "sample_index"},
+            {&spec.hasSampleMask, "u32", "sample_mask"},
+            {&spec.hasPrimitiveIndex, "u32", "primitive_index"},
+            {&spec.hasSubgroupInvocationId, "u32", "subgroup_invocation_id"},
+            {&spec.hasSubgroupSize, "u32", "subgroup_size"},
         };
 
         stream << "@fragment fn fs_main(input: FragmentInput";
