@@ -141,6 +141,30 @@
       },
       "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef1dfba9_6f48c47b",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T20:51:24Z",
+      "side": 1,
+      "message": "I think it could be better because looking at the file you can assume \"I can ignore all these lines\"\n\nThe only downside i can see is in automation for visualization. Which tbh should be trivial.",
+      "parentUuid": "eca7a71f_c3e73dc0",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
