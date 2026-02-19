@@ -159,6 +159,7 @@ cc_binary(
       "//src/tint/lang/wgsl/inspector:test",
       "//src/tint/lang/wgsl/reader/parser:test",
       "//src/tint/lang/wgsl/reader/program_to_ir:test",
+      "//src/tint/lang/wgsl/reader/validation:test",
       "//src/tint/lang/wgsl/reader:test",
     ],
     "//conditions:default": [],

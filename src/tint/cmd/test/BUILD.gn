@@ -167,6 +167,7 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/wgsl/reader:unittests",
         "${tint_src_dir}/lang/wgsl/reader/parser:unittests",
         "${tint_src_dir}/lang/wgsl/reader/program_to_ir:unittests",
+        "${tint_src_dir}/lang/wgsl/reader/validation:unittests",
       ]
     }
 

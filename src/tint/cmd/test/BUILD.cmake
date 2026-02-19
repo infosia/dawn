@@ -174,6 +174,7 @@ if(TINT_BUILD_WGSL_READER)
     tint_lang_wgsl_inspector_test
     tint_lang_wgsl_reader_parser_test
     tint_lang_wgsl_reader_program_to_ir_test
+    tint_lang_wgsl_reader_validation_test
     tint_lang_wgsl_reader_test
   )
 endif(TINT_BUILD_WGSL_READER)

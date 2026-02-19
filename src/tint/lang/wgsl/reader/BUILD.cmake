@@ -37,6 +37,7 @@
 include(lang/wgsl/reader/lower/BUILD.cmake)
 include(lang/wgsl/reader/parser/BUILD.cmake)
 include(lang/wgsl/reader/program_to_ir/BUILD.cmake)
+include(lang/wgsl/reader/validation/BUILD.cmake)
 
 if(TINT_BUILD_WGSL_READER)
 ################################################################################
