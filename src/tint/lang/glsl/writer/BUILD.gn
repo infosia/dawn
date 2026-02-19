@@ -158,6 +158,13 @@ if (tint_build_glsl_writer) {
       "${tint_src_dir}/utils/text",
     ]
 
+    if (tint_build_fuzzer_opengl_support) {
+      deps += [
+        "${tint_khronos_dir}:khronos_headers",
+        "${tint_mesa_dir}:mesa_lib",
+      ]
+    }
+
     if (tint_build_glsl_writer) {
       deps += [
         "${tint_src_dir}/lang/glsl/writer",

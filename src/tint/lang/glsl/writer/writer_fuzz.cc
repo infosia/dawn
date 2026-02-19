@@ -33,6 +33,17 @@
 #include "src/tint/lang/glsl/writer/helpers/generate_bindings.h"
 #include "src/tint/lang/glsl/writer/printer/printer.h"
 #include "src/tint/lang/glsl/writer/writer.h"
+#include "src/tint/utils/macros/defer.h"
+
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+// The GL headers need to be included before the EGL headers
+// clang-format off
+#define GL_GLEXT_PROTOTYPES
+#include "GL/gl.h"
+#include "EGL/egl.h"
+#include "EGL/eglext.h"
+// clang-format on
+#endif
 
 namespace tint::glsl::writer {
 namespace {
@@ -64,6 +75,95 @@ struct FuzzedOptions {
                  substitute_overrides_config);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
+
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+Result<SuccessType> ValidateUsingOpenGL(const std::string& glsl,
+                                        const std::string& entry_point,
+                                        core::ir::Function::PipelineStage stage) {
+    // Initialize EGL
+    EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+    if (display == EGL_NO_DISPLAY) {
+        return Failure{"eglGetDisplay failed"};
+    }
+    TINT_DEFER(eglTerminate(display));
+
+    EGLint major, minor;
+    if (!eglInitialize(display, &major, &minor)) {
+        return Failure{"eglInitialize failed"};
+    }
+
+    if (!eglBindAPI(EGL_OPENGL_ES_API)) {
+        return Failure{"eglBindAPI failed"};
+    }
+
+    static const EGLint config_attribs[] = {EGL_SURFACE_TYPE,
+                                            EGL_PBUFFER_BIT,
+                                            EGL_RENDERABLE_TYPE,
+                                            EGL_OPENGL_ES3_BIT,
+                                            EGL_BLUE_SIZE,
+                                            8,
+                                            EGL_GREEN_SIZE,
+                                            8,
+                                            EGL_RED_SIZE,
+                                            8,
+                                            EGL_NONE};
+    EGLConfig config;
+    EGLint num_config;
+    if (!eglChooseConfig(display, config_attribs, &config, 1, &num_config)) {
+        return Failure{"eglChooseConfig failed"};
+    }
+
+    EGLint context_attribs[] = {EGL_CONTEXT_CLIENT_VERSION, 3, EGL_NONE};
+    EGLContext context = eglCreateContext(display, config, EGL_NO_CONTEXT, context_attribs);
+    if (context == EGL_NO_CONTEXT) {
+        return Failure{"eglCreateContext failed"};
+    }
+    TINT_DEFER(eglDestroyContext(display, context));
+
+    if (!eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, context)) {
+        return Failure{"eglMakeCurrent failed"};
+    }
+    TINT_DEFER(eglMakeCurrent(display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT));
+
+    GLenum gl_stage = 0;
+    switch (stage) {
+        case core::ir::Function::PipelineStage::kCompute:
+            gl_stage = GL_COMPUTE_SHADER;
+            break;
+        case core::ir::Function::PipelineStage::kFragment:
+            gl_stage = GL_FRAGMENT_SHADER;
+            break;
+        case core::ir::Function::PipelineStage::kVertex:
+            gl_stage = GL_VERTEX_SHADER;
+            break;
+        default:
+            return Failure{"Unsupported pipeline stage"};
+    }
+
+    // Create the shader
+    GLuint shader = glCreateShader(gl_stage);
+    if (shader == 0) {
+        return Failure{"glCreateShader failed"};
+    }
+    TINT_DEFER(glDeleteShader(shader));
+
+    const char* source = glsl.c_str();
+    glShaderSource(shader, 1, &source, nullptr);
+    glCompileShader(shader);
+
+    GLint status;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    if (status == GL_FALSE) {
+        GLint log_length;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+        std::string log(log_length, '\0');
+        glGetShaderInfoLog(shader, log_length, nullptr, log.data());
+        return Failure{"Shader compilation failed:\n" + log};
+    }
+
+    return Success;
+}
+#endif  // TINT_BUILD_FUZZER_OPENGL_SUPPORT
 
 Result<SuccessType> IRFuzzer(core::ir::Module& module,
                              const fuzz::ir::Context& context,
@@ -166,6 +266,10 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     if (context.options.dump) {
         std::cout << "Dumping generated GLSL:\n" << output.glsl << "\n";
     }
+
+#if TINT_BUILD_FUZZER_OPENGL_SUPPORT
+    TINT_CHECK_RESULT(ValidateUsingOpenGL(output.glsl, ep_name, entry_point->Stage()));
+#endif
 
     return Success;
 }

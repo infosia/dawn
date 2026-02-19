@@ -137,6 +137,11 @@ cc_library(
 )
 
 alias(
+  name = "tint_build_fuzzer_opengl_support",
+  actual = "//src/tint:tint_build_fuzzer_opengl_support_true",
+)
+
+alias(
   name = "tint_build_glsl_validator",
   actual = "//src/tint:tint_build_glsl_validator_true",
 )

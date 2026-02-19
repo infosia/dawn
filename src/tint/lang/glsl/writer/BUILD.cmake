@@ -183,6 +183,13 @@ tint_target_add_external_dependencies(tint_lang_glsl_writer_fuzz fuzz
   "src_utils"
 )
 
+if(TINT_BUILD_FUZZER_OPENGL_SUPPORT)
+  tint_target_add_external_dependencies(tint_lang_glsl_writer_fuzz fuzz
+    "khronos_headers"
+    "mesa_lib"
+  )
+endif(TINT_BUILD_FUZZER_OPENGL_SUPPORT)
+
 if(TINT_BUILD_GLSL_WRITER)
   tint_target_add_dependencies(tint_lang_glsl_writer_fuzz fuzz
     tint_lang_glsl_writer

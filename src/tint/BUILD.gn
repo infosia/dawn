@@ -39,6 +39,11 @@ if (tint_build_unittests) {
 
 import("tint.gni")
 
+# OpenGL support in the fuzzer requires Mesa
+assert(
+    !tint_build_fuzzer_opengl_support || tint_build_mesa,
+    "tint_build_fuzzer_opengl_support=true requires also tint_build_mesa=true")
+
 ###############################################################################
 # Common - Configs, etc. shared across targets
 ###############################################################################
@@ -150,6 +155,12 @@ config("tint_public_config") {
     defines += [ "TINT_BUILD_FUZZER_VULKAN_SUPPORT=1" ]
   } else {
     defines += [ "TINT_BUILD_FUZZER_VULKAN_SUPPORT=0" ]
+  }
+
+  if (tint_build_fuzzer_opengl_support) {
+    defines += [ "TINT_BUILD_FUZZER_OPENGL_SUPPORT=1" ]
+  } else {
+    defines += [ "TINT_BUILD_FUZZER_OPENGL_SUPPORT=0" ]
   }
 
   include_dirs = [

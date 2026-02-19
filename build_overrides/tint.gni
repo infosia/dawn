@@ -39,6 +39,7 @@ tint_standalone = true
 
 # The paths to Tint's dependencies
 tint_lpm_dir = "//third_party/libprotobuf-mutator"
+tint_khronos_dir = "//third_party/khronos"
 tint_spirv_tools_dir = "//third_party/spirv-tools/src"
 tint_spirv_headers_dir = "//third_party/spirv-headers/src"
 tint_glslang_dir = "//third_party/glslang/src"

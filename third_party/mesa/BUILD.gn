@@ -34,3 +34,17 @@ meson_target("mesa") {
   options = mesa_options
   outputs = [ "${target_gen_dir}/install" ]
 }
+
+config("mesa_config") {
+  include_dirs = [ "${target_gen_dir}/install/include" ]
+  lib_dirs = [ "${target_gen_dir}/install/lib" ]
+  libs = [
+    "EGL",
+    "GL",
+  ]
+}
+
+group("mesa_lib") {
+  public_deps = [ ":mesa" ]
+  public_configs = [ ":mesa_config" ]
+}

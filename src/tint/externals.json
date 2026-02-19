@@ -43,6 +43,9 @@
     "mesa": {
         "Condition": "tint_build_mesa"
     },
+    "mesa_lib": {
+        "Condition": "tint_build_fuzzer_opengl_support"
+    },
     "metal": {
         "IncludePatterns": [
             "Metal/Metal.h"
@@ -122,5 +125,8 @@
         "IncludePatterns": [
             "src/utils/chromium_test_compat/*"
         ]
+    },
+    "khronos_headers": {
+        "Condition": "tint_build_fuzzer_opengl_support"
     }
 }

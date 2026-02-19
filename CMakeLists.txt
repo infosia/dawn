@@ -245,10 +245,15 @@ option(TINT_BUILD_NULL_WRITER "Build the NULL output writer" ${DAWN_ENABLE_NULL}
 option(TINT_BUILD_IR_BINARY "Build IR binary format support" ${DAWN_BUILD_PROTOBUF})
 option(TINT_BUILD_FUZZERS "Build fuzzers" OFF)
 option(TINT_BUILD_FUZZER_VULKAN_SUPPORT "Build fuzzing Vulkan drivers" OFF)
+option(TINT_BUILD_FUZZER_OPENGL_SUPPORT "Build fuzzing OpenGL drivers" OFF)
 option(TINT_BUILD_BENCHMARKS "Build Tint benchmarks" OFF)
 option(TINT_BUILD_TESTS "Build tests" ON)
 option(TINT_BUILD_AS_OTHER_OS "Override OS detection to force building of *_other.cc files" OFF)
 option(TINT_BUILD_MESA "Build Mesa" OFF)
+
+if (TINT_BUILD_FUZZER_VULKAN_SUPPORT OR TINT_BUILD_FUZZER_OPENGL_SUPPORT)
+  set(TINT_BUILD_MESA ON)
+endif()
 
 if (EMSCRIPTEN)
   # Skip tint tests in emscripten build
@@ -331,6 +336,7 @@ message(STATUS "Tint install: ${TINT_ENABLE_INSTALL}")
 message(STATUS "Tint build IR binary: ${TINT_BUILD_IR_BINARY}")
 message(STATUS "Tint build fuzzers: ${TINT_BUILD_FUZZERS}")
 message(STATUS "Tint build fuzzing vulkan drivers: ${TINT_BUILD_FUZZER_VULKAN_SUPPORT}")
+message(STATUS "Tint build fuzzing opengl drivers: ${TINT_BUILD_FUZZER_OPENGL_SUPPORT}")
 message(STATUS "Tint build benchmarks: ${TINT_BUILD_BENCHMARKS}")
 message(STATUS "Tint build tests: ${TINT_BUILD_TESTS}")
 message(STATUS "Tint build tintd: ${TINT_BUILD_TINTD}")
@@ -365,6 +371,10 @@ message(STATUS "")
 
 if (TINT_BUILD_FUZZER_VULKAN_SUPPORT AND NOT TINT_BUILD_FUZZERS)
     message(FATAL_ERROR "Cannot enable TINT_BUILD_FUZZER_VULKAN_SUPPORT without enabling TINT_BUILD_FUZZERS")
+endif()
+
+if (TINT_BUILD_FUZZER_OPENGL_SUPPORT AND NOT TINT_BUILD_FUZZERS)
+    message(FATAL_ERROR "Cannot enable TINT_BUILD_FUZZER_OPENGL_SUPPORT without enabling TINT_BUILD_FUZZERS")
 endif()
 
 # Much of the backend code is shared among desktop OpenGL and OpenGL ES
