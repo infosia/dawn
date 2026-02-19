@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb5656a9_2a908615",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:52:14Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "ee0c3e868ece4141f378ba175d4b0d451580203b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fa5bb60_90d04153",
+        "filename": "src/dawn/native/ResourceMemoryAllocation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-19T14:52:14Z",
+      "side": 1,
+      "message": "Could we have TODOs and issues to fix the various dangling pointers?",
+      "revId": "ee0c3e868ece4141f378ba175d4b0d451580203b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
