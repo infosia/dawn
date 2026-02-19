@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01ef6dfa_42e62f17",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T20:43:59Z",
+      "side": 1,
+      "message": "I mean this WIP tag would be for our own organization. I dont expect anyone to add it except those trying to create visualizations (me)",
+      "parentUuid": "679aab58_6da73f46",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 19
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ebb2e1c7_b4006df6",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 3
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Using a section for Permanent skip seems better then a tag?",
       "parentUuid": "ebb2e1c7_b4006df6",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "951eec89f6adb04336c2010046fa2d5a5db961e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca7a71f_c3e73dc0",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-19T20:43:59Z",
+      "side": 1,
+      "message": "Why is it better?",
+      "parentUuid": "a7e376ce_6b3502b5",
       "range": {
         "startLine": 118,
         "startChar": 2,
