@@ -712,9 +712,14 @@ func (j job) run(cfg runConfig, fsReaderWriter oswrapper.FilesystemReaderWriter,
 			expectedFilePath += string(j.format)
 		}
 
+		isValidationTest := strings.HasSuffix(j.file, ".error.wgsl")
+
 		// Is there an expected output file? If so, load it.
 		expected, expectedFileExists := "", false
-		if content, err := fsReaderWriter.ReadFile(expectedFilePath); err == nil {
+		if isValidationTest {
+			content, _ := parseValidationResult(j.file, fsReaderWriter)
+			expected = content + "\n\n" + "tint executable returned error: exit status 1"
+		} else if content, err := fsReaderWriter.ReadFile(expectedFilePath); err == nil {
 			expected = string(content)
 			expectedFileExists = true
 		}
@@ -805,6 +810,13 @@ func (j job) run(cfg runConfig, fsReaderWriter oswrapper.FilesystemReaderWriter,
 		}
 		timeTaken := time.Since(start)
 
+		// If this is a validation test then an "ok" result is to have had the run fail. So, flip the
+		// `ok` result.
+		if isValidationTest {
+			ok = !ok
+			out = strings.TrimRight(out, " \r\n")
+		}
+
 		out = strings.ReplaceAll(out, "\r\n", "\n")
 		out = strings.ReplaceAll(out, filepath.ToSlash(fileutils.DawnRoot(fsReaderWriter)), "<dawn>")
 		out, hashes := extractValidationHashes(out)
@@ -816,6 +828,9 @@ func (j job) run(cfg runConfig, fsReaderWriter oswrapper.FilesystemReaderWriter,
 				canEmitPassExpectationFile = false
 				break
 			}
+		}
+		if isValidationTest {
+			canEmitPassExpectationFile = false
 		}
 
 		saveExpectedFile := func(path string, content string) error {
@@ -1182,6 +1197,34 @@ func parseFlags(path string, fsReader oswrapper.FilesystemReader) ([]cmdLineFlag
 		}
 	}
 	return out, nil
+}
+
+var reComment = regexp.MustCompile(`^\/\/ (.*)`)
+
+// parseValidationResults reads the comment lines from the start of the test file and returns them
+// as the expected result.
+func parseValidationResult(path string, fsReader oswrapper.FilesystemReader) (string, error) {
+	inputFile, err := fsReader.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer inputFile.Close()
+
+	expected := ""
+	scanner := bufio.NewScanner(inputFile)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		content := scanner.Text()
+		m := reComment.FindStringSubmatch(content)
+		if len(m) == 2 {
+			expected += m[1] + "\n"
+			continue
+		}
+		if len(content) > 0 && !strings.HasPrefix(content, "//") {
+			break
+		}
+	}
+	return expected, nil
 }
 
 // parseOutputFormat parses the outputFormat(s) from s, and
