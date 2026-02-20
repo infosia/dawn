@@ -37,6 +37,17 @@ namespace dawn::native::vulkan {
 
 class Device;
 
+class SharedTextureMemoryContentsVk final : public SharedTextureMemoryContents {
+  public:
+    SharedTextureMemoryContentsVk(WeakRef<SharedTextureMemoryBase> sharedTextureMemory,
+                                  bool isYCbCrFilterable);
+
+    bool IsYCbCrFilterable() const;
+
+  private:
+    bool mIsYCbCrFilterable = false;
+};
+
 class SharedTextureMemory final : public SharedTextureMemoryBase {
   public:
     static ResultOrError<Ref<SharedTextureMemory>>
@@ -68,6 +79,8 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
                         uint32_t queueFamilyIndex);
     void DestroyImpl(DestroyReason reason) override;
 
+    Ref<SharedResourceMemoryContents> CreateContents() override;
+
     ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) override;
     MaybeError BeginAccessImpl(TextureBase* texture,
@@ -85,6 +98,7 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
 
     // Populated if this instance was created from an AHardwareBuffer.
     YCbCrVkDescriptor mYCbCrAHBInfo;
+    bool mIsYCbCrFilterable;
 };
 
 }  // namespace dawn::native::vulkan

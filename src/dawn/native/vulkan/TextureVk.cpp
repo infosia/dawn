@@ -2106,17 +2106,24 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
     if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
         mIsYCbCr = true;
-        mYCbCrVkDescriptor = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
-        mYCbCrVkDescriptor.nextInChain = nullptr;
+        mHasYCbCrDescriptor = true;
+        mIsYCbCrFilterable = static_cast<SharedTextureMemoryContentsVk*>(
+                                 GetTexture()->GetSharedResourceMemoryContents())
+                                 ->IsYCbCrFilterable();
+
+        YCbCrVkDescriptor yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
+        yCbCr.nextInChain = nullptr;
 
         DAWN_TRY_ASSIGN(mSamplerYCbCrConversion,
-                        CreateSamplerYCbCrConversionCreateInfo(mYCbCrVkDescriptor, device));
+                        CreateSamplerYCbCrConversionCreateInfo(yCbCr, device));
 
         samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
         samplerYCbCrInfo.pNext = nullptr;
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
 
         createInfo.pNext = &samplerYCbCrInfo;
+    } else if (descriptor->format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        mIsYCbCr = true;
     }
 
     DAWN_TRY(CheckVkSuccess(
@@ -2261,9 +2268,14 @@ bool TextureView::IsYCbCr() const {
     return mIsYCbCr;
 }
 
-YCbCrVkDescriptor TextureView::GetYCbCrVkDescriptor() const {
+bool TextureView::HasYCbCrDescriptor() const {
     DAWN_ASSERT(IsYCbCr());
-    return mYCbCrVkDescriptor;
+    return mHasYCbCrDescriptor;
+}
+
+bool TextureView::IsYCbCrFilterable() const {
+    DAWN_ASSERT(IsYCbCr());
+    return mIsYCbCrFilterable;
 }
 
 void TextureView::SetLabelImpl() {
