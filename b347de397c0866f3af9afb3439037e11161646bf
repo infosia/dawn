@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c0b5550_59490335",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-20T21:04:57Z",
+      "side": 1,
+      "message": "I think this also need update to chain in `TexelBufferBindingEntry` (like ExternalTexture) We can leave this with TODO for acutal implementation if it\u0027s hard.\nBut why data.textureViewId passed compilation?",
+      "revId": "b347de397c0866f3af9afb3439037e11161646bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
