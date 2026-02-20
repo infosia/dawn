@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794865c4_7fdb9b01",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-20T01:49:10Z",
+      "side": 1,
+      "message": "This should be `texelBufferViewId`? (and related FillEntry) (a view of a buffer)",
+      "revId": "6024b81e20dae18d861feda79595f83b1fb9a809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
