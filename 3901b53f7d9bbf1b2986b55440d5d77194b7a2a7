@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "656b5c7d_ec1eb38c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-20T19:52:21Z",
+      "side": 1,
+      "message": "Right, having untriaged tests is fine as long as we know which ones they are.",
+      "parentUuid": "1fa94dc8_aa3abb9c",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "626b3326_5a69bb83",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 6
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Yes this was my thought process. I agree that the bug suggests it is more accuracy.\nI can change these ones.\n\nAlso i saw some comments that maybe this is resolved by argument buffers?",
       "parentUuid": "626b3326_5a69bb83",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1d6efa5_75275600",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-20T19:52:21Z",
+      "side": 1,
+      "message": "Yes, weird accuracy thing that we believe should be fixed by argument buffers (based on comparisons to WebKit which is already using argument buffers).",
+      "parentUuid": "0cf9409e_a70ce9da",
       "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
