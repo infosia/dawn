@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bd3a0157_1437bf99",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-20T13:17:16Z",
+      "side": 1,
+      "message": "I use Canary where WebGPUCOmpatibilityMode flag is enabled by default. This is why `textureBindingViewDimension` for `texture` in DevTools console says `\"2d-array\"`.\n\nCould it be a dawn wire thing?",
+      "parentUuid": "82b05197_a115d0bd",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7126bfbb_a8df720a",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
         "patchSetId": 7
@@ -83,6 +101,24 @@
       "writtenOn": "2026-02-20T11:23:51Z",
       "side": 1,
       "message": "This should return `WGPUTextureViewDimension_Undefined` no?",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cf0268b_8c73ebb1",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-20T13:17:16Z",
+      "side": 1,
+      "message": "WGPUTextureViewDimension_Undefined is not valid in Emscripten. I could use `WebGPU.TextureViewDimension[0]` but that resolves to `undefined` as well.",
+      "parentUuid": "e1ce332a_2ce7abc7",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
