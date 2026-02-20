@@ -1,4 +1,4 @@
-// Copyright 2023 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,25 +25,28 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_SPIRV_IR_LITERAL_OPERAND_H_
-#define SRC_TINT_LANG_SPIRV_IR_LITERAL_OPERAND_H_
+#include "src/tint/lang/spirv/type/literal.h"
 
-#include "src/tint/lang/core/ir/constant.h"
-#include "src/tint/utils/rtti/castable.h"
+#include <gtest/gtest.h>
 
-namespace tint::spirv::ir {
+#include "src/tint/lang/core/type/u32.h"
 
-/// LiteralOperand is a type of constant value that is intended to be emitted as a literal in
-/// the SPIR-V instruction stream.
-class LiteralOperand final : public Castable<LiteralOperand, core::ir::Constant> {
-  public:
-    /// Constructor
-    /// @param value the operand value
-    explicit LiteralOperand(const core::constant::Value* value);
-    /// Destructor
-    ~LiteralOperand() override;
-};
+namespace tint::spirv::type {
+namespace {
 
-}  // namespace tint::spirv::ir
+TEST(LiteralTest, Equals) {
+    const Literal a{};
+    const Literal b{};
+    const core::type::U32 c{};
 
-#endif  // SRC_TINT_LANG_SPIRV_IR_LITERAL_OPERAND_H_
+    EXPECT_TRUE(a.Equals(b));
+    EXPECT_FALSE(a.Equals(c));
+}
+
+TEST(LiteralTest, FriendlyName) {
+    const Literal l;
+    EXPECT_EQ(l.FriendlyName(), "spirv.literal");
+}
+
+}  // namespace
+}  // namespace tint::spirv::type

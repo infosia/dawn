@@ -63,6 +63,7 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/type/explicit_layout_array.h"
 #include "src/tint/lang/spirv/type/image.h"
+#include "src/tint/lang/spirv/type/literal.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 
@@ -1534,6 +1535,12 @@ class Parser {
                 Type(spirv_context_->get_type_mgr()->GetId(s->type())), std::move(elements));
         }
         TINT_UNIMPLEMENTED() << "unhandled constant type";
+    }
+
+    /// @returns a literal operand with the given value
+    core::ir::Value* Literal(uint32_t value) {
+        return b_.Constant(ir_.constant_values.Get<core::constant::Scalar<u32>>(
+            ty_.Get<type::Literal>(), u32(value)));
     }
 
     /// Register an IR value for a SPIR-V result ID.
@@ -3129,13 +3136,13 @@ class Parser {
 
         if (inst.NumInOperands() > 2) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(2);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
 
             if (literal_mask != 0) {
                 args.Push(Value(inst.GetSingleWordInOperand(3)));
             }
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), fn, args), inst.result_id());
@@ -3150,7 +3157,7 @@ class Parser {
 
         if (inst.NumInOperands() > 3) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(3);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
 
             if (literal_mask != 0) {
                 TINT_ASSERT(static_cast<spv::ImageOperandsMask>(literal_mask) ==
@@ -3159,7 +3166,7 @@ class Parser {
                 args.Push(Value(inst.GetSingleWordInOperand(4)));
             }
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()),
@@ -3176,7 +3183,7 @@ class Parser {
 
         if (inst.NumInOperands() > 3) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(3);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
 
             if (literal_mask != 0) {
                 TINT_ASSERT(static_cast<spv::ImageOperandsMask>(literal_mask) ==
@@ -3185,7 +3192,7 @@ class Parser {
                 args.Push(Value(inst.GetSingleWordInOperand(4)));
             }
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), spirv::BuiltinFn::kImageGather,
@@ -3201,7 +3208,7 @@ class Parser {
 
         if (inst.NumInOperands() > 2) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(2);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
 
             if (literal_mask != 0) {
                 TINT_ASSERT(inst.NumInOperands() > 3);
@@ -3211,7 +3218,7 @@ class Parser {
                 args.Push(Value(inst.GetSingleWordInOperand(i)));
             }
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), fn, args), inst.result_id());
@@ -3230,7 +3237,7 @@ class Parser {
 
         if (inst.NumInOperands() > 3) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(3);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
 
             if (literal_mask != 0) {
                 TINT_ASSERT(inst.NumInOperands() > 4);
@@ -3249,7 +3256,7 @@ class Parser {
                 TINT_ASSERT(v == 0.0f) << "Dref LOD values must be 0.0";
             }
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), fn, args), inst.result_id());
@@ -3286,10 +3293,10 @@ class Parser {
         Vector<core::ir::Value*, 4> args = {image, coord, texel};
         if (inst.NumInOperands() > 3) {
             uint32_t literal_mask = inst.GetSingleWordInOperand(3);
-            args.Push(b_.Constant(u32(literal_mask)));
+            args.Push(Literal(literal_mask));
             TINT_ASSERT(literal_mask == 0);
         } else {
-            args.Push(b_.Zero(ty_.u32()));
+            args.Push(Literal(0u));
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(ty_.void_(), spirv::BuiltinFn::kImageWrite, args),
