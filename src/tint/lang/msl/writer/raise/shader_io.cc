@@ -89,21 +89,13 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // The following builtin values are polyfilled using other builtin values:
         // * workgroup_index - workgroup_id and num_workgroups
         // * global_invocation_index - global_invocation_id, num_workgroups (and workgroup size)
-        const bool has_global_invocation_index = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kGlobalInvocationIndex;
-        });
-        const bool has_num_workgroups = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kNumWorkgroups;
-        });
-        const bool has_workgroup_id = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kWorkgroupId;
-        });
-        const bool has_workgroup_index = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kWorkgroupIndex;
-        });
-        const bool has_global_invocation_id = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kGlobalInvocationId;
-        });
+        const bool has_global_invocation_index =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
+        const bool has_num_workgroups = HasBuiltinInput(core::BuiltinValue::kNumWorkgroups);
+        const bool has_workgroup_id = HasBuiltinInput(core::BuiltinValue::kWorkgroupId);
+        const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
+        const bool has_global_invocation_id =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationId);
 
         const bool needs_workgroup_id = has_workgroup_index;
         if (needs_workgroup_id && !has_workgroup_id) {

@@ -257,6 +257,12 @@ struct State {
 
 }  // namespace
 
+bool ShaderIOBackendState::HasBuiltinInput(core::BuiltinValue builtin) const {
+    return inputs.Any([builtin](auto& struct_mem_desc) {  //
+        return struct_mem_desc.attributes.builtin == builtin;
+    });
+}
+
 core::ir::Value* ShaderIOBackendState::PolyfillWorkgroupIndex(Builder& builder,
                                                               uint32_t workgroup_id_index,
                                                               uint32_t num_workgroups_index) {

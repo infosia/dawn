@@ -231,15 +231,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
-        if (config.add_input_position_member) {
-            const bool has_position_member = inputs.Any([](auto& struct_mem_desc) {
-                return struct_mem_desc.attributes.builtin == core::BuiltinValue::kPosition;
-            });
-            if (!has_position_member) {
-                core::IOAttributes attrs;
-                attrs.builtin = core::BuiltinValue::kPosition;
-                AddInput(ir.symbols.New("pos"), ty.vec4f(), attrs);
-            }
+        if (config.add_input_position_member && !HasBuiltinInput(core::BuiltinValue::kPosition)) {
+            core::IOAttributes attrs{
+                .builtin = core::BuiltinValue::kPosition,
+            };
+            AddInput(ir.symbols.New("pos"), ty.vec4f(), attrs);
         }
 
         // Check if we need to add certain builtins for polyfills:
@@ -247,27 +243,16 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // workgroup size)
         // * workgroup_id for workgroup_index or global_invocation_index
         // * num_workgroups for workgroup_index or global_invocation_index
-        const bool has_subgroup_id = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kSubgroupId;
-        });
-        const bool has_local_invocation_index = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kLocalInvocationIndex;
-        });
-        const bool has_global_invocation_index = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kGlobalInvocationIndex;
-        });
-        const bool has_num_workgroups = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kNumWorkgroups;
-        });
-        const bool has_workgroup_id = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kWorkgroupId;
-        });
-        const bool has_workgroup_index = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kWorkgroupIndex;
-        });
-        const bool has_global_invocation_id = inputs.Any([](auto& struct_mem_desc) {
-            return struct_mem_desc.attributes.builtin == core::BuiltinValue::kGlobalInvocationId;
-        });
+        const bool has_subgroup_id = HasBuiltinInput(core::BuiltinValue::kSubgroupId);
+        const bool has_local_invocation_index =
+            HasBuiltinInput(core::BuiltinValue::kLocalInvocationIndex);
+        const bool has_global_invocation_index =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
+        const bool has_num_workgroups = HasBuiltinInput(core::BuiltinValue::kNumWorkgroups);
+        const bool has_workgroup_id = HasBuiltinInput(core::BuiltinValue::kWorkgroupId);
+        const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
+        const bool has_global_invocation_id =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationId);
         const bool needs_local_invocation_index = has_subgroup_id && linear_workgroup_size;
         if (needs_local_invocation_index && !has_local_invocation_index) {
             core::IOAttributes attrs{
