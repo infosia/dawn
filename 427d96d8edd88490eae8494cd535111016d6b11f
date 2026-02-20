@@ -16,6 +16,24 @@
       "message": "nit: can\u0027t the NotifyType be part of the template parameters for CondVarGuard? Or alternatively it could be passed as a normal parameter here since the inlining of the functions will cause constant evaluation to make this switch free.",
       "revId": "427d96d8edd88490eae8494cd535111016d6b11f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0f2eb54_58ad91e0",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-20T01:29:25Z",
+      "side": 1,
+      "message": "I changed the implementation quite a bit to address this, so PTAL again before I submit!",
+      "parentUuid": "008b2047_9271051c",
+      "revId": "427d96d8edd88490eae8494cd535111016d6b11f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
