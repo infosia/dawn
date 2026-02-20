@@ -54,8 +54,8 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     // Returns true if the BindGroup was successfully populated (now or on a previous call)
     // in the current allocator's heap. If false is returned, caller should
     // AllocateAndSwitchShaderVisibleHeap and populate again.
-    bool PopulateViews(MutexProtected<ShaderVisibleDescriptorAllocator>& viewAllocator);
-    bool PopulateSamplers(MutexProtected<ShaderVisibleDescriptorAllocator>& samplerAllocator);
+    bool PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator);
+    bool PopulateSamplers(ShaderVisibleDescriptorAllocator* samplerAllocator);
 
     D3D12_GPU_DESCRIPTOR_HANDLE GetBaseViewDescriptor() const;
     D3D12_GPU_DESCRIPTOR_HANDLE GetBaseSamplerDescriptor() const;

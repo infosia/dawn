@@ -377,8 +377,8 @@ MaybeError Device::TickImpl() {
     ExecutionSerial completedSerial = GetQueue()->GetCompletedCommandSerial();
 
     (*mResourceAllocatorManager)->Tick(completedSerial);
-    (*mViewShaderVisibleDescriptorAllocator)->Tick(completedSerial);
-    (*mSamplerShaderVisibleDescriptorAllocator)->Tick(completedSerial);
+    mViewShaderVisibleDescriptorAllocator->Tick(completedSerial);
+    mSamplerShaderVisibleDescriptorAllocator->Tick(completedSerial);
     (*mRenderTargetViewAllocator)->Tick(completedSerial);
     (*mDepthStencilViewAllocator)->Tick(completedSerial);
     mUsedComObjectRefs->ClearUpTo(completedSerial);
@@ -796,14 +796,12 @@ void Device::DestroyImpl(DestroyReason reason) {
     DAWN_ASSERT(mUsedComObjectRefs->Empty());
 }
 
-MutexProtected<ShaderVisibleDescriptorAllocator>& Device::GetViewShaderVisibleDescriptorAllocator()
-    const {
-    return *mViewShaderVisibleDescriptorAllocator.get();
+ShaderVisibleDescriptorAllocator* Device::GetViewShaderVisibleDescriptorAllocator() const {
+    return mViewShaderVisibleDescriptorAllocator.get();
 }
 
-MutexProtected<ShaderVisibleDescriptorAllocator>&
-Device::GetSamplerShaderVisibleDescriptorAllocator() const {
-    return *mSamplerShaderVisibleDescriptorAllocator.get();
+ShaderVisibleDescriptorAllocator* Device::GetSamplerShaderVisibleDescriptorAllocator() const {
+    return mSamplerShaderVisibleDescriptorAllocator.get();
 }
 
 MutexProtected<StagingDescriptorAllocator>* Device::GetViewStagingDescriptorAllocator(

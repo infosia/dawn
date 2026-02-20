@@ -253,7 +253,7 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
     }
 }
 
-bool ResourceTable::PopulateViews(MutexProtected<ShaderVisibleDescriptorAllocator>& viewAllocator) {
+bool ResourceTable::PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator) {
     if (viewAllocator->IsAllocationStillValid(mGPUViewAllocation)) {
         return true;
     }
