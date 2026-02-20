@@ -35,12 +35,20 @@
 namespace dawn {
 namespace {
 
-class YCbCrVulkanSamplersWithoutFeatureTest : public ValidationTest {
-    void SetUp() override {
-        ValidationTest::SetUp();
-        DAWN_SKIP_TEST_IF(UsesWire());
-    }
+wgpu::ExternalTextureDescriptor CreateDefaultExternalTextureDescriptor() {
+    static constexpr std::array<float, 12> kPlaceholderConstantArray = {};
 
+    wgpu::ExternalTextureDescriptor desc;
+    desc.yuvToRgbConversionMatrix = kPlaceholderConstantArray.data();
+    desc.gamutConversionMatrix = kPlaceholderConstantArray.data();
+    desc.srcTransferFunctionParameters = kPlaceholderConstantArray.data();
+    desc.dstTransferFunctionParameters = kPlaceholderConstantArray.data();
+    desc.cropSize = {1, 1};
+    desc.apparentSize = {1, 1};
+    return desc;
+}
+
+class YCbCrVulkanSamplersWithoutFeatureTest : public ValidationTest {
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::MultiPlanarFormatExtendedUsages};
     }
@@ -68,11 +76,6 @@ TEST_F(YCbCrVulkanSamplersWithoutFeatureTest, YCbCrTextureNotSupported) {
 
 class YCbCrVulkanSamplersTest : public ValidationTest {
   protected:
-    void SetUp() override {
-        ValidationTest::SetUp();
-        DAWN_SKIP_TEST_IF(UsesWire());
-    }
-
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::MultiPlanarFormatP210,
                 wgpu::FeatureName::MultiPlanarFormatExtendedUsages,
@@ -507,6 +510,188 @@ TEST_F(YCbCrVulkanSamplersTest, YCbCrMakesDifferentTextureView) {
     wgpu::TextureView view2 = texture.CreateView(&viewDesc);
 
     ASSERT_NE(view1.Get(), view2.Get());
+}
+
+// That that OpaqueYCbCrAndroid views cannot be used to create ExternalTextures with only this
+// feature.
+TEST_F(YCbCrVulkanSamplersTest, YCbCrViewNotAllowedForExternalTexture) {
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    yCbCrDesc.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+    wgpu::TextureView ycbcrView = CreateYCbCrView(&yCbCrDesc);
+
+    // Error case, the OpaqueYCbCrForExternalTexture extension is not enabled.
+    wgpu::ExternalTextureDescriptor etDesc = CreateDefaultExternalTextureDescriptor();
+    etDesc.plane0 = ycbcrView;
+    ASSERT_DEVICE_ERROR(device.CreateExternalTexture(&etDesc));
+}
+
+class OpaqueYCbCrForExternalTextureWithoutFeatureTest : public ValidationTest {
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::MultiPlanarFormatExtendedUsages};
+    }
+};
+
+// Tests that creating a texture with OpaqueYCbCrAndroid is not possible without the feature.
+TEST_F(OpaqueYCbCrForExternalTextureWithoutFeatureTest, YCbCrTextureNotSupported) {
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    ASSERT_DEVICE_ERROR(device.CreateTexture(&tDesc));
+}
+
+class OpaqueYCbCrForExternalTextureTest : public ValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::MultiPlanarFormatP210,
+                wgpu::FeatureName::MultiPlanarFormatExtendedUsages,
+                wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture};
+    }
+};
+
+// Test that OpaqueYCbCrAndroid texture views can be created.
+TEST_F(OpaqueYCbCrForExternalTextureTest, YCbCrViewSupported) {
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+    // Success case: a texture view can be created without YCbCrVkDescriptor.
+    texture.CreateView();
+
+    // Error case: using a YCbCrVkDescriptor is not allowed with just this feature.
+    wgpu::TextureViewDescriptor viewDesc = {};
+    wgpu::YCbCrVkDescriptor ycbcr = {};
+    ycbcr.externalFormat = 1;
+    viewDesc.nextInChain = &ycbcr;
+    ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+}
+
+// That that OpaqueYCbCrAndroid views cannot be used in BindGroups with just this feature.
+TEST_F(OpaqueYCbCrForExternalTextureTest, YCbCrViewNotAllowedInBindGroup) {
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::TextureSampleType::UnfilterableFloat}});
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, texture.CreateView()}}));
+}
+
+// That that OpaqueYCbCrAndroid views can be used to create single-planar ExternalTextures.
+TEST_F(OpaqueYCbCrForExternalTextureTest, YCbCrViewForExternalTexture) {
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    wgpu::TextureView ycbcrView = device.CreateTexture(&tDesc).CreateView();
+
+    // Success case, the ExternalTexture uses a single "plane" that's the YCbCr view.
+    wgpu::ExternalTextureDescriptor etDesc = CreateDefaultExternalTextureDescriptor();
+    etDesc.plane0 = ycbcrView;
+    device.CreateExternalTexture(&etDesc);
+
+    // Error case, the ExternalTexture cannot be created with a YCbCrView and a second plane.
+    tDesc.format = wgpu::TextureFormat::RG8Unorm;  // What could be a UV plane.
+    etDesc.plane1 = device.CreateTexture(&tDesc).CreateView();
+    ASSERT_DEVICE_ERROR(device.CreateExternalTexture(&etDesc));
+}
+
+class BothYCbCrExtensionTest : public ValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::MultiPlanarFormatP210,
+                wgpu::FeatureName::MultiPlanarFormatExtendedUsages,
+                wgpu::FeatureName::StaticSamplers, wgpu::FeatureName::YCbCrVulkanSamplers,
+                wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture};
+    }
+};
+
+// That that only views without a YCbCrVkDescriptor can be used to create ExternalTextures.
+TEST_F(BothYCbCrExtensionTest, YCbCrViewForExternalTexture) {
+    // Create view with / without a YCbCrVkDescriptor.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+    wgpu::TextureViewDescriptor viewDesc;
+    wgpu::TextureView noYcbcrDescView = texture.CreateView(&viewDesc);
+
+    wgpu::YCbCrVkDescriptor ycbcrDesc;
+    ycbcrDesc.externalFormat = 1;
+    viewDesc.nextInChain = &ycbcrDesc;
+    wgpu::TextureView ycbcrDescView = texture.CreateView(&viewDesc);
+
+    // Success case: the view doesn't have a YCbCrVkDescriptor.
+    wgpu::ExternalTextureDescriptor etDesc = CreateDefaultExternalTextureDescriptor();
+    etDesc.plane0 = noYcbcrDescView;
+    device.CreateExternalTexture(&etDesc);
+
+    // Error case: the view has a YCbCrVkDescriptor.
+    etDesc.plane0 = ycbcrDescView;
+    ASSERT_DEVICE_ERROR(device.CreateExternalTexture(&etDesc));
+}
+
+// Tests that creating a bind group layout with a valid static sampler succeeds if the
+// required feature is enabled.
+TEST_F(BothYCbCrExtensionTest, CreateBindGroupWithYCbCrView) {
+    wgpu::YCbCrVkDescriptor ycbcrDesc;
+    ycbcrDesc.externalFormat = 1;
+
+    // Create view with / without a YCbCrVkDescriptor.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {2, 2},
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+    };
+    wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+    wgpu::TextureViewDescriptor viewDesc;
+    wgpu::TextureView noYcbcrDescView = texture.CreateView(&viewDesc);
+
+    viewDesc.nextInChain = &ycbcrDesc;
+    wgpu::TextureView ycbcrDescView = texture.CreateView(&viewDesc);
+
+    // Set up the BGL with the static YCbCr sampler.
+    wgpu::SamplerDescriptor sDesc = {};
+    sDesc.nextInChain = &ycbcrDesc;
+    wgpu::Sampler ycbcrSampler = device.CreateSampler(&sDesc);
+
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::BindGroupLayoutEntry& binding0 = entries.emplace_back();
+    binding0.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    staticSamplerBinding.sampler = ycbcrSampler;
+    staticSamplerBinding.sampledTextureBinding = 1;
+    binding0.nextInChain = &staticSamplerBinding;
+
+    wgpu::BindGroupLayoutEntry& binding1 = entries.emplace_back();
+    binding1.binding = 1;
+    binding1.texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
+    binding1.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding1.texture.multisampled = false;
+
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = entries.size();
+    layoutDesc.entries = entries.data();
+    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&layoutDesc);
+
+    // Success case: the view has a YCbCrVkDescriptor
+    utils::MakeBindGroup(device, layout, {{1, ycbcrDescView}});
+
+    // Error case: the view doesn't have a YCbCrVkDescriptor
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, layout, {{1, noYcbcrDescView}}));
 }
 
 }  // anonymous namespace
