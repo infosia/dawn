@@ -1787,6 +1787,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl:
         case wgpu::FeatureName::AtomicVec2uMinMax:
         case wgpu::FeatureName::Unorm16FormatsForExternalTexture:
+        case wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture:
             return false;
     }
     return false;
