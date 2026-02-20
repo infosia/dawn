@@ -2106,11 +2106,15 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
     if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
         mIsYCbCr = true;
-        mYCbCrVkDescriptor = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
-        mYCbCrVkDescriptor.nextInChain = nullptr;
+        mIsYCbCrFilterable = static_cast<SharedTextureMemoryContentsVk*>(
+                                 GetTexture()->GetSharedResourceMemoryContents())
+                                 ->IsYCbCrFilterable();
+
+        YCbCrVkDescriptor yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
+        yCbCr.nextInChain = nullptr;
 
         DAWN_TRY_ASSIGN(mSamplerYCbCrConversion,
-                        CreateSamplerYCbCrConversionCreateInfo(mYCbCrVkDescriptor, device));
+                        CreateSamplerYCbCrConversionCreateInfo(yCbCr, device));
 
         samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
         samplerYCbCrInfo.pNext = nullptr;
@@ -2261,9 +2265,9 @@ bool TextureView::IsYCbCr() const {
     return mIsYCbCr;
 }
 
-YCbCrVkDescriptor TextureView::GetYCbCrVkDescriptor() const {
+bool TextureView::IsYCbCrFilterable() const {
     DAWN_ASSERT(IsYCbCr());
-    return mYCbCrVkDescriptor;
+    return mIsYCbCrFilterable;
 }
 
 void TextureView::SetLabelImpl() {
