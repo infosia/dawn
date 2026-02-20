@@ -222,20 +222,4 @@ void APISharedTextureMemoryEndAccessStateFreeMembers(WGPUSharedTextureMemoryEndA
     delete[] state->signaledValues;
 }
 
-// SharedTextureMemoryContents
-
-SharedTextureMemoryContents::SharedTextureMemoryContents(
-    WeakRef<SharedTextureMemoryBase> sharedTextureMemory)
-    : SharedResourceMemoryContents(sharedTextureMemory),
-      mSupportedExternalSampleTypes(SampleTypeBit::None) {}
-
-SampleTypeBit SharedTextureMemoryContents::GetExternalFormatSupportedSampleTypes() const {
-    return mSupportedExternalSampleTypes;
-}
-
-void SharedTextureMemoryContents::SetExternalFormatSupportedSampleTypes(
-    SampleTypeBit supportedSampleType) {
-    mSupportedExternalSampleTypes = supportedSampleType;
-}
-
 }  // namespace dawn::native
