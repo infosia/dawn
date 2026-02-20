@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daa5588a_b0c62c02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-20T20:16:38Z",
+      "side": 1,
+      "message": "PTAL\n\n[Here](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-try-linux-x64-sws-rel/5/infra) is an led run with this CL applied, but on a patchset with the `//infra/specs` entry removed and the Starlark-defined test specs forcibly used. Not seeing any difference compared to a [CI run](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-sws-rel/2085/infra) using the `//infra/specs` version.",
+      "revId": "454fd7ca0640a8e7520097add9e5c4f5e59ef8c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
