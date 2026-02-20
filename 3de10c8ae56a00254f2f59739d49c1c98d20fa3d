@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbbe4da_0c25392d",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-20T10:38:25Z",
+      "side": 1,
+      "message": "I\u0027ve added this so that you can see `desc.textureBindingViewDimension` is well-set.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b7a8f1e_b9acf2a4",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-20T10:38:25Z",
+      "side": 1,
+      "message": "But here..., when I inspect `texture` in DevTools, it says `textureBindingViewDimension` is indeed `\"2d-array\"` BUT `texture.textureBindingViewDimension` below says \"undefined\". I don\u0027t get it.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7126bfbb_a8df720a",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2715,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-20T10:38:25Z",
+      "side": 1,
+      "message": "Note that I\u0027ve added this because it can now be undefined.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
