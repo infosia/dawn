@@ -16,6 +16,24 @@
       "message": "nit: As this is a complex x macro usage and reference external macros from Schema.h, I asked gemini to generate some comments to better explain things:\n\n```\nThis block uses DAWN_REPLAY_GET_X_MACRO to dispatch to different handlers based on argument count:\n\nDAWN_SET_LABEL_CASE_INVALID: Triggered for types with an extra parameter (e.g., Invalid, 0), resulting in a no-op case.\n\nDAWN_SET_LABEL_CASE_VALID: Triggered for standard types (e.g., Buffer), which performs the mResources lookup, asserts existence, and updates both the wgpu object label and the internal cache.\n\nThis ensures that adding new types to DAWN_REPLAY_OBJECT_TYPES automatically updates the labeling logic without boilerplate.\n\nThe DAWN_SET_LABEL_GEN expands something like:\n--- Case 1: Standard Resource (e.g., Buffer) ---\ncase schema::ObjectType::Buffer: {\n  auto iter \u003d mResources.find(id);\n  DAWN_ASSERT(iter !\u003d mResources.end());\n  std::get_if\u003cwgpu::Buffer\u003e(\u0026iter-\u003esecond.resource)-\u003eSetLabel(wgpu::StringView(label));\n  iter-\u003esecond.label \u003d label;\n  break;\n}\n--- Case 2: Placeholder/Invalid Type (e.g., Invalid, 0) ---\ncase schema::ObjectType::Invalid:\n  break;\n```",
       "revId": "ca8572232516c0c21fb5ef970464ee54dc7da422",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a27f6c9_9a0a95f8",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-20T01:52:39Z",
+      "side": 1,
+      "message": "Looking at more stacked CL and seeing this pattern repeatedly, the gemini comment seems a bit overkill... So maybe just some 2-liner explaination seems good enough",
+      "parentUuid": "9c7133ea_8c1a7a56",
+      "revId": "ca8572232516c0c21fb5ef970464ee54dc7da422",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
