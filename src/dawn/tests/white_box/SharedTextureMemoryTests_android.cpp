@@ -485,7 +485,7 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoFromDevice) {
 }
 
 // Test querying YCbCr info from the SharedTextureMemory without external format.
-TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithoutExternalFormat) {
+TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithoutYCbCrFormat) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
 
@@ -524,7 +524,6 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithoutExternalFormat) {
     // AHB.
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = false;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
@@ -574,7 +573,7 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithExternalFormat) {
         .width = 4,
         .height = 4,
         .layers = 1,
-        .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .format = AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420,
         .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
@@ -601,7 +600,6 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithExternalFormat) {
     // AHB.
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
@@ -651,7 +649,7 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
         .width = 4,
         .height = 4,
         .layers = 1,
-        .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .format = AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420,
         .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
@@ -659,7 +657,6 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;

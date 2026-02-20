@@ -53,7 +53,7 @@ wgpu::Texture Create2DTexture(wgpu::Device& device) {
         .width = kWidth,
         .height = kHeight,
         .layers = 1,
-        .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .format = AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420,
         .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
@@ -64,7 +64,6 @@ wgpu::Texture Create2DTexture(wgpu::Device& device) {
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
@@ -311,7 +310,7 @@ TEST_P(YCbCrInfoTest, CreateBindGroupWithYCbCrSamplerSupported) {
 
     wgpu::BindGroupLayoutEntry& binding1 = entries.emplace_back();
     binding1.binding = 1;
-    binding1.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding1.texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
     binding1.texture.viewDimension = wgpu::TextureViewDimension::e2D;
     binding1.texture.multisampled = false;
 
@@ -459,7 +458,7 @@ TEST_P(YCbCrInfoTest, CreateBindGroupWithSamplerAndStaticSamplerSupported) {
 
     wgpu::BindGroupLayoutEntry& binding2 = entries.emplace_back();
     binding2.binding = 2;
-    binding2.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding2.texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
     binding2.texture.viewDimension = wgpu::TextureViewDimension::e2D;
     binding2.texture.multisampled = false;
 
