@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "b64c09228319d4f67ac2e6c0a46f2b3dc88b3564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5587f89e_272299cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T01:15:10Z",
+      "side": 1,
+      "message": "LGTM but could you add tests to SpotTests.cpp that trigger these codepaths in a basic way?",
+      "revId": "b64c09228319d4f67ac2e6c0a46f2b3dc88b3564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
