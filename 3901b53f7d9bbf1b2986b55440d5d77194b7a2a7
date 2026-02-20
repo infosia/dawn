@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fa94dc8_aa3abb9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T19:10:43Z",
+      "side": 1,
+      "message": "right now the latter. But ideally i think every bug will fall into a category. For reporting/visualization we can have a uncategorized/untriaged treatment. \n\nBecause of our flakiness of testing/new dev features we will always have webgpu:shader tests that end up in the untriaged part of the file",
+      "parentUuid": "4a724367_3732d293",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "626b3326_5a69bb83",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 6
