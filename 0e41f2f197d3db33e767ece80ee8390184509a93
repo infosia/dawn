@@ -16,6 +16,29 @@
       "message": "Currently as it is written you cannot write code that requires extensions. Pretty sure we could just add this to the environment",
       "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "537946b3_1cd1796b",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T16:58:07Z",
+      "side": 1,
+      "message": "maybe just pass in   AllowedFeatures Everything() {",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
