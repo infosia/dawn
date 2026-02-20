@@ -524,7 +524,6 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithoutExternalFormat) {
     // AHB.
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = false;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
@@ -601,7 +600,6 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithExternalFormat) {
     // AHB.
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
@@ -659,7 +657,6 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
