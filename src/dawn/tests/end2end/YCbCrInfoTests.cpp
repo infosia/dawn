@@ -625,6 +625,22 @@ TEST_P(YCbCrInfoTest, CreatBindGroupYCbCrTextureWrongStaticSampler) {
     ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, layout, {{1, textureView}}));
 }
 
+// Test that using different YCbCr info creates different texture views. This is a test for a bug
+// where the TextureViewCache would not look at the YCbCr info and would cache as the same view all
+// textures views differing only on that info.
+TEST_P(YCbCrInfoTest, YCbCrMakesDifferentTextureView) {
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    yCbCrDesc.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+
+    wgpu::Texture texture = Create2DTexture(device);
+    yCbCrDesc.forceExplicitReconstruction = true;
+    wgpu::TextureView view1 = Create2DTextureView(texture, &yCbCrDesc);
+    yCbCrDesc.forceExplicitReconstruction = false;
+    wgpu::TextureView view2 = Create2DTextureView(texture, &yCbCrDesc);
+
+    ASSERT_NE(view1.Get(), view2.Get());
+}
+
 DAWN_INSTANTIATE_TEST(YCbCrInfoTest, VulkanBackend());
 
 // TODO(crbug.com/dawn/2476): Add validation that mipLevel, arrayLayers are always 1 along with 2D
