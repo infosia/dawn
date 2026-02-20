@@ -74,20 +74,33 @@ wgpu::TextureFormat FormatFromAHardwareBufferFormat(uint32_t ahbFormat) {
         // YUV formats are sampleable with external Vulkan samplers or as opaque samplers in GLES.
         // Treat them as External.
         case AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420:
-            return wgpu::TextureFormat::External;
+            return wgpu::TextureFormat::OpaqueYCbCrAndroid;
         case AHARDWAREBUFFER_FORMAT_YCbCr_P010:
-            return wgpu::TextureFormat::External;
+            return wgpu::TextureFormat::OpaqueYCbCrAndroid;
+        case AHARDWAREBUFFER_FORMAT_YCbCr_P210:
+            return wgpu::TextureFormat::OpaqueYCbCrAndroid;
 
-        // RGB formats with no direct representation in WebGPU. Trivially sampleable and renderable
-        // in Vulkan and GLES but data uploads are not currently supported.
+        // RGB formats with no direct representation in WebGPU. They could be sampleable and
+        // renderable in Vulkan and GLES but data uploads couldn't be supported without more work.
         case AHARDWAREBUFFER_FORMAT_R8G8B8_UNORM:
             return wgpu::TextureFormat::External;
         case AHARDWAREBUFFER_FORMAT_R5G6B5_UNORM:
-            return wgpu::TextureFormat::External;
+            return wgpu::TextureFormat::Undefined;
 
         // R10G10B10A10 maps to Vulkan format VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16 and no
         // GLES format. Not supported with no known use case.
         case AHARDWAREBUFFER_FORMAT_R10G10B10A10_UNORM:
+            return wgpu::TextureFormat::Undefined;
+
+            // Other formats not supported yet
+        case AHARDWAREBUFFER_FORMAT_R12_UINT:
+        case AHARDWAREBUFFER_FORMAT_R14_UINT:
+        case AHARDWAREBUFFER_FORMAT_R12G12_UINT:
+        case AHARDWAREBUFFER_FORMAT_R14G14_UINT:
+        case AHARDWAREBUFFER_FORMAT_R12G12B12A12_UINT:
+        case AHARDWAREBUFFER_FORMAT_R14G14B14A14_UINT:
+        case AHARDWAREBUFFER_FORMAT_B10G10R10A2_UNORM:
+        case AHARDWAREBUFFER_FORMAT_B10G10R10X2_UNORM:
             return wgpu::TextureFormat::Undefined;
 
         // Can be used as a Vulkan buffer or bound to a GLES buffer using GL_EXT_external_buffer.
@@ -99,7 +112,7 @@ wgpu::TextureFormat FormatFromAHardwareBufferFormat(uint32_t ahbFormat) {
         // YUV formats used by the camera and video decoder. Treat these all as external and
         // sampleable.
         default:
-            return wgpu::TextureFormat::External;
+            return wgpu::TextureFormat::OpaqueYCbCrAndroid;
     }
 }
 
