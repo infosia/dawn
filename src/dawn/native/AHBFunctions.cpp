@@ -92,17 +92,6 @@ wgpu::TextureFormat FormatFromAHardwareBufferFormat(uint32_t ahbFormat) {
         case AHARDWAREBUFFER_FORMAT_R10G10B10A10_UNORM:
             return wgpu::TextureFormat::Undefined;
 
-            // Other formats not supported yet
-        case AHARDWAREBUFFER_FORMAT_R12_UINT:
-        case AHARDWAREBUFFER_FORMAT_R14_UINT:
-        case AHARDWAREBUFFER_FORMAT_R12G12_UINT:
-        case AHARDWAREBUFFER_FORMAT_R14G14_UINT:
-        case AHARDWAREBUFFER_FORMAT_R12G12B12A12_UINT:
-        case AHARDWAREBUFFER_FORMAT_R14G14B14A14_UINT:
-        case AHARDWAREBUFFER_FORMAT_B10G10R10A2_UNORM:
-        case AHARDWAREBUFFER_FORMAT_B10G10R10X2_UNORM:
-            return wgpu::TextureFormat::Undefined;
-
         // Can be used as a Vulkan buffer or bound to a GLES buffer using GL_EXT_external_buffer.
         // These use cases are not currently supported.
         case AHARDWAREBUFFER_FORMAT_BLOB:
