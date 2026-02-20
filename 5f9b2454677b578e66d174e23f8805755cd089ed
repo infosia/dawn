@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2c2ca17c_c5102694",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T18:52:06Z",
+      "side": 1,
+      "message": ";)",
+      "parentUuid": "4045343c_87c7ff6e",
+      "revId": "5f9b2454677b578e66d174e23f8805755cd089ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3b3504e_ee41086c",
         "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
         "patchSetId": 15
@@ -31,6 +49,30 @@
       "writtenOn": "2026-02-20T18:49:54Z",
       "side": 1,
       "message": "I feel like these should be `DAWN_TEST_UNSUPPORTED_IF()` instead of reducing the limit and letting them pass, so that they show up as skipped tests.\n\nThat said, I realize that this would mean you completely lose test coverage for these devices. Maybe a separate test case for the max binding size scenario would be better?\n\nThen again as long as there are bugs open for the cases we care about then that should be good enough, so feel free to ignore this.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 9
+      },
+      "revId": "5f9b2454677b578e66d174e23f8805755cd089ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d5d90f_558212da",
+        "filename": "src/dawn/tests/end2end/OpArrayLengthTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T18:52:06Z",
+      "side": 1,
+      "message": "Yes this is a difficult situation. The end result is still very similar.",
+      "parentUuid": "c3b3504e_ee41086c",
       "range": {
         "startLine": 79,
         "startChar": 0,
