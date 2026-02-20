@@ -16,6 +16,24 @@
       "message": "This should be `texelBufferViewId`? (and related FillEntry) (a view of a buffer)",
       "revId": "6024b81e20dae18d861feda79595f83b1fb9a809",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2660f589_716163ae",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-20T20:16:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794865c4_7fdb9b01",
+      "revId": "6024b81e20dae18d861feda79595f83b1fb9a809",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
