@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a481e2a2_efb3358b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-20T22:46:18Z",
+      "side": 1,
+      "message": "This should make it a bit easier to do your multisampled input attachment thing.\nNote that you can\u0027t call this helper lazily in `GetInput()` though - you still need to know ahead of time (during FinalizeInputs) that you are going to need it, and then save the index for later (but that shouldn\u0027t be too hard to do now).",
+      "revId": "ccdb8ff3badca35bf4fc69d253041cf0d7b3af89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
