@@ -231,11 +231,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
-        if (config.add_input_position_member && !HasBuiltinInput(core::BuiltinValue::kPosition)) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kPosition,
-            };
-            AddInput(ir.symbols.New("pos"), ty.vec4f(), attrs);
+        if (config.add_input_position_member) {
+            RequireBuiltinInput(core::BuiltinValue::kPosition, ty.vec4f(), "pos");
         }
 
         // Check if we need to add certain builtins for polyfills:
@@ -244,42 +241,26 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // * workgroup_id for workgroup_index or global_invocation_index
         // * num_workgroups for workgroup_index or global_invocation_index
         const bool has_subgroup_id = HasBuiltinInput(core::BuiltinValue::kSubgroupId);
-        const bool has_local_invocation_index =
-            HasBuiltinInput(core::BuiltinValue::kLocalInvocationIndex);
         const bool has_global_invocation_index =
             HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
-        const bool has_num_workgroups = HasBuiltinInput(core::BuiltinValue::kNumWorkgroups);
-        const bool has_workgroup_id = HasBuiltinInput(core::BuiltinValue::kWorkgroupId);
         const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
-        const bool has_global_invocation_id =
-            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationId);
         const bool needs_local_invocation_index = has_subgroup_id && linear_workgroup_size;
-        if (needs_local_invocation_index && !has_local_invocation_index) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kLocalInvocationIndex,
-            };
-            AddInput(ir.symbols.New("local_invocation_index"), ty.u32(), attrs);
+        if (needs_local_invocation_index) {
+            RequireBuiltinInput(core::BuiltinValue::kLocalInvocationIndex, ty.u32(),
+                                "local_invocation_index");
         }
         const bool needs_workgroup_id = has_workgroup_index;
-        if (needs_workgroup_id && !has_workgroup_id) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kWorkgroupId,
-            };
-            AddInput(ir.symbols.New("workgroup_id"), ty.vec3u(), attrs);
+        if (needs_workgroup_id) {
+            RequireBuiltinInput(core::BuiltinValue::kWorkgroupId, ty.vec3u(), "workgroup_id");
         }
         const bool needs_num_workgroups = has_workgroup_index || has_global_invocation_index;
-        if (needs_num_workgroups && !has_num_workgroups) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kNumWorkgroups,
-            };
-            AddInput(ir.symbols.New("num_workgroups"), ty.vec3u(), attrs);
+        if (needs_num_workgroups) {
+            RequireBuiltinInput(core::BuiltinValue::kNumWorkgroups, ty.vec3u(), "num_workgroups");
         }
         const bool needs_global_invocation_id = has_global_invocation_index;
-        if (needs_global_invocation_id && !has_global_invocation_id) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kGlobalInvocationId,
-            };
-            AddInput(ir.symbols.New("global_invocation_id"), ty.vec3u(), attrs);
+        if (needs_global_invocation_id) {
+            RequireBuiltinInput(core::BuiltinValue::kGlobalInvocationId, ty.vec3u(),
+                                "global_invocation_id");
         }
 
         Vector<MemberInfo, 4> input_data;

@@ -91,32 +91,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         // * global_invocation_index - global_invocation_id, num_workgroups (and workgroup size)
         const bool has_global_invocation_index =
             HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
-        const bool has_num_workgroups = HasBuiltinInput(core::BuiltinValue::kNumWorkgroups);
-        const bool has_workgroup_id = HasBuiltinInput(core::BuiltinValue::kWorkgroupId);
         const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
-        const bool has_global_invocation_id =
-            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationId);
-
         const bool needs_workgroup_id = has_workgroup_index;
-        if (needs_workgroup_id && !has_workgroup_id) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kWorkgroupId,
-            };
-            AddInput(ir.symbols.New("workgroup_id"), ty.vec3u(), attrs);
+        if (needs_workgroup_id) {
+            RequireBuiltinInput(core::BuiltinValue::kWorkgroupId, ty.vec3u(), "workgroup_id");
         }
         const bool needs_num_workgroups = has_workgroup_index || has_global_invocation_index;
-        if (needs_num_workgroups && !has_num_workgroups) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kNumWorkgroups,
-            };
-            AddInput(ir.symbols.New("num_workgroups"), ty.vec3u(), attrs);
+        if (needs_num_workgroups) {
+            RequireBuiltinInput(core::BuiltinValue::kNumWorkgroups, ty.vec3u(), "num_workgroups");
         }
         const bool needs_global_invocation_id = has_global_invocation_index;
-        if (needs_global_invocation_id && !has_global_invocation_id) {
-            core::IOAttributes attrs{
-                .builtin = core::BuiltinValue::kGlobalInvocationId,
-            };
-            AddInput(ir.symbols.New("global_invocation_id"), ty.vec3u(), attrs);
+        if (needs_global_invocation_id) {
+            RequireBuiltinInput(core::BuiltinValue::kGlobalInvocationId, ty.vec3u(),
+                                "global_invocation_id");
         }
 
         Vector<core::type::Manager::StructMemberDesc, 4> input_struct_members;

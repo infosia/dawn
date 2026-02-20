@@ -263,6 +263,17 @@ bool ShaderIOBackendState::HasBuiltinInput(core::BuiltinValue builtin) const {
     });
 }
 
+uint32_t ShaderIOBackendState::RequireBuiltinInput(core::BuiltinValue builtin,
+                                                   const core::type::Type* type,
+                                                   std::string_view name) {
+    for (uint32_t i = 0; i < inputs.Length(); i++) {
+        if (inputs[i].attributes.builtin == builtin) {
+            return i;
+        }
+    }
+    return AddInput(ir.symbols.New(name), type, core::IOAttributes{.builtin = builtin});
+}
+
 core::ir::Value* ShaderIOBackendState::PolyfillWorkgroupIndex(Builder& builder,
                                                               uint32_t workgroup_id_index,
                                                               uint32_t num_workgroups_index) {
