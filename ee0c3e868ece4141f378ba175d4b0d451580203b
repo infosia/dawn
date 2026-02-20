@@ -33,6 +33,24 @@
       "message": "Could we have TODOs and issues to fix the various dangling pointers?",
       "revId": "ee0c3e868ece4141f378ba175d4b0d451580203b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "469ed819_61e4ccf7",
+        "filename": "src/dawn/native/ResourceMemoryAllocation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-20T13:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa5bb60_90d04153",
+      "revId": "ee0c3e868ece4141f378ba175d4b0d451580203b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
