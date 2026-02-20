@@ -57,10 +57,10 @@ struct FixTypeLayoutOptions {
 /// * Convert values that contain packed types to their original unpacked equivalents after loading
 ///   them from memory, and the vice versa before storing values to memory.
 ///
-/// @param module the module to transform
+/// @param ir the module to transform
 /// @param options the transform options
 /// @returns success or failure
-Result<SuccessType> FixTypeLayout(core::ir::Module& module, const FixTypeLayoutOptions& options);
+Result<SuccessType> FixTypeLayout(core::ir::Module& ir, const FixTypeLayoutOptions& options);
 
 }  // namespace tint::msl::writer::raise
 
