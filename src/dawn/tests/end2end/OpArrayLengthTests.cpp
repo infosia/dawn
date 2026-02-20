@@ -25,9 +25,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <cstdint>
 #include <string>
+#include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Math.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -35,20 +38,73 @@
 namespace dawn {
 namespace {
 
-class OpArrayLengthTest : public DawnTest {
+enum class TieredLimits {
+    No,
+    Yes,
+};
+
+std::ostream& operator<<(std::ostream& o, TieredLimits tieredLimits) {
+    switch (tieredLimits) {
+        case TieredLimits::No:
+            o << "NoTieredLimits";
+            break;
+        case TieredLimits::Yes:
+            o << "TieredLimits";
+            break;
+    }
+    return o;
+}
+
+DAWN_TEST_PARAM_STRUCT(OpArrayLengthTestParams, TieredLimits);
+
+class OpArrayLengthTest : public DawnTestWithParams<OpArrayLengthTestParams> {
   protected:
+    bool GetRequireUseTieredLimits() override {
+        return GetParam().mTieredLimits == TieredLimits::Yes;
+    }
+
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits& required) override {
         // Just copy all the limits, though all we really care about is
         // maxStorageBuffersInFragmentStage
         // maxStorageBuffersInVertexStage
+        // maxStorageBufferBindingSize
         supported.UnlinkedCopyTo(&required);
     }
 
     void SetUp() override {
-        DawnTest::SetUp();
+        DawnTestWithParams<OpArrayLengthTestParams>::SetUp();
 
-        // Create buffers of various size to check the length() implementation
+        auto maxBindingSizeSize = AlignDown(GetSupportedLimits().maxStorageBufferBindingSize, 4);
+        const uint64_t kReducedBindingSize = 1024 * 1024;
+        // Will fail with 'VK_ERROR_OUT_OF_DEVICE_MEMORY' due to the maxStorageBufferBindingSize
+        // portion of the test
+        if (IsCompatibilityMode() || IsSwiftshader() || IsANGLESwiftShader() || IsOpenGLES()) {
+            maxBindingSizeSize = kReducedBindingSize;
+        }
+
+        // Warp runs into memory issues.
+        if (IsWARP()) {
+            maxBindingSizeSize = kReducedBindingSize;
+        }
+
+        // TODO(crbug.com/473894293): [Capture] buffer mapping: investigate.
+        if (IsCaptureReplayCheckingEnabled()) {
+            maxBindingSizeSize = kReducedBindingSize;
+        }
+
+        // 32-bit x86 has issues with OpArrayLength.
+        if ((IsX86() && Is32Bit())) {
+            maxBindingSizeSize = kReducedBindingSize;
+        }
+
+        // TODO(crbug.com/485946556): Dawn native will report the wrong arrayLength for Apple
+        // hardware.
+        if (IsApple() && !GetRequireUseTieredLimits()) {
+            maxBindingSizeSize = kReducedBindingSize;
+        }
+
+        // Create buffers of various sizes to check the length() implementation
         wgpu::BufferDescriptor bufferDesc;
         bufferDesc.size = 4;
         bufferDesc.usage = wgpu::BufferUsage::Storage;
@@ -59,6 +115,9 @@ class OpArrayLengthTest : public DawnTest {
 
         bufferDesc.size = 512 + 256;
         mStorageBuffer512 = device.CreateBuffer(&bufferDesc);
+
+        bufferDesc.size = maxBindingSizeSize;
+        mStorageBufferMax = device.CreateBuffer(&bufferDesc);
 
         // Common shader code to use these buffers in shaders, assuming they are in bindgroup index
         // 0.
@@ -85,18 +144,27 @@ class OpArrayLengthTest : public DawnTest {
                 data : array<Buffer3Data>,
             }
             @group(0) @binding(2) var<storage, read> buffer3 : Buffer3;
+
+            struct Buffer4 {
+                data : array<u32>,
+            }
+            // Length should be max size of storage buffer divided by 4.
+            @group(0) @binding(3) var<storage, read> buffer4 : Buffer4;
         )";
 
         // See comments in the shader for an explanation of these values
-        mExpectedLengths = {1, 64, 56};
+        mExpectedLengths = {1, 64, 56, static_cast<uint32_t>(maxBindingSizeSize / 4)};
     }
 
     wgpu::BindGroupLayout MakeBindGroupLayout(wgpu::ShaderStage stages) {
         // Put them all in a bind group for tests to bind them easily.
         return utils::MakeBindGroupLayout(device,
-                                          {{0, stages, wgpu::BufferBindingType::ReadOnlyStorage},
-                                           {1, stages, wgpu::BufferBindingType::ReadOnlyStorage},
-                                           {2, stages, wgpu::BufferBindingType::ReadOnlyStorage}});
+                                          {
+                                              {0, stages, wgpu::BufferBindingType::ReadOnlyStorage},
+                                              {1, stages, wgpu::BufferBindingType::ReadOnlyStorage},
+                                              {2, stages, wgpu::BufferBindingType::ReadOnlyStorage},
+                                              {3, stages, wgpu::BufferBindingType::ReadOnlyStorage},
+                                          });
     }
 
     wgpu::BindGroup MakeBindGroup(wgpu::BindGroupLayout bindGroupLayout) {
@@ -105,15 +173,17 @@ class OpArrayLengthTest : public DawnTest {
                                         {0, mStorageBuffer4, 0, 4},
                                         {1, mStorageBuffer256, 0, wgpu::kWholeSize},
                                         {2, mStorageBuffer512, 256, wgpu::kWholeSize},
+                                        {3, mStorageBufferMax, 0, wgpu::kWholeSize},
                                     });
     }
 
     wgpu::Buffer mStorageBuffer4;
     wgpu::Buffer mStorageBuffer256;
     wgpu::Buffer mStorageBuffer512;
+    wgpu::Buffer mStorageBufferMax;
 
     std::string mShaderInterface;
-    std::array<uint32_t, 3> mExpectedLengths;
+    std::vector<uint32_t> mExpectedLengths;
 };
 
 // Test OpArrayLength in the compute stage
@@ -142,7 +212,7 @@ TEST_P(OpArrayLengthTest, Compute) {
     pipelineDesc.layout = pl;
     pipelineDesc.compute.module = utils::CreateShaderModule(device, (R"(
         struct ResultBuffer {
-            data : array<u32, 3>
+            data : array<u32, 4>
         }
         @group(1) @binding(0) var<storage, read_write> result : ResultBuffer;
         )" + mShaderInterface + R"(
@@ -150,6 +220,7 @@ TEST_P(OpArrayLengthTest, Compute) {
             result.data[0] = arrayLength(&buffer1.data);
             result.data[1] = arrayLength(&buffer2.data);
             result.data[2] = arrayLength(&buffer3.data);
+            result.data[3] = arrayLength(&buffer4.data);
         })")
                                                                         .c_str());
     wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&pipelineDesc);
@@ -167,7 +238,7 @@ TEST_P(OpArrayLengthTest, Compute) {
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
 
-    EXPECT_BUFFER_U32_RANGE_EQ(mExpectedLengths.data(), resultBuffer, 0, 3);
+    EXPECT_BUFFER_U32_RANGE_EQ(mExpectedLengths.data(), resultBuffer, 0, mExpectedLengths.size());
 }
 
 // Test OpArrayLength in the fragment stage
@@ -290,15 +361,11 @@ TEST_P(OpArrayLengthTest, Vertex) {
     EXPECT_PIXEL_RGBA8_EQ(expectedColor, renderPass.color, 0, 0);
 }
 
-DAWN_INSTANTIATE_TEST(OpArrayLengthTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      OpenGLESBackend({"gl_use_array_length_from_uniform"}),
-                      VulkanBackend(),
-                      WebGPUBackend());
+DAWN_INSTANTIATE_TEST_P(OpArrayLengthTest,
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
+                         OpenGLESBackend(), OpenGLESBackend({"gl_use_array_length_from_uniform"}),
+                         VulkanBackend(), WebGPUBackend()},
+                        {TieredLimits::No, TieredLimits::Yes});
 
 }  // anonymous namespace
 }  // namespace dawn
