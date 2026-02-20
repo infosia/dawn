@@ -202,6 +202,10 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
     // Add initial capabilities to formats.
     auto InitialCapsAddedBy = [&](std::optional<Feature> feature,
                                   std::initializer_list<wgpu::TextureFormat> formats, Cap caps) {
+        // At least for now, all formats should be sampleable, if that's no longer the case, we need
+        // to add validation in CreateTexture that requires Cap::Sampleable.
+        DAWN_ASSERT(caps & Cap::Sampleable);
+
         const bool supported = !feature.has_value() || device->HasFeature(*feature);
 
         for (wgpu::TextureFormat fmt : formats) {
@@ -210,7 +214,7 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
             Format& format = table[index];
 
             if (supported) {
-                format.caps = caps;  // set the initial capabilities
+                format.caps |= caps;  // set the initial capabilities
                 format.unsupportedReason = Format::supported;
             } else if (format.caps == Cap::None &&
                        std::holds_alternative<std::monostate>(format.unsupportedReason)) {
@@ -244,20 +248,21 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
     InitialCapsAddedBy(std::nullopt,
                        {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
                         wgpu::TextureFormat::RG11B10Ufloat, wgpu::TextureFormat::RGB9E5Ufloat},
-                       Cap::None);
+                       Cap::Sampleable);
 
-    InitialCapsAddedBy(std::nullopt,
-                       {wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm,
-                        wgpu::TextureFormat::RGBA8UnormSrgb, wgpu::TextureFormat::BGRA8Unorm,
-                        wgpu::TextureFormat::R16Float, wgpu::TextureFormat::RG16Float,
-                        wgpu::TextureFormat::RGB10A2Unorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
+    InitialCapsAddedBy(
+        std::nullopt,
+        {wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm,
+         wgpu::TextureFormat::RGBA8UnormSrgb, wgpu::TextureFormat::BGRA8Unorm,
+         wgpu::TextureFormat::R16Float, wgpu::TextureFormat::RG16Float,
+         wgpu::TextureFormat::RGB10A2Unorm},
+        Cap::Sampleable | Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
 
     InitialCapsAddedBy(std::nullopt, {wgpu::TextureFormat::RGBA8Snorm},
-                       Cap::StorageROnly | Cap::StorageWOnly);
+                       Cap::Sampleable | Cap::StorageROnly | Cap::StorageWOnly);
     InitialCapsAddedBy(std::nullopt, {wgpu::TextureFormat::RGBA8Unorm},
-                       Cap::StorageROnly | Cap::StorageWOnly | Cap::Renderable | Cap::Multisample |
-                           Cap::Resolve | Cap::Blendable);
+                       Cap::Sampleable | Cap::StorageROnly | Cap::StorageWOnly | Cap::Renderable |
+                           Cap::Multisample | Cap::Resolve | Cap::Blendable);
 
     InitialCapsAddedBy(
         std::nullopt,
@@ -265,42 +270,47 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
          wgpu::TextureFormat::R16Sint, wgpu::TextureFormat::RG8Uint, wgpu::TextureFormat::RG8Sint,
          wgpu::TextureFormat::RG16Uint, wgpu::TextureFormat::RG16Sint,
          wgpu::TextureFormat::RGB10A2Uint},
-        Cap::Renderable);
+        Cap::Sampleable | Cap::Renderable);
 
     InitialCapsAddedBy(
         std::nullopt,
         {wgpu::TextureFormat::R32Uint, wgpu::TextureFormat::R32Sint, wgpu::TextureFormat::R32Float},
-        Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly | Cap::StorageRW);
+        Cap::Sampleable | Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly | Cap::StorageRW);
 
     InitialCapsAddedBy(std::nullopt,
                        {wgpu::TextureFormat::RGBA8Uint, wgpu::TextureFormat::RGBA8Sint},
-                       Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
+                       Cap::Sampleable | Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
 
     InitialCapsAddedBy(std::nullopt,
                        {wgpu::TextureFormat::RG32Uint, wgpu::TextureFormat::RG32Sint,
                         wgpu::TextureFormat::RG32Float},
-                       Cap::Renderable);
+                       Cap::Sampleable | Cap::Renderable);
 
     InitialCapsAddedBy(std::nullopt,
                        {wgpu::TextureFormat::RGBA16Uint, wgpu::TextureFormat::RGBA16Sint},
-                       Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
+                       Cap::Sampleable | Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
 
-    InitialCapsAddedBy(
-        std::nullopt, {wgpu::TextureFormat::RGBA16Float},
-        Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly | Cap::Resolve | Cap::Blendable);
+    InitialCapsAddedBy(std::nullopt, {wgpu::TextureFormat::RGBA16Float},
+                       Cap::Sampleable | Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly |
+                           Cap::Resolve | Cap::Blendable);
 
     InitialCapsAddedBy(std::nullopt,
                        {wgpu::TextureFormat::RGBA32Uint, wgpu::TextureFormat::RGBA32Sint,
                         wgpu::TextureFormat::RGBA32Float},
-                       Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
+                       Cap::Sampleable | Cap::Renderable | Cap::StorageROnly | Cap::StorageWOnly);
 
     // Initialize the format capabilities and add the pre-initialized format capabilities when
     // relevant features are enabled
-    InitialCapsAddedBy(Feature::YCbCrVulkanSamplers, {wgpu::TextureFormat::OpaqueYCbCrAndroid},
-                       Cap::None);
 
-    InitialCapsAddedBy(Feature::CoreFeaturesAndLimits, {wgpu::TextureFormat::BGRA8UnormSrgb},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
+    // The two YCbCr extensions each add support for OpaqueYCbCrAndroid.
+    InitialCapsAddedBy(Feature::YCbCrVulkanSamplers, {wgpu::TextureFormat::OpaqueYCbCrAndroid},
+                       Cap::Sampleable | Cap::None);
+    InitialCapsAddedBy(Feature::OpaqueYCbCrAndroidForExternalTexture,
+                       {wgpu::TextureFormat::OpaqueYCbCrAndroid}, Cap::Sampleable | Cap::None);
+
+    InitialCapsAddedBy(
+        Feature::CoreFeaturesAndLimits, {wgpu::TextureFormat::BGRA8UnormSrgb},
+        Cap::Sampleable | Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
 
     if (device->HasFeature(Feature::CoreFeaturesAndLimits)) {
         AddCaps(
@@ -334,8 +344,8 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
                        {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
                         wgpu::TextureFormat::RGBA16Unorm, wgpu::TextureFormat::R16Snorm,
                         wgpu::TextureFormat::RG16Snorm, wgpu::TextureFormat::RGBA16Snorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Blendable | Cap::StorageROnly |
-                           Cap::StorageWOnly);
+                       Cap::Sampleable | Cap::Renderable | Cap::Multisample | Cap::Blendable |
+                           Cap::StorageROnly | Cap::StorageWOnly);
 
     if (device->HasFeature(Feature::TextureFormatsTier1)) {
         AddCaps({wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
@@ -389,7 +399,7 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
     InitialCapsAddedBy(Feature::Unorm16TextureFormats,
                        {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
                         wgpu::TextureFormat::RGBA16Unorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve);
+                       Cap::Sampleable | Cap::Renderable | Cap::Multisample | Cap::Resolve);
 }
 
 FormatTable BuildFormatTable(const DeviceBase* device) {

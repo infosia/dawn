@@ -60,14 +60,15 @@ namespace dawn::native {
 
 enum class FormatCapability : uint16_t {
     None = 0x0,
-    Multisample = 0x1,
-    Renderable = 0x2,
-    Resolve = 0x4,
-    StorageROnly = 0x8,   // Read-Only.
-    StorageWOnly = 0x10,  // Write-Only
-    StorageRW = 0x20,     // When set StorageR/WOnly will be set as well.
-    PLS = 0x40,
-    Blendable = 0x80,
+    Sampleable = 0x1,
+    Multisample = 0x2,
+    Renderable = 0x4,
+    Resolve = 0x8,
+    StorageROnly = 0x10,  // Read-Only.
+    StorageWOnly = 0x20,  // Write-Only
+    StorageRW = 0x40,     // When set StorageR/WOnly will be set as well.
+    PLS = 0x80,
+    Blendable = 0x100,
 };
 }  // namespace dawn::native
 
