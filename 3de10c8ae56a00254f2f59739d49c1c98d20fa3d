@@ -3,6 +3,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8006e468_f28b32ae",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "Theoretically at some point we might have a feature that implicitly enables CoreFeaturesAndLimits. For `UseCompatibilityMode()` tests, I think we can just not enable _any_ features.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2f7afe9_fb022e43",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "We should check here if we actually got a device without CoreFeaturesAndLimits. If CoreFeaturesAndLimits is on the device, the test should fail. (Technically this is valid and we could skip, but we\u0027re not worried about these tests passing on compat-less browsers for the moment. We can fix it later if we want to.)",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e19f26fd_e2ec27b1",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "In light of the bug below, we should have a non-compat spot test for this too. Test that it returns undefined even if the descriptor has a textureBindingViewDimension.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "edbbe4da_0c25392d",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
         "patchSetId": 7
@@ -91,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50b105d3_d1fc48cf",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "It seems to work correctly in Canary for me (147.0.7698.0). I just went in dev tools console and typed:\n```\nd \u003d await (await navigator.gpu.requestAdapter({featureLevel: \"compatibility\"})).requestDevice()\nt \u003d d.createTexture({format: \u0027rgba8unorm\u0027, usage: GPUTextureUsage.COPY_DST, size: [1,1], textureBindingViewDimension: \u00272d-array\u0027})\nt.textureBindingViewDimension\n```",
+      "parentUuid": "ac179518_aa5281eb",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7126bfbb_a8df720a",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
         "patchSetId": 7
@@ -102,6 +171,24 @@
       "writtenOn": "2026-02-20T10:38:25Z",
       "side": 1,
       "message": "Note that I\u0027ve added this because it can now be undefined.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "785e8153_9e444052",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2715,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7126bfbb_a8df720a",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +224,24 @@
       "side": 1,
       "message": "WGPUTextureViewDimension_Undefined is not valid in Emscripten. I could use `WebGPU.TextureViewDimension[0]` but that resolves to `undefined` as well.",
       "parentUuid": "e1ce332a_2ce7abc7",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c50d9cf9_c197b7b6",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T23:01:21Z",
+      "side": 1,
+      "message": "The correct way to refer to this is `{{{ gpu.TextureViewDimension.Undefined }}}`, which should be `0` (the value of `WGPUTextureViewDimension_Undefined`).\n\nHowever I think what we should actually do is make it so `WebGPU.TextureViewDimension.indexOf(undefined)` works. It doesn\u0027t work because that array has a hole instead of an explicit `undefined` at index 0 (due to a code size optimization in the template).\n\nAs a hack, try changing the `jsrepr` for this value from `undefined` to `undefined /* comment to prevent this from being elided from library_webgpu_enum_tables.js */`\nAs long as the tests verify this hack works, I think it\u0027s fine.",
+      "parentUuid": "5cf0268b_8c73ebb1",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
