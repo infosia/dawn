@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ac179518_aa5281eb",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T13:28:08Z",
+      "side": 1,
+      "message": "dawn::wire is used by Blink so if the devtools see the correct value, then it should be what\u0027s returned by dawn::wire.",
+      "parentUuid": "bd3a0157_1437bf99",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7126bfbb_a8df720a",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
         "patchSetId": 7
