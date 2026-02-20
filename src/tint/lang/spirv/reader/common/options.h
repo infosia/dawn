@@ -31,7 +31,6 @@
 #include <unordered_map>
 
 #include "src/tint/api/common/binding_point.h"
-#include "src/tint/lang/wgsl/allowed_features.h"
 
 namespace tint::spirv::reader {
 

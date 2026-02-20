@@ -27,10 +27,8 @@
 
 #include "src/tint/lang/spirv/reader/lower/texture.h"
 
-#include <optional>
 #include <tuple>
 #include <utility>
-#include <vector>
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/clone_context.h"

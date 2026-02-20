@@ -27,8 +27,6 @@
 
 #include "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer.h"
 
-#include <utility>
-
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
