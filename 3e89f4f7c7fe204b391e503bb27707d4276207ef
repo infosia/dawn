@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4df4d82_8abde800",
+        "filename": "src/dawn/tests/end2end/VideoViewsTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T09:05:08Z",
+      "side": 1,
+      "message": "Soon with Dan\u0027s filterability attribute work streams! But yeah it\u0027s not available yet.",
+      "parentUuid": "38ef9228_cbd69ce9",
+      "range": {
+        "startLine": 566,
+        "startChar": 4,
+        "endLine": 568,
+        "endChar": 96
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c32cd0a_722ad6af",
@@ -78,6 +102,30 @@
       "writtenOn": "2026-02-19T20:32:23Z",
       "side": 1,
       "message": "Just to confirm, is there already a test that verifies that we cannot create them without the feature? I\u0027m assuming either `TextureViewValidation` or `TextureViewValidationForNonSupportedContextFormats` checks this already?",
+      "range": {
+        "startLine": 1043,
+        "startChar": 75,
+        "endLine": 1045,
+        "endChar": 30
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cde2c89_b9904cfe",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T09:05:08Z",
+      "side": 1,
+      "message": "Added a test with the feature disabled.",
+      "parentUuid": "6c32cd0a_722ad6af",
       "range": {
         "startLine": 1043,
         "startChar": 75,
@@ -111,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba3c40b2_c0c1def3",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T09:05:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8dfac6a_0484f36f",
+      "range": {
+        "startLine": 1048,
+        "startChar": 47,
+        "endLine": 1048,
+        "endChar": 50
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3b538cc_cb3f782a",
@@ -124,6 +196,30 @@
       "writtenOn": "2026-02-19T20:32:23Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"retreiving\" is a possible misspelling of \"retrieving\".\n\nTo bypass Spellchecker,...\n\n\"retreiving\" is a possible misspelling of \"retrieving\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 1058,
+        "startChar": 7,
+        "endLine": 1058,
+        "endChar": 17
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e39966e7_228cdee0",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T09:05:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b538cc_cb3f782a",
       "range": {
         "startLine": 1058,
         "startChar": 7,
