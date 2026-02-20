@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c640d52_a6b848b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:36:21Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2c23ae_91b7f3e2",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:36:21Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edd93b72_ff774af9",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:36:21Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edcadc2d_be79341d",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:36:21Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
