@@ -59,7 +59,7 @@ class ResourceTable final : public ResourceTableBase {
     // Returns true if the ResourceTable was successfully populated (now or on a previous call)
     // in the current allocator's heap. If false is returned, caller should
     // AllocateAndSwitchShaderVisibleHeap and populate again.
-    bool PopulateViews(MutexProtected<ShaderVisibleDescriptorAllocator>& viewAllocator);
+    bool PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator);
 
     // Returns a GPU heap handle handle to the base descriptor of the set of descriptors
     // that were copied there in PopulateViews. This should be set as a root descriptor table on the

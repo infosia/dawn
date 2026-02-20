@@ -485,8 +485,8 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         UpdateRootSignatureIfNecessary(commandList);
 
         const bool usesResourceTable = mPipelineLayout->UsesResourceTable();
-        auto& viewAllocator = mDevice->GetViewShaderVisibleDescriptorAllocator();
-        auto& samplerAllocator = mDevice->GetSamplerShaderVisibleDescriptorAllocator();
+        auto* viewAllocator = mDevice->GetViewShaderVisibleDescriptorAllocator();
+        auto* samplerAllocator = mDevice->GetSamplerShaderVisibleDescriptorAllocator();
 
         // ResourceTable and BindGroups are allocated in shader-visible descriptor heaps which are
         // managed by a ringbuffer owned by the allocator. There can be only a single shader-visible
@@ -526,7 +526,8 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
             mDirtyBindGroupsObjectChangedOrIsDynamic |= mBindGroupLayoutsMask;
             mDirtyBindGroups |= mBindGroupLayoutsMask;
 
-            // Must be called before applying the bindgroups.
+            // Must be called before applying the bindgroups. This sets the descriptor heaps for
+            // both render and compute pipelines.
             SetID3D12DescriptorHeaps(commandList);
 
             for (BindGroupIndex index : mBindGroupLayoutsMask) {
@@ -765,12 +766,18 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     }
 
     raw_ptr<Device> mDevice;
+
+    // Points to the same instance of DescriptorHeapState that owns both the compute and render
+    // instances of this class, so that calling SetID3D12DescriptorHeaps one one sets the descriptor
+    // heaps for both.
     raw_ptr<DescriptorHeapState> mHeapState;
     raw_ptr<ResourceTable> mResourceTable = nullptr;
 
     PerBindGroup<D3D12_GPU_DESCRIPTOR_HANDLE> mBoundRootSamplerTables = {};
 };
 
+// Owns both BindGroupStateTrackers for compute and render, ensuring that when one of them sets
+// descriptor heaps, it sets both of them.
 class DescriptorHeapState {
   public:
     explicit DescriptorHeapState(Device* device)
