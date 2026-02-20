@@ -81,16 +81,6 @@
           'isolated_scripts': 'swiftshader_isolated_scripts',
         },
       },
-      'dawn-linux-x64-sws-rel': {
-        'os_type': 'linux',
-        'mixins': [
-          'gpu_linux_gce_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'swiftshader_gtests',
-          'isolated_scripts': 'swiftshader_isolated_scripts',
-        },
-      },
       'dawn-linux-x64-sws-tsan': {
         'os_type': 'linux',
         'mixins': [
