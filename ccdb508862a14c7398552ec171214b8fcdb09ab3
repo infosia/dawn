@@ -213,6 +213,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d44c1cd7_ab11877f",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-20T15:51:19Z",
+      "side": 1,
+      "message": "Since we\u0027re still waiting on reviews, I\u0027ve written a variant of EnqueueGL() that copies the buffer to an std::vector in deferral mode, and passes it directly otherwise. I\u0027ve refactored WriteBuffer() and WriteTexture() to use that variant, allowing them to use one lambda for all modes. This reduces the number of remaining GetGL() calls in non-test code to three.",
+      "parentUuid": "317cc981_401f06b9",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "757919d7_e66b4390",
@@ -655,6 +673,24 @@
       "side": 1,
       "message": "Do you mind in a follow-up adding accessors and using the accessors to initialize the sampler? It\u0027s a longstanding cleanup to make all the backends use that for samplers as they do with every other objects.",
       "parentUuid": "595c776b_ee6fd8dd",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "831d56ad_b1e89b2f",
+        "filename": "src/dawn/native/opengl/SamplerGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-20T15:51:19Z",
+      "side": 1,
+      "message": "Logged as https://crbug.com/486077881.",
+      "parentUuid": "f09ceb05_380f67a2",
       "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
