@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a2ba25_4fd7a71a",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-20T19:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d2c23ae_91b7f3e2",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edd93b72_ff774af9",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2545d49f_c362b1dc",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-20T19:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd93b72_ff774af9",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edcadc2d_be79341d",
@@ -77,6 +125,30 @@
       "writtenOn": "2026-02-20T08:36:21Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 0
+      },
+      "revId": "7bb608ca68b33d957bda0cdddbcfb48ba7fc5db9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc459eb_0b1a131f",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-20T19:45:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edcadc2d_be79341d",
       "range": {
         "startLine": 380,
         "startChar": 0,
