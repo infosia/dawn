@@ -389,6 +389,7 @@ class TextureViewBase : public ApiObjectBase {
 
     virtual bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
+    virtual bool HasYCbCrDescriptor() const;
     virtual bool IsYCbCrFilterable() const;
 
   protected:

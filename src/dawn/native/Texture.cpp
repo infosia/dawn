@@ -1949,6 +1949,11 @@ bool TextureViewBase::IsYCbCr() const {
     return false;
 }
 
+bool TextureViewBase::HasYCbCrDescriptor() const {
+    DAWN_UNREACHABLE();
+    return false;
+}
+
 bool TextureViewBase::IsYCbCrFilterable() const {
     DAWN_UNREACHABLE();
     return false;
