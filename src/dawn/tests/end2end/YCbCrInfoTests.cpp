@@ -64,7 +64,6 @@ wgpu::Texture Create2DTexture(wgpu::Device& device) {
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
