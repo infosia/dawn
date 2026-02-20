@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "765448e6_47ca8750",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-20T15:23:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f6c4244_b3c7d6e2",
+      "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e56e39c_ccc4f313",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-02-20T08:47:32Z",
       "side": 1,
       "message": "nit: maybe we could keep an ASSERT and comment that explains it\u0027s already checked before this call.",
+      "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36e2c14_eee53bac",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-20T15:23:26Z",
+      "side": 1,
+      "message": "As discussed offline, the check is being made after we call this function, so let\u0027s keep this as is.",
+      "parentUuid": "6e56e39c_ccc4f313",
       "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
