@@ -103,6 +103,9 @@ struct ShaderIOBackendState {
     /// @returns true if a vertex point size builtin should be added
     virtual bool NeedsVertexPointSize() const { return false; }
 
+    /// @returns true if there is an input with builtin @p builtin
+    bool HasBuiltinInput(core::BuiltinValue builtin) const;
+
     /// Creates the polyfilled workgroup_index builtin value.
     /// Each backend is responsible for tracking the indices of workgroup_id and num_workgroups
     /// builtin values (and ensuring they are available in the module).
