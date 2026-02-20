@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 
 #include <algorithm>
+#include <concepts>
 #include <limits>
 #include <utility>
 #include <vector>
@@ -160,7 +161,8 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
-    explicit DescriptorSetTracker(ResourceTable* table) : mResourceTable(table) {}
+    explicit DescriptorSetTracker(ResourceTable* table, bool framebufferFetchEnabled)
+        : mResourceTable(table), mFramebufferFetchEnabled(framebufferFetchEnabled) {}
 
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
@@ -174,12 +176,30 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         mVkLayout = pipeline->GetVkLayout();
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+        if constexpr (std::derived_from<VkPipelineType, RenderPipelineBase>) {
+            mUsesFramebufferFetch =
+                static_cast<RenderPipelineBase*>(pipeline)->UsesFramebufferFetch();
+        }
     }
 
     void Apply(Device* device,
                CommandRecordingContext* recordingContext,
                VkPipelineBindPoint bindPoint) {
         BeforeApply();
+
+        BindGroupIndex startOfBindGroups{0u};
+
+        if (mFramebufferFetchEnabled) {
+            if (!mHasBoundFramebufferFetchDescriptorSet) {
+                DAWN_ASSERT(recordingContext->framebufferFetchDescriptorSet != VK_NULL_HANDLE);
+                device->fn.CmdBindDescriptorSets(
+                    recordingContext->commandBuffer, bindPoint, mVkLayout,
+                    static_cast<uint32_t>(startOfBindGroups), 1,
+                    &*recordingContext->framebufferFetchDescriptorSet, 0, nullptr);
+                mHasBoundFramebufferFetchDescriptorSet = true;
+            }
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
         // When the usages of the resource table changes between pipelines, all the BindGroups are
         // shifted by 1 (due to the resource table being in the first VkDescriptorSet) so we dirty
@@ -192,11 +212,14 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
             if (mUsesResourceTable) {
                 DAWN_ASSERT(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
-                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
-                                                 mVkLayout, 0, 1, &*set, 0, nullptr);
+                device->fn.CmdBindDescriptorSets(
+                    recordingContext->commandBuffer, bindPoint, mVkLayout,
+                    static_cast<uint32_t>(startOfBindGroups), 1, &*set, 0, nullptr);
             }
         }
-        BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
+        if (mUsesResourceTable) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
         for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
             VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
@@ -219,8 +242,11 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
     raw_ptr<ResourceTable> mResourceTable;
+    const bool mFramebufferFetchEnabled;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
+    bool mHasBoundFramebufferFetchDescriptorSet = false;
+    bool mUsesFramebufferFetch = false;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -753,6 +779,23 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
         device->fn.CmdBeginRenderPass(commands, &beginInfo, VK_SUBPASS_CONTENTS_INLINE);
     }
 
+    if (device->HasFeature(Feature::FramebufferFetch)) {
+        std::vector<VkImageView> attachmentViews(kMaxColorAttachments, VK_NULL_HANDLE);
+        for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+            auto& attachmentInfo = renderPass->colorAttachments[i];
+            TextureView* view = ToBackend(attachmentInfo.view.Get());
+            if (view->GetDimension() == wgpu::TextureViewDimension::e3D) {
+                DAWN_TRY_ASSIGN(attachmentViews[static_cast<uint8_t>(i)],
+                                view->GetOrCreate2DViewOn3D(attachmentInfo.depthSlice));
+            } else {
+                attachmentViews[static_cast<uint8_t>(i)] = view->GetHandle();
+            }
+        }
+        DAWN_TRY_ASSIGN(
+            recordingContext->framebufferFetchDescriptorSet,
+            device->GetOrCreateFramebufferFetchDescriptorSet(recordingContext, attachmentViews));
+    }
+
     return {};
 }
 
@@ -763,6 +806,7 @@ void RecordEndRenderPass(CommandRecordingContext* recordingContext, Device* devi
         device->fn.CmdEndRenderingKHR(commands);
     } else {
         device->fn.CmdEndRenderPass(commands);
+        recordingContext->framebufferFetchDescriptorSet = VK_NULL_HANDLE;
     }
 }
 
@@ -1260,7 +1304,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets{resourceTable, false};
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1464,7 +1508,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets{resourceTable};
+    DescriptorSetTracker descriptorSets{resourceTable,
+                                        device->HasFeature(Feature::FramebufferFetch)};
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.

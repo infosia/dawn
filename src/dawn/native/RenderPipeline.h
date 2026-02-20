@@ -143,6 +143,7 @@ class RenderPipelineBase : public PipelineBase,
     bool UsesSampleIndex() const;
     bool UsesVertexIndex() const;
     bool UsesInstanceIndex() const;
+    bool UsesFramebufferFetch() const;
 
     const AttachmentState* GetAttachmentState() const;
 
@@ -187,6 +188,7 @@ class RenderPipelineBase : public PipelineBase,
     bool mUsesSampleIndex = false;
     bool mUsesVertexIndex = false;
     bool mUsesInstanceIndex = false;
+    bool mUsesFramebufferFetch = false;
 };
 
 }  // namespace dawn::native
