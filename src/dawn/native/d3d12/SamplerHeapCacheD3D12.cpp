@@ -74,7 +74,7 @@ SamplerHeapCacheEntry::~SamplerHeapCacheEntry() {
     DAWN_ASSERT(!mCPUAllocation.IsValid());
 }
 
-bool SamplerHeapCacheEntry::Populate(MutexProtected<ShaderVisibleDescriptorAllocator>& allocator) {
+bool SamplerHeapCacheEntry::Populate(ShaderVisibleDescriptorAllocator* allocator) {
     if (allocator->IsAllocationStillValid(mGPUAllocation)) {
         return true;
     }

@@ -475,8 +475,13 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     using Base = BindGroupTrackerBase;
 
   public:
-    BindGroupStateTracker(Device* device, DescriptorHeapState* heapState)
-        : BindGroupTrackerBase(), mDevice(device), mHeapState(heapState) {}
+    BindGroupStateTracker(DescriptorHeapState* heapState,
+                          ShaderVisibleDescriptorAllocator* viewAllocator,
+                          ShaderVisibleDescriptorAllocator* samplerAllocator)
+        : BindGroupTrackerBase(),
+          mHeapState(heapState),
+          mViewAllocator(viewAllocator),
+          mSamplerAllocator(samplerAllocator) {}
 
     MaybeError Apply(CommandRecordingContext* commandContext) {
         BeforeApply();
@@ -485,8 +490,8 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         UpdateRootSignatureIfNecessary(commandList);
 
         const bool usesResourceTable = mPipelineLayout->UsesResourceTable();
-        auto& viewAllocator = mDevice->GetViewShaderVisibleDescriptorAllocator();
-        auto& samplerAllocator = mDevice->GetSamplerShaderVisibleDescriptorAllocator();
+        // auto& viewAllocator = mDevice->GetViewShaderVisibleDescriptorAllocator();
+        // auto& samplerAllocator = mDevice->GetSamplerShaderVisibleDescriptorAllocator();
 
         // ResourceTable and BindGroups are allocated in shader-visible descriptor heaps which are
         // managed by a ringbuffer owned by the allocator. There can be only a single shader-visible
@@ -502,8 +507,8 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         bool populatedSamplers = true;
         for (BindGroupIndex index : mDirtyBindGroups) {
             BindGroup* group = ToBackend(mBindGroups[index]);
-            populatedViews = populatedViews && group->PopulateViews(viewAllocator);
-            populatedSamplers = populatedSamplers && group->PopulateSamplers(samplerAllocator);
+            populatedViews = populatedViews && group->PopulateViews(mViewAllocator);
+            populatedSamplers = populatedSamplers && group->PopulateSamplers(mSamplerAllocator);
         }
         if (usesResourceTable) {
             DAWN_ASSERT(mResourceTable);
@@ -511,33 +516,34 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
             // PopulateViews. We also do this after bind groups because resource tables are more
             // likely to make the largest GPU sub-allocation, so if it returns false, we don't waste
             // extra time copying a large table to GPU heap memory twice.
-            populatedViews = populatedViews && mResourceTable->PopulateViews(viewAllocator);
+            populatedViews = populatedViews && mResourceTable->PopulateViews(mViewAllocator);
         }
 
         if (!populatedViews || !populatedSamplers) {
             if (!populatedViews) {
-                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
+                DAWN_TRY(mViewAllocator->AllocateAndSwitchShaderVisibleHeap());
             }
 
             if (!populatedSamplers) {
-                DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap());
+                DAWN_TRY(mSamplerAllocator->AllocateAndSwitchShaderVisibleHeap());
             }
 
             mDirtyBindGroupsObjectChangedOrIsDynamic |= mBindGroupLayoutsMask;
             mDirtyBindGroups |= mBindGroupLayoutsMask;
 
-            // Must be called before applying the bindgroups.
+            // Must be called before applying the bindgroups. This sets the descriptor heaps for
+            // both render and compute pipelines.
             SetID3D12DescriptorHeaps(commandList);
 
             for (BindGroupIndex index : mBindGroupLayoutsMask) {
                 BindGroup* group = ToBackend(mBindGroups[index]);
-                populatedViews = group->PopulateViews(viewAllocator);
-                populatedSamplers = group->PopulateSamplers(samplerAllocator);
+                populatedViews = group->PopulateViews(mViewAllocator);
+                populatedSamplers = group->PopulateSamplers(mSamplerAllocator);
                 DAWN_ASSERT(populatedViews);
                 DAWN_ASSERT(populatedSamplers);
             }
             if (usesResourceTable) {
-                populatedViews = mResourceTable->PopulateViews(viewAllocator);
+                populatedViews = mResourceTable->PopulateViews(mViewAllocator);
                 DAWN_ASSERT(populatedViews);
             }
         }
@@ -764,25 +770,38 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
         }
     }
 
-    raw_ptr<Device> mDevice;
+    // raw_ptr<Device> mDevice;
+
+    // Points to the same instance of DescriptorHeapState that owns both the compute and render
+    // instances of this class, so that calling SetID3D12DescriptorHeaps one one sets the descriptor
+    // heaps for both.
     raw_ptr<DescriptorHeapState> mHeapState;
+
+    raw_ptr<ShaderVisibleDescriptorAllocator> mViewAllocator;
+    raw_ptr<ShaderVisibleDescriptorAllocator> mSamplerAllocator;
+
     raw_ptr<ResourceTable> mResourceTable = nullptr;
 
     PerBindGroup<D3D12_GPU_DESCRIPTOR_HANDLE> mBoundRootSamplerTables = {};
 };
 
+// Owns both BindGroupStateTrackers for compute and render, ensuring that when one of them sets
+// descriptor heaps, it sets both of them.
 class DescriptorHeapState {
   public:
-    explicit DescriptorHeapState(Device* device)
-        : mDevice(device),
-          mComputeBindingTracker(device, this),
-          mGraphicsBindingTracker(device, this) {}
+    explicit DescriptorHeapState(ShaderVisibleDescriptorAllocator* viewAllocator,
+                                 ShaderVisibleDescriptorAllocator* samplerAllocator)
+        : mViewAllocator(viewAllocator),
+          mSamplerAllocator(samplerAllocator),
+          mComputeBindingTracker(this, viewAllocator, samplerAllocator),
+          mGraphicsBindingTracker(this, viewAllocator, samplerAllocator) {}
 
     void SetID3D12DescriptorHeaps(ID3D12GraphicsCommandList* commandList) {
         DAWN_ASSERT(commandList != nullptr);
         std::array<ID3D12DescriptorHeap*, 2> descriptorHeaps = {
-            mDevice->GetViewShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap(),
-            mDevice->GetSamplerShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap()};
+            // mDevice->GetViewShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap(),
+            // mDevice->GetSamplerShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap()};
+            mViewAllocator->GetShaderVisibleHeap(), mSamplerAllocator->GetShaderVisibleHeap()};
         DAWN_ASSERT(descriptorHeaps[0] != nullptr);
         DAWN_ASSERT(descriptorHeaps[1] != nullptr);
         commandList->SetDescriptorHeaps(static_cast<uint32_t>(descriptorHeaps.size()),
@@ -803,10 +822,24 @@ class DescriptorHeapState {
         return &mGraphicsBindingTracker;
     }
 
+    // ShaderVisibleDescriptorAllocator* GetViewAllocator() {
+    //     return mViewAllocator;
+    // }
+
+    // ShaderVisibleDescriptorAllocator* GetSamplerAllocator() {
+    //     return mSamplerAllocator;
+    // }
+
   private:
-    raw_ptr<Device> mDevice;
+    // raw_ptr<Device> mDevice;
+    raw_ptr<ShaderVisibleDescriptorAllocator> mViewAllocator;
+    raw_ptr<ShaderVisibleDescriptorAllocator> mSamplerAllocator;
     BindGroupStateTracker<ComputePipeline> mComputeBindingTracker;
     BindGroupStateTracker<RenderPipeline> mGraphicsBindingTracker;
+
+    // using Usage = MutexProtected<ShaderVisibleDescriptorAllocator>::Usage;
+    // Usage mComputeUsage;
+    // Usage mGraphicsUsage;
 };
 
 template <typename PipelineType>
@@ -959,7 +992,21 @@ CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescrip
 MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext) {
     Device* device = ToBackend(GetDevice());
 
-    DescriptorHeapState descriptorHeapState(device);
+    // Lock both the view and sampler allocators for the duration of command recording. This allows
+    // us to use the allocators directly instead of via the MutexProtected.
+    return device->GetViewShaderVisibleDescriptorAllocator().Use([&](auto viewAllocator) {
+        return device->GetSamplerShaderVisibleDescriptorAllocator().Use([&](auto samplerAllocator) {
+            return RecordCommandsImpl(commandContext, &*viewAllocator, &*samplerAllocator);
+        });
+    });
+}
+
+MaybeError CommandBuffer::RecordCommandsImpl(CommandRecordingContext* commandContext,
+                                             ShaderVisibleDescriptorAllocator* viewAllocator,
+                                             ShaderVisibleDescriptorAllocator* samplerAllocator) {
+    Device* device = ToBackend(GetDevice());
+
+    DescriptorHeapState descriptorHeapState(viewAllocator, samplerAllocator);
     // Make sure we use the correct descriptors for this command list. Could be done once per
     // actual command list but here is ok because there should be few command buffers.
     ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();

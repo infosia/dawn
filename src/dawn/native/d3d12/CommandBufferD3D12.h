@@ -44,6 +44,7 @@ class CommandRecordingContext;
 class ComputePipeline;
 class RenderPassBuilder;
 class RenderPipeline;
+class ShaderVisibleDescriptorAllocator;
 
 class CommandBuffer final : public CommandBufferBase {
   public:
@@ -54,6 +55,10 @@ class CommandBuffer final : public CommandBufferBase {
 
   private:
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
+
+    MaybeError RecordCommandsImpl(CommandRecordingContext* commandContext,
+                                  ShaderVisibleDescriptorAllocator* viewAllocator,
+                                  ShaderVisibleDescriptorAllocator* samplerAllocator);
 
     MaybeError RecordComputePass(CommandRecordingContext* commandContext,
                                  BindGroupStateTracker<ComputePipeline>* bindingTracker,
