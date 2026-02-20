@@ -16,6 +16,23 @@
       "message": "Thanks!",
       "revId": "98c376121bd61cfa8bae1b6dc460f61429292447",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c551f85_a1b5caac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-20T13:17:28Z",
+      "side": 1,
+      "message": "Hi @cwallez@chromium.org, can you please +1/+2?",
+      "revId": "98c376121bd61cfa8bae1b6dc460f61429292447",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
