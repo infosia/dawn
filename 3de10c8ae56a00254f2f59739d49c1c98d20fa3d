@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82b05197_a115d0bd",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T11:23:51Z",
+      "side": 1,
+      "message": "uuuuh that\u0027s super weird, IDK. What are the flags? (is WebGPUCOmpatibilityMode defined?) Can you log inside the implementation to see what happens?",
+      "parentUuid": "4b7a8f1e_b9acf2a4",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7126bfbb_a8df720a",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
         "patchSetId": 7
@@ -48,6 +66,23 @@
       "writtenOn": "2026-02-20T10:38:25Z",
       "side": 1,
       "message": "Note that I\u0027ve added this because it can now be undefined.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1ce332a_2ce7abc7",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T11:23:51Z",
+      "side": 1,
+      "message": "This should return `WGPUTextureViewDimension_Undefined` no?",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
