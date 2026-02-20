@@ -898,8 +898,11 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
         DAWN_INVALID_IF(ycbcr->externalFormat == 0 && ycbcr->vkFormat == kVkFormatUndefined,
                         "Both VkFormat and VkExternalFormatANDROID are undefined.");
     } else if (format.format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
-        return DAWN_VALIDATION_ERROR("Invalid TextureViewDescriptor with Texture format (%s).",
-                                     wgpu::TextureFormat::OpaqueYCbCrAndroid);
+        DAWN_INVALID_IF(!device->HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture),
+                        "A texture view of format (%s) is created without a YCbCrVkDescriptor nor "
+                        "a %s enabled.",
+                        wgpu::TextureFormat::OpaqueYCbCrAndroid,
+                        wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture);
     }
 
     DAWN_TRY(ValidateCanViewTextureAs(device, texture, *viewFormat, descriptor->aspect));
@@ -1833,6 +1836,9 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
         mSwizzleBlue = swizzle.b;
         mSwizzleAlpha = swizzle.a;
     }
+    if (descriptor.Has<YCbCrVkDescriptor>()) {
+        mHasYCbCrDescriptor = true;
+    }
     mIsSwizzleIdentity = GetSwizzle() == kRGBASwizzle;
 
     GetObjectTrackingList()->Track(this);
@@ -1951,6 +1957,10 @@ bool TextureViewBase::IsSwizzleIdentity() const {
 
 bool TextureViewBase::IsYCbCr() const {
     return GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid;
+}
+
+bool TextureViewBase::HasYCbCrDescriptor() const {
+    return mHasYCbCrDescriptor;
 }
 
 bool TextureViewBase::IsYCbCrFilterable() const {
