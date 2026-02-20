@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ef9228_cbd69ce9",
+        "filename": "src/dawn/tests/end2end/VideoViewsTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T00:40:19Z",
+      "side": 1,
+      "message": "no, it\u0027s not possible, currently the auto layout algorithm always makes samplers \"filtering\". https://github.com/gpuweb/gpuweb/issues/4956",
+      "parentUuid": "8b55b18f_d059971e",
+      "range": {
+        "startLine": 566,
+        "startChar": 4,
+        "endLine": 568,
+        "endChar": 96
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c32cd0a_722ad6af",
@@ -59,6 +83,29 @@
         "startChar": 75,
         "endLine": 1045,
         "endChar": 30
+      },
+      "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8dfac6a_0484f36f",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-20T00:40:19Z",
+      "side": 1,
+      "message": "s/ues/use",
+      "range": {
+        "startLine": 1048,
+        "startChar": 47,
+        "endLine": 1048,
+        "endChar": 50
       },
       "revId": "3e89f4f7c7fe204b391e503bb27707d4276207ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
