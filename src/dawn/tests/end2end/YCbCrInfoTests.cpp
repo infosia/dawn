@@ -53,7 +53,7 @@ wgpu::Texture Create2DTexture(wgpu::Device& device) {
         .width = kWidth,
         .height = kHeight,
         .layers = 1,
-        .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .format = AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420,
         .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
@@ -64,7 +64,6 @@ wgpu::Texture Create2DTexture(wgpu::Device& device) {
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
-    stmAHardwareBufferDesc.useExternalFormat = true;
 
     wgpu::SharedTextureMemoryDescriptor desc;
     desc.nextInChain = &stmAHardwareBufferDesc;
