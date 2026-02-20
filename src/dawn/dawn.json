@@ -2013,8 +2013,7 @@
         "chain roots": ["shared texture memory descriptor"],
         "tags": ["dawn", "native"],
         "members": [
-            {"name": "handle", "type": "void *"},
-            {"name": "use external format", "type" : "bool"}
+            {"name": "handle", "type": "void *"}
         ]
     },
     "shared texture memory dma buf plane": {
