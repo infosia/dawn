@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "699b964d_98391213",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T16:46:03Z",
+      "side": 1,
+      "message": "Currently as it is written you cannot write code that requires extensions. Pretty sure we could just add this to the environment",
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
