@@ -126,6 +126,7 @@ bool IsFeatureSupported(WGPUFeatureName feature) {
         case WGPUFeatureName_ChromiumExperimentalSubgroupSizeControl:
         case WGPUFeatureName_AtomicVec2uMinMax:
         case WGPUFeatureName_Unorm16FormatsForExternalTexture:
+        case WGPUFeatureName_OpaqueYCbCrAndroidForExternalTexture:
             return true;
     }
 
