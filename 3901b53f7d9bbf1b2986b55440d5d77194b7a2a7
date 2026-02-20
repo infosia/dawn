@@ -51,6 +51,24 @@
       "message": "Reading the bug these actually sound like \"accuracy\", despite the scary sounding comment above.\n(sounds like the WindowServer is killed due to log spam not bad GPU stuff)",
       "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cf9409e_a70ce9da",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-20T19:12:47Z",
+      "side": 1,
+      "message": "Yes this was my thought process. I agree that the bug suggests it is more accuracy.\nI can change these ones.\n\nAlso i saw some comments that maybe this is resolved by argument buffers?",
+      "parentUuid": "626b3326_5a69bb83",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
