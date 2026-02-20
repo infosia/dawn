@@ -91,15 +91,7 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
 
 class SharedTextureMemoryContents : public SharedResourceMemoryContents {
   public:
-    explicit SharedTextureMemoryContents(WeakRef<SharedTextureMemoryBase> sharedTextureMemory);
-
-    SampleTypeBit GetExternalFormatSupportedSampleTypes() const;
-    void SetExternalFormatSupportedSampleTypes(SampleTypeBit supportedSampleType);
-
-  private:
-    friend class SharedTextureMemoryBase;
-
-    SampleTypeBit mSupportedExternalSampleTypes;
+    using SharedResourceMemoryContents::SharedResourceMemoryContents;
 };
 
 }  // namespace dawn::native
