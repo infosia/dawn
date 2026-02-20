@@ -2106,6 +2106,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
     if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
         mIsYCbCr = true;
+        mHasYCbCrDescriptor = true;
         mIsYCbCrFilterable = static_cast<SharedTextureMemoryContentsVk*>(
                                  GetTexture()->GetSharedResourceMemoryContents())
                                  ->IsYCbCrFilterable();
@@ -2121,6 +2122,8 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
 
         createInfo.pNext = &samplerYCbCrInfo;
+    } else if (descriptor->format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        mIsYCbCr = true;
     }
 
     DAWN_TRY(CheckVkSuccess(
@@ -2263,6 +2266,11 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
 
 bool TextureView::IsYCbCr() const {
     return mIsYCbCr;
+}
+
+bool TextureView::HasYCbCrDescriptor() const {
+    DAWN_ASSERT(IsYCbCr());
+    return mHasYCbCrDescriptor;
 }
 
 bool TextureView::IsYCbCrFilterable() const {

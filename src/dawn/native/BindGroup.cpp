@@ -450,6 +450,13 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
                             "YCbCr static sampler %s at binding (%u) samples a non-YCbCr %s.",
                             sampler, bindingInfo.binding, textureView);
 
+            // YCbCr views can be created without a YCbCrDescriptor but that means they can only be
+            // used with ExternalTextures.
+            DAWN_INVALID_IF(!textureView->HasYCbCrDescriptor(),
+                            "YCbCr static sampler %s at binding (%u) samples a YCbCr %s with "
+                            "implicit YCbCr info.",
+                            sampler, bindingInfo.binding, textureView);
+
             // Filterability of YCbCr textures is per-object so we don't check with the sampleType
             // but instead check against the static sampler it will be used with.
             DAWN_INVALID_IF(sampler->IsFiltering() && !textureView->IsYCbCrFilterable(),
