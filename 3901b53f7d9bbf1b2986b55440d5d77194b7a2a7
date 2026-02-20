@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a724367_3732d293",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-20T18:58:27Z",
+      "side": 1,
+      "message": "Are we going to have another category for bugs that don\u0027t fit into any of these categories?\n\nSpecifically, what does it mean for a bug to have no category? Does that mean it\u0027s been assessed and deemed to be non-critical (and also non-accuracy, non-spurious, ...)? Or that it hasn\u0027t been assessed yet?",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "626b3326_5a69bb83",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-20T18:58:27Z",
+      "side": 1,
+      "message": "Reading the bug these actually sound like \"accuracy\", despite the scary sounding comment above.\n(sounds like the WindowServer is killed due to log spam not bad GPU stuff)",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
