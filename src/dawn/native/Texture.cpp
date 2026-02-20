@@ -1949,9 +1949,9 @@ bool TextureViewBase::IsYCbCr() const {
     return false;
 }
 
-YCbCrVkDescriptor TextureViewBase::GetYCbCrVkDescriptor() const {
+bool TextureViewBase::IsYCbCrFilterable() const {
     DAWN_UNREACHABLE();
-    return {};
+    return false;
 }
 
 ApiObjectList* TextureViewBase::GetObjectTrackingList() {
