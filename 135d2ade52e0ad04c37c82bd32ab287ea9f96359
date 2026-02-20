@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "243cf203_026c02e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-20T01:00:12Z",
+      "side": 1,
+      "message": "This script is probably overdue for a refactor to break it up into smaller files + actually add test coverage.",
+      "revId": "135d2ade52e0ad04c37c82bd32ab287ea9f96359",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
