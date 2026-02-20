@@ -91,8 +91,8 @@
 #include "src/tint/lang/spirv/ir/binary.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/ir/copy_logical.h"
-#include "src/tint/lang/spirv/ir/literal_operand.h"
 #include "src/tint/lang/spirv/type/explicit_layout_array.h"
+#include "src/tint/lang/spirv/type/literal.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 #include "src/tint/lang/spirv/writer/analysis/relaxed_precision_decorations.h"
 #include "src/tint/lang/spirv/writer/common/binary_writer.h"
@@ -413,8 +413,8 @@ class Printer {
     /// @returns the result ID of the constant
     uint32_t Constant(const core::ir::Constant* constant) {
         // If it is a literal operand, just return the value.
-        if (auto* literal = constant->As<spirv::ir::LiteralOperand>()) {
-            return literal->Value()->ValueAs<uint32_t>();
+        if (constant->Type()->Is<spirv::type::Literal>()) {
+            return constant->Value()->ValueAs<uint32_t>();
         }
 
         auto id = Constant(constant->Value());

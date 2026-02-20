@@ -1,4 +1,4 @@
-// Copyright 2023 The Dawn & Tint Authors
+// Copyright 2026 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,14 +25,35 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/spirv/ir/literal_operand.h"
+#include "src/tint/lang/spirv/type/literal.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::spirv::ir::LiteralOperand);
+#include <cstddef>
+#include <string>
 
-namespace tint::spirv::ir {
+#include "src/tint/lang/core/type/clone_context.h"
+#include "src/tint/lang/core/type/manager.h"
+#include "src/tint/lang/core/type/unique_node.h"
+#include "src/tint/utils/math/hash.h"
+#include "src/tint/utils/rtti/castable.h"
 
-LiteralOperand::LiteralOperand(const core::constant::Value* value) : Base(value) {}
+TINT_INSTANTIATE_TYPEINFO(tint::spirv::type::Literal);
 
-LiteralOperand::~LiteralOperand() = default;
+namespace tint::spirv::type {
 
-}  // namespace tint::spirv::ir
+Literal::Literal()
+    : Base(static_cast<size_t>(Hash(tint::TypeCode::Of<Literal>().bits)),
+           core::type::Flags{core::type::kConstructable, core::type::kCreationFixedFootprint}) {}
+
+bool Literal::Equals(const UniqueNode& other) const {
+    return other.Is<Literal>();
+}
+
+std::string Literal::FriendlyName() const {
+    return "spirv.literal";
+}
+
+Literal* Literal::Clone(core::type::CloneContext& ctx) const {
+    return ctx.dst.mgr->Get<Literal>();
+}
+
+}  // namespace tint::spirv::type

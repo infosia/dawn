@@ -52,7 +52,7 @@
 #include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/spirv/ir/binary.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
-#include "src/tint/lang/spirv/ir/literal_operand.h"
+#include "src/tint/lang/spirv/type/literal.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/internal_limits.h"
@@ -407,8 +407,9 @@ struct State {
     /// Create a literal operand.
     /// @param value the literal value
     /// @returns the literal operand
-    spirv::ir::LiteralOperand* Literal(u32 value) {
-        return ir.CreateValue<spirv::ir::LiteralOperand>(b.ConstantValue(value));
+    core::ir::Value* Literal(u32 value) {
+        return b.Constant(
+            ir.constant_values.Get<core::constant::Scalar<u32>>(ty.Get<type::Literal>(), value));
     }
 
     /// Handle an `arrayLength()` builtin.
@@ -1365,9 +1366,8 @@ struct State {
     /// @param input_ty the type of the input matrices
     /// @param result_ty the type of the result matrix
     /// @returns the literal operands
-    ir::LiteralOperand* SubgroupMatrixMultiplyOperands(
-        const core::type::SubgroupMatrix* input_ty,
-        const core::type::SubgroupMatrix* result_ty) {
+    core::ir::Value* SubgroupMatrixMultiplyOperands(const core::type::SubgroupMatrix* input_ty,
+                                                    const core::type::SubgroupMatrix* result_ty) {
         uint32_t operands = SpvCooperativeMatrixOperandsMaskNone;
         if (input_ty->Type()->IsSignedIntegerScalar()) {
             operands |= SpvCooperativeMatrixOperandsMatrixASignedComponentsKHRMask;

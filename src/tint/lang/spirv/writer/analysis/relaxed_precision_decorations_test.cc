@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/type/image.h"
+#include "src/tint/lang/spirv/type/literal.h"
 #include "src/tint/lang/spirv/type/sampled_image.h"
 
 namespace tint::spirv::writer::analysis {
@@ -65,6 +66,12 @@ class SpirvWriter_RelaxedPrecisionDecorationsTest : public core::ir::IRTestHelpe
         auto sampled = type::Sampled::kReadWriteOpCompatible;
         auto access = core::Access::kReadWrite;
         return ty.Get<type::Image>(ty.f32(), dim, depth, arrayed, ms, sampled, format, access);
+    }
+
+    /// @returns a literal operand with the given value
+    core::ir::Value* Literal(uint32_t value) {
+        return b.Constant(mod.constant_values.Get<core::constant::Scalar<u32>>(
+            ty.Get<type::Literal>(), u32(value)));
     }
 };
 
@@ -126,9 +133,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, StorageTexture_F16Format_Rea
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Multiply(b.Convert<vec4h>(texel), 2_h));
         b.Return(ep);
     });
@@ -168,9 +175,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         auto* tmp1 = b.Let("tmp1", texel);
         auto* tmp2 = b.Let("tmp2", tmp1);
         b.Let("result", b.Multiply(b.Convert<vec4h>(tmp2), 2_h));
@@ -214,9 +221,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Multiply(texel, 2_f));
         b.Return(ep);
     });
@@ -257,7 +264,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
         auto* coords = b.Zero<vec2u>();
         texel = b.Convert<vec4f>(b.Splat<vec4h>(1_h))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel,
-                                0_u);
+                                Literal(0u));
         b.Return(ep);
     });
 
@@ -300,7 +307,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
         auto* tmp2 = b.Let("tmp2", tmp1);
         texel = tmp2->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel,
-                                0_u);
+                                Literal(0u));
         b.Return(ep);
     });
 
@@ -340,7 +347,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, StorageTexture_F16Format_Wri
         auto* coords = b.Zero<vec2u>();
         texel = b.Let("value", b.Splat<vec4f>(1_f))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel,
-                                0_u);
+                                Literal(0u));
         b.Return(ep);
     });
 
@@ -376,9 +383,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, StorageTexture_F32Format_Rea
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Multiply(b.Convert<vec4h>(texel), 2_h));
         b.Return(ep);
     });
@@ -418,9 +425,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Multiply(texel, 2_f));
         b.Return(ep);
     });
@@ -460,7 +467,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
         auto* coords = b.Zero<vec2u>();
         texel = b.Convert<vec4f>(b.Splat<vec4h>(1_h))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel,
-                                0_u);
+                                Literal(0u));
         b.Return(ep);
     });
 
@@ -498,7 +505,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
         auto* coords = b.Zero<vec2u>();
         texel = b.Let("value", b.Splat<vec4f>(1_f))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel,
-                                0_u);
+                                Literal(0u));
         b.Return(ep);
     });
 
@@ -535,14 +542,14 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel1 =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel1 = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                         Literal(0u))
+                     ->Result();
         b.Let("result1", b.Multiply(b.Convert<vec4h>(texel1), 2_h));
 
-        texel2 =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel2 = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                         Literal(0u))
+                     ->Result();
         b.Let("result2", b.Multiply(texel2, 2_f));
         b.Return(ep);
     });
@@ -590,11 +597,11 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
 
         texel1 = b.Convert<vec4f>(b.Splat<vec4h>(1_h))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel1,
-                                0_u);
+                                Literal(0u));
 
         texel2 = b.Let("value", b.Splat<vec4f>(1_f))->Result();
         b.Call<ir::BuiltinCall>(ty.void_(), BuiltinFn::kImageWrite, b.Load(image), coords, texel2,
-                                0_u);
+                                Literal(0u));
 
         b.Return(ep);
     });
@@ -646,7 +653,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, SampledTexture_Read_Converte
             loaded_image, loaded_sampler);
 
         sample = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageSampleImplicitLod,
-                                         sampled_image, coords, 0_u)
+                                         sampled_image, coords, Literal(0u))
                      ->Result();
         b.Let("result", b.Convert<vec4h>(sample));
         b.Return(ep);
@@ -700,7 +707,7 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, SampledTexture_Read_NotConve
             loaded_image, loaded_sampler);
 
         sample = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageSampleImplicitLod,
-                                         sampled_image, coords, 0_u)
+                                         sampled_image, coords, Literal(0u))
                      ->Result();
         b.Let("result", b.Multiply(sample, 2_f));
         b.Return(ep);
@@ -741,9 +748,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, StorageTexture_F16Format_Rea
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Convert<vec4i>(texel));
         b.Return(ep);
     });
@@ -785,9 +792,9 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest, StorageTexture_IntFormat_Rea
     auto* ep = b.ComputeFunction("main");
     b.Append(ep->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel =
-            b.Call<ir::BuiltinCall>(ty.vec4i(), BuiltinFn::kImageRead, b.Load(image), coords, 0_u)
-                ->Result();
+        texel = b.Call<ir::BuiltinCall>(ty.vec4i(), BuiltinFn::kImageRead, b.Load(image), coords,
+                                        Literal(0u))
+                    ->Result();
         b.Let("result", b.Convert<vec4h>(texel));
         b.Return(ep);
     });
@@ -829,7 +836,8 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     foo->AppendParam(image_param);
     b.Append(foo->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords, 0_u)
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords,
+                                        Literal(0u))
                     ->Result();
         b.Let("result", b.Multiply(b.Convert<vec4h>(texel), 2_h));
         b.Return(foo);
@@ -884,8 +892,8 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     foo->AppendParam(image_param);
     b.Append(foo->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        auto* texel =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords, 0_u);
+        auto* texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param,
+                                              coords, Literal(0u));
         b.Let("result", b.Multiply(texel, 2_f));
         b.Return(foo);
     });
@@ -938,7 +946,8 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     bar->AppendParam(bar_param);
     b.Append(bar->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, bar_param, coords, 0_u)
+        texel = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, bar_param, coords,
+                                        Literal(0u))
                     ->Result();
         b.Let("result", b.Convert<vec4h>(texel));
         b.Return(bar);
@@ -1008,14 +1017,14 @@ TEST_F(SpirvWriter_RelaxedPrecisionDecorationsTest,
     foo->AppendParam(image_param);
     b.Append(foo->Block(), [&] {  //
         auto* coords = b.Zero<vec2u>();
-        texel1 =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords, 0_u)
-                ->Result();
+        texel1 = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords,
+                                         Literal(0u))
+                     ->Result();
         b.Let("result1", b.Convert<vec4h>(texel1));
 
-        texel2 =
-            b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords, 0_u)
-                ->Result();
+        texel2 = b.Call<ir::BuiltinCall>(ty.vec4f(), BuiltinFn::kImageRead, image_param, coords,
+                                         Literal(0u))
+                     ->Result();
         b.Let("result2", b.Multiply(texel2, 2_f));
         b.Return(foo);
     });
