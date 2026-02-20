@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3e0bc4_6d5e05c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:47:32Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f6c4244_b3c7d6e2",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:47:32Z",
+      "side": 1,
+      "message": "nit: Maybe comment why this is special-cased and not in `ValidateResourceTableDescriptor`",
+      "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e56e39c_ccc4f313",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-20T08:47:32Z",
+      "side": 1,
+      "message": "nit: maybe we could keep an ASSERT and comment that explains it\u0027s already checked before this call.",
+      "revId": "9879e9226cf5102d2aaed2699306d6500e54c350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
