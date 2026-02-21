@@ -225,10 +225,17 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
     tint::Bindings bindings =
         GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
-            return tint::BindingPoint{
-                .group = useArgumentBuffers ? uint32_t(group) : 0,
-                .binding = layout->GetBindingIndexInfo(stage)[group][index],
-            };
+            if (useArgumentBuffers) {
+                return tint::BindingPoint{
+                    .group = uint32_t(group),
+                    .binding = ToMTLArgumentBufferIndex(index),
+                };
+            } else {
+                return tint::BindingPoint{
+                    .group = 0,
+                    .binding = layout->GetBindingIndexInfo(stage)[group][index],
+                };
+            }
         });
 
     tint::msl::writer::ArrayLengthOptions arrayLengthFromConstants =
