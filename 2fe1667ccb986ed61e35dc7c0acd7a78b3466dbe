@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aed5a2a_081a58b8",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-21T01:25:06Z",
+      "side": 1,
+      "message": "Any reason not to just exclude all of Tint from this? Seems like this is only really relevant for code under `src/dawn/native/`, unless I\u0027m missing something?",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 30
+      },
+      "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
