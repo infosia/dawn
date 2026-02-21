@@ -214,11 +214,11 @@ crbug.com/41491936 [ nvidia-0x2184 win10 ] webgpu:api,validation,state,device_lo
 # Skipped since they kill WindowsServer on Mac AMD.
 # Skipped on Mac Intel as well, because MacBook Pro AMD are dual GPU machines,
 # so Intel expectations apply to them as well, overriding AMD expectations.
-crbug.com/374691235 [ intel mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:stage="*";format="stencil8";* [ Skip ] # CAT:Critical
-crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:* [ Skip ] # CAT:Critical
-crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:* [ Skip ] # CAT:Critical
-crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_3d_coords:* [ Skip ] # CAT:Critical
-crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Skip ] # CAT:Critical
+crbug.com/374691235 [ intel mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:stage="*";format="stencil8";* [ Skip ] # CAT:Accuracy
+crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:* [ Skip ] # CAT:Accuracy
+crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:* [ Skip ] # CAT:Accuracy
+crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_3d_coords:* [ Skip ] # CAT:Accuracy
+crbug.com/374691235 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Skip ] # CAT:Accuracy
 
 # Wrapping is incorrect for texture gather (skip or fail? - they'll never pass, but skip means no testing)
 crbug.com/376240232 [ intel-0x9bc5 win ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_3d_coords:stage="*";format="bc1-rgba-unorm";* [ Skip ] # CAT:Accuracy
