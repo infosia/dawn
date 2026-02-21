@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dabcab02_ddbbe779",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-21T02:36:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "656b5c7d_ec1eb38c",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "626b3326_5a69bb83",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "Yes, weird accuracy thing that we believe should be fixed by argument buffers (based on comparisons to WebKit which is already using argument buffers).",
       "parentUuid": "0cf9409e_a70ce9da",
+      "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb9ff14f_f1319f52",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-21T02:36:39Z",
+      "side": 1,
+      "message": "I will submit an update in another CL",
+      "parentUuid": "b1d6efa5_75275600",
       "revId": "3901b53f7d9bbf1b2986b55440d5d77194b7a2a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
