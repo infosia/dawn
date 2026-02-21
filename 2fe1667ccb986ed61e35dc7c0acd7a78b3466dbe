@@ -22,6 +22,30 @@
       },
       "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d452060_4102a52d",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-21T07:35:00Z",
+      "side": 1,
+      "message": "We\u0027re concerned about the overall binary size, so Tint is relevant.\n\nIt seemed to me that Tint could just as well have multi-line blocks of MSL or HLSL code embedded in it - though I did notice I didn\u0027t find any when doing this. Is there an architectural reason that wouldn\u0027t happen?",
+      "parentUuid": "6aed5a2a_081a58b8",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 30
+      },
+      "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
