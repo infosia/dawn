@@ -33,6 +33,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/metal/BindGroupMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/UtilsMetal.h"
 
 namespace dawn::native::metal {
 
@@ -56,7 +57,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
         auto& bindingInfo = GetBindingInfo(i);
 
         MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
-        desc.index = uint32_t(bindingInfo.binding);
+        desc.index = ToMTLArgumentBufferIndex(i);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
         desc.access = MTLArgumentAccessReadOnly;

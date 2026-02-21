@@ -77,6 +77,11 @@ MTLCompareFunction ToMetalCompareFunction(wgpu::CompareFunction compareFunction)
 MTLSize ToMTLSize(const TexelExtent3D& extent);
 MTLOrigin ToMTLOrigin(const TexelOrigin3D& origin);
 
+// When using argument buffers, we use the WebGPU group/index directly in MSL, instead of remapping.
+inline uint32_t ToMTLArgumentBufferIndex(BindingIndex index) {
+    return uint32_t(index);
+}
+
 // For different reasons a WebGPU copy may need to be split into multiple copies for Metal. This
 // structure and its associated function `ComputeTextureBufferCopySplit` have the necessary logic
 // for the splits.
