@@ -85,9 +85,11 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
     }
 
     if (!descriptors.empty()) {
-        NSRef<NSArray> ary = AcquireNSRef([NSArray arrayWithObjects:descriptors.data()
-                                                              count:descriptors.size()]);
-        mArgumentEncoder = [ToBackend(device)->GetMTLDevice() newArgumentEncoderWithArguments:*ary];
+        @autoreleasepool {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mArgumentEncoder = AcquireNSPRef(
+                [ToBackend(device)->GetMTLDevice() newArgumentEncoderWithArguments:ary]);
+        }
     }
 }
 
