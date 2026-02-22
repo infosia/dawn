@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8337162_3814dbac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-22T11:27:34Z",
+      "side": 1,
+      "message": "Still LTGM!",
+      "revId": "ec523bef01f8952d238b7e2c58916c36dee0e9d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51cb4b75_990610e6",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-22T11:27:34Z",
+      "side": 1,
+      "message": "nit: maybe we could use span\u003cchar\u003e? We\u0027re going to want to replace a lot of void* + size with that over time in Dawn.\n\n(can be follow-up to not block landing the CL)",
+      "revId": "ec523bef01f8952d238b7e2c58916c36dee0e9d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdee0500_05ccba05",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-22T11:27:34Z",
+      "side": 1,
+      "message": "^^",
+      "revId": "ec523bef01f8952d238b7e2c58916c36dee0e9d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
