@@ -577,6 +577,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a97d12f_7493c22f",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-22T19:46:24Z",
+      "side": 1,
+      "message": "I was wrong; most of the Multithread tests actually pass, so I\u0027ve enabled them. As Quyen points out, there is already a lock in Queue::Submit() which allows multiple threads to call it. The problems seem isolated to buffer mapping so I\u0027ve left those tests disabled for now.",
+      "parentUuid": "e30685ae_0020bbbb",
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e786f3d0_19072e00",
@@ -1091,6 +1109,30 @@
       "side": 1,
       "message": "Agreed about testing. My plan was to enable a run of all the end2end tests on the GL bots with gl_defer enabled in a followup CL. I thought it might be a bit verbose to enable them individually.",
       "parentUuid": "3a5782ec_bb196b34",
+      "range": {
+        "startLine": 2067,
+        "startChar": 38,
+        "endLine": 2067,
+        "endChar": 71
+      },
+      "revId": "ccdb508862a14c7398552ec171214b8fcdb09ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8191460a_f32480cc",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-22T19:46:24Z",
+      "side": 1,
+      "message": "Done. I\u0027ve enabled Buffer, Copy, and TextureZeroInit tests with gl_defer, as well as most of the Multithread tests with both gl_defer and gl_allow_context_on_multi_threads, with the exception of the Multithreaded buffer mapping tests (see above).",
+      "parentUuid": "a02ad142_82511762",
       "range": {
         "startLine": 2067,
         "startChar": 38,

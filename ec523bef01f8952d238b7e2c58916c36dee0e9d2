@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fcd7ba33_0e2620ca",
+        "filename": "src/dawn/native/opengl/DeviceGL.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-22T19:46:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "51cb4b75_990610e6",
+      "revId": "ec523bef01f8952d238b7e2c58916c36dee0e9d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cdee0500_05ccba05",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 34
