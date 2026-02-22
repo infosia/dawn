@@ -46,6 +46,47 @@
       },
       "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2b284fd_e254dab2",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-22T17:46:33Z",
+      "side": 1,
+      "message": "There is no architectual reason it wouldn\u0027t happen, just usually the longest strings we make are validation strings.\n\nThat said, if we wanted to use this in Tint we\u0027d need to move it out of src/dawn and into src/utils so it could be shared.",
+      "parentUuid": "4d452060_4102a52d",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 30
+      },
+      "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94bf901e_50142a26",
+        "filename": "src/tint/utils/ice/ice.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-22T17:46:33Z",
+      "side": 1,
+      "message": "Tint doesn\u0027t include anything from src/dawn, so this needs to be in src/utils if you want to use it here.",
+      "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
