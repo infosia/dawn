@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea346ed_a68e7e52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-22T17:38:25Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"existance\" is a possible misspelling of \"existence\".\n\nTo bypass Spellchecker, a...\n\n\"existance\" is a possible misspelling of \"existence\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "f5db2b6591ccaae502da170f1b80798478f292dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
