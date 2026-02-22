@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c4a489c_9691a894",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-22T11:36:20Z",
+      "side": 1,
+      "message": "That pattern is a bit funny but I think it\u0027s ok for now!",
+      "revId": "6731b50cc18bb3d0f7238840d0fafcee5a188c42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
