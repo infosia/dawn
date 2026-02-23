@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbca82bc_9e09791d",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T21:29:42Z",
+      "side": 1,
+      "message": "This could be `isPipelineMultiSampled` since this is true if the pipeline is multi-sampled.",
+      "range": {
+        "startLine": 134,
+        "startChar": 9,
+        "endLine": 134,
+        "endChar": 37
+      },
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d688e9ca_ad275b90",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T21:29:42Z",
+      "side": 1,
+      "message": "And then this would be `isRenderPassMultiSampled \u0026\u0026 programmableStage.metadata-\u003efragmentInputMask.any()` to only trigger for multisampled plus color attribute.",
+      "range": {
+        "startLine": 221,
+        "startChar": 53,
+        "endLine": 221,
+        "endChar": 81
+      },
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
