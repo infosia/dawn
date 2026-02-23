@@ -363,9 +363,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Gather list of internal immediate constants used by this pipeline
-    bool isSampled = (GetSampleCount() > 1u) && UsesFragPosition() &&
-                     (IsFragMultiSampled() || UsesSampleIndex());
-    if ((isSampled || UsesFragDepth()) && !HasUnclippedDepth()) {
+    bool isSampled = (GetSampleCount() > 1u) && (IsFragMultiSampled() || UsesSampleIndex());
+    if (((isSampled && UsesFragPosition()) || UsesFragDepth()) && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
@@ -380,7 +379,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         DAWN_TRY_ASSIGN(moduleAndSpirv,
                         ToBackend(programmableStage.module)
                             ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
-                                                isSampled, GetImmediateMask()));
+                                                isSampled, UsesFragPosition(), GetImmediateMask()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

@@ -70,6 +70,7 @@ class ShaderModule final : public ShaderModuleBase {
                                                     const PipelineLayout* layout,
                                                     bool emitPointSize,
                                                     bool isSampled,
+                                                    bool usesFragPosition,
                                                     const ImmediateConstantMask& pipelineMask);
 
   private:
