@@ -887,12 +887,15 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
         "texture's mip level count (%u).",
         descriptor->baseMipLevel, descriptor->mipLevelCount, texture->GetNumMipLevels());
 
-    if (descriptor.Get<YCbCrVkDescriptor>()) {
+    if (auto* ycbcr = descriptor.Get<YCbCrVkDescriptor>()) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
                         wgpu::FeatureName::YCbCrVulkanSamplers);
         DAWN_INVALID_IF(format.format != wgpu::TextureFormat::OpaqueYCbCrAndroid,
                         "Texture format (%s) is not (%s).", format.format,
                         wgpu::TextureFormat::OpaqueYCbCrAndroid);
+
+        DAWN_INVALID_IF(ycbcr->externalFormat == 0 && ycbcr->vkFormat == 0,
+                        "Both VkFormat and VkExternalFormatANDROID are undefined.");
     } else if (format.format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
         return DAWN_VALIDATION_ERROR("Invalid TextureViewDescriptor with Texture format (%s).",
                                      wgpu::TextureFormat::OpaqueYCbCrAndroid);
@@ -1946,11 +1949,11 @@ bool TextureViewBase::IsSwizzleIdentity() const {
 }
 
 bool TextureViewBase::IsYCbCr() const {
-    return false;
+    return GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid;
 }
 
 bool TextureViewBase::IsYCbCrFilterable() const {
-    DAWN_UNREACHABLE();
+    DAWN_ASSERT(IsYCbCr());
     return false;
 }
 

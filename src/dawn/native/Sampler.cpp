@@ -71,9 +71,12 @@ MaybeError ValidateSamplerDescriptor(DeviceBase* device, const SamplerDescriptor
     DAWN_TRY(ValidateCompareFunction(descriptor->compare));
 
     UnpackedPtr<SamplerDescriptor> unpacked = Unpack(descriptor);
-    if (unpacked.Get<YCbCrVkDescriptor>()) {
+    if (auto* ycbcr = unpacked.Get<YCbCrVkDescriptor>()) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
                         wgpu::FeatureName::YCbCrVulkanSamplers);
+
+        DAWN_INVALID_IF(ycbcr->externalFormat == 0 && ycbcr->vkFormat == 0,
+                        "Both VkFormat and VkExternalFormatANDROID are undefined.");
     }
 
     return {};
