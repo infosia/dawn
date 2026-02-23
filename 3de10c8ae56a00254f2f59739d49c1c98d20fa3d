@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22118a53_7b6cc00f",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8006e468_f28b32ae",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2f7afe9_fb022e43",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-20T23:01:21Z",
       "side": 1,
       "message": "We should check here if we actually got a device without CoreFeaturesAndLimits. If CoreFeaturesAndLimits is on the device, the test should fail. (Technically this is valid and we could skip, but we\u0027re not worried about these tests passing on compat-less browsers for the moment. We can fix it later if we want to.)",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "894dba37_0ccecc11",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f7afe9_fb022e43",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e20a5ce_986a10b6",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e19f26fd_e2ec27b1",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edbbe4da_0c25392d",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-02-20T10:38:25Z",
       "side": 1,
       "message": "I\u0027ve added this so that you can see `desc.textureBindingViewDimension` is well-set.",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "513df839_847c2b19",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edbbe4da_0c25392d",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +230,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e442b4a3_a6639e49",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "Corentin solved it offline. We needed to update `webgpu-externs.js` file because of the Closure compiler.",
+      "parentUuid": "50b105d3_d1fc48cf",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7126bfbb_a8df720a",
@@ -242,6 +332,24 @@
       "side": 1,
       "message": "The correct way to refer to this is `{{{ gpu.TextureViewDimension.Undefined }}}`, which should be `0` (the value of `WGPUTextureViewDimension_Undefined`).\n\nHowever I think what we should actually do is make it so `WebGPU.TextureViewDimension.indexOf(undefined)` works. It doesn\u0027t work because that array has a hole instead of an explicit `undefined` at index 0 (due to a code size optimization in the template).\n\nAs a hack, try changing the `jsrepr` for this value from `undefined` to `undefined /* comment to prevent this from being elided from library_webgpu_enum_tables.js */`\nAs long as the tests verify this hack works, I think it\u0027s fine.",
       "parentUuid": "5cf0268b_8c73ebb1",
+      "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3353f2f4_c6ae3a86",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-02-23T11:12:47Z",
+      "side": 1,
+      "message": "I\u0027ve tried your hack but it didn\u0027t propagate til the end file so I\u0027ve switched to `{{{ gpu.TextureViewDimension.Undefined }}` as suggested.",
+      "parentUuid": "c50d9cf9_c197b7b6",
       "revId": "3de10c8ae56a00254f2f59739d49c1c98d20fa3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
