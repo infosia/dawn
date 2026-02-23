@@ -387,7 +387,7 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::TextureComponentSwizzle GetSwizzle() const;
     bool IsSwizzleIdentity() const;
 
-    virtual bool IsYCbCr() const;
+    bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
     virtual bool IsYCbCrFilterable() const;
 
