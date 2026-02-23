@@ -16,6 +16,46 @@
       "message": "PTAL!",
       "revId": "b237dab413ceb75b002bc7960fe5e314cf69e3e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "974e4a20_8b6aa28b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T15:58:54Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "b237dab413ceb75b002bc7960fe5e314cf69e3e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5550184e_6fbe79a0",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T15:58:54Z",
+      "side": 1,
+      "message": "Q: What does changing the type to undefined do here? I would guess it causes something in the validation layer to reject the SharedTextureMemoryProperties but I couldn\u0027t find anything in codesearch that looked like it did that.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 50
+      },
+      "revId": "b237dab413ceb75b002bc7960fe5e314cf69e3e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
