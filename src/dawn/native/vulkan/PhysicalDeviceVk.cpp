@@ -955,12 +955,14 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
     // because they affect whether or not the MSAARenderToSingleSampled feature is available.
 
     // Use dynamic rendering by default if the corresponding extension is available.
-    // Also disable on older Intel devices, which have been observed to have driver issues with
-    // the dynamic rendering path.
+    // Also disable on older Intel devices and ARM Valhall devices which have been observed to have
+    // driver issues with the dynamic rendering path.
+    // TODO(crbug.com/484578402): Remove or narrow ARM restriction.
     if (!GetDeviceInfo().HasExt(DeviceExt::DynamicRendering) ||
         GetDeviceInfo().dynamicRenderingFeatures.dynamicRendering == VK_FALSE ||
         (gpu_info::IsIntel(GetVendorId()) &&
-         gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
+         gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9) ||
+        gpu_info::IsARMValhall(GetVendorId(), GetDeviceId())) {
         adapterToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
     } else {
         adapterToggles->Default(Toggle::VulkanUseDynamicRendering, true);
