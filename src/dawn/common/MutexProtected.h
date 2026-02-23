@@ -212,22 +212,13 @@ class CondVarGuard : public NonMovable, StackAllocated {
     template <NotifyType U>
     struct NotifyScope : NotifyScopeBase {
         using NotifyScopeBase::NotifyScopeBase;
-    };
-    template <>
-    struct NotifyScope<NotifyType::All> : NotifyScopeBase {
-        using NotifyScopeBase::NotifyScopeBase;
         ~NotifyScope() {
             if constexpr (!std::is_const_v<T>) {
-                this->cv->notify_all();
-            }
-        }
-    };
-    template <>
-    struct NotifyScope<NotifyType::One> : NotifyScopeBase {
-        using NotifyScopeBase::NotifyScopeBase;
-        ~NotifyScope() {
-            if constexpr (!std::is_const_v<T>) {
-                this->cv->notify_one();
+                if constexpr (U == NotifyType::All) {
+                    this->cv->notify_all();
+                } else if constexpr (U == NotifyType::One) {
+                    this->cv->notify_one();
+                }
             }
         }
     };
