@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "706702b2_c919372f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-23T16:15:40Z",
+      "side": 1,
+      "message": "Corentin, Loko: PTAL. Thanks!",
+      "revId": "c2040c0ff97894d5a3d64e04d450e61ecd4ff70f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
