@@ -16,6 +16,24 @@
       "message": "That pattern is a bit funny but I think it\u0027s ok for now!",
       "revId": "6731b50cc18bb3d0f7238840d0fafcee5a188c42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d32dc9f8_3059719b",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-23T16:40:15Z",
+      "side": 1,
+      "message": "Yeah, not much choice when dealing with `MutexProtected` in its current state. We\u0027d have to add a `Use` function that takes multiple MutexProtected objects and calls an input function with each one passed in as an arg.\n\nAnyway, my latest CL removes the `MutexProtected` altogether, so a problem for another day!",
+      "parentUuid": "4c4a489c_9691a894",
+      "revId": "6731b50cc18bb3d0f7238840d0fafcee5a188c42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
