@@ -55,6 +55,17 @@ class SamplerBase : public ApiObjectBase,
 
     ObjectType GetType() const override;
 
+    wgpu::AddressMode GetAddressModeU() const { return mAddressModeU; }
+    wgpu::AddressMode GetAddressModeV() const { return mAddressModeV; }
+    wgpu::AddressMode GetAddressModeW() const { return mAddressModeW; }
+    wgpu::FilterMode GetMagFilter() const { return mMagFilter; }
+    wgpu::FilterMode GetMinFilter() const { return mMinFilter; }
+    wgpu::MipmapFilterMode GetMipmapFilter() const { return mMipmapFilter; }
+    float GetLodMinClamp() const { return mLodMinClamp; }
+    float GetLodMaxClamp() const { return mLodMaxClamp; }
+    wgpu::CompareFunction GetCompareFunction() const { return mCompareFunction; }
+    uint16_t GetMaxAnisotropy() const { return mMaxAnisotropy; }
+
     bool IsComparison() const;
     bool IsFiltering() const;
     bool IsYCbCr() const;
@@ -68,15 +79,12 @@ class SamplerBase : public ApiObjectBase,
         bool operator()(const SamplerBase* a, const SamplerBase* b) const;
     };
 
-    uint16_t GetMaxAnisotropy() const { return mMaxAnisotropy; }
-
   protected:
     void DestroyImpl(DestroyReason reason) override;
 
   private:
     SamplerBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
 
-    // TODO(cwallez@chromium.org): Store a crypto hash of the items instead?
     wgpu::AddressMode mAddressModeU;
     wgpu::AddressMode mAddressModeV;
     wgpu::AddressMode mAddressModeW;
