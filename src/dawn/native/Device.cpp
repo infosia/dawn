@@ -2179,7 +2179,8 @@ ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateUninitializedComputePi
     DAWN_TRY_ASSIGN(layoutRef, ValidateLayoutAndGetComputePipelineDescriptorWithDefaults(
                                    this, *descriptor, &appliedDescriptor));
 
-    return CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
+    auto pipeline = CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
+    return pipeline;
 }
 
 // This base version is creating the pipeline synchronously,
