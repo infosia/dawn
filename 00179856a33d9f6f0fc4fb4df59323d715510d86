@@ -16,6 +16,29 @@
       "message": "PTAL if this passes CQ",
       "revId": "00179856a33d9f6f0fc4fb4df59323d715510d86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0e869c1_0cddaf66",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-23T23:56:44Z",
+      "side": 1,
+      "message": "This is fine as a fix for now but in real chrome code we use\n\n\u0027base::ScopedFD\u0027 and \u0027base::win::ScopedHandle\u0027\n\nIs \u0027dlopen\u0027 even an FD?",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "00179856a33d9f6f0fc4fb4df59323d715510d86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
