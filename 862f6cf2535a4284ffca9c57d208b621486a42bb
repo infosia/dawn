@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbe7152c_e3d5ea50",
+        "filename": "src/dawn/native/SharedTextureMemory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T19:03:02Z",
+      "side": 1,
+      "message": "Is there any reason this class is still needed if nothing is different from base class?",
+      "revId": "862f6cf2535a4284ffca9c57d208b621486a42bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce07d215_501aadb5",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-23T19:03:02Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem quite right to me but I might be missing something. Chrome creates/uses AHBs with real format like RGBA_8888. It\u0027s just the AHBs created by video decoders that have external format. If we import RGBA_8888 or similar format AHB into Dawn it uses SharedTextureMemory around [here](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/shared_image/dawn_ahardwarebuffer_image_representation.cc;l\u003d112;drc\u003d7e9fdfc244e7bb32269d952adce9c54a8380acb1) so wouldn\u0027t that also use SharedTextureMemoryContentsVk? If so we can\u0027t assume format is always OpaqueYCbCrAndroid.",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "862f6cf2535a4284ffca9c57d208b621486a42bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
