@@ -374,6 +374,7 @@ IOAttributeUsage IOAttributeUsageFor(Function::PipelineStage stage, IODirection 
                 case IODirection::kResource:
                     return IOAttributeUsage::kComputeResourceUsage;
             }
+            break;
         case Function::PipelineStage::kFragment:
             switch (direction) {
                 case IODirection::kInput:
@@ -383,6 +384,7 @@ IOAttributeUsage IOAttributeUsageFor(Function::PipelineStage stage, IODirection 
                 case IODirection::kResource:
                     return IOAttributeUsage::kFragmentResourceUsage;
             }
+            break;
         case Function::PipelineStage::kVertex:
             switch (direction) {
                 case IODirection::kInput:
@@ -392,6 +394,7 @@ IOAttributeUsage IOAttributeUsageFor(Function::PipelineStage stage, IODirection 
                 case IODirection::kResource:
                     return IOAttributeUsage::kVertexResourceUsage;
             }
+            break;
         case Function::PipelineStage::kUndefined:
             return IOAttributeUsage::kUndefinedUsage;
     }
