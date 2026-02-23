@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "246d05f3_95b148c8",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-23T21:36:58Z",
+      "side": 1,
+      "message": "This is gemini generated code, so please review closely.",
+      "revId": "12e6b31bc1f55b4359236c7368a8a6b29503f612",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
