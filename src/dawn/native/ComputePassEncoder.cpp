@@ -66,6 +66,9 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
             clientOffsetInU32: u32,
             enableValidation: u32,
             duplicateNumWorkgroups: u32,
+            linearIndexing: u32,
+            globalIndex: u32,
+            wgSize: u32,
         }
 
         struct IndirectParams {
@@ -82,11 +85,20 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
 
         @compute @workgroup_size(1, 1, 1)
         fn main() {
+            var invocations = select(1u, uniformParams.wgSize, uniformParams.globalIndex > 0u);
             for (var i = 0u; i < 3u; i = i + 1u) {
                 var numWorkgroups = clientParams.data[uniformParams.clientOffsetInU32 + i];
-                if (uniformParams.enableValidation > 0u &&
-                    numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension) {
-                    numWorkgroups = 0u;
+                if (uniformParams.enableValidation > 0u) {
+                    if (numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension) {
+                        numWorkgroups = 0u;
+                    } else if (invocations != 0u && uniformParams.linearIndexing > 0u) {
+                        if (invocations > 0xffffffffu / numWorkgroups) {
+                          numWorkgroups = 0u;
+                          invocations = 0u;
+                        } else {
+                          invocations *= numWorkgroups;
+                        }
+                    }
                 }
                 validatedParams.data[i] = numWorkgroups;
 
@@ -241,6 +253,21 @@ void ComputePassEncoder::APIDispatchWorkgroups(uint32_t workgroupCountX,
                     DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter()->GetLimits().v1,
                                                 maxComputeWorkgroupsPerDimension, workgroupCountZ));
 
+                if (auto pipeline = mCommandBufferState.GetComputePipeline()) {
+                    if (pipeline->UsesLinearIndexing()) {
+                        auto wgSize =
+                            pipeline->GetWorkgroupSize().value_or(std::vector<uint32_t>(3, 1));
+                        uint64_t totalInvocations = wgSize[0] * wgSize[1] * wgSize[2];
+                        totalInvocations *= workgroupCountX;
+                        totalInvocations *= workgroupCountY;
+                        totalInvocations *= workgroupCountZ;
+                        DAWN_INVALID_IF(totalInvocations > 0xffffffff,
+                                        "Dispatch using linear_indexing built-in value would "
+                                        "exceed unsigned 32-bit range(%u invocations).",
+                                        totalInvocations);
+                    }
+                }
+
                 if (!GetDevice()->HasFlexibleTextureViews()) {
                     DAWN_TRY(mCommandBufferState.ValidateNoDifferentTextureViewsOnSameTexture());
                 }
@@ -276,6 +303,12 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
     if (!IsValidationEnabled() && !shouldDuplicateNumWorkgroups) {
         return std::make_pair(indirectBuffer, indirectOffset);
     }
+    const bool usesLinearIndexing = mCommandBufferState.GetComputePipeline()->UsesLinearIndexing();
+    const bool usesGlobalIndex =
+        mCommandBufferState.GetComputePipeline()->UsesGlobalInvocationIndex();
+    const auto wgSize = mCommandBufferState.GetComputePipeline()->GetWorkgroupSize().value_or(
+        std::vector<uint32_t>(3, 1));
+    const uint32_t wgInvocations = wgSize[0] * wgSize[1] * wgSize[2];
 
     // Save the previous command buffer state so it can be restored after the
     // validation inserts additional commands.
@@ -308,6 +341,9 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
         uint32_t clientOffsetInU32;
         uint32_t enableValidation;
         uint32_t duplicateNumWorkgroups;
+        uint32_t linearIndexing;
+        uint32_t globalIndex;
+        uint32_t wgSize;
     };
 
     // Create a uniform buffer to hold parameters for the shader.
@@ -319,6 +355,9 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
         params.clientOffsetInU32 = clientOffsetFromAlignedBoundary / sizeof(uint32_t);
         params.enableValidation = static_cast<uint32_t>(IsValidationEnabled());
         params.duplicateNumWorkgroups = static_cast<uint32_t>(shouldDuplicateNumWorkgroups);
+        params.linearIndexing = static_cast<uint32_t>(usesLinearIndexing);
+        params.globalIndex = static_cast<uint32_t>(usesGlobalIndex);
+        params.wgSize = wgInvocations;
 
         DAWN_TRY_ASSIGN(uniformBuffer,
                         utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform, {params}));
