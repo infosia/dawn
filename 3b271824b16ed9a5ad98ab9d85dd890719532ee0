@@ -70,6 +70,24 @@
       "parentUuid": "9fee5436_919786c9",
       "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a19141d0_5948182b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-23T15:14:39Z",
+      "side": 1,
+      "message": "sigh, silly compilers. I\u0027d prefer to keep that warning enabled as it does catch mistakes.",
+      "parentUuid": "4ed90d17_153640ef",
+      "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
