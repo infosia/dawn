@@ -3,6 +3,46 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ddb4f562_d5430647",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-23T17:02:36Z",
+      "side": 1,
+      "message": "LGTM with one minor nit.",
+      "revId": "1fcac27d895145f8511bb6dae2128c27e4e1a8dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28fd1116_d1ac824d",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-23T17:02:36Z",
+      "side": 1,
+      "message": "Comment needs updating? These are no longer marked as external.",
+      "range": {
+        "startLine": 75,
+        "startChar": 25,
+        "endLine": 75,
+        "endChar": 33
+      },
+      "revId": "1fcac27d895145f8511bb6dae2128c27e4e1a8dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f274fb30_1d7569d4",
         "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
         "patchSetId": 6
