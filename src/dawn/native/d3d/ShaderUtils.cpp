@@ -244,7 +244,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
     // have been substituted.
     if (r.stage == SingleShaderStage::Compute) {
         // Validate workgroup size and workgroup storage size.
-        Extent3D _;
+        Extent3D workgroupSize;
         DAWN_TRY_ASSIGN(_,
                         ValidateComputeStageWorkgroupSize(
                             result->workgroup_info, /*usesSubgroupMatrix=*/false, r.maxSubgroupSize,
@@ -252,6 +252,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
         DAWN_TRY(ValidateExplicitComputeSubgroupSize(
             result->workgroup_info, r.minExplicitComputeSubgroupSize,
             r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
+        compiledShader->workgroupSize = workgroupSize;
     }
 
     bool usesVertexIndex = false;
