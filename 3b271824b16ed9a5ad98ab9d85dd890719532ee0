@@ -16,6 +16,24 @@
       "message": "This shouldn\u0027t be needed, the `switch` above fully covers and all paths return?",
       "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62adc496_b5f1c565",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-23T15:12:29Z",
+      "side": 1,
+      "message": "This is a cmake warning.\nIt is either fix it this way or maybe silence the warning",
+      "parentUuid": "3e50fbf9_177ad2dc",
+      "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
