@@ -92,6 +92,7 @@ MaybeError ComputePipeline::InitializeImpl() {
                                                     ToBackend(GetLayout()), compileFlags,
                                                     /* usedInterstageVariables */ {}));
     d3dDesc.CS = {compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size()};
+    SetWorkgroupSize(compiledShader.workgroupSize);
 
     StreamIn(&mCacheKey, d3dDesc, ToBackend(GetLayout())->GetRootSignatureBlob());
 

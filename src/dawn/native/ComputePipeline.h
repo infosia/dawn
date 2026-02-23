@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_COMPUTEPIPELINE_H_
 #define SRC_DAWN_NATIVE_COMPUTEPIPELINE_H_
 
+#include <vector>
+
 #include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/Forward.h"
@@ -60,11 +62,23 @@ class ComputePipelineBase : public PipelineBase,
         bool operator()(const ComputePipelineBase* a, const ComputePipelineBase* b) const;
     };
 
+    std::optional<std::vector<uint32_t>> GetWorkgroupSize() const { return mWorkgroupSize; }
+    void SetWorkgroupSize(std::vector<uint32_t> size) { mWorkgroupSize = size; }
+
+    bool UsesLinearIndexing() const { return mUsesLinearIndex; }
+    void SetUsesLinearIndexing(bool use) { mUsesLinearIndex = use; }
+    bool UsesGlobalInvocationIndex() const { return mUsesGlobalInvocationIndex; }
+    void SetUsesGlobalInvocationIndex(bool use) { mUsesGlobalInvocationIndex = use; }
+
   protected:
     void DestroyImpl(DestroyReason reason) override;
 
   private:
     ComputePipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+
+    std::optional<std::vector<uint32_t>> mWorkgroupSize = std::nullopt;
+    bool mUsesLinearIndex = false;
+    bool mUsesGlobalInvocationIndex = false;
 };
 
 }  // namespace dawn::native

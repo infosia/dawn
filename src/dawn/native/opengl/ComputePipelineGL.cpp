@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/ComputePipelineGL.h"
 
+#include <vector>
+
 #include "dawn/native/opengl/DeviceGL.h"
 
 namespace dawn::native::opengl {
@@ -46,8 +48,12 @@ void ComputePipeline::DestroyImpl(DestroyReason reason) {
 }
 
 MaybeError ComputePipeline::InitializeImpl() {
-    return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
-                          mImmediateMask, /* bgraSwizzleAttributes */ {});
+    std::vector<uint32_t> workgroupSize;
+    auto error =
+        InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
+                       mImmediateMask, /* bgraSwizzleAttributes */ {}, &workgroupSize);
+    SetWorkgroupSize(workgroupSize);
+    return error;
 }
 
 MaybeError ComputePipeline::ApplyNow(const OpenGLFunctions& gl) {
