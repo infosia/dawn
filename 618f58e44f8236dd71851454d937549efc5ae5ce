@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e04881_66289953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-23T15:10:37Z",
+      "side": 1,
+      "message": "Does this also need to be done in src/tint/cmd/fuzz/ir/main_fuzz.cc?",
+      "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
