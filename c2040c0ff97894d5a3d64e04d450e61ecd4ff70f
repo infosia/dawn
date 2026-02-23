@@ -16,6 +16,23 @@
       "message": "Corentin, Loko: PTAL. Thanks!",
       "revId": "c2040c0ff97894d5a3d64e04d450e61ecd4ff70f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5066f24_b6c3e8dc",
+        "filename": "src/dawn/native/opengl/SamplerGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-23T16:19:12Z",
+      "side": 1,
+      "message": "Maybe set this earlier otherwise on error we would leak the ID of the  GL sampler.",
+      "revId": "c2040c0ff97894d5a3d64e04d450e61ecd4ff70f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
