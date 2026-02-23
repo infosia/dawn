@@ -27,6 +27,8 @@
 
 #include "dawn/native/opengl/ComputePipelineGL.h"
 
+#include <vector>
+
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
@@ -55,9 +57,12 @@ void ComputePipeline::DestroyImpl(DestroyReason reason) {
 MaybeError ComputePipeline::InitializeImpl() {
     return ToBackend(GetDevice())
         ->EnqueueGL([self = Ref<ComputePipeline>(this)](const OpenGLFunctions& gl) -> MaybeError {
-            return self->InitializeBase(gl, ToBackend(self->GetLayout()), self->GetAllStages(),
-                                        self->mImmediateMask,
-                                        /* bgraSwizzleAttributes */ {});
+            std::vector<uint32_t> workgroupSize;
+            auto error = self->InitializeBase(gl, ToBackend(self->GetLayout()),
+                                              self->GetAllStages(), self->mImmediateMask,
+                                              /* bgraSwizzleAttributes */ {}, &workgroupSize);
+            self->SetWorkgroupSize(workgroupSize);
+            return error;
         });
 }
 
