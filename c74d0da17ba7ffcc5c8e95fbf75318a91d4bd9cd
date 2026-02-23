@@ -16,6 +16,46 @@
       "message": "PTAL!",
       "revId": "c74d0da17ba7ffcc5c8e95fbf75318a91d4bd9cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e2127de_b8b0c1ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-23T17:13:14Z",
+      "side": 1,
+      "message": "Looking good overall once you get the bot failures cleared up.",
+      "revId": "c74d0da17ba7ffcc5c8e95fbf75318a91d4bd9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa9d6549_b1fdf886",
+        "filename": "src/dawn/tests/end2end/YCbCrInfoTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-23T17:13:14Z",
+      "side": 1,
+      "message": "Something about the sample type validation is tripping this test up on the bots.\n\n```\nErrorType::Validation\nNone of the supported sample types (Float) of [Texture (unlabeled 32x32 px, TextureFormat::OpaqueYCbCrAndroid)] match the expected sample types (UnfilterableFloat).\n   - While validating entries[0] against { binding: 1, visibility: ShaderStage::None, texture: {sampleType: TextureSampleType::UnfilterableFloat, viewDimension: TextureViewDimension::e2D, multisampled: 0} }.\n   - While validating [BindGroupDescriptor] against [BindGroupLayout (unlabeled)]\n   - While calling [Device].CreateBindGroup([BindGroupDescriptor]).\n```",
+      "range": {
+        "startLine": 313,
+        "startChar": 13,
+        "endLine": 313,
+        "endChar": 20
+      },
+      "revId": "c74d0da17ba7ffcc5c8e95fbf75318a91d4bd9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
