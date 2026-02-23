@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "225f8ba2_d909190f",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-23T17:48:04Z",
+      "side": 1,
+      "message": "I think it\u0027s unlikely to happen since we try and represent everything in Tint IR where possible.\n\nWhen it does happen, it uses our own `Line()` helper for buffering output, which looks like this:\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/147.0.7700.2:third_party/dawn/src/tint/lang/msl/writer/printer/printer.cc;l\u003d210-218",
+      "parentUuid": "b2b284fd_e254dab2",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 30
+      },
+      "revId": "2fe1667ccb986ed61e35dc7c0acd7a78b3466dbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "94bf901e_50142a26",
         "filename": "src/tint/utils/ice/ice.cc",
         "patchSetId": 5
