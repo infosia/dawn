@@ -363,12 +363,14 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Gather list of internal immediate constants used by this pipeline
-    bool isSampled = (GetSampleCount() > 1u) && UsesFragPosition() &&
-                     (IsFragMultiSampled() || UsesSampleIndex());
-    if ((isSampled || UsesFragDepth()) && !HasUnclippedDepth()) {
+    bool polyfillPixelCenter = (GetSampleCount() > 1u) && UsesFragPosition() &&
+                               (IsFragMultiSampled() || UsesSampleIndex());
+    if ((polyfillPixelCenter || UsesFragDepth()) && !HasUnclippedDepth()) {
         mImmediateMask |= GetImmediateConstantBlockBits(
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
+
+    bool multisampledFramebufferFetch = GetSampleCount() > 1u;
 
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
@@ -380,7 +382,8 @@ MaybeError RenderPipeline::InitializeImpl() {
         DAWN_TRY_ASSIGN(moduleAndSpirv,
                         ToBackend(programmableStage.module)
                             ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
-                                                isSampled, GetImmediateMask()));
+                                                polyfillPixelCenter, multisampledFramebufferFetch,
+                                                GetImmediateMask()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.

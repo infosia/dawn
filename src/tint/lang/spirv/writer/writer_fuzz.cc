@@ -80,6 +80,7 @@ struct FuzzedOptions {
     SubstituteOverridesConfig substitute_overrides_config;
     bool texture_sample_compare_depth_cube_array;
     bool polyfill_saturate_as_min_max_f16;
+    bool multisampled_framebuffer_fetch;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -110,7 +111,8 @@ struct FuzzedOptions {
                  spirv_version,
                  substitute_overrides_config,
                  texture_sample_compare_depth_cube_array,
-                 polyfill_saturate_as_min_max_f16);
+                 polyfill_saturate_as_min_max_f16,
+                 multisampled_framebuffer_fetch);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 
@@ -322,6 +324,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
         fuzzed_options.texture_sample_compare_depth_cube_array;
     options.workarounds.polyfill_saturate_as_min_max_f16 =
         fuzzed_options.polyfill_saturate_as_min_max_f16;
+    options.multisampled_framebuffer_fetch = fuzzed_options.multisampled_framebuffer_fetch;
 
     TINT_CHECK_RESULT(CanGenerate(module, options));
 
