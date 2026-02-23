@@ -251,6 +251,8 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
         DAWN_TRY(ValidateExplicitComputeSubgroupSize(
             result->workgroup_info, r.minExplicitComputeSubgroupSize,
             r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
+        compiledShader->workgroupSize = {result->workgroup_info.x, result->workgroup_info.y,
+                                         result->workgroup_info.z};
     }
 
     bool usesVertexIndex = false;

@@ -92,7 +92,8 @@ class ShaderModule final : public ShaderModuleBase {
                                         std::vector<CombinedSampler>* combinedSamplers,
                                         const PipelineLayout* layout,
                                         EmulatedTextureBuiltinRegistrar* emulatedTextureBuiltings,
-                                        bool* needsSSBOLengthUniformBuffer);
+                                        bool* needsSSBOLengthUniformBuffer,
+                                        std::vector<uint32_t>* workgroupSize);
 
   private:
     ShaderModule(Device* device,
