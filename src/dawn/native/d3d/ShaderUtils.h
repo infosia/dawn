@@ -48,7 +48,8 @@ class Device;
     X(std::string, hlslSource)     \
     X(Sha3_256::Output, sha3)      \
     X(bool, usesVertexIndex)       \
-    X(bool, usesInstanceIndex)
+    X(bool, usesInstanceIndex)     \
+    X(std::vector<uint32_t>, workgroupSize)
 
 // `CompiledShader` holds a ref to one of the various representations of shader blobs and
 // information used to emulate vertex/instance index starts. It also holds the `hlslSource` for the
