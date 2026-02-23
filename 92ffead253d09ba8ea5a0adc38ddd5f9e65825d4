@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e73238d_f297c2e4",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-23T22:05:38Z",
+      "side": 1,
+      "message": "Why is this condition different from `IsFragMultiSampled()` used above?\n\nI\u0027m actually very confused about what multi-sampling actually means. It seems like there\u0027s (at least) three different things that contribute to the idea of multi-sampling in the context of a render pipeline:\n- The sample count of the attachment\n- The use of a `sample` interpolant in the shader\n- The use of `@builtin(sample index)` in the shader\n\nThe pixel center polyfill looks at all three of these things, whereas this new framebuffer fetch check only looks at the first. Maybe that\u0027s correct but it\u0027s unclear to me why.",
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbca82bc_9e09791d",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 4
