@@ -34,6 +34,24 @@
       "parentUuid": "3e50fbf9_177ad2dc",
       "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fee5436_919786c9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-23T15:13:00Z",
+      "side": 1,
+      "message": "Which warning? fallthrough?",
+      "parentUuid": "62adc496_b5f1c565",
+      "revId": "3b271824b16ed9a5ad98ab9d85dd890719532ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
