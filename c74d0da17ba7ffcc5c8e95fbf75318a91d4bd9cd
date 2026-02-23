@@ -56,6 +56,30 @@
       },
       "revId": "c74d0da17ba7ffcc5c8e95fbf75318a91d4bd9cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7404c493_4432aaa3",
+        "filename": "src/dawn/tests/end2end/YCbCrInfoTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-23T17:46:12Z",
+      "side": 1,
+      "message": "It should be fixed with https://dawn-review.git.corp.google.com/c/dawn/+/292497/6..7",
+      "parentUuid": "aa9d6549_b1fdf886",
+      "range": {
+        "startLine": 313,
+        "startChar": 13,
+        "endLine": 313,
+        "endChar": 20
+      },
+      "revId": "c74d0da17ba7ffcc5c8e95fbf75318a91d4bd9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
