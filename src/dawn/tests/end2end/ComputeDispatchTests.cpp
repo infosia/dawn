@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <initializer_list>
+#include <string>
 #include <vector>
 
 #include "dawn/common/Math.h"
@@ -583,6 +584,126 @@ DAWN_INSTANTIATE_TEST_P(ComputeMultipleDispatchesTests,
                         {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
                          OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
                         {true, false}  // useNumWorkgroups
+);
+
+namespace {
+using LinearBuiltin = std::string;
+DAWN_TEST_PARAM_STRUCT(LinearParams, LinearBuiltin);
+}  // namespace
+
+class ComputeLinearIndexingDispatchTests : public DawnTestWithParams<LinearParams> {
+  protected:
+    void SetUp() override {
+        DawnTestWithParams<LinearParams>::SetUp();
+        const auto builtin = GetParam().mLinearBuiltin;
+
+        bindGroupLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+
+        wgpu::PipelineLayoutDescriptor pipelineLayoutDescriptor;
+        pipelineLayoutDescriptor.bindGroupLayoutCount = 1;
+        pipelineLayoutDescriptor.bindGroupLayouts = &bindGroupLayout;
+        wgpu::PipelineLayout pipelineLayout =
+            device.CreatePipelineLayout(&pipelineLayoutDescriptor);
+
+        wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+            @group(0) @binding(0) var<storage, read_write> out : u32;
+
+            @compute @workgroup_size(2, 1, 1)
+            fn main(@builtin()" + builtin + R"() input : u32,
+                    @builtin(global_invocation_id) gid : vec3u) {
+              if (gid.x == 0 && gid.y == 0 && gid.z == 0) {
+                out = 0xf0f0f0f0u + input;
+              }
+            })");
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        //
+        csDesc.compute.module = module;
+        csDesc.layout = pipelineLayout;
+        pipeline = device.CreateComputePipeline(&csDesc);
+    }
+
+    void IndirectTest(std::vector<uint32_t> indirectBufferData) {
+        wgpu::Buffer indirectBuffer = utils::CreateBufferFromData(
+            device, &indirectBufferData[0], indirectBufferData.size() * sizeof(uint32_t),
+            wgpu::BufferUsage::Indirect | wgpu::BufferUsage::CopySrc);
+
+        std::vector<uint32_t> outData = {0};
+        wgpu::Buffer outBuffer = utils::CreateBufferFromData(
+            device, &outData[0], outData.size() * sizeof(uint32_t),
+            wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst);
+
+        wgpu::BindGroup bindGroup =
+            utils::MakeBindGroup(device, bindGroupLayout,
+                                 {
+                                     {0, outBuffer, 0, outData.size() * sizeof(uint32_t)},
+                                 });
+
+        wgpu::CommandBuffer commands;
+        {
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+            wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+            pass.SetPipeline(pipeline);
+            pass.SetBindGroup(0, bindGroup);
+            pass.DispatchWorkgroupsIndirect(indirectBuffer, 0);
+            pass.End();
+            commands = encoder.Finish();
+        }
+
+        queue.Submit(1, &commands);
+
+        const auto builtin = GetParam().mLinearBuiltin;
+        uint64_t totalInvocations = 1;
+        totalInvocations *= indirectBufferData[0];
+        totalInvocations *= indirectBufferData[1];
+        totalInvocations *= indirectBufferData[2];
+        if (builtin == "global_invocation_index") {
+            totalInvocations *= 2;
+        }
+        const bool validation = !HasToggleEnabled("skip_validation");
+        const bool overflow = totalInvocations > 0xffffffff;
+        uint32_t value = 0xf0f0f0f0u;
+        if (overflow && validation) {
+            value = 0u;
+        }
+        std::vector<uint32_t> expected = {value};
+        EXPECT_BUFFER_U32_RANGE_EQ(&expected[0], outBuffer, 0, expected.size())
+            << "groupCountX = " << indirectBufferData[0] << "\n"
+            << "groupCountY = " << indirectBufferData[1] << "\n"
+            << "groupCountZ = " << indirectBufferData[2] << "\n"
+            << "totalInvs   = " << totalInvocations << "\n"
+            << "overflow    = " << (overflow ? "yes" : "no") << "\n"
+            << "validation  = " << (validation ? "yes" : "no") << "\n";
+    }
+
+  private:
+    wgpu::ComputePipeline pipeline;
+    wgpu::BindGroupLayout bindGroupLayout;
+};
+
+TEST_P(ComputeLinearIndexingDispatchTests, Indirect) {
+    uint32_t max = GetSupportedLimits().maxComputeWorkgroupsPerDimension;
+
+    const auto builtin = GetParam().mLinearBuiltin;
+    uint32_t min = (builtin == "global_invocation_index") ? 1 : 2;
+
+    // In bounds
+    IndirectTest({max, 1, 1});
+    IndirectTest({1, max, 1});
+
+    if (!HasToggleEnabled("skip_validation")) {
+        // Out of bounds
+        IndirectTest({max, max, min});
+        IndirectTest({max, min, max});
+        IndirectTest({min, max, max});
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(ComputeLinearIndexingDispatchTests,
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
+                         OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+                        {"global_invocation_index", "workgroup_index"}  // LinearBuiltin
 );
 
 }  // anonymous namespace
