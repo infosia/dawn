@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c98472_36e3833c",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-23T22:31:25Z",
+      "side": 1,
+      "message": "LGTM but we should have a comment here explaining that this needs to stay last.",
+      "revId": "7a0489fddf4d257f17916fd581f3236709519e28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
