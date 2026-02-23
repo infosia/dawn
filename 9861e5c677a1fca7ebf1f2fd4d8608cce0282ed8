@@ -16,6 +16,24 @@
       "message": "Shrek PTAL as next week\u0027s gardener (since this might result in a revert)",
       "revId": "9861e5c677a1fca7ebf1f2fd4d8608cce0282ed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efebbd37_6c09bc4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-23T18:24:59Z",
+      "side": 1,
+      "message": "Gotcha. Thanks!",
+      "parentUuid": "c4a69f01_8e2438e2",
+      "revId": "9861e5c677a1fca7ebf1f2fd4d8608cce0282ed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
