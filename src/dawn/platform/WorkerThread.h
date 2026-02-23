@@ -77,10 +77,11 @@ class AsyncJobHandleImpl : public RefCounted, public NonCopyable {
 
     void JobThreadLoop(PostWorkerJobCallback cb, void* userdata);
 
-    std::thread mThread;
     std::atomic<bool> mCancelled = false;
     bool mJoined = false;
     std::once_flag mJoinFlag;
+    // The thread object uses other member fields so it needs to be the last member constructed.
+    std::thread mThread;
 };
 
 class AsyncWorkerThreadPool : public WorkerTaskPool, public NonCopyable {
