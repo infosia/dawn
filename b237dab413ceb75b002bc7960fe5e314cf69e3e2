@@ -56,6 +56,30 @@
       },
       "revId": "b237dab413ceb75b002bc7960fe5e314cf69e3e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a4bbe5_2516ca3b",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-23T16:22:35Z",
+      "side": 1,
+      "message": "The call to `FormatFromVkFormat` at [1] will [produce a validation error](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;drc\u003d3e982ddc88a9c945d6fa66335671bac22132b67c;l\u003d641) but it\u0027s not super clear. I\u0027m hoping to clean the code in STMVk a bit once I\u0027m able to test on Android (this was all done with trybots only for now and I need a bit more time to set up Android testing locally)",
+      "parentUuid": "5550184e_6fbe79a0",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 50
+      },
+      "revId": "b237dab413ceb75b002bc7960fe5e314cf69e3e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -22,6 +22,30 @@
       },
       "revId": "e056c4505461c48041b8c3a5f875f84a05f3bbef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abd02fcd_7996385a",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-23T16:22:35Z",
+      "side": 0,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/7595306 needs to land first (so this is a 3-sided patch)",
+      "parentUuid": "7da86888_a56e1e32",
+      "range": {
+        "startLine": 489,
+        "startChar": 41,
+        "endLine": 489,
+        "endChar": 58
+      },
+      "revId": "e056c4505461c48041b8c3a5f875f84a05f3bbef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
