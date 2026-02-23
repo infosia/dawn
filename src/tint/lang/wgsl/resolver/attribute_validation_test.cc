@@ -221,8 +221,9 @@ const ast::Attribute* CreateAttribute(const Source& source,
         case AttributeKind::kColor:
             return builder.Color(source, 2_a);
         case AttributeKind::kDiagnostic:
-            return builder.DiagnosticAttribute(source, wgsl::DiagnosticSeverity::kInfo, "chromium",
-                                               "unreachable_code");
+            return builder.DiagnosticAttribute(
+                source, wgsl::DiagnosticSeverity::kInfo,
+                builder.DiagnosticRuleName("chromium", "unreachable_code"));
         case AttributeKind::kGroup:
             return builder.Group(source, 1_a);
         case AttributeKind::kId:

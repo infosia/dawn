@@ -131,16 +131,19 @@ class State {
         if (options.allow_non_uniform_derivatives) {
             // Suppress errors regarding non-uniform derivative operations if requested, by adding a
             // diagnostic directive to the module.
-            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff, "derivative_uniformity");
+            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff,
+                                  b.DiagnosticRuleName("derivative_uniformity"));
         }
         if (options.allow_non_uniform_subgroup_operations) {
             // Suppress errors regarding non-uniform subgroups operations if requested, by adding a
             // diagnostic directive to the module.
-            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff, "subgroup_uniformity");
+            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff,
+                                  b.DiagnosticRuleName("subgroup_uniformity"));
         }
         if (options.disable_unreachable_code_warning) {
             // Suppress warnings regarding unreachable code
-            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff, "chromium", "unreachable_code");
+            b.DiagnosticDirective(wgsl::DiagnosticSeverity::kOff,
+                                  b.DiagnosticRuleName("chromium", "unreachable_code"));
         }
 
         return Program{resolver::Resolve(b, options.allowed_features)};
