@@ -361,6 +361,11 @@ EntryPoint Inspector::GetEntryPoint(const tint::ast::Function* func) {
                             param->Declaration()->attributes);
         entry_point.subgroup_size_used |= ContainsBuiltin(
             core::BuiltinValue::kSubgroupSize, param->Type(), param->Declaration()->attributes);
+        entry_point.global_invocation_index_used |=
+            ContainsBuiltin(core::BuiltinValue::kGlobalInvocationIndex, param->Type(),
+                            param->Declaration()->attributes);
+        entry_point.workgroup_index_used |= ContainsBuiltin(
+            core::BuiltinValue::kWorkgroupIndex, param->Type(), param->Declaration()->attributes);
 
         if (entry_point.stage == PipelineStage::kFragment) {
             entry_point.frag_position_used = ContainsBuiltin(

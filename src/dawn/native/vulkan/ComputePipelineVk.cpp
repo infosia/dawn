@@ -90,6 +90,7 @@ MaybeError ComputePipeline::InitializeImpl() {
         module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
                                   /*emitPointSize=*/false, /*polyfillPixelCenter=*/false,
                                   /*needsMultisampledFramebufferFetch=*/false, GetImmediateMask()));
+    SetWorkgroupSize(moduleAndSpirv.workgroupSize.value_or(std::vector<uint32_t>(3, 1)));
 
     createInfo.stage.module = moduleAndSpirv.module;
     // string_view returned by GetIsolatedEntryPointName() points to a null-terminated string.

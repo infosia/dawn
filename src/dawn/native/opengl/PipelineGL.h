@@ -95,7 +95,8 @@ class PipelineGL {
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
                               ImmediateConstantMask& pipelineImmediateMask,
-                              VertexAttributeMask bgraSwizzleAttributes);
+                              VertexAttributeMask bgraSwizzleAttributes,
+                              std::vector<uint32_t>* workgroupSize = nullptr);
 
   protected:
     GLuint mProgram;
