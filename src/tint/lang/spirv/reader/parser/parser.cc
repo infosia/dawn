@@ -3776,8 +3776,8 @@ class Parser {
             default_blk->Append(b_.ExitSwitch(switch_));
         }
 
-        std::unordered_map<uint32_t, core::ir::Switch::Case*> block_id_to_case;
-        block_id_to_case[default_id] = &(switch_->Cases().Back());
+        std::unordered_map<uint32_t, size_t> block_id_to_case_index;
+        block_id_to_case_index[default_id] = switch_->Cases().Length() - 1;
 
         for (uint32_t i = 2; i < inst.NumInOperandWords(); i += 2) {
             auto blk_id = inst.GetSingleWordInOperand(i + 1);
@@ -3800,9 +3800,10 @@ class Parser {
             }
 
             // Determine if we've seen this block and should combine selectors
-            auto iter = block_id_to_case.find(blk_id);
-            if (iter != block_id_to_case.end()) {
-                iter->second->selectors.Push(core::ir::Switch::CaseSelector{sel});
+            auto case_index_iter = block_id_to_case_index.find(blk_id);
+            if (case_index_iter != block_id_to_case_index.end()) {
+                switch_->Cases()[case_index_iter->second].selectors.Push(
+                    core::ir::Switch::CaseSelector{sel});
                 continue;
             }
 
@@ -3814,7 +3815,7 @@ class Parser {
             if (!blk->Terminator()) {
                 blk->Append(b_.ExitSwitch(switch_));
             }
-            block_id_to_case[blk_id] = &(switch_->Cases().Back());
+            block_id_to_case_index[blk_id] = switch_->Cases().Length() - 1;
         }
 
         current_switch_blocks_.pop_back();
