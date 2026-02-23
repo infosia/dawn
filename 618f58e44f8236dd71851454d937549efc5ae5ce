@@ -33,6 +33,23 @@
       "message": "Needs a second reviewer",
       "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf51301_3e6fcdb9",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-23T15:14:01Z",
+      "side": 1,
+      "message": "We usually return 1 on failure, not -1, is -1 needed specifically or can this be 1?",
+      "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
