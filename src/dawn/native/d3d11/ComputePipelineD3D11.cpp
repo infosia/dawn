@@ -90,6 +90,7 @@ MaybeError ComputePipeline::InitializeImpl() {
         SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(device->GetPlatform(), "D3D11.CreateComputeShaderUs");
         DAWN_TRY_ASSIGN(mComputeShader, device->GetOrCreateComputeShader(compiledShader));
     }
+    SetWorkgroupSize(compiledShader.workgroupSize);
 
     SetLabelImpl();
 

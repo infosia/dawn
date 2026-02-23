@@ -87,7 +87,9 @@ MaybeError ComputePipeline::InitializeImpl() {
     timer.RecordMicroseconds("Metal.newComputePipelineStateWithDescriptor.CacheMiss");
 
     // Copy over the local workgroup size as it is passed to dispatch explicitly in Metal
-    mLocalWorkgroupSize = computeData.localWorkgroupSize;
+    SetWorkgroupSize({(uint32_t)computeData.localWorkgroupSize.width,
+                      (uint32_t)computeData.localWorkgroupSize.height,
+                      (uint32_t)computeData.localWorkgroupSize.depth});
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
@@ -107,7 +109,8 @@ void ComputePipeline::Encode(id<MTLComputeCommandEncoder> encoder) {
 }
 
 MTLSize ComputePipeline::GetLocalWorkGroupSize() const {
-    return mLocalWorkgroupSize;
+    auto size = GetWorkgroupSize().value();
+    return MTLSizeMake(size[0], size[1], size[2]);
 }
 
 bool ComputePipeline::RequiresStorageBufferLength() const {
