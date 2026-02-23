@@ -16,6 +16,24 @@
       "message": "How did you determine that these failures are not currently happening on the bots?\n(note that the CQ run on this CL skipped the CTS runs on Pixel 4)",
       "revId": "bdea3d0e47c9c28c8ed405af6fc2e9eab9426eab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "283714a5_255b57a7",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2117,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-23T18:40:39Z",
+      "side": 0,
+      "message": "Oh yes this thing. Let me try again.",
+      "parentUuid": "04f9ad74_e8de2747",
+      "revId": "bdea3d0e47c9c28c8ed405af6fc2e9eab9426eab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
