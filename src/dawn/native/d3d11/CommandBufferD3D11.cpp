@@ -892,53 +892,35 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         switch (type) {
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
-
                 d3d11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 
-                if (renderPass->attachmentState->GetSampleCount() > 1) {
-                    // Resolve multisampled textures.
-                    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-                        const auto& attachment = renderPass->colorAttachments[i];
-                        if (!attachment.resolveTarget.Get()) {
-                            continue;
-                        }
-
-                        DAWN_ASSERT(attachment.view->GetAspects() == Aspect::Color);
-                        DAWN_ASSERT(attachment.resolveTarget->GetAspects() == Aspect::Color);
-
-                        Texture* resolveTexture = ToBackend(attachment.resolveTarget->GetTexture());
-                        Texture* colorTexture = ToBackend(attachment.view->GetTexture());
-                        uint32_t dstSubresource = resolveTexture->GetSubresourceIndex(
-                            attachment.resolveTarget->GetBaseMipLevel(),
-                            attachment.resolveTarget->GetBaseArrayLayer(), Aspect::Color);
-                        uint32_t srcSubresource = colorTexture->GetSubresourceIndex(
-                            attachment.view->GetBaseMipLevel(),
-                            attachment.view->GetBaseArrayLayer(), Aspect::Color);
-                        d3d11DeviceContext->ResolveSubresource(
-                            resolveTexture->GetD3D11Resource(), dstSubresource,
-                            colorTexture->GetD3D11Resource(), srcSubresource,
-                            d3d::DXGITextureFormat(GetDevice(),
-                                                   attachment.resolveTarget->GetFormat().format));
-                    }
+                if (renderPass->attachmentState->GetSampleCount() <= 1) {
+                    return {};
                 }
 
+                // Resolve multisampled textures.
                 for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-                    if (renderPass->colorAttachments[i].storeOp == wgpu::StoreOp::Discard) {
-                        d3d11DeviceContext->DiscardView(d3d11RenderTargetViews[i]);
+                    const auto& attachment = renderPass->colorAttachments[i];
+                    if (!attachment.resolveTarget.Get()) {
+                        continue;
                     }
-                }
 
-                if (renderPass->attachmentState->HasDepthStencilAttachment()) {
-                    auto* attachmentInfo = &renderPass->depthStencilAttachment;
-                    const Format& attachmentFormat =
-                        attachmentInfo->view->GetTexture()->GetFormat();
-                    bool discardDepth = !attachmentFormat.HasDepth() ||
-                                        attachmentInfo->depthStoreOp == wgpu::StoreOp::Discard;
-                    bool discardStencil = !attachmentFormat.HasStencil() ||
-                                          attachmentInfo->stencilStoreOp == wgpu::StoreOp::Discard;
-                    if (discardDepth && discardStencil) {
-                        d3d11DeviceContext->DiscardView(d3d11DepthStencilView);
-                    }
+                    DAWN_ASSERT(attachment.view->GetAspects() == Aspect::Color);
+                    DAWN_ASSERT(attachment.resolveTarget->GetAspects() == Aspect::Color);
+
+                    Texture* resolveTexture = ToBackend(attachment.resolveTarget->GetTexture());
+                    Texture* colorTexture = ToBackend(attachment.view->GetTexture());
+                    uint32_t dstSubresource = resolveTexture->GetSubresourceIndex(
+                        attachment.resolveTarget->GetBaseMipLevel(),
+                        attachment.resolveTarget->GetBaseArrayLayer(), Aspect::Color);
+                    uint32_t srcSubresource = colorTexture->GetSubresourceIndex(
+                        attachment.view->GetBaseMipLevel(), attachment.view->GetBaseArrayLayer(),
+                        Aspect::Color);
+                    d3d11DeviceContext->ResolveSubresource(
+                        resolveTexture->GetD3D11Resource(), dstSubresource,
+                        colorTexture->GetD3D11Resource(), srcSubresource,
+                        d3d::DXGITextureFormat(GetDevice(),
+                                               attachment.resolveTarget->GetFormat().format));
                 }
 
                 return {};
