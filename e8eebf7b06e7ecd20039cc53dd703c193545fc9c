@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e953923_b57e3433",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-23T15:50:54Z",
+      "side": 1,
+      "message": "when building using cmake and ninja i see this \n\nIn file included from /home/petermcneeley/dawn/src/dawn/platform/WorkerThread.h:38,\n                 from /home/petermcneeley/dawn/src/dawn/platform/WorkerThread.cpp:28:\n/home/petermcneeley/dawn/src/dawn/common/MutexProtected.h:216:15: error: explicit specialization in non-namespace scope ‘class dawn::detail::CondVarGuard\u003cT, Traits, NotifyT\u003e’ [-Wtemplate-body]\n  216 |     template \u003c\u003e\n      |               ^\n/home/petermcneeley/dawn/src/dawn/common/MutexProtected.h:217:12: error: too few template-parameter-lists [-Wtemplate-body]\n  217 |     struct NotifyScope\u003cNotifyType::All\u003e : NotifyScopeBase {\n      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~\n/home/petermcneeley/dawn/src/dawn/common/MutexProtected.h:225:15: error: explicit specialization in non-namespace scope ‘class dawn::detail::CondVarGuard\u003cT, Traits, NotifyT\u003e’ [-Wtemplate-body]\n  225 |     template \u003c\u003e\n      |               ^\n/home/petermcneeley/dawn/src/dawn/common/MutexProtected.h:226:12: error: too few template-parameter-lists [-Wtemplate-body]\n  226 |     struct NotifyScope\u003cNotifyType::One\u003e : NotifyScopeBase {\n      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~\ncc1plus: note: unrecognized command-line option ‘-Wno-nullability-extension’ may have been intended to silence earlier diagnostics\ncc1plus: note: unrecognized command-line option ‘-Wno-unreachable-code-break’ may have been intended to silence earlier diagnostics",
+      "revId": "e8eebf7b06e7ecd20039cc53dd703c193545fc9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
