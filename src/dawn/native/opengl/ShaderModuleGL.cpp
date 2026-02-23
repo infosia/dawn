@@ -66,7 +66,9 @@ using InterstageLocationAndName = std::pair<uint32_t, std::string>;
 DAWN_MAKE_CACHE_REQUEST(GLSLCompilationRequest, GLSL_COMPILATION_REQUEST_MEMBERS);
 #undef GLSL_COMPILATION_REQUEST_MEMBERS
 
-#define GLSL_COMPILATION_MEMBERS(X) X(std::string, glsl)
+#define GLSL_COMPILATION_MEMBERS(X) \
+    X(std::string, glsl)            \
+    X(std::vector<uint32_t>, workgroupSize)
 DAWN_SERIALIZABLE(struct, GLSLCompilation, GLSL_COMPILATION_MEMBERS) {
     static ResultOrError<GLSLCompilation> FromValidatedBlob(Blob blob);
 };
@@ -346,7 +348,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     std::vector<CombinedSampler>* combinedSamplersOut,
     const PipelineLayout* layout,
     EmulatedTextureBuiltinRegistrar* emulatedTextureBuiltins,
-    bool* needsSSBOLengthUniformBuffer) {
+    bool* needsSSBOLengthUniformBuffer,
+    std::vector<uint32_t>* workgroupSize) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "TranslateToGLSL");
 
     const OpenGLVersion& version = gl.GetVersion();
@@ -510,6 +513,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                 result.Failure().reason);
             }
 
+            GLSLCompilation compResult{{.glsl = std::move(result->glsl)}};
             // Workgroup validation has to come after `Generate` because it may require
             // overrides to have been substituted.
             if (r.stage == SingleShaderStage::Compute) {
@@ -521,11 +525,15 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                        /*usesSubgroupMatrix=*/false,
                                        /*maxSubgroupSize=*/0, r.limits,
                                        r.adapterSupportedLimits.UnsafeGetValue()));
+                compResult.workgroupSize = {result->workgroup_info.x, result->workgroup_info.y,
+                                            result->workgroup_info.z};
             }
 
-            return GLSLCompilation{{std::move(result->glsl)}};
+            return compResult;
         },
         "OpenGL.CompileShaderToGLSL");
+
+    *workgroupSize = compilationResult->workgroupSize;
 
     if (GetDevice()->IsToggleEnabled(Toggle::DumpShaders)) {
         std::ostringstream dumpedMsg;
