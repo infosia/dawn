@@ -16,6 +16,23 @@
       "message": "Does this also need to be done in src/tint/cmd/fuzz/ir/main_fuzz.cc?",
       "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f792c8db_9cb45f5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-23T15:13:10Z",
+      "side": 1,
+      "message": "Needs a second reviewer",
+      "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
