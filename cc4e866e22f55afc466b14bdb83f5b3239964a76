@@ -16,6 +16,29 @@
       "message": "Corentin, Loko: PTAL. Thanks!",
       "revId": "cc4e866e22f55afc466b14bdb83f5b3239964a76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e39c051_70351b21",
+        "filename": "src/dawn/native/Sampler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-23T19:28:56Z",
+      "side": 1,
+      "message": "nit. With the accessors, I assume that this TODO could probably be removed?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 76
+      },
+      "revId": "cc4e866e22f55afc466b14bdb83f5b3239964a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
