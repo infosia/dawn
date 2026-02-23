@@ -2177,7 +2177,16 @@ ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateUninitializedComputePi
     DAWN_TRY_ASSIGN(layoutRef, ValidateLayoutAndGetComputePipelineDescriptorWithDefaults(
                                    this, *descriptor, &appliedDescriptor));
 
-    return CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
+    auto pipeline = CreateUninitializedComputePipelineImpl(Unpack(&appliedDescriptor));
+    if (IsValidationEnabled()) {
+        auto entryPoint = descriptor->compute.module->ReifyEntryPointName(
+            descriptor->compute.entryPoint, SingleShaderStage::Compute);
+        const auto& metadata = descriptor->compute.module->GetEntryPoint(entryPoint.name);
+        pipeline->SetUsesLinearIndexing(metadata.usesGlobalInvocationIndex ||
+                                        metadata.usesWorkgroupIndex);
+        pipeline->SetUsesGlobalInvocationIndex(metadata.usesGlobalInvocationIndex);
+    }
+    return pipeline;
 }
 
 // This base version is creating the pipeline synchronously,
