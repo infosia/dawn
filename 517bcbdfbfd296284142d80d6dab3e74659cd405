@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8cc5d74_20065f74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-24T14:34:15Z",
+      "side": 1,
+      "message": "Example failures:\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-nvidia-gtx1660-rel/1087/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd630-rel/1284/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/1255/overview\n```\n*.isolated file for target dawn_perf_tests is missing\n```",
+      "revId": "517bcbdfbfd296284142d80d6dab3e74659cd405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
