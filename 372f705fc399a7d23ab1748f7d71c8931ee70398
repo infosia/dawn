@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58d07eb7_9bb40dfa",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36780f84_d9a12738",
+      "range": {
+        "startLine": 1071,
+        "startChar": 61,
+        "endLine": 1071,
+        "endChar": 79
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5226239_4d2b2bd0",
@@ -119,6 +143,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11742384_a2362221",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5bdd7c_46567fb8",
+      "range": {
+        "startLine": 1069,
+        "startChar": 1,
+        "endLine": 1074,
+        "endChar": 84
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbc96020_124da65b",
@@ -132,6 +180,30 @@
       "writtenOn": "2026-02-24T18:33:49Z",
       "side": 1,
       "message": "nit: `/*emitPointSize\u003d*/false` so that clang-tidy can check them.",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 92,
+        "endChar": 66
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5eb3646_4a79948e",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbc96020_124da65b",
       "range": {
         "startLine": 91,
         "startChar": 34,

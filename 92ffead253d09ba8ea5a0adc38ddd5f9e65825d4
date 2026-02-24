@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9a02bde_303d84eb",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b71f61_d0b622a2",
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbca82bc_9e09791d",

@@ -33,6 +33,24 @@
       "message": "```suggestion\n    bool isMultisampled \u003d (GetSampleCount() \u003e 1u);\n```\n\nIt could also be an accessor on `RenderPipeline`.",
       "revId": "0b7e8cfea13cd7074f4ac059a4de9f216f545571",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd604c1_c98a0650",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:12:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5b59a49a_a84d3400",
+      "revId": "0b7e8cfea13cd7074f4ac059a4de9f216f545571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
