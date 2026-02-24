@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aef8141_6b49f327",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-02-24T02:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9935f9da_184f8dd5",
+      "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "878aa853_321eae83",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-02-17T21:11:47Z",
       "side": 1,
       "message": "Would be good to cover vec2h and vec3h if they aren\u0027t elsewhere,",
+      "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c24bc5e_c4d11b6a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 5222,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-02-24T02:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "878aa853_321eae83",
       "revId": "28a5f4a1a5c4b2da6c698612f7ed02e9430f1965",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
