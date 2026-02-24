@@ -116,6 +116,30 @@
       },
       "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97050449_c3bd4399",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-24T18:24:07Z",
+      "side": 1,
+      "message": "Yep I missed your comment, that change would make this work.",
+      "parentUuid": "97f9716a_01846b80",
+      "range": {
+        "startLine": 372,
+        "startChar": 45,
+        "endLine": 372,
+        "endChar": 66
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
