@@ -54,7 +54,6 @@ void v_14(uint offset, matrix<float16_t, 4, 3> obj[4]) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
 }
@@ -74,7 +73,6 @@ ary_ret v_17(uint start_byte_offset) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
   matrix<float16_t, 4, 3> v_20[4] = a;

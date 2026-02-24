@@ -39,7 +39,6 @@ void v_3(uint offset, int obj[2]) {
       {
         v_4 = (v_5 + 1u);
       }
-      continue;
     }
   }
 }
@@ -58,7 +57,6 @@ void v_6(uint offset, int obj[3][2]) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
 }
@@ -77,7 +75,6 @@ void v_10(uint offset, int obj[4][3][2]) {
       {
         v_11 = (v_12 + 1u);
       }
-      continue;
     }
   }
 }
@@ -95,7 +92,6 @@ void v_14(uint offset, int4 obj[4]) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
 }
@@ -115,7 +111,6 @@ ary_ret_1 v_17(uint offset) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
   int4 v_20[4] = a;
@@ -137,7 +132,6 @@ ary_ret_2 v_21(uint start_byte_offset) {
       {
         v_22 = (v_23 + 1u);
       }
-      continue;
     }
   }
   int4 v_24[4] = a;
@@ -184,7 +178,6 @@ void main_inner(uint tint_local_index) {
       {
         v_35 = (v_36 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

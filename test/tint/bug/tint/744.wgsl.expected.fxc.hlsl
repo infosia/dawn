@@ -24,7 +24,6 @@ void main_inner(uint3 global_id) {
       uint v_1 = 0u;
       secondMatrix.GetDimensions(v_1);
       result = (result + (firstMatrix.Load((0u + (min(a, ((v / 4u) - 1u)) * 4u))) * secondMatrix.Load((0u + (min(b, ((v_1 / 4u) - 1u)) * 4u)))));
-      continue;
     }
   }
   uint index = (resultCell.y + (resultCell.x * dimOutter));

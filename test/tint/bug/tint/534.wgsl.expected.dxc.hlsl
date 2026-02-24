@@ -58,7 +58,6 @@ void main_inner(uint3 GlobalInvocationID) {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i = (i + 1u);
       }
-      continue;
     }
   }
   uint outputIndex = ((GlobalInvocationID.y * uint(size.x)) + GlobalInvocationID.x);

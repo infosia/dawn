@@ -36,7 +36,6 @@ void foo_inner(uint tint_local_index) {
         GroupMemoryBarrierWithGroupSync();
         i = asint((asuint(i) + asuint(v_2)));
       }
-      continue;
     }
   }
 }

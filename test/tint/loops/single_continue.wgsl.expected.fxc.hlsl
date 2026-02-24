@@ -19,7 +19,6 @@ void main() {
       if (tint_continue) {
         continue;
       }
-      continue;
     }
   }
 }

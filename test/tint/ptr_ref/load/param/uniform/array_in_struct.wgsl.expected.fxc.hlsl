@@ -17,7 +17,6 @@ ary_ret v(uint start_byte_offset) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
   int4 v_3[4] = a;

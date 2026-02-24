@@ -19,7 +19,6 @@ void foo() {
         i = asint((asuint(i) + asuint(x_1)));
         if ((i > int(10))) { break; }
       }
-      continue;
     }
   }
   output.Store(0u, asuint(i));

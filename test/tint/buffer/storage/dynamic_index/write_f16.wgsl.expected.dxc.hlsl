@@ -24,7 +24,6 @@ void v_1(uint offset, matrix<float16_t, 4, 2> obj[2]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -42,7 +41,6 @@ void v_4(uint offset, float3 obj[2]) {
       {
         v_5 = (v_6 + 1u);
       }
-      continue;
     }
   }
 }

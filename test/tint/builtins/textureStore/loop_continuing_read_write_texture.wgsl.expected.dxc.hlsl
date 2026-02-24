@@ -20,7 +20,6 @@ void foo() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         tex[(int(0)).xx] = (int(0)).xxxx;
       }
-      continue;
     }
   }
 }

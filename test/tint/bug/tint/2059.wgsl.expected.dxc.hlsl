@@ -42,7 +42,6 @@ void v_1(uint offset, float3x3 obj[1]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -66,7 +65,6 @@ void v_6(uint offset, S2 obj[1]) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
 }
@@ -95,7 +93,6 @@ void v_12(uint offset, S obj[1]) {
       {
         v_13 = (v_14 + 1u);
       }
-      continue;
     }
   }
 }
@@ -119,7 +116,6 @@ void v_17(uint offset, float3x3 obj[1]) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
 }
@@ -148,7 +144,6 @@ void v_22(uint offset, S obj[1]) {
       {
         v_23 = (v_24 + 1u);
       }
-      continue;
     }
   }
 }
@@ -192,7 +187,6 @@ void v_33(uint offset, float3x3 obj[1]) {
       {
         v_34 = (v_35 + 1u);
       }
-      continue;
     }
   }
 }
@@ -235,7 +229,6 @@ void main() {
       {
         c = (c + 1u);
       }
-      continue;
     }
   }
   float3x3 a = m;

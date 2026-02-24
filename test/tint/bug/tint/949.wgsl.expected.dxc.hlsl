@@ -352,7 +352,6 @@ void main_1() {
         int x_441 = i;
         i = asint((asuint(x_441) + asuint(int(1))));
       }
-      continue;
     }
   }
   float2 x_444 = vCurrOffset;

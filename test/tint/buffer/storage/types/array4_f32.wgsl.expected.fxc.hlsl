@@ -14,7 +14,6 @@ void v_2(uint offset, float obj[4]) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
 }
@@ -34,7 +33,6 @@ ary_ret v_5(uint offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   float v_8[4] = a;

@@ -31,7 +31,6 @@ ary_ret v_2(uint offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   Inner v_6[4] = a;
@@ -53,7 +52,6 @@ ary_ret_1 v_7(uint offset) {
       {
         v_8 = (v_9 + 1u);
       }
-      continue;
     }
   }
   float3 v_10[2] = a;

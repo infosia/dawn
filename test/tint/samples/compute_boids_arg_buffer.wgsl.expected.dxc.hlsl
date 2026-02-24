@@ -51,7 +51,6 @@ void comp_main_inner(uint3 gl_GlobalInvocationID) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   if ((cMassCount > int(0))) {

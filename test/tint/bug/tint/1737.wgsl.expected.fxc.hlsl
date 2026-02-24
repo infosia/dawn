@@ -18,7 +18,6 @@ void f_inner(uint tint_local_index) {
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
   {
@@ -33,7 +32,6 @@ void f_inner(uint tint_local_index) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

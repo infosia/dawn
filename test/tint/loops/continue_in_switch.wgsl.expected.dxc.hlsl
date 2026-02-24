@@ -29,7 +29,6 @@ void f() {
       {
         i = asint((asuint(i) + asuint(int(1))));
       }
-      continue;
     }
   }
 }

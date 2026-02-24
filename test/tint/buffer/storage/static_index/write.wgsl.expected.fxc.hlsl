@@ -24,7 +24,6 @@ void v_1(uint offset, Inner obj[4]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -42,7 +41,6 @@ void v_5(uint offset, float3 obj[2]) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
 }

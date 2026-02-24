@@ -52,7 +52,6 @@ void main() {
       bool2 v_30 = bool2((true).xx);
       uint2 v_31 = uint2((uint(v_28)).xx);
       v2b_2 = (((v_31 == uint2(0u, 1u))) ? (v_30) : (v_29));
-      continue;
     }
   }
 }

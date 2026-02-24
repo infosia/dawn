@@ -31,7 +31,6 @@ void main_inner(uint3 global_id) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   uint index = (resultCell.y + (resultCell.x * dimOutter));

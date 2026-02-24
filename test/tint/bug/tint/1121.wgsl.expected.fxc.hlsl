@@ -103,7 +103,6 @@ void main_inner(uint3 GlobalInvocationID) {
               float4 v_20 = p;
               uint v_21 = i;
               dp = (v_19 + min(0.0f, dot(v_20, frustumPlanes[v_21])));
-              continue;
             }
           }
           if ((dp >= 0.0f)) {
@@ -125,10 +124,8 @@ void main_inner(uint3 GlobalInvocationID) {
             }
             tileLightId.Store(((4u + (min(tileId, 3u) * 260u)) + (min(offset, 63u) * 4u)), GlobalInvocationID.x);
           }
-          continue;
         }
       }
-      continue;
     }
   }
 }

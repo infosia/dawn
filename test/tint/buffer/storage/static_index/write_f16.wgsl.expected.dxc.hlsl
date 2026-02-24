@@ -26,7 +26,6 @@ void v_1(uint offset, Inner obj[4]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -51,7 +50,6 @@ void v_6(uint offset, matrix<float16_t, 4, 2> obj[2]) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
 }
@@ -69,7 +67,6 @@ void v_9(uint offset, float3 obj[2]) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
 }

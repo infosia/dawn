@@ -48,7 +48,6 @@ void main() {
       {
         i_1 = asint((asuint(i_1) + asuint(int(1))));
       }
-      continue;
     }
   }
 }

@@ -121,7 +121,6 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
               _72_h = asint((asuint(_72_h) + asuint(int(1))));
               if ((_72_h >= int(4))) { break; }
             }
-            continue;
           }
         }
         float4 _83_q = _71_g;
@@ -143,7 +142,6 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         _61_o = asint((asuint(_61_o) + asuint(int(1))));
       }
-      continue;
     }
   }
   if ((_56_d == int(0))) {

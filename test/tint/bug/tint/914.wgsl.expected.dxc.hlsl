@@ -78,7 +78,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       {
         v_6 = (v_7 + 256u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -102,7 +101,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       {
         index = (index + 1u);
       }
-      continue;
     }
   }
   uint ColPerThreadA = 4u;
@@ -136,13 +134,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       {
@@ -166,13 +162,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       GroupMemoryBarrierWithGroupSync();
@@ -197,7 +191,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               {
                 inner = (inner + 1u);
               }
-              continue;
             }
           }
           {
@@ -225,26 +218,22 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
                   {
                     innerCol = (innerCol + 1u);
                   }
-                  continue;
                 }
               }
               {
                 innerRow = (innerRow + 1u);
               }
-              continue;
             }
           }
           {
             k = (k + 1u);
           }
-          continue;
         }
       }
       GroupMemoryBarrierWithGroupSync();
       {
         t = (t + 1u);
       }
-      continue;
     }
   }
   {
@@ -266,13 +255,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
           {
             innerCol = (innerCol + 1u);
           }
-          continue;
         }
       }
       {
         innerRow = (innerRow + 1u);
       }
-      continue;
     }
   }
 }

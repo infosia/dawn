@@ -38,7 +38,6 @@ void main() {
         InnerS v_3[8] = tint_array_copy;
         s1.a1 = v_3;
       }
-      continue;
     }
   }
 }

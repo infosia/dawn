@@ -56,7 +56,6 @@ void main() {
                 tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
                 j = asint((asuint(j) + asuint(int(2))));
               }
-              continue;
             }
           }
           tint_continue = true;
@@ -84,7 +83,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i = asint((asuint(i) + asuint(int(2))));
       }
-      continue;
     }
   }
 }

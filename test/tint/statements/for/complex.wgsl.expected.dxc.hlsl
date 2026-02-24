@@ -31,7 +31,6 @@ void f() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i = asint((asuint(i) + asuint(int(1))));
       }
-      continue;
     }
   }
 }
