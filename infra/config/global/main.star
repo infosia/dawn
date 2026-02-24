@@ -332,8 +332,14 @@ consoles.list_view(
 )
 
 # Run other non-builder setup.
-exec("//recipes.star")
+exec("@chromium-targets//mixins.star")
+exec("//binaries.star")
+exec("//bundles.star")
+exec("//compile_targets.star")
 exec("//gn_args.star")
+exec("//mixins.star")
+exec("//recipes.star")
+exec("//tests.star")
 
 # Handle any other builders defined in other files.
 exec("//chromium_try.star")
