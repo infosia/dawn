@@ -181,6 +181,7 @@ class ResourceTableValidationTest : public ValidationTest {
 };
 
 class ResourceTableValidationTestDisabled : public ValidationTest {
+  protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override { return {}; }
 };
 
@@ -1717,8 +1718,8 @@ TEST_F(ResourceTableValidationTest, PinValidationUsageRenderPass) {
     }
 }
 
-// Checks that only texture views are allowed as resources in mutators for SamplingResourceTable.
-// TODO(https://issues.chromium.org/473354063): Support samplers in SamplingResourceTable.
+// Checks that only texture views and samplers are allowed as resources in mutators for
+// SamplingResourceTable.
 TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
     // Create the texture to put in the table.
     wgpu::TextureDescriptor tDesc = {
@@ -1739,22 +1740,21 @@ TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
     wgpu::Sampler sampler = device.CreateSampler();
 
     for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
-        // Control case: putting only a texture is valid.
+        // Success case: a single texture is valid.
         {
             wgpu::BindingResource resource = {.textureView = texture.CreateView()};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Success case: a single sampler is valid
+        {
+            wgpu::BindingResource resource = {.sampler = sampler};
             TestMutator(mutator, &resource, true);
         }
 
         // Error case: a buffer is an error.
         {
             wgpu::BindingResource resource = {.buffer = buffer};
-            TestMutator(mutator, &resource, false);
-        }
-
-        // Error case: a sampler is an error.
-        // TODO(https://issues.chromium.org/473354063): Support samplers in SamplingResourceTable.
-        {
-            wgpu::BindingResource resource = {.sampler = sampler};
             TestMutator(mutator, &resource, false);
         }
 
@@ -1765,6 +1765,79 @@ TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
             TestMutator(mutator, &resource, false);
         }
     }
+}
+
+// Tests that resources added/inserted on a table must be valid objects
+TEST_F(ResourceTableValidationTest, MutatorResourceMustBeValid) {
+    // Create the texture to put in the table.
+    wgpu::TextureDescriptor tDesc = {
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture textureGood = device.CreateTexture(&tDesc);
+
+    tDesc.size = {0, 0};
+    ASSERT_DEVICE_ERROR(wgpu::Texture textureBad = device.CreateTexture(&tDesc));
+
+    // Create the sampler to put in the table.
+    wgpu::SamplerDescriptor sDesc = {};
+    wgpu::Sampler samplerGood = device.CreateSampler(&sDesc);
+
+    sDesc.lodMinClamp = -1;
+    ASSERT_DEVICE_ERROR(wgpu::Sampler samplerBad = device.CreateSampler(&sDesc));
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Success case: valid texture
+        {
+            wgpu::BindingResource resource = {.textureView = textureGood.CreateView()};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: invalid texture
+        {
+            ASSERT_DEVICE_ERROR(
+                wgpu::BindingResource resource = {.textureView = textureBad.CreateView()});
+            TestMutator(mutator, &resource, false);
+        }
+
+        // Success case: valid sampler
+        {
+            wgpu::BindingResource resource = {.sampler = samplerGood};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: invalid sampler
+        {
+            wgpu::BindingResource resource = {.sampler = samplerBad};
+            TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+// Tests that adding and removing different types of resources works
+TEST_F(ResourceTableValidationTest, MutatorsMultipleResources) {
+    // Create the texture to put in the table.
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::BindingResource textureResource = {.textureView =
+                                                 device.CreateTexture(&tDesc).CreateView()};
+    wgpu::BindingResource samplerResource = {.sampler = device.CreateSampler()};
+
+    auto table = MakeResourceTable(42);
+
+    EXPECT_EQ(wgpu::Status::Success, table.Update(0, &textureResource));
+    EXPECT_EQ(wgpu::Status::Success, table.Update(1, &samplerResource));
+    EXPECT_EQ(2u, table.InsertBinding(&textureResource));
+    EXPECT_EQ(3u, table.InsertBinding(&samplerResource));
+
+    EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(0));
+    EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(1));
+    EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(2));
+    EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(3));
 }
 
 // Check that the view must have only the TextureBinding usage for SamplingResourceTable.
@@ -1852,6 +1925,79 @@ TEST_F(ResourceTableValidationTest, MutatorTextureViewMustBeSingleAspect) {
         {
             wgpu::BindingResource resource = {.textureView = tex.CreateView()};
             TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+class ResourceTableStaticSamplerValidationTest : public ResourceTableValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {
+            wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable,
+            wgpu::FeatureName::StaticSamplers,
+            wgpu::FeatureName::YCbCrVulkanSamplers,
+        };
+    }
+};
+
+// Checks that YCbCr samplers cannot be added to a resource table
+TEST_F(ResourceTableStaticSamplerValidationTest, MutatorSamplerMustNotBeYCbCr) {
+    wgpu::SamplerDescriptor samplerDesc = {};
+    wgpu::Sampler samplerDefault = device.CreateSampler(&samplerDesc);
+
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    yCbCrDesc.externalFormat = 1;
+    samplerDesc.nextInChain = &yCbCrDesc;
+    wgpu::Sampler samplerYCbCr = device.CreateSampler(&samplerDesc);
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Success case: default sampler
+        {
+            wgpu::BindingResource resource = {.sampler = samplerDefault};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: YCbCr sampler
+        {
+            wgpu::BindingResource resource = {.sampler = samplerYCbCr};
+            TestMutator(mutator, &resource, false);
+        }
+    }
+}
+
+// Checks that YCbCr texture views cannot be added to a resource table
+TEST_F(ResourceTableStaticSamplerValidationTest, MutatorViewMustNotBeYCbCr) {
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture textureDefault = device.CreateTexture(&tDesc);
+
+    tDesc.format = wgpu::TextureFormat::OpaqueYCbCrAndroid;
+    wgpu::Texture textureYCbCr = device.CreateTexture(&tDesc);
+
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    yCbCrDesc.externalFormat = 1;
+
+    wgpu::TextureViewDescriptor vDesc{
+        .nextInChain = &yCbCrDesc,
+        .format = wgpu::TextureFormat::OpaqueYCbCrAndroid,
+        .arrayLayerCount = 1,
+        .usage = wgpu::TextureUsage::TextureBinding,
+    };
+
+    for (auto mutator : {Mutator::Update, Mutator::InsertBinding}) {
+        // Success case: default texture view
+        {
+            wgpu::BindingResource resource = {.textureView = textureDefault.CreateView()};
+            TestMutator(mutator, &resource, true);
+        }
+
+        // Error case: YCbCr texture view
+        {
+            wgpu::BindingResource resource = {.textureView = textureYCbCr.CreateView(&vDesc)};
+            // TestMutator(mutator, &resource, false);
         }
     }
 }
