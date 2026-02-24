@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2714ef88_6decd042",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T15:52:17Z",
+      "side": 1,
+      "message": "This is to generate a saved index for subsequent GetInput calls.",
+      "parentUuid": "2eb14f23_1acf066e",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62e72679_9bf7c7ab",
         "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-24T15:16:16Z",
       "side": 1,
       "message": "Should this be negated?",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c67b9ba_520a5c8f",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T15:52:17Z",
+      "side": 1,
+      "message": "No, workgroup_index is polyfilled using workgroup_id.",
+      "parentUuid": "62e72679_9bf7c7ab",
       "revId": "52435344e70e7e20759f4975a63444000be1616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2eb4e26_261e7238",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T15:52:17Z",
+      "side": 1,
+      "message": "Ok, this was copied so I\u0027ll see about updating the other uses too.",
+      "parentUuid": "c25d39fc_9084c5ff",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f60d019_cf6645b4",
         "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
         "patchSetId": 2
@@ -65,6 +119,24 @@
       "writtenOn": "2026-02-24T15:16:16Z",
       "side": 1,
       "message": "Do you need to save the returned indices into your optionals?",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c755800_838ddef2",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T15:52:17Z",
+      "side": 1,
+      "message": "That happens in the MakeVars function.",
+      "parentUuid": "3f60d019_cf6645b4",
       "revId": "52435344e70e7e20759f4975a63444000be1616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
