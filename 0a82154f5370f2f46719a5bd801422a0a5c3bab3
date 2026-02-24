@@ -22,6 +22,30 @@
       },
       "revId": "0a82154f5370f2f46719a5bd801422a0a5c3bab3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aecf0494_aa961828",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-02-24T18:32:18Z",
+      "side": 1,
+      "message": "You can view the `graphite-insert-error` crash key in this [crash report](https://crash.corp.google.com/browse?q\u003dproduct.name+IN+%28%27Chrome%27%29+AND+expanded_custom_data.ChromeCrashProto.magic_signature_1.name%3D%27gpu%3A%3AGraphiteSharedContext%3A%3AInsertRecordingImpl%27+AND+expanded_custom_data.ChromeCrashProto.channel%3D%27canary%27+AND+ComparableVersion%28product.version%29+%3E%3D+ComparableVersion%28%27147.0.7696.0%27%29+AND+product.Version%3D%27147.0.7701.0%27\u0026stbtiq\u003d\u0026reportid\u003dc873ae0ab7084bd9\u0026index\u003d3#2). It prints something like \"C:\\Users\\...\\AppData\\Local\\Google\\Chrome SxS\\Application\\147.0.7701.0\\Shader@...(111,5-15): error X3511: unable to unroll loop\"\n\nI\u0027m just following the same fake path used by [ANGLE](https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/libANGLE/Program.cpp;drc\u003d75bd37cd98d8654e740d5b267c1be6fbf81c6ede;l\u003d221) to mask the path. The user paths are being leaked in the crash reports currently, I would like to land this as soon as possible.",
+      "parentUuid": "bf1ca406_9021f530",
+      "range": {
+        "startLine": 193,
+        "startChar": 49,
+        "endLine": 193,
+        "endChar": 61
+      },
+      "revId": "0a82154f5370f2f46719a5bd801422a0a5c3bab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
