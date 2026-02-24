@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78de503_7908767e",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T11:38:35Z",
+      "side": 1,
+      "message": "```suggestion\n    // a single thread, during command recording.\n    ShaderVisibleDescriptorAllocator* GetViewShaderVisibleDescriptorAllocator() const;\n\n    // Returns the shader-visible view (SRV) allocator. Not MutexProtected as it is only accessed by\n    // a single thread, during command recording.\n    ShaderVisibleDescriptorAllocator* GetSamplerShaderVisibleDescriptorAllocator() const;\n\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "9303782f7396d0f617800e72f7d303bfed0376bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
