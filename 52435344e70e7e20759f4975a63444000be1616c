@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3deb7206_0015f3f2",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T20:12:59Z",
+      "side": 1,
+      "message": "I\u0027ve switched to include a remapping from the input indices to variable indices like other versions of the pass.",
+      "parentUuid": "cfbce420_4e85233e",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62e72679_9bf7c7ab",
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "No, workgroup_index is polyfilled using workgroup_id.",
       "parentUuid": "62e72679_9bf7c7ab",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb71b5e_1129ee56",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T20:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c67b9ba_520a5c8f",
       "revId": "52435344e70e7e20759f4975a63444000be1616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -142,6 +178,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "533833c8_e4388bdb",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T20:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89552b6d_44860ae6",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f60d019_cf6645b4",
@@ -173,6 +227,24 @@
       "side": 1,
       "message": "That happens in the MakeVars function.",
       "parentUuid": "3f60d019_cf6645b4",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2820cf83_00b8d36c",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T20:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c755800_838ddef2",
       "revId": "52435344e70e7e20759f4975a63444000be1616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
