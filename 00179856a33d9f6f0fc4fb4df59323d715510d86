@@ -63,6 +63,30 @@
       },
       "revId": "00179856a33d9f6f0fc4fb4df59323d715510d86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d1d1e46_2496457c",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T00:00:19Z",
+      "side": 1,
+      "message": "And on windows this is a \u0027hmodule\u0027 not actually a handle. (more specific)",
+      "parentUuid": "c04f1e2a_9a7f6c54",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "00179856a33d9f6f0fc4fb4df59323d715510d86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
