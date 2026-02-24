@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef853c88_b0f22d55",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:01:53Z",
+      "side": 1,
+      "message": "The check above is determining the conditions for when we need to polyfill pixel center. I\u0027m not sure why it checks the extra conditions, but i don\u0027t think they\u0027re necessarily relevant for framebuffer fetch?",
+      "parentUuid": "add66a88_bc667a05",
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbca82bc_9e09791d",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 4
@@ -49,6 +67,30 @@
       "writtenOn": "2026-02-23T21:29:42Z",
       "side": 1,
       "message": "This could be `isPipelineMultiSampled` since this is true if the pipeline is multi-sampled.",
+      "range": {
+        "startLine": 134,
+        "startChar": 9,
+        "endLine": 134,
+        "endChar": 37
+      },
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0bd19a5_b0b624b6",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:01:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dbca82bc_9e09791d",
       "range": {
         "startLine": 134,
         "startChar": 9,
@@ -72,6 +114,30 @@
       "writtenOn": "2026-02-23T21:29:42Z",
       "side": 1,
       "message": "And then this would be `isRenderPassMultiSampled \u0026\u0026 programmableStage.metadata-\u003efragmentInputMask.any()` to only trigger for multisampled plus color attribute.",
+      "range": {
+        "startLine": 221,
+        "startChar": 53,
+        "endLine": 221,
+        "endChar": 81
+      },
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7323abe4_86c6f0fc",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:01:53Z",
+      "side": 1,
+      "message": "Added the UsesFramebufferFetch check to `multisampledFramebufferFetch` definition.",
+      "parentUuid": "d688e9ca_ad275b90",
       "range": {
         "startLine": 221,
         "startChar": 53,
