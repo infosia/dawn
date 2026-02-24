@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae6b551_bd9faeb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-24T20:17:12Z",
+      "side": 1,
+      "message": "This is a manual Chromium -\u003e Dawn roll which includes https://chromium-review.googlesource.com/c/chromium/src/+/7601432 that fixed the em++ build.",
+      "revId": "4d52fcc1e13782f9928dedb4a2a7b361a4a2752e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
