@@ -152,12 +152,13 @@ class ExecutionQueueBase : public ApiObjectBase {
     //   1) Callback ordering is guaranteed.
     //   2) Re-entrant callbacks do not cause lock-inversion issues w.r.t this lock and the
     //      device lock.
-    std::mutex mMutex;
-    std::condition_variable mCv;
-    bool mCallingCallbacks = false;
-    bool mWaitingForIdle = false;
-    bool mAssumeCompleted = false;
-    SerialMap<ExecutionSerial, Task> mWaitingTasks;
+    struct State {
+        bool mCallingCallbacks = false;
+        bool mWaitingForIdle = false;
+        bool mAssumeCompleted = false;
+        SerialMap<ExecutionSerial, Task> mWaitingTasks;
+    };
+    MutexCondVarProtected<State> mState;
 };
 
 }  // namespace dawn::native
