@@ -496,7 +496,7 @@ MaybeError ValidateColorTargetState(
     const MultisampleState& multisample) {
     UnpackedPtr<ColorTargetState> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(&descriptor));
-    if (unpacked.Get<ColorTargetStateExpandResolveTextureDawn>()) {
+    if (unpacked.Has<ColorTargetStateExpandResolveTextureDawn>()) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture),
                         "The ColorTargetStateExpandResolveTextureDawn struct is used while the "
                         "%s feature is not enabled.",
