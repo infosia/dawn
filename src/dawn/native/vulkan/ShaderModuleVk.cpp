@@ -130,7 +130,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool emitPointSize,
-    bool isSampled,
+    bool polyfillPixelCenter,
+    bool needsMultisampledFramebufferFetch,
     const ImmediateConstantMask& pipelineImmediateMask) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
@@ -216,7 +217,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
 
     req.tintOptions.emit_vertex_point_size = emitPointSize;
-    req.tintOptions.polyfill_pixel_center = isSampled;
+    req.tintOptions.polyfill_pixel_center = polyfillPixelCenter;
+    req.tintOptions.multisampled_framebuffer_fetch = needsMultisampledFramebufferFetch;
 
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
                                         ? tint::spirv::writer::SpvVersion::kSpv14

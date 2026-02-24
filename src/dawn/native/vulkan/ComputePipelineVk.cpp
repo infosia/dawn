@@ -85,10 +85,11 @@ MaybeError ComputePipeline::InitializeImpl() {
     ShaderModule* module = ToBackend(computeStage.module.Get());
 
     ShaderModule::ModuleAndSpirv moduleAndSpirv;
-    DAWN_TRY_ASSIGN(moduleAndSpirv,
-                    module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
-                                              /*emitPointSize*/ false, /*isSampled*/ false,
-                                              GetImmediateMask()));
+    DAWN_TRY_ASSIGN(
+        moduleAndSpirv,
+        module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
+                                  /*emitPointSize=*/false, /*polyfillPixelCenter=*/false,
+                                  /*needsMultisampledFramebufferFetch=*/false, GetImmediateMask()));
 
     createInfo.stage.module = moduleAndSpirv.module;
     // string_view returned by GetIsolatedEntryPointName() points to a null-terminated string.

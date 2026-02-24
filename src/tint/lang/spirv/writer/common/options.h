@@ -215,6 +215,9 @@ struct Options {
     /// Set to `true` to apply builtin 'position' pixel center emulation.
     bool polyfill_pixel_center = false;
 
+    /// Set to `true` if framebuffer fetch should be multisampled
+    bool multisampled_framebuffer_fetch = false;
+
     /// Any workarounds to enable/disable.
     Workarounds workarounds{};
 
@@ -247,6 +250,7 @@ struct Options {
                  disable_integer_range_analysis,
                  emit_vertex_point_size,
                  polyfill_pixel_center,
+                 multisampled_framebuffer_fetch,
                  workarounds,
                  extensions,
                  depth_range_offsets,

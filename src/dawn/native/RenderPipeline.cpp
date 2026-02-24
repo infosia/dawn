@@ -1065,8 +1065,13 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
     if (HasStage(SingleShaderStage::Fragment)) {
         mUsesFragDepth = GetStage(SingleShaderStage::Fragment).metadata->usesFragDepth;
         mUsesFragPosition = GetStage(SingleShaderStage::Fragment).metadata->usesFragPosition;
-        mIsFragMultiSampled = GetStage(SingleShaderStage::Fragment).metadata->isFragMultiSampled;
         mUsesSampleIndex = GetStage(SingleShaderStage::Fragment).metadata->usesSampleIndex;
+        mUsesFramebufferFetch =
+            GetStage(SingleShaderStage::Fragment).metadata->fragmentInputMask.any();
+        mUsesSampleInterpolants =
+            GetSampleCount() > 1 &&
+            (GetStage(SingleShaderStage::Fragment).metadata->isFragMultiSampled ||
+             mUsesSampleIndex || mUsesFramebufferFetch);
     }
 
     if (HasStage(SingleShaderStage::Vertex)) {
@@ -1289,9 +1294,9 @@ bool RenderPipelineBase::UsesFragPosition() const {
     return mUsesFragPosition;
 }
 
-bool RenderPipelineBase::IsFragMultiSampled() const {
+bool RenderPipelineBase::UsesSampleInterpolants() const {
     DAWN_ASSERT(!IsError());
-    return mIsFragMultiSampled;
+    return mUsesSampleInterpolants;
 }
 
 bool RenderPipelineBase::UsesVertexIndex() const {
@@ -1302,6 +1307,11 @@ bool RenderPipelineBase::UsesVertexIndex() const {
 bool RenderPipelineBase::UsesInstanceIndex() const {
     DAWN_ASSERT(!IsError());
     return mUsesInstanceIndex;
+}
+
+bool RenderPipelineBase::UsesFramebufferFetch() const {
+    DAWN_ASSERT(!IsError());
+    return mUsesFramebufferFetch;
 }
 
 size_t RenderPipelineBase::ComputeContentHash() {

@@ -660,6 +660,11 @@ implicit(F: texel_format, T: fiu32, C: iu32, A: readable)
 fn image_read(image: image<T, dim_subpass, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>,
               coords: vec2<C>) -> vec4<T>
 
+implicit(F: texel_format, T: fiu32, Z: iu32, C: iu32, A: readable)
+fn image_read(image: image<T, dim_subpass, non_depth, non_arrayed, multi_sampled, rw_op_compatible, F, A>,
+              coords: vec2<C>,
+              image_operands: literal,
+              sample: Z) -> vec4<T>
 
 //////////////////////////////////////////////
 // Image Sample Implicit Lod

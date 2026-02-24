@@ -139,10 +139,11 @@ class RenderPipelineBase : public PipelineBase,
     bool WritesStencil() const;
     bool UsesFragDepth() const;
     bool UsesFragPosition() const;
-    bool IsFragMultiSampled() const;
+    bool UsesSampleInterpolants() const;
     bool UsesSampleIndex() const;
     bool UsesVertexIndex() const;
     bool UsesInstanceIndex() const;
+    bool UsesFramebufferFetch() const;
 
     const AttachmentState* GetAttachmentState() const;
 
@@ -183,10 +184,11 @@ class RenderPipelineBase : public PipelineBase,
     bool mWritesStencil = false;
     bool mUsesFragDepth = false;
     bool mUsesFragPosition = false;
-    bool mIsFragMultiSampled = false;
+    bool mUsesSampleInterpolants = false;
     bool mUsesSampleIndex = false;
     bool mUsesVertexIndex = false;
     bool mUsesInstanceIndex = false;
+    bool mUsesFramebufferFetch = false;
 };
 
 }  // namespace dawn::native
