@@ -22,6 +22,30 @@
       },
       "revId": "9303782f7396d0f617800e72f7d303bfed0376bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0514c8ab_b9806b6d",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-24T12:08:38Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d78de503_7908767e",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "9303782f7396d0f617800e72f7d303bfed0376bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
