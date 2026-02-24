@@ -81,6 +81,30 @@
       },
       "revId": "862f6cf2535a4284ffca9c57d208b621486a42bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "386306e4_396a855a",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-24T16:43:30Z",
+      "side": 1,
+      "message": "Oh, so we\u0027ll still create SharedTextureMemoryContentsVk for RGBA AHB but we\u0027ll never care about this value since validation won\u0027t check `view-\u003eTextureView::IsYCbCrFilterable()` for non-ycbcr textures.",
+      "parentUuid": "4ee19899_6a32f668",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "862f6cf2535a4284ffca9c57d208b621486a42bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
