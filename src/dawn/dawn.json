@@ -392,7 +392,8 @@
             {"value": 1, "name": "undefined", "jsrepr": "undefined", "valid": false},
             {"value": 2, "name": "filtering"},
             {"value": 3, "name": "non filtering"},
-            {"value": 4, "name": "comparison"}
+            {"value": 4, "name": "comparison"},
+            {"value": 5, "name": "unknown filtering", "tags": ["dawn"]}
         ]
     },
     "sampler binding layout": {
@@ -421,7 +422,8 @@
             {"value": 3, "name": "unfilterable float"},
             {"value": 4, "name": "depth"},
             {"value": 5, "name": "sint"},
-            {"value": 6, "name": "uint"}
+            {"value": 6, "name": "uint"},
+            {"value": 7, "name": "unknown filterable", "tags": ["dawn"]}
         ]
     },
     "texture binding layout": {
