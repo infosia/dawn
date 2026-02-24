@@ -105,7 +105,6 @@ void tint_store_and_preserve_padding_8(device tint_array<Inner, 4>* const target
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
 }
@@ -123,7 +122,6 @@ void tint_store_and_preserve_padding_6(device tint_array<tint_packed_vec3_f32_ar
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }

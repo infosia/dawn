@@ -42,7 +42,6 @@ void foo_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) 
         threadgroup_barrier(mem_flags::mem_threadgroup);
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(v_2)));
       }
-      continue;
     }
   }
 }

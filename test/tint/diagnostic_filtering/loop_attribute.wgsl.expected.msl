@@ -32,7 +32,6 @@ void main_inner(float x) {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if ((x > 0.0f)) { break; }
       }
-      continue;
     }
   }
 }

@@ -38,7 +38,6 @@ kernel void v(device int* v_1 [[buffer(0)]]) {
         }
         if ((i > 10)) { break; }
       }
-      continue;
     }
   }
   (*tint_module_vars.tint_member) = i;

@@ -119,7 +119,6 @@ kernel void entry() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (true) { break; }
       }
-      continue;
     }
   }
 }
@@ -146,7 +145,6 @@ kernel void entry() {
       {
         if (true) { break; }
       }
-      continue;
     }
   }
 }
@@ -186,7 +184,6 @@ kernel void entry() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (v) { break; }
       }
-      continue;
     }
   }
 }
@@ -218,7 +215,6 @@ kernel void entry() {
       {
         if (v) { break; }
       }
-      continue;
     }
   }
 }
@@ -259,7 +255,6 @@ kernel void entry() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (v) { break; }
       }
-      continue;
     }
   }
 }
@@ -292,7 +287,6 @@ kernel void entry() {
       {
         if (v) { break; }
       }
-      continue;
     }
   }
 }
@@ -342,7 +336,6 @@ kernel void entry() {
       {
         v = (v + 1u);
       }
-      continue;
     }
   }
 }

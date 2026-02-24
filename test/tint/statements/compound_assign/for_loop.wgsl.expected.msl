@@ -57,7 +57,6 @@ kernel void foo() {
         thread float* const v_2 = (&a[min(uint(idx3(tint_module_vars)), 3u)]);
         (*v_2) = ((*v_2) + 1.0f);
       }
-      continue;
     }
   }
 }

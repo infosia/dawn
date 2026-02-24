@@ -87,7 +87,6 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, const constant SimParams* cons
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   if ((cMassCount > 0)) {

@@ -193,7 +193,6 @@ void main_1(tint_module_vars_struct tint_module_vars) {
               float const x_218 = f;
               f = (x_218 + 1.0f);
             }
-            continue;
           }
         }
       }
@@ -250,7 +249,6 @@ void main_1(tint_module_vars_struct tint_module_vars) {
         int const x_304 = i;
         i = as_type<int>((as_type<uint>(x_304) + as_type<uint>(1)));
       }
-      continue;
     }
   }
   float3 const x_310 = float3((*tint_module_vars.x_20).colorMul);

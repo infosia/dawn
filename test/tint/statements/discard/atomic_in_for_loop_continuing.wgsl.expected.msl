@@ -49,7 +49,6 @@ int foo_inner(float in, float2 coord, tint_module_vars_struct tint_module_vars) 
         }
         i = v;
       }
-      continue;
     }
   }
   if (!((*tint_module_vars.continue_execution))) {

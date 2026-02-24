@@ -51,7 +51,6 @@ void main_inner(uint3 lid, uint tint_local_index, tint_module_vars_struct tint_m
       {
         S = as_type<int>((as_type<uint>(S) + as_type<uint>(8)));
       }
-      continue;
     }
   }
   {
@@ -69,7 +68,6 @@ void main_inner(uint3 lid, uint tint_local_index, tint_module_vars_struct tint_m
       {
         s_group = as_type<int>((as_type<uint>(s_group) + as_type<uint>(8)));
       }
-      continue;
     }
   }
 }

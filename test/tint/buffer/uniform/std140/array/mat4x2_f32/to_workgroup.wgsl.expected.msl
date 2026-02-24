@@ -35,7 +35,6 @@ void f_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);
