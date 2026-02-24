@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf1ca406_9021f530",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-24T18:24:20Z",
+      "side": 1,
+      "message": "What\u0027s an example of the error message that FXC currenty outputs?\nCan we replace this with \"\u003cno source name\u003e\" instead?",
+      "range": {
+        "startLine": 193,
+        "startChar": 49,
+        "endLine": 193,
+        "endChar": 61
+      },
+      "revId": "0a82154f5370f2f46719a5bd801422a0a5c3bab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
