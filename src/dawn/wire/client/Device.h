@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "dawn/common/LinkedList.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "dawn/wire/client/ApiObjects_autogen.h"
@@ -102,16 +103,17 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     WGPUFuture CreatePipelineAsync(Descriptor const* descriptor, const CallbackInfo& callbackInfo);
 
     LimitsAndFeatures mLimitsAndFeatures;
+    std::variant<Ref<TrackedEvent>, FutureID> mDeviceLostInfo;
 
-    struct DeviceLostInfo {
-        FutureID futureID = kNullFutureID;
-        Ref<TrackedEvent> event = nullptr;
+    struct CallbackInfos {
+        CallbackInfos(const WGPUUncapturedErrorCallbackInfo& error,
+                      const WGPULoggingCallbackInfo& logging);
+
+        WGPUUncapturedErrorCallbackInfo error;
+        WGPULoggingCallbackInfo logging;
+        uint32_t semaphore = 0;
     };
-    DeviceLostInfo mDeviceLostInfo;
-
-    WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
-        WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
-    WGPULoggingCallbackInfo mLoggingCallbackInfo = WGPU_LOGGING_CALLBACK_INFO_INIT;
+    MutexCondVarProtected<CallbackInfos> mCallbackInfos;
 
     Ref<Adapter> mAdapter;
     Ref<Queue> mQueue;
