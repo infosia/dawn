@@ -511,34 +511,46 @@ class Printer : public tint::TextGenerator {
                 ? new core::ir::analysis::ForLoopAnalysis(*l)
                 : nullptr);
 
-        auto emit_continuing = [&] {
-            Line() << "{";
-            {
-                const ScopedIndent si(current_buffer_);
-                EmitBlock(l->Continuing());
-            }
-            Line() << "}";
-        };
-        TINT_SCOPED_ASSIGNMENT(emit_continuing_, emit_continuing);
-
         Line() << "{";
         {
             const ScopedIndent init(current_buffer_);
             EmitBlock(l->Initializer());
 
             bool has_loop_condition = false;
+            bool uses_for_loop_update = false;
             if (analysis) {
                 if (auto* if_cond = analysis->GetIfCondition()) {
-                    auto while_construct_line = Line();
-                    while_construct_line << "while(";
+                    auto loop_header = Line();
+                    if (auto* store = analysis->GetContinuingUpdateStore()) {
+                        loop_header << "for( ; ";
+                        EmitValue(loop_header, if_cond);
+                        loop_header << "; ";
+                        EmitStore(store, loop_header);
+                        uses_for_loop_update = true;
+                    } else {
+                        loop_header << "while(";
+                        EmitValue(loop_header, if_cond);
+                    }
+                    loop_header << ") {";
                     has_loop_condition = true;
-                    EmitValue(while_construct_line, if_cond);
-                    while_construct_line << ") {";
                 }
             }
             if (!has_loop_condition) {
                 Line() << "while(true) {";
             }
+
+            auto emit_continuing = [&] {
+                if (uses_for_loop_update) {
+                    return;
+                }
+                Line() << "{";
+                {
+                    const ScopedIndent si(current_buffer_);
+                    EmitBlock(l->Continuing());
+                }
+                Line() << "}";
+            };
+            TINT_SCOPED_ASSIGNMENT(emit_continuing_, emit_continuing);
 
             {
                 const ScopedIndent si(current_buffer_);
@@ -1167,14 +1179,18 @@ class Printer : public tint::TextGenerator {
     /// @param load the load
     void EmitLoad(StringStream& out, const core::ir::Load* load) { EmitValue(out, load->From()); }
 
-    /// Emit a store
+    /// Emit a store to a new line.
     void EmitStore(const core::ir::Store* s) {
         auto out = Line();
+        EmitStore(s, out);
+        out << ";";
+    }
 
+    /// Emit a store to an existing line.
+    void EmitStore(const core::ir::Store* s, LineWriter& out) {
         EmitValue(out, s->To());
         out << " = ";
         EmitValue(out, s->From());
-        out << ";";
     }
 
     /// Emit a binary instruction

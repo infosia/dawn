@@ -31,11 +31,8 @@ void foo() {
 void main() {
   {
     int i = int(0);
-    while((i < int(2))) {
+    for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       foo();
-      {
-        i = asint((asuint(i) + asuint(int(1))));
-      }
       continue;
     }
   }
