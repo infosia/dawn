@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2eb14f23_1acf066e",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:16:16Z",
+      "side": 1,
+      "message": "What is this for?",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62e72679_9bf7c7ab",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:16:16Z",
+      "side": 1,
+      "message": "Should this be negated?",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c25d39fc_9084c5ff",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:16:16Z",
+      "side": 1,
+      "message": "You don\u0027t need the check here, `RequireBuiltinInput` will only add it if doesn\u0027t already exist.",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f60d019_cf6645b4",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T15:16:16Z",
+      "side": 1,
+      "message": "Do you need to save the returned indices into your optionals?",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
