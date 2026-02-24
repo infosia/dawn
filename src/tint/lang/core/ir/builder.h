@@ -723,6 +723,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* Equal(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
@@ -738,6 +739,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* NotEqual(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
@@ -753,6 +755,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* LessThan(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
@@ -768,6 +771,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* GreaterThan(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
@@ -783,6 +787,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* LessThanEqual(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
@@ -798,6 +803,7 @@ class Builder {
     /// @returns the operation
     template <typename LHS, typename RHS>
     ir::CoreBinary* GreaterThanEqual(LHS&& lhs, RHS&& rhs) {
+        CheckForNonDeterministicEvaluation<LHS, RHS>();
         auto* lhs_value = Value(std::forward<LHS>(lhs));
         auto* rhs_value = Value(std::forward<RHS>(rhs));
         TINT_ASSERT(lhs_value);
