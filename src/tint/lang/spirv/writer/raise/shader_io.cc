@@ -33,6 +33,7 @@
 #include <set>
 #include <utility>
 
+#include "spirv/unified1/spirv.h"
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
@@ -42,6 +43,7 @@
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/type/image.h"
+#include "src/tint/lang/spirv/type/literal.h"
 #include "src/tint/utils/ice/ice.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
@@ -68,10 +70,13 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     core::ir::Value* vert_out_position = nullptr;
 
     // IO index for vertex position emulation interpolant
-    std::optional<uint32_t> center_pos_vert_idx;
+    std::optional<uint32_t> center_pos_vert_idx = std::nullopt;
 
     // IO index for fragment position emulation interpolant
-    std::optional<uint32_t> center_pos_frag_idx;
+    std::optional<uint32_t> center_pos_frag_idx = std::nullopt;
+
+    // IO index for sample_index
+    std::optional<uint32_t> sample_index_idx = std::nullopt;
 
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
@@ -176,7 +181,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 auto sample_ty = store_type->DeepestElement();
                 store_type = ty.Get<spirv::type::Image>(
                     sample_ty, type::Dim::kSubpassData, type::Depth::kNotDepth,
-                    type::Arrayed::kNonArrayed, type::Multisampled::kSingleSampled,
+                    type::Arrayed::kNonArrayed,
+                    config.multisampled_framebuffer_fetch ? type::Multisampled::kMultisampled
+                                                          : type::Multisampled::kSingleSampled,
                     type::Sampled::kReadWriteOpCompatible, core::TexelFormat::kUndefined, access);
 
                 new_addrspace = core::AddressSpace::kHandle;
@@ -204,6 +211,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        if (config.multisampled_framebuffer_fetch) {
+            sample_index_idx =
+                RequireBuiltinInput(core::BuiltinValue::kSampleIndex, ty.u32(), "sample_idx");
+        }
+
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
@@ -236,6 +248,13 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             Vector<core::ir::Value*, 8> builtin_args;
             builtin_args.Push(value);
             builtin_args.Push(coords);
+
+            if (config.multisampled_framebuffer_fetch) {
+                builtin_args.Push(
+                    builder.Constant(builder.ir.constant_values.Get<core::constant::Scalar<u32>>(
+                        ty.Get<type::Literal>(), u32(SpvImageOperandsSampleMask))));
+                builtin_args.Push(builder.Load(input_vars[sample_index_idx.value()])->Result());
+            }
 
             // Call the builtin.
             value = builder
