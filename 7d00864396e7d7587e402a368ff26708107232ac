@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "7d00864396e7d7587e402a368ff26708107232ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e80770_6419433b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-24T19:29:52Z",
+      "side": 1,
+      "message": "LGTM, but CC-ing Peter since I want to see if there\u0027s a way to make this better in the long run. It\u0027s a bit gross to see like 6-7 entries of what looks like the same machine/platform. Maybe if when we run the tests, we find that the diff is small, like 1 feature or something from an existing entry, we can mention that in the logs also? That way we could potentially update an entry instead of adding a new one every time?",
+      "revId": "7d00864396e7d7587e402a368ff26708107232ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
