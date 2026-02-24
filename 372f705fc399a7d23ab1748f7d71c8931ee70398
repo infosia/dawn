@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36780f84_d9a12738",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T17:59:25Z",
+      "side": 1,
+      "message": "This one could be renamed to `usesSampleInterpolants` but it could be in a follow-up.",
+      "range": {
+        "startLine": 1071,
+        "startChar": 61,
+        "endLine": 1071,
+        "endChar": 79
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5226239_4d2b2bd0",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T17:59:25Z",
+      "side": 1,
+      "message": "```suggestion\n        mUsesFramebufferFetch \u003d\n            GetStage(SingleShaderStage::Fragment).metadata-\u003efragmentInputMask.any();\n        mUsesSampleRateShading \u003d\n            GetSampleCount() \u003e 1 \u0026\u0026\n            (GetStage(SingleShaderStage::Fragment).metadata-\u003eisFragMultiSampled ||\n             mUsesSampleIndex || mUsesFramebufferFetch);\n```",
+      "range": {
+        "startLine": 1069,
+        "startChar": 1,
+        "endLine": 1074,
+        "endChar": 84
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
