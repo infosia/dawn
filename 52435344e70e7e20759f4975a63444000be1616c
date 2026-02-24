@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfbce420_4e85233e",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-24T16:30:36Z",
+      "side": 1,
+      "message": "I found this a little confusing too. I think it\u0027d be clearer to change the top-level for loop from a for-each to a `for (uint32_t index \u003d 0; index \u003c entries.Length(); index++) {}` loop instead of using the length of vars to get the index, and then you don\u0027t need these placeholder entries.",
+      "parentUuid": "2714ef88_6decd042",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62e72679_9bf7c7ab",
         "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Ok, this was copied so I\u0027ll see about updating the other uses too.",
       "parentUuid": "c25d39fc_9084c5ff",
+      "revId": "52435344e70e7e20759f4975a63444000be1616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89552b6d_44860ae6",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-24T16:30:36Z",
+      "side": 1,
+      "message": "No I think the check is correct here. This is about whether the shader *needs* workgroup_id. The `RequireBuiltinInput` helper will only check whether you already *have* it (it has no knowledge about when the builtin is needed, which is the condition above).",
+      "parentUuid": "a2eb4e26_261e7238",
       "revId": "52435344e70e7e20759f4975a63444000be1616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
