@@ -63,6 +63,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The output variables.
     Vector<core::ir::Var*, 4> output_vars;
 
+    Vector<uint32_t, 4> input_indices;
+
     /// The configuration options.
     const ShaderIOConfig& config;
 
@@ -78,9 +80,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     // IO index for sample_index
     std::optional<uint32_t> sample_index_idx = std::nullopt;
 
+    std::optional<uint32_t> global_invocation_index_index;
+    std::optional<uint32_t> global_invocation_id_index;
+    std::optional<uint32_t> workgroup_index_index;
+    std::optional<uint32_t> workgroup_id_index;
+    std::optional<uint32_t> num_workgroups_index;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
-        : ShaderIOBackendState(mod, f), config(cfg) {}
+        : ShaderIOBackendState(mod, f), config(cfg) {
+        if (auto wgsize = func->WorkgroupSizeAsConst()) {
+            workgroup_size = wgsize;
+        }
+    }
 
     /// Destructor
     ~StateImpl() override {}
@@ -157,6 +169,31 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                     io.attributes.interpolation =
                         core::Interpolation{core::InterpolationType::kFlat};
                 }
+
+                uint32_t index = static_cast<uint32_t>(input_indices.Length());
+                switch (io.attributes.builtin.value()) {
+                    // Record an index for polyfilled inputs.
+                    case core::BuiltinValue::kGlobalInvocationIndex:
+                        global_invocation_index_index = index;
+                        input_indices.Push(index);
+                        continue;
+                    // Save the indices of the builtins below for use in polyfills.
+                    case core::BuiltinValue::kWorkgroupIndex:
+                        workgroup_index_index = index;
+                        input_indices.Push(index);
+                        continue;
+                    case core::BuiltinValue::kGlobalInvocationId:
+                        global_invocation_id_index = index;
+                        break;
+                    case core::BuiltinValue::kWorkgroupId:
+                        workgroup_id_index = index;
+                        break;
+                    case core::BuiltinValue::kNumWorkgroups:
+                        num_workgroups_index = index;
+                        break;
+                    default:
+                        break;
+                }
             }
             if (io.attributes.location) {
                 name << "_loc" << io.attributes.location.value();
@@ -205,6 +242,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             var->SetAttributes(io.attributes);
 
             ir.root_block->Append(var);
+            input_indices.Push(static_cast<uint32_t>(vars.Length()));
             vars.Push(var);
         }
     }
@@ -214,6 +252,26 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         if (config.multisampled_framebuffer_fetch) {
             sample_index_idx =
                 RequireBuiltinInput(core::BuiltinValue::kSampleIndex, ty.u32(), "sample_idx");
+        }
+
+        // The following builtin values are polyfilled using other builtin values:
+        // * workgroup_index - workgroup_id and num_workgroups
+        // * global_invocation_index - global_invocation_id, num_workgroups (and workgroup size)
+        const bool has_global_invocation_index =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
+        const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
+        const bool needs_workgroup_id = has_workgroup_index;
+        if (needs_workgroup_id) {
+            RequireBuiltinInput(core::BuiltinValue::kWorkgroupId, ty.vec3u(), "workgroup_id");
+        }
+        const bool needs_num_workgroups = has_workgroup_index || has_global_invocation_index;
+        if (needs_num_workgroups) {
+            RequireBuiltinInput(core::BuiltinValue::kNumWorkgroups, ty.vec3u(), "num_workgroups");
+        }
+        const bool needs_global_invocation_id = has_global_invocation_index;
+        if (needs_global_invocation_id) {
+            RequireBuiltinInput(core::BuiltinValue::kGlobalInvocationId, ty.vec3u(),
+                                "global_invocation_id");
         }
 
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
@@ -228,13 +286,22 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        if (idx == global_invocation_index_index) {
+            return PolyfillGlobalInvocationIndex(builder, global_invocation_id_index.value(),
+                                                 num_workgroups_index.value());
+        }
+        if (idx == workgroup_index_index) {
+            return PolyfillWorkgroupIndex(builder, workgroup_id_index.value(),
+                                          num_workgroups_index.value());
+        }
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
-        auto* from = input_vars[idx]->Result();
+        auto input_index = input_indices[idx];
+        auto* from = input_vars[input_index]->Result();
 
         // SampleMask becomes an array for SPIR-V, so load from the first element.
         if (inputs[idx].attributes.builtin == core::BuiltinValue::kSampleMask) {
-            from = builder.Access(ptr, input_vars[idx], 0_u)->Result();
+            from = builder.Access(ptr, input_vars[input_index], 0_u)->Result();
         }
 
         core::ir::Value* value = builder.Load(from)->Result();
@@ -293,7 +360,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             auto p5_const = builder.Constant(0.5_f);
             auto* plus_p5 = builder.Add(floor_xy, builder.Splat(ty.vec2f(), p5_const));
 
-            auto* xyzw_from_user_center = builder.Load(input_vars[center_pos_frag_idx.value()]);
+            auto center_idx = input_indices[center_pos_frag_idx.value()];
+            auto* xyzw_from_user_center = builder.Load(input_vars[center_idx]);
 
             auto* user_center_z = builder.Swizzle(ty.f32(), xyzw_from_user_center, {2});
             auto* user_center_w = builder.Swizzle(ty.f32(), xyzw_from_user_center, {3});
