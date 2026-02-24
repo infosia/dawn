@@ -348,7 +348,6 @@ void main_1() {
         uint v_10 = uint(x_441);
         i = int((v_10 + uint(1)));
       }
-      continue;
     }
   }
   vec2 x_444 = vCurrOffset;

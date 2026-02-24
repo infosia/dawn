@@ -59,7 +59,6 @@ void main() {
                 uint v = uint(j);
                 j = int((v + uint(2)));
               }
-              continue;
             }
           }
           tint_continue = true;
@@ -89,7 +88,6 @@ void main() {
         uint v_1 = uint(i);
         i = int((v_1 + uint(2)));
       }
-      continue;
     }
   }
 }

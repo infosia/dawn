@@ -60,7 +60,6 @@ void tint_store_and_preserve_padding_3(vec3 value_param[2]) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
 }

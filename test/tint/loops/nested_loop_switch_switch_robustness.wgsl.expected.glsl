@@ -60,7 +60,6 @@ void main() {
         uint v = uint(i);
         i = int((v + uint(2)));
       }
-      continue;
     }
   }
 }

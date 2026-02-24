@@ -29,7 +29,6 @@ void tint_store_and_preserve_padding_1(uvec3 value_param[4]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -52,7 +51,6 @@ uvec3[4] v_4(uint start_byte_offset) {
       {
         v_5 = (v_6 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -79,7 +77,6 @@ void foo_inner(uint tint_local_index) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
   barrier();

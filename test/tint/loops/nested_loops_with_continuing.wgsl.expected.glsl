@@ -29,7 +29,6 @@ int f() {
             uint v = uint(j);
             j = int((v + uint(1)));
           }
-          continue;
         }
       }
       /* unreachable */

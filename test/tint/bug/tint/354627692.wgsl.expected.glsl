@@ -38,7 +38,6 @@ void main() {
         }
         if ((i > 10)) { break; }
       }
-      continue;
     }
   }
   v.inner = i;

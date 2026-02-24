@@ -46,7 +46,6 @@ void main() {
         v.inner.data[v_1] = (v.inner.data[v_1] * 2u);
         i = (i + 1u);
       }
-      continue;
     }
   }
 }

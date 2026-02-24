@@ -145,7 +145,6 @@ void main_inner(uvec3 GlobalInvocationID) {
               {
                 i = (i + 1u);
               }
-              continue;
             }
           }
           if ((dp >= 0.0f)) {
@@ -186,14 +185,12 @@ void main_inner(uvec3 GlobalInvocationID) {
             uint v_44 = uint(x);
             x = int((v_44 + uint(1)));
           }
-          continue;
         }
       }
       {
         uint v_49 = uint(y);
         y = int((v_49 + uint(1)));
       }
-      continue;
     }
   }
 }

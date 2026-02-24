@@ -162,7 +162,6 @@ void main_1() {
               float x_218 = f;
               f = (x_218 + 1.0f);
             }
-            continue;
           }
         }
       }
@@ -220,7 +219,6 @@ void main_1() {
         uint v_11 = uint(x_304);
         i = int((v_11 + uint(1)));
       }
-      continue;
     }
   }
   vec3 x_310 = uintBitsToFloat(v.inner[7u].xyz);

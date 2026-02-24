@@ -87,7 +87,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (true) { break; }
       }
-      continue;
     }
   }
 }
@@ -126,7 +125,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (v) { break; }
       }
-      continue;
     }
   }
 }
@@ -166,7 +164,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         if (v) { break; }
       }
-      continue;
     }
   }
 }

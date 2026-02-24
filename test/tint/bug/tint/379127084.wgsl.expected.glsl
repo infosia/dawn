@@ -129,7 +129,6 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
               _72_h = int((v_15 + uint(1)));
               if ((_72_h >= 4)) { break; }
             }
-            continue;
           }
         }
         vec4 _83_q = _71_g;
@@ -152,7 +151,6 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
         uint v_16 = uint(_61_o);
         _61_o = int((v_16 + uint(1)));
       }
-      continue;
     }
   }
   if ((_56_d == 0)) {

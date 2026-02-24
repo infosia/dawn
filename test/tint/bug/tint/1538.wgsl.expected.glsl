@@ -40,7 +40,6 @@ void main() {
         uint tint_carry_1 = uint((tint_low_inc_1 == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry_1);
       }
-      continue;
     }
   }
 }

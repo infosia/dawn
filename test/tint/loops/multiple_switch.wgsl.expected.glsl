@@ -52,7 +52,6 @@ void main() {
         uint v = uint(i_1);
         i_1 = int((v + uint(1)));
       }
-      continue;
     }
   }
 }
