@@ -59,7 +59,6 @@ kernel void v() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(2)));
       }
-      continue;
     }
   }
 }

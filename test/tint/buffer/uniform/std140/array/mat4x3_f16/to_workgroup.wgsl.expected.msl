@@ -73,7 +73,6 @@ void f_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);

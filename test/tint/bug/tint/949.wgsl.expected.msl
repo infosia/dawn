@@ -388,7 +388,6 @@ void main_1(tint_module_vars_struct tint_module_vars) {
         int const x_441 = i;
         i = as_type<int>((as_type<uint>(x_441) + as_type<uint>(1)));
       }
-      continue;
     }
   }
   float2 const x_444 = vCurrOffset;

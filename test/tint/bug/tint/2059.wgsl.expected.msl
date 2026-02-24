@@ -80,7 +80,6 @@ void tint_store_and_preserve_padding_3(device tint_array<tint_array<tint_packed_
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
 }
@@ -102,7 +101,6 @@ void tint_store_and_preserve_padding_7(device tint_array<S2_packed_vec3, 1>* con
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -124,7 +122,6 @@ void tint_store_and_preserve_padding_6(device tint_array<S_packed_vec3, 1>* cons
       {
         v_4 = (v_5 + 1u);
       }
-      continue;
     }
   }
 }
@@ -155,7 +152,6 @@ kernel void v_6(device tint_array<tint_packed_vec3_f32_array_element, 3>* buffer
       {
         c = (c + 1u);
       }
-      continue;
     }
   }
   float3x3 const a = m;

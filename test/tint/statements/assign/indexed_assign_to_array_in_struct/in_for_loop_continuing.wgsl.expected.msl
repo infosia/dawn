@@ -53,7 +53,6 @@ kernel void v_1(const constant Uniforms* uniforms [[buffer(0)]]) {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         s1.a1[min((*tint_module_vars.uniforms).i, 7u)] = v;
       }
-      continue;
     }
   }
 }

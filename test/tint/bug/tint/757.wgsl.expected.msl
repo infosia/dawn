@@ -47,7 +47,6 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
 }

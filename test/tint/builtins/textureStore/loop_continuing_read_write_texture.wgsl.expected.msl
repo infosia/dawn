@@ -28,7 +28,6 @@ kernel void foo(texture2d<int, access::read_write> tex [[texture(0)]]) {
         tint_module_vars.tex.write(int4(0), uint2(int2(0)));
         const_cast<texture2d<int, access::read_write>thread &>(tint_module_vars.tex).fence();
       }
-      continue;
     }
   }
 }

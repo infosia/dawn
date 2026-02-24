@@ -54,7 +54,6 @@ kernel void v(const device FSUniforms* _storage [[buffer(0)]], const constant ti
         uint const tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
       }
-      continue;
     }
   }
 }

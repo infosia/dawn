@@ -56,7 +56,6 @@ void main_inner(uint3 global_id, tint_module_vars_struct tint_module_vars) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   uint const index = (resultCell.y + (resultCell.x * dimOutter));
