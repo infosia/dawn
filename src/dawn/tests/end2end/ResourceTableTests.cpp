@@ -518,9 +518,6 @@ TEST_P(ResourceTableTests, HasResourceOneTexturePinUnpin) {
 
 // Test WGSL `hasResource` reflects the state of the resource table.
 TEST_P(ResourceTableTests, HasResourceFilterableToUnfilterable) {
-    // TODO(crbug.com/473354062): Implement on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     wgpu::TextureDescriptor tDesc{
         .usage = wgpu::TextureUsage::TextureBinding,
         .size = {1, 1},

@@ -1718,7 +1718,6 @@ TEST_F(ResourceTableValidationTest, PinValidationUsageRenderPass) {
 }
 
 // Checks that only texture views are allowed as resources in mutators for SamplingResourceTable.
-// TODO(https://issues.chromium.org/473354063): Support samplers in SamplingResourceTable.
 TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
     // Create the texture to put in the table.
     wgpu::TextureDescriptor tDesc = {
@@ -1752,10 +1751,9 @@ TEST_F(ResourceTableValidationTest, MutatorBindingKindValidation) {
         }
 
         // Error case: a sampler is an error.
-        // TODO(https://issues.chromium.org/473354063): Support samplers in SamplingResourceTable.
         {
             wgpu::BindingResource resource = {.sampler = sampler};
-            TestMutator(mutator, &resource, false);
+            TestMutator(mutator, &resource, true);
         }
 
         // Error case: both a sampler and a texture at the same time is an error.
