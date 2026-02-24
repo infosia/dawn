@@ -34,6 +34,7 @@ load("@chromium-luci//ci.star", "ci")
 load("@chromium-luci//consoles.star", "consoles")
 load("@chromium-luci//gardener_rotations.star", "gardener_rotations")
 load("@chromium-luci//gn_args.star", "gn_args")
+load("@chromium-luci//targets.star", "targets")
 load("//constants.star", "siso")
 
 ci.defaults.set(
@@ -53,6 +54,13 @@ ci.defaults.set(
     builderless = True,
     notifies = ["gardener-notifier"],
     gardener_rotations = gardener_rotations.rotation("dawn", None, None),
+)
+
+targets.builder_defaults.set(
+    mixins = [
+        "chromium-tester-service-account",
+        "swarming_containment_auto",
+    ],
 )
 
 ################################################################################
@@ -933,6 +941,15 @@ ci.thin_tester(
             target_platform = builder_config.target_platform.LINUX,
         ),
         run_tests_serially = True,
+    ),
+    targets = targets.bundle(
+        targets = [
+            "swiftshader_gtests",
+            "swiftshader_isolated_scripts",
+        ],
+        mixins = [
+            "gpu_linux_gce_stable",
+        ],
     ),
     console_view_entry = consoles.console_view_entry(
         category = "linux|test|clang|rel|x64",
