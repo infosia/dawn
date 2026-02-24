@@ -22,6 +22,30 @@
       },
       "revId": "3f6da69469e7f0cd4d94665c90cb5954b488e3fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25f6ce19_1ac097a8",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-24T20:09:30Z",
+      "side": 1,
+      "message": "If the original WGSL shader used `loop { continuing { ... }}` then they can put all sorts of wonderful things inside the continuing block.",
+      "parentUuid": "1f8ade68_ef1be7db",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "3f6da69469e7f0cd4d94665c90cb5954b488e3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
