@@ -34,6 +34,29 @@
       "parentUuid": "404d80f1_a2f4a885",
       "revId": "398c5a5330c2ed488b64ebd00478f9273e56bac8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16d1d69_0ea3c021",
+        "filename": "test/tint/loops/for_loop_detection.wgsl.expected.fxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T20:04:14Z",
+      "side": 1,
+      "message": "initializer not in for loop. Does it matter?",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 25
+      },
+      "revId": "398c5a5330c2ed488b64ebd00478f9273e56bac8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

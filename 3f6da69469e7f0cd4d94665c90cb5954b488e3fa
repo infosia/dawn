@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f8ade68_ef1be7db",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T20:04:14Z",
+      "side": 1,
+      "message": "What are the conditions for which this is not a store? Is it possible to have the loop use the operands or is this because the looping parameter is outside the loop (in our case) always",
+      "range": {
+        "startLine": 82,
+        "startChar": 10,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "3f6da69469e7f0cd4d94665c90cb5954b488e3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

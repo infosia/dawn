@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf4c25c9_76bea0ed",
+        "filename": "test/tint/samples/compute_boids.wgsl.expected.fxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T20:04:14Z",
+      "side": 0,
+      "message": "I wonder how it detects this (both continues). will check impl",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "947e26d0c454effd5cd9afe0124192d566d5c3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
