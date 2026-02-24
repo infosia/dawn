@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44b71f61_d0b622a2",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T17:34:05Z",
+      "side": 1,
+      "message": "I _think_ I\u0027ve implemented your suggestion cwallez@, please let me know if I got it wrong.",
+      "parentUuid": "c2998e56_5c2f8a0d",
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbca82bc_9e09791d",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 4
