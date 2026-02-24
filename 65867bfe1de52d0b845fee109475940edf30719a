@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80811c7f_3a1ab06d",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Yup",
+      "parentUuid": "28207595_7133e675",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a97c01a1_b872ad17",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "It would be easier to list the cases that don\u0027t need this validation (with ideas of names):\n\n - bool unknownFloatSampleTypeInShader: shader: Unknown (float) + required: Float or UnfilterableFloat\n - bool shaderSampleTypeConvertsToRequiredFloat: shader: unfilterable + required: Float.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efac18dd_5f21a000",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97c01a1_b872ad17",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5486b8ec_bfaabc00",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "I make a few changes to make unknown-filterable fit better but it never actually shows up in error messages as it can convert to either.",
+      "parentUuid": "7a124490_93fd019f",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "509da6ce_761c33de",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 1
@@ -65,6 +119,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "nit: can the rename be in a pre-CL to reduce the diff size and make changes more clear?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5aab7601_61b3fd52",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509da6ce_761c33de",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c88916d2_56c2b82b",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0a6c9b_77cb634e",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c20b96f8_691ff30e",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "Maybe explicitly list kUnknown?",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8912827_13fdcebd",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c20b96f8_691ff30e",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a6d5363_d36f6786",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f6ab80d_d2ed42ce",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "649170b1_eeb657a9",
@@ -133,6 +259,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "You can use utils::MakeBindGroupLayout.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f62b166b_475d11de",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649170b1_eeb657a9",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -154,6 +298,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c6cb724_f259211e",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1936e3_d1440428",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c08ccd6_d3144845",
@@ -167,6 +329,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "We don\u0027t seem to have tests checking that filtering is used only with filtering, but given the structure of the code I think that\u0027s ok: the information is already given by the BGL and at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.cpp;drc\u003dd11ac50b16a71e96e242989f6ea53183f7eddcdd;l\u003d1573 we check only against the BGLs and without the shader reflection. What will be a bit tricky is the layout defaulting but that\u0027s in the next CL.",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdff133e_86643353",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c08ccd6_d3144845",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +370,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2731d2c_6bb366e8",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "We could, but there aren\u0027t that many of them and I think they\u0027re pretty clear as is?",
+      "parentUuid": "1810ad2b_7f2e016b",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abd01feb_fe5e6d3b",
         "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
         "patchSetId": 1
@@ -207,6 +405,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2597ad89_8323c139",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "No, because we still have things like `texture_multisampled_2d\u003cf32\u003e` which is `kFloat` type.",
+      "parentUuid": "abd01feb_fe5e6d3b",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6f9f9df4_aef4704a",
         "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
         "patchSetId": 1
@@ -218,6 +434,24 @@
       "writtenOn": "2026-02-18T09:17:30Z",
       "side": 1,
       "message": "```suggestion\n        kFilteringUnknown,\n```",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87247565_d1d0b4fe",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T22:17:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9f9df4_aef4704a",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
