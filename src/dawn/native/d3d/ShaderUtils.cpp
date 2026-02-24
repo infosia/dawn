@@ -189,9 +189,10 @@ ResultOrError<ComPtr<ID3DBlob>> CompileShaderFXC(const d3d::D3DBytecodeCompilati
     ComPtr<ID3DBlob> compiledShader;
     ComPtr<ID3DBlob> errors;
 
-    auto result = r.d3dCompile.UnsafeGetValue()(
-        hlslSource.c_str(), hlslSource.length(), nullptr, nullptr, nullptr, entryPointName.c_str(),
-        r.fxcShaderProfile.data(), r.compileFlags, 0, &compiledShader, &errors);
+    auto result = r.d3dCompile.UnsafeGetValue()(hlslSource.c_str(), hlslSource.length(),
+                                                "C:\\fakepath", nullptr, nullptr,
+                                                entryPointName.c_str(), r.fxcShaderProfile.data(),
+                                                r.compileFlags, 0, &compiledShader, &errors);
 
     if (FAILED(result)) {
         const char* resultAsString = HRESULTAsString(result);
