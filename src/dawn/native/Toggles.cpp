@@ -817,6 +817,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Allows the GL backend to defer GL commands until Queue::Submit is called. This includes "
       "backend resource creations which will also be deferred.",
       "https://crbug.com/dawn/451928481", ToggleStage::Device}},
+    {Toggle::ShadowCopyMapWrite,
+     {"shadow_copy_map_write",
+      "By shadowing mapped buffers on the host, this allows any thread to call Instance::WaitAny() "
+      "on buffer mapping futures when GL deferral is enabled."
+      "This may incur a performance penalty due to the host-side copies.",
+      "https://crbug.com/dawn/451928481", ToggleStage::Device}},
     {Toggle::DisableTransientAttachment,
      {"disable_transient_attachment", "Disable TextureUsage TransientAttachment usage.",
       "https://crbug.com/dawn/462620664", ToggleStage::Device}},

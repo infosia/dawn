@@ -219,6 +219,12 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
+    if ((mode & wgpu::MapMode::Write) && GetDevice()->IsToggleEnabled(Toggle::ShadowCopyMapWrite)) {
+        mCPUStaging.resize(GetSize());
+        mMappedData = mCPUStaging.data();
+        return {};
+    }
+
     // It is an error to map an empty range in OpenGL. We always have at least a 4-byte buffer
     // so we extend the range to be 4 bytes.
     if (size == 0) {
