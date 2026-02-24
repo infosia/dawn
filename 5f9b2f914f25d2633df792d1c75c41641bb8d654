@@ -16,6 +16,23 @@
       "message": "PTAL! Tested on Android and macOS.\n\nI can also take a look at getting this built (and tested?) on our infra.",
       "revId": "5f9b2f914f25d2633df792d1c75c41641bb8d654",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "515373c7_eaa39c86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T15:48:34Z",
+      "side": 1,
+      "message": "Nice, LGTM!",
+      "revId": "5f9b2f914f25d2633df792d1c75c41641bb8d654",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
