@@ -128,7 +128,7 @@ MaybeError SharedTextureMemoryBase::GetProperties(SharedTextureMemoryProperties*
     UnpackedPtr<SharedTextureMemoryProperties> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(properties));
 
-    if (unpacked.Get<SharedTextureMemoryAHardwareBufferProperties>()) {
+    if (unpacked.Has<SharedTextureMemoryAHardwareBufferProperties>()) {
         DAWN_INVALID_IF(
             !GetDevice()->HasFeature(Feature::SharedTextureMemoryAHardwareBuffer),
             "SharedTextureMemory properties (%s) have a chained "

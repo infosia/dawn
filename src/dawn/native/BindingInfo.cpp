@@ -111,11 +111,11 @@ void IncrementBindingCounts(BindingCounts* bindingCounts,
         }
     } else if (entry->storageTexture.access != wgpu::StorageTextureAccess::BindingNotUsed) {
         perStageBindingCountMember = &PerStageBindingCounts::storageTextureCount;
-    } else if (entry.Get<TexelBufferBindingLayout>()) {
+    } else if (entry.Has<TexelBufferBindingLayout>()) {
         perStageBindingCountMember = &PerStageBindingCounts::texelBufferCount;
-    } else if (entry.Get<ExternalTextureBindingLayout>()) {
+    } else if (entry.Has<ExternalTextureBindingLayout>()) {
         perStageBindingCountMember = &PerStageBindingCounts::externalTextureCount;
-    } else if (entry.Get<StaticSamplerBindingLayout>()) {
+    } else if (entry.Has<StaticSamplerBindingLayout>()) {
         ++bindingCounts->staticSamplerCount;
         perStageBindingCountMember = &PerStageBindingCounts::staticSamplerCount;
     }
