@@ -34,6 +34,7 @@ load("@chromium-luci//ci.star", "ci")
 load("@chromium-luci//consoles.star", "consoles")
 load("@chromium-luci//gardener_rotations.star", "gardener_rotations")
 load("@chromium-luci//gn_args.star", "gn_args")
+load("@chromium-luci//targets.star", "targets")
 load("//constants.star", "siso")
 
 ci.defaults.set(
@@ -53,6 +54,13 @@ ci.defaults.set(
     builderless = True,
     notifies = ["gardener-notifier"],
     gardener_rotations = gardener_rotations.rotation("dawn", None, None),
+)
+
+targets.builder_defaults.set(
+    mixins = [
+        "chromium-tester-service-account",
+        "swarming_containment_auto",
+    ],
 )
 
 ################################################################################
@@ -139,6 +147,11 @@ dawn_linux_parent_builder(
             "component",
             "release_with_dchecks",
             "x64",
+        ],
+    ),
+    targets = targets.bundle(
+        additional_compile_targets = [
+            "default",
         ],
     ),
     console_view_entry = consoles.console_view_entry(
@@ -838,6 +851,18 @@ ci.thin_tester(
         ),
         run_tests_serially = True,
     ),
+    targets = targets.bundle(
+        targets = [
+            "real_hardware_common_gtests",
+        ],
+        mixins = [
+            "linux_intel_uhd_630_stable",
+        ],
+    ),
+    targets_settings = targets.settings(
+        browser_config = targets.browser_config.RELEASE,
+        os_type = targets.os_type.LINUX,
+    ),
     console_view_entry = consoles.console_view_entry(
         category = "linux|test|clang|rel|x64",
         short_name = "630",
@@ -862,6 +887,18 @@ ci.thin_tester(
         ),
         run_tests_serially = True,
     ),
+    targets = targets.bundle(
+        targets = [
+            "real_hardware_common_gtests",
+        ],
+        mixins = [
+            "linux_intel_uhd_770_stable",
+        ],
+    ),
+    targets_settings = targets.settings(
+        browser_config = targets.browser_config.RELEASE,
+        os_type = targets.os_type.LINUX,
+    ),
     console_view_entry = consoles.console_view_entry(
         category = "linux|test|clang|rel|x64",
         short_name = "770",
@@ -885,6 +922,18 @@ ci.thin_tester(
             target_platform = builder_config.target_platform.LINUX,
         ),
         run_tests_serially = True,
+    ),
+    targets = targets.bundle(
+        targets = [
+            "real_hardware_common_gtests",
+        ],
+        mixins = [
+            "linux_nvidia_gtx_1660_stable",
+        ],
+    ),
+    targets_settings = targets.settings(
+        browser_config = targets.browser_config.RELEASE,
+        os_type = targets.os_type.LINUX,
     ),
     console_view_entry = consoles.console_view_entry(
         category = "linux|test|clang|rel|x64",
@@ -933,6 +982,19 @@ ci.thin_tester(
             target_platform = builder_config.target_platform.LINUX,
         ),
         run_tests_serially = True,
+    ),
+    targets = targets.bundle(
+        targets = [
+            "swiftshader_gtests",
+            "swiftshader_isolated_scripts",
+        ],
+        mixins = [
+            "gpu_linux_gce_stable",
+        ],
+    ),
+    targets_settings = targets.settings(
+        browser_config = targets.browser_config.RELEASE,
+        os_type = targets.os_type.LINUX,
     ),
     console_view_entry = consoles.console_view_entry(
         category = "linux|test|clang|rel|x64",
