@@ -35,7 +35,6 @@ void main() {
       if (tint_continue_1) {
         continue;
       }
-      continue;
     }
   }
 }

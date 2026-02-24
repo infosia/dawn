@@ -36,7 +36,6 @@ ary_ret v_5(uint start_byte_offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   S v_9[4] = a;

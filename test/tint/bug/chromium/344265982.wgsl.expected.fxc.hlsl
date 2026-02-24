@@ -20,7 +20,6 @@ void foo() {
       if (tint_continue) {
         continue;
       }
-      continue;
     }
   }
 }

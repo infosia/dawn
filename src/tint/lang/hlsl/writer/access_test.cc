@@ -384,7 +384,6 @@ ary_ret v_1(uint offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3 v_4[5] = a;
@@ -499,7 +498,6 @@ ary_ret v_1(uint offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3 v_4[5] = a;
@@ -1251,7 +1249,6 @@ ary_ret v_1(uint start_byte_offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3 v_4[5] = a;
@@ -1311,7 +1308,6 @@ ary_ret v_5(uint start_byte_offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   vector<float16_t, 3> v_9[5] = a;
@@ -1358,7 +1354,6 @@ ary_ret v_1(uint start_byte_offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3 v_4[42] = a;
@@ -1528,7 +1523,6 @@ ary_ret v_1(uint start_byte_offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3 v_4[5] = a;
@@ -1908,7 +1902,6 @@ void v_1(uint offset, float3 obj[5]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -2136,7 +2129,6 @@ void v_1(uint offset, float3 obj[5]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }

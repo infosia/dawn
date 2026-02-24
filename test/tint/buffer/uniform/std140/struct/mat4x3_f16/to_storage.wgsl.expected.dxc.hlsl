@@ -66,7 +66,6 @@ void v_18(uint offset, S obj[4]) {
       {
         v_19 = (v_20 + 1u);
       }
-      continue;
     }
   }
 }
@@ -87,7 +86,6 @@ ary_ret v_22(uint start_byte_offset) {
       {
         v_23 = (v_24 + 1u);
       }
-      continue;
     }
   }
   S v_26[4] = a;

@@ -22,7 +22,6 @@ void main_inner(uint3 GlobalInvocationID) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
 }

@@ -30,7 +30,6 @@ void main_inner(uint3 lid, uint tint_local_index) {
       {
         S = asint((asuint(S) + asuint(int(8))));
       }
-      continue;
     }
   }
   {
@@ -48,7 +47,6 @@ void main_inner(uint3 lid, uint tint_local_index) {
       {
         s_group = asint((asuint(s_group) + asuint(int(8))));
       }
-      continue;
     }
   }
 }

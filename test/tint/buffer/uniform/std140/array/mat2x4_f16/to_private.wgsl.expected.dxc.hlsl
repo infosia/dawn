@@ -46,7 +46,6 @@ ary_ret v_9(uint start_byte_offset) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
   matrix<float16_t, 2, 4> v_12[4] = a;

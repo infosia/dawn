@@ -57,7 +57,6 @@ ary_ret v_14(uint start_byte_offset) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
   S v_18[4] = a;
@@ -78,7 +77,6 @@ void f_inner(uint tint_local_index) {
       {
         v_19 = (v_20 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

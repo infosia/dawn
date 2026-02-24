@@ -86,7 +86,6 @@ void comp_main_inner(uint3 gl_GlobalInvocationID) {
         cVel = (cVel + vel);
         cVelCount = asint((asuint(cVelCount) + asuint(int(1))));
       }
-      continue;
     }
   }
   if ((cMassCount > int(0))) {

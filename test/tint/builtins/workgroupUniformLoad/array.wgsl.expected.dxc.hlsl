@@ -25,7 +25,6 @@ void main_inner(uint tint_local_index) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

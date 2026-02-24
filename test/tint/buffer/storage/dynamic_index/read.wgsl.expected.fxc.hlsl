@@ -24,7 +24,6 @@ ary_ret v(uint offset) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
   float3 v_3[2] = a;

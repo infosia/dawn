@@ -27,7 +27,6 @@ void v(uint offset, uint3 obj[4]) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
 }
@@ -54,7 +53,6 @@ ary_ret v_5(uint offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   uint3 v_8[4] = a;
@@ -84,7 +82,6 @@ ary_ret_1 v_14(uint start_byte_offset) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
   uint3 v_17[4] = a;
@@ -116,7 +113,6 @@ void foo_inner(uint tint_local_index) {
       {
         v_23 = (v_24 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

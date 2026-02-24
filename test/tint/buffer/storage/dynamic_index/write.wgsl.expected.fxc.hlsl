@@ -17,7 +17,6 @@ void v(uint offset, float3 obj[2]) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
 }

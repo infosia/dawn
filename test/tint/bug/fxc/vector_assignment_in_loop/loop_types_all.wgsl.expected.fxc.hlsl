@@ -76,7 +76,6 @@ void main() {
       bool4 v_46 = bool4((true).xxxx);
       uint4 v_47 = uint4((uint(v_44)).xxxx);
       v4b = (((v_47 == uint4(0u, 1u, 2u, 3u))) ? (v_46) : (v_45));
-      continue;
     }
   }
 }

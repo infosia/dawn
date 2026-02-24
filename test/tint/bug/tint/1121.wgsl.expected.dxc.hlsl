@@ -118,7 +118,6 @@ void main_inner(uint3 GlobalInvocationID) {
               {
                 i = (i + 1u);
               }
-              continue;
             }
           }
           if ((dp >= 0.0f)) {
@@ -149,13 +148,11 @@ void main_inner(uint3 GlobalInvocationID) {
           {
             x = asint((asuint(x) + asuint(int(1))));
           }
-          continue;
         }
       }
       {
         y = asint((asuint(y) + asuint(int(1))));
       }
-      continue;
     }
   }
 }

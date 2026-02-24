@@ -69,7 +69,6 @@ void main() {
         int v_16 = asint((asuint(asint(buffer.Load((((0u + (v_13 * 64u)) + v_14) + (min(uint(v_15), 3u) * 4u))))) + asuint(int(1))));
         buffer.Store((((0u + (v_13 * 64u)) + v_14) + (min(uint(v_15), 3u) * 4u)), asuint(v_16));
       }
-      continue;
     }
   }
 }

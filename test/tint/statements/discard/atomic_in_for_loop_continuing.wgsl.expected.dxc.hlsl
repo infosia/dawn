@@ -41,7 +41,6 @@ int foo_inner(float v, float2 coord) {
         a.InterlockedAdd(int(0u), int(1), v_1);
         i = v_1;
       }
-      continue;
     }
   }
   return result;

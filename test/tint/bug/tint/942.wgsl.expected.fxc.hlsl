@@ -32,7 +32,6 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
       {
         v = (v_1 + 64u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -56,10 +55,8 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
           uint v_5 = ((4u * LocalInvocationID.x) + c);
           float2 v_6 = (float2(loadIndex) + (0.25f).xx);
           tile[v_4][v_5] = inputTex.SampleLevel(samp, (v_6 / float2(dims)), 0.0f).xyz;
-          continue;
         }
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -112,16 +109,13 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
                   tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
                   f = (f + 1u);
                 }
-                continue;
               }
             }
             uint2 v_13 = writeIndex;
             outputTex[v_13] = float4(acc, 1.0f);
           }
-          continue;
         }
       }
-      continue;
     }
   }
 }

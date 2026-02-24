@@ -27,7 +27,6 @@ int f() {
             tint_loop_idx_1.y = (tint_loop_idx_1.y - tint_carry_1);
             j = asint((asuint(j) + asuint(int(1))));
           }
-          continue;
         }
       }
       /* unreachable */

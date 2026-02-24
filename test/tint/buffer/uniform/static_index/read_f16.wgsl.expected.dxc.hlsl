@@ -50,7 +50,6 @@ ary_ret v_8(uint start_byte_offset) {
       {
         v_9 = (v_10 + 1u);
       }
-      continue;
     }
   }
   Inner v_12[4] = a;
@@ -79,7 +78,6 @@ ary_ret_1 v_17(uint start_byte_offset) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
   matrix<float16_t, 4, 2> v_20[2] = a;
@@ -101,7 +99,6 @@ ary_ret_2 v_21(uint start_byte_offset) {
       {
         v_22 = (v_23 + 1u);
       }
-      continue;
     }
   }
   float3 v_24[2] = a;

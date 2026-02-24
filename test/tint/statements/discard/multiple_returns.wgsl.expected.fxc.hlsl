@@ -37,7 +37,6 @@ void main() {
           i = asint((asuint(i) + asuint(int(1))));
           if ((i == int(5))) { break; }
         }
-        continue;
       }
     }
     if (!(continue_execution)) {

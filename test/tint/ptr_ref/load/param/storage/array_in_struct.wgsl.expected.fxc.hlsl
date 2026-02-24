@@ -15,7 +15,6 @@ ary_ret v(uint offset) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
   int v_3[4] = a;

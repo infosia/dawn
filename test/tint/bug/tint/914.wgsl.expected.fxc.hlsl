@@ -78,7 +78,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       {
         v_6 = (v_7 + 256u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -95,7 +94,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
     for( ; (index < 16u); index = (index + 1u)) {
       uint v_8 = index;
       acc[v_8] = 0.0f;
-      continue;
     }
   }
   uint ColPerThreadA = 4u;
@@ -114,10 +112,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               uint inputRow = (tileRow + innerRow);
               uint inputCol = (tileColA + innerCol);
               mm_Asub[inputRow][min(inputCol, 63u)] = mm_readA((globalRow + innerRow), ((t * 64u) + inputCol));
-              continue;
             }
           }
-          continue;
         }
       }
       {
@@ -130,10 +126,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               uint inputCol = (tileCol + innerCol);
               uint v_9 = innerCol;
               mm_Bsub[v_9][inputCol] = mm_readB(((t * 64u) + inputRow), (globalCol + innerCol));
-              continue;
             }
           }
-          continue;
         }
       }
       GroupMemoryBarrierWithGroupSync();
@@ -147,7 +141,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               uint v_11 = k;
               uint v_12 = (tileCol + inner);
               BCached[v_10] = mm_Bsub[v_11][v_12];
-              continue;
             }
           }
           {
@@ -164,17 +157,13 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
                   float v_16 = ACached;
                   uint v_17 = innerCol;
                   acc[index] = (v_15 + (v_16 * BCached[v_17]));
-                  continue;
                 }
               }
-              continue;
             }
           }
-          continue;
         }
       }
       GroupMemoryBarrierWithGroupSync();
-      continue;
     }
   }
   {
@@ -185,10 +174,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
         for( ; (innerCol < 4u); innerCol = (innerCol + 1u)) {
           uint index = ((innerRow * 4u) + innerCol);
           mm_write((globalRow + innerRow), (globalCol + innerCol), acc[index]);
-          continue;
         }
       }
-      continue;
     }
   }
 }

@@ -32,7 +32,6 @@ void main() {
         }
         if ((i > int(10))) { break; }
       }
-      continue;
     }
   }
   buffer.Store(0u, asuint(i));

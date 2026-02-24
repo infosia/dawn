@@ -161,7 +161,6 @@ void main_1() {
               float x_218 = f;
               f = (x_218 + 1.0f);
             }
-            continue;
           }
         }
       }
@@ -218,7 +217,6 @@ void main_1() {
         int x_304 = i;
         i = asint((asuint(x_304) + asuint(int(1))));
       }
-      continue;
     }
   }
   float3 x_310 = asfloat(x_20[7u].xyz);
