@@ -446,18 +446,18 @@ class Printer {
                                      {Type(ty), id});
                 },
                 [&](const core::type::I32*) {
-                    module_.PushType(spv::Op::OpConstant, {Type(ty), id, constant->ValueAs<u32>()});
+                    module_.PushType(spv::Op::OpConstant,
+                                     {Type(ty), id, U32Operand(constant->ValueAs<i32>())});
                 },
                 [&](const core::type::U32*) {
-                    module_.PushType(spv::Op::OpConstant,
-                                     {Type(ty), id, U32Operand(constant->ValueAs<i32>())});
-                },
-                [&](const core::type::I8*) {
                     module_.PushType(spv::Op::OpConstant, {Type(ty), id, constant->ValueAs<u32>()});
                 },
-                [&](const core::type::U8*) {
+                [&](const core::type::I8*) {
                     module_.PushType(spv::Op::OpConstant,
                                      {Type(ty), id, U32Operand(constant->ValueAs<i32>())});
+                },
+                [&](const core::type::U8*) {
+                    module_.PushType(spv::Op::OpConstant, {Type(ty), id, constant->ValueAs<u32>()});
                 },
                 [&](const core::type::F32*) {
                     module_.PushType(spv::Op::OpConstant, {Type(ty), id, constant->ValueAs<f32>()});
