@@ -44,10 +44,10 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
   uint2 baseIndex = (v_3 - uint2(filterOffset, 0u));
   {
     uint r = 0u;
-    while((r < 4u)) {
+    for( ; (r < 4u); r = (r + 1u)) {
       {
         uint c = 0u;
-        while((c < 4u)) {
+        for( ; (c < 4u); c = (c + 1u)) {
           uint2 loadIndex = (baseIndex + uint2(c, r));
           if ((flip[0u].x != 0u)) {
             loadIndex = loadIndex.yx;
@@ -56,14 +56,8 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
           uint v_5 = ((4u * LocalInvocationID.x) + c);
           float2 v_6 = (float2(loadIndex) + (0.25f).xx);
           tile[v_4][v_5] = inputTex.SampleLevel(samp, (v_6 / float2(dims)), 0.0f).xyz;
-          {
-            c = (c + 1u);
-          }
           continue;
         }
-      }
-      {
-        r = (r + 1u);
       }
       continue;
     }
@@ -71,10 +65,10 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
   GroupMemoryBarrierWithGroupSync();
   {
     uint r = 0u;
-    while((r < 4u)) {
+    for( ; (r < 4u); r = (r + 1u)) {
       {
         uint c = 0u;
-        while((c < 4u)) {
+        for( ; (c < 4u); c = (c + 1u)) {
           uint2 writeIndex = (baseIndex + uint2(c, r));
           if ((flip[0u].x != 0u)) {
             writeIndex = writeIndex.yx;
@@ -124,14 +118,8 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
             uint2 v_13 = writeIndex;
             outputTex[v_13] = float4(acc, 1.0f);
           }
-          {
-            c = (c + 1u);
-          }
           continue;
         }
-      }
-      {
-        r = (r + 1u);
       }
       continue;
     }

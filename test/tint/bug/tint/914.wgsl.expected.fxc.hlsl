@@ -92,12 +92,9 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
   float BCached[4] = (float[4])0;
   {
     uint index = 0u;
-    while((index < 16u)) {
+    for( ; (index < 16u); index = (index + 1u)) {
       uint v_8 = index;
       acc[v_8] = 0.0f;
-      {
-        index = (index + 1u);
-      }
       continue;
     }
   }
@@ -107,46 +104,34 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
   uint tileRowB = (local_id.y * RowPerThreadB);
   {
     uint t = 0u;
-    while((t < numTiles)) {
+    for( ; (t < numTiles); t = (t + 1u)) {
       {
         uint innerRow = 0u;
-        while((innerRow < 4u)) {
+        for( ; (innerRow < 4u); innerRow = (innerRow + 1u)) {
           {
             uint innerCol = 0u;
-            while((innerCol < ColPerThreadA)) {
+            for( ; (innerCol < ColPerThreadA); innerCol = (innerCol + 1u)) {
               uint inputRow = (tileRow + innerRow);
               uint inputCol = (tileColA + innerCol);
               mm_Asub[inputRow][min(inputCol, 63u)] = mm_readA((globalRow + innerRow), ((t * 64u) + inputCol));
-              {
-                innerCol = (innerCol + 1u);
-              }
               continue;
             }
-          }
-          {
-            innerRow = (innerRow + 1u);
           }
           continue;
         }
       }
       {
         uint innerRow = 0u;
-        while((innerRow < RowPerThreadB)) {
+        for( ; (innerRow < RowPerThreadB); innerRow = (innerRow + 1u)) {
           {
             uint innerCol = 0u;
-            while((innerCol < 4u)) {
+            for( ; (innerCol < 4u); innerCol = (innerCol + 1u)) {
               uint inputRow = (tileRowB + innerRow);
               uint inputCol = (tileCol + innerCol);
               uint v_9 = innerCol;
               mm_Bsub[v_9][inputCol] = mm_readB(((t * 64u) + inputRow), (globalCol + innerCol));
-              {
-                innerCol = (innerCol + 1u);
-              }
               continue;
             }
-          }
-          {
-            innerRow = (innerRow + 1u);
           }
           continue;
         }
@@ -154,75 +139,54 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       GroupMemoryBarrierWithGroupSync();
       {
         uint k = 0u;
-        while((k < 64u)) {
+        for( ; (k < 64u); k = (k + 1u)) {
           {
             uint inner = 0u;
-            while((inner < 4u)) {
+            for( ; (inner < 4u); inner = (inner + 1u)) {
               uint v_10 = inner;
               uint v_11 = k;
               uint v_12 = (tileCol + inner);
               BCached[v_10] = mm_Bsub[v_11][v_12];
-              {
-                inner = (inner + 1u);
-              }
               continue;
             }
           }
           {
             uint innerRow = 0u;
-            while((innerRow < 4u)) {
+            for( ; (innerRow < 4u); innerRow = (innerRow + 1u)) {
               uint v_13 = (tileRow + innerRow);
               uint v_14 = k;
               ACached = mm_Asub[v_13][v_14];
               {
                 uint innerCol = 0u;
-                while((innerCol < 4u)) {
+                for( ; (innerCol < 4u); innerCol = (innerCol + 1u)) {
                   uint index = ((innerRow * 4u) + innerCol);
                   float v_15 = acc[index];
                   float v_16 = ACached;
                   uint v_17 = innerCol;
                   acc[index] = (v_15 + (v_16 * BCached[v_17]));
-                  {
-                    innerCol = (innerCol + 1u);
-                  }
                   continue;
                 }
               }
-              {
-                innerRow = (innerRow + 1u);
-              }
               continue;
             }
-          }
-          {
-            k = (k + 1u);
           }
           continue;
         }
       }
       GroupMemoryBarrierWithGroupSync();
-      {
-        t = (t + 1u);
-      }
       continue;
     }
   }
   {
     uint innerRow = 0u;
-    while((innerRow < 4u)) {
+    for( ; (innerRow < 4u); innerRow = (innerRow + 1u)) {
       {
         uint innerCol = 0u;
-        while((innerCol < 4u)) {
+        for( ; (innerCol < 4u); innerCol = (innerCol + 1u)) {
           uint index = ((innerRow * 4u) + innerCol);
           mm_write((globalRow + innerRow), (globalCol + innerCol), acc[index]);
-          {
-            innerCol = (innerCol + 1u);
-          }
           continue;
         }
-      }
-      {
-        innerRow = (innerRow + 1u);
       }
       continue;
     }

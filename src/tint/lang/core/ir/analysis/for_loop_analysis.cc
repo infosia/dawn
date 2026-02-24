@@ -41,6 +41,8 @@
 #include "src/tint/lang/core/ir/load_vector_element.h"
 #include "src/tint/lang/core/ir/loop.h"
 #include "src/tint/lang/core/ir/multi_in_block.h"
+#include "src/tint/lang/core/ir/next_iteration.h"
+#include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/unary.h"
 #include "src/tint/lang/core/ir/value.h"
@@ -72,6 +74,34 @@ std::optional<Hashset<const core::ir::Instruction*, 32>> SinkChain(
     }
     return sink_chain;
 }
+
+const core::ir::Store* GetContinuingSimpleLoopUpdate(const Loop* loop) {
+    // Check whether the continuing block can be embedded in a for-loop update statement.
+    // We can do this if the following conditions hold:
+    //  - the last instruction of the continuing block is a next_iteration with no operands
+    //  - the preceding instruction is a store
+    //  - all other instructions in the block sink into that store
+
+    if (!loop->Continuing()) {
+        return nullptr;
+    }
+    auto* next_iteration = loop->Continuing()->Back()->As<const core::ir::NextIteration>();
+    if (!next_iteration || !next_iteration->Operands().IsEmpty()) {
+        return nullptr;
+    }
+
+    auto* store = As<core::ir::Store>(next_iteration->prev);
+    if (!store) {
+        return nullptr;
+    }
+
+    if (!SinkChain(store)) {
+        return nullptr;
+    }
+
+    return store;
+}
+
 }  // namespace
 
 void ForLoopAnalysis::AttemptForLoopDeduction(const Loop* loop) {
@@ -117,6 +147,9 @@ void ForLoopAnalysis::AttemptForLoopDeduction(const Loop* loop) {
 
     // Valid condition found. Success criteria for condition hoisting.
     for_condition = if_to_remove->Condition();
+
+    // Now check whether the continuing block can be embedded in a for-loop update statement.
+    continuing_update_store = GetContinuingSimpleLoopUpdate(loop);
 }
 
 ForLoopAnalysis::ForLoopAnalysis(const Loop& loop) {

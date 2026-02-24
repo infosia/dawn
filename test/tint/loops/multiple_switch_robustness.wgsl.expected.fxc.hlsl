@@ -4,7 +4,7 @@ void main() {
   int i = int(0);
   {
     int i_1 = int(0);
-    while((i_1 < int(2))) {
+    for( ; (i_1 < int(2)); i_1 = asint((asuint(i_1) + asuint(int(1))))) {
       bool tint_continue = false;
       switch(i_1) {
         case int(0):
@@ -18,9 +18,6 @@ void main() {
         }
       }
       if (tint_continue) {
-        {
-          i_1 = asint((asuint(i_1) + asuint(int(1))));
-        }
         continue;
       }
       bool tint_continue_1 = false;
@@ -36,13 +33,7 @@ void main() {
         }
       }
       if (tint_continue_1) {
-        {
-          i_1 = asint((asuint(i_1) + asuint(int(1))));
-        }
         continue;
-      }
-      {
-        i_1 = asint((asuint(i_1) + asuint(int(1))));
       }
       continue;
     }

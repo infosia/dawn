@@ -11,7 +11,7 @@ void main() {
   bool2 v2b_2 = (false).xx;
   {
     int i = int(0);
-    while((i < int(2))) {
+    for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       int v = i;
       float2 v_1 = v2f;
       float2 v_2 = float2((1.0f).xx);
@@ -52,9 +52,6 @@ void main() {
       bool2 v_30 = bool2((true).xx);
       uint2 v_31 = uint2((uint(v_28)).xx);
       v2b_2 = (((v_31 == uint2(0u, 1u))) ? (v_30) : (v_29));
-      {
-        i = asint((asuint(i) + asuint(int(1))));
-      }
       continue;
     }
   }
