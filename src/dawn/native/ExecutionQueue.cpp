@@ -48,7 +48,7 @@ void PopWaitingTasksInto(ExecutionSerial serial,
 }  // namespace
 
 ExecutionQueueBase::~ExecutionQueueBase() {
-    DAWN_ASSERT(mWaitingTasks.Empty());
+    DAWN_ASSERT(mState->mWaitingTasks.Empty());
 }
 
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
@@ -121,21 +121,18 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
 MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     // Currently waiting for idle for destruction requires the device lock to be held.
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
-    {
-        std::lock_guard<std::mutex> lock(mMutex);
-        DAWN_ASSERT(!mWaitingForIdle);
-        mWaitingForIdle = true;
-    }
+    mState.Use<NotifyType::None>([](auto state) {
+        DAWN_ASSERT(!state->mWaitingForIdle);
+        state->mWaitingForIdle = true;
+    });
+
     IgnoreErrors(WaitForIdleForDestructionImpl());
 
     // Prepare to call any remaining outstanding callbacks now.
     std::vector<Task> tasks;
-    {
-        std::unique_lock<std::mutex> lock(mMutex);
-
-        if (mCallingCallbacks) {
-            mCv.wait(lock, [&] { return !mCallingCallbacks; });
-        }
+    mState.Use<NotifyType::None>([&](auto state) {
+        // Wait until we can exclusively call callbacks.
+        state.Wait([](auto& x) { return !x.mCallingCallbacks; });
 
         // We finish tasks all the way up to the pending command serial because otherwise, pending
         // tasks that may be for cleanup won't every be completed. Also, for |buffer.MapAsync|, a
@@ -145,20 +142,22 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
         // pending command is ever submitted, the map async task will be left dangling if we only
         // clear up to the completed serial.
         auto serial = GetPendingCommandSerial();
-        PopWaitingTasksInto(serial, mWaitingTasks, tasks);
+        PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
 
         if (tasks.size() > 0) {
-            mCallingCallbacks = true;
+            state->mCallingCallbacks = true;
         }
-    }
+    });
+
+    // Call the callbacks without holding the lock on the ExecutionQueue to avoid lock-inversion
+    // issues when dealing with potential re-entrant callbacks.
     for (auto task : tasks) {
         task();
     }
+
     if (tasks.size() > 0) {
-        std::lock_guard<std::mutex> lock(mMutex);
-        mCallingCallbacks = false;
+        mState->mCallingCallbacks = false;
     }
-    mCv.notify_all();
     return {};
 }
 
@@ -188,14 +187,16 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
 // destruction. As a result, callers should ensure that the calling thread releases any locks that
 // will be taken by the task prior to calling TrackSerialTask.
 void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
-    {
-        std::lock_guard<std::mutex> lock(mMutex);
-        if (!mAssumeCompleted && serial > GetCompletedCommandSerial()) {
-            mWaitingTasks.Enqueue(std::move(task), serial);
-            return;
+    bool tracked = mState.Use<NotifyType::None>([&](auto state) {
+        if (!state->mAssumeCompleted && serial > GetCompletedCommandSerial()) {
+            state->mWaitingTasks.Enqueue(std::move(task), serial);
+            return true;
         }
+        return false;
+    });
+    if (!tracked) {
+        task();
     }
-    task();
 }
 
 void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
@@ -205,14 +206,12 @@ void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial
 void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial completedSerial,
                                                          bool forceTasks) {
     std::vector<Task> tasks;
-    {
-        std::unique_lock<std::mutex> lock(mMutex);
-
+    mState.Use<NotifyType::None>([&](auto state) {
         // We update the completed serial as soon as possible before waiting for callback rights so
         // that we almost always process as many callbacks as possible.
         FetchMax(mCompletedSerial, uint64_t(completedSerial));
 
-        if (mWaitingForIdle && !forceTasks) {
+        if (state->mWaitingForIdle && !forceTasks) {
             // If we are waiting for idle, then the callbacks will be fired there. It is currently
             // necessary to avoid calling the callbacks in this function and doing it in the
             // |WaitForIdleForDestruction| call because |WaitForIdleForDestruction| is called while
@@ -224,27 +223,25 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial complet
             return;
         }
 
-        if (mCallingCallbacks) {
-            mCv.wait(lock, [&] { return !mCallingCallbacks; });
-        }
+        // Wait until we can exclusively call callbacks.
+        state.Wait([](auto& x) { return !x.mCallingCallbacks; });
 
         auto serial = GetCompletedCommandSerial();
-        PopWaitingTasksInto(serial, mWaitingTasks, tasks);
+        PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
         if (tasks.size() > 0) {
-            mCallingCallbacks = true;
+            state->mCallingCallbacks = true;
         }
-    }
+    });
 
     // Call the callbacks without holding the lock on the ExecutionQueue to avoid lock-inversion
     // issues when dealing with potential re-entrant callbacks.
     for (auto task : tasks) {
         task();
     }
+
     if (tasks.size() > 0) {
-        std::lock_guard<std::mutex> lock(mMutex);
-        mCallingCallbacks = false;
+        mState->mCallingCallbacks = false;
     }
-    mCv.notify_all();
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
@@ -262,11 +259,8 @@ MaybeError ExecutionQueueBase::SubmitPendingCommands() {
 }
 
 void ExecutionQueueBase::AssumeCommandsComplete() {
-    {
-        std::unique_lock<std::mutex> lock(mMutex);
-        // Any tasks that get scheduled after this call are executed immediately.
-        mAssumeCompleted = true;
-    }
+    mState.Use<NotifyType::None>([](auto state) { state->mAssumeCompleted = true; });
+
     // Bump serials so any pending callbacks can be fired.
     // TODO(crbug.com/dawn/831): This is called during device destroy, which is not
     // thread-safe yet. Two threads calling destroy would race setting these serials.
