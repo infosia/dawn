@@ -45,6 +45,29 @@
       },
       "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e3dbbe_389cacce",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-24T18:01:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this condition will work for FBF. All Tint/Dawn knows about the shader at this point is it has a @color(N) attribute. Take [this shader](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/FramebufferFetchTests.cpp;l\u003d341-344;drc\u003d3252383e3842a722e39f404882a1ae10f5fdbace) it doesn\u0027t have @builtin(sample_index) and it doesn\u0027t use @interpolate(perspective, sample). One of those is necessary for UseSampleRateShading() to be true IIUC. As a result needsMultisampledFramebufferFetch will be false for that shader when it needs to be true.",
+      "range": {
+        "startLine": 372,
+        "startChar": 45,
+        "endLine": 372,
+        "endChar": 66
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
