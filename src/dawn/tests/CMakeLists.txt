@@ -160,6 +160,12 @@ add_executable(dawn_end2end_tests
     "End2EndTestsMain.cpp"
 )
 common_compile_options(dawn_end2end_tests)
+
+set(conditional_private_platform_depends)
+if (DAWN_ENABLE_D3D11 OR DAWN_ENABLE_D3D12)
+  list(APPEND conditional_private_platform_depends dxgi.lib)
+endif()
+
 target_link_libraries(dawn_end2end_tests PRIVATE
   absl_strings
   dawn_common
@@ -175,4 +181,6 @@ target_link_libraries(dawn_end2end_tests PRIVATE
   dawn_wgpu_utils
   dawncpp
   gmock
+
+  ${conditional_private_platform_depends}
 )
