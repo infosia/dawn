@@ -129,10 +129,15 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     IgnoreErrors(WaitForIdleForDestructionImpl());
 
     // Prepare to call any remaining outstanding callbacks now.
+    std::vector<Ref<SerialProcessor>>* processors = nullptr;
     std::vector<Task> tasks;
+    ExecutionSerial serial;
+
     mState.Use<NotifyType::None>([&](auto state) {
         // Wait until we can exclusively call callbacks.
         state.Wait([](auto& x) { return !x.mCallingCallbacks; });
+
+        processors = &state->mWaitingProcessors;
 
         // We finish tasks all the way up to the pending command serial because otherwise, pending
         // tasks that may be for cleanup won't every be completed. Also, for |buffer.MapAsync|, a
@@ -141,13 +146,19 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
         // is set to the pending command serial to reflect that. If the device is lost before that
         // pending command is ever submitted, the map async task will be left dangling if we only
         // clear up to the completed serial.
-        auto serial = GetPendingCommandSerial();
+        serial = GetPendingCommandSerial();
         PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
 
-        if (tasks.size() > 0) {
+        if (!processors->empty() || !tasks.empty()) {
             state->mCallingCallbacks = true;
         }
     });
+
+    // Always call the processors before processing individual tasks.
+    DAWN_ASSERT(processors);
+    for (auto& processor : *processors) {
+        processor->UpdateCompletedSerialTo(serial);
+    }
 
     // Call the callbacks without holding the lock on the ExecutionQueue to avoid lock-inversion
     // issues when dealing with potential re-entrant callbacks.
@@ -155,7 +166,7 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
         task();
     }
 
-    if (tasks.size() > 0) {
+    if (!processors->empty() || !tasks.empty()) {
         mState->mCallingCallbacks = false;
     }
     return {};
@@ -183,6 +194,13 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     return {};
 }
 
+void ExecutionQueueBase::RegisterSerialProcessor(Ref<SerialProcessor>&& serialProcessor) {
+    // Serial processor registration should always happen at queue initialization.
+    DAWN_ASSERT(mCompletedSerial == static_cast<uint64_t>(kBeginningOfGPUTime));
+    mState.Use<NotifyType::None>(
+        [&](auto state) { state->mWaitingProcessors.push_back(std::move(serialProcessor)); });
+}
+
 // Tasks may execute synchronously if the given serial has already passed or during device
 // destruction. As a result, callers should ensure that the calling thread releases any locks that
 // will be taken by the task prior to calling TrackSerialTask.
@@ -205,7 +223,10 @@ void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial
 
 void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial completedSerial,
                                                          bool forceTasks) {
+    std::vector<Ref<SerialProcessor>>* processors = nullptr;
     std::vector<Task> tasks;
+    ExecutionSerial serial = completedSerial;
+
     mState.Use<NotifyType::None>([&](auto state) {
         // We update the completed serial as soon as possible before waiting for callback rights so
         // that we almost always process as many callbacks as possible.
@@ -226,12 +247,21 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial complet
         // Wait until we can exclusively call callbacks.
         state.Wait([](auto& x) { return !x.mCallingCallbacks; });
 
-        auto serial = GetCompletedCommandSerial();
+        processors = &state->mWaitingProcessors;
+
+        serial = GetCompletedCommandSerial();
         PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
-        if (tasks.size() > 0) {
+        if (!processors->empty() || !tasks.empty()) {
             state->mCallingCallbacks = true;
         }
     });
+
+    // Always call the processors before processing individual tasks.
+    if (processors) {
+        for (auto& processor : *processors) {
+            processor->UpdateCompletedSerialTo(serial);
+        }
+    }
 
     // Call the callbacks without holding the lock on the ExecutionQueue to avoid lock-inversion
     // issues when dealing with potential re-entrant callbacks.
@@ -239,7 +269,7 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial complet
         task();
     }
 
-    if (tasks.size() > 0) {
+    if ((processors && !processors->empty()) || !tasks.empty()) {
         mState->mCallingCallbacks = false;
     }
 }
@@ -269,6 +299,22 @@ void ExecutionQueueBase::AssumeCommandsComplete() {
     // Force any waiting tasks to execute. This will ensure that any tasks that were scheduled
     // after WaitForIdleForDestruction being called are completed.
     UpdateCompletedSerialToInternal(completed, true);
+
+    // Update all the processors to let them know that they should assume commands are complete,
+    // then release our reference to them.
+    std::vector<Ref<SerialProcessor>> processors;
+    mState.Use<NotifyType::None>([&](auto state) {
+        // Since we don't hold the lock while accessing the list of processes and instead rely on
+        // |mCallingCallbacks|, we need to wait until we are no longer calling callbacks before
+        // resetting the vector.
+        state.Wait([](auto& x) { return !x.mCallingCallbacks; });
+
+        processors = std::move(state->mWaitingProcessors);
+        state->mWaitingProcessors.clear();
+    });
+    for (auto& processor : processors) {
+        processor->AssumeCommandsComplete();
+    }
 }
 
 void ExecutionQueueBase::IncrementLastSubmittedCommandSerial() {

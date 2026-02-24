@@ -32,8 +32,10 @@
 #include <condition_variable>
 #include <functional>
 #include <mutex>
+#include <vector>
 
 #include "dawn/common/MutexProtected.h"
+#include "dawn/common/RefCounted.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/Time.h"
 #include "dawn/native/Error.h"
@@ -50,6 +52,23 @@ namespace dawn::native {
 class ExecutionQueueBase : public ApiObjectBase {
   public:
     using Task = std::function<void()>;
+
+    // Implementations of this class are registered to the queue such that when the serial tracked
+    // by the queue increases, the processor is notified and updated as well. Prefer registering a
+    // SerialProcessor over tracking a SerialTask when the task would need to keep track of extended
+    // state, happen frequently, or acquire the same lock multiple times if split into separate
+    // tasks. Implementations must also be thread-safe.
+    class SerialProcessor : public RefCounted {
+      public:
+        // This is the entry point that's fired whenever the queue's internal completed serial is
+        // updated.
+        virtual void UpdateCompletedSerialTo(ExecutionSerial completedSerial) = 0;
+
+        // Implementations need to implement this shut down function to set some internal state such
+        // that any further tracking on the processor is processed immediately since the
+        // |UpdateCompletedSerialTo| entry point will no longer be called after this point.
+        virtual void AssumeCommandsComplete() = 0;
+    };
 
     // The latest serial known to have completed execution on the queue.
     ExecutionSerial GetCompletedCommandSerial() const;
@@ -95,6 +114,10 @@ class ExecutionQueueBase : public ApiObjectBase {
 
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass.
     MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
+
+    // Registers a SerialProcessor that will be notified of serial updates. Note that serial
+    // processors are always notified before handling serial tasks.
+    void RegisterSerialProcessor(Ref<SerialProcessor>&& serialProcessor);
 
     // Tracks new tasks to complete when |serial| is reached.
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
@@ -156,6 +179,7 @@ class ExecutionQueueBase : public ApiObjectBase {
         bool mCallingCallbacks = false;
         bool mWaitingForIdle = false;
         bool mAssumeCompleted = false;
+        std::vector<Ref<SerialProcessor>> mWaitingProcessors;
         SerialMap<ExecutionSerial, Task> mWaitingTasks;
     };
     MutexCondVarProtected<State> mState;
