@@ -16,6 +16,24 @@
       "message": "Same as the other CL, would prefer using an for loop index instead of the placeholder entry here.",
       "revId": "73f7bf99651e772f1c19ca0aedd385302f3ebfb0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "745ada87_9dbbcf7b",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-24T20:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a20c9c_c0aaadc4",
+      "revId": "73f7bf99651e772f1c19ca0aedd385302f3ebfb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
