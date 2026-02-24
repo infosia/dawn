@@ -37,7 +37,6 @@ ary_ret v_6(uint start_byte_offset) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
   matrix<float16_t, 4, 2> v_9[4] = a;
@@ -57,7 +56,6 @@ void f_inner(uint tint_local_index) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();

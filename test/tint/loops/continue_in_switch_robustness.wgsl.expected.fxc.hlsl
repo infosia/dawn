@@ -19,7 +19,6 @@ void f() {
       if (tint_continue) {
         continue;
       }
-      continue;
     }
   }
 }

@@ -28,7 +28,6 @@ void v_5(uint offset, float2x2 obj[4]) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
 }
@@ -48,7 +47,6 @@ ary_ret v_8(uint start_byte_offset) {
       {
         v_9 = (v_10 + 1u);
       }
-      continue;
     }
   }
   float2x2 v_11[4] = a;

@@ -28,7 +28,6 @@ ary_ret v_1(uint start_byte_offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   float3x4 v_4[4] = a_1;

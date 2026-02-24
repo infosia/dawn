@@ -23,7 +23,6 @@ void main_inner(uint3 lid, uint tint_local_index) {
   {
     int S = init;
     for( ; (S < asint(U[3u].x)); S = asint((asuint(S) + asuint(int(8))))) {
-      continue;
     }
   }
   {
@@ -34,7 +33,6 @@ void main_inner(uint3 lid, uint tint_local_index) {
       uint4 result = outputs[lid.z][lid.x];
       uint2 v = uint2((uint(asint(U[3u].x))).xx);
       dst_image2d[v] = result;
-      continue;
     }
   }
 }

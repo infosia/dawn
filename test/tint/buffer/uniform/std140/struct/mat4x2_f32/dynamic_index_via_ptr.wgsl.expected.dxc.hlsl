@@ -48,7 +48,6 @@ ary_ret v_10(uint start_byte_offset) {
       {
         v_11 = (v_12 + 1u);
       }
-      continue;
     }
   }
   Inner v_14[4] = a_2;
@@ -77,7 +76,6 @@ ary_ret_1 v_18(uint start_byte_offset) {
       {
         v_19 = (v_20 + 1u);
       }
-      continue;
     }
   }
   Outer v_22[4] = a_1;

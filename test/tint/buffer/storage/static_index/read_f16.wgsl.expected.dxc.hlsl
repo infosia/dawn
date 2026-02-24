@@ -36,7 +36,6 @@ ary_ret v_2(uint offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   Inner v_6[4] = a;
@@ -62,7 +61,6 @@ ary_ret_1 v_8(uint offset) {
       {
         v_9 = (v_10 + 1u);
       }
-      continue;
     }
   }
   matrix<float16_t, 4, 2> v_11[2] = a;
@@ -84,7 +82,6 @@ ary_ret_2 v_12(uint offset) {
       {
         v_13 = (v_14 + 1u);
       }
-      continue;
     }
   }
   float3 v_15[2] = a;

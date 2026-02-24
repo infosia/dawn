@@ -35,7 +35,6 @@ void main() {
         InnerS v_2 = v;
         s1.a1[v_1] = v_2;
       }
-      continue;
     }
   }
 }

@@ -13,7 +13,6 @@ void v(uint offset, int obj[4]) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
 }

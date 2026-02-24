@@ -32,7 +32,6 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
       {
         v = (v_1 + 64u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -67,13 +66,11 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
           {
             c = (c + 1u);
           }
-          continue;
         }
       }
       {
         r = (r + 1u);
       }
-      continue;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -134,7 +131,6 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
                   tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
                   f = (f + 1u);
                 }
-                continue;
               }
             }
             uint2 v_13 = writeIndex;
@@ -143,13 +139,11 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
           {
             c = (c + 1u);
           }
-          continue;
         }
       }
       {
         r = (r + 1u);
       }
-      continue;
     }
   }
 }

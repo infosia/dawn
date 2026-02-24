@@ -38,7 +38,6 @@ void main() {
         b.Store((4u + v_1), (b.Load((4u + v_1)) * 2u));
         i = (i + 1u);
       }
-      continue;
     }
   }
 }

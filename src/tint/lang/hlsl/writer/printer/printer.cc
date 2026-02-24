@@ -333,7 +333,7 @@ class Printer : public tint::TextGenerator {
 
                 [&](const core::ir::BreakIf* i) { EmitBreakIf(i); },                        //
                 [&](const core::ir::Call* i) { EmitCallStmt(i); },                          //
-                [&](const core::ir::Continue*) { EmitContinue(); },                         //
+                [&](const core::ir::Continue* c) { EmitContinue(c); },                      //
                 [&](const core::ir::ExitLoop*) { EmitExitLoop(); },                         //
                 [&](const core::ir::ExitSwitch*) { EmitExitSwitch(); },                     //
                 [&](const core::ir::If* i) { EmitIf(i); },                                  //
@@ -476,11 +476,13 @@ class Printer : public tint::TextGenerator {
         }
     }
 
-    void EmitContinue() {
+    void EmitContinue(const core::ir::Continue* c) {
         if (emit_continuing_) {
             emit_continuing_();
         }
-        Line() << "continue;";
+        if (c->Block() != c->Loop()->Body()) {
+            Line() << "continue;";
+        }
     }
 
     void EmitExitLoop() { Line() << "break;"; }

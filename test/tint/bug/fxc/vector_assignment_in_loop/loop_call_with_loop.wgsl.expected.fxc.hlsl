@@ -27,7 +27,6 @@ void foo() {
       bool2 v_14 = bool2((true).xx);
       uint2 v_15 = uint2((uint(v_12)).xx);
       v2b = (((v_15 == uint2(0u, 1u))) ? (v_14) : (v_13));
-      continue;
     }
   }
 }
@@ -38,7 +37,6 @@ void main() {
     int i = int(0);
     for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       foo();
-      continue;
     }
   }
 }

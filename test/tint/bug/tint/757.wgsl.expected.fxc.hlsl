@@ -15,7 +15,6 @@ void main_inner(uint3 GlobalInvocationID) {
       uint v = 0u;
       result.GetDimensions(v);
       result.Store((0u + (min((flatIndex + i), ((v / 4u) - 1u)) * 4u)), asuint(texel.x));
-      continue;
     }
   }
 }

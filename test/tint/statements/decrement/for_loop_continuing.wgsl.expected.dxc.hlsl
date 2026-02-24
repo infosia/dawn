@@ -19,7 +19,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         i.Store(0u, (i.Load(0u) - 1u));
       }
-      continue;
     }
   }
 }

@@ -46,7 +46,6 @@ int foo_inner(float v, float2 coord) {
         }
         i = v_1;
       }
-      continue;
     }
   }
   return result;

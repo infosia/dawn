@@ -33,7 +33,6 @@ void main() {
     int i = int(0);
     for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       foo();
-      continue;
     }
   }
 }

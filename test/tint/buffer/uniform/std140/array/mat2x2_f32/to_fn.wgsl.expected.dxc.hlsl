@@ -41,7 +41,6 @@ ary_ret v_5(uint start_byte_offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   float2x2 v_8[4] = a_2;

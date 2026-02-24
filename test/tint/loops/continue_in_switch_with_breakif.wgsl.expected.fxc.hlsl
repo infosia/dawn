@@ -39,7 +39,6 @@ void f() {
         i = asint((asuint(i) + asuint(int(1))));
         if ((i >= int(4))) { break; }
       }
-      continue;
     }
   }
 }
