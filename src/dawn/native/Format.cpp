@@ -48,6 +48,7 @@ SampleTypeBit SampleTypeToSampleTypeBit(wgpu::TextureSampleType sampleType) {
     switch (sampleType) {
         case wgpu::TextureSampleType::Float:
         case wgpu::TextureSampleType::UnfilterableFloat:
+        case wgpu::TextureSampleType::UnknownFilterable:
         case wgpu::TextureSampleType::Sint:
         case wgpu::TextureSampleType::Uint:
         case wgpu::TextureSampleType::Depth:
@@ -87,6 +88,10 @@ SampleTypeBit SampleTypeToSampleTypeBit(wgpu::TextureSampleType sampleType) {
     static_assert(SampleTypeBit::Depth ==
                   static_cast<SampleTypeBit>(
                       1 << (static_cast<uint32_t>(wgpu::TextureSampleType::Depth) - 2)));
+    static_assert(SampleTypeBit::UnknownFilterable ==
+                  static_cast<SampleTypeBit>(
+                      1 << (static_cast<uint32_t>(wgpu::TextureSampleType::UnknownFilterable) -
+                            kDawnEnumPrefix - 2)));
     return static_cast<SampleTypeBit>(1 << (static_cast<uint32_t>(sampleType) - 2));
 }
 
