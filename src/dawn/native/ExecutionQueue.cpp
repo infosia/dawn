@@ -183,6 +183,13 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     return {};
 }
 
+void ExecutionQueueBase::RegisterSerialProcessor(Ref<SerialProcessor>&& serialProcessor) {
+    // Serial processor registration should always happen at queue initialization.
+    DAWN_ASSERT(mCompletedSerial == static_cast<uint64_t>(kBeginningOfGPUTime));
+    mState.Use<NotifyType::None>(
+        [&](auto state) { state->mWaitingProcessors.push_back(std::move(serialProcessor)); });
+}
+
 // Tasks may execute synchronously if the given serial has already passed or during device
 // destruction. As a result, callers should ensure that the calling thread releases any locks that
 // will be taken by the task prior to calling TrackSerialTask.
