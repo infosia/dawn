@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9c33550_607d8bed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T15:33:34Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "0b7e8cfea13cd7074f4ac059a4de9f216f545571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b59a49a_a84d3400",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-24T15:33:34Z",
+      "side": 1,
+      "message": "```suggestion\n    bool isMultisampled \u003d (GetSampleCount() \u003e 1u);\n```\n\nIt could also be an accessor on `RenderPipeline`.",
+      "revId": "0b7e8cfea13cd7074f4ac059a4de9f216f545571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
