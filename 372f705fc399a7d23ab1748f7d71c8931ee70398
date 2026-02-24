@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ed8a904_bca73570",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T18:40:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we want `mUsesFramebufferFetch` in `mUsesSampleRateShading` do we? Like FBF isn\u0027t always multisampled, so we don\u0027t want to force it every time do we?",
+      "parentUuid": "c115bd77_204d4db7",
+      "range": {
+        "startLine": 1069,
+        "startChar": 1,
+        "endLine": 1074,
+        "endChar": 84
+      },
+      "revId": "372f705fc399a7d23ab1748f7d71c8931ee70398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbc96020_124da65b",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 6
