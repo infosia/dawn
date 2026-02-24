@@ -85,7 +85,6 @@ void tint_store_and_preserve_padding_9(Inner value_param[4]) {
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
 }
@@ -107,7 +106,6 @@ void tint_store_and_preserve_padding_6(vec3 value_param[2]) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
 }

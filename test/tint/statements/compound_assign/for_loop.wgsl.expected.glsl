@@ -37,7 +37,6 @@ void main() {
         uint v_3 = min(uint(idx3()), 3u);
         a[v_3] = (a[v_3] + 1.0f);
       }
-      continue;
     }
   }
 }

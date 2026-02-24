@@ -38,7 +38,6 @@ void tint_store_and_preserve_padding(f16mat2x3 value_param[4]) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
 }
@@ -56,7 +55,6 @@ f16mat2x3[4] v_8(uint start_byte_offset) {
       {
         v_9 = (v_10 + 1u);
       }
-      continue;
     }
   }
   return a;

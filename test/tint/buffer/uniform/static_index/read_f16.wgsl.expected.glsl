@@ -46,7 +46,6 @@ Inner[4] v_7(uint start_byte_offset) {
       {
         v_8 = (v_9 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -71,7 +70,6 @@ f16mat4x2[2] v_14(uint start_byte_offset) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -90,7 +88,6 @@ vec3[2] v_17(uint start_byte_offset) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
   return a;

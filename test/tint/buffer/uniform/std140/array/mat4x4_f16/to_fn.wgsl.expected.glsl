@@ -48,7 +48,6 @@ f16mat4[4] v_11(uint start_byte_offset) {
       {
         v_12 = (v_13 + 1u);
       }
-      continue;
     }
   }
   return a_2;

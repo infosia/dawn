@@ -1299,7 +1299,6 @@ vec3[5] v_2(uint start_byte_offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -1350,7 +1349,6 @@ f16vec3[5] v_2(uint start_byte_offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -1396,7 +1394,6 @@ vec3[42] v_2(uint start_byte_offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -1569,7 +1566,6 @@ vec3[5] v_2(uint start_byte_offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -1992,7 +1988,6 @@ void tint_store_and_preserve_padding(vec3 value_param[5]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }
@@ -2287,7 +2282,6 @@ void tint_store_and_preserve_padding_4(vec3 value_param[5]) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
 }

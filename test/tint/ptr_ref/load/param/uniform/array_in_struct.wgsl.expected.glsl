@@ -18,7 +18,6 @@ ivec4[4] v_1(uint start_byte_offset) {
       {
         v_2 = (v_3 + 1u);
       }
-      continue;
     }
   }
   return a;

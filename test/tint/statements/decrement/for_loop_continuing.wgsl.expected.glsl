@@ -23,7 +23,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         v.inner = (v.inner - 1u);
       }
-      continue;
     }
   }
 }

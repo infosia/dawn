@@ -21,7 +21,6 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         imageStore(tex, ivec2(0), ivec4(0));
       }
-      continue;
     }
   }
 }

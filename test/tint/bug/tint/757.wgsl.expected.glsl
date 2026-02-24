@@ -34,7 +34,6 @@ void main_inner(uvec3 GlobalInvocationID) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
 }

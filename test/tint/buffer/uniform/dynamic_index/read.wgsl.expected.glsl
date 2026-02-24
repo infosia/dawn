@@ -25,7 +25,6 @@ vec3[2] v_2(uint start_byte_offset) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
   return a;

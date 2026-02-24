@@ -29,7 +29,6 @@ mat4x2[4] v_9(uint start_byte_offset) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -47,7 +46,6 @@ void f_inner(uint tint_local_index) {
       {
         v_12 = (v_13 + 1u);
       }
-      continue;
     }
   }
   barrier();

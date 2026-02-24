@@ -47,7 +47,6 @@ void main() {
           i = int((v_5 + uint(1)));
           if ((i == 5)) { break; }
         }
-        continue;
       }
     }
     if (!(continue_execution)) {

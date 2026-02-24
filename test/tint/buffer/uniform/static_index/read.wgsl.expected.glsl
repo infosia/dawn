@@ -37,7 +37,6 @@ Inner[4] v_6(uint start_byte_offset) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -56,7 +55,6 @@ vec3[2] v_9(uint start_byte_offset) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
   return a;

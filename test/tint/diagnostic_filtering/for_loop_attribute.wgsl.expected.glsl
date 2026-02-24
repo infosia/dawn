@@ -39,7 +39,6 @@ void main_inner(float x) {
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
       }
-      continue;
     }
   }
 }

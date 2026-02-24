@@ -31,7 +31,6 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
       {
         v_3 = (v_4 + 64u);
       }
-      continue;
     }
   }
   barrier();
@@ -68,13 +67,11 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
           {
             c = (c + 1u);
           }
-          continue;
         }
       }
       {
         r = (r + 1u);
       }
-      continue;
     }
   }
   barrier();
@@ -138,7 +135,6 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
                   tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
                   f = (f + 1u);
                 }
-                continue;
               }
             }
             uvec2 v_22 = writeIndex;
@@ -148,13 +144,11 @@ void main_inner(uvec3 WorkGroupID, uvec3 LocalInvocationID, uint tint_local_inde
           {
             c = (c + 1u);
           }
-          continue;
         }
       }
       {
         r = (r + 1u);
       }
-      continue;
     }
   }
 }

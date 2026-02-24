@@ -34,7 +34,6 @@ mat2[4] v_7(uint start_byte_offset) {
       {
         v_8 = (v_9 + 1u);
       }
-      continue;
     }
   }
   return a;

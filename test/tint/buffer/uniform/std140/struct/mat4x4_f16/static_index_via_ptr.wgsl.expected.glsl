@@ -47,7 +47,6 @@ Inner[4] v_10(uint start_byte_offset) {
       {
         v_11 = (v_12 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -69,7 +68,6 @@ Outer[4] v_14(uint start_byte_offset) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
   return a;

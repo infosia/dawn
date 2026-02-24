@@ -72,7 +72,6 @@ void tint_store_and_preserve_padding(S value_param[4]) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
 }
@@ -90,7 +89,6 @@ S[4] v_17(uint start_byte_offset) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
   return a;
