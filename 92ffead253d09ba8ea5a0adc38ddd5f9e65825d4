@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "add66a88_bc667a05",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-24T14:34:58Z",
+      "side": 1,
+      "message": "The @color(N) attribute works a lot like @builtin(sample_index) so if the sample count of the attachment is \u003e 1 and shader has @color(N) then the fragement shader has to run once for each sample_index. This is to match the existing FramebufferFetch API as defined by [FramebufferFetchTests.MultisamplingIsSampleRasterization](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/FramebufferFetchTests.cpp;l\u003d329-396;drc\u003d3252383e3842a722e39f404882a1ae10f5fdbace).",
+      "parentUuid": "9e73238d_f297c2e4",
+      "revId": "92ffead253d09ba8ea5a0adc38ddd5f9e65825d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbca82bc_9e09791d",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 4
