@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6cca7d0_bbf2c09b",
+        "filename": "webgpu-cts/failure_browser/js/ep.mjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T21:12:25Z",
+      "side": 1,
+      "message": "We can follow this grammer.\nI can update the expectations.txt to adhere to this.",
+      "range": {
+        "startLine": 333,
+        "startChar": 46,
+        "endLine": 333,
+        "endChar": 58
+      },
+      "revId": "830386b95f9e1026ba2323dd93603bb7105581f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
