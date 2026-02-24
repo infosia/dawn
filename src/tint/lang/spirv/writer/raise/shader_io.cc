@@ -73,9 +73,19 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     // IO index for fragment position emulation interpolant
     std::optional<uint32_t> center_pos_frag_idx;
 
+    std::optional<uint32_t> global_invocation_index_index;
+    std::optional<uint32_t> global_invocation_id_index;
+    std::optional<uint32_t> workgroup_index_index;
+    std::optional<uint32_t> workgroup_id_index;
+    std::optional<uint32_t> num_workgroups_index;
+
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& cfg)
-        : ShaderIOBackendState(mod, f), config(cfg) {}
+        : ShaderIOBackendState(mod, f), config(cfg) {
+        if (auto wgsize = func->WorkgroupSizeAsConst()) {
+            workgroup_size = wgsize;
+        }
+    }
 
     /// Destructor
     ~StateImpl() override {}
@@ -139,6 +149,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             StringStream name;
             name << ir.NameOf(func).Name();
 
+            bool is_polyfill = false;
             if (io.attributes.builtin) {
                 // SampleMask must be an array for Vulkan.
                 if (io.attributes.builtin == core::BuiltinValue::kSampleMask) {
@@ -151,6 +162,31 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                     io.type->IsIntegerScalarOrVector()) {
                     io.attributes.interpolation =
                         core::Interpolation{core::InterpolationType::kFlat};
+                }
+
+                uint32_t index = static_cast<uint32_t>(vars.Length());
+                switch (io.attributes.builtin.value()) {
+                    // Record an index for polyfilled inputs.
+                    case core::BuiltinValue::kGlobalInvocationIndex:
+                        global_invocation_index_index = index;
+                        is_polyfill = true;
+                        break;
+                    // Save the indices of the builtins below for use in polyfills.
+                    case core::BuiltinValue::kWorkgroupIndex:
+                        workgroup_index_index = index;
+                        is_polyfill = true;
+                        break;
+                    case core::BuiltinValue::kGlobalInvocationId:
+                        global_invocation_id_index = index;
+                        break;
+                    case core::BuiltinValue::kWorkgroupId:
+                        workgroup_id_index = index;
+                        break;
+                    case core::BuiltinValue::kNumWorkgroups:
+                        num_workgroups_index = index;
+                        break;
+                    default:
+                        break;
                 }
             }
             if (io.attributes.location) {
@@ -192,18 +228,42 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 io.attributes.color = std::nullopt;
             }
 
-            // Create an IO variable and add it to the root block.
-            auto* ptr = ty.ptr(new_addrspace, store_type, access);
-            auto* var = b.Var(name.str(), ptr);
-            var->SetAttributes(io.attributes);
+            if (is_polyfill) {
+                vars.Push(nullptr);
+            } else {
+                // Create an IO variable and add it to the root block.
+                auto* ptr = ty.ptr(new_addrspace, store_type, access);
+                auto* var = b.Var(name.str(), ptr);
+                var->SetAttributes(io.attributes);
 
-            ir.root_block->Append(var);
-            vars.Push(var);
+                ir.root_block->Append(var);
+                vars.Push(var);
+            }
         }
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+        // The following builtin values are polyfilled using other builtin values:
+        // * workgroup_index - workgroup_id and num_workgroups
+        // * global_invocation_index - global_invocation_id, num_workgroups (and workgroup size)
+        const bool has_global_invocation_index =
+            HasBuiltinInput(core::BuiltinValue::kGlobalInvocationIndex);
+        const bool has_workgroup_index = HasBuiltinInput(core::BuiltinValue::kWorkgroupIndex);
+        const bool needs_workgroup_id = has_workgroup_index;
+        if (needs_workgroup_id) {
+            RequireBuiltinInput(core::BuiltinValue::kWorkgroupId, ty.vec3u(), "workgroup_id");
+        }
+        const bool needs_num_workgroups = has_workgroup_index || has_global_invocation_index;
+        if (needs_num_workgroups) {
+            RequireBuiltinInput(core::BuiltinValue::kNumWorkgroups, ty.vec3u(), "num_workgroups");
+        }
+        const bool needs_global_invocation_id = has_global_invocation_index;
+        if (needs_global_invocation_id) {
+            RequireBuiltinInput(core::BuiltinValue::kGlobalInvocationId, ty.vec3u(),
+                                "global_invocation_id");
+        }
+
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
         return tint::Empty;
     }
@@ -216,6 +276,14 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
+        if (idx == global_invocation_index_index) {
+            return PolyfillGlobalInvocationIndex(builder, global_invocation_id_index.value(),
+                                                 num_workgroups_index.value());
+        }
+        if (idx == workgroup_index_index) {
+            return PolyfillWorkgroupIndex(builder, workgroup_id_index.value(),
+                                          num_workgroups_index.value());
+        }
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
         auto* from = input_vars[idx]->Result();
