@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d7c6bd_be399323",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T18:43:13Z",
+      "side": 1,
+      "message": "It would be nice to further clean this up some day.\nMore common code \u003d\u003d less mistakes.",
+      "revId": "b50935eff83e1d8d85562fc75e0fd506dbfb7f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
