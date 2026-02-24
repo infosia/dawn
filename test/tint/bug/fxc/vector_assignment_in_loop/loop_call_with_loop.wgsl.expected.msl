@@ -23,7 +23,6 @@ void foo(tint_module_vars_struct tint_module_vars) {
       {
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(1)));
       }
-      continue;
     }
   }
 }
@@ -46,7 +45,6 @@ kernel void v() {
       {
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(1)));
       }
-      continue;
     }
   }
 }

@@ -42,7 +42,6 @@ void compute_main_inner(uint tint_local_index, tint_module_vars_struct tint_modu
       {
         v_1 = (v_2 + 1u);
       }
-      continue;
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);

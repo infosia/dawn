@@ -70,7 +70,6 @@ void tint_store_and_preserve_padding(device tint_array<S_packed_vec3, 4>* const 
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
 }

@@ -146,7 +146,6 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
               {
                 i = (i + 1u);
               }
-              continue;
             }
           }
           if ((dp >= 0.0f)) {
@@ -175,13 +174,11 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
           {
             x = as_type<int>((as_type<uint>(x) + as_type<uint>(1)));
           }
-          continue;
         }
       }
       {
         y = as_type<int>((as_type<uint>(y) + as_type<uint>(1)));
       }
-      continue;
     }
   }
 }

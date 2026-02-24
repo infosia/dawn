@@ -74,7 +74,6 @@ void tint_store_and_preserve_padding_3(device tint_array<tint_packed_vec3_f32_ar
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
 }

@@ -92,7 +92,6 @@ kernel void v_1(device tint_array<S, 1>* v_2 [[buffer(0)]], const constant tint_
         int const v_15 = as_type<int>((as_type<uint>((*v_13)[min(uint(v_14), 3u)]) + as_type<uint>(1)));
         (*v_13)[min(uint(v_14), 3u)] = v_15;
       }
-      continue;
     }
   }
 }

@@ -34,7 +34,6 @@ void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars)
       {
         v_1 = (v_2 + 13u);
       }
-      continue;
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);

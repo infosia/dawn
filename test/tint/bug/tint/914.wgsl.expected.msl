@@ -103,7 +103,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
       {
         v_3 = (v_4 + 256u);
       }
-      continue;
     }
   }
   threadgroup_barrier(mem_flags::mem_threadgroup);
@@ -127,7 +126,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
       {
         index = (index + 1u);
       }
-      continue;
     }
   }
   uint const ColPerThreadA = 4u;
@@ -161,13 +159,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       {
@@ -191,13 +187,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       threadgroup_barrier(mem_flags::mem_threadgroup);
@@ -219,7 +213,6 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
               {
                 inner = (inner + 1u);
               }
-              continue;
             }
           }
           {
@@ -242,26 +235,22 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
                   {
                     innerCol = (innerCol + 1u);
                   }
-                  continue;
                 }
               }
               {
                 innerRow = (innerRow + 1u);
               }
-              continue;
             }
           }
           {
             k = (k + 1u);
           }
-          continue;
         }
       }
       threadgroup_barrier(mem_flags::mem_threadgroup);
       {
         t = (t + 1u);
       }
-      continue;
     }
   }
   {
@@ -283,13 +272,11 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index, tint_mod
           {
             innerCol = (innerCol + 1u);
           }
-          continue;
         }
       }
       {
         innerRow = (innerRow + 1u);
       }
-      continue;
     }
   }
 }

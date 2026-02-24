@@ -130,7 +130,6 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, tint_module_vars_struct tint_m
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   if ((cMassCount > 0)) {

@@ -37,7 +37,6 @@ kernel void foo(device tint_array<int, 10>* output [[buffer(0)]]) {
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(x_1)));
         if ((i > 10)) { break; }
       }
-      continue;
     }
   }
   (*tint_module_vars.output)[0u] = i;
