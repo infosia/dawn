@@ -16,7 +16,7 @@ void main_inner(uint3 global_id) {
   uint result = 0u;
   {
     uint i = 0u;
-    while((i < dimInner)) {
+    for( ; (i < dimInner); i = (i + 1u)) {
       uint a = (i + (resultCell.x * dimInner));
       uint b = (resultCell.y + (i * dimOutter));
       uint v = 0u;
@@ -24,9 +24,6 @@ void main_inner(uint3 global_id) {
       uint v_1 = 0u;
       secondMatrix.GetDimensions(v_1);
       result = (result + (firstMatrix.Load((0u + (min(a, ((v / 4u) - 1u)) * 4u))) * secondMatrix.Load((0u + (min(b, ((v_1 / 4u) - 1u)) * 4u)))));
-      {
-        i = (i + 1u);
-      }
       continue;
     }
   }

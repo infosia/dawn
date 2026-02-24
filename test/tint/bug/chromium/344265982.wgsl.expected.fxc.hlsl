@@ -3,7 +3,7 @@ RWByteAddressBuffer buffer : register(u0);
 void foo() {
   {
     int i = int(0);
-    while((i < int(4))) {
+    for( ; (i < int(4)); i = asint((asuint(i) + asuint(int(1))))) {
       bool tint_continue = false;
       switch(asint(buffer.Load((0u + (uint(i) * 4u))))) {
         case int(1):
@@ -18,13 +18,7 @@ void foo() {
         }
       }
       if (tint_continue) {
-        {
-          i = asint((asuint(i) + asuint(int(1))));
-        }
         continue;
-      }
-      {
-        i = asint((asuint(i) + asuint(int(1))));
       }
       continue;
     }

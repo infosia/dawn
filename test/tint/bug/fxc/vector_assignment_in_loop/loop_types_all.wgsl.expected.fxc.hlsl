@@ -15,7 +15,7 @@ void main() {
   bool4 v4b = (false).xxxx;
   {
     int i = int(0);
-    while((i < int(2))) {
+    for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       int v = i;
       float2 v_1 = v2f;
       float2 v_2 = float2((1.0f).xx);
@@ -76,9 +76,6 @@ void main() {
       bool4 v_46 = bool4((true).xxxx);
       uint4 v_47 = uint4((uint(v_44)).xxxx);
       v4b = (((v_47 == uint4(0u, 1u, 2u, 3u))) ? (v_46) : (v_45));
-      {
-        i = asint((asuint(i) + asuint(int(1))));
-      }
       continue;
     }
   }

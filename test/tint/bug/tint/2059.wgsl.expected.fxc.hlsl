@@ -223,7 +223,7 @@ void main() {
   float3x3 m = float3x3((0.0f).xxx, (0.0f).xxx, (0.0f).xxx);
   {
     uint c = 0u;
-    while((c < 3u)) {
+    for( ; (c < 3u); c = (c + 1u)) {
       uint v_41 = c;
       float v_42 = float(((c * 3u) + 1u));
       float v_43 = float(((c * 3u) + 2u));
@@ -248,9 +248,6 @@ void main() {
         {
           break;
         }
-      }
-      {
-        c = (c + 1u);
       }
       continue;
     }

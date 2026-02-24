@@ -3,7 +3,7 @@
 void main() {
   {
     int i = int(0);
-    while((i < int(2))) {
+    for( ; (i < int(2)); i = asint((asuint(i) + asuint(int(1))))) {
       bool tint_continue = false;
       switch(i) {
         case int(0):
@@ -27,13 +27,7 @@ void main() {
         }
       }
       if (tint_continue) {
-        {
-          i = asint((asuint(i) + asuint(int(1))));
-        }
         continue;
-      }
-      {
-        i = asint((asuint(i) + asuint(int(1))));
       }
       continue;
     }

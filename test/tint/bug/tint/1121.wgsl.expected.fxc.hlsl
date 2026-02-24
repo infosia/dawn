@@ -59,10 +59,10 @@ void main_inner(uint3 GlobalInvocationID) {
   int TILE_COUNT_Y = int(2);
   {
     int y = int(0);
-    while((y < TILE_COUNT_Y)) {
+    for( ; (y < TILE_COUNT_Y); y = asint((asuint(y) + asuint(int(1))))) {
       {
         int x = int(0);
-        while((x < TILE_COUNT_X)) {
+        for( ; (x < TILE_COUNT_X); x = asint((asuint(x) + asuint(int(1))))) {
           int2 tilePixel0Idx = int2(asint((asuint(x) * asuint(TILE_SIZE))), asint((asuint(y) * asuint(TILE_SIZE))));
           float2 v_13 = (2.0f * float2(tilePixel0Idx));
           float2 floorCoord = ((v_13 / asfloat(uniforms[10u]).xy) - (1.0f).xx);
@@ -78,7 +78,7 @@ void main_inner(uint3 GlobalInvocationID) {
           float dp = 0.0f;
           {
             uint i = 0u;
-            while((i < 6u)) {
+            for( ; (i < 6u); i = (i + 1u)) {
               float4 p = (0.0f).xxxx;
               uint v_16 = i;
               if ((frustumPlanes[v_16].x > 0.0f)) {
@@ -103,9 +103,6 @@ void main_inner(uint3 GlobalInvocationID) {
               float4 v_20 = p;
               uint v_21 = i;
               dp = (v_19 + min(0.0f, dot(v_20, frustumPlanes[v_21])));
-              {
-                i = (i + 1u);
-              }
               continue;
             }
           }
@@ -118,30 +115,18 @@ void main_inner(uint3 GlobalInvocationID) {
               v_22 = (tileId >= config[0u].y);
             }
             if (v_22) {
-              {
-                x = asint((asuint(x) + asuint(int(1))));
-              }
               continue;
             }
             uint v_23 = 0u;
             tileLightId.InterlockedAdd((0u + (min(tileId, 3u) * 260u)), 1u, v_23);
             uint offset = v_23;
             if ((offset >= config[1u].x)) {
-              {
-                x = asint((asuint(x) + asuint(int(1))));
-              }
               continue;
             }
             tileLightId.Store(((4u + (min(tileId, 3u) * 260u)) + (min(offset, 63u) * 4u)), GlobalInvocationID.x);
           }
-          {
-            x = asint((asuint(x) + asuint(int(1))));
-          }
           continue;
         }
-      }
-      {
-        y = asint((asuint(y) + asuint(int(1))));
       }
       continue;
     }
