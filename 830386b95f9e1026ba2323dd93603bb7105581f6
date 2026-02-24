@@ -46,6 +46,30 @@
       },
       "revId": "830386b95f9e1026ba2323dd93603bb7105581f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a1ebafe_3df4f06c",
+        "filename": "webgpu-cts/failure_browser/js/ep.mjs",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-24T21:14:29Z",
+      "side": 1,
+      "message": "Right now we dont have any instances of this (multiple categories on a single failure) in the file",
+      "parentUuid": "642debf1_2ce3b203",
+      "range": {
+        "startLine": 333,
+        "startChar": 46,
+        "endLine": 333,
+        "endChar": 58
+      },
+      "revId": "830386b95f9e1026ba2323dd93603bb7105581f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
