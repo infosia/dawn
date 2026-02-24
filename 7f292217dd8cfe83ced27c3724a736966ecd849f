@@ -16,6 +16,91 @@
       "message": "PTAL",
       "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8782f436_8e7e7c73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-24T19:44:02Z",
+      "side": 1,
+      "message": "Looking good overall! A few minor or optional nits.",
+      "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3935a997_c462399b",
+        "filename": "docs/dawn/features/opaque_ycbcr_android_for_external_texture.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-24T19:44:02Z",
+      "side": 1,
+      "message": "Don\u0027t think the link format used here for y_cb_cr_vulkan_samplers.md is valid for all Markdown renderers. It would be better to make it more explicit.\n```suggestion\nDawn has a large API in [y_cb_cr_vulkan_samplers.md](./y_cb_cr_vulkan_samplers.md) that\u0027s  mostly passthrough to Vulkan but it is quite inflexible and difficult to use (future Vulkan extension could improve this but would take time to be available everywhere).\n```",
+      "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "676b44c8_0c740366",
+        "filename": "docs/dawn/features/opaque_ycbcr_android_for_external_texture.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-24T19:44:02Z",
+      "side": 1,
+      "message": "Ditto\n```suggestion\nInternally Dawn recognizes that a pipeline will use an `ExternalTexture` and uses the same mechanisms as [y_cb_cr_vulkan_samplers.md](./y_cb_cr_vulkan_samplers.md) to do 0-copy YUV sampling, recreating `BindGroupLayouts` with static samplers and recompiling the underlying `VkPipeline`.\n```",
+      "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61678e41_61582e6c",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-24T19:44:02Z",
+      "side": 1,
+      "message": "Optional nit: Given that all the formats are initially marked as sampleable anyway, this change doesn\u0027t feel strictly necessary for the OpaqueYCbCrAndroidForExternalTexture feature? Maybe consider bumping it out to a separate CL just to keep things more atomic/make potential reverts cleaner.\n\nOn the other hand, it\u0027s not a huge change so feel free to ignore.",
+      "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32a147f9_62b9f27a",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-24T19:44:02Z",
+      "side": 1,
+      "message": "Should go above the `// Valid to call...` comment. It\u0027s valid to call this even if IsYCbCr is false, but not the method below it.",
+      "revId": "7f292217dd8cfe83ced27c3724a736966ecd849f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
