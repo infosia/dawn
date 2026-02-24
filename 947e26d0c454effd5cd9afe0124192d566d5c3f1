@@ -46,6 +46,30 @@
       },
       "revId": "947e26d0c454effd5cd9afe0124192d566d5c3f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ea3ccf_c7317d0c",
+        "filename": "test/tint/samples/compute_boids.wgsl.expected.fxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T20:08:43Z",
+      "side": 0,
+      "message": "It\u0027s because it uses a lambda to print out the continuing block when it needs to emit a continue. The code change stops it from printing the continue block in the lambda now. (The `emit_continuing` in the printer)",
+      "parentUuid": "96d05ec4_3500ed3f",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "947e26d0c454effd5cd9afe0124192d566d5c3f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
