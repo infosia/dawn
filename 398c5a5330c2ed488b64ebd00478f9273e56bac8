@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404d80f1_a2f4a885",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-24T19:34:12Z",
+      "side": 1,
+      "message": "nit: `while_construct_line` is a bit of a weird name now",
+      "revId": "398c5a5330c2ed488b64ebd00478f9273e56bac8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
