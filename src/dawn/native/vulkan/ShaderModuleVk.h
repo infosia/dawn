@@ -69,7 +69,8 @@ class ShaderModule final : public ShaderModuleBase {
                                                     const ProgrammableStage& programmableStage,
                                                     const PipelineLayout* layout,
                                                     bool emitPointSize,
-                                                    bool isSampled,
+                                                    bool polyfillPixelCenter,
+                                                    bool needsMultisampledFramebufferFetch,
                                                     const ImmediateConstantMask& pipelineMask);
 
   private:

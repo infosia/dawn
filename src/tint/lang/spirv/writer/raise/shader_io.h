@@ -65,6 +65,8 @@ struct ShaderIOConfig {
     bool polyfill_f16_io = false;
     /// true if we should force pixel centers via polyfill when multi-sampling.
     bool polyfill_pixel_center = false;
+    /// true if the framebuffer fetch should be multisampled
+    bool multisampled_framebuffer_fetch = false;
     /// offsets for clamping frag depth
     std::optional<Options::RangeOffsets> depth_range_offsets{};
 };
