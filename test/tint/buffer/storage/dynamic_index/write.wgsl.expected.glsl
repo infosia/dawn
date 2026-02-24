@@ -51,7 +51,6 @@ void tint_store_and_preserve_padding_3(uint target_indices[1], vec3 value_param[
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
 }

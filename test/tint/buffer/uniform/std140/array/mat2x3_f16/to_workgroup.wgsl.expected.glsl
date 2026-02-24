@@ -36,7 +36,6 @@ f16mat2x3[4] v_6(uint start_byte_offset) {
       {
         v_7 = (v_8 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -54,7 +53,6 @@ void f_inner(uint tint_local_index) {
       {
         v_9 = (v_10 + 1u);
       }
-      continue;
     }
   }
   barrier();

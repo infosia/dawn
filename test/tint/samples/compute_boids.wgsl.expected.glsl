@@ -109,7 +109,6 @@ void comp_main_inner(uvec3 v_3) {
       {
         i = (i + 1u);
       }
-      continue;
     }
   }
   if ((cMassCount > 0)) {

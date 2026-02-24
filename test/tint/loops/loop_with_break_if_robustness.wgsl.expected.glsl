@@ -20,7 +20,6 @@ int f() {
         i = int((v + uint(1)));
         if ((i == 4)) { break; }
       }
-      continue;
     }
   }
   return i;

@@ -29,7 +29,6 @@ void tint_store_and_preserve_padding(mat3 value_param[4]) {
       {
         v_3 = (v_4 + 1u);
       }
-      continue;
     }
   }
 }
@@ -47,7 +46,6 @@ mat3[4] v_5(uint start_byte_offset) {
       {
         v_6 = (v_7 + 1u);
       }
-      continue;
     }
   }
   return a;

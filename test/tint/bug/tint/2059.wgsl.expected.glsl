@@ -67,7 +67,6 @@ void tint_store_and_preserve_padding_15(uint target_indices[1], mat3 value_param
       {
         v_8 = (v_9 + 1u);
       }
-      continue;
     }
   }
 }
@@ -87,7 +86,6 @@ void tint_store_and_preserve_padding_21(S2 value_param[1]) {
       {
         v_10 = (v_11 + 1u);
       }
-      continue;
     }
   }
 }
@@ -112,7 +110,6 @@ void tint_store_and_preserve_padding_19(S value_param[1]) {
       {
         v_12 = (v_13 + 1u);
       }
-      continue;
     }
   }
 }
@@ -134,7 +131,6 @@ void tint_store_and_preserve_padding_14(mat3 value_param[1]) {
       {
         v_14 = (v_15 + 1u);
       }
-      continue;
     }
   }
 }
@@ -159,7 +155,6 @@ void tint_store_and_preserve_padding_20(S value_param[1]) {
       {
         v_16 = (v_17 + 1u);
       }
-      continue;
     }
   }
 }
@@ -195,7 +190,6 @@ void tint_store_and_preserve_padding_16(mat3 value_param[1]) {
       {
         v_18 = (v_19 + 1u);
       }
-      continue;
     }
   }
 }
@@ -232,7 +226,6 @@ void main() {
       {
         c = (c + 1u);
       }
-      continue;
     }
   }
   mat3 a = m;

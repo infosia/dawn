@@ -27,7 +27,6 @@ void main() {
         i = int((v_4 + uint(v_3)));
         if ((i > 10)) { break; }
       }
-      continue;
     }
   }
   v.inner[0u] = i;

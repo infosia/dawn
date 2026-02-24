@@ -44,7 +44,6 @@ int foo_inner(float v_1, vec2 coord) {
         }
         i = v_4;
       }
-      continue;
     }
   }
   if (!(continue_execution)) {

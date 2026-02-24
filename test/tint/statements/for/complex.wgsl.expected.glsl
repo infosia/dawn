@@ -33,7 +33,6 @@ void main() {
         uint v_2 = uint(i);
         i = int((v_2 + uint(1)));
       }
-      continue;
     }
   }
 }

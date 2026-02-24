@@ -40,7 +40,6 @@ void foo() {
         uint v_3 = uint(i);
         i = int((v_3 + uint(1)));
       }
-      continue;
     }
   }
 }

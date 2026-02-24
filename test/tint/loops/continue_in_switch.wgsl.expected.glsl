@@ -32,7 +32,6 @@ void main() {
         uint v = uint(i);
         i = int((v + uint(1)));
       }
-      continue;
     }
   }
 }

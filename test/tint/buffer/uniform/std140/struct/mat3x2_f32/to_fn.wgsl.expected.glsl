@@ -50,7 +50,6 @@ S[4] v_13(uint start_byte_offset) {
       {
         v_14 = (v_15 + 1u);
       }
-      continue;
     }
   }
   return a_2;

@@ -70,7 +70,6 @@ void main() {
         int v_17 = int((v_16 - uint(1)));
         v_1.inner[v_13].a[v_14][min(uint(v_15), 3u)] = v_17;
       }
-      continue;
     }
   }
 }

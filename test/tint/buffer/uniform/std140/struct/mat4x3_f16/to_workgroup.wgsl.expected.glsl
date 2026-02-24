@@ -47,7 +47,6 @@ S[4] v_14(uint start_byte_offset) {
       {
         v_15 = (v_16 + 1u);
       }
-      continue;
     }
   }
   return a;
@@ -65,7 +64,6 @@ void f_inner(uint tint_local_index) {
       {
         v_17 = (v_18 + 1u);
       }
-      continue;
     }
   }
   barrier();

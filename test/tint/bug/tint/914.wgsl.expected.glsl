@@ -85,7 +85,6 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
       {
         v_16 = (v_17 + 256u);
       }
-      continue;
     }
   }
   barrier();
@@ -110,7 +109,6 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
       {
         index = (index + 1u);
       }
-      continue;
     }
   }
   uint ColPerThreadA = 4u;
@@ -144,13 +142,11 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       {
@@ -174,13 +170,11 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
               {
                 innerCol = (innerCol + 1u);
               }
-              continue;
             }
           }
           {
             innerRow = (innerRow + 1u);
           }
-          continue;
         }
       }
       barrier();
@@ -205,7 +199,6 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
               {
                 inner = (inner + 1u);
               }
-              continue;
             }
           }
           {
@@ -233,26 +226,22 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
                   {
                     innerCol = (innerCol + 1u);
                   }
-                  continue;
                 }
               }
               {
                 innerRow = (innerRow + 1u);
               }
-              continue;
             }
           }
           {
             k = (k + 1u);
           }
-          continue;
         }
       }
       barrier();
       {
         t = (t + 1u);
       }
-      continue;
     }
   }
   {
@@ -274,13 +263,11 @@ void main_inner(uvec3 local_id, uvec3 global_id, uint tint_local_index) {
           {
             innerCol = (innerCol + 1u);
           }
-          continue;
         }
       }
       {
         innerRow = (innerRow + 1u);
       }
-      continue;
     }
   }
 }

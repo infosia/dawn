@@ -30,7 +30,6 @@ void main_inner(float x) {
         dFdx(1.0f);
         if ((x > 0.0f)) { break; }
       }
-      continue;
     }
   }
 }

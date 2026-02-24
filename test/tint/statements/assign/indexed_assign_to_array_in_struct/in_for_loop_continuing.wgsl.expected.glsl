@@ -38,7 +38,6 @@ void main() {
         uvec4 v_3 = v_1.inner[0u];
         s1.a1[min(v_3.x, 7u)] = v;
       }
-      continue;
     }
   }
 }

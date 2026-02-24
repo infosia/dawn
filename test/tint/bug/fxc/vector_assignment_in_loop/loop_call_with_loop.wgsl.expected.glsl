@@ -20,7 +20,6 @@ void foo() {
         uint v = uint(i);
         i = int((v + uint(1)));
       }
-      continue;
     }
   }
 }
@@ -38,7 +37,6 @@ void main() {
         uint v_1 = uint(i);
         i = int((v_1 + uint(1)));
       }
-      continue;
     }
   }
 }

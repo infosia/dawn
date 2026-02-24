@@ -29,7 +29,6 @@ void main_inner(uvec3 lid, uint tint_local_index) {
         uint v_3 = uint(S);
         S = int((v_3 + uint(8)));
       }
-      continue;
     }
   }
   {
@@ -53,7 +52,6 @@ void main_inner(uvec3 lid, uint tint_local_index) {
         uint v_10 = uint(s_group);
         s_group = int((v_10 + uint(8)));
       }
-      continue;
     }
   }
 }

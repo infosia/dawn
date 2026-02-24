@@ -14,7 +14,6 @@ void main_inner(uint tint_local_index) {
       {
         v = (v_1 + 1u);
       }
-      continue;
     }
   }
   barrier();

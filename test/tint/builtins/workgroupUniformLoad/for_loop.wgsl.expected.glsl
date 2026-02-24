@@ -34,7 +34,6 @@ void foo_inner(uint tint_local_index) {
         uint v_3 = uint(i);
         i = int((v_3 + uint(v_2)));
       }
-      continue;
     }
   }
 }
