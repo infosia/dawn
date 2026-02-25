@@ -36,12 +36,12 @@ namespace dawn {
 // heap.
 //
 // This is similar to chromium's STACK_ALLOCATED() macro.
-//
-// TODO(crbug.com/338381306) Consider checking StackAllocated classes are only member of
-// StackAllocated classes. This can be implemented by adding `IsStackAllocatedTypeMarker`, and
-// enable the 'check-stack-allocated' clang plugin option.
 class StackAllocated {
   private:
+    // This is a marker type used by several clang plugins to identify stack allocated types. It is
+    // not used by the code itself.
+    using IsStackAllocatedTypeMarker [[maybe_unused]] = int;
+
     void* operator new(size_t) = delete;
     void* operator new(size_t, void*) = delete;
 };
