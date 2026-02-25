@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c78a4a5a_f9c698a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-25T11:06:32Z",
+      "side": 1,
+      "message": "The group agreed that this is the expected behavior.",
+      "parentUuid": "8c5b0d2d_ee3da8f6",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fdfd0e27_a34ac601",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
