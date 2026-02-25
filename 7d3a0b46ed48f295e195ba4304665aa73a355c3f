@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a60324_feeb2f91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-25T18:51:05Z",
+      "side": 1,
+      "message": "CI looks happy this time:\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-nvidia-gtx1660-rel/1129/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd630-rel/1330/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-intel-uhd770-rel/1302/overview\nhttps://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-sws-rel/2154/overview",
+      "revId": "7d3a0b46ed48f295e195ba4304665aa73a355c3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
