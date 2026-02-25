@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "133ddaf8_4441671c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-25T18:45:04Z",
+      "side": 1,
+      "message": "oops, review removed because I added a TODO in a new file. PTAL",
+      "revId": "d03292219b811c0da0b97f18164a4ea0bba506e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f10274bb_d0b23e9e",

@@ -16,6 +16,24 @@
       "message": "Note that BindingIndex is not the number passed by the user (that\u0027s BindingNumber) but a compacted version of it where all the bindings are between [0, N) (dense). This is a good change as we don\u0027t need per-binding kind compaction like in the non-argument buffer case. But the comment needs updating to be a bit more precise.",
       "revId": "c024a0d3eacd30c0b3fc17e8fc8b55f69931c288",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16135e53_96017005",
+        "filename": "src/dawn/native/metal/UtilsMetal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-25T18:45:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c7d2dda_9e5b8c7a",
+      "revId": "c024a0d3eacd30c0b3fc17e8fc8b55f69931c288",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
