@@ -52,6 +52,24 @@
       "parentUuid": "00766328_9d59833a",
       "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40650b35_8c434e93",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-25T22:18:29Z",
+      "side": 1,
+      "message": "Updated it and did some other changes to make the callback infos optionals so that its a lot more obvious that they are nulled out. This also has the added benefit of guaranteeing that we will not deadlock since the semaphore no longer gets incremented anymore if the callback is nulled.\n\nLeaving this comment open so you can take one more look at the changes. Once you resolve this comment, I will submit.",
+      "parentUuid": "1d4e45af_b4189093",
+      "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
