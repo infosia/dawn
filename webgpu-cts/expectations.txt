@@ -96,12 +96,13 @@
 # conflicts_allowed: true
 # full_wildcard_support: true
 
-#######################################################################################
+###########################################################################################
 # WebGPU expectations categories format
 #
-#  At the end of the line we add '# CAT:'  and then a comma deliminated categories.
+#  At the end of the line we add '# CAT:CategoryName'
+#  Multiple categories can be appended with a space delimited CAT:CategoryName
 #
-#  Known categories:
+#  Defined category names:
 #          Accuracy - A small deviation in output that is not significant in practice
 #                     eg. tanh inaccuracies, sampling in cubemap corners
 #          Critical - A significant error that could impact users and needs investigation
@@ -110,9 +111,9 @@
 #                     eg. compiler stress test, slow coverage testing
 #
 #  Examples:
-#   crbug.com/123 [ android ] webgpu:shader,execution,limits:* [ Skip ] # CAT:Spurious
+#   crbug.com/123 [ android ] webgpu:shader,abc* [ Skip ] # CAT:Spurious CAT:Accuracy
 #
-#######################################################################################
+###########################################################################################
 
 ################################################################################
 # Permanent Skip Expectations
