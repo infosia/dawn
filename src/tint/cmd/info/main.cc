@@ -191,7 +191,7 @@ void EmitJson(const tint::Program& program) {
                       << "\"size\": " << binding.size << ",\n"
                       << "\"resource_type\": \""
                       << tint::cmd::ResourceTypeToString(binding.resource_type) << "\",\n"
-                      << "\"dimemsions\": \"" << tint::cmd::TextureDimensionToString(binding.dim)
+                      << "\"dimensions\": \"" << tint::cmd::TextureDimensionToString(binding.dim)
                       << "\",\n"
                       << "\"sampled_kind\": \""
                       << tint::cmd::SampledKindToString(binding.sampled_kind) << "\",\n"
