@@ -1989,7 +1989,7 @@ fn ep_func() {
     EXPECT_EQ(ResourceBinding::ResourceType::kMultisampledTexture, result[4].resource_type);
     EXPECT_EQ(0u, result[4].bind_group);
     EXPECT_EQ(4u, result[4].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kFloat, result[4].sampled_kind);
+    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kUnfilterable, result[4].sampled_kind);
 
     EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[5].resource_type);
     EXPECT_EQ(0u, result[5].bind_group);
@@ -2757,6 +2757,7 @@ INSTANTIATE_TEST_SUITE_P(InspectorGetResourceBindingsTest,
 
 std::string BaseType(ResourceBinding::SampledKind sampled_kind) {
     switch (sampled_kind) {
+        case ResourceBinding::SampledKind::kUnfilterable:
         case ResourceBinding::SampledKind::kFloat:
             return "f32";
         case ResourceBinding::SampledKind::kSInt:
@@ -2796,15 +2797,16 @@ var<private> foo_sample_index: i32;
 INSTANTIATE_TEST_SUITE_P(
     InspectorGetResourceBindingsTest,
     InspectorGetResourceBindingsTest_WithMultisampledTextureParams,
-    testing::Values(MultisampledTextureTestParams{core::type::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::SampledKind::kFloat},
-                    MultisampledTextureTestParams{core::type::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::SampledKind::kSInt},
-                    MultisampledTextureTestParams{core::type::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::TextureDimension::k2d,
-                                                  inspector::ResourceBinding::SampledKind::kUInt}));
+    testing::Values(
+        MultisampledTextureTestParams{core::type::TextureDimension::k2d,
+                                      inspector::ResourceBinding::TextureDimension::k2d,
+                                      inspector::ResourceBinding::SampledKind::kUnfilterable},
+        MultisampledTextureTestParams{core::type::TextureDimension::k2d,
+                                      inspector::ResourceBinding::TextureDimension::k2d,
+                                      inspector::ResourceBinding::SampledKind::kSInt},
+        MultisampledTextureTestParams{core::type::TextureDimension::k2d,
+                                      inspector::ResourceBinding::TextureDimension::k2d,
+                                      inspector::ResourceBinding::SampledKind::kUInt}));
 
 using DimensionParams = std::tuple<core::type::TextureDimension, ResourceBinding::TextureDimension>;
 using TexelFormatParams =

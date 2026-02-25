@@ -638,11 +638,6 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
             }
 
             wgpu::TextureSampleType shaderSampleType = shaderBindingInfo.sampleType;
-            // TODO(487595547): Make Tint return unfilterable for multisampled textures
-            if (shaderBindingInfo.multisampled &&
-                shaderSampleType == wgpu::TextureSampleType::Float) {
-                shaderSampleType = wgpu::TextureSampleType::UnfilterableFloat;
-            }
 
             bool isSameSampleType = shaderSampleType == bglSampleType;
             bool unknownFloatSampleTypeInShader =
