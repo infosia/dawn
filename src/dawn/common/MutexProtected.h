@@ -158,11 +158,8 @@ class DAWN_SCOPED_LOCKABLE Guard : public NonMovable, StackAllocated {
     friend class CondVarGuard<T, Traits, NotifyType::None>;
 
     typename Traits::LockType mLock;
-    // RAW_PTR_EXCLUSION: This pointer is created/destroyed on each access to a MutexProtected.
-    // The pointer is always transiently used while the MutexProtected is in scope so it is
-    // unlikely to be used after it is freed.
-    RAW_PTR_EXCLUSION T* mObj = nullptr;
-    raw_ptr<class Defer> mDefer = nullptr;
+    T* mObj = nullptr;
+    class Defer* mDefer = nullptr;
 };
 
 // CondVarGuard is a different guard class that internally holds a Guard, but provides additional
