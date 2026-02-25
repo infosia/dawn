@@ -44,10 +44,10 @@
         %b_0 = OpVariable %_ptr_Function_int Function
          %25 = OpFunctionCall %int %c %int_2
                OpStore %b_0 %25
-         %27 = OpFunctionCall %int %c %int_3
-         %29 = OpLoad %int %b_0 None
-         %30 = OpBitcast %uint %29
-         %31 = OpBitcast %uint %27
+         %27 = OpLoad %int %b_0 None
+         %28 = OpFunctionCall %int %c %int_3
+         %30 = OpBitcast %uint %27
+         %31 = OpBitcast %uint %28
          %32 = OpIAdd %uint %30 %31
          %33 = OpBitcast %int %32
                OpStore %b_0 %33 None

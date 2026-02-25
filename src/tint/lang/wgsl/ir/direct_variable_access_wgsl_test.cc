@@ -862,28 +862,20 @@ fn f0_1(p_indices : array<u32, 2u>) -> f32 {
 
 fn f1() -> f32 {
   var res : f32;
-  let v = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v);
-  let v_1 = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v_1);
-  let v_2 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_2);
-  let v_3 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_3);
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
 fn f1_1(p_indices : array<u32, 1u>) -> f32 {
-  let v_4 = p_indices[0u];
+  let v = p_indices[0u];
   var res : f32;
-  let v_5 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_5);
-  let v_6 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_6);
-  let v_7 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_7);
-  let v_8 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_8);
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
@@ -1109,28 +1101,20 @@ fn f0_1(p_indices : array<u32, 2u>) -> f32 {
 
 fn f1() -> f32 {
   var res : f32;
-  let v = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v);
-  let v_1 = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v_1);
-  let v_2 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_2);
-  let v_3 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_3);
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
 fn f1_1(p_indices : array<u32, 1u>) -> f32 {
-  let v_4 = p_indices[0u];
+  let v = p_indices[0u];
   var res : f32;
-  let v_5 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_5);
-  let v_6 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_6);
-  let v_7 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_7);
-  let v_8 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_8);
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
@@ -1308,28 +1292,20 @@ fn f0_1(p_indices : array<u32, 2u>) -> f32 {
 
 fn f1() -> f32 {
   var res : f32;
-  let v = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v);
-  let v_1 = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v_1);
-  let v_2 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_2);
-  let v_3 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_3);
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
 fn f1_1(p_indices : array<u32, 1u>) -> f32 {
-  let v_4 = p_indices[0u];
+  let v = p_indices[0u];
   var res : f32;
-  let v_5 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_5);
-  let v_6 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_6);
-  let v_7 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_7);
-  let v_8 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_8);
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
@@ -1726,28 +1702,20 @@ fn f0_1(p_indices : array<u32, 2u>) -> f32 {
 
 fn f1() -> f32 {
   var res : f32;
-  let v = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v);
-  let v_1 = f0(array<u32, 1u>(u32(1i)));
-  res = (res + v_1);
-  let v_2 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_2);
-  let v_3 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_3);
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0(array<u32, 1u>(u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 
 fn f1_1(p_indices : array<u32, 1u>) -> f32 {
-  let v_4 = p_indices[0u];
+  let v = p_indices[0u];
   var res : f32;
-  let v_5 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_5);
-  let v_6 = f0_1(array<u32, 2u>(v_4, u32(1i)));
-  res = (res + v_6);
-  let v_7 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_7);
-  let v_8 = f0_1(array<u32, 2u>(u32(2i), u32(1i)));
-  res = (res + v_8);
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(v, u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
+  res = (res + f0_1(array<u32, 2u>(u32(2i), u32(1i))));
   return res;
 }
 

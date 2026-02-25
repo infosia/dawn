@@ -132,10 +132,10 @@
          %73 = OpLabel
                OpBranch %47
          %72 = OpLabel
-         %74 = OpLoad %int %i None
-         %75 = OpLoad %int %result None
-         %76 = OpBitcast %uint %75
-         %77 = OpBitcast %uint %74
+         %74 = OpLoad %int %result None
+         %75 = OpLoad %int %i None
+         %76 = OpBitcast %uint %74
+         %77 = OpBitcast %uint %75
          %78 = OpIAdd %uint %76 %77
          %79 = OpBitcast %int %78
                OpStore %result %79 None

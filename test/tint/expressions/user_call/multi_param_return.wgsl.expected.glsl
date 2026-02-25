@@ -12,7 +12,8 @@ int c(int x, int y, int z) {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   int b_1 = c(2, 3, 4);
-  int v_4 = c(3, 4, 5);
-  uint v_5 = uint(b_1);
-  b_1 = int((v_5 + uint(v_4)));
+  int v_4 = b_1;
+  int v_5 = c(3, 4, 5);
+  uint v_6 = uint(v_4);
+  b_1 = int((v_6 + uint(v_5)));
 }

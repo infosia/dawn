@@ -8,7 +8,7 @@ int c() {
 [numthreads(1, 1, 1)]
 void b() {
   int b_1 = c();
-  int v = c();
-  b_1 = asint((asuint(b_1) + asuint(v)));
+  int v = b_1;
+  b_1 = asint((asuint(v) + asuint(c())));
 }
 

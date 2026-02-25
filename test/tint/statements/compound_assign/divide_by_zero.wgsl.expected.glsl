@@ -26,10 +26,10 @@ void foo(int maybe_zero) {
   a = tint_mod_i32(a, maybe_zero);
   b = (b / 0.0f);
   b = tint_float_modulo(b, 0.0f);
-  float v_10 = float(maybe_zero);
-  b = (b / v_10);
-  float v_11 = float(maybe_zero);
-  b = tint_float_modulo(b, v_11);
+  float v_10 = b;
+  b = (v_10 / float(maybe_zero));
+  float v_11 = b;
+  b = tint_float_modulo(v_11, float(maybe_zero));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
