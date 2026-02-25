@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f10274bb_d0b23e9e",
+        "filename": "src/dawn/native/metal/UtilsMetal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-25T18:45:03Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"insetad\" is a possible misspelling of \"instead\".\n\nTo bypass Spellchecker, add a...\n\n\"insetad\" is a possible misspelling of \"instead\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 80,
+        "startChar": 83,
+        "endLine": 80,
+        "endChar": 90
+      },
+      "revId": "d03292219b811c0da0b97f18164a4ea0bba506e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
