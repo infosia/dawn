@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7517747_bbd62c21",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-25T06:42:20Z",
+      "side": 1,
+      "message": "I don\u0027t quite see why draining the semaphore is necessary before resetting the infos. Seems like in other places you swap the callback infos without it, and that\u0027s fine because HandleError/HandleLogging snapshot the info before using it.\n\nOr, is it not this, but something later in CompleteImpl, that needs the semaphore drained before continuing?",
+      "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
