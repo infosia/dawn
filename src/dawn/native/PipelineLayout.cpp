@@ -28,7 +28,6 @@
 #include "dawn/native/PipelineLayout.h"
 
 #include <algorithm>
-#include <map>
 #include <memory>
 #include <utility>
 
@@ -37,9 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Numeric.h"
 #include "dawn/common/Range.h"
-#include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
@@ -334,7 +331,14 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
                 entry.buffer.type = bindingInfo.type;
                 entry.buffer.minBindingSize = bindingInfo.minBindingSize;
             },
-            [&](const SamplerBindingInfo& bindingInfo) { entry.sampler.type = bindingInfo.type; },
+            [&](const SamplerBindingInfo& bindingInfo) {
+                entry.sampler.type = bindingInfo.type;
+
+                // TODO(487593147): Support filiterability in default pipeline
+                if (entry.sampler.type == kUnknownFilteringSamplerBindingType) {
+                    entry.sampler.type = wgpu::SamplerBindingType::Filtering;
+                }
+            },
             [&](const TextureBindingInfo& bindingInfo) {
                 entry.texture.sampleType = bindingInfo.sampleType;
                 entry.texture.viewDimension = bindingInfo.viewDimension;
@@ -342,7 +346,9 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
 
                 // Default to UnfilterableFloat for texture_Nd<f32> as it will be promoted to Float
                 // if it is used with a sampler.
-                if (entry.texture.sampleType == wgpu::TextureSampleType::Float) {
+                // TODO(487593147): Support filiterability in default pipeline
+                if (entry.texture.sampleType == wgpu::TextureSampleType::Float ||
+                    entry.texture.sampleType == kUnknownFilterableFloatSampleType) {
                     entry.texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
                 }
             },

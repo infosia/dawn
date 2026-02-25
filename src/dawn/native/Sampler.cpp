@@ -134,6 +134,17 @@ bool SamplerBase::IsFiltering() const {
            mMipmapFilter == wgpu::MipmapFilterMode::Linear;
 }
 
+wgpu::SamplerBindingType SamplerBase::GetBindingType() const {
+    if (IsComparison()) {
+        return wgpu::SamplerBindingType::Comparison;
+    }
+    if (IsFiltering()) {
+        return wgpu::SamplerBindingType::Filtering;
+    }
+
+    return wgpu::SamplerBindingType::NonFiltering;
+}
+
 bool SamplerBase::IsYCbCr() const {
     return mIsYCbCr;
 }
