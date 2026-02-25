@@ -41,6 +41,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/StackAllocated.h"
 #include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
@@ -440,10 +441,18 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_DESE
 #undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_INVALID
 #undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID
 
-struct BindGroupEntryVisitor {
+struct BindGroupEntryVisitor : public StackAllocated {
     const ReplayImpl& replay;
     std::vector<wgpu::BindGroupEntry>& entries;
     std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>& externalTextureBindingEntries;
+
+    BindGroupEntryVisitor(const ReplayImpl& replay,
+                          std::vector<wgpu::BindGroupEntry>& entries,
+                          std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>&
+                              externalTextureBindingEntries)
+        : replay(replay),
+          entries(entries),
+          externalTextureBindingEntries(externalTextureBindingEntries) {}
 
     template <typename T>
     MaybeError operator()(const T& data) {
@@ -518,9 +527,13 @@ struct BindGroupEntryVisitor {
     }
 };
 
-struct BindGroupLayoutEntryVisitor {
+struct BindGroupLayoutEntryVisitor : public StackAllocated {
     wgpu::BindGroupLayoutEntry& entry;
     wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout;
+
+    BindGroupLayoutEntryVisitor(wgpu::BindGroupLayoutEntry& entry,
+                                wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout)
+        : entry(entry), externalTextureBindingLayout(externalTextureBindingLayout) {}
 
     template <typename T>
     MaybeError operator()(const T& data) {
@@ -778,7 +791,7 @@ MaybeError ProcessCommands(ReadHead& readHead, Visitor&& visitor) {
 }
 
 template <typename Pass>
-struct CommandVisitorBase {
+struct CommandVisitorBase : public StackAllocated {
     const ReplayImpl& replay;
     Pass pass;
 
