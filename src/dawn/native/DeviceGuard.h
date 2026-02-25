@@ -35,6 +35,7 @@
 #include "dawn/common/Defer.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Ref.h"
+#include "dawn/common/StackAllocated.h"
 
 namespace dawn::native {
 
@@ -52,6 +53,8 @@ class DeviceMutex : public RecursiveMutex {
     void Unlock() DAWN_UNLOCK_FUNCTION;
 
     uint32_t mRecursionStackDepth = 0;
+
+    STACK_ALLOCATED_IGNORE("TODO: avoid heap allocated class to containe StackAllocated members")
     std::optional<class Defer> mDefer = std::nullopt;
 };
 
