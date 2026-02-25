@@ -16,6 +16,23 @@
       "message": "PTAL\n\n[Here](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-linux-x64-rel/18/infra) is a dawn-cq-linux-x64-rel build with this CL applied + the follow-up to remove the infra/specs content + the JSON used to trigger manually modified to point to `//infra/config/global/generated/builders/try/dawn-cq-linux-64-rel/targets` for the test specs.",
       "revId": "51a213c80fb27d649995d23f4fa5ba90c92ec6d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbde137f_44d8de62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-25T17:19:19Z",
+      "side": 1,
+      "message": "Looking good, let\u0027s try this.",
+      "revId": "51a213c80fb27d649995d23f4fa5ba90c92ec6d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
