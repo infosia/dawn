@@ -34,6 +34,24 @@
       "parentUuid": "5b5e71bc_bd27f9d6",
       "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6a134d6_3841afac",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-25T16:53:43Z",
+      "side": 1,
+      "message": "This works but given it is super specific to Graphite can we 1) call that out in the toggle description and 2) make sure to remove that path once eager mapping is implemented?",
+      "parentUuid": "6bac81ce_52728bd4",
+      "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
