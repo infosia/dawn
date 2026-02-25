@@ -35,6 +35,7 @@
 
 #include "dawn/replay/Deserialization.h"
 #include "dawn/replay/ReadHead.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::replay {
 
@@ -147,12 +148,12 @@ class EncoderVisitor {
 };
 
 struct CommandBufferData {
-    ReadHead* readHead;
+    raw_ptr<ReadHead> readHead;
 };
 
 struct RenderBundleData {
     schema::RenderBundle bundle;
-    ReadHead* readHead;
+    raw_ptr<ReadHead> readHead;
 };
 
 // This is needed to map a command to a deserialization data type.
