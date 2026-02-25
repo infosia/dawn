@@ -47,8 +47,15 @@ void PopWaitingTasksInto(ExecutionSerial serial,
 }
 }  // namespace
 
+inline QueuePriority& operator+=(QueuePriority& priority, size_t i) {
+    priority = static_cast<QueuePriority>(static_cast<size_t>(priority) + i);
+    return priority;
+}
+
 ExecutionQueueBase::~ExecutionQueueBase() {
-    DAWN_ASSERT(mState->mWaitingTasks.Empty());
+    for (QueuePriority p = static_cast<QueuePriority>(0); p <= QueuePriority::All; p += 1) {
+        DAWN_ASSERT(mState->mWaitingTasks[p].Empty());
+    }
 }
 
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
@@ -67,7 +74,7 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
     // Serial is already complete.
     if (waitSerial <= GetCompletedCommandSerial()) {
         // Ensure that all tasks related to the serial have been triggered.
-        UpdateCompletedSerialTo(waitSerial);
+        UpdateCompletedSerialTo(QueuePriority::UserFacing, waitSerial);
         return {};
     }
 
@@ -89,10 +96,10 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
             // Wait on the serial if it hasn't passed yet.
             ExecutionSerial completedSerial = kWaitSerialTimeout;
             DAWN_TRY_ASSIGN(completedSerial, WaitForQueueSerialImpl(waitSerial, timeout));
-            UpdateCompletedSerialTo(completedSerial);
+            UpdateCompletedSerialTo(QueuePriority::UserFacing, completedSerial);
             return {};
         }
-        return UpdateCompletedSerial();
+        return UpdateCompletedSerial(QueuePriority::UserFacing);
     } else {
         // Otherwise, we need to acquire the device lock first.
         auto deviceGuard = GetDevice()->GetGuard();
@@ -114,7 +121,7 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
             // stale data.
             FetchMax(mCompletedSerial, uint64_t(completedSerial));
         }
-        return UpdateCompletedSerial();
+        return UpdateCompletedSerial(QueuePriority::UserFacing);
     }
 }
 
@@ -137,8 +144,6 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
         // Wait until we can exclusively call callbacks.
         state.Wait([](auto& x) { return !x.mCallingCallbacks; });
 
-        processors = &state->mWaitingProcessors;
-
         // We finish tasks all the way up to the pending command serial because otherwise, pending
         // tasks that may be for cleanup won't every be completed. Also, for |buffer.MapAsync|, a
         // lot of backends queue up a clear to initialize the data on those buffers and that clear
@@ -147,7 +152,13 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
         // pending command is ever submitted, the map async task will be left dangling if we only
         // clear up to the completed serial.
         serial = GetPendingCommandSerial();
-        PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
+
+        // Call all callbacks that for all priorities.
+        for (QueuePriority p = static_cast<QueuePriority>(0); p <= QueuePriority::All; p += 1) {
+            processors.insert(processors.end(), state->mWaitingProcessors[p].begin(),
+                              state->mWaitingProcessors[p].end());
+            PopWaitingTasksInto(serial, state->mWaitingTasks[p], tasks);
+        }
 
         if (!processors->empty() || !tasks.empty()) {
             state->mCallingCallbacks = true;
@@ -184,30 +195,34 @@ MaybeError ExecutionQueueBase::CheckPassedSerials() {
     return {};
 }
 
-MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
+MaybeError ExecutionQueueBase::UpdateCompletedSerial(QueuePriority priority) {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
 
     DAWN_ASSERT(completedSerial <=
                 ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
-    UpdateCompletedSerialTo(completedSerial);
+    UpdateCompletedSerialTo(priority, completedSerial);
     return {};
 }
 
-void ExecutionQueueBase::RegisterSerialProcessor(Ref<SerialProcessor>&& serialProcessor) {
+void ExecutionQueueBase::RegisterSerialProcessor(QueuePriority priority,
+                                                 Ref<SerialProcessor>&& serialProcessor) {
     // Serial processor registration should always happen at queue initialization.
     DAWN_ASSERT(mCompletedSerial == static_cast<uint64_t>(kBeginningOfGPUTime));
-    mState.Use<NotifyType::None>(
-        [&](auto state) { state->mWaitingProcessors.push_back(std::move(serialProcessor)); });
+    mState.Use<NotifyType::None>([&](auto state) {
+        state->mWaitingProcessors[priority].push_back(std::move(serialProcessor));
+    });
 }
 
 // Tasks may execute synchronously if the given serial has already passed or during device
 // destruction. As a result, callers should ensure that the calling thread releases any locks that
 // will be taken by the task prior to calling TrackSerialTask.
-void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
+void ExecutionQueueBase::TrackSerialTask(QueuePriority priority,
+                                         ExecutionSerial serial,
+                                         Task&& task) {
     bool tracked = mState.Use<NotifyType::None>([&](auto state) {
         if (!state->mAssumeCompleted && serial > GetCompletedCommandSerial()) {
-            state->mWaitingTasks.Enqueue(std::move(task), serial);
+            state->mWaitingTasks[priority].Enqueue(std::move(task), serial);
             return true;
         }
         return false;
@@ -217,11 +232,13 @@ void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
     }
 }
 
-void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
-    UpdateCompletedSerialToInternal(completedSerial);
+void ExecutionQueueBase::UpdateCompletedSerialTo(QueuePriority priority,
+                                                 ExecutionSerial completedSerial) {
+    UpdateCompletedSerialToInternal(priority, completedSerial);
 }
 
-void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial completedSerial,
+void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
+                                                         ExecutionSerial completedSerial,
                                                          bool forceTasks) {
     std::vector<Ref<SerialProcessor>>* processors = nullptr;
     std::vector<Task> tasks;
@@ -247,11 +264,16 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(ExecutionSerial complet
         // Wait until we can exclusively call callbacks.
         state.Wait([](auto& x) { return !x.mCallingCallbacks; });
 
-        processors = &state->mWaitingProcessors;
-
         serial = GetCompletedCommandSerial();
-        PopWaitingTasksInto(serial, state->mWaitingTasks, tasks);
-        if (!processors->empty() || !tasks.empty()) {
+
+        // Call all callbacks that for the given priority and anything of higher priority as well.
+        for (QueuePriority p = static_cast<QueuePriority>(0); p <= priority; p += 1) {
+            processors.insert(processors.end(), state->mWaitingProcessors[p].begin(),
+                              state->mWaitingProcessors[p].end());
+            PopWaitingTasksInto(serial, state->mWaitingTasks[p], tasks);
+        }
+
+        if (!processors.empty() || !tasks.empty()) {
             state->mCallingCallbacks = true;
         }
     });
@@ -298,19 +320,17 @@ void ExecutionQueueBase::AssumeCommandsComplete() {
         ExecutionSerial(mLastSubmittedSerial.fetch_add(1u, std::memory_order_release) + 1);
     // Force any waiting tasks to execute. This will ensure that any tasks that were scheduled
     // after WaitForIdleForDestruction being called are completed.
-    UpdateCompletedSerialToInternal(completed, true);
+    UpdateCompletedSerialToInternal(QueuePriority::All, completed, true);
 
     // Update all the processors to let them know that they should assume commands are complete,
     // then release our reference to them.
     std::vector<Ref<SerialProcessor>> processors;
     mState.Use<NotifyType::None>([&](auto state) {
-        // Since we don't hold the lock while accessing the list of processes and instead rely on
-        // |mCallingCallbacks|, we need to wait until we are no longer calling callbacks before
-        // resetting the vector.
-        state.Wait([](auto& x) { return !x.mCallingCallbacks; });
-
-        processors = std::move(state->mWaitingProcessors);
-        state->mWaitingProcessors.clear();
+        for (QueuePriority p = static_cast<QueuePriority>(0); p <= QueuePriority::All; p += 1) {
+            processors.insert(processors.end(), state->mWaitingProcessors[p].begin(),
+                              state->mWaitingProcessors[p].end());
+            state->mWaitingProcessors[p].clear();
+        }
     });
     for (auto& processor : processors) {
         processor->AssumeCommandsComplete();
