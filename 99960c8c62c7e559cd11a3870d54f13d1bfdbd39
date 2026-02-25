@@ -16,6 +16,24 @@
       "message": "I don\u0027t quite see why draining the semaphore is necessary before resetting the infos. Seems like in other places you swap the callback infos without it, and that\u0027s fine because HandleError/HandleLogging snapshot the info before using it.\n\nOr, is it not this, but something later in CompleteImpl, that needs the semaphore drained before continuing?",
       "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00766328_9d59833a",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-25T07:06:22Z",
+      "side": 1,
+      "message": "Right, `HandleError`/`HandleLogging` snapshot the info before using it, but the `mCallback` below might deallocate those callbacks because that callback \"owns\" the uncaptured and logging callbacks in Chromium (that\u0027s how we ensure to clean them up). So because we snapshot it, we could end up calling into deallocated callbacks if we don\u0027t either hold the lock while calling them, or drain them first.\n\nThe simpler solution would probably be to hold the lock while calling those callbacks, but that could lead to re-entrancy issues where we try to acquire those locks again if we aren\u0027t careful.",
+      "parentUuid": "a7517747_bbd62c21",
+      "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
