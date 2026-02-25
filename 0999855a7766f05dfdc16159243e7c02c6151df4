@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "920cc69d_5d928d4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-25T19:36:26Z",
+      "side": 1,
+      "message": "PTAL\n\nBoth CI and CQ look happy after the Starlark migration, so I think it\u0027s safe to land this.",
+      "revId": "0999855a7766f05dfdc16159243e7c02c6151df4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
