@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3e2a9b_d414d0e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-25T18:30:01Z",
+      "side": 1,
+      "message": "Seems right but I\u0027m not a good owner for tint changes. Please rely on local owners for different parts and avoid sending reviews to too many people",
+      "revId": "555ac66ea22fbe5f5dd2af91241f9d6ede781f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33015941_3d67bd07",
