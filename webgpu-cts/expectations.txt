@@ -1055,7 +1055,6 @@ crbug.com/445458866 [ intel-0x4680 linux ] webgpu:api,operation,storage_texture,
 # CTS needs to support new storage formats from texture-feature-tier1,
 # will be removed after the latest CTS rolling into Dawn
 crbug.com/421941589 [ angle-opengl arch-x86_64 desktop display-server-x graphite-disabled intel-0x9bc5 memory_ge_16gb mesa_ge_23.2 no-asan no-clang-coverage release renderer-skia-vulkan target-cpu-64 ubuntu ] webgpu:api,operation,storage_texture,read_only:basic:* [ Failure ]
-crbug.com/421941589 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureStore:texel_formats:format="rgb10a2unorm";* [ Failure ]
 
 # Unsure if these ever pass on retry, or if they also are flaky-but-fail-on-retry
 crbug.com/432291885 [ dawn-no-backend-validation intel-0x3e9b sequoia ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:arrayed_2d_coords:* [ RetryOnFailure ] # CAT:Accuracy
@@ -1087,9 +1086,6 @@ crbug.com/459848489 [ android android-brya ] webgpu:api,validation,createBindGro
 crbug.com/459848489 [ android android-brya ] webgpu:shader,execution,expression,call,builtin,texture* [ RetryOnFailure ]
 
 # textureLoad failures on mac AMD for depth2plus-stencil8 format
-crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="f";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
-crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:stage="v";format="depth24plus-stencil8";texture_type="texture_2d_array" [ Failure ]
-crbug.com/448397616 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureLoad:depth:stage="c";format="depth32float-stencil8" [ Failure ]
 
 # The spec doesn't precisely require a behavior and the CTS tests only one of them. Remove suppressions once the spec / CTS is fixed.
 crbug.com/449980070 webgpu:api,validation,encoding,encoder_open_state:* [ Failure ]
@@ -1352,8 +1348,6 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,shader_io,fragment_b
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:all:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:continuing:useStorageBuffers=true [ Failure ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=false [ Failure ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:function_call:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:loop:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,statement,discard:three_quarters:useStorageBuffers=true [ Failure ]
@@ -2136,8 +2130,6 @@ crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,constructor,zero
 crbug.com/0000 [ dawn-no-backend-validation no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ android-r qualcomm ] webgpu:shader,execution,memory_layout:write_layout:* [ Failure ]
 crbug.com/0000 [ android-r ] webgpu:shader,execution,shader_io,vertex_builtins:* [ Failure ]
-crbug.com/0000 [ amd-0x7340 mac ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
-crbug.com/0000 [ no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shader,execution,statement,discard:derivatives:useStorageBuffers=true [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";workgroupSize=[1,1,1];batch__=14 [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="offscreen";format="bgra8unorm";usage=8 [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:web_platform,canvas,configure:invalid_usage:canvasType="onscreen";format="bgra8unorm";usage=8 [ Failure ]
