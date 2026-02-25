@@ -49,7 +49,14 @@ def _apply_mac_cmake_builder_defaults(kwargs):
     return kwargs
 
 def _apply_win_cmake_builder_defaults(kwargs):
-    kwargs.setdefault("cpu", cpu.X86_64)
+    # This CPU dimension acts as a proxy for machine_type: n2-standard-8 since
+    # machine_type cannot currently be set via Starlark. n2-standard-8 is
+    # specifically targeted for Win/CMake instead of the more common
+    # e2-standard-8 because Windows compilation takes the most time and the use
+    # of MSVC means that RBE is unsupported for remote compilation. The newer
+    # CPUs used by n2-standard-8 GCE instances result in significantly faster
+    # compile times.
+    kwargs.setdefault("cpu", "x86-64-Ice_Lake_GCE")
     kwargs.setdefault("os", os.WINDOWS_DEFAULT)
     kwargs.setdefault("ssd", None)
     return kwargs
