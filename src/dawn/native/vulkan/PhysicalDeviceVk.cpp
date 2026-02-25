@@ -325,6 +325,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
+        mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
+            .rasterizationOrderColorAttachmentAccess) {
+        // FramebufferFetch is supported only if coherent extension is available.
+        EnableFeature(Feature::FramebufferFetch);
+    }
+
     if (mDeviceInfo.features.shaderClipDistance == VK_TRUE) {
         EnableFeature(Feature::ClipDistances);
     }
@@ -963,7 +970,8 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
          gpu_info::GetIntelGen(GetVendorId(), GetDeviceId()) <= gpu_info::IntelGen::Gen9)) {
         adapterToggles->ForceSet(Toggle::VulkanUseDynamicRendering, false);
     } else {
-        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, true);
+        // TODO(kylechar): Disable dynamic rendering in the relevant test instead.
+        adapterToggles->Default(Toggle::VulkanUseDynamicRendering, false);
     }
 
     // Use CreateRenderPass2KHR by default if the corresponding extension is available.

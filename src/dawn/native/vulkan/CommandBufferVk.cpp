@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 
 #include <algorithm>
+#include <concepts>
 #include <limits>
 #include <utility>
 #include <vector>
@@ -40,6 +41,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
@@ -160,6 +162,9 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
+    explicit DescriptorSetTracker(bool framebufferFetchEnabled)
+        : mFramebufferFetchEnabled(framebufferFetchEnabled) {}
+
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
@@ -172,6 +177,10 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         mVkLayout = pipeline->GetVkLayout();
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+        if constexpr (std::derived_from<VkPipelineType, RenderPipelineBase>) {
+            mPipelineUsesFramebufferFetch =
+                static_cast<RenderPipelineBase*>(pipeline)->UsesFramebufferFetch();
+        }
     }
 
     void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
@@ -181,9 +190,25 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
                VkPipelineBindPoint bindPoint) {
         BeforeApply();
 
-        // When the usage of the resource table changes between pipelines, or the resource table is
-        // changed, all the BindGroups are shifted by 1 (due to the resource table being in the
-        // first VkDescriptorSet) so we dirty all bind groups.
+        BindGroupIndex startOfBindGroups{0u};
+
+        if (mFramebufferFetchEnabled) {
+            if (mPipelineUsesFramebufferFetch && !mHasBoundFramebufferFetchDescriptorSet) {
+                VkDescriptorSet set = device->GetFramebufferFetchHelper()->GetDescriptorSet();
+                DAWN_ASSERT(set != VK_NULL_HANDLE);
+                device->fn.CmdBindDescriptorSets(
+                    recordingContext->commandBuffer, bindPoint, mVkLayout,
+                    static_cast<uint32_t>(startOfBindGroups), 1, &*set, 0, nullptr);
+                mHasBoundFramebufferFetchDescriptorSet = true;
+            }
+            // When FramebufferFetch is enabled all BindGroups are shifted by 1, even if nothing
+            // has been bound to that descriptor set yet due to no pipelines using the feature.
+            startOfBindGroups += BindGroupIndex(1);
+        }
+
+        // When the usages of the resource table changes between pipelines, all the BindGroups are
+        // shifted by 1 (due to the resource table being in the first VkDescriptorSet) so we dirty
+        // all bind groups.
         BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
         if (mLastUsesResourceTable != mUsesResourceTable || mLastResourceTable != mResourceTable) {
             dirtyBindGroups = mBindGroupLayoutsMask;
@@ -192,11 +217,14 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
             if (mUsesResourceTable) {
                 DAWN_ASSERT(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
-                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
-                                                 mVkLayout, 0, 1, &*set, 0, nullptr);
+                device->fn.CmdBindDescriptorSets(
+                    recordingContext->commandBuffer, bindPoint, mVkLayout,
+                    static_cast<uint32_t>(startOfBindGroups), 1, &*set, 0, nullptr);
             }
         }
-        BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
+        if (mUsesResourceTable) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
         for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
             VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
@@ -221,8 +249,11 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
     raw_ptr<ResourceTable> mLastResourceTable = nullptr;
     raw_ptr<ResourceTable> mResourceTable = nullptr;
+    const bool mFramebufferFetchEnabled;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
+    bool mHasBoundFramebufferFetchDescriptorSet = false;
+    bool mPipelineUsesFramebufferFetch = false;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -1254,7 +1285,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets;
+    DescriptorSetTracker descriptorSets(false);
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1461,13 +1492,13 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets;
+    DescriptorSetTracker descriptorSets(device->HasFeature(Feature::FramebufferFetch));
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
     uint32_t workCommandCount = 0;
 
-    auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
+    auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) -> MaybeError {
         switch (type) {
             case Command::Draw: {
                 workCommandCount++;
@@ -1652,6 +1683,11 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                                            pipeline->GetHandle());
                 lastPipeline = pipeline;
 
+                if (pipeline->UsesFramebufferFetch()) {
+                    DAWN_TRY(device->GetFramebufferFetchHelper()->CreateDescriptorSetForRenderPass(
+                        renderPassCmd));
+                }
+
                 descriptorSets.OnSetPipeline<RenderPipeline>(pipeline);
                 immediates.OnSetPipeline(pipeline);
                 break;
@@ -1686,6 +1722,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 DAWN_UNREACHABLE();
                 break;
         }
+
+        return {};
     };
 
     Command type;
@@ -1704,6 +1742,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     device->fn.CmdBeginQuery(commands, ToBackend(querySet)->GetHandle(), 0, 0);
                     device->fn.CmdEndQuery(commands, ToBackend(querySet)->GetHandle(), 0);
                 }
+
+                device->GetFramebufferFetchHelper()->EndRenderPass();
 
                 RecordEndRenderPass(recordingContext, device);
 
@@ -1783,7 +1823,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                     CommandIterator* iter = bundles[i]->GetCommands();
                     iter->Reset();
                     while (iter->NextCommandId(&type)) {
-                        EncodeRenderBundleCommand(iter, type);
+                        DAWN_TRY(EncodeRenderBundleCommand(iter, type));
                     }
                 }
                 break;
@@ -1817,7 +1857,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             default: {
-                EncodeRenderBundleCommand(&mCommands, type);
+                DAWN_TRY(EncodeRenderBundleCommand(&mCommands, type));
                 break;
             }
         }

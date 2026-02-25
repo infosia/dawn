@@ -153,6 +153,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::DisplayTiming, "VK_GOOGLE_display_timing"},
     {DeviceExt::CooperativeMatrix, "VK_KHR_cooperative_matrix"},
     {DeviceExt::MultisampledRenderToSingleSampled, "VK_EXT_multisampled_render_to_single_sampled"},
+    {DeviceExt::RasterizationOrderAttachmentAccess, "VK_EXT_rasterization_order_attachment_access"},
 
     {DeviceExt::ExternalMemoryAndroidHardwareBuffer,
      "VK_ANDROID_external_memory_android_hardware_buffer"},
@@ -219,6 +220,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::ShaderBufferInt64Atomics:
             case DeviceExt::VulkanMemoryModel:
             case DeviceExt::CooperativeMatrix:
+            case DeviceExt::RasterizationOrderAttachmentAccess:
             case DeviceExt::ShaderFloatControls:
             case DeviceExt::DescriptorIndexing:
             case DeviceExt::CreateRenderPass2:
