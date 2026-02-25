@@ -1,5 +1,5 @@
 {
-	"lucicfg": "1.46.2",
+	"lucicfg": "1.46.1",
 	"packages": [
 		{
 			"name": "@dawn-project",
@@ -28,7 +28,7 @@
 			"name": "@chromium-targets",
 			"source": {
 				"repo": "https://chromium.googlesource.com/chromium/src/+/refs/heads/main",
-				"revision": "fac069478853596abe1fdbc7df8fee3750e155db",
+				"revision": "bb7c30e0fbd7f104f58e10c628a60538b1d1bc6b",
 				"path": "infra/config/targets"
 			},
 			"deps": [
