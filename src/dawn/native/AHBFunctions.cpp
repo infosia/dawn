@@ -77,8 +77,6 @@ wgpu::TextureFormat FormatFromAHardwareBufferFormat(uint32_t ahbFormat) {
             return wgpu::TextureFormat::OpaqueYCbCrAndroid;
         case AHARDWAREBUFFER_FORMAT_YCbCr_P010:
             return wgpu::TextureFormat::OpaqueYCbCrAndroid;
-        case AHARDWAREBUFFER_FORMAT_YCbCr_P210:
-            return wgpu::TextureFormat::OpaqueYCbCrAndroid;
 
         // RGB formats with no direct representation in WebGPU. They could be sampleable and
         // renderable in Vulkan and GLES but data uploads couldn't be supported without more work.
