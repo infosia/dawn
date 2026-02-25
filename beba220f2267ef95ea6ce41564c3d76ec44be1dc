@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6c8f313_42a8f59e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-25T14:51:10Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "beba220f2267ef95ea6ce41564c3d76ec44be1dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b415a07a_6a09e984",
+        "filename": "docs/dawn/features/opaque_ycbcr_android_for_external_texture.md",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-02-25T14:51:10Z",
+      "side": 1,
+      "message": "IIUC you\u0027re never allowed to use YCbCrVkDescriptor with this Feature so both TextureView and ExternalTexture will reject it? It\u0027s kind of clear for TextureView above but less clear here.",
+      "revId": "beba220f2267ef95ea6ce41564c3d76ec44be1dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
