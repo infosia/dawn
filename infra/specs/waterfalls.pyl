@@ -6,11 +6,6 @@
       'swarming_containment_auto',
     ],
     'machines': {
-      'dawn-linux-x64-builder-dbg': {
-        'additional_compile_targets': [
-          'default',
-        ],
-      },
       'dawn-linux-x64-fuzz-dbg': {
         'os_type': 'linux',
         'mixins': [
@@ -37,16 +32,6 @@
         'test_suites': {
           'gtest_tests': 'wire_trace_gtests',
           'isolated_scripts': 'tint_fuzzer_corpus_generate_tests',
-        },
-      },
-      'dawn-linux-x64-sws-dbg': {
-        'os_type': 'linux',
-        'mixins': [
-          'gpu_linux_gce_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'swiftshader_gtests',
-          'isolated_scripts': 'swiftshader_isolated_scripts',
         },
       },
       'dawn-linux-x64-sws-tsan': {
