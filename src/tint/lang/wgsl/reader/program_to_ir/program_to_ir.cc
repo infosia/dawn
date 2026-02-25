@@ -454,14 +454,15 @@ class Impl {
         if (sem_swizzle) {
             CollapsedSwizzle swizzle = CollapseSwizzle(sem_swizzle);
 
-            auto lhs = EmitValueExpression(swizzle.vector->Declaration());
-            auto rhs = EmitValueExpression(stmt->rhs);
+            auto* lhs = EmitValueExpression(swizzle.vector->Declaration());
 
             if (swizzle.indices.Length() == 1) {
-                b.StoreVectorElement(lhs, b.Constant(u32(swizzle.indices[0])), rhs);
+                auto* rhs_val = EmitValueExpression(stmt->rhs);
+                b.StoreVectorElement(lhs, b.Constant(u32(swizzle.indices[0])), rhs_val);
             } else {
-                rhs = ConstructSwizzleAssignmentRhs(lhs, rhs, swizzle.indices);
-                b.Store(lhs, rhs);
+                auto* lhs_val = b.Load(lhs)->Result();
+                auto* rhs_val = EmitValueExpression(stmt->rhs);
+                b.Store(lhs, ConstructSwizzleAssignmentRhs(lhs_val, rhs_val, swizzle.indices));
             }
             return;
         }
@@ -498,25 +499,26 @@ class Impl {
             return;
         }
 
+        auto* inst = current_block_->Append(BinaryOp(lhs_val, rhs_val, stmt->op));
+
         auto b = builder_.Append(current_block_);
         const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
         if (sem_swizzle) {
-            auto* inst = current_block_->Append(BinaryOp(lhs_val, rhs_val, stmt->op));
             CollapsedSwizzle swizzle = CollapseSwizzle(sem_swizzle);
-            auto* swizzle_lhs = EmitValueExpression(swizzle.vector->Declaration());
+            auto* lhs_vec = EmitValueExpression(swizzle.vector->Declaration());
 
             if (swizzle.indices.Length() == 1) {
-                b.StoreVectorElement(swizzle_lhs, b.Constant(u32(swizzle.indices[0])),
-                                     inst->Result());
+                b.StoreVectorElement(lhs_vec, b.Constant(u32(swizzle.indices[0])), inst);
             } else {
-                rhs_val =
-                    ConstructSwizzleAssignmentRhs(swizzle_lhs, inst->Result(), swizzle.indices);
-                b.Store(swizzle_lhs, rhs_val);
+                // Reload the value of the swizzle view for populating the old contents of the
+                // vector to store because it may have been changed by evaluating rhs.
+                auto* lhs_vec_val = b.Load(lhs_vec)->Result();
+                b.Store(lhs_vec, ConstructSwizzleAssignmentRhs(lhs_vec_val, inst->Result(),
+                                                               swizzle.indices));
             }
             return;
         }
 
-        auto* inst = current_block_->Append(BinaryOp(lhs_val, rhs_val, stmt->op));
         Store(lhs, inst->Result());
     }
 
@@ -591,11 +593,10 @@ class Impl {
 
         // For indices which were not referenced in the swizzle, fill in the old vals from the
         // loaded lhs vector.
-        auto* lhs_val = b.Load(lhs);
         for (uint32_t i = 0; i < vec_ty->Width(); i++) {
             if (new_vec_args[i] == nullptr) {
                 auto* access =
-                    b.Access(elem_ty->Clone(clone_ctx_.type_ctx), lhs_val, b.Constant(u32(i)));
+                    b.Access(elem_ty->Clone(clone_ctx_.type_ctx), lhs, b.Constant(u32(i)));
                 new_vec_args[i] = access->Result();
             }
         }
