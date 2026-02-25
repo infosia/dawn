@@ -11,11 +11,6 @@
           'default',
         ],
       },
-      'dawn-linux-x64-builder-rel': {
-        'additional_compile_targets': [
-          'default',
-        ],
-      },
       'dawn-linux-x64-fuzz-dbg': {
         'os_type': 'linux',
         'mixins': [
@@ -34,33 +29,6 @@
           'isolated_scripts': 'tint_fuzzer_corpus_check_tests',
         },
       },
-      'dawn-linux-x64-intel-uhd630-rel': {
-        'os_type': 'linux',
-        'mixins': [
-          'linux_intel_uhd_630_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_common_gtests',
-        },
-      },
-      'dawn-linux-x64-intel-uhd770-rel': {
-        'os_type': 'linux',
-        'mixins': [
-          'linux_intel_uhd_770_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_common_gtests',
-        },
-      },
-      'dawn-linux-x64-nvidia-gtx1660-rel': {
-        'os_type': 'linux',
-        'mixins': [
-          'linux_nvidia_gtx_1660_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_common_gtests',
-        },
-      },
       'dawn-linux-x64-sws-clusterfuzz': {
         'os_type': 'linux',
         'mixins': [
@@ -72,16 +40,6 @@
         },
       },
       'dawn-linux-x64-sws-dbg': {
-        'os_type': 'linux',
-        'mixins': [
-          'gpu_linux_gce_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'swiftshader_gtests',
-          'isolated_scripts': 'swiftshader_isolated_scripts',
-        },
-      },
-      'dawn-linux-x64-sws-rel': {
         'os_type': 'linux',
         'mixins': [
           'gpu_linux_gce_stable',
