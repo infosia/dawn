@@ -520,6 +520,7 @@
 "texture_depth_cube_array"
 "texture_depth_multisampled_2d"
 "texture_external"
+"texture_formats_tier1"
 "texture_multisampled_2d"
 "texture_storage_1d"
 "texture_storage_2d"
