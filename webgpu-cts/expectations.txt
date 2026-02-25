@@ -96,12 +96,13 @@
 # conflicts_allowed: true
 # full_wildcard_support: true
 
-#######################################################################################
+###########################################################################################
 # WebGPU expectations categories format
 #
-#  At the end of the line we add '# CAT:'  and then a comma deliminated categories.
+#  At the end of the line we add '# CAT:CategoryName'
+#  Multiple categories can be appended with a space deliminted CAT:CategoryName
 #
-#  Known categories:
+#  Defined category names:
 #          Accuracy - A small deviation in output that is not significant in practice
 #                     eg. tanh inaccuracies, sampling in cubemap corners
 #          Critical - A significant error that could impact users and needs investigation
@@ -110,9 +111,9 @@
 #                     eg. compiler stress test, slow coverage testing
 #
 #  Examples:
-#   crbug.com/123 [ android ] webgpu:shader,execution,limits:* [ Skip ] # CAT:Spurious
+#   crbug.com/123 [ android ] webgpu:shader,abc* [ Skip ] # CAT:Spurious CAT:Accuracy
 #
-#######################################################################################
+###########################################################################################
 
 ################################################################################
 # Permanent Skip Expectations
@@ -743,13 +744,6 @@ crbug.com/407076133 [ android-pixel-6 ] webgpu:shader,execution,expression,call,
 crbug.com/407076134 [ asan dawn-no-backend-validation intel-0x9bc5 no-clang-coverage release-x64 target-cpu-64 webgpu-dxc-disabled win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ] # CAT:Accuracy
 crbug.com/407076134 [ asan dawn-no-backend-validation intel-0x9bc5 no-clang-coverage release-x64 target-cpu-64 webgpu-dxc-enabled win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ] # CAT:Accuracy
 crbug.com/407076134 [ intel no-asan no-clang-coverage win ] webgpu:shader,execution,expression,call,builtin,textureGather:* [ Failure ] # CAT:Accuracy
-
-# textureSampleBias failures on Mac AMD
-crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:* [ Failure ] # CAT:Accuracy
-crbug.com/407109059 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:format="bc7-rgba-unorm-srgb";filt="linear";modeU="c";modeV="r";offset=true [ Failure ] # CAT:Accuracy
-
-# All textureSampleBias tests marked failing on Mac M2
-crbug.com/407076135 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ] # CAT:Accuracy
 
 # fragment_builtins with multisampling and "sample" mode failing on many Vulkan devices
 crbug.com/407144390 [ android-14 android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
@@ -2122,78 +2116,6 @@ crbug.com/0000 [ android-14 android-pixel-6 dawn-no-backend-validation ] webgpu:
 crbug.com/0000 [ dawn-no-backend-validation intel no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=4;rows=4 [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation no-asan no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=4;rows=4 [ Failure ]
 crbug.com/0000 [ intel-0x4680 no-asan release-x64 target-cpu-64 webgpu-dxc-enabled win ] webgpu:shader,execution,expression,call,builtin,select:short_circuit:cond=false;preventValueOptimizations=false;overload="scalar" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="c";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="f";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_1d:stage="v";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="c";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="f";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d:stage="v";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="c";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="f";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_2d_array:stage="v";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="c";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="f";format="rgba16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="r16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="r16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="rg16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="rg16unorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="rgba16snorm" [ Failure ]
-crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:storage_textures_3d:stage="v";format="rgba16unorm" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="c";textureType="texture_external";filt="nearest";modeU="m";modeV="r" [ Failure ]
 crbug.com/0000 [ dawn-backend-validation intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="r";modeV="r" [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation intel-0x9bc5 no-asan release-x64 target-cpu-64 webgpu-dxc-enabled win ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:stage="f";format="rgba32float";filt="linear";mode="c" [ Failure ]
