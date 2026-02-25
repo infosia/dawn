@@ -986,7 +986,7 @@ class Printer : public tint::TextGenerator {
         if (c->Func() == msl::BuiltinFn::kPointerOffset) {
             out << "reinterpret_cast<";
             EmitType(out, c->Result()->Type());
-            out << ">(reinterpret_cast<const constant char*>(";
+            out << ">(reinterpret_cast<uintptr_t>(";
             EmitValue(out, c->Operand(0));
             out << ") + ";
             EmitValue(out, c->Operand(1));
