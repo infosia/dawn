@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "531819b0_338bee5d",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-25T23:06:47Z",
+      "side": 1,
+      "message": "Non-blocking nit, but if IIRC this could just be `mState-\u003emCallingCallbacks \u003d false;`, right? Since the arrow operator takes a lock?",
+      "revId": "cc15ffc035ab55086f4e31912781e6c369a3702d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
