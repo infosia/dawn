@@ -1846,6 +1846,9 @@ bool Converter::Convert(wgpu::WGSLLanguageFeatureName& out, interop::WGSLLanguag
         case interop::WGSLLanguageFeatureName::kLinearIndexing:
             out = wgpu::WGSLLanguageFeatureName::LinearIndexing;
             return true;
+        case interop::WGSLLanguageFeatureName::kTextureFormatsTier1:
+            out = wgpu::WGSLLanguageFeatureName::TextureFormatsTier1;
+            return true;
     }
     return false;
 }
@@ -1902,6 +1905,9 @@ bool Converter::Convert(interop::WGSLLanguageFeatureName& out, wgpu::WGSLLanguag
             return true;
         case wgpu::WGSLLanguageFeatureName::LinearIndexing:
             out = interop::WGSLLanguageFeatureName::kLinearIndexing;
+            return true;
+        case wgpu::WGSLLanguageFeatureName::TextureFormatsTier1:
+            out = interop::WGSLLanguageFeatureName::kTextureFormatsTier1;
             return true;
 
         case wgpu::WGSLLanguageFeatureName::ChromiumTestingUnimplemented:
