@@ -573,6 +573,7 @@ func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	}
 	fmt.Println()
 
+	failed_files := []string{}
 	for _, f := range failures {
 		color.Set(color.FgBlue)
 		fmt.Printf("%s ", f.file)
@@ -582,8 +583,12 @@ func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 		fmt.Println("FAIL")
 		color.Unset()
 		fmt.Println(indent(f.err.Error(), 4))
+
+		failed_files = append(failed_files, f.file)
 	}
 	if len(failures) > 0 {
+		fmt.Println("Failed Files")
+		fmt.Println(strings.Join(failed_files, "\n"))
 		fmt.Println()
 	}
 
