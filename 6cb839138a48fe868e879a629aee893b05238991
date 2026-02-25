@@ -34,6 +34,24 @@
       "parentUuid": "99c99831_f0c4238a",
       "revId": "6cb839138a48fe868e879a629aee893b05238991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3d01d60_4f2ad666",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-25T22:51:20Z",
+      "side": 1,
+      "message": "I think the issue I have is that, # CAT:Accuracy \u003d\u003d\u003d ignore\n\nI don\u0027t think that\u0027s what we want. I think what we want is that new GPUs and new drivers pass these tests and I\u0027m worried that # CAT::Accuracy means we won\u0027t check. It also feels like it\u0027s down playing the issues.\n\noffset issues are not off by 0.001 issues. They are you have an array with [1, -1000, -10000000] and on some devices you ask for array[1] but get array[2] or array[0]. That\u0027s not an \"accuracy\" issue since the value you use in your calculation could be way way off.\n\nGiven offsets don\u0027t work in so many places I kind of wish we\u0027d just deprecate them. Print \"warning: texture offsets don\u0027t work\" and encourage people to not use them. After which maybe we can just remove all the offset tests or skip all of them.",
+      "parentUuid": "225bbdc7_c961f8be",
+      "revId": "6cb839138a48fe868e879a629aee893b05238991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
