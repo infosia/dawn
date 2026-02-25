@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce1804e_e94e4b77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-25T23:00:06Z",
+      "side": 1,
+      "message": "PTAL\n\n[led run](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-linux-x64-dbg/1/infra) with the infra/specs entries removed and the Starlark version forcibly applied looks good.",
+      "revId": "67f14512c336d6a92eb644875c21d72576ccb734",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
