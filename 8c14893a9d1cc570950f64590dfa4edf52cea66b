@@ -16,6 +16,24 @@
       "message": "I am not sure this toggle is enough to allow WaitAny on any thread.\n\n- Front-end\u0027s WaitAny will call [WaitQueueSerials here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/EventManager.cpp;drc\u003d0bd06bf896dd685d16fa790986344929e12ed5a6;l\u003d197)\n- Which in turn will call [Queue::WaitForQueueSerial](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/EventManager.cpp;drc\u003d0bd06bf896dd685d16fa790986344929e12ed5a6;l\u003d164)\n- Then triggers [Queue::WaitForQueueSerialImpl](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ExecutionQueue.cpp;drc\u003d0bd06bf896dd685d16fa790986344929e12ed5a6;l\u003d91)\n- The OpenGL\u0027s implementation will call [eglClientWaitSync](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/QueueGL.cpp;drc\u003d0bd06bf896dd685d16fa790986344929e12ed5a6;l\u003d200) which requires a current context. I don\u0027t think it will work without `GLAllowContextOnMultiThreads` toggle.",
       "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bac81ce_52728bd4",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-25T14:15:36Z",
+      "side": 1,
+      "message": "Thanks for your analysis. However, I think the reason that this works is that `MapAsyncImpl()` does not increment the serial on this path, so it does not require a `eglClientWaitSync()`. It is specific to the `MapAsync()` / `WaitAny()` call pattern used by Graphite, though. If any other calls were made between those two that incremented the serial (e.g., GL calls), it would likely fail.\n\nI\u0027ll update the description to reflect this more narrow functionality.",
+      "parentUuid": "5b5e71bc_bd27f9d6",
+      "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
