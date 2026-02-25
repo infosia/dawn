@@ -45,6 +45,9 @@
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/ShaderModule.h"
+#include "dawn/native/dawn_platform.h"
+#include "webgpu/webgpu_cpp.h"
+#include "webgpu/webgpu_cpp_print.h"
 
 namespace dawn::native {
 
@@ -249,7 +252,6 @@ MaybeError MergeEntries(BindGroupLayoutEntry* modifiedEntry,
     bool compatible =
         modifiedEntry->binding == mergedEntry.binding &&
         modifiedEntry->buffer.type == mergedEntry.buffer.type &&
-        modifiedEntry->sampler.type == mergedEntry.sampler.type &&
         // Compatibility between these sample types is checked below.
         (modifiedEntry->texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) ==
             (mergedEntry.texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) &&
@@ -261,20 +263,36 @@ MaybeError MergeEntries(BindGroupLayoutEntry* modifiedEntry,
                      modifiedEntry->buffer.hasDynamicOffset == mergedEntry.buffer.hasDynamicOffset;
     }
 
+    if (modifiedEntry->sampler.type != wgpu::SamplerBindingType::BindingNotUsed) {
+        bool bindingTypeEqual = modifiedEntry->sampler.type == mergedEntry.sampler.type;
+        bool mergedUnknown = mergedEntry.sampler.type == kUnknownFilteringSamplerBindingType;
+
+        bool compatibleBindingType =
+            bindingTypeEqual || mergedUnknown ||
+            (modifiedEntry->sampler.type == wgpu::SamplerBindingType::Filtering &&
+             mergedEntry.sampler.type == wgpu::SamplerBindingType::NonFiltering);
+
+        compatible = bindingTypeEqual || compatibleBindingType;
+
+        std::cout << " mod: " << modifiedEntry->sampler.type
+                  << " merged: " << mergedEntry.sampler.type << "\n";
+    }
+
     if (modifiedEntry->texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) {
-        // Sample types are compatible if they are exactly equal,
-        // or if the |modifiedEntry| is Float and the |mergedEntry| is UnfilterableFloat.
-        // Note that the |mergedEntry| never has type Float. Texture bindings all start
-        // as UnfilterableFloat and are promoted to Float if they are statically used with
-        // a sampler.
-        DAWN_ASSERT(mergedEntry.texture.sampleType != wgpu::TextureSampleType::Float);
+        bool sampleTypesEqual = modifiedEntry->texture.sampleType == mergedEntry.texture.sampleType;
+        bool mergedUnknown = mergedEntry.texture.sampleType == kUnknownFilterableFloatSampleType;
+
         bool compatibleSampleTypes =
-            modifiedEntry->texture.sampleType == mergedEntry.texture.sampleType ||
+            sampleTypesEqual || mergedUnknown ||
             (modifiedEntry->texture.sampleType == wgpu::TextureSampleType::Float &&
              mergedEntry.texture.sampleType == wgpu::TextureSampleType::UnfilterableFloat);
+
         compatible = compatible && compatibleSampleTypes &&
                      modifiedEntry->texture.viewDimension == mergedEntry.texture.viewDimension &&
                      modifiedEntry->texture.multisampled == mergedEntry.texture.multisampled;
+
+        std::cout << " mod: " << modifiedEntry->texture.sampleType
+                  << " merged: " << mergedEntry.texture.sampleType << "\n";
     }
 
     if (modifiedEntry->storageTexture.access != wgpu::StorageTextureAccess::BindingNotUsed) {
@@ -321,26 +339,11 @@ BindGroupLayoutEntry ConvertMetadataToEntry(
             entry.buffer.type = bindingInfo.type;
             entry.buffer.minBindingSize = bindingInfo.minBindingSize;
         },
-        [&](const SamplerBindingInfo& bindingInfo) {
-            entry.sampler.type = bindingInfo.type;
-
-            // TODO(487593147): Support filiterability in default pipeline
-            if (entry.sampler.type == kUnknownFilteringSamplerBindingType) {
-                entry.sampler.type = wgpu::SamplerBindingType::Filtering;
-            }
-        },
+        [&](const SamplerBindingInfo& bindingInfo) { entry.sampler.type = bindingInfo.type; },
         [&](const TextureBindingInfo& bindingInfo) {
             entry.texture.sampleType = bindingInfo.sampleType;
             entry.texture.viewDimension = bindingInfo.viewDimension;
             entry.texture.multisampled = bindingInfo.multisampled;
-
-            // Default to UnfilterableFloat for texture_Nd<f32> as it will be promoted to Float
-            // if it is used with a sampler.
-            // TODO(487593147): Support filiterability in default pipeline
-            if (entry.texture.sampleType == wgpu::TextureSampleType::Float ||
-                entry.texture.sampleType == kUnknownFilterableFloatSampleType) {
-                entry.texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
-            }
         },
         [&](const StorageTextureBindingInfo& bindingInfo) {
             entry.storageTexture.access = bindingInfo.access;
@@ -454,15 +457,60 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
             }
         }
 
-        // Promote any Unfilterable textures used with a sampler to Filtering.
+        // For any texture with unknown-filterable promote to filtering if used with a sampler. For
+        // any sampler, with unknown-filtering promote to filtering if used with a filtering texture
+        // Promote any unknown-filterable textures used with a sampler to Filtering.
         for (const EntryPointMetadata::SamplerTexturePair& pair :
              metadata.samplerAndNonSamplerTexturePairs) {
             if (pair.sampler == EntryPointMetadata::nonSamplerBindingPoint) {
                 continue;
             }
             BindGroupLayoutEntry* entry = &entryData[pair.texture.group][pair.texture.binding];
-            if (entry->texture.sampleType == wgpu::TextureSampleType::UnfilterableFloat) {
+
+            wgpu::TextureSampleType texSampleType = entry->texture.sampleType;
+            wgpu::SamplerBindingType samplerBindingType = entry->sampler.type;
+
+            // We have four cases for determining filterability settings
+            //
+            // 1. Neither are unknown, in which case we just take what's provided
+            // 2. Both are unknown, pick the most restrictive `Float`/`Filtering`
+            // 3. Texture unknown, sampler known, if sampler is `Filtering`, set `Float`,
+            //    otherwise set `UnfilterableFloat`
+            // 4. Sampler unknown, texture known, if texture is `Float`, set `Filtering`,
+            //    otherwise set `NonFiltering`
+            if (texSampleType != kUnknownFilterableFloatSampleType &&
+                samplerBindingType != kUnknownFilteringSamplerBindingType) {
+                continue;
+            }
+            if (texSampleType == kUnknownFilterableFloatSampleType &&
+                samplerBindingType == kUnknownFilteringSamplerBindingType) {
                 entry->texture.sampleType = wgpu::TextureSampleType::Float;
+                entry->sampler.type = wgpu::SamplerBindingType::Filtering;
+            } else if (texSampleType == kUnknownFilterableFloatSampleType) {
+                if (samplerBindingType == wgpu::SamplerBindingType::Filtering) {
+                    entry->texture.sampleType = wgpu::TextureSampleType::Float;
+                } else {
+                    entry->texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
+                }
+            } else if (samplerBindingType == kUnknownFilteringSamplerBindingType) {
+                entry->sampler.type = wgpu::SamplerBindingType::NonFiltering;
+            } else {
+                DAWN_UNREACHABLE();
+            }
+        }
+
+        // For any texture/sampler entry which is still set to unknown set to
+        // unfilterable/filtering.
+        for (auto [group, groupBindings] : Enumerate(metadata.bindings)) {
+            for (const auto& [bindingNumber, shaderBinding] : groupBindings) {
+                BindGroupLayoutEntry* entry = &entryData[group][bindingNumber];
+
+                if (entry->texture.sampleType == kUnknownFilterableFloatSampleType) {
+                    entry->texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
+                }
+                if (entry->sampler.type == kUnknownFilteringSamplerBindingType) {
+                    entry->sampler.type = wgpu::SamplerBindingType::Filtering;
+                }
             }
         }
 
