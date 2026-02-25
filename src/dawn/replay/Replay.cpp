@@ -44,6 +44,7 @@
 #include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
+#include "src/dawn/common/StackAllocated.h"
 #include "src/dawn/replay/ReplayImpl.h"
 
 namespace dawn::replay {
@@ -172,7 +173,7 @@ class DawnResourceVisitor : public ResourceVisitor {
     template <typename T>
     MaybeError Create(const T& data);
 
-    DawnRootCommandVisitor* mVisitor;
+    raw_ptr<DawnRootCommandVisitor> mVisitor;
 };
 
 class DawnRootCommandVisitor : public RootCommandVisitor {
@@ -287,7 +288,7 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     schema::ObjectId mCurrentResourceId;
     std::string mCurrentResourceLabel;
 
-    ReadHead* mContentReadHead = nullptr;
+    raw_ptr<ReadHead> mContentReadHead = nullptr;
 
     std::string kNotFound;
 };
@@ -491,10 +492,18 @@ MaybeError InitializeTexture(const DawnRootCommandVisitor& replay,
     return {};
 }
 
-struct BindGroupEntryVisitor {
+struct BindGroupEntryVisitor : public StackAllocated {
     const DawnRootCommandVisitor& replay;
     std::vector<wgpu::BindGroupEntry>& entries;
     std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>& externalTextureBindingEntries;
+
+    BindGroupEntryVisitor(const DawnRootCommandVisitor& replay,
+                          std::vector<wgpu::BindGroupEntry>& entries,
+                          std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>&
+                              externalTextureBindingEntries)
+        : replay(replay),
+          entries(entries),
+          externalTextureBindingEntries(externalTextureBindingEntries) {}
 
     template <typename T>
     MaybeError operator()(const T& data) {
@@ -569,9 +578,13 @@ struct BindGroupEntryVisitor {
     }
 };
 
-struct BindGroupLayoutEntryVisitor {
+struct BindGroupLayoutEntryVisitor : public StackAllocated {
     wgpu::BindGroupLayoutEntry& entry;
     wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout;
+
+    BindGroupLayoutEntryVisitor(wgpu::BindGroupLayoutEntry& entry,
+                                wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout)
+        : entry(entry), externalTextureBindingLayout(externalTextureBindingLayout) {}
 
     template <typename T>
     MaybeError operator()(const T& data) {
