@@ -52,6 +52,24 @@
       "parentUuid": "6bac81ce_52728bd4",
       "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b0cf627_13cc98ea",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-25T17:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a134d6_3841afac",
+      "revId": "8c14893a9d1cc570950f64590dfa4edf52cea66b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
