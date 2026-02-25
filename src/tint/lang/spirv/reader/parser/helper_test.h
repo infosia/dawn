@@ -68,7 +68,7 @@ class SpirvParserTestHelperBase : public BASE {
         TINT_CHECK_RESULT_UNWRAP(binary, Assemble(spirv_asm, spv_version));
 
         // Parse the SPIR-V to produce an IR module.
-        TINT_CHECK_RESULT_UNWRAP(parsed, Parse(Slice(binary.data(), binary.size()), options));
+        TINT_CHECK_RESULT_UNWRAP(parsed, Parse(binary, options));
 
         // Validate the IR module against the capabilities supported by the SPIR-V dialect.
         TINT_CHECK_RESULT(

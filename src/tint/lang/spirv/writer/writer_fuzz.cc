@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <span>
 #include <string>
 #include <vector>
 
@@ -120,7 +121,7 @@ namespace {
 
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
 Result<SuccessType> ValidateUsingVulkan(const std::string& vk_icd_path,
-                                        Slice<const uint32_t> spirv) {
+                                        std::span<const uint32_t> spirv) {
 #if TINT_BUILD_IS_WIN
 #error "TINT_BUILD_FUZZER_VULKAN_SUPPORT is not supported on Windows"
 #endif  // TINT_BUILD_IS_WIN
@@ -178,8 +179,8 @@ Result<SuccessType> ValidateUsingVulkan(const std::string& vk_icd_path,
 
     VkShaderModuleCreateInfo shader_module_create_info = {
         .sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO,
-        .codeSize = spirv.len * sizeof(uint32_t),
-        .pCode = spirv.data,
+        .codeSize = spirv.size() * sizeof(uint32_t),
+        .pCode = spirv.data(),
     };
 
     VkShaderModule shader_module;
@@ -346,7 +347,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     }
 
     auto& spirv = output.spirv;
-    auto res = validate::Validate(Slice(spirv.data(), spirv.size()), target_env);
+    auto res = validate::Validate(spirv, target_env);
     TINT_ASSERT(res == Success) << "output of SPIR-V writer failed to validate with SPIR-V Tools\n"
                                 << res.Failure() << "\n\n"
                                 << "IR:\n"
@@ -354,8 +355,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
 
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
     if (!context.options.vk_icd.empty()) {
-        TINT_CHECK_RESULT(
-            ValidateUsingVulkan(context.options.vk_icd, Slice(spirv.data(), spirv.size())));
+        TINT_CHECK_RESULT(ValidateUsingVulkan(context.options.vk_icd, spirv));
     }
 #endif
 

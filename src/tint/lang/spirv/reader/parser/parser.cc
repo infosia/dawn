@@ -31,6 +31,7 @@
 #include <list>
 #include <memory>
 #include <optional>
+#include <span>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -98,14 +99,14 @@ class Parser {
 
     /// @param spirv the SPIR-V binary data
     /// @returns the generated SPIR-V IR module on success, or failure
-    Result<core::ir::Module> Run(Slice<const uint32_t> spirv) {
+    Result<core::ir::Module> Run(std::span<const uint32_t> spirv) {
         // Validate the incoming SPIR-V binary.
         TINT_CHECK_RESULT(validate::Validate(spirv, kTargetEnv));
 
         // Build the SPIR-V tools internal representation of the SPIR-V module.
         spvtools::Context context(kTargetEnv);
-        spirv_context_ =
-            spvtools::BuildModule(kTargetEnv, context.CContext()->consumer, spirv.data, spirv.len);
+        spirv_context_ = spvtools::BuildModule(kTargetEnv, context.CContext()->consumer,
+                                               spirv.data(), spirv.size());
         if (!spirv_context_) {
             return Failure("failed to build the internal representation of the module");
         }
@@ -4621,7 +4622,7 @@ class Parser {
 
 }  // namespace
 
-Result<core::ir::Module> Parse(Slice<const uint32_t> spirv, const Options& options) {
+Result<core::ir::Module> Parse(std::span<const uint32_t> spirv, const Options& options) {
     return Parser(options).Run(spirv);
 }
 
