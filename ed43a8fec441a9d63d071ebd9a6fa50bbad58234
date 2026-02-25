@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "207c7299_7edf019f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-02-25T20:32:27Z",
+      "side": 1,
+      "message": "PTAAL, I expanded this to cover the related tests etc., so nothing below src/tint/lang/spirv/ uses tint::Slice now.",
+      "revId": "ed43a8fec441a9d63d071ebd9a6fa50bbad58234",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
