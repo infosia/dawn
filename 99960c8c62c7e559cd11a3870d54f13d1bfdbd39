@@ -34,6 +34,24 @@
       "parentUuid": "a7517747_bbd62c21",
       "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d4e45af_b4189093",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-25T07:34:59Z",
+      "side": 1,
+      "message": "Ah got it. I think the comment is a bit misleading. How about this (order swapped to make the ordering easier to understand even though it doesn\u0027t make a difference because of the locks):\n\n```\n        mDevice-\u003emCallbackInfos.Use\u003cNotifyType::None\u003e([](auto callbackInfos) {\n            callbackInfos-\u003eerror \u003d kEmptyUncapturedErrorCallbackInfo;\n            callbackInfos-\u003elogging \u003d kEmptyLoggingCallbackInfo;\n\n            // UncapturedError and Logging callbacks are spontaneous and must stop before we can\n            // call the DeviceLost `mCallback()`. We\u0027ve cleared the callbacks, but need to wait for\n            // any outstanding callbacks that might still be using the old ones, before continuing.\n            callbackInfos.Wait([](auto\u0026 x) { return x.semaphore \u003d\u003d 0; });\n        });\n```\n\nJust curious, can this technically deadlock because the semaphore can keep getting incremented before it reaches 0? Or do we guarantee we stop enqueueing new events now that the device is mid-shutdown? It shouldn\u0027t really matter but maybe we should tweak to avoid that possibility.",
+      "parentUuid": "00766328_9d59833a",
+      "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
