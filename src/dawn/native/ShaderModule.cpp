@@ -974,7 +974,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             metadata->interStageVariables[location] = variable;
             if (inputVar.interpolation_sampling ==
                 tint::inspector::InterpolationSampling::kSample) {
-                metadata->isFragMultiSampled = true;
+                metadata->usesSampleInterpolants = true;
             }
         }
 
