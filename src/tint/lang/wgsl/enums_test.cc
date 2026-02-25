@@ -332,6 +332,7 @@ static constexpr LanguageFeatureCase kValidLanguageFeatureCases[] = {
     {"swizzle_assignment", LanguageFeature::kSwizzleAssignment},
     {"texel_buffers", LanguageFeature::kTexelBuffers},
     {"texture_and_sampler_let", LanguageFeature::kTextureAndSamplerLet},
+    {"texture_formats_tier1", LanguageFeature::kTextureFormatsTier1},
     {"uniform_buffer_standard_layout", LanguageFeature::kUniformBufferStandardLayout},
     {"unrestricted_pointer_parameters", LanguageFeature::kUnrestrictedPointerParameters},
 };
@@ -397,12 +398,15 @@ static constexpr LanguageFeatureCase kInvalidLanguageFeatureCases[] = {
     {"textukke_aVd_satpler_lHH", LanguageFeature::kUndefined},
     {"texturerrand_sampler_let", LanguageFeature::kUndefined},
     {"teture_and_sampleWWs_let", LanguageFeature::kUndefined},
-    {"unform_buffer_standarY_layout", LanguageFeature::kUndefined},
-    {"uniffrm_buffer_standLrd_lyoqt", LanguageFeature::kUndefined},
-    {"vvniffm_buffer_standarduulayo22t", LanguageFeature::kUndefined},
-    {"unrestricted_pointr_paraeters", LanguageFeature::kUndefined},
-    {"unrstricted_poiYYter_parametes", LanguageFeature::kUndefined},
-    {"unrestrYYEted_y7ointer_parameters", LanguageFeature::kUndefined},
+    {"teYture_format_tier1", LanguageFeature::kUndefined},
+    {"tqture_Lormats_tief1", LanguageFeature::kUndefined},
+    {"texture_fvrmatf_tuu22r1", LanguageFeature::kUndefined},
+    {"uiorm_buffer_standard_layout", LanguageFeature::kUndefined},
+    {"unifrm_bufferYYtandard_layout", LanguageFeature::kUndefined},
+    {"uniformYYbufyer77standard_layoEt", LanguageFeature::kUndefined},
+    {"unrestrictood_pointe_paMamdters", LanguageFeature::kUndefined},
+    {"unrestricMMed_pointer_paameters", LanguageFeature::kUndefined},
+    {"unrestricted_poi55ter_parameters", LanguageFeature::kUndefined},
 };
 
 using LanguageFeatureParseTest = testing::TestWithParam<LanguageFeatureCase>;

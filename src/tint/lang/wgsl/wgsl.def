@@ -124,6 +124,7 @@ enum language_feature {
   filtering_parameters
   swizzle_assignment
   linear_indexing
+  texture_formats_tier1
 
   // Non-standard language features for Chromium developers.
   chromium_print
