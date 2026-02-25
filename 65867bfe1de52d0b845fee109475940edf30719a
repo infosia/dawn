@@ -404,6 +404,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "615c509f_8890b6e6",
+        "filename": "src/dawn/tests/end2end/TextureSamplerValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-25T14:11:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a2731d2c_6bb366e8",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abd01feb_fe5e6d3b",
@@ -435,6 +453,24 @@
       "side": 1,
       "message": "No, because we still have things like `texture_multisampled_2d\u003cf32\u003e` which is `kFloat` type.",
       "parentUuid": "abd01feb_fe5e6d3b",
+      "revId": "65867bfe1de52d0b845fee109475940edf30719a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c1813b8_ccc28e70",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-25T14:11:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2597ad89_8323c139",
       "revId": "65867bfe1de52d0b845fee109475940edf30719a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
