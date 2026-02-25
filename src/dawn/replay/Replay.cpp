@@ -44,6 +44,7 @@
 #include "dawn/replay/BlitBufferToDepthTexture.h"
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
+#include "partition_alloc/pointers/raw_ref.h"
 #include "src/dawn/replay/ReplayImpl.h"
 
 namespace dawn::replay {
@@ -441,16 +442,17 @@ DAWN_REPLAY_BINDING_GROUP_LAYOUT_ENTRY_TYPES_ENUM(DAWN_REPLAY_GEN_BINDGROUP_DESE
 #undef DAWN_REPLAY_BINDGROUP_DESERIALIZE_CASE_VALID
 
 struct BindGroupEntryVisitor {
-    const ReplayImpl& replay;
-    std::vector<wgpu::BindGroupEntry>& entries;
-    std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>& externalTextureBindingEntries;
+    const raw_ref<const ReplayImpl> replay;
+    const raw_ref<std::vector<wgpu::BindGroupEntry>> entries;
+    const raw_ref<std::vector<std::unique_ptr<wgpu::ExternalTextureBindingEntry>>>
+        externalTextureBindingEntries;
 
     template <typename T>
     MaybeError operator()(const T& data) {
         wgpu::BindGroupEntry entry;
         entry.binding = data.binding;
         DAWN_TRY(FillEntry(entry, data.data));
-        entries.push_back(entry);
+        entries->push_back(entry);
         return {};
     }
 
@@ -461,7 +463,7 @@ struct BindGroupEntryVisitor {
   private:
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeBufferBindingData& data) {
-        entry.buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
+        entry.buffer = replay->GetObjectById<wgpu::Buffer>(data.bufferId);
         entry.offset = data.offset;
         entry.size = data.size;
         return {};
@@ -469,19 +471,19 @@ struct BindGroupEntryVisitor {
 
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeSamplerBindingData& data) {
-        entry.sampler = replay.GetObjectById<wgpu::Sampler>(data.samplerId);
+        entry.sampler = replay->GetObjectById<wgpu::Sampler>(data.samplerId);
         return {};
     }
 
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeTextureBindingData& data) {
-        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        entry.textureView = replay->GetObjectById<wgpu::TextureView>(data.textureViewId);
         return {};
     }
 
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeStorageTextureBindingData& data) {
-        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        entry.textureView = replay->GetObjectById<wgpu::TextureView>(data.textureViewId);
         return {};
     }
 
@@ -492,22 +494,22 @@ struct BindGroupEntryVisitor {
 
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeInputAttachmentBindingInfoData& data) {
-        entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+        entry.textureView = replay->GetObjectById<wgpu::TextureView>(data.textureViewId);
         return {};
     }
 
     MaybeError FillEntry(wgpu::BindGroupEntry& entry,
                          const schema::BindGroupEntryTypeExternalTextureBindingData& data) {
         if (data.externalTextureId != 0) {
-            auto& externalBindingEntryPtr = externalTextureBindingEntries.emplace_back(
+            auto& externalBindingEntryPtr = externalTextureBindingEntries->emplace_back(
                 std::make_unique<wgpu::ExternalTextureBindingEntry>());
             externalBindingEntryPtr->externalTexture =
-                replay.GetObjectById<wgpu::ExternalTexture>(data.externalTextureId);
+                replay->GetObjectById<wgpu::ExternalTexture>(data.externalTextureId);
             entry.nextInChain = externalBindingEntryPtr.get();
         } else {
             // External texture binding can bind a regular texture view
             DAWN_ASSERT(data.textureViewId != 0);
-            entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
+            entry.textureView = replay->GetObjectById<wgpu::TextureView>(data.textureViewId);
         }
         return {};
     }
@@ -519,14 +521,14 @@ struct BindGroupEntryVisitor {
 };
 
 struct BindGroupLayoutEntryVisitor {
-    wgpu::BindGroupLayoutEntry& entry;
-    wgpu::ExternalTextureBindingLayout& externalTextureBindingLayout;
+    const raw_ref<wgpu::BindGroupLayoutEntry> entry;
+    const raw_ref<wgpu::ExternalTextureBindingLayout> externalTextureBindingLayout;
 
     template <typename T>
     MaybeError operator()(const T& data) {
-        entry.binding = data.binding.binding;
-        entry.visibility = data.binding.visibility;
-        entry.bindingArraySize = data.binding.bindingArraySize;
+        entry->binding = data.binding.binding;
+        entry->visibility = data.binding.visibility;
+        entry->bindingArraySize = data.binding.bindingArraySize;
         return FillEntry(data.data);
     }
 
@@ -536,7 +538,7 @@ struct BindGroupLayoutEntryVisitor {
 
   private:
     MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeBufferBindingData& data) {
-        entry.buffer = {
+        entry->buffer = {
             .type = data.type,
             .hasDynamicOffset = data.hasDynamicOffset,
             .minBindingSize = data.minBindingSize,
@@ -545,12 +547,12 @@ struct BindGroupLayoutEntryVisitor {
     }
 
     MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeSamplerBindingData& data) {
-        entry.sampler = {.type = data.type};
+        entry->sampler = {.type = data.type};
         return {};
     }
 
     MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeStorageTextureBindingData& data) {
-        entry.storageTexture = {
+        entry->storageTexture = {
             .access = data.access,
             .format = data.format,
             .viewDimension = data.viewDimension,
@@ -559,7 +561,7 @@ struct BindGroupLayoutEntryVisitor {
     }
 
     MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeTextureBindingData& data) {
-        entry.texture = {
+        entry->texture = {
             .sampleType = data.sampleType,
             .viewDimension = data.viewDimension,
             .multisampled = data.multisampled,
@@ -568,7 +570,7 @@ struct BindGroupLayoutEntryVisitor {
     }
 
     MaybeError FillEntry(const schema::BindGroupLayoutEntryTypeExternalTextureBindingData& data) {
-        entry.nextInChain = &externalTextureBindingLayout;
+        entry->nextInChain = &externalTextureBindingLayout.get();
         return {};
     }
 
@@ -592,7 +594,8 @@ ResultOrError<wgpu::BindGroup> CreateBindGroup(const ReplayImpl& replay,
     for (uint32_t i = 0; i < bg.numEntries; ++i) {
         BindGroupEntryVariant entryVariant;
         DAWN_TRY(Deserialize(readHead, &entryVariant));
-        DAWN_TRY(std::visit(BindGroupEntryVisitor{replay, entries, externalTextureBindingEntries},
+        DAWN_TRY(std::visit(BindGroupEntryVisitor{raw_ref(replay), raw_ref(entries),
+                                                  raw_ref(externalTextureBindingEntries)},
                             entryVariant));
     }
 
@@ -628,8 +631,9 @@ ResultOrError<wgpu::BindGroupLayout> CreateBindGroupLayout(const ReplayImpl& rep
         DAWN_TRY(Deserialize(readHead, &entryVariant));
 
         wgpu::BindGroupLayoutEntry entry;
-        DAWN_TRY(std::visit(BindGroupLayoutEntryVisitor{entry, externalTextureBindingLayout},
-                            entryVariant));
+        DAWN_TRY(std::visit(
+            BindGroupLayoutEntryVisitor{raw_ref(entry), raw_ref(externalTextureBindingLayout)},
+            entryVariant));
         entries.push_back(entry);
     }
 
@@ -779,14 +783,14 @@ MaybeError ProcessCommands(ReadHead& readHead, Visitor&& visitor) {
 
 template <typename Pass>
 struct CommandVisitorBase {
-    const ReplayImpl& replay;
+    const raw_ref<const ReplayImpl> replay;
     Pass pass;
 
     CommandVisitorBase(const ReplayImpl& r, Pass p) : replay(r), pass(p) {}
 
     // SHARED_COMMANDS
     MaybeError operator()(const schema::CommandBufferCommandSetBindGroupCmdData& data) {
-        pass.SetBindGroup(data.index, replay.GetObjectById<wgpu::BindGroup>(data.bindGroupId),
+        pass.SetBindGroup(data.index, replay->GetObjectById<wgpu::BindGroup>(data.bindGroupId),
                           data.dynamicOffsets.size(), data.dynamicOffsets.data());
         return {};
     }
@@ -829,19 +833,21 @@ struct RenderVisitor : CommandVisitorBase<Pass> {
     using CommandVisitorBase<Pass>::pass;
 
     MaybeError operator()(const schema::CommandBufferCommandSetRenderPipelineCmdData& data) {
-        pass.SetPipeline(replay.template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
+        pass.SetPipeline(
+            this->replay->template GetObjectById<wgpu::RenderPipeline>(data.pipelineId));
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandSetVertexBufferCmdData& data) {
-        pass.SetVertexBuffer(data.slot, replay.template GetObjectById<wgpu::Buffer>(data.bufferId),
+        pass.SetVertexBuffer(data.slot,
+                             this->replay->template GetObjectById<wgpu::Buffer>(data.bufferId),
                              data.offset, data.size);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandSetIndexBufferCmdData& data) {
-        pass.SetIndexBuffer(replay.template GetObjectById<wgpu::Buffer>(data.bufferId), data.format,
-                            data.offset, data.size);
+        pass.SetIndexBuffer(this->replay->template GetObjectById<wgpu::Buffer>(data.bufferId),
+                            data.format, data.offset, data.size);
         return {};
     }
 
@@ -857,14 +863,15 @@ struct RenderVisitor : CommandVisitorBase<Pass> {
     }
 
     MaybeError operator()(const schema::CommandBufferCommandDrawIndirectCmdData& data) {
-        pass.DrawIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+        pass.DrawIndirect(this->replay->template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
                           data.indirectOffset);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandDrawIndexedIndirectCmdData& data) {
-        pass.DrawIndexedIndirect(replay.template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
-                                 data.indirectOffset);
+        pass.DrawIndexedIndirect(
+            this->replay->template GetObjectById<wgpu::Buffer>(data.indirectBufferId),
+            data.indirectOffset);
         return {};
     }
 };
@@ -1174,7 +1181,7 @@ struct ComputePassVisitor : CommandVisitorBase<wgpu::ComputePassEncoder> {
     using CommandVisitorBase<wgpu::ComputePassEncoder>::operator();
 
     MaybeError operator()(const schema::CommandBufferCommandSetComputePipelineCmdData& data) {
-        pass.SetPipeline(replay.GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
+        pass.SetPipeline(this->replay->GetObjectById<wgpu::ComputePipeline>(data.pipelineId));
         return {};
     }
 
@@ -1184,13 +1191,14 @@ struct ComputePassVisitor : CommandVisitorBase<wgpu::ComputePassEncoder> {
     }
 
     MaybeError operator()(const schema::CommandBufferCommandDispatchIndirectCmdData& data) {
-        pass.DispatchWorkgroupsIndirect(replay.GetObjectById<wgpu::Buffer>(data.bufferId),
+        pass.DispatchWorkgroupsIndirect(this->replay->GetObjectById<wgpu::Buffer>(data.bufferId),
                                         data.offset);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
-        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        pass.WriteTimestamp(this->replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                            data.queryIndex);
         return {};
     }
 
@@ -1229,7 +1237,7 @@ struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
     MaybeError operator()(const schema::CommandBufferCommandExecuteBundlesCmdData& data) {
         std::vector<wgpu::RenderBundle> bundles;
         for (auto bundleId : data.bundleIds) {
-            bundles.push_back(replay.GetObjectById<wgpu::RenderBundle>(bundleId));
+            bundles.push_back(this->replay->GetObjectById<wgpu::RenderBundle>(bundleId));
         }
         pass.ExecuteBundles(bundles.size(), bundles.data());
         return {};
@@ -1267,7 +1275,8 @@ struct RenderPassVisitor : RenderVisitor<wgpu::RenderPassEncoder> {
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
-        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        pass.WriteTimestamp(this->replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                            data.queryIndex);
         return {};
     }
 
@@ -1299,7 +1308,7 @@ MaybeError DeserializeCommand<EncoderVariant>(ReadHead& readHead,
 }
 
 struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
-    ReadHead& readHead;
+    const raw_ref<ReadHead> readHead;
     wgpu::Device device;
 
     EncoderVisitor(const ReplayImpl& r, wgpu::CommandEncoder p, ReadHead& rh, wgpu::Device d)
@@ -1308,26 +1317,29 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
     using CommandVisitorBase<wgpu::CommandEncoder>::operator();
 
     MaybeError operator()(const schema::CommandBufferCommandBeginComputePassCmdData& data) {
-        wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
+        wgpu::PassTimestampWrites timestampWrites =
+            ToWGPU(this->replay.get(), data.timestampWrites);
         wgpu::ComputePassDescriptor desc{
             .label = wgpu::StringView(data.label),
             .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
         };
         wgpu::ComputePassEncoder computePass = pass.BeginComputePass(&desc);
-        return ProcessComputePassCommands(replay, readHead, device, computePass);
+        return ProcessComputePassCommands(this->replay.get(), this->readHead.get(), device,
+                                          computePass);
     }
 
     MaybeError operator()(const schema::CommandBufferCommandBeginRenderPassCmdData& data) {
-        wgpu::PassTimestampWrites timestampWrites = ToWGPU(replay, data.timestampWrites);
+        wgpu::PassTimestampWrites timestampWrites =
+            ToWGPU(this->replay.get(), data.timestampWrites);
         std::vector<wgpu::RenderPassColorAttachment> colorAttachments;
 
         for (const auto& attachment : data.colorAttachments) {
             colorAttachments.push_back(wgpu::RenderPassColorAttachment{
                 .nextInChain = nullptr,
-                .view = replay.GetObjectById<wgpu::TextureView>(attachment.viewId),
+                .view = this->replay->GetObjectById<wgpu::TextureView>(attachment.viewId),
                 .depthSlice = attachment.depthSlice,
                 .resolveTarget =
-                    replay.GetObjectById<wgpu::TextureView>(attachment.resolveTargetId),
+                    this->replay->GetObjectById<wgpu::TextureView>(attachment.resolveTargetId),
                 .loadOp = attachment.loadOp,
                 .storeOp = attachment.storeOp,
                 .clearValue = ToWGPU(attachment.clearValue),
@@ -1335,7 +1347,8 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
         }
 
         wgpu::RenderPassDepthStencilAttachment depthStencilAttachment{
-            .view = replay.GetObjectById<wgpu::TextureView>(data.depthStencilAttachment.viewId),
+            .view =
+                this->replay->GetObjectById<wgpu::TextureView>(data.depthStencilAttachment.viewId),
             .depthLoadOp = data.depthStencilAttachment.depthLoadOp,
             .depthStoreOp = data.depthStencilAttachment.depthStoreOp,
             .depthClearValue = data.depthStencilAttachment.depthClearValue,
@@ -1353,7 +1366,7 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
             .depthStencilAttachment =
                 depthStencilAttachment.view != nullptr ? &depthStencilAttachment : nullptr,
             .occlusionQuerySet =
-                replay.template GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
+                this->replay->template GetObjectById<wgpu::QuerySet>(data.occlusionQuerySetId),
             .timestampWrites = timestampWrites.querySet ? &timestampWrites : nullptr,
         };
 
@@ -1369,60 +1382,64 @@ struct EncoderVisitor : CommandVisitorBase<wgpu::CommandEncoder> {
         }
 
         wgpu::RenderPassEncoder renderPass = pass.BeginRenderPass(&desc);
-        return ProcessRenderPassCommands(replay, readHead, device, renderPass);
+        return ProcessRenderPassCommands(this->replay.get(), this->readHead.get(), device,
+                                         renderPass);
     }
 
     MaybeError operator()(const schema::CommandBufferCommandClearBufferCmdData& data) {
-        pass.ClearBuffer(replay.GetObjectById<wgpu::Buffer>(data.bufferId), data.offset, data.size);
+        pass.ClearBuffer(this->replay->GetObjectById<wgpu::Buffer>(data.bufferId), data.offset,
+                         data.size);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandCopyBufferToBufferCmdData& data) {
         pass.CopyBufferToBuffer(
-            replay.GetObjectById<wgpu::Buffer>(data.srcBufferId), data.srcOffset,
-            replay.GetObjectById<wgpu::Buffer>(data.dstBufferId), data.dstOffset, data.size);
+            this->replay->GetObjectById<wgpu::Buffer>(data.srcBufferId), data.srcOffset,
+            this->replay->GetObjectById<wgpu::Buffer>(data.dstBufferId), data.dstOffset, data.size);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandCopyBufferToTextureCmdData& data) {
-        wgpu::TexelCopyBufferInfo src = ToWGPU(replay, data.source);
-        wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
+        wgpu::TexelCopyBufferInfo src = ToWGPU(this->replay.get(), data.source);
+        wgpu::TexelCopyTextureInfo dst = ToWGPU(this->replay.get(), data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
         pass.CopyBufferToTexture(&src, &dst, &copySize);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandCopyTextureToBufferCmdData& data) {
-        wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
-        wgpu::TexelCopyBufferInfo dst = ToWGPU(replay, data.destination);
+        wgpu::TexelCopyTextureInfo src = ToWGPU(this->replay.get(), data.source);
+        wgpu::TexelCopyBufferInfo dst = ToWGPU(this->replay.get(), data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
         pass.CopyTextureToBuffer(&src, &dst, &copySize);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandCopyTextureToTextureCmdData& data) {
-        wgpu::TexelCopyTextureInfo src = ToWGPU(replay, data.source);
-        wgpu::TexelCopyTextureInfo dst = ToWGPU(replay, data.destination);
+        wgpu::TexelCopyTextureInfo src = ToWGPU(this->replay.get(), data.source);
+        wgpu::TexelCopyTextureInfo dst = ToWGPU(this->replay.get(), data.destination);
         wgpu::Extent3D copySize = ToWGPU(data.copySize);
         pass.CopyTextureToTexture(&src, &dst, &copySize);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandResolveQuerySetCmdData& data) {
-        pass.ResolveQuerySet(
-            replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.firstQuery, data.queryCount,
-            replay.GetObjectById<wgpu::Buffer>(data.destinationId), data.destinationOffset);
+        pass.ResolveQuerySet(this->replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                             data.firstQuery, data.queryCount,
+                             this->replay->GetObjectById<wgpu::Buffer>(data.destinationId),
+                             data.destinationOffset);
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteBufferCmdData& data) {
-        wgpu::Buffer buffer = replay.GetObjectById<wgpu::Buffer>(data.bufferId);
+        wgpu::Buffer buffer = this->replay->GetObjectById<wgpu::Buffer>(data.bufferId);
         pass.WriteBuffer(buffer, data.bufferOffset, data.data.data(), data.data.size());
         return {};
     }
 
     MaybeError operator()(const schema::CommandBufferCommandWriteTimestampCmdData& data) {
-        pass.WriteTimestamp(replay.GetObjectById<wgpu::QuerySet>(data.querySetId), data.queryIndex);
+        pass.WriteTimestamp(this->replay->GetObjectById<wgpu::QuerySet>(data.querySetId),
+                            data.queryIndex);
         return {};
     }
 
