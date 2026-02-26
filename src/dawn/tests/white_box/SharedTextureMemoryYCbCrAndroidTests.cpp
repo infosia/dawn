@@ -28,9 +28,12 @@
 #include <android/hardware_buffer.h>
 #include <webgpu/webgpu_cpp.h>
 
+#include <span>
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Assert.h"
+#include "dawn/common/Range.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -40,11 +43,54 @@
 namespace dawn {
 namespace {
 
+AHardwareBuffer* MakeYUVAHB(uint32_t width,
+                            uint32_t height,
+                            std::span<const uint8_t> yData,
+                            std::span<const uint8_t> uData,
+                            std::span<const uint8_t> vData) {
+    DAWN_ASSERT(width % 2 == 0 && height % 2 == 0);
+
+    AHardwareBuffer_Desc ahbDesc = {
+        .width = width,
+        .height = height,
+        .layers = 1,
+        .format = AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420,
+        .usage = AHARDWAREBUFFER_USAGE_CPU_WRITE_RARELY | AHARDWAREBUFFER_USAGE_CPU_READ_NEVER |
+                 AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
+    };
+
+    AHardwareBuffer* ahb = nullptr;
+    EXPECT_EQ(AHardwareBuffer_allocate(&ahbDesc, &ahb), 0);
+
+    AHardwareBuffer_Planes ahbPlanes;
+    EXPECT_EQ(AHardwareBuffer_lockPlanes(ahb, AHARDWAREBUFFER_USAGE_CPU_WRITE_RARELY, -1, nullptr,
+                                         &ahbPlanes),
+              0);
+
+    auto CopyPlane = [](std::span<const uint8_t> src, uint32_t srcWidth, uint32_t srcHeight,
+                        const AHardwareBuffer_Plane& dst) {
+        uint8_t* dstData = static_cast<uint8_t*>(dst.data);
+        for (uint32_t x : Range(srcWidth)) {
+            for (uint32_t y : Range(srcHeight)) {
+                dstData[y * dst.rowStride + x * dst.pixelStride] = src[y * srcWidth + x];
+            }
+        }
+    };
+
+    CopyPlane(yData, width, height, ahbPlanes.planes[0]);
+    CopyPlane(uData, width / 2, height / 2, ahbPlanes.planes[0]);
+    CopyPlane(vData, width / 2, height / 2, ahbPlanes.planes[0]);
+
+    EXPECT_EQ(AHardwareBuffer_unlock(ahb, nullptr), 0);
+
+    return ahb;
+}
+
 class SharedTextureMemoryYCbCrVulkanSamplersTests : public DawnTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
-                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::YCbCrVulkanSamplers};
+                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::StaticSamplers, wgpu::FeatureName::YCbCrVulkanSamplers};
     }
 };
 
@@ -345,6 +391,80 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
     beginDesc.nextInChain = &beginLayout;
 
     ASSERT_DEVICE_ERROR(memory.BeginAccess(texture, &beginDesc));
+}
+
+// Test sampling of a YCbCr 420 AHB using a static YCbCr sampler.
+TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
+    // Make the AHB and import it as an STM and wgpu::Texture.
+    const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
+    const std::array<uint8_t, 1> uData = {75};
+    const std::array<uint8_t, 1> vData = {125};
+
+    AHardwareBuffer* ahb = MakeYUVAHB(2, 2, yData, uData, vData);
+
+    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc{};
+    stmAHardwareBufferDesc.handle = ahb;
+    wgpu::SharedTextureMemoryDescriptor stmDesc{};
+    stmDesc.nextInChain = &stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemory stm = device.ImportSharedTextureMemory(&stmDesc);
+    wgpu::Texture ycbcrTex = stm.CreateTexture();
+
+    AHardwareBuffer_release(ahb);
+
+    wgpu::SharedTextureMemoryBeginAccessDescriptor beginDesc{};
+    beginDesc.initialized = true;
+    wgpu::SharedTextureMemoryVkImageLayoutBeginState beginLayout{};
+    beginDesc.nextInChain = &beginLayout;
+    EXPECT_EQ(stm.BeginAccess(ycbcrTex, &beginDesc), wgpu::Status::Success);
+
+    // Get the YCbCrVkDescriptor
+    wgpu::SharedTextureMemoryProperties stmProperties{};
+    wgpu::SharedTextureMemoryAHardwareBufferProperties ahbProperties{};
+    stmProperties.nextInChain = &ahbProperties;
+    stm.GetProperties(&stmProperties);
+    wgpu::YCbCrVkDescriptor yCbCrDesc = ahbProperties.yCbCrInfo;
+
+    // Create the BindGroupLayout and BindGroup.
+    wgpu::SamplerDescriptor samplerDesc;
+    samplerDesc.nextInChain = &yCbCrDesc;
+
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding{};
+    staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 1;
+
+    std::array<wgpu::BindGroupLayoutEntry, 2> bglEntries;
+    bglEntries[0].binding = 0;
+    bglEntries[0].nextInChain = &staticSamplerBinding;
+    bglEntries[1].binding = 1;
+    bglEntries[1].texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
+
+    wgpu::BindGroupLayoutDescriptor bglDesc {
+        .entryCount = bglEntries.size(),
+        .entries = bglEntries.data(),
+    };
+    wgpu::BindGroupLayout bgl = device.CreateBindGroupLayout(&bglDesc);
+
+    wgpu::TextureViewDescriptor viewDesc;
+    viewDesc.nextInChain = &yCbCrDesc;
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{1, ycbcrTex.CreateView(&viewDesc)}});
+
+    // Create the pipeline that copies from the YCbCr texture to an RGBA one.
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        @vertex fn quad(@builtin(vertex_index) i : u32) -> @builtin(position) vec4f {
+            const pos = array(
+                vec2f(-1.0, -1.0),
+                vec2f( 3.0, -1.0),
+                vec2f(-1.0,  3.0));
+            return vec4f(pos[i], 0.0, 1.0);
+        }
+
+        @group(0) @binding(0) var s : sampler;
+        @group(0) @binding(1) var t : texture_2d<f32>;
+        @fragment fn fs(@builtin(position) pos : vec4f) -> @location(0) vec4f { 
+            return textureSample(t, s, pos.xy / 2);
+        }
+    )");
+
 }
 
 DAWN_INSTANTIATE_TEST(SharedTextureMemoryYCbCrVulkanSamplersTests, VulkanBackend());
