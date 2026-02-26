@@ -70,10 +70,6 @@ wgpu::TextureViewDescriptor CreateDefaultViewDescriptor(wgpu::TextureViewDimensi
 }
 
 class YCbCrInfoWithoutFeatureValidationTest : public ValidationTest {
-    void SetUp() override {
-        ValidationTest::SetUp();
-        DAWN_SKIP_TEST_IF(UsesWire());
-    }
 };
 
 // Tests that creating a sampler with a valid ycbcr vulkan descriptor raises an error
@@ -107,12 +103,6 @@ TEST_F(YCbCrInfoWithoutFeatureValidationTest, YCbCrTextureViewNotSupported) {
 }
 
 class YCbCrInfoWithFeatureValidationTest : public YCbCrInfoWithoutFeatureValidationTest {
-    void SetUp() override {
-        ValidationTest::SetUp();
-        DAWN_SKIP_TEST_IF(!DAWN_PLATFORM_IS(ANDROID));
-        DAWN_SKIP_TEST_IF(UsesWire());
-    }
-
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::StaticSamplers, wgpu::FeatureName::YCbCrVulkanSamplers};
     }

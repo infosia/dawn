@@ -1831,6 +1831,10 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
     }
     mIsSwizzleIdentity = GetSwizzle() == kRGBASwizzle;
 
+    if (descriptor.Get<YCbCrVkDescriptor>()) {
+        mIsYCbCr = true;
+    }
+
     GetObjectTrackingList()->Track(this);
 }
 
@@ -1946,7 +1950,7 @@ bool TextureViewBase::IsSwizzleIdentity() const {
 }
 
 bool TextureViewBase::IsYCbCr() const {
-    return false;
+    return mIsYCbCr;
 }
 
 YCbCrVkDescriptor TextureViewBase::GetYCbCrVkDescriptor() const {

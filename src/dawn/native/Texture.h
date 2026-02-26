@@ -382,7 +382,7 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::TextureComponentSwizzle GetSwizzle() const;
     bool IsSwizzleIdentity() const;
 
-    virtual bool IsYCbCr() const;
+    bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
     virtual YCbCrVkDescriptor GetYCbCrVkDescriptor() const;
 
@@ -406,6 +406,7 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::ComponentSwizzle mSwizzleBlue = wgpu::ComponentSwizzle::B;
     wgpu::ComponentSwizzle mSwizzleAlpha = wgpu::ComponentSwizzle::A;
     bool mIsSwizzleIdentity = false;
+    bool mIsYCbCr = false;
 };
 
 }  // namespace dawn::native
