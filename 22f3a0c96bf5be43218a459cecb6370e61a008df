@@ -16,6 +16,23 @@
       "message": "PTAL\n\nWill submit after it\u0027s clear that the CMake migration is sticking",
       "revId": "22f3a0c96bf5be43218a459cecb6370e61a008df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ebdda7d_0eb0462b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T19:17:54Z",
+      "side": 1,
+      "message": "Was holding off on submitting this since I wanted to deal with the increased build times before committing to this code removal. That seems to have been resolved by switching to n2-standard-8 instances for Win/CMake, so submitting now.",
+      "revId": "22f3a0c96bf5be43218a459cecb6370e61a008df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
