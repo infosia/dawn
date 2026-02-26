@@ -276,7 +276,7 @@ TEST_F(GetBindGroupLayoutTests, DefaultTextureSampleType) {
         device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
                   wgpu::TextureSampleType::UnfilterableFloat},
                  {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
-                  wgpu::SamplerBindingType::Filtering}});
+                  wgpu::SamplerBindingType::NonFiltering}});
 
     wgpu::ShaderModule emptyVertexModule = utils::CreateShaderModule(device, R"(
         @group(0) @binding(0) var myTexture : texture_2d<f32>;
@@ -512,7 +512,7 @@ TEST_F(GetBindGroupLayoutTests, BindingType) {
 
     binding.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
     {
-        binding.sampler.type = wgpu::SamplerBindingType::Filtering;
+        binding.sampler.type = wgpu::SamplerBindingType::NonFiltering;
         wgpu::RenderPipeline pipeline = RenderPipelineFromFragmentShader(R"(
             @group(0) @binding(0) var mySampler: sampler;
 
@@ -998,7 +998,7 @@ TEST_F(GetBindGroupLayoutTests, StageAggregation) {
     // Create BGLs with minBufferBindingSize 4 and 64.
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    binding.sampler.type = wgpu::SamplerBindingType::Filtering;
+    binding.sampler.type = wgpu::SamplerBindingType::NonFiltering;
 
     wgpu::BindGroupLayoutDescriptor desc = {};
     desc.entryCount = 1;
