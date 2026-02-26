@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68852757_bd42d012",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T00:29:54Z",
+      "side": 1,
+      "message": "PTAL\n\n[led run](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-mac-arm64-rel/1/infra) with this CL + the infra/specs removal applied and the Starlark targets forcibly applied looks good.",
+      "revId": "58585f0234cb5358cff55596c212955099ee0b0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
