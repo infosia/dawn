@@ -63,6 +63,20 @@ targets.mixin(
 )
 
 targets.mixin(
+    name = "disable_dxc",
+    args = [
+        "--disable-toggles=use_dxc",
+    ],
+)
+
+targets.mixin(
+    name = "enable_backend_validation",
+    args = [
+        "--enable-backend-validation",
+    ],
+)
+
+targets.mixin(
     name = "result_adapter_gtest_json",
     resultdb = targets.resultdb(
         result_format = "gtest_json",
@@ -87,5 +101,15 @@ targets.mixin(
     name = "use_wire",
     args = [
         "--use-wire",
+    ],
+)
+
+targets.mixin(
+    name = "win_snapdragon_x_elite_gtest_args",
+    args = [
+        # Only use the physical GPU. On these devices, SwiftShader (0x1AE0),
+        # WARP (0x1414), and some unknown "integrated GPU" (0x5143) are all
+        # reported in addition to this.
+        "--adapter-vendor-id=0x4D4F4351",
     ],
 )
