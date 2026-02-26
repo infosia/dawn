@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7282b16_54b876a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-26T18:13:38Z",
+      "side": 1,
+      "message": "You need to re-generate the expectation for `tint/samples/compute_boids_arg_buffer.wgsl`.\n\nYou can do something like `./tools/run tests --tint out/gn/tint (or your path) --generate-expected test/tint/samples/compute_boids_arg_buffer.wgsl` which should recreate the expected.msl file.",
+      "revId": "c94e1126ea03927918dbf1b54c3e3b65dc2fc153",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
