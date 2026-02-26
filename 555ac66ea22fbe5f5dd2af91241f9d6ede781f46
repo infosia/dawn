@@ -67,6 +67,24 @@
       "message": "Value 8 is taken by subgroup uniformity that should be moved here without the \"dawn\" tag: see https://github.com/webgpu-native/webgpu-headers/blob/eabe67053fcee45dc46fcc2c722a9182062a5539/webgpu.h#L1240\n\nAlso can you make a PR to webgpu-headers to add the \"texture format tier 1\" enum there?",
       "revId": "555ac66ea22fbe5f5dd2af91241f9d6ede781f46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88093478_e379d4bd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4500,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-02-26T02:57:27Z",
+      "side": 1,
+      "message": "Done\n\nThe PR to webgpu-headers is https://github.com/webgpu-native/webgpu-headers/pull/585. PTAL, thanks!",
+      "parentUuid": "33015941_3d67bd07",
+      "revId": "555ac66ea22fbe5f5dd2af91241f9d6ede781f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
