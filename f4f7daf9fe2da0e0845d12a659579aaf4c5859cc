@@ -73,6 +73,52 @@
       "message": "```suggestion\n# If needed, you can also include dawn::webgpu_glfw here.\n```",
       "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1894e62f_beaf8212",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-26T23:06:40Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with bundling but should this be SHARED if BUILD_SHARED_LIBS is true (see line 66 below)",
+      "range": {
+        "startLine": 63,
+        "startChar": 27,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5fb051b_f495c5f7",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-26T23:06:40Z",
+      "side": 1,
+      "message": "Is this an accidental copy-paste of what\u0027s above on lines 65 to 68?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 7
+      },
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
