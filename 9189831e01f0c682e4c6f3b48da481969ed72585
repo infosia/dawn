@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da4be4c_f95777f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T18:43:15Z",
+      "side": 1,
+      "message": "[CI build](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x64-sws-dbg/1612/infra) with the Starlark change picked up the Starlark-generated test specs as expected.",
+      "revId": "9189831e01f0c682e4c6f3b48da481969ed72585",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
