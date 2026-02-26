@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed126531_6234d985",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-02-26T14:21:04Z",
+      "side": 1,
+      "message": "Hi Shaobo! For the immediate size passed to Tint, I used ImmediateConstantMask::count() to count the number of actually-used immediate slots (including internal uses). It\u0027s \"compressed\", skipping any unused slots in the immediate data, matching what Tint will produce in the IR struct. I then round it up by 4 slots to match the widest possible alignment of members (e.g., vec4) in case that, e.g., one stage contains a vec4 and the other does not. Code here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/ShaderModuleGL.cpp;l\u003d438\n\nTint\u0027s decompose transform then maxes that length with the WGSL-computed struct size to determine the array length. This may produce an array that is larger than strictly required by one stage or the other, but that shouldn\u0027t be a problem. Code here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/decompose_access.cc;l\u003d183\n\nValidation is left as-is, using the pipeline immediate size as computed by the front-end.",
+      "parentUuid": "1ab9641e_9eff09be",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "822c95ff_d265ce1a",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 8
