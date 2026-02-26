@@ -45,7 +45,7 @@ class ScopedSwapStateCommandRecordingContext;
 // - RTVs from the first register (r0)
 // - UAVs in bind groups
 // - Pixel Local Storage UAVs
-class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/true, uint64_t> {
+class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/true> {
   public:
     explicit BindGroupTracker(const ScopedSwapStateCommandRecordingContext* commandContext);
     virtual ~BindGroupTracker();
