@@ -56,6 +56,30 @@
       },
       "revId": "c5ca08cb02655c3f62efe5b026c42fc86efe8f58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33511ae_0ed471d5",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:53:13Z",
+      "side": 1,
+      "message": "Actually that might be equivalent to\n```suggestion\ncrbug.com/487756197 webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:* [ Failure ]\n```",
+      "parentUuid": "4247ef73_4c604e1d",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1659,
+        "endChar": 152
+      },
+      "revId": "c5ca08cb02655c3f62efe5b026c42fc86efe8f58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
