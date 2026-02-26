@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f16c98e5_6929d889",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T10:38:34Z",
+      "side": 1,
+      "message": "Advice needed on this one, I don\u0027t know what the purpose of the command line interface is exactly",
+      "revId": "d424f4eed434809689d46c850e78ef1da3a48662",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
