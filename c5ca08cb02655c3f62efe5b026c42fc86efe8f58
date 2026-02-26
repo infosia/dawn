@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "49db6cab_808c80ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:27:05Z",
+      "side": 1,
+      "message": "```suggestion\nBug: 487752270, 487756197\nChange-Id: I9a555b12c42924e18aa14ce09396fa0d78205d14\n```",
+      "revId": "c5ca08cb02655c3f62efe5b026c42fc86efe8f58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "379b82de_44ef1ca1",
@@ -14,6 +31,29 @@
       "writtenOn": "2026-02-26T19:15:47Z",
       "side": 1,
       "message": "PTAL!",
+      "revId": "c5ca08cb02655c3f62efe5b026c42fc86efe8f58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4247ef73_4c604e1d",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:27:05Z",
+      "side": 1,
+      "message": "Better to remove the tags here and just have one expectation per test. Otherwise we\u0027ll be missing suppressions on experimental bots and local test devices.\n\n```suggestion\ncrbug.com/487756197 webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"compute\";pass1Type\u003d\"compute\" [ Failure ]\ncrbug.com/487756197 webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"compute\";pass1Type\u003d\"render\" [ Failure ]\ncrbug.com/487756197 webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"render\";pass1Type\u003d\"compute\" [ Failure ]\ncrbug.com/487756197 webgpu:api,validation,encoding,encoder_state:pass_end_invalid_order:pass0Type\u003d\"render\";pass1Type\u003d\"render\" [ Failure ]\n```",
+      "range": {
+        "startLine": 1624,
+        "startChar": 0,
+        "endLine": 1659,
+        "endChar": 152
+      },
       "revId": "c5ca08cb02655c3f62efe5b026c42fc86efe8f58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
