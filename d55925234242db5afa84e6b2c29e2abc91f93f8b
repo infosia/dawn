@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8ac22ea_9b8230cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-26T22:22:34Z",
+      "side": 1,
+      "message": "PTAL! This fixes a huge chunk of the CTS failures seen on the S25 FE. Thankful that Kyle had the workaround in place already for the Pixel 10!",
+      "revId": "d55925234242db5afa84e6b2c29e2abc91f93f8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
