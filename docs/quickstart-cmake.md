@@ -50,6 +50,8 @@ $ cmake --install out/Release --prefix install/Release
 
 This installs Dawn from the `out/Release` build tree into `install/Release`.
 
+If you enabled DAWN_ENABLE_INSTALL and DAWN_USE_GLFW (or it was on by default), the install command will also install the webgpu_glfw target, a small utility library that will create the correct platform surface from a GLFW window.
+
 ## Linking your code to the Dawn installation
 
 ### Create test code
@@ -130,6 +132,7 @@ find_package(Dawn REQUIRED)
 add_executable(hello_webgpu hello_webgpu.cpp)
 
 # Declare dependency on the dawn::webgpu_dawn library
+# Ifneeded, you can also include dawn::webgpu_glfw here.
 target_link_libraries(hello_webgpu dawn::webgpu_dawn)
 ```
 

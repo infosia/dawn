@@ -45,7 +45,8 @@ else()
 endif ()
 
 dawn_add_library(
-  dawn_glfw
+  dawn_glfw_objects
+  FORCE_OBJECT
   ENABLE_EMSCRIPTEN
   UTILITY_TARGET dawn_internal_config
   HEADERS
@@ -57,9 +58,24 @@ dawn_add_library(
   PRIVATE_DEPENDS
     glfw
 )
+
+include(BundleLibraries)
+bundle_libraries(dawn_glfw STATIC dawn_glfw_objects)
+
 target_compile_definitions(dawn_glfw PRIVATE "WGPU_GLFW_IMPLEMENTATION")
 if(BUILD_SHARED_LIBS)
     target_compile_definitions(dawn_glfw PUBLIC "WGPU_GLFW_SHARED_LIBRARY")
 endif()
 
+if (DAWN_USE_GLFW AND DAWN_ENABLE_INSTALL)
+    dawn_install_target(dawn_glfw HEADERS "${headers}")
+endif ()
+
+
+target_compile_definitions(dawn_glfw PRIVATE "WGPU_GLFW_IMPLEMENTATION")
+if(BUILD_SHARED_LIBS)
+    target_compile_definitions(dawn_glfw PUBLIC "WGPU_GLFW_SHARED_LIBRARY")
+endif()
+
+add_library(dawn::dawn_glfw ALIAS dawn_glfw)
 add_library(webgpu_glfw ALIAS dawn_glfw)
