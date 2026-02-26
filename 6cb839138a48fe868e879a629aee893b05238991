@@ -52,6 +52,24 @@
       "parentUuid": "225bbdc7_c961f8be",
       "revId": "6cb839138a48fe868e879a629aee893b05238991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "880ab1c5_b2cc1e3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-02-26T03:08:14Z",
+      "side": 1,
+      "message": "Accuracy is almost always about floating point. So this array access is not really part of the question.\n\nHowever again I agree that some might be labeled accuracy when in fact the result might be far from acceptable. \n\nThe challenge of webgpu is how do we bring together the various os/device implementations and present them as one thing.\n\nIf we completely remove offsets we might end up severely pessimising certain graphics algorithms. We might not want to do this. It might be better to try to polyfill and have it be a bit slower on some devices.",
+      "parentUuid": "c3d01d60_4f2ad666",
+      "revId": "6cb839138a48fe868e879a629aee893b05238991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
