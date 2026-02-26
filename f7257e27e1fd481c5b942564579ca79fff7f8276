@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dedec8c6_8dfb4f01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T06:25:33Z",
+      "side": 1,
+      "message": "I thought way too hard about this bugfix. PTAL",
+      "revId": "f7257e27e1fd481c5b942564579ca79fff7f8276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
