@@ -16,6 +16,24 @@
       "message": "What about if they\u0027re defined in the continuing block itself? Or does that stop the sinking in general?",
       "revId": "13797d68a39d803c908534aee604d935e31c599e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f7bcca_af57c6e3",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T17:02:20Z",
+      "side": 1,
+      "message": "Good catch. The logic for detecting those cases was not in the sink chain utility and so was only being done for the condition hoisting and not the update hoisting. I\u0027ve moved it to the helper and added a test for this case.",
+      "parentUuid": "75f3eb7f_a30c73e0",
+      "revId": "13797d68a39d803c908534aee604d935e31c599e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
