@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26231e79_82c8804a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:38:01Z",
+      "side": 1,
+      "message": "LGTM, I of course haven\u0027t tested this but looks good if it works for you!",
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3788ff08_e922dfed",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:38:01Z",
+      "side": 1,
+      "message": "```suggestion\n- `DAWN_ENABLE_INSTALL\u003dON` configures the project to install binaries, headers and cmake configuration files in a directory of your choice. This allows other projects to discover Dawn in CMake and link with it. (If `DAWN_USE_GLFW\u003dON`, this also includes the `webgpu_glfw` utility library for using Dawn with GLFW windows.)\n```",
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb4378c_4b6fef27",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:38:01Z",
+      "side": 1,
+      "message": "nit: This info fits better above next to `DAWN_ENABLE_INSTALL`.\n\n```suggestion\n## Linking your code to the Dawn installation\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96b75168_6f818c5e",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:38:01Z",
+      "side": 1,
+      "message": "```suggestion\n# If needed, you can also include dawn::webgpu_glfw here.\n```",
+      "revId": "f4f7daf9fe2da0e0845d12a659579aaf4c5859cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
