@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "596c8a6189ee6a4ca63707b169841159a9e30249",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "224853c9_09754928",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T18:54:57Z",
+      "side": 1,
+      "message": "[CI build](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-mac-arm64-apple-m2-rel/1460/infra) that picked up the Starlark-generated test specs and used them appropriately.",
+      "revId": "596c8a6189ee6a4ca63707b169841159a9e30249",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
