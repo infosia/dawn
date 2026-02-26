@@ -22,7 +22,7 @@ vars = {
   'dawn_tintd': False, # Also fetches dependencies required for building tintd.
   'dawn_cmake_version': 'version:2@3.23.3',
   'dawn_cmake_win32_sha1': 'b106d66bcdc8a71ea2cdf5446091327bfdb1bcd7',
-  'dawn_gn_version': 'git_revision:47b40ef49e678319c0dac767a95a363cc3f1f6cb',
+  'dawn_gn_version': 'git_revision:6767e99aea9e7c32b6fc421ad3271ab99a82ca78',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
   'dawn_ninja_version': 'version:3@1.12.1.chromium.4',
@@ -66,7 +66,7 @@ vars = {
 
   # Version of Chromium the DEPS entries synced by scripts/roll_chromium_deps.py
   # were last synced to.
-  'chromium_revision': 'bb7c30e0fbd7f104f58e10c628a60538b1d1bc6b',
+  'chromium_revision': '10451dc13917d3f9843789ebf00e73304a4a17e4',
   # We never want to actually checkout Chromium, but we need a fake DEPS entry
   # in order for the Chromium -> Dawn DEPS autoroller to work.
   'checkout_placeholder_chromium': False,
@@ -79,7 +79,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@451e71432ac9f6a91d4d5604c29e0a5078e8c2e8',
+    'url': '{chromium_git}/chromium/src/buildtools@136da69a1267b8db487354b96d44d0cc8add5aeb',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -112,7 +112,7 @@ deps = {
   },
 
   'third_party/depot_tools': {
-    'url': '{chromium_git}/chromium/tools/depot_tools.git@8aad2863865f0d0bde8b2eb804b389412f04a38b',
+    'url': '{chromium_git}/chromium/tools/depot_tools.git@044f01ae0351fb8a97efce042c93f99d3e95240c',
     'condition': 'dawn_standalone',
   },
 
@@ -128,7 +128,7 @@ deps = {
 
   # Required by libc++
   'third_party/llvm-libc/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@5a08c449f7cfea83a178a0eb3418b611570ca0bb',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@f4940a069bf76a358d7cc7f525e1fa74b85f6ba0',
     'condition': 'dawn_standalone',
   },
 
@@ -143,7 +143,7 @@ deps = {
   # The //build and //tools/* deps should all be updated in unison, as
   #  there are dependencies between them.
   'build': {
-  'url': '{chromium_git}/chromium/src/build@cdd1fdc6cfb4c17f19886eec62a28bf18727a7c7',
+  'url': '{chromium_git}/chromium/src/build@07efd23b7d9cf9b6a59076d14f5a68cd0c4c1fa7',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
@@ -253,7 +253,7 @@ deps = {
 
   # Testing, GTest and GMock
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@cc65bfd464d9ed09292ab4a120d28580ba0ab298',
+    'url': '{chromium_git}/chromium/src/testing@87d06a6fe4843026375a21de14bcd14e58859c01',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
@@ -266,7 +266,7 @@ deps = {
   },
   # This is a dependency of //testing
   'third_party/catapult': {
-    'url': '{chromium_git}/catapult.git@9fdb1d4c9d0f278ae34891b069d96ef89ea9cdf2',
+    'url': '{chromium_git}/catapult.git@1ec586469aedb45f1e0809017409346ddf96e210',
     'condition': 'dawn_standalone',
   },
   'third_party/google_benchmark/src': {
@@ -365,7 +365,7 @@ deps = {
   },
 
   'third_party/abseil-cpp': {
-    'url': '{chromium_git}/chromium/src/third_party/abseil-cpp@74d426ccd39ca11ed753ec2135a2f33ec6597de8',
+    'url': '{chromium_git}/chromium/src/third_party/abseil-cpp@ea09accd9adefed426f583b4a7351c4920e28de1',
     'condition': 'dawn_standalone',
   },
 
