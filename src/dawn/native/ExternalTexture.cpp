@@ -162,11 +162,11 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
 
 namespace {
 ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescriptor* descriptor) {
-    using math::Vec2f;
-    using math::Vec2u;
     using math::Mat3x2f;
     using math::Mat3x3f;
     using math::Mul;
+    using math::Vec2f;
+    using math::Vec2u;
 
     ExternalTextureParams params;
     params.numPlanes = descriptor->plane1 == nullptr ? 1 : 2;
