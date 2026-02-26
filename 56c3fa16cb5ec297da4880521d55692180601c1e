@@ -33,6 +33,57 @@
       "message": "(will add the few missing deps tomorrow)",
       "revId": "56c3fa16cb5ec297da4880521d55692180601c1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d979f636_196631ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T21:04:35Z",
+      "side": 1,
+      "message": "LGTM, thanks for finishing this off!",
+      "revId": "56c3fa16cb5ec297da4880521d55692180601c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5547d86e_a40b318b",
+        "filename": "src/dawn/tests/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T21:04:35Z",
+      "side": 1,
+      "message": "I think this should be `if (NOT IS_DEBUG_BUILD)`, as per the GN version.",
+      "revId": "56c3fa16cb5ec297da4880521d55692180601c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c651d4_e4eca3b7",
+        "filename": "src/dawn/tests/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T21:04:35Z",
+      "side": 1,
+      "message": "Nit: dawn_whitebox_test_objects",
+      "revId": "56c3fa16cb5ec297da4880521d55692180601c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
