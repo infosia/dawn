@@ -16,6 +16,24 @@
       "message": "Advice needed on this one, I don\u0027t know what the purpose of the command line interface is exactly",
       "revId": "d424f4eed434809689d46c850e78ef1da3a48662",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32113850_2fdd894b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-26T16:38:27Z",
+      "side": 1,
+      "message": "The command line interface is for testing, or generating the shader using argument buffers. The values don\u0027t, really, matter they just need to be valid (and repeatable).\n\nYou can see `test/tint/samples/compute_boids_arg_buffer.wgsl` which is attempting to use them to set the argument buffer information. Basically, the command line just provides a way to mimic what Dawn would provide to us.",
+      "parentUuid": "f16c98e5_6929d889",
+      "revId": "d424f4eed434809689d46c850e78ef1da3a48662",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
