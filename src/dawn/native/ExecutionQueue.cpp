@@ -27,6 +27,7 @@
 
 #include "dawn/native/ExecutionQueue.h"
 
+#include <algorithm>
 #include <atomic>
 #include <utility>
 #include <vector>
@@ -67,7 +68,20 @@ ExecutionSerial ExecutionQueueBase::GetLastSubmittedCommandSerial() const {
 }
 
 ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
-    return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
+    return ExecutionSerial(
+        mCompletedSerial.Use([](const auto completedSerial) { return *completedSerial; }));
+}
+
+ResultOrError<ExecutionSerial> ExecutionQueueBase::WaitForQueueSerialImpl(
+    ExecutionSerial waitSerial,
+    Nanoseconds timeout) {
+    return mCompletedSerial.Use<NotifyType::None>([&](auto completed) {
+        if (completed.WaitFor(timeout,
+                              [&](auto& x) { return x >= static_cast<uint64_t>(waitSerial); })) {
+            return ExecutionSerial(*completed);
+        }
+        return kWaitSerialTimeout;
+    });
 }
 
 MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout) {
@@ -119,7 +133,8 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
             // determining the true latest serial. Preemptively updating mCompletedSerial
             // ensures CheckAndUpdateCompletedSerials() returns an accurate value, preventing
             // stale data.
-            FetchMax(mCompletedSerial, uint64_t(completedSerial));
+            mCompletedSerial.Use(
+                [&](auto old) { *old = std::max(*old, uint64_t(completedSerial)); });
         }
         return UpdateCompletedSerial(QueuePriority::UserFacing);
     }
@@ -190,7 +205,7 @@ MaybeError ExecutionQueueBase::CheckPassedSerials() {
                 ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
 
     // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
+    mCompletedSerial.Use([&](auto old) { *old = std::max(*old, uint64_t(completedSerial)); });
     return {};
 }
 
@@ -207,7 +222,9 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial(QueuePriority priority) {
 void ExecutionQueueBase::RegisterSerialProcessor(QueuePriority priority,
                                                  Ref<SerialProcessor>&& serialProcessor) {
     // Serial processor registration should always happen at queue initialization.
-    DAWN_ASSERT(mCompletedSerial == static_cast<uint64_t>(kBeginningOfGPUTime));
+    DAWN_ASSERT(mCompletedSerial.Use<NotifyType::None>([](auto completedSerial) {
+        return *completedSerial;
+    }) == static_cast<uint64_t>(kBeginningOfGPUTime));
     mState.Use<NotifyType::None>([&](auto state) {
         state->mWaitingProcessors[priority].push_back(std::move(serialProcessor));
     });
@@ -241,13 +258,15 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
                                                          bool forceTasks) {
     std::vector<Ref<SerialProcessor>> processors;
     std::vector<Task> tasks;
-    ExecutionSerial serial = completedSerial;
+
+    // We update the completed serial as soon as possible before waiting for callback rights so
+    // that we almost always process as many callbacks as possible.
+    ExecutionSerial serial = mCompletedSerial.Use([&](auto old) {
+        *old = std::max(*old, static_cast<uint64_t>(completedSerial));
+        return ExecutionSerial(*old);
+    });
 
     mState.Use<NotifyType::None>([&](auto state) {
-        // We update the completed serial as soon as possible before waiting for callback rights so
-        // that we almost always process as many callbacks as possible.
-        FetchMax(mCompletedSerial, uint64_t(completedSerial));
-
         if (state->mWaitingForIdle && !forceTasks) {
             // If we are waiting for idle, then the callbacks will be fired there. It is currently
             // necessary to avoid calling the callbacks in this function and doing it in the
@@ -262,8 +281,6 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
 
         // Wait until we can exclusively call callbacks.
         state.Wait([](auto& x) { return !x.mCallingCallbacks; });
-
-        serial = GetCompletedCommandSerial();
 
         // Call all callbacks that for the given priority and anything of higher priority as well.
         for (QueuePriority p = static_cast<QueuePriority>(0); p <= priority; p += 1) {
@@ -340,7 +357,7 @@ void ExecutionQueueBase::IncrementLastSubmittedCommandSerial() {
 
 bool ExecutionQueueBase::HasScheduledCommands() const {
     return mLastSubmittedSerial.load(std::memory_order_acquire) >
-               mCompletedSerial.load(std::memory_order_acquire) ||
+               mCompletedSerial.Use([](auto completedSerial) { return *completedSerial; }) ||
            HasPendingCommands();
 }
 
