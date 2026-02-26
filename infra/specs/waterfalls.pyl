@@ -184,21 +184,6 @@
           'isolated_scripts': 'swiftshader_isolated_scripts',
         },
       },
-      'dawn-win-arm64-builder-rel': {
-        'additional_compile_targets': [
-          'default',
-        ],
-      },
-      'dawn-win-arm64-qualcomm-snapdragonxelite-rel': {
-        'os_type': 'win',
-        'mixins': [
-          'win11_qualcomm_snapdragon_x_elite_stable',
-          'win_snapdragon_x_elite_gtest_args',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_win_gtests',
-        },
-      },
       'dawn-win-x64-builder-asan': {
         'additional_compile_targets': [
           'default',
