@@ -414,6 +414,11 @@ dawn_win_parent_builder(
             "arm64",
         ],
     ),
+    targets = targets.bundle(
+        additional_compile_targets = [
+            "default",
+        ],
+    ),
     console_view_entry = consoles.console_view_entry(
         category = "win|build|clang|rel",
         short_name = "a64",
@@ -1294,6 +1299,19 @@ ci.thin_tester(
             target_platform = builder_config.target_platform.WIN,
         ),
         run_tests_serially = True,
+    ),
+    targets = targets.bundle(
+        targets = [
+            "real_hardware_win_gtests",
+        ],
+        mixins = [
+            "win11_qualcomm_snapdragon_x_elite_stable",
+            "win_snapdragon_x_elite_gtest_args",
+        ],
+    ),
+    targets_settings = targets.settings(
+        browser_config = targets.browser_config.RELEASE,
+        os_type = targets.os_type.WINDOWS,
     ),
     console_view_entry = consoles.console_view_entry(
         category = "win|test|clang|rel|arm64",
