@@ -74,6 +74,39 @@ targets.tests.gtest_test(
 )
 
 targets.tests.gtest_test(
+    name = "dawn_end2end_no_dxc_tests",
+    mixins = [
+        "dawn_end2end_real_hardware_gtests_common_args",
+        "disable_dxc",
+        "result_adapter_gtest_json",
+        "true_noop_merge",
+        targets.mixin(
+            swarming = targets.swarming(
+                shards = 2,
+            ),
+        ),
+    ],
+    binary = "dawn_end2end_tests",
+)
+
+targets.tests.gtest_test(
+    name = "dawn_end2end_no_dxc_validation_layers_tests",
+    mixins = [
+        "dawn_end2end_real_hardware_gtests_common_args",
+        "disable_dxc",
+        "enable_backend_validation",
+        "result_adapter_gtest_json",
+        "true_noop_merge",
+        targets.mixin(
+            swarming = targets.swarming(
+                shards = 3,
+            ),
+        ),
+    ],
+    binary = "dawn_end2end_tests",
+)
+
+targets.tests.gtest_test(
     name = "dawn_end2end_skip_validation_tests",
     mixins = [
         "dawn_end2end_real_hardware_gtests_common_args",
@@ -146,6 +179,7 @@ targets.tests.gtest_test(
     name = "dawn_end2end_validation_layers_tests",
     mixins = [
         "dawn_end2end_real_hardware_gtests_common_args",
+        "enable_backend_validation",
         "result_adapter_gtest_json",
         "true_noop_merge",
         targets.mixin(
@@ -154,9 +188,6 @@ targets.tests.gtest_test(
                 shards = 3,
             ),
         ),
-    ],
-    args = [
-        "--enable-backend-validation",
     ],
     binary = "dawn_end2end_tests",
 )
