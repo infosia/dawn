@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6f39f8_3f8e8382",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/var_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T17:00:03Z",
+      "side": 1,
+      "message": "Nit: this seems like a spurious change of namespace scoping?",
+      "revId": "e43c8a3d77fc2b8bb13fd58aab55ef60b875b5b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
