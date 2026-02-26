@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ab9641e_9eff09be",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-26T08:48:13Z",
+      "side": 1,
+      "message": "senorblanco@, I\u0027m hitting an situation about this.\nBackground: to remove trailing space in user immediate struct, we need to host two sizes. One is the user immediate block size without trailing space, we use this for validation. The other is the user immediate block size (with trailing padding). We need it because of internal immediates. We calculate internal immediates in API side and uplod the offset. PrepareImmediateData transform accept the offset and try to insert it into immediate blocks. The transform will check whether it has conflicts with other members. So we need the padding size to make the layout correct.\n\nIn metal, there is another problem due to the restriction describe in the comment.\n\nIn sync with cwallez@, it seems GL backend has similar issues (some attributes will be eliminated by driver and layout will be changed dynamically). So do you any suggestions on this case?",
+      "parentUuid": "deec1e86_981cb514",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "822c95ff_d265ce1a",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 8
