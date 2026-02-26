@@ -97,12 +97,12 @@
          %58 = OpISub %uint %57 %tint_carry
          %59 = OpAccessChain %_ptr_Function_uint %tint_loop_idx %uint_1
                OpStore %59 %58 None
+         %60 = OpLoad %int %i None
                OpControlBarrier %uint_2 %uint_2 %uint_264
-         %61 = OpLoad %int %b None
+         %62 = OpLoad %int %b None
                OpControlBarrier %uint_2 %uint_2 %uint_264
-         %63 = OpLoad %int %i None
-         %64 = OpBitcast %uint %63
-         %65 = OpBitcast %uint %61
+         %64 = OpBitcast %uint %60
+         %65 = OpBitcast %uint %62
          %66 = OpIAdd %uint %64 %65
          %67 = OpBitcast %int %66
                OpStore %i %67 None

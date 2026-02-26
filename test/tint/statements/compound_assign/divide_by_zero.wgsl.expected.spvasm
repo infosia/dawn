@@ -52,13 +52,13 @@
          %23 = OpLoad %float %b None
          %24 = OpFRem %float %23 %float_0
                OpStore %b %24 None
-         %25 = OpConvertSToF %float %maybe_zero
-         %26 = OpLoad %float %b None
-         %27 = OpFDiv %float %26 %25
+         %25 = OpLoad %float %b None
+         %26 = OpConvertSToF %float %maybe_zero
+         %27 = OpFDiv %float %25 %26
                OpStore %b %27 None
-         %28 = OpConvertSToF %float %maybe_zero
-         %29 = OpLoad %float %b None
-         %30 = OpFRem %float %29 %28
+         %28 = OpLoad %float %b None
+         %29 = OpConvertSToF %float %maybe_zero
+         %30 = OpFRem %float %28 %29
                OpStore %b %30 None
                OpReturn
                OpFunctionEnd

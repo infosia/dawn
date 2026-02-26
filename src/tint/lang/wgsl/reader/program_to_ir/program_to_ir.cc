@@ -44,6 +44,7 @@
 #include "src/tint/lang/core/ir/swizzle.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/value.h"
+#include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/struct.h"
@@ -111,6 +112,7 @@
 #include "src/tint/lang/wgsl/sem/variable.h"
 #include "src/tint/utils/containers/reverse.h"
 #include "src/tint/utils/containers/scope_stack.h"
+#include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/macros/defer.h"
 #include "src/tint/utils/macros/scoped_assignment.h"
 #include "src/tint/utils/rtti/switch.h"
@@ -471,41 +473,35 @@ class Impl {
             return;
         }
 
-        if (auto* v = std::get_if<core::ir::Value*>(&lhs)) {
-            b.Store(*v, rhs);
-        } else if (auto ref = std::get_if<VectorRefElementAccess>(&lhs)) {
-            b.StoreVectorElement(ref->vector, ref->index, rhs);
-        }
+        Store(lhs, rhs);
     }
 
     void EmitIncrementDecrement(const ast::IncrementDecrementStatement* stmt) {
         auto lhs = EmitExpression(stmt->lhs);
+        auto* lhs_val = Load(lhs);
 
         auto* one = program_.TypeOf(stmt->lhs)->UnwrapRef()->IsSignedIntegerScalar()
                         ? builder_.Constant(1_i)
                         : builder_.Constant(1_u);
 
-        EmitCompoundAssignment(lhs, one,
-                               stmt->increment ? core::BinaryOp::kAdd : core::BinaryOp::kSubtract);
+        auto op = stmt->increment ? core::BinaryOp::kAdd : core::BinaryOp::kSubtract;
+        auto* inst = current_block_->Append(BinaryOp(lhs_val, one, op));
+        Store(lhs, inst->Result());
     }
 
     void EmitCompoundAssignment(const ast::CompoundAssignmentStatement* stmt) {
         auto lhs = EmitExpression(stmt->lhs);
+        auto* lhs_val = Load(lhs);
 
-        auto rhs = EmitValueExpression(stmt->rhs);
-        if (!rhs) {
+        auto rhs_val = EmitValueExpression(stmt->rhs);
+        if (!rhs_val) {
             return;
         }
 
         const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
-        auto* lhs_val = std::get_if<core::ir::Value*>(&lhs);
-
-        // This branch supports swizzle assignment, which includes multi-element swizzles and
-        // single-element swizzles chained onto nested swizzle views. For single-element swizzles
-        // directly onto a vector, lhs will be a VecElAccess, so lhs_val is a nullptr.
-        if (sem_swizzle && lhs_val != nullptr) {
+        if (sem_swizzle) {
             auto b = builder_.Append(current_block_);
-            auto* inst = current_block_->Append(BinaryOp(*lhs_val, rhs, stmt->op));
+            auto* inst = current_block_->Append(BinaryOp(lhs_val, rhs_val, stmt->op));
             CollapsedSwizzle swizzle = CollapseSwizzle(sem_swizzle);
             auto* swizzle_lhs = EmitValueExpression(swizzle.vector->Declaration());
 
@@ -513,25 +509,38 @@ class Impl {
                 b.StoreVectorElement(swizzle_lhs, b.Constant(u32(swizzle.indices[0])),
                                      inst->Result());
             } else {
-                rhs = ConstructSwizzleAssignmentRhs(swizzle_lhs, inst->Result(), swizzle.indices);
-                b.Store(swizzle_lhs, rhs);
+                rhs_val =
+                    ConstructSwizzleAssignmentRhs(swizzle_lhs, inst->Result(), swizzle.indices);
+                b.Store(swizzle_lhs, rhs_val);
             }
             return;
         }
 
-        EmitCompoundAssignment(lhs, rhs, stmt->op);
+        auto* inst = current_block_->Append(BinaryOp(lhs_val, rhs_val, stmt->op));
+        Store(lhs, inst->Result());
     }
 
-    void EmitCompoundAssignment(ValueOrVecElAccess lhs, core::ir::Value* rhs, core::BinaryOp op) {
+    core::ir::Value* Load(ValueOrVecElAccess val) {
+        auto b = builder_.Append(current_block_);
+        if (auto* v = std::get_if<core::ir::Value*>(&val)) {
+            if ((*v)->Type()->Is<core::type::MemoryView>()) {
+                return b.Load(*v)->Result();
+            } else {
+                return *v;
+            }
+        } else if (auto ref = std::get_if<VectorRefElementAccess>(&val)) {
+            return b.LoadVectorElement(ref->vector, ref->index)->Result();
+        } else {
+            TINT_UNREACHABLE();
+        }
+    }
+
+    void Store(ValueOrVecElAccess lhs, core::ir::Value* rhs) {
         auto b = builder_.Append(current_block_);
         if (auto* v = std::get_if<core::ir::Value*>(&lhs)) {
-            auto* load = b.Load(*v);
-            auto* inst = current_block_->Append(BinaryOp(load->Result(), rhs, op));
-            b.Store(*v, inst);
+            b.Store(*v, rhs);
         } else if (auto ref = std::get_if<VectorRefElementAccess>(&lhs)) {
-            auto* load = b.LoadVectorElement(ref->vector, ref->index);
-            auto* inst = b.Append(BinaryOp(load->Result(), rhs, op));
-            b.StoreVectorElement(ref->vector, ref->index, inst);
+            b.StoreVectorElement(ref->vector, ref->index, rhs);
         }
     }
 

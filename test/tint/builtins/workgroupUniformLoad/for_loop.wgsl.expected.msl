@@ -37,17 +37,18 @@ void foo_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) 
         tint_loop_idx.x = tint_low_inc;
         uint const tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
+        int const v_2 = i;
         threadgroup_barrier(mem_flags::mem_threadgroup);
-        int const v_2 = (*tint_module_vars.b);
+        int const v_3 = (*tint_module_vars.b);
         threadgroup_barrier(mem_flags::mem_threadgroup);
-        i = as_type<int>((as_type<uint>(i) + as_type<uint>(v_2)));
+        i = as_type<int>((as_type<uint>(v_2) + as_type<uint>(v_3)));
       }
     }
   }
 }
 
 [[max_total_threads_per_threadgroup(1)]]
-kernel void foo(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_2* v_3 [[threadgroup(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v_3).tint_symbol), .b=(&(*v_3).tint_symbol_1)};
+kernel void foo(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_2* v_4 [[threadgroup(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v_4).tint_symbol), .b=(&(*v_4).tint_symbol_1)};
   foo_inner(tint_local_index, tint_module_vars);
 }

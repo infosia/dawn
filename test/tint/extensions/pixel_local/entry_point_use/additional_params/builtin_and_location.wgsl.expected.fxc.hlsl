@@ -19,9 +19,9 @@ uint tint_f32_to_u32(float value) {
 }
 
 void f_inner(float4 pos, float4 uv) {
-  uint v = tint_f32_to_u32(pos.x);
-  uint v_1 = (v + tint_f32_to_u32(uv.x));
-  P.a = (P.a + v_1);
+  uint v = P.a;
+  uint v_1 = tint_f32_to_u32(pos.x);
+  P.a = (v + (v_1 + tint_f32_to_u32(uv.x)));
 }
 
 void f(f_inputs inputs) {

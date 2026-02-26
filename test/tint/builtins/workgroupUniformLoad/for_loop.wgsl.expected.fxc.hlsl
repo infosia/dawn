@@ -31,10 +31,11 @@ void foo_inner(uint tint_local_index) {
         tint_loop_idx.x = tint_low_inc;
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
+        int v_2 = i;
         GroupMemoryBarrierWithGroupSync();
-        int v_2 = b;
+        int v_3 = b;
         GroupMemoryBarrierWithGroupSync();
-        i = asint((asuint(i) + asuint(v_2)));
+        i = asint((asuint(v_2) + asuint(v_3)));
       }
     }
   }

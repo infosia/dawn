@@ -28,11 +28,12 @@ void foo_inner(uint tint_local_index) {
         tint_loop_idx.x = tint_low_inc;
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
+        int v_2 = i;
         barrier();
-        int v_2 = b;
+        int v_3 = b;
         barrier();
-        uint v_3 = uint(i);
-        i = int((v_3 + uint(v_2)));
+        uint v_4 = uint(v_2);
+        i = int((v_4 + uint(v_3)));
       }
     }
   }
