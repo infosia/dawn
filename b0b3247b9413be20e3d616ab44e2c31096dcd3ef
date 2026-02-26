@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e410a88_ce1cdfd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T19:53:30Z",
+      "side": 1,
+      "message": "[CI build](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-arm64-qualcomm-snapdragonxelite-rel/1065/infra) correctly using the Starlark test specs.",
+      "revId": "b0b3247b9413be20e3d616ab44e2c31096dcd3ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
