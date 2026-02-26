@@ -1348,7 +1348,7 @@ TEST_P(BindGroupTests, DynamicOffsetOrder) {
     std::array<uint32_t, 3> offsets = {3 * mMinUniformBufferOffsetAlignment,
                                        1 * mMinUniformBufferOffsetAlignment,
                                        2 * mMinUniformBufferOffsetAlignment};
-    std::array<uint32_t, 3> values = {21, 67, 32};
+    std::array<uint32_t, 3> values = {0x15, 0x43, 0x20};
 
     // Create three buffers large enough to by offset by the largest offset.
     wgpu::BufferDescriptor bufferDescriptor;
