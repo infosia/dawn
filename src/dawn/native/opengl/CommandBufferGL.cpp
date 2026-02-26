@@ -302,7 +302,7 @@ struct VectorDirtyRangeInfo {
     size_t end;
 };
 
-class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
+class BindGroupTracker : public BindGroupTrackerBase<false> {
   public:
     void OnSetPipeline(RenderPipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
@@ -343,7 +343,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     MaybeError ApplyBindGroup(const OpenGLFunctions& gl,
                               BindGroupIndex groupIndex,
                               BindGroupBase* group,
-                              const ityp::span<BindingIndex, uint64_t>& dynamicOffsets) {
+                              const ityp::span<BindingIndex, uint32_t>& dynamicOffsets) {
         const auto& indices = ToBackend(mPipelineLayout)->GetBindingIndexInfo()[groupIndex];
 
         for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
@@ -358,7 +358,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
 
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
-                        offset += dynamicOffsets[bindingIndex];
+                        offset += uint64_t(dynamicOffsets[bindingIndex]);
                     }
 
                     GLenum target;
