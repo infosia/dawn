@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee12630f_7df9fc03",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-26T18:54:14Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we could just mark it stable since it\u0027s sort of what we had before already? Though that might require you to update the exhaustive feature tests too?",
+      "range": {
+        "startLine": 463,
+        "startChar": 33,
+        "endLine": 463,
+        "endChar": 45
+      },
+      "revId": "dd780d09167b242f34fa55167b961e605f8d5f1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
