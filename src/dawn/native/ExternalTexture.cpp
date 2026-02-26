@@ -124,7 +124,7 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
                         "%s isn't enabled while plane0 (%s) has format %s.",
                         wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture, descriptor->plane0,
                         wgpu::TextureFormat::OpaqueYCbCrAndroid);
-        DAWN_INVALID_IF(descriptor->plane0->HasYCbCrDescriptor(),
+        DAWN_INVALID_IF(descriptor->plane0->HasYCbCrDescriptor(),ExternalTexture
                         "%s was created with a YCbCrVkDescriptor.", descriptor->plane0);
 
     } else {
