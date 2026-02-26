@@ -70,6 +70,24 @@
       "parentUuid": "1d4e45af_b4189093",
       "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a84bd77b_a1e685f5",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:31:07Z",
+      "side": 1,
+      "message": "Sorry for the delay. LGTM",
+      "parentUuid": "40650b35_8c434e93",
+      "revId": "99960c8c62c7e559cd11a3870d54f13d1bfdbd39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
