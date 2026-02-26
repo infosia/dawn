@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e261750_7882d9df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-26T20:09:02Z",
+      "side": 1,
+      "message": "There is one remaining test failing `GetBindGroupLayoutTests.DefaultTextureSampleType` which I\u0027m not sure if the test is wrong, or if my code is wrong. (You can see a couple other tests I flipped the result values for in the CL).\n\nAny pointers would be greatly appreciated.",
+      "revId": "479036f0aeabd65aec9e5bf878f97a92814b7374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
