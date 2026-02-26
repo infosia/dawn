@@ -197,7 +197,7 @@ std::unordered_map<uint32_t, tint::msl::writer::ArgumentBufferInfo> GenerateArgu
                 [&](const BufferBindingInfo& binding) {
                     if (binding.hasDynamicOffset) {
                         argBufferInfo.binding_info_to_offset_index.insert(
-                            {static_cast<uint32_t>(bindingInfo.binding), curDynamicOffset++});
+                            {uint32_t(bindingIndex), curDynamicOffset++});
                     }
                 },
                 [&](const SamplerBindingInfo& bindingInfo) {},

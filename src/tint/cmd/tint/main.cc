@@ -480,10 +480,6 @@ When specified, automatically enables MSL validation)",
         "dynamic-offset-buffer",
         R"(Mapping for a dynamic offset buffer, format is GROUP=DYNAMIC_BUFFER_ID, comma separated))");
 
-    auto& dynamic_offset = options.Add<StringOption>(
-        "dynamic-offset",
-        R"(Mapping for dynamic buffers to be attached to the entry point, format is GROUP.BINDING=OFFSET, comma separated))");
-
     // Default to validating against MSL 2.3, which corresponds to macOS 11.0.
     tint::Vector<EnumName<tint::msl::validate::MslVersion>, 2> msl_version_enum_names{
         EnumName(tint::msl::validate::MslVersion::kMsl_2_3, "2.3"),
@@ -656,37 +652,6 @@ Options:
                 opts->group_to_argument_buffer_info.insert({group, {}});
             }
             opts->group_to_argument_buffer_info[group].dynamic_buffer_id = idx;
-        }
-    }
-
-    if (dynamic_offset.value.has_value()) {
-        for (auto val : tint::Split(*dynamic_offset.value, ",")) {
-            auto parts = tint::Split(val, "=");
-            if (parts.Length() != 2) {
-                std::cerr << "dynamic-offset values must be of the form GROUP.BINDING=OFFSET";
-                return false;
-            }
-
-            auto bind_point = tint::Split(parts[0], ".");
-            if (bind_point.Length() != 2) {
-                std::cerr << "dynamic-offset values must be of the form GROUP.BINDING=OFFSET";
-                return false;
-            }
-            uint32_t group = 0;
-            std::from_chars(bind_point[0].data(), bind_point[0].data() + bind_point[0].size(),
-                            group, 10);
-            uint32_t binding = 0;
-            std::from_chars(bind_point[0].data(), bind_point[0].data() + bind_point[0].size(),
-                            binding, 10);
-
-            uint32_t offset = 0;
-            std::from_chars(parts[1].data(), parts[1].data() + parts[1].size(), offset, 10);
-
-            if (!opts->group_to_argument_buffer_info.contains(group)) {
-                opts->group_to_argument_buffer_info.insert({group, {}});
-            }
-            opts->group_to_argument_buffer_info[group].binding_info_to_offset_index.insert(
-                {binding, offset});
         }
     }
 #endif
