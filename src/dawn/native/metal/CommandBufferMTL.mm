@@ -846,7 +846,14 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         }
 
         if (mUseArgumentBuffers) {
-            uint32_t offset_size = uint32_t(dynamicOffsets.size());
+            ityp::vector<BindingIndex, uint32_t> dynamicOffsets32;
+            dynamicOffsets32.reserve(dynamicOffsets.size());
+            for (uint64_t offset : dynamicOffsets) {
+                DAWN_ASSERT(offset <= std::numeric_limits<uint32_t>::max());
+                dynamicOffsets32.push_back(uint32_t(offset));
+            }
+            const uint32_t dynamicOffsetsCount = uint32_t(dynamicOffsets.size());
+
             if (render) {
                 [render setVertexBuffer:*(group->GetArgumentBuffer())
                                  offset:0
@@ -856,14 +863,14 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                                    offset:0
                                   atIndex:argumentBufferIdx];
 
-                if (offset_size > 0) {
+                if (dynamicOffsetsCount > 0) {
                     DAWN_ASSERT(dynamicBufferIdx.has_value());
-                    [render setVertexBytes:dynamicOffsets.data()
-                                    length:offset_size * sizeof(uint32_t)
+                    [render setVertexBytes:dynamicOffsets32.data()
+                                    length:dynamicOffsetsCount * sizeof(uint32_t)
                                    atIndex:dynamicBufferIdx.value()];
 
-                    [render setFragmentBytes:dynamicOffsets.data()
-                                      length:offset_size * sizeof(uint32_t)
+                    [render setFragmentBytes:dynamicOffsets32.data()
+                                      length:dynamicOffsetsCount * sizeof(uint32_t)
                                      atIndex:dynamicBufferIdx.value()];
                 }
             } else {
@@ -873,10 +880,10 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                             offset:0
                            atIndex:argumentBufferIdx];
 
-                if (offset_size > 0) {
+                if (dynamicOffsetsCount > 0) {
                     DAWN_ASSERT(dynamicBufferIdx.has_value());
-                    [compute setBytes:dynamicOffsets.data()
-                               length:offset_size * sizeof(uint32_t)
+                    [compute setBytes:dynamicOffsets32.data()
+                               length:dynamicOffsetsCount * sizeof(uint32_t)
                               atIndex:dynamicBufferIdx.value()];
                 }
             }
