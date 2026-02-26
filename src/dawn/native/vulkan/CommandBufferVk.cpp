@@ -185,16 +185,23 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
         // changed, all the BindGroups are shifted by 1 (due to the resource table being in the
         // first VkDescriptorSet) so we dirty all bind groups.
         BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
+
+        // Changing push constant range invalidates all descriptor sets.
+        if (mLastAppliedImmediateConstantSize != mImmediateConstantSize) {
+            dirtyBindGroups = mBindGroupLayoutsMask;
+        }
+
         if (mLastUsesResourceTable != mUsesResourceTable || mLastResourceTable != mResourceTable) {
             dirtyBindGroups = mBindGroupLayoutsMask;
+        }
 
-            // Set the resource table as the first set if it starts being used.
-            if (mUsesResourceTable) {
-                DAWN_ASSERT(mResourceTable != nullptr);
-                VkDescriptorSet set = mResourceTable->GetHandle();
-                device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
-                                                 mVkLayout, 0, 1, &*set, 0, nullptr);
-            }
+        // Rebind the resource table (set 0) whenever all descriptor sets are invalidated
+        // (push constant range change, resource table change, or usage change).
+        if (mUsesResourceTable && dirtyBindGroups == mBindGroupLayoutsMask) {
+            DAWN_ASSERT(mResourceTable != nullptr);
+            VkDescriptorSet set = mResourceTable->GetHandle();
+            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
+                                             0, 1, &*set, 0, nullptr);
         }
         BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
 
