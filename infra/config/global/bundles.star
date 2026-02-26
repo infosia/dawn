@@ -46,10 +46,26 @@ targets.bundle(
 )
 
 targets.bundle(
+    name = "dawn_end2end_real_hardware_win_only_gtests",
+    targets = [
+        "dawn_end2end_no_dxc_tests",
+        "dawn_end2end_no_dxc_validation_layers_tests",
+    ],
+)
+
+targets.bundle(
     name = "real_hardware_common_gtests",
     targets = [
         "dawn_end2end_real_hardware_common_gtests",
         "dawn_real_hardware_common_perf_tests",
+    ],
+)
+
+targets.bundle(
+    name = "real_hardware_win_gtests",
+    targets = [
+        "dawn_end2end_real_hardware_win_only_gtests",
+        "real_hardware_common_gtests",
     ],
 )
 

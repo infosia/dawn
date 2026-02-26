@@ -126,12 +126,12 @@
       },
       {
         "args": [
-          "--enable-backend-validation",
           "--use-gpu-in-tests",
           "--exclusive-device-type-preference=discrete,integrated",
           "--test-launcher-retry-limit=0",
           "--test-launcher-batch-limit=512",
-          "--no-xvfb"
+          "--no-xvfb",
+          "--enable-backend-validation"
         ],
         "merge": {
           "script": "//scripts/merge_scripts/true_noop_merge.py"
