@@ -728,6 +728,72 @@ TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_FailNonCanonicalIfOnlyExit) {
     EXPECT_EQ(nullptr, analysis.GetContinuingUpdateStore());
 }
 
+TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_EmptyContinuingBlock) {
+    Var* idx = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    If* ifelse = nullptr;
+    Continue* cont_statement = nullptr;
+    CoreBinary* condition = nullptr;
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 0_u);
+            b.NextIteration(loop, 10_u);
+        });
+        auto* body_param = b.BlockParam<u32>();
+        loop->Body()->AddParam(body_param);
+        b.Append(loop->Body(), [&] {
+            condition = b.LessThan(b.Load(idx), body_param);
+            ifelse = b.If(condition);
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitIf(ifelse);
+            });
+            b.Append(ifelse->False(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            b.ExitLoop(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, u32, read_write> = var 0u
+        next_iteration 10u  # -> $B3
+      }
+      $B3 (%3:u32): {  # body
+        %4:u32 = load %idx
+        %5:bool = lt %4, %3
+        if %5 [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            exit_if  # if_1
+          }
+          $B5: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        exit_loop  # loop_1
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(ValidateBefore(mod), Success);
+
+    ForLoopAnalysis analysis(*loop);
+    EXPECT_EQ(ifelse->Condition(), analysis.GetIfCondition());
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(ifelse));
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(condition));
+    EXPECT_FALSE(analysis.IsBodyRemovedInstruction(cont_statement));
+    EXPECT_EQ(nullptr, analysis.GetContinuingUpdateStore());
+}
+
 TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_ContinuingNextIterationHasOperands) {
     Var* idx = nullptr;
     Loop* loop = nullptr;

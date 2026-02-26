@@ -82,7 +82,7 @@ const core::ir::Store* GetContinuingSimpleLoopUpdate(const Loop* loop) {
     //  - the preceding instruction is a store
     //  - all other instructions in the block sink into that store
 
-    if (!loop->Continuing()) {
+    if (!loop->Continuing() || loop->Continuing()->IsEmpty()) {
         return nullptr;
     }
     auto* next_iteration = loop->Continuing()->Back()->As<const core::ir::NextIteration>();
