@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "a5f0197bd54a0231b7f06cb25c0f08489dc80891",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cde3eba_038d3218",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-26T21:19:11Z",
+      "side": 1,
+      "message": "kAnd",
+      "revId": "a5f0197bd54a0231b7f06cb25c0f08489dc80891",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
