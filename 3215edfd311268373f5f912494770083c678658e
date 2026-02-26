@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc728f83_c0e7c841",
+        "filename": "infra/config/global/cmake_shared.star",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-02-26T18:56:25Z",
+      "side": 1,
+      "message": "Hmm, my understanding is that n2 isn\u0027t limited to Ice Lake.\nE.g. can be \"Cascade Lake\" per https://docs.cloud.google.com/compute/docs/cpu-platforms.\nWould be better to enable Starlark to set machine_type dimension.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "3215edfd311268373f5f912494770083c678658e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
