@@ -39513,6 +39513,10 @@ webgpu:api,validation,non_filterable_texture:non_filterable_texture_with_filteri
 webgpu:api,validation,non_filterable_texture:non_filterable_texture_with_filtering_sampler:pipeline="render";async=false;sampleType="depth";viewDimension="cube";sameGroup=false
 webgpu:api,validation,non_filterable_texture:non_filterable_texture_with_filtering_sampler:pipeline="render";async=false;sampleType="depth";viewDimension="cube-array";sameGroup=true
 webgpu:api,validation,non_filterable_texture:non_filterable_texture_with_filtering_sampler:pipeline="render";async=false;sampleType="depth";viewDimension="cube-array";sameGroup=false
+webgpu:api,validation,pipeline,immediates:pipeline_creation_immediate_size_mismatch:pipelineType="compute";isAsync=true
+webgpu:api,validation,pipeline,immediates:pipeline_creation_immediate_size_mismatch:pipelineType="compute";isAsync=false
+webgpu:api,validation,pipeline,immediates:pipeline_creation_immediate_size_mismatch:pipelineType="render";isAsync=true
+webgpu:api,validation,pipeline,immediates:pipeline_creation_immediate_size_mismatch:pipelineType="render";isAsync=false
 webgpu:api,validation,query_set,create:count:type="occlusion"
 webgpu:api,validation,query_set,create:count:type="timestamp"
 webgpu:api,validation,query_set,destroy:twice:
@@ -45126,7 +45130,8 @@ webgpu:api,validation,render_pipeline,misc:no_attachment:isAsync=true
 webgpu:api,validation,render_pipeline,misc:vertex_state_only:isAsync=false
 webgpu:api,validation,render_pipeline,misc:vertex_state_only:isAsync=true
 webgpu:api,validation,render_pipeline,misc:pipeline_layout,device_mismatch:
-webgpu:api,validation,render_pipeline,misc:external_texture:
+webgpu:api,validation,render_pipeline,misc:external_texture:isAsync=false
+webgpu:api,validation,render_pipeline,misc:external_texture:isAsync=true
 webgpu:api,validation,render_pipeline,misc:storage_texture,format:format="rgba8unorm"
 webgpu:api,validation,render_pipeline,misc:storage_texture,format:format="rgba8snorm"
 webgpu:api,validation,render_pipeline,misc:storage_texture,format:format="rgba8uint"
@@ -280480,6 +280485,12 @@ webgpu:web_platform,external_texture,video:importExternalTexture,sample_non_YUV_
 webgpu:web_platform,external_texture,video:importExternalTexture,sample_non_YUV_video_frame:videoFrameFormat="RGBX"
 webgpu:web_platform,external_texture,video:importExternalTexture,sample_non_YUV_video_frame:videoFrameFormat="BGRA"
 webgpu:web_platform,external_texture,video:importExternalTexture,sample_non_YUV_video_frame:videoFrameFormat="BGRX"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_diff_with_coded_size:displayScale="smaller"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_diff_with_coded_size:displayScale="same"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_diff_with_coded_size:displayScale="larger"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_from_textureDimensions:displayScale="smaller"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_from_textureDimensions:displayScale="same"
+webgpu:web_platform,external_texture,video:importExternalTexture,video_frame_display_size_from_textureDimensions:displayScale="larger"
 webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-vp8-bt601.webm";dstColorSpace="display-p3"
 webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-vp8-bt601.webm";dstColorSpace="srgb"
 webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:videoName="four-colors-h264-bt601.mp4";dstColorSpace="display-p3"
