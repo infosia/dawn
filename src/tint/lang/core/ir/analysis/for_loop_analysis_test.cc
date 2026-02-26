@@ -1029,5 +1029,164 @@ TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_ContinuingInstructionDoesNotS
     EXPECT_EQ(nullptr, analysis.GetContinuingUpdateStore());
 }
 
+TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_ContinuingInstructionUsesBodyResult) {
+    Var* idx = nullptr;
+    Var* inc = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    If* ifelse = nullptr;
+    Continue* cont_statement = nullptr;
+    CoreBinary* condition = nullptr;
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 0_u);
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {
+            auto* idx_load = b.Load(idx);
+            condition = b.LessThan(idx_load, 5_u);
+            ifelse = b.If(condition);
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitIf(ifelse);
+            });
+            b.Append(ifelse->False(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            inc = b.Var("inc", 1_u);
+            cont_statement = b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            auto* load = b.Load(idx);
+            b.Store(idx, b.Add(load, b.Load(inc)));
+            b.NextIteration(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, u32, read_write> = var 0u
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:u32 = load %idx
+        %4:bool = lt %3, 5u
+        if %4 [t: $B5, f: $B6] {  # if_1
+          $B5: {  # true
+            exit_if  # if_1
+          }
+          $B6: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        %inc:ptr<function, u32, read_write> = var 1u
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %6:u32 = load %idx
+        %7:u32 = load %inc
+        %8:u32 = add %6, %7
+        store %idx, %8
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(ValidateBefore(mod), Success);
+
+    ForLoopAnalysis analysis(*loop);
+    EXPECT_EQ(ifelse->Condition(), analysis.GetIfCondition());
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(ifelse));
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(condition));
+    EXPECT_FALSE(analysis.IsBodyRemovedInstruction(cont_statement));
+    EXPECT_EQ(nullptr, analysis.GetContinuingUpdateStore());
+}
+
+TEST_F(IR_ForLoopAnalysisTest, SimpleLoopCondition_ContinuingHasVarDeclaration) {
+    Var* idx = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    If* ifelse = nullptr;
+    Continue* cont_statement = nullptr;
+    CoreBinary* condition = nullptr;
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 0_u);
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {
+            auto* idx_load = b.Load(idx);
+            condition = b.LessThan(idx_load, 5_u);
+            ifelse = b.If(condition);
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitIf(ifelse);
+            });
+            b.Append(ifelse->False(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            cont_statement = b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            auto inc = b.Var("inc", 1_u);
+            auto* load = b.Load(idx);
+            b.Store(idx, b.Add(load, b.Load(inc)));
+            b.NextIteration(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, u32, read_write> = var 0u
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:u32 = load %idx
+        %4:bool = lt %3, 5u
+        if %4 [t: $B5, f: $B6] {  # if_1
+          $B5: {  # true
+            exit_if  # if_1
+          }
+          $B6: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %inc:ptr<function, u32, read_write> = var 1u
+        %6:u32 = load %idx
+        %7:u32 = load %inc
+        %8:u32 = add %6, %7
+        store %idx, %8
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(ValidateBefore(mod), Success);
+
+    ForLoopAnalysis analysis(*loop);
+    EXPECT_EQ(ifelse->Condition(), analysis.GetIfCondition());
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(ifelse));
+    EXPECT_TRUE(analysis.IsBodyRemovedInstruction(condition));
+    EXPECT_FALSE(analysis.IsBodyRemovedInstruction(cont_statement));
+    EXPECT_EQ(nullptr, analysis.GetContinuingUpdateStore());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::analysis
