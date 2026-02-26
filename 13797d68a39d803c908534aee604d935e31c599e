@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75f3eb7f_a30c73e0",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-26T16:00:51Z",
+      "side": 1,
+      "message": "What about if they\u0027re defined in the continuing block itself? Or does that stop the sinking in general?",
+      "revId": "13797d68a39d803c908534aee604d935e31c599e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
