@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "367cfc39_5648f8fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-26T01:12:32Z",
+      "side": 1,
+      "message": "PTAL\n\n[led run](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-win-arm64-rel/1/infra) with this CL + the infra/specs removal applied and the Starlark test specs forcibly applied looks good.\n\nNot sending to the CQ or enabling autosubmit since this will 100% require a rebase after the Mac CL lands due to the switch to a mixin for the backend validation arg. Will need another stamp after that rebase, as well.",
+      "revId": "30bbe2c00ca1a2acb47047b64a793c6ed18881e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
