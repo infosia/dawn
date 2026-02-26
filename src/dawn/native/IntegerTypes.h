@@ -61,6 +61,8 @@ constexpr BindingNumber kMaxBindingsPerBindGroupTyped = BindingNumber(kMaxBindin
 using APIBindingIndex = TypedInteger<struct APIBindingIndexT, uint32_t>;
 using BindingIndex = TypedInteger<struct BindingIndexT, uint32_t>;
 
+using DynamicOffset = TypedInteger<struct DynamicOffsetT, uint32_t>;
+
 // Bind group indinces represent the index in the SetBindGroup, the index in
 // wgpu::PipelineLayoutDescriptor::bindGroupLayouts and friends.
 using BindGroupIndex = TypedInteger<struct BindGroupIndexT, uint32_t>;

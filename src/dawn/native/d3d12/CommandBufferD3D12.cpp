@@ -471,7 +471,7 @@ class ImmediateConstantTracker : public T {
 class DescriptorHeapState;
 
 template <typename PipelineType>
-class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
+class BindGroupStateTracker : public BindGroupTrackerBase<false> {
     using Base = BindGroupTrackerBase;
 
   public:
