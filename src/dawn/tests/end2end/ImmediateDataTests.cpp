@@ -720,6 +720,225 @@ TEST_P(ImmediateDataTests, BundlesDontCarePreviousImmediatesState) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(51, 102, 153, 255), renderPass.color, 0, 0);
 }
 
+// Switching pipelines with different internal push constant sizes (e.g. frag_depth adds
+// clampFragDepth) must rebind all bind groups due to VkPipelineLayout change.
+TEST_P(ImmediateDataTests, BindGroupsReboundOnDifferentInternalImmediateSize) {
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}});
+    wgpu::PipelineLayout layout = utils::MakeBasicPipelineLayout(device, &bgl, 16);
+
+    // Pipeline A: no frag_depth.
+    wgpu::ShaderModule moduleA = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var<uniform> color: vec4f;
+        var<immediate> imm: vec4f;
+        @vertex fn vs(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+            let p = array(vec2f(1,-1), vec2f(-1,-1), vec2f(0,1));
+            return vec4f(p[i], 0, 1);
+        }
+        @fragment fn fs() -> @location(0) vec4f { return vec4f(1,0,0,1); }
+    )");
+    // Pipeline B: frag_depth adds internal push constants. Reads uniform to verify rebound.
+    wgpu::ShaderModule moduleB = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var<uniform> color: vec4f;
+        var<immediate> imm: vec4f;
+        struct Out { @location(0) c: vec4f, @builtin(frag_depth) d: f32 }
+        @vertex fn vs(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+            let p = array(vec2f(1,-1), vec2f(-1,-1), vec2f(0,1));
+            return vec4f(p[i], 0, 1);
+        }
+        @fragment fn fs() -> Out { return Out(color, 0.5); }
+    )");
+
+    auto makePipeline = [&](wgpu::ShaderModule mod, bool useDepthWrite) {
+        utils::ComboRenderPipelineDescriptor desc;
+        desc.vertex.module = mod;
+        desc.cFragment.module = mod;
+        desc.cFragment.targetCount = 1;
+        desc.layout = layout;
+        auto* ds = desc.EnableDepthStencil(wgpu::TextureFormat::Depth32Float);
+        ds->depthWriteEnabled =
+            useDepthWrite ? wgpu::OptionalBool::True : wgpu::OptionalBool::False;
+        ds->depthCompare = wgpu::CompareFunction::Always;
+        return device.CreateRenderPipeline(&desc);
+    };
+
+    wgpu::RenderPipeline pipelineA = makePipeline(moduleA, false);
+    wgpu::RenderPipeline pipelineB = makePipeline(moduleB, true);
+
+    // Expected rgba8 {51, 102, 153, 255}.
+    wgpu::Buffer uniformBuf =
+        utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform, {0.2f, 0.4f, 0.6f, 1.0f});
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, uniformBuf}});
+
+    utils::BasicRenderPass rp = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+    // Attach a depth texture for Pipeline B's frag_depth output.
+    wgpu::TextureDescriptor depthDesc;
+    depthDesc.size = {kRTSize, kRTSize};
+    depthDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    depthDesc.format = wgpu::TextureFormat::Depth32Float;
+    wgpu::Texture depthTex = device.CreateTexture(&depthDesc);
+    utils::ComboRenderPassDescriptor rpDesc({rp.color.CreateView()}, depthTex.CreateView());
+    rpDesc.UnsetDepthStencilLoadStoreOpsForFormat(wgpu::TextureFormat::Depth32Float);
+
+    std::array<float, 4> immData = {};
+    wgpu::CommandEncoder enc = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = enc.BeginRenderPass(&rpDesc);
+    pass.SetBindGroup(0, bg);
+    pass.SetImmediates(0, immData.data(), sizeof(immData));
+    // Draw with Pipeline A (red), then switch to Pipeline B without re-setting bind group.
+    pass.SetPipeline(pipelineA);
+    pass.Draw(3);
+    pass.SetPipeline(pipelineB);
+    pass.Draw(3);
+    pass.End();
+    wgpu::CommandBuffer commands = enc.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(51, 102, 153, 255), rp.color, 0, 0);
+}
+
+// Switching pipelines with different PipelineLayout immediateSize must rebind bind groups.
+TEST_P(ImmediateDataTests, BindGroupsReboundOnDifferentPipelineLayoutImmediateSize) {
+    wgpu::BindGroupLayout bgl = CreateBindGroupLayout();
+    wgpu::PipelineLayout layoutA = utils::MakeBasicPipelineLayout(device, &bgl, 4);
+    wgpu::PipelineLayout layoutB = utils::MakeBasicPipelineLayout(device, &bgl, 16);
+
+    wgpu::ShaderModule moduleA = utils::CreateShaderModule(device, R"(
+        var<immediate> imm: u32;
+        @group(0) @binding(0) var<storage, read_write> output: vec4u;
+        @compute @workgroup_size(1) fn csMain() { output = vec4u(imm, 0, 0, 0); }
+    )");
+    wgpu::ShaderModule moduleB = utils::CreateShaderModule(device, R"(
+        var<immediate> imm: vec4u;
+        @group(0) @binding(0) var<storage, read_write> output: vec4u;
+        @compute @workgroup_size(1) fn csMain() { output = imm; }
+    )");
+
+    wgpu::ComputePipelineDescriptor csDescA;
+    csDescA.compute.module = moduleA;
+    csDescA.layout = layoutA;
+    wgpu::ComputePipelineDescriptor csDescB;
+    csDescB.compute.module = moduleB;
+    csDescB.layout = layoutB;
+    wgpu::ComputePipeline pipelineA = device.CreateComputePipeline(&csDescA);
+    wgpu::ComputePipeline pipelineB = device.CreateComputePipeline(&csDescB);
+
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, mStorageBuffer}});
+
+    uint32_t immA = 42;
+    std::array<uint32_t, 4> immB = {10, 20, 30, 40};
+
+    wgpu::CommandEncoder enc = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = enc.BeginComputePass();
+    // Dispatch with Pipeline A, then switch to Pipeline B without re-setting bind group.
+    pass.SetBindGroup(0, bg);
+    pass.SetImmediates(0, &immA, sizeof(uint32_t));
+    pass.SetPipeline(pipelineA);
+    pass.DispatchWorkgroups(1);
+    pass.SetImmediates(0, immB.data(), sizeof(immB));
+    pass.SetPipeline(pipelineB);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+    wgpu::CommandBuffer commands = enc.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_RANGE_EQ(immB.data(), mStorageBuffer, 0, immB.size());
+}
+
+// Switching pipelines with different internal push constant sizes must invalidate ALL
+// descriptor sets. Uses two bind groups to confirm every set is rebound.
+TEST_P(ImmediateDataTests, AllBindGroupsReboundOnSamePipelineLayoutDifferentImmediate) {
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
+    wgpu::BindGroupLayout bgl0 = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}});
+    wgpu::BindGroupLayout bgl1 = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}});
+
+    std::array<wgpu::BindGroupLayout, 2> bgls = {bgl0, bgl1};
+    wgpu::PipelineLayoutDescriptor plDesc;
+    plDesc.bindGroupLayoutCount = bgls.size();
+    plDesc.bindGroupLayouts = bgls.data();
+    plDesc.immediateSize = 4;
+    wgpu::PipelineLayout layout = device.CreatePipelineLayout(&plDesc);
+
+    // Pipeline A: no frag_depth, outputs red.
+    wgpu::ShaderModule moduleA = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var<uniform> mul: vec4f;
+        @group(1) @binding(0) var<uniform> add: vec4f;
+        var<immediate> imm: f32;
+        @vertex fn vs(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+            let p = array(vec2f(1,-1), vec2f(-1,-1), vec2f(0,1));
+            return vec4f(p[i], 0, 1);
+        }
+        @fragment fn fs() -> @location(0) vec4f { return vec4f(1,0,0,1); }
+    )");
+    // Pipeline B: frag_depth (different push constant range). Reads both bind groups.
+    wgpu::ShaderModule moduleB = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var<uniform> mul: vec4f;
+        @group(1) @binding(0) var<uniform> add: vec4f;
+        var<immediate> imm: f32;
+        struct Out { @location(0) c: vec4f, @builtin(frag_depth) d: f32 }
+        @vertex fn vs(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
+            let p = array(vec2f(1,-1), vec2f(-1,-1), vec2f(0,1));
+            return vec4f(p[i], 0, 1);
+        }
+        @fragment fn fs() -> Out { return Out(mul * add, 0.5); }
+    )");
+
+    auto makePipeline = [&](wgpu::ShaderModule mod, bool useDepthWrite) {
+        utils::ComboRenderPipelineDescriptor desc;
+        desc.vertex.module = mod;
+        desc.cFragment.module = mod;
+        desc.cFragment.targetCount = 1;
+        desc.layout = layout;
+        auto* ds = desc.EnableDepthStencil(wgpu::TextureFormat::Depth32Float);
+        ds->depthWriteEnabled =
+            useDepthWrite ? wgpu::OptionalBool::True : wgpu::OptionalBool::False;
+        ds->depthCompare = wgpu::CompareFunction::Always;
+        return device.CreateRenderPipeline(&desc);
+    };
+
+    wgpu::RenderPipeline pipelineA = makePipeline(moduleA, false);
+    wgpu::RenderPipeline pipelineB = makePipeline(moduleB, true);
+
+    // mul={0.5,0.5,1,1} * add={0.4,0.8,0.6,1} = {0.2,0.4,0.6,1} -> rgba8 {51,102,153,255}.
+    wgpu::Buffer mulBuf =
+        utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform, {0.5f, 0.5f, 1.0f, 1.0f});
+    wgpu::Buffer addBuf =
+        utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform, {0.4f, 0.8f, 0.6f, 1.0f});
+    wgpu::BindGroup bg0 = utils::MakeBindGroup(device, bgl0, {{0, mulBuf}});
+    wgpu::BindGroup bg1 = utils::MakeBindGroup(device, bgl1, {{0, addBuf}});
+
+    utils::BasicRenderPass rp = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+    wgpu::TextureDescriptor depthDesc;
+    depthDesc.size = {kRTSize, kRTSize};
+    depthDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    depthDesc.format = wgpu::TextureFormat::Depth32Float;
+    wgpu::Texture depthTex = device.CreateTexture(&depthDesc);
+    utils::ComboRenderPassDescriptor rpDesc({rp.color.CreateView()}, depthTex.CreateView());
+    rpDesc.UnsetDepthStencilLoadStoreOpsForFormat(wgpu::TextureFormat::Depth32Float);
+
+    float immData = 0.0f;
+    wgpu::CommandEncoder enc = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = enc.BeginRenderPass(&rpDesc);
+    pass.SetBindGroup(0, bg0);
+    pass.SetBindGroup(1, bg1);
+    pass.SetImmediates(0, &immData, sizeof(float));
+    // Draw with Pipeline A (red), then switch to Pipeline B without re-setting bind groups.
+    pass.SetPipeline(pipelineA);
+    pass.Draw(3);
+    pass.SetPipeline(pipelineB);
+    pass.Draw(3);
+    pass.End();
+    wgpu::CommandBuffer commands = enc.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(51, 102, 153, 255), rp.color, 0, 0);
+}
+
 DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       D3D11Backend(),
                       D3D12Backend(),
@@ -727,6 +946,126 @@ DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       OpenGLESBackend(),
                       VulkanBackend(),
                       WebGPUBackend());
+
+class ImmediateDataWithResourceTableTests : public DawnTest {
+  protected:
+    void SetUp() override {
+        DawnTest::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(
+            !SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}));
+        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() && !DAWN_PLATFORM_IS(ARM64));
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable})) {
+            return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};
+        }
+        return {};
+    }
+
+    wgpu::PipelineLayout MakePipelineLayoutWithTable(std::vector<wgpu::BindGroupLayout> bgls,
+                                                     uint32_t immediateSize) {
+        wgpu::PipelineLayoutResourceTable plTable;
+        plTable.usesResourceTable = true;
+
+        wgpu::PipelineLayoutDescriptor desc{
+            .nextInChain = &plTable,
+            .bindGroupLayoutCount = bgls.size(),
+            .bindGroupLayouts = bgls.data(),
+            .immediateSize = immediateSize,
+        };
+        return device.CreatePipelineLayout(&desc);
+    }
+};
+
+// Resource table (VkDescriptorSet 0) must be rebound when push constant range changes
+// between pipelines, even if the resource table itself doesn't change.
+TEST_P(ImmediateDataWithResourceTableTests, ResourceTableReboundOnDifferentImmediateSize) {
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+
+    wgpu::PipelineLayout layoutA = MakePipelineLayoutWithTable({bgl}, 4);
+    wgpu::PipelineLayout layoutB = MakePipelineLayoutWithTable({bgl}, 16);
+
+    wgpu::ShaderModule moduleA = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        var<immediate> imm: u32;
+        @group(0) @binding(0) var<storage, read_write> output: u32;
+        @compute @workgroup_size(1) fn main() {
+            output = imm + u32(hasResource<texture_2d<f32, filterable>>(0));
+        }
+    )");
+    wgpu::ShaderModule moduleB = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        var<immediate> imm: vec4u;
+        @group(0) @binding(0) var<storage, read_write> output: u32;
+        @compute @workgroup_size(1) fn main() {
+            output = imm.x + u32(hasResource<texture_2d<f32, filterable>>(0));
+        }
+    )");
+
+    wgpu::ComputePipelineDescriptor csDescA;
+    csDescA.compute.module = moduleA;
+    csDescA.layout = layoutA;
+    wgpu::ComputePipelineDescriptor csDescB;
+    csDescB.compute.module = moduleB;
+    csDescB.layout = layoutB;
+    wgpu::ComputePipeline pipelineA = device.CreateComputePipeline(&csDescA);
+    wgpu::ComputePipeline pipelineB = device.CreateComputePipeline(&csDescB);
+
+    wgpu::BufferDescriptor bufDesc = {
+        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+        .size = sizeof(uint32_t),
+    };
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&bufDesc);
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, resultBuffer}});
+
+    // Create a pinned texture and put it in the resource table at slot 0.
+    wgpu::TextureDescriptor tDesc{
+        .usage = wgpu::TextureUsage::TextureBinding,
+        .size = {1, 1},
+        .format = wgpu::TextureFormat::RGBA8Unorm,
+    };
+    wgpu::Texture tex = device.CreateTexture(&tDesc);
+    tex.Pin(wgpu::TextureUsage::TextureBinding);
+
+    wgpu::ResourceTableDescriptor rtDesc;
+    rtDesc.size = 1;
+    wgpu::ResourceTable table = device.CreateResourceTable(&rtDesc);
+    wgpu::BindingResource resource = {.textureView = tex.CreateView()};
+    table.Update(0, &resource);
+
+    uint32_t immA = 100;
+    std::array<uint32_t, 4> immB = {200, 0, 0, 0};
+
+    wgpu::CommandEncoder enc = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = enc.BeginComputePass();
+    pass.SetResourceTable(table);
+    pass.SetBindGroup(0, bg);
+
+    // Dispatch with pipelineA, then switch to pipelineB (different immediate size).
+    // If the resource table is not rebound, hasResource will return wrong value.
+    pass.SetImmediates(0, &immA, sizeof(immA));
+    pass.SetPipeline(pipelineA);
+    pass.DispatchWorkgroups(1);
+
+    pass.SetImmediates(0, immB.data(), sizeof(immB));
+    pass.SetPipeline(pipelineB);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = enc.Finish();
+    queue.Submit(1, &commands);
+
+    // Pipeline B: imm.x (200) + hasResource (1) = 201
+    uint32_t expected = 201;
+    EXPECT_BUFFER_U32_EQ(expected, resultBuffer, 0);
+}
+
+DAWN_INSTANTIATE_TEST(ImmediateDataWithResourceTableTests,
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
