@@ -4325,7 +4325,7 @@
             {"value": 4, "name": "texture binding"},
             {"value": 8, "name": "storage binding"},
             {"value": 16, "name": "render attachment"},
-            {"value": 32, "name": "transient attachment", "tags": ["dawn"]},
+            {"value": 32, "name": "transient attachment"},
             {"value": 64, "name": "storage attachment", "tags": ["dawn"]}
         ]
     },
