@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0de27ba0_0f9feb9e",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:49:47Z",
+      "side": 1,
+      "message": "OK to do this outside the `mState` lock? Seems probably fine to me but just checking.",
+      "revId": "df22bb71e28aefde6c33f0177fa3ddd2d1e9deae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b94eb829_cae689e6",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-02-26T22:49:47Z",
+      "side": 1,
+      "message": "Unsure if I should be concerned about overhead of using a lock instead of an atomic. Probably we don\u0027t access the serial so much that it\u0027s a problem?",
+      "revId": "df22bb71e28aefde6c33f0177fa3ddd2d1e9deae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
