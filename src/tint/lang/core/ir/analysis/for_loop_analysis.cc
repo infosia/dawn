@@ -81,6 +81,7 @@ const core::ir::Store* GetContinuingSimpleLoopUpdate(const Loop* loop) {
     //  - the last instruction of the continuing block is a next_iteration with no operands
     //  - the preceding instruction is a store
     //  - all other instructions in the block sink into that store
+    //  - none of the operands to these instructions are defined in the loop body
 
     if (!loop->Continuing() || loop->Continuing()->IsEmpty()) {
         return nullptr;
@@ -95,8 +96,20 @@ const core::ir::Store* GetContinuingSimpleLoopUpdate(const Loop* loop) {
         return nullptr;
     }
 
-    if (!SinkChain(store)) {
+    auto sink_chain = SinkChain(store);
+    if (!sink_chain) {
         return nullptr;
+    }
+
+    // If an operand was defined in the loop body, then sinking may violate scoping rules.
+    for (auto inst : *sink_chain) {
+        for (auto* operand : inst->Operands()) {
+            if (auto* result = operand->As<InstructionResult>()) {
+                if (result->Instruction()->Block() == loop->Body()) {
+                    return nullptr;
+                }
+            }
+        }
     }
 
     return store;
