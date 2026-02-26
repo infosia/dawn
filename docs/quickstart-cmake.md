@@ -31,7 +31,7 @@ $ cmake -S . -B out/Release -DDAWN_FETCH_DEPENDENCIES=ON -DDAWN_ENABLE_INSTALL=O
 ```
 
 - `DAWN_FETCH_DEPENDENCIES=ON` uses a Python script `fetch_dawn_dependencies.py` as a less tedious alternative to setting up depot_tools and fetching dependencies via `gclient`.
-- `DAWN_ENABLE_INSTALL=ON` configures the project to install binaries, headers and cmake configuration files in a directory of your choice. This allows other projects to discover Dawn in CMake and link with it.
+- `DAWN_ENABLE_INSTALL=ON` configures the project to install binaries, headers and cmake configuration files in a directory of your choice. This allows other projects to discover Dawn in CMake and link with it. In combination with DAWN_USE_GLFW (which is on by default on some platforms), the install command will also install the webgpu_glfw target, a small utility library that will create the correct platform surface from a GLFW window.
 
 Now you can build Dawn:
 
@@ -130,6 +130,7 @@ find_package(Dawn REQUIRED)
 add_executable(hello_webgpu hello_webgpu.cpp)
 
 # Declare dependency on the dawn::webgpu_dawn library
+# If needed, you can also include dawn::webgpu_glfw here.
 target_link_libraries(hello_webgpu dawn::webgpu_dawn)
 ```
 
