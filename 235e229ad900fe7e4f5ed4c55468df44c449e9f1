@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de01bfa3_4f3ebebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-26T19:02:23Z",
+      "side": 1,
+      "message": "LGTM with a non-blocking comment.",
+      "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f960d11_123ed840",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-26T19:02:23Z",
+      "side": 1,
+      "message": "Given that you assert in `RegisterSerialProcessor` that processors can only be added at the beginning of time, it feels like a bit of a waste to constantly be making copies of the vector here because we know it won\u0027t change by the time this method is called. (Assuming that you don\u0027t pass `kBeginningOfGPUTime` as the completed serial, anyway.\n\nI get why we want the processor list to be part of the state during startup, so I\u0027m not sure what I\u0027d suggest here. It\u0027s ultimately a pretty minor thing. But we DO want to reduce the amount of vector manipulation we do during steady state, so it\u0027s probably worth giving at least a bit of thought to.\n\nEDIT: Okay, I see that the processors could be altered by `AssumeCommandsComplete`, which might happen in parallel. Leaving this comment here just in case you can think of a way to reduce vector manipulation, but it\u0027s non-blocking.",
+      "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
