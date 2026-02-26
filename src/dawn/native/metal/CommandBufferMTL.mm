@@ -655,7 +655,7 @@ class ImmediateConstantTracker : public T {
 // pipeline state.
 // Bind groups may be inherited because bind groups are packed in the buffer /
 // texture tables in contiguous order.
-class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
+class BindGroupTracker : public BindGroupTrackerBase<true> {
   public:
     BindGroupTracker(StorageBufferLengthTracker* lengthTracker, bool useArgumentBuffers)
         : BindGroupTrackerBase(),
@@ -697,7 +697,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                             id<MTLComputeCommandEncoder> compute,
                             BindGroupIndex index,
                             BindGroup* group,
-                            const ityp::span<BindingIndex, uint64_t>& dynamicOffsets,
+                            const ityp::span<BindingIndex, uint32_t>& dynamicOffsets,
                             PipelineLayout* pipelineLayout,
                             uint32_t argumentBufferIdx,
                             std::optional<uint32_t> dynamicBufferIdx) {
@@ -846,12 +846,6 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         }
 
         if (mUseArgumentBuffers) {
-            ityp::vector<BindingIndex, uint32_t> dynamicOffsets32;
-            dynamicOffsets32.reserve(dynamicOffsets.size());
-            for (uint64_t offset : dynamicOffsets) {
-                DAWN_ASSERT(offset <= std::numeric_limits<uint32_t>::max());
-                dynamicOffsets32.push_back(uint32_t(offset));
-            }
             const uint32_t dynamicOffsetsCount = uint32_t(dynamicOffsets.size());
 
             if (render) {
@@ -865,11 +859,11 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
 
                 if (dynamicOffsetsCount > 0) {
                     DAWN_ASSERT(dynamicBufferIdx.has_value());
-                    [render setVertexBytes:dynamicOffsets32.data()
+                    [render setVertexBytes:dynamicOffsets.data()
                                     length:dynamicOffsetsCount * sizeof(uint32_t)
                                    atIndex:dynamicBufferIdx.value()];
 
-                    [render setFragmentBytes:dynamicOffsets32.data()
+                    [render setFragmentBytes:dynamicOffsets.data()
                                       length:dynamicOffsetsCount * sizeof(uint32_t)
                                      atIndex:dynamicBufferIdx.value()];
                 }
@@ -882,7 +876,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
 
                 if (dynamicOffsetsCount > 0) {
                     DAWN_ASSERT(dynamicBufferIdx.has_value());
-                    [compute setBytes:dynamicOffsets32.data()
+                    [compute setBytes:dynamicOffsets.data()
                                length:dynamicOffsetsCount * sizeof(uint32_t)
                               atIndex:dynamicBufferIdx.value()];
                 }
