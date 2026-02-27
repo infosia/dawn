@@ -44,6 +44,7 @@ import "src/tint/lang/core/filtering_parameters.def"
 // Types                                                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
+type u16
 type i32
 type u32
 type f32
@@ -184,6 +185,12 @@ implicit(T: f32_i32, N: num) fn asuint(vec<N, T>) -> vec<N, u32>
 implicit(T: iu32) fn asfloat(T) -> f32
 implicit(T: iu32, N: num) fn asfloat(vec<N, T>) -> vec<N, f32>
 
+fn asuint16(f16) -> u16
+implicit(N: num) fn asuint16(vec<N, f16>) -> vec<N, u16>
+
+fn asfloat16(u16) -> f16
+implicit(N: num) fn asfloat16(vec<N, u16>) -> vec<N, f16>
+
 fn dot4add_i8packed(u32, u32, ptr<function, i32, writable>) -> i32
 fn dot4add_u8packed(u32, u32, ptr<function, u32, writable>) -> u32
 
@@ -311,6 +318,11 @@ implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, vec<N, T>) -> vec<N, T>
 @member_function fn Load3F16(byte_address_buffer<readable>, offset: u32) -> vec3<f16>
 @member_function fn Load4F16(byte_address_buffer<readable>, offset: u32) -> vec4<f16>
 
+@member_function fn LoadU16(byte_address_buffer<readable>, offset: u32) -> u16
+@member_function fn Load2U16(byte_address_buffer<readable>, offset: u32) -> vec2<u16>
+@member_function fn Load3U16(byte_address_buffer<readable>, offset: u32) -> vec3<u16>
+@member_function fn Load4U16(byte_address_buffer<readable>, offset: u32) -> vec4<u16>
+
 @member_function fn Store(byte_address_buffer<writable>, offset: u32, value: u32)
 @member_function fn Store2(byte_address_buffer<writable>, offset: u32, value: vec2<u32>)
 @member_function fn Store3(byte_address_buffer<writable>, offset: u32, value: vec3<u32>)
@@ -320,6 +332,11 @@ implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, vec<N, T>) -> vec<N, T>
 @member_function fn Store2F16(byte_address_buffer<writable>, offset: u32, value: vec2<f16>)
 @member_function fn Store3F16(byte_address_buffer<writable>, offset: u32, value: vec3<f16>)
 @member_function fn Store4F16(byte_address_buffer<writable>, offset: u32, value: vec4<f16>)
+
+@member_function fn StoreU16(byte_address_buffer<writable>, offset: u32, value: u16)
+@member_function fn Store2U16(byte_address_buffer<writable>, offset: u32, value: vec2<u16>)
+@member_function fn Store3U16(byte_address_buffer<writable>, offset: u32, value: vec3<u16>)
+@member_function fn Store4U16(byte_address_buffer<writable>, offset: u32, value: vec4<u16>)
 
 @member_function fn GatherCmp(texture: texture_depth_2d,
                               sampler: sampler_comparison,
