@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dca5c3bf_598e7a49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-27T22:31:58Z",
+      "side": 1,
+      "message": "This is done in every backend, so maybe makes sense to make this change generically when producing the isolated entry point name in Device.cpp?",
+      "revId": "0fb79a22ba794506f9c2997061cd2eae6449e1b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7c00964_90d76d61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-02-27T22:31:58Z",
+      "side": 1,
+      "message": "Note: If the WGSL entry point name is not valid MSL (e.g. contains unicode) then this will cause problems. Maybe that\u0027s fine because this is an opt-in toggle (and I\u0027m pretty sure there are other things that also break when it\u0027s used), but just calling it out.",
+      "revId": "0fb79a22ba794506f9c2997061cd2eae6449e1b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
