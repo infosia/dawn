@@ -744,7 +744,8 @@ const Inspector::EntryPointTextureMetadata& Inspector::ComputeTextureMetadata(
     return metadata;
 }
 
-std::bitset<kImmediateSlotCount> Inspector::GetImmediateBlockInfo(const std::string& entry_point) {
+std::bitset<kImmediateBlockInfoBitCount> Inspector::GetImmediateBlockInfo(
+    const std::string& entry_point) {
     auto* func = FindEntryPointByName(entry_point);
     if (!func) {
         return {};
@@ -767,7 +768,7 @@ std::bitset<kImmediateSlotCount> Inspector::GetImmediateBlockInfo(const std::str
     auto* mv = immediate_var->Type()->As<core::type::MemoryView>();
     auto* type = mv->StoreType();
 
-    std::bitset<kImmediateSlotCount> accessible_slots;
+    std::bitset<kImmediateBlockInfoBitCount> accessible_slots;
 
     std::function<void(const core::type::Type*, uint32_t)> mark_slots =
         [&](const core::type::Type* t, uint32_t offset) {
@@ -790,7 +791,11 @@ std::bitset<kImmediateSlotCount> Inspector::GetImmediateBlockInfo(const std::str
                     uint32_t end_byte = offset + s;
                     uint32_t end_slot = (end_byte - 1) / kImmediateSlotSize;
                     for (uint32_t i = start_slot; i <= end_slot; i++) {
-                        TINT_ASSERT(i < accessible_slots.size());
+                        if (i >= kImmediateSlotCount) {
+                            // Real member data exceeds the immediate buffer limit.
+                            accessible_slots[kImmediateSlotOverflowBit] = true;
+                            return;
+                        }
                         accessible_slots[i] = true;
                     }
                 });

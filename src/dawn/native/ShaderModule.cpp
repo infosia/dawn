@@ -870,15 +870,17 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
         metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
 
-        // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
-        // as it might cause an assertion in Tint.
-        DAWN_INVALID_IF(
-            entryPoint.immediate_data_size > kMaxExternalImmediateConstantsPerPipeline * 4,
-            "Immediate data size (%u) exceeds the maximum allowed size (%u).",
-            entryPoint.immediate_data_size, kMaxExternalImmediateConstantsPerPipeline * 4);
-
         auto immediateBlockInfo = inspector->GetImmediateBlockInfo(entryPoint.name);
-        metadata->immediateDataUsedSlots = ImmediateConstantMask(immediateBlockInfo.to_ullong());
+
+        // If the overflow bit is set, actual member data exceeds the immediate buffer
+        // limit. In that case we leave immediateDataUsedSlots as zero (empty). The
+        // exceed-limit condition will be caught later during pipeline creation validation
+        // when immediateDataRangeByteSize is compared against the pipeline layout's
+        // immediate data capacity.
+        if (!immediateBlockInfo[tint::inspector::kImmediateSlotOverflowBit]) {
+            metadata->immediateDataUsedSlots =
+                ImmediateConstantMask(immediateBlockInfo.to_ullong());
+        }
     }
 
     // Vertex shader specific reflection.

@@ -4636,4 +4636,63 @@ fn main() {
     }
 }
 
+// Test that the overflow bit is set when actual member data exceeds the immediate slot limit.
+TEST_F(InspectorImmediateBlockTest, OverflowBit) {
+    // 4 vec4f members = 64 bytes = 16 slots (fits exactly), plus one extra f32 member that
+    // pushes actual data into slot 16 which is beyond the limit.
+    auto* src = R"(
+requires immediate_address_space;
+struct S {
+  c0 : vec4f,
+  c1 : vec4f,
+  c2 : vec4f,
+  c3 : vec4f,
+  extra : f32,
+}
+var<immediate> u : S;
+@compute @workgroup_size(1)
+fn main() {
+  _ = u;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    // The overflow bit should be set because 'extra' exceeds the slot limit.
+    EXPECT_TRUE(info[kImmediateSlotOverflowBit]);
+}
+
+// Test that trailing struct padding beyond the limit does NOT set the overflow bit
+// when all actual member data fits within the slot limit.
+TEST_F(InspectorImmediateBlockTest, TrailingPaddingNoOverflow) {
+    // A struct with a vec3f as the last member. vec3f is 12 bytes, but WGSL struct layout
+    // pads the struct to a multiple of the largest alignment. With 3 vec4f (48 bytes) +
+    // 1 vec3f (12 bytes) = 60 bytes of actual data, fitting in 15 slots. But the struct
+    // size rounds up to 64 bytes due to vec4-alignment of the struct. The struct size is 64
+    // bytes but actual data is 60 bytes, so no overflow.
+    auto* src = R"(
+requires immediate_address_space;
+struct S {
+  c0 : vec4f,
+  c1 : vec4f,
+  c2 : vec4f,
+  c3 : vec3f,
+}
+var<immediate> u : S;
+@compute @workgroup_size(1)
+fn main() {
+  _ = u;
+}
+)";
+    Inspector& inspector = Initialize(src);
+    auto info = inspector.GetImmediateBlockInfo("main");
+    // No overflow: actual member data (60 bytes = 15 slots) fits within 16 slots.
+    EXPECT_FALSE(info[kImmediateSlotOverflowBit]);
+    // First 15 slots should be set (slots 0-14).
+    for (size_t i = 0; i < 15; ++i) {
+        EXPECT_TRUE(info[i]) << "slot " << i;
+    }
+    // Slot 15 is trailing padding, not actual data.
+    EXPECT_FALSE(info[15]);
+}
+
 }  // namespace tint::inspector
