@@ -192,6 +192,10 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         DAWN_TRY_ASSIGN(mResourceTableLayout, ResourceTable::MakeDescriptorSetLayout(this));
     }
 
+    if (HasFeature(Feature::FramebufferFetch)) {
+        DAWN_TRY(mFramebufferFetchHelper.Initialize(this));
+    }
+
     return DeviceBase::Initialize(descriptor, std::move(queue));
 }
 
@@ -394,6 +398,10 @@ const VkDescriptorSetLayout& Device::GetResourceTableLayout() const {
     return mResourceTableLayout;
 }
 
+FramebufferFetchHelper* Device::GetFramebufferFetchHelper() {
+    return &mFramebufferFetchHelper;
+}
+
 MutexProtected<FencedDeleter>& Device::GetFencedDeleter() const {
     return *mDeleter;
 }
@@ -511,6 +519,15 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
         usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
         featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
+    }
+
+    if (HasFeature(Feature::FramebufferFetch)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::RasterizationOrderAttachmentAccess));
+        auto& usedKnobFeature = usedKnobs.rasterizationOrderAttachmentAccessFeatures;
+        usedKnobFeature = mDeviceInfo.rasterizationOrderAttachmentAccessFeatures;
+        usedKnobFeature.rasterizationOrderDepthAttachmentAccess = VK_FALSE;
+        usedKnobFeature.rasterizationOrderDepthAttachmentAccess = VK_FALSE;
+        featuresChain.Add(&usedKnobs.rasterizationOrderAttachmentAccessFeatures);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
@@ -1014,6 +1031,8 @@ void Device::DestroyImpl(DestroyReason reason) {
         fn.DestroyDescriptorSetLayout(mVkDevice, mResourceTableLayout, nullptr);
         mResourceTableLayout = VK_NULL_HANDLE;
     }
+
+    mFramebufferFetchHelper.Destroy();
 
     mDescriptorAllocatorsPendingDeallocation.Use([&](auto pending) {
         for (Ref<DescriptorSetAllocator>& allocator : pending->IterateUpTo(kMaxExecutionSerial)) {

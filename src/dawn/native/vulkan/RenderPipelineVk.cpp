@@ -468,8 +468,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     multisample.pNext = nullptr;
     multisample.flags = 0;
     multisample.rasterizationSamples = VulkanSampleCount(GetSampleCount());
-    multisample.sampleShadingEnable = VK_FALSE;
-    multisample.minSampleShading = 0.0f;
+    multisample.sampleShadingEnable = UsesFramebufferFetch() ? VK_TRUE : VK_FALSE;
+    multisample.minSampleShading = 1.0f;
     // VkPipelineMultisampleStateCreateInfo.pSampleMask is an array of length
     // ceil(rasterizationSamples / 32) and since we're passing a single uint32_t
     // we have to assert that this length is indeed 1.
@@ -511,6 +511,12 @@ MaybeError RenderPipeline::InitializeImpl() {
         colorBlend.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
         colorBlend.pNext = nullptr;
         colorBlend.flags = 0;
+
+        if (GetStage(SingleShaderStage::Fragment).metadata->fragmentInputMask.any()) {
+            colorBlend.flags |=
+                VK_PIPELINE_COLOR_BLEND_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_BIT_EXT;
+        }
+
         // LogicOp isn't supported so we disable it.
         colorBlend.logicOpEnable = VK_FALSE;
         colorBlend.logicOp = VK_LOGIC_OP_CLEAR;
