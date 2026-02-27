@@ -33,6 +33,58 @@
 #include "tint/tint.h"
 
 namespace {
+constexpr auto kDefaults = std::array{
+    tint::ResourceType::kTexture1d_f32_filterable,
+    tint::ResourceType::kTexture2d_f32_filterable,
+    tint::ResourceType::kTexture2dArray_f32_filterable,
+    tint::ResourceType::kTextureCube_f32_filterable,
+    tint::ResourceType::kTextureCubeArray_f32_filterable,
+    tint::ResourceType::kTexture3d_f32_filterable,
+    tint::ResourceType::kTexture1d_f32_unfilterable,
+    tint::ResourceType::kTexture2d_f32_unfilterable,
+    tint::ResourceType::kTexture2dArray_f32_unfilterable,
+    tint::ResourceType::kTextureCube_f32_unfilterable,
+    tint::ResourceType::kTextureCubeArray_f32_unfilterable,
+    tint::ResourceType::kTexture3d_f32_unfilterable,
+
+    tint::ResourceType::kTexture1d_u32,
+    tint::ResourceType::kTexture2d_u32,
+    tint::ResourceType::kTexture2dArray_u32,
+    tint::ResourceType::kTextureCube_u32,
+    tint::ResourceType::kTextureCubeArray_u32,
+    tint::ResourceType::kTexture3d_u32,
+
+    tint::ResourceType::kTexture1d_i32,
+    tint::ResourceType::kTexture2d_i32,
+    tint::ResourceType::kTexture2dArray_i32,
+    tint::ResourceType::kTextureCube_i32,
+    tint::ResourceType::kTextureCubeArray_i32,
+    tint::ResourceType::kTexture3d_i32,
+
+    tint::ResourceType::kTextureMultisampled2d_f32,
+    tint::ResourceType::kTextureMultisampled2d_u32,
+    tint::ResourceType::kTextureMultisampled2d_i32,
+
+    tint::ResourceType::kTextureDepth2d,
+    tint::ResourceType::kTextureDepth2dArray,
+    tint::ResourceType::kTextureDepthCube,
+    tint::ResourceType::kTextureDepthCubeArray,
+    tint::ResourceType::kTextureDepthMultisampled2d,
+
+    tint::ResourceType::kSampler_filtering,
+    tint::ResourceType::kSampler_non_filtering,
+    tint::ResourceType::kSampler_comparison,
+};
+
+constexpr uint32_t IndexOfDefault(tint::ResourceType resourceType) {
+    for (uint32_t i = 0; i < kDefaults.size(); ++i) {
+        if (kDefaults[i] == resourceType) {
+            return i;
+        }
+    }
+    return ~0;
+}
+
 // This helper function is used in ASSERTs to check that the default resources are compatible with
 // the typeIds that they will be used as defaults for.
 [[maybe_unused]] bool AreTypeIDCompatible(tint::ResourceType resourceTypeId,
@@ -75,45 +127,6 @@ namespace dawn::native {
 
 // static
 ityp::span<ResourceTableSlot, const tint::ResourceType> ResourceTableDefaultResources::GetOrder() {
-    constexpr auto kDefaults = std::array{
-        tint::ResourceType::kTexture1d_f32_filterable,
-        tint::ResourceType::kTexture2d_f32_filterable,
-        tint::ResourceType::kTexture2dArray_f32_filterable,
-        tint::ResourceType::kTextureCube_f32_filterable,
-        tint::ResourceType::kTextureCubeArray_f32_filterable,
-        tint::ResourceType::kTexture3d_f32_filterable,
-        tint::ResourceType::kTexture1d_f32_unfilterable,
-        tint::ResourceType::kTexture2d_f32_unfilterable,
-        tint::ResourceType::kTexture2dArray_f32_unfilterable,
-        tint::ResourceType::kTextureCube_f32_unfilterable,
-        tint::ResourceType::kTextureCubeArray_f32_unfilterable,
-        tint::ResourceType::kTexture3d_f32_unfilterable,
-
-        tint::ResourceType::kTexture1d_u32,
-        tint::ResourceType::kTexture2d_u32,
-        tint::ResourceType::kTexture2dArray_u32,
-        tint::ResourceType::kTextureCube_u32,
-        tint::ResourceType::kTextureCubeArray_u32,
-        tint::ResourceType::kTexture3d_u32,
-
-        tint::ResourceType::kTexture1d_i32,
-        tint::ResourceType::kTexture2d_i32,
-        tint::ResourceType::kTexture2dArray_i32,
-        tint::ResourceType::kTextureCube_i32,
-        tint::ResourceType::kTextureCubeArray_i32,
-        tint::ResourceType::kTexture3d_i32,
-
-        tint::ResourceType::kTextureMultisampled2d_f32,
-        tint::ResourceType::kTextureMultisampled2d_u32,
-        tint::ResourceType::kTextureMultisampled2d_i32,
-
-        tint::ResourceType::kTextureDepth2d,
-        tint::ResourceType::kTextureDepth2dArray,
-        tint::ResourceType::kTextureDepthCube,
-        tint::ResourceType::kTextureDepthCubeArray,
-        tint::ResourceType::kTextureDepthMultisampled2d,
-    };
-
     return {kDefaults.data(), ResourceTableSlot(uint32_t(kDefaults.size()))};
 }
 
@@ -122,14 +135,20 @@ ResourceTableSlot ResourceTableDefaultResources::GetCount() {
     return GetOrder().size();
 }
 
-ResultOrError<ityp::span<ResourceTableSlot, Ref<TextureViewBase>>>
+// static
+ResourceTableSlot ResourceTableDefaultResources::IndexOf(tint::ResourceType resourceType) {
+    return ResourceTableSlot{IndexOfDefault(resourceType)};
+}
+
+ResultOrError<ityp::span<ResourceTableSlot, ResourceTableDefaultResources::ResourceType>>
 ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
-    if (!mSampledTextureDefaults.empty()) {
-        return {{mSampledTextureDefaults.data(), mSampledTextureDefaults.size()}};
+    if (!mDefaultResources.empty()) {
+        return {{mDefaultResources.data(), mDefaultResources.size()}};
     }
 
-    auto AddDefaultResource = [&](TextureBase* texture,
-                                  const TextureViewDescriptor* viewDesc = nullptr) -> MaybeError {
+    // Each resource is added in the order specified by GetOrder()
+    auto AddDefaultTextureView = [&](TextureBase* texture, const TextureViewDescriptor* viewDesc =
+                                                               nullptr) -> MaybeError {
         DAWN_TRY(texture->Pin(wgpu::TextureUsage::TextureBinding));
 
         Ref<TextureViewBase> view;
@@ -137,11 +156,19 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
 
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
-        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(view.Get()),
-                                        GetOrder()[mSampledTextureDefaults.size()]));
-        mSampledTextureDefaults.push_back(view);
+        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(view),
+                                        GetOrder()[mDefaultResources.size()]));
+        mDefaultResources.push_back(view);
 
         return {};
+    };
+
+    auto AddDefaultSampler = [&](Ref<SamplerBase> sampler) {
+        // Check that the resource we will have will match the order of default textures that we
+        // will give to the shader compilation.
+        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(sampler),
+                                        GetOrder()[mDefaultResources.size()]));
+        mDefaultResources.push_back(sampler);
     };
 
     // Create the color format single-sampled views.
@@ -176,23 +203,23 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         for (uint32_t i = 0; i < timesToAdd; i++) {
             // Create all the default binding view, reusing the 2D texture between
             // 2D/2DArray/Cube/CubeArray.
-            DAWN_TRY(AddDefaultResource(t1D.Get()));
+            DAWN_TRY(AddDefaultTextureView(t1D.Get()));
 
             TextureViewDescriptor vDesc{
                 .label = "default SampledTexture resource",
             };
             vDesc.arrayLayerCount = 1;
             vDesc.dimension = wgpu::TextureViewDimension::e2D;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.dimension = wgpu::TextureViewDimension::e2DArray;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.arrayLayerCount = 6;
             vDesc.dimension = wgpu::TextureViewDimension::Cube;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.dimension = wgpu::TextureViewDimension::CubeArray;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
 
-            DAWN_TRY(AddDefaultResource(t3D.Get()));
+            DAWN_TRY(AddDefaultTextureView(t3D.Get()));
         }
     }
 
@@ -210,7 +237,7 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
 
         Ref<TextureBase> t;
         DAWN_TRY_ASSIGN(t, device->CreateTexture(&tDesc));
-        DAWN_TRY(AddDefaultResource(t.Get()));
+        DAWN_TRY(AddDefaultTextureView(t.Get()));
     }
 
     // Create the single-sampled depth texture default resource.
@@ -230,14 +257,14 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         };
         vDesc.arrayLayerCount = 1;
         vDesc.dimension = wgpu::TextureViewDimension::e2D;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.dimension = wgpu::TextureViewDimension::e2DArray;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.arrayLayerCount = 6;
         vDesc.dimension = wgpu::TextureViewDimension::Cube;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.dimension = wgpu::TextureViewDimension::CubeArray;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
     }
 
     // Create the multi-sampled depth texture default resource.
@@ -253,10 +280,48 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
 
         Ref<TextureBase> t;
         DAWN_TRY_ASSIGN(t, device->CreateTexture(&tDesc));
-        DAWN_TRY(AddDefaultResource(t.Get()));
+        DAWN_TRY(AddDefaultTextureView(t.Get()));
     }
 
-    return {{mSampledTextureDefaults.data(), mSampledTextureDefaults.size()}};
+    // Create the samplers.
+    {
+        // Filtering
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .magFilter = wgpu::FilterMode::Linear,
+                .minFilter = wgpu::FilterMode::Linear,
+                .mipmapFilter = wgpu::MipmapFilterMode::Linear,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+        // Non-filtering
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .magFilter = wgpu::FilterMode::Nearest,
+                .minFilter = wgpu::FilterMode::Nearest,
+                .mipmapFilter = wgpu::MipmapFilterMode::Nearest,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+        // Comparison
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .compare = wgpu::CompareFunction::Always,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+    }
+
+    return {{mDefaultResources.data(), mDefaultResources.size()}};
 }
 
 }  // namespace dawn::native
