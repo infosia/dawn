@@ -51,6 +51,24 @@
       "parentUuid": "7f960d11_123ed840",
       "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "286da053_8308c740",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-27T23:36:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d3f14ca7_998bdeef",
+      "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
