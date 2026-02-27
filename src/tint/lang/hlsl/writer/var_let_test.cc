@@ -640,5 +640,149 @@ void main(main_inputs inputs) {
 )");
 }
 
+TEST_F(HlslWriterTest, VarWorkgroupU16) {
+    auto* s = b.Var("u", ty.ptr<workgroup>(ty.u16()));
+
+    b.ir.root_block->Append(s);
+
+    auto* eb = b.ComputeFunction("main");
+    b.Append(eb->Block(), [&] {
+        b.Let("x", b.Load(s));
+        b.Return(eb);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(struct main_inputs {
+  uint tint_local_index : SV_GroupIndex;
+};
+
+
+groupshared uint16_t u;
+void main_inner(uint tint_local_index) {
+  if ((tint_local_index < 1u)) {
+    u = uint16_t(0u);
+  }
+  GroupMemoryBarrierWithGroupSync();
+  uint16_t x = u;
+}
+
+[numthreads(1, 1, 1)]
+void main(main_inputs inputs) {
+  main_inner(inputs.tint_local_index);
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarPrivateU16) {
+    auto* s = b.Var("u", ty.ptr<private_>(ty.u16()));
+
+    b.ir.root_block->Append(s);
+
+    auto* eb = b.ComputeFunction("main");
+    b.Append(eb->Block(), [&] {
+        b.Let("x", b.Load(s));
+        b.Return(eb);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+static uint16_t u = uint16_t(0u);
+[numthreads(1, 1, 1)]
+void main() {
+  uint16_t x = u;
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarStorageReadU16) {
+    auto* s = b.Var("u", ty.ptr<storage, core::Access::kRead>(ty.u16()));
+    s->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(s);
+
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("x", b.Load(s));
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+ByteAddressBuffer u : register(t0);
+void main() {
+  uint16_t x = u.Load<uint16_t>(0u);
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarStorageReadVec4U16) {
+    auto* s = b.Var<storage, vec4<u16>, core::Access::kRead>("u");
+    s->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(s);
+
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("x", b.Load(s));
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+ByteAddressBuffer u : register(t0);
+void main() {
+  vector<uint16_t, 4> x = u.Load<vector<uint16_t, 4> >(0u);
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarStorageWriteU16) {
+    auto* s = b.Var("u", ty.ptr<storage, core::Access::kReadWrite>(ty.u16()));
+    s->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(s);
+
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Store(s, b.Constant(u16(1)));
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+RWByteAddressBuffer u : register(u0);
+void main() {
+  u.Store<uint16_t>(0u, uint16_t(1u));
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarStorageWriteVec4U16) {
+    auto* s = b.Var<storage, vec4<u16>, core::Access::kReadWrite>("u");
+    s->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(s);
+
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Store(s, b.Zero(ty.vec4(ty.u16())));
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+RWByteAddressBuffer u : register(u0);
+void main() {
+  u.Store<vector<uint16_t, 4> >(0u, (uint16_t(0u)).xxxx);
+}
+
+)");
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer

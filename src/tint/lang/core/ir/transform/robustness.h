@@ -46,6 +46,7 @@ namespace tint::core::ir::transform {
 const Capabilities kRobustnessCapabilities{
     Capability::kAllowDuplicateBindings,
     Capability::kAllow8BitIntegers,
+    Capability::kAllow16BitIntegers,
 };
 
 /// Configuration options that control when to clamp accesses.

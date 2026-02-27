@@ -32,6 +32,7 @@
 #include "gtest/gtest.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/transform/helper_test.h"
+#include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
@@ -42,6 +43,7 @@
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
+using Capability = tint::core::ir::Capability;
 
 namespace tint::hlsl::writer::raise {
 namespace {
@@ -393,6 +395,190 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastToVec4F16) {
     %27:f16 = convert %26
     %28:vec4<f16> = construct %22, %23, %25, %27
     ret %28
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+// Test bitcast from f16 to u16 scalar — should use asuint16.
+TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastF16ToU16) {
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    auto* a = b.FunctionParam("a", ty.f16());
+    auto* func = b.Function("foo", ty.u16());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast(ty.u16(), a)); });
+
+    auto* src = R"(
+%foo = func(%a:f16):u16 {
+  $B1: {
+    %3:u16 = bitcast<u16> %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:f16):u16 {
+  $B1: {
+    %3:u16 = hlsl.asuint16 %a
+    ret %3
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+// Test bitcast from u16 to f16 scalar — should use asfloat16.
+TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastU16ToF16) {
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    auto* a = b.FunctionParam("a", ty.u16());
+    auto* func = b.Function("foo", ty.f16());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast(ty.f16(), a)); });
+
+    auto* src = R"(
+%foo = func(%a:u16):f16 {
+  $B1: {
+    %3:f16 = bitcast<f16> %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:u16):f16 {
+  $B1: {
+    %3:f16 = hlsl.asfloat16 %a
+    ret %3
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastVec2U16ToVec2F16) {
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    auto* a = b.FunctionParam<vec2<u16>>("a");
+    auto* func = b.Function("foo", ty.vec2h());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast(ty.vec2h(), a)); });
+
+    auto* src = R"(
+%foo = func(%a:vec2<u16>):vec2<f16> {
+  $B1: {
+    %3:vec2<f16> = bitcast<vec2<f16>> %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:vec2<u16>):vec2<f16> {
+  $B1: {
+    %3:vec2<f16> = hlsl.asfloat16 %a
+    ret %3
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastVec2U16ToU32) {
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    auto* a = b.FunctionParam<vec2<u16>>("a");
+    auto* func = b.Function("foo", ty.u32());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast(ty.u32(), a)); });
+
+    auto* src = R"(
+%foo = func(%a:vec2<u16>):u32 {
+  $B1: {
+    %3:u32 = bitcast<u32> %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:vec2<u16>):u32 {
+  $B1: {
+    %3:u32 = call %tint_bitcast_from_u16, %a
+    ret %3
+  }
+}
+%tint_bitcast_from_u16 = func(%src:vec2<u16>):u32 {
+  $B2: {
+    %6:vec2<f16> = hlsl.asfloat16 %src
+    %7:vec2<f32> = convert %6
+    %8:vec2<u32> = hlsl.f32tof16 %7
+    %r:vec2<u32> = let %8
+    %10:u32 = swizzle %r, x
+    %11:u32 = and %10, 65535u
+    %12:u32 = swizzle %r, y
+    %13:u32 = and %12, 65535u
+    %14:u32 = shl %13, 16u
+    %15:u32 = or %11, %14
+    ret %15
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastU32ToVec2U16) {
+    capabilities.Add(Capability::kAllow16BitIntegers);
+    auto* a = b.FunctionParam<u32>("a");
+    auto* func = b.Function("foo", ty.vec(ty.u16(), 2));
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast(ty.vec(ty.u16(), 2), a)); });
+
+    auto* src = R"(
+%foo = func(%a:u32):vec2<u16> {
+  $B1: {
+    %3:vec2<u16> = bitcast<vec2<u16>> %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:u32):vec2<u16> {
+  $B1: {
+    %3:vec2<u16> = call %tint_bitcast_to_u16, %a
+    ret %3
+  }
+}
+%tint_bitcast_to_u16 = func(%src:u32):vec2<u16> {
+  $B2: {
+    %v:u32 = let %src
+    %7:u32 = and %v, 65535u
+    %8:f32 = hlsl.f16tof32 %7
+    %t_low:f32 = let %8
+    %10:u32 = shr %v, 16u
+    %11:u32 = and %10, 65535u
+    %12:f32 = hlsl.f16tof32 %11
+    %t_high:f32 = let %12
+    %14:f16 = convert %t_low
+    %15:f16 = convert %t_high
+    %16:vec2<f16> = construct %14, %15
+    %17:vec2<u16> = hlsl.asuint16 %16
+    ret %17
   }
 }
 )";
