@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e621c748_fdf95599",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-27T17:37:11Z",
+      "side": 1,
+      "message": "The strategy sounds good to me.\n\nAh I found it is added here: https://dawn-review.googlesource.com/c/dawn/+/285400\n\nBut I didn\u0027t find UnmapBuffer in webgpu.h. (Isn\u0027t it buffer.Unmap()?). Did I miss anything?",
+      "parentUuid": "df77bb4e_10a27d63",
+      "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "436db6e9_c88366d1",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 6
