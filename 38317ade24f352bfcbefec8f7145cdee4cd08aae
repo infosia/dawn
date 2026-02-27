@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bdb29f6_98b67d5b",
+        "filename": "src/dawn/common/StackAllocated.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-27T10:39:48Z",
+      "side": 0,
+      "message": "I don\u0027t know why exactly, but it seems to be enforced already.",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "38317ade24f352bfcbefec8f7145cdee4cd08aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

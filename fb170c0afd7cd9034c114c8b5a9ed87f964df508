@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f5d610a_8ebf9894",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-27T10:39:48Z",
+      "side": 1,
+      "message": "Hi Corentin, could you please take a look?",
+      "revId": "fb170c0afd7cd9034c114c8b5a9ed87f964df508",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb90a620_5afb9245",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-02-27T10:39:48Z",
+      "side": 1,
+      "message": "Note: Alternatively, we can make `Defer` not StackAllocated().",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 97
+      },
+      "revId": "fb170c0afd7cd9034c114c8b5a9ed87f964df508",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
