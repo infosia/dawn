@@ -314,6 +314,10 @@ ityp::span<ResourceTableSlot, const tint::ResourceType> GetDefaultResourceOrder(
         tint::ResourceType::kTextureDepthCube,
         tint::ResourceType::kTextureDepthCubeArray,
         tint::ResourceType::kTextureDepthMultisampled2d,
+
+        tint::ResourceType::kSampler_filtering,
+        tint::ResourceType::kSampler_non_filtering,
+        tint::ResourceType::kSampler_comparison,
     };
 
     return {kDefaults.data(), ResourceTableSlot(uint32_t(kDefaults.size()))};
@@ -419,16 +423,16 @@ MaybeError ResourceTableBase::InitializeBase() {
     DAWN_TRY(mMetadataBuffer->Unmap());
 
     // Add the default resources at the end of the table.
-    // TODO(https://issues.chromium.org/473354063): Add default samplers
-    ityp::span<ResourceTableSlot, Ref<TextureViewBase>> defaultResources;
-    DAWN_TRY_ASSIGN(
-        defaultResources,
-        device->GetResourceTableDefaultResources()->GetOrCreateSampledTextureDefaults(device));
+    ityp::span<ResourceTableSlot, ResourceTableDefaultResources::ResourceType> defaultResources;
+    DAWN_TRY_ASSIGN(defaultResources,
+                    device->GetResourceTableDefaultResources()->GetOrCreateDefaults(device));
 
     for (auto [i, defaultResource] : Enumerate(defaultResources)) {
-        BindingResource entryContents = {
-            .textureView = defaultResource.Get(),
-        };
+        BindingResource entryContents;
+        MatchVariant(
+            defaultResource,
+            [&](Ref<TextureViewBase> view) { entryContents.textureView = view.Get(); },
+            [&](Ref<SamplerBase> sampler) { entryContents.sampler = sampler.Get(); });
         Update(mAPISize + i, &entryContents);
     }
 
@@ -630,7 +634,12 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
         DAWN_ASSERT(state.dirty);
         state.dirty = false;
 
-        tint::ResourceType effectiveType = state.pinned ? state.typeId : tint::ResourceType::kEmpty;
+        // Set the value in the table to the type id. If the resource requires pinning, we only set
+        // the type id if it's pinned, else we clear it.
+        tint::ResourceType effectiveType = state.typeId;
+        if (std::holds_alternative<Ref<TextureViewBase>>(state.resource)) {
+            effectiveType = state.pinned ? state.typeId : tint::ResourceType::kEmpty;
+        }
 
         // Add the update for the metadata buffer.
         size_t offset = sizeof(uint32_t) * (uint32_t(dirtyIndex) + 1);
@@ -677,14 +686,15 @@ void ResourceTableBase::MarkStateDirty(ResourceTableSlot slot) {
 
 // ResourceTableDefaultResources
 
-ResultOrError<ityp::span<ResourceTableSlot, Ref<TextureViewBase>>>
-ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* device) {
-    if (!mSampledTextureDefaults.empty()) {
-        return {{mSampledTextureDefaults.data(), mSampledTextureDefaults.size()}};
+ResultOrError<ityp::span<ResourceTableSlot, ResourceTableDefaultResources::ResourceType>>
+ResourceTableDefaultResources::GetOrCreateDefaults(DeviceBase* device) {
+    if (!mDefaultResources.empty()) {
+        return {{mDefaultResources.data(), mDefaultResources.size()}};
     }
 
-    auto AddDefaultResource = [&](TextureBase* texture,
-                                  const TextureViewDescriptor* viewDesc = nullptr) -> MaybeError {
+    // Each resource is added in the order specified by GetDefaultResourceOrder()
+    auto AddDefaultTextureView = [&](TextureBase* texture, const TextureViewDescriptor* viewDesc =
+                                                               nullptr) -> MaybeError {
         DAWN_TRY(texture->Pin(wgpu::TextureUsage::TextureBinding));
 
         Ref<TextureViewBase> view;
@@ -692,11 +702,19 @@ ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* dev
 
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
-        DAWN_ASSERT(AreTypeIDCompatible(ComputeTypeId(view.Get()),
-                                        GetDefaultResourceOrder()[mSampledTextureDefaults.size()]));
-        mSampledTextureDefaults.push_back(view);
+        DAWN_ASSERT(AreTypeIDCompatible(ComputeTypeId(view),
+                                        GetDefaultResourceOrder()[mDefaultResources.size()]));
+        mDefaultResources.push_back(view);
 
         return {};
+    };
+
+    auto AddDefaultSampler = [&](Ref<SamplerBase> sampler) {
+        // Check that the resource we will have will match the order of default textures that we
+        // will give to the shader compilation.
+        DAWN_ASSERT(AreTypeIDCompatible(ComputeTypeId(sampler),
+                                        GetDefaultResourceOrder()[mDefaultResources.size()]));
+        mDefaultResources.push_back(sampler);
     };
 
     // Create the color format single-sampled views.
@@ -731,23 +749,23 @@ ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* dev
         for (uint32_t i = 0; i < timesToAdd; i++) {
             // Create all the default binding view, reusing the 2D texture between
             // 2D/2DArray/Cube/CubeArray.
-            DAWN_TRY(AddDefaultResource(t1D.Get()));
+            DAWN_TRY(AddDefaultTextureView(t1D.Get()));
 
             TextureViewDescriptor vDesc{
                 .label = "default SampledTexture resource",
             };
             vDesc.arrayLayerCount = 1;
             vDesc.dimension = wgpu::TextureViewDimension::e2D;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.dimension = wgpu::TextureViewDimension::e2DArray;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.arrayLayerCount = 6;
             vDesc.dimension = wgpu::TextureViewDimension::Cube;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
             vDesc.dimension = wgpu::TextureViewDimension::CubeArray;
-            DAWN_TRY(AddDefaultResource(t2D.Get(), &vDesc));
+            DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
 
-            DAWN_TRY(AddDefaultResource(t3D.Get()));
+            DAWN_TRY(AddDefaultTextureView(t3D.Get()));
         }
     }
 
@@ -765,7 +783,7 @@ ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* dev
 
         Ref<TextureBase> t;
         DAWN_TRY_ASSIGN(t, device->CreateTexture(&tDesc));
-        DAWN_TRY(AddDefaultResource(t.Get()));
+        DAWN_TRY(AddDefaultTextureView(t.Get()));
     }
 
     // Create the single-sampled depth texture default resource.
@@ -785,14 +803,14 @@ ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* dev
         };
         vDesc.arrayLayerCount = 1;
         vDesc.dimension = wgpu::TextureViewDimension::e2D;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.dimension = wgpu::TextureViewDimension::e2DArray;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.arrayLayerCount = 6;
         vDesc.dimension = wgpu::TextureViewDimension::Cube;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
         vDesc.dimension = wgpu::TextureViewDimension::CubeArray;
-        DAWN_TRY(AddDefaultResource(t.Get(), &vDesc));
+        DAWN_TRY(AddDefaultTextureView(t.Get(), &vDesc));
     }
 
     // Create the multi-sampled depth texture default resource.
@@ -808,10 +826,48 @@ ResourceTableDefaultResources::GetOrCreateSampledTextureDefaults(DeviceBase* dev
 
         Ref<TextureBase> t;
         DAWN_TRY_ASSIGN(t, device->CreateTexture(&tDesc));
-        DAWN_TRY(AddDefaultResource(t.Get()));
+        DAWN_TRY(AddDefaultTextureView(t.Get()));
     }
 
-    return {{mSampledTextureDefaults.data(), mSampledTextureDefaults.size()}};
+    // Create the samplers.
+    {
+        // Filtering
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .magFilter = wgpu::FilterMode::Linear,
+                .minFilter = wgpu::FilterMode::Linear,
+                .mipmapFilter = wgpu::MipmapFilterMode::Linear,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+        // Non-filtering
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .magFilter = wgpu::FilterMode::Nearest,
+                .minFilter = wgpu::FilterMode::Nearest,
+                .mipmapFilter = wgpu::MipmapFilterMode::Nearest,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+        // Comparison
+        {
+            SamplerDescriptor sDesc{
+                .label = "default Sampler resource",
+                .compare = wgpu::CompareFunction::Always,
+            };
+            Ref<SamplerBase> s;
+            DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
+            AddDefaultSampler(s);
+        }
+    }
+
+    return {{mDefaultResources.data(), mDefaultResources.size()}};
 }
 
 }  // namespace dawn::native

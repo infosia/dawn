@@ -33,6 +33,7 @@
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/vulkan/DeviceVk.h"
+#include "dawn/native/vulkan/SamplerVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -64,7 +65,7 @@ ResultOrError<VkDescriptorSetLayout> ResourceTable::MakeDescriptorSetLayout(Devi
          },
          {
              .binding = 1,
-             .descriptorType = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
+             .descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
              .descriptorCount = kMaxResourceTableSize + uint32_t{GetDefaultResourceCount()},
              .stageFlags = VulkanShaderStages(kAllStages),
              .pImmutableSamplers = nullptr,
@@ -106,11 +107,74 @@ MaybeError ResourceTable::Initialize() {
 
     uint32_t sampledImageCount = uint32_t(GetSizeWithDefaultResources());
 
+    // {
+    //     VkSamplerCreateInfo createInfo = {};
+    //     createInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+    //     DAWN_TRY(CheckVkSuccess(
+    //         device->fn.CreateSampler(device->GetVkDevice(), &createInfo, nullptr,
+    //         &*mUnusedSampler), "CreateSampler"));
+    //     }
+
+    // {
+    //     VkImageCreateInfo createInfo = {};
+    //     createInfo.sType         = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+    //     createInfo.imageType     = VK_IMAGE_TYPE_2D;
+    //     createInfo.format        = VK_FORMAT_R8G8B8A8_SRGB; // Must be a supported format
+    //     createInfo.extent.width  = 1;
+    //     createInfo.extent.height = 1;
+    //     createInfo.extent.depth  = 1; // Must be at least 1 even for 2D images
+    //     createInfo.mipLevels     = 1; // Cannot be 0
+    //     createInfo.arrayLayers   = 1; // Cannot be 0
+    //     createInfo.samples       = VK_SAMPLE_COUNT_1_BIT;
+    //     createInfo.tiling        = VK_IMAGE_TILING_OPTIMAL;
+    //     createInfo.usage         = VK_IMAGE_USAGE_SAMPLED_BIT; // Must have at least one bit set
+    //     createInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+
+    //     DAWN_TRY(CheckVkOOMThenSuccess(
+    //         device->fn.CreateImage(device->GetVkDevice(), &createInfo, nullptr, &*mUnusedImage),
+    //         "CreateImage"));
+    // }
+    // {
+    //     VkImageViewCreateInfo createInfo{};
+    //     createInfo.sType                           = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+    //     createInfo.image                           = mUnusedImage;
+    //     createInfo.viewType                        = VK_IMAGE_VIEW_TYPE_2D;
+    //     createInfo.format                          = VK_FORMAT_R8G8B8A8_SRGB;
+    //     // Components (Swizzle) - defaults to IDENTITY if zero-initialized
+    //     createInfo.subresourceRange.aspectMask     = VK_IMAGE_ASPECT_COLOR_BIT;
+    //     createInfo.subresourceRange.baseMipLevel   = 0;
+    //     createInfo.subresourceRange.levelCount     = 1; // Must be at least 1
+    //     createInfo.subresourceRange.baseArrayLayer = 0;
+    //     createInfo.subresourceRange.layerCount     = 1; // Must be at least 1
+
+    //     DAWN_TRY(CheckVkSuccess(
+    //         device->fn.CreateImageView(device->GetVkDevice(), &createInfo, nullptr,
+    //         &*mUnusedImageView), "CreateImageView"));
+    // }
+
+    {
+        DAWN_TRY_ASSIGN(mUnusedSampler, device->CreateSampler());
+    }
+    {
+        TextureDescriptor tDesc{
+            .label = "default SampledTexture resource",
+            .usage = wgpu::TextureUsage::TextureBinding,
+            .dimension = wgpu::TextureDimension::e1D,
+            .size = {1},
+            .format = wgpu::TextureFormat::R8Unorm,
+        };
+        Ref<TextureBase> t1D;
+        DAWN_TRY_ASSIGN(mUnusedTexture, device->CreateTexture(&tDesc));
+    }
+    {
+        DAWN_TRY_ASSIGN(mUnusedTextureView, device->CreateTextureView(mUnusedTexture.Get()));
+    }
+
     // Allocate mPool.
     {
         std::array<VkDescriptorPoolSize, 2> sizes = {
             VkDescriptorPoolSize{VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1},  // The metadata buffer.
-            VkDescriptorPoolSize{VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, sampledImageCount},
+            VkDescriptorPoolSize{VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, sampledImageCount},
         };
 
         VkDescriptorPoolCreateInfo createInfo{
@@ -254,7 +318,7 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
                 }
 
                 VkDescriptorImageInfo imageWrite = {
-                    .sampler = VkSampler{},
+                    .sampler = ToBackend(mUnusedSampler)->GetHandle(),
                     .imageView = handle,
                     .imageLayout = VulkanImageLayout(textureView->GetFormat(),
                                                      wgpu::TextureUsage::TextureBinding),
@@ -264,7 +328,20 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
             },
             [&](SamplerBase* sampler) {
                 // TODO(https://issues.chromium.org/473354063): Support samplers updates.
-                DAWN_UNREACHABLE();
+                // DAWN_UNREACHABLE();
+
+                VkSampler handle = ToBackend(sampler)->GetHandle();
+                if (handle == nullptr) {
+                    return;
+                }
+
+                VkDescriptorImageInfo imageWrite = {
+                    .sampler = handle,
+                    .imageView = ToBackend(mUnusedTextureView)->GetHandle(),
+                    .imageLayout = VK_IMAGE_LAYOUT_GENERAL,
+                };
+                imageWrites.push_back(imageWrite);
+                arrayElements.push_back(uint32_t{update.slot});
             });
     }
 
@@ -277,7 +354,7 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
             .dstBinding = 1,
             .dstArrayElement = arrayElements[i],
             .descriptorCount = 1,
-            .descriptorType = VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
+            .descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
             .pImageInfo = &imageWrites[i],
             .pBufferInfo = nullptr,
             .pTexelBufferView = nullptr,
@@ -300,6 +377,19 @@ void ResourceTable::DestroyImpl(DestroyReason reason) {
         mPool = VK_NULL_HANDLE;
         mSet = VK_NULL_HANDLE;
     }
+    // if (mUnusedImageView != VK_NULL_HANDLE) {
+    //     ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mUnusedImageView);
+    // }
+    // if (mUnusedImage != VK_NULL_HANDLE) {
+    //     ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mUnusedImage);
+    // }
+    // if (mUnusedSampler != VK_NULL_HANDLE) {
+    //     ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mUnusedSampler);
+    //     mUnusedSampler = VK_NULL_HANDLE;
+    // }
+    mUnusedTextureView = nullptr;
+    mUnusedTexture = nullptr;
+    mUnusedSampler = nullptr;
 
     ResourceTableBase::DestroyImpl(reason);
 }

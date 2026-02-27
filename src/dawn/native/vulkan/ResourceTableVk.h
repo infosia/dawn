@@ -69,6 +69,13 @@ class ResourceTable final : public ResourceTableBase {
 
     VkDescriptorPool mPool = VK_NULL_HANDLE;
     VkDescriptorSet mSet = VK_NULL_HANDLE;
+    // Unused sampler and image+view for VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER
+    // VkSampler mUnusedSampler = VK_NULL_HANDLE;
+    // VkImage mUnusedImage = VK_NULL_HANDLE;
+    // VkImageView mUnusedImageView = VK_NULL_HANDLE;
+    Ref<SamplerBase> mUnusedSampler;
+    Ref<TextureBase> mUnusedTexture;
+    Ref<TextureViewBase> mUnusedTextureView;
 };
 
 }  // namespace dawn::native::vulkan
