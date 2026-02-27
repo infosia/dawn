@@ -97,6 +97,7 @@
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/type.h"
+#include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/core/type/void.h"
@@ -791,6 +792,17 @@ class Printer : public tint::TextGenerator {
         } else if (fn == BuiltinFn::kLoad4F16 || fn == BuiltinFn::kStore4F16) {
             // Note space between '> >' is required for DXC
             suffix = "<vector<float16_t, 4> >";
+        } else if (fn == BuiltinFn::kLoadU16 || fn == BuiltinFn::kStoreU16) {
+            suffix = "<uint16_t>";
+        } else if (fn == BuiltinFn::kLoad2U16 || fn == BuiltinFn::kStore2U16) {
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<uint16_t, 2> >";
+        } else if (fn == BuiltinFn::kLoad3U16 || fn == BuiltinFn::kStore3U16) {
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<uint16_t, 3> >";
+        } else if (fn == BuiltinFn::kLoad4U16 || fn == BuiltinFn::kStore4U16) {
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<uint16_t, 4> >";
         }
 
         if (fn == BuiltinFn::kLoadF16 || fn == BuiltinFn::kLoad2F16 || fn == BuiltinFn::kLoad3F16 ||
@@ -798,6 +810,12 @@ class Printer : public tint::TextGenerator {
             fn = BuiltinFn::kLoad;
         } else if (fn == BuiltinFn::kStoreF16 || fn == BuiltinFn::kStore2F16 ||
                    fn == BuiltinFn::kStore3F16 || fn == BuiltinFn::kStore4F16) {
+            fn = BuiltinFn::kStore;
+        } else if (fn == BuiltinFn::kLoadU16 || fn == BuiltinFn::kLoad2U16 ||
+                   fn == BuiltinFn::kLoad3U16 || fn == BuiltinFn::kLoad4U16) {
+            fn = BuiltinFn::kLoad;
+        } else if (fn == BuiltinFn::kStoreU16 || fn == BuiltinFn::kStore2U16 ||
+                   fn == BuiltinFn::kStore3U16 || fn == BuiltinFn::kStore4U16) {
             fn = BuiltinFn::kStore;
         }
 
@@ -1272,6 +1290,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::F32*) { PrintF32(out, c->ValueAs<f32>()); },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
             [&](const core::type::U32*) { out << c->ValueAs<AInt>() << "u"; },
+            [&](const core::type::U16*) { out << "uint16_t(" << c->ValueAs<AInt>() << "u)"; },
             [&](const core::type::Array* a) { EmitConstantArray(out, c, a); },
             [&](const core::type::Vector* v) { EmitConstantVector(out, c, v); },
             [&](const core::type::Matrix* m) { EmitConstantMatrix(out, c, m); },
@@ -1408,6 +1427,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::F32*) { out << "float"; },      //
             [&](const core::type::I32*) { out << "int"; },        //
             [&](const core::type::U32*) { out << "uint"; },       //
+            [&](const core::type::U16*) { out << "uint16_t"; },   //
             [&](const core::type::Void*) { out << "void"; },      //
 
             [&](const core::type::Atomic* atomic) { EmitType(out, atomic->Type(), name); },
