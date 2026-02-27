@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "3a3de82e17d287f552f1276e91563f7d3665c02e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38978208_929c9111",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-27T18:46:38Z",
+      "side": 1,
+      "message": "[CI build](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-linux-x86-sws-dbg/1613/infra) looks happy after picking up the Starlark change.",
+      "revId": "3a3de82e17d287f552f1276e91563f7d3665c02e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
