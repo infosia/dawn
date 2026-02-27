@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9082799_08af40eb",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-27T18:27:14Z",
+      "side": 1,
+      "message": "It\u0027s in [Schema.h](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/serialization/Schema.h;l\u003d223?q\u003dschema.h%20dawn\u0026ss\u003dchromium). The x-macros  generate a call to operator() for each command and so they require a that operator() to be implemented.\n\nI should have removed it from Schema.h before starting this stack but forgot and now they continue through it. I would like to remove them after if that\u0027s ok with you.",
+      "parentUuid": "a21e6ec0_1203c973",
+      "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "436db6e9_c88366d1",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 6
