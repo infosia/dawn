@@ -245,6 +245,7 @@ Result<SuccessType> PixelLocal(core::ir::Module& ir, const PixelLocalConfig& con
     TINT_CHECK_RESULT(core::ir::ValidateBeforeIfNeeded(
         ir,
         core::ir::Capabilities{
+            core::ir::Capability::kAllow16BitIntegers,
             core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
             core::ir::Capability::kAllowDuplicateBindings,
             core::ir::Capability::kAllowNonCoreTypes,

@@ -43,7 +43,9 @@ namespace tint::core::ir::transform {
 struct ImmediateDataLayout;
 
 /// The capabilities that the transform can support.
-const Capabilities kArrayLengthFromImmediateCapabilities{Capability::kAllowDuplicateBindings};
+const Capabilities kArrayLengthFromImmediateCapabilities{
+    Capability::kAllowDuplicateBindings,
+};
 
 /// The result of running the ArrayLengthFromUniform transform.
 struct ArrayLengthFromImmediateResult {
