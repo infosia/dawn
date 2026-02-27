@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "465c19e0_aff4b198",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-27T15:58:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure exactly what I need to do here.",
+      "parentUuid": "d5d112bc_aa130276",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf01c214_990e695e",
         "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "writtenOn": "2026-02-27T09:06:10Z",
       "side": 1,
       "message": "[1] We shouldn\u0027t need this in validation tests.",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d564205_651dd0d0",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-27T15:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf01c214_990e695e",
       "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d246810a_4110003d",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-27T15:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184b1f7d_fe1a54ad",
+      "range": {
+        "startLine": 1950,
+        "startChar": 25,
+        "endLine": 1950,
+        "endChar": 49
+      },
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4893651d_ca510cf8",
@@ -88,6 +148,24 @@
       "writtenOn": "2026-02-27T09:06:10Z",
       "side": 1,
       "message": "ditto",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01b0adc9_64f605aa",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-27T15:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4893651d_ca510cf8",
       "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
