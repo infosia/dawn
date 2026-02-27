@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9247dd2_d12a71b4",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-02-27T16:09:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa85305_0f9d9633",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf01c214_990e695e",
