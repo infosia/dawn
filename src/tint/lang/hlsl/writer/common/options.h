@@ -211,6 +211,14 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
+    /// Set to `true` if the device supports shader f16 (i.e. the shader_f16 feature is enabled).
+    /// When false, workgroup decomposition will be skipped because it may generate u16 types
+    /// that are not supported by FXC.
+    bool has_shader_f16 = false;
+
+    /// Set to `true` when compiling for the D3D12 backend.
+    bool is_d3d12_backend = false;
+
     /// Any enabled workarounds
     Workarounds workarounds{};
 
@@ -272,6 +280,8 @@ struct Options {
                  disable_workgroup_init,
                  truncate_interstage_variables,
                  disable_polyfill_integer_div_mod,
+                 has_shader_f16,
+                 is_d3d12_backend,
                  workarounds,
                  extensions,
                  compiler,
