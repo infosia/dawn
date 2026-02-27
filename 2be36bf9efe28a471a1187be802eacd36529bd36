@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b80c1bcd_41e7212a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-27T23:32:26Z",
+      "side": 1,
+      "message": "ptal. I this is just a follow up top the previous CL\u0027s changes.",
+      "revId": "2be36bf9efe28a471a1187be802eacd36529bd36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
