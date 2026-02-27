@@ -89,16 +89,14 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
             for (var i = 0u; i < 3u; i = i + 1u) {
                 var numWorkgroups = clientParams.data[uniformParams.clientOffsetInU32 + i];
                 if (uniformParams.enableValidation > 0u) {
-                    if (numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension) {
-                        numWorkgroups = 0u;
-                    } else if (invocations != 0u && uniformParams.linearIndexing > 0u) {
-                        if (invocations > 0xffffffffu / numWorkgroups) {
-                          numWorkgroups = 0u;
-                          invocations = 0u;
-                        } else {
-                          invocations *= numWorkgroups;
-                        }
+                    if (uniformParams.linearIndexing > 0u) {
+                        let overflow = invocations > (0xffffffffu / numWorkgroups);
+                        invocations = select(invocations * numWorkgroups, invocations, overflow);
+                        numWorkgroups = select(numWorkgroups, 0u, overflow);
                     }
+                    numWorkgroups =
+                        select(numWorkgroups, 0u,
+                               numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension);
                 }
                 validatedParams.data[i] = numWorkgroups;
 
