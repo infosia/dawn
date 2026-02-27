@@ -36,11 +36,13 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
+#include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/texture.h"
+#include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
@@ -162,13 +164,20 @@ struct State {
             auto* src_type = bitcast->Args()[0]->Type();
             auto* dst_type = bitcast->Result()->Type();
             auto* dst_deepest = dst_type->DeepestElement();
+            auto* src_deepest = src_type->DeepestElement();
 
             if (src_type == dst_type) {
                 ReplaceBitcastWithValue(bitcast);
-            } else if (src_type->DeepestElement()->Is<core::type::F16>()) {
-                ReplaceBitcastWithFromF16Polyfill(bitcast);
-            } else if (dst_deepest->Is<core::type::F16>()) {
-                ReplaceBitcastWithToF16Polyfill(bitcast);
+            } else if (src_deepest->Size() == 2 && dst_deepest->Size() == 2) {
+                // Same-width 16-bit bitcast (e.g. f16 <-> u16), scalar or vector.
+                // Must be checked before the f16 vector cases below.
+                Replace16BitBitcastWith16BitConstruct(bitcast);
+            } else if (src_deepest->Size() == 2 && src_type->Is<core::type::Vector>()) {
+                // 16-bit vector to 32-bit bitcast (e.g., vec2<f16> -> u32 or vec2<u16> -> u32)
+                ReplaceBitcastWithFrom16BitPolyfill(bitcast);
+            } else if (dst_deepest->Size() == 2 && dst_type->Is<core::type::Vector>()) {
+                // 32-bit to 16-bit vector bitcast (e.g., u32 -> vec2<f16> or u32 -> vec2<u16>)
+                ReplaceBitcastWithTo16BitPolyfill(bitcast);
             } else {
                 ReplaceBitcastWithAs(bitcast);
             }
@@ -552,6 +561,28 @@ struct State {
         bitcast->Destroy();
     }
 
+    /// Replaces a bitcast with a 16-bit as function for f16 <-> u16 conversions (scalar and vec).
+    /// Uses asuint16 (f16 -> u16) or asfloat16 (u16 -> f16).
+    void Replace16BitBitcastWith16BitConstruct(core::ir::CoreBuiltinCall* bitcast) {
+        auto* dst_type = bitcast->Result()->Type();
+        auto* dst_deepest = dst_type->DeepestElement();
+
+        BuiltinFn fn = BuiltinFn::kNone;
+        if (dst_deepest->Is<core::type::U16>()) {
+            fn = BuiltinFn::kAsuint16;
+        } else if (dst_deepest->Is<core::type::F16>()) {
+            fn = BuiltinFn::kAsfloat16;
+        } else {
+            TINT_IR_ICE(ir) << "unexpected 16-bit bitcast destination type: " << dst_deepest;
+        }
+
+        b.InsertBefore(bitcast, [&] {
+            b.CallWithResult<hlsl::ir::BuiltinCall>(bitcast->DetachResult(), fn,
+                                                    bitcast->Args()[0]);
+        });
+        bitcast->Destroy();
+    }
+
     void ReplaceBitcastWithAs(core::ir::CoreBuiltinCall* bitcast) {
         auto* dst_type = bitcast->Result()->Type();
         auto* dst_deepest = dst_type->DeepestElement();
@@ -585,34 +616,55 @@ struct State {
         bitcast->Destroy();
     }
 
-    // Bitcast f16 types to others by converting the given f16 value to f32 and call
-    // f32tof16 to get the bits. This should be safe, because the conversion is precise
-    // for finite and infinite f16 value as they are exactly representable by f32.
-    core::ir::Function* CreateBitcastFromF16(const core::type::Type* src_type,
-                                             const core::type::Type* dst_type) {
+    // Bitcast 16-bit vector types (f16 or u16) to 32-bit types by converting to
+    // f32 and calling f32tof16 to get the bits. For u16 sources, an asfloat16 is
+    // applied first. This should be safe, because the conversion is precise for
+    // finite and infinite f16 values as they are exactly representable by f32.
+    core::ir::Function* CreateBitcastFrom16Bit(const core::type::Type* src_type,
+                                               const core::type::Type* dst_type) {
         return bitcast_funcs_.GetOrAdd(
             BitcastType{{src_type, dst_type}}, [&]() -> core::ir::Function* {
                 TINT_IR_ASSERT(ir, src_type->Is<core::type::Vector>());
 
-                // Generate a helper function that performs the following (in HLSL):
-                //
-                // uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
-                //   uint2 r = f32tof16(float2(src));
-                //   return uint((r.x & 65535u) | ((r.y & 65535u) << 16u));
-                // }
+                auto* src_vec = src_type->As<core::type::Vector>();
+                bool src_is_u16 = src_vec->Type()->Is<core::type::U16>();
+                auto* f16_vec_ty = src_is_u16 ? ty.MatchWidth(ty.f16(), src_vec) : src_type;
 
-                auto fn_name = b.ir.symbols.New(std::string("tint_bitcast_from_f16")).Name();
+                // Generates a helper that packs a 16-bit vector into a 32-bit scalar.
+                // For a vec2<f16> source, the emitted HLSL looks like:
+                //
+                //   uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
+                //     uint2 r = f32tof16(float2(src));
+                //     return uint((r.x & 65535u) | ((r.y & 65535u) << 16u));
+                //   }
+                //
+                // For a vec2<u16> source, asfloat16 is applied first:
+                //
+                //   uint tint_bitcast_from_u16(vector<uint16_t, 2> src) {
+                //     uint2 r = f32tof16(float2(asfloat16(src)));
+                //     return uint((r.x & 65535u) | ((r.y & 65535u) << 16u));
+                //   }
+
+                auto fn_name =
+                    b.ir.symbols.New(src_is_u16 ? "tint_bitcast_from_u16" : "tint_bitcast_from_f16")
+                        .Name();
 
                 auto* f = b.Function(fn_name, dst_type);
                 auto* src = b.FunctionParam("src", src_type);
                 f->SetParams({src});
 
                 b.Append(f->Block(), [&] {
-                    auto* src_vec = src_type->As<core::type::Vector>();
+                    // If source is u16, first reinterpret as f16 via asfloat16
+                    core::ir::Value* f16_src = src;
+                    if (src_is_u16) {
+                        f16_src =
+                            b.Call<hlsl::ir::BuiltinCall>(f16_vec_ty, BuiltinFn::kAsfloat16, src)
+                                ->Result();
+                    }
 
-                    auto* cast = b.Convert(ty.vec(ty.f32(), src_vec->Width()), src);
+                    auto* cast = b.Convert(ty.MatchWidth(ty.f32(), src_vec), f16_src);
                     auto* r =
-                        b.Let("r", b.Call<hlsl::ir::BuiltinCall>(ty.vec(ty.u32(), src_vec->Width()),
+                        b.Let("r", b.Call<hlsl::ir::BuiltinCall>(ty.MatchWidth(ty.u32(), src_vec),
                                                                  hlsl::BuiltinFn::kF32Tof16, cast));
 
                     auto* x = b.And(b.Swizzle(ty.u32(), r, {0_u}), 0xffff_u);
@@ -657,37 +709,53 @@ struct State {
             });
     }
 
-    /// Replaces a bitcast with a call to the FromF16 polyfill for the given types
-    void ReplaceBitcastWithFromF16Polyfill(core::ir::CoreBuiltinCall* bitcast) {
+    /// Replaces a bitcast with a call to the From16Bit polyfill for the given types
+    void ReplaceBitcastWithFrom16BitPolyfill(core::ir::CoreBuiltinCall* bitcast) {
         auto* src_type = bitcast->Args()[0]->Type();
         auto* dst_type = bitcast->Result()->Type();
 
-        auto* f = CreateBitcastFromF16(src_type, dst_type);
+        auto* f = CreateBitcastFrom16Bit(src_type, dst_type);
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
         bitcast->Destroy();
     }
 
-    // Bitcast other types to f16 types by reinterpreting their bits as f16 using
-    // f16tof32, and convert the result f32 to f16. This should be safe, because the
-    // conversion is precise for finite and infinite f16 result value as they are
-    // exactly representable by f32.
-    core::ir::Function* CreateBitcastToF16(const core::type::Type* src_type,
-                                           const core::type::Type* dst_type) {
+    // Bitcast 32-bit types to 16-bit vector types (f16 or u16) by reinterpreting
+    // their bits as f16 using f16tof32. For u16 destinations, an additional asuint16
+    // is applied. This should be safe, because the conversion is precise for finite
+    // and infinite f16 values as they are exactly representable by f32.
+    core::ir::Function* CreateBitcastTo16Bit(const core::type::Type* src_type,
+                                             const core::type::Type* dst_type) {
         return bitcast_funcs_.GetOrAdd(
             BitcastType{{src_type, dst_type}}, [&]() -> core::ir::Function* {
                 TINT_IR_ASSERT(ir, dst_type->Is<core::type::Vector>());
 
-                // Generate a helper function that performs the following (in HLSL):
-                //
-                // vector<float16_t, 2> tint_bitcast_to_f16(float src) {
-                //   uint v = asuint(src);
-                //   float t_low = f16tof32(v & 65535u);
-                //   float t_high = f16tof32((v >> 16u) & 65535u);
-                //   return vector<float16_t, 2>(t_low.x, t_high.x);
-                // }
+                auto* dst_vec = dst_type->As<core::type::Vector>();
+                bool dst_is_u16 = dst_vec->Type()->Is<core::type::U16>();
+                auto* f16_vec_ty = dst_is_u16 ? ty.MatchWidth(ty.f16(), dst_vec) : dst_type;
 
-                auto fn_name = b.ir.symbols.New(std::string("tint_bitcast_to_f16")).Name();
+                // Generates a helper that unpacks a 32-bit scalar into a 16-bit vector.
+                // For a vec2<f16> destination, the emitted HLSL looks like:
+                //
+                //   vector<float16_t, 2> tint_bitcast_to_f16(float src) {
+                //     uint v = asuint(src);
+                //     float t_low = f16tof32(v & 65535u);
+                //     float t_high = f16tof32((v >> 16u) & 65535u);
+                //     return vector<float16_t, 2>(t_low.x, t_high.x);
+                //   }
+                //
+                // For a vec2<u16> destination, asuint16 is applied to the final f16 result:
+                //
+                //   vector<uint16_t, 2> tint_bitcast_to_u16(float src) {
+                //     uint v = asuint(src);
+                //     float t_low = f16tof32(v & 65535u);
+                //     float t_high = f16tof32((v >> 16u) & 65535u);
+                //     return asuint16(vector<float16_t, 2>(t_low.x, t_high.x));
+                //   }
+
+                auto fn_name =
+                    b.ir.symbols.New(dst_is_u16 ? "tint_bitcast_to_u16" : "tint_bitcast_to_f16")
+                        .Name();
 
                 auto* f = b.Function(fn_name, dst_type);
                 auto* src = b.FunctionParam("src", src_type);
@@ -742,15 +810,23 @@ struct State {
                     x = b.Convert(ty.f16(), x);
                     y = b.Convert(ty.f16(), y);
 
-                    auto dst_width = dst_type->As<core::type::Vector>()->Width();
+                    auto dst_width = dst_vec->Width();
                     TINT_IR_ASSERT(ir, dst_width == 2 || dst_width == 4);
 
+                    core::ir::Value* f16_result = nullptr;
                     if (dst_width == 2) {
-                        b.Return(f, b.Construct(dst_type, x, y));
+                        f16_result = b.Construct(f16_vec_ty, x, y)->Result();
                     } else {
                         auto* z = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_low, {1_u}));
                         auto* w = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_high, {1_u}));
-                        b.Return(f, b.Construct(dst_type, x, y, z, w));
+                        f16_result = b.Construct(f16_vec_ty, x, y, z, w)->Result();
+                    }
+
+                    if (dst_is_u16) {
+                        b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsuint16,
+                                                                  f16_result));
+                    } else {
+                        b.Return(f, f16_result);
                     }
                 });
                 return f;
@@ -778,12 +854,12 @@ struct State {
         call->Destroy();
     }
 
-    /// Replaces a bitcast with a call to the ToF16 polyfill for the given types
-    void ReplaceBitcastWithToF16Polyfill(core::ir::CoreBuiltinCall* bitcast) {
+    /// Replaces a bitcast with a call to the To16Bit polyfill for the given types
+    void ReplaceBitcastWithTo16BitPolyfill(core::ir::CoreBuiltinCall* bitcast) {
         auto* src_type = bitcast->Args()[0]->Type();
         auto* dst_type = bitcast->Result()->Type();
 
-        auto* f = CreateBitcastToF16(src_type, dst_type);
+        auto* f = CreateBitcastTo16Bit(src_type, dst_type);
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
         bitcast->Destroy();
@@ -1918,6 +1994,7 @@ Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
     TINT_CHECK_RESULT(
         ValidateBeforeIfNeeded(ir,
                                core::ir::Capabilities{
+                                   core::ir::Capability::kAllow16BitIntegers,
                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
                                    core::ir::Capability::kAllowDuplicateBindings,
                                    core::ir::Capability::kAllowNonCoreTypes,

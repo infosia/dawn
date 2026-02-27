@@ -45,6 +45,7 @@ const core::ir::Capabilities kDirectVariableAccessCapabilities{
     core::ir::Capability::kAllowDuplicateBindings,
     core::ir::Capability::kAllowNonCoreTypes,
     core::ir::Capability::kAllow8BitIntegers,
+    core::ir::Capability::kAllow16BitIntegers,
 };
 
 /// The level of handle workspace change
