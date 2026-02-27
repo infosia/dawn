@@ -8,7 +8,7 @@ struct main_inputs {
 
 
 static int4 src_private[4] = (int4[4])0;
-groupshared int4 src_workgroup[4];
+groupshared uint4 src_workgroup[4];
 cbuffer cbuffer_src_uniform : register(b0) {
   uint4 src_uniform[4];
 };
@@ -66,47 +66,68 @@ ary_ret_2 v_6(uint start_byte_offset) {
   return v_9;
 }
 
+typedef int4 ary_ret_3[4];
+ary_ret_3 v_10(uint start_byte_offset) {
+  int4 a[4] = (int4[4])0;
+  {
+    uint v_11 = 0u;
+    v_11 = 0u;
+    while(true) {
+      uint v_12 = v_11;
+      if ((v_12 >= 4u)) {
+        break;
+      }
+      a[v_12] = asint(src_workgroup[((start_byte_offset + (v_12 * 16u)) / 16u)]);
+      {
+        v_11 = (v_12 + 1u);
+      }
+    }
+  }
+  int4 v_13[4] = a;
+  return v_13;
+}
+
 void foo(int4 src_param[4]) {
   int4 src_function[4] = (int4[4])0;
-  int4 v_10[4] = (int4[4])0;
-  int4 v_11[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
-  v_10 = v_11;
-  v_10 = src_param;
-  int4 v_12[4] = ret_arr();
-  v_10 = v_12;
+  int4 v_14[4] = (int4[4])0;
+  int4 v_15[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
+  v_14 = v_15;
+  v_14 = src_param;
+  int4 v_16[4] = ret_arr();
+  v_14 = v_16;
   int4 src_let[4] = (int4[4])0;
-  v_10 = src_let;
-  int4 v_13[4] = src_function;
-  v_10 = v_13;
-  int4 v_14[4] = src_private;
-  v_10 = v_14;
-  int4 v_15[4] = src_workgroup;
-  v_10 = v_15;
-  S v_16 = ret_struct_arr();
-  int4 v_17[4] = v_16.arr;
-  v_10 = v_17;
-  int4 v_18[4] = v_6(0u);
-  v_10 = v_18;
-  int4 v_19[4] = v_2(0u);
-  v_10 = v_19;
+  v_14 = src_let;
+  int4 v_17[4] = src_function;
+  v_14 = v_17;
+  int4 v_18[4] = src_private;
+  v_14 = v_18;
+  int4 v_19[4] = v_10(0u);
+  v_14 = v_19;
+  S v_20 = ret_struct_arr();
+  int4 v_21[4] = v_20.arr;
+  v_14 = v_21;
+  int4 v_22[4] = v_6(0u);
+  v_14 = v_22;
+  int4 v_23[4] = v_2(0u);
+  v_14 = v_23;
   int dst_nested[4][3][2] = (int[4][3][2])0;
   int src_nested[4][3][2] = (int[4][3][2])0;
-  int v_20[4][3][2] = src_nested;
-  dst_nested = v_20;
+  int v_24[4][3][2] = src_nested;
+  dst_nested = v_24;
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_21 = 0u;
-    v_21 = tint_local_index;
+    uint v_25 = 0u;
+    v_25 = tint_local_index;
     while(true) {
-      uint v_22 = v_21;
-      if ((v_22 >= 4u)) {
+      uint v_26 = v_25;
+      if ((v_26 >= 4u)) {
         break;
       }
-      src_workgroup[v_22] = (int(0)).xxxx;
+      src_workgroup[((v_26 * 16u) / 16u)] = asuint(int4((int(0)).xxxx));
       {
-        v_21 = (v_22 + 1u);
+        v_25 = (v_26 + 1u);
       }
     }
   }

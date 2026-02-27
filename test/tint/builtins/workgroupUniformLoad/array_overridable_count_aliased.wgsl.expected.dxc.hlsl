@@ -3,10 +3,10 @@ struct main_inputs {
 };
 
 
-groupshared int v[128];
+groupshared uint v[128];
 int foo() {
   GroupMemoryBarrierWithGroupSync();
-  int v_1 = v[0u];
+  int v_1 = asint(v[0u]);
   GroupMemoryBarrierWithGroupSync();
   return v_1;
 }
@@ -20,7 +20,7 @@ void main_inner(uint tint_local_index) {
       if ((v_3 >= 128u)) {
         break;
       }
-      v[v_3] = int(0);
+      v[((v_3 * 4u) / 4u)] = asuint(int(0));
       {
         v_2 = (v_3 + 1u);
       }

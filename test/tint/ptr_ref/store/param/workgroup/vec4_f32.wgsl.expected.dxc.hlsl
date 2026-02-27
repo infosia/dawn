@@ -3,14 +3,14 @@ struct main_inputs {
 };
 
 
-groupshared float4 S;
+groupshared uint4 S[1];
 void func() {
-  S = (0.0f).xxxx;
+  S[0u] = asuint((0.0f).xxxx);
 }
 
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    S = (0.0f).xxxx;
+    S[0u] = asuint((0.0f).xxxx);
   }
   GroupMemoryBarrierWithGroupSync();
   func();

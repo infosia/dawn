@@ -624,10 +624,10 @@ TEST_F(HlslWriterTest, VarWorkgroup) {
 };
 
 
-groupshared float4 u;
+groupshared uint4 u[1];
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    u = (0.0f).xxxx;
+    u[0u] = asuint((0.0f).xxxx);
   }
   GroupMemoryBarrierWithGroupSync();
 }

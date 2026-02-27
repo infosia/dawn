@@ -8,7 +8,7 @@ struct main_inputs {
 
 
 static int4 src_private[4] = (int4[4])0;
-groupshared int4 src_workgroup[4];
+groupshared uint4 src_workgroup[4];
 cbuffer cbuffer_src_uniform : register(b0) {
   uint4 src_uniform[4];
 };
@@ -138,45 +138,66 @@ ary_ret_2 v_21(uint start_byte_offset) {
   return v_24;
 }
 
+typedef int4 ary_ret_3[4];
+ary_ret_3 v_25(uint start_byte_offset) {
+  int4 a[4] = (int4[4])0;
+  {
+    uint v_26 = 0u;
+    v_26 = 0u;
+    while(true) {
+      uint v_27 = v_26;
+      if ((v_27 >= 4u)) {
+        break;
+      }
+      a[v_27] = asint(src_workgroup[((start_byte_offset + (v_27 * 16u)) / 16u)]);
+      {
+        v_26 = (v_27 + 1u);
+      }
+    }
+  }
+  int4 v_28[4] = a;
+  return v_28;
+}
+
 void foo(int4 src_param[4]) {
   int4 src_function[4] = (int4[4])0;
-  int4 v_25[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
-  v_14(0u, v_25);
+  int4 v_29[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
+  v_14(0u, v_29);
   v_14(0u, src_param);
-  int4 v_26[4] = ret_arr();
-  v_14(0u, v_26);
+  int4 v_30[4] = ret_arr();
+  v_14(0u, v_30);
   int4 src_let[4] = (int4[4])0;
   v_14(0u, src_let);
-  int4 v_27[4] = src_function;
-  v_14(0u, v_27);
-  int4 v_28[4] = src_private;
-  v_14(0u, v_28);
-  int4 v_29[4] = src_workgroup;
-  v_14(0u, v_29);
-  S v_30 = ret_struct_arr();
-  int4 v_31[4] = v_30.arr;
+  int4 v_31[4] = src_function;
   v_14(0u, v_31);
-  int4 v_32[4] = v_21(0u);
+  int4 v_32[4] = src_private;
   v_14(0u, v_32);
-  int4 v_33[4] = v_17(0u);
+  int4 v_33[4] = v_25(0u);
   v_14(0u, v_33);
+  S v_34 = ret_struct_arr();
+  int4 v_35[4] = v_34.arr;
+  v_14(0u, v_35);
+  int4 v_36[4] = v_21(0u);
+  v_14(0u, v_36);
+  int4 v_37[4] = v_17(0u);
+  v_14(0u, v_37);
   int src_nested[4][3][2] = (int[4][3][2])0;
-  int v_34[4][3][2] = src_nested;
-  v_10(0u, v_34);
+  int v_38[4][3][2] = src_nested;
+  v_10(0u, v_38);
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_35 = 0u;
-    v_35 = tint_local_index;
+    uint v_39 = 0u;
+    v_39 = tint_local_index;
     while(true) {
-      uint v_36 = v_35;
-      if ((v_36 >= 4u)) {
+      uint v_40 = v_39;
+      if ((v_40 >= 4u)) {
         break;
       }
-      src_workgroup[v_36] = (int(0)).xxxx;
+      src_workgroup[((v_40 * 16u) / 16u)] = asuint(int4((int(0)).xxxx));
       {
-        v_35 = (v_36 + 1u);
+        v_39 = (v_40 + 1u);
       }
     }
   }

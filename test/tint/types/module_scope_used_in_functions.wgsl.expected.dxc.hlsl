@@ -4,7 +4,7 @@ struct main_inputs {
 
 
 static float p = 0.0f;
-groupshared float w;
+groupshared uint w[1];
 ByteAddressBuffer uniforms : register(t1);
 RWByteAddressBuffer storages : register(u0);
 void no_uses() {
@@ -16,7 +16,7 @@ void zoo() {
 
 void bar(float a, float b) {
   p = a;
-  w = b;
+  w[0u] = asuint(b);
   uint v = 0u;
   storages.GetDimensions(v);
   uint v_1 = ((v / 4u) - 1u);
@@ -33,7 +33,7 @@ void foo(float a) {
 
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    w = 0.0f;
+    w[0u] = asuint(0.0f);
   }
   GroupMemoryBarrierWithGroupSync();
   foo(1.0f);

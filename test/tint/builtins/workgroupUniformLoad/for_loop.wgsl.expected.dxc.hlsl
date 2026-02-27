@@ -3,12 +3,12 @@ struct foo_inputs {
 };
 
 
-groupshared int a;
-groupshared int b;
+groupshared uint a[1];
+groupshared uint b[1];
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    a = int(0);
-    b = int(0);
+    a[0u] = asuint(int(0));
+    b[0u] = asuint(int(0));
   }
   GroupMemoryBarrierWithGroupSync();
   {
@@ -20,7 +20,7 @@ void foo_inner(uint tint_local_index) {
       }
       int v = i;
       GroupMemoryBarrierWithGroupSync();
-      int v_1 = a;
+      int v_1 = asint(a[0u]);
       GroupMemoryBarrierWithGroupSync();
       if ((v < v_1)) {
       } else {
@@ -33,7 +33,7 @@ void foo_inner(uint tint_local_index) {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         int v_2 = i;
         GroupMemoryBarrierWithGroupSync();
-        int v_3 = b;
+        int v_3 = asint(b[0u]);
         GroupMemoryBarrierWithGroupSync();
         i = asint((asuint(v_2) + asuint(v_3)));
       }

@@ -3,13 +3,13 @@ struct main_inputs {
 };
 
 
-groupshared int v;
+groupshared uint v[1];
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    v = int(0);
+    v[0u] = asuint(int(0));
   }
   GroupMemoryBarrierWithGroupSync();
-  int i = v;
+  int i = asint(v[0u]);
 }
 
 [numthreads(1, 1, 1)]

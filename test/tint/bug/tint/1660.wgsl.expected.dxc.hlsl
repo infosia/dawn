@@ -3,7 +3,7 @@ struct main_inputs {
 };
 
 
-groupshared float a[2];
+groupshared uint a[2];
 void main_inner(uint tint_local_index) {
   {
     uint v = 0u;
@@ -13,13 +13,14 @@ void main_inner(uint tint_local_index) {
       if ((v_1 >= 2u)) {
         break;
       }
-      a[v_1] = 0.0f;
+      a[((v_1 * 4u) / 4u)] = asuint(0.0f);
       {
         v = (v_1 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
+  asfloat(a[0u]);
 }
 
 [numthreads(1, 1, 1)]

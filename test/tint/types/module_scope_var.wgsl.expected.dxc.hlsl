@@ -17,10 +17,10 @@ static float4 v4f32_var = (0.0f).xxxx;
 static float2x3 m2x3_var = float2x3((0.0f).xxx, (0.0f).xxx);
 static float arr_var[4] = (float[4])0;
 static S struct_var = (S)0;
-groupshared float wg_var;
+groupshared uint wg_var[1];
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    wg_var = 0.0f;
+    wg_var[0u] = asuint(0.0f);
   }
   GroupMemoryBarrierWithGroupSync();
   bool_var = false;
@@ -35,7 +35,7 @@ void main_inner(uint tint_local_index) {
   arr_var = v;
   S v_1 = (S)0;
   struct_var = v_1;
-  wg_var = 42.0f;
+  wg_var[0u] = asuint(42.0f);
 }
 
 [numthreads(1, 1, 1)]

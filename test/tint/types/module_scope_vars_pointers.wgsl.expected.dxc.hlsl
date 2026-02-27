@@ -4,13 +4,13 @@ struct main_inputs {
 
 
 static float p = 0.0f;
-groupshared float w;
+groupshared uint w[1];
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    w = 0.0f;
+    w[0u] = asuint(0.0f);
   }
   GroupMemoryBarrierWithGroupSync();
-  float x = (p + w);
+  float x = (p + asfloat(w[0u]));
   p = x;
 }
 
