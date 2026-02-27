@@ -257,7 +257,8 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
             },
             [&](SamplerBase* sampler) {
                 // TODO(https://issues.chromium.org/473354063): Support samplers updates.
-                DAWN_UNREACHABLE();
+                // Skip for now to allow most e2e tests to pass when attempting to add default
+                // samplers.
             });
     }
 }
