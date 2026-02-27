@@ -42,7 +42,10 @@ class Module;
 namespace tint::core::ir::transform {
 
 /// The capabilities that the transform can support.
-const Capabilities kArrayLengthFromUniformCapabilities{Capability::kAllowDuplicateBindings};
+const Capabilities kArrayLengthFromUniformCapabilities{
+    Capability::kAllow16BitIntegers,
+    Capability::kAllowDuplicateBindings,
+};
 
 /// The result of running the ArrayLengthFromUniform transform.
 struct ArrayLengthFromUniformResult {
