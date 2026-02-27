@@ -50,6 +50,24 @@
       "message": "If the VK_INCOMPLETE is happening on the Graphite wgpu::Device this makes sense. Since Graphite uses VkPipelineCache from multiple threads it\u0027s possible internal synchronization is broken in the Xclipse driver too. We might be able to better workaround issues by implementing our own external synchronization.\n\nIf the VK_INCOMPLETE is happening on the WebGPU device that is a little puzzling since VkPipelineCache isn\u0027t used from multiple threads there.",
       "revId": "d55925234242db5afa84e6b2c29e2abc91f93f8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cbbe437_32c382e7",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-02-27T20:02:46Z",
+      "side": 1,
+      "message": "It\u0027s definitely been happening with the WebGPU device. I\u0027ve observed it both with test run harnesses and the CTS web page. And applying this workaround completely fixes it as far as I can see.",
+      "parentUuid": "4e119063_a1bd23a5",
+      "revId": "d55925234242db5afa84e6b2c29e2abc91f93f8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
