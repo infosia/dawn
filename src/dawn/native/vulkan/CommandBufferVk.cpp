@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/CommandEncoder.h"
@@ -741,12 +742,17 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
     beginInfo.pNext = nullptr;
     beginInfo.renderPass = renderPassVK;
     beginInfo.framebuffer = framebuffer;
-    beginInfo.renderArea.offset.x = 0;
-    beginInfo.renderArea.offset.y = 0;
-    beginInfo.renderArea.extent.width = renderPass->width;
-    beginInfo.renderArea.extent.height = renderPass->height;
+    beginInfo.renderArea.offset.x = renderPass->renderAreaX;
+    beginInfo.renderArea.offset.y = renderPass->renderAreaY;
+    beginInfo.renderArea.extent.width = renderPass->renderAreaWidth;
+    beginInfo.renderArea.extent.height = renderPass->renderAreaHeight;
     beginInfo.clearValueCount = framebufferQuery.attachmentCount;
     beginInfo.pClearValues = framebufferQuery.clearValues.data();
+    // dawn::ErrorLog() << absl::StrFormat("VkRenderPassBeginInfo (%d,%d) sub_rect=(%d,%d %d x %d)",
+    //                                     renderPass->width, renderPass->height,
+    //                                     renderPass->renderAreaX, renderPass->renderAreaY,
+    //                                     renderPass->renderAreaWidth,
+    //                                     renderPass->renderAreaHeight);
 
     if (renderPass->attachmentState->GetExpandResolveInfo().attachmentsToExpandResolve.any()) {
         DAWN_TRY(BeginRenderPassAndExpandResolveTextureWithDraw(device, recordingContext,

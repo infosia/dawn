@@ -181,6 +181,11 @@ struct BeginRenderPassCmd {
     // TODO(https://issues.chromium.org/424536624): Use TexelCount instead of uint32_t.
     uint32_t width;
     uint32_t height;
+    uint32_t renderAreaX;
+    uint32_t renderAreaY;
+    uint32_t renderAreaWidth;
+    uint32_t renderAreaHeight;
+
     // Used for partial resolve
     ResolveRect resolveRect;
     bool msaaRenderToSingleSampled = false;

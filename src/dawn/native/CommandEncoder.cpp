@@ -294,6 +294,21 @@ class RenderPassValidationState final : public NonMovable {
         return {};
     }
 
+    void SetRenderBounds(UnpackedPtr<RenderPassDescriptor> descriptor) {
+        auto bounds = descriptor.Get<RenderPassDescriptorBounds>();
+        if (bounds) {
+            mRenderBoundsX = bounds->x;
+            mRenderBoundsY = bounds->y;
+            mRenderBoundsWidth = bounds->width;
+            mRenderBoundsHeight = bounds->height;
+        } else {
+            mRenderBoundsX = 0;
+            mRenderBoundsY = 0;
+            mRenderBoundsWidth = mRenderWidth;
+            mRenderBoundsHeight = mRenderHeight;
+        }
+    }
+
     // Only sets the values needed for executing the render pass, used when validation is disabled.
     void SetUnvalidatedAttachment(const TextureViewBase* attachment) {
         // Should only be called once.
@@ -331,6 +346,14 @@ class RenderPassValidationState final : public NonMovable {
 
     uint32_t GetRenderHeight() const { return mRenderHeight; }
 
+    uint32_t GetRenderBoundsX() const { return mRenderBoundsX; }
+
+    uint32_t GetRenderBoundsY() const { return mRenderBoundsY; }
+
+    uint32_t GetRenderBoundsWidth() const { return mRenderBoundsWidth; }
+
+    uint32_t GetRenderBoundsHeight() const { return mRenderBoundsHeight; }
+
     uint32_t GetSampleCount() const { return mSampleCount; }
 
     uint32_t IsMsrtssAllowed() const { return mMsrtssAllowed; }
@@ -351,6 +374,11 @@ class RenderPassValidationState final : public NonMovable {
     // The attachment's width, height and sample count.
     uint32_t mRenderWidth = 0;
     uint32_t mRenderHeight = 0;
+    uint32_t mRenderBoundsX = 0;
+    uint32_t mRenderBoundsY = 0;
+    uint32_t mRenderBoundsWidth = 0;
+    uint32_t mRenderBoundsHeight = 0;
+
     uint32_t mSampleCount = 0;
     bool mMsrtssAllowed = false;
 
@@ -944,6 +972,8 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
                         wgpu::LoadOp::ExpandResolveTexture);
     }
 
+    validationState->SetRenderBounds(descriptor);
+
     return {};
 }
 
@@ -987,7 +1017,7 @@ MaybeError InitializeValidationStateAttachment(DeviceBase* device,
     // Only one attachment needs to be added to the validation state.
     DAWN_ASSERT(representativeView);
     validationState->SetUnvalidatedAttachment(representativeView);
-
+    validationState->SetRenderBounds(descriptor);
     return {};
 }
 
@@ -1548,6 +1578,10 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->width = validationState.GetRenderWidth();
             cmd->height = validationState.GetRenderHeight();
+            cmd->renderAreaX = validationState.GetRenderBoundsX();
+            cmd->renderAreaY = validationState.GetRenderBoundsY();
+            cmd->renderAreaWidth = validationState.GetRenderBoundsWidth();
+            cmd->renderAreaHeight = validationState.GetRenderBoundsHeight();
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
