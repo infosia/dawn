@@ -33,6 +33,24 @@
       "message": "Given that you assert in `RegisterSerialProcessor` that processors can only be added at the beginning of time, it feels like a bit of a waste to constantly be making copies of the vector here because we know it won\u0027t change by the time this method is called. (Assuming that you don\u0027t pass `kBeginningOfGPUTime` as the completed serial, anyway.\n\nI get why we want the processor list to be part of the state during startup, so I\u0027m not sure what I\u0027d suggest here. It\u0027s ultimately a pretty minor thing. But we DO want to reduce the amount of vector manipulation we do during steady state, so it\u0027s probably worth giving at least a bit of thought to.\n\nEDIT: Okay, I see that the processors could be altered by `AssumeCommandsComplete`, which might happen in parallel. Leaving this comment here just in case you can think of a way to reduce vector manipulation, but it\u0027s non-blocking.",
       "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3f14ca7_998bdeef",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-27T21:30:17Z",
+      "side": 1,
+      "message": "Good point. I thought about it a bit more, and have updated it to use a pointer to the vector because I believe it\u0027s guarded by the conditional boolean which should make it safe to use without the lock since we ensure that all the processors are registered before we start updating anything. I\u0027ll leave this comment open to give you a chance to take another look. Once you resolve this comment, I\u0027ll try to land it!",
+      "parentUuid": "7f960d11_123ed840",
+      "revId": "235e229ad900fe7e4f5ed4c55468df44c449e9f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
