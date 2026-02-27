@@ -33,6 +33,24 @@
       "message": "kAnd",
       "revId": "a5f0197bd54a0231b7f06cb25c0f08489dc80891",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95605fa9_5d3a26a1",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-02-27T03:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cde3eba_038d3218",
+      "revId": "a5f0197bd54a0231b7f06cb25c0f08489dc80891",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
