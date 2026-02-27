@@ -16,6 +16,23 @@
       "message": "What is this UnmapBuffer root cmd?",
       "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "436db6e9_c88366d1",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-02-27T00:56:56Z",
+      "side": 1,
+      "message": "Is this End cmd marking the end of the capture?",
+      "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
