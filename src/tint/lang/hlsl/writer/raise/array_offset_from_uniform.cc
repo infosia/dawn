@@ -131,6 +131,10 @@ struct State {
                         case BuiltinFn::kLoad2F16:
                         case BuiltinFn::kLoad3F16:
                         case BuiltinFn::kLoad4F16:
+                        case BuiltinFn::kLoadU16:
+                        case BuiltinFn::kLoad2U16:
+                        case BuiltinFn::kLoad3U16:
+                        case BuiltinFn::kLoad4U16:
                         case BuiltinFn::kStore:
                         case BuiltinFn::kStore2:
                         case BuiltinFn::kStore3:
@@ -139,12 +143,18 @@ struct State {
                         case BuiltinFn::kStore2F16:
                         case BuiltinFn::kStore3F16:
                         case BuiltinFn::kStore4F16:
+                        case BuiltinFn::kStoreU16:
+                        case BuiltinFn::kStore2U16:
+                        case BuiltinFn::kStore3U16:
+                        case BuiltinFn::kStore4U16:
                             add_offset_to_arg(0);
                             break;
                         // Ignore the functions below
                         case BuiltinFn::kAsint:
                         case BuiltinFn::kAsuint:
                         case BuiltinFn::kAsfloat:
+                        case BuiltinFn::kAsuint16:
+                        case BuiltinFn::kAsfloat16:
                         case BuiltinFn::kDot4AddI8Packed:
                         case BuiltinFn::kDot4AddU8Packed:
                         case BuiltinFn::kF32Tof16:

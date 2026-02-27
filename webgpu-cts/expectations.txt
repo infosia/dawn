@@ -436,22 +436,6 @@ crbug.com/42251290 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,m
 crbug.com/42251180 [ asan dawn-no-backend-validation intel-0x9bc5 release-x64 target-cpu-64 webgpu-dxc-enabled win10 ] webgpu:shader,execution,robust_access:linear_memory:* [ Failure ] # CAT:Critical
 crbug.com/42251180 [ dawn-no-backend-validation intel-0x9bc5 no-asan release-x64 target-cpu-64 webgpu-dxc-enabled win10 ] webgpu:shader,execution,robust_access:linear_memory:* [ Failure ] # CAT:Critical
 
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3h_align8";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4h_align8";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4h_align8";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x2f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x2f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat2x3f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x3f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat2x4f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4f_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x3h_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x3h_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat3x4h_size";aspace="workgroup" [ Failure ] # CAT:Critical
-crbug.com/341991439 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,memory_layout:write_layout:case="mat4x4h_size";aspace="workgroup" [ Failure ] # CAT:Critical
-
 crbug.com/341991440 [ intel-0x4680 webgpu-dxc-enabled win ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="workgroup";access="read";containerType="array";* [ Failure ] # CAT:Critical
 
 # Video tests fail on Mac SwiftShader
