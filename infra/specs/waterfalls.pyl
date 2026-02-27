@@ -175,11 +175,6 @@
           'default',
         ],
       },
-      'dawn-win-x64-builder-rel': {
-        'additional_compile_targets': [
-          'default',
-        ],
-      },
       'dawn-win-x64-intel-uhd630-asan': {
         'os_type': 'win',
         'mixins': [
@@ -189,41 +184,7 @@
           'gtest_tests': 'real_hardware_win_gtests',
         },
       },
-      'dawn-win-x64-intel-uhd630-rel': {
-        'os_type': 'win',
-        'mixins': [
-          'win10_intel_uhd_630_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_win_gtests',
-        },
-      },
-      'dawn-win-x64-intel-uhd770-rel': {
-        'os_type': 'win',
-        'mixins': [
-          'win10_intel_uhd_770_stable',
-        ],
-        'test_suites': {},
-      },
       'dawn-win-x64-nvidia-gtx1660-asan': {
-        'os_type': 'win',
-        'mixins': [
-          'win10_nvidia_gtx_1660_stable',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_win_gtests',
-        },
-      },
-      'dawn-win-x64-nvidia-gtx1660-exp-rel': {
-        'os_type': 'win',
-        'mixins': [
-          'win10_nvidia_gtx_1660_experimental',
-        ],
-        'test_suites': {
-          'gtest_tests': 'real_hardware_win_gtests',
-        },
-      },
-      'dawn-win-x64-nvidia-gtx1660-rel': {
         'os_type': 'win',
         'mixins': [
           'win10_nvidia_gtx_1660_stable',
@@ -253,16 +214,6 @@
         },
       },
       'dawn-win-x64-sws-msvc-rel': {
-        'os_type': 'win',
-        'mixins': [
-          'win10_gce_gpu_pool',
-        ],
-        'test_suites': {
-          'gtest_tests': 'win_software_renderer_gtests',
-          'isolated_scripts': 'win_software_renderer_isolated_scripts',
-        },
-      },
-      'dawn-win-x64-sws-rel': {
         'os_type': 'win',
         'mixins': [
           'win10_gce_gpu_pool',
