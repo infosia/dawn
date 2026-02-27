@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f36d44_541315e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T09:06:10Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5d112bc_aa130276",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T09:06:10Z",
+      "side": 1,
+      "message": "I think this is done with Dan\u0027s filterability CLs!",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf01c214_990e695e",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T09:06:10Z",
+      "side": 1,
+      "message": "[1] We shouldn\u0027t need this in validation tests.",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "184b1f7d_fe1a54ad",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1950,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T09:06:10Z",
+      "side": 1,
+      "message": "nit: to avoid including vulkan at [1] we can instead set `yCbCrDesc.externalFormat` to 1 or anything non-0.",
+      "range": {
+        "startLine": 1950,
+        "startChar": 25,
+        "endLine": 1950,
+        "endChar": 49
+      },
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4893651d_ca510cf8",
+        "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T09:06:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
