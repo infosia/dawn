@@ -56,6 +56,11 @@ constexpr size_t kMaxImmediateSize = 64;
 constexpr size_t kImmediateSlotSize = 4;
 /// The number of slots in the immediate buffer.
 constexpr size_t kImmediateSlotCount = kMaxImmediateSize / kImmediateSlotSize;
+/// The index of the overflow bit in the immediate block info bitset.
+/// This bit is set when actual member data (not trailing struct padding) exceeds the slot limit.
+constexpr size_t kImmediateSlotOverflowBit = kImmediateSlotCount;
+/// The total number of bits in the immediate block info bitset, including the overflow bit.
+constexpr size_t kImmediateBlockInfoBitCount = kImmediateSlotCount + 1;
 
 /// Extracts information from a program
 class Inspector {
@@ -109,10 +114,11 @@ class Inspector {
         const BindingPoint& non_sampler_placeholder);
 
     /// @param entry_point name of the entry point to get information about
-    /// @returns a bitset where the nth bit is true if the nth 4-byte slot of the immediate block
-    /// may be used by the entry point. Returns an empty bitset if the immediate block is not
-    /// referenced.
-    std::bitset<kImmediateSlotCount> GetImmediateBlockInfo(const std::string& entry_point);
+    /// @returns a bitset where the nth bit (0..kImmediateSlotCount-1) is true if the nth 4-byte
+    /// slot of the immediate block may be used by the entry point. Bit kImmediateSlotOverflowBit
+    /// is set if any member data exceeds the immediate buffer size limit. Returns an empty bitset
+    /// if the immediate block is not referenced.
+    std::bitset<kImmediateBlockInfoBitCount> GetImmediateBlockInfo(const std::string& entry_point);
 
     /// @returns vector of all valid extension names used by the program. There
     /// will be no duplicated names in the returned vector even if an extension
