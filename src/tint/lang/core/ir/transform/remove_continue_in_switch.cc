@@ -123,6 +123,7 @@ Result<SuccessType> RemoveContinueInSwitch(Module& ir) {
     TINT_CHECK_RESULT(
         ValidateBeforeIfNeeded(ir,
                                core::ir::Capabilities{
+                                   core::ir::Capability::kAllow16BitIntegers,
                                    core::ir::Capability::kAllowVectorElementPointer,
                                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
