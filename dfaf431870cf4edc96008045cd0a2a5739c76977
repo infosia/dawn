@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5aa85305_0f9d9633",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T16:04:44Z",
+      "side": 1,
+      "message": "The TODO is done so we can remove it.",
+      "parentUuid": "465c19e0_aff4b198",
+      "revId": "dfaf431870cf4edc96008045cd0a2a5739c76977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf01c214_990e695e",
         "filename": "src/dawn/tests/unittests/validation/ResourceTableValidationTests.cpp",
         "patchSetId": 6
