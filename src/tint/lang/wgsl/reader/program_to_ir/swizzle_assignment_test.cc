@@ -68,12 +68,12 @@ TEST_F(ProgramToIRSwizzleAssignmentTest, Assignment_MultiElementSwizzle) {
     EXPECT_EQ(Dis(m.Get()), R"(%test_function = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     %v:ptr<function, vec4<f32>, read_write> = var undef
-    %3:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 0u
-    %4:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 1u
-    %5:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 2u
-    %6:vec4<f32> = load %v
-    %7:f32 = access %6, 2u
-    %8:vec4<f32> = construct %5, %3, %7, %4
+    %3:vec4<f32> = load %v
+    %4:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 0u
+    %5:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 1u
+    %6:f32 = access vec3<f32>(1.0f, 2.0f, 3.0f), 2u
+    %7:f32 = access %3, 2u
+    %8:vec4<f32> = construct %6, %4, %7, %5
     store %v, %8
     ret
   }
@@ -115,12 +115,12 @@ TEST_F(ProgramToIRSwizzleAssignmentTest, Assignment_ChainedMultiElementSwizzle) 
     EXPECT_EQ(Dis(m.Get()), R"(%test_function = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     %v:ptr<function, vec4<f32>, read_write> = var undef
-    %3:f32 = access vec2<f32>(1.0f, 2.0f), 0u
-    %4:f32 = access vec2<f32>(1.0f, 2.0f), 1u
-    %5:vec4<f32> = load %v
-    %6:f32 = access %5, 1u
-    %7:f32 = access %5, 3u
-    %8:vec4<f32> = construct %4, %6, %3, %7
+    %3:vec4<f32> = load %v
+    %4:f32 = access vec2<f32>(1.0f, 2.0f), 0u
+    %5:f32 = access vec2<f32>(1.0f, 2.0f), 1u
+    %6:f32 = access %3, 1u
+    %7:f32 = access %3, 3u
+    %8:vec4<f32> = construct %5, %6, %4, %7
     store %v, %8
     ret
   }
@@ -167,12 +167,12 @@ TEST_F(ProgramToIRSwizzleAssignmentTest, CompoundAssignment_MultiElementSwizzle)
     %3:vec4<f32> = load %v
     %4:vec3<f32> = swizzle %3, ywx
     %5:vec3<f32> = mul %4, vec3<f32>(1.0f, 2.0f, 3.0f)
-    %6:f32 = access %5, 0u
-    %7:f32 = access %5, 1u
-    %8:f32 = access %5, 2u
-    %9:vec4<f32> = load %v
-    %10:f32 = access %9, 2u
-    %11:vec4<f32> = construct %8, %6, %10, %7
+    %6:vec4<f32> = load %v
+    %7:f32 = access %5, 0u
+    %8:f32 = access %5, 1u
+    %9:f32 = access %5, 2u
+    %10:f32 = access %6, 2u
+    %11:vec4<f32> = construct %9, %7, %10, %8
     store %v, %11
     ret
   }
@@ -195,16 +195,15 @@ TEST_F(ProgramToIRSwizzleAssignmentTest, CompoundAssignment_ChainedSwizzle) {
   $B1: {
     %v:ptr<function, vec4<f32>, read_write> = var undef
     %3:vec4<f32> = load %v
-    %4:vec3<f32> = swizzle %3, zyx
-    %5:vec2<f32> = swizzle %4, xz
-    %6:vec2<f32> = add %5, vec2<f32>(1.0f, 2.0f)
-    %7:f32 = access %6, 0u
-    %8:f32 = access %6, 1u
-    %9:vec4<f32> = load %v
-    %10:f32 = access %9, 1u
-    %11:f32 = access %9, 3u
-    %12:vec4<f32> = construct %8, %10, %7, %11
-    store %v, %12
+    %4:vec2<f32> = swizzle %3, zx
+    %5:vec2<f32> = add %4, vec2<f32>(1.0f, 2.0f)
+    %6:vec4<f32> = load %v
+    %7:f32 = access %5, 0u
+    %8:f32 = access %5, 1u
+    %9:f32 = access %6, 1u
+    %10:f32 = access %6, 3u
+    %11:vec4<f32> = construct %8, %9, %7, %10
+    store %v, %11
     ret
   }
 }
