@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16167fc5_d3453013",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-27T22:51:18Z",
+      "side": 1,
+      "message": "Looking a bit more. It seems every backend overrides `InitializeImpl`, so how about a function `void InitializeBase(Extent3D wgsize)` that is called there. It does the setting of all these variables.",
+      "parentUuid": "8ead9dc8_fd5d04f8",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d182c462_4ba92e30",
         "filename": "src/dawn/native/ComputePipeline.h",
         "patchSetId": 15
