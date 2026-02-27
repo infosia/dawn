@@ -339,8 +339,12 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
 
     // DecomposeAccess must come after DecomposeStorageAccess, ChangeImmediateToUniform, and
-    // ArrayOffsetFrom* transforms
-    core::ir::transform::DecomposeAccessOptions decompose_config{.uniform = true};
+    // ArrayOffsetFrom* transforms.
+    // Workgroup decomposition uses u16 base types for f16-containing variables. Only enable
+    // workgroup decomposition when the device supports shader f16, since only then can f16
+    // types appear in workgroup variables and the compiler (DXC) can handle u16 types.
+    core::ir::transform::DecomposeAccessOptions decompose_config{
+        .uniform = true, .workgroup = options.is_d3d12_backend && options.has_shader_f16};
     TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
 
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.
