@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bb52660_7447746e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-02-27T18:50:49Z",
+      "side": 1,
+      "message": "CI builders seem to be running correctly after picking up the Starlark change\n\n* [NVIDIA exp](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-nvidia-gtx1660-exp-rel/651/infra)\n* [NVIDIA](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-nvidia-gtx1660-rel/1001/infra)\n* [Intel UHD 630](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-intel-uhd630-rel/975/infra)\n* [Intel UHD 770](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-intel-uhd770-rel/1189/infra) (expected to not run any tests atm)\n* [SwiftShader](https://ci.chromium.org/ui/p/dawn/builders/ci/dawn-win-x64-sws-rel/1741/infra)",
+      "revId": "055a26b3db372bd834e0b008f9855eb80e65e6a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
