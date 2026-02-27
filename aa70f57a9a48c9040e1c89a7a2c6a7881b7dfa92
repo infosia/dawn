@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df77bb4e_10a27d63",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-27T17:24:33Z",
+      "side": 1,
+      "message": "It\u0027s an empty handler because there\u0027s a UnmapBuffer command in RootComamnds. \n\nI thought I wrote this in a comment but I can\u0027t find it now. Maybe I forgot to pick save. 😅\n\nI thought I asked if I could remove it and other unmap related stuff after this stack of CLs lands. Otherwise, is several hours of propagating changes through the CL stack, especially since files changes moved files twice.\n\nI also asked if I could fix a few other things after the stack lands.\n\n1. I think I can simplify the x-macros W.R.T. `Invalid` and that would remove the complication of having to select a 1 argument macro vs a 2 argument macro in all of these spots. But, same issue. Since the CL stack moves things twice (Replay-\u003eReplayImplBase-\u003eCaptureWalker) it\u0027s a PITA to propagate the changes so I\u0027m hoping it\u0027s okay for now.\n\n2. There\u0027s a couple places that could use code generation that are not. I\u0027d like to fix those after the stack lands.",
+      "parentUuid": "bfe2774b_b8dd7011",
+      "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "436db6e9_c88366d1",
         "filename": "src/dawn/replay/Replay.cpp",
         "patchSetId": 6
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-27T00:56:56Z",
       "side": 1,
       "message": "Is this End cmd marking the end of the capture?",
+      "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bccbfcc0_cfcae8f3",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-02-27T17:24:33Z",
+      "side": 1,
+      "message": "This end is making satisfying the x-macro code generation that here must be one handler per command.",
+      "parentUuid": "436db6e9_c88366d1",
       "revId": "aa70f57a9a48c9040e1c89a7a2c6a7881b7dfa92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
