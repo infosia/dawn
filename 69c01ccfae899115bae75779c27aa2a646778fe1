@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ead9dc8_fd5d04f8",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-02-27T19:04:32Z",
+      "side": 1,
+      "message": "For 2, doesn\u0027t that mean we\u0027d have to store the wgsize twice everywhere (base and backend)? Many of the backends only have access temporarily.\n\nRelated to that, apparently, there is a problem with the WebGPU backend. I missed that one and it doesn\u0027t have the wgsize available, but it is also unclear how to get it since there is only an incomplete pointer to `WGPUComputePipelineImpl` in that version. Any ideas how I\u0027m supposed to propagate that out of the backend?",
+      "parentUuid": "a3e8fe95_3844d721",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d182c462_4ba92e30",
         "filename": "src/dawn/native/ComputePipeline.h",
         "patchSetId": 15
