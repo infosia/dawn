@@ -67,8 +67,7 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
             enableValidation: u32,
             duplicateNumWorkgroups: u32,
             linearIndexing: u32,
-            globalIndex: u32,
-            wgSize: u32,
+            overflowValue: u32,
         }
 
         struct IndirectParams {
@@ -85,18 +84,20 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
 
         @compute @workgroup_size(1, 1, 1)
         fn main() {
-            var invocations = select(1u, uniformParams.wgSize, uniformParams.globalIndex > 0u);
+            var invocations = 1u;
             for (var i = 0u; i < 3u; i = i + 1u) {
                 var numWorkgroups = clientParams.data[uniformParams.clientOffsetInU32 + i];
                 if (uniformParams.enableValidation > 0u) {
-                    if (uniformParams.linearIndexing > 0u) {
-                        let overflow = invocations > (0xffffffffu / numWorkgroups);
-                        invocations = select(invocations * numWorkgroups, invocations, overflow);
-                        numWorkgroups = select(numWorkgroups, 0u, overflow);
+                    if (numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension) {
+                        numWorkgroups = 0u;
+                    } else if (invocations != 0u && uniformParams.linearIndexing > 0u) {
+                        if (invocations > uniformParams.overflowValue / numWorkgroups) {
+                          numWorkgroups = 0u;
+                          invocations = 0u;
+                        } else {
+                          invocations *= numWorkgroups;
+                        }
                     }
-                    numWorkgroups =
-                        select(numWorkgroups, 0u,
-                               numWorkgroups > uniformParams.maxComputeWorkgroupsPerDimension);
                 }
                 validatedParams.data[i] = numWorkgroups;
 
@@ -307,6 +308,10 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
     const auto wgSize = mCommandBufferState.GetComputePipeline()->GetWorkgroupSize().value_or(
         std::vector<uint32_t>(3, 1));
     const uint32_t wgInvocations = wgSize[0] * wgSize[1] * wgSize[2];
+    uint32_t overflowValue = 0xffffffffu;
+    if (usesGlobalIndex) {
+        overflowValue /= wgInvocations;
+    }
 
     // Save the previous command buffer state so it can be restored after the
     // validation inserts additional commands.
@@ -340,8 +345,7 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
         uint32_t enableValidation;
         uint32_t duplicateNumWorkgroups;
         uint32_t linearIndexing;
-        uint32_t globalIndex;
-        uint32_t wgSize;
+        uint32_t overflowValue;
     };
 
     // Create a uniform buffer to hold parameters for the shader.
@@ -354,8 +358,7 @@ ComputePassEncoder::TransformIndirectDispatchBuffer(Ref<BufferBase> indirectBuff
         params.enableValidation = static_cast<uint32_t>(IsValidationEnabled());
         params.duplicateNumWorkgroups = static_cast<uint32_t>(shouldDuplicateNumWorkgroups);
         params.linearIndexing = static_cast<uint32_t>(usesLinearIndexing);
-        params.globalIndex = static_cast<uint32_t>(usesGlobalIndex);
-        params.wgSize = wgInvocations;
+        params.overflowValue = overflowValue;
 
         DAWN_TRY_ASSIGN(uniformBuffer,
                         utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform, {params}));
