@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b60f0efc_60e967f4",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-27T23:52:00Z",
+      "side": 1,
+      "message": "I don\u0027t think that should be a problem at this time. There\u0027s only a couple places that call `TrackSerialTask` right now, and it\u0027s in the future stuff which I marked all as `UserVisible`, and a couple places in the Vulkan backend. The fenced deleter is the only thing I marked as `BestEffort` right now so unless we have any assumptions on that we should be fine.\n\nAnd moving forwards, it should be fine to have lower priority tasks that are not complete yet. By definition, if they are lower priority they shouldn\u0027t be blocking higher priority stuff.",
+      "parentUuid": "2fba957e_851fc0b4",
+      "revId": "68a7b79248094cc5d87a147eee8e1dccf43913d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "806eb191_1526ce5f",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26b339eb_4f70a1ea",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-27T23:52:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806eb191_1526ce5f",
+      "revId": "68a7b79248094cc5d87a147eee8e1dccf43913d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dd45921_a13519f5",
@@ -48,6 +84,24 @@
       "writtenOn": "2026-02-26T20:01:22Z",
       "side": 1,
       "message": "μNit: These names feel a bit weird to me? Honestly they\u0027re probably fine, I just don\u0027t know that I would immediately connect that \"user facing\" \u003d\u003d \"the highest possible priority.\"",
+      "revId": "68a7b79248094cc5d87a147eee8e1dccf43913d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c0696ff_761ecce9",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-02-27T23:52:00Z",
+      "side": 1,
+      "message": "They were based on the task priority enums in Chromium. I added a link to them in the comment as well.",
+      "parentUuid": "4dd45921_a13519f5",
       "revId": "68a7b79248094cc5d87a147eee8e1dccf43913d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
