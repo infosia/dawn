@@ -610,7 +610,7 @@ var LibraryWebGPU = {
 
       // Non-standard. If this is undefined, it will correctly just cast to 0.
       if (limits.maxImmediateSize !== undefined) {
-        setLimitValueU32('maxImmediateSize', {{{ C_STRUCTS.WGPULimits.maxImmediateSize }}});
+        setLimitValueU32('maxImmediateSize', limitsOutPtr, {{{ C_STRUCTS.WGPULimits.maxImmediateSize }}});
       }
     },
 
