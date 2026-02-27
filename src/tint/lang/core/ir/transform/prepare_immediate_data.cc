@@ -153,6 +153,7 @@ Result<ImmediateDataLayout> PrepareImmediateData(Module& ir,
                                              core::ir::Capabilities{
                                                  core::ir::Capability::kAllowDuplicateBindings,
                                                  core::ir::Capability::kAllow8BitIntegers,
+                                                 core::ir::Capability::kAllow16BitIntegers,
                                                  core::ir::Capability::kAllowNonCoreTypes,
                                              },
                                              "core.PrepareImmediateData"));
