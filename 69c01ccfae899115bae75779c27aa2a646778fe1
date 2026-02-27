@@ -1,0 +1,379 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6547aa31_09513b9d",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Can we have a TODO to make these into immediates instead so we don\u0027t have to allocate a buffer for every dispach indirect?",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e6e54f6_a71b557f",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "This shader is a bit weird in how it runs validation iteratively on the dimensions. Would something like this work?\n\n```\nvar workgroups \u003d vec3u(\n    clientParams.data[uniformParams.clientOffsetInU32 + 0],\n    clientParams.data[uniformParams.clientOffsetInU32 + 1],\n    clientParams.data[uniformParams.clientOffsetInU32 + 2],\n);\n\nbool valid \u003d true;\n\n// Check that no dimension exceeds maxComputeWorkgroupsPerDimension\nif (max(max(workgroups.x, workgroups.y), workgroups.z) \u003e uniformParams.maxComputeWorkgroupsPerDimension) {\n    valid \u003d false;\n}\n\n// Check that the total number of workgroups doesn\u0027t exceed the maximum.\nif (maxWorkgroupsAllowed \u003e 0) {\n    var totalWorkgroupXY \u003d workgroups.x * workgroups.y;\n    var totalWorkgroupXYZ \u003d totalWorkgroupXY * workgroups.z;\n    \n    // Check for overflow, or one dimesion being 0.\n    if (min(totalWorkgroupXY, totalWorkgroupXYZ) \u003c workgroups.x) {\n        valid \u003d false;\n    }\n}\n\nif (validationEnabled \u0026\u0026 !valid) {\n    workgroups \u003d vec3(0);\n}\n\n// write out and duplicate if needed.\n```\n\nIt\u0027s more code but much less \"smart\".",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3082f90f_d7a35810",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "777bb4d2_c3f6351e",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "If the validation passes at [1], then we are guaranteed to have a pipeline so we can remove that condition.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "465dfc8a_e998baed",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "This technically cannot overflow a uint64_t in the base WebGPU limits but it is not necessarily the case with increased limits. We could do something like:\n\n```\nuint64_t wgInvocations \u003d  wgSize[0] * wgSize[1] * wgSize[2]; // Assert limits don\u0027t allow overflowing a uint64_t maybe?\nuint64_t factorWGAndX \u003d uint64_t(workgroupCountX) * wgInvocations\nuint64_t factorYAndZ \u003d uint64_t(workgroupCountY) * uint64_t(workgroupCountZ);\n\nuint64_t totalInvocations \u003d factorWGAndX * factorYAndZ;\nDAWN_INVALID_IF(totalInvocations \u003c\u003d factorWGAndX, \"Total number of invocations overflowed 64 bits.\");\n\n```",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f288a9_c399c882",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Maybe the error should include the various factors that went into the computation of the total number of invocations?\n\nAlso\n\n```suggestion\n                        DAWN_INVALID_IF(totalInvocations \u003e std::numeric_limits\u003cuint32_t\u003e::max(),\n                                        \"Dispatch using linear_indexing built-in value would \"\n                                        \"exceed unsigned 32-bit range (%u invocations).\",\n                                        totalInvocations);\n                    }\n```",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 0
+      },
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f10a945_5641d1a2",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "```suggestion\n    uint32_t overflowValue \u003d std::numeric_limits\u003cuint32_t\u003e::max();\n```",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3e8fe95_3844d721",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Instead of setters called in various places, can we add `MaybeError InitializeImpl() final` here that\n\n1) get `mUsesLinearIndex` and `mUsesGlobalInvocationIndex` from the ShaderModule metadata directly in `ComputePipeline` instead of [2] so that logic is more local (also no need to skip if validation is not enabled, since getting the info is super cheap and in cold code)\n2) calls a new `virtual ResultOrError\u003cExtent3D\u003e InitializeComputeImpl()` that\u0027s implemented in all backends and returns the actual workgroup size?\n\nThis way we are guaranteed that if initialization passes, the workgroup size is set, so the member can be an `Extent3D` instead of `optional\u003cvector\u003e`.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d182c462_4ba92e30",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: can we have implementations in the .cpp file for these functions?",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79c3a81_ed75618f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f22b1978_3187faa1",
+        "filename": "src/dawn/native/metal/ComputePipelineMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: if this needs a cast, it can use `uint32_t(value)` or `static_cast\u003cuint32_t\u003e(value)` but `(uint32_t) value` is a deprecated C-style cast.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1c4d0e_da52e3c3",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Likewise these various cached reflection of shader compilation in the backends can return an `Extent3D`.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20d3ed8_9bb1eb3e",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: we are already in an anonymous namespace so adding this one doesn\u0027t change anything.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2df004c3_90c123d2",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Can we also have tests for the non-indirect dispatches?",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12b8b2cf_af31698c",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: this is the defaulted pipeline layout so it doesn\u0027t need to be created. At [3] the layout can be left to the default of nullptr, then at [4] `pipeline.GetBindGroupLayout(0)` would be used.",
+      "range": {
+        "startLine": 600,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 0
+      },
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3171eea2_ef9a2c68",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "Why //?",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb187b4b_a774fbc1",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34550cba_566cfa34",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to create a buffer from data as they are zero-initialized.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c34af5c_c0edea01",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "[4]",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c0e0de_bc794124",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "And this can be removed.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5036c300_579ae93c",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-02-27T10:06:57Z",
+      "side": 1,
+      "message": "nit: maybe |\u003d with `entry_point.global_invocation_index_used/workgroup_index_used` after setting them below? It makes the logic slightly more local.",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
