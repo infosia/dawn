@@ -339,8 +339,11 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
 
     // DecomposeAccess must come after DecomposeStorageAccess, ChangeImmediateToUniform, and
-    // ArrayOffsetFrom* transforms
-    core::ir::transform::DecomposeAccessOptions decompose_config{.uniform = true};
+    // ArrayOffsetFrom* transforms.
+    // Workgroup decomposition uses u16 base types for f16-containing variables, and FXC does
+    // not support uint16_t, so only enable workgroup decomposition when targeting DXC.
+    core::ir::transform::DecomposeAccessOptions decompose_config{
+        .uniform = true, .workgroup = (options.compiler != Options::Compiler::kFXC)};
     TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
 
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.
