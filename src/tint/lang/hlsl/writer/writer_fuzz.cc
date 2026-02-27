@@ -63,6 +63,7 @@ struct FuzzedOptions {
     std::optional<uint32_t> num_workgroups_start_offset;
     std::vector<BindingPoint> ignored_by_robustness_transform;
     SubstituteOverridesConfig substitute_overrides_config;
+    bool has_shader_f16;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -83,7 +84,8 @@ struct FuzzedOptions {
                  first_instance_offset,
                  num_workgroups_start_offset,
                  ignored_by_robustness_transform,
-                 substitute_overrides_config);
+                 substitute_overrides_config,
+                 has_shader_f16);
 };
 
 Result<SuccessType> IRFuzzer(core::ir::Module& module,
@@ -132,6 +134,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.num_workgroups_start_offset = fuzzed_options.num_workgroups_start_offset;
     options.ignored_by_robustness_transform = fuzzed_options.ignored_by_robustness_transform;
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
+    options.has_shader_f16 = fuzzed_options.has_shader_f16;
 
     options.bindings = GenerateBindings(module, ep_name, false, false);
     options.immediate_binding_point = BindingPoint(0, 30);

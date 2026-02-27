@@ -14,7 +14,7 @@ RWTexture2D<float4> outputTex : register(u2, space1);
 cbuffer cbuffer_flip : register(b3, space1) {
   uint4 flip[1];
 };
-groupshared float3 tile[4][256];
+groupshared uint tile[4096];
 uint tint_div_u32(uint lhs, uint rhs) {
   return (lhs / (((rhs == 0u)) ? (1u) : (rhs)));
 }
@@ -28,7 +28,9 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
       if ((v_1 >= 1024u)) {
         break;
       }
-      tile[(v_1 / 256u)][(v_1 % 256u)] = (0.0f).xxx;
+      tile[((((v_1 / 256u) * 4096u) + ((v_1 % 256u) * 16u)) / 4u)] = asuint((0.0f).xxx.x);
+      tile[(((((v_1 / 256u) * 4096u) + ((v_1 % 256u) * 16u)) / 4u) + 1u)] = asuint((0.0f).xxx.y);
+      tile[((((((v_1 / 256u) * 4096u) + ((v_1 % 256u) * 16u)) / 4u) + 1u) + 1u)] = asuint((0.0f).xxx.z);
       {
         v = (v_1 + 64u);
       }
@@ -59,10 +61,13 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
           if ((flip[0u].x != 0u)) {
             loadIndex = loadIndex.yx;
           }
-          uint v_4 = r;
-          uint v_5 = ((4u * LocalInvocationID.x) + c);
+          uint v_4 = (r * 4096u);
+          uint v_5 = (((4u * LocalInvocationID.x) + c) * 16u);
           float2 v_6 = (float2(loadIndex) + (0.25f).xx);
-          tile[v_4][v_5] = inputTex.SampleLevel(samp, (v_6 / float2(dims)), 0.0f).xyz;
+          float3 v_7 = inputTex.SampleLevel(samp, (v_6 / float2(dims)), 0.0f).xyz;
+          tile[((v_4 + v_5) / 4u)] = asuint(v_7.x);
+          tile[(((v_4 + v_5) / 4u) + 1u)] = asuint(v_7.y);
+          tile[((((v_4 + v_5) / 4u) + 1u) + 1u)] = asuint(v_7.z);
           {
             c = (c + 1u);
           }
@@ -93,19 +98,19 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
             writeIndex = writeIndex.yx;
           }
           uint center = ((4u * LocalInvocationID.x) + c);
-          bool v_7 = false;
-          if ((center >= filterOffset)) {
-            v_7 = (center < (256u - filterOffset));
-          } else {
-            v_7 = false;
-          }
           bool v_8 = false;
-          if (v_7) {
-            v_8 = all((writeIndex < dims));
+          if ((center >= filterOffset)) {
+            v_8 = (center < (256u - filterOffset));
           } else {
             v_8 = false;
           }
+          bool v_9 = false;
           if (v_8) {
+            v_9 = all((writeIndex < dims));
+          } else {
+            v_9 = false;
+          }
+          if (v_9) {
             float3 acc = (0.0f).xxx;
             {
               uint2 tint_loop_idx = (4294967295u).xx;
@@ -119,11 +124,10 @@ void main_inner(uint3 WorkGroupID, uint3 LocalInvocationID, uint tint_local_inde
                   break;
                 }
                 uint i = ((center + f) - filterOffset);
-                float3 v_9 = acc;
-                float v_10 = (1.0f / float(params[0u].x));
-                uint v_11 = r;
-                uint v_12 = min(i, 255u);
-                acc = (v_9 + (v_10 * tile[v_11][v_12]));
+                float3 v_10 = acc;
+                float v_11 = (1.0f / float(params[0u].x));
+                uint v_12 = (((r * 4096u) + (min(i, 255u) * 16u)) / 4u);
+                acc = (v_10 + (v_11 * asfloat(uint3(tile[v_12], tile[(v_12 + 1u)], tile[((v_12 + 1u) + 1u)]).xyz)));
                 {
                   uint tint_low_inc = (tint_loop_idx.x - 1u);
                   tint_loop_idx.x = tint_low_inc;

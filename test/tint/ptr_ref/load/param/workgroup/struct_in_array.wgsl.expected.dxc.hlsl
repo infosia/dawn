@@ -7,31 +7,40 @@ struct main_inputs {
 };
 
 
-groupshared str S[4];
+groupshared uint S[4];
+str v(uint start_byte_offset) {
+  str v_1 = {asint(S[(start_byte_offset / 4u)])};
+  return v_1;
+}
+
 str func(uint pointer_indices[1]) {
-  str v = S[pointer_indices[0u]];
-  return v;
+  str v_2 = v((pointer_indices[0u] * 4u));
+  return v_2;
+}
+
+void v_3(uint start_byte_offset, str object) {
+  S[(start_byte_offset / 4u)] = asuint(object.i);
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_1 = 0u;
-    v_1 = tint_local_index;
+    uint v_4 = 0u;
+    v_4 = tint_local_index;
     while(true) {
-      uint v_2 = v_1;
-      if ((v_2 >= 4u)) {
+      uint v_5 = v_4;
+      if ((v_5 >= 4u)) {
         break;
       }
-      str v_3 = (str)0;
-      S[v_2] = v_3;
+      str v_6 = (str)0;
+      v_3((v_5 * 4u), v_6);
       {
-        v_1 = (v_2 + 1u);
+        v_4 = (v_5 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  uint v_4[1] = {2u};
-  str r = func(v_4);
+  uint v_7[1] = {2u};
+  str r = func(v_7);
 }
 
 [numthreads(1, 1, 1)]

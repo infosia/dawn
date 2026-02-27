@@ -282,6 +282,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
                                         ? tint::hlsl::writer::Options::Compiler::kFXC
                                         : tint::hlsl::writer::Options::Compiler::kDXC;
+    req.hlsl.tintOptions.has_shader_f16 = device->HasFeature(Feature::ShaderF16);
 
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);

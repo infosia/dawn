@@ -6,17 +6,17 @@ struct main1_inputs {
 };
 
 
-groupshared int a;
+groupshared uint a[1];
 void uses_a() {
-  a = asint((asuint(a) + asuint(int(1))));
+  a[0u] = asuint(asint((asuint(asint(a[0u])) + asuint(int(1)))));
 }
 
 void main1_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    a = int(0);
+    a[0u] = asuint(int(0));
   }
   GroupMemoryBarrierWithGroupSync();
-  a = int(42);
+  a[0u] = asuint(int(42));
   uses_a();
 }
 
@@ -33,17 +33,17 @@ struct main2_inputs {
 };
 
 
-groupshared int b;
+groupshared uint b[1];
 void uses_b() {
-  b = asint((asuint(b) * asuint(int(2))));
+  b[0u] = asuint(asint((asuint(asint(b[0u])) * asuint(int(2)))));
 }
 
 void main2_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    b = int(0);
+    b[0u] = asuint(int(0));
   }
   GroupMemoryBarrierWithGroupSync();
-  b = int(7);
+  b[0u] = asuint(int(7));
   uses_b();
 }
 
@@ -60,25 +60,25 @@ struct main3_inputs {
 };
 
 
-groupshared int a;
-groupshared int b;
+groupshared uint a[1];
+groupshared uint b[1];
 void uses_a() {
-  a = asint((asuint(a) + asuint(int(1))));
+  a[0u] = asuint(asint((asuint(asint(a[0u])) + asuint(int(1)))));
 }
 
 void uses_b() {
-  b = asint((asuint(b) * asuint(int(2))));
+  b[0u] = asuint(asint((asuint(asint(b[0u])) * asuint(int(2)))));
 }
 
 void uses_a_and_b() {
-  b = a;
+  b[0u] = asuint(asint(a[0u]));
 }
 
 void no_uses() {
 }
 
 void outer() {
-  a = int(0);
+  a[0u] = asuint(int(0));
   uses_a();
   uses_a_and_b();
   uses_b();
@@ -87,8 +87,8 @@ void outer() {
 
 void main3_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    a = int(0);
-    b = int(0);
+    a[0u] = asuint(int(0));
+    b[0u] = asuint(int(0));
   }
   GroupMemoryBarrierWithGroupSync();
   outer();

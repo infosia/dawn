@@ -12,74 +12,110 @@ struct f_inputs {
 cbuffer cbuffer_u : register(b0) {
   uint4 u[32];
 };
-groupshared S w[4];
+groupshared uint w[128];
+uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
+  uint2 r = f32tof16(float2(src));
+  return ((r.x & 65535u) | ((r.y & 65535u) << 16u));
+}
+
+void v_1(uint start_byte_offset, matrix<float16_t, 4, 2> object) {
+  w[(start_byte_offset / 4u)] = tint_bitcast_from_f16(object[0u]);
+  w[((4u + start_byte_offset) / 4u)] = tint_bitcast_from_f16(object[1u]);
+  w[((8u + start_byte_offset) / 4u)] = tint_bitcast_from_f16(object[2u]);
+  w[((12u + start_byte_offset) / 4u)] = tint_bitcast_from_f16(object[3u]);
+}
+
+void v_2(uint start_byte_offset, S object) {
+  w[(start_byte_offset / 4u)] = asuint(object.before);
+  v_1((4u + start_byte_offset), object.m);
+  w[((64u + start_byte_offset) / 4u)] = asuint(object.after);
+}
+
 vector<float16_t, 2> tint_bitcast_to_f16(uint src) {
   uint v = src;
   float t_low = f16tof32((v & 65535u));
   float t_high = f16tof32(((v >> 16u) & 65535u));
-  float16_t v_1 = float16_t(t_low);
-  return vector<float16_t, 2>(v_1, float16_t(t_high));
+  float16_t v_3 = float16_t(t_low);
+  return vector<float16_t, 2>(v_3, float16_t(t_high));
 }
 
-matrix<float16_t, 4, 2> v_2(uint start_byte_offset) {
-  vector<float16_t, 2> v_3 = tint_bitcast_to_f16(u[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
-  vector<float16_t, 2> v_4 = tint_bitcast_to_f16(u[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]);
-  vector<float16_t, 2> v_5 = tint_bitcast_to_f16(u[((8u + start_byte_offset) / 16u)][(((8u + start_byte_offset) & 15u) >> 2u)]);
-  return matrix<float16_t, 4, 2>(v_3, v_4, v_5, tint_bitcast_to_f16(u[((12u + start_byte_offset) / 16u)][(((12u + start_byte_offset) & 15u) >> 2u)]));
+matrix<float16_t, 4, 2> v_4(uint start_byte_offset) {
+  vector<float16_t, 2> v_5 = tint_bitcast_to_f16(u[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
+  vector<float16_t, 2> v_6 = tint_bitcast_to_f16(u[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]);
+  vector<float16_t, 2> v_7 = tint_bitcast_to_f16(u[((8u + start_byte_offset) / 16u)][(((8u + start_byte_offset) & 15u) >> 2u)]);
+  return matrix<float16_t, 4, 2>(v_5, v_6, v_7, tint_bitcast_to_f16(u[((12u + start_byte_offset) / 16u)][(((12u + start_byte_offset) & 15u) >> 2u)]));
 }
 
-S v_6(uint start_byte_offset) {
-  int v_7 = asint(u[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
-  matrix<float16_t, 4, 2> v_8 = v_2((4u + start_byte_offset));
-  S v_9 = {v_7, v_8, asint(u[((64u + start_byte_offset) / 16u)][(((64u + start_byte_offset) & 15u) >> 2u)])};
-  return v_9;
+S v_8(uint start_byte_offset) {
+  int v_9 = asint(u[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
+  matrix<float16_t, 4, 2> v_10 = v_4((4u + start_byte_offset));
+  S v_11 = {v_9, v_10, asint(u[((64u + start_byte_offset) / 16u)][(((64u + start_byte_offset) & 15u) >> 2u)])};
+  return v_11;
 }
 
-typedef S ary_ret[4];
-ary_ret v_10(uint start_byte_offset) {
-  S a[4] = (S[4])0;
+void v_12(uint start_byte_offset, S object[4]) {
   {
-    uint v_11 = 0u;
-    v_11 = 0u;
+    uint v_13 = 0u;
+    v_13 = 0u;
     while(true) {
-      uint v_12 = v_11;
-      if ((v_12 >= 4u)) {
+      uint v_14 = v_13;
+      if ((v_14 >= 4u)) {
         break;
       }
-      S v_13 = v_6((start_byte_offset + (v_12 * 128u)));
-      a[v_12] = v_13;
+      S v_15 = object[v_14];
+      v_2((start_byte_offset + (v_14 * 128u)), v_15);
       {
-        v_11 = (v_12 + 1u);
+        v_13 = (v_14 + 1u);
       }
     }
   }
-  S v_14[4] = a;
-  return v_14;
+}
+
+typedef S ary_ret[4];
+ary_ret v_16(uint start_byte_offset) {
+  S a[4] = (S[4])0;
+  {
+    uint v_17 = 0u;
+    v_17 = 0u;
+    while(true) {
+      uint v_18 = v_17;
+      if ((v_18 >= 4u)) {
+        break;
+      }
+      S v_19 = v_8((start_byte_offset + (v_18 * 128u)));
+      a[v_18] = v_19;
+      {
+        v_17 = (v_18 + 1u);
+      }
+    }
+  }
+  S v_20[4] = a;
+  return v_20;
 }
 
 void f_inner(uint tint_local_index) {
   {
-    uint v_15 = 0u;
-    v_15 = tint_local_index;
+    uint v_21 = 0u;
+    v_21 = tint_local_index;
     while(true) {
-      uint v_16 = v_15;
-      if ((v_16 >= 4u)) {
+      uint v_22 = v_21;
+      if ((v_22 >= 4u)) {
         break;
       }
-      S v_17 = (S)0;
-      w[v_16] = v_17;
+      S v_23 = (S)0;
+      v_2((v_22 * 128u), v_23);
       {
-        v_15 = (v_16 + 1u);
+        v_21 = (v_22 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  S v_18[4] = v_10(0u);
-  w = v_18;
-  S v_19 = v_6(256u);
-  w[1u] = v_19;
-  w[3u].m = v_2(260u);
-  w[1u].m[0u] = tint_bitcast_to_f16(u[0u].z).yx;
+  S v_24[4] = v_16(0u);
+  v_12(0u, v_24);
+  S v_25 = v_8(256u);
+  v_2(128u, v_25);
+  v_1(388u, v_4(260u));
+  w[33u] = tint_bitcast_from_f16(tint_bitcast_to_f16(u[0u].z).yx);
 }
 
 [numthreads(1, 1, 1)]

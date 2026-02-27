@@ -7,15 +7,19 @@ struct main_inputs {
 };
 
 
-groupshared str S;
+groupshared uint S[1];
 int func() {
-  return S.i;
+  return asint(S[0u]);
+}
+
+void v(uint start_byte_offset, str object) {
+  S[(start_byte_offset / 4u)] = asuint(object.i);
 }
 
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    str v = (str)0;
-    S = v;
+    str v_1 = (str)0;
+    v(0u, v_1);
   }
   GroupMemoryBarrierWithGroupSync();
   int r = func();
