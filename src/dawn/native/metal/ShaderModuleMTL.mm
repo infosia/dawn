@@ -312,7 +312,13 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     };
     req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
     req.tintOptions.entry_point_name = programmableStage.entryPoint;
-    req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
+    if (device->IsToggleEnabled(Toggle::DisableSymbolRenaming)) {
+        // Retain the original entry point name on the generated `dawn_entry_point` wrapper.
+        req.tintOptions.remapped_entry_point_name = absl::StrFormat(
+            "%s_%s", programmableStage.entryPoint, device->GetIsolatedEntryPointName());
+    } else {
+        req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
+    }
     req.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
     req.tintOptions.disable_workgroup_init = device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
     req.tintOptions.disable_polyfill_integer_div_mod =
