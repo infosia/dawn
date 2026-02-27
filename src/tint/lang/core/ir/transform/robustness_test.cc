@@ -4443,6 +4443,70 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+// Test that the constant stride calculations are not susceptible to integer overflow.
+// See crbug.com/487624528
+TEST_F(IR_RobustnessTest, SubgroupMatrixLoad_WorkgroupFixedArray_ConstStrideAndOffset_U32Overflow) {
+    auto* arr = b.Var("arr", ty.ptr(workgroup, ty.array<f32, 12>()));
+    mod.root_block->Append(arr);
+
+    auto* mat = ty.subgroup_matrix_result(ty.f32(), 8u, 8u);
+
+    auto* func = b.Function("foo", mat);
+    b.Append(func->Block(), [&] {
+        // The large stride causes access size calculations to overflow a uint32_t.
+        auto* load = b.CallExplicit(mat, BuiltinFn::kSubgroupMatrixLoad, Vector{mat}, arr, 0_u,
+                                    false, 613566757_u);
+        b.Return(func, load);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %arr:ptr<workgroup, array<f32, 12>, read_write> = var undef
+}
+
+%foo = func():subgroup_matrix_result<f32, 8, 8> {
+  $B2: {
+    %3:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 8>> %arr, 0u, false, 613566757u
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect_with_predication = R"(
+$B1: {  # root
+  %arr:ptr<workgroup, array<f32, 12>, read_write> = var undef
+}
+
+%foo = func():subgroup_matrix_result<f32, 8, 8> {
+  $B2: {
+    %3:u32 = mul 613566757u, 7u
+    %4:u32 = add 0u, %3
+    %5:u32 = add %4, 8u
+    %6:bool = lte %5, 12u
+    %7:ptr<function, subgroup_matrix_result<f32, 8, 8>, read_write> = var undef
+    if %6 [t: $B3] {  # if_1
+      $B3: {  # true
+        %8:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixLoad<subgroup_matrix_result<f32, 8, 8>> %arr, 0u, false, 613566757u
+        store %7, %8
+        exit_if  # if_1
+      }
+    }
+    %9:subgroup_matrix_result<f32, 8, 8> = load %7
+    ret %9
+  }
+}
+)";
+
+    auto* expect_without_predication = src;
+
+    RobustnessConfig cfg;
+    cfg.predicate_subgroup_matrix = GetParam();
+    Run(Robustness, cfg);
+
+    EXPECT_EQ(GetParam() ? expect_with_predication : expect_without_predication, str());
+}
+
 TEST_P(IR_RobustnessTest, SubgroupMatrixLoad_i8_WorkgroupFixedArray_ConstStrideAndOffset) {
     capabilities = core::ir::Capability::kAllow8BitIntegers;
 

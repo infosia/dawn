@@ -513,10 +513,12 @@ struct State {
         // If the array length, offset, and stride are all constants, then we can determine if the
         // call is in bounds now and skip any predication if so.
         if (array_length->Is<Constant>() && stride->Is<Constant>() && offset->Is<Constant>()) {
-            uint32_t const_length = array_length->As<Constant>()->Value()->ValueAs<uint32_t>();
-            uint32_t const_stride = stride->As<Constant>()->Value()->ValueAs<uint32_t>();
-            uint32_t const_offset = offset->As<Constant>()->Value()->ValueAs<uint32_t>();
-            uint32_t const_end = const_offset + (const_stride * (major_dim - 1)) + min_stride;
+            // Note: use 64-bit integers to avoid overflow in the calculations below.
+            // See https://crbug.com/487624528
+            uint64_t const_length = array_length->As<Constant>()->Value()->ValueAs<uint32_t>();
+            uint64_t const_stride = stride->As<Constant>()->Value()->ValueAs<uint32_t>();
+            uint64_t const_offset = offset->As<Constant>()->Value()->ValueAs<uint32_t>();
+            uint64_t const_end = const_offset + (const_stride * (major_dim - 1)) + min_stride;
             if (const_end <= const_length) {
                 return;
             }
