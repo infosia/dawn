@@ -69,6 +69,8 @@ class ResourceTable final : public ResourceTableBase {
 
     VkDescriptorPool mPool = VK_NULL_HANDLE;
     VkDescriptorSet mSet = VK_NULL_HANDLE;
+    Ref<TextureViewBase> mUnusedTextureView;
+    Ref<SamplerBase> mUnusedSampler;
 };
 
 }  // namespace dawn::native::vulkan
