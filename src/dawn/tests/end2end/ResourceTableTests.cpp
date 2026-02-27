@@ -988,7 +988,10 @@ TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
     // Test hasResource returning for each of the supported WGSL types, against each texture.
     for (auto wgslType : kWgslSampledTextureTypes) {
         std::vector<bool> expected;
-        for (auto textureCase : textureCases) {
+        for (auto& textureCase : textureCases) {
+            // The reasons wgslTypes is a vector is because some textures can be
+            // both filterable and non-filterable, so hasResource will return true for both types on
+            // the one table entry with such a texture.
             expected.push_back(textureCase.wgslTypes.contains(wgslType));
         }
 

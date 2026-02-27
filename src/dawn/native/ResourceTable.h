@@ -187,11 +187,13 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
 // Used to cache the default resources on the device so they can be reused between resource tables.
 class ResourceTableDefaultResources : public NonMovable {
   public:
-    ResultOrError<ityp::span<ResourceTableSlot, Ref<TextureViewBase>>>
-    GetOrCreateSampledTextureDefaults(DeviceBase* device);
+    using ResourceType = std::variant<Ref<TextureViewBase>, Ref<SamplerBase>>;
+
+    ResultOrError<ityp::span<ResourceTableSlot, ResourceType>> GetOrCreateDefaults(
+        DeviceBase* device);
 
   private:
-    ityp::vector<ResourceTableSlot, Ref<TextureViewBase>> mSampledTextureDefaults;
+    ityp::vector<ResourceTableSlot, ResourceType> mDefaultResources;
 };
 
 }  // namespace dawn::native
