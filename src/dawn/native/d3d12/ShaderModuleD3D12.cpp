@@ -134,7 +134,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.entry_point_name = programmableStage.entryPoint;
     req.hlsl.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
 
-    req.bytecode.hasShaderF16Feature = device->HasFeature(Feature::ShaderF16);
+    const bool hasShaderF16Feature = device->HasFeature(Feature::ShaderF16);
+    req.bytecode.hasShaderF16Feature = hasShaderF16Feature;
     req.bytecode.compileFlags = compileFlags;
 
     if (device->IsToggleEnabled(Toggle::UseDXC)) {
@@ -282,6 +283,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
                                         ? tint::hlsl::writer::Options::Compiler::kFXC
                                         : tint::hlsl::writer::Options::Compiler::kDXC;
+    req.hlsl.tintOptions.has_shader_f16 = hasShaderF16Feature;
+    device->EmitLog(wgpu::LoggingType::Info, hasShaderF16Feature
+                                                 ? "[D3D12] Feature::ShaderF16 = true"
+                                                 : "[D3D12] Feature::ShaderF16 = false");
 
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);
