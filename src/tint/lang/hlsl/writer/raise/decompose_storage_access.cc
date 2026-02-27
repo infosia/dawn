@@ -412,19 +412,24 @@ struct State {
                                  core::ir::Value* from,
                                  core::ir::Value* offset) {
         bool is_f16 = from->Type()->DeepestElement()->Is<core::type::F16>();
+        bool is_u16 = from->Type()->DeepestElement()->Is<core::type::U16>();
 
         const core::type::Type* cast_ty = ty.MatchWidth(ty.u32(), from->Type());
-        auto fn = is_f16 ? BuiltinFn::kStoreF16 : BuiltinFn::kStore;
+        auto fn =
+            is_f16 ? BuiltinFn::kStoreF16 : (is_u16 ? BuiltinFn::kStoreU16 : BuiltinFn::kStore);
         if (auto* vec = from->Type()->As<core::type::Vector>()) {
             switch (vec->Width()) {
                 case 2:
-                    fn = is_f16 ? BuiltinFn::kStore2F16 : BuiltinFn::kStore2;
+                    fn = is_f16 ? BuiltinFn::kStore2F16
+                                : (is_u16 ? BuiltinFn::kStore2U16 : BuiltinFn::kStore2);
                     break;
                 case 3:
-                    fn = is_f16 ? BuiltinFn::kStore3F16 : BuiltinFn::kStore3;
+                    fn = is_f16 ? BuiltinFn::kStore3F16
+                                : (is_u16 ? BuiltinFn::kStore3U16 : BuiltinFn::kStore3);
                     break;
                 case 4:
-                    fn = is_f16 ? BuiltinFn::kStore4F16 : BuiltinFn::kStore4;
+                    fn = is_f16 ? BuiltinFn::kStore4F16
+                                : (is_u16 ? BuiltinFn::kStore4U16 : BuiltinFn::kStore4);
                     break;
                 default:
                     TINT_IR_UNREACHABLE(ir);
@@ -432,8 +437,8 @@ struct State {
         }
 
         core::ir::Value* cast = nullptr;
-        // The `f16` type is not cast in a store as the store itself ends up templated.
-        if (is_f16) {
+        // The `f16` and `u16` types are not cast in a store as the store itself ends up templated.
+        if (is_f16 || is_u16) {
             cast = from;
         } else {
             cast = b.Bitcast(cast_ty, from)->Result();
@@ -478,26 +483,32 @@ struct State {
                                            const core::type::Type* result_ty,
                                            core::ir::Value* offset) {
         bool is_f16 = result_ty->DeepestElement()->Is<core::type::F16>();
+        bool is_u16 = result_ty->DeepestElement()->Is<core::type::U16>();
 
         const core::type::Type* load_ty = nullptr;
-        // An `f16` load returns an `f16` instead of a `u32`
+        // `f16` and `u16` loads return their native type instead of a `u32`
         if (is_f16) {
             load_ty = ty.MatchWidth(ty.f16(), result_ty);
+        } else if (is_u16) {
+            load_ty = ty.MatchWidth(ty.u16(), result_ty);
         } else {
             load_ty = ty.MatchWidth(ty.u32(), result_ty);
         }
 
-        auto fn = is_f16 ? BuiltinFn::kLoadF16 : BuiltinFn::kLoad;
+        auto fn = is_f16 ? BuiltinFn::kLoadF16 : (is_u16 ? BuiltinFn::kLoadU16 : BuiltinFn::kLoad);
         if (auto* v = result_ty->As<core::type::Vector>()) {
             switch (v->Width()) {
                 case 2:
-                    fn = is_f16 ? BuiltinFn::kLoad2F16 : BuiltinFn::kLoad2;
+                    fn = is_f16 ? BuiltinFn::kLoad2F16
+                                : (is_u16 ? BuiltinFn::kLoad2U16 : BuiltinFn::kLoad2);
                     break;
                 case 3:
-                    fn = is_f16 ? BuiltinFn::kLoad3F16 : BuiltinFn::kLoad3;
+                    fn = is_f16 ? BuiltinFn::kLoad3F16
+                                : (is_u16 ? BuiltinFn::kLoad3U16 : BuiltinFn::kLoad3);
                     break;
                 case 4:
-                    fn = is_f16 ? BuiltinFn::kLoad4F16 : BuiltinFn::kLoad4;
+                    fn = is_f16 ? BuiltinFn::kLoad4F16
+                                : (is_u16 ? BuiltinFn::kLoad4U16 : BuiltinFn::kLoad4);
                     break;
                 default:
                     TINT_IR_UNREACHABLE(ir);
@@ -507,8 +518,8 @@ struct State {
         auto* builtin = b.MemberCall<hlsl::ir::MemberBuiltinCall>(load_ty, fn, var, offset);
         core::ir::Call* res = nullptr;
 
-        // Do not bitcast the `f16` conversions as they need to be a templated Load instruction
-        if (is_f16) {
+        // Do not bitcast `f16` or `u16` conversions as they use templated Load instructions
+        if (is_f16 || is_u16) {
             res = builtin;
         } else {
             res = b.Bitcast(result_ty, builtin->Result());
@@ -902,6 +913,7 @@ Result<SuccessType> DecomposeStorageAccess(core::ir::Module& ir) {
     TINT_CHECK_RESULT(core::ir::ValidateBeforeIfNeeded(
         ir,
         core::ir::Capabilities{
+            core::ir::Capability::kAllow16BitIntegers,
             core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
             core::ir::Capability::kAllowDuplicateBindings,
         },
