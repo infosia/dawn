@@ -3,8 +3,8 @@ struct f_inputs {
 };
 
 
-groupshared float a[10];
-groupshared float b[20];
+groupshared uint a[10];
+groupshared uint b[20];
 void f_inner(uint tint_local_index) {
   {
     uint v = 0u;
@@ -14,7 +14,7 @@ void f_inner(uint tint_local_index) {
       if ((v_1 >= 10u)) {
         break;
       }
-      a[v_1] = 0.0f;
+      a[((v_1 * 4u) / 4u)] = asuint(0.0f);
       {
         v = (v_1 + 1u);
       }
@@ -28,15 +28,15 @@ void f_inner(uint tint_local_index) {
       if ((v_3 >= 20u)) {
         break;
       }
-      b[v_3] = 0.0f;
+      b[((v_3 * 4u) / 4u)] = asuint(0.0f);
       {
         v_2 = (v_3 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  float x = a[0u];
-  float y = b[0u];
+  float x = asfloat(a[0u]);
+  float y = asfloat(b[0u]);
 }
 
 [numthreads(1, 1, 1)]

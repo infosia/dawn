@@ -11,8 +11,8 @@ RWByteAddressBuffer resultMatrix : register(u2);
 cbuffer cbuffer_uniforms : register(b3) {
   uint4 uniforms[1];
 };
-groupshared float mm_Asub[64][64];
-groupshared float mm_Bsub[64][64];
+groupshared uint mm_Asub[4096];
+groupshared uint mm_Bsub[4096];
 float mm_readA(uint row, uint col) {
   bool v = false;
   if ((row < uniforms[0u].x)) {
@@ -73,8 +73,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       if ((v_7 >= 4096u)) {
         break;
       }
-      mm_Asub[(v_7 / 64u)][(v_7 % 64u)] = 0.0f;
-      mm_Bsub[(v_7 / 64u)][(v_7 % 64u)] = 0.0f;
+      mm_Asub[((((v_7 / 64u) * 256u) + ((v_7 % 64u) * 4u)) / 4u)] = asuint(0.0f);
+      mm_Bsub[((((v_7 / 64u) * 256u) + ((v_7 % 64u) * 4u)) / 4u)] = asuint(0.0f);
       {
         v_6 = (v_7 + 256u);
       }
@@ -130,7 +130,7 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               }
               uint inputRow = (tileRow + innerRow);
               uint inputCol = (tileColA + innerCol);
-              mm_Asub[inputRow][min(inputCol, 63u)] = mm_readA((globalRow + innerRow), ((t * 64u) + inputCol));
+              mm_Asub[(((inputRow * 256u) + (min(inputCol, 63u) * 4u)) / 4u)] = asuint(mm_readA((globalRow + innerRow), ((t * 64u) + inputCol)));
               {
                 innerCol = (innerCol + 1u);
               }
@@ -157,8 +157,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               }
               uint inputRow = (tileRowB + innerRow);
               uint inputCol = (tileCol + innerCol);
-              uint v_9 = innerCol;
-              mm_Bsub[v_9][inputCol] = mm_readB(((t * 64u) + inputRow), (globalCol + innerCol));
+              uint v_9 = (innerCol * 256u);
+              mm_Bsub[((v_9 + (inputCol * 4u)) / 4u)] = asuint(mm_readB(((t * 64u) + inputRow), (globalCol + innerCol)));
               {
                 innerCol = (innerCol + 1u);
               }
@@ -185,9 +185,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
                 break;
               }
               uint v_10 = inner;
-              uint v_11 = k;
-              uint v_12 = (tileCol + inner);
-              BCached[v_10] = mm_Bsub[v_11][v_12];
+              uint v_11 = (((k * 256u) + ((tileCol + inner) * 4u)) / 4u);
+              BCached[v_10] = asfloat(mm_Bsub[v_11]);
               {
                 inner = (inner + 1u);
               }
@@ -200,9 +199,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               } else {
                 break;
               }
-              uint v_13 = (tileRow + innerRow);
-              uint v_14 = k;
-              ACached = mm_Asub[v_13][v_14];
+              uint v_12 = ((((tileRow + innerRow) * 256u) + (k * 4u)) / 4u);
+              ACached = asfloat(mm_Asub[v_12]);
               {
                 uint innerCol = 0u;
                 while(true) {
@@ -211,10 +209,10 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
                     break;
                   }
                   uint index = ((innerRow * 4u) + innerCol);
-                  float v_15 = acc[index];
-                  float v_16 = ACached;
-                  uint v_17 = innerCol;
-                  acc[index] = (v_15 + (v_16 * BCached[v_17]));
+                  float v_13 = acc[index];
+                  float v_14 = ACached;
+                  uint v_15 = innerCol;
+                  acc[index] = (v_13 + (v_14 * BCached[v_15]));
                   {
                     innerCol = (innerCol + 1u);
                   }

@@ -164,6 +164,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     // D3D11 only supports FXC
     req.hlsl.tintOptions.compiler = tint::hlsl::writer::Options::Compiler::kFXC;
+    req.hlsl.tintOptions.has_shader_f16 = device->HasFeature(Feature::ShaderF16);
 
     req.hlsl.tintOptions.workarounds.scalarize_max_min_clamp =
         device->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);

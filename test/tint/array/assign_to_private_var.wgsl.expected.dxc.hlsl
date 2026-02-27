@@ -8,7 +8,7 @@ struct main_inputs {
 
 
 static int4 src_private[4] = (int4[4])0;
-groupshared int4 src_workgroup[4];
+groupshared uint4 src_workgroup[4];
 cbuffer cbuffer_src_uniform : register(b0) {
   uint4 src_uniform[4];
 };
@@ -68,45 +68,66 @@ ary_ret_2 v_7(uint start_byte_offset) {
   return v_10;
 }
 
+typedef int4 ary_ret_3[4];
+ary_ret_3 v_11(uint start_byte_offset) {
+  int4 a[4] = (int4[4])0;
+  {
+    uint v_12 = 0u;
+    v_12 = 0u;
+    while(true) {
+      uint v_13 = v_12;
+      if ((v_13 >= 4u)) {
+        break;
+      }
+      a[v_13] = asint(src_workgroup[((start_byte_offset + (v_13 * 16u)) / 16u)]);
+      {
+        v_12 = (v_13 + 1u);
+      }
+    }
+  }
+  int4 v_14[4] = a;
+  return v_14;
+}
+
 void foo(int4 src_param[4]) {
   int4 src_function[4] = (int4[4])0;
-  int4 v_11[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
-  v = v_11;
+  int4 v_15[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
+  v = v_15;
   v = src_param;
-  int4 v_12[4] = ret_arr();
-  v = v_12;
+  int4 v_16[4] = ret_arr();
+  v = v_16;
   int4 src_let[4] = (int4[4])0;
   v = src_let;
-  int4 v_13[4] = src_function;
-  v = v_13;
-  int4 v_14[4] = src_private;
-  v = v_14;
-  int4 v_15[4] = src_workgroup;
-  v = v_15;
-  S v_16 = ret_struct_arr();
-  int4 v_17[4] = v_16.arr;
+  int4 v_17[4] = src_function;
   v = v_17;
-  int4 v_18[4] = v_7(0u);
+  int4 v_18[4] = src_private;
   v = v_18;
-  int4 v_19[4] = v_3(0u);
+  int4 v_19[4] = v_11(0u);
   v = v_19;
+  S v_20 = ret_struct_arr();
+  int4 v_21[4] = v_20.arr;
+  v = v_21;
+  int4 v_22[4] = v_7(0u);
+  v = v_22;
+  int4 v_23[4] = v_3(0u);
+  v = v_23;
   int src_nested[4][3][2] = (int[4][3][2])0;
-  int v_20[4][3][2] = src_nested;
-  dst_nested = v_20;
+  int v_24[4][3][2] = src_nested;
+  dst_nested = v_24;
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_21 = 0u;
-    v_21 = tint_local_index;
+    uint v_25 = 0u;
+    v_25 = tint_local_index;
     while(true) {
-      uint v_22 = v_21;
-      if ((v_22 >= 4u)) {
+      uint v_26 = v_25;
+      if ((v_26 >= 4u)) {
         break;
       }
-      src_workgroup[v_22] = (int(0)).xxxx;
+      src_workgroup[((v_26 * 16u) / 16u)] = asuint(int4((int(0)).xxxx));
       {
-        v_21 = (v_22 + 1u);
+        v_25 = (v_26 + 1u);
       }
     }
   }

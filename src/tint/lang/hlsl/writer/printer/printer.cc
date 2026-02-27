@@ -98,6 +98,7 @@
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/type.h"
+#include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/core/type/void.h"
@@ -1274,6 +1275,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::F32*) { PrintF32(out, c->ValueAs<f32>()); },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
             [&](const core::type::U32*) { out << c->ValueAs<AInt>() << "u"; },
+            [&](const core::type::U16*) { out << "uint16_t(" << c->ValueAs<AInt>() << "u)"; },
             [&](const core::type::Array* a) { EmitConstantArray(out, c, a); },
             [&](const core::type::Vector* v) { EmitConstantVector(out, c, v); },
             [&](const core::type::Matrix* m) { EmitConstantMatrix(out, c, m); },
@@ -1410,6 +1412,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::F32*) { out << "float"; },      //
             [&](const core::type::I32*) { out << "int"; },        //
             [&](const core::type::U32*) { out << "uint"; },       //
+            [&](const core::type::U16*) { out << "uint16_t"; },   //
             [&](const core::type::Void*) { out << "void"; },      //
 
             [&](const core::type::Atomic* atomic) { EmitType(out, atomic->Type(), name); },

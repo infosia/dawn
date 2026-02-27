@@ -3,17 +3,17 @@ struct main_inputs {
 };
 
 
-groupshared float4 v;
+groupshared uint4 v[1];
 float4 foo() {
   GroupMemoryBarrierWithGroupSync();
-  float4 v_1 = v;
+  float4 v_1 = asfloat(v[0u]);
   GroupMemoryBarrierWithGroupSync();
   return v_1;
 }
 
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    v = (0.0f).xxxx;
+    v[0u] = asuint((0.0f).xxxx);
   }
   GroupMemoryBarrierWithGroupSync();
   foo();

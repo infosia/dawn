@@ -4,10 +4,10 @@ struct compute_main_inputs {
 
 
 RWByteAddressBuffer prevent_dce : register(u0);
-groupshared float16_t arg_0;
+groupshared uint16_t arg_0[1];
 float16_t workgroupUniformLoad_e07d08() {
   GroupMemoryBarrierWithGroupSync();
-  float16_t v = arg_0;
+  float16_t v = asfloat16(arg_0[0u]);
   GroupMemoryBarrierWithGroupSync();
   float16_t res = v;
   return res;
@@ -15,7 +15,7 @@ float16_t workgroupUniformLoad_e07d08() {
 
 void compute_main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    arg_0 = float16_t(0.0h);
+    arg_0[0u] = asuint16(float16_t(0.0h));
   }
   GroupMemoryBarrierWithGroupSync();
   prevent_dce.Store<float16_t>(0u, workgroupUniformLoad_e07d08());

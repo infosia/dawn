@@ -5,15 +5,15 @@ struct main_inputs {
 };
 
 
-groupshared uint sh_atomic_failed;
+groupshared uint sh_atomic_failed[1];
 RWByteAddressBuffer output : register(u4);
 void main_inner(uint3 global_id, uint3 local_id, uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    sh_atomic_failed = 0u;
+    sh_atomic_failed[0u] = 0u;
   }
   GroupMemoryBarrierWithGroupSync();
   GroupMemoryBarrierWithGroupSync();
-  uint v = sh_atomic_failed;
+  uint v = sh_atomic_failed[0u];
   GroupMemoryBarrierWithGroupSync();
   uint failed = v;
   if ((local_id.x == 0u)) {

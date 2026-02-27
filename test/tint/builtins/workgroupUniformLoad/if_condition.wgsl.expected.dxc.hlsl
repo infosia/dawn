@@ -3,10 +3,10 @@ struct main_inputs {
 };
 
 
-groupshared bool v;
+groupshared uint v[1];
 int foo() {
   GroupMemoryBarrierWithGroupSync();
-  bool v_1 = v;
+  bool v_1 = bool(v[0u]);
   GroupMemoryBarrierWithGroupSync();
   if (v_1) {
     return int(42);
@@ -16,7 +16,7 @@ int foo() {
 
 void main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
-    v = false;
+    v[0u] = uint(false);
   }
   GroupMemoryBarrierWithGroupSync();
   foo();
