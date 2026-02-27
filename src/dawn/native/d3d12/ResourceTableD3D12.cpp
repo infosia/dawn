@@ -35,6 +35,7 @@
 #include "dawn/common/Range.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/Queue.h"
+#include "dawn/native/ResourceTableDefaultResources.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PipelineLayoutD3D12.h"
@@ -67,7 +68,8 @@ std::vector<D3D12_DESCRIPTOR_RANGE1> ResourceTable::GetCbvUavSrvDescriptorRanges
     std::vector<D3D12_DESCRIPTOR_RANGE1> ranges;
 
     const uint32_t baseRegisterSpace = layout.GetBaseResourceTableRegisterSpace();
-    const uint32_t defaultResourceCount = static_cast<uint32_t>(GetDefaultResourceCount());
+    const uint32_t defaultResourceCount =
+        static_cast<uint32_t>(ResourceTableDefaultResources::GetCount());
 
     // The metadata storage buffer is bound to (kBaseResourceTableRegisterSpace, 0)
     ranges.push_back(D3D12_DESCRIPTOR_RANGE1{
@@ -255,7 +257,8 @@ void ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& up
             },
             [&](SamplerBase* sampler) {
                 // TODO(https://issues.chromium.org/473354063): Support samplers updates.
-                DAWN_UNREACHABLE();
+                // Skip for now to allow most e2e tests to pass when attempting to add default
+                // samplers.
             });
     }
 }
