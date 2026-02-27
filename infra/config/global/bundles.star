@@ -94,3 +94,19 @@ targets.bundle(
         "tint_benchmark",
     ],
 )
+
+targets.bundle(
+    name = "win_software_renderer_gtests",
+    targets = [
+        "swiftshader_gtests",
+        "dawn_end2end_warp_tests",
+    ],
+)
+
+targets.bundle(
+    name = "win_software_renderer_isolated_scripts",
+    targets = [
+        "dawn_node_software_d3d12_cts",
+        "tint_benchmark",
+    ],
+)

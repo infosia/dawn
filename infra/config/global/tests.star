@@ -193,6 +193,24 @@ targets.tests.gtest_test(
 )
 
 targets.tests.gtest_test(
+    name = "dawn_end2end_warp_tests",
+    mixins = [
+        "result_adapter_gtest_json",
+        "true_noop_merge",
+        targets.mixin(
+            swarming = targets.swarming(
+                # Very slow on debug builds.
+                shards = 6,
+            ),
+        ),
+    ],
+    args = [
+        "--adapter-vendor-id=0x1414",
+    ],
+    binary = "dawn_end2end_tests",
+)
+
+targets.tests.gtest_test(
     name = "dawn_end2end_wire_tests",
     mixins = [
         "dawn_end2end_real_hardware_gtests_common_args",
@@ -207,6 +225,22 @@ targets.tests.gtest_test(
         ),
     ],
     binary = "dawn_end2end_tests",
+)
+
+targets.tests.isolated_script_test(
+    name = "dawn_node_software_d3d12_cts",
+    mixins = [
+        "result_adapter_single",
+        "true_noop_merge",
+    ],
+    args = [
+        "-backend",
+        "d3d12",
+        "-adapter",
+        "Microsoft Basic Render Driver",
+        "webgpu:api,operation,adapter,requestDevice:default:*",
+    ],
+    binary = "dawn_node_cts",
 )
 
 targets.tests.isolated_script_test(
