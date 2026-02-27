@@ -735,7 +735,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
 Result<SuccessType> ShaderIO(core::ir::Module& ir, const ShaderIOConfig& config) {
     TINT_CHECK_RESULT(core::ir::ValidateBeforeIfNeeded(
-        ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
+        ir,
+        core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings,
+                               core::ir::Capability::kAllow16BitIntegers},
         "hlsl.ShaderIO"));
 
     core::ir::transform::RunShaderIOBase(ir, [&](core::ir::Module& mod, core::ir::Function* func) {
