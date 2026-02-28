@@ -34,6 +34,7 @@
 
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/api/common/bindings.h"
+#include "src/tint/api/common/resource_type.h"
 #include "src/tint/api/common/substitute_overrides_config.h"
 #include "src/tint/api/common/vertex_pulling_config.h"
 #include "src/tint/utils/reflection.h"
@@ -69,10 +70,20 @@ struct ArgumentBufferInfo {
     /// The buffer ID to use for the dynamic buffer if needed
     std::optional<uint32_t> dynamic_buffer_id{};
 
-    /// Dynamic offsets map. The map is BindingIndex -> dynamic offsets array index
-    std::unordered_map<uint32_t, uint32_t> binding_info_to_offset_index{};
+    struct Entry {
+        tint::BindingType type;
+        // [[id()]] annotation
+        uint32_t id;
+        // Index into the dynamic offsets array
+        std::optional<uint32_t> offset_index = std::nullopt;
 
-    TINT_REFLECT(ArgumentBufferInfo, id, dynamic_buffer_id, binding_info_to_offset_index);
+        TINT_REFLECT(Entry, type, id, offset_index);
+        TINT_REFLECT_HASH_CODE(Entry);
+    };
+    /// Struct members in order. These come from the BindGroupLayout - they must match it exactly.
+    std::vector<Entry> struct_members{};
+
+    TINT_REFLECT(ArgumentBufferInfo, id, dynamic_buffer_id, struct_members);
     TINT_REFLECT_HASH_CODE(ArgumentBufferInfo);
 
     bool operator==(const ArgumentBufferInfo&) const = default;
