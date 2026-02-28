@@ -203,6 +203,7 @@ struct State {
 
         // Collect a list of struct members for the variable declarations.
         Hashmap<uint32_t, Vector<core::type::Manager::StructMemberDesc, 8>, 4> group_to_members;
+        Hashmap<uint32_t, uint32_t, 8> group_to_first_unfilled_id;
         for (auto& var : vars) {
             auto bp = var->BindingPoint();
             auto* type = var->Result()->Type();
@@ -220,13 +221,34 @@ struct State {
             module_vars.Push(var);
 
             auto& struct_members = group_to_members.GetOrAddZero(bp->group);
-            var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
 
+            // Metal for some reason needs the argbuf struct to be densely packed, so insert dummy
+            // padding members to make the slot number line up with the struct member number.
+            // DO NOT SUBMIT: This is probably wrong, different resource types might have different
+            // sizes in the struct. Need to either figure out why it's ignoring the id, or need to
+            // generate the same struct for every stage. Presumably the IDs don't actually have to
+            // be dense, just the structs must exactly match the argument encoder layout, but our
+            // IDs are dense anyway. But WHY does [[id]] exist at all if it's not used for this??
+            auto& first_unfilled_id = group_to_first_unfilled_id.GetOrAddZero(bp->group);
+            for (; first_unfilled_id < bp->binding; ++first_unfilled_id) {
+                auto* dummy_ptr_ty = ty.Get<core::type::Pointer>(core::AddressSpace::kStorage,
+                                                                 ty.i32(), core::Access::kRead);
+                struct_members.Push(core::type::Manager::StructMemberDesc{
+                    ir.symbols.New("id_space_padding"), dummy_ptr_ty,
+                    core::IOAttributes{
+                        .binding_point = BindingPoint{bp->group, first_unfilled_id},
+                    }});
+            }
+
+            TINT_ASSERT(bp->binding == first_unfilled_id);
+            TINT_ASSERT(bp->binding == struct_members.Length());
+            var_to_struct_idx.Add(var, bp->binding);
             struct_members.Push(core::type::Manager::StructMemberDesc{
                 name, type,
                 core::IOAttributes{
                     .binding_point = BindingPoint{bp->group, bp->binding},
                 }});
+            ++first_unfilled_id;
         }
 
         // Sort the keys for deterministic struct generation

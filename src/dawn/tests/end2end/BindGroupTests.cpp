@@ -410,7 +410,6 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
     DAWN_ASSERT(offsetof(Data, color) == 256);
 
     std::vector<Data> data;
-    std::vector<wgpu::Buffer> buffers;
     std::vector<wgpu::BindGroup> bindGroups;
 
     data.push_back({{1.0f, 0.0f, 0.0f, 0.0f}, {0}, {0.0f, 1.0f, 0.0f, 1.0f}});
@@ -420,10 +419,12 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
     for (int i = 0; i < 2; i++) {
         wgpu::Buffer buffer =
             utils::CreateBufferFromData(device, &data[i], sizeof(Data), wgpu::BufferUsage::Uniform);
-        buffers.push_back(buffer);
+        buffer.SetLabel(absl::StrFormat("buffer_%d", i).c_str());
         bindGroups.push_back(utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
-                                                  {{0, buffers[i], 0, sizeof(Data::transform)},
-                                                   {1, buffers[i], 256, sizeof(Data::color)}}));
+                                                  {
+                                                      {0, buffer, 0, sizeof(Data::transform)},
+                                                      {1, buffer, 256, sizeof(Data::color)},
+                                                  }));
     }
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
