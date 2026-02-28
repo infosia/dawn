@@ -179,6 +179,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81d1d79e_23516914",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T02:16:46Z",
+      "side": 1,
+      "message": "I realized that the complexity we introduced here is due to we mixed two things in a single patch:\n1. The wrong validation rules, which inspector use immediate block size with trailing padding bytes to validate the immedaite size attribute.\n2. An optimization, which we shrink the immediateMask based on internal-user defined immediates to \"compress\" the uploading size we do in API side.\n\nSo I think I\u0027ll keep this CL to resolve the validation error. And use another CL for the \"compress\" things.",
+      "parentUuid": "11da2d54_466fd0a0",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "822c95ff_d265ce1a",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 8
