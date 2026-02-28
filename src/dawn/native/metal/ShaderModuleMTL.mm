@@ -182,32 +182,14 @@ std::unordered_map<uint32_t, tint::msl::writer::ArgumentBufferInfo> GenerateArgu
             dynamicOffsetsBufferIdx = curBufferIdx--;
         }
 
-        tint::msl::writer::ArgumentBufferInfo argBufferInfo = {
-            .id = argumentBufferIdx,
-            .dynamic_buffer_id = dynamicOffsetsBufferIdx,
-        };
-
-        uint32_t curDynamicOffset = 0;
-
-        for (BindingIndex bindingIndex : Range(bgl->GetBindingCount())) {
-            const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
-
-            MatchVariant(
-                bindingInfo.bindingLayout,  //
-                [&](const BufferBindingInfo& binding) {
-                    if (binding.hasDynamicOffset) {
-                        argBufferInfo.binding_info_to_offset_index.insert(
-                            {uint32_t(bindingIndex), curDynamicOffset++});
-                    }
-                },
-                [&](const SamplerBindingInfo& bindingInfo) {},
-                [&](const StaticSamplerBindingInfo& bindingInfo) {},
-                [&](const TextureBindingInfo& bindingInfo) {}, [](const TexelBufferBindingInfo&) {},
-                [&](const StorageTextureBindingInfo& bindingInfo) {},
-                [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
-                [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
-        }
-        info.insert({static_cast<uint32_t>(group), argBufferInfo});
+        info.insert({
+            static_cast<uint32_t>(group),
+            tint::msl::writer::ArgumentBufferInfo{
+                .id = argumentBufferIdx,
+                .dynamic_buffer_id = dynamicOffsetsBufferIdx,
+                .struct_members = bgl->MakeTintArgumentBufferMembers(),
+            },
+        });
     }
 
     return info;
