@@ -33,8 +33,11 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/binding_array.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
+#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/msl/builtin_fn.h"
 #include "src/tint/lang/msl/ir/builtin_call.h"
+#include "src/tint/lang/msl/writer/common/options.h"
 
 namespace tint::msl::writer::raise {
 namespace {
@@ -114,12 +117,13 @@ struct State {
 
             auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
 
+            const auto& struct_members = iter->second.struct_members;
             // Only uniform and storage buffers support dynamic offsets.
             if (!(ptr->AddressSpace() == core::AddressSpace::kStorage ||
                   ptr->AddressSpace() == core::AddressSpace::kUniform)) {
-                auto binding_iter =
-                    iter->second.binding_info_to_offset_index.find(var->BindingPoint()->binding);
-                if (binding_iter != iter->second.binding_info_to_offset_index.end()) {
+                auto binding = var->BindingPoint()->binding;
+                if (binding >= struct_members.size() ||
+                    struct_members[binding].offset_index.has_value()) {
                     return Failure("dynamic offset supplied for non-buffer type");
                 }
             }
@@ -173,9 +177,187 @@ struct State {
         return Success;
     }
 
+    core::type::TextureDimension ToInternal(TextureViewDimension dim) {
+        switch (dim) {
+            case TextureViewDimension::k1d:
+                return core::type::TextureDimension::k1d;
+            case TextureViewDimension::k2d:
+                return core::type::TextureDimension::k2d;
+            case TextureViewDimension::k2dArray:
+                return core::type::TextureDimension::k2dArray;
+            case TextureViewDimension::kCube:
+                return core::type::TextureDimension::kCube;
+            case TextureViewDimension::kCubeArray:
+                return core::type::TextureDimension::kCubeArray;
+            case TextureViewDimension::k3d:
+                return core::type::TextureDimension::k3d;
+        }
+        TINT_ICE();
+    }
+
+    core::TexelFormat ToInternal(BindingTypeStorageTexture::Format format) {
+        switch (format) {
+            using enum tint::BindingTypeStorageTexture::Format;
+            case kBgra8Unorm:
+                return core::TexelFormat::kBgra8Unorm;
+            case kR16Float:
+                return core::TexelFormat::kR16Float;
+            case kR16Sint:
+                return core::TexelFormat::kR16Sint;
+            case kR16Snorm:
+                return core::TexelFormat::kR16Snorm;
+            case kR16Uint:
+                return core::TexelFormat::kR16Uint;
+            case kR16Unorm:
+                return core::TexelFormat::kR16Unorm;
+            case kR32Float:
+                return core::TexelFormat::kR32Float;
+            case kR32Sint:
+                return core::TexelFormat::kR32Sint;
+            case kR32Uint:
+                return core::TexelFormat::kR32Uint;
+            case kR8Sint:
+                return core::TexelFormat::kR8Sint;
+            case kR8Snorm:
+                return core::TexelFormat::kR8Snorm;
+            case kR8Uint:
+                return core::TexelFormat::kR8Uint;
+            case kR8Unorm:
+                return core::TexelFormat::kR8Unorm;
+            case kRg11B10Ufloat:
+                return core::TexelFormat::kRg11B10Ufloat;
+            case kRg16Float:
+                return core::TexelFormat::kRg16Float;
+            case kRg16Sint:
+                return core::TexelFormat::kRg16Sint;
+            case kRg16Snorm:
+                return core::TexelFormat::kRg16Snorm;
+            case kRg16Uint:
+                return core::TexelFormat::kRg16Uint;
+            case kRg16Unorm:
+                return core::TexelFormat::kRg16Unorm;
+            case kRg32Float:
+                return core::TexelFormat::kRg32Float;
+            case kRg32Sint:
+                return core::TexelFormat::kRg32Sint;
+            case kRg32Uint:
+                return core::TexelFormat::kRg32Uint;
+            case kRg8Sint:
+                return core::TexelFormat::kRg8Sint;
+            case kRg8Snorm:
+                return core::TexelFormat::kRg8Snorm;
+            case kRg8Uint:
+                return core::TexelFormat::kRg8Uint;
+            case kRg8Unorm:
+                return core::TexelFormat::kRg8Unorm;
+            case kRgb10A2Uint:
+                return core::TexelFormat::kRgb10A2Uint;
+            case kRgb10A2Unorm:
+                return core::TexelFormat::kRgb10A2Unorm;
+            case kRgba16Float:
+                return core::TexelFormat::kRgba16Float;
+            case kRgba16Sint:
+                return core::TexelFormat::kRgba16Sint;
+            case kRgba16Snorm:
+                return core::TexelFormat::kRgba16Snorm;
+            case kRgba16Uint:
+                return core::TexelFormat::kRgba16Uint;
+            case kRgba16Unorm:
+                return core::TexelFormat::kRgba16Unorm;
+            case kRgba32Float:
+                return core::TexelFormat::kRgba32Float;
+            case kRgba32Sint:
+                return core::TexelFormat::kRgba32Sint;
+            case kRgba32Uint:
+                return core::TexelFormat::kRgba32Uint;
+            case kRgba8Sint:
+                return core::TexelFormat::kRgba8Sint;
+            case kRgba8Snorm:
+                return core::TexelFormat::kRgba8Snorm;
+            case kRgba8Uint:
+                return core::TexelFormat::kRgba8Uint;
+            case kRgba8Unorm:
+                return core::TexelFormat::kRgba8Unorm;
+            default:
+                break;
+        }
+        TINT_ICE();
+    }
+
+    core::Access ToInternal(BindingTypeStorageTexture::Access access) {
+        switch (access) {
+            case BindingTypeStorageTexture::Access::kRead:
+                return core::Access::kRead;
+            case BindingTypeStorageTexture::Access::kWrite:
+                return core::Access::kWrite;
+            case BindingTypeStorageTexture::Access::kReadWrite:
+                return core::Access::kReadWrite;
+        }
+        TINT_ICE();
+    }
+
+    const core::type::Type* CreatePlaceholderMemberType(
+        const tint::msl::writer::ArgumentBufferInfo::Entry& member) {
+        if (const auto* tb = std::get_if<BindingTypeBuffer>(&member.type)) {
+            // Create a placeholder buffer pointing to i32. We assume all buffer pointers should be
+            // the same size, regardless of what they point to, and their access mode.
+            switch (*tb) {
+                case BindingTypeBuffer::kUniform:
+                    return ty.ptr(uniform, ty.i32(), read);
+                case BindingTypeBuffer::kStorage:
+                    return ty.ptr(storage, ty.i32(), read);
+            }
+            TINT_ICE();
+        } else if (const auto* ts = std::get_if<BindingTypeSampler>(&member.type)) {
+            switch (*ts) {
+                case BindingTypeSampler::kComparison:
+                    return ty.comparison_sampler();
+                case BindingTypeSampler::kNonComparison:
+                    // MSL doesn't care if the sampler is filtering or not.
+                    return ty.sampler();
+            }
+            TINT_ICE();
+        } else if (const auto* tt = std::get_if<BindingTypeTexture>(&member.type)) {
+            auto dim = ToInternal(tt->viewDimension);
+
+            if (tt->sampleType == BindingTypeTexture::SampleType::kDepth) {
+                if (tt->multisampled) {
+                    return ty.depth_multisampled_texture(dim);
+                } else {
+                    return ty.depth_texture(dim);
+                }
+            }
+
+            auto sampleType = [&]() -> const core::type::Type* {
+                switch (tt->sampleType) {
+                    case BindingTypeTexture::SampleType::kFloat:
+                        return ty.f32();
+                    case BindingTypeTexture::SampleType::kSInt:
+                        return ty.i32();
+                    case BindingTypeTexture::SampleType::kUInt:
+                        return ty.u32();
+                    case BindingTypeTexture::SampleType::kDepth:
+                        break;
+                }
+                TINT_ICE();
+            }();
+
+            if (tt->multisampled) {
+                return ty.multisampled_texture(dim, sampleType);
+            } else {
+                return ty.sampled_texture(dim, sampleType, core::TextureFilterable::kUndefined);
+            }
+            TINT_ICE();
+        } else if (const auto* t = std::get_if<BindingTypeStorageTexture>(&member.type)) {
+            return ty.storage_texture(ToInternal(t->viewDimension), ToInternal(t->format),
+                                      ToInternal(t->access));
+        }
+        TINT_ICE();
+    }
+
     /// Create the argument buffers. Each bind group will have a separate structure.
     void CreateArgumentBuffers() {
-        Vector<core::ir::Var*, 4> vars;
+        Hashmap<BindingPoint, core::ir::Var*, 4> bindpoint_to_var;
         for (auto* global : *ir.root_block) {
             auto* var = global->As<core::ir::Var>();
             if (!var) {
@@ -192,56 +374,54 @@ struct State {
                 continue;
             }
 
-            vars.Push(var);
+            bindpoint_to_var.Add(*bp, var);
         }
 
-        // Metal requires the argument buffer `id` entries to be in increasing order. Sort the Vars
-        // such that when we create the struct we will create it in ascending order.
-        vars.Sort([&](const auto* va, const auto* vb) {
-            return va->BindingPoint() < vb->BindingPoint();
-        });
+        // Construct the argbuf struct definition.
+        for (const auto& [group, argument_buffer_info] : config.group_to_argument_buffer_info) {
+            // Translate argbuf members from Tint API into IR.
+            Vector<core::type::Manager::StructMemberDesc, 8> struct_members;
+            for (const auto member : argument_buffer_info.struct_members) {
+                Symbol name;
+                const core::type::Type* type = nullptr;
 
-        // Collect a list of struct members for the variable declarations.
-        Hashmap<uint32_t, Vector<core::type::Manager::StructMemberDesc, 8>, 4> group_to_members;
-        for (auto& var : vars) {
-            auto bp = var->BindingPoint();
-            auto* type = var->Result()->Type();
+                // If there's a var for this bindpoint, get the type info from it.
+                // Otherwise, take it from the config.
+                if (auto var = bindpoint_to_var.GetOr(BindingPoint{group, member.id}, nullptr)) {
+                    type = var->Result()->Type();
+                    // Handle types drop the pointer and are passed around by value.
+                    auto* ptr = type->As<core::type::Pointer>();
+                    if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
+                        type = ptr->StoreType();
+                    }
 
-            // Handle types drop the pointer and are passed around by value.
-            auto* ptr = type->As<core::type::Pointer>();
-            if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
-                type = ptr->StoreType();
+                    name = ir.NameOf(var);
+                    if (!name) {
+                        name = ir.symbols.New("unnamed");
+                    }
+                    module_vars.Push(var);
+
+                    var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
+                } else {
+                    type = CreatePlaceholderMemberType(member);
+                    name = ir.symbols.New("placeholder");
+                }
+
+                struct_members.Push(core::type::Manager::StructMemberDesc{
+                    name, type,
+                    core::IOAttributes{
+                        .binding_point = BindingPoint{group, member.id},
+                    }});
             }
 
-            auto name = ir.NameOf(var);
-            if (!name) {
-                name = ir.symbols.New();
-            }
-            module_vars.Push(var);
-
-            auto& struct_members = group_to_members.GetOrAddZero(bp->group);
-            var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
-
-            struct_members.Push(core::type::Manager::StructMemberDesc{
-                name, type,
-                core::IOAttributes{
-                    .binding_point = BindingPoint{bp->group, bp->binding},
-                }});
-        }
-
-        // Sort the keys for deterministic struct generation
-        auto keys = group_to_members.Keys().Sort();
-
-        for (auto& k : keys) {
             // Create the structure.
-            auto name = ir.symbols.New(std::string(kArgBufferName) + "_" + std::to_string(k));
-            auto members = group_to_members.Get(k);
+            auto name = ir.symbols.New(std::string(kArgBufferName) + "_" + std::to_string(group));
 
-            auto* strct = ty.Struct(name, std::move(*members));
+            auto* strct = ty.Struct(name, std::move(struct_members));
             strct->SetStructFlag(core::type::kExplicitLayout);
 
             auto* type = ty.ptr(uniform, strct, read);
-            arg_buffers.Add(k, type);
+            arg_buffers.Add(group, type);
         }
     }
 
@@ -353,8 +533,8 @@ struct State {
                 return access->Result();
             }
 
-            auto binding_iter = grp_iter->second.binding_info_to_offset_index.find(binding);
-            if (binding_iter == grp_iter->second.binding_info_to_offset_index.end()) {
+            auto member = grp_iter->second.struct_members[binding];
+            if (member.offset_index == std::nullopt) {
                 return access->Result();
             }
 
@@ -366,7 +546,7 @@ struct State {
             core::ir::Value* result = nullptr;
             b.InsertAfter(access, [&] {
                 auto* offset = b.Access(ty.ptr<storage, u32, read>(), offset_buffer,
-                                        b.Constant(u32(binding_iter->second)));
+                                        b.Constant(u32(member.offset_index.value())));
 
                 result = b.Call<msl::ir::BuiltinCall>(type, msl::BuiltinFn::kPointerOffset, access,
                                                       b.Load(offset))
