@@ -212,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0600beaf_3ec1a622",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "822c95ff_d265ce1a",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdc9c368_a5825032",
@@ -225,6 +243,24 @@
       "writtenOn": "2026-02-12T08:50:40Z",
       "side": 1,
       "message": "Can we have minimal test coverage of the validation not requiring the trailing padding bytes as described in the commit message?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "538edb98_52504723",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "See ValidatePipelineLayoutImmediateDataBytesWithoutTrailingPadding",
+      "parentUuid": "cdc9c368_a5825032",
       "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -246,6 +282,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a06c353_e11ef798",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625d4b74_391e1dab",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58e13492_6dfcea49",
@@ -259,6 +313,24 @@
       "writtenOn": "2026-02-12T08:50:40Z",
       "side": 1,
       "message": "Where is the error case?",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2a50b68_a0f93439",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e13492_6dfcea49",
       "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -280,6 +352,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad7286e4_4727f1e6",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a857260d_793ed597",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0185a5b_2a8d2e8d",
@@ -293,6 +383,24 @@
       "writtenOn": "2026-02-12T08:50:40Z",
       "side": 1,
       "message": "I think we might be reconsidering that and adding array support in https://github.com/gpuweb/gpuweb/issues/5555 so we might as well add it here already.",
+      "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3f8d0a2_1a1c65db",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0185a5b_2a8d2e8d",
       "revId": "d4378dce29a67c2ef2ec6f8b672823c990332eca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f29b2c1c_66705763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-02-28T06:25:20Z",
+      "side": 1,
+      "message": "Sry for introduce rebase diff into the patch set (IIRC, previously gerrit doesn\u0027t have this issue?). Address comments focused on validation issue.",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
