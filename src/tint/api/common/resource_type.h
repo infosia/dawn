@@ -32,6 +32,79 @@
 
 namespace tint {
 
+enum class TextureViewDimension : uint8_t { k1d, k2d, k2dArray, kCube, kCubeArray, k3d };
+
+enum class BindingTypeBuffer : uint8_t { kUniform, kStorage };
+
+enum class BindingTypeSampler : uint8_t { kComparison, kNonComparison };
+
+struct BindingTypeTexture {
+    enum class SampleType : uint8_t { kFloat, kSInt, kUInt, kDepth };
+
+    bool multisampled;
+    TextureViewDimension viewDimension;
+    SampleType sampleType;
+
+    TINT_REFLECT(BindingTypeTexture, multisampled, viewDimension, sampleType);
+    TINT_REFLECT_HASH_CODE(BindingTypeTexture);
+};
+
+struct BindingTypeStorageTexture {
+    enum class Format : uint8_t {
+        kBgra8Unorm,
+        kR16Float,
+        kR16Sint,
+        kR16Snorm,
+        kR16Uint,
+        kR16Unorm,
+        kR32Float,
+        kR32Sint,
+        kR32Uint,
+        kR8Sint,
+        kR8Snorm,
+        kR8Uint,
+        kR8Unorm,
+        kRg11B10Ufloat,
+        kRg16Float,
+        kRg16Sint,
+        kRg16Snorm,
+        kRg16Uint,
+        kRg16Unorm,
+        kRg32Float,
+        kRg32Sint,
+        kRg32Uint,
+        kRg8Sint,
+        kRg8Snorm,
+        kRg8Uint,
+        kRg8Unorm,
+        kRgb10A2Uint,
+        kRgb10A2Unorm,
+        kRgba16Float,
+        kRgba16Sint,
+        kRgba16Snorm,
+        kRgba16Uint,
+        kRgba16Unorm,
+        kRgba32Float,
+        kRgba32Sint,
+        kRgba32Uint,
+        kRgba8Sint,
+        kRgba8Snorm,
+        kRgba8Uint,
+        kRgba8Unorm,
+    };
+    enum class Access : uint8_t { kRead, kWrite, kReadWrite };
+
+    TextureViewDimension viewDimension;
+    Format format;
+    Access access;
+
+    TINT_REFLECT(BindingTypeStorageTexture, viewDimension, format, access);
+    TINT_REFLECT_HASH_CODE(BindingTypeStorageTexture);
+};
+
+using BindingType = std::
+    variant<BindingTypeBuffer, BindingTypeSampler, BindingTypeTexture, BindingTypeStorageTexture>;
+
 enum class ResourceType : uint32_t {
     kEmpty,
 
