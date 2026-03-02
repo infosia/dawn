@@ -34,6 +34,24 @@
       "parentUuid": "d3896f37_a62b6cf5",
       "revId": "5c8cd3d507f568f2481f49f495e9da78256bf9d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "806a4b8a_f7255461",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3251430
+      },
+      "writtenOn": "2026-03-02T14:17:27Z",
+      "side": 1,
+      "message": "Ah, I still need another +2. Nearly there!",
+      "parentUuid": "5e42f3e3_c455e870",
+      "revId": "5c8cd3d507f568f2481f49f495e9da78256bf9d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
