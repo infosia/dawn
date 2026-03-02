@@ -33,6 +33,24 @@
       "message": "this if forward right?",
       "revId": "1607b4dcac0464dd9786583a5bdfbd0d17494318",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "844248d8_d33e64cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-02T21:08:41Z",
+      "side": 1,
+      "message": "Backwards, I\u0027m rolling back. Is it already fixed forward?",
+      "parentUuid": "e84f2044_5c9f01f6",
+      "revId": "1607b4dcac0464dd9786583a5bdfbd0d17494318",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
