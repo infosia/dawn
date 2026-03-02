@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "534ffff9_5bddd146",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "Looks better, thank you for the iteration!",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfad93db_31f89ad6",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "That comment will be confusing to readers. Maybe \"Validate without making assumptions on the range of the various uint32_ts as limits may be increased from their base values.\"",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3aa6eba_208be658",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "ditto numeric limits.",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1f30d08_40d7ca25",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "Why did this need to be split up?",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d83d586a_15ee51ce",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "Multiple nits:\n\n1) this block breaks the initialization of the \"inner\" compute pipeline in two, can it be moved to be entirely before or entirely after?\n\n2) The comment about ugliness doesn\u0027t help understanding, maybe `Shader reflection after the application of overridable constant is required by the frontend for the workgroup size`.\n\n3) IMHO we could do it unconditionally because this is cold code, and it will avoid the need to debug and remove the condition in the future if it is required outside of the validation path as well.",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

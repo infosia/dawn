@@ -73,6 +73,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8981c497_386721d3",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cecb1224_9d366d6a",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3082f90f_d7a35810",
         "filename": "src/dawn/native/ComputePassEncoder.cpp",
         "patchSetId": 15
@@ -307,6 +325,24 @@
       "side": 1,
       "message": "I\u0027ve done something like my last comment, PTAL.",
       "parentUuid": "16167fc5_d3453013",
+      "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14cad34a_06783966",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:17:23Z",
+      "side": 1,
+      "message": "This works but is slightly roundabout because it goes from the frontend, to the backend and to setters in the frontend. It would be simpler to see the WG size as part of results of the initialization of the backend compute pipeline. I can give it a shot in a follow up if you don\u0027t feel like doing the change.",
+      "parentUuid": "15d1bc21_ec91c608",
       "revId": "69c01ccfae899115bae75779c27aa2a646778fe1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
