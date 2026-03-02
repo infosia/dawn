@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4113dc_0b625637",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3251430
+      },
+      "writtenOn": "2026-03-02T14:40:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1f876ac_1906761e",
+      "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86b12e87_ca42b440",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "Ah man, jj fix did me in. I\u0027ll revert.",
       "parentUuid": "86b12e87_ca42b440",
+      "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "044be20d_6c65f372",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 3251430
+      },
+      "writtenOn": "2026-03-02T14:40:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b76d2a_2e92491b",
       "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
