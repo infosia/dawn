@@ -33,6 +33,24 @@
       "message": "This looks like it was all re-formatted to a style which doesn\u0027t match our clang-format file?",
       "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25b76d2a_2e92491b",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 3251430
+      },
+      "writtenOn": "2026-03-02T14:34:54Z",
+      "side": 1,
+      "message": "Ah man, jj fix did me in. I\u0027ll revert.",
+      "parentUuid": "86b12e87_ca42b440",
+      "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
