@@ -27,6 +27,8 @@
 
 #include "src/tint/lang/wgsl/resolver/sem_helper.h"
 
+#include <span>
+
 #include "src/tint/lang/wgsl/resolver/incomplete_type.h"
 #include "src/tint/lang/wgsl/resolver/unresolved_identifier.h"
 #include "src/tint/lang/wgsl/sem/builtin_enum_expression.h"
@@ -135,13 +137,12 @@ StyledText SemHelper::Describe(const sem::Expression* expr) const {
     return text;
 }
 
-void SemHelper::ErrorUnexpectedIdent(
-    const ast::Identifier* ident,
-    std::string_view wanted,
-    tint::Slice<const std::string_view> suggestions /* = Empty */) const {
+void SemHelper::ErrorUnexpectedIdent(const ast::Identifier* ident,
+                                     std::string_view wanted,
+                                     std::span<const std::string_view> suggestions) const {
     auto name = ident->symbol.NameView();
     AddError(ident->source) << "unresolved " << wanted << " " << style::Code(name);
-    if (!suggestions.IsEmpty()) {
+    if (!suggestions.empty()) {
         // Filter out suggestions that have a leading underscore.
         Vector<std::string_view, 8> filtered;
         for (auto str : suggestions) {
@@ -152,14 +153,13 @@ void SemHelper::ErrorUnexpectedIdent(
         auto& note = AddNote(ident->source);
         SuggestAlternativeOptions opts;
         opts.alternatives_style = style::Enum;
-        SuggestAlternatives(name, filtered.Slice(), note.message, opts);
+        SuggestAlternatives(name, filtered.AsSpan(), note.message, opts);
     }
 }
 
-void SemHelper::ErrorUnexpectedExprKind(
-    const sem::Expression* expr,
-    std::string_view wanted,
-    tint::Slice<const std::string_view> suggestions /* = Empty */) const {
+void SemHelper::ErrorUnexpectedExprKind(const sem::Expression* expr,
+                                        std::string_view wanted,
+                                        std::span<const std::string_view> suggestions) const {
     if (auto* ui = expr->As<UnresolvedIdentifier>()) {
         return ErrorUnexpectedIdent(ui->Identifier()->identifier, wanted, suggestions);
     }
