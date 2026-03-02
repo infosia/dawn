@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b67a554b_f75bb3eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-02T19:37:01Z",
+      "side": 1,
+      "message": "Still LGTM modulo some weirdness in the diff",
+      "revId": "0491d789c903d1705751850583a7b384b9eb1249",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "518f6807_064fe1be",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-02T19:37:01Z",
+      "side": 1,
+      "message": "Why does this part of the diff look so weird? O.o",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 261
+      },
+      "revId": "0491d789c903d1705751850583a7b384b9eb1249",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
