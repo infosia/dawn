@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e6d1c3_5c0727a9",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-02T22:32:13Z",
+      "side": 1,
+      "message": "nit. Would it be possible to use an enum? The bool doesn\u0027t help w.r.t to making it obvious what it means. I think by default the test names will print with the numeric value of the enum, but you could probably override that also to print the enum name to make it a bit more useful.",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "dff0a383da48cbb187e9f0d06f2139b839f597d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
