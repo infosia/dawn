@@ -16,6 +16,114 @@
       "message": "Sry for introduce rebase diff into the patch set (IIRC, previously gerrit doesn\u0027t have this issue?). Address comments focused on validation issue.",
       "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "177ce5d9_35b0780a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "LGTM +R Dan for the Tint part.",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7beaf7d3_a5a6d95c",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "```suggestion\n        mUserImmediateSlots |\u003d metadata.immediateDataUsedSlots;\n```",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed287393_15ea5250",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "This is only used in Initialize, IMHO it\u0027s not worth keeping around. We could loop over stages again in Initialize, or set `mImmediateMask` here.",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8879598_a37deba4",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "Maybe rename them to `immediateDataByteSizeNoPadding/WithPadding` to make things clear?",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 47
+      },
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75774eec_657b8156",
+        "filename": "src/tint/lang/wgsl/inspector/entry_point.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "ditto rename",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "699572ac_30159db1",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T08:50:39Z",
+      "side": 1,
+      "message": "Pairs with the same type twice are super confusing, consider making a simple struct for the return value.",
+      "revId": "13d5edcb2f6a099fdc7827a13a1017684d2c8719",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
