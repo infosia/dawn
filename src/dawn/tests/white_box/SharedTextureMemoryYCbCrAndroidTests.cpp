@@ -28,7 +28,9 @@
 #include <android/hardware_buffer.h>
 #include <webgpu/webgpu_cpp.h>
 
+#include <concepts>
 #include <span>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -40,6 +42,216 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+
+namespace MinimalAlgebra {
+
+template <size_t Size, typename Scalar = float>
+struct Vector {
+    using Self = Vector<Size, Scalar>;
+    std::array<Scalar, Size> data = {};
+
+    constexpr Vector() { data.fill(Scalar()); }
+    constexpr explicit Vector(const std::array<Scalar, Size>& data) : data(data) {}
+    constexpr Vector(const Scalar& s1, const Scalar& s2)
+        requires(Size == 2)
+        : data{s1, s2} {}
+    constexpr Vector(const Scalar& s1, const Scalar& s2, const Scalar& s3)
+        requires(Size == 3)
+        : data{s1, s2, s3} {}
+    constexpr Vector(const Scalar& s1, const Scalar& s2, const Scalar& s3, const Scalar& s4)
+        requires(Size == 4)
+        : data{s1, s2, s3, s4} {}
+
+    constexpr Scalar& operator[](size_t i) { return data[i]; }
+    constexpr const Scalar& operator[](size_t i) const { return data[i]; }
+
+    constexpr Self operator+(const Self& other) const {
+        Self result;
+        for (size_t i = 0; i < Size; i++) {
+            result[i] = data[i] + other[i];
+        }
+        return result;
+    }
+    constexpr Self& operator+=(const Self& other) {
+        *this = *this + other;
+        return *this;
+    }
+
+    constexpr Self operator*(const Scalar& s) const {
+        Self result;
+        for (size_t i = 0; i < Size; i++) {
+            result[i] = data[i] * s;
+        }
+        return result;
+    }
+    constexpr Self& operator*=(const Scalar& s) {
+        *this = *this * s;
+        return *this;
+    }
+
+};
+
+// Column-major to match WGSL
+template <size_t Cols, size_t Rows, typename Scalar = float>
+struct Matrix {
+    using Column = Vector<Rows, Scalar>;
+    using Self = Matrix<Cols, Rows, Scalar>;
+    std::array<Column, Cols> data = {};
+
+    constexpr Matrix() { data.fill(Column()); }
+    constexpr explicit Matrix(const std::array<Column, Cols>& data) : data(data) {}
+    constexpr Matrix(const Column& c1, const Column& c2)
+        requires(Cols == 2)
+        : data{c1, c2} {}
+    constexpr Matrix(const Column& c1, const Column& c2, const Column& c3)
+        requires(Cols == 3)
+        : data{c1, c2, c3} {}
+    constexpr Matrix(const Column& c1, const Column& c2, const Column& c3, const Column& c4)
+        requires(Cols == 4)
+        : data{c1, c2, c3, c4} {}
+
+    constexpr Column& operator[](size_t i) { return data[i]; }
+    constexpr const Column& operator[](size_t i) const { return data[i]; }
+
+    constexpr static Self Identity()
+        requires(Cols == Rows)
+    {
+        std::array<Scalar, Rows> scales;
+        scales.fill(1);
+        return Scale({scales});
+    }
+
+    template <typename... Args>
+        requires(std::is_convertible_v<Args, Scalar> && ...)
+    constexpr static Self Scale(Args&&... scales)
+        requires(sizeof...(scales) == Rows) && (Cols == Rows)
+    {
+        return Scale(Column(std::forward<Args>(scales)...));
+    }
+
+    constexpr static Self Scale(Column scale)
+        requires(Cols == Rows)
+    {
+        Self mat;
+        for (size_t i = 0; i < Rows; i++) {
+            mat[i][i] = scale[i];
+        }
+        return mat;
+    }
+
+};
+
+template <size_t M, size_t N, typename Scalar>
+constexpr Vector<N, Scalar> Mul(const Matrix<M, N, Scalar>& A, const Vector<M, Scalar>& V) {
+    Vector<N, Scalar> result;
+    for (size_t i = 0; i < M; i++) {
+        result += A[i] * V[i];
+    }
+    return result;
+}
+
+template <size_t M, size_t N, size_t K, typename Scalar>
+constexpr Matrix<M, N, Scalar> Mul(const Matrix<K, N, Scalar>& A, const Matrix<M, K, Scalar>& B) {
+    Matrix<M, N, Scalar> result;
+    for (size_t i = 0; i < M; i++) {
+        result[i] = Mul(A, B[i]);
+    }
+    return result;
+}
+
+using Vec2f = Vector<2, float>;
+using Vec3f = Vector<3, float>;
+using Vec4f = Vector<4, float>;
+using Mat3x3f = Matrix<3, 3, float>;
+using Mat4x3f = Matrix<4, 3, float>;
+using Mat4x4f = Matrix<4, 4, float>;
+
+
+std::ostream& operator<<(std::ostream& os, const Vec4f& v) {
+    os << v[0] << " " << v[1] << " " << v[2] << " " << v[3];
+    return os;
+}
+
+
+void f(float Y) {
+    // TODO figure out the range stuff
+    // TODO land the MinimalAlgebra
+    // TODO land a Colorspace header.
+    // TODO parametrize the test to check values on Vulkan
+
+    // Y'Cb'Cr' to R'G'B' conversion defined in https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#MODEL_BT601
+    constexpr Mat4x4f kYCbCrToRGB_Rec601 = {
+        {1.0, 1.0, 1.0, 0.0},
+        {0.0, -(0.202008 / 0.587), 1.772, 0.0},
+        {1.402, -(0.419198 / 0.587), 0.0, 0.0},
+        {0.0, 0.0, 0.0, 1.0},
+    };
+
+    // Y'Cb'Cr' to R'G'B' conversion defined in https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#MODEL_BT709
+    constexpr Mat4x4f kYCbCrToRGB_Rec709 = {
+        {1.0, 1.0, 1.0, 0.0},
+        {0.0, -(0.13397432 / 0.7152), 1.8556, 0.0},
+        {1.5748, -(0.33480248 / 0.7152), 0.0, 0.0},
+        {0.0, 0.0, 0.0, 1.0},
+    };
+
+    // Y'Cb'Cr' to R'G'B' conversion defined in https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#MODEL_BT2020
+    constexpr Mat4x4f kYCbCrToRGB_Rec2020 = {
+        {1.0, 1.0, 1.0, 0.0},
+        {0.0, -(0.11156702 / 0.6780), 1.8814, 0.0},
+        {1.4746, -(0.38737742 / 0.6780), 0.0, 0.0},
+        {0.0, 0.0, 0.0, 1.0},
+    };
+
+    constexpr Mat4x4f kFullRangeScaleAndBias = {
+        {255.0 / 255.0, 0.0, 0.0, 0.0},
+        {0.0, 255.0 / 255.0, 0.0, 0.0},
+        {0.0, 0.0, 255.0 / 255.0, 0.0},
+        {0.0, -128.0, -128.0, 1.0},
+    };
+
+    // Vulkan has UYV but we want YUV.
+    constexpr Mat4x4f kUndoVulkanSwizzle = {
+        {0, 1, 0, 0},
+        {1, 0, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1},
+    };
+
+    Vec4f ycbcrSwizzled = {140, Y, 130, 1.0};
+    Vec4f ycbcr = Mul(kUndoVulkanSwizzle, ycbcrSwizzled);
+    Vec4f ycbcrBiased = Mul(kFullRangeScaleAndBias, ycbcr);
+    Vec4f rgb = Mul(kYCbCrToRGB_Rec2020, ycbcrBiased);
+
+    //DAWN_DEBUG() << "ycbcrSwizzled " << ycbcrSwizzled;
+    //DAWN_DEBUG() << "ycbcr" << ycbcr;
+    //DAWN_DEBUG() << "ycbcrBiased " << ycbcrBiased;
+    DAWN_DEBUG() << "rgb " << rgb;
+
+    //constexpr Mat3x3f y = Mul(kYCbCrToRGB_Rev709, kUndoVulkanSwizzle);
+
+    //// constexpr Mat3x3f kYCbCrToRGB_Rev7092 = {
+    ////     {1.0f, 1.0f, 1.0f},
+    ////     {0.0f, -(0.13397432f / 0.7152f), 1.8556f},
+    ////     {1.5748f, -(0.33480248f / 0.7152f), 0.0f},
+    //// };
+    //constexpr Vec3f YCbCrRangeBias{};
+    //constexpr Vec3f RGBRangeBias = Mul(kYCbCrToRGB_Rev709, YCbCrRangeBias);
+
+    // Mat4x3f YCbCrToRGBAndBias{kYCbCrToRGB};
+}
+
+// Note actually R'G'B' and Y'Cb'Cr as the values are all computed before applying the transfer
+// function.
+//
+// RGB = YCbCr2RGB * RangeYCbCr
+// RangeYCbCr = RangeScale * YCbCr + YCbCrRangeBias
+// RGB = YCbCr2RGB * RangeScale * YCbCr + RGBRangeBias
+// RGBRangeBias = YCbCr2RGB * YCbCrRangeBias
+
+}  // namespace MinimalAlgebra
+
+namespace MA = MinimalAlgebra;
 
 namespace dawn {
 namespace {
@@ -91,7 +303,8 @@ class SharedTextureMemoryYCbCrVulkanSamplersTests : public DawnTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
-                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::StaticSamplers, wgpu::FeatureName::YCbCrVulkanSamplers};
+                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::StaticSamplers,
+                wgpu::FeatureName::YCbCrVulkanSamplers};
     }
 };
 
@@ -398,9 +611,13 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
     // Make the AHB and import it as an STM and wgpu::Texture.
     const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
-    const std::array<uint8_t, 1> uData = {75};
-    const std::array<uint8_t, 1> vData = {125};
+    const std::array<uint8_t, 1> uData = {140};
+    const std::array<uint8_t, 1> vData = {130};
 
+    MinimalAlgebra::f(50);
+    MinimalAlgebra::f(100);
+    MinimalAlgebra::f(150);
+    MinimalAlgebra::f(200);
     AHardwareBuffer* ahb = MakeYUVAHB(2, 2, yData, uData, vData);
 
     wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc{};
@@ -427,8 +644,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
 
     // Make this a parametrized test on the mode, range, and forceExplicitReconstruction
 
-    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
-    yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR;
+    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020;
+    yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
     yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
     yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
     yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
@@ -451,7 +668,7 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
     bglEntries[1].visibility = wgpu::ShaderStage::Fragment;
     bglEntries[1].texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
 
-    wgpu::BindGroupLayoutDescriptor bglDesc {
+    wgpu::BindGroupLayoutDescriptor bglDesc{
         .entryCount = bglEntries.size(),
         .entries = bglEntries.data(),
     };
@@ -487,7 +704,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
 
     // Do the copy.
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
+    utils::BasicRenderPass renderPass =
+        utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
     wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
     pass.SetPipeline(pipeline);
     pass.SetBindGroup(0, bg);
@@ -497,10 +715,10 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
 
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0 ,0);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0 ,1);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1 ,0);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1 ,1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0, 1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1, 1);
 }
 
 DAWN_INSTANTIATE_TEST(SharedTextureMemoryYCbCrVulkanSamplersTests, VulkanBackend());
