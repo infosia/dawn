@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74217353_0436a428",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2026-03-02T18:08:28Z",
+      "side": 1,
+      "message": "Quyen, Loko: PTAL. Thanks!\n\nI noticed that GLES\u0027s UnmapImpl() grabs the device lock, but its MapAsyncImpl() does not. D3D11 and D3D12 both do this; Metal and Vulkan don\u0027t (although their MapAsyncImpl()s are no-ops). Adding it fixes the multithreaded tests, as indicated, on both gl_defer and gl_context_on_multi_threads.\n\nIs this a good approach?",
+      "revId": "98f7f97b2e26d8afb913aeb5188afe075e115474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
