@@ -66,6 +66,10 @@ const char* str(BuiltinFn i) {
             return "atomic_load_explicit";
         case BuiltinFn::kAtomicStoreExplicit:
             return "atomic_store_explicit";
+        case BuiltinFn::kAtomicMaxExplicit:
+            return "atomic_max_explicit";
+        case BuiltinFn::kAtomicMinExplicit:
+            return "atomic_min_explicit";
         case BuiltinFn::kFence:
             return "fence";
         case BuiltinFn::kGather:

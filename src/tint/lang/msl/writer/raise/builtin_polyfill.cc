@@ -98,8 +98,10 @@ struct State {
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
                     case core::BuiltinFn::kAtomicExchange:
                     case core::BuiltinFn::kAtomicLoad:
-                    case core::BuiltinFn::kAtomicMax:
                     case core::BuiltinFn::kAtomicMin:
+                    case core::BuiltinFn::kAtomicMax:
+                    case core::BuiltinFn::kAtomicStoreMin:
+                    case core::BuiltinFn::kAtomicStoreMax:
                     case core::BuiltinFn::kAtomicOr:
                     case core::BuiltinFn::kAtomicStore:
                     case core::BuiltinFn::kAtomicSub:
@@ -194,6 +196,12 @@ struct State {
                     break;
                 case core::BuiltinFn::kAtomicMin:
                     AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchMinExplicit);
+                    break;
+                case core::BuiltinFn::kAtomicStoreMin:
+                    AtomicCall(builtin, msl::BuiltinFn::kAtomicMinExplicit);
+                    break;
+                case core::BuiltinFn::kAtomicStoreMax:
+                    AtomicCall(builtin, msl::BuiltinFn::kAtomicMaxExplicit);
                     break;
                 case core::BuiltinFn::kAtomicOr:
                     AtomicCall(builtin, msl::BuiltinFn::kAtomicFetchOrExplicit);
