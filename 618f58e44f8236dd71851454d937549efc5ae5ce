@@ -50,6 +50,24 @@
       "message": "We usually return 1 on failure, not -1, is -1 needed specifically or can this be 1?",
       "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7a4caa_8bdb9a66",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3251430
+      },
+      "writtenOn": "2026-03-02T14:29:37Z",
+      "side": 1,
+      "message": "Great question!\n\nIt actually seems that libfuzzer itself ignores the return value, despite it being defined as a int-returning function 😞 [1].\n\nMy little fuzzing engine can handle any non-zero value, so I\u0027m happy to align with your convention. Fixed.\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/libFuzzer/src/FuzzerDriver.cpp;l\u003d652;drc\u003dbea408a6e01f0f7e6c82a43121fe3af4506c932e",
+      "parentUuid": "bcf51301_3e6fcdb9",
+      "revId": "618f58e44f8236dd71851454d937549efc5ae5ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
