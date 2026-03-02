@@ -69,6 +69,24 @@
       "parentUuid": "b94eb829_cae689e6",
       "revId": "df22bb71e28aefde6c33f0177fa3ddd2d1e9deae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a755d8d_d91b78cd",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-02T09:48:19Z",
+      "side": 1,
+      "message": "The resource table is going to access it a bunch, as well as D3D11 MapAsync at the moment. But it\u0027s probably fine to keep like this and optimize later.",
+      "parentUuid": "b94eb829_cae689e6",
+      "revId": "df22bb71e28aefde6c33f0177fa3ddd2d1e9deae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
