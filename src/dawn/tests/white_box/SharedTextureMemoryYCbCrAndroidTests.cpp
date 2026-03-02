@@ -29,6 +29,8 @@
 #include <webgpu/webgpu_cpp.h>
 
 #include <span>
+#include <type_traits>
+#include <concepts>
 #include <utility>
 #include <vector>
 
@@ -40,6 +42,154 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+
+namespace MinimalAlgebra {
+
+template <size_t Size, typename Scalar = float>
+struct Vector {
+    using Self = Vector<Size, Scalar>;
+
+    template <typename... Args>
+        requires(std::convertible_to<Args, Scalar> && ...)
+    constexpr Vector(Args&&... args)
+        requires(sizeof...(args) == Size)
+    {
+        data = {static_cast<Scalar>(args)...};
+    }
+    constexpr Vector() {data.fill(Scalar());}
+
+    constexpr explicit Vector(std::array<Scalar, Size> data) : data(data) {}
+
+    constexpr Scalar& operator[](size_t i) { return data[i]; }
+    constexpr const Scalar& operator[](size_t i) const { return data[i]; }
+
+    constexpr Self operator+(const Self& other) const {
+        Self result;
+        for (size_t i = 0; i < Size; i++) {
+            result[i] = data[i] + other[i];
+        }
+        return result;
+    }
+    constexpr Self& operator+=(const Self& other) {
+        *this = *this + other;
+        return *this;
+    }
+
+    constexpr Self operator*(const Scalar& s) const {
+        Self result;
+        for (size_t i = 0; i < Size; i++) {
+            result[i] = data[i] * s;
+        }
+        return result;
+    }
+    constexpr Self& operator*=(const Scalar& s) {
+        *this = *this * s;
+        return *this;
+    }
+
+    std::array<Scalar, Size> data = {};
+};
+
+// Column-major to match WGSL
+template <size_t Cols, size_t Rows, typename Scalar = float>
+struct Matrix {
+    using Column = Vector<Rows, Scalar>;
+    using Self = Matrix<Cols, Rows, Scalar>;
+
+    template <typename... Args>
+        requires(std::convertible_to<Args, Column> && ...)
+    constexpr Matrix(Args&&... columns)
+        requires(sizeof...(columns) == Rows)
+    {
+        data = {static_cast<Column>(columns)...};
+    }
+
+    constexpr Matrix() {data.fill(Column());}
+
+    constexpr static Self Identity()
+        requires(Cols == Rows)
+    {
+        std::array<Scalar, Rows> scales;
+        scales.fill(1);
+        return Scale({scales});
+    }
+
+    template <typename... Args>
+        requires(std::is_convertible_v<Args, Scalar> && ...)
+    constexpr static Self Scale(Args&&... scales)
+        requires(sizeof...(scales) == Rows)
+         && (Cols == Rows)
+    {
+        return Scale(Column(std::forward<Args>(scales)...));
+    }
+
+    constexpr static Self Scale(Column scale) requires (Cols == Rows) {
+        Self mat;
+        for (size_t i = 0; i < Rows; i++) {
+            mat[i][i] = scale[i];
+        }
+        return mat;
+    }
+
+    constexpr Column& operator[](size_t i) { return data[i]; }
+    constexpr const Column& operator[](size_t i) const { return data[i]; }
+
+    std::array<Column, Cols> data = {};
+};
+
+template<size_t M, size_t N, typename Scalar>
+constexpr Vector<N, Scalar> Mul(const Matrix<M, N, Scalar>& A, const Vector<M, Scalar>& V) {
+    Vector<N, Scalar> result;
+    for (size_t i = 0; i < M; i++) {
+        result += A[i] * V[i];
+    }
+    return result;
+}
+
+template<size_t M, size_t N, size_t K, typename Scalar>
+Matrix<M, N, Scalar> Mul(const Matrix<K, N, Scalar>& A, const Matrix<M, K, Scalar>& B) {
+    Matrix<M, N, Scalar> result;
+    for (size_t i = 0; i < M; i++) {
+        result[i] = Mul(A, B[i]);
+    }
+    return result;
+}
+
+using Vec2f = Vector<2, float>;
+using Vec3f = Vector<3, float>;
+using Vec4f = Vector<4, float>;
+using Mat3x3f = Matrix<3, 3, float>;
+using Mat4x3f = Matrix<4, 3, float>;
+
+void f() {
+    constexpr Mat3x3f kYCbCrToRGB_Rev709 = {
+        Vec3f{1.0f, 1.0f, 1.0f},
+        Vec3f{0.0f, -(0.13397432f / 0.7152f), 1.8556f},
+        Vec3f{1.5748f, -(0.33480248f / 0.7152f), 0.0f},
+    };
+
+    //constexpr Mat3x3f kYCbCrToRGB_Rev7092 = {
+    //    {1.0f, 1.0f, 1.0f},
+    //    {0.0f, -(0.13397432f / 0.7152f), 1.8556f},
+    //    {1.5748f, -(0.33480248f / 0.7152f), 0.0f},
+    //};
+    constexpr Vec3f YCbCrRangeBias{};
+    constexpr Vec3f RGBRangeBias = Mul(kYCbCrToRGB_Rev709, YCbCrRangeBias);
+
+    //Mat4x3f YCbCrToRGBAndBias{kYCbCrToRGB};
+}
+
+// Note actually R'G'B' and Y'Cb'Cr as the values are all computed before applying the transfer
+// function.
+//
+// RGB = YCbCr2RGB * RangeYCbCr
+// RangeYCbCr = RangeScale * YCbCr + YCbCrRangeBias
+// RGB = YCbCr2RGB * RangeScale * YCbCr + RGBRangeBias
+// RGBRangeBias = YCbCr2RGB * YCbCrRangeBias
+
+}  // namespace MinimalAlgebra
+
+namespace MA = MinimalAlgebra;
 
 namespace dawn {
 namespace {
@@ -91,7 +241,8 @@ class SharedTextureMemoryYCbCrVulkanSamplersTests : public DawnTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
-                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::StaticSamplers, wgpu::FeatureName::YCbCrVulkanSamplers};
+                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::StaticSamplers,
+                wgpu::FeatureName::YCbCrVulkanSamplers};
     }
 };
 
@@ -427,8 +578,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
 
     // Make this a parametrized test on the mode, range, and forceExplicitReconstruction
 
-    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
-    yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR;
+    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR;
+    yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR;
     yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
     yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
     yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
@@ -451,7 +602,7 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
     bglEntries[1].visibility = wgpu::ShaderStage::Fragment;
     bglEntries[1].texture.sampleType = wgpu::TextureSampleType::UnfilterableFloat;
 
-    wgpu::BindGroupLayoutDescriptor bglDesc {
+    wgpu::BindGroupLayoutDescriptor bglDesc{
         .entryCount = bglEntries.size(),
         .entries = bglEntries.data(),
     };
@@ -487,7 +638,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
 
     // Do the copy.
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
+    utils::BasicRenderPass renderPass =
+        utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
     wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
     pass.SetPipeline(pipeline);
     pass.SetBindGroup(0, bg);
@@ -497,10 +649,10 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, SampleYUVAHB) {
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
 
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0 ,0);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0 ,1);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1 ,0);
-    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1 ,1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 0, 1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 0), renderPass.color, 1, 1);
 }
 
 DAWN_INSTANTIATE_TEST(SharedTextureMemoryYCbCrVulkanSamplersTests, VulkanBackend());
