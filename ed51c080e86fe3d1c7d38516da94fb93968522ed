@@ -16,6 +16,23 @@
       "message": "I have taken into consideration all the previous review comments.",
       "revId": "ed51c080e86fe3d1c7d38516da94fb93968522ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc54357_e07f656f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-02T16:25:52Z",
+      "side": 1,
+      "message": "LGTM, but I\u0027m not an owner on stuff under src/dawn yet, so Kai will need to give the final +2",
+      "revId": "ed51c080e86fe3d1c7d38516da94fb93968522ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
