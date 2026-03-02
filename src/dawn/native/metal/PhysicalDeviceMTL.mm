@@ -754,6 +754,16 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
 
+    if ([*mDevice supportsFamily:MTLGPUFamilyApple9]) {
+        EnableFeature(Feature::AtomicVec2uMinMax);
+    }
+
+    // Early 64 bit  (ulong) support when both mac2 and apple8. (These means the M2)
+    // See footnote 11 of https://developer.apple.com/metal/Metal-Feature-Set-Tables.pdf
+    if ([device supportsFamily:MTLGPUFamilyMac2] && [device supportsFamily:MTLGPUFamilyApple8]) {
+        EnableFeature(Feature::AtomicVec2uMinMax);
+    }
+
     if ([*mDevice readWriteTextureSupport] == MTLReadWriteTextureTier2) {
         EnableFeature(Feature::TextureFormatsTier2);
     }
