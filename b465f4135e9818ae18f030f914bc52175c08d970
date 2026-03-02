@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1f876ac_1906761e",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-02T14:32:36Z",
+      "side": 1,
+      "message": "Something weird happened here?",
+      "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86b12e87_ca42b440",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-02T14:32:36Z",
+      "side": 1,
+      "message": "This looks like it was all re-formatted to a style which doesn\u0027t match our clang-format file?",
+      "revId": "b465f4135e9818ae18f030f914bc52175c08d970",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
