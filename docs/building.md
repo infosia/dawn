@@ -150,6 +150,10 @@ and use `find_package(Dawn)` in your CMake project to discover Dawn and link wit
 the `dawn::webgpu_dawn` target. Please see [Quickstart with CMake](./quickstart-cmake.md)
 for step-by-step instructions.
 
+### Compiling for Android using CMake
+Please see [Running Dawn tests on Android with CMake](./dawn/android_cmake.md)
+for step-by-step instructions.
+
 ### Using ccache for CMake builds
 There is a substantial number of source files that are needed to be
 built for Dawn and its dependencies (~thousands), which can lead to

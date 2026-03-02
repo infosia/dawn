@@ -1,6 +1,10 @@
 # Testing Dawn
 
-(TODO)
+Dawn has several test suites to ensure correctness and performance across different platforms and backends.
+
+## Dawn End-to-End Tests
+`dawn_end2end_tests` are the primary tests for the execution of the WebGPU API and require a GPU to run.
+For instructions on running these tests on Android, see [Running Dawn tests on Android with CMake](./android_cmake.md).
 
 ## Dawn Perf Tests
 
