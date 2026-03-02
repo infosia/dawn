@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d333dcf_d9c8d08f",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-02T16:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfad93db_31f89ad6",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3aa6eba_208be658",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-02T09:17:23Z",
       "side": 1,
       "message": "ditto numeric limits.",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e787b70_83e14d97",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-02T16:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3aa6eba_208be658",
       "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38c451d2_fd830fb0",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-02T16:00:38Z",
+      "side": 1,
+      "message": "Forgot to revert when pulled the code into ComputePipelineBase.",
+      "parentUuid": "d1f30d08_40d7ca25",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d83d586a_15ee51ce",
@@ -82,6 +136,24 @@
       "writtenOn": "2026-03-02T09:17:23Z",
       "side": 1,
       "message": "Multiple nits:\n\n1) this block breaks the initialization of the \"inner\" compute pipeline in two, can it be moved to be entirely before or entirely after?\n\n2) The comment about ugliness doesn\u0027t help understanding, maybe `Shader reflection after the application of overridable constant is required by the frontend for the workgroup size`.\n\n3) IMHO we could do it unconditionally because this is cold code, and it will avoid the need to debug and remove the condition in the future if it is required outside of the validation path as well.",
+      "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc6207d8_fe0e5d6c",
+        "filename": "src/dawn/native/webgpu/ComputePipelineWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-02T16:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d83d586a_15ee51ce",
       "revId": "5b9071be2356febef34ed599f9d61654a6420ed5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
