@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b87785c_9742ec19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-02T14:22:32Z",
+      "side": 1,
+      "message": "Hi @cwallez@chromium.org,\n\nThis patch is ready. Could you please take a look?",
+      "revId": "bdaeb1a7d7240bd2102c5b2085036cacb088fb77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
