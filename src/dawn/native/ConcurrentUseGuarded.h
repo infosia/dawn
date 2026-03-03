@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_CONCURRENTUSEGUARDED_H_
 #define SRC_DAWN_NATIVE_CONCURRENTUSEGUARDED_H_
 
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/Error.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -68,6 +69,25 @@ class ConcurrentUseGuardedBase {
 
   protected:
     virtual ~ConcurrentUseGuardedBase() = default;
+};
+
+// A map of objects that must be guarded from concurrent uses, to their ScopedUse.
+// Automatically calls FinishUse() on all entries when destroyed.
+using ConcurrentUseGuardedObjectList =
+    absl::flat_hash_map<ConcurrentUseGuardedBase*, ConcurrentUseGuardedBase::ScopedUse>;
+
+// A concrete implementation of ConcurrentUseGuardedBase that uses an atomic flag to manage the
+// in-use state.
+class ConcurrentUseGuarded : public ConcurrentUseGuardedBase {
+  public:
+    ResultOrError<ScopedUse> ValidateCanUseOnQueueNow() override;
+    void FinishUse() override;
+
+  protected:
+    ResultOrError<ScopedUse> TryUse();
+
+  private:
+    std::atomic<bool> mInUse{false};
 };
 
 }  // namespace dawn::native

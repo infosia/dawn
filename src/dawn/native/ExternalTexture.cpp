@@ -421,15 +421,20 @@ const std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat>& ExternalTextureBase
     return mTextureViews;
 }
 
-MaybeError ExternalTextureBase::ValidateCanUseInSubmitNow() const {
+MaybeError ExternalTextureBase::ValidateCanUseOnQueueNow(
+    ConcurrentUseGuardedObjectList* objectsUsedInQueue) {
     DAWN_ASSERT(!IsError());
+
     DAWN_INVALID_IF(mState != ExternalTextureState::Active,
                     "External texture %s used in a submit is not active.", this);
 
     for (uint32_t i = 0; i < kMaxPlanesPerFormat; ++i) {
         if (mTextureViews[i] != nullptr) {
-            DAWN_TRY_CONTEXT(mTextureViews[i]->GetTexture()->ValidateCanUseInSubmitNow(),
-                             "Validate plane %u of %s can be used in a submit.", i, this);
+            TextureBase* texture = mTextureViews[i]->GetTexture();
+            if (auto [iter, inserted] = objectsUsedInQueue->try_emplace(texture); inserted) {
+                DAWN_TRY_ASSIGN_WITH_CLEANUP(iter->second, texture->ValidateCanUseOnQueueNow(),
+                                             { objectsUsedInQueue->erase(iter); });
+            }
         }
     }
     return {};

@@ -40,6 +40,7 @@
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/BlockInfo.h"
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/ConcurrentUseGuarded.h"
 #include "dawn/native/DeviceGuard.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Format.h"
@@ -145,8 +146,10 @@ struct TextureViewCacheFuncs {
     bool operator()(const TextureViewQuery& a, const TextureViewQuery& b) const;
 };
 
-class TextureBase : public RefCountedWithExternalCount<SharedResource> {
+class TextureBase : public RefCountedWithExternalCount<SharedResource>,
+                    public ConcurrentUseGuarded {
   public:
+    using ScopedUse = ConcurrentUseGuarded::ScopedUse;
     enum class ClearValue { Zero, NonZero };
 
     static Ref<TextureBase> MakeError(DeviceBase* device, const TextureDescriptor* descriptor);
@@ -194,7 +197,8 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     bool IsSubresourceContentInitialized(const SubresourceRange& range) const;
     void SetIsSubresourceContentInitialized(bool isInitialized, const SubresourceRange& range);
 
-    MaybeError ValidateCanUseInSubmitNow() const;
+    // ConcurrentUseGuardedBase implementation
+    ResultOrError<ScopedUse> ValidateCanUseOnQueueNow() override;
 
     bool IsMultisampledTexture() const;
 

@@ -57,7 +57,9 @@ DeviceMock::DeviceMock(AdapterBase* adapter,
     ON_CALL(*this, CreateBindGroupImpl)
         .WillByDefault(WithArgs<0>([this](const UnpackedPtr<BindGroupDescriptor>& descriptor)
                                        -> ResultOrError<Ref<BindGroupBase>> {
-            return AcquireRef(new NiceMock<BindGroupMock>(this, descriptor));
+            Ref<BindGroupMock> bg = AcquireRef(new NiceMock<BindGroupMock>(this, descriptor));
+            DAWN_TRY(bg->Initialize(descriptor));
+            return bg;
         }));
     ON_CALL(*this, CreateBindGroupLayoutImpl)
         .WillByDefault(WithArgs<0>([this](const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor)
@@ -78,7 +80,9 @@ DeviceMock::DeviceMock(AdapterBase* adapter,
     ON_CALL(*this, CreateExternalTextureImpl)
         .WillByDefault(WithArgs<0>([this](const ExternalTextureDescriptor* descriptor)
                                        -> ResultOrError<Ref<ExternalTextureBase>> {
-            return ExternalTextureMock::Create(this, descriptor);
+            Ref<ExternalTextureMock> et;
+            DAWN_TRY_ASSIGN(et, ExternalTextureMock::CreateAndInitialize(this, descriptor));
+            return et;
         }));
     ON_CALL(*this, CreatePipelineLayoutImpl)
         .WillByDefault(WithArgs<0>([this](const UnpackedPtr<PipelineLayoutDescriptor>& descriptor)
