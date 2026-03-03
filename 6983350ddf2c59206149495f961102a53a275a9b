@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18cf5172_605c6784",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-03T14:33:31Z",
+      "side": 1,
+      "message": "Hi @cwallez@chromium.org.\n\nCould you please take a look?",
+      "revId": "6983350ddf2c59206149495f961102a53a275a9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
