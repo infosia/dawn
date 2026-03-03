@@ -39,6 +39,30 @@
       },
       "revId": "0491d789c903d1705751850583a7b384b9eb1249",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "113c8063_56d0db59",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-03T09:10:35Z",
+      "side": 1,
+      "message": "Because of the way I did things in VIM (copying 2D blocks of code), there seems to have been a lot of whitespace inserted. Removed it and the diff looks normal now!",
+      "parentUuid": "518f6807_064fe1be",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 261
+      },
+      "revId": "0491d789c903d1705751850583a7b384b9eb1249",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
