@@ -30,6 +30,7 @@
 
 #include <array>
 
+#include "dawn/native/ConcurrentUseGuarded.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/ObjectBase.h"
@@ -79,7 +80,8 @@ class ExternalTextureBase : public ApiObjectBase {
     const std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat>& GetTextureViews() const;
     ObjectType GetType() const override;
 
-    MaybeError ValidateCanUseInSubmitNow() const;
+    MaybeError ValidateCanUseOnQueueNow(ConcurrentUseGuardedObjectList* objectsUsedInQueue);
+
     static Ref<ExternalTextureBase> MakeError(DeviceBase* device, StringView label = {});
 
     void APIExpire();

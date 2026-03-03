@@ -579,11 +579,14 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
 }
 
 MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
-                                             const TexelCopyTextureInfo& destination,
-                                             const Extent3D& copySize,
-                                             const CopyTextureForBrowserOptions& options) {
+                                              const TexelCopyTextureInfo& destination,
+                                              const Extent3D& copySize,
+                                              const CopyTextureForBrowserOptions& options) {
     DAWN_TRY(device->ValidateObject(destination.texture));
-    DAWN_TRY(destination.texture->ValidateCanUseInSubmitNow());
+    // The copy internally binds destination as a render attachment, so its scoped use will be
+    // re-validated later in Queue::Submit.
+    TextureBase::ScopedUse use;
+    DAWN_TRY_ASSIGN(use, destination.texture->ValidateCanUseOnQueueNow());
     DAWN_TRY_CONTEXT(ValidateTexelCopyTextureInfo(device, destination, copySize),
                      "validating the TexelCopyTextureInfo for the destination");
     DAWN_TRY_CONTEXT(ValidateTextureCopyRange(device, destination, copySize),
@@ -636,7 +639,10 @@ MaybeError ValidateCopyTextureForBrowser(DeviceBase* device,
                                          const CopyTextureForBrowserOptions* options) {
     // Validate source
     DAWN_TRY(device->ValidateObject(source->texture));
-    DAWN_TRY(source->texture->ValidateCanUseInSubmitNow());
+    // The copy internally binds source as a texture and destination as a render attachment, so
+    // their scoped uses will be re-validated later in Queue::Submit.
+    TextureBase::ScopedUse sourceUse;
+    DAWN_TRY_ASSIGN(sourceUse, source->texture->ValidateCanUseOnQueueNow());
     DAWN_TRY_CONTEXT(ValidateTexelCopyTextureInfo(device, *source, *copySize),
                      "validating the TexelCopyTextureInfo for the source");
     DAWN_TRY_CONTEXT(ValidateTextureCopyRange(device, *source, *copySize),
@@ -676,7 +682,10 @@ MaybeError ValidateCopyExternalTextureForBrowser(DeviceBase* device,
                                                  const CopyTextureForBrowserOptions* options) {
     // Validate source
     DAWN_TRY(device->ValidateObject(source->externalTexture));
-    DAWN_TRY(source->externalTexture->ValidateCanUseInSubmitNow());
+    // The copy internally binds the external texture's planes as textures and destination as a
+    // render attachment, so their scoped uses will be re-validated later in Queue::Submit.
+    ConcurrentUseGuardedObjectList sourcePlaneUses;
+    DAWN_TRY(source->externalTexture->ValidateCanUseOnQueueNow(&sourcePlaneUses));
 
     Extent2D sourceSize;
     sourceSize.width = source->naturalSize.width;

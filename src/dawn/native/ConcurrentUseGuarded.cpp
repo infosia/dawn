@@ -63,4 +63,23 @@ void ConcurrentUseGuardedBase::ScopedUse::Release() {
     mGuarded = nullptr;
 }
 
+ResultOrError<ConcurrentUseGuardedBase::ScopedUse>
+ConcurrentUseGuarded::ValidateCanUseOnQueueNow() {
+    return TryUse();
+}
+
+ResultOrError<ConcurrentUseGuardedBase::ScopedUse> ConcurrentUseGuarded::TryUse() {
+    bool expected = false;
+    if (!mInUse.compare_exchange_strong(expected, true, std::memory_order::acq_rel)) {
+        // TODO(crbug.com/467247254): consider a way to print object's label.
+        return DAWN_VALIDATION_ERROR("Concurrent use is not allowed.");
+    }
+    return ScopedUse(this);
+}
+
+void ConcurrentUseGuarded::FinishUse() {
+    DAWN_ASSERT(mInUse.load(std::memory_order::relaxed));
+    mInUse.store(false, std::memory_order::release);
+}
+
 }  // namespace dawn::native
