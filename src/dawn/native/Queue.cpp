@@ -36,7 +36,6 @@
 #include <utility>
 #include <vector>
 
-#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/FutureUtils.h"
@@ -365,7 +364,8 @@ MaybeError QueueBase::WriteTextureInternal(const TexelCopyTextureInfo* destinati
                                            const Extent3D* writeSize) {
     TexelCopyTextureInfo destination = destinationOrig->WithTrivialFrontendDefaults();
 
-    DAWN_TRY(ValidateWriteTexture(&destination, dataSize, dataLayout, writeSize));
+    ConcurrentUseGuardedBase::ScopedUse use;
+    DAWN_TRY_ASSIGN(use, ValidateWriteTexture(&destination, dataSize, dataLayout, writeSize));
 
     if (writeSize->width == 0 || writeSize->height == 0 || writeSize->depthOrArrayLayers == 0) {
         return {};
@@ -485,7 +485,7 @@ MaybeError QueueBase::CopyExternalTextureForBrowserInternal(
 
 MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
                                      CommandBufferBase* const* commands,
-                                     BufferSet& buffersFromCommands) const {
+                                     ConcurrentUseGuardedObjectList& objectsUsedInQueue) const {
     TRACE_EVENT0(GetDevice()->GetPlatform(), Validation, "Queue::ValidateSubmit");
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
@@ -500,13 +500,11 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         const CommandBufferResourceUsage& usages = commands[i]->GetResourceUsages();
 
-        auto ValidateBuffer = [&buffersFromCommands](BufferBase* buffer) -> MaybeError {
-            if (auto [iter, inserted] = buffersFromCommands.insert(buffer); inserted) {
-                BufferBase::ScopedUse use;
-                DAWN_TRY_ASSIGN_WITH_CLEANUP(use, buffer->ValidateCanUseOnQueueNow(),
-                                             { buffersFromCommands.erase(iter); });
-                // FinishUse() will be called on the buffers in `buffersFromCommands` explicitly.
-                use.Release();
+        auto ValidateConcurrencyGuarded =
+            [&objectsUsedInQueue](ConcurrentUseGuardedBase* resource) -> MaybeError {
+            if (auto [iter, inserted] = objectsUsedInQueue.try_emplace(resource); inserted) {
+                DAWN_TRY_ASSIGN_WITH_CLEANUP(iter->second, resource->ValidateCanUseOnQueueNow(),
+                                             { objectsUsedInQueue.erase(iter); });
             }
             return {};
         };
@@ -514,13 +512,13 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
         // Maybe track last usage for other resources, and use it to release resources earlier?
         for (const SyncScopeResourceUsage& scope : usages.renderPasses) {
             for (BufferBase* buffer : scope.buffers) {
-                DAWN_TRY(ValidateBuffer(buffer));
+                DAWN_TRY(ValidateConcurrencyGuarded(buffer));
             }
-            for (const TextureBase* texture : scope.textures) {
-                DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+            for (TextureBase* texture : scope.textures) {
+                DAWN_TRY(ValidateConcurrencyGuarded(texture));
             }
-            for (const ExternalTextureBase* externalTexture : scope.externalTextures) {
-                DAWN_TRY(externalTexture->ValidateCanUseInSubmitNow());
+            for (ExternalTextureBase* externalTexture : scope.externalTextures) {
+                DAWN_TRY(externalTexture->ValidateCanUseOnQueueNow(&objectsUsedInQueue));
             }
             for (const ResourceTableBase* resourceTable : scope.usedResourceTables) {
                 DAWN_TRY(resourceTable->ValidateCanUseInSubmitNow());
@@ -529,13 +527,13 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         for (const ComputePassResourceUsage& pass : usages.computePasses) {
             for (BufferBase* buffer : pass.referencedBuffers) {
-                DAWN_TRY(ValidateBuffer(buffer));
+                DAWN_TRY(ValidateConcurrencyGuarded(buffer));
             }
-            for (const TextureBase* texture : pass.referencedTextures) {
-                DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+            for (TextureBase* texture : pass.referencedTextures) {
+                DAWN_TRY(ValidateConcurrencyGuarded(texture));
             }
-            for (const ExternalTextureBase* externalTexture : pass.referencedExternalTextures) {
-                DAWN_TRY(externalTexture->ValidateCanUseInSubmitNow());
+            for (ExternalTextureBase* externalTexture : pass.referencedExternalTextures) {
+                DAWN_TRY(externalTexture->ValidateCanUseOnQueueNow(&objectsUsedInQueue));
             }
             for (const ResourceTableBase* resourceTable : pass.referencedResourceTables) {
                 DAWN_TRY(resourceTable->ValidateCanUseInSubmitNow());
@@ -543,10 +541,10 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
         }
 
         for (BufferBase* buffer : usages.topLevelBuffers) {
-            DAWN_TRY(ValidateBuffer(buffer));
+            DAWN_TRY(ValidateConcurrencyGuarded(buffer));
         }
-        for (const TextureBase* texture : usages.topLevelTextures) {
-            DAWN_TRY(texture->ValidateCanUseInSubmitNow());
+        for (TextureBase* texture : usages.topLevelTextures) {
+            DAWN_TRY(ValidateConcurrencyGuarded(texture));
         }
         for (const QuerySetBase* querySet : usages.usedQuerySets) {
             DAWN_TRY(querySet->ValidateCanUseInSubmitNow());
@@ -609,10 +607,11 @@ MaybeError QueueBase::ValidateOnSubmittedWorkDone() const {
     return {};
 }
 
-MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destination,
-                                           size_t dataSize,
-                                           const TexelCopyBufferLayout& dataLayout,
-                                           const Extent3D* writeSize) const {
+ResultOrError<ConcurrentUseGuardedBase::ScopedUse> QueueBase::ValidateWriteTexture(
+    const TexelCopyTextureInfo* destination,
+    size_t dataSize,
+    const TexelCopyBufferLayout& dataLayout,
+    const Extent3D* writeSize) const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_TRY(GetDevice()->ValidateObject(destination->texture));
@@ -643,9 +642,7 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
 
     DAWN_TRY(ValidateLinearTextureData(dataLayout, dataSize, blockInfo, *writeSize));
 
-    DAWN_TRY(destination->texture->ValidateCanUseInSubmitNow());
-
-    return {};
+    return destination->texture->ValidateCanUseOnQueueNow();
 }
 
 MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -656,23 +653,15 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
 
     TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
 
-    BufferSet buffersUsedInSubmit;
-    absl::Cleanup finishUseBuffers = [&buffersUsedInSubmit]() {
-        for (BufferBase* buffer : buffersUsedInSubmit) {
-            buffer->FinishUse();
-        }
-    };
+    ConcurrentUseGuardedObjectList objectsUsedInQueue;
     if (device->IsValidationEnabled()) {
         // TODO(crbug.com/425472913): Keep a rolling average of set size so this can reserve a
         // sufficiently large set for max of last N submits.
-        DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
+        DAWN_TRY(ValidateSubmit(commandCount, commands, objectsUsedInQueue));
     }
     DAWN_ASSERT(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
-
-    // Switch the buffer state back to unmapped before Tick().
-    std::move(finishUseBuffers).Invoke();
 
     // Call Tick() to flush pending work.
     DAWN_TRY(device->Tick());

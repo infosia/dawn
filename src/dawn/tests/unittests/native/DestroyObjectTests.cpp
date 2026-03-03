@@ -28,6 +28,8 @@
 #include <gtest/gtest.h>
 #include <webgpu/webgpu_cpp.h>
 
+#include <atomic>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -49,6 +51,7 @@
 #include "mocks/ExternalTextureMock.h"
 #include "mocks/PipelineLayoutMock.h"
 #include "mocks/QuerySetMock.h"
+#include "mocks/QueueMock.h"
 #include "mocks/RenderPipelineMock.h"
 #include "mocks/SamplerMock.h"
 #include "mocks/ShaderModuleMock.h"
@@ -1096,6 +1099,263 @@ TEST_F(DestroyObjectTests, IsAliveRace) {
             bufferMock = nullptr;
         }
     });
+}
+
+class ConcurrentDestroyTests : public DawnMockTest {
+  public:
+    ConcurrentDestroyTests() : DawnMockTest() {
+        // We need validation enabled to catch the concurrent destruction error.
+        mDeviceToggles.ForceSet(Toggle::SkipValidation, false);
+    }
+
+  protected:
+    wgpu::Texture CreateTexture(wgpu::TextureUsage usage) {
+        wgpu::TextureDescriptor descriptor;
+        descriptor.size.width = 1;
+        descriptor.size.height = 1;
+        descriptor.size.depthOrArrayLayers = 1;
+        descriptor.mipLevelCount = 1;
+        descriptor.sampleCount = 1;
+        descriptor.dimension = wgpu::TextureDimension::e2D;
+        descriptor.format = wgpu::TextureFormat::RGBA8Unorm;
+        descriptor.usage = usage;
+        return device.CreateTexture(&descriptor);
+    }
+};
+
+// Test that calling Destroy() concurrently with Queue::Submit should return error.
+TEST_F(ConcurrentDestroyTests, TextureDestroyWhileInSubmit) {
+    wgpu::Texture texture = CreateTexture(wgpu::TextureUsage::CopySrc);
+    wgpu::Texture dstTexture = CreateTexture(wgpu::TextureUsage::CopyDst);
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::TexelCopyTextureInfo src = {};
+    src.texture = texture;
+    wgpu::TexelCopyTextureInfo dst = {};
+    dst.texture = dstTexture;
+    wgpu::Extent3D copySize = {1, 1, 1};
+    encoder.CopyTextureToTexture(&src, &dst, &copySize);
+    wgpu::CommandBuffer commands = encoder.Finish();
+
+    std::atomic<bool> inSubmit{false};
+    std::atomic<bool> destroyCalled{false};
+
+    EXPECT_CALL(*(mDeviceMock->GetQueueMock()), SubmitImpl(_, _))
+        .WillOnce([&](uint32_t, CommandBufferBase* const*) -> MaybeError {
+            inSubmit = true;
+            inSubmit.notify_all();
+            destroyCalled.wait(false);
+            return {};
+        });
+
+    std::thread destroyThread([&]() {
+        inSubmit.wait(false);
+
+        // This should trigger a validation error because the queue has marked the texture as
+        // in-use.
+        EXPECT_CALL(mDeviceErrorCallback, Call(_, _, _)).Times(1);
+        texture.Destroy();
+
+        destroyCalled = true;
+        destroyCalled.notify_all();
+    });
+
+    device.GetQueue().Submit(1, &commands);
+    destroyThread.join();
+}
+
+// Test that calling Destroy() on a texture wrapped by an ExternalTexture, while the ExternalTexture
+// is used in a BindGroup concurrently with Queue::Submit, should return error.
+TEST_F(ConcurrentDestroyTests, ExternalTextureDestroyWhileInSubmit) {
+    wgpu::Texture texture = CreateTexture(wgpu::TextureUsage::TextureBinding);
+    wgpu::Texture renderTarget = CreateTexture(wgpu::TextureUsage::RenderAttachment);
+
+    wgpu::ExternalTextureDescriptor desc = {};
+    std::array<float, 12> placeholderConstantArray;
+    desc.yuvToRgbConversionMatrix = placeholderConstantArray.data();
+    desc.gamutConversionMatrix = placeholderConstantArray.data();
+    desc.srcTransferFunctionParameters = placeholderConstantArray.data();
+    desc.dstTransferFunctionParameters = placeholderConstantArray.data();
+    desc.cropSize = {1, 1};
+    desc.apparentSize = {1, 1};
+    desc.plane0 = texture.CreateView();
+
+    wgpu::ExternalTexture externalTexture = device.CreateExternalTexture(&desc);
+
+    // Create a bind group referencing the external texture to include it in the submit.
+    wgpu::BindGroupLayout bgl = dawn::utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, &dawn::utils::kExternalTextureBindingLayout}});
+    wgpu::BindGroup bg = dawn::utils::MakeBindGroup(device, bgl, {{0, externalTexture}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    dawn::utils::ComboRenderPassDescriptor rpDesc({renderTarget.CreateView()});
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&rpDesc);
+    pass.SetBindGroup(0, bg);
+    pass.End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+
+    std::atomic<bool> inSubmit{false};
+    std::atomic<bool> destroyCalled{false};
+
+    EXPECT_CALL(*(mDeviceMock->GetQueueMock()), SubmitImpl(_, _))
+        .WillOnce([&](uint32_t, CommandBufferBase* const*) -> MaybeError {
+            inSubmit = true;
+            inSubmit.notify_all();
+            destroyCalled.wait(false);
+            return {};
+        });
+
+    std::thread destroyThread([&]() {
+        inSubmit.wait(false);
+
+        // This should trigger a validation error because the queue has marked the wrapped
+        // texture as in-use.
+        EXPECT_CALL(mDeviceErrorCallback, Call(_, _, _)).Times(1);
+        texture.Destroy();
+
+        destroyCalled = true;
+        destroyCalled.notify_all();
+    });
+
+    device.GetQueue().Submit(1, &commands);
+    destroyThread.join();
+}
+
+// Test that calling Destroy() concurrently with Queue::WriteTexture should return error.
+TEST_F(ConcurrentDestroyTests, TextureDestroyWhileInWriteTexture) {
+    wgpu::Texture texture = CreateTexture(wgpu::TextureUsage::CopyDst);
+
+    wgpu::TexelCopyTextureInfo dst = {};
+    dst.texture = texture;
+    uint32_t data = 0;
+    wgpu::TexelCopyBufferLayout layout = {};
+    wgpu::Extent3D writeSize = {1, 1, 1};
+
+    std::atomic<bool> inWriteTexture{false};
+    std::atomic<bool> destroyCalled{false};
+
+    EXPECT_CALL(*(mDeviceMock->GetQueueMock()), WriteTextureImpl(_, _, _, _, _))
+        .WillOnce([&](const TexelCopyTextureInfo&, const void*, size_t,
+                      const TexelCopyBufferLayout&, const Extent3D&) -> MaybeError {
+            inWriteTexture = true;
+            inWriteTexture.notify_all();
+            destroyCalled.wait(false);
+            return {};
+        });
+
+    std::thread destroyThread([&]() {
+        inWriteTexture.wait(false);
+
+        // This should trigger a validation error because the queue has marked the texture as
+        // in-use.
+        EXPECT_CALL(mDeviceErrorCallback, Call(_, _, _)).Times(1);
+        texture.Destroy();
+
+        destroyCalled = true;
+        destroyCalled.notify_all();
+    });
+
+    device.GetQueue().WriteTexture(&dst, &data, sizeof(data), &layout, &writeSize);
+    destroyThread.join();
+}
+
+// Test that calling Destroy() concurrently with Queue::CopyTextureForBrowser should return error.
+TEST_F(ConcurrentDestroyTests, TextureDestroyWhileInCopyTextureForBrowser) {
+    wgpu::Texture texture =
+        CreateTexture(wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::TextureBinding);
+    wgpu::Texture dstTexture =
+        CreateTexture(wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::RenderAttachment);
+
+    wgpu::TexelCopyTextureInfo src = {};
+    src.texture = texture;
+    wgpu::TexelCopyTextureInfo dst = {};
+    dst.texture = dstTexture;
+    wgpu::Extent3D copySize = {1, 1, 1};
+    wgpu::CopyTextureForBrowserOptions options = {};
+
+    std::atomic<bool> inCopy{false};
+    std::atomic<bool> destroyCalled{false};
+
+    // We mock the SubmitImpl which is eventually called by the internal implementation of
+    // CopyTextureForBrowser.
+    EXPECT_CALL(*(mDeviceMock->GetQueueMock()), SubmitImpl(_, _))
+        .WillOnce([&](uint32_t, CommandBufferBase* const*) -> MaybeError {
+            inCopy = true;
+            inCopy.notify_all();
+            destroyCalled.wait(false);
+            return {};
+        });
+
+    std::thread destroyThread([&]() {
+        inCopy.wait(false);
+
+        // This should trigger a validation error because the queue has marked the texture as
+        // in-use.
+        EXPECT_CALL(mDeviceErrorCallback, Call(_, _, _)).Times(1);
+        texture.Destroy();
+
+        destroyCalled = true;
+        destroyCalled.notify_all();
+    });
+
+    device.GetQueue().CopyTextureForBrowser(&src, &dst, &copySize, &options);
+    destroyThread.join();
+}
+
+// Test that calling Destroy() on a texture wrapped by an ExternalTexture concurrently with
+// Queue::CopyExternalTextureForBrowser should return error.
+TEST_F(ConcurrentDestroyTests, TextureDestroyWhileInCopyExternalTextureForBrowser) {
+    wgpu::Texture plane0 = CreateTexture(wgpu::TextureUsage::TextureBinding);
+    wgpu::Texture dstTexture =
+        CreateTexture(wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::RenderAttachment);
+
+    wgpu::ExternalTextureDescriptor desc = {};
+    std::array<float, 12> placeholderConstantArray;
+    desc.yuvToRgbConversionMatrix = placeholderConstantArray.data();
+    desc.gamutConversionMatrix = placeholderConstantArray.data();
+    desc.srcTransferFunctionParameters = placeholderConstantArray.data();
+    desc.dstTransferFunctionParameters = placeholderConstantArray.data();
+    desc.cropSize = {1, 1};
+    desc.apparentSize = {1, 1};
+    desc.plane0 = plane0.CreateView();
+
+    wgpu::ExternalTexture et = device.CreateExternalTexture(&desc);
+
+    wgpu::ImageCopyExternalTexture src = {};
+    src.externalTexture = et;
+    src.naturalSize = {1, 1};
+    wgpu::TexelCopyTextureInfo dst = {};
+    dst.texture = dstTexture;
+    wgpu::Extent3D copySize = {1, 1, 1};
+    wgpu::CopyTextureForBrowserOptions options = {};
+
+    std::atomic<bool> inCopy{false};
+    std::atomic<bool> destroyCalled{false};
+
+    // We mock the SubmitImpl which is eventually called by the internal implementation of
+    // CopyExternalTextureForBrowser.
+    EXPECT_CALL(*(mDeviceMock->GetQueueMock()), SubmitImpl(_, _))
+        .WillOnce([&](uint32_t, CommandBufferBase* const*) -> MaybeError {
+            inCopy = true;
+            inCopy.notify_all();
+            destroyCalled.wait(false);
+            return {};
+        });
+
+    std::thread destroyThread([&]() {
+        inCopy.wait(false);
+
+        // This should trigger a validation error because the queue has marked the wrapped
+        // texture as in-use.
+        EXPECT_CALL(mDeviceErrorCallback, Call(_, _, _)).Times(1);
+        plane0.Destroy();
+
+        destroyCalled = true;
+        destroyCalled.notify_all();
+    });
+
+    device.GetQueue().CopyExternalTextureForBrowser(&src, &dst, &copySize, &options);
+    destroyThread.join();
 }
 
 class DestroyObjectRegressionTests : public DawnNativeTest {};
