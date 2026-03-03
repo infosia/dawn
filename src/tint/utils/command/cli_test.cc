@@ -30,6 +30,7 @@
 #include <sstream>
 
 #include "gmock/gmock.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/containers/transform.h"  // Used by ToStringList()
 #include "src/tint/utils/text/string.h"
 

@@ -33,6 +33,7 @@
 #include "src/tint/lang/wgsl/sem/switch_statement.h"
 #include "src/tint/lang/wgsl/sem/value_expression.h"
 #include "src/tint/lang/wgsl/sem/while_statement.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::resolver {
 namespace {

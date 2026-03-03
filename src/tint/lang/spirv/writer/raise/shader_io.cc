@@ -44,6 +44,7 @@
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/type/image.h"
 #include "src/tint/lang/spirv/type/literal.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/ice/ice.h"
 
 using namespace tint::core::fluent_types;     // NOLINT

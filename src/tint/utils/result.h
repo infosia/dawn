@@ -33,6 +33,7 @@
 #include <utility>
 #include <variant>
 
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/rtti/traits.h"
 #include "src/utils/compiler.h"

@@ -158,8 +158,8 @@ struct TypeCodeSet {
             return {TypeCode::Of<std::remove_cv_t<std::tuple_element_t<0, TUPLE>>>().bits};
         } else {
             constexpr auto kMid = kCount / 2;
-            return {OfTuple<tint::traits::SliceTuple<0, kMid, TUPLE>>().bits |
-                    OfTuple<tint::traits::SliceTuple<kMid, kCount - kMid, TUPLE>>().bits};
+            return {OfTuple<tint::traits::Subtuple<0, kMid, TUPLE>>().bits |
+                    OfTuple<tint::traits::Subtuple<kMid, kCount - kMid, TUPLE>>().bits};
         }
     }
 
@@ -262,8 +262,8 @@ struct TypeInfo {
                 // Possibly one of the types in `TUPLE`.
                 // Split the search in two, and scan each block.
                 static constexpr auto kMid = kCount / 2;
-                return IsAnyOfTuple<tint::traits::SliceTuple<0, kMid, TUPLE>>() ||
-                       IsAnyOfTuple<tint::traits::SliceTuple<kMid, kCount - kMid, TUPLE>>();
+                return IsAnyOfTuple<tint::traits::Subtuple<0, kMid, TUPLE>>() ||
+                       IsAnyOfTuple<tint::traits::Subtuple<kMid, kCount - kMid, TUPLE>>();
             }
             return false;
         }

@@ -34,6 +34,7 @@
 #include "src/tint/lang/wgsl/sem/loop_statement.h"
 #include "src/tint/lang/wgsl/sem/switch_statement.h"
 #include "src/tint/lang/wgsl/sem/while_statement.h"
+#include "src/tint/utils/containers/empty.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
 

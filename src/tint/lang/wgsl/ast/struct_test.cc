@@ -29,6 +29,7 @@
 
 #include "src/tint/lang/wgsl/ast/alias.h"
 #include "src/tint/lang/wgsl/ast/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::ast {
 namespace {

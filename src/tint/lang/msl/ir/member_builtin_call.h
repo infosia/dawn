@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/member_builtin_call.h"
 #include "src/tint/lang/msl/builtin_fn.h"
 #include "src/tint/lang/msl/intrinsic/dialect.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/castable.h"
 
 namespace tint::msl::ir {

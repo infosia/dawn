@@ -30,6 +30,7 @@
 #include <ostream>
 
 #include "gtest/gtest.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::traits {
 
@@ -154,44 +155,44 @@ TEST(ParamType, Lambda) {
     static_assert(SignatureOfT<decltype(l3)>::parameter_count == 3);
 }
 
-TEST(SliceTuple, Empty) {
-    using sliced = SliceTuple<0, 0, std::tuple<>>;
+TEST(Subtuple, Empty) {
+    using sliced = Subtuple<0, 0, std::tuple<>>;
     static_assert(std::tuple_size_v<sliced> == 0);
 }
 
-TEST(SliceTuple, SingleElementSliceEmpty) {
-    using sliced = SliceTuple<0, 0, std::tuple<int>>;
+TEST(Subtuple, SingleElementSliceEmpty) {
+    using sliced = Subtuple<0, 0, std::tuple<int>>;
     static_assert(std::tuple_size_v<sliced> == 0);
 }
 
-TEST(SliceTuple, SingleElementSliceFull) {
-    using sliced = SliceTuple<0, 1, std::tuple<int>>;
+TEST(Subtuple, SingleElementSliceFull) {
+    using sliced = Subtuple<0, 1, std::tuple<int>>;
     static_assert(std::tuple_size_v<sliced> == 1);
     static_assert(std::is_same_v<std::tuple_element_t<0, sliced>, int>);
 }
 
-TEST(SliceTuple, MixedTupleSliceEmpty) {
-    using sliced = SliceTuple<1, 0, std::tuple<int, bool, float>>;
+TEST(Subtuple, MixedTupleSliceEmpty) {
+    using sliced = Subtuple<1, 0, std::tuple<int, bool, float>>;
     static_assert(std::tuple_size_v<sliced> == 0);
 }
 
-TEST(SliceTuple, MixedTupleSliceFull) {
-    using sliced = SliceTuple<0, 3, std::tuple<int, bool, float>>;
+TEST(Subtuple, MixedTupleSliceFull) {
+    using sliced = Subtuple<0, 3, std::tuple<int, bool, float>>;
     static_assert(std::tuple_size_v<sliced> == 3);
     static_assert(std::is_same_v<std::tuple_element_t<0, sliced>, int>);
     static_assert(std::is_same_v<std::tuple_element_t<1, sliced>, bool>);
     static_assert(std::is_same_v<std::tuple_element_t<2, sliced>, float>);
 }
 
-TEST(SliceTuple, MixedTupleSliceLowPart) {
-    using sliced = SliceTuple<0, 2, std::tuple<int, bool, float>>;
+TEST(Subtuple, MixedTupleSliceLowPart) {
+    using sliced = Subtuple<0, 2, std::tuple<int, bool, float>>;
     static_assert(std::tuple_size_v<sliced> == 2);
     static_assert(std::is_same_v<std::tuple_element_t<0, sliced>, int>);
     static_assert(std::is_same_v<std::tuple_element_t<1, sliced>, bool>);
 }
 
-TEST(SliceTuple, MixedTupleSliceHighPart) {
-    using sliced = SliceTuple<1, 2, std::tuple<int, bool, float>>;
+TEST(Subtuple, MixedTupleSliceHighPart) {
+    using sliced = Subtuple<1, 2, std::tuple<int, bool, float>>;
     static_assert(std::tuple_size_v<sliced> == 2);
     static_assert(std::is_same_v<std::tuple_element_t<0, sliced>, bool>);
     static_assert(std::is_same_v<std::tuple_element_t<1, sliced>, float>);

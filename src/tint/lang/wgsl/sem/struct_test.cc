@@ -29,6 +29,7 @@
 
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/wgsl/sem/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::sem {
 namespace {

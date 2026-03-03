@@ -29,6 +29,7 @@
 
 #include "gmock/gmock.h"
 #include "src/tint/lang/wgsl/writer/ast_printer/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::wgsl::writer {
 namespace {

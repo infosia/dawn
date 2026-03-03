@@ -35,6 +35,7 @@
 #include "gtest/gtest.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/number.h"
+#include "src/tint/utils/containers/empty.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
 

@@ -31,6 +31,7 @@
 #include "src/tint/lang/wgsl/ast/stage_attribute.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/writer/ast_printer/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
 

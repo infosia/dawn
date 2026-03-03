@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/reader/parser/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::wgsl::reader {
 namespace {

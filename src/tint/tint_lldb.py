@@ -98,7 +98,6 @@ string_encoding = "escape"  # remove | unicode | escape
 log = logging.getLogger(__name__)
 
 module = sys.modules[__name__]
-tint_category = None
 
 
 def __lldb_init_module(debugger, dict):
@@ -106,8 +105,6 @@ def __lldb_init_module(debugger, dict):
 
     tint_category = debugger.CreateCategory('tint')
     tint_category.SetEnabled(True)
-
-    attach_synthetic_to_type(UtilsSlicePrinter, r'^tint::Slice<.+>$', True)
 
     attach_synthetic_to_type(UtilsVectorPrinter, r'^tint::Vector<.+>$', True)
 
@@ -224,13 +221,13 @@ class Printer(object):
         return self.template_params()[index]
 
 
-class UtilsSlicePrinter(Printer):
-    '''Printer for tint::Slice<T>'''
+class UtilsVectorBasePrinter(object):
+    '''Base class for tint::Vector and tint::VectorRef'''
 
-    def initialize(self):
-        self.len = self.valobj.GetChildMemberWithName('len')
-        self.cap = self.valobj.GetChildMemberWithName('cap')
-        self.data = self.valobj.GetChildMemberWithName('data')
+    def __init__(self, data, len, cap):
+        self.data = data
+        self.len = len
+        self.cap = cap
         self.elem_type = self.data.GetType().GetPointeeType()
         self.elem_size = self.elem_type.GetByteSize()
 
@@ -250,7 +247,6 @@ class UtilsSlicePrinter(Printer):
         try:
             if not 0 <= index < self.num_children():
                 return None
-            # TODO: return self.value_at(index)
             offset = index * self.elem_size
             return self.data.CreateChildAtOffset('[%s]' % index, offset,
                                                  self.elem_type)
@@ -269,64 +265,70 @@ class UtilsVectorPrinter(Printer):
     '''Printer for tint::Vector<T, N>'''
 
     def initialize(self):
-        self.slice = self.member('impl_', 'slice')
-        self.slice_printer = UtilsSlicePrinter(self.slice)
+        self.impl = self.member('impl_')
         self.fixed_size = int(self.template_param_at(1))
-        self.cap = self.slice_printer.member('cap')
+        self.base = UtilsVectorBasePrinter(
+            self.impl.GetChildMemberWithName('data'),
+            self.impl.GetChildMemberWithName('len'),
+            self.impl.GetChildMemberWithName('cap'))
 
     def get_summary(self):
-        using_heap = self.cap.GetValueAsUnsigned() > self.fixed_size
-        return 'heap={} {}'.format(using_heap,
-                                   self.slice_printer.get_summary())
+        using_heap = self.base.cap.GetValueAsUnsigned() > self.fixed_size
+        return 'heap={} {}'.format(using_heap, self.base.get_summary())
 
     def num_children(self):
-        return self.slice_printer.num_children()
+        return self.base.num_children()
 
     def has_children(self):
-        return self.slice_printer.has_children()
+        return self.base.has_children()
 
     def get_child_at_index(self, index):
-        return self.slice_printer.get_child_at_index(index)
+        return self.base.get_child_at_index(index)
 
-    def make_slice_printer(self):
-        return UtilsSlicePrinter(self.slice)
+    def value_at(self, index):
+        return self.base.value_at(index)
 
 
 class UtilsVectorRefPrinter(Printer):
     '''Printer for tint::VectorRef<T>'''
 
     def initialize(self):
-        self.slice = self.member('slice_')
-        self.slice_printer = UtilsSlicePrinter(self.slice)
+        self.data_ptr = self.member('data_')
+        self.len_ptr = self.member('len_')
+        self.cap_ptr = self.member('cap_')
         self.can_move = self.member('can_move_')
+        self.base = UtilsVectorBasePrinter(self.data_ptr.Dereference(),
+                                           self.len_ptr.Dereference(),
+                                           self.cap_ptr.Dereference())
 
     def get_summary(self):
         return 'can_move={} {}'.format(self.can_move.GetValue(),
-                                       self.slice_printer.get_summary())
+                                       self.base.get_summary())
 
     def num_children(self):
-        return self.slice_printer.num_children()
+        return self.base.num_children()
 
     def has_children(self):
-        return self.slice_printer.has_children()
+        return self.base.has_children()
 
     def get_child_at_index(self, index):
-        return self.slice_printer.get_child_at_index(index)
+        return self.base.get_child_at_index(index)
+
+    def value_at(self, index):
+        return self.base.value_at(index)
 
 
 class UtilsHashmapBasePrinter(Printer):
     '''Base Printer for HashmapBase-derived types'''
 
     def initialize(self):
-        self.slice = UtilsVectorPrinter(
-            self.member('slots_')).make_slice_printer()
-
+        self.slots = UtilsVectorPrinter(self.member('slots_'))
         self.try_read_std_optional_func = self.try_read_std_optional
 
     def update(self):
         self.valid_slots = []
-        for slot in range(0, self.slice.num_children()):
-            v = self.slice.value_at(slot)
+        for slot in range(0, self.slots.num_children()):
+            v = self.slots.value_at(slot)
             if member(v, 'hash').GetValueAsUnsigned() != 0:
                 self.valid_slots.append(slot)
         return False
@@ -342,7 +344,7 @@ class UtilsHashmapBasePrinter(Printer):
 
     def get_child_at_index(self, index):
         slot = self.valid_slots[index]
-        v = self.slice.value_at(slot)
+        v = self.slots.value_at(slot)
         entry = member(v, 'entry')
 
         # entry is a std::optional, let's try to extract its value for display

@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/ir/switch.h"
 #include "src/tint/lang/wgsl/reader/program_to_ir/ir_program_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
 

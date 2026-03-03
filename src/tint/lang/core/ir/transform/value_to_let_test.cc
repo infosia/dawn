@@ -31,6 +31,7 @@
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 #include "src/tint/lang/core/type/depth_texture.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::core::ir::transform {
 namespace {

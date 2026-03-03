@@ -28,6 +28,7 @@
 #include "gmock/gmock.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
 #include "src/tint/lang/wgsl/writer/ast_printer/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/text/string_stream.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT

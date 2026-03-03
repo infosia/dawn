@@ -28,7 +28,7 @@
 #include "gmock/gmock.h"
 #include "src/tint/lang/wgsl/resolver/resolver.h"
 #include "src/tint/lang/wgsl/resolver/resolver_helper_test.h"
-#include "src/tint/utils/containers/slice.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::resolver {
 namespace {

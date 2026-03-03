@@ -38,6 +38,7 @@
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/storage_texture.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::core::ir {
 

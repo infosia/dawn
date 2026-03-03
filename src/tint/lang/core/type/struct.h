@@ -163,7 +163,9 @@ class Struct : public Castable<Struct, Type> {
     StyledText Layout() const;
 
     /// @param concrete the conversion-rank ordered concrete versions of this abstract structure.
-    void SetConcreteTypes(VectorRef<const Struct*> concrete) { concrete_types_ = concrete; }
+    void SetConcreteTypes([[maybe_unused]] VectorRef<const Struct*> concrete) {
+        concrete_types_ = concrete;
+    }
 
     /// @returns the conversion-rank ordered concrete versions of this abstract structure, or an
     /// empty vector if this structure is not abstract.

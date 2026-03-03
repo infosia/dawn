@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/lang/core/type/matrix.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/switch.h"
 
 namespace tint::core::ir {

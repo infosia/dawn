@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/member_builtin_call.h"
 #include "src/tint/lang/glsl/builtin_fn.h"
 #include "src/tint/lang/glsl/intrinsic/dialect.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/castable.h"
 
 namespace tint::glsl::ir {

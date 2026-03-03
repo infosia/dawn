@@ -31,6 +31,7 @@
 #include <string>
 
 #include "src/tint/lang/core/ir/terminator.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/castable.h"
 
 // Forward declarations

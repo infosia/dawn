@@ -52,7 +52,7 @@ class UniqueAllocator {
         // Create a temporary T instance on the stack so that we can hash it, and use it for
         // equality lookup for the Set. If the item is not found in the set, then we create the
         // persisted instance with the allocator.
-        TYPE prototype{args...};
+        TYPE prototype(args...);
         Key& key = items.Add(&prototype);
         if (key.Value() == &prototype) {
             key = allocator.template Create<TYPE>(std::forward<ARGS>(args)...);
@@ -67,7 +67,7 @@ class UniqueAllocator {
     TYPE* Find(ARGS&&... args) const {
         // Create a temporary T instance on the stack so that we can hash it, and use it for
         // equality lookup for the Set.
-        TYPE prototype{std::forward<ARGS>(args)...};
+        TYPE prototype(std::forward<ARGS>(args)...);
         return static_cast<TYPE*>(items.Get(&prototype));
     }
 

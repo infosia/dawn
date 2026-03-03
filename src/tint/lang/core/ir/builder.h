@@ -584,13 +584,6 @@ class Builder {
     }
 
     template <typename T>
-    auto Values(tint::Slice<T>&&) {
-        static_assert(sizeof(T) != sizeof(T),  // Condition must be type-dependent
-                      "Cannot construct a Vector from a Slice as the size is not known at "
-                      "compile-time. Use ToVector<N>(Slice&&) instead.");
-    }
-
-    template <typename T>
     auto Values(std::span<T>&&) {
         static_assert(sizeof(T) != sizeof(T),  // Condition must be type-dependent
                       "Cannot construct a Vector from a span as the size is not known at "

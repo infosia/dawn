@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "gmock/gmock.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/text/string_stream.h"
 
 namespace tint {

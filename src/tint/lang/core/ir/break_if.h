@@ -33,6 +33,7 @@
 
 #include "src/tint/lang/core/ir/exit.h"
 #include "src/tint/lang/core/ir/value.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/castable.h"
 
 // Forward declarations

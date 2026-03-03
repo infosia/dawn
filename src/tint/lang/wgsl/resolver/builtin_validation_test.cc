@@ -30,6 +30,7 @@
 #include "src/tint/lang/wgsl/ast/builtin_texture_helper_test.h"
 #include "src/tint/lang/wgsl/resolver/resolver_helper_test.h"
 #include "src/tint/lang/wgsl/sem/value_constructor.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/text/string_stream.h"
 
 namespace tint::resolver {

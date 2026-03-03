@@ -64,6 +64,7 @@ cc_library(
     "bump_allocator_test.cc",
   ],
   deps = [
+    "//src/tint/utils/containers",
     "//src/tint/utils/macros",
     "//src/tint/utils/math",
     "//src/tint/utils/memory",

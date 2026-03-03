@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/builtin_call.h"
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/intrinsic/dialect.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/rtti/castable.h"
 
 namespace tint::spirv::ir {

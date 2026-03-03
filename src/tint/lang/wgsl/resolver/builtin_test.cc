@@ -35,6 +35,7 @@
 #include "src/tint/lang/wgsl/sem/member_accessor_expression.h"
 #include "src/tint/lang/wgsl/sem/statement.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/text/string_stream.h"
 
 using ::testing::ElementsAre;

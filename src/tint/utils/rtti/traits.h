@@ -139,10 +139,10 @@ struct IsTypeIn<T, TypeContainer<Ts...>> : std::disjunction<std::is_same<T, Ts>.
 
 }  // namespace detail
 
-/// Resolves to the slice of the tuple `t` with the tuple elements
+/// Resolves to the subset of the tuple `t` with the tuple elements
 /// `[OFFSET..OFFSET+COUNT)`
 template <std::size_t OFFSET, std::size_t COUNT, typename TUPLE>
-using SliceTuple =
+using Subtuple =
     std::remove_pointer_t<decltype(traits::detail::SwizzlePtrTy<TUPLE>(Range<OFFSET, COUNT>()))>;
 
 /// Evaluates to the decayed pointer element type, or the decayed type T if T is not a pointer.

@@ -852,37 +852,37 @@ inline bool MatchAtomicCompareExchangeResult(intrinsic::MatchState&,
     return false;
 }
 
-inline const type::Struct* BuildModfResult(intrinsic::MatchState& state,
-                                           const type::Type*,
-                                           const type::Type* el) {
+inline const type::Type* BuildModfResult(intrinsic::MatchState& state,
+                                         const type::Type*,
+                                         const type::Type* el) {
     return type::CreateModfResult(state.types, state.symbols, el);
 }
 
-inline const type::Struct* BuildModfResultVec(intrinsic::MatchState& state,
-                                              const type::Type*,
-                                              intrinsic::Number& n,
-                                              const type::Type* el) {
+inline const type::Type* BuildModfResultVec(intrinsic::MatchState& state,
+                                            const type::Type*,
+                                            intrinsic::Number& n,
+                                            const type::Type* el) {
     auto* vec = state.types.vec(el, n.Value());
     return type::CreateModfResult(state.types, state.symbols, vec);
 }
 
-inline const type::Struct* BuildFrexpResult(intrinsic::MatchState& state,
-                                            const type::Type*,
-                                            const type::Type* el) {
+inline const type::Type* BuildFrexpResult(intrinsic::MatchState& state,
+                                          const type::Type*,
+                                          const type::Type* el) {
     return type::CreateFrexpResult(state.types, state.symbols, el);
 }
 
-inline const type::Struct* BuildFrexpResultVec(intrinsic::MatchState& state,
-                                               const type::Type*,
-                                               intrinsic::Number& n,
-                                               const type::Type* el) {
+inline const type::Type* BuildFrexpResultVec(intrinsic::MatchState& state,
+                                             const type::Type*,
+                                             intrinsic::Number& n,
+                                             const type::Type* el) {
     auto* vec = state.types.vec(el, n.Value());
     return type::CreateFrexpResult(state.types, state.symbols, vec);
 }
 
-inline const type::Struct* BuildAtomicCompareExchangeResult(intrinsic::MatchState& state,
-                                                            const type::Type*,
-                                                            const type::Type* ty) {
+inline const type::Type* BuildAtomicCompareExchangeResult(intrinsic::MatchState& state,
+                                                          const type::Type*,
+                                                          const type::Type* ty) {
     return type::CreateAtomicCompareExchangeResult(state.types, state.symbols, ty);
 }
 

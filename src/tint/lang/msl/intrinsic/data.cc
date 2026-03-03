@@ -11842,13 +11842,13 @@ constexpr IntrinsicInfo kBuiltins[] = {
 
 const core::intrinsic::TableData Dialect::kData{
   /* templates */ kTemplates,
-  /* type_matcher_indices */ kMatcherIndices,
+  /* matcher_indices */ kMatcherIndices,
   /* type_matchers */ kTypeMatchers,
   /* number_matchers */ kNumberMatchers,
   /* parameters */ kParameters,
   /* overloads */ kOverloads,
-  /* const_eval_functions */ Empty,
-  /* ctor_conv */ Empty,
+  /* const_eval_functions */ {},
+  /* ctor_conv */ {},
   /* builtins */ kBuiltins,
   /* binary '+' */ tint::core::intrinsic::kNoOverloads,
   /* binary '-' */ tint::core::intrinsic::kNoOverloads,

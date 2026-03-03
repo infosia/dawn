@@ -34,6 +34,7 @@
 #include <unordered_map>
 
 #include "gmock/gmock.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint {
 namespace {

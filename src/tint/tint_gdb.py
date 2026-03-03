@@ -70,14 +70,13 @@ class Printer(object):
         return self.val.type.template_argument(index)
 
 
-class UtilsSlicePrinter(Printer):
-    '''Printer for tint::Slice<T>'''
+class UtilsVectorBasePrinter(object):
+    '''Base class for tint::Vector and tint::VectorRef'''
 
-    def __init__(self, val):
-        super(UtilsSlicePrinter, self).__init__(val)
-        self.len = self.val['len']
-        self.cap = self.val['cap']
-        self.data = self.val['data']
+    def __init__(self, data, len, cap):
+        self.data = data
+        self.len = len
+        self.cap = cap
         self.elem_type = self.data.type.target().unqualified()
 
     def length(self):
@@ -102,14 +101,8 @@ class UtilsSlicePrinter(Printer):
     def children(self):
         for m in self.members():
             yield m
-        for i in range(self.len):
+        for i in range(int(self.len)):
             yield str(i), self.value_at(i)
-
-    def display_hint(self):
-        return 'array'
-
-
-pp_set.add_printer('UtilsSlicePrinter', '^tint::Slice<.*>$', UtilsSlicePrinter)
 
 
 class UtilsVectorPrinter(Printer):
@@ -117,14 +110,13 @@ class UtilsVectorPrinter(Printer):
 
     def __init__(self, val):
         super(UtilsVectorPrinter, self).__init__(val)
-        self.slice = self.val['impl_']['slice']
-        self.using_heap = self.slice['cap'] > self.template_type(1)
-
-    def slice_printer(self):
-        return UtilsSlicePrinter(self.slice)
+        impl = self.val['impl_']
+        self.base = UtilsVectorBasePrinter(impl['data'], impl['len'],
+                                           impl['cap'])
+        self.using_heap = self.base.cap > self.template_type(1)
 
     def to_string(self):
-        return 'heap={} {}'.format(self.using_heap, self.slice)
+        return 'heap={} {}'.format(self.using_heap, self.base.to_string())
 
     def members(self):
         if _DISPLAY_MEMBERS_AS_CHILDREN:
@@ -135,7 +127,7 @@ class UtilsVectorPrinter(Printer):
             return []
 
     def children(self):
-        return chain(self.members(), self.slice_printer().children())
+        return chain(self.members(), self.base.children())
 
     def display_hint(self):
         return 'array'
@@ -149,11 +141,13 @@ class UtilsVectorRefPrinter(Printer):
 
     def __init__(self, val):
         super(UtilsVectorRefPrinter, self).__init__(val)
-        self.slice = self.val['slice_']
+        self.base = UtilsVectorBasePrinter(self.val['data_'].dereference(),
+                                           self.val['len_'].dereference(),
+                                           self.val['cap_'].dereference())
         self.can_move = self.val['can_move_']
 
     def to_string(self):
-        return 'can_move={} {}'.format(self.can_move, self.slice)
+        return 'can_move={} {}'.format(self.can_move, self.base.to_string())
 
     def members(self):
         if _DISPLAY_MEMBERS_AS_CHILDREN:
@@ -164,7 +158,7 @@ class UtilsVectorRefPrinter(Printer):
             return []
 
     def children(self):
-        return chain(self.members(), UtilsSlicePrinter(self.slice).children())
+        return chain(self.members(), self.base.children())
 
     def display_hint(self):
         return 'array'
@@ -179,20 +173,20 @@ class UtilsHashmapBasePrinter(Printer):
 
     def __init__(self, val):
         super(UtilsHashmapBasePrinter, self).__init__(val)
-        self.slice = UtilsVectorPrinter(self.val['slots_']).slice_printer()
+        self.slots = UtilsVectorPrinter(self.val['slots_'])
         self.try_read_std_optional_func = self.try_read_std_optional
 
     def to_string(self):
         length = 0
-        for slot in range(0, self.slice.length()):
-            v = self.slice.value_at(slot)
+        for slot in range(0, int(self.slots.base.len)):
+            v = self.slots.base.value_at(slot)
             if v['hash'] != 0:
                 length += 1
         return 'length={}'.format(length)
 
     def children(self):
-        for slot in range(0, self.slice.length()):
-            v = self.slice.value_at(slot)
+        for slot in range(0, int(self.slots.base.len)):
+            v = self.slots.base.value_at(slot)
             if v['hash'] != 0:
                 entry = v['entry']
 

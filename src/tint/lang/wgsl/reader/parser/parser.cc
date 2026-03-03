@@ -60,6 +60,7 @@
 #include "src/tint/lang/wgsl/reader/parser/classify_template_args.h"
 #include "src/tint/lang/wgsl/reader/parser/lexer.h"
 #include "src/tint/lang/wgsl/reserved_words.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/containers/reverse.h"
 #include "src/tint/utils/macros/defer.h"
 #include "src/tint/utils/text/string.h"

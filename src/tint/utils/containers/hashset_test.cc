@@ -34,6 +34,7 @@
 #include <unordered_set>
 
 #include "gmock/gmock.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/containers/predicates.h"
 
 namespace tint {

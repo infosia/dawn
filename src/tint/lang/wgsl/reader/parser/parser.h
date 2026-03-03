@@ -41,6 +41,7 @@
 #include "src/tint/lang/wgsl/reader/parser/detail.h"
 #include "src/tint/lang/wgsl/reader/parser/token.h"
 #include "src/tint/lang/wgsl/resolver/resolve.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/diagnostic/formatter.h"
 #include "src/tint/utils/text/styled_text.h"
 

@@ -21005,7 +21005,7 @@ constexpr IntrinsicInfo kConstructorsAndConverters[] = {
 
 const core::intrinsic::TableData Dialect::kData{
   /* templates */ kTemplates,
-  /* type_matcher_indices */ kMatcherIndices,
+  /* matcher_indices */ kMatcherIndices,
   /* type_matchers */ kTypeMatchers,
   /* number_matchers */ kNumberMatchers,
   /* parameters */ kParameters,

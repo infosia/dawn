@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/lang/wgsl/reader/program_to_ir/ir_program_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint::wgsl::reader {
 namespace {

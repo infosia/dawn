@@ -35,6 +35,7 @@
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/wgsl/resolver/resolver_helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/containers/transform.h"
 
 namespace tint::resolver {

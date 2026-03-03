@@ -33,6 +33,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/rtti/traits.h"
 

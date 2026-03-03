@@ -73,6 +73,7 @@ tint_add_target(tint_lang_spirv_reader_common_test test
 
 tint_target_add_dependencies(tint_lang_spirv_reader_common_test test
   tint_utils
+  tint_utils_containers
   tint_utils_ice
   tint_utils_macros
   tint_utils_rtti

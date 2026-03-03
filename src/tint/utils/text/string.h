@@ -32,7 +32,7 @@
 #include <string>
 #include <variant>
 
-#include "src/tint/utils/containers/slice.h"
+#include "src/tint/utils/containers/empty.h"
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/text/string_stream.h"
 #include "src/tint/utils/text/text_style.h"

@@ -13940,13 +13940,13 @@ constexpr uint8_t kBinaryOperatorStar = 2;
 
 const core::intrinsic::TableData Dialect::kData{
   /* templates */ kTemplates,
-  /* type_matcher_indices */ kMatcherIndices,
+  /* matcher_indices */ kMatcherIndices,
   /* type_matchers */ kTypeMatchers,
   /* number_matchers */ kNumberMatchers,
   /* parameters */ kParameters,
   /* overloads */ kOverloads,
-  /* const_eval_functions */ Empty,
-  /* ctor_conv */ Empty,
+  /* const_eval_functions */ {},
+  /* ctor_conv */ {},
   /* builtins */ kBuiltins,
   /* binary '+' */ kBinaryOperators[kBinaryOperatorPlus],
   /* binary '-' */ kBinaryOperators[kBinaryOperatorMinus],

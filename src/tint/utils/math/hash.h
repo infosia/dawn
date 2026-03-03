@@ -122,6 +122,28 @@ struct Hasher<std::vector<T>> {
     }
 };
 
+/// Forward declarations
+template <typename T, size_t N>
+class Vector;
+template <typename T>
+class VectorRef;
+
+/// Hasher specialization for tint::Vector
+template <typename T, size_t N>
+struct Hasher<Vector<T, N>> {
+    /// @param vector the vector to hash
+    /// @returns a hash of the vector
+    HashCode operator()(const Vector<T, N>& vector) const { return vector.HashCode(); }
+};
+
+/// Hasher specialization for tint::VectorRef
+template <typename T>
+struct Hasher<VectorRef<T>> {
+    /// @param vector the vector to hash
+    /// @returns a hash of the vector
+    HashCode operator()(const VectorRef<T>& vector) const { return vector.HashCode(); }
+};
+
 /// Hasher specialization for std::tuple
 template <typename... TYPES>
 struct Hasher<std::tuple<TYPES...>> {

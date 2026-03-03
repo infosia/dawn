@@ -41,6 +41,7 @@
 tint_add_target(tint_utils_containers lib
   utils/containers/bitset.h
   utils/containers/containers.cc
+  utils/containers/empty.h
   utils/containers/enum_set.h
   utils/containers/filtered_iterator.h
   utils/containers/hashmap.h
@@ -48,9 +49,9 @@ tint_add_target(tint_utils_containers lib
   utils/containers/hashset.h
   utils/containers/map.h
   utils/containers/predicates.h
+  utils/containers/reinterpret.h
   utils/containers/reverse.h
   utils/containers/scope_stack.h
-  utils/containers/slice.h
   utils/containers/transform.h
   utils/containers/unique_allocator.h
   utils/containers/unique_vector.h
@@ -83,7 +84,6 @@ tint_add_target(tint_utils_containers_test test
   utils/containers/predicates_test.cc
   utils/containers/reverse_test.cc
   utils/containers/scope_stack_test.cc
-  utils/containers/slice_test.cc
   utils/containers/transform_test.cc
   utils/containers/unique_allocator_test.cc
   utils/containers/unique_vector_test.cc

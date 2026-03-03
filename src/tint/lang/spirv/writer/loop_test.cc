@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/lang/spirv/writer/common/helper_test.h"
+#include "src/tint/utils/containers/empty.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
 

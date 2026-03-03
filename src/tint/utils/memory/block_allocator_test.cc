@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "gtest/gtest.h"
+#include "src/tint/utils/containers/empty.h"
 
 namespace tint {
 namespace {
