@@ -69,6 +69,24 @@
       "parentUuid": "f77487ed_c6c0da36",
       "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa2d8810_1701a296",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-03-03T12:06:27Z",
+      "side": 1,
+      "message": "No changes are required for the sample app published on the DAC page, but we will need to fix some annotations in the dawn-demo, such as changing @PrimitiveTopology to @PrimitiveTopology.Type.",
+      "parentUuid": "df15f331_c41782a4",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
