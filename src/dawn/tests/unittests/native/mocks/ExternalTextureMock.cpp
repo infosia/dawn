@@ -49,4 +49,14 @@ Ref<ExternalTextureMock> ExternalTextureMock::Create(DeviceMock* device,
     return externalTexture;
 }
 
+// static
+ResultOrError<Ref<ExternalTextureMock>> ExternalTextureMock::CreateAndInitialize(
+    DeviceMock* device,
+    const ExternalTextureDescriptor* descriptor) {
+    Ref<ExternalTextureMock> externalTexture =
+        AcquireRef(new NiceMock<ExternalTextureMock>(device, descriptor));
+    DAWN_TRY(externalTexture->Initialize(device, descriptor));
+    return externalTexture;
+}
+
 }  // namespace dawn::native
