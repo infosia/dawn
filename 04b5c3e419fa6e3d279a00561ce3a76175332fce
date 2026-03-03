@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799ac24b_1b63a901",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2026-03-03T11:10:28Z",
+      "side": 1,
+      "message": "If a client application uses the wrong type of constant will they get a build-time error?",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3acdcdc0_b6bf62d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2026-03-03T11:10:28Z",
+      "side": 1,
+      "message": "If a client application uses the wrong type of constant will they get a build-time error?",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
