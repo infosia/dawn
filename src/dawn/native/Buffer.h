@@ -35,6 +35,7 @@
 
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/NonCopyable.h"
+#include "dawn/native/ConcurrentUseGuarded.h"
 #include "dawn/native/DeviceGuard.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
@@ -80,29 +81,11 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
     const BufferBase* buffer,
     const TexelBufferViewDescriptor* descriptor);
 
-class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
+class BufferBase : public SharedResource,
+                   public WeakRefSupport<BufferBase>,
+                   public ConcurrentUseGuardedBase {
   public:
-    // Calls FinishUse() on buffer when it goes out of scope. Caller is responsible for ensuring
-    // buffer lifetime is longer than ScopedUseBuffer.
-    class ScopedUseBuffer {
-      public:
-        ScopedUseBuffer();
-        ~ScopedUseBuffer();
-
-        ScopedUseBuffer(ScopedUseBuffer&& other);
-        ScopedUseBuffer& operator=(ScopedUseBuffer&& other);
-
-        // Caller will handle calling FinishUse() on buffer. Can't be called on an empty
-        // ScopedUseBuffer.
-        void Release();
-
-      private:
-        friend class BufferBase;
-
-        explicit ScopedUseBuffer(BufferBase* buffer);
-
-        raw_ptr<BufferBase> mBuffer = nullptr;
-    };
+    using ScopedUse = ConcurrentUseGuardedBase::ScopedUse;
 
     // TODO(crbug.com/467247254): See if ConcurrentAccessGuard<T> can be used be implemented and
     // used instead of having an InUse state.
@@ -136,18 +119,20 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     MaybeError MapAtCreation();
 
     // Changes buffer state to denote it's being used. The buffer must be unmapped so this isn't
-    // suitable for buffers that could be used by external API calls. `ScopedUseBuffer` will resets
+    // suitable for buffers that could be used by external API calls. `ScopedUse` will resets
     // state when it goes out of scope.
-    [[nodiscard]] ScopedUseBuffer UseInternal();
+    [[nodiscard]] ScopedUse UseInternal();
 
+    // ConcurrentUseGuardedBase implementation
     // Checks that the buffer is ready for use on queue. If successful, changes state to InUse and
-    // returns `ScopedUseBuffer` which resets the state when it goes out of scope. Returns a
+    // returns `ScopedUse` which resets the state when it goes out of scope. Returns a
     // validation error on failure.
-    ResultOrError<ScopedUseBuffer> ValidateCanUseOnQueueNow();
+    ResultOrError<ScopedUse> ValidateCanUseOnQueueNow() override;
 
+    // ConcurrentUseGuardedBase implementation
     // Called when buffer is done being used, on queue or internally. This should only be called
-    // from ScopedUseBuffer or if ScopedUseBuffer was released from calling this.
-    void FinishUse();
+    // from ScopedUse or if ScopedUse was released from calling this.
+    void FinishUse() override;
 
     bool IsFullBufferRange(uint64_t offset, uint64_t size) const;
     bool NeedsInitialization() const;

@@ -666,13 +666,13 @@ size_t BufferBase::MapSize() const {
     return mMapSize;
 }
 
-BufferBase::ScopedUseBuffer BufferBase::UseInternal() {
+BufferBase::ScopedUse BufferBase::UseInternal() {
     auto fromState = mState.exchange(BufferState::InUse, std::memory_order::acq_rel);
     DAWN_CHECK(fromState == BufferState::Unmapped);
-    return ScopedUseBuffer(this);
+    return ScopedUse(this);
 }
 
-ResultOrError<BufferBase::ScopedUseBuffer> BufferBase::ValidateCanUseOnQueueNow() {
+ResultOrError<BufferBase::ScopedUse> BufferBase::ValidateCanUseOnQueueNow() {
     DAWN_ASSERT(!IsError());
 
     switch (BufferState state = mState.load(std::memory_order::acquire)) {
@@ -689,7 +689,7 @@ ResultOrError<BufferBase::ScopedUseBuffer> BufferBase::ValidateCanUseOnQueueNow(
             return ConcurrentUseError();
         case BufferState::Unmapped:
             DAWN_TRY(TransitionState(state, BufferState::InUse));
-            return ScopedUseBuffer(this);
+            return ScopedUse(this);
     }
     DAWN_UNREACHABLE();
 }
@@ -1117,6 +1117,7 @@ TexelBufferViewBase* BufferBase::APICreateTexelView(const TexelBufferViewDescrip
     return ReturnToAPI(std::move(result));
 }
 
+// TexelBufferView tracking list
 ApiObjectList* BufferBase::GetTexelBufferViewTrackingList() {
     return &mTexelBufferViews;
 }
@@ -1127,34 +1128,6 @@ MaybeError BufferBase::TransitionState(BufferState currentState, BufferState des
     }
 
     return ConcurrentUseError();
-}
-
-BufferBase::ScopedUseBuffer::ScopedUseBuffer() = default;
-
-BufferBase::ScopedUseBuffer::ScopedUseBuffer(BufferBase* buffer) : mBuffer(buffer) {
-    DAWN_ASSERT(mBuffer);
-    DAWN_ASSERT(mBuffer->mState.load(std::memory_order::relaxed) == BufferState::InUse);
-}
-
-BufferBase::ScopedUseBuffer::~ScopedUseBuffer() {
-    if (mBuffer) {
-        mBuffer->FinishUse();
-    }
-}
-
-BufferBase::ScopedUseBuffer::ScopedUseBuffer(ScopedUseBuffer&& other) : mBuffer(other.mBuffer) {
-    other.mBuffer = nullptr;
-}
-
-BufferBase::ScopedUseBuffer& BufferBase::ScopedUseBuffer::operator=(ScopedUseBuffer&& other) {
-    mBuffer = other.mBuffer;
-    other.mBuffer = nullptr;
-    return *this;
-}
-
-void BufferBase::ScopedUseBuffer::Release() {
-    DAWN_ASSERT(mBuffer);
-    mBuffer = nullptr;
 }
 
 }  // namespace dawn::native
