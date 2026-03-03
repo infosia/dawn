@@ -583,7 +583,7 @@ MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
                                              const Extent3D& copySize,
                                              const CopyTextureForBrowserOptions& options) {
     DAWN_TRY(device->ValidateObject(destination.texture));
-    DAWN_TRY(destination.texture->ValidateCanUseInSubmitNow());
+    DAWN_TRY(device->GetQueue()->ValidateCanUseOnQueueNow(destination.texture));
     DAWN_TRY_CONTEXT(ValidateTexelCopyTextureInfo(device, destination, copySize),
                      "validating the TexelCopyTextureInfo for the destination");
     DAWN_TRY_CONTEXT(ValidateTextureCopyRange(device, destination, copySize),
@@ -636,7 +636,7 @@ MaybeError ValidateCopyTextureForBrowser(DeviceBase* device,
                                          const CopyTextureForBrowserOptions* options) {
     // Validate source
     DAWN_TRY(device->ValidateObject(source->texture));
-    DAWN_TRY(source->texture->ValidateCanUseInSubmitNow());
+    DAWN_TRY(device->GetQueue()->ValidateCanUseOnQueueNow(source->texture));
     DAWN_TRY_CONTEXT(ValidateTexelCopyTextureInfo(device, *source, *copySize),
                      "validating the TexelCopyTextureInfo for the source");
     DAWN_TRY_CONTEXT(ValidateTextureCopyRange(device, *source, *copySize),

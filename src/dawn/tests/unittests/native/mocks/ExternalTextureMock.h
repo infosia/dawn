@@ -39,6 +39,9 @@ class ExternalTextureMock : public ExternalTextureBase {
     // Creates an external texture mock based on a descriptor.
     static Ref<ExternalTextureMock> Create(DeviceMock* device,
                                            const ExternalTextureDescriptor* descriptor);
+    static ResultOrError<Ref<ExternalTextureMock>> CreateAndInitialize(
+        DeviceMock* device,
+        const ExternalTextureDescriptor* descriptor);
 
     ~ExternalTextureMock() override;
 
