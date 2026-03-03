@@ -33,6 +33,24 @@
       "message": "If a client application uses the wrong type of constant will they get a build-time error?",
       "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f77487ed_c6c0da36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-03-03T11:53:22Z",
+      "side": 1,
+      "message": "The code will still compile because the value is a valid integer, but it will trigger a linter error. For example \n```              \nGPUTextureDescriptor(\n                    size \u003d GPUExtent3D(width \u003d 1),\n                    format \u003d 12121, //Invalid value\n                    usage \u003d TextureUsage.TextureBinding or TextureUsage.CopyDst\n                )\n\n```\n\nThis will prompt a linter warning: \u0027Must be one of: TextureFormat.Undefined, TextureFormat.R8Unorm...\u0027\"",
+      "parentUuid": "3acdcdc0_b6bf62d7",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
