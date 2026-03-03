@@ -30,11 +30,12 @@
 
 #include <memory>
 
-#include "absl/container/flat_hash_set.h"
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/WeakRefSupport.h"
 #include "dawn/native/CallbackTaskManager.h"
+#include "dawn/native/ConcurrentUseGuarded.h"
 #include "dawn/native/DawnNative.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ExecutionQueue.h"
@@ -64,8 +65,6 @@ struct TrackTaskCallback : CallbackTask {
 
 class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
   public:
-    using BufferSet = absl::flat_hash_set<BufferBase*>;
-
     ~QueueBase() override;
 
     static Ref<QueueBase> MakeError(DeviceBase* device, StringView label);
@@ -95,6 +94,8 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size);
+
+    MaybeError ValidateCanUseOnQueueNow(ConcurrentUseGuardedBase* object) const;
 
     // Ensure a flush occurs if needed, and track this task as complete after the
     // scheduled work is complete.
@@ -142,9 +143,7 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
                                                      const TexelCopyTextureInfo* destination,
                                                      const Extent3D* copySize,
                                                      const CopyTextureForBrowserOptions* options);
-    MaybeError ValidateSubmit(uint32_t commandCount,
-                              CommandBufferBase* const* commands,
-                              BufferSet& buffersFromCommands) const;
+    MaybeError ValidateSubmit(uint32_t commandCount, CommandBufferBase* const* commands) const;
     MaybeError ValidateOnSubmittedWorkDone() const;
     MaybeError ValidateWriteTexture(const TexelCopyTextureInfo* destination,
                                     size_t dataSize,
@@ -153,7 +152,13 @@ class QueueBase : public ExecutionQueueBase, public WeakRefSupport<QueueBase> {
 
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
+    auto AutoClearPendingUsedObjects() const;
+
+    using ConcurrentUseGuardedObjectList =
+        absl::flat_hash_map<ConcurrentUseGuardedBase*, ConcurrentUseGuardedBase::ScopedUse>;
+
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
+    mutable ConcurrentUseGuardedObjectList mPendingUsedObjects;
 };
 
 }  // namespace dawn::native

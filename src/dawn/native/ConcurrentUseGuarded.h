@@ -70,6 +70,20 @@ class ConcurrentUseGuardedBase {
     virtual ~ConcurrentUseGuardedBase() = default;
 };
 
+// A concrete implementation of ConcurrentUseGuardedBase that uses an atomic flag to manage the
+// in-use state.
+class ConcurrentUseGuarded : public ConcurrentUseGuardedBase {
+  public:
+    ResultOrError<ScopedUse> ValidateCanUseOnQueueNow() override;
+    void FinishUse() override;
+
+  protected:
+    ResultOrError<ScopedUse> TryUse();
+
+  private:
+    std::atomic<bool> mInUse{false};
+};
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_CONCURRENTUSEGUARDED_H_
