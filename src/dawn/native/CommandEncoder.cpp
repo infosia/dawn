@@ -50,6 +50,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/ComputePassEncoder.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/QueryHelper.h"
@@ -98,6 +99,15 @@ std::string_view GetAttachmentTypeStr(AttachmentType type) {
             return "storage attachment";
     }
     DAWN_UNREACHABLE();
+}
+
+RenderAreaRect GetRenderAreaRect(const RenderPassRenderAreaRect* area) {
+    RenderAreaRect renderArea;
+    renderArea.x = area->x;
+    renderArea.y = area->y;
+    renderArea.width = area->width;
+    renderArea.height = area->height;
+    return renderArea;
 }
 
 // The width, height, sample count and subresource range need to be validated between all
@@ -944,6 +954,18 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
                         wgpu::LoadOp::ExpandResolveTexture);
     }
 
+    if (auto area = descriptor.Get<RenderPassRenderAreaRect>()) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::RenderPassRenderArea),
+                        "RenderPassDescriptorResolveRect can't be used without %s.",
+                        ToAPI(Feature::RenderPassRenderArea));
+        DAWN_INVALID_IF(static_cast<uint64_t>(area->x) + static_cast<uint64_t>(area->width) >
+                            validationState->GetRenderWidth(),
+                        "RenderPassRenderAreaRect is larger than render pass");
+        DAWN_INVALID_IF(static_cast<uint64_t>(area->y) + static_cast<uint64_t>(area->height) >
+                            validationState->GetRenderHeight(),
+                        "RenderPassRenderAreaRect is larger than render pass");
+    }
+
     return {};
 }
 
@@ -987,7 +1009,6 @@ MaybeError InitializeValidationStateAttachment(DeviceBase* device,
     // Only one attachment needs to be added to the validation state.
     DAWN_ASSERT(representativeView);
     validationState->SetUnvalidatedAttachment(representativeView);
-
     return {};
 }
 
@@ -1548,6 +1569,14 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->width = validationState.GetRenderWidth();
             cmd->height = validationState.GetRenderHeight();
+            if (auto* area = descriptor.Get<RenderPassRenderAreaRect>()) {
+                cmd->renderArea = GetRenderAreaRect(area);
+            } else {
+                cmd->renderArea.x = 0;
+                cmd->renderArea.y = 0;
+                cmd->renderArea.width = validationState.GetRenderWidth();
+                cmd->renderArea.height = validationState.GetRenderHeight();
+            }
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
@@ -1599,10 +1628,21 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
         "encoding %s.BeginRenderPass(%s).", this, descriptor);
 
     if (success) {
+        RenderAreaRect renderArea;
+        if (auto* area = descriptor.Get<RenderPassRenderAreaRect>()) {
+            renderArea = GetRenderAreaRect(area);
+        } else {
+            renderArea.x = 0;
+            renderArea.y = 0;
+            renderArea.width = validationState.GetRenderWidth();
+            renderArea.height = validationState.GetRenderHeight();
+        }
+
         Ref<RenderPassEncoder> passEncoder = RenderPassEncoder::Create(
             device, descriptor, this, &mEncodingContext, std::move(usageTracker),
             std::move(attachmentState), validationState.GetRenderWidth(),
-            validationState.GetRenderHeight(), depthReadOnly, stencilReadOnly, passEndCallback);
+            validationState.GetRenderHeight(), renderArea, depthReadOnly, stencilReadOnly,
+            passEndCallback);
 
         mEncodingContext.EnterPass(passEncoder.Get());
 

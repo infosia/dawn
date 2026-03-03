@@ -47,6 +47,7 @@ class RenderPassEncoder final : public RenderEncoderBase {
                                          Ref<AttachmentState> attachmentState,
                                          uint32_t renderTargetWidth,
                                          uint32_t renderTargetHeight,
+                                         const RenderAreaRect& renderArea,
                                          bool depthReadOnly,
                                          bool stencilReadOnly,
                                          EndCallback endCallback = nullptr);
@@ -94,6 +95,7 @@ class RenderPassEncoder final : public RenderEncoderBase {
                       Ref<AttachmentState> attachmentState,
                       uint32_t renderTargetWidth,
                       uint32_t renderTargetHeight,
+                      const RenderAreaRect& renderArea,
                       bool depthReadOnly,
                       bool stencilReadOnly,
                       EndCallback endCallback = nullptr);
@@ -114,6 +116,8 @@ class RenderPassEncoder final : public RenderEncoderBase {
 
     uint32_t mRenderTargetWidth;
     uint32_t mRenderTargetHeight;
+
+    RenderAreaRect mRenderArea;
 
     // The resources for occlusion query
     Ref<QuerySetBase> mOcclusionQuerySet;

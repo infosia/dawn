@@ -74,6 +74,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
                                      Ref<AttachmentState> attachmentState,
                                      uint32_t renderTargetWidth,
                                      uint32_t renderTargetHeight,
+                                     const RenderAreaRect& renderArea,
                                      bool depthReadOnly,
                                      bool stencilReadOnly,
                                      EndCallback endCallback)
@@ -86,6 +87,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
       mCommandEncoder(commandEncoder),
       mRenderTargetWidth(renderTargetWidth),
       mRenderTargetHeight(renderTargetHeight),
+      mRenderArea(renderArea),
       mOcclusionQuerySet(descriptor->occlusionQuerySet),
       mEndCallback(std::move(endCallback)) {
     mUsageTracker = std::move(usageTracker);
@@ -105,13 +107,14 @@ Ref<RenderPassEncoder> RenderPassEncoder::Create(
     Ref<AttachmentState> attachmentState,
     uint32_t renderTargetWidth,
     uint32_t renderTargetHeight,
+    const RenderAreaRect& renderArea,
     bool depthReadOnly,
     bool stencilReadOnly,
     EndCallback endCallback) {
-    return AcquireRef(new RenderPassEncoder(device, descriptor, commandEncoder, encodingContext,
-                                            std::move(usageTracker), std::move(attachmentState),
-                                            renderTargetWidth, renderTargetHeight, depthReadOnly,
-                                            stencilReadOnly, std::move(endCallback)));
+    return AcquireRef(new RenderPassEncoder(
+        device, descriptor, commandEncoder, encodingContext, std::move(usageTracker),
+        std::move(attachmentState), renderTargetWidth, renderTargetHeight, renderArea,
+        depthReadOnly, stencilReadOnly, std::move(endCallback)));
 }
 
 RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
@@ -316,6 +319,7 @@ void RenderPassEncoder::APISetScissorRect(uint32_t x, uint32_t y, uint32_t width
                     "Scissor rect (x: %u, y: %u, width: %u, height: %u) is not contained in "
                     "the render target dimensions (%u x %u).",
                     x, y, width, height, mRenderTargetWidth, mRenderTargetHeight);
+                // TODO(kylechar): Validate render area here?
             }
 
             SetScissorRectCmd* cmd =
