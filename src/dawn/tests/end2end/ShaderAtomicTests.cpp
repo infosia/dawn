@@ -31,6 +31,7 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
@@ -143,6 +144,9 @@ class ShaderAtomicVec2Tests : public DawnTestWithParams<ShaderAtomicVec2TestsPar
 };
 
 TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Max) {
+    if (IsApple()) {
+        DAWN_ASSERT(SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
+    }
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
 
     const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
@@ -298,7 +302,7 @@ DAWN_INSTANTIATE_TEST_P(ShaderAtomicTests,
                         {ShaderAtomicOp::AtomicAdd, ShaderAtomicOp::AtomicCASFakeAdd});
 
 DAWN_INSTANTIATE_TEST_P(ShaderAtomicVec2Tests,
-                        {VulkanBackend()},
+                        {VulkanBackend(), MetalBackend()},
                         {1,  2,  3,  4,  5,  6,   7,   8,   9,   13, 15,
                          16, 31, 32, 53, 64, 111, 128, 137, 173, 256}, /* workgroup size*/
                         {1, 2, 7, 15}                                  /*dispatch size */
