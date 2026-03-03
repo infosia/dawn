@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10dc85ae_cdca7871",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-03T09:08:01Z",
+      "side": 1,
+      "message": "This should be with padding, or the default layout for shaders that have structs with padding in immediates will fail validation (because the default layout will not have enough data).",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "935f001d_687ce27e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-03T09:08:01Z",
+      "side": 1,
+      "message": "Wait... we already have this helper? It takes care of skipping the padding, then why do we need `immediateDataByteSizeNoPadding` when the info is already available?\n\nWhat we need AFAIU is:\n\n - the full size for validation against the pipeline layout, and the pipeline layout defaulting.\n - the list of u32s that need to be set at draw time.\n - Maybe in the future we compress even these, but that can use the BlockInfo.",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9cc83a5_0c97db44",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-03T09:08:01Z",
+      "side": 1,
+      "message": "This should be with padding as per the decision in the group. We only skip padding on the draw time validation, not the compatibility with the layout.",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
