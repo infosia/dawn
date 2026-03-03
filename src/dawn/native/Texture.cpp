@@ -1364,8 +1364,12 @@ void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
     }
 }
 
-MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
+ResultOrError<TextureBase::ScopedUse> TextureBase::ValidateCanUseOnQueueNow() {
     DAWN_ASSERT(!IsError());
+
+    ScopedUse use;
+    DAWN_TRY_ASSIGN(use, TryUse());
+
     if (mState.destroyed || !mState.hasAccess) [[unlikely]] {
         DAWN_INVALID_IF(mState.destroyed, "Destroyed texture %s used in a submit.", this);
         if (!mState.hasAccess) [[unlikely]] {
@@ -1387,7 +1391,7 @@ MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
         }
     }
 
-    return {};
+    return std::move(use);
 }
 
 bool TextureBase::IsMultisampledTexture() const {
@@ -1590,6 +1594,10 @@ std::optional<DeviceGuard> TextureBase::UseDeviceGuardForDestroy() {
 void TextureBase::APIDestroy() {
     auto deviceGuard = UseDeviceGuardForDestroy();
 
+    ScopedUse use;
+    if (GetDevice()->ConsumedError(TryUse(), &use, "calling %s.Destroy()", this)) {
+        return;
+    }
     Destroy();
 }
 
