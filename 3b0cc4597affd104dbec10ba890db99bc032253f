@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d7612cb_9e5cb969",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-03T20:47:45Z",
+      "side": 1,
+      "message": "missing reflect",
+      "revId": "3b0cc4597affd104dbec10ba890db99bc032253f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
