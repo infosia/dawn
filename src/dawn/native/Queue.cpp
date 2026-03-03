@@ -332,7 +332,7 @@ MaybeError QueueBase::WriteBuffer(BufferBase* buffer,
     DAWN_TRY(GetDevice()->ValidateIsAlive());
     DAWN_TRY(GetDevice()->ValidateObject(this));
     DAWN_TRY(ValidateWriteBuffer(GetDevice(), buffer, bufferOffset, size));
-    BufferBase::ScopedUseBuffer scopedUseBuffer;
+    BufferBase::ScopedUse scopedUseBuffer;
     DAWN_TRY_ASSIGN(scopedUseBuffer, buffer->ValidateCanUseOnQueueNow());
     return WriteBufferImpl(buffer, bufferOffset, data, size);
 }
@@ -502,7 +502,7 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 
         auto ValidateBuffer = [&buffersFromCommands](BufferBase* buffer) -> MaybeError {
             if (auto [iter, inserted] = buffersFromCommands.insert(buffer); inserted) {
-                BufferBase::ScopedUseBuffer use;
+                BufferBase::ScopedUse use;
                 DAWN_TRY_ASSIGN_WITH_CLEANUP(use, buffer->ValidateCanUseOnQueueNow(),
                                              { buffersFromCommands.erase(iter); });
                 // FinishUse() will be called on the buffers in `buffersFromCommands` explicitly.
