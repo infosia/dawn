@@ -50,6 +50,74 @@
       "message": "This should be with padding as per the decision in the group. We only skip padding on the draw time validation, not the compatibility with the layout.",
       "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac68f12_99d534f2",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-03T14:57:59Z",
+      "side": 1,
+      "message": "Instead of TightSize, maybe UnpaddedByteSize to make it clearer?",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a763e701_322a5bf1",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-03T14:57:59Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be possible, WGSL structs require at least one member, should this be an UNREACHABLE? (Or, `TINT_ASSERT(!members.IsEmpty());`)",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9c324a4_68960dd1",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-03T14:57:59Z",
+      "side": 1,
+      "message": "Maybe add a comment, that inner matrix padding is ok, but we strip the end padding? Or something similar",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3ac326c_4549a128",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-03T14:57:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be `UNREACHABLE` as array isn\u0027t supported?",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
