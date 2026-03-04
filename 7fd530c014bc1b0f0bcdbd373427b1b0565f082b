@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4392890a_cc1e8b8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-04T18:04:28Z",
+      "side": 1,
+      "message": "PTAL! Part of a 3-way patch to add bounds checking:\n\n - https://dawn-review.googlesource.com/c/dawn/+/295115\n - https://chromium-review.googlesource.com/c/chromium/src/+/7632342\n - https://dawn-review.googlesource.com/c/dawn/+/295116",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
