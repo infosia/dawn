@@ -69,11 +69,11 @@ class RenderPassTest : public DawnTest {
         pipeline = device.CreateRenderPipeline(&descriptor);
     }
 
-    wgpu::Texture CreateDefault2DTexture() {
+    wgpu::Texture CreateDefault2DTexture(uint32_t size = kRTSize) {
         wgpu::TextureDescriptor descriptor;
         descriptor.dimension = wgpu::TextureDimension::e2D;
-        descriptor.size.width = kRTSize;
-        descriptor.size.height = kRTSize;
+        descriptor.size.width = size;
+        descriptor.size.height = size;
         descriptor.size.depthOrArrayLayers = 1;
         descriptor.sampleCount = 1;
         descriptor.format = kFormat;
@@ -383,6 +383,63 @@ DAWN_INSTANTIATE_TEST(
     VulkanBackend({"vulkan_use_create_render_pass_2"}, {"vulkan_use_dynamic_rendering"}),
     VulkanBackend({}, {"vulkan_use_create_render_pass_2", "vulkan_use_dynamic_rendering"}),
     WebGPUBackend());
+
+class RenderPassRenderAreaTest : public RenderPassTest {
+  protected:
+    void SetUp() override {
+        RenderPassTest::SetUp();
+
+        // Skip all tests if the RenderPassRenderArea feature is not supported.
+        DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::RenderPassRenderArea}));
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures = {};
+        if (SupportsFeatures({wgpu::FeatureName::RenderPassRenderArea})) {
+            requiredFeatures.push_back(wgpu::FeatureName::RenderPassRenderArea);
+        }
+        return requiredFeatures;
+    }
+};
+
+TEST_P(RenderPassRenderAreaTest, ClipsDrawing) {
+    constexpr uint32_t kSize = 64;
+
+    wgpu::Texture renderTarget1 = CreateDefault2DTexture(kSize);
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+    utils::ComboRenderPassDescriptor renderPass({renderTarget1.CreateView()});
+    renderPass.cColorAttachments[0].clearValue = {1.0f, 0.0f, 0.0f, 1.0f};
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 32;
+    renderArea.y = 32;
+    renderArea.width = 32;
+    renderArea.height = 32;
+    renderPass.nextInChain = &renderArea;
+
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+    pass.SetPipeline(pipeline);
+    pass.Draw(3);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Pixels inside the render area impacted by clear/draw.
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget1, 32, 32);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget1, 63, 63);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget1, 63, 32);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kBlue, renderTarget1, 32, 63);
+
+    // Pixels outside the render area are not modified.
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget1, 0, 0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget1, 31, 31);
+}
+
+DAWN_INSTANTIATE_TEST(RenderPassRenderAreaTest,
+                      VulkanBackend({"vulkan_use_dynamic_rendering"}, {}),
+                      VulkanBackend({}, {"vulkan_use_dynamic_rendering"}));
 
 }  // anonymous namespace
 }  // namespace dawn
