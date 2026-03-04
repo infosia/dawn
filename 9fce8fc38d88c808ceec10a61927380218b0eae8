@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ebc42a_ff41ce7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T23:04:19Z",
+      "side": 1,
+      "message": "Agreed, the E2E approach has the benefit it naturally seeds the fuzzer corpus. That said, I don\u0027t know how much having known-to-be-invalid WGSL would help the fuzzers.\n\nIt\u0027s also possible to have the corpus generation script extract the WGSL shaders from the unit tests if we really wanted.\n\nResolving comment as we\u0027ve decided to move forward with the unit test approach for now.",
+      "parentUuid": "e6cd582a_07b0b43a",
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5997ef69_fda010da",
@@ -59,6 +77,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6403cd8d_1ec3de0b",
+        "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T23:04:19Z",
+      "side": 1,
+      "message": "SubstituteOverrides will be the main and probably only other source of errors that we might want to test with WGSL in, but we can already do that in Dawn E2E tests if we want to (see `OverrideConstantsValidationTests.cpp`).",
+      "parentUuid": "5997ef69_fda010da",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8a678c3_55342ac2",
@@ -72,6 +114,24 @@
       "writtenOn": "2026-02-19T16:36:50Z",
       "side": 1,
       "message": "Did it drop the line/column or did you remove it? Seems weird it\u0027s missing?",
+      "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bce2eb9_f5e717db",
+        "filename": "src/tint/lang/wgsl/reader/validation/validation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T23:04:19Z",
+      "side": 1,
+      "message": "Changed it to match the whole error instead of allowing substrings.",
+      "parentUuid": "c8a678c3_55342ac2",
       "revId": "9fce8fc38d88c808ceec10a61927380218b0eae8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46869755_a5dbb0f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T23:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "699b964d_98391213",
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "537946b3_1cd1796b",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-02-20T16:58:07Z",
       "side": 1,
       "message": "maybe just pass in   AllowedFeatures Everything() {",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 47
+      },
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8cc76e9_6b5ee385",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T23:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537946b3_1cd1796b",
       "range": {
         "startLine": 43,
         "startChar": 46,
