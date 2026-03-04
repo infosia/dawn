@@ -365,6 +365,25 @@ class RenderPassValidationState final : public NonMovable {
     std::optional<RenderPassDescriptorResolveRect> mExpandResolveRect;
 };
 
+RenderAreaRect GetRenderAreaRect(const RenderPassRenderAreaRect* area,
+                                 const RenderPassValidationState& validationState) {
+    RenderAreaRect renderArea;
+
+    if (area) {
+        renderArea.x = area->x;
+        renderArea.y = area->y;
+        renderArea.width = area->width;
+        renderArea.height = area->height;
+    } else {
+        renderArea.x = 0;
+        renderArea.y = 0;
+        renderArea.width = validationState.GetRenderWidth();
+        renderArea.height = validationState.GetRenderHeight();
+    }
+
+    return renderArea;
+}
+
 MaybeError ValidateB2BCopyAlignment(uint64_t dataSize, uint64_t srcOffset, uint64_t dstOffset) {
     // Copy size must be a multiple of 4 bytes on macOS.
     DAWN_INVALID_IF(dataSize % 4 != 0, "Copy size (%u) is not a multiple of 4.", dataSize);
@@ -943,6 +962,18 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
         // TODO(dawn:1704): Consider supporting ExpandResolveTexture + PLS
         DAWN_INVALID_IF(pls != nullptr, "For now pixel local storage is invalid to use with %s.",
                         wgpu::LoadOp::ExpandResolveTexture);
+    }
+
+    if (auto area = descriptor.Get<RenderPassRenderAreaRect>()) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::RenderPassRenderArea),
+                        "RenderPassRenderAreaRect can't be used without %s.",
+                        ToAPI(Feature::RenderPassRenderArea));
+        DAWN_INVALID_IF(static_cast<uint64_t>(area->x) + static_cast<uint64_t>(area->width) >
+                            validationState->GetRenderWidth(),
+                        "RenderPassRenderAreaRect is larger than render pass");
+        DAWN_INVALID_IF(static_cast<uint64_t>(area->y) + static_cast<uint64_t>(area->height) >
+                            validationState->GetRenderHeight(),
+                        "RenderPassRenderAreaRect is larger than render pass");
     }
 
     return {};
@@ -1549,6 +1580,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->width = validationState.GetRenderWidth();
             cmd->height = validationState.GetRenderHeight();
+            cmd->renderArea =
+                GetRenderAreaRect(descriptor.Get<RenderPassRenderAreaRect>(), validationState);
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
@@ -1600,10 +1633,13 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
         "encoding %s.BeginRenderPass(%s).", this, descriptor);
 
     if (success) {
-        Ref<RenderPassEncoder> passEncoder = RenderPassEncoder::Create(
-            device, descriptor, this, &mEncodingContext, std::move(usageTracker),
-            std::move(attachmentState), validationState.GetRenderWidth(),
-            validationState.GetRenderHeight(), depthReadOnly, stencilReadOnly, passEndCallback);
+        RenderAreaRect renderArea =
+            GetRenderAreaRect(descriptor.Get<RenderPassRenderAreaRect>(), validationState);
+
+        Ref<RenderPassEncoder> passEncoder =
+            RenderPassEncoder::Create(device, descriptor, this, &mEncodingContext,
+                                      std::move(usageTracker), std::move(attachmentState),
+                                      renderArea, depthReadOnly, stencilReadOnly, passEndCallback);
 
         mEncodingContext.EnterPass(passEncoder.Get());
 
