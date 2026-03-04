@@ -87,6 +87,24 @@
       "parentUuid": "df15f331_c41782a4",
       "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b756008_ce2372eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2026-03-04T08:45:25Z",
+      "side": 1,
+      "message": "Is there any way to avoid that `.Type` suffix? Seems clunky to me.",
+      "parentUuid": "aa2d8810_1701a296",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
