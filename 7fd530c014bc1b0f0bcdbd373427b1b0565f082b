@@ -33,6 +33,24 @@
       "message": "While this works, is there any chance we can instead do the 5-way to make it an std::span?\n\n 1 - (dawn) add noop virtual std::span\u003cuint8_t\u003e GetSource()\n 2 - (chromium) add actual virtual std::span\u003cuint8_t\u003e GetSource()\n 3 - (dawn) use std::span\u003cuint8_t\u003e GetSource() and make GetSourceData default to returning GetSource().data()\n 4 - (chromium) remove GetSourceData\n 5 - (dawn) remove GetSourceData",
       "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdfd81be_5a695159",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-04T18:48:57Z",
+      "side": 1,
+      "message": "+1 to this if possible.",
+      "parentUuid": "ea4fd05e_ae515161",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
