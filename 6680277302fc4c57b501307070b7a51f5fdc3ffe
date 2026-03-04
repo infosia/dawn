@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "6680277302fc4c57b501307070b7a51f5fdc3ffe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d9fff8_c5a94c3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-03-04T19:20:51Z",
+      "side": 1,
+      "message": "I question the usefulness of a DEPS trybot.\nYou can\u0027t test Dawn CLs with it like you can with a ToT bot.\nI propose to delete the DEPS CI bot and set up CI and Try ToT bots.",
+      "revId": "6680277302fc4c57b501307070b7a51f5fdc3ffe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
