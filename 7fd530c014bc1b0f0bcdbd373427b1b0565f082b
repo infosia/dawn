@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5e6dea9_cc6b346b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-04T19:52:48Z",
+      "side": 1,
+      "message": "Can we add an OWNER file in include/dawn/wire that redirects to src/dawn/wire?",
+      "parentUuid": "cdd58aed_9281d109",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea4fd05e_ae515161",
