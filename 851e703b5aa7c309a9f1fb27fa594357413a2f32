@@ -16,6 +16,24 @@
       "message": "These ones are hitting the assert because lhs_type does not have to be the same as rhs_type. Maybe need two different helpers.",
       "revId": "851e703b5aa7c309a9f1fb27fa594357413a2f32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65f45c7c_ec20351d",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-04T20:45:02Z",
+      "side": 1,
+      "message": "Restored original for these two.",
+      "parentUuid": "59a09f56_4e13b737",
+      "revId": "851e703b5aa7c309a9f1fb27fa594357413a2f32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
