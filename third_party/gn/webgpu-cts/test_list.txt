@@ -230460,6 +230460,7 @@ webgpu:shader,execution,stage:basic_render:
 webgpu:shader,execution,statement,compound:decl:case="uses"
 webgpu:shader,execution,statement,compound:decl:case="shadowed"
 webgpu:shader,execution,statement,compound:decl:case="gone"
+webgpu:shader,execution,statement,compound:eval_order:
 webgpu:shader,execution,statement,discard:all:useStorageBuffers=false
 webgpu:shader,execution,statement,discard:all:useStorageBuffers=true
 webgpu:shader,execution,statement,discard:three_quarters:useStorageBuffers=false
