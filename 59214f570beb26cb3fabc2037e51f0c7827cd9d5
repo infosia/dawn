@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d89a7113_082d6fae",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-04T01:37:50Z",
+      "side": 1,
+      "message": "(Although)\nYes, it returns bit sets. Now I remembered why I added a size helper, I think it is:\n1. In origin CL, I want to do compress optimization and find layout issue. So I need the struct size to help me order the immediates.\n\nAnd in origin CL I tried to extract size without paddings from bitset and find it also need helper to do bit math. So I extract all type of sizes in the size helper(So we don\u0027t need another helper).",
+      "parentUuid": "935f001d_687ce27e",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9cc83a5_0c97db44",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 14
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-03T09:08:01Z",
       "side": 1,
       "message": "This should be with padding as per the decision in the group. We only skip padding on the draw time validation, not the compatibility with the layout.",
+      "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1524dd_6342df3e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-04T01:37:50Z",
+      "side": 1,
+      "message": "Ah, by reading Jim\u0027s comments again I think I misunderstand the decision. Jim said we could relax in shader creation time but we don\u0027t need to. (I focused on the spec no need to change because draw time validation hints we don\u0027t validate the trailing padding bytes and ignore this).\n\nThen I think this CL is not needed because:\nAs you said in another comments, we already have a bitset to record accessible_slots which ignored trailing padding bytes.",
+      "parentUuid": "c9cc83a5_0c97db44",
       "revId": "59214f570beb26cb3fabc2037e51f0c7827cd9d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
