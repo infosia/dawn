@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd58aed_9281d109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001671
+      },
+      "writtenOn": "2026-03-04T19:13:18Z",
+      "side": 1,
+      "message": "Thanks for the +2, Loko! Apparently I need Corentin\u0027s _special_ +2, though. 😄",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea4fd05e_ae515161",
