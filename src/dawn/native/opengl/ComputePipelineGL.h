@@ -44,13 +44,13 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineGL {
 
     MaybeError ApplyNow(const OpenGLFunctions& gl);
 
-    MaybeError InitializeImpl() override;
-
     GLuint GetProgramHandle() const;
 
   private:
     using ComputePipelineBase::ComputePipelineBase;
     ~ComputePipeline() override;
+    ResultOrError<Extent3D> InitializeImpl() override;
+
     void DestroyImpl(DestroyReason reason) override;
 };
 
