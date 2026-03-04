@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "64e17bba02561faa973ce296037bf6b61effe8f4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98aff8e5_3fa081c0",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-04T19:53:50Z",
+      "side": 1,
+      "message": "Should this be RetryOnFailure since it\u0027s flaky?",
+      "revId": "64e17bba02561faa973ce296037bf6b61effe8f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
