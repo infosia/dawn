@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a531245a_6f66f288",
+        "filename": "src/dawn/replay/Replay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-03-04T19:52:54Z",
+      "side": 0,
+      "message": "I was going to add generators for these but I tried removing them and no errors. It\u0027s possible it would be needed if called but they\u0027re not currently called. My only worry is that if you tried to call them the error might be very unclear.",
+      "revId": "7aa10227ee961a1ae943375e7d8e6ed98f3379c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
