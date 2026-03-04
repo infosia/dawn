@@ -139,8 +139,8 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
                     descriptor->usage, mProperties.usage);
 
     // Validate that the buffer size exactly matches the shared buffer memory's size.
-    DAWN_INVALID_IF(descriptor->size != mProperties.size,
-                    "SharedBufferMemory size (%u) doesn't match descriptor size (%u).",
+    DAWN_INVALID_IF(descriptor->size > mProperties.size,
+                    "SharedBufferMemory size (%u) is smaller than descriptor size (%u).",
                     mProperties.size, descriptor->size);
 
     Ref<BufferBase> buffer;

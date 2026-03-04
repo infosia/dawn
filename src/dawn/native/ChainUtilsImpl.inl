@@ -111,14 +111,14 @@ constexpr inline wgpu::SType STypeForImpl<d3d12::SharedBufferMemoryD3D12Resource
     wgpu::SType(WGPUSType_SharedBufferMemoryD3D12ResourceDescriptor);
 
 template <>
-constexpr inline wgpu::SType STypeForImpl<d3d12::SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor> =
-    wgpu::SType(WGPUSType_SharedBufferMemoryD3D12SharedMemoryFileMappingHandleDescriptor);
+constexpr inline wgpu::SType STypeForImpl<wgpu::SharedBufferMemoryFileHandleDescriptor> =
+    wgpu::SType(WGPUSType_SharedBufferMemoryFileHandleDescriptor);
 
 template <>
 struct AdditionalExtensions<SharedBufferMemoryDescriptor> {
     using List =
         AdditionalExtensionsList<const d3d12::SharedBufferMemoryD3D12ResourceDescriptor*,
-                                 const d3d12::SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor*>;
+                                 const wgpu::SharedBufferMemoryFileHandleDescriptor*>;
 };
 
 }  // namespace detail

@@ -1462,6 +1462,7 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
+    const wgpu::ChainedStruct* originalNextInChain = deviceDescriptor.nextInChain;
     wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
     deviceDescriptor.nextInChain = &cacheDesc;
     cacheDesc.isolationKey = isolationKey.c_str();
@@ -1470,6 +1471,8 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
     // inherited to all adapters' toggles set.
     ParamTogglesHelper deviceTogglesHelper(mParam, native::ToggleStage::Device);
     cacheDesc.nextInChain = &deviceTogglesHelper.togglesDesc;
+
+    deviceTogglesHelper.togglesDesc.nextInChain = originalNextInChain;
 
     WGPUDevice createdDevice;
     uint32_t deviceCreationDeprecatedWarningExpectation =

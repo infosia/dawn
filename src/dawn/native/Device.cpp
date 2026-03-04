@@ -1819,6 +1819,15 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         mEnabledFeatures.EnableFeature(wgpu::FeatureName::CoreFeaturesAndLimits);
     }
 
+    if (auto* useSharedMemoryFileHandleInWire =
+            deviceDescriptor.Get<DeviceDescriptorUseSharedMemoryFileHandleInWire>()) {
+        if (useSharedMemoryFileHandleInWire->useSharedMemoryFileHandleInWire &&
+            IsToggleEnabled(Toggle::EnableSharedMemoryFileHanleInWire)) {
+            mEnabledFeatures.EnableFeature(
+                Feature::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle);
+        }
+    }
+
     // TODO(384921944): Enable Compat's optional features by default in Core Mode.
 }
 

@@ -50,6 +50,7 @@
             { "name": "device id", "type": "ObjectId", "id_type": "device" },
             { "name": "descriptor", "type": "buffer descriptor", "annotation": "const*" },
             { "name": "result", "type": "ObjectHandle", "handle_type": "buffer" },
+            { "name": "use shared memory file handle", "type": "bool", "default": "false" },
             { "name": "read handle create info length", "type": "uint64_t" },
             { "name": "read handle create info", "type": "uint8_t", "annotation": "const*", "length": "read handle create info length", "skip_serialize": true},
             { "name": "write handle create info length", "type": "uint64_t" },

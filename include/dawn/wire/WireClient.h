@@ -29,6 +29,7 @@
 #define INCLUDE_DAWN_WIRE_WIRECLIENT_H_
 
 #include <memory>
+#include <string>
 #include <string_view>
 #include <vector>
 
@@ -116,6 +117,22 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     // Create a handle for writing server data.
     // This may fail and return nullptr.
     virtual WriteHandle* CreateWriteHandle(size_t) = 0;
+
+    struct SharedMemoryInfo {
+        std::string name = {};
+        void* handle = nullptr;
+        size_t size = 0;
+        void* mappedPointer = nullptr;
+    };
+
+    virtual SharedMemoryInfo AllocateSharedMemory(size_t) { return {}; }
+    virtual void DeallocateSharedMemory(const SharedMemoryInfo&) {}
+    virtual ReadHandle* CreateReadHandleWithSharedMemory(const SharedMemoryInfo&) {
+        return nullptr;
+    }
+    virtual WriteHandle* CreateWriteHandleWithSharedMemory(const SharedMemoryInfo&) {
+        return nullptr;
+    }
 
     class DAWN_WIRE_EXPORT ReadHandle {
       public:

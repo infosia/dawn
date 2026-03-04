@@ -37,6 +37,7 @@
 #include <string>
 #include <utility>
 
+#include "dawn/common/Platform.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/wire/BufferConsumer_impl.h"
 #include "dawn/wire/WireCmd_autogen.h"
@@ -194,6 +195,8 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor) {
     Client* wireClient = device->GetClient();
 
+    bool useSharedMemoryFileHandle = device->SupportUseSharedMemoryFileHandleInWire();
+
     bool fakeOOMAtWireClientMap = false;
     for (const auto* chain = descriptor->nextInChain; chain != nullptr; chain = chain->next) {
         switch (chain->sType) {
@@ -228,13 +231,25 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     cmd.writeHandleCreateInfoLength = 0;
     cmd.writeHandleCreateInfo = nullptr;  // Skipped by skip_serialize.
 
+    MemoryTransferService::SharedMemoryInfo sharedMemoryInfo = {};
+    if (mappable && useSharedMemoryFileHandle) {
+        sharedMemoryInfo =
+            wireClient->GetMemoryTransferService()->AllocateSharedMemory(descriptor->size);
+    }
+
     size_t readHandleCreateInfoLength = 0;
     size_t writeHandleCreateInfoLength = 0;
     if (mappable) {
         if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
             // Create the read handle on buffer creation.
-            readHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            if (sharedMemoryInfo.handle != nullptr) {
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandleWithSharedMemory(
+                        sharedMemoryInfo));
+            } else {
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            }
             if (readHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }
@@ -244,8 +259,14 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
 
         if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 || descriptor->mappedAtCreation) {
             // Create the write handle on buffer creation.
-            writeHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            if (sharedMemoryInfo.handle != nullptr) {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandleWithSharedMemory(
+                        sharedMemoryInfo));
+            } else {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            }
             if (writeHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }
@@ -253,6 +274,8 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
             cmd.writeHandleCreateInfoLength = writeHandleCreateInfoLength;
         }
     }
+
+    cmd.useSharedMemoryFileHandle = sharedMemoryInfo.handle != nullptr;
 
     // Create the buffer and send the creation command.
     // This must happen after any potential error buffer creation
@@ -597,6 +620,11 @@ void Buffer::FreeMappedData() {
         memset(static_cast<uint8_t*>(mMappedData) + mMappedOffset, 0xCA, mMappedSize);
     }
 #endif  // defined(DAWN_ENABLE_ASSERTS)
+
+    if (mSharedMemoryInfo.handle != nullptr) {
+        mDevice->GetClient()->GetMemoryTransferService()->DeallocateSharedMemory(mSharedMemoryInfo);
+        mSharedMemoryInfo = {};
+    }
 
     mMappedOffset = 0;
     mMappedSize = 0;

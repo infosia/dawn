@@ -36,10 +36,31 @@
 
 #include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
+#include "dawn/common/Platform.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/client/Client.h"
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+#include <Windows.h>
+
+#include <atomic>
+#include <string>
+
+#include "dawn/common/Constants.h"
+#endif
+
 namespace dawn::wire::client {
+
+namespace {
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+std::string MakeSharedName() {
+    static std::atomic<uint64_t> counter{1};
+    return "Local\\DawnWire_" + std::to_string(counter.fetch_add(1));
+}
+#endif
+
+}  // anonymous namespace
 
 class InlineMemoryTransferService : public MemoryTransferService {
     class ReadHandleImpl : public ReadHandle {
@@ -109,6 +130,60 @@ class InlineMemoryTransferService : public MemoryTransferService {
         size_t mSize;
     };
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+
+    class ReadHandleWithSharedMemoryFileHandleImpl : public ReadHandle {
+      public:
+        explicit ReadHandleWithSharedMemoryFileHandleImpl(const SharedMemoryInfo& sharedMemoryInfo)
+            : mSharedMemoryInfo(sharedMemoryInfo) {}
+
+        ~ReadHandleWithSharedMemoryFileHandleImpl() override = default;
+
+        size_t SerializeCreateSize() override { return mSharedMemoryInfo.name.size(); }
+
+        void SerializeCreate(void* ptr) override {
+            memcpy(ptr, mSharedMemoryInfo.name.c_str(), mSharedMemoryInfo.name.size());
+        }
+
+        const void* GetData() override { return mSharedMemoryInfo.mappedPointer; }
+
+        // We don't need to deserialize anything as the memory is already GPU-visible.
+        bool DeserializeDataUpdate(const void* deserializePointer,
+                                   size_t deserializeSize,
+                                   size_t offset,
+                                   size_t size) override {
+            return true;
+        }
+
+      private:
+        SharedMemoryInfo mSharedMemoryInfo;
+    };
+
+    class WriteHandleWithSharedMemoryFileHandleImpl : public WriteHandle {
+      public:
+        explicit WriteHandleWithSharedMemoryFileHandleImpl(const SharedMemoryInfo& sharedMemoryInfo)
+            : mSharedMemoryInfo(sharedMemoryInfo) {}
+
+        ~WriteHandleWithSharedMemoryFileHandleImpl() override = default;
+
+        size_t SerializeCreateSize() override { return mSharedMemoryInfo.name.size(); }
+
+        void SerializeCreate(void* ptr) override {
+            memcpy(ptr, mSharedMemoryInfo.name.c_str(), mSharedMemoryInfo.name.size());
+        }
+
+        void* GetData() override { return mSharedMemoryInfo.mappedPointer; }
+
+        size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) override { return 0; }
+
+        void SerializeDataUpdate(void* serializePointer, size_t offset, size_t size) override {}
+
+      private:
+        SharedMemoryInfo mSharedMemoryInfo;
+    };
+
+#endif
+
   public:
     InlineMemoryTransferService() {}
     ~InlineMemoryTransferService() override = default;
@@ -129,6 +204,55 @@ class InlineMemoryTransferService : public MemoryTransferService {
         }
         return nullptr;
     }
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+    SharedMemoryInfo AllocateSharedMemory(size_t size) override {
+        if (size == 0) {
+            return {};
+        }
+
+        std::string name = MakeSharedName();
+        size_t allocatedSize = Align(size, kSharedBufferMemoryFileHandleRequiredAlignment);
+        HANDLE fileMapping = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE,
+                                                static_cast<DWORD>(allocatedSize >> 32),
+                                                static_cast<DWORD>(allocatedSize), name.c_str());
+        if (!fileMapping) {
+            return {};
+        }
+
+        void* mappedPointer = MapViewOfFile(fileMapping, FILE_MAP_ALL_ACCESS, 0, 0, size);
+        if (!mappedPointer) {
+            CloseHandle(fileMapping);
+            return {};
+        }
+
+        SharedMemoryInfo sharedMemoryInfo;
+        sharedMemoryInfo.name = name;
+        sharedMemoryInfo.size = size;
+        sharedMemoryInfo.handle = fileMapping;
+        sharedMemoryInfo.mappedPointer = mappedPointer;
+        return sharedMemoryInfo;
+    }
+
+    void DeallocateSharedMemory(const SharedMemoryInfo& sharedMemoryInfo) override {
+        if (sharedMemoryInfo.mappedPointer != nullptr) {
+            UnmapViewOfFile(sharedMemoryInfo.mappedPointer);
+        }
+        if (sharedMemoryInfo.handle != nullptr) {
+            CloseHandle(sharedMemoryInfo.handle);
+        }
+    }
+
+    ReadHandle* CreateReadHandleWithSharedMemory(
+        const SharedMemoryInfo& sharedMemoryInfo) override {
+        return new ReadHandleWithSharedMemoryFileHandleImpl(sharedMemoryInfo);
+    }
+    WriteHandle* CreateWriteHandleWithSharedMemory(
+        const SharedMemoryInfo& sharedMemoryInfo) override {
+        return new WriteHandleWithSharedMemoryFileHandleImpl(sharedMemoryInfo);
+    }
+
+#endif
 };
 
 std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService() {

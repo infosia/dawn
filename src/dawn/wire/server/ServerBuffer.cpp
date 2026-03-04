@@ -34,11 +34,18 @@
 #include <memory>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Platform.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/wire/BufferConsumer_impl.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "dawn/wire/WireResult.h"
 #include "dawn/wire/server/Server.h"
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+#include <Windows.h>
+
+#include <string>
+#endif
 
 namespace dawn::wire::server {
 
@@ -78,6 +85,12 @@ WireResult Server::PreHandleBufferDestroy(const BufferDestroyCmd& cmd) {
     buffer->writeHandle = nullptr;
     buffer->mapWriteState = BufferMapWriteState::Unmapped;
 
+    if (buffer->sharedMemoryFileHandle != nullptr) {
+        WGPUSharedBufferMemoryEndAccessState state;
+        mProcs->sharedBufferMemoryEndAccess(buffer->sharedMemoryFileHandle, buffer->handle, &state);
+        mProcs->sharedBufferMemoryRelease(buffer->sharedMemoryFileHandle);
+        buffer->sharedMemoryFileHandle = nullptr;
+    }
     return WireResult::Success;
 }
 
@@ -112,6 +125,12 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
         return WireResult::Success;
     }
 
+    /* if (buffer->sharedMemoryFileHandle != nullptr) {
+        OnBufferMapAsyncCallback(userdata.get(), WGPUMapAsyncStatus_Success,
+                                 kEmptyOutputStringView);
+        return WireResult::Success;
+    }*/
+
     size_t offset = static_cast<size_t>(offset64);
     size_t size = static_cast<size_t>(size64);
 
@@ -129,6 +148,7 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
 WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                                         const WGPUBufferDescriptor* descriptor,
                                         ObjectHandle bufferHandle,
+                                        WGPUBool useSharedMemoryFileHandle,
                                         uint64_t readHandleCreateInfoLength,
                                         const uint8_t* readHandleCreateInfo,
                                         uint64_t writeHandleCreateInfoLength,
@@ -136,7 +156,6 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
     // Create and register the buffer object.
     Reserved<WGPUBuffer> buffer;
     WIRE_TRY(Allocate(&buffer, bufferHandle));
-    buffer->handle = mProcs->deviceCreateBuffer(device->handle, descriptor);
     buffer->usage = descriptor->usage;
     buffer->mappedAtCreation = (descriptor->mappedAtCreation != 0u);
 
@@ -153,6 +172,66 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
         readHandleCreateInfoLength >
             std::numeric_limits<size_t>::max() - writeHandleCreateInfoLength) {
         return WireResult::FatalError;
+    }
+
+    if (!useSharedMemoryFileHandle) {
+        buffer->handle = mProcs->deviceCreateBuffer(device->handle, descriptor);
+    } else {
+#if DAWN_PLATFORM_IS(WINDOWS)
+        std::string sharedMemoryName;
+
+        if (isWriteMode) {
+            if (!mMemoryTransferService->DeserializeSharedMemoryName(
+                    writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                    &sharedMemoryName)) {
+                return WireResult::FatalError;
+            }
+        }
+        if (isReadMode) {
+            std::string readSharedMemoryName;
+            if (!mMemoryTransferService->DeserializeSharedMemoryName(
+                    readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                    &readSharedMemoryName)) {
+                return WireResult::FatalError;
+            }
+            if (!sharedMemoryName.empty() && sharedMemoryName != readSharedMemoryName) {
+                return WireResult::FatalError;
+            }
+            sharedMemoryName = readSharedMemoryName;
+        }
+
+        HANDLE sharedMemoryHandle =
+            OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, sharedMemoryName.c_str());
+        if (sharedMemoryHandle == nullptr) {
+            return WireResult::FatalError;
+        }
+
+        WGPUSharedBufferMemoryFileHandleDescriptor fileHandleDesc = {};
+        fileHandleDesc.chain.sType = WGPUSType_SharedBufferMemoryFileHandleDescriptor;
+        fileHandleDesc.handle = sharedMemoryHandle;
+        fileHandleDesc.size =
+            Align(descriptor->size, kSharedBufferMemoryFileHandleRequiredAlignment);
+        WGPUSharedBufferMemoryDescriptor sharedBufferDescriptor = {};
+        sharedBufferDescriptor.nextInChain = &fileHandleDesc.chain;
+        buffer->sharedMemoryFileHandle =
+            mProcs->deviceImportSharedBufferMemory(device->handle, &sharedBufferDescriptor);
+        if (buffer->sharedMemoryFileHandle == nullptr) {
+            return WireResult::FatalError;
+        }
+        buffer->handle =
+            mProcs->sharedBufferMemoryCreateBuffer(buffer->sharedMemoryFileHandle, descriptor);
+        if (buffer->handle == nullptr) {
+            return WireResult::FatalError;
+        }
+        WGPUSharedBufferMemoryBeginAccessDescriptor beginAccessDesc = {};
+        beginAccessDesc.initialized = true;
+        beginAccessDesc.fenceCount = 0;
+        mProcs->sharedBufferMemoryBeginAccess(buffer->sharedMemoryFileHandle, buffer->handle,
+                                              &beginAccessDesc);
+        return WireResult::Success;
+#else
+        return WireResult::FatalError;
+#endif
     }
 
     if (isWriteMode) {
@@ -229,6 +308,11 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
         case BufferMapWriteState::Mapped:
             break;
     }
+
+    if (buffer->sharedMemoryFileHandle != nullptr) {
+        return WireResult::Success;
+    }
+
     if (!buffer->writeHandle) {
         // This check is performed after the check for the MapError state. It is permissible
         // to Unmap and attempt to update mapped data of an error buffer.
@@ -267,6 +351,14 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
     // to skip_serialize). Instead, the custom CommandExtension below fills that memory.
     cmd.readDataUpdateInfoLength = 0;
     cmd.readDataUpdateInfo = nullptr;  // Skipped by skip_serialize.
+
+    if (buffer->sharedMemoryFileHandle != nullptr) {
+        // The buffer is backed by shared memory, so the client already has access to the data and
+        // doesn't need an update.
+        cmd.readDataUpdateInfoLength = 0;
+        SerializeCommand(cmd);
+        return;
+    }
 
     const void* readData = nullptr;
     size_t readDataUpdateInfoLength = 0;

@@ -100,6 +100,16 @@ class InlineMemoryTransferService : public MemoryTransferService {
         *writeHandle = new WriteHandleImpl();
         return true;
     }
+
+    bool DeserializeSharedMemoryName(const void* deserializePointer,
+                                     size_t deserializeSize,
+                                     std::string* sharedMemoryName) override {
+        DAWN_ASSERT(sharedMemoryName != nullptr);
+        std::vector<char> name(deserializeSize + 1);
+        memcpy(name.data(), deserializePointer, deserializeSize);
+        *sharedMemoryName = name.data();
+        return true;
+    }
 };
 
 std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService() {

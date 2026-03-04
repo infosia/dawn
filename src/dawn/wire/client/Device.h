@@ -62,6 +62,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     bool IsAlive() const;
     Queue* GetQueue();
     const LimitsAndFeatures& GetLimitsAndFeatures() const;
+    bool SupportUseSharedMemoryFileHandleInWire() const;
 
     void HandleError(WGPUErrorType errorType, WGPUStringView message);
     void HandleLogging(WGPULoggingType loggingType, WGPUStringView message);
@@ -126,6 +127,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     Ref<Adapter> mAdapter;
     Ref<Queue> mQueue;
     bool mIsAlive = true;
+    bool mSupportUseSharedMemoryFileHandleInWire = false;
 };
 
 }  // namespace dawn::wire::client

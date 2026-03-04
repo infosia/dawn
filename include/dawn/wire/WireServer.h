@@ -97,6 +97,12 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
                                         size_t deserializeSize,
                                         WriteHandle** writeHandle) = 0;
 
+    virtual bool DeserializeSharedMemoryName(const void* deserializePointer,
+                                             size_t deserializeSize,
+                                             std::string* sharedMemoryName) {
+        return true;
+    }
+
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
         ReadHandle();

@@ -336,6 +336,15 @@ WGPUFuture Adapter::APIRequestDevice(const WGPUDeviceDescriptor* descriptor,
         wireDescriptor.uncapturedErrorCallbackInfo = {};
     }
 
+    WGPUDeviceDescriptorUseSharedMemoryFileHandleInWire useSharedMemoryFileHandleDesc = {};
+    if (mLimitsAndFeatures.HasFeature(
+            WGPUFeatureName_SharedBufferMemoryD3D12SharedMemoryFileMappingHandle)) {
+        useSharedMemoryFileHandleDesc.chain.sType =
+            WGPUSType_DeviceDescriptorUseSharedMemoryFileHandleInWire;
+        useSharedMemoryFileHandleDesc.useSharedMemoryFileHandleInWire = true;
+        wireDescriptor.nextInChain = &useSharedMemoryFileHandleDesc.chain;
+    }
+
     AdapterRequestDeviceCmd cmd;
     cmd.adapterId = GetWireHandle(client).id;
     cmd.eventManagerHandle = GetEventManagerHandle();

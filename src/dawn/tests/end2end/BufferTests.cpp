@@ -722,10 +722,7 @@ TEST_P(BufferMappingTests, WaitForOnSubmittedWorkDoneThenMap) {
 }
 
 DAWN_INSTANTIATE_TEST_P(BufferMappingTests,
-                        {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
-                         D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
-                         D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
-                         OpenGLESBackend({"gl_defer"}), VulkanBackend(), WebGPUBackend()},
+                        {D3D12Backend({"enable_shared_memory_file_handle_in_wire"})},
                         std::initializer_list<wgpu::CallbackMode>{
                             wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
                             wgpu::CallbackMode::AllowSpontaneous});

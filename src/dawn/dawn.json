@@ -230,6 +230,15 @@
             {"name": "consume adapter", "type": "bool", "default": "false"}
         ]
     },
+    "device descriptor use shared memory file handle in wire": {
+        "tags": ["dawn"],
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["device descriptor"],
+        "members": [
+            {"name": "use shared memory file handle in wire", "type": "bool", "default": "false"}
+        ]
+    },
     "dawn toggles descriptor": {
         "tags": ["dawn", "native"],
         "category": "structure",
@@ -1900,6 +1909,16 @@
         "tags": ["dawn", "native"],
         "members": [
             {"name": "label", "type": "string view", "optional": true}
+        ]
+    },
+    "shared buffer memory file handle descriptor": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["shared buffer memory descriptor"],
+        "tags": ["dawn", "native"],
+        "members": [
+            {"name": "handle", "type": "void *"},
+            {"name": "size", "type": "uint64_t"}
         ]
     },
     "shared texture memory": {
@@ -4029,11 +4048,12 @@
             {"value": 74, "name": "texel buffer binding layout", "tags": ["dawn"]},
             {"value": 75, "name": "shared texture memory metal end access state", "tags": ["dawn", "native"]},
             {"value": 76, "name": "adapter properties WGPU", "tags": ["dawn"]},
-            {"value": 77, "name": "shared buffer memory D3D12 shared memory file mapping handle descriptor", "tags": ["dawn", "native"]},
+            {"value": 77, "name": "shared buffer memory file handle descriptor", "tags": ["dawn", "native"]},
             {"value": 78, "name": "shared texture memory D3D12 resource descriptor", "tags": ["dawn", "native"]},
             {"value": 79, "name": "request adapter options angle virtualization group", "tags": ["dawn", "native"]},
             {"value": 80, "name": "pipeline layout resource table", "tags": ["dawn"]},
-            {"value": 81, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]}
+            {"value": 81, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]},
+            {"value": 82, "name": "device descriptor use shared memory file handle in wire", "tags": ["dawn"]}
         ]
     },
     "texture": {

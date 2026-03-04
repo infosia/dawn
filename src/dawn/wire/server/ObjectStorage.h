@@ -73,6 +73,7 @@ struct ObjectData<WGPUBuffer> : public ObjectDataBase<WGPUBuffer> {
     WGPUBufferUsage usage = WGPUBufferUsage_None;
     // Indicate if writeHandle needs to be destroyed on unmap
     bool mappedAtCreation = false;
+    WGPUSharedBufferMemory sharedMemoryFileHandle = nullptr;
 };
 
 struct DeviceInfo {

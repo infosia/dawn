@@ -120,6 +120,8 @@ class Buffer final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     // TODO(enga): Use a tagged pointer to save space.
     std::unique_ptr<MemoryTransferService::ReadHandle> mReadHandle = nullptr;
     std::unique_ptr<MemoryTransferService::WriteHandle> mWriteHandle = nullptr;
+
+    MemoryTransferService::SharedMemoryInfo mSharedMemoryInfo = {};
 };
 
 }  // namespace dawn::wire::client

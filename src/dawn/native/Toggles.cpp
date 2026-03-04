@@ -837,6 +837,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Backend will automatically map the buffer when it's not in use by GPU, to allow "
       "front-end's MapAsync and Unmap calls to become cheap without acquiring any lock internally.",
       "https://crbug.com/dawn/481158754", ToggleStage::Device}},
+    {Toggle::EnableSharedMemoryFileHanleInWire,
+     {"enable_shared_memory_file_handle_in_wire",
+      "Enable transfering buffer mapped data with shared memory file handle in dawn_wire.",
+      "https://crbug.com/dawn/386255678", ToggleStage::Device}}
 
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};

@@ -30,6 +30,7 @@
 #include <memory>
 #include <utility>
 
+#include "dawn/common/Constants.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -93,7 +94,8 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
     Device* device,
     D3D12_HEAP_PROPERTIES heapProperties,
     bool allowUAV,
-    uint64_t size) {
+    uint64_t size,
+    bool alwaysAllowMapping) {
     HeapAccessType heapType;
     DAWN_TRY_ASSIGN(heapType, MapToHeapAccessType(heapProperties, device));
 
@@ -115,8 +117,12 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
                 usages |= wgpu::BufferUsage::Storage;
             }
 
-            if (device->GetDeviceInfo().isUMA &&
-                device->HasFeature(Feature::BufferMapExtendedUsages)) {
+            if (alwaysAllowMapping) {
+                usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
+            }
+
+            else if (device->GetDeviceInfo().isUMA &&
+                     device->HasFeature(Feature::BufferMapExtendedUsages)) {
                 // On UMA systems, buffers with WRITE_COMBINE or WRITE_BACK heaps can also be
                 // mapped.
                 if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE) {
@@ -188,8 +194,8 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     bool allowUAV = desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
 
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties,
-                    GetSharedBufferMemoryProperties(device, heapProperties, allowUAV, desc.Width));
+    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, allowUAV,
+                                                                desc.Width, false));
 
     auto result =
         AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Resource)));
@@ -201,12 +207,11 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
 ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     Device* device,
     StringView label,
-    const SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor* descriptor) {
+    const SharedBufferMemoryFileHandleDescriptor* descriptor) {
     HANDLE sharedMemoryFileHandle = descriptor->handle;
     DAWN_INVALID_IF(sharedMemoryFileHandle == nullptr, "shared HANDLE is missing.");
 
-    constexpr uint32_t kAlignment =
-        SharedBufferMemoryD3D12SharedMemoryFileHandleDescriptor::kRequiredAlignment;
+    constexpr uint32_t kAlignment = kSharedBufferMemoryFileHandleRequiredAlignment;
     DAWN_INVALID_IF(descriptor->size % kAlignment != 0,
                     "shared buffer memory size is not a multiple of (%d).", kAlignment);
 
@@ -223,7 +228,7 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     D3D12_HEAP_PROPERTIES heapProperties = heapDesc.Properties;
     SharedBufferMemoryProperties properties;
     DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, true,
-                                                                descriptor->size));
+                                                                descriptor->size, true));
 
     D3D12_RESOURCE_DESC resourceDescriptor;
     resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
