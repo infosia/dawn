@@ -51,6 +51,24 @@
       "parentUuid": "ea4fd05e_ae515161",
       "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8edf8b2a_a80658cb",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-04T18:54:46Z",
+      "side": 1,
+      "message": "Yeah, I tried that first. The problem is that Chromium disallows use of `std::span` (enforced by presubmit check) and Dawn can\u0027t take a dependency on base to use `base::span`. (And, before anyone asks, `absl::span` is also banned in Chromium.)\n\nThis wouldn\u0027t be an issue if not for the fact that we\u0027re overloading the method to return the span in Chromium, which means we HAVE to write out the return type fully and it has to match the base class declaration. (Otherwise we could use `auto` on the Chromium side to skirt the requirement.)\n\nI talked it over with tsepez@ yesterday and while he thinks this particular scenario is a corner case that the presubmit should be less strict about, he also admitted that for cross-library boundaries like this sometimes data()/size() is the best you can do.",
+      "parentUuid": "fdfd81be_5a695159",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
