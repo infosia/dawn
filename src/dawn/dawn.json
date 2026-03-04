@@ -2432,7 +2432,8 @@
             {"value": 60, "name": "atomic vec2u min max", "tags": ["dawn"]},
             {"value": 61, "name": "unorm16 formats for external texture", "tags": ["dawn"]},
             {"value": 62, "name": "opaque y cb cr android for external texture", "tags": ["dawn"]},
-            {"value": 63, "name": "unorm16 filterable", "tags": ["dawn"]}
+            {"value": 63, "name": "unorm16 filterable", "tags": ["dawn"]},
+            {"value": 64, "name": "render pass render area", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -3182,7 +3183,7 @@
             {"name": "max draw count", "type": "uint64_t", "default": 50000000}
         ]
     },
-    "render pass descriptor expand resolve rect": {
+    "render pass render area rect": {
         "category": "structure",
         "tags": ["dawn"],
         "chained": "in",
@@ -3980,7 +3981,7 @@
             {"value": 24, "name": "dawn drm format capabilities", "tags": ["dawn"]},
             {"value": 25, "name": "shader module compilation options", "tags": ["dawn"]},
             {"value": 26, "name": "color target state expand resolve texture dawn", "tags": ["dawn"]},
-            {"value": 27, "name": "render pass descriptor expand resolve rect", "tags": ["dawn"]},
+            {"value": 27, "name": "render pass render area rect", "tags": ["dawn"]},
 
             {"value": 28, "name": "shared texture memory vk dedicated allocation descriptor", "tags": ["dawn", "native"]},
             {"value": 29, "name": "shared texture memory a hardware buffer descriptor", "tags": ["dawn", "native"]},
