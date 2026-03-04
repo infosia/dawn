@@ -177,7 +177,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
     EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::Unorm16TextureFormats);
     EnableFeature(Feature::Unorm16Filterable);
     EnableFeature(Feature::Unorm16FormatsForExternalTexture);
     EnableFeature(Feature::AdapterPropertiesMemoryHeaps);

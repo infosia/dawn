@@ -214,11 +214,6 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "pixel_local_storage.md",
       FeatureInfo::FeatureState::Experimental}},
-    {Feature::Unorm16TextureFormats,
-     {"Supports R/RG/RGBA16 unorm texture formats",
-      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
-      "norm16_texture_formats.md",
-      FeatureInfo::FeatureState::Stable}},
     {Feature::SharedTextureMemoryVkDedicatedAllocation,
      {"Support specifying whether a Vulkan allocation for shared texture memory is a dedicated "
       "memory allocation.",

@@ -394,11 +394,6 @@ void ComputeFormatCapabilities(const DeviceBase* device, FormatTable& table) {
         AddCaps({wgpu::TextureFormat::RG11B10Ufloat},
                 Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable);
     }
-
-    InitialCapsAddedBy(Feature::Unorm16TextureFormats,
-                       {wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm,
-                        wgpu::TextureFormat::RGBA16Unorm},
-                       Cap::Renderable | Cap::Multisample | Cap::Resolve);
 }
 
 FormatTable BuildFormatTable(const DeviceBase* device) {
@@ -488,8 +483,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
                                                        ? kAnyFloat
                                                        : SampleTypeBit::UnfilterableFloat;
     SampleTypeBit sampleTypeForNorm16Formats =
-        (device->HasFeature(Feature::Unorm16TextureFormats) ||
-         device->HasFeature(Feature::Unorm16Filterable))
+         device->HasFeature(Feature::Unorm16Filterable)
             ? kAnyFloat
             : SampleTypeBit::UnfilterableFloat;
 

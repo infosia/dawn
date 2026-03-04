@@ -1055,27 +1055,6 @@ TEST_F(BGRA8UnormTextureFormatsValidationTests, StorageFeature) {
     device.CreateTexture(&descriptor);
 }
 
-class Unorm16TextureFormatsValidationTests : public TextureValidationTest {
-  protected:
-    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        return {wgpu::FeatureName::Unorm16TextureFormats};
-    }
-};
-
-// Test that Norm16 formats are valid as renderable and sample-able texture if
-// 'norm16-texture-formats' is enabled.
-TEST_F(Unorm16TextureFormatsValidationTests, RenderAndSample) {
-    wgpu::TextureDescriptor descriptor;
-    descriptor.size = {1, 1, 1};
-    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding;
-
-    descriptor.format = wgpu::TextureFormat::R16Unorm;
-    device.CreateTexture(&descriptor);
-
-    descriptor.format = wgpu::TextureFormat::RG16Unorm;
-    device.CreateTexture(&descriptor);
-}
-
 // Test that the Norm16 formats are not available even for just TextureBinding when the optional
 // feature is not specified.
 TEST_F(TextureValidationTest, Norm16NotAvailableWithoutExtension) {

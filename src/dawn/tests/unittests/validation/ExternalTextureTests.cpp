@@ -998,38 +998,6 @@ TEST_F(ExternalTextureTest, SubmitTextureViewWithDestroyedTexture) {
     }
 }
 
-class ExternalTextureNorm16Test : public ExternalTextureTest {
-  protected:
-    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        return {wgpu::FeatureName::Unorm16TextureFormats};
-    }
-
-    static constexpr wgpu::TextureFormat kBiplanarPlane0FormatNorm16 =
-        wgpu::TextureFormat::R16Unorm;
-    static constexpr wgpu::TextureFormat kBiplanarPlane1FormatNorm16 =
-        wgpu::TextureFormat::RG16Unorm;
-};
-
-// Test that norm16 external texture creation works as expected in multiplane scenarios.
-TEST_F(ExternalTextureNorm16Test, CreateMultiplanarExternalTextureValidation) {
-    // Creating an external texture from two 2D, single-subresource textures with a biplanar
-    // format should succeed.
-    {
-        wgpu::TextureDescriptor plane0TextureDescriptor =
-            CreateTextureDescriptor(kBiplanarPlane0FormatNorm16);
-        wgpu::TextureDescriptor plane1TextureDescriptor =
-            CreateTextureDescriptor(kBiplanarPlane1FormatNorm16);
-        wgpu::Texture texture0 = device.CreateTexture(&plane0TextureDescriptor);
-        wgpu::Texture texture1 = device.CreateTexture(&plane1TextureDescriptor);
-
-        wgpu::ExternalTextureDescriptor externalDesc = CreateDefaultExternalTextureDescriptor();
-        externalDesc.plane0 = texture0.CreateView();
-        externalDesc.plane1 = texture1.CreateView();
-
-        device.CreateExternalTexture(&externalDesc);
-    }
-}
-
 class ExternalTextureUnorm16Test : public ExternalTextureTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {

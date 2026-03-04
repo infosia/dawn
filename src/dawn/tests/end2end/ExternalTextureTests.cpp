@@ -220,16 +220,11 @@ class ExternalTextureTests : public ExternalTextureTestsBase<DawnTest> {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> requiredFeatures = {};
-        if (SupportsFeatures({wgpu::FeatureName::Unorm16TextureFormats})) {
-            mIsUnorm16TextureFormatsSupported = true;
-            requiredFeatures.push_back(wgpu::FeatureName::Unorm16TextureFormats);
+        if (SupportsFeatures({wgpu::FeatureName::TextureFormatsTier1})) {
+            requiredFeatures.push_back(wgpu::FeatureName::TextureFormatsTier1);
         }
         return requiredFeatures;
     }
-
-    bool IsUnorm16TextureFormatsSupported() { return mIsUnorm16TextureFormatsSupported; }
-
-    bool mIsUnorm16TextureFormatsSupported = false;
 };
 
 TEST_P(ExternalTextureTests, CreateExternalTextureSuccess) {
@@ -617,7 +612,7 @@ TEST_P(ExternalTextureTests, SampleMultiplanarExternalTexture) {
 }
 
 TEST_P(ExternalTextureTests, SampleMultiplanarExternalTextureNorm16) {
-    DAWN_TEST_UNSUPPORTED_IF(!IsUnorm16TextureFormatsSupported());
+    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
 
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());

@@ -288,9 +288,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
-    // Unorm16TextureFormats
+    // Unorm16*
     if (mFunctions.IsGLExtensionSupported("GL_EXT_texture_norm16")) {
-        EnableFeature(Feature::Unorm16TextureFormats);
         EnableFeature(Feature::Unorm16Filterable);
         EnableFeature(Feature::Unorm16FormatsForExternalTexture);
     }

@@ -2379,7 +2379,6 @@
             {"value": 9, "name": "ANGLE texture sharing", "tags": ["dawn", "native"]},
             {"value": 10, "name": "pixel local storage coherent", "tags": ["dawn"]},
             {"value": 11, "name": "pixel local storage non coherent", "tags": ["dawn"]},
-            {"value": 12, "name": "unorm16 texture formats", "tags": ["dawn", "emscripten"], "jsrepr": "'chromium-experimental-unorm16-texture-formats'"},
             {"value": 13, "name": "multi planar format extended usages", "tags": ["dawn"]},
             {"value": 14, "name": "multi planar format p010", "tags": ["dawn"]},
             {"value": 15, "name": "host mapped pointer", "tags": ["dawn"]},

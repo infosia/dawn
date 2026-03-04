@@ -381,25 +381,16 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::BGRA8UnormStorage);
     }
 
-    bool unorm16TextureFormatsSupported = true;
     bool unorm16FormatsFilterabilitySupported = true;
     for (const auto& unorm16Format :
          {VK_FORMAT_R16_UNORM, VK_FORMAT_R16G16_UNORM, VK_FORMAT_R16G16B16A16_UNORM}) {
         VkFormatProperties unorm16Properties;
         mVulkanInstance->GetFunctions().GetPhysicalDeviceFormatProperties(
             mVkPhysicalDevice, unorm16Format, &unorm16Properties);
-        unorm16TextureFormatsSupported &= IsSubset(
-            static_cast<VkFormatFeatureFlags>(VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT |
-                                              VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BIT |
-                                              VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT),
-            unorm16Properties.optimalTilingFeatures);
         unorm16FormatsFilterabilitySupported &= IsSubset(
             static_cast<VkFormatFeatureFlags>(VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT |
                                               VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT),
             unorm16Properties.optimalTilingFeatures);
-    }
-    if (unorm16TextureFormatsSupported) {
-        EnableFeature(Feature::Unorm16TextureFormats);
     }
     if (unorm16FormatsFilterabilitySupported) {
         EnableFeature(Feature::Unorm16Filterable);

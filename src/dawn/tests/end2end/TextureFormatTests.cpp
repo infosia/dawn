@@ -550,11 +550,8 @@ class TextureFormatTest : public DawnTest {
             mIsRG11B10UfloatRenderableSupported = true;
             requiredFeatures.push_back(wgpu::FeatureName::RG11B10UfloatRenderable);
         }
-        if (SupportsFeatures({wgpu::FeatureName::Unorm16TextureFormats})) {
-            mIsUnorm16TextureFormatsSupported = true;
-            requiredFeatures.push_back(wgpu::FeatureName::Unorm16TextureFormats);
-        }
         if (SupportsFeatures({wgpu::FeatureName::TextureFormatsTier1})) {
+            mIsUnorm16TextureFormatsSupported = true;
             mIsSnorm16TextureFormatsSupported = true;
             requiredFeatures.push_back(wgpu::FeatureName::TextureFormatsTier1);
         }

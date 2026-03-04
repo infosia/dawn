@@ -388,7 +388,7 @@ class CopyTests_WithFormatParam : public CopyTests,
             case wgpu::TextureFormat::RG16Unorm:
             case wgpu::TextureFormat::RGBA16Unorm:
                 DAWN_TEST_UNSUPPORTED_IF(
-                    !device.HasFeature(wgpu::FeatureName::Unorm16TextureFormats));
+                    !device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
                 break;
             default:
                 break;
@@ -402,8 +402,8 @@ class CopyTests_WithFormatParam : public CopyTests,
             case wgpu::TextureFormat::R16Unorm:
             case wgpu::TextureFormat::RG16Unorm:
             case wgpu::TextureFormat::RGBA16Unorm:
-                if (SupportsFeatures({wgpu::FeatureName::Unorm16TextureFormats})) {
-                    requiredFeatures.push_back(wgpu::FeatureName::Unorm16TextureFormats);
+                if (SupportsFeatures({wgpu::FeatureName::TextureFormatsTier1})) {
+                    requiredFeatures.push_back(wgpu::FeatureName::TextureFormatsTier1);
                 }
                 break;
             default:
