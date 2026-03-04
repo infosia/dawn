@@ -105,6 +105,24 @@
       "parentUuid": "aa2d8810_1701a296",
       "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58daf2b0_3ca32cab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-03-04T16:24:55Z",
+      "side": 1,
+      "message": "As discussed that we can\u0027t keep the name the same as it will lead to a namespace collision. The only other option would be to use \"Type\" as a suffix, but that would also look confusing and repetitive.",
+      "parentUuid": "5b756008_ce2372eb",
+      "revId": "04b5c3e419fa6e3d279a00561ce3a76175332fce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
