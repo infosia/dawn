@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35da3d5f_abff8e9a",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T03:16:56Z",
+      "side": 1,
+      "message": "This, and MultipleSamplers below, both fail on Vulkan_Mali_G78 on CQ. In both cases, the result buffer contains only zeroes. I guess we should suppress these tests on Mali for now?",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
