@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b88cb62_3fec9fc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2026-03-05T18:16:05Z",
+      "side": 1,
+      "message": "Replay is not something that is ever supposed to be used in Chrome. It\u0027s for user code outside of Chrome. It feels like it shouldn\u0027t need this and can\u0027t include it.\n\nIs there a way to exclude it (and error if it\u0027s ever used in Chrome?)",
+      "revId": "d4e279345138561a5f30d3486668eb4ba85140a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
