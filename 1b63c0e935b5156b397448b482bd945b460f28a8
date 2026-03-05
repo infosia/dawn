@@ -16,6 +16,57 @@
       "message": "@cwallez, could you please take a look?",
       "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "769b13c3_21af656a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:53:12Z",
+      "side": 1,
+      "message": "LGTM +CC Gregg for replay/",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6cb327a_6b6d79bd",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:53:12Z",
+      "side": 1,
+      "message": "nit: can the forward declaration be above? For example next to the `MutexProtected `one?",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae87c74d_af02ed3d",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:53:12Z",
+      "side": 1,
+      "message": "Is this still needed with Defer no longer being stack allocated?",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
