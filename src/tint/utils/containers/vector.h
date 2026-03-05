@@ -72,6 +72,20 @@ TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 namespace tint {
 template <typename>
 class VectorRef;
+
+namespace detail {
+
+/// InternalSlice is a pointer, length and capacity triplet.
+/// This is used internally by Vector and VectorRef to avoid a dependency on tint::Slice.
+template <typename T>
+struct InternalSlice {
+    /// The current elements of the slice
+    std::span<T> data;
+    /// The total capacity of the slice
+    size_t cap;
+};
+
+}  // namespace detail
 }  // namespace tint
 
 namespace tint {
@@ -344,9 +358,12 @@ class Vector {
     /// @param elements the elements to place into the vector
     Vector(std::initializer_list<T> elements) {
         Reserve(elements.size());
+        auto* data = impl_.slice.data.data();
+        size_t len = 0;
         for (auto& el : elements) {
-            new (&impl_.slice.data[impl_.slice.len++]) T{el};
+            new (&data[len++]) T{el};
         }
+        impl_.slice.data = {data, len};
     }
 
     /// Copy constructor
@@ -379,7 +396,7 @@ class Vector {
               ReinterpretMode MODE,
               typename = std::enable_if_t<CanReinterpretSlice<MODE, T, U>>>
     Vector(const Vector<U, N2>& other) {  // NOLINT(runtime/explicit)
-        Copy(other.impl_.slice.template Reinterpret<T, MODE>);
+        Copy(other.impl_.slice);
     }
 
     /// Move constructor with covariance / const conversion
@@ -399,12 +416,12 @@ class Vector {
 
     /// Copy constructor from an immutable vector reference
     /// @param other the vector reference to copy
-    Vector(const VectorRef<T>& other) { Copy(other.slice_); }  // NOLINT(runtime/explicit)
+    Vector(const VectorRef<T>& other) { Copy(*other.slice_); }  // NOLINT(runtime/explicit)
 
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     Vector(const Slice<T>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(detail::InternalSlice<T>{{other.data, other.len}, other.cap});
     }
 
     /// Copy constructor from an immutable slice
@@ -412,14 +429,14 @@ class Vector {
     /// @note This overload only exists to keep MSVC happy. The compiler should be able to match
     /// `Slice<U>`.
     Vector(const Slice<const T>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(detail::InternalSlice<const T>{{other.data, other.len}, other.cap});
     }
 
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     template <typename U>
     Vector(const Slice<U>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(detail::InternalSlice<U>{{other.data, other.len}, other.cap});
     }
 
     /// Destructor
@@ -467,8 +484,8 @@ class Vector {
     /// @param other the vector reference to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(const VectorRef<T>& other) {
-        if (&other.slice_ != &impl_.slice) {
-            Copy(other.slice_);
+        if (other.slice_ != &impl_.slice) {
+            Copy(*other.slice_);
         }
         return *this;
     }
@@ -477,7 +494,7 @@ class Vector {
     /// @param other the vector reference to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(VectorRef<T>&& other) {
-        if (&other.slice_ != &impl_.slice) {
+        if (other.slice_ != &impl_.slice) {
             MoveOrCopy(std::move(other));
         }
         return *this;
@@ -487,22 +504,28 @@ class Vector {
     /// @param other the slice to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(const Slice<T>& other) {
-        Copy(other);
+        Copy(detail::InternalSlice<T>{{other.data, other.len}, other.cap});
         return *this;
     }
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    T& operator[](size_t i) { return impl_.slice[i]; }
+    T& operator[](size_t i) {
+        TINT_ASSERT(i < Length());
+        return impl_.slice.data[i];
+    }
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    const T& operator[](size_t i) const { return impl_.slice[i]; }
+    const T& operator[](size_t i) const {
+        TINT_ASSERT(i < Length());
+        return impl_.slice.data[i];
+    }
 
     /// @return the number of elements in the vector
-    size_t Length() const { return impl_.slice.len; }
+    size_t Length() const { return impl_.slice.data.size(); }
 
     /// @return the number of elements that the vector could hold before a heap allocation needs to
     /// be made
@@ -513,12 +536,14 @@ class Vector {
     void Reserve(size_t new_cap) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         if (new_cap > impl_.slice.cap) {
-            auto* old_data = impl_.slice.data;
+            auto* old_data = impl_.slice.data.data();
+            size_t len = impl_.slice.data.size();
             impl_.Allocate(new_cap);
-            for (size_t i = 0; i < impl_.slice.len; i++) {
-                new (&impl_.slice.data[i]) T(std::move(old_data[i]));
+            for (size_t i = 0; i < len; i++) {
+                new (&impl_.slice.data.data()[i]) T(std::move(old_data[i]));
                 old_data[i].~T();
             }
+            impl_.slice.data = {impl_.slice.data.data(), len};
             impl_.Free(old_data);
         }
     }
@@ -528,13 +553,15 @@ class Vector {
     /// @param new_len the new vector length
     void Resize(size_t new_len) {
         Reserve(new_len);
-        for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+        size_t old_len = impl_.slice.data.size();
+        auto* data = impl_.slice.data.data();
+        for (size_t i = old_len; i > new_len; i--) {  // Shrink
+            data[i - 1].~T();
         }
-        for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{};
+        for (size_t i = old_len; i < new_len; i++) {  // Grow
+            new (&data[i]) T{};
         }
-        impl_.slice.len = new_len;
+        impl_.slice.data = {data, new_len};
     }
 
     /// Resizes the vector to the given length, expanding capacity if necessary.
@@ -542,13 +569,15 @@ class Vector {
     /// @param value the value to copy into the new elements
     void Resize(size_t new_len, const T& value) {
         Reserve(new_len);
-        for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+        size_t old_len = impl_.slice.data.size();
+        auto* data = impl_.slice.data.data();
+        for (size_t i = old_len; i > new_len; i--) {  // Shrink
+            data[i - 1].~T();
         }
-        for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{value};
+        for (size_t i = old_len; i < new_len; i++) {  // Grow
+            new (&data[i]) T{value};
         }
-        impl_.slice.len = new_len;
+        impl_.slice.data = {data, new_len};
     }
 
     /// Copies all the elements from `other` to this vector, replacing the content of this vector.
@@ -561,30 +590,38 @@ class Vector {
     /// Clears all elements from the vector, keeping the capacity the same.
     void Clear() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            impl_.slice.data[i].~T();
+        auto* data = impl_.slice.data.data();
+        size_t len = impl_.slice.data.size();
+        for (size_t i = 0; i < len; i++) {
+            data[i].~T();
         }
-        impl_.slice.len = 0;
+        impl_.slice.data = {data, 0};
     }
 
     /// Appends a new element to the vector.
     /// @param el the element to copy to the vector.
     void Push(const T& el) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        size_t len = impl_.slice.data.size();
+        if (len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(el);
+        auto* data = impl_.slice.data.data();
+        new (&data[len]) T(el);
+        impl_.slice.data = {data, len + 1};
     }
 
     /// Appends a new element to the vector.
     /// @param el the element to move to the vector.
     void Push(T&& el) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        size_t len = impl_.slice.data.size();
+        if (len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(std::move(el));
+        auto* data = impl_.slice.data.data();
+        new (&data[len]) T(std::move(el));
+        impl_.slice.data = {data, len + 1};
     }
 
     /// Appends a new element to the vector.
@@ -592,10 +629,13 @@ class Vector {
     template <typename... ARGS>
     void Emplace(ARGS&&... args) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        size_t len = impl_.slice.data.size();
+        if (len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T{std::forward<ARGS>(args)...};
+        auto* data = impl_.slice.data.data();
+        new (&data[len]) T{std::forward<ARGS>(args)...};
+        impl_.slice.data = {data, len + 1};
     }
 
     /// Removes and returns the last element from the vector.
@@ -603,9 +643,12 @@ class Vector {
     T Pop() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(!IsEmpty());
-        auto& el = impl_.slice.data[--impl_.slice.len];
+        size_t len = impl_.slice.data.size();
+        auto* data = impl_.slice.data.data();
+        auto& el = data[len - 1];
         auto val = std::move(el);
         el.~T();
+        impl_.slice.data = {data, len - 1};
         return val;
     }
 
@@ -617,15 +660,16 @@ class Vector {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(before <= Length());
         size_t n = Length();
-        Resize(Length() + 1);
+        Resize(n + 1);
         // Shuffle
+        auto* data = impl_.slice.data.data();
         for (size_t i = n; i > before; i--) {
-            auto& src = impl_.slice.data[i - 1];
-            auto& dst = impl_.slice.data[i];
+            auto& src = data[i - 1];
+            auto& dst = data[i];
             dst = std::move(src);
         }
         // Insert
-        impl_.slice.data[before] = std::forward<EL>(element);
+        data[before] = std::forward<EL>(element);
     }
 
     /// Removes @p count elements from the vector
@@ -635,17 +679,20 @@ class Vector {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(start < Length());
         TINT_ASSERT((start + count) <= Length());
+        size_t len = impl_.slice.data.size();
+        auto* data = impl_.slice.data.data();
         // Shuffle
-        for (size_t i = start + count; i < impl_.slice.len; i++) {
-            auto& src = impl_.slice.data[i];
-            auto& dst = impl_.slice.data[i - count];
+        for (size_t i = start + count; i < len; i++) {
+            auto& src = data[i];
+            auto& dst = data[i - count];
             dst = std::move(src);
         }
         // Pop
         for (size_t i = 0; i < count; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
+            auto& el = data[--len];
             el.~T();
         }
+        impl_.slice.data = {data, len};
     }
 
     /// Removes all the elements from the vector that match the predicate function.
@@ -654,13 +701,15 @@ class Vector {
     template <typename PREDICATE>
     void EraseIf(PREDICATE&& predicate) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
+        size_t len = impl_.slice.data.size();
+        auto* data = impl_.slice.data.data();
         // Shuffle
         size_t num_removed = 0;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            auto& el = impl_.slice.data[i];
+        for (size_t i = 0; i < len; i++) {
+            auto& el = data[i];
             bool remove = predicate(const_cast<const T&>(el));
             if (num_removed > 0) {
-                auto& dst = impl_.slice.data[i - num_removed];
+                auto& dst = data[i - num_removed];
                 dst = std::move(el);
             }
             if (remove) {
@@ -669,9 +718,10 @@ class Vector {
         }
         // Pop
         for (size_t i = 0; i < num_removed; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
+            auto& el = data[--len];
             el.~T();
         }
+        impl_.slice.data = {data, len};
     }
 
     /// Sort sorts the vector in-place using the predicate function @p pred
@@ -714,77 +764,105 @@ class Vector {
     }
 
     /// @returns true if the vector is empty.
-    bool IsEmpty() const { return impl_.slice.len == 0; }
+    bool IsEmpty() const { return impl_.slice.data.empty(); }
 
     /// @returns a reference to the first element in the vector
-    T& Front() { return impl_.slice.Front(); }
+    T& Front() {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.data.front();
+    }
 
     /// @returns a reference to the first element in the vector
-    const T& Front() const { return impl_.slice.Front(); }
+    const T& Front() const {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.data.front();
+    }
 
     /// @returns a reference to the last element in the vector
-    T& Back() { return impl_.slice.Back(); }
+    T& Back() {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.data.back();
+    }
 
     /// @returns a reference to the last element in the vector
-    const T& Back() const { return impl_.slice.Back(); }
+    const T& Back() const {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.data.back();
+    }
 
 #if TINT_VECTOR_MUTATION_CHECKS_ENABLED
     /// @returns a forward iterator to the first element of the vector
-    iterator begin() { return iterator{impl_.slice.begin(), &iterator_count_}; }
+    iterator begin() { return iterator{impl_.slice.data.data(), &iterator_count_}; }
 
     /// @returns a forward iterator to the first element of the vector
     const const_iterator begin() const {
-        return const_iterator{impl_.slice.begin(), &iterator_count_};
+        return const_iterator{impl_.slice.data.data(), &iterator_count_};
     }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    iterator end() { return iterator{impl_.slice.end(), &iterator_count_}; }
+    iterator end() {
+        return iterator{impl_.slice.data.data() + impl_.slice.data.size(), &iterator_count_};
+    }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    const const_iterator end() const { return const_iterator{impl_.slice.end(), &iterator_count_}; }
+    const const_iterator end() const {
+        return const_iterator{impl_.slice.data.data() + impl_.slice.data.size(), &iterator_count_};
+    }
 
     /// @returns a reverse iterator to the last element of the vector
-    reverse_iterator rbegin() { return reverse_iterator{impl_.slice.end(), &iterator_count_} + 1; }
+    reverse_iterator rbegin() {
+        return reverse_iterator{impl_.slice.data.data() + impl_.slice.data.size(),
+                                &iterator_count_} +
+               1;
+    }
 
     /// @returns a reverse iterator to the last element of the vector
     const const_reverse_iterator rbegin() const {
-        return const_reverse_iterator{impl_.slice.end(), &iterator_count_} + 1;
+        return const_reverse_iterator{impl_.slice.data.data() + impl_.slice.data.size(),
+                                      &iterator_count_} +
+               1;
     }
 
     /// @returns a reverse iterator to one element before the first element of the vector
-    reverse_iterator rend() { return reverse_iterator{impl_.slice.begin(), &iterator_count_} + 1; }
+    reverse_iterator rend() {
+        return reverse_iterator{impl_.slice.data.data(), &iterator_count_} + 1;
+    }
 
     /// @returns a reverse iterator to one element before the first element of the vector
     const const_reverse_iterator rend() const {
-        return const_reverse_iterator{impl_.slice.begin(), &iterator_count_} + 1;
+        return const_reverse_iterator{impl_.slice.data.data(), &iterator_count_} + 1;
     }
 #else
     /// @returns a forward iterator to the first element of the vector
-    iterator begin() { return iterator{impl_.slice.begin()}; }
+    iterator begin() { return iterator{impl_.slice.data.data()}; }
 
     /// @returns a forward iterator to the first element of the vector
-    const const_iterator begin() const { return const_iterator{impl_.slice.begin()}; }
+    const const_iterator begin() const { return const_iterator{impl_.slice.data.data()}; }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    iterator end() { return iterator{impl_.slice.end()}; }
+    iterator end() { return iterator{impl_.slice.data.data() + impl_.slice.data.size()}; }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    const const_iterator end() const { return const_iterator{impl_.slice.end()}; }
+    const const_iterator end() const {
+        return const_iterator{impl_.slice.data.data() + impl_.slice.data.size()};
+    }
 
     /// @returns a reverse iterator to the last element of the vector
-    reverse_iterator rbegin() { return reverse_iterator{impl_.slice.end()} + 1; }
+    reverse_iterator rbegin() {
+        return reverse_iterator{impl_.slice.data.data() + impl_.slice.data.size()} + 1;
+    }
 
     /// @returns a reverse iterator to the last element of the vector
     const const_reverse_iterator rbegin() const {
-        return const_reverse_iterator{impl_.slice.end()} + 1;
+        return const_reverse_iterator{impl_.slice.data.data() + impl_.slice.data.size()} + 1;
     }
 
     /// @returns a reverse iterator to one element before the first element of the vector
-    reverse_iterator rend() { return reverse_iterator{impl_.slice.begin()} + 1; }
+    reverse_iterator rend() { return reverse_iterator{impl_.slice.data.data()} + 1; }
 
     /// @returns a reverse iterator to one element before the first element of the vector
     const const_reverse_iterator rend() const {
-        return const_reverse_iterator{impl_.slice.begin()} + 1;
+        return const_reverse_iterator{impl_.slice.data.data()} + 1;
     }
 #endif
 
@@ -824,16 +902,21 @@ class Vector {
     }
 
     /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() { return impl_.slice; }
+    tint::Slice<T> Slice() {
+        return tint::Slice<T>{impl_.slice.data.data(), impl_.slice.data.size(), impl_.slice.cap};
+    }
 
     /// @returns the internal slice of the vector
-    tint::Slice<const T> Slice() const { return impl_.slice; }
+    tint::Slice<const T> Slice() const {
+        return tint::Slice<const T>{impl_.slice.data.data(), impl_.slice.data.size(),
+                                    impl_.slice.cap};
+    }
 
     /// @returns the internal data of the vector as a std::span
-    std::span<T> AsSpan() { return {impl_.slice.data, impl_.slice.len}; }
+    std::span<T> AsSpan() { return impl_.slice.data; }
 
     /// @returns the internal data of the vector as a std::span
-    std::span<const T> AsSpan() const { return {impl_.slice.data, impl_.slice.len}; }
+    std::span<const T> AsSpan() const { return impl_.slice.data; }
 
   private:
     /// Friend class (differing specializations of this class)
@@ -844,13 +927,12 @@ class Vector {
     template <typename>
     friend class VectorRef;
 
-    /// Friend class
-    template <typename>
-    friend class VectorRef;
-
     template <typename... Ts>
     void AppendVariadic(Ts&&... args) {
-        ((new (&impl_.slice.data[impl_.slice.len++]) T(std::forward<Ts>(args))), ...);
+        auto* data = impl_.slice.data.data();
+        size_t len = impl_.slice.data.size();
+        ((new (&data[len++]) T(std::forward<Ts>(args))), ...);
+        impl_.slice.data = {data, len};
     }
 
     /// Expands the capacity of the vector
@@ -859,71 +941,86 @@ class Vector {
     /// Moves 'other' to this vector, if possible, otherwise performs a copy.
     void MoveOrCopy(VectorRef<T>&& other) {
         if (other.can_move_) {
-            // Just steal the slice.
+            // Just steal the data.
             ClearAndFree();
-            impl_.slice = other.slice_;
-            other.slice_ = {};
+            impl_.slice = *other.slice_;
+            *other.slice_ = {};
         } else {
-            Copy(other.slice_);
+            Copy(*other.slice_);
         }
     }
 
     /// Copies all the elements from `other` to this vector, replacing the content of this vector.
     /// @param other the slice to copy
     template <typename U>
-    void Copy(const tint::Slice<U>& other) {
-        if (impl_.slice.cap < other.len) {
+    void Copy(const detail::InternalSlice<U>& other) {
+        size_t other_len = other.data.size();
+        if (impl_.slice.cap < other_len) {
             ClearAndFree();
-            impl_.Allocate(other.len);
+            impl_.Allocate(other_len);
         } else {
             Clear();
         }
 
-        impl_.slice.len = other.len;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{other.data[i]};
+        auto* data = impl_.slice.data.data();
+        for (size_t i = 0; i < other_len; i++) {
+            new (&data[i]) T{other.data[i]};
         }
+        impl_.slice.data = {data, other_len};
     }
 
     /// Moves all the elements from `other` to this vector, replacing the content of this vector.
     /// @param other the vector to move
     template <typename U, size_t N2>
     void Move(Vector<U, N2>&& other) {
-        auto& other_slice = other.impl_.slice;
+        auto& other_impl = other.impl_;
         if constexpr (std::is_same_v<T, U>) {
-            if (other.impl_.CanMove()) {
-                // Just steal the slice.
+            if (other_impl.CanMove()) {
+                // Just steal the data.
                 ClearAndFree();
-                impl_.slice = other_slice;
-                other_slice = {};
+                impl_.slice = other_impl.slice;
+                other_impl.slice = {};
+                other_impl.slice.cap = N2;  // Reset to static capacity if N2 > 0
+                if constexpr (N2 > 0) {
+                    other_impl.slice.data = {&other_impl.small_arr[0].Get(), 0};
+                }
                 return;
             }
         }
 
-        // Can't steal the slice, so we have to move the elements instead.
+        // Can't steal the data, so we have to move the elements instead.
 
+        size_t other_len = other_impl.slice.data.size();
         // Ensure we have capacity for all the elements
-        if (impl_.slice.cap < other_slice.len) {
+        if (impl_.slice.cap < other_len) {
             ClearAndFree();
-            impl_.Allocate(other_slice.len);
+            impl_.Allocate(other_len);
         } else {
             Clear();
         }
 
         // Move each of the elements.
-        impl_.slice.len = other_slice.len;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{std::move(other_slice.data[i])};
+        auto* data = impl_.slice.data.data();
+        auto* other_data = other_impl.slice.data.data();
+        for (size_t i = 0; i < other_len; i++) {
+            new (&data[i]) T{std::move(other_data[i])};
         }
+        impl_.slice.data = {data, other_len};
 
         // Clear other
         other.Clear();
     }
 
-    /// Clears the vector, then frees the slice data.
+    /// Clears the vector, then frees the data.
     void ClearAndFree() {
         Clear();
-        impl_.Free(impl_.slice.data);
+        impl_.Free(impl_.slice.data.data());
+        impl_.slice.cap = (N > 0) ? N : 0;
+        if constexpr (N > 0) {
+            impl_.slice.data = {&impl_.small_arr[0].Get(), 0};
+        } else {
+            impl_.slice.data = {};
+        }
     }
 
     /// True if this vector uses a small array for small object optimization.
@@ -935,46 +1032,50 @@ class Vector {
     /// The internal structure for the vector with a small array.
     struct ImplWithSmallArray {
         TStorage small_arr[N];
-        tint::Slice<T> slice = {&small_arr[0].Get(), 0, N};
+        detail::InternalSlice<T> slice = {{&small_arr[0].Get(), static_cast<size_t>(0)}, N};
 
         /// Allocates a new vector of `T` either from #small_arr, or from the heap, then assigns the
         /// pointer it to #slice.data, and updates #slice.cap.
         void Allocate(size_t new_cap) {
-            if (new_cap < N) {
-                slice.data = &small_arr[0].Get();
+            if (new_cap <= N) {
+                slice.data = {&small_arr[0].Get(), slice.data.size()};
                 slice.cap = N;
             } else {
-                slice.data = Bitcast<T*>(new TStorage[new_cap]);
+                slice.data = {Bitcast<T*>(new TStorage[new_cap]), slice.data.size()};
                 slice.cap = new_cap;
             }
         }
 
-        /// Frees `data`, if isn't a pointer to #small_arr
-        void Free(T* data) const {
-            if (data != &small_arr[0].Get()) {
-                delete[] Bitcast<TStorage*>(data);
+        /// Frees `ptr`, if isn't a pointer to #small_arr
+        void Free(T* ptr) const {
+            if (ptr != &small_arr[0].Get()) {
+                delete[] Bitcast<TStorage*>(ptr);
             }
         }
 
-        /// Indicates whether the slice structure can be std::move()d.
-        /// @returns true if #slice.data does not point to #small_arr
-        bool CanMove() const { return slice.data != &small_arr[0].Get(); }
+        /// Indicates whether the structure can be std::move()d.
+        /// @returns true if #slice.data.data() does not point to #small_arr
+        bool CanMove() const { return slice.data.data() != &small_arr[0].Get(); }
     };
 
     /// The internal structure for the vector without a small array.
     struct ImplWithoutSmallArray {
-        tint::Slice<T> slice = Empty;
+        detail::InternalSlice<T> slice = {{}, 0};
 
         /// Allocates a new vector of `T` and assigns it to #slice.data, and updates #slice.cap.
         void Allocate(size_t new_cap) {
-            slice.data = Bitcast<T*>(new TStorage[new_cap]);
+            slice.data = {Bitcast<T*>(new TStorage[new_cap]), slice.data.size()};
             slice.cap = new_cap;
         }
 
-        /// Frees `data`.
-        void Free(T* data) const { delete[] Bitcast<TStorage*>(data); }
+        /// Frees `ptr`.
+        void Free(T* ptr) const {
+            if (ptr) {
+                delete[] Bitcast<TStorage*>(ptr);
+            }
+        }
 
-        /// Indicates whether the slice structure can be std::move()d.
+        /// Indicates whether the structure can be std::move()d.
         /// @returns true
         bool CanMove() const { return true; }
     };
@@ -989,8 +1090,6 @@ class Vector {
 namespace detail {
 
 /// Helper for determining the Vector element type (`T`) from the vector's constuctor arguments
-/// @tparam IS_CASTABLE true if the types of `Ts` derive from CastableBase
-/// @tparam Ts the vector constructor argument types to infer the vector element type from.
 template <bool IS_CASTABLE, typename... Ts>
 struct VectorCommonType;
 
@@ -1046,66 +1145,76 @@ Vector(Ts...) -> Vector<VectorCommonType<Ts...>, sizeof...(Ts)>;
 /// Aside from this move pattern, a VectorRef provides an immutable reference to the Vector.
 template <typename T>
 class VectorRef {
-    /// @returns an empty slice.
-    static tint::Slice<T>& EmptySlice() {
-        static tint::Slice<T> empty;
-        return empty;
-    }
-
   public:
     /// Type of `T`.
     using value_type = T;
 
     /// Constructor - empty reference
-    VectorRef() : slice_(EmptySlice()) {}
+    VectorRef() : slice_(&local_slice_) {}
 
     /// Constructor
-    VectorRef(EmptyType) : slice_(EmptySlice()) {}  // NOLINT(runtime/explicit)
+    VectorRef(EmptyType) : slice_(&local_slice_) {}  // NOLINT(runtime/explicit)
 
     /// Constructor from a Slice
     /// @param slice the slice
-    VectorRef(tint::Slice<T>& slice)  // NOLINT(runtime/explicit)
-        : slice_(slice) {}
+    VectorRef(const tint::Slice<T>& slice)  // NOLINT(runtime/explicit)
+        : local_slice_{{slice.data, slice.len}, slice.cap}, slice_(&local_slice_) {}
 
     /// Constructor from a Vector
     /// @param vector the vector to create a reference of
     template <size_t N>
     VectorRef(Vector<T, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice) {}
+        : slice_(&vector.impl_.slice) {}
 
     /// Constructor from a const Vector
     /// @param vector the vector to create a reference of
     template <size_t N>
     VectorRef(const Vector<T, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(const_cast<tint::Slice<T>&>(vector.impl_.slice)) {}
+        : slice_(const_cast<detail::InternalSlice<T>*>(&vector.impl_.slice)) {}
 
     /// Constructor from a moved Vector
     /// @param vector the vector being moved
     template <size_t N>
     VectorRef(Vector<T, N>&& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice), can_move_(vector.impl_.CanMove()) {}
+        : slice_(&vector.impl_.slice), can_move_(vector.impl_.CanMove()) {}
 
     /// Copy constructor
     /// @param other the vector reference
-    VectorRef(const VectorRef& other) : slice_(other.slice_) {}
+    VectorRef(const VectorRef& other)
+        : local_slice_(other.LocalSlice()),
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_) {}
 
     /// Move constructor
     /// @param other the vector reference
-    VectorRef(VectorRef&& other) = default;
+    VectorRef(VectorRef&& other)
+        : local_slice_(other.LocalSlice()),
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_),
+          can_move_(other.can_move_) {
+        other.can_move_ = false;
+    }
 
     /// Copy constructor with covariance / const conversion
     /// @param other the other vector reference
     template <typename U,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(const VectorRef<U>& other)  // NOLINT(runtime/explicit)
-        : slice_(other.slice_.template Reinterpret<T>()) {}
+        : local_slice_{{Bitcast<T*>(other.begin()), other.Length()}, other.Capacity()},
+          slice_(other.slice_ == &other.local_slice_
+                     ? &local_slice_
+                     : Bitcast<detail::InternalSlice<T>*>(other.slice_)) {}
 
     /// Move constructor with covariance / const conversion
     /// @param other the vector reference
     template <typename U,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(VectorRef<U>&& other)  // NOLINT(runtime/explicit)
-        : slice_(other.slice_.template Reinterpret<T>()), can_move_(other.can_move_) {}
+        : local_slice_{{Bitcast<T*>(other.begin()), other.Length()}, other.Capacity()},
+          slice_(other.slice_ == &other.local_slice_
+                     ? &local_slice_
+                     : Bitcast<detail::InternalSlice<T>*>(other.slice_)),
+          can_move_(other.can_move_) {
+        other.can_move_ = false;
+    }
 
     /// Constructor from a Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
@@ -1114,7 +1223,8 @@ class VectorRef {
               size_t N,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(const Vector<U, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(const_cast<tint::Slice<U>&>(vector.impl_.slice).template Reinterpret<T>()) {}
+        : slice_(Bitcast<detail::InternalSlice<T>*>(
+              const_cast<detail::InternalSlice<U>*>(&vector.impl_.slice))) {}
 
     /// Constructor from a moved Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
@@ -1123,51 +1233,63 @@ class VectorRef {
               size_t N,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(Vector<U, N>&& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice.template Reinterpret<T>()), can_move_(vector.impl_.CanMove()) {}
+        : slice_(Bitcast<detail::InternalSlice<T>*>(&vector.impl_.slice)),
+          can_move_(vector.impl_.CanMove()) {}
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    const T& operator[](size_t i) const { return slice_[i]; }
+    const T& operator[](size_t i) const {
+        TINT_ASSERT(i < Length());
+        return slice_->data[i];
+    }
 
     /// @return the number of elements in the vector
-    size_t Length() const { return slice_.len; }
+    size_t Length() const { return slice_->data.size(); }
 
     /// @return the number of elements that the vector could hold before a heap allocation needs to
     /// be made
-    size_t Capacity() const { return slice_.cap; }
+    size_t Capacity() const { return slice_->cap; }
 
     /// @return a reinterpretation of this VectorRef as elements of type U.
     /// @note this is doing a reinterpret_cast of elements. It is up to the caller to ensure that
     /// this is a safe operation.
     template <typename U>
     VectorRef<U> ReinterpretCast() const {
-        return {slice_.template Reinterpret<U, ReinterpretMode::kUnsafe>()};
+        return {tint::Slice<U>{Bitcast<U*>(slice_->data.data()), slice_->data.size(), slice_->cap}};
     }
 
     /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() { return slice_; }
+    tint::Slice<T> Slice() {
+        return tint::Slice<T>{slice_->data.data(), slice_->data.size(), slice_->cap};
+    }
 
     /// @returns true if the vector is empty.
-    bool IsEmpty() const { return slice_.len == 0; }
+    bool IsEmpty() const { return slice_->data.empty(); }
 
     /// @returns a reference to the first element in the vector
-    const T& Front() const { return slice_.Front(); }
+    const T& Front() const {
+        TINT_ASSERT(!IsEmpty());
+        return slice_->data.front();
+    }
 
     /// @returns a reference to the last element in the vector
-    const T& Back() const { return slice_.Back(); }
+    const T& Back() const {
+        TINT_ASSERT(!IsEmpty());
+        return slice_->data.back();
+    }
 
     /// @returns a pointer to the first element in the vector
-    const T* begin() const { return slice_.begin(); }
+    const T* begin() const { return slice_->data.data(); }
 
     /// @returns a pointer to one past the last element in the vector
-    const T* end() const { return slice_.end(); }
+    const T* end() const { return slice_->data.data() + slice_->data.size(); }
 
     /// @returns a reverse iterator starting with the last element in the vector
-    auto rbegin() const { return slice_.rbegin(); }
+    auto rbegin() const { return std::reverse_iterator<const T*>(end()); }
 
     /// @returns the end for a reverse iterator
-    auto rend() const { return slice_.rend(); }
+    auto rend() const { return std::reverse_iterator<const T*>(begin()); }
 
     /// @returns a hash code of the Vector
     tint::HashCode HashCode() const {
@@ -1201,13 +1323,16 @@ class VectorRef {
     template <typename>
     friend class VectorRef;
 
-    /// Friend class
-    template <typename>
-    friend class VectorRef;
+    /// @returns the internal slice
+    detail::InternalSlice<T> LocalSlice() const { return *slice_; }
+
+    /// A local InternalSlice used when the VectorRef does not point to a Vector's internal slice.
+    detail::InternalSlice<T> local_slice_ = {{}, 0};
 
     /// The slice of the vector being referenced.
-    tint::Slice<T>& slice_;
-    /// Whether the slice data is passed by r-value reference, and can be moved.
+    detail::InternalSlice<T>* slice_ = nullptr;
+
+    /// Whether the data is passed by r-value reference, and can be moved.
     bool can_move_ = false;
 };
 
