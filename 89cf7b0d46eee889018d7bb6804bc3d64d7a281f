@@ -26,6 +26,74 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6d600fbb_ecf729f9",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "`math` would be sorter to type then `algebra`",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c276a3b9_ac3067eb",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Will this ever need to deal with `f16` or is it strictly 32 bit types?",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f0dc98c_c017dc6d",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "if returns, don\u0027t need else",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca6061ca_7dbd704f",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "```suggestion\n// A vector class with template arguments for the type of scalar, number of dimensions. Note\n```",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f19391f_e37fb66e",
         "filename": "src/dawn/common/Algebra.h",
         "patchSetId": 2
@@ -72,6 +140,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2fc7523d_b6044a3e",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Does `Scalar()` already handle over/underflow? If not, are we concerned about it for these methods?",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d859271_6265d75a",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Are we concerned `other[i]` is ever 0?",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "04829cf6_c7c839c6",
         "filename": "src/dawn/common/Algebra.h",
         "patchSetId": 2
@@ -112,6 +214,57 @@
         "endLine": 206,
         "endChar": 66
       },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4cc69c9_c3ab3b4c",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Is this right? `A[i]` will be a column vector from the matrix, so this ends up doing:\n\n```\n[v1, v2, v3, v4][a1]\n                [a2]\n                [a3]\n                [a4]\n```\n\nSo, we\u0027re doing V * A, not A * V. We need to pull out row vectors from the matrix to do the other way or loop over columns/rows.",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a1fbb20_52a81fcd",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Does this not end up doing columns of A * columns of B instead of rows of a * columns of b?",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ec45e04_7121ff6d",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T15:25:59Z",
+      "side": 1,
+      "message": "Does this need to go in a CMake file? I thought unittests we added to cmake too",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
