@@ -121,6 +121,24 @@
       "parentUuid": "ae87c74d_af02ed3d",
       "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57ab5dc_c70521b8",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-05T17:31:12Z",
+      "side": 1,
+      "message": "It is needed:\nhttps://ci.chromium.org/ui/p/chromium/builders/try/win-dawn-rel/55861/overview",
+      "parentUuid": "c4f30c68_5a993208",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
