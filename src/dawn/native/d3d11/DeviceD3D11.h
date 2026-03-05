@@ -89,6 +89,8 @@ class Device final : public d3d::Device {
     bool MayRequireDuplicationOfIndirectParameters() const override;
     uint64_t GetBufferCopyOffsetAlignmentForDepthStencil() const override;
     bool CanTextureLoadResolveTargetInTheSameRenderpass() const override;
+    // Returns true if D3D11 MapOnDefaultBuffers is supported
+    bool CanMapOnDefaultBuffer() const override { return mCanMapOnDefaultBuffer; }
     bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                       wgpu::BufferUsage originalUsage,
                                                       size_t bufferSize) const override;
@@ -207,6 +209,8 @@ class Device final : public d3d::Device {
     // MutexProtected is required because in the future Buffer::DestroyImpl might no longer be
     // protected by the device guard, making concurrent access possible from multiple threads.
     MutexProtected<std::vector<ComPtr<ID3D11Buffer>>> mPendingDestroyedBufferUnmaps;
+
+    bool mCanMapOnDefaultBuffer = false;
 };
 
 }  // namespace dawn::native::d3d11

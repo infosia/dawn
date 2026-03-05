@@ -327,6 +327,8 @@ class GPUUsableBuffer final : public Buffer {
         GPUWritableNonConstantBuffer,
         // Storage for staging usage,
         Staging,
+        // Storage for D3D11_USAGE_DEFAULT that is mappable (if supported)
+        Default,
 
         Count,
     };
