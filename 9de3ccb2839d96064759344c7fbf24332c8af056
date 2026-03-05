@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2f1c9b3_33254939",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T12:03:08Z",
+      "side": 1,
+      "message": "PTAL!\n\nFYI Kai, this is a rework of Dan\u0027s CL that didn\u0027t pass existing tests and he said he would add the tests for explicit filterability in a follow-up.",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
