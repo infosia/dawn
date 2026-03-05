@@ -47,6 +47,7 @@ add_executable(dawn_end2end_tests
     "end2end/BindingArrayTests.cpp"
     "end2end/BufferHostMappedPointerTests.cpp"
     "end2end/BufferHostMappedPointerTests.h"
+    "end2end/BufferRobustnessTests.cpp"
     "end2end/BufferTests.cpp"
     "end2end/BufferZeroInitTests.cpp"
     "end2end/ClipDistancesTests.cpp"
