@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1402e3cc_1a5d2caa",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-05T17:10:15Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "19e8d67c_02c64f10",
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f4661b9_90d661b9",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f22e417d_4b866419",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-05T17:10:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4661b9_90d661b9",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "910c0c0d_968c037c",
@@ -71,6 +113,24 @@
       "writtenOn": "2026-03-05T16:47:40Z",
       "side": 1,
       "message": "This test failed for the wrong reason",
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cebac06_ab36f4eb",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-05T17:10:15Z",
+      "side": 1,
+      "message": "Good catch, fixed by passing the options.",
+      "parentUuid": "910c0c0d_968c037c",
       "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
