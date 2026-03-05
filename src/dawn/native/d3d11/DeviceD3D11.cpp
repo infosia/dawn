@@ -231,6 +231,13 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
     SetLabelImpl();
 
+    // Detect MapOnDefaultBuffers support
+    D3D11_FEATURE_DATA_D3D11_OPTIONS1 opts = {};
+    if (SUCCEEDED(
+            mD3d11Device->CheckFeatureSupport(D3D11_FEATURE_D3D11_OPTIONS1, &opts, sizeof(opts)))) {
+        mCanMapOnDefaultBuffer = (opts.MapOnDefaultBuffers != 0);
+    }
+
     return {};
 }
 
