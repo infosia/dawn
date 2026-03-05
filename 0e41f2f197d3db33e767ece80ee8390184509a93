@@ -81,6 +81,40 @@
       },
       "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752e59bc_042de4ec",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:47:40Z",
+      "side": 1,
+      "message": "What happened to this test (and the 2 after it)?",
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "104406e6_b4db9689",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:47:40Z",
+      "side": 1,
+      "message": "This one is missing? (And the 5 after it?)",
+      "revId": "0e41f2f197d3db33e767ece80ee8390184509a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

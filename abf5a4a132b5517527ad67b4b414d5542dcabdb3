@@ -16,6 +16,63 @@
       "message": "Also added `ExpectSuccess` for the ones where we expect validation to pass.",
       "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19e8d67c_02c64f10",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:47:40Z",
+      "side": 1,
+      "message": "You made `options`, but never passed it to the parser?",
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4661b9_90d661b9",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:47:40Z",
+      "side": 1,
+      "message": "```suggestion\n    if (!error.empty() \u0026\u0026 error[0] \u003d\u003d \u0027\\n\u0027) {\n```",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "910c0c0d_968c037c",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:47:40Z",
+      "side": 1,
+      "message": "This test failed for the wrong reason",
+      "revId": "abf5a4a132b5517527ad67b4b414d5542dcabdb3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
