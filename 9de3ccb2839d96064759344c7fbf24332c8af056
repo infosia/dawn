@@ -16,6 +16,132 @@
       "message": "PTAL!\n\nFYI Kai, this is a rework of Dan\u0027s CL that didn\u0027t pass existing tests and he said he would add the tests for explicit filterability in a follow-up.",
       "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bccb3dc_8a6a41b8",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "This case is handled above on 249 since a \u003d\u003d b",
+      "range": {
+        "startLine": 257,
+        "startChar": 9,
+        "endLine": 257,
+        "endChar": 47
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6aa01ee_4c45ee2c",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "Handled above since a \u003d\u003d b",
+      "range": {
+        "startLine": 262,
+        "startChar": 9,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e3d9c5a_d867e461",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "Handled above as a \u003d\u003d b",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30ad4079_7bc2c50a",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "Handled above a \u003d\u003d b",
+      "range": {
+        "startLine": 286,
+        "startChar": 9,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68c96f6e_26e209be",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "This mentions `float` as setting non-filterable but then in `[1]` we check !Float",
+      "range": {
+        "startLine": 452,
+        "startChar": 90,
+        "endLine": 452,
+        "endChar": 95
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d72e441_a334a09a",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T16:56:35Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
