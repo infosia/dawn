@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a67dc631_14d4a832",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T18:23:23Z",
+      "side": 1,
+      "message": "Should struct be `RenderAreaRect`? I\u0027m using that name internally and I guess this might conflict if I changed it.",
+      "range": {
+        "startLine": 3186,
+        "startChar": 5,
+        "endLine": 3186,
+        "endChar": 33
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03d529e9_b0f1edb8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T18:23:23Z",
+      "side": 1,
+      "message": "Do we have a function/bool somewhere that\u0027s true if GPU is a TBR?",
+      "range": {
+        "startLine": 550,
+        "startChar": 56,
+        "endLine": 550,
+        "endChar": 76
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79df6758_fc79b5e5",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T18:23:23Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth adding more noise to the test to verify this feature. IMO it\u0027s the same for all features that are unconditionally enabled.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

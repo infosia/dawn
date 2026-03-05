@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb47123_c684dc18",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T18:23:23Z",
+      "side": 1,
+      "message": "This is only used in the Vulkan backend right now but it sounds like this functionality can be used more broadly?",
+      "revId": "0c86d677bf2281d4187d8f04280c2f5e90ca1558",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
