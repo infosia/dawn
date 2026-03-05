@@ -235,7 +235,9 @@ void DawnPerfTestBase::RunTest() {
             OutputResults();
         }
     }
+    printf("Disabing trace evnts\n");
     platform->EnableTraceEventRecording(false);
+    printf(" RunTest complete\n");
 }
 
 void DawnPerfTestBase::DoRunLoop(double maxRunTime) {
@@ -319,6 +321,8 @@ void DawnPerfTestBase::OutputResults() {
         EventTracker* tracker = nullptr;
         double* totalTime = nullptr;
 
+        printf("TE %d %s\n", static_cast<uint32_t>(traceEvent.category), traceEvent.name);
+
         switch (traceEvent.category) {
             case platform::TraceCategory::Validation:
                 tracker = &validationTracker;
@@ -361,10 +365,15 @@ void DawnPerfTestBase::OutputResults() {
     PrintPerIterationResultFromSeconds("validation_time", totalValidationTime, true);
     PrintPerIterationResultFromSeconds("recording_time", totalRecordingTime, true);
 
+    printf("OUTPUT Done\n");
+
     const char* traceFile = gTestEnv->GetTraceFile();
     if (traceFile != nullptr) {
+        printf("Dump trace file\n");
         DumpTraceEventsToJSONFile(traceEventBuffer, traceFile);
     }
+
+    printf("Complete\n");
 }
 
 void DawnPerfTestBase::AddGPUTime(double time) {

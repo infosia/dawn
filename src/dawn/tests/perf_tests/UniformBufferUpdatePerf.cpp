@@ -405,7 +405,11 @@ void UniformBufferUpdatePerf::Step() {
 }
 
 TEST_P(UniformBufferUpdatePerf, Run) {
+    printf("Test run start\n");
+
     RunTest();
+
+    printf("Test run complete\n");
 }
 
 DAWN_INSTANTIATE_TEST_P(UniformBufferUpdatePerf,
