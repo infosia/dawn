@@ -90,6 +90,13 @@ bool IsStaging(wgpu::BufferUsage usage) {
     return IsMappable(usage) && IsSubset(usage, kStagingUsages);
 }
 
+bool CanUseSharedDefaultStorage(wgpu::BufferUsage usage) {
+    // Some drivers reject MapOnDefaultBuffers resources when combined with IA/indirect-specific
+    // flags. Fall back to the staging path for those cases.
+    return !(usage &
+             (wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index | wgpu::BufferUsage::Indirect));
+}
+
 UINT D3D11BufferBindFlags(wgpu::BufferUsage usage) {
     UINT bindFlags = 0;
 
@@ -278,6 +285,9 @@ bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
     // Check supports for writeable storage usage:
     if (requiresUAV) {
         // D3D11 mappable buffers cannot be used as UAV natively. So avoid that.
+        if ((originalUsage & kMappableBufferUsages) && device->CanMapOnDefaultBuffer()) {
+            return true;
+        }
         return !(originalUsage & kMappableBufferUsages);
     }
 
@@ -829,6 +839,13 @@ class GPUUsableBuffer::Storage : public RefCounted, NonCopyable {
                 break;
         }
 
+        if (desc.CPUAccessFlags & D3D11_CPU_ACCESS_READ) {
+            mMappableCopyableFlags |= wgpu::BufferUsage::MapRead;
+        }
+        if (desc.CPUAccessFlags & D3D11_CPU_ACCESS_WRITE) {
+            mMappableCopyableFlags |= wgpu::BufferUsage::MapWrite;
+        }
+
         mIsConstantBuffer = desc.BindFlags & D3D11_BIND_CONSTANT_BUFFER;
     }
 
@@ -909,6 +926,7 @@ void GPUUsableBuffer::SetStorageLabel(StorageType storageType) {
             "Dawn_CPUWritableNonConstantBuffer",
             "Dawn_GPUWritableNonConstantBuffer",
             "Dawn_Staging",
+            "Dawn_Default",
         };
 
     if (!mStorages[storageType]) {
@@ -923,8 +941,15 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
     mStorages = {};
 
     wgpu::BufferUsage usagesToHandle = GetInternalUsage();
+    const bool hasStagingLikeMappableUsage =
+        (usagesToHandle & wgpu::BufferUsage::MapRead) || IsStaging(usagesToHandle);
+    const bool useDefaultForMappableStorage = ToBackend(GetDevice())->CanMapOnDefaultBuffer() &&
+                                              CanUseSharedDefaultStorage(usagesToHandle) &&
+                                              hasStagingLikeMappableUsage;
 
-    // If the buffer has MapRead usage, allocate a staging storage for both MapRead & MapWrite.
+    // If the buffer has staging-like mappable usage, allocate a mappable storage for both
+    // MapRead & MapWrite. When MapOnDefaultBuffers is supported and the usage combination is
+    // compatible, this storage can be Default. Otherwise it falls back to Staging.
     // Example: If user creates a buffer with MapWrite + MapRead + Vertex usages:
     // - We will allocate:
     //   - A storage for both MapWrite + MapRead.
@@ -932,8 +957,10 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
     //   - This will require a copy for vertex input whenever the user maps the buffer (either for
     //   writing or reading).
     //   - This is acceptable since a buffer with both MapWrite + MapRead is rare.
-    if ((usagesToHandle & wgpu::BufferUsage::MapRead) || IsStaging(usagesToHandle)) {
-        DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(StorageType::Staging));
+    if (hasStagingLikeMappableUsage) {
+        const StorageType mappableStorageType =
+            useDefaultForMappableStorage ? StorageType::Default : StorageType::Staging;
+        DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(mappableStorageType));
         mMappableStorage = mLastUpdatedStorage;
         usagesToHandle &= ~kStagingUsages;
     }
@@ -962,7 +989,16 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
         }
     }
 
+    const bool shouldAliasSharedDefaultToGPUWritable =
+        useDefaultForMappableStorage && mMappableStorage != nullptr &&
+        !(GetInternalUsage() & wgpu::BufferUsage::Uniform);
     if (usagesToHandle == wgpu::BufferUsage::None) {
+        if (shouldAliasSharedDefaultToGPUWritable) {
+            // Reuse the shared Default backed mappable storage as the GPU writable
+            // non-constant storage so later WriteBuffer/copy/UAV paths do not create a
+            // redundant buffer.
+            mStorages[StorageType::GPUWritableNonConstantBuffer] = mStorages[StorageType::Default];
+        }
         return {};
     }
 
@@ -982,8 +1018,16 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
         mMappableStorage = mLastUpdatedStorage;
     } else {
         usagesToHandle &= ~wgpu::BufferUsage::CopyDst;
-        DAWN_TRY_ASSIGN(mLastUpdatedStorage,
-                        GetOrCreateStorage(StorageType::GPUWritableNonConstantBuffer));
+        if (shouldAliasSharedDefaultToGPUWritable) {
+            // Reuse the shared Default backed mappable storage as the GPU writable
+            // non-constant storage, and mark it as the latest contents for the remaining
+            // non-mappable GPU paths.
+            mStorages[StorageType::GPUWritableNonConstantBuffer] = mStorages[StorageType::Default];
+            mLastUpdatedStorage = mMappableStorage;
+        } else {
+            DAWN_TRY_ASSIGN(mLastUpdatedStorage,
+                            GetOrCreateStorage(StorageType::GPUWritableNonConstantBuffer));
+        }
     }
 
     return {};
@@ -1042,6 +1086,14 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
             bufferDescriptor.BindFlags = 0;
             bufferDescriptor.MiscFlags = 0;
         } break;
+        case StorageType::Default: {
+            const auto nonUniformUsage =
+                GetInternalUsage() & ~(kMappableBufferUsages | wgpu::BufferUsage::Uniform);
+            bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
+            bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
+            bufferDescriptor.BindFlags = D3D11BufferBindFlags(nonUniformUsage);
+            bufferDescriptor.MiscFlags = D3D11BufferMiscFlags(nonUniformUsage);
+        } break;
         case StorageType::Count:
             DAWN_UNREACHABLE();
     }
@@ -1061,6 +1113,10 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
 ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateDstCopyableStorage() {
     if (mStorages[StorageType::GPUCopyDstConstantBuffer]) {
         return mStorages[StorageType::GPUCopyDstConstantBuffer].Get();
+    }
+    if (mStorages[StorageType::Default] &&
+        mStorages[StorageType::Default].Get() == mMappableStorage) {
+        return mStorages[StorageType::Default].Get();
     }
     if (mStorages[StorageType::GPUWritableNonConstantBuffer]) {
         return mStorages[StorageType::GPUWritableNonConstantBuffer].Get();
@@ -1140,26 +1196,30 @@ void GPUUsableBuffer::IncrStorageRevAndMakeLatest(
     dstStorage->SetRevision(dstStorage->GetRevision() + 1);
     mLastUpdatedStorage = dstStorage;
 
-    if (dstStorage->IsGPUWritable() && IsMappable(GetInternalUsage())) {
-        // If this buffer is mappable and the last updated storage is GPU writable, we need to
-        // update the staging storage when the command buffer is flushed.
-        // This is to make sure the staging storage will contain the up-to-date GPU modified data.
+    if (dstStorage->IsGPUWritable() && IsMappable(GetInternalUsage()) &&
+        dstStorage != mMappableStorage) {
+        // If this buffer is mappable and the last updated storage is GPU writable, queue a sync
+        // of the mappable storage when the command buffer is flushed.
+        // For the legacy path the mappable storage is staging. For MapOnDefaultBuffers it may be
+        // a Default backed storage instead. This keeps future CPU mapping/reads observing the
+        // latest GPU written contents when the mappable storage is separate from dstStorage.
         commandContext->AddBufferForSyncingWithCPU(this);
     }
 }
 
-MaybeError GPUUsableBuffer::SyncGPUWritesToStaging(
+MaybeError GPUUsableBuffer::SyncGPUWritesToMappableStorage(
     const ScopedCommandRecordingContext* commandContext) {
     DAWN_ASSERT(IsMappable(GetInternalUsage()));
 
-    // Only sync staging storage. Later other CPU writable storages can be updated by
-    // copying from staging storage with Map(MAP_WRITE_DISCARD) which won't stall the CPU.
-    // Otherwise, since CPU writable storages don't support CopyDst, it would require a CPU
-    // stall in order to sync them here.
-    Storage* stagingStorage;
-    DAWN_TRY_ASSIGN(stagingStorage, GetOrCreateStorage(StorageType::Staging));
+    if (mMappableStorage == nullptr || mLastUpdatedStorage == mMappableStorage) {
+        return {};
+    }
 
-    return SyncStorage(commandContext, stagingStorage);
+    // Only sync the mappable storage. In the legacy path this is staging. Later other CPU
+    // writable storages can be updated from that mappable storage with Map(MAP_WRITE_DISCARD),
+    // which won't stall the CPU. Otherwise, since CPU writable storages don't support CopyDst,
+    // it would require a CPU stall to sync them here.
+    return SyncStorage(commandContext, mMappableStorage);
 }
 
 MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* commandContext,

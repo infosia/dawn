@@ -403,6 +403,9 @@ class DeviceBase : public ErrorSink,
     // will be resolved into.
     virtual bool CanTextureLoadResolveTargetInTheSameRenderpass() const;
 
+    // Whether the backend supports MapOnDefaultBuffer.
+    virtual bool CanMapOnDefaultBuffer() const;
+
     // Whether the backend supports resolving MSAA textures partially.
     virtual bool CanResolveSubRect() const;
 
