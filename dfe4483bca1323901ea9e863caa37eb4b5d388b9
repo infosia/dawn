@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2d723d8_f7085446",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Off to a great start! Multiple little comments, but I don\u0027t think it\u0027s too far off.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef56e00f_c878e658",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "A few things that I would like to see captured here:\n\n - How does the render area rect interact with the viewport? Does the viewport still encompass the entire render target by default?\n - Given that the scissor rect must be contained in the render area that implies that it defaults to the render area at the start of the pass, correct?\n - Despite the fact that internally the area may be larger than requested, the scissor must always match the given render area, not the expanded one, correct? Making that more of an implementation detail rather than something that can effect output. Same for load and store ops?",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a67dc631_14d4a832",
@@ -20,6 +54,98 @@
         "endLine": 3186,
         "endChar": 33
       },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59f20dca_91b95908",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 14
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "I think RenderPassAreaRect is fine, unless we think this struct is going to eventually be used in more places.",
+      "parentUuid": "a67dc631_14d4a832",
+      "range": {
+        "startLine": 3186,
+        "startChar": 5,
+        "endLine": 3186,
+        "endChar": 33
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d20035a7_8aad645f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Since the x/y/width/height is given as `uint32_t` we should format these as `%u`. Also in other similar places we write out the arg names like so:\n\n```suggestion\n                        \"RenderPassRenderAreaRect (x: %u, y: %u, width: %u, height: %u) must not be empty\", area-\u003ex,\n```\n\n(Optional side quest: If you want to save on some typing you could add `RenderPassRenderAreaRect` to webgpu_absl_format.h/.cpp so that it formats itself when passed in a message like this.)",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f77d261_0cc585e2",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Let\u0027s mimic the validation error formatting for `setScissorRect()` here for clarity:\n\n```suggestion\n            \"RenderPassRenderAreaRect (x: %u, y: %u, width: %u, height: %u) is not contained in the render target dimensions (%u x %u).\",\n```",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb9c9536_faa590d1",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Minor nit, but it would be nice if we could compute the `renderArea` once instead of both here and in the `TryEncode()`",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbd6ef57_ec34296a",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"the render area dimensions (x: %u, y: %u, width: %u, height: %u).\",\n```\nFor clarity, since these dimensions may now be smaller than the render target.",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -49,6 +175,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02a5c727_11988121",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Not at this point, no.",
+      "parentUuid": "03d529e9_b0f1edb8",
+      "range": {
+        "startLine": 550,
+        "startChar": 56,
+        "endLine": 550,
+        "endChar": 76
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79df6758_fc79b5e5",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 14
@@ -60,6 +210,80 @@
       "writtenOn": "2026-03-05T18:23:23Z",
       "side": 1,
       "message": "I don\u0027t think it\u0027s worth adding more noise to the test to verify this feature. IMO it\u0027s the same for all features that are unconditionally enabled.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0dd04ec_8d359809",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"choosen\" is a possible misspelling of \"chosen\".\n\nTo bypass Spellchecker, add a ...\n\n\"choosen\" is a possible misspelling of \"chosen\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 414,
+        "startChar": 25,
+        "endLine": 414,
+        "endChar": 32
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b6e1456_f3deab1d",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "I\u0027d actually prefer if these were misaligned from the assumed granularity so that we can test below whether or not the clear affects areas outside the render area but inside the granularity alignment, which I can see being a potential error case. Or that can be tested as a separate test.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33c46afe_190f8f58",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Comment isn\u0027t accurate",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce9043d_73c428fa",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2612,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-05T19:49:34Z",
+      "side": 1,
+      "message": "Can this test also include a variant where the x and y are non-zero but the width and height are still zero?",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
