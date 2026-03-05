@@ -32,5 +32,7 @@ int main(int argc, char** argv) {
     dawn::SubstituteChromiumArgs(argc, argv);
     InitDawnPerfTestEnvironment(argc, argv);
     testing::InitGoogleTest(&argc, argv);
+
+    printf("RUN ALL TESTS\n");
     return RUN_ALL_TESTS();
 }
