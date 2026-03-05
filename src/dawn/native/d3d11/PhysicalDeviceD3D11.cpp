@@ -332,6 +332,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
                                mDeviceInfo.supportsNonMonitoredFence);
         deviceToggles->ForceSet(Toggle::D3D11DisableFence, !mDeviceInfo.supportsNonMonitoredFence);
     }
+    deviceToggles->Default(Toggle::D3D11MapOnDefaultBuffers, true);
+
     deviceToggles->Default(Toggle::UseBlitForT2B, true);
     deviceToggles->Default(Toggle::UseBlitForB2T, true);
 

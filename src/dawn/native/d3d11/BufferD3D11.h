@@ -327,6 +327,8 @@ class GPUUsableBuffer final : public Buffer {
         GPUWritableNonConstantBuffer,
         // Storage for staging usage,
         Staging,
+        // Storage shared by mappable and GPU writable paths when MapOnDefaultBuffers is used.
+        MappableAndGPUWritable,
 
         Count,
     };
