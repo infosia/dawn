@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56065db3_9908bd28",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f156d5_5e4388fd",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d600fbb_ecf729f9",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-03-05T15:25:59Z",
       "side": 1,
       "message": "`math` would be sorter to type then `algebra`",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "919384c6_5da12668",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Yeah but with have Math.h with a bunch of unnamespaced stuff already. I was imagining that .cpp files using this would do `using namespace algebra;` to import everything anyway. WDYT?",
+      "parentUuid": "6d600fbb_ecf729f9",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64fa0b74_6843abb0",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "For now it\u0027s only 32bit because we don\u0027t have a `Half` datatype. I\u0027ll add a static assert that `Scalar` is 32bit.",
+      "parentUuid": "c276a3b9_ac3067eb",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f0dc98c_c017dc6d",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-03-05T15:25:59Z",
       "side": 1,
       "message": "if returns, don\u0027t need else",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f768af5_43f0129e",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f0dc98c_c017dc6d",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f8493e9_e751f544",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6061ca_7dbd704f",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f19391f_e37fb66e",
@@ -105,6 +201,30 @@
       "writtenOn": "2026-03-05T15:12:25Z",
       "side": 1,
       "message": "Suggest `typename Scalar \u003d float` to match Matrix below.",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d87ce5c_53d0a633",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Removed it on the matrix instead (I thought I had locally)",
+      "parentUuid": "7f19391f_e37fb66e",
       "range": {
         "startLine": 56,
         "startChar": 23,
@@ -138,6 +258,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2a99cbf_eda1d098",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311d5f1d_c7205f3e",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fc7523d_b6044a3e",
@@ -151,6 +295,24 @@
       "writtenOn": "2026-03-05T15:25:59Z",
       "side": 1,
       "message": "Does `Scalar()` already handle over/underflow? If not, are we concerned about it for these methods?",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2642e95_858d51f9",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Scalar is `uint32_t`, `int32_t` of `float`. This should all be for internal computations after validation so I don\u0027t think we want to protect against overflows.",
+      "parentUuid": "2fc7523d_b6044a3e",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -172,6 +334,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "389f997e_12d45bb5",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Added an ASSERT for good measure. This is post-validation so it would be a programming error on our end if that case happened.",
+      "parentUuid": "8d859271_6265d75a",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04829cf6_c7c839c6",
@@ -185,6 +365,30 @@
       "writtenOn": "2026-03-05T15:12:25Z",
       "side": 1,
       "message": "Ditto: `class`",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 6
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c93cd246_0f729f15",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04829cf6_c7c839c6",
       "range": {
         "startLine": 156,
         "startChar": 0,
@@ -218,6 +422,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cba6426e_c8d9bd39",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Changing to just operator\u003d\u003d.",
+      "parentUuid": "d571c3ea_7f96ced5",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 66
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4cc69c9_c3ab3b4c",
@@ -231,6 +459,24 @@
       "writtenOn": "2026-03-05T15:25:59Z",
       "side": 1,
       "message": "Is this right? `A[i]` will be a column vector from the matrix, so this ends up doing:\n\n```\n[v1, v2, v3, v4][a1]\n                [a2]\n                [a3]\n                [a4]\n```\n\nSo, we\u0027re doing V * A, not A * V. We need to pull out row vectors from the matrix to do the other way or loop over columns/rows.",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "204a4409_9f157c64",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this is right with the tests and the usage in WIP CLs. We may have learned this stuff with different conventions, but what this does is doing a weighed sum of the column vector (aka the images of the basis vectors by A) by the coordinates of V. By linearity of matrix - vector multiplication, this should be the result of the multiplication. If basis vectors are `v0..vn` and `V \u003d a0 * v0 + ... + an * vn`, then\n\n```\n  A * V\n\u003d A * (a0 * v0 + ... + an * vn)\n\u003d a0 * A * v0 + ... + an * A * vn\n```\n\nthe latter is what we are computing in the function.",
+      "parentUuid": "d4cc69c9_c3ab3b4c",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -252,6 +498,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8869b50_30deb0bc",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Same here, we compute the image of the basis vectors through multiplication in both matrices: B[i] is the image through B, which we then multiply through A.",
+      "parentUuid": "4a1fbb20_52a81fcd",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ec45e04_7121ff6d",
@@ -265,6 +529,24 @@
       "writtenOn": "2026-03-05T15:25:59Z",
       "side": 1,
       "message": "Does this need to go in a CMake file? I thought unittests we added to cmake too",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d59fd57_32419a29",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:52:19Z",
+      "side": 1,
+      "message": "Not unittests yet, only end2end and whitebox and perf tests.",
+      "parentUuid": "7ec45e04_7121ff6d",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
