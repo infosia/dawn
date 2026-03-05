@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c9c7e33_3e140805",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-03-05T18:46:17Z",
+      "side": 0,
+      "message": "Do you plan to remove these from test_suites.pyl all at once in the end of the migration?",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 59
+      },
+      "revId": "849d3a43b234b24cbe4cbfe2832bd2d5b6547324",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
