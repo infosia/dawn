@@ -157,6 +157,27 @@ bool CanUseCPUUploadBuffer(const Device* device, wgpu::BufferUsage usage, size_t
            !device->IsToggleEnabled(Toggle::D3D11DisableCPUUploadBuffers);
 }
 
+bool CanMappableUseDefaultStorage(const Device* device, wgpu::BufferUsage usage) {
+    DAWN_ASSERT(IsMappable(usage));
+    if (!device->GetDeviceInfo().supportsMapOnDefaultBuffer ||
+        device->IsToggleEnabled(Toggle::D3D11DisableMapOnDefaultBuffers)) {
+        return false;
+    }
+    if (usage & wgpu::BufferUsage::Uniform) {
+        return false;
+    }
+    if (!device->GetDeviceInfo().isUMA && (usage & wgpu::BufferUsage::MapWrite)) {
+        // On non-UMA, prefer not using DEFAULT storage for MapWrite buffers because CPU writes
+        // are likely slower when the storage resides in VRAM.
+        return false;
+    }
+    // Default storage cannot be used with Vertex, Index or Indirect usage.
+    // See
+    // https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#5.6.1.3%20Map()%20on%20DEFAULT%20Buffers%20used%20as%20SRVs%20or%20UAVs
+    return !(usage &
+             (wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index | wgpu::BufferUsage::Indirect));
+}
+
 constexpr size_t kConstantBufferUpdateAlignment = 16;
 
 wgpu::MapMode GetAutoMapMode(DeviceBase* device, wgpu::BufferUsage usage) {
@@ -274,14 +295,21 @@ bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
         return false;
     }
 
+    if (IsMappable(originalUsage) && CanMappableUseDefaultStorage(device, originalUsage)) {
+        // If we can use DEFAULT storage for mappable buffers then adding Storage usage is OK.
+        return true;
+    }
+
     const bool requiresUAV = storageUsage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer);
     // Check supports for writeable storage usage:
     if (requiresUAV) {
-        // D3D11 mappable buffers cannot be used as UAV natively. So avoid that.
+        // D3D11 mappable buffers cannot be used as UAV unless MapOnDefaultBuffers is supported.
+        // So avoid that.
         return !(originalUsage & kMappableBufferUsages);
     }
 
-    // Read-only storage buffer cannot be mapped for read natively. Avoid that.
+    // Read-only storage buffer cannot be mapped for read unless MapOnDefaultBuffers is
+    // supported. So avoid that.
     DAWN_ASSERT(storageUsage == kReadOnlyStorageBuffer);
     return !(originalUsage & wgpu::BufferUsage::MapRead);
 }
@@ -817,16 +845,18 @@ class GPUUsableBuffer::Storage : public RefCounted, NonCopyable {
 
         switch (mD3d11Usage) {
             case D3D11_USAGE_STAGING:
-                mMappableCopyableFlags |= kMappableBufferUsages | wgpu::BufferUsage::CopyDst;
-                break;
-            case D3D11_USAGE_DYNAMIC:
-                mMappableCopyableFlags |= wgpu::BufferUsage::MapWrite;
-                break;
             case D3D11_USAGE_DEFAULT:
                 mMappableCopyableFlags |= wgpu::BufferUsage::CopyDst;
                 break;
             default:
                 break;
+        }
+
+        if (desc.CPUAccessFlags & D3D11_CPU_ACCESS_READ) {
+            mMappableCopyableFlags |= wgpu::BufferUsage::MapRead;
+        }
+        if (desc.CPUAccessFlags & D3D11_CPU_ACCESS_WRITE) {
+            mMappableCopyableFlags |= wgpu::BufferUsage::MapWrite;
         }
 
         mIsConstantBuffer = desc.BindFlags & D3D11_BIND_CONSTANT_BUFFER;
@@ -909,6 +939,7 @@ void GPUUsableBuffer::SetStorageLabel(StorageType storageType) {
             "Dawn_CPUWritableNonConstantBuffer",
             "Dawn_GPUWritableNonConstantBuffer",
             "Dawn_Staging",
+            "Dawn_MappableAndGPUWritable",
         };
 
     if (!mStorages[storageType]) {
@@ -994,6 +1025,15 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
     if (mStorages[storageType]) {
         return mStorages[storageType].Get();
     }
+
+    Device* device = ToBackend(GetDevice());
+    auto AliasToMappableAndGPUWritableStorage = [&]() -> ResultOrError<Storage*> {
+        // Share a single MappableAndGPUWritable storage.
+        DAWN_TRY_ASSIGN(mStorages[storageType],
+                        GetOrCreateStorage(StorageType::MappableAndGPUWritable));
+        return mStorages[storageType].Get();
+    };
+
     D3D11_BUFFER_DESC bufferDescriptor;
     bufferDescriptor.ByteWidth = GetAllocatedSize();
     bufferDescriptor.StructureByteStride = 0;
@@ -1012,10 +1052,14 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
             bufferDescriptor.MiscFlags = 0;
             break;
         case StorageType::CPUWritableNonConstantBuffer: {
+            auto nonUniformUsage = GetInternalUsage() & ~wgpu::BufferUsage::Uniform;
+            // Try to unify CPU and GPU writable storages if possible.
+            if (CanMappableUseDefaultStorage(device, nonUniformUsage)) {
+                return AliasToMappableAndGPUWritableStorage();
+            }
             // Need to exclude GPU writable usages because CPU writable buffer is not GPU writable
-            // in D3D11.
-            auto nonUniformUsage =
-                GetInternalUsage() & ~(kD3D11GPUWriteUsages | wgpu::BufferUsage::Uniform);
+            // in D3D11 if we cannot use MapOnDefaultBuffers feature.
+            nonUniformUsage = nonUniformUsage & ~kD3D11GPUWriteUsages;
             bufferDescriptor.Usage = D3D11_USAGE_DYNAMIC;
             bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
             bufferDescriptor.BindFlags = D3D11BufferBindFlags(nonUniformUsage);
@@ -1028,19 +1072,39 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
             }
         } break;
         case StorageType::GPUWritableNonConstantBuffer: {
+            auto nonUniformUsage = GetInternalUsage() & ~wgpu::BufferUsage::Uniform;
+            // Try to unify CPU and GPU writable storages if possible.
+            if (IsMappable(nonUniformUsage) &&
+                CanMappableUseDefaultStorage(device, nonUniformUsage)) {
+                return AliasToMappableAndGPUWritableStorage();
+            }
             // Need to exclude mapping usages.
-            const auto nonUniformUsage =
-                GetInternalUsage() & ~(kMappableBufferUsages | wgpu::BufferUsage::Uniform);
+            nonUniformUsage = nonUniformUsage & ~kMappableBufferUsages;
             bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
             bufferDescriptor.CPUAccessFlags = 0;
             bufferDescriptor.BindFlags = D3D11BufferBindFlags(nonUniformUsage);
             bufferDescriptor.MiscFlags = D3D11BufferMiscFlags(nonUniformUsage);
         } break;
         case StorageType::Staging: {
+            auto nonUniformUsage = GetInternalUsage() & ~wgpu::BufferUsage::Uniform;
+            // Try to use MapOnDefaultBuffers feature if possible.
+            if (CanMappableUseDefaultStorage(device, nonUniformUsage)) {
+                return AliasToMappableAndGPUWritableStorage();
+            }
             bufferDescriptor.Usage = D3D11_USAGE_STAGING;
             bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
             bufferDescriptor.BindFlags = 0;
             bufferDescriptor.MiscFlags = 0;
+        } break;
+        case StorageType::MappableAndGPUWritable: {
+            const auto nonUniformUsage =
+                GetInternalUsage() & ~(kMappableBufferUsages | wgpu::BufferUsage::Uniform);
+            bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
+            // TODO(crbug.com/479047477): Investigate the performance of including both read &
+            // write accesses.
+            bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
+            bufferDescriptor.BindFlags = D3D11BufferBindFlags(nonUniformUsage);
+            bufferDescriptor.MiscFlags = D3D11BufferMiscFlags(nonUniformUsage);
         } break;
         case StorageType::Count:
             DAWN_UNREACHABLE();
@@ -1140,10 +1204,12 @@ void GPUUsableBuffer::IncrStorageRevAndMakeLatest(
     dstStorage->SetRevision(dstStorage->GetRevision() + 1);
     mLastUpdatedStorage = dstStorage;
 
-    if (dstStorage->IsGPUWritable() && IsMappable(GetInternalUsage())) {
+    if (dstStorage->IsGPUWritable() && IsMappable(GetInternalUsage()) &&
+        dstStorage != mMappableStorage) {
         // If this buffer is mappable and the last updated storage is GPU writable, we need to
         // update the staging storage when the command buffer is flushed.
         // This is to make sure the staging storage will contain the up-to-date GPU modified data.
+        // Note: we only do this if the mappable and GPU writable storages are separate.
         commandContext->AddBufferForSyncingWithCPU(this);
     }
 }

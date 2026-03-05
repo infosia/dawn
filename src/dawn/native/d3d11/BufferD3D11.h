@@ -300,8 +300,9 @@ class GPUUsableBuffer final : public Buffer {
     // - Since D3D11 constant buffer cannot be bound for other purposes (e.g. vertex, storage, etc),
     //   we also need a separate storage for constant buffer and one storage for non-constant buffer
     //   purpose. Note: constant buffer's only supported GPU writing operation is CopyDst.
-    // - Lastly, we need a separate storage for MapRead because only D3D11 staging buffer can be
-    //   read by CPU.
+    // - Lastly, we usually need a separate staging storage for CPU reads.
+    // - When MapOnDefaultBuffers is supported and the usage is compatible, mappable and GPU
+    //   writable paths can alias a single D3D11 default-buffer storage.
     //
     // One example of a buffer being created with MapWrite | Uniform | Storage and being used:
     // - Map + CPU write: `CPUWritableConstantBuffer` gets updated.
@@ -327,6 +328,8 @@ class GPUUsableBuffer final : public Buffer {
         GPUWritableNonConstantBuffer,
         // Storage for staging usage,
         Staging,
+        // Storage shared by mappable and GPU writable paths when MapOnDefaultBuffers is used.
+        MappableAndGPUWritable,
 
         Count,
     };
@@ -351,8 +354,9 @@ class GPUUsableBuffer final : public Buffer {
 
     // The storage contains most up-to-date content.
     raw_ptr<Storage> mLastUpdatedStorage;
-    // This points to either CPU writable constant buffer or CPU writable non-constant buffer or a
-    // staging buffer. We don't need multiple CPU writable buffers to exist.
+    // This points to either CPU writable constant buffer, CPU writable non-constant buffer,
+    // staging buffer, or the shared MappableAndGPUWritable storage. We don't need multiple CPU
+    // writable buffers to exist.
     raw_ptr<Storage> mMappableStorage;
 
     // TODO(dawn:381045722): Use LRU to limit number of cached entries.

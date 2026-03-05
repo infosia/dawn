@@ -2200,6 +2200,7 @@ TEST_P(BufferMapExtendedUsagesTests,
 
 DAWN_INSTANTIATE_TEST(BufferMapExtendedUsagesTests,
                       D3D11Backend(),
+                      D3D11Backend({"d3d11_disable_map_on_default_buffers"}),
                       D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
                       D3D12Backend(),
                       MetalBackend(),
