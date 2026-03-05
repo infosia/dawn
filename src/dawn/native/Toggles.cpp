@@ -793,6 +793,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Some chrome tests run with swiftshader, they don't care about the pixel output. This toggle "
       "allows skipping expensive draw operations for them.",
       "https://crbug.com/chromium/331688266", ToggleStage::Device}},
+    {Toggle::D3D11DisableMapOnDefaultBuffers,
+     {"d3d11_disable_map_on_default_buffers",
+      "Disable the D3D11 MapOnDefaultBuffers path even when the device supports it.",
+      "https://crbug.com/chromium/479047477", ToggleStage::Device}},
     {Toggle::D3D11UseUnmonitoredFence,
      {"d3d11_use_unmonitored_fence", "Use d3d11 unmonitored fence.",
       "https://crbug.com/chromium/335553337", ToggleStage::Device}},

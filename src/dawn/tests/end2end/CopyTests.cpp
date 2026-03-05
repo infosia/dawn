@@ -2074,8 +2074,9 @@ TEST_P(CopyTests_T2B, Texture3DMipUnaligned) {
 }
 
 DAWN_INSTANTIATE_TEST_P(CopyTests_T2B,
-                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), OpenGLESBackend({"gl_defer"}), VulkanBackend(),
+                        {D3D11Backend(), D3D11Backend({"d3d11_disable_map_on_default_buffers"}),
+                         D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_defer"}), VulkanBackend(),
                          VulkanBackend({"use_blit_for_snorm_texture_to_buffer_copy",
                                         "use_blit_for_bgra8unorm_texture_to_buffer_copy"}),
                          WebGPUBackend()},
@@ -2180,6 +2181,7 @@ TEST_P(CopyTests_T2B_No_Format_Param, CopyOneRowWithDepth32Float) {
 
 DAWN_INSTANTIATE_TEST(CopyTests_T2B_No_Format_Param,
                       D3D11Backend(),
+                      D3D11Backend({"d3d11_disable_map_on_default_buffers"}),
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
@@ -2280,6 +2282,7 @@ TEST_P(CopyTests_T2B_Compat, TextureCubeRegionNonzeroRowsPerImage) {
 DAWN_INSTANTIATE_TEST_P(CopyTests_T2B_Compat,
                         {
                             D3D11Backend(),
+                            D3D11Backend({"d3d11_disable_map_on_default_buffers"}),
                             OpenGLBackend(),
                             OpenGLESBackend(),
                             OpenGLESBackend({"gl_defer"}),

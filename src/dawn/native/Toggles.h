@@ -194,6 +194,7 @@ enum class Toggle {
     ClearColorWithDraw,
     VulkanSkipDraw,
 
+    D3D11DisableMapOnDefaultBuffers,
     D3D11UseUnmonitoredFence,
     D3D11DisableFence,
     D3D11DelayFlushToGPU,
