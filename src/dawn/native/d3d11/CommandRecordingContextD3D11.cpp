@@ -210,7 +210,7 @@ void ScopedCommandRecordingContext::AddBufferForSyncingWithCPU(GPUUsableBuffer* 
 
 MaybeError ScopedCommandRecordingContext::FlushBuffersForSyncingWithCPU() const {
     for (auto buffer : Get()->mBuffersToSyncWithCPU) {
-        DAWN_TRY(buffer->SyncGPUWritesToStaging(this));
+        DAWN_TRY(buffer->SyncGPUWritesToMappableStorage(this));
     }
     Get()->mBuffersToSyncWithCPU.clear();
     return {};

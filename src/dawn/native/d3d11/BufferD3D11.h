@@ -243,9 +243,9 @@ class GPUUsableBuffer final : public Buffer {
                                uint64_t offset,
                                uint64_t size) override;
 
-    // Make sure CPU accessible storages are up-to-date. This is usually called at the end of a
+    // Make sure the mappable storage is up-to-date. This is usually called at the end of a
     // command buffer after the buffer was modified on GPU.
-    MaybeError SyncGPUWritesToStaging(const ScopedCommandRecordingContext* commandContext);
+    MaybeError SyncGPUWritesToMappableStorage(const ScopedCommandRecordingContext* commandContext);
 
   private:
     class Storage;
@@ -312,8 +312,8 @@ class GPUUsableBuffer final : public Buffer {
     //   - commandContext->AddBufferForSyncingWithCPU.
     //   - Queue::Submit
     //     - commandContext->FlushBuffersForSyncingWithCPU
-    //        - buffer->SyncGPUWritesToStaging: `GPUWritableNonConstantBuffer` is copied to
-    //        `Staging`.
+    //        - buffer->SyncGPUWritesToMappableStorage: `GPUWritableNonConstantBuffer` is copied
+    //        to the mappable storage.
     // - Map again:
     //   - `Staging` is copied to `CPUWritableConstantBuffer` with DISCARD flag
     enum class StorageType : uint8_t {
@@ -327,6 +327,8 @@ class GPUUsableBuffer final : public Buffer {
         GPUWritableNonConstantBuffer,
         // Storage for staging usage,
         Staging,
+        // Storage for D3D11_USAGE_DEFAULT that is mappable (if supported)
+        Default,
 
         Count,
     };
