@@ -39,6 +39,23 @@
       },
       "revId": "3d9b5a4068450769599a3315ad51517ec401b9d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "627d3321_df537931",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T14:00:56Z",
+      "side": 1,
+      "message": "```suggestion\n#endif  // SRC_DAWN_COMMON_ALGEBRA_H_\n```",
+      "revId": "3d9b5a4068450769599a3315ad51517ec401b9d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
