@@ -135,6 +135,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "902456b2_d04f8fad",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Any suggestions on where to store RenderAreaRect so it\u0027s accessible in both places?",
+      "parentUuid": "bb9c9536_faa590d1",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbd6ef57_ec34296a",
         "filename": "src/dawn/native/RenderPassEncoder.cpp",
         "patchSetId": 14
@@ -146,6 +164,24 @@
       "writtenOn": "2026-03-05T19:49:34Z",
       "side": 1,
       "message": "```suggestion\n                    \"the render area dimensions (x: %u, y: %u, width: %u, height: %u).\",\n```\nFor clarity, since these dimensions may now be smaller than the render target.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be1899e3_12a78a54",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd6ef57_ec34296a",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -199,6 +235,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df3af82f_0f96cd73",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Mind if I leave this as a TODO for now? We aren\u0027t going to be using dynamic rendering and render area at the same time right now so this isn\u0027t used.",
+      "parentUuid": "02a5c727_11988121",
+      "range": {
+        "startLine": 550,
+        "startChar": 56,
+        "endLine": 550,
+        "endChar": 76
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79df6758_fc79b5e5",
         "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
         "patchSetId": 14
@@ -227,6 +287,30 @@
       "writtenOn": "2026-03-05T19:49:34Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"choosen\" is a possible misspelling of \"chosen\".\n\nTo bypass Spellchecker, add a ...\n\n\"choosen\" is a possible misspelling of \"chosen\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 414,
+        "startChar": 25,
+        "endLine": 414,
+        "endChar": 32
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c55acc59_8e88fb8a",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0dd04ec_8d359809",
       "range": {
         "startLine": 414,
         "startChar": 25,
@@ -271,6 +355,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9c4a078_ddd569c8",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2567,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c46afe_190f8f58",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fce9043d_73c428fa",
@@ -284,6 +386,24 @@
       "writtenOn": "2026-03-05T19:49:34Z",
       "side": 1,
       "message": "Can this test also include a variant where the x and y are non-zero but the width and height are still zero?",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca9e4f3_b31bfb98",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2612,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-05T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fce9043d_73c428fa",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
