@@ -1815,6 +1815,22 @@ TEST_F(RenderPassDescriptorValidationTest, RenderPassColorAttachmentBytesPerSamp
     }
 }
 
+// Test that chaining RenderPassRenderAreaRect is rejected when RenderPassRenderArea feature is
+// disabled.
+TEST_F(RenderPassDescriptorValidationTest, RenderAreaNotAllowed) {
+    wgpu::TextureView color = Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 32;
+    renderArea.y = 32;
+    renderArea.width = 32;
+    renderArea.height = 32;
+    renderPass.nextInChain = &renderArea;
+
+    AssertBeginRenderPassError(&renderPass);
+}
+
 // TODO(cwallez@chromium.org): Constraints on attachment aliasing?
 
 class MSAARenderToSingleSampledRenderPassDescriptorValidationTest
@@ -2515,6 +2531,111 @@ TEST_F(TransientAttachmentRenderPassDescriptorValidationTest, DepthStencilAttach
         renderPassDescriptor.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Discard;
         renderPassDescriptor.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Store;
         AssertBeginRenderPassError(&renderPassDescriptor);
+    }
+}
+
+class RenderPassRenderAreaValidationTests : public RenderPassDescriptorValidationTest {
+  protected:
+    static constexpr uint16_t kSize = 16;
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::RenderPassRenderArea};
+    }
+};
+
+// Tests that chaining RenderPassRenderAreaRect is allowed.
+TEST_F(RenderPassRenderAreaValidationTests, RenderAreaFull) {
+    wgpu::TextureView color =
+        Create2DAttachment(device, kSize, kSize, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 0;
+    renderArea.y = 0;
+    renderArea.width = kSize;
+    renderArea.height = kSize;
+    renderPass.nextInChain = &renderArea;
+
+    AssertBeginRenderPassSuccess(&renderPass);
+}
+
+// Tests that chaining RenderPassRenderAreaRect is allowed.
+TEST_F(RenderPassRenderAreaValidationTests, RenderAreaPartial) {
+    wgpu::TextureView color =
+        Create2DAttachment(device, kSize, kSize, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 1;
+    renderArea.y = 1;
+    renderArea.width = kSize - 1;
+    renderArea.height = kSize - 1;
+    renderPass.nextInChain = &renderArea;
+
+    AssertBeginRenderPassSuccess(&renderPass);
+}
+
+// Tests that render area that isn't contained by the render pass size is rejected.
+TEST_F(RenderPassRenderAreaValidationTests, RenderAreaNotContained) {
+    wgpu::TextureView color =
+        Create2DAttachment(device, kSize, kSize, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 0;
+    renderArea.y = 0;
+    renderArea.width = kSize * 2;
+    renderArea.height = kSize * 2;
+    renderPass.nextInChain = &renderArea;
+
+    AssertBeginRenderPassError(&renderPass);
+}
+
+// Tests that an empty render area is rejected.
+TEST_F(RenderPassRenderAreaValidationTests, RenderAreaIsEmpty) {
+    wgpu::TextureView color =
+        Create2DAttachment(device, kSize, kSize, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 0;
+    renderArea.y = 0;
+    renderArea.width = 0;
+    renderArea.height = 0;
+    renderPass.nextInChain = &renderArea;
+
+    AssertBeginRenderPassError(&renderPass);
+}
+
+// Tests that setting a scissor rect outside the render area is rejected.
+TEST_F(RenderPassRenderAreaValidationTests, ScissorRectOutsideRenderArea) {
+    wgpu::TextureView color =
+        Create2DAttachment(device, kSize, kSize, wgpu::TextureFormat::RGBA8Unorm);
+    utils::ComboRenderPassDescriptor renderPass({color});
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.x = 4;
+    renderArea.y = 4;
+    renderArea.width = kSize / 2;
+    renderArea.height = kSize / 2;
+    renderPass.nextInChain = &renderArea;
+
+    {
+        wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
+
+        renderPassEncoder.SetScissorRect(2, 2, 1, 1);
+        renderPassEncoder.End();
+        ASSERT_DEVICE_ERROR(commandEncoder.Finish());
+    }
+
+    {
+        wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
+
+        renderPassEncoder.SetScissorRect(14, 14, 1, 1);
+        renderPassEncoder.End();
+        ASSERT_DEVICE_ERROR(commandEncoder.Finish());
     }
 }
 
