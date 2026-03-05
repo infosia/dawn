@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9f156d5_5e4388fd",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T15:12:25Z",
+      "side": 1,
+      "message": "Header guards should be the very first thing in this file, above the includes.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f19391f_e37fb66e",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T15:12:25Z",
+      "side": 1,
+      "message": "Suggest `typename Scalar \u003d float` to match Matrix below.",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311d5f1d_c7205f3e",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T15:12:25Z",
+      "side": 1,
+      "message": "nit: `class` since we\u0027re making data private anyway.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 7
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04829cf6_c7c839c6",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T15:12:25Z",
+      "side": 1,
+      "message": "Ditto: `class`",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 6
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d571c3ea_7f96ced5",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T15:12:25Z",
+      "side": 1,
+      "message": "This will generate \u003c,\u003c\u003d,\u003e,\u003e\u003d operators for comparison, but I don\u0027t see tests for this.",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 66
+      },
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
