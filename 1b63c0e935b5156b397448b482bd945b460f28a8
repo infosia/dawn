@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0570d739_ba006b5e",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T16:36:30Z",
+      "side": 1,
+      "message": "Aaah got it, thanks for the explanation.",
+      "parentUuid": "df249ef6_69e5aedf",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae87c74d_af02ed3d",
