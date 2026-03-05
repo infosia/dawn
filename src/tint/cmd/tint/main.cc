@@ -1129,13 +1129,6 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
     }
     gen_options.substitute_overrides_config = substitute_override_cfg.Get();
 
-    // Check that the module and options are supported by the backend.
-    auto check = tint::msl::writer::CanGenerate(ir, gen_options);
-    if (check != tint::Success) {
-        std::cerr << check.Failure() << "\n";
-        return false;
-    }
-
     auto result = tint::msl::writer::Generate(ir, gen_options);
     if (result != tint::Success) {
         options.printer->Print(tint::core::ir::Disassembler(ir).Text());
@@ -1167,7 +1160,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
         if (xcrun.Found()) {
             res = tint::msl::validate::Validate(xcrun.Path(), result->msl, options.msl_version);
         } else {
-            res = Failure{"xcrun executable not found. Cannot validate."};
+            res = tint::Failure{"xcrun executable not found. Cannot validate."};
         }
 #endif  // TINT_BUILD_IS_MAC
         if (res != tint::Success) {
