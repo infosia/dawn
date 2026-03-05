@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cf64657_92782060",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Yeah, I agree. The only issue is that AddDefaultSampler has a similar assert to AddDefaultTextureView that will fail because the type id isn\u0027t compatible with the sampler type:\n```\n        // Check that the resource we will have will match the order of default textures that we\n        // will give to the shader compilation.\n        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(sampler),\n                                        GetOrder()[mDefaultResources.size()]));\n```",
+      "parentUuid": "faa8d369_73ed853a",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c0af5cd_a6336455",
         "filename": "src/dawn/native/ResourceTableDefaultResources.h",
         "patchSetId": 8
@@ -48,6 +66,30 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "nit: Resource? Since it\u0027s not a type, but an actual resource.",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa91a49a_ce86928a",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0af5cd_a6336455",
       "range": {
         "startLine": 49,
         "startChar": 10,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e6fbe77_d272be4c",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "I copied my commit comment here as it pretty much describes the what and the why.",
+      "parentUuid": "b190d66b_9e14dbe8",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eaf5a651_b293c378",
@@ -94,6 +154,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "904080ce_a08403f4",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Sure, this is caching the result of calling `device-\u003eGetResourceTableDefaultResources()-\u003eGetOrCreate(device))`, `ResourceTableDefaultResources::IndexOf` (which performs a linear search), and finally the indexing itself. I figured it was worth caching these values once in `Initialize`, instead of paying the cost for each `UpdateResourceBindings`.",
+      "parentUuid": "eaf5a651_b293c378",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27a4c1d1_260be613",
         "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
         "patchSetId": 8
@@ -105,6 +183,24 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "In a follow-up can we expand these to also include samplers? (a small rename will be needed) (we can use default values of undefined in the renamed TextureDescForTypeIDCase to discriminate between samplers and textures) (this will test the fact that a non-filtering sampler can be used as a filtering one in WGSL) (ugh the suppression on D3D12 will be slightly ugly as it will be a continue instead of DAWN_SUPPRESS_TEST_IF).",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c2239d_0846e581",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "27a4c1d1_260be613",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -146,6 +242,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ad794c1_99ee627e",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "https://g-issues.chromium.org/issues/490066027",
+      "parentUuid": "c64d7c9a_b9df5d8e",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67260cbb_5aab1aaa",
         "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
         "patchSetId": 8
@@ -157,6 +271,24 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "`MakePinnedU8View` should produce exactly that as far as I can tell.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34114368_685c2fdf",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Discussed offline, but I need a texture_2d\u003cf32, *\u003e so that I can call `textureSample`.",
+      "parentUuid": "67260cbb_5aab1aaa",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -178,6 +310,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c2b8539_0b0da845",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53ec7142_8d7063af",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1390f02_338f56a8",
@@ -191,6 +341,24 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "```suggestion\n    auto CreateCheckerboardTexture \u003d [\u0026]() {\n```",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eec26427_c9f2bee3",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1390f02_338f56a8",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -218,6 +386,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6464004_34e5106e",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3fb11e5_c8d39efc",
+      "range": {
+        "startLine": 1241,
+        "startChar": 43,
+        "endLine": 1248,
+        "endChar": 37
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "481c323e_bc5576b8",
@@ -231,6 +423,24 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "This could use writeTexture, which would be simpler than making a buffer and submitting a copy.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4df03fef_3aa7871b",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "481c323e_bc5576b8",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -252,6 +462,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fe57b46_99a948ed",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1feda1c2_9d180a3c",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dbc9e82_c6c68eed",
@@ -265,6 +493,30 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "nit: these are the defaults (because they are the cheapest option)",
+      "range": {
+        "startLine": 1274,
+        "startChar": 0,
+        "endLine": 1276,
+        "endChar": 66
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2065d791_23dc29a1",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dbc9e82_c6c68eed",
       "range": {
         "startLine": 1274,
         "startChar": 0,
@@ -294,6 +546,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b64b08ec_3cb0cd3d",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "But `textureSample` must be used in a fragment shader, right?",
+      "parentUuid": "cd7d37eb_fd0795ac",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d204a19_e596aaa8",
         "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
         "patchSetId": 8
@@ -305,6 +575,30 @@
       "writtenOn": "2026-03-05T09:03:43Z",
       "side": 1,
       "message": "```suggestion\n    float expectedGreen[4] \u003d {0.0, 1.0, 0.0, 1.0};\n    float expected_Red[4] \u003d {1.0, 0.0, 0.0, 1.0};\n\n```",
+      "range": {
+        "startLine": 1357,
+        "startChar": 1,
+        "endLine": 1359,
+        "endChar": 0
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7e2ab3a_35fdd008",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-05T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d204a19_e596aaa8",
       "range": {
         "startLine": 1357,
         "startChar": 1,
