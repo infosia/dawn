@@ -1,6 +1,114 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26402111_2de5e975",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faa8d369_73ed853a",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "We could have a single sampler (that\u0027s non-filtering) for both filtering and non-filtering (we just add it twice). It also matches the default sampler descriptor, which makes sense for a default resource.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c0af5cd_a6336455",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "nit: Resource? Since it\u0027s not a type, but an actual resource.",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b190d66b_9e14dbe8",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "Can we have a comment explaining how this will be used to contain both textures and samplers that will be recombined in the shader?",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf5a651_b293c378",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "Do we need to keep these around? It seems we could query them in as needed in UpdateResourceBindings.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27a4c1d1_260be613",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "In a follow-up can we expand these to also include samplers? (a small rename will be needed) (we can use default values of undefined in the renamed TextureDescForTypeIDCase to discriminate between samplers and textures) (this will test the fact that a non-filtering sampler can be used as a filtering one in WGSL) (ugh the suppression on D3D12 will be slightly ugly as it will be a continue instead of DAWN_SUPPRESS_TEST_IF).",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35da3d5f_abff8e9a",
@@ -14,6 +122,195 @@
       "writtenOn": "2026-03-05T03:16:56Z",
       "side": 1,
       "message": "This, and MultipleSamplers below, both fail on Vulkan_Mali_G78 on CQ. In both cases, the result buffer contains only zeroes. I guess we should suppress these tests on Mali for now?",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c64d7c9a_b9df5d8e",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "Let\u0027s suppress, file an issue and CC Albin Bernhardsson",
+      "parentUuid": "35da3d5f_abff8e9a",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67260cbb_5aab1aaa",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "`MakePinnedU8View` should produce exactly that as far as I can tell.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53ec7142_8d7063af",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "(this as well)",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1390f02_338f56a8",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "```suggestion\n    auto CreateCheckerboardTexture \u003d [\u0026]() {\n```",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3fb11e5_c8d39efc",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "Defaults are made to have the simple case be easiest to write!\n\n```suggestion\n        wgpu::TextureDescriptor descriptor;\n        descriptor.dimension \u003d wgpu::TextureDimension::e2D;\n        descriptor.size \u003d {2, 2};\n        descriptor.format \u003d wgpu::TextureFormat::RGBA8Unorm;\n```",
+      "range": {
+        "startLine": 1241,
+        "startChar": 43,
+        "endLine": 1248,
+        "endChar": 37
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "481c323e_bc5576b8",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "This could use writeTexture, which would be simpler than making a buffer and submitting a copy.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1feda1c2_9d180a3c",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "```suggestion\n    auto CreateSampler \u003d [\u0026](wgpu::AddressMode mode) {\n```",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dbc9e82_c6c68eed",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "nit: these are the defaults (because they are the cheapest option)",
+      "range": {
+        "startLine": 1274,
+        "startChar": 0,
+        "endLine": 1276,
+        "endChar": 66
+      },
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd7d37eb_fd0795ac",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "optional nit: Since we are writing to a storage buffer we might as well use a compute shader.",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d204a19_e596aaa8",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:03:43Z",
+      "side": 1,
+      "message": "```suggestion\n    float expectedGreen[4] \u003d {0.0, 1.0, 0.0, 1.0};\n    float expected_Red[4] \u003d {1.0, 0.0, 0.0, 1.0};\n\n```",
+      "range": {
+        "startLine": 1357,
+        "startChar": 1,
+        "endLine": 1359,
+        "endChar": 0
+      },
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
