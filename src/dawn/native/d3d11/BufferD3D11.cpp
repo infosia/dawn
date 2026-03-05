@@ -278,6 +278,9 @@ bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
     // Check supports for writeable storage usage:
     if (requiresUAV) {
         // D3D11 mappable buffers cannot be used as UAV natively. So avoid that.
+        if ((originalUsage & kMappableBufferUsages) && device->CanMapOnDefaultBuffer()) {
+            return true;
+        }
         return !(originalUsage & kMappableBufferUsages);
     }
 
@@ -933,9 +936,15 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
     //   writing or reading).
     //   - This is acceptable since a buffer with both MapWrite + MapRead is rare.
     if ((usagesToHandle & wgpu::BufferUsage::MapRead) || IsStaging(usagesToHandle)) {
-        DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(StorageType::Staging));
-        mMappableStorage = mLastUpdatedStorage;
-        usagesToHandle &= ~kStagingUsages;
+        if (ToBackend(GetDevice())->CanMapOnDefaultBuffer()) {
+            DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(StorageType::Default));
+            mMappableStorage = mLastUpdatedStorage;
+            usagesToHandle &= ~kStagingUsages;
+        } else {
+            DAWN_TRY_ASSIGN(mLastUpdatedStorage, GetOrCreateStorage(StorageType::Staging));
+            mMappableStorage = mLastUpdatedStorage;
+            usagesToHandle &= ~kStagingUsages;
+        }
     }
 
     // We need to create a separate storage for uniform usage, because D3D11 doesn't allow constant
@@ -1040,6 +1049,12 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
             bufferDescriptor.Usage = D3D11_USAGE_STAGING;
             bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
             bufferDescriptor.BindFlags = 0;
+            bufferDescriptor.MiscFlags = 0;
+        } break;
+        case StorageType::Default: {
+            bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
+            bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
+            bufferDescriptor.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
             bufferDescriptor.MiscFlags = 0;
         } break;
         case StorageType::Count:

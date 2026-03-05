@@ -2640,6 +2640,10 @@ bool DeviceBase::CanTextureLoadResolveTargetInTheSameRenderpass() const {
     return false;
 }
 
+bool DeviceBase::CanMapOnDefaultBuffer() const {
+    return false;
+}
+
 bool DeviceBase::CanResolveSubRect() const {
     return false;
 }
