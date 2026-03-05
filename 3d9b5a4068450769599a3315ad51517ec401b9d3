@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34c64d84_087821c2",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T14:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22a8d1d_6811571d",
+      "range": {
+        "startLine": 153,
+        "startChar": 29,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "3d9b5a4068450769599a3315ad51517ec401b9d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "627d3321_df537931",
@@ -54,6 +78,24 @@
       "writtenOn": "2026-03-05T14:00:56Z",
       "side": 1,
       "message": "```suggestion\n#endif  // SRC_DAWN_COMMON_ALGEBRA_H_\n```",
+      "revId": "3d9b5a4068450769599a3315ad51517ec401b9d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f2a028e_235bc6b4",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T14:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "627d3321_df537931",
       "revId": "3d9b5a4068450769599a3315ad51517ec401b9d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
