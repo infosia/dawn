@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32781ad2_95d73d03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-05T23:39:55Z",
+      "side": 1,
+      "message": "Theoretically shouldn\u0027t be possible because the `OnSubmittedWorkDone` shouldn\u0027t fire until `MapAsync` has fired (since they\u0027re both `CallbackMode::AllowProcessEvents` and run in `ProcessEvents()`)\n\nBut the change seems like it will be at least as good as before, so LGTM",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 67
+      },
+      "revId": "8edf4ac3b41297f018447462b4383310dd514103",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e248c424_ff9d0690",
