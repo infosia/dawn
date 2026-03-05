@@ -16,6 +16,398 @@
       "message": "PTAL this fix, thanks!",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c1dc22a_e7b68022",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "This comment should be associated with the dirtying caused by the resource table at [1]",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c959415b_dd3aa2de",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e6ce8d_dad571ff",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "109b5ed3_6ce00654",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Instead of this, let\u0027s keep this block in [1] and instead clear the mLastResourceTable at [2].",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee444ffb_25095872",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Why? Can we have a TODO?",
+      "range": {
+        "startLine": 726,
+        "startChar": 26,
+        "endLine": 726,
+        "endChar": 56
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12d4fe43_adf72d1f",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Any reason we need two bindgroups in this test?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3456097b_ae4b690b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "We could add a push constant size defaulted to 0 to [`utils::MakePipelineLayout`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/WGPUHelpers.cpp;drc\u003d2546bab52b03777485a99528329c161ad1e751b3;l\u003d236)",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f5b8be8_41e425b1",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "This VS is the same between both pipelines, we could have one module and just set the entryPoint to something different for the FS of both pipelines.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa65ad2_af25d095",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "This could directly return the values in one of the bindgroups, which would remove the need for the math to compute the expected values below.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acf3cf61_c3b31269",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "```suggestion\n    auto MakePipeline \u003d [\u0026](wgpu::ShaderModule mod, bool useDepthWrite) {\n```",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddacf4ce_d456caa4",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "A size of 1 is sufficient?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a793af9_0476efee",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "```suggestion\n    // Draw with Pipeline A (red), then switch to Pipeline B without re-setting bind groups.\n    // The Vulkan backend needs to reapply VkDescriptorSets after setting B because the change in push constant size will invalidate the currently bound VkDescriptorSets.\n```",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61a3dd0a_353d09de",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "```suggestion\n// bind groups.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ce901ca_d311d334",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "ditto `MakePipelineLayout` for both layouts.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35bcb0e_ccc403f6",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Why do we need the uniform buffer? A single VkDescriptorSet should be sufficient to test the issue. In shaders we can write immediate values to `output` and that\u0027s sufficient to test the potential issue?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76e301be_514ead35",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "```suggestion\n// bind groups. Also tests that defaulted pipeline layouts work correctly.\n```",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da43f6cd_8c1e1f47",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Defaulted layouts are not compatible between pipelines at all. (I hope we change that one day)",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dda28701_1be2f6c4",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "Maybe copy the comment at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ResourceTableTests.cpp;drc\u003d492a81a423b225a848d5b0aaf8baac729c2c6dba;l\u003d50 ?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa4fd24b_2d373af4",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "```suggestion\n        DawnTest::SetUp();\n        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() \u0026\u0026 !DAWN_PLATFORM_IS(ARM64));\n    }\n\n    std::vector\u003cwgpu::FeatureName\u003e GetRequiredFeatures() override {\n        return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};\n    }\n\n```",
+      "range": {
+        "startLine": 951,
+        "startChar": 1,
+        "endLine": 963,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c244da0_84629e08",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "nit: created on pipeline fully then the other?",
+      "range": {
+        "startLine": 1005,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80f4610f_cb381e6d",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "We don\u0027t even need to put something in the resource table for this test, since all we need is the resource table to be bound correctly in the Vulkan backend.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b826488a_6979bb52",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-05T09:49:32Z",
+      "side": 1,
+      "message": "And the VVL will complain, which should be sufficient for the test, or did the VVLs not complain? (with `--enable-backend-validation` (`\u003dfull`?))?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
