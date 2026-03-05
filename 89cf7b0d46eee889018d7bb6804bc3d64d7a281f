@@ -85,6 +85,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3782d816_531495df",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T17:00:39Z",
+      "side": 1,
+      "message": "You could still use the `math` namespace here even if the file is a `Algebra` to accomplish the same thing?",
+      "parentUuid": "919384c6_5da12668",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c276a3b9_ac3067eb",
         "filename": "src/dawn/common/Algebra.h",
         "patchSetId": 2
@@ -477,6 +495,24 @@
       "side": 1,
       "message": "I\u0027m pretty sure this is right with the tests and the usage in WIP CLs. We may have learned this stuff with different conventions, but what this does is doing a weighed sum of the column vector (aka the images of the basis vectors by A) by the coordinates of V. By linearity of matrix - vector multiplication, this should be the result of the multiplication. If basis vectors are `v0..vn` and `V \u003d a0 * v0 + ... + an * vn`, then\n\n```\n  A * V\n\u003d A * (a0 * v0 + ... + an * vn)\n\u003d a0 * A * v0 + ... + an * A * vn\n```\n\nthe latter is what we are computing in the function.",
       "parentUuid": "d4cc69c9_c3ab3b4c",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df59f599_e6c03f0d",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T17:00:39Z",
+      "side": 1,
+      "message": "That seems like it\u0027s what I learned, but it requires row-major data, you have column-major data so you\u0027re doing the V * A ? (The math notation is right, but I think the data storage is flipped to what you\u0027d normally think in math world?)",
+      "parentUuid": "204a4409_9f157c64",
       "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
