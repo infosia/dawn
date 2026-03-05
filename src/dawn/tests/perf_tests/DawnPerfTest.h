@@ -143,6 +143,7 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
     // no way to enforce that without a huge refactor. Marking it as `final`
     // at least means derived classes can't incorrectly override it.
     void SetUp() final {
+        printf("DPT Setup\n");
         DawnTestWithParams<Params>::SetUp();
 
         DAWN_TEST_UNSUPPORTED_IF(this->IsCPU());
@@ -152,6 +153,8 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
         }
 
         SetUpPerfTest();
+
+        printf("DPT done\n");
     }
 
     virtual void SetUpPerfTest() {}

@@ -231,6 +231,8 @@ void UniformBufferUpdatePerf::ReturnStagingBuffer(wgpu::Buffer buffer) {
 }
 
 void UniformBufferUpdatePerf::SetUpPerfTest() {
+    printf("RUNING SETUP\n");
+
     // Skip all tests if the BufferMapExtendedUsages feature is not supported.
     DAWN_TEST_UNSUPPORTED_IF(GetParam().uploadMethod == UploadMethod::MapWithExtendedUsages &&
                              !device.HasFeature(wgpu::FeatureName::BufferMapExtendedUsages));
@@ -310,6 +312,8 @@ void UniformBufferUpdatePerf::SetUpPerfTest() {
         buffer.Unmap();
         ReturnUniformBuffer(buffer);
     }
+
+    printf("DONE SETUP\n");
 }
 
 void UniformBufferUpdatePerf::Step() {
@@ -405,7 +409,11 @@ void UniformBufferUpdatePerf::Step() {
 }
 
 TEST_P(UniformBufferUpdatePerf, Run) {
+    printf("Test run start\n");
+
     RunTest();
+
+    printf("Test run complete\n");
 }
 
 DAWN_INSTANTIATE_TEST_P(UniformBufferUpdatePerf,

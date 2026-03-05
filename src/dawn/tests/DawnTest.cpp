@@ -1672,23 +1672,33 @@ void DawnTestBase::SetUp() {
 }
 
 void DawnTestBase::TearDown() {
+    printf("DAWN TEST BASE Teardown\n");
+
     ResolveDeferredExpectationsNow();
+
+    printf("a\n");
 
     mRecorder.reset();
 
+    printf("b\n");
     if (mRequireUseTieredLimits) {
         mBackendAdapter.SetUseTieredLimits(false);
     }
+    printf("c\n");
     if (!UsesWire()) {
         EXPECT_EQ(mLastWarningCount, GetDeprecationWarningCountForTesting());
     }
+    printf("d\n");
 
     if (mExpectedTimeMaxSec != 0.0f) {
         float real_time_taken = mTimer->GetElapsedTime();
         EXPECT_GE(mExpectedTimeMaxSec, real_time_taken);
     }
 
+    printf("e\n");
     mAdapterInfo = nullptr;
+
+    printf("F\n");
 }
 
 void DawnTestBase::DestroyDevice(wgpu::Device deviceToDestroy) {

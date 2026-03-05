@@ -136,6 +136,7 @@ void DawnPerfTestEnvironment::SetUp() {
     mInstance = CreateInstance(mPlatform.get());
     DAWN_ASSERT(mInstance);
 
+    printf("DawnPrefTestEnv setup\n");
     // Begin writing the trace event array.
     if (mTraceFile != nullptr) {
         std::ofstream outFile;
@@ -148,6 +149,7 @@ void DawnPerfTestEnvironment::SetUp() {
 }
 
 void DawnPerfTestEnvironment::TearDown() {
+    printf("DawnPrefTesTENv teardown\n");
     // End writing the trace event array.
     if (mTraceFile != nullptr) {
         std::vector<DawnPerfTestPlatform::TraceEvent> traceEventBuffer =
@@ -162,7 +164,9 @@ void DawnPerfTestEnvironment::TearDown() {
         outFile.close();
     }
 
+    printf("Do dawnTEST teardown\n");
     DawnTestEnvironment::TearDown();
+    printf("DawnPrefTestEnv teardown done\n");
 }
 
 bool DawnPerfTestEnvironment::IsCalibrating() const {
@@ -235,7 +239,9 @@ void DawnPerfTestBase::RunTest() {
             OutputResults();
         }
     }
+    printf("Disabing trace evnts\n");
     platform->EnableTraceEventRecording(false);
+    printf(" RunTest complete\n");
 }
 
 void DawnPerfTestBase::DoRunLoop(double maxRunTime) {
@@ -319,6 +325,8 @@ void DawnPerfTestBase::OutputResults() {
         EventTracker* tracker = nullptr;
         double* totalTime = nullptr;
 
+        printf("TE %d %s\n", static_cast<uint32_t>(traceEvent.category), traceEvent.name);
+
         switch (traceEvent.category) {
             case platform::TraceCategory::Validation:
                 tracker = &validationTracker;
@@ -361,10 +369,15 @@ void DawnPerfTestBase::OutputResults() {
     PrintPerIterationResultFromSeconds("validation_time", totalValidationTime, true);
     PrintPerIterationResultFromSeconds("recording_time", totalRecordingTime, true);
 
+    printf("OUTPUT Done\n");
+
     const char* traceFile = gTestEnv->GetTraceFile();
     if (traceFile != nullptr) {
+        printf("Dump trace file\n");
         DumpTraceEventsToJSONFile(traceEventBuffer, traceFile);
     }
+
+    printf("Complete\n");
 }
 
 void DawnPerfTestBase::AddGPUTime(double time) {
