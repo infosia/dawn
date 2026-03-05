@@ -47,12 +47,12 @@
 #include "src/tint/utils/memory/bitcast.h"
 
 // This file implements a custom STL style container & iterator in a performant manner, using
-// C-style data access. It is not unexpected that -Wunsafe-buffer-usage triggers in this code, since
-// the type of dynamic access being used cannot be guaranteed to be safe via static analysis.
+// C-style data access. It is not unexpected that -Wunsafe-buffer-usage (UBU triggers in this code,
+// since the type of dynamic access being used cannot be guaranteed to be safe via static analysis.
 // Attempting to change this code in simple ways to quiet these errors either a) negatively affects
 // the performance by introducing unneeded copes, or b) uses typing shenanigans to work around the
-// warning that other linters/analyses are unhappy with.
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+// warning that other linters/analyses are unhappy with. The suppression of this warning has been
+// narrowed to the code that it is expected to occur in.
 
 #ifndef TINT_VECTOR_MUTATION_CHECKS_ENABLED
 #ifdef NDEBUG
@@ -72,17 +72,35 @@ TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 namespace tint {
 template <typename>
 class VectorRef;
-}  // namespace tint
 
-namespace tint {
+namespace internal {
 
+/// Slice is a memory view into the backing memory for a Vector.
+///
+/// buffer.data() is the entire memory associated with the Vector
+/// buffer.size() is the size of this memory, so maximum number of elements that can be in the
+///               Vector before it needs to grow, so the capacity
+/// len           is the number of elements of the allocation being used by the Vector, so the
+///               length
+template <typename T>
+struct Slice {
+    /// The backing memory for the vector (capacity)
+    std::span<T> buffer;
+    /// The number of elements currently accessible in the Vector
+    size_t len = 0;
+};
+
+}  // namespace internal
+
+// VectorIterator intrinsically depends on pointer math, so will always cause UBU warnings
+TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 /// VectorIterator is a forward iterator of Vector elements.
 template <typename T, bool FORWARD = true>
 class VectorIterator {
   public:
     /// The iterator trait
     using iterator_category = std::random_access_iterator_tag;
-    /// The type of an element that this iterator points to
+    /// The type of element that this iterator points to
     using value_type = T;
     /// The type of the difference of two iterators
     using difference_type = std::ptrdiff_t;
@@ -289,6 +307,7 @@ class VectorIterator {
     std::atomic<uint32_t>* iterator_count_ = nullptr;
 #endif
 };
+TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 /// @param out the stream to write to
 /// @param it the VectorIterator
@@ -299,7 +318,7 @@ auto& operator<<(STREAM& out, const VectorIterator<T, FORWARD>& it) {
     return out << *it;
 }
 
-/// Vector is a small-object-optimized, dynamically-sized vector of contigious elements of type T.
+/// Vector is a small-object-optimized, dynamically-sized vector of contiguous elements of type T.
 ///
 /// Vector will fit `N` elements internally before spilling to heap allocations. If `N` is greater
 /// than zero, the internal elements are stored in a 'small array' held internally by the Vector.
@@ -345,7 +364,7 @@ class Vector {
     Vector(std::initializer_list<T> elements) {
         Reserve(elements.size());
         for (auto& el : elements) {
-            new (&impl_.slice.data[impl_.slice.len++]) T{el};
+            new (&impl_.slice.buffer[impl_.slice.len++]) T{el};
         }
     }
 
@@ -379,7 +398,7 @@ class Vector {
               ReinterpretMode MODE,
               typename = std::enable_if_t<CanReinterpretSlice<MODE, T, U>>>
     Vector(const Vector<U, N2>& other) {  // NOLINT(runtime/explicit)
-        Copy(other.impl_.slice.template Reinterpret<T, MODE>);
+        Copy(other.impl_.slice);
     }
 
     /// Move constructor with covariance / const conversion
@@ -399,27 +418,33 @@ class Vector {
 
     /// Copy constructor from an immutable vector reference
     /// @param other the vector reference to copy
-    Vector(const VectorRef<T>& other) { Copy(other.slice_); }  // NOLINT(runtime/explicit)
+    Vector(const VectorRef<T>& other) { Copy(*other.slice_); }  // NOLINT(runtime/explicit)
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     Vector(const Slice<T>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(internal::Slice<T>{std::span<T>{other.data, other.cap}, other.len});
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     /// @note This overload only exists to keep MSVC happy. The compiler should be able to match
     /// `Slice<U>`.
     Vector(const Slice<const T>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(internal::Slice<const T>{std::span<const T>{other.data, other.cap}, other.len});
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     template <typename U>
     Vector(const Slice<U>& other) {  // NOLINT(runtime/explicit)
-        Copy(other);
+        Copy(internal::Slice<U>{std::span<U>{other.data, other.cap}, other.len});
     }
 
     /// Destructor
@@ -467,8 +492,8 @@ class Vector {
     /// @param other the vector reference to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(const VectorRef<T>& other) {
-        if (&other.slice_ != &impl_.slice) {
-            Copy(other.slice_);
+        if (other.slice_ != &impl_.slice) {
+            Copy(*other.slice_);
         }
         return *this;
     }
@@ -477,7 +502,7 @@ class Vector {
     /// @param other the vector reference to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(VectorRef<T>&& other) {
-        if (&other.slice_ != &impl_.slice) {
+        if (other.slice_ != &impl_.slice) {
             MoveOrCopy(std::move(other));
         }
         return *this;
@@ -487,52 +512,64 @@ class Vector {
     /// @param other the slice to copy
     /// @returns this vector so calls can be chained
     Vector& operator=(const Slice<T>& other) {
-        Copy(other);
+        Copy(internal::Slice<T>{std::span<T>{other.data, other.cap}, other.len});
         return *this;
     }
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    T& operator[](size_t i) { return impl_.slice[i]; }
+    T& operator[](size_t i) {
+        TINT_ASSERT(i < Length());
+        return impl_.slice.buffer[i];
+    }
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    const T& operator[](size_t i) const { return impl_.slice[i]; }
+    const T& operator[](size_t i) const {
+        TINT_ASSERT(i < Length());
+        return impl_.slice.buffer[i];
+    }
 
     /// @return the number of elements in the vector
     size_t Length() const { return impl_.slice.len; }
 
     /// @return the number of elements that the vector could hold before a heap allocation needs to
     /// be made
-    size_t Capacity() const { return impl_.slice.cap; }
+    size_t Capacity() const { return impl_.slice.buffer.size(); }
 
+    // Iterating the buffers to move
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
     /// Reserves memory to hold at least `new_cap` elements
     /// @param new_cap the new vector capacity
     void Reserve(size_t new_cap) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (new_cap > impl_.slice.cap) {
-            auto* old_data = impl_.slice.data;
+        if (new_cap > impl_.slice.buffer.size()) {
+            auto* old_data = impl_.slice.buffer.data();
+            size_t len = impl_.slice.len;
             impl_.Allocate(new_cap);
-            for (size_t i = 0; i < impl_.slice.len; i++) {
-                new (&impl_.slice.data[i]) T(std::move(old_data[i]));
+            for (size_t i = 0; i < len; i++) {
+                new (&impl_.slice.buffer[i]) T(std::move(old_data[i]));
                 old_data[i].~T();
             }
+            impl_.slice.len = len;
             impl_.Free(old_data);
         }
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
     /// Resizes the vector to the given length, expanding capacity if necessary.
     /// New elements are zero-initialized
     /// @param new_len the new vector length
     void Resize(size_t new_len) {
         Reserve(new_len);
-        for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+        size_t old_len = impl_.slice.len;
+        for (size_t i = old_len; i > new_len; i--) {  // Shrink
+            impl_.slice.buffer[i - 1].~T();
         }
-        for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{};
+        for (size_t i = old_len; i < new_len; i++) {  // Grow
+            new (&impl_.slice.buffer[i]) T{};
         }
         impl_.slice.len = new_len;
     }
@@ -542,11 +579,12 @@ class Vector {
     /// @param value the value to copy into the new elements
     void Resize(size_t new_len, const T& value) {
         Reserve(new_len);
-        for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+        size_t old_len = impl_.slice.len;
+        for (size_t i = old_len; i > new_len; i--) {  // Shrink
+            impl_.slice.buffer[i - 1].~T();
         }
-        for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{value};
+        for (size_t i = old_len; i < new_len; i++) {  // Grow
+            new (&impl_.slice.buffer[i]) T{value};
         }
         impl_.slice.len = new_len;
     }
@@ -562,7 +600,7 @@ class Vector {
     void Clear() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         for (size_t i = 0; i < impl_.slice.len; i++) {
-            impl_.slice.data[i].~T();
+            impl_.slice.buffer[i].~T();
         }
         impl_.slice.len = 0;
     }
@@ -571,20 +609,20 @@ class Vector {
     /// @param el the element to copy to the vector.
     void Push(const T& el) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        if (impl_.slice.len >= impl_.slice.buffer.size()) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(el);
+        new (&impl_.slice.buffer[impl_.slice.len++]) T(el);
     }
 
     /// Appends a new element to the vector.
     /// @param el the element to move to the vector.
     void Push(T&& el) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        if (impl_.slice.len >= impl_.slice.buffer.size()) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(std::move(el));
+        new (&impl_.slice.buffer[impl_.slice.len++]) T(std::move(el));
     }
 
     /// Appends a new element to the vector.
@@ -592,10 +630,10 @@ class Vector {
     template <typename... ARGS>
     void Emplace(ARGS&&... args) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
-        if (impl_.slice.len >= impl_.slice.cap) {
+        if (impl_.slice.len >= impl_.slice.buffer.size()) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T{std::forward<ARGS>(args)...};
+        new (&impl_.slice.buffer[impl_.slice.len++]) T{std::forward<ARGS>(args)...};
     }
 
     /// Removes and returns the last element from the vector.
@@ -603,7 +641,7 @@ class Vector {
     T Pop() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(!IsEmpty());
-        auto& el = impl_.slice.data[--impl_.slice.len];
+        auto& el = impl_.slice.buffer[--impl_.slice.len];
         auto val = std::move(el);
         el.~T();
         return val;
@@ -617,15 +655,13 @@ class Vector {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(before <= Length());
         size_t n = Length();
-        Resize(Length() + 1);
+        Resize(n + 1);
         // Shuffle
         for (size_t i = n; i > before; i--) {
-            auto& src = impl_.slice.data[i - 1];
-            auto& dst = impl_.slice.data[i];
-            dst = std::move(src);
+            impl_.slice.buffer[i] = std::move(impl_.slice.buffer[i - 1]);
         }
         // Insert
-        impl_.slice.data[before] = std::forward<EL>(element);
+        impl_.slice.buffer[before] = std::forward<EL>(element);
     }
 
     /// Removes @p count elements from the vector
@@ -635,17 +671,16 @@ class Vector {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(start < Length());
         TINT_ASSERT((start + count) <= Length());
+        size_t len = impl_.slice.len;
         // Shuffle
-        for (size_t i = start + count; i < impl_.slice.len; i++) {
-            auto& src = impl_.slice.data[i];
-            auto& dst = impl_.slice.data[i - count];
-            dst = std::move(src);
+        for (size_t i = start + count; i < len; i++) {
+            impl_.slice.buffer[i - count] = std::move(impl_.slice.buffer[i]);
         }
         // Pop
         for (size_t i = 0; i < count; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
-            el.~T();
+            impl_.slice.buffer[--len].~T();
         }
+        impl_.slice.len = len;
     }
 
     /// Removes all the elements from the vector that match the predicate function.
@@ -654,14 +689,14 @@ class Vector {
     template <typename PREDICATE>
     void EraseIf(PREDICATE&& predicate) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
+        size_t len = impl_.slice.len;
         // Shuffle
         size_t num_removed = 0;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            auto& el = impl_.slice.data[i];
+        for (size_t i = 0; i < len; i++) {
+            auto& el = impl_.slice.buffer[i];
             bool remove = predicate(const_cast<const T&>(el));
             if (num_removed > 0) {
-                auto& dst = impl_.slice.data[i - num_removed];
-                dst = std::move(el);
+                impl_.slice.buffer[i - num_removed] = std::move(el);
             }
             if (remove) {
                 num_removed++;
@@ -669,9 +704,9 @@ class Vector {
         }
         // Pop
         for (size_t i = 0; i < num_removed; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
-            el.~T();
+            impl_.slice.buffer[--len].~T();
         }
+        impl_.slice.len = len;
     }
 
     /// Sort sorts the vector in-place using the predicate function @p pred
@@ -717,74 +752,106 @@ class Vector {
     bool IsEmpty() const { return impl_.slice.len == 0; }
 
     /// @returns a reference to the first element in the vector
-    T& Front() { return impl_.slice.Front(); }
+    T& Front() {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.buffer.front();
+    }
 
     /// @returns a reference to the first element in the vector
-    const T& Front() const { return impl_.slice.Front(); }
+    const T& Front() const {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.buffer.front();
+    }
 
     /// @returns a reference to the last element in the vector
-    T& Back() { return impl_.slice.Back(); }
+    T& Back() {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.buffer[impl_.slice.len - 1];
+    }
 
     /// @returns a reference to the last element in the vector
-    const T& Back() const { return impl_.slice.Back(); }
+    const T& Back() const {
+        TINT_ASSERT(!IsEmpty());
+        return impl_.slice.buffer[impl_.slice.len - 1];
+    }
 
 #if TINT_VECTOR_MUTATION_CHECKS_ENABLED
     /// @returns a forward iterator to the first element of the vector
-    iterator begin() { return iterator{impl_.slice.begin(), &iterator_count_}; }
+    iterator begin() { return iterator{impl_.slice.buffer.data(), &iterator_count_}; }
 
     /// @returns a forward iterator to the first element of the vector
     const const_iterator begin() const {
-        return const_iterator{impl_.slice.begin(), &iterator_count_};
+        return const_iterator{impl_.slice.buffer.data(), &iterator_count_};
+    }
+
+    // STL end()/rbegin() is beyond the end of the span, so requires unsafe pointer math
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+    /// @returns a forward iterator to one-pass the last element of the vector
+    iterator end() {
+        return iterator{impl_.slice.buffer.data() + impl_.slice.len, &iterator_count_};
     }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    iterator end() { return iterator{impl_.slice.end(), &iterator_count_}; }
-
-    /// @returns a forward iterator to one-pass the last element of the vector
-    const const_iterator end() const { return const_iterator{impl_.slice.end(), &iterator_count_}; }
+    const const_iterator end() const {
+        return const_iterator{impl_.slice.buffer.data() + impl_.slice.len, &iterator_count_};
+    }
 
     /// @returns a reverse iterator to the last element of the vector
-    reverse_iterator rbegin() { return reverse_iterator{impl_.slice.end(), &iterator_count_} + 1; }
+    reverse_iterator rbegin() {
+        return reverse_iterator{impl_.slice.buffer.data() + impl_.slice.len, &iterator_count_} + 1;
+    }
 
     /// @returns a reverse iterator to the last element of the vector
     const const_reverse_iterator rbegin() const {
-        return const_reverse_iterator{impl_.slice.end(), &iterator_count_} + 1;
+        return const_reverse_iterator{impl_.slice.buffer.data() + impl_.slice.len,
+                                      &iterator_count_} +
+               1;
+    }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+
+    /// @returns a reverse iterator to one element before the first element of the vector
+    reverse_iterator rend() {
+        return reverse_iterator{impl_.slice.buffer.data(), &iterator_count_} + 1;
     }
 
     /// @returns a reverse iterator to one element before the first element of the vector
-    reverse_iterator rend() { return reverse_iterator{impl_.slice.begin(), &iterator_count_} + 1; }
-
-    /// @returns a reverse iterator to one element before the first element of the vector
     const const_reverse_iterator rend() const {
-        return const_reverse_iterator{impl_.slice.begin(), &iterator_count_} + 1;
+        return const_reverse_iterator{impl_.slice.buffer.data(), &iterator_count_} + 1;
     }
 #else
     /// @returns a forward iterator to the first element of the vector
-    iterator begin() { return iterator{impl_.slice.begin()}; }
+    iterator begin() { return iterator{impl_.slice.buffer.data()}; }
 
     /// @returns a forward iterator to the first element of the vector
-    const const_iterator begin() const { return const_iterator{impl_.slice.begin()}; }
+    const const_iterator begin() const { return const_iterator{impl_.slice.buffer.data()}; }
+
+    // STL end()/rbegin() is beyond the end of the span, so requires unsafe pointer math
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+    /// @returns a forward iterator to one-pass the last element of the vector
+    iterator end() { return iterator{impl_.slice.buffer.data() + impl_.slice.len}; }
 
     /// @returns a forward iterator to one-pass the last element of the vector
-    iterator end() { return iterator{impl_.slice.end()}; }
-
-    /// @returns a forward iterator to one-pass the last element of the vector
-    const const_iterator end() const { return const_iterator{impl_.slice.end()}; }
+    const const_iterator end() const {
+        return const_iterator{impl_.slice.buffer.data() + impl_.slice.len};
+    }
 
     /// @returns a reverse iterator to the last element of the vector
-    reverse_iterator rbegin() { return reverse_iterator{impl_.slice.end()} + 1; }
+    reverse_iterator rbegin() {
+        return reverse_iterator{impl_.slice.buffer.data() + impl_.slice.len} + 1;
+    }
 
     /// @returns a reverse iterator to the last element of the vector
     const const_reverse_iterator rbegin() const {
-        return const_reverse_iterator{impl_.slice.end()} + 1;
+        return const_reverse_iterator{impl_.slice.buffer.data() + impl_.slice.len} + 1;
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
     /// @returns a reverse iterator to one element before the first element of the vector
-    reverse_iterator rend() { return reverse_iterator{impl_.slice.begin()} + 1; }
+    reverse_iterator rend() { return reverse_iterator{impl_.slice.buffer.data()} + 1; }
 
     /// @returns a reverse iterator to one element before the first element of the vector
     const const_reverse_iterator rend() const {
-        return const_reverse_iterator{impl_.slice.begin()} + 1;
+        return const_reverse_iterator{impl_.slice.buffer.data()} + 1;
     }
 #endif
 
@@ -824,16 +891,22 @@ class Vector {
     }
 
     /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() { return impl_.slice; }
+    tint::Slice<T> Slice() {
+        return tint::Slice<T>{impl_.slice.buffer.data(), impl_.slice.len,
+                              impl_.slice.buffer.size()};
+    }
 
     /// @returns the internal slice of the vector
-    tint::Slice<const T> Slice() const { return impl_.slice; }
+    tint::Slice<const T> Slice() const {
+        return tint::Slice<const T>{impl_.slice.buffer.data(), impl_.slice.len,
+                                    impl_.slice.buffer.size()};
+    }
 
     /// @returns the internal data of the vector as a std::span
-    std::span<T> AsSpan() { return {impl_.slice.data, impl_.slice.len}; }
+    std::span<T> AsSpan() { return impl_.slice.buffer.subspan(0, impl_.slice.len); }
 
     /// @returns the internal data of the vector as a std::span
-    std::span<const T> AsSpan() const { return {impl_.slice.data, impl_.slice.len}; }
+    std::span<const T> AsSpan() const { return impl_.slice.buffer.subspan(0, impl_.slice.len); }
 
   private:
     /// Friend class (differing specializations of this class)
@@ -844,87 +917,100 @@ class Vector {
     template <typename>
     friend class VectorRef;
 
-    /// Friend class
-    template <typename>
-    friend class VectorRef;
-
     template <typename... Ts>
     void AppendVariadic(Ts&&... args) {
-        ((new (&impl_.slice.data[impl_.slice.len++]) T(std::forward<Ts>(args))), ...);
+        ((new (&impl_.slice.buffer[impl_.slice.len++]) T(std::forward<Ts>(args))), ...);
     }
 
     /// Expands the capacity of the vector
-    void Grow() { Reserve(std::max(impl_.slice.cap, static_cast<size_t>(1)) * 2); }
+    void Grow() { Reserve(std::max(impl_.slice.buffer.size(), static_cast<size_t>(1)) * 2); }
 
     /// Moves 'other' to this vector, if possible, otherwise performs a copy.
     void MoveOrCopy(VectorRef<T>&& other) {
         if (other.can_move_) {
-            // Just steal the slice.
+            // Just steal the data.
             ClearAndFree();
-            impl_.slice = other.slice_;
-            other.slice_ = {};
+            impl_.slice = *other.slice_;
+            *other.slice_ = {};
         } else {
-            Copy(other.slice_);
+            Copy(*other.slice_);
         }
     }
 
     /// Copies all the elements from `other` to this vector, replacing the content of this vector.
     /// @param other the slice to copy
     template <typename U>
-    void Copy(const tint::Slice<U>& other) {
-        if (impl_.slice.cap < other.len) {
+    void Copy(const internal::Slice<U>& other) {
+        size_t other_len = other.len;
+        if (impl_.slice.buffer.size() < other_len) {
             ClearAndFree();
-            impl_.Allocate(other.len);
+            impl_.Allocate(other_len);
         } else {
             Clear();
         }
 
-        impl_.slice.len = other.len;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{other.data[i]};
+        for (size_t i = 0; i < other_len; i++) {
+            new (&impl_.slice.buffer[i]) T{other.buffer[i]};
         }
+        impl_.slice.len = other_len;
     }
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Moves all the elements from `other` to this vector, replacing the content of this vector.
     /// @param other the vector to move
     template <typename U, size_t N2>
     void Move(Vector<U, N2>&& other) {
-        auto& other_slice = other.impl_.slice;
         if constexpr (std::is_same_v<T, U>) {
-            if (other.impl_.CanMove()) {
-                // Just steal the slice.
+            auto& other_impl = other.impl_;
+            if (other_impl.CanMove()) {
+                // Just steal the data.
                 ClearAndFree();
-                impl_.slice = other_slice;
-                other_slice = {};
+                impl_.slice = other_impl.slice;
+                other_impl.slice = {};
+                if constexpr (N2 > 0) {
+                    other_impl.slice.buffer = {&other_impl.small_arr[0].Get(), N2};
+                }
                 return;
             }
         }
+        TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
-        // Can't steal the slice, so we have to move the elements instead.
+        // Can't steal the data, so we have to move the elements instead.
 
+        size_t other_len = other.Length();
         // Ensure we have capacity for all the elements
-        if (impl_.slice.cap < other_slice.len) {
+        if (Capacity() < other_len) {
             ClearAndFree();
-            impl_.Allocate(other_slice.len);
+            impl_.Allocate(other_len);
         } else {
             Clear();
         }
 
         // Move each of the elements.
-        impl_.slice.len = other_slice.len;
-        for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{std::move(other_slice.data[i])};
+        for (size_t i = 0; i < other_len; i++) {
+            new (&impl_.slice.buffer[i]) T{std::move(other[i])};
         }
+        impl_.slice.len = other_len;
 
         // Clear other
         other.Clear();
     }
 
-    /// Clears the vector, then frees the slice data.
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+    /// Clears the vector, then frees the data.
     void ClearAndFree() {
         Clear();
-        impl_.Free(impl_.slice.data);
+        impl_.Free(impl_.slice.buffer.data());
+        if constexpr (N > 0) {
+            impl_.slice.buffer = {&impl_.small_arr[0].Get(), N};
+        } else {
+            impl_.slice.buffer = {};
+        }
+        impl_.slice.len = 0;
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// True if this vector uses a small array for small object optimization.
     constexpr static bool HasSmallArray = N > 0;
@@ -932,52 +1018,59 @@ class Vector {
     /// A structure that has the same size and alignment as T.
     using TStorage = AlignedStorage<T>;
 
+    // Directly manipulating the underlying allocation for performance, so requires unsafe pointers
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// The internal structure for the vector with a small array.
     struct ImplWithSmallArray {
         TStorage small_arr[N];
-        tint::Slice<T> slice = {&small_arr[0].Get(), 0, N};
+        internal::Slice<T> slice = {std::span<T>{&small_arr[0].Get(), N}, 0};
 
         /// Allocates a new vector of `T` either from #small_arr, or from the heap, then assigns the
-        /// pointer it to #slice.data, and updates #slice.cap.
+        /// pointer it to #slice.buffer.
         void Allocate(size_t new_cap) {
-            if (new_cap < N) {
-                slice.data = &small_arr[0].Get();
-                slice.cap = N;
+            if (new_cap <= N) {
+                slice.buffer = {&small_arr[0].Get(), N};
             } else {
-                slice.data = Bitcast<T*>(new TStorage[new_cap]);
-                slice.cap = new_cap;
+                slice.buffer = {Bitcast<T*>(new TStorage[new_cap]), new_cap};
             }
         }
 
-        /// Frees `data`, if isn't a pointer to #small_arr
-        void Free(T* data) const {
-            if (data != &small_arr[0].Get()) {
-                delete[] Bitcast<TStorage*>(data);
+        /// Frees `ptr`, if isn't a pointer to #small_arr
+        void Free(T* ptr) const {
+            if (ptr != &small_arr[0].Get()) {
+                delete[] reinterpret_cast<TStorage*>(ptr);
             }
         }
 
-        /// Indicates whether the slice structure can be std::move()d.
-        /// @returns true if #slice.data does not point to #small_arr
-        bool CanMove() const { return slice.data != &small_arr[0].Get(); }
+        /// Indicates whether the structure can be std::move()d.
+        /// @returns true if #slice.buffer.data() does not point to #small_arr
+        bool CanMove() const { return slice.buffer.data() != &small_arr[0].Get(); }
     };
 
     /// The internal structure for the vector without a small array.
     struct ImplWithoutSmallArray {
-        tint::Slice<T> slice = Empty;
+        internal::Slice<T> slice = {{}, 0};
 
-        /// Allocates a new vector of `T` and assigns it to #slice.data, and updates #slice.cap.
+        /// Allocates a new vector of `T` and assigns it to #slice.buffer.
         void Allocate(size_t new_cap) {
-            slice.data = Bitcast<T*>(new TStorage[new_cap]);
-            slice.cap = new_cap;
+            slice.buffer = {reinterpret_cast<T*>(new TStorage[new_cap]), new_cap};
         }
 
-        /// Frees `data`.
-        void Free(T* data) const { delete[] Bitcast<TStorage*>(data); }
+        /// Frees `ptr`.
+        void Free(T* ptr) const {
+            if (ptr) {
+                delete[] reinterpret_cast<TStorage*>(ptr);
+            }
+        }
 
-        /// Indicates whether the slice structure can be std::move()d.
+        /// Indicates whether the structure can be std::move()d.
         /// @returns true
         bool CanMove() const { return true; }
     };
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
     /// Either a ImplWithSmallArray or ImplWithoutSmallArray based on N.
     std::conditional_t<HasSmallArray, ImplWithSmallArray, ImplWithoutSmallArray> impl_;
@@ -986,11 +1079,9 @@ class Vector {
     mutable std::atomic<uint32_t> iterator_count_ = 0;
 };
 
-namespace detail {
+namespace internal {
 
-/// Helper for determining the Vector element type (`T`) from the vector's constuctor arguments
-/// @tparam IS_CASTABLE true if the types of `Ts` derive from CastableBase
-/// @tparam Ts the vector constructor argument types to infer the vector element type from.
+/// Helper for determining the Vector element type (`T`) from the vector's constructor arguments
 template <bool IS_CASTABLE, typename... Ts>
 struct VectorCommonType;
 
@@ -1012,12 +1103,12 @@ struct VectorCommonType</*IS_CASTABLE*/ true, Ts...> {
                                     common_ty*>;
 };
 
-}  // namespace detail
+}  // namespace internal
 
 /// Helper for determining the Vector element type (`T`) from the vector's constuctor arguments
 template <typename... Ts>
 using VectorCommonType =
-    typename tint::detail::VectorCommonType<IsCastable<std::remove_pointer_t<Ts>...>, Ts...>::type;
+    tint::internal::VectorCommonType<IsCastable<std::remove_pointer_t<Ts>...>, Ts...>::type;
 
 /// Deduction guide for Vector
 template <typename... Ts>
@@ -1046,66 +1137,84 @@ Vector(Ts...) -> Vector<VectorCommonType<Ts...>, sizeof...(Ts)>;
 /// Aside from this move pattern, a VectorRef provides an immutable reference to the Vector.
 template <typename T>
 class VectorRef {
-    /// @returns an empty slice.
-    static tint::Slice<T>& EmptySlice() {
-        static tint::Slice<T> empty;
-        return empty;
-    }
-
   public:
     /// Type of `T`.
     using value_type = T;
 
     /// Constructor - empty reference
-    VectorRef() : slice_(EmptySlice()) {}
+    VectorRef() : slice_(&local_slice_) {}
 
     /// Constructor
-    VectorRef(EmptyType) : slice_(EmptySlice()) {}  // NOLINT(runtime/explicit)
+    VectorRef(EmptyType) : slice_(&local_slice_) {}  // NOLINT(runtime/explicit)
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Constructor from a Slice
     /// @param slice the slice
-    VectorRef(tint::Slice<T>& slice)  // NOLINT(runtime/explicit)
-        : slice_(slice) {}
+    VectorRef(const tint::Slice<T>& slice)  // NOLINT(runtime/explicit)
+        : local_slice_{std::span<T>{slice.data, slice.cap}, slice.len}, slice_(&local_slice_) {}
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// Constructor from a Vector
     /// @param vector the vector to create a reference of
     template <size_t N>
     VectorRef(Vector<T, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice) {}
+        : slice_(&vector.impl_.slice) {}
 
     /// Constructor from a const Vector
     /// @param vector the vector to create a reference of
     template <size_t N>
     VectorRef(const Vector<T, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(const_cast<tint::Slice<T>&>(vector.impl_.slice)) {}
+        : slice_(const_cast<internal::Slice<T>*>(&vector.impl_.slice)) {}
 
     /// Constructor from a moved Vector
     /// @param vector the vector being moved
     template <size_t N>
     VectorRef(Vector<T, N>&& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice), can_move_(vector.impl_.CanMove()) {}
+        : slice_(&vector.impl_.slice), can_move_(vector.impl_.CanMove()) {}
 
     /// Copy constructor
     /// @param other the vector reference
-    VectorRef(const VectorRef& other) : slice_(other.slice_) {}
+    VectorRef(const VectorRef& other)
+        : local_slice_(other.LocalSlice()),
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_) {}
 
     /// Move constructor
     /// @param other the vector reference
-    VectorRef(VectorRef&& other) = default;
+    VectorRef(VectorRef&& other)
+        : local_slice_(other.LocalSlice()),
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_),
+          can_move_(other.can_move_) {
+        other.can_move_ = false;
+    }
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor with covariance / const conversion
     /// @param other the other vector reference
     template <typename U,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(const VectorRef<U>& other)  // NOLINT(runtime/explicit)
-        : slice_(other.slice_.template Reinterpret<T>()) {}
+        : local_slice_{std::span<T>{Bitcast<T*>(other.begin()), other.Capacity()}, other.Length()},
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_
+                                                     : Bitcast<internal::Slice<T>*>(other.slice_)) {
+    }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Move constructor with covariance / const conversion
     /// @param other the vector reference
     template <typename U,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(VectorRef<U>&& other)  // NOLINT(runtime/explicit)
-        : slice_(other.slice_.template Reinterpret<T>()), can_move_(other.can_move_) {}
+        : local_slice_{std::span<T>{Bitcast<T*>(other.begin()), other.Capacity()}, other.Length()},
+          slice_(other.slice_ == &other.local_slice_ ? &local_slice_
+                                                     : Bitcast<internal::Slice<T>*>(other.slice_)),
+          can_move_(other.can_move_) {
+        other.can_move_ = false;
+    }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// Constructor from a Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
@@ -1114,7 +1223,8 @@ class VectorRef {
               size_t N,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(const Vector<U, N>& vector)  // NOLINT(runtime/explicit)
-        : slice_(const_cast<tint::Slice<U>&>(vector.impl_.slice).template Reinterpret<T>()) {}
+        : slice_(reinterpret_cast<internal::Slice<T>*>(
+              const_cast<internal::Slice<U>*>(&vector.impl_.slice))) {}
 
     /// Constructor from a moved Vector with covariance / const conversion
     /// @param vector the vector to create a reference of
@@ -1123,51 +1233,67 @@ class VectorRef {
               size_t N,
               typename = std::enable_if_t<CanReinterpretSlice<ReinterpretMode::kSafe, T, U>>>
     VectorRef(Vector<U, N>&& vector)  // NOLINT(runtime/explicit)
-        : slice_(vector.impl_.slice.template Reinterpret<T>()), can_move_(vector.impl_.CanMove()) {}
+        : slice_(reinterpret_cast<internal::Slice<T>*>(&vector.impl_.slice)),
+          can_move_(vector.impl_.CanMove()) {}
 
     /// Index operator
     /// @param i the element index. Must be less than `len`.
     /// @returns a reference to the i'th element.
-    const T& operator[](size_t i) const { return slice_[i]; }
+    const T& operator[](size_t i) const {
+        TINT_ASSERT(i < Length());
+        return slice_->buffer[i];
+    }
 
     /// @return the number of elements in the vector
-    size_t Length() const { return slice_.len; }
+    size_t Length() const { return slice_->len; }
 
     /// @return the number of elements that the vector could hold before a heap allocation needs to
     /// be made
-    size_t Capacity() const { return slice_.cap; }
+    size_t Capacity() const { return slice_->buffer.size(); }
 
     /// @return a reinterpretation of this VectorRef as elements of type U.
     /// @note this is doing a reinterpret_cast of elements. It is up to the caller to ensure that
     /// this is a safe operation.
     template <typename U>
     VectorRef<U> ReinterpretCast() const {
-        return {slice_.template Reinterpret<U, ReinterpretMode::kUnsafe>()};
+        return VectorRef<U>{
+            tint::Slice<U>{Bitcast<U*>(slice_->buffer.data()), slice_->len, slice_->buffer.size()}};
     }
 
     /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() { return slice_; }
+    tint::Slice<T> Slice() {
+        return tint::Slice<T>{slice_->buffer.data(), slice_->len, slice_->buffer.size()};
+    }
 
     /// @returns true if the vector is empty.
-    bool IsEmpty() const { return slice_.len == 0; }
+    bool IsEmpty() const { return slice_->len == 0; }
 
     /// @returns a reference to the first element in the vector
-    const T& Front() const { return slice_.Front(); }
+    const T& Front() const {
+        TINT_ASSERT(!IsEmpty());
+        return slice_->buffer.front();
+    }
 
     /// @returns a reference to the last element in the vector
-    const T& Back() const { return slice_.Back(); }
+    const T& Back() const {
+        TINT_ASSERT(!IsEmpty());
+        return slice_->buffer[slice_->len - 1];
+    }
 
     /// @returns a pointer to the first element in the vector
-    const T* begin() const { return slice_.begin(); }
+    const T* begin() const { return slice_->buffer.data(); }
 
+    // STL end()/rbegin() is beyond the end of the span, so requires unsafe pointer math
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
     /// @returns a pointer to one past the last element in the vector
-    const T* end() const { return slice_.end(); }
+    const T* end() const { return slice_->buffer.data() + slice_->len; }
 
     /// @returns a reverse iterator starting with the last element in the vector
-    auto rbegin() const { return slice_.rbegin(); }
+    auto rbegin() const { return std::reverse_iterator<const T*>(end()); }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
     /// @returns the end for a reverse iterator
-    auto rend() const { return slice_.rend(); }
+    auto rend() const { return std::reverse_iterator<const T*>(begin()); }
 
     /// @returns a hash code of the Vector
     tint::HashCode HashCode() const {
@@ -1201,13 +1327,16 @@ class VectorRef {
     template <typename>
     friend class VectorRef;
 
-    /// Friend class
-    template <typename>
-    friend class VectorRef;
+    /// @returns the internal slice
+    internal::Slice<T> LocalSlice() const { return *slice_; }
+
+    /// A local InternalSlice used when the VectorRef does not point to a Vector's internal slice.
+    internal::Slice<T> local_slice_ = {{}, 0};
 
     /// The slice of the vector being referenced.
-    tint::Slice<T>& slice_;
-    /// Whether the slice data is passed by r-value reference, and can be moved.
+    internal::Slice<T>* slice_ = nullptr;
+
+    /// Whether the data is passed by r-value reference, and can be moved.
     bool can_move_ = false;
 };
 
@@ -1297,7 +1426,7 @@ auto& operator<<(STREAM& o, VectorRef<T> vec) {
     return o;
 }
 
-namespace detail {
+namespace internal {
 
 /// IsVectorLike<T>::value is true if T is a Vector or VectorRef.
 template <typename T>
@@ -1319,14 +1448,12 @@ struct IsVectorLike<VectorRef<T>> {
     /// True for the IsVectorLike specialization of VectorRef
     static constexpr bool value = true;
 };
-}  // namespace detail
+}  // namespace internal
 
 /// True if T is a Vector<T, N> or VectorRef<T>
 template <typename T>
-static constexpr bool IsVectorLike = tint::detail::IsVectorLike<T>::value;
+static constexpr bool IsVectorLike = tint::internal::IsVectorLike<T>::value;
 
 }  // namespace tint
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 #endif  // SRC_TINT_UTILS_CONTAINERS_VECTOR_H_
