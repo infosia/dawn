@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<2, f32>)
 fn print_bdb245() {
   print(vec2<f32>(1.f));

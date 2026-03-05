@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<4, f32>)
 fn print_c7511a() {
   var arg_0 = vec4<f32>(1.f);

@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<4, u32>)
 fn print_7f7178() {
   var arg_0 = vec4<u32>(1u);

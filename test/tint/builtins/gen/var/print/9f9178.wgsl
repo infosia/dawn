@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(bool)
 fn print_9f9178() {
   var arg_0 = true;

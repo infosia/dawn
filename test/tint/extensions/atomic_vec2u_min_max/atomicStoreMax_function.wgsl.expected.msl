@@ -1,5 +1,15 @@
-SKIP: FAILED
+#include <metal_stdlib>
+using namespace metal;
 
-64-bit (vec2u) atomic operations are not yet supported by the MSL backend
+struct tint_module_vars_struct {
+  device atomic_ulong* a;
+};
 
-tint executable returned error: exit status 1
+void foo(device atomic_ulong* const p) {
+  atomic_min_explicit(p, as_type<ulong>(uint2(0u)), memory_order_relaxed);
+}
+
+fragment void v(device atomic_ulong* a [[buffer(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=a};
+  foo(tint_module_vars.a);
+}

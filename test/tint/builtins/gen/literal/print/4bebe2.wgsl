@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<3, f32>)
 fn print_4bebe2() {
   print(vec3<f32>(1.f));

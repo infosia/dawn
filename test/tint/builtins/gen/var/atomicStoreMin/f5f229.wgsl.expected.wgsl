@@ -1,3 +1,4 @@
+// [msl] flags: --msl-version 2.4
 enable atomic_vec2u_min_max;
 
 struct SB_RW {
