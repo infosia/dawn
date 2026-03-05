@@ -517,6 +517,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fc2e451_fcf49a7c",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-05T18:05:53Z",
+      "side": 1,
+      "message": "Discussed offline. Leaving as is.",
+      "parentUuid": "df59f599_e6c03f0d",
+      "revId": "89cf7b0d46eee889018d7bb6804bc3d64d7a281f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a1fbb20_52a81fcd",
