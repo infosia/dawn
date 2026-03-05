@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a29a5129_38f83463",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-05T23:03:02Z",
+      "side": 1,
+      "message": "Thoughts on this before I do other backends?\n\nI think it\u0027s nicer to have everything go through CanGenerate() automatically instead of having some callsites manually call it and others not.",
+      "revId": "eda36744d8ca00d51d501eadb6907c06157799c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
