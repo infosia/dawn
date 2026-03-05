@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48ab280f_37245be4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2026-03-05T04:27:53Z",
+      "side": 1,
+      "message": "Qualcomm is going to release Snapdragon X2 laptops with below device ids. We had an internal sync with them and it\u0027s time to enable in upstream.\n\nDevice IDs:\n0x35464630 - 8440\n0x36334630 - 8480",
+      "revId": "73c0afdd7d8a81fba4ccba684baf990a60bbdffc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
