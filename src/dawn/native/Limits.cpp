@@ -59,10 +59,10 @@
 #define LIMITS_STORAGE_BUFFER_BINDING_SIZE(X)                                                        \
     X(v1, Maximum, maxStorageBufferBindingSize, 134217728, 134217728, 268435456, 536870912, 1073741824, 2147483644, 4294967292)
 
-// Tiers are 256MB, 1GB, 2GB, 4GB.
-//                                    compat      tier0       tier1
-#define LIMITS_MAX_BUFFER_SIZE(X)                                                         \
-    X(v1, Maximum, maxBufferSize, 0x10000000, 0x10000000, 0x40000000, 0x80000000, 0x100000000)
+// Tiers are 256MB, 1GB, 2GB, 4GB-4.
+//                                     compat        tier0        tier1        tier2        tier3
+#define LIMITS_MAX_BUFFER_SIZE(X)                                                                  \
+    X(v1, Maximum, maxBufferSize, 0x1000'0000, 0x1000'0000, 0x4000'0000, 0x8000'0000, 0xFFFF'FFFC)
 
 // Tiers for limits related to resource bindings.
 // Note that changing these limits may require updating hard-coded constants common/Constants.h.

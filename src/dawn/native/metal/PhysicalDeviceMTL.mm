@@ -920,7 +920,10 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     limits->v1.minUniformBufferOffsetAlignment = mtlLimits.minBufferOffsetAlignment;
     limits->v1.minStorageBufferOffsetAlignment = mtlLimits.minBufferOffsetAlignment;
 
-    uint64_t maxBufferSize = Buffer::QueryMaxBufferLength(*mDevice);
+    // Hard limit at 4GiB because we pass storage (and thus vertex) buffer sizes to MSL as uint32_t.
+    // Subtract 4 because vertex buffers need an extra 4 bytes at the end for clamping (and the
+    // limit on vertex buffer binding size is, implicitly, maxBufferSize).
+    uint64_t maxBufferSize = std::min(0x1'0000'0000ull, Buffer::QueryMaxBufferLength(*mDevice)) - 4;
     limits->v1.maxBufferSize = maxBufferSize;
 
     // Metal has no documented limit on the size of a binding. Use the maximum

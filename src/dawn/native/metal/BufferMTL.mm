@@ -89,8 +89,8 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     }
 
     // The vertex pulling transform requires at least 4 bytes in the buffer.
-    // 0-sized vertex buffer bindings are allowed, so we always need an additional 4 bytes
-    // after the end.
+    // Zero-sized vertex buffer bindings at the very end of the buffer are
+    // allowed, so we always need an additional 4 bytes after the end.
     NSUInteger extraBytes = 0u;
     if ((GetInternalUsage() & wgpu::BufferUsage::Vertex) != 0) {
         extraBytes = 4u;
@@ -103,7 +103,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
         std::max(static_cast<NSUInteger>(GetSize()) + extraBytes, NSUInteger(4));
 
     if (currentSize > std::numeric_limits<NSUInteger>::max() - alignment) {
-        // Alignment would overlow.
+        // Alignment would overflow.
         return DAWN_OUT_OF_MEMORY_ERROR("Buffer allocation is too large");
     }
     currentSize = Align(currentSize, alignment);
