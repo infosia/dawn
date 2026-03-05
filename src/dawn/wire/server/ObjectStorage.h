@@ -35,6 +35,7 @@
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
+#include "dawn/common/Mutex.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "dawn/wire/WireServer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -66,10 +67,16 @@ enum class BufferMapWriteState { Unmapped, Mapped, MapError };
 
 template <>
 struct ObjectData<WGPUBuffer> : public ObjectDataBase<WGPUBuffer> {
-    // TODO(enga): Use a tagged pointer to save space.
+    // The |mapStateMutex| protects the buffer state when it is being modified concurrently by the
+    // client's commands and the spontaneous buffer map async callbacks. We use an explicit mutex
+    // here instead of a MutexProtected around these members because we only need to lock around
+    // small critical sections where a race with spontaneous callbacks is possible, whereas other
+    // accesses to these members are safe because the server runs on one thread otherwise.
+    Ref<Mutex> mapStateMutex = AcquireRef(new Mutex());
     std::unique_ptr<MemoryTransferService::ReadHandle> readHandle;
     std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle;
     BufferMapWriteState mapWriteState = BufferMapWriteState::Unmapped;
+
     WGPUBufferUsage usage = WGPUBufferUsage_None;
     // Indicate if writeHandle needs to be destroyed on unmap
     bool mappedAtCreation = false;

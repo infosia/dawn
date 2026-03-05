@@ -56,13 +56,13 @@ WireResult Server::PreHandleBufferUnmap(const BufferUnmapCmd& cmd) {
     Known<WGPUBuffer> buffer;
     WIRE_TRY(Get(cmd.selfId, &buffer));
 
+    Mutex::AutoLock lock(buffer->mapStateMutex.Get());
     if (buffer->mappedAtCreation && !(buffer->usage & WGPUBufferUsage_MapWrite)) {
         // This indicates the writeHandle is for mappedAtCreation only. Destroy on unmap
         // writeHandle could have possibly been deleted if buffer is already destroyed so we
         // don't assert it's non-null
         buffer->writeHandle = nullptr;
     }
-
     buffer->mapWriteState = BufferMapWriteState::Unmapped;
 
     return WireResult::Success;
@@ -74,6 +74,7 @@ WireResult Server::PreHandleBufferDestroy(const BufferDestroyCmd& cmd) {
     WIRE_TRY(Get(cmd.selfId, &buffer));
 
     // The buffer was destroyed. Clear the Read/WriteHandle.
+    Mutex::AutoLock lock(buffer->mapStateMutex.Get());
     buffer->readHandle = nullptr;
     buffer->writeHandle = nullptr;
     buffer->mapWriteState = BufferMapWriteState::Unmapped;
@@ -268,6 +269,7 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
     cmd.readDataUpdateInfoLength = 0;
     cmd.readDataUpdateInfo = nullptr;  // Skipped by skip_serialize.
 
+    Mutex::AutoLock lock(buffer->mapStateMutex.Get());
     const void* readData = nullptr;
     size_t readDataUpdateInfoLength = 0;
     if (isSuccess) {
