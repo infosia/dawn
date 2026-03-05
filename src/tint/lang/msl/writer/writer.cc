@@ -194,6 +194,8 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
 }
 
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+    TINT_CHECK_RESULT(CanGenerate(ir, options));
+
     // Raise from core-dialect to MSL-dialect.
     TINT_CHECK_RESULT_UNWRAP(raise_result, Raise(ir, options));
     TINT_CHECK_RESULT_UNWRAP(result, Print(ir, options));
