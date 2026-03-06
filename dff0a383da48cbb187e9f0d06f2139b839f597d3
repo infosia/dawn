@@ -22,6 +22,30 @@
       },
       "revId": "dff0a383da48cbb187e9f0d06f2139b839f597d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "829edb79_54c090f2",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-06T02:43:13Z",
+      "side": 1,
+      "message": "Done, also changed the Compat case to request no limits instead of max limits, and fixed tests accordingly.",
+      "parentUuid": "c3e6d1c3_5c0727a9",
+      "range": {
+        "startLine": 48,
+        "startChar": 50,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "dff0a383da48cbb187e9f0d06f2139b839f597d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
