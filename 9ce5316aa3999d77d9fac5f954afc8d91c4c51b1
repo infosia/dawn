@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f072120a_d2a6afaa",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:22:24Z",
+      "side": 1,
+      "message": "Then we should add a case at [1] that allows sampler_non_filtering -\u003e sampler_filtering conversions as that will be allowed in the WGSL side validation.",
+      "parentUuid": "8cf64657_92782060",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c0af5cd_a6336455",
         "filename": "src/dawn/native/ResourceTableDefaultResources.h",
         "patchSetId": 8
@@ -594,6 +612,24 @@
       "side": 1,
       "message": "But `textureSample` must be used in a fragment shader, right?",
       "parentUuid": "cd7d37eb_fd0795ac",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73171a31_ee2be9b4",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:22:24Z",
+      "side": 1,
+      "message": "Duh ^^ (at least for the implicit lod version yeah)",
+      "parentUuid": "b64b08ec_3cb0cd3d",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

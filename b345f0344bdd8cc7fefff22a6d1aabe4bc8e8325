@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "081e10fb_0d5a4805",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:22:24Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "b345f0344bdd8cc7fefff22a6d1aabe4bc8e8325",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
