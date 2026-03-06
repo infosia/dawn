@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b73b1ff_4b0bf294",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "\u003e Looking at the implementation, it seems that it could overclear when expanding the render area to use the granularity? Should we limit the expansion to only happen when loadOp is load or don\u0027t care?\n\nThat\u0027s a good question. Yes, it can over clear. I didn\u0027t think this through before but graphite must only be doing a load op clear when it can safely clear the whole attachment since there is no renderArea support. That is probably not how you would design things with renderArea support?\n\nThe performance hit from using unaligned renderArea looked pretty severe on Mali GPUs. The active cycle count went up when compared with using the full render pass as renderArea.\n\nI see two options here:\n1. Change the description to note that renderArea might be expanded so clear operations could impact a larger area.\n2. Add a bool to the descriptor to control if renderArea should be expanded to granularity.\n\nI think this is also impacted by how we want renderArea to work on other backends which I\u0027m not sure about.",
+      "parentUuid": "c7fdaa24_f9ae8223",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a67dc631_14d4a832",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 14
@@ -117,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c6087f_c3ad977f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d20035a7_8aad645f",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f77d261_0cc585e2",
@@ -130,6 +166,24 @@
       "writtenOn": "2026-03-05T19:49:34Z",
       "side": 1,
       "message": "Let\u0027s mimic the validation error formatting for `setScissorRect()` here for clarity:\n\n```suggestion\n            \"RenderPassRenderAreaRect (x: %u, y: %u, width: %u, height: %u) is not contained in the render target dimensions (%u x %u).\",\n```",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac9a4e2a_8ab7023d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f77d261_0cc585e2",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -201,6 +255,24 @@
       "side": 1,
       "message": "This could also get rid of the helper function potentially.",
       "parentUuid": "d2e152bf_750a209c",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5477fd1_5f2ab54b",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad00158_443266f0",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -352,6 +424,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b404095c_3a15e31c",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "79df6758_fc79b5e5",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0dd04ec_8d359809",
@@ -412,6 +502,24 @@
       "writtenOn": "2026-03-05T19:49:34Z",
       "side": 1,
       "message": "I\u0027d actually prefer if these were misaligned from the assumed granularity so that we can test below whether or not the clear affects areas outside the render area but inside the granularity alignment, which I can see being a potential error case. Or that can be tested as a separate test.",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40338bea_98de30ba",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "That is a little tricky since we don\u0027t know what the granularity is going to be and don\u0027t have any way to query it from the test. Let me think a little bit.",
+      "parentUuid": "1b6e1456_f3deab1d",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

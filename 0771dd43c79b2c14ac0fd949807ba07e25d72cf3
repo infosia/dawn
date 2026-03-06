@@ -53,6 +53,41 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aca4f426_4a9ee221",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "I tried that and VkOffset2D is actually int32 while VkExtend2D is uint32. Mixing the signed and unsigned math complicates things more IMO. Happy to switch things around if you disagree though.",
+      "parentUuid": "820949af_9b190cdc",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95b62e1c_bcbddf18",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Would you typically do a checked cast for uint32 -\u003e int32 covnersion here? I\u0027m 99% sure it\u0027s not a problem, renderArea.x/y must be smaller than attachment size and texture max sizes are smaller than INT32_MAX. I guess with validation off the result of the expression could be bigger than INT32_MAX which results in negative x or y. It\u0027s hard to reason about what happens after that point.",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9c89b94_19ab85a7",
@@ -66,6 +101,30 @@
       "writtenOn": "2026-03-06T15:13:55Z",
       "side": 1,
       "message": "why 32x32? Is that experimentally the max of what the tilers return? I\u0027d assume it depends on the size of attachments no?",
+      "range": {
+        "startLine": 550,
+        "startChar": 78,
+        "endLine": 550,
+        "endChar": 99
+      },
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83843ee0_2880cecc",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "I think 32x32 is the max granularity for Mali/Imagination GPUs but this is mostly just a guess. I\u0027ll update the comment to make it clear this needs some investigation. Picking a reasonable max tile size based on the GPU architecture/vendor might be a reasonably way to handle things when vkGetRenderingAreaGranularity() is missing. Since this code is only going to be used in tests for the foreseeable future it\u0027s not the highest priority.",
+      "parentUuid": "d9c89b94_19ab85a7",
       "range": {
         "startLine": 550,
         "startChar": 78,
@@ -93,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "472ed309_945d7f78",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f9f1f14_39d8a14f",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95526638_f2292e96",
@@ -106,6 +183,24 @@
       "writtenOn": "2026-03-06T15:13:55Z",
       "side": 1,
       "message": "nit: can we have a control case, and test exactly at the boundary (so +1) with cases for all of X and Y, W and H?",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82eb5f3_a0b849bb",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "RenderAreaFull is already the control case, no? I added  the other cases.",
+      "parentUuid": "95526638_f2292e96",
       "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -127,6 +222,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fb951c6_2a1935c7",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2608,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "390a3ee1_4354fe49",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ead4b7b_f622dbba",
@@ -140,6 +253,24 @@
       "writtenOn": "2026-03-06T15:13:55Z",
       "side": 1,
       "message": "Could we have a control case of the full render area and then separate cases for X, Y, W, and H (with all the comments in this file I\u0027m hoping to have full coverage of the validation branches).",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab02bc2_60e8e6d1",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T21:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ead4b7b_f622dbba",
       "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
