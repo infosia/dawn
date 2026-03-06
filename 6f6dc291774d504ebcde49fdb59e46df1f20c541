@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5289d0ee_549a4c56",
+        "filename": "src/dawn/wire/server/ServerQueue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:16:18Z",
+      "side": 1,
+      "message": "It was a bit buried in a comment, but can we make the public interface only return a span? https://dawn-review.git.corp.google.com/c/dawn/+/295115/comment/ea4fd05e_ae515161/",
+      "revId": "6f6dc291774d504ebcde49fdb59e46df1f20c541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
