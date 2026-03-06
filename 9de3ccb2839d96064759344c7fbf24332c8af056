@@ -258,6 +258,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b89df0b0_7f3be46f",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4419397_09c24f56",
+      "range": {
+        "startLine": 452,
+        "startChar": 90,
+        "endLine": 452,
+        "endChar": 95
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d72e441_a334a09a",
