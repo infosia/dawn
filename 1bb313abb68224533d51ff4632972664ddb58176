@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2861da21_b8aa796d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T17:51:02Z",
+      "side": 1,
+      "message": "I did a quick grep over `TINT_REFLECT_ENUM_RANGE` and these are the ones that seem obviously wrong. One I wasn\u0027t sure of was `TINT_REFLECT_ENUM_RANGE(spirv::writer::SpvVersion, kSpv13, kSpv14);` which has an `kSpv15` in the enum, but it says it\u0027s \"for testing purposes only\".",
+      "revId": "1bb313abb68224533d51ff4632972664ddb58176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
