@@ -970,7 +970,54 @@ std::vector<TextureDescForTypeIDCase> MakeTextureDescForTypeIDCases() {
     return cases;
 }
 
-// Test that hasResource() works as expected for all supported types in WGSL.
+constexpr auto kWgslSamplerTypes = std::array{
+    "sampler<non_filtering>",
+    "sampler<filtering>",
+    "sampler_comparison",
+};
+
+struct SamplerDescForTypeIDCase {
+    std::unordered_set<std::string_view> wgslTypes;
+    bool filtering = false;
+    bool comparison = false;
+
+    // Create a sampler for this case.
+    wgpu::Sampler CreateTestSampler(const wgpu::Device& device) {
+        wgpu::SamplerDescriptor desc{};
+        if (filtering) {
+            desc.magFilter = wgpu::FilterMode::Linear;
+            desc.minFilter = wgpu::FilterMode::Linear;
+            desc.mipmapFilter = wgpu::MipmapFilterMode::Linear;
+        }
+        if (comparison) {
+            desc.compare = wgpu::CompareFunction::Less;
+        }
+        return device.CreateSampler(&desc);
+    }
+};
+
+std::vector<SamplerDescForTypeIDCase> MakeSamplerDescForTypeIDCases() {
+    std::vector<SamplerDescForTypeIDCase> cases;
+
+    // Non-filtering sampler
+    cases.push_back({
+        .wgslTypes = {{"sampler<non_filtering>"}},
+    });
+    // Filtering sampler
+    cases.push_back({
+        .wgslTypes = {{"sampler<non_filtering>"}, {"sampler<filtering>"}},
+        .filtering = true,
+    });
+    // Comparison sampler
+    cases.push_back({
+        .wgslTypes = {{"sampler_comparison"}},
+        .comparison = true,
+    });
+
+    return cases;
+}
+
+// Test that hasResource() works as expected for all supported textures in WGSL.
 TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
     // We rely on RGBA32Float being unfilterable for this test so that we can test both filterable /
     // unfilterable float without needing any additional extensions.
@@ -988,11 +1035,35 @@ TEST_P(ResourceTableTests, HasResourceTextureCompatibilityAllTypes) {
     // Test hasResource returning for each of the supported WGSL types, against each texture.
     for (auto wgslType : kWgslSampledTextureTypes) {
         std::vector<bool> expected;
+        expected.reserve(textureCases.size());
         for (auto& textureCase : textureCases) {
             // The reasons wgslTypes is a vector is because some textures can be
             // both filterable and non-filterable, so hasResource will return true for both types on
             // the one table entry with such a texture.
             expected.push_back(textureCase.wgslTypes.contains(wgslType));
+        }
+
+        TestHasResource(table, expected, wgslType);
+    }
+}
+
+// Test that hasResource() works as expected for all supported sampler types in WGSL.
+TEST_P(ResourceTableTests, HasResourceSamplerCompatibilityAllTypes) {
+    auto samplerCases = MakeSamplerDescForTypeIDCases();
+
+    // Make a resource table with all of our test samplers.
+    wgpu::ResourceTable table = MakeResourceTable(samplerCases.size());
+    for (auto [i, samplerCase] : Enumerate(samplerCases)) {
+        wgpu::BindingResource resource = {.sampler = samplerCase.CreateTestSampler(device)};
+        table.Update(i, &resource);
+    }
+
+    // Test hasResource returning for each of the supported WGSL types, against each sampler.
+    for (auto wgslType : kWgslSamplerTypes) {
+        std::vector<bool> expected;
+        expected.reserve(samplerCases.size());
+        for (auto& samplerCase : samplerCases) {
+            expected.push_back(samplerCase.wgslTypes.contains(wgslType));
         }
 
         TestHasResource(table, expected, wgslType);
