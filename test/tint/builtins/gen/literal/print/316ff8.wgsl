@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(u32)
 fn print_316ff8() {
   print(1u);

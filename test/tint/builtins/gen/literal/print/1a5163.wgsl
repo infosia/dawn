@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<2, i32>)
 fn print_1a5163() {
   print(vec2<i32>(1i));

@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(i32)
 fn print_53dca8() {
   var arg_0 = 1i;

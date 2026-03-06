@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<2, u32>)
 fn print_ce690c() {
   print(vec2<u32>(1u));

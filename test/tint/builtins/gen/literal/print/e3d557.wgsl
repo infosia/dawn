@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<4, bool>)
 fn print_e3d557() {
   print(vec4<bool>(true));

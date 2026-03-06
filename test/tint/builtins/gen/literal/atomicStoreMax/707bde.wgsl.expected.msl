@@ -1,12 +1,45 @@
-SKIP: FAILED
-
-64-bit (vec2u) atomic operations are not yet supported by the MSL backend
-64-bit (vec2u) atomic operations are not yet supported by the MSL backend
 //
 // fragment_main
 //
+#include <metal_stdlib>
+using namespace metal;
+
+struct SB_RW_a64 {
+  /* 0x0000 */ atomic_ulong arg_0;
+};
+
+struct tint_module_vars_struct {
+  device SB_RW_a64* sb_rw;
+};
+
+void atomicStoreMax_707bde(tint_module_vars_struct tint_module_vars) {
+  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+}
+
+fragment void fragment_main(device SB_RW_a64* sb_rw [[buffer(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb_rw=sb_rw};
+  atomicStoreMax_707bde(tint_module_vars);
+}
 //
 // compute_main
 //
+#include <metal_stdlib>
+using namespace metal;
 
-tint executable returned error: exit status 1
+struct SB_RW_a64 {
+  /* 0x0000 */ atomic_ulong arg_0;
+};
+
+struct tint_module_vars_struct {
+  device SB_RW_a64* sb_rw;
+};
+
+void atomicStoreMax_707bde(tint_module_vars_struct tint_module_vars) {
+  atomic_max_explicit((&(*tint_module_vars.sb_rw).arg_0), as_type<ulong>(uint2(1u)), memory_order_relaxed);
+}
+
+[[max_total_threads_per_threadgroup(1)]]
+kernel void compute_main(device SB_RW_a64* sb_rw [[buffer(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb_rw=sb_rw};
+  atomicStoreMax_707bde(tint_module_vars);
+}

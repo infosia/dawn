@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(vec<2, bool>)
 fn print_41babd() {
   print(vec2<bool>(true));

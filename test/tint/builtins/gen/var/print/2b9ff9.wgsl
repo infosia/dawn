@@ -36,7 +36,6 @@
 
 
 // [msl] flags: --msl-version 3.2
-
 // fn print(f32)
 fn print_2b9ff9() {
   var arg_0 = 1.f;
