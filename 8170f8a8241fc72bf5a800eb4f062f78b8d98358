@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb22e9e_51699d45",
+        "filename": "src/dawn/common/Algebra.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T17:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1609ede8_b8691b54",
+      "range": {
+        "startLine": 195,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 43
+      },
+      "revId": "8170f8a8241fc72bf5a800eb4f062f78b8d98358",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f230d2c_f9382183",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59aefb9d_e50a57a7",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T17:25:13Z",
+      "side": 1,
+      "message": "Yeah but cpplint didn\u0027t like `using namespace math;` /shrug. It\u0027s ok because of ADL that allows `Max` and `Mul` to be found.",
+      "parentUuid": "7f230d2c_f9382183",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 20
+      },
+      "revId": "8170f8a8241fc72bf5a800eb4f062f78b8d98358",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41b34416_c463849f",
@@ -77,6 +125,30 @@
       "writtenOn": "2026-03-06T16:01:53Z",
       "side": 1,
       "message": "The old logic used a `mat2x3`, I\u0027m just curious why you went for a `Mat3x3f` here instead?",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 12
+      },
+      "revId": "8170f8a8241fc72bf5a800eb4f062f78b8d98358",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f288e02_75c97028",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T17:25:13Z",
+      "side": 1,
+      "message": "Because it is clearer that the homogeneous 2D space is just a 3D space. It avoids having to special case the multiplication for that, and even if there are a few more computations, this is cold-ish code and the compiler should optimize out a TOD of them.",
+      "parentUuid": "41b34416_c463849f",
       "range": {
         "startLine": 224,
         "startChar": 4,
