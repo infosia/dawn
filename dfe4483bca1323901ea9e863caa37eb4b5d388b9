@@ -153,6 +153,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d2e152bf_750a209c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-06T00:27:05Z",
+      "side": 1,
+      "message": "You could declare it at the top of the method outside the lambda. (Like `depthReadOnly` and `stencilReadOnly`)",
+      "parentUuid": "902456b2_d04f8fad",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbd6ef57_ec34296a",
         "filename": "src/dawn/native/RenderPassEncoder.cpp",
         "patchSetId": 14
@@ -247,6 +265,30 @@
       "side": 1,
       "message": "Mind if I leave this as a TODO for now? We aren\u0027t going to be using dynamic rendering and render area at the same time right now so this isn\u0027t used.",
       "parentUuid": "02a5c727_11988121",
+      "range": {
+        "startLine": 550,
+        "startChar": 56,
+        "endLine": 550,
+        "endChar": 76
+      },
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e1b9022_fef4f21a",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-06T00:27:05Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s fine by me.",
+      "parentUuid": "df3af82f_0f96cd73",
       "range": {
         "startLine": 550,
         "startChar": 56,
