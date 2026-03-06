@@ -16,6 +16,24 @@
       "message": "Could you add comments in the other places they\u0027re used about why the lock isn\u0027t needed? I can\u0027t tell what\u0027s special about the places that take the lock.\n\nActually, ideally we would have MutexProtected around these and a way to explicitly bypass the lock when we know we don\u0027t need it. But not sure if we have a pattern for that.",
       "revId": "19b513ea5d5854fac36e28ba24bc90a80d02b251",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ba856b5_d14946cf",
+        "filename": "src/dawn/wire/server/ObjectStorage.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T14:53:19Z",
+      "side": 1,
+      "message": "I\u0027d imagine it\u0027s buffer creation: because it is the creation we know the buffer is not used anywhere else. But also we might have well have a `MutexProtected` as uncontended locking is extremely cheap, and it makes it easier to reason that all the places that need locking are under the mutex.",
+      "parentUuid": "abb006d4_140a16a5",
+      "revId": "19b513ea5d5854fac36e28ba24bc90a80d02b251",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
