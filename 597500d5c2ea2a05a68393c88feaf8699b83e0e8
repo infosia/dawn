@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8782d2f_0e7cd94d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T19:50:50Z",
+      "side": 1,
+      "message": "I decided not to merge this into the existing texture struct/func/test because it seemed unnecessary, and I figured it would make it easier to suppress the test on D3D12 (although in the end, I didn\u0027t need to since metadata updates work for samplers on D3D12). Let me know if you would prefer merging these together as per https://dawn-review.git.corp.google.com/c/dawn/+/294735/comment/27a4c1d1_260be613/.",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
