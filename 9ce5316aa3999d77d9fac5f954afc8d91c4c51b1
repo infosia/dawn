@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58e2005a_14fad360",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T14:54:06Z",
+      "side": 1,
+      "message": "My turn for a \"duh ^^\" 😊",
+      "parentUuid": "f072120a_d2a6afaa",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c0af5cd_a6336455",
