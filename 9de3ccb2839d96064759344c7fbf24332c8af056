@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd8ea113_1dde4ecf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-06T01:21:13Z",
+      "side": 1,
+      "message": "no additional comments, lgtm!",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3bccb3dc_8a6a41b8",
@@ -117,6 +134,30 @@
       "writtenOn": "2026-03-05T16:56:35Z",
       "side": 1,
       "message": "This mentions `float` as setting non-filterable but then in `[1]` we check !Float",
+      "range": {
+        "startLine": 452,
+        "startChar": 90,
+        "endLine": 452,
+        "endChar": 95
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4419397_09c24f56",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-06T01:21:13Z",
+      "side": 1,
+      "message": "I think \"unfilterable-float\" was intended here",
+      "parentUuid": "68c96f6e_26e209be",
       "range": {
         "startLine": 452,
         "startChar": 90,
