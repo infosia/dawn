@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff15e35d_6a6fbf8c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "Any chance to make this use a `Rect2D{wgpu::Origin2D origin, wgpu::Extent2D extent}`? It will be useful for other APIs in the future.\n\nBut feel free to push back and add a TODO if too annoying to do.",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "820949af_9b190cdc",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "nit: this could be slightly simpler if we first converted renderPassCmd-\u003erenderArea then handled cases by directly mutating `renderArea`:\n\n```\nVkRect2D renderArea \u003d /*designated initializer that copies?*/\n\nif (granularity.width \u003e 1) {\n    uint32_t right \u003d renderArea.offset.x + renderArea.offset.width;\n    renderArea.offset.x \u003d AlignDown(renderArea.offset.x, granularity.width);\n    renderArea.offset.width \u003d Align(right, granularity.width) - renderArea.offset.x;\n}\nsame for height\n```",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9c89b94_19ab85a7",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "why 32x32? Is that experimentally the max of what the tilers return? I\u0027d assume it depends on the size of attachments no?",
+      "range": {
+        "startLine": 550,
+        "startChar": 78,
+        "endLine": 550,
+        "endChar": 99
+      },
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f9f1f14_39d8a14f",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "nit: can we have a control case without the renderArea, just to check that it is indeed the problem.\n\nAlso the render area would be causing an error with the feature enabled as it doesn\u0027t fit in the 1x1 attachment.",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95526638_f2292e96",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "nit: can we have a control case, and test exactly at the boundary (so +1) with cases for all of X and Y, W and H?",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "390a3ee1_4354fe49",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2608,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t check the overflow necessarily because even without the overflow, the result would be larger than `kSize` (because is would be `kSize * 2 - 1`). Setting the width/height to 1 would work.\n\nAlso can we have separate tests for W and H?",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ead4b7b_f622dbba",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "Could we have a control case of the full render area and then separate cases for X, Y, W, and H (with all the comments in this file I\u0027m hoping to have full coverage of the validation branches).",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

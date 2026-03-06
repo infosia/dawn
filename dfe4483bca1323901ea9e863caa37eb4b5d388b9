@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7fdaa24_f9ae8223",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "Looking at the implementation, it seems that it could overclear when expanding the render area to use the granularity? Should we limit the expansion to only happen when loadOp is load or don\u0027t care?",
+      "parentUuid": "ef56e00f_c878e658",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a67dc631_14d4a832",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 14
@@ -165,6 +183,24 @@
       "side": 1,
       "message": "You could declare it at the top of the method outside the lambda. (Like `depthReadOnly` and `stencilReadOnly`)",
       "parentUuid": "902456b2_d04f8fad",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad00158_443266f0",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:13:55Z",
+      "side": 1,
+      "message": "This could also get rid of the helper function potentially.",
+      "parentUuid": "d2e152bf_750a209c",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
