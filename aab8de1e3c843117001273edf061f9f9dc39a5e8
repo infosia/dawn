@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d10859ed_287c9eba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-06T13:21:49Z",
+      "side": 1,
+      "message": "Thanks!\n\nI am going to merge this, the clang plugin. Then I will come back with dawn/reply enforcement.",
+      "revId": "aab8de1e3c843117001273edf061f9f9dc39a5e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
