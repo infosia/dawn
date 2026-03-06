@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df55bbbc_3151a655",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T22:44:11Z",
+      "side": 1,
+      "message": "Hi Brandon, the fuzzer incorrectly identified by CL as the culprit, but I\u0027m pretty sure it came in with https://dawn-review.git.corp.google.com/c/dawn/+/284015. I basically copied what we do at the top of `ValidateRenderPassColorAttachment` into `ValidateColorAttachmentRenderToSingleSampled`.",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
