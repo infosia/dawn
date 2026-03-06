@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28fb878c_105186c5",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bccb3dc_8a6a41b8",
+      "range": {
+        "startLine": 257,
+        "startChar": 9,
+        "endLine": 257,
+        "endChar": 47
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6aa01ee_4c45ee2c",
@@ -71,6 +95,30 @@
       "writtenOn": "2026-03-05T16:56:35Z",
       "side": 1,
       "message": "Handled above since a \u003d\u003d b",
+      "range": {
+        "startLine": 262,
+        "startChar": 9,
+        "endLine": 262,
+        "endChar": 47
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9712ff35_d4a83b61",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6aa01ee_4c45ee2c",
       "range": {
         "startLine": 262,
         "startChar": 9,
@@ -98,6 +146,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ed9072_d085be4a",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3d9c5a_d867e461",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30ad4079_7bc2c50a",
@@ -111,6 +177,30 @@
       "writtenOn": "2026-03-05T16:56:35Z",
       "side": 1,
       "message": "Handled above a \u003d\u003d b",
+      "range": {
+        "startLine": 286,
+        "startChar": 9,
+        "endLine": 286,
+        "endChar": 49
+      },
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a66fc4a_82a24bc5",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30ad4079_7bc2c50a",
       "range": {
         "startLine": 286,
         "startChar": 9,
@@ -181,6 +271,24 @@
       "writtenOn": "2026-03-05T16:56:35Z",
       "side": 1,
       "message": "[1]",
+      "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4116e7b3_2810d9f3",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T09:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d72e441_a334a09a",
       "revId": "9de3ccb2839d96064759344c7fbf24332c8af056",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
