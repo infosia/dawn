@@ -33,6 +33,24 @@
       "message": "I like the color space explanation you wrote!",
       "revId": "5c257468b9324b9654b50b12a5b73e779a795846",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef92e21_dc1bc9d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T17:26:02Z",
+      "side": 1,
+      "message": "Thanks, it took a while to write but I figured it would help reviewers and my future self ^^",
+      "parentUuid": "c65593cb_3d55f8b8",
+      "revId": "5c257468b9324b9654b50b12a5b73e779a795846",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
