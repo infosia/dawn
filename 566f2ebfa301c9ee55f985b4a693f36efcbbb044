@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "566f2ebfa301c9ee55f985b4a693f36efcbbb044",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30b06d5e_04167a26",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:21:52Z",
+      "side": 1,
+      "message": "Based on the comment at [1] we could remove the check for `BufferMapExtendedUsages` and leave that to `CreateBuffer`. Then the condition is only `isUMA`. Do you remember why we put these check for page properties behind `isUMA`? If we could lift the condition, then I\u0027d expect that the `CPUPageProperty` for imported handles would have both `D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE` and `D3D12_CPU_PAGE_PROPERTY_WRITE_BACK` such that mapping is allowed.",
+      "revId": "566f2ebfa301c9ee55f985b4a693f36efcbbb044",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "069d716a_fd1ece1a",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-06T15:21:52Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "566f2ebfa301c9ee55f985b4a693f36efcbbb044",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
