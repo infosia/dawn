@@ -69,6 +69,24 @@
       "parentUuid": "1c79ae9b_f09ecb2e",
       "revId": "d4e279345138561a5f30d3486668eb4ba85140a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba63661_10a66548",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-06T12:55:56Z",
+      "side": 1,
+      "message": "SGTM.\n\n--\n\nThe `StackAllocated` change is a bit useless now, without `/dawn/replay`. It previously allowed me to avoid rewriting structs from Replay. Still, I would like to keep it, because it is a positive change.",
+      "parentUuid": "54db4c2d_a89bbaf3",
+      "revId": "d4e279345138561a5f30d3486668eb4ba85140a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

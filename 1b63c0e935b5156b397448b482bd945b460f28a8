@@ -139,6 +139,24 @@
       "parentUuid": "c4f30c68_5a993208",
       "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1df4c17_95fbeb6f",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-03-06T12:55:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a57ab5dc_c70521b8",
+      "revId": "1b63c0e935b5156b397448b482bd945b460f28a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
