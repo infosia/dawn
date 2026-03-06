@@ -259,6 +259,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c555e12_c13fe1ce",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T14:57:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c2239d_0846e581",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35da3d5f_abff8e9a",
