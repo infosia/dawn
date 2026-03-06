@@ -93,6 +93,7 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
     Device* device,
     D3D12_HEAP_PROPERTIES heapProperties,
     bool allowUAV,
+    bool alwaysAllowMapping,
     uint64_t size) {
     HeapAccessType heapType;
     DAWN_TRY_ASSIGN(heapType, MapToHeapAccessType(heapProperties, device));
@@ -115,8 +116,10 @@ ResultOrError<SharedBufferMemoryProperties> GetSharedBufferMemoryProperties(
                 usages |= wgpu::BufferUsage::Storage;
             }
 
-            if (device->GetDeviceInfo().isUMA &&
-                device->HasFeature(Feature::BufferMapExtendedUsages)) {
+            if (alwaysAllowMapping) {
+                usages |= wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
+            } else if (device->GetDeviceInfo().isUMA &&
+                       device->HasFeature(Feature::BufferMapExtendedUsages)) {
                 // On UMA systems, buffers with WRITE_COMBINE or WRITE_BACK heaps can also be
                 // mapped.
                 if (heapProperties.CPUPageProperty == D3D12_CPU_PAGE_PROPERTY_WRITE_COMBINE) {
@@ -187,9 +190,10 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
 
     bool allowUAV = desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
 
+    constexpr bool kAlwaysAllowMapping = false;
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties,
-                    GetSharedBufferMemoryProperties(device, heapProperties, allowUAV, desc.Width));
+    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, allowUAV,
+                                                                kAlwaysAllowMapping, desc.Width));
 
     auto result =
         AcquireRef(new SharedBufferMemory(device, label, properties, std::move(d3d12Resource)));
@@ -222,8 +226,17 @@ ResultOrError<Ref<SharedBufferMemory>> SharedBufferMemory::Create(
     D3D12_HEAP_DESC heapDesc = d3d12Heap->GetDesc();
     D3D12_HEAP_PROPERTIES heapProperties = heapDesc.Properties;
     SharedBufferMemoryProperties properties;
-    DAWN_TRY_ASSIGN(properties, GetSharedBufferMemoryProperties(device, heapProperties, true,
-                                                                descriptor->size));
+    // We should always allow buffer mapping on the heap created from a shared memory file handle
+    // because when the `heapProperties.Type` of such heap will always be `D3D12_HEAP_TYPE_CUSTOM`,
+    // and the heap access type will always be `GPUQueueAccessible`, then we won't be able to set
+    // `MapRead` or `MapWrite` when `BufferMapExtendedUsages` is not enabled on the current device.
+    // Note that it is safe the always set `MapRead` and `MapWrite` on `SharedBufferMemory` because
+    // we can still check the buffer usage in `SharedBufferMemoryBase::CreateBuffer()` when we
+    // create a buffer on the `SharedBufferMemory`.
+    constexpr bool kAlwaysAllowMapping = true;
+    DAWN_TRY_ASSIGN(properties,
+                    GetSharedBufferMemoryProperties(device, heapProperties, true,
+                                                    kAlwaysAllowMapping, descriptor->size));
 
     D3D12_RESOURCE_DESC resourceDescriptor;
     resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
