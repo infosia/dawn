@@ -170,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6386c650_423e60af",
+        "filename": "src/dawn/native/vulkan/ResourceTableVk.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T02:56:58Z",
+      "side": 1,
+      "message": "I updated `ResourceTableDefaultResources::IndexOf` to make it O(1), and made the change you suggested here.",
+      "parentUuid": "904080ce_a08403f4",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27a4c1d1_260be613",
@@ -254,6 +272,24 @@
       "side": 1,
       "message": "https://g-issues.chromium.org/issues/490066027",
       "parentUuid": "c64d7c9a_b9df5d8e",
+      "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f35b847_94a1cc50",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-06T02:56:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ad794c1_99ee627e",
       "revId": "9ce5316aa3999d77d9fac5f954afc8d91c4c51b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
