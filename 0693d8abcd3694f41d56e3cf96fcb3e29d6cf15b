@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "0693d8abcd3694f41d56e3cf96fcb3e29d6cf15b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad3e178_50cd34ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-06T00:00:40Z",
+      "side": 1,
+      "message": "CI builders look happy with the Starlark-generated specs, submitting.",
+      "revId": "0693d8abcd3694f41d56e3cf96fcb3e29d6cf15b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
