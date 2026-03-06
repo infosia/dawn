@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a54a68e_0f5a9947",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-06T17:31:10Z",
+      "side": 1,
+      "message": "Just to clarify you mean rename this type to be Rect2D and have it composed of Origin2D and Extend2D?",
+      "parentUuid": "ff15e35d_6a6fbf8c",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "820949af_9b190cdc",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 15
