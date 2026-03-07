@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2a5d1e0_2e25eae5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-07T01:31:24Z",
+      "side": 1,
+      "message": "PTAL\n\nSkipping the missing explicit on constructor checks, because all of the hit lines already have a NOLINT about not being explicit. My understanding is that we want these constructors to be implicit so that different vector-like things will be converted without needing many explicit constructors to be defined and touching lots of callsites.\n\nSkipping the trailing comma check, because from what I can tell it is broken with multi-line initializers. It always triggers irregardless of how I format the statment and its \u0027suggestion\u0027 is to just replace the later lines with a single comma...",
+      "revId": "a9a40d3ea1310cf994f8bf8aed3b8065cb48fa36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
