@@ -29,6 +29,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/Forward.h"
 #include "dawn/native/metal/QueueMTL.h"
@@ -66,7 +67,14 @@ MaybeError CommandRecordingContext::PrepareNextCommandBuffer(id<MTLCommandQueue>
         DAWN_ASSERT(!mNeedsSubmit);
         DAWN_ASSERT(!mUsed);
 
-        mCommands = [queue commandBuffer];
+        if (mQueue->GetInstance()->GetBackendValidationLevel() !=
+            dawn::native::BackendValidationLevel::Disabled) {
+            auto cbDescriptor = AcquireNSRef([[MTLCommandBufferDescriptor alloc] init]);
+            cbDescriptor.Get().errorOptions = MTLCommandBufferErrorOptionEncoderExecutionStatus;
+            mCommands = [queue commandBufferWithDescriptor:*cbDescriptor];
+        } else {
+            mCommands = [queue commandBuffer];
+        }
         if (mCommands == nil) {
             return DAWN_INTERNAL_ERROR("Failed to allocate an MTLCommandBuffer");
         }

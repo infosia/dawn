@@ -233,10 +233,11 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
     }];
 
     // This ObjC block runs on a different thread.
-    [*pendingCommands addCompletedHandler:^(id<MTLCommandBuffer>) {
+    [*pendingCommands addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
         TRACE_EVENT_ASYNC_END0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
                                uint64_t(pendingSerial));
 
+        DAWN_ASSERT(commandBuffer.error == nullptr);
         this->UpdateCompletedSerialTo(QueuePriority::Lowest, pendingSerial);
     }];
 
