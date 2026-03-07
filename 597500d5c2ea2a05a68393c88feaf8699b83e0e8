@@ -16,6 +16,23 @@
       "message": "I decided not to merge this into the existing texture struct/func/test because it seemed unnecessary, and I figured it would make it easier to suppress the test on D3D12 (although in the end, I didn\u0027t need to since metadata updates work for samplers on D3D12). Let me know if you would prefer merging these together as per https://dawn-review.git.corp.google.com/c/dawn/+/294735/comment/27a4c1d1_260be613/.",
       "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f78c2e_5481a88c",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-07T21:18:02Z",
+      "side": 1,
+      "message": "Would it be possible to merge this with the texture cases, using `Undefined` of the enums (`TextureSampleType::Undefined`, `SamplerBindingType::Undefined`) as a way to discriminate the variant? This way we can know that sampler and texture types will not be possible to use incorrectly in the shaders.",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
