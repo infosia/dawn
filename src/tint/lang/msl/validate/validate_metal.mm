@@ -68,6 +68,17 @@ Result ValidateUsingMetal(const std::string& src_original, MslVersion version) {
         case MslVersion::kMsl_2_3:
             compileOptions.languageVersion = MTLLanguageVersion2_3;
             break;
+        case MslVersion::kMsl_2_4:
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 120000
+            if (@available(macOS 12.0, *)) {
+                compileOptions.languageVersion = MTLLanguageVersion2_4;
+                break;
+            } else
+#endif
+            {
+                return Result{};
+            }
+            break;
         case MslVersion::kMsl_3_2:
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= 150000
             if (@available(macOS 15.0, iOS 18.0, *)) {
