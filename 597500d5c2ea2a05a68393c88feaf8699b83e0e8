@@ -33,6 +33,24 @@
       "message": "Would it be possible to merge this with the texture cases, using `Undefined` of the enums (`TextureSampleType::Undefined`, `SamplerBindingType::Undefined`) as a way to discriminate the variant? This way we can know that sampler and texture types will not be possible to use incorrectly in the shaders.",
       "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd1d697d_fb963f5d",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-08T21:33:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure I see the point of merging these together as it doesn\u0027t really give us much additional benefit. Is there a specific reason you would want this? If you really want this, I could simpy use a variant again in these cases, reather than setting \u0027Undefined\u0027.",
+      "parentUuid": "81f78c2e_5481a88c",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
