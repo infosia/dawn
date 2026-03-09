@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e3e5ec0_45bb23e9",
+        "filename": "src/tint/utils/reflection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T21:01:38Z",
+      "side": 1,
+      "message": "Do you think we can follow up with just removing this macro altogether, especially since it doesn\u0027t use reflection anymore?",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "88e355e10573e316bebb555f19fa4d54c00989d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
