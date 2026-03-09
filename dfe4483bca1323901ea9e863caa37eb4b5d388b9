@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de9acafe_cf72ea36",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T18:48:40Z",
+      "side": 1,
+      "message": "I added some more context in https://crbug.com/489152883#comment10 so we can move discussion there.",
+      "parentUuid": "c2893c54_5f4606a3",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a67dc631_14d4a832",
