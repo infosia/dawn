@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "333c216f_0a86a523",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:13:43Z",
+      "side": 1,
+      "message": "Yeah, this is something that will be useful in a bunch of other places, like the new ExternalTextureDescriptor I\u0027m working on. But it\u0027s probably a larger change than necessary in this CL so just a TODO would work.",
+      "parentUuid": "4a54a68e_0f5a9947",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "820949af_9b190cdc",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 15
@@ -71,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2292b26a_a390f1b8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:13:43Z",
+      "side": 1,
+      "message": "Ugh that\u0027s a bit annoying, esp. when everything here will be uint32_t and not overflow because we validated in the frontend.\n\nWould it work to keep Dawn types like [Rect2D](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/dawn_platform.h;drc\u003d38317ade24f352bfcbefec8f7145cdee4cd08aae;l\u003d138) defined in `dawn_platform.h` (because it isn\u0027t in `dawn.json` yet) and `Extent2D` (added to dawn_platform.h it doesn\u0027t exist already) for the granularity? Then converting to Vulkan late?",
+      "parentUuid": "aca4f426_4a9ee221",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95b62e1c_bcbddf18",
@@ -84,6 +120,24 @@
       "writtenOn": "2026-03-06T21:06:04Z",
       "side": 1,
       "message": "Would you typically do a checked cast for uint32 -\u003e int32 covnersion here? I\u0027m 99% sure it\u0027s not a problem, renderArea.x/y must be smaller than attachment size and texture max sizes are smaller than INT32_MAX. I guess with validation off the result of the expression could be bigger than INT32_MAX which results in negative x or y. It\u0027s hard to reason about what happens after that point.",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dd88eae_41d5608f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:13:43Z",
+      "side": 1,
+      "message": "It wouldn\u0027t be a problem if validation would prevent it and I agree that it would prevent overflows here.",
+      "parentUuid": "95b62e1c_bcbddf18",
       "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -201,6 +255,24 @@
       "side": 1,
       "message": "RenderAreaFull is already the control case, no? I added  the other cases.",
       "parentUuid": "95526638_f2292e96",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9451ca_fddad938",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:13:43Z",
+      "side": 1,
+      "message": "It\u0027s just that it\u0027s a bit less context to keep in mind if we have a control case local to each test when possible.",
+      "parentUuid": "e82eb5f3_a0b849bb",
       "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

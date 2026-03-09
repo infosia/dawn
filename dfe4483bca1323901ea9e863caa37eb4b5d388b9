@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c322ef3d_9c1fa74a",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:13:43Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a perfect good solution at the moment because it would be complicated to add a way to get the granularity (plus not something that we\u0027d want to add). How about doing 1) for now, but in the future we\u0027ll want all backends to support clearing only the render area, which could be done by emulating the clear when the granularity doesn\u0027t match (or on Metal where there is no renderArea feature). This would take the form of a detailed TODO in this doc, and maybe one in the test as well.\n\n+CC Albin, is there a way to make a tight renderArea that will not cause extra tile load/stores?",
+      "parentUuid": "6b73b1ff_4b0bf294",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a67dc631_14d4a832",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 14
