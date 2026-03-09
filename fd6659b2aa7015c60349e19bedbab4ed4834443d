@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a8a5272_659610b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:27:20Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2be774bc_bdaa7fe2",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:27:20Z",
+      "side": 1,
+      "message": "I assume none of the number changed, and that this just makes them more clear what they are?",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fd0fec9_2f512450",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:27:20Z",
+      "side": 1,
+      "message": "nit: \n```suggestion\n    uint64_t maxBufferSize \u003d std::min(std::numeric_limits\u003cuint32_t\u003e::max()), Buffer::QueryMaxBufferLength(*mDevice));\n```",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09138247_e5ad4db1",
+        "filename": "src/dawn/tests/end2end/BufferRobustnessTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:27:20Z",
+      "side": 1,
+      "message": "nit: it might be more clear to have a single module with two VS entry points and choose the`entryPoint` depending on `bindType` when creating the pipeline. Here I had to squint real hard to find where the `%s` where ^^.",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
