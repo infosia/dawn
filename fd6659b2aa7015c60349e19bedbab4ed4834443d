@@ -67,6 +67,29 @@
       "message": "nit: it might be more clear to have a single module with two VS entry points and choose the`entryPoint` depending on `bindType` when creating the pipeline. Here I had to squint real hard to find where the `%s` where ^^.",
       "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "209d2433_24e3923a",
+        "filename": "src/dawn/tests/end2end/BufferRobustnessTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-09T18:12:53Z",
+      "side": 1,
+      "message": "For this instance and the others below also.\n\nPlease fix this WARNING reported by ClangTidy: check: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_c...\n\ncheck: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_cast (https://clang.llvm.org/extra/clang-tidy/checks/modernize/avoid-c-style-cast.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: modernize-avoid-c-style-cast` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
