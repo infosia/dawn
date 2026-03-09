@@ -22,6 +22,30 @@
       },
       "revId": "88e355e10573e316bebb555f19fa4d54c00989d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc0c6e8_3f0e9b52",
+        "filename": "src/tint/utils/reflection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-09T21:36:35Z",
+      "side": 1,
+      "message": "Done in this CL now, PTAL.\n\nI originally thought maybe the macro was nicer than writing out the operator everywhere, but in reality it\u0027s not really.",
+      "parentUuid": "8e3e5ec0_45bb23e9",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 27
+      },
+      "revId": "88e355e10573e316bebb555f19fa4d54c00989d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
