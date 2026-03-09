@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c8fc11d2_0bdf5582",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c1dc22a_e7b68022",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c959415b_dd3aa2de",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 5
@@ -86,6 +104,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5668aeee_72ee9bdc",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109b5ed3_6ce00654",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee444ffb_25095872",
@@ -99,6 +135,30 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "Why? Can we have a TODO?",
+      "range": {
+        "startLine": 726,
+        "startChar": 26,
+        "endLine": 726,
+        "endChar": 56
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f15f1d47_a6fa00dd",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "No need. Done.",
+      "parentUuid": "ee444ffb_25095872",
       "range": {
         "startLine": 726,
         "startChar": 26,
@@ -144,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df37c7d3_50106dcd",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4f1418_2636b87d",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3456097b_ae4b690b",
@@ -157,6 +235,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "We could add a push constant size defaulted to 0 to [`utils::MakePipelineLayout`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/WGPUHelpers.cpp;drc\u003d2546bab52b03777485a99528329c161ad1e751b3;l\u003d236)",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16e7f5b7_cc76546f",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3456097b_ae4b690b",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -178,6 +274,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cff67c69_81ce5a15",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f5b8be8_41e425b1",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3aa65ad2_af25d095",
@@ -195,6 +309,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e9ef2df_45421c2b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa65ad2_af25d095",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acf3cf61_c3b31269",
@@ -208,6 +340,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "```suggestion\n    auto MakePipeline \u003d [\u0026](wgpu::ShaderModule mod, bool useDepthWrite) {\n```",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e76ea2_aa39cd77",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf3cf61_c3b31269",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -246,6 +396,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "571cae43_34b398ac",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a793af9_0476efee",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61a3dd0a_353d09de",
@@ -259,6 +427,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "```suggestion\n// bind groups.",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf00eb9_bb366e42",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a3dd0a_353d09de",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -280,6 +466,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c993090_64106f48",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce901ca_d311d334",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d35bcb0e_ccc403f6",
@@ -293,6 +497,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "Why do we need the uniform buffer? A single VkDescriptorSet should be sufficient to test the issue. In shaders we can write immediate values to `output` and that\u0027s sufficient to test the potential issue?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7f76a37_c35283b3",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35bcb0e_ccc403f6",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -348,6 +570,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4721b42b_799eb24a",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda28701_1be2f6c4",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa4fd24b_2d373af4",
@@ -361,6 +601,30 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "```suggestion\n        DawnTest::SetUp();\n        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() \u0026\u0026 !DAWN_PLATFORM_IS(ARM64));\n    }\n\n    std::vector\u003cwgpu::FeatureName\u003e GetRequiredFeatures() override {\n        return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};\n    }\n\n```",
+      "range": {
+        "startLine": 951,
+        "startChar": 1,
+        "endLine": 963,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a674ca_3455e4e2",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "This fails the bots. So keep the origin logic.",
+      "parentUuid": "aa4fd24b_2d373af4",
       "range": {
         "startLine": 951,
         "startChar": 1,
@@ -394,6 +658,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74dd4c70_30eb8ada",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c244da0_84629e08",
+      "range": {
+        "startLine": 1005,
+        "startChar": 0,
+        "endLine": 1013,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80f4610f_cb381e6d",
@@ -411,6 +699,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20b970e1_2b1762ad",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80f4610f_cb381e6d",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b826488a_6979bb52",
@@ -424,6 +730,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "And the VVL will complain, which should be sufficient for the test, or did the VVLs not complain? (with `--enable-backend-validation` (`\u003dfull`?))?",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b56c3feb_5046528d",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T08:55:34Z",
+      "side": 1,
+      "message": "I cannot see the error in my local machine. But the experiment here https://dawn-review.googlesource.com/c/dawn/+/295916 shows validation layer (at least in bots) should catch this. Done.",
+      "parentUuid": "b826488a_6979bb52",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
