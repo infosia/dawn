@@ -350,7 +350,7 @@ TEST_F(MslWriterTest, CanGenerate_TexelBufferUnsupported) {
                 testing::HasSubstr("texel buffers are not supported by the MSL backend"));
 }
 
-TEST_F(MslWriterTest, CanGenerate_AtomicStoreMax_Unsupported) {
+TEST_F(MslWriterTest, CanGenerate_AtomicStoreMax_Supported) {
     auto* sb =
         ty.Struct(mod.symbols.New("SB"), {
                                              {mod.symbols.Register("a"), ty.atomic(ty.u64())},
@@ -369,11 +369,7 @@ TEST_F(MslWriterTest, CanGenerate_AtomicStoreMax_Unsupported) {
     Options options;
     options.entry_point_name = "main";
     auto result = CanGenerate(mod, options);
-    ASSERT_NE(result, Success);
-    EXPECT_THAT(result.Failure().reason,
-                testing::HasSubstr(
-                    "64-bit (vec2u) atomic operations are not yet supported by the MSL backend"));
+    ASSERT_EQ(result, Success);
 }
-
 }  // namespace
 }  // namespace tint::msl::writer
