@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "698e1db3_f4f69165",
+        "filename": "infra/config/global/generated/builders/ci/dawn-win-x64-builder-asan/targets/ci.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-09T18:41:53Z",
+      "side": 1,
+      "message": "Caught this today as well when I took a look at the exception file. Will be fixed by https://dawn-review.googlesource.com/c/dawn/+/295976.",
+      "parentUuid": "7fbd908a_bfa28e38",
+      "range": {
+        "startLine": 120,
+        "startChar": 17,
+        "endLine": 120,
+        "endChar": 60
+      },
+      "revId": "c023be65ee0004b6ce6f5ce384120800f13ec8ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb94da34_280c27f5",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-09T18:40:29Z",
       "side": 1,
       "message": "here, too",
+      "range": {
+        "startLine": 409,
+        "startChar": 17,
+        "endLine": 409,
+        "endChar": 60
+      },
+      "revId": "c023be65ee0004b6ce6f5ce384120800f13ec8ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3833834_4d9fb2ff",
+        "filename": "infra/config/global/generated/builders/ci/dawn-win-x64-builder-asan/targets/ci.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-09T18:41:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eb94da34_280c27f5",
       "range": {
         "startLine": 409,
         "startChar": 17,
