@@ -536,6 +536,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6fc9cbb_0dec549f",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T11:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76e301be_514ead35",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da43f6cd_8c1e1f47",
@@ -549,6 +567,24 @@
       "writtenOn": "2026-03-05T09:49:32Z",
       "side": 1,
       "message": "Defaulted layouts are not compatible between pipelines at all. (I hope we change that one day)",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e2d4edb_6e34a541",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T11:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da43f6cd_8c1e1f47",
       "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -649,6 +685,30 @@
       "side": 1,
       "message": "This is a bit surprising to me, can you link one of the failures?",
       "parentUuid": "76a674ca_3455e4e2",
+      "range": {
+        "startLine": 951,
+        "startChar": 1,
+        "endLine": 963,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd4c5492_b04405b9",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-09T11:07:44Z",
+      "side": 1,
+      "message": "For example, this one. https://ci.chromium.org/ui/p/dawn/builders/try/dawn-cq-mac-arm64-rel/b8687829645656633745/test-results?q\u003dExactID%3Aninja%3A%2F%2Fsrc%2Fdawn%2Ftests%3Adawn_end2end_tests%2FImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize%2FMetal_Apple_M2+VHash%3Ac103dd1a63d99530\u0026clean\u003d",
+      "parentUuid": "425d8060_b766cacb",
       "range": {
         "startLine": 951,
         "startChar": 1,
