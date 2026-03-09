@@ -105,6 +105,24 @@
       "parentUuid": "4f29a1b2_86508f31",
       "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "224033fa_31805981",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T14:26:56Z",
+      "side": 1,
+      "message": "As much as I don\u0027t love variant, I still went for it as it worked better in this case (e.g. sampler desc is just two bools).",
+      "parentUuid": "43395e57_847342de",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
