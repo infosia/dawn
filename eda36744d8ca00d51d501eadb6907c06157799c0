@@ -16,6 +16,24 @@
       "message": "Thoughts on this before I do other backends?\n\nI think it\u0027s nicer to have everything go through CanGenerate() automatically instead of having some callsites manually call it and others not.",
       "revId": "eda36744d8ca00d51d501eadb6907c06157799c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84bbfc55_ec5992a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-09T19:30:27Z",
+      "side": 1,
+      "message": "Yea, I think it\u0027s nicer. We probably want to make sure chrome isn\u0027t accidentally emitting IR disassembly, but other then that, lgtm.",
+      "parentUuid": "a29a5129_38f83463",
+      "revId": "eda36744d8ca00d51d501eadb6907c06157799c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
