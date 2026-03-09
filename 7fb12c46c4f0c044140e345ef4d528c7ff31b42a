@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "824ed385_325121ea",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T09:49:26Z",
+      "side": 1,
+      "message": "nit: It also needs to exist in the layout, otherwise as far as the Vulkan backend is concerned, it doesn\u0027t exist.",
+      "revId": "7fb12c46c4f0c044140e345ef4d528c7ff31b42a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa11de4d_c1e2eef7",
+        "filename": "src/dawn/utils/WGPUHelpers.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T09:49:26Z",
+      "side": 1,
+      "message": "This can be unconditional since the default is 0 in the struct as well.",
+      "revId": "7fb12c46c4f0c044140e345ef4d528c7ff31b42a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
