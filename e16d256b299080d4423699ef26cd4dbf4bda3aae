@@ -34,6 +34,57 @@
       "parentUuid": "df55bbbc_3151a655",
       "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea03a782_74674a43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-09T16:34:16Z",
+      "side": 1,
+      "message": "I have a mild preference for a different approach, but I\u0027m fine either way. Thank for catching this!",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06988451_21428c5c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-09T16:34:16Z",
+      "side": 1,
+      "message": "Seems like this might be better as an assert, with the code moved at [1], since we probably shouldn\u0027t be calling this anyway if we don\u0027t have a view.",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c22129c_e5787200",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-09T16:34:16Z",
+      "side": 1,
+      "message": "[1]\nIf you go the assert route move this entire if statement into the `if (attachment.view)` block below.",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
