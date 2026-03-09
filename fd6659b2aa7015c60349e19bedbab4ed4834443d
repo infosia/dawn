@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c19aea_b0adebff",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-09T20:09:31Z",
+      "side": 1,
+      "message": "Correct. The only one that changed is maxBufferSize tier3. Verified by the exhaustive limits test",
+      "parentUuid": "2be774bc_bdaa7fe2",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9fd0fec9_2f512450",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-09T10:27:20Z",
       "side": 1,
       "message": "nit: \n```suggestion\n    uint64_t maxBufferSize \u003d std::min(std::numeric_limits\u003cuint32_t\u003e::max()), Buffer::QueryMaxBufferLength(*mDevice));\n```",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d537094f_ca1a2853",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-09T20:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd0fec9_2f512450",
       "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be55ff6d_3bb1307c",
+        "filename": "src/dawn/tests/end2end/BufferRobustnessTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-09T20:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09138247_e5ad4db1",
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "209d2433_24e3923a",
@@ -82,6 +136,30 @@
       "writtenOn": "2026-03-09T18:12:53Z",
       "side": 1,
       "message": "For this instance and the others below also.\n\nPlease fix this WARNING reported by ClangTidy: check: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_c...\n\ncheck: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_cast (https://clang.llvm.org/extra/clang-tidy/checks/modernize/avoid-c-style-cast.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: modernize-avoid-c-style-cast` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "fd6659b2aa7015c60349e19bedbab4ed4834443d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36888a7e_b2bb62fb",
+        "filename": "src/dawn/tests/end2end/BufferRobustnessTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-09T20:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "209d2433_24e3923a",
       "range": {
         "startLine": 196,
         "startChar": 0,
