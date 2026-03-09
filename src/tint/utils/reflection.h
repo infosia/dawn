@@ -195,13 +195,8 @@ void ForeachField(const OBJECT& object, CB&& callback) {
         }                                                                                     \
     }
 
-/// TINT_REFLECT_EQUALS(CLASS) generates an operator== for the CLASS based on the reflected fields.
-/// All reflected fields must be equality comparable.
-#define TINT_REFLECT_EQUALS(CLASS)                                                                 \
-    bool operator==(const CLASS& other) const {                                                    \
-        return CLASS::Reflection::FieldsAsTuple(*this) == CLASS::Reflection::FieldsAsTuple(other); \
-    }                                                                                              \
-    TINT_REQUIRE_SEMICOLON
+/// TINT_REFLECT_EQUALS(CLASS) defines a default operator== that compares all fields of CLASS.
+#define TINT_REFLECT_EQUALS(CLASS) bool operator==(const CLASS&) const = default
 
 /// TINT_REFLECT_HASH_CODE(CLASS) generates a tint::HashCode implementation for the CLASS based on
 /// the reflected fields.
