@@ -728,5 +728,119 @@ DAWN_INSTANTIATE_TEST(ImmediateDataTests,
                       VulkanBackend(),
                       WebGPUBackend());
 
+class ImmediateDataWithResourceTableTests : public DawnTest {
+  protected:
+    void SetUp() override {
+        DawnTest::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(
+            !SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}));
+
+        // TODO(https://issues.chromium.org/435317394): The Subzero compiler used by Swiftshader
+        // produces bad code and crashes on some VK_EXT_descriptor_indexing workloads. Skip tests on
+        // it, but still run them with Swiftshader LLVM 10.0. On ARM64 the only supported compiler
+        // is LLVM10.0 so use that signal to choose when Swiftshader can be tested.
+        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() && !DAWN_PLATFORM_IS(ARM64));
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable})) {
+            return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};
+        }
+        return {};
+    }
+
+    wgpu::PipelineLayout MakePipelineLayoutWithTable(std::vector<wgpu::BindGroupLayout> bgls,
+                                                     uint32_t immediateSize) {
+        wgpu::PipelineLayoutResourceTable plTable;
+        plTable.usesResourceTable = true;
+
+        wgpu::PipelineLayoutDescriptor desc{
+            .nextInChain = &plTable,
+            .bindGroupLayoutCount = bgls.size(),
+            .bindGroupLayouts = bgls.data(),
+            .immediateSize = immediateSize,
+        };
+        return device.CreatePipelineLayout(&desc);
+    }
+};
+
+// Resource table (VkDescriptorSet 0) must be rebound when push constant range changes
+// between pipelines, even if the resource table itself doesn't change.
+TEST_P(ImmediateDataWithResourceTableTests, ResourceTableReboundOnDifferentImmediateSize) {
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+
+    wgpu::PipelineLayout layout4Bytes = MakePipelineLayoutWithTable({bgl}, 4);
+    wgpu::PipelineLayout layout16Bytes = MakePipelineLayoutWithTable({bgl}, 16);
+
+    wgpu::ShaderModule module4Bytes = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        var<immediate> imm: u32;
+        @group(0) @binding(0) var<storage, read_write> output: u32;
+        @compute @workgroup_size(1) fn main() {
+            output = imm;
+        }
+    )");
+    wgpu::ShaderModule module16Bytes = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        var<immediate> imm: vec4u;
+        @group(0) @binding(0) var<storage, read_write> output: u32;
+        @compute @workgroup_size(1) fn main() {
+            output = imm.x;
+        }
+    )");
+
+    wgpu::ComputePipelineDescriptor csDesc4Bytes;
+    csDesc4Bytes.compute.module = module4Bytes;
+    csDesc4Bytes.layout = layout4Bytes;
+    wgpu::ComputePipeline pipeline4Bytes = device.CreateComputePipeline(&csDesc4Bytes);
+
+    wgpu::ComputePipelineDescriptor csDesc16Bytes;
+    csDesc16Bytes.compute.module = module16Bytes;
+    csDesc16Bytes.layout = layout16Bytes;
+    wgpu::ComputePipeline pipeline16Bytes = device.CreateComputePipeline(&csDesc16Bytes);
+
+    wgpu::BufferDescriptor bufDesc = {
+        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+        .size = sizeof(uint32_t),
+    };
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&bufDesc);
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, resultBuffer}});
+
+    wgpu::ResourceTableDescriptor rtDesc;
+    rtDesc.size = 1;
+    wgpu::ResourceTable table = device.CreateResourceTable(&rtDesc);
+
+    uint32_t imm4Bytes = 100;
+    std::array<uint32_t, 4> imm16Bytes = {200, 0, 0, 0};
+
+    wgpu::CommandEncoder enc = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder pass = enc.BeginComputePass();
+    pass.SetResourceTable(table);
+    pass.SetBindGroup(0, bg);
+
+    // Dispatch with pipeline4Bytes, then switch to pipeline16Bytes (different immediate size).
+    pass.SetImmediates(0, &imm4Bytes, sizeof(imm4Bytes));
+    pass.SetPipeline(pipeline4Bytes);
+    pass.DispatchWorkgroups(1);
+
+    pass.SetImmediates(0, imm16Bytes.data(), sizeof(imm16Bytes));
+    pass.SetPipeline(pipeline16Bytes);
+    pass.DispatchWorkgroups(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = enc.Finish();
+    queue.Submit(1, &commands);
+
+    // Pipeline B writes imm.x = 200 to output.
+    uint32_t expected = 200;
+    EXPECT_BUFFER_U32_EQ(expected, resultBuffer, 0);
+}
+
+DAWN_INSTANTIATE_TEST(ImmediateDataWithResourceTableTests,
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend());
+
 }  // anonymous namespace
 }  // namespace dawn
