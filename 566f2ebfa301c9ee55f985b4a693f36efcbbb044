@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f4da5e7d_ebdd96b7",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-09T08:23:48Z",
+      "side": 1,
+      "message": "Done\n\nNow I find a better way to fix this issue. PTAL, thanks!",
+      "parentUuid": "30b06d5e_04167a26",
+      "revId": "566f2ebfa301c9ee55f985b4a693f36efcbbb044",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "069d716a_fd1ece1a",
         "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
         "patchSetId": 1
