@@ -107,7 +107,19 @@ BufferBase* SharedBufferMemoryBase::APICreateBuffer(const BufferDescriptor* desc
     if (descriptor == nullptr) {
         defaultDescriptor = {};
         defaultDescriptor.size = mProperties.size;
-        defaultDescriptor.usage = mProperties.usage;
+
+        wgpu::BufferUsage usage = mProperties.usage;
+
+        // Ensure map usages are always combined with valid copy usages.
+        if (!GetDevice()->HasFeature(Feature::BufferMapExtendedUsages)) {
+            if (usage & wgpu::BufferUsage::MapRead) {
+                usage = wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
+            }
+            if (usage & wgpu::BufferUsage::MapWrite) {
+                usage = wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
+            }
+        }
+        defaultDescriptor.usage = usage;
         descriptor = &defaultDescriptor;
     }
 
