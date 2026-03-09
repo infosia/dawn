@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73f94db5_3a428e59",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:39:08Z",
+      "side": 1,
+      "message": "nit: do you have a link to the documentation that requires this?",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61715df3_fceba59c",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:39:08Z",
+      "side": 1,
+      "message": "```suggestion\ninline constexpr uint32_t kD3D12SharedBufferMemoryFileMappingHandleSizeAlignment \u003d 65536;\n```",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
