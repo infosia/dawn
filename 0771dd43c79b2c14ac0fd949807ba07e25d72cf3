@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c07118cd_21cc788e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3186,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T16:42:14Z",
+      "side": 1,
+      "message": "Last tweak I used `size` instead of `extent` as that is consistent with the other uses of Extend2D so far.",
+      "parentUuid": "9a78e28e_b480dab2",
+      "revId": "0771dd43c79b2c14ac0fd949807ba07e25d72cf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "820949af_9b190cdc",
