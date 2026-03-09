@@ -53,6 +53,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5001e93_47b28b5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T16:41:58Z",
+      "side": 1,
+      "message": "I went with your approach.",
+      "parentUuid": "ea03a782_74674a43",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d034a818_64a59adb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T16:41:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ef47e3_f0f2e13c",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06988451_21428c5c",
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b82171_60db3981",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T16:41:58Z",
+      "side": 1,
+      "message": "That makes sense. Done!",
+      "parentUuid": "06988451_21428c5c",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c22129c_e5787200",
@@ -83,6 +137,24 @@
       "writtenOn": "2026-03-09T16:34:16Z",
       "side": 1,
       "message": "[1]\nIf you go the assert route move this entire if statement into the `if (attachment.view)` block below.",
+      "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d4b5080_d0b1e890",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T16:41:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7c22129c_e5787200",
       "revId": "e16d256b299080d4423699ef26cd4dbf4bda3aae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
