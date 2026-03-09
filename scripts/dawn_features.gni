@@ -68,6 +68,9 @@ declare_args() {
 }
 
 declare_args() {
+  # Enable Dawn's API tracing instrumentation.
+  dawn_enable_api_tracing = false
+
   # Enable Dawn's ASSERTs even in release builds
   dawn_always_assert = false
 

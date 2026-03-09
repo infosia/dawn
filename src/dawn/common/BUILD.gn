@@ -121,6 +121,10 @@ config("internal_config") {
     defines += [ "DAWN_ENABLE_ERROR_INJECTION" ]
   }
 
+  if (dawn_enable_api_tracing) {
+    defines += [ "DAWN_ENABLE_API_TRACING" ]
+  }
+
   if (dawn_force_system_component_load) {
     defines += [ "DAWN_FORCE_SYSTEM_COMPONENT_LOAD" ]
   }

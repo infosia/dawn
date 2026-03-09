@@ -43,7 +43,32 @@
     {% endif %}
 {% endfor %}
 
+#if defined(DAWN_ENABLE_API_TRACING)
+#include "dawn/platform/tracing/TraceEvent.h"
+#endif
+
 namespace {{native_namespace}} {
+
+#if defined(DAWN_ENABLE_API_TRACING)
+namespace {
+    inline dawn::platform::Platform* GetPlatform(InstanceBase* instance) {
+        return instance->GetPlatform();
+    }
+    inline dawn::platform::Platform* GetPlatform(DeviceBase* device) {
+        return device->GetPlatform();
+    }
+    inline dawn::platform::Platform* GetPlatform(AdapterBase* adapter) {
+        return adapter->GetInstance()->GetPlatform();
+    }
+    inline dawn::platform::Platform* GetPlatform(Surface* surface) {
+        return surface->GetInstance()->GetPlatform();
+    }
+    inline dawn::platform::Platform* GetPlatform(ObjectBase* object) {
+        return object->GetInstance()->GetPlatform();
+    }
+}  // anonymous namespace
+#endif
+
     {% for (type, methods) in c_methods_sorted_by_parent %}
         {% for method in methods %}
             {% set suffix = as_MethodSuffix(type.name, method.name) %}
@@ -57,6 +82,10 @@ namespace {{native_namespace}} {
                 //* Perform conversion between C types and frontend types
                 {% if type.category == "object" %}
                     auto self = FromAPI(cSelf);
+
+                    #if defined(DAWN_ENABLE_API_TRACING)
+                        TRACE_EVENT0(GetPlatform(self), Recording, "{{as_cMethod(type.name, method.name)}}");
+                    #endif
                 {% endif %}
 
                 {% for arg in method.arguments %}
