@@ -56,7 +56,6 @@ See:
 {{- template "GLSLShaderModel" $overload -}}
 {{- /* Generate the optional flag for the MSL version */ -}}
 {{- template "MSLVersion" $overload -}}
-
 {{- /* Generate enable directives */ -}}
 {{- template "EnableDirectives" $overload -}}
 
@@ -314,8 +313,11 @@ fn vertex_main() -> VertexOutput {
 
 {{-   if eq "print" $builtin_name}}
 // [msl] flags: --msl-version 3.2
-{{    end -}}
-
+{{- "\n" -}}
+{{-   else if or (HasPrefix $builtin_name "atomicStoreMax") (HasPrefix $builtin_name "atomicStoreMin") }}
+// [msl] flags: --msl-version 2.4
+{{- "\n" -}}
+{{-   end -}}
 {{- end -}}
 
 
@@ -337,8 +339,10 @@ enable subgroups;
 
 {{- /* Emit enable atomic_vec2u_min_max for limited 64 bit atomics*/ -}}
 {{-   if or (HasPrefix $builtin_name "atomicStoreMax") (HasPrefix $builtin_name "atomicStoreMin") }}
+{{- "\n" -}}
 enable atomic_vec2u_min_max;
-{{    end -}}
+{{- "\n" -}}
+{{-   end -}}
 
 {{- /* Emit 'enable chromium_internal_input_attachments' if required */ -}}
 {{-   if eq "inputAttachmentLoad" $builtin_name}}
