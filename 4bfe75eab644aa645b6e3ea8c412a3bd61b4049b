@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7a403a8_25c8507d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T03:18:58Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "4bfe75eab644aa645b6e3ea8c412a3bd61b4049b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d266d109_7daa43d2",
+        "filename": "src/dawn/common/ColorSpace.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T03:18:58Z",
+      "side": 1,
+      "message": "nit: indent",
+      "range": {
+        "startLine": 96,
+        "startChar": 3,
+        "endLine": 96,
+        "endChar": 14
+      },
+      "revId": "4bfe75eab644aa645b6e3ea8c412a3bd61b4049b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fed70cc0_76746e61",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T03:18:58Z",
+      "side": 1,
+      "message": "Mistake?",
+      "range": {
+        "startLine": 127,
+        "startChar": 65,
+        "endLine": 127,
+        "endChar": 80
+      },
+      "revId": "4bfe75eab644aa645b6e3ea8c412a3bd61b4049b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbab847a_96dcf671",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryYCbCrAndroidTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T03:18:58Z",
+      "side": 1,
+      "message": "Should these strings have spaces? For test names I\u0027d assume you want no spaces and have the PrintToStringParamName implementation insert underscores between each parameter name. It looks like dawn has some automation around this already though.",
+      "range": {
+        "startLine": 410,
+        "startChar": 18,
+        "endLine": 410,
+        "endChar": 27
+      },
+      "revId": "4bfe75eab644aa645b6e3ea8c412a3bd61b4049b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
