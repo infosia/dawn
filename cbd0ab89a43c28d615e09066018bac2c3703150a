@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deda2b20_01fcc03f",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:31:26Z",
+      "side": 1,
+      "message": "Why is this needed? Is it so that creating the default buffer from an SBM always works? Which test fails if we don\u0027t do that, can we fix them instead?\n\nI\u0027m concerned that the logic added here is a bit too magic and risks tripping up applications because all of a sudden the buffer will have no GPU usages (except Copy) just because the SBM happens to be mappable.",
+      "revId": "cbd0ab89a43c28d615e09066018bac2c3703150a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a7d9869_bc184eb2",
+        "filename": "src/dawn/native/d3d12/SharedBufferMemoryD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-09T10:31:26Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "cbd0ab89a43c28d615e09066018bac2c3703150a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
