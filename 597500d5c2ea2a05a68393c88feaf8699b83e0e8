@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd4ef17_1bea628c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T13:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8782d2f_0e7cd94d",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81f78c2e_5481a88c",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "The reason I\u0027m asking for this is that these tests are the only tests that the shader-injected validation is correct. We need to make sure that you cannot for example ask for a sampler entry on a texture entry (even if combined texture-sampler or w/e). While I agree that it is unlikely to be incorrect right now, it\u0027s still good to have exhaustive testing of validation like that to prevent regressions.\n\nI was suggesting `Undefined` that that\u0027s how `BindGroupLayoutEntry` does the sum-type (we cannot use union in the C header) and `std::variant` kinda sucks IMHO. But whatever makes the code look nice is fine :)",
       "parentUuid": "cd1d697d_fb963f5d",
+      "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43395e57_847342de",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-09T13:50:31Z",
+      "side": 1,
+      "message": "I understand now. I\u0027ll merge the two.\n\nAlso, agreed about std::variant sucking 😊",
+      "parentUuid": "4f29a1b2_86508f31",
       "revId": "597500d5c2ea2a05a68393c88feaf8699b83e0e8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
