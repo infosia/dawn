@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00609fe7_068a9039",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-09T21:51:56Z",
+      "side": 1,
+      "message": "PTAL! Narrowed down the blocklist to just the known crashing GPU. Unfortunately I haven\u0027t yet figured out what may be causing the memory leak that we saw in conjunction with this feature being enabled, so it\u0027s still not clear if they\u0027re related.",
+      "revId": "051c4f60c10a74a52096098daad7c17444e2864d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
