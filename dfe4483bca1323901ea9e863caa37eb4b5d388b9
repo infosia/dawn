@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2893c54_5f4606a3",
+        "filename": "docs/dawn/features/render_pass_render_area.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T15:38:43Z",
+      "side": 1,
+      "message": "I clarified the readme that it might modify outside render area still. I\u0027ll leave this open in case Albin has some guidance.",
+      "parentUuid": "c322ef3d_9c1fa74a",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a67dc631_14d4a832",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 14
@@ -538,6 +556,24 @@
       "side": 1,
       "message": "That is a little tricky since we don\u0027t know what the granularity is going to be and don\u0027t have any way to query it from the test. Let me think a little bit.",
       "parentUuid": "1b6e1456_f3deab1d",
+      "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85b5b56d_80ddeb6b",
+        "filename": "src/dawn/tests/end2end/RenderPassTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-09T15:38:43Z",
+      "side": 1,
+      "message": "I added a non-aligned test that only hse expectations inside the render area and outside the max expected granularity (eg. 32x32). It\u0027s not perfect but I think it\u0027s the best we can do?",
+      "parentUuid": "40338bea_98de30ba",
       "revId": "dfe4483bca1323901ea9e863caa37eb4b5d388b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
