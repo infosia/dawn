@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ead883e_2ef8df61",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-10T03:00:02Z",
+      "side": 1,
+      "message": "\u003e Why is this needed? Is it so that creating the default buffer from an SBM always works? Which test fails if we don\u0027t do that, can we fix them instead?\n\nThere are a lot of tests that calls `sharedBufferMemory.CreateBuffer()` with a nullptr, and without this the buffer usage will include many other buffer usages together with map usages.\n\n\u003e I\u0027m concerned that the logic added here is a bit too magic and risks tripping up applications because all of a sudden the buffer will have no GPU usages (except Copy) just because the SBM happens to be mappable.\n\nIn fact without `BufferMapExtendedUsages` a GPUBuffer shouldn\u0027t have other GPU usages except Copy together with map usages. If we want a buffer that have other GPU usages besides Copy and Map usages, then we should enable `BufferMapExtendedUsages` when creating the GPUDevice.",
+      "parentUuid": "deda2b20_01fcc03f",
+      "revId": "cbd0ab89a43c28d615e09066018bac2c3703150a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2a7d9869_bc184eb2",
