@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87f2b1d4_7a66be35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-10T07:31:34Z",
+      "side": 1,
+      "message": "PTAL, this fix a cts validation test failure. The failure is due to we report exceed maxImmediateSize during shaderModule creation time instead of pipeline creation time.",
+      "revId": "fe4478045a6409f0048f96425b8b60419ec94eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
