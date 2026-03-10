@@ -16,6 +16,23 @@
       "message": "PTAL, this fix a cts validation test failure. The failure is due to we report exceed maxImmediateSize during shaderModule creation time instead of pipeline creation time.",
       "revId": "fe4478045a6409f0048f96425b8b60419ec94eb0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76061e97_d188c353",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-10T09:18:15Z",
+      "side": 1,
+      "message": "We can just use `DelayedInvalidIf` which is designed to handle pushing errors to pipeline creation time (when we detect them at shader creation time). So we don\u0027t need the complexity of an overflow bit etc.",
+      "revId": "fe4478045a6409f0048f96425b8b60419ec94eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
