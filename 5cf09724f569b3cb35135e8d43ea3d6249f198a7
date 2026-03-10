@@ -739,6 +739,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a08c044_b04ad94c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-10T09:07:06Z",
+      "side": 1,
+      "message": "Wow I forgot that GetRequiredFeatures didn\u0027t cause DawnTest to actually skip if the feature isn\u0027t available. That\u0027s a big gotcha. Can you file a issue with type techdebt to fix that?",
+      "parentUuid": "bd4c5492_b04405b9",
+      "range": {
+        "startLine": 951,
+        "startChar": 1,
+        "endLine": 963,
+        "endChar": 0
+      },
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1c244da0_84629e08",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 5
