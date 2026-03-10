@@ -38,10 +38,10 @@
 -struct WGPUExternalTextureBindingLayout;
  struct WGPUFuture;
  struct WGPUInstanceLimits;
- struct WGPULimits;
+ struct WGPUMultisampleState;
 @@
- struct WGPUTexelCopyBufferLayout;
  struct WGPUTextureBindingLayout;
+ struct WGPUTextureBindingViewDimension;
  struct WGPUTextureComponentSwizzle;
 -struct WGPUTextureViewDescriptor;
  struct WGPUVertexAttribute;
@@ -58,6 +58,7 @@
  struct WGPUBindGroupLayoutDescriptor;
  struct WGPUColorTargetState;
  struct WGPUComputePipelineDescriptor;
+ struct WGPUDeviceDescriptor;
  struct WGPURenderPassDescriptor;
 +struct WGPUTextureViewDescriptor;
  struct WGPUVertexState;
@@ -69,9 +70,9 @@
      WGPUSType_TextureComponentSwizzleDescriptor = 0x0000000C,
 -    WGPUSType_ExternalTextureBindingLayout = 0x0000000D,
 -    WGPUSType_ExternalTextureBindingEntry = 0x0000000E,
+     WGPUSType_CompatibilityModeLimits = 0x0000000F,
+     WGPUSType_TextureBindingViewDimension = 0x00000010,
      WGPUSType_Force32 = 0x7FFFFFFF
- } WGPUSType WGPU_ENUM_ATTRIBUTE;
- 
 @@
      /*.subgroupMaxSize=*/0 _wgpu_COMMA \
  })
