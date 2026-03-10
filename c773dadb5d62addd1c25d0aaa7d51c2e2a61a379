@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "c773dadb5d62addd1c25d0aaa7d51c2e2a61a379",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c84ccee4_b33ecd4a",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4337941
+      },
+      "writtenOn": "2026-03-10T23:29:49Z",
+      "side": 1,
+      "message": "nit: Do we still need this file? If so (e.g., it\u0027s consumed somewhere still), what about removing the entry?",
+      "revId": "c773dadb5d62addd1c25d0aaa7d51c2e2a61a379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
