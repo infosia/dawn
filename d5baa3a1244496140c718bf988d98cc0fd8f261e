@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee2e21f3_bb038057",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-10T09:03:06Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "d5baa3a1244496140c718bf988d98cc0fd8f261e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22a43617_ad58f6e4",
+        "filename": "src/dawn/wire/server/ObjectStorage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-10T09:03:06Z",
+      "side": 1,
+      "message": "optional follow-up: these two fields seem like they could be replaced with calls to the getter (they are used in a single place to early destroy the write handle).",
+      "revId": "d5baa3a1244496140c718bf988d98cc0fd8f261e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
