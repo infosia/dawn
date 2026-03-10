@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecbc7aea_66246bbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-10T23:12:18Z",
+      "side": 1,
+      "message": "PTAL\n\nWith this, everything in Dawn should be moved to Starlark 🎉\n\nBoth the diff against the infra/specs-generated files and the [led run](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-try-linux-x64-sws-tsan/1/infra) look good to me.",
+      "revId": "cb5c2da2d87e891e5bc8a5cd68e85c370191b7c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
