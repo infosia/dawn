@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8264200f_69b8a5f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-10T01:46:09Z",
+      "side": 1,
+      "message": "It will only be used in wire server side to import a piece of transfer buffer memory into dawn::native as a SharedBufferMemory, so we should have it in webgpu.h to let dawn::wire use.\n\n\u003e Is the handle valid across processes?\n\nI don\u0027t think we need to transfer the file handle across the processes. We only need to transfer the name of the named file mapping handle.\n\nNow I am experimenting below workflow:\n\nWhen we call `CreateBuffer` on wire client to create a mappable buffer:\n1. Create a named shared memory file mapping handle on wire client and save the CPU mapped pointer.\n2. Transfer the name to wire server.\n3. On wire server, get the same file mapping handle with the name and import it into wire server as the GPUBuffer.\n\nThen\n- On wire client, we can read or write data into the file mapping handle on CPU.\n- On wire server, the GPU can read or write data with the GPUBuffer created on the file mapping handle on GPU.",
+      "parentUuid": "93900ddc_9f5c689e",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73f94db5_3a428e59",
         "filename": "src/dawn/common/Constants.h",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-09T10:39:08Z",
       "side": 1,
       "message": "nit: do you have a link to the documentation that requires this?",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebcbdb01_62c7993a",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-10T01:46:09Z",
+      "side": 1,
+      "message": "Done\n\nI\u0027ve added more explanations in the comment here.",
+      "parentUuid": "73f94db5_3a428e59",
       "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2026-03-09T10:39:08Z",
       "side": 1,
       "message": "```suggestion\ninline constexpr uint32_t kD3D12SharedBufferMemoryFileMappingHandleSizeAlignment \u003d 65536;\n```",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c379adf_0edd247d",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-10T01:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61715df3_fceba59c",
       "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
