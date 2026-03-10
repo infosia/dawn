@@ -33,6 +33,24 @@
       "message": "nit: Do we still need this file? If so (e.g., it\u0027s consumed somewhere still), what about removing the entry?",
       "revId": "c773dadb5d62addd1c25d0aaa7d51c2e2a61a379",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a45b0d8_d182c20a",
+        "filename": "infra/specs/waterfalls.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-10T23:48:12Z",
+      "side": 1,
+      "message": "`infra/specs/generate_test_spec_json.py` references this file and is still called as part of the Chromium -\u003e Dawn roll and this directory is still listed as the default test spec directory in the recipe code, so I\u0027d like to remove those references before cleaning up more stuff in this directory. Additional cleanup is definitely coming, though.",
+      "parentUuid": "c84ccee4_b33ecd4a",
+      "revId": "c773dadb5d62addd1c25d0aaa7d51c2e2a61a379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
