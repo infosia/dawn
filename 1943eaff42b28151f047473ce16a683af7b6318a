@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c9aceb0_4d5c7568",
+        "filename": "src/dawn/common/SlabAllocator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-10T18:37:13Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_c...\n\ncheck: modernize-avoid-c-style-cast\n\nC-style casts are discouraged; use static_cast (https://clang.llvm.org/extra/clang-tidy/checks/modernize/avoid-c-style-cast.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: modernize-avoid-c-style-cast` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "1943eaff42b28151f047473ce16a683af7b6318a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
