@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dbfdd30_eb301ac3",
+        "filename": "infra/config/global/generated/builders/ci/dawn-linux-x64-sws-clusterfuzz/targets/ci.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-03-10T16:55:23Z",
+      "side": 1,
+      "message": "Missing:\n          \"--use-wire\",",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "78e615a25ce5edb610fb4593cbac623cc86727d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c0faf4_a9e9bda8",
+        "filename": "infra/config/global/tests.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-03-10T16:55:23Z",
+      "side": 1,
+      "message": "guess need to add \"use_wire\" mixin here?",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 11
+      },
+      "revId": "78e615a25ce5edb610fb4593cbac623cc86727d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
