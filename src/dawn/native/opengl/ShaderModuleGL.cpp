@@ -47,6 +47,7 @@
 #include "dawn/native/opengl/UtilsGL.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "tint/api/common/bindings.h"
 #include "tint/tint.h"
 
 namespace dawn::native::opengl {
@@ -196,17 +197,23 @@ void GenerateCombinedSamplerInfo(
         // This is an external texture, add planes individually.
         const auto& bindingLayout = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
 
+        auto& tint_data = bindings.external_texture.at(ToTint(use.texture));
+        DAWN_ASSERT(std::holds_alternative<tint::ExternalMultiplanarTexture>(tint_data));
+
+        tint::ExternalMultiplanarTexture mp_data =
+            std::get<tint::ExternalMultiplanarTexture>(tint_data);
+
         CombinedBindingInfo plane0 = {
             .group = use.texture.group,
             .index = bindingLayout.plane0,
-            .remappedBinding = bindings.external_texture.at(ToTint(use.texture)).plane0,
+            .remappedBinding = mp_data.plane0,
         };
         AddCombinedSampler(plane0, sampler, false);
 
         CombinedBindingInfo plane1 = {
             .group = use.texture.group,
             .index = bindingLayout.plane1,
-            .remappedBinding = bindings.external_texture.at(ToTint(use.texture)).plane1,
+            .remappedBinding = mp_data.plane1,
         };
         AddCombinedSampler(plane1, sampler, true);
     }
