@@ -56,7 +56,6 @@ See:
 {{- template "GLSLShaderModel" $overload -}}
 {{- /* Generate the optional flag for the MSL version */ -}}
 {{- template "MSLVersion" $overload -}}
-
 {{- /* Generate enable directives */ -}}
 {{- template "EnableDirectives" $overload -}}
 
@@ -314,8 +313,9 @@ fn vertex_main() -> VertexOutput {
 
 {{-   if eq "print" $builtin_name}}
 // [msl] flags: --msl-version 3.2
+{{    else if or (HasPrefix $builtin_name "atomicStoreMax") (HasPrefix $builtin_name "atomicStoreMin") }}
+// [msl] flags: --msl-version 2.4
 {{    end -}}
-
 {{- end -}}
 
 
