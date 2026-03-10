@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa7ab884_c1cbc829",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-10T15:27:57Z",
+      "side": 1,
+      "message": "What I\u0027m suggesting is that mappable cases are less common, so the default created buffers should only contain the GPU usages if `BufferMapExtendedUsages` is not enabled. And even if it is enabled, maybe mappable usages should still be opt-in. Also can you update the doc for shared_buffer_memory in docs/dawn/features?",
+      "parentUuid": "7ead883e_2ef8df61",
+      "revId": "cbd0ab89a43c28d615e09066018bac2c3703150a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2a7d9869_bc184eb2",
