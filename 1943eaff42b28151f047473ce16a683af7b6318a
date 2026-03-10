@@ -22,6 +22,30 @@
       },
       "revId": "1943eaff42b28151f047473ce16a683af7b6318a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dc299c7_a1a2d799",
+        "filename": "src/dawn/common/SlabAllocator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-10T18:56:34Z",
+      "side": 1,
+      "message": "This warning isn\u0027t that useful in most cases, like this one, since there\u0027s no real danger of truncation. However, instead of using `static_cast`, I would use braced init, like `size_t{1}`, which is less wordy, and works because it\u0027s a compile error if it truncates.",
+      "parentUuid": "5c9aceb0_4d5c7568",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "1943eaff42b28151f047473ce16a683af7b6318a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
