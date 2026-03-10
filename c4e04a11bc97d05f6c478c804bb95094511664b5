@@ -39,6 +39,30 @@
       },
       "revId": "c4e04a11bc97d05f6c478c804bb95094511664b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "360724ef_0495d3da",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-10T20:10:24Z",
+      "side": 1,
+      "message": "Oops! Yeah, I thought there was going to be one place where I could override with a span directly but it turned out to not work out. Thanks for catching that.",
+      "parentUuid": "9d1ee193_a7db5184",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 15
+      },
+      "revId": "c4e04a11bc97d05f6c478c804bb95094511664b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
