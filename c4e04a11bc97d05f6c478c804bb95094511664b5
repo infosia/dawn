@@ -16,6 +16,29 @@
       "message": "PTAL! Following up on https://dawn-review.googlesource.com/c/dawn/+/295115/comment/ea4fd05e_ae515161/",
       "revId": "c4e04a11bc97d05f6c478c804bb95094511664b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d1ee193_a7db5184",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-10T19:05:46Z",
+      "side": 1,
+      "message": "nit. This doesn\u0027t need to be virtual right? (I\u0027m assuming we never override this directly, and are instead expected to override `GetSourceData` and `GetSourceSize`.)",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 15
+      },
+      "revId": "c4e04a11bc97d05f6c478c804bb95094511664b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
