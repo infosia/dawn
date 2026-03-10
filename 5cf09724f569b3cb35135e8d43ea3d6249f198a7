@@ -379,6 +379,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50ef3920_5e6047b1",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-10T07:28:54Z",
+      "side": 1,
+      "message": "Do an experiment and it seems test could catch the issue https://dawn-review.googlesource.com/c/dawn/+/296155?tab\u003dchecks",
+      "parentUuid": "ddacf4ce_d456caa4",
+      "revId": "5cf09724f569b3cb35135e8d43ea3d6249f198a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a793af9_0476efee",

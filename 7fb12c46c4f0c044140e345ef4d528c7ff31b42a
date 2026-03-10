@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8b84d7f_7757dd96",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-10T07:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "824ed385_325121ea",
+      "revId": "7fb12c46c4f0c044140e345ef4d528c7ff31b42a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa11de4d_c1e2eef7",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-09T09:49:26Z",
       "side": 1,
       "message": "This can be unconditional since the default is 0 in the struct as well.",
+      "revId": "7fb12c46c4f0c044140e345ef4d528c7ff31b42a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256f84e4_72c79d8b",
+        "filename": "src/dawn/utils/WGPUHelpers.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-10T07:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa11de4d_c1e2eef7",
       "revId": "7fb12c46c4f0c044140e345ef4d528c7ff31b42a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
