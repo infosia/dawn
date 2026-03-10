@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38b79f1d_523e3a9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-10T18:40:55Z",
+      "side": 1,
+      "message": "Just for my understanding, that effectively means that the client will need access to the file system right? I don\u0027t think that will work in Chrome out of the box? What is this being used for then? Basically trying to understand more context for this change.",
+      "parentUuid": "445f0943_db246a5d",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73f94db5_3a428e59",
