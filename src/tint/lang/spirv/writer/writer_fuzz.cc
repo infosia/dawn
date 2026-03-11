@@ -62,7 +62,7 @@ struct FuzzedOptions {
     bool polyfill_pixel_center;
     bool polyfill_case_switch;
     bool scalarize_max_min_clamp;
-    bool dva_transform_handle;
+    bool dva_transform_handle_deprecated;
     bool polyfill_pack_unpack_4x8_norm;
     bool subgroup_shuffle_clamped;
     bool polyfill_subgroup_broadcast_f16;
@@ -83,6 +83,7 @@ struct FuzzedOptions {
     bool polyfill_saturate_as_min_max_f16;
     bool multisampled_framebuffer_fetch;
     bool cooperative_matrix_stride_is_matrix_elements;
+    core::ir::transform::HandleTransformLevel dva_transform_handle;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(FuzzedOptions,
@@ -95,7 +96,7 @@ struct FuzzedOptions {
                  polyfill_pixel_center,
                  polyfill_case_switch,
                  scalarize_max_min_clamp,
-                 dva_transform_handle,
+                 dva_transform_handle_deprecated,
                  polyfill_pack_unpack_4x8_norm,
                  subgroup_shuffle_clamped,
                  polyfill_subgroup_broadcast_f16,
@@ -115,7 +116,8 @@ struct FuzzedOptions {
                  texture_sample_compare_depth_cube_array,
                  polyfill_saturate_as_min_max_f16,
                  multisampled_framebuffer_fetch,
-                 cooperative_matrix_stride_is_matrix_elements);
+                 cooperative_matrix_stride_is_matrix_elements,
+                 dva_transform_handle);
     TINT_REFLECT_HASH_CODE(FuzzedOptions);
 };
 

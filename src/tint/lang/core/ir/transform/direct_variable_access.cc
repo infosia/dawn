@@ -37,6 +37,7 @@
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/external_texture.h"
 #include "src/tint/utils/containers/reverse.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
@@ -633,7 +634,11 @@ struct State {
         }
 
         if (param_type->IsHandle()) {
-            return options.transform_handle;
+            if (options.transform_handle == HandleTransformLevel::kFull) {
+                return true;
+            }
+            return options.transform_handle == HandleTransformLevel::kExternal &&
+                   param_type->Is<type::ExternalTexture>();
         }
 
         return false;
@@ -659,7 +664,7 @@ struct State {
                     return let->Value();
                 },
                 [&](Load* load) {
-                    if (options.transform_handle) {
+                    if (options.transform_handle == HandleTransformLevel::kFull) {
                         TINT_DEFER(load->Destroy());
                         return load->From();
                     }
