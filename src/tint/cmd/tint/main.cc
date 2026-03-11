@@ -1398,13 +1398,6 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
     gen_options.bindings = std::move(data.bindings);
     gen_options.texture_builtins_from_uniform = std::move(data.texture_builtins_from_uniform);
 
-    // Check that the module and options are supported by the backend.
-    auto check = tint::glsl::writer::CanGenerate(ir, gen_options);
-    if (check != tint::Success) {
-        std::cerr << check.Failure() << "\n";
-        return false;
-    }
-
     // Generate GLSL.
     auto result = tint::glsl::writer::Generate(ir, gen_options);
     if (result != tint::Success) {
