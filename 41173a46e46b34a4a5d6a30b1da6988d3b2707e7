@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95718038_e24141c6",
+        "filename": "src/dawn/tests/end2end/ShaderAtomicTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T17:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002e2847_23b5aa3c",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6af4c185_58af39a2",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Ok will do",
       "parentUuid": "6af4c185_58af39a2",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd30f85a_9bf6df7c",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T17:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8bc8f88_c9579111",
       "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9015fe38_cb530592",
+        "filename": "src/tint/lang/msl/writer/writer_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T17:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ed4f2e_54cba722",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79230fe6_3ef832a7",
@@ -119,6 +173,24 @@
       "writtenOn": "2026-03-11T14:26:27Z",
       "side": 1,
       "message": "Can we get a test for using the wrong type into the call? So, if I try to store into a ty.u32(), and maybe a test for passing a non `vec2u` value fails?\n\nCan I store into a runtime array in a storage struct?, nested storage structs? storage array?",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e95e4f66_97bafb8b",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T17:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79230fe6_3ef832a7",
       "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
