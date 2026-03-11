@@ -45,6 +45,8 @@
 
 namespace tint::spirv::writer {
 
+namespace {
+
 Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // The enum is accessible in the API so ensure we have a valid value.
     switch (options.spirv_version) {
@@ -141,7 +143,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     return Success;
 }
 
+}  // namespace
+
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+    TINT_CHECK_RESULT(CanGenerate(ir, options));
+
     // There are currently no plans on supporting override-expressions, so we can pull this
     // information out before the raise. If we want to support overrides then this either needs to
     // happen in raise, before the builtins are polyfilled, or the analysis needs to also look for
