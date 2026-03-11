@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8841017_08e10149",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-03-11T08:50:22Z",
+      "side": 1,
+      "message": "I\u0027ve updated the `cli` tool to only show lines that differ so that it\u0027s easier to read.\n\nNote that because https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;l\u003d626;drc\u003d4a3dff821cb9283b98d8bfe8c56289fae69122ed forces a special ordering for objects for instance, there\u0027s always a diff ;(",
+      "parentUuid": "4ad3c78c_5e45faac",
+      "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04573b7e_0db371a1",
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Actually you\u0027ll need to either update Emdawnwebgpu (it\u0027s still using old names) or add both the `\"dawn\"` and `\"emscripten\"` tags.",
       "parentUuid": "04573b7e_0db371a1",
+      "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5018a5_31281e89",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2026-03-11T08:50:22Z",
+      "side": 1,
+      "message": "I\u0027ve simply added `\"tags\": [\"dawn\"]` and it seems to work. I think I had updated Emdawnwebgpu to use new names. Did I miss anything?",
+      "parentUuid": "fddc4ddf_d0344d0e",
       "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
