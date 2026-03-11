@@ -107,7 +107,14 @@ BufferBase* SharedBufferMemoryBase::APICreateBuffer(const BufferDescriptor* desc
     if (descriptor == nullptr) {
         defaultDescriptor = {};
         defaultDescriptor.size = mProperties.size;
-        defaultDescriptor.usage = mProperties.usage;
+
+        // The buffers created with default descriptor will only contain GPU usages if
+        // `BufferMapExtendedUsages` is not enabled.
+        wgpu::BufferUsage usage = mProperties.usage;
+        if (!GetDevice()->HasFeature(Feature::BufferMapExtendedUsages)) {
+            usage &= ~(wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite);
+        }
+        defaultDescriptor.usage = usage;
         descriptor = &defaultDescriptor;
     }
 
