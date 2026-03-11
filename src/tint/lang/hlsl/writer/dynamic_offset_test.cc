@@ -54,7 +54,8 @@ TEST_F(HlslWriterTest, DynamicOffset_RobustnessAndDynamicOffsetFromImmediates) {
     options.array_offset_from_uniform.buffer_offsets_offset = 16;
     options.array_offset_from_uniform.bindpoint_to_offset_index[{0, 0}] = 0;
 
-    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer sb : register(u0);
 cbuffer cbuffer_tint_immediate_data : register(b30) {
@@ -86,7 +87,8 @@ TEST_F(HlslWriterTest, DynamicOffset_AtomicWithImmediates) {
     options.array_offset_from_uniform.buffer_offsets_offset = 0;
     options.array_offset_from_uniform.bindpoint_to_offset_index[{0, 0}] = 0;
 
-    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer sb : register(u0);
 cbuffer cbuffer_tint_immediate_data : register(b30) {
@@ -127,7 +129,8 @@ TEST_F(HlslWriterTest, DynamicOffset_MultipleBuffersWithImmediates) {
     options.array_offset_from_uniform.bindpoint_to_offset_index[{0, 0}] = 0;
     options.array_offset_from_uniform.bindpoint_to_offset_index[{0, 1}] = 1;
 
-    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer sb1 : register(u0);
 RWByteAddressBuffer sb2 : register(u1);
