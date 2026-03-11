@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42b1c8b7_41b49981",
+        "filename": "src/dawn/tests/end2end/DepthStencilCopyTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-11T20:59:35Z",
+      "side": 1,
+      "message": "A device error only triggers when validation is enabled, which is why I had to disable \"skip_validation\" for all the backends (see `DAWN_INSTANTIATE_TEST` below). I\u0027m thinking this means we should probably move this to a validation unittests.",
+      "range": {
+        "startLine": 1643,
+        "startChar": 4,
+        "endLine": 1643,
+        "endChar": 23
+      },
+      "revId": "ebe7dd636820073571fc6f7673f2f4f47a86a847",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
