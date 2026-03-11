@@ -210,6 +210,24 @@
       "message": "You want the `-` on the start and end here `{{-` and `-}}` to remove the empty line output when generating",
       "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f05df5f7_8eeb4fce",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 23
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T17:25:56Z",
+      "side": 1,
+      "message": "This so far seems to have worked.",
+      "parentUuid": "91c007b7_fe34e743",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
