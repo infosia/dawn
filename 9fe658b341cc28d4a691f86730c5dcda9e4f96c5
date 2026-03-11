@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb734689_626c831b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-11T19:03:45Z",
+      "side": 1,
+      "message": "Upstream also does a topo sort. They used to match, but recently we changed something that\u0027s sorted differently between the two, and I don\u0027t know what the difference is.\n\nFewer lines is fine for now, but I\u0027d like to try to remember to revert it when we fix the sorting. When the diff is smaller, it makes the diff much _easier_ to read because it shows the context for sorting issues.",
+      "parentUuid": "f8841017_08e10149",
+      "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04573b7e_0db371a1",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I\u0027ve simply added `\"tags\": [\"dawn\"]` and it seems to work. I think I had updated Emdawnwebgpu to use new names. Did I miss anything?",
       "parentUuid": "fddc4ddf_d0344d0e",
+      "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a5976e_a0bbe23e",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-11T19:03:45Z",
+      "side": 1,
+      "message": "Ah no, I mistook `textureBindingViewDimensionDescriptor` for `WGPUTextureBindingViewDimensionDescriptor`. LGTM",
+      "parentUuid": "ea5018a5_31281e89",
       "revId": "9fe658b341cc28d4a691f86730c5dcda9e4f96c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
