@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ed6efd9_abb0f594",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMin_access.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T21:27:28Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fc20adab33bd0b0b0b7fef91e2a9daad4ca2839d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "158976f7_34678d4c",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMin_array.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T21:27:28Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "revId": "fc20adab33bd0b0b0b7fef91e2a9daad4ca2839d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd69316d_407b4079",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMin_function.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T21:27:28Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "revId": "fc20adab33bd0b0b0b7fef91e2a9daad4ca2839d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1348f6ed_c1ef7128",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMin_let.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T21:27:28Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "revId": "fc20adab33bd0b0b0b7fef91e2a9daad4ca2839d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f72074d4_437304ec",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMin_var.wgsl",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T21:27:28Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2026 The Dawn \u0026 Tint Authors\n```",
+      "revId": "fc20adab33bd0b0b0b7fef91e2a9daad4ca2839d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
