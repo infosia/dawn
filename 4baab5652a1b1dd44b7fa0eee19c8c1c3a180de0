@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "172e30a9_47b6083e",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T18:20:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bd0e61cb_cced89d1",
+      "range": {
+        "startLine": 433,
+        "startChar": 265,
+        "endLine": 433,
+        "endChar": 279
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "515cd388_44d264b6",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "This is for unit tests",
       "parentUuid": "ebbc6ff5_cd6edad7",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac5ee128_bcc25c78",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T18:20:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27fed6fa_f96aa1bc",
       "range": {
         "startLine": 68,
         "startChar": 2,
