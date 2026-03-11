@@ -1,0 +1,15 @@
+# THIS IS A GENERATED FILE DO NOT EDIT!!!
+# Instead:
+# 1. Modify //infra/config/targets/basic_suites.star, //infra/config/targets/compound_suites.star and/or //infra/config/targets/matrix_compound_suites.star
+# 2. Run //infra/config/main.star
+
+{
+  'basic_suites': {
+  },
+
+  'compound_suites': {
+  },
+
+  'matrix_compound_suites': {
+  },
+}

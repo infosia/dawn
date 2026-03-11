@@ -52,6 +52,7 @@ lucicfg.config(
         "luci/luci-scheduler.cfg",
         "luci/project.cfg",
         "luci/realms.cfg",
+        "testing/*.pyl",
     ],
     fail_on_warnings = True,
 )
@@ -144,6 +145,10 @@ chromium_luci.configure_recipe_experiments(
     # This can be removed once all builders use the chromium-luci wrappers for
     # creating builders instead of directly calling luci.builder().
     require_builder_wrappers = False,
+)
+
+chromium_luci.configure_targets(
+    generate_pyl_files = chromium_luci.pyl_generation_configuration(),
 )
 
 luci.logdog(gs_bucket = "chromium-luci-logdog")
