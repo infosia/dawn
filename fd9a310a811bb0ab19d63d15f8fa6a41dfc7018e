@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d75f42c_107c2312",
+        "filename": "test/tint/extensions/atomic_vec2u_min_max/atomicStoreMax_access.wgsl.expected.spvasm",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 0,
+      "message": "Do we have equivalent tests for `Min`?",
+      "revId": "fd9a310a811bb0ab19d63d15f8fa6a41dfc7018e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

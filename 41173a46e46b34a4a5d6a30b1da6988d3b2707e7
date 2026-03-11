@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f742b46_664db92d",
+        "filename": "src/dawn/tests/end2end/ShaderAtomicTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 1,
+      "message": "Seems unrelated?",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6af4c185_58af39a2",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 1,
+      "message": "ugh, this seems like a separate bug, we may want to fix in an independent cl since it may cause test failures on then bots.",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e939e6f_ecd790cb",
+        "filename": "src/tint/lang/msl/writer/writer_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 1,
+      "message": "These should also validated the emitted MSL matches some expected string.",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79230fe6_3ef832a7",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 1,
+      "message": "Can we get a test for using the wrong type into the call? So, if I try to store into a ty.u32(), and maybe a test for passing a non `vec2u` value fails?\n\nCan I store into a runtime array in a storage struct?, nested storage structs? storage array?",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c007b7_fe34e743",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 23
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-11T14:26:27Z",
+      "side": 1,
+      "message": "You want the `-` on the start and end here `{{-` and `-}}` to remove the empty line output when generating",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
