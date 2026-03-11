@@ -73,7 +73,7 @@ TEST_F(SpirvWriterTest, CanGenerate_SubgroupMatrixRequiresVulkanMemoryModel) {
     Options options;
     options.extensions.use_vulkan_memory_model = false;
     options.entry_point_name = "main";
-    auto result = CanGenerate(mod, options);
+    auto result = Generate(options);
     ASSERT_NE(result, Success);
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr("using subgroup matrices requires the Vulkan Memory Model"));

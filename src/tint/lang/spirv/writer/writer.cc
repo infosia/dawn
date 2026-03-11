@@ -47,6 +47,8 @@
 
 namespace tint::spirv::writer {
 
+namespace {
+
 Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // The enum is accessible in the API so ensure we have a valid value.
     switch (options.spirv_version) {
@@ -78,18 +80,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     if (!options.remapped_entry_point_name.empty()) {
         if (options.remapped_entry_point_name.find('\0') != std::string::npos) {
             return Failure("remapped entry point name contains null character");
-        }
-
-        // Check for multiple entry points.
-        // TODO(375388101): Remove this check when SingleEntryPoint is part of the backend.
-        bool has_entry_point = false;
-        for (auto& func : ir.functions) {
-            if (func->IsEntryPoint()) {
-                if (has_entry_point) {
-                    return Failure("module must only contain a single entry point");
-                }
-                has_entry_point = true;
-            }
         }
     }
 
@@ -158,7 +148,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     return Success;
 }
 
+}  // namespace
+
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+    TINT_CHECK_RESULT(CanGenerate(ir, options));
+
     // There are currently no plans on supporting override-expressions, so we can pull this
     // information out before the raise. If we want to support overrides then this either needs to
     // happen in raise, before the builtins are polyfilled, or the analysis needs to also look for

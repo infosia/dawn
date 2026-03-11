@@ -331,8 +331,6 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
         fuzzed_options.cooperative_matrix_stride_is_matrix_elements;
     options.multisampled_framebuffer_fetch = fuzzed_options.multisampled_framebuffer_fetch;
 
-    TINT_CHECK_RESULT(CanGenerate(module, options));
-
     TINT_CHECK_RESULT_UNWRAP(output, Generate(module, options));
 
     spv_target_env target_env = SPV_ENV_VULKAN_1_1;
