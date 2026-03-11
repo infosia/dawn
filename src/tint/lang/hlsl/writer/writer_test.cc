@@ -63,7 +63,8 @@ TEST_F(HlslWriterTest, StripAllNames) {
     Options options;
     options.remapped_entry_point_name = "tint_entry_point";
     options.strip_all_names = true;
-    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(struct tint_struct {
   int tint_member;
   int4 tint_member_1;
