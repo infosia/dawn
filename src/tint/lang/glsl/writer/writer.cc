@@ -43,6 +43,8 @@
 
 namespace tint::glsl::writer {
 
+namespace {
+
 Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // Check for unsupported types.
     for (auto* ty : ir.Types()) {
@@ -201,7 +203,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     return Success;
 }
 
+}  // namespace
+
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+    TINT_CHECK_RESULT(CanGenerate(ir, options));
+
     // Raise from core-dialect to GLSL-dialect.
     TINT_CHECK_RESULT(Raise(ir, options));
 
