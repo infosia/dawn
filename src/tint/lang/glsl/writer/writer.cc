@@ -43,6 +43,8 @@
 
 namespace tint::glsl::writer {
 
+namespace {
+
 Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // Check for unsupported types.
     for (auto* ty : ir.Types()) {
@@ -121,21 +123,24 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             // Check texture types that need metadata for texture_builtins_from_uniform.
             if (handle_type->Is<core::type::Texture>() &&
                 !handle_type->IsAnyOf<core::type::StorageTexture, core::type::ExternalTexture>()) {
-                bool found = false;
-                auto binding = options.bindings.texture.at(var->BindingPoint().value());
-                for (auto& bp : options.texture_builtins_from_uniform.ubo_contents) {
-                    if (bp.binding == binding) {
-                        if (bp.count < count) {
-                            return Failure(
-                                "binding_array of textures doesn't have enough data in "
-                                "texture_builtins_from_uniform list");
+                auto binding_itr = options.bindings.texture.find(var->BindingPoint().value());
+                if (binding_itr != options.bindings.texture.end()) {
+                    auto binding = binding_itr->second;
+                    bool found = false;
+                    for (auto& bp : options.texture_builtins_from_uniform.ubo_contents) {
+                        if (bp.binding == binding) {
+                            if (bp.count < count) {
+                                return Failure(
+                                    "binding_array of textures doesn't have enough data in "
+                                    "texture_builtins_from_uniform list");
+                            }
+                            found = true;
+                            break;
                         }
-                        found = true;
-                        break;
                     }
-                }
-                if (!found) {
-                    return Failure("texture missing from texture_builtins_from_uniform list");
+                    if (!found) {
+                        return Failure("texture missing from texture_builtins_from_uniform list");
+                    }
                 }
             }
 
@@ -227,7 +232,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     return Success;
 }
 
+}  // namespace
+
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+    TINT_CHECK_RESULT(CanGenerate(ir, options));
+
     // Raise from core-dialect to GLSL-dialect.
     TINT_CHECK_RESULT(Raise(ir, options));
 

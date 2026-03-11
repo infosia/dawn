@@ -135,7 +135,7 @@ TEST_F(GlslWriterTest, CanGenerate_TexelBufferUnsupported) {
 
     Options options;
     options.entry_point_name = "main";
-    auto result = CanGenerate(mod, options);
+    auto result = Generate(options);
     ASSERT_NE(result, Success);
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr("texel buffers are not supported by the GLSL backend"));
@@ -159,7 +159,7 @@ TEST_F(GlslWriterTest, CanGenerate_AtomicStoreMax_Unsupported) {
 
     Options options;
     options.entry_point_name = "main";
-    auto result = CanGenerate(mod, options);
+    auto result = Generate(options);
     ASSERT_NE(result, Success);
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr(
@@ -184,7 +184,7 @@ TEST_F(GlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
 
     Options options;
     options.entry_point_name = "main";
-    auto result = CanGenerate(mod, options);
+    auto result = Generate(options);
     ASSERT_NE(result, Success);
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr(
