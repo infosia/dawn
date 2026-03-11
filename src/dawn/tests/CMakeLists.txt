@@ -160,10 +160,12 @@ set(end2end_sources
     "end2end/TextureZeroInitTests.cpp"
     "end2end/VertexFormatTests.cpp"
     "end2end/VertexOnlyRenderPipelineTests.cpp"
-    "end2end/VertexStateTests.cpp"
-    "end2end/ViewportOrientationTests.cpp"
-    "end2end/ViewportTests.cpp"
-)
+    "end2end/VertexStateTests.cpp",
+    "end2end/ViewportOrientationTests.cpp",
+    "end2end/ViewportTests.cpp",
+    "end2end/WGSLFuzzerTests.cpp",
+    )
+
 
 if (NOT IS_DEBUG_BUILD)
     list(APPEND end2end_sources
