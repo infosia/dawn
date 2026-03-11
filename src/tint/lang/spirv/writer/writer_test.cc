@@ -38,7 +38,8 @@ TEST_F(SpirvWriterTest, ModuleHeader) {
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] { b.Return(eb); });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpCapability Shader");
     EXPECT_INST("OpMemoryModel Logical GLSL450");
 }
@@ -50,7 +51,8 @@ TEST_F(SpirvWriterTest, ModuleHeader_VulkanMemoryModel) {
     auto* eb = b.ComputeFunction("main");
     b.Append(eb->Block(), [&] { b.Return(eb); });
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpExtension \"SPV_KHR_vulkan_memory_model\"");
     EXPECT_INST("OpCapability VulkanMemoryModel");
     EXPECT_INST("OpCapability VulkanMemoryModelDeviceScope");
@@ -100,7 +102,8 @@ TEST_F(SpirvWriterTest, Unreachable) {
 
     Options options;
     options.disable_robustness = true;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
        %main = OpFunction %void None %3
           %4 = OpLabel
@@ -146,8 +149,9 @@ TEST_F(SpirvWriterTest, TooManyFunctionParameters) {
         b.Return(ep);
     });
 
-    EXPECT_FALSE(Generate());
-    EXPECT_THAT(Error(),
+    auto result = Generate();
+    ASSERT_NE(result, Success);
+    EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr(
                     "Function 'foo' has more than 255 parameters after running Tint transforms"));
 }
@@ -160,7 +164,8 @@ TEST_F(SpirvWriterTest, EntryPointName_Remapped) {
 
     Options options;
     options.remapped_entry_point_name = "my_entry_point";
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"my_entry_point\"");
 }
 
@@ -172,7 +177,8 @@ TEST_F(SpirvWriterTest, EntryPointName_NotRemapped) {
 
     Options options;
     options.remapped_entry_point_name = "";
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\"");
 }
 
@@ -185,7 +191,8 @@ TEST_F(SpirvWriterTest, EntryPoint_FunctionVar_Spirv1p3) {
 
     Options options;
     options.remapped_entry_point_name = "";
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
 }
 
@@ -199,7 +206,8 @@ TEST_F(SpirvWriterTest, EntryPoint_FunctionVar_Spirv1p4) {
     Options options;
     options.remapped_entry_point_name = "";
     options.spirv_version = SpvVersion::kSpv14;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
 }
 
@@ -215,7 +223,8 @@ TEST_F(SpirvWriterTest, EntryPoint_StorageVar_Spirv1p3) {
 
     Options options;
     options.remapped_entry_point_name = "";
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
 }
 
@@ -232,7 +241,8 @@ TEST_F(SpirvWriterTest, EntryPoint_StorageVar_Spirv1p4) {
     Options options;
     options.remapped_entry_point_name = "";
     options.spirv_version = SpvVersion::kSpv14;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\" %1");
 }
 
@@ -254,7 +264,8 @@ TEST_F(SpirvWriterTest, EntryPoint_StorageVar_CalledFunction_Spirv1p4) {
     Options options;
     options.remapped_entry_point_name = "";
     options.spirv_version = SpvVersion::kSpv14;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\" %1");
 }
 
@@ -276,7 +287,8 @@ TEST_F(SpirvWriterTest, Spv14_CopyLogical) {
     Options options;
     options.remapped_entry_point_name = "";
     options.spirv_version = SpvVersion::kSpv14;
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                ; Annotations
                OpDecorate %_arr_uint_uint_4 ArrayStride 4
@@ -328,7 +340,8 @@ TEST_F(SpirvWriterTest, StripAllNames) {
     Options options;
     options.strip_all_names = true;
     options.remapped_entry_point_name = "tint_entry_point";
-    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpEntryPoint GLCompute %16 "tint_entry_point" %gl_LocalInvocationIndex
                OpExecutionMode %16 LocalSize 1 1 1

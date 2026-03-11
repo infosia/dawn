@@ -57,7 +57,8 @@ TEST_F(SpirvWriterTest, AtomicAdd_Storage) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicIAdd %int %ptr %uint_1 %uint_0 %arg1");
 }
 
@@ -80,7 +81,8 @@ TEST_F(SpirvWriterTest, AtomicAdd_Workgroup) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicIAdd %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -103,7 +105,8 @@ TEST_F(SpirvWriterTest, AtomicAnd) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicAnd %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -131,7 +134,8 @@ TEST_F(SpirvWriterTest, AtomicCompareExchangeWeak) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%12 = OpAtomicCompareExchange %int %var %uint_2 %uint_0 %uint_0 %val %cmp");
     EXPECT_INST("%15 = OpIEqual %bool %12 %cmp");
     EXPECT_INST("%result = OpCompositeConstruct %__atomic_compare_exchange_result_i32 %12 %15");
@@ -157,7 +161,8 @@ TEST_F(SpirvWriterTest, AtomicExchange) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicExchange %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -178,7 +183,8 @@ TEST_F(SpirvWriterTest, AtomicLoad) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicLoad %int %var %uint_2 %uint_0");
 }
 
@@ -201,7 +207,8 @@ TEST_F(SpirvWriterTest, AtomicMax_I32) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicSMax %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -224,7 +231,8 @@ TEST_F(SpirvWriterTest, AtomicMax_U32) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicUMax %uint %var %uint_2 %uint_0 %arg1");
 }
 
@@ -247,7 +255,8 @@ TEST_F(SpirvWriterTest, AtomicMin_I32) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicSMin %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -270,7 +279,8 @@ TEST_F(SpirvWriterTest, AtomicMin_U32) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicUMin %uint %var %uint_2 %uint_0 %arg1");
 }
 
@@ -293,7 +303,8 @@ TEST_F(SpirvWriterTest, AtomicOr) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicOr %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -315,7 +326,8 @@ TEST_F(SpirvWriterTest, AtomicStore) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpAtomicStore %var %uint_2 %uint_0 %arg1");
 }
 
@@ -338,7 +350,8 @@ TEST_F(SpirvWriterTest, AtomicSub) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicISub %int %var %uint_2 %uint_0 %arg1");
 }
 
@@ -361,7 +374,8 @@ TEST_F(SpirvWriterTest, AtomicXor) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%result = OpAtomicXor %int %var %uint_2 %uint_0 %arg1");
 }
 
