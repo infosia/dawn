@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82dd60ea_5ce53e6d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-11T21:17:54Z",
+      "side": 1,
+      "message": "I audited the other places we do this, and so far everything looks good. I wanted to add some extra validation by adding a Defer here that ensures the texture\u0027s ref count increases, but it looks like we can\u0027t query the ref count at the moment, so I left it alone. Let me know if you think that\u0027s a good idea.\n\nThe idea is that at this point, we save the ref count, and by the time this Defer object gets destroyed, all other objects below (e.g. TextureCopy instances) will have been destroyed already, so we should be left with only the refs in the command buffer.",
+      "range": {
+        "startLine": 1997,
+        "startChar": 12,
+        "endLine": 1998,
+        "endChar": 58
+      },
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

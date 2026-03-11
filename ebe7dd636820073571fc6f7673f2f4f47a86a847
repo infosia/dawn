@@ -22,6 +22,30 @@
       },
       "revId": "ebe7dd636820073571fc6f7673f2f4f47a86a847",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ede3289_f96124a2",
+        "filename": "src/dawn/tests/end2end/DepthStencilCopyTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-11T21:17:54Z",
+      "side": 1,
+      "message": "Done. I moved the test to validation tests.",
+      "parentUuid": "42b1c8b7_41b49981",
+      "range": {
+        "startLine": 1643,
+        "startChar": 4,
+        "endLine": 1643,
+        "endChar": 23
+      },
+      "revId": "ebe7dd636820073571fc6f7673f2f4f47a86a847",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
