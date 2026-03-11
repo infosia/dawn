@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77652713_6788e726",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-11T08:26:08Z",
+      "side": 1,
+      "message": "Oh it\u0027s not related to the file system but the Windows Named Shared Memory File Handle used to share CPU data among multiple processes (https://learn.microsoft.com/en-us/windows/win32/memory/creating-named-shared-memory). \n\nIn Chromium the Transfer Buffer (created by CommandBuffer[1]) is implemented with Named Shared Memory File Mapping[2].\n\nWhat I am prototyping is using`SharedBufferMemoryD3D12SharedMemoryFileMapping` (only available on cache coherent UMA) to import a whole GPU transfer buffer as a SharedBufferMemory in Dawn::native and directly access it as a GPU resource without any extra CPU or GPU copies.\n\nIt\u0027s not easy and needs several changes in dawn::wire. I will write a design doc first to share all my findings and discuss with you.\n\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:gpu/ipc/client/command_buffer_proxy_impl.cc;l\u003d501\n[2] https://source.chromium.org/chromium/chromium/src/+/main:base/memory/platform_shared_memory_region_win.cc;l\u003d104",
+      "parentUuid": "38b79f1d_523e3a9b",
+      "revId": "e2a37277fb36c2dc7dc90f8412d3881b8645912d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73f94db5_3a428e59",
