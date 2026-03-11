@@ -162,7 +162,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // Fixup loads of binding_arrays of handles that may have been introduced by
     // DirectVariableAccess (DVA). Vulkan drivers that need DVA of handle expect binding_arrays to
     // stay as pointer and many mishandle by-value binding_arrays.
-    if (options.workarounds.dva_transform_handle) {
+    if (options.workarounds.dva_transform_handle ==
+        core::ir::transform::HandleTransformLevel::kFull) {
         TINT_CHECK_RESULT(raise::KeepBindingArrayAsPointer(module));
     }
 

@@ -633,7 +633,7 @@ struct State {
         }
 
         if (param_type->IsHandle()) {
-            return options.transform_handle;
+            return options.transform_handle == HandleTransformLevel::kFull;
         }
 
         return false;
@@ -659,7 +659,7 @@ struct State {
                     return let->Value();
                 },
                 [&](Load* load) {
-                    if (options.transform_handle) {
+                    if (options.transform_handle == HandleTransformLevel::kFull) {
                         TINT_DEFER(load->Destroy());
                         return load->From();
                     }

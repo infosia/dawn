@@ -49,19 +49,25 @@ namespace {
 static constexpr DirectVariableAccessOptions kTransformHandle = {
     /* transform_private */ false,
     /* transform_function */ false,
-    /* transform_handle */ true,
+    /* transform_handle */ HandleTransformLevel::kFull,
+};
+
+static constexpr DirectVariableAccessOptions kTransformExternalHandle = {
+    /* transform_private */ false,
+    /* transform_function */ false,
+    /* transform_handle */ HandleTransformLevel::kExternal,
 };
 
 static constexpr DirectVariableAccessOptions kTransformPrivate = {
     /* transform_private */ true,
     /* transform_function */ false,
-    /* transform_handle */ false,
+    /* transform_handle */ HandleTransformLevel::kNone,
 };
 
 static constexpr DirectVariableAccessOptions kTransformFunction = {
     /* transform_private */ false,
     /* transform_function */ true,
-    /* transform_handle */ false,
+    /* transform_handle */ HandleTransformLevel::kNone,
 };
 
 }  // namespace
@@ -441,6 +447,45 @@ $B1: {  # root
 
 )";
     Run(DirectVariableAccess, kTransformHandle);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DirectVariableAccessTest_RemoveUncalled, HandleExternalTexture_Enabled) {
+    b.Append(b.ir.root_block, [&] { b.Var<private_>("keep_me", 42_i); });
+
+    auto* f = b.Function("f", ty.u32());
+    auto* p = b.FunctionParam("p", ty.external_texture());
+    f->SetParams({
+        b.FunctionParam("pre", ty.i32()),
+        p,
+        b.FunctionParam("post", ty.i32()),
+    });
+    b.Append(f->Block(),
+             [&] { b.Return(f, b.Call(ty.u32(), core::BuiltinFn::kTextureDimensions, p, 0_u)); });
+
+    auto* src = R"(
+$B1: {  # root
+  %keep_me:ptr<private, i32, read_write> = var 42i
+}
+
+%f = func(%pre:i32, %p:texture_1d<f32>, %post:i32):u32 {
+  $B2: {
+    %6:u32 = textureDimensions %p, 0u
+    ret %6
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %keep_me:ptr<private, i32, read_write> = var 42i
+}
+
+)";
+    Run(DirectVariableAccess, kTransformExternalHandle);
 
     EXPECT_EQ(expect, str());
 }
