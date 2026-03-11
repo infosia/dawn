@@ -1599,6 +1599,49 @@ TEST_P(DepthStencilCopyTests_RegressionDawn1083, Run) {
     }
 }
 
+class DepthStencilCopyTests_Regression489585038 : public DawnTest {};
+
+// Regression test for crbug.com/489585038. Checks that an effective no-op T2T copies doesn't crash
+// during submit when all texture refs are 0. This was happening with
+// use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource enabled, and doing a 0-depth
+// (no-op) copy, then making sure that the src and dst texture refs go to 0 so they are deleted, and
+// then submitting. The bug was that the raw texture pointers were being added
+// CommandEncoder::mTopLevelTextures but without the texture refs being also stored in a command
+// object.
+TEST_P(DepthStencilCopyTests_Regression489585038, Run) {
+    wgpu::Texture src, dst;
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::TextureDescriptor texDesc = {};
+        texDesc.size = {8, 8, 1};
+        texDesc.format = wgpu::TextureFormat::Depth32Float;
+        texDesc.mipLevelCount = 4;
+        texDesc.sampleCount = 1;
+        texDesc.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst |
+                        wgpu::TextureUsage::RenderAttachment;
+
+        src = device.CreateTexture(&texDesc);
+        dst = device.CreateTexture(&texDesc);
+
+        wgpu::TexelCopyTextureInfo srcInfo = utils::CreateTexelCopyTextureInfo(src, 1);
+        wgpu::TexelCopyTextureInfo dstInfo = utils::CreateTexelCopyTextureInfo(dst, 1);
+
+        constexpr uint32_t depthToCopy = 0;  // Crucial for reproducing the crash
+        wgpu::Extent3D copySize = {4, 4, depthToCopy};
+
+        wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+        commandEncoder.CopyTextureToTexture(&srcInfo, &dstInfo, &copySize);
+        commands = commandEncoder.Finish();
+    }
+
+    src.Destroy();
+    dst.Destroy();
+    src = nullptr;
+    dst = nullptr;
+    // This should fail validation because the textures for the copy were destroyed
+    ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
+}
+
 DAWN_INSTANTIATE_TEST_P(
     DepthStencilCopyTests,
     {D3D11Backend(), D3D11Backend({"use_packed_depth24_unorm_stencil8_format"}), D3D12Backend(),
@@ -1677,6 +1720,18 @@ DAWN_INSTANTIATE_TEST_P(
     std::vector<wgpu::TextureFormat>{wgpu::TextureFormat::Depth16Unorm,
                                      wgpu::TextureFormat::Depth32FloatStencil8,
                                      wgpu::TextureFormat::Depth24Plus});
+
+DAWN_INSTANTIATE_TEST(
+    DepthStencilCopyTests_Regression489585038,
+    D3D11Backend(),
+    D3D12Backend(),
+    D3D12Backend({"use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
+    MetalBackend(),
+    MetalBackend({"use_blit_for_depth_texture_to_texture_copy_to_nonzero_subresource"}),
+    OpenGLBackend(),
+    OpenGLESBackend(),
+    VulkanBackend(),
+    WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
