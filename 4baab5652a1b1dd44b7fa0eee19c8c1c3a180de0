@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd0e61cb_cced89d1",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T14:08:48Z",
+      "side": 1,
+      "message": "M2 on farm has this feature and is the only device that can actually test it on real hw",
+      "range": {
+        "startLine": 433,
+        "startChar": 265,
+        "endLine": 433,
+        "endChar": 279
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "515cd388_44d264b6",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T14:08:48Z",
+      "side": 1,
+      "message": "The intel macs on the farm will fail validation if we dont use these version checks because they dont have the ulong (u64) support",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29734ae4_b5cf3462",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T14:08:48Z",
+      "side": 1,
+      "message": "Changes to these template files can cause extralines which will cause large diffs. It is hard to sometimes make these go away.",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
