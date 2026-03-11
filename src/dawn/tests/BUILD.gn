@@ -732,6 +732,7 @@ source_set("end2end_tests_sources") {
     "end2end/VertexStateTests.cpp",
     "end2end/ViewportOrientationTests.cpp",
     "end2end/ViewportTests.cpp",
+    "end2end/WGSLFuzzerTests.cpp",
   ]
 
   if (!is_debug) {

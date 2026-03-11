@@ -163,7 +163,9 @@ set(end2end_sources
     "end2end/VertexStateTests.cpp"
     "end2end/ViewportOrientationTests.cpp"
     "end2end/ViewportTests.cpp"
-)
+    "end2end/WGSLFuzzerTests.cpp"
+    )
+
 
 if (NOT IS_DEBUG_BUILD)
     list(APPEND end2end_sources
