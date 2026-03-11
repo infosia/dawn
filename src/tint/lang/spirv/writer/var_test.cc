@@ -42,7 +42,8 @@ TEST_F(SpirvWriterTest, FunctionVar_NoInit) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Function_int Function");
 }
 
@@ -54,7 +55,8 @@ TEST_F(SpirvWriterTest, FunctionVar_WithInit) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Function_int Function");
     EXPECT_INST("OpStore %v %int_42");
 }
@@ -71,7 +73,8 @@ TEST_F(SpirvWriterTest, FunctionVar_DeclInsideBlock) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
        %main = OpFunction %void None %3
           %4 = OpLabel
@@ -96,7 +99,8 @@ TEST_F(SpirvWriterTest, FunctionVar_Load) {
         mod.SetName(result, "result");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Function_int Function");
     EXPECT_INST("%result = OpLoad %int %v");
 }
@@ -109,7 +113,8 @@ TEST_F(SpirvWriterTest, FunctionVar_Store) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Function_int Function");
     EXPECT_INST("OpStore %v %int_42");
 }
@@ -124,7 +129,8 @@ TEST_F(SpirvWriterTest, PrivateVar_NoInit) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Private_int Private");
 }
 
@@ -139,7 +145,8 @@ TEST_F(SpirvWriterTest, PrivateVar_WithInit) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Private_int Private %int_42");
 }
 
@@ -158,7 +165,8 @@ TEST_F(SpirvWriterTest, PrivateVar_LoadAndStore) {
         mod.SetName(add, "add");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Private_int Private %int_42");
     EXPECT_INST("%load = OpLoad %int %v");
     EXPECT_INST("OpBitcast %uint %load");
@@ -178,7 +186,8 @@ TEST_F(SpirvWriterTest, WorkgroupVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Workgroup_int Workgroup");
 }
 
@@ -195,7 +204,8 @@ TEST_F(SpirvWriterTest, WorkgroupVar_LoadAndStore) {
         mod.SetName(add, "add");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%v = OpVariable %_ptr_Workgroup_int Workgroup");
     EXPECT_INST("%load = OpLoad %int %v");
     EXPECT_INST("OpBitcast %uint %load");
@@ -220,7 +230,8 @@ TEST_F(SpirvWriterTest, WorkgroupVar_ZeroInitializeWithExtension) {
     opts.extensions.use_zero_initialize_workgroup_memory = true;
 
     // Create a writer with the zero_init_workgroup_memory flag set to `true`.
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%4 = OpConstantNull %int");
     EXPECT_INST("%v = OpVariable %_ptr_Workgroup_int Workgroup %4");
 }
@@ -236,7 +247,8 @@ TEST_F(SpirvWriterTest, StorageVar_ReadOnly) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v_block Block
                OpDecorate %1 DescriptorSet 0
@@ -265,7 +277,8 @@ TEST_F(SpirvWriterTest, StorageVar_LoadAndStore) {
         mod.SetName(add, "add");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %1 Coherent
 )");
@@ -300,7 +313,8 @@ TEST_F(SpirvWriterTest, StorageVar_WithVulkan) {
     Options opts;
     opts.extensions.use_vulkan_memory_model = true;
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(               OpCapability Shader
                OpCapability VulkanMemoryModel
                OpCapability VulkanMemoryModelDeviceScope
@@ -365,7 +379,8 @@ TEST_F(SpirvWriterTest, StorageVar_Workgroup_WithVulkan) {
     Options opts;
     opts.extensions.use_vulkan_memory_model = true;
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(               OpCapability Shader
                OpCapability VulkanMemoryModel
                OpCapability VulkanMemoryModelDeviceScope
@@ -443,7 +458,8 @@ TEST_F(SpirvWriterTest, UniformVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %_arr_v4uint_uint_1 ArrayStride 16
                OpMemberDecorate %v_block_tint_explicit_layout 0 Offset 0
@@ -472,7 +488,8 @@ TEST_F(SpirvWriterTest, UniformVar_Load) {
         mod.SetName(load, "load");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
          %12 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %uint_0
          %15 = OpLoad %v4uint %12 None
@@ -491,7 +508,8 @@ TEST_F(SpirvWriterTest, ImmediateVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v_block Block
 )");
@@ -519,7 +537,8 @@ TEST_F(SpirvWriterTest, ImmedaiteVar_Load) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
           %8 = OpAccessChain %_ptr_PushConstant_int %1 %uint_0
        %load = OpLoad %int %8 None
@@ -539,7 +558,8 @@ TEST_F(SpirvWriterTest, SamplerVar) {
         mod.SetName(load, "load");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v DescriptorSet 0
                OpDecorate %v Binding 0
@@ -566,7 +586,8 @@ TEST_F(SpirvWriterTest, TextureVar) {
         mod.SetName(load, "load");
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v DescriptorSet 0
                OpDecorate %v Binding 0
@@ -607,7 +628,8 @@ TEST_F(SpirvWriterTest, TextureVar_TextureParamTextureLoad_NoDva) {
     Options opts{};
     opts.workarounds.dva_transform_handle = false;
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("OpFunctionParameter");
 }
 
@@ -639,7 +661,8 @@ TEST_F(SpirvWriterTest, TextureVar_TextureParamTextureLoad_Dva) {
     Options opts{};
     opts.workarounds.dva_transform_handle = true;
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     // Consider a EXPECT_NOT_INST macro.
     ASSERT_TRUE(output_.find("OpFunctionParameter") == std::string::npos) << output_;
 }
@@ -658,7 +681,8 @@ TEST_F(SpirvWriterTest, ReadOnlyStorageTextureVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v DescriptorSet 0
                OpDecorate %v Binding 0
@@ -686,7 +710,8 @@ TEST_F(SpirvWriterTest, ReadWriteStorageTextureVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v DescriptorSet 0
                OpDecorate %v Binding 0
@@ -714,7 +739,8 @@ TEST_F(SpirvWriterTest, WriteOnlyStorageTextureVar) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << Error() << output_;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST(R"(
                OpDecorate %v DescriptorSet 0
                OpDecorate %v Binding 0
