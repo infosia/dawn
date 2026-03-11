@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27fed6fa_f96aa1bc",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-11T14:29:23Z",
+      "side": 1,
+      "message": "This is for unit tests",
+      "parentUuid": "ebbc6ff5_cd6edad7",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "4baab5652a1b1dd44b7fa0eee19c8c1c3a180de0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29734ae4_b5cf3462",
         "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
         "patchSetId": 22
