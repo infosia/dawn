@@ -151,8 +151,6 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     }
     options.array_length_from_uniform.buffer_sizes_offset = 0x800;
 
-    TINT_CHECK_RESULT(CanGenerate(module, options));
-
     TINT_CHECK_RESULT_UNWRAP(output, Generate(module, options));
     if (context.options.dump) {
         std::cout << "Dumping generated HLSL:\n" << output.hlsl << "\n";
