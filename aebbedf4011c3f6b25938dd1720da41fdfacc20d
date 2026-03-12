@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc7a3188_cfd8f138",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-12T00:59:57Z",
+      "side": 1,
+      "message": "+ynovikov for general review\n+kainino for the PRESUBMIT.py and test_spec_presubmit_support.py changes\n\nled runs with this + the prerequisite CLs applied look good\n\n* [try](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/dawn-cq-linux-x64-rel/20/infra)\n* [CI parent builder](https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-builder-dbg/4/infra)\n* [CI child tester](https://ci.chromium.org/ui/p/dawn/builders/ci.shadow/dawn-linux-x64-sws-dbg/2/infra)",
+      "revId": "aebbedf4011c3f6b25938dd1720da41fdfacc20d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
