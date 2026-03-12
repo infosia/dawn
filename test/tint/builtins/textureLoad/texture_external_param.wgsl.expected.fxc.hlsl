@@ -34,11 +34,11 @@ struct vertex_main_outputs {
 };
 
 
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 uint2 tint_v2f32_to_v2u32(float2 value) {
   return uint2(clamp(value, (0.0f).xx, (4294967040.0f).xx));
 }
@@ -50,7 +50,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 v_4 = round(mul(float3(float2(min(coords, params.apparentSize)), 1.0f), params.loadTransform));
   uint2 v_5 = tint_v2f32_to_v2u32(v_4);
   float3 v_6 = (0.0f).xxx;
@@ -80,7 +80,7 @@ float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> pla
 }
 
 float4 textureLoad2d(Texture2D<float4> texture_plane0, Texture2D<float4> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
 }
 
 float3x2 v_17(uint start_byte_offset) {
@@ -176,11 +176,11 @@ struct tint_ExternalTextureParams {
 };
 
 
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 uint2 tint_v2f32_to_v2u32(float2 value) {
   return uint2(clamp(value, (0.0f).xx, (4294967040.0f).xx));
 }
@@ -192,7 +192,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 v_4 = round(mul(float3(float2(min(coords, params.apparentSize)), 1.0f), params.loadTransform));
   uint2 v_5 = tint_v2f32_to_v2u32(v_4);
   float3 v_6 = (0.0f).xxx;
@@ -222,7 +222,7 @@ float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> pla
 }
 
 float4 textureLoad2d(Texture2D<float4> texture_plane0, Texture2D<float4> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
 }
 
 float3x2 v_17(uint start_byte_offset) {
@@ -312,11 +312,11 @@ struct tint_ExternalTextureParams {
 };
 
 
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 uint2 tint_v2f32_to_v2u32(float2 value) {
   return uint2(clamp(value, (0.0f).xx, (4294967040.0f).xx));
 }
@@ -328,7 +328,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 v_4 = round(mul(float3(float2(min(coords, params.apparentSize)), 1.0f), params.loadTransform));
   uint2 v_5 = tint_v2f32_to_v2u32(v_4);
   float3 v_6 = (0.0f).xxx;
@@ -358,7 +358,7 @@ float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> pla
 }
 
 float4 textureLoad2d(Texture2D<float4> texture_plane0, Texture2D<float4> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, uint2(coords));
 }
 
 float3x2 v_17(uint start_byte_offset) {

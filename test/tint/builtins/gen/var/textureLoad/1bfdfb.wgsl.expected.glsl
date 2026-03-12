@@ -48,7 +48,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_3 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_3) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
+vec4 tint_TextureLoadMultiplanarExternal(tint_ExternalTextureParams params, uvec2 coords) {
   vec2 v_4 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_5 = uvec2(v_4);
   vec3 v_6 = vec3(0.0f);
@@ -124,7 +124,7 @@ tint_ExternalTextureParams v_32(uint start_byte_offset) {
 vec4 textureLoad_1bfdfb() {
   uvec2 arg_1 = uvec2(1u);
   tint_ExternalTextureParams v_52 = v_32(0u);
-  vec4 res = tint_TextureLoadExternal(v_52, min(arg_1, ((v_52.apparentSize + uvec2(1u)) - uvec2(1u))));
+  vec4 res = tint_TextureLoadMultiplanarExternal(v_52, min(arg_1, ((v_52.apparentSize + uvec2(1u)) - uvec2(1u))));
   return res;
 }
 void main() {
@@ -178,7 +178,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_3 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_3) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
+vec4 tint_TextureLoadMultiplanarExternal(tint_ExternalTextureParams params, uvec2 coords) {
   vec2 v_4 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_5 = uvec2(v_4);
   vec3 v_6 = vec3(0.0f);
@@ -254,7 +254,7 @@ tint_ExternalTextureParams v_32(uint start_byte_offset) {
 vec4 textureLoad_1bfdfb() {
   uvec2 arg_1 = uvec2(1u);
   tint_ExternalTextureParams v_52 = v_32(0u);
-  vec4 res = tint_TextureLoadExternal(v_52, min(arg_1, ((v_52.apparentSize + uvec2(1u)) - uvec2(1u))));
+  vec4 res = tint_TextureLoadMultiplanarExternal(v_52, min(arg_1, ((v_52.apparentSize + uvec2(1u)) - uvec2(1u))));
   return res;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -311,7 +311,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
+vec4 tint_TextureLoadMultiplanarExternal(tint_ExternalTextureParams params, uvec2 coords) {
   vec2 v_3 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_4 = uvec2(v_3);
   vec3 v_5 = vec3(0.0f);
@@ -387,7 +387,7 @@ tint_ExternalTextureParams v_31(uint start_byte_offset) {
 vec4 textureLoad_1bfdfb() {
   uvec2 arg_1 = uvec2(1u);
   tint_ExternalTextureParams v_51 = v_31(0u);
-  vec4 res = tint_TextureLoadExternal(v_51, min(arg_1, ((v_51.apparentSize + uvec2(1u)) - uvec2(1u))));
+  vec4 res = tint_TextureLoadMultiplanarExternal(v_51, min(arg_1, ((v_51.apparentSize + uvec2(1u)) - uvec2(1u))));
   return res;
 }
 VertexOutput vertex_main_inner() {

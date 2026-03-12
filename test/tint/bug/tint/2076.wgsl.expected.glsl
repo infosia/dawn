@@ -32,12 +32,12 @@ struct tint_ExternalTextureParams {
   vec2 plane1CoordFactor;
 };
 
-uniform highp sampler2D randomTexture_plane0;
-uniform highp sampler2D randomTexture_plane1;
 layout(binding = 3, std140)
 uniform randomTexture_params_block_1_ubo {
   uvec4 inner[17];
 } v;
+uniform highp sampler2D randomTexture_plane0;
+uniform highp sampler2D randomTexture_plane1;
 uniform highp sampler2D depthTexture;
 mat3x2 v_1(uint start_byte_offset) {
   uvec4 v_2 = v.inner[(start_byte_offset / 16u)];
