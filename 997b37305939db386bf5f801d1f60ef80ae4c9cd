@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62f6617a_bfc96d88",
+        "filename": "src/dawn/native/BlitDepthToDepth.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-12T15:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57372c84_327fdc54",
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82dd60ea_5ce53e6d",
@@ -82,6 +100,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c5756f_2ffd9d75",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-12T15:57:21Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f7ac25b2_654f52c9",
+      "range": {
+        "startLine": 1997,
+        "startChar": 12,
+        "endLine": 1998,
+        "endChar": 58
+      },
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38bd1869_d41e1faf",
@@ -95,6 +137,30 @@
       "writtenOn": "2026-03-12T12:09:20Z",
       "side": 1,
       "message": "nit: the Destroy here shouldn\u0027t matter because it only queues the destruction of the GPU data. It\u0027s the setting to nullptr that causes the issue.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 18
+      },
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2be22ff_c76899c6",
+        "filename": "src/dawn/tests/unittests/validation/CopyCommandsValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-12T15:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38bd1869_d41e1faf",
       "range": {
         "startLine": 258,
         "startChar": 0,
