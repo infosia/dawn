@@ -33,6 +33,24 @@
       "message": "I don\u0027t think we should be exposing this through the backend options. The only workaround here is \"must DVA all handles\", which is the current option. The need to apply DVA to external textures is a requirement of the backend when using YUV, not a workaround that clients should be telling us to do.\n\nSo IMO the `dva_transform_handle ? kFull : kExternal` logic should just be in `Raise()`.",
       "revId": "32b2fc7e51a19cbd32f9634f4647784fd14c2f79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914916e2_4078b0bc",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-12T20:20:03Z",
+      "side": 1,
+      "message": "Hm, so dawn would just set the flag `true` and we\u0027d interpret `false` to mean External? That does mean it can never be turned off for SPIR-V, but maybe that\u0027s ok?",
+      "parentUuid": "64a146c6_5fee9f88",
+      "revId": "32b2fc7e51a19cbd32f9634f4647784fd14c2f79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
