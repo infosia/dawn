@@ -16,6 +16,24 @@
       "message": "Out of curiosity, are there plans to get rid of this .pyl file and use the Starlark source of truth?",
       "revId": "ad824e2cb3465f5397c5ebe2f851a47747718c6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b883dc51_ebb20d2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-03-12T17:59:57Z",
+      "side": 1,
+      "message": "I\u0027m not aware of any - the Chromium config only seems to support `gn_isolate_map.pyl`",
+      "parentUuid": "498f0dde_88a9c5bb",
+      "revId": "ad824e2cb3465f5397c5ebe2f851a47747718c6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
