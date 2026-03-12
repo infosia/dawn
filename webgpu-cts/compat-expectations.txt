@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-03-04 07:26:34AM
+# Last rolled: 2026-03-12 05:12:38AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -531,8 +531,6 @@ crbug.com/42240846 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_f
 
 # textureSample() failures on Pixel 6
 # these are also failing on Vulkan (WebGPU Core) on the same device
-
-
 
 # 'asin' failures on Intel
 crbug.com/341327470 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,asin:f32:* [ Failure ]
