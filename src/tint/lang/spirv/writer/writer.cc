@@ -151,12 +151,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (call->Func() == core::BuiltinFn::kPrint) {
             return Failure("print is not supported by the SPIR-V backend");
         }
-        if (call->Func() == core::BuiltinFn::kHasResource ||
-            call->Func() == core::BuiltinFn::kGetResource) {
-            if (!options.resource_table) {
-                return Failure("hasResource and getResource require a resource table");
-            }
-        }
     }
 
     TINT_CHECK_RESULT(ValidateBindingOptions(options));
