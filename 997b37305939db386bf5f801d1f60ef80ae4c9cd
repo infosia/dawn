@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe3c2e7_9e43d82a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-12T12:09:20Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57372c84_327fdc54",
+        "filename": "src/dawn/native/BlitDepthToDepth.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-12T12:09:20Z",
+      "side": 1,
+      "message": "```suggestion\n    DAWN_ASSERT(!copyExtent.IsEmpty());\n```",
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82dd60ea_5ce53e6d",
@@ -19,6 +53,53 @@
         "startChar": 12,
         "endLine": 1998,
         "endChar": 58
+      },
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7ac25b2_654f52c9",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-12T12:09:20Z",
+      "side": 1,
+      "message": "While doing the Defer could work, I\u0027m thinking it\u0027s a temporary and complex solution to ASSERT, but it would be better to spend time fixing the problem for good by doing crbug.com/491867541 so with an audit and regression test for this case I think we are ok for this CL.",
+      "parentUuid": "82dd60ea_5ce53e6d",
+      "range": {
+        "startLine": 1997,
+        "startChar": 12,
+        "endLine": 1998,
+        "endChar": 58
+      },
+      "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38bd1869_d41e1faf",
+        "filename": "src/dawn/tests/unittests/validation/CopyCommandsValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-12T12:09:20Z",
+      "side": 1,
+      "message": "nit: the Destroy here shouldn\u0027t matter because it only queues the destruction of the GPU data. It\u0027s the setting to nullptr that causes the issue.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 18
       },
       "revId": "997b37305939db386bf5f801d1f60ef80ae4c9cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
