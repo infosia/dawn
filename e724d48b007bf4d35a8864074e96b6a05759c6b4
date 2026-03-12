@@ -33,6 +33,24 @@
       "message": "```suggestion\n            mProperties.usage \u0026 ~kMappableBufferUsages;\n```",
       "revId": "e724d48b007bf4d35a8864074e96b6a05759c6b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4584e605_4fbeb506",
+        "filename": "src/dawn/native/SharedBufferMemory.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-12T08:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c33c14_cfbd91de",
+      "revId": "e724d48b007bf4d35a8864074e96b6a05759c6b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
