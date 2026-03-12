@@ -16,6 +16,24 @@
       "message": "This should use `seen_hlsl_texture_bindings` then, no? Since that\u0027s the space it lands in?",
       "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b32cdbcb_bb813914",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-12T23:48:30Z",
+      "side": 1,
+      "message": "Yeah this validation logic is actually completely wrong. We need to be looking at the access modes of the buffers and storage textures as well, which we don\u0027t actually have in the options struct.\n\nThis probably all needs a rework to make that possible.",
+      "parentUuid": "c55ab9fe_fe4c3ec2",
+      "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
