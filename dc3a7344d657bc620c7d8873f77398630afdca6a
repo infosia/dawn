@@ -16,6 +16,23 @@
       "message": "PTAL.\nThe transform diff shows more changed than it really has (changing `config.` to `config-\u003e` confused the diff tool apparently).",
       "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6caf5bf_a5c21d6f",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-12T17:33:35Z",
+      "side": 1,
+      "message": "I think the better fix would be to make this iterate over the instructions for a single entry point. This is going to have the same issue for Print where a call in an unused entrypoint would trigger an error incorrectly.\n\nMy prefernece would be to keep the get/has Resources checks in here and make the instruction walk smarter (we probably have similar issues in other CanGenerate checks.)",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
