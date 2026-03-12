@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80d0c386_94a8160c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-12T17:12:14Z",
+      "side": 1,
+      "message": "PTAL.\nThe transform diff shows more changed than it really has (changing `config.` to `config-\u003e` confused the diff tool apparently).",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
