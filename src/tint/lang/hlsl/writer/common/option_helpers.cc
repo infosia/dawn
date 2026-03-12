@@ -41,7 +41,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
 
     tint::Hashmap<tint::BindingPoint, tint::BindingPoint, 8> seen_wgsl_bindings{};
 
-    PointToPointMap seen_hlsl_buffer_bindings{};
+    PointToPointMap seen_hlsl_uniform_bindings{};
+    PointToPointMap seen_hlsl_storage_bindings{};
     PointToPointMap seen_hlsl_texture_bindings{};
     PointToPointMap seen_hlsl_sampler_bindings{};
 
@@ -91,23 +92,26 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
         return true;
     };
 
-    // Storage and uniform are both [[buffer()]]
-    if (!valid(seen_hlsl_buffer_bindings, options.bindings.uniform)) {
+    // uniform buffers use register b#.
+    if (!valid(seen_hlsl_uniform_bindings, options.bindings.uniform)) {
         diagnostics.AddNote(Source{}) << "when processing uniform";
         return Failure{diagnostics.Str()};
     }
-    if (!valid(seen_hlsl_buffer_bindings, options.bindings.storage)) {
+
+    // read-only storage buffers use register t#.
+    // read-write storage buffers use register u#.
+    if (!valid(seen_hlsl_storage_bindings, options.bindings.storage)) {
         diagnostics.AddNote(Source{}) << "when processing storage";
         return Failure{diagnostics.Str()};
     }
 
-    // Sampler is [[sampler()]]
+    // samplers use register s#.
     if (!valid(seen_hlsl_sampler_bindings, options.bindings.sampler)) {
         diagnostics.AddNote(Source{}) << "when processing sampler";
         return Failure{diagnostics.Str()};
     }
 
-    // Texture and storage texture are [[texture()]]
+    // textures use register t#.
     if (!valid(seen_hlsl_texture_bindings, options.bindings.texture)) {
         diagnostics.AddNote(Source{}) << "when processing texture";
         return Failure{diagnostics.Str()};
@@ -129,7 +133,7 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
             return Failure{diagnostics.Str()};
         }
 
-        // Plane0 & Plane1 are [[texture()]]
+        // Plane0 & Plane1 use register t#.
         if (hlsl_seen(seen_hlsl_texture_bindings, plane0, src_binding)) {
             diagnostics.AddNote(Source{}) << "when processing external_texture";
             return Failure{diagnostics.Str()};
@@ -138,8 +142,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
             diagnostics.AddNote(Source{}) << "when processing external_texture";
             return Failure{diagnostics.Str()};
         }
-        // Metadata is [[buffer()]]
-        if (hlsl_seen(seen_hlsl_buffer_bindings, metadata, src_binding)) {
+        // Metadata is a uniform buffer, which uses register b#.
+        if (hlsl_seen(seen_hlsl_uniform_bindings, metadata, src_binding)) {
             diagnostics.AddNote(Source{}) << "when processing external_texture";
             return Failure{diagnostics.Str()};
         }
