@@ -95,7 +95,7 @@ struct FuzzedOptions {
                  polyfill_pixel_center,
                  polyfill_case_switch,
                  scalarize_max_min_clamp,
-                 dva_transform_handle,
+                 dva_transform_handle_deprecated,
                  polyfill_pack_unpack_4x8_norm,
                  subgroup_shuffle_clamped,
                  polyfill_subgroup_broadcast_f16,
