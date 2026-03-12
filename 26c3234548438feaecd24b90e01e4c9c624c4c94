@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55ab9fe_fe4c3ec2",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-12T17:26:22Z",
+      "side": 1,
+      "message": "This should use `seen_hlsl_texture_bindings` then, no? Since that\u0027s the space it lands in?",
+      "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
