@@ -175,7 +175,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         TINT_CHECK_RESULT(check_io_attributes(ep_func->ReturnAttributes()));
     }
 
-    TINT_CHECK_RESULT(ValidateBindingOptions(options));
+    TINT_CHECK_RESULT(ValidateBindingOptions(ir, options));
 
     return Success;
 }

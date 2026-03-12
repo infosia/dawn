@@ -31,6 +31,11 @@
 #include <variant>
 
 #include "src/tint/api/common/bindings.h"
+#include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/binding_array.h"
+#include "src/tint/lang/core/type/pointer.h"
+#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 
@@ -38,14 +43,23 @@ namespace tint::hlsl::writer {
 
 using PointToPointMap = tint::Hashmap<tint::BindingPoint, tint::BindingPoint, 8>;
 
-Result<SuccessType> ValidateBindingOptions(const Options& options) {
+Result<SuccessType> ValidateBindingOptions(const core::ir::Module& ir, const Options& options) {
     diag::List diagnostics;
 
-    tint::Hashmap<tint::BindingPoint, tint::BindingPoint, 8> seen_wgsl_bindings{};
+    tint::Hashmap<tint::BindingPoint, const core::ir::Var*, 8> binding_to_var{};
+    for (auto* inst : *ir.root_block) {
+        if (auto* var = inst->As<core::ir::Var>()) {
+            if (auto bp = var->BindingPoint()) {
+                binding_to_var.Add(*bp, var);
+            }
+        }
+    }
 
-    PointToPointMap seen_hlsl_buffer_bindings{};
-    PointToPointMap seen_hlsl_texture_bindings{};
-    PointToPointMap seen_hlsl_sampler_bindings{};
+    PointToPointMap seen_wgsl_bindings{};
+    PointToPointMap seen_hlsl_register_b{};
+    PointToPointMap seen_hlsl_register_s{};
+    PointToPointMap seen_hlsl_register_t{};
+    PointToPointMap seen_hlsl_register_u{};
 
     // Both wgsl_seen and hlsl_seen check to see if the pair of [src, dst] are unique. If we have
     // multiple entries that map the same [src, dst] pair, that's fine. We treat it as valid as it's
@@ -77,7 +91,7 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
         return false;
     };
 
-    auto valid = [&wgsl_seen, &hlsl_seen](PointToPointMap& map, const auto& hsh) -> bool {
+    auto valid = [&wgsl_seen, &hlsl_seen](auto&& map, const auto& hsh) -> bool {
         for (const auto& it : hsh) {
             const auto& src_binding = it.first;
             const auto& dst_binding = it.second;
@@ -86,35 +100,72 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
                 return false;
             }
 
-            if (hlsl_seen(map, dst_binding, src_binding)) {
+            // The map is either passed directly or as a function that returns the map.
+            PointToPointMap* dst_map = nullptr;
+            if constexpr (std::is_same_v<decltype(map), PointToPointMap&>) {
+                dst_map = &map;
+            } else {
+                dst_map = &map(src_binding);
+            }
+
+            if (hlsl_seen(*dst_map, dst_binding, src_binding)) {
                 return false;
             }
         }
         return true;
     };
 
-    // Storage and uniform are both [[buffer()]]
-    if (!valid(seen_hlsl_buffer_bindings, options.bindings.uniform)) {
+    // uniform buffers use register b#.
+    if (!valid(seen_hlsl_register_b, options.bindings.uniform)) {
         diagnostics.AddNote(Source{}) << "when processing uniform";
         return Failure{diagnostics.Str()};
     }
-    if (!valid(seen_hlsl_buffer_bindings, options.bindings.storage)) {
+
+    // read-only storage buffers use register t#.
+    // read-write storage buffers use register u#.
+    auto storage_map = [&](const tint::BindingPoint& src) -> PointToPointMap& {
+        bool is_read_only = false;
+        if (auto* var = binding_to_var.GetOr(src, nullptr)) {
+            if (auto* ptr = var->Result()->Type()->As<core::type::Pointer>()) {
+                is_read_only = ptr->Access() == core::Access::kRead;
+            }
+        }
+        return is_read_only ? seen_hlsl_register_t : seen_hlsl_register_u;
+    };
+    if (!valid(storage_map, options.bindings.storage)) {
         diagnostics.AddNote(Source{}) << "when processing storage";
         return Failure{diagnostics.Str()};
     }
 
-    // Sampler is [[sampler()]]
-    if (!valid(seen_hlsl_sampler_bindings, options.bindings.sampler)) {
+    // samplers use register s#.
+    if (!valid(seen_hlsl_register_s, options.bindings.sampler)) {
         diagnostics.AddNote(Source{}) << "when processing sampler";
         return Failure{diagnostics.Str()};
     }
 
-    // Texture and storage texture are [[texture()]]
-    if (!valid(seen_hlsl_texture_bindings, options.bindings.texture)) {
+    // read-only textures use register t#.
+    if (!valid(seen_hlsl_register_t, options.bindings.texture)) {
         diagnostics.AddNote(Source{}) << "when processing texture";
         return Failure{diagnostics.Str()};
     }
-    if (!valid(seen_hlsl_texture_bindings, options.bindings.storage_texture)) {
+
+    // read-only storage textures use register t#.
+    // writable storage textures use register u#.
+    auto storage_texture_map = [&](const tint::BindingPoint& src) -> PointToPointMap& {
+        bool is_read_only = false;
+        if (auto* var = binding_to_var.GetOr(src, nullptr)) {
+            auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+            auto* store_ty = ptr->StoreType();
+            if (auto* arr = store_ty->As<core::type::BindingArray>()) {
+                store_ty = arr->ElemType();
+            }
+            if (auto* st = store_ty->As<core::type::StorageTexture>()) {
+                is_read_only = st->Access() == core::Access::kRead;
+            }
+        }
+        return is_read_only ? seen_hlsl_register_t : seen_hlsl_register_u;
+    };
+    if (!valid(storage_texture_map, options.bindings.storage_texture)) {
         diagnostics.AddNote(Source{}) << "when processing storage_texture";
         return Failure{diagnostics.Str()};
     }
@@ -124,27 +175,33 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
 
         auto& data = it.second;
         BindingPoint src;
-        BindingPoint helper;
         BindingPoint metadata;
         if (std::holds_alternative<ExternalMultiplanarTexture>(data)) {
             ExternalMultiplanarTexture et = std::get<ExternalMultiplanarTexture>(data);
             src = et.plane0;
-            helper = et.plane1;
             metadata = et.metadata;
 
-            // helper is [[texture()]]
-            if (hlsl_seen(seen_hlsl_texture_bindings, helper, src_binding)) {
+            // Plane0 & Plane1 both use register t#.
+            if (hlsl_seen(seen_hlsl_register_t, et.plane0, src_binding)) {
+                diagnostics.AddNote(Source{}) << "when processing external_texture";
+                return Failure{diagnostics.Str()};
+            }
+            if (hlsl_seen(seen_hlsl_register_t, et.plane1, src_binding)) {
                 diagnostics.AddNote(Source{}) << "when processing external_texture";
                 return Failure{diagnostics.Str()};
             }
         } else if (std::holds_alternative<ExternalYCBCRTexture>(data)) {
             ExternalYCBCRTexture ycb = std::get<ExternalYCBCRTexture>(data);
             src = ycb.texture;
-            helper = ycb.sampler;
             metadata = ycb.metadata;
 
-            // helper is [[sampler()]]
-            if (hlsl_seen(seen_hlsl_sampler_bindings, helper, src_binding)) {
+            // The texture uses register t#.
+            if (hlsl_seen(seen_hlsl_register_t, ycb.texture, src_binding)) {
+                diagnostics.AddNote(Source{}) << "when processing external_texture";
+                return Failure{diagnostics.Str()};
+            }
+            // The sampler uses register s#.
+            if (hlsl_seen(seen_hlsl_register_s, ycb.sampler, src_binding)) {
                 diagnostics.AddNote(Source{}) << "when processing external_texture";
                 return Failure{diagnostics.Str()};
             }
@@ -158,13 +215,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
             return Failure{diagnostics.Str()};
         }
 
-        // Src is [[texture()]]
-        if (hlsl_seen(seen_hlsl_texture_bindings, src, src_binding)) {
-            diagnostics.AddNote(Source{}) << "when processing external_texture";
-            return Failure{diagnostics.Str()};
-        }
-        // Metadata is [[buffer()]]
-        if (hlsl_seen(seen_hlsl_buffer_bindings, metadata, src_binding)) {
+        // Metadata is a uniform buffer, which uses register b#.
+        if (hlsl_seen(seen_hlsl_register_b, metadata, src_binding)) {
             diagnostics.AddNote(Source{}) << "when processing external_texture";
             return Failure{diagnostics.Str()};
         }
