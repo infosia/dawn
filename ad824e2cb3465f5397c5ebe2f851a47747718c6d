@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "498f0dde_88a9c5bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2026-03-12T17:57:21Z",
+      "side": 1,
+      "message": "Out of curiosity, are there plans to get rid of this .pyl file and use the Starlark source of truth?",
+      "revId": "ad824e2cb3465f5397c5ebe2f851a47747718c6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
