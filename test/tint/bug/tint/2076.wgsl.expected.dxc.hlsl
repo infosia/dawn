@@ -30,11 +30,11 @@ struct tint_ExternalTextureParams {
 };
 
 
-Texture2D<float4> randomTexture_plane0 : register(t1);
-Texture2D<float4> randomTexture_plane1 : register(t3);
 cbuffer cbuffer_randomTexture_params : register(b4) {
   uint4 randomTexture_params[17];
 };
+Texture2D<float4> randomTexture_plane0 : register(t1);
+Texture2D<float4> randomTexture_plane1 : register(t3);
 Texture2D<float4> depthTexture : register(t2);
 float3x2 v(uint start_byte_offset) {
   uint4 v_1 = randomTexture_params[(start_byte_offset / 16u)];
