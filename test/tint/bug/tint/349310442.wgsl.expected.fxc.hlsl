@@ -27,11 +27,11 @@ struct tint_ExternalTextureParams {
 };
 
 
-Texture2D<float4> t_plane0 : register(t0);
-Texture2D<float4> t_plane1 : register(t1);
 cbuffer cbuffer_t_params : register(b2) {
   uint4 t_params[17];
 };
+Texture2D<float4> t_plane0 : register(t0);
+Texture2D<float4> t_plane1 : register(t1);
 uint2 tint_v2f32_to_v2u32(float2 value) {
   return uint2(clamp(value, (0.0f).xx, (4294967040.0f).xx));
 }
@@ -43,7 +43,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureLoadExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 v_4 = round(mul(float3(float2(min(coords, params.apparentSize)), 1.0f), params.loadTransform));
   uint2 v_5 = tint_v2f32_to_v2u32(v_4);
   float3 v_6 = (0.0f).xxx;
@@ -121,6 +121,6 @@ tint_ExternalTextureParams v_27(uint start_byte_offset) {
 [numthreads(1, 1, 1)]
 void i() {
   tint_ExternalTextureParams v_48 = v_27(0u);
-  float4 r = tint_TextureLoadExternal(t_plane0, t_plane1, v_48, uint2((int(0)).xx));
+  float4 r = tint_TextureLoadMultiplanarExternal(t_plane0, t_plane1, v_48, uint2((int(0)).xx));
 }
 

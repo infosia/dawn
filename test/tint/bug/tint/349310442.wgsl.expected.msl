@@ -65,9 +65,9 @@ struct tint_ExternalTextureParams_packed_vec3 {
 };
 
 struct tint_module_vars_struct {
+  const constant tint_ExternalTextureParams_packed_vec3* t_params;
   texture2d<float, access::sample> t_plane0;
   texture2d<float, access::sample> t_plane1;
-  const constant tint_ExternalTextureParams_packed_vec3* t_params;
 };
 
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
@@ -75,7 +75,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
 }
 
-float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 const v_2 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
   uint2 const v_3 = uint2(v_2);
   float3 v_4 = 0.0f;
@@ -111,8 +111,8 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
 }
 
 [[max_total_threads_per_threadgroup(1)]]
-kernel void i(texture2d<float, access::sample> t_plane0 [[texture(0)]], texture2d<float, access::sample> t_plane1 [[texture(1)]], const constant tint_ExternalTextureParams_packed_vec3* t_params [[buffer(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.t_plane0=t_plane0, .t_plane1=t_plane1, .t_params=t_params};
+kernel void i(const constant tint_ExternalTextureParams_packed_vec3* t_params [[buffer(0)]], texture2d<float, access::sample> t_plane0 [[texture(0)]], texture2d<float, access::sample> t_plane1 [[texture(1)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.t_params=t_params, .t_plane0=t_plane0, .t_plane1=t_plane1};
   tint_ExternalTextureParams const v_17 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
-  float4 r = tint_TextureLoadExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_17, min(uint2(int2(0)), ((v_17.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 r = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_17, min(uint2(int2(0)), ((v_17.apparentSize + uint2(1u)) - uint2(1u))));
 }
