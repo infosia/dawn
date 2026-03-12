@@ -31,11 +31,11 @@ struct tint_ExternalTextureParams {
 
 
 RWByteAddressBuffer prevent_dce : register(u0);
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t2, space1);
 cbuffer cbuffer_arg_0_params : register(b3, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t2, space1);
 SamplerState arg_1 : register(s1, space1);
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   float3 v_1 = float3((params.G).xxx);
@@ -44,7 +44,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureSampleExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
+float4 tint_TextureSampleClampToEdgeMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
   float2 v_4 = mul(float3(coords, 1.0f), params.sampleTransform);
   float3 v_5 = (0.0f).xxx;
   float v_6 = 0.0f;
@@ -117,7 +117,7 @@ tint_ExternalTextureParams v_22(uint start_byte_offset) {
 float4 textureSampleBaseClampToEdge_7c04e6() {
   float2 arg_2 = (1.0f).xx;
   tint_ExternalTextureParams v_43 = v_22(0u);
-  float4 res = tint_TextureSampleExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
+  float4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
   return res;
 }
 
@@ -158,11 +158,11 @@ struct tint_ExternalTextureParams {
 
 
 RWByteAddressBuffer prevent_dce : register(u0);
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t2, space1);
 cbuffer cbuffer_arg_0_params : register(b3, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t2, space1);
 SamplerState arg_1 : register(s1, space1);
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   float3 v_1 = float3((params.G).xxx);
@@ -171,7 +171,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureSampleExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
+float4 tint_TextureSampleClampToEdgeMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
   float2 v_4 = mul(float3(coords, 1.0f), params.sampleTransform);
   float3 v_5 = (0.0f).xxx;
   float v_6 = 0.0f;
@@ -244,7 +244,7 @@ tint_ExternalTextureParams v_22(uint start_byte_offset) {
 float4 textureSampleBaseClampToEdge_7c04e6() {
   float2 arg_2 = (1.0f).xx;
   tint_ExternalTextureParams v_43 = v_22(0u);
-  float4 res = tint_TextureSampleExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
+  float4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
   return res;
 }
 
@@ -295,11 +295,11 @@ struct vertex_main_outputs {
 };
 
 
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t2, space1);
 cbuffer cbuffer_arg_0_params : register(b3, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t2, space1);
 SamplerState arg_1 : register(s1, space1);
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   float3 v_1 = float3((params.G).xxx);
@@ -308,7 +308,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return (((abs(v) < v_2)) ? ((v_3 * ((params.C * abs(v)) + params.F))) : ((v_3 * (pow(((params.A * abs(v)) + params.B), v_1) + params.E))));
 }
 
-float4 tint_TextureSampleExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
+float4 tint_TextureSampleClampToEdgeMultiplanarExternal(Texture2D<float4> plane_0, Texture2D<float4> plane_1, tint_ExternalTextureParams params, SamplerState tint_sampler, float2 coords) {
   float2 v_4 = mul(float3(coords, 1.0f), params.sampleTransform);
   float3 v_5 = (0.0f).xxx;
   float v_6 = 0.0f;
@@ -381,7 +381,7 @@ tint_ExternalTextureParams v_22(uint start_byte_offset) {
 float4 textureSampleBaseClampToEdge_7c04e6() {
   float2 arg_2 = (1.0f).xx;
   tint_ExternalTextureParams v_43 = v_22(0u);
-  float4 res = tint_TextureSampleExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
+  float4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(arg_0_plane0, arg_0_plane1, v_43, arg_1, arg_2);
   return res;
 }
 
