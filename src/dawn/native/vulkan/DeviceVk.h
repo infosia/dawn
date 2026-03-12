@@ -150,7 +150,8 @@ class Device final : public DeviceBase {
 
     QuerySetBase* GetEmptyPassQuerySet();
 
-    VulkanRenderPassType GetRenderPassType() { return mRenderPassType; }
+    VulkanRenderPassType GetRenderPassType() const { return mRenderPassType; }
+    bool UsePipelineRobustness() const { return mUsePipelineRobustness; }
 
   private:
     Device(AdapterBase* adapter,
@@ -238,6 +239,7 @@ class Device final : public DeviceBase {
     std::atomic<uint64_t> mNextTextureViewId = 1;
 
     VulkanRenderPassType mRenderPassType = VulkanRenderPassType::CreateRenderPass;
+    bool mUsePipelineRobustness = false;
 
     MaybeError ImportExternalImage(const ExternalImageDescriptorVk* descriptor,
                                    ExternalMemoryHandle memoryHandle,

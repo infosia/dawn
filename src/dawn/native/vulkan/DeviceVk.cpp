@@ -473,6 +473,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
             usedKnobs.pipelineRobustnessFeatures = mDeviceInfo.pipelineRobustnessFeatures;
             featuresChain.Add(&usedKnobs.pipelineRobustnessFeatures);
+            mUsePipelineRobustness = mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness;
         }
 
         // robustBufferAccess requires robustBufferAccessUpdateAfterBind to be used with descriptor

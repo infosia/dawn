@@ -664,7 +664,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     // necessary because when bindless is enabled and robustBufferAccessUpdateAfterBind is false, we
     // must only set robust buffer access on vertexInputs.
     VkPipelineRobustnessCreateInfo robustnessCreateInfo;
-    if (device->GetDeviceInfo().HasExt(DeviceExt::PipelineRobustness)) {
+    if (device->UsePipelineRobustness()) {
         createInfoChain.Add(&robustnessCreateInfo,
                             VK_STRUCTURE_TYPE_PIPELINE_ROBUSTNESS_CREATE_INFO);
 
