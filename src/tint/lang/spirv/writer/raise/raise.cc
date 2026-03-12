@@ -94,11 +94,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         TINT_CHECK_RESULT(core::ir::transform::PreventInfiniteLoops(module));
     }
 
-    if (options.resource_table.has_value()) {
-        spirv::writer::raise::ResourceTableHelper helper;
-        TINT_CHECK_RESULT(
-            core::ir::transform::ResourceTable(module, options.resource_table.value(), &helper));
-    }
+    spirv::writer::raise::ResourceTableHelper helper;
+    TINT_CHECK_RESULT(core::ir::transform::ResourceTable(module, options.resource_table, &helper));
 
     // PrepareImmediateData must come before any transform that needs internal immediate data.
     core::ir::transform::PrepareImmediateDataConfig immediate_data_config;

@@ -92,23 +92,7 @@ $B1: {  # root
 }
 )";
 
-    auto* expect = R"(
-tint_resource_table_metadata_struct = struct @align(4) {
-  array_length:u32 @offset(0)
-  bindings:array<u32> @offset(4)
-}
-
-$B1: {  # root
-  %texture:ptr<handle, texture_storage_2d<rgba8unorm, write>, read> = var undef @binding_point(3, 2)
-  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
-}
-
-%foo = func():void {
-  $B2: {
-    ret
-  }
-}
-)";
+    auto* expect = src;
 
     EXPECT_EQ(src, str());
 
@@ -123,46 +107,21 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_ResourceTableTest, CreateVars) {
-    auto format = core::TexelFormat::kRgba8Unorm;
-    auto* texture_ty =
-        ty.storage_texture(core::type::TextureDimension::k2d, format, core::Access::kWrite);
-
-    auto* var = b.Var("texture", ty.ptr(handle, texture_ty));
-    var->SetBindingPoint(3, 2);
-    mod.root_block->Append(var);
+TEST_F(IR_ResourceTableTest, MissingConfig) {
+    auto* texture_ty = ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.u32());
 
     auto* func = b.Function("foo", ty.void_());
-    b.Append(func->Block(), [&] { b.Return(func); });
+    b.Append(func->Block(), [&] {
+        b.Let("t",
+              b.CallExplicit(ty.bool_(), core::BuiltinFn::kHasResource, Vector{texture_ty}, 1_u));
+        b.Return(func);
+    });
 
     auto* src = R"(
-$B1: {  # root
-  %texture:ptr<handle, texture_storage_2d<rgba8unorm, write>, read> = var undef @binding_point(3, 2)
-}
-
 %foo = func():void {
-  $B2: {
-    ret
-  }
-}
-)";
-
-    auto* expect = R"(
-tint_resource_table_metadata_struct = struct @align(4) {
-  array_length:u32 @offset(0)
-  bindings:array<u32> @offset(4)
-}
-
-$B1: {  # root
-  %texture:ptr<handle, texture_storage_2d<rgba8unorm, write>, read> = var undef @binding_point(3, 2)
-  %2:ptr<handle, resource_table<texture_1d<f32, filterable>>, read> = var undef @binding_point(0, 1)
-  %3:ptr<handle, resource_table<texture_3d<i32>>, read> = var undef @binding_point(0, 1)
-  %4:ptr<handle, resource_table<texture_2d_array<u32>>, read> = var undef @binding_point(0, 1)
-  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
-}
-
-%foo = func():void {
-  $B2: {
+  $B1: {
+    %2:bool = hasResource<texture_2d_array<u32>> 1u
+    %t:bool = let %2
     ret
   }
 }
@@ -171,19 +130,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     Helper helper;
-    Run(ResourceTable,
-        ResourceTableConfig{
-            .resource_table_binding = {0, 1},
-            .storage_buffer_binding = {1, 2},
-            .default_binding_type_order =
-                {
-                    ResourceType::kTexture1d_f32_filterable,
-                    ResourceType::kTexture3d_i32,
-                    ResourceType::kTexture2dArray_u32,
-                },
-        },
-        &helper);
-    EXPECT_EQ(expect, str());
+    auto result = RunWithFailure(ResourceTable, std::nullopt, &helper);
+    EXPECT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason, "hasResource and getResource require a resource table");
 }
 
 TEST_F(IR_ResourceTableTest, HasResource) {
