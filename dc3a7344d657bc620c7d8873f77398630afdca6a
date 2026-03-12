@@ -33,6 +33,24 @@
       "message": "I think the better fix would be to make this iterate over the instructions for a single entry point. This is going to have the same issue for Print where a call in an unused entrypoint would trigger an error incorrectly.\n\nMy prefernece would be to keep the get/has Resources checks in here and make the instruction walk smarter (we probably have similar issues in other CanGenerate checks.)",
       "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a1a9262_82377ec9",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-12T23:47:18Z",
+      "side": 1,
+      "message": "We very likely do have issues like this, which is why I\u0027m keen to remove these checks from `CanGenerate()`. It makes a lot more sense to me to put the checks next to (or in) the code that they are protecting. Making `CanGenerate()` do more complicated checks here feels unappealing when we already have the information we want to check in the transform that consumes it.\n\nSee https://dawn-review.googlesource.com/c/dawn/+/283697 for another example where we moved validation from `CanGenerate()` to the relevant transform, to avoid duplicating logic between the two places.\n\nCan you explain your concern about `Print()`? By the time we get to `Print()` there is exactly one entry point, so there shouldn\u0027t be any problems there?",
+      "parentUuid": "e6caf5bf_a5c21d6f",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
