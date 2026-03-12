@@ -51,6 +51,24 @@
       "parentUuid": "64a146c6_5fee9f88",
       "revId": "32b2fc7e51a19cbd32f9634f4647784fd14c2f79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5699b651_b1277ede",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-12T20:22:09Z",
+      "side": 1,
+      "message": "Right, Dawn would stay unchanged from what it does now.\n\nI think it\u0027s fine for it to always be on (for external) for SPIR-V, since we\u0027re going to start requiring it for YUV textures anyway.",
+      "parentUuid": "914916e2_4078b0bc",
+      "revId": "32b2fc7e51a19cbd32f9634f4647784fd14c2f79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
