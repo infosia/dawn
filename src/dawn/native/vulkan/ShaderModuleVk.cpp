@@ -61,6 +61,7 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "tint/lang/core/ir/transform/direct_variable_access.h"
 #include "tint/tint.h"
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
@@ -263,7 +264,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::SaturateAsMinMaxF16);
 
     req.tintOptions.workarounds.dva_transform_handle =
-        GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle);
+        GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle)
+            ? tint::core::ir::transform::HandleTransformLevel::kFull
+            : tint::core::ir::transform::HandleTransformLevel::kExternal;
     req.tintOptions.workarounds.polyfill_subgroup_broadcast_f16 =
         GetDevice()->IsToggleEnabled(Toggle::EnableSubgroupsIntelGen9);
     req.tintOptions.workarounds.cooperative_matrix_stride_is_matrix_elements =

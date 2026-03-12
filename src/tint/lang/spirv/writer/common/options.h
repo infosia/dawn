@@ -37,6 +37,7 @@
 #include "src/tint/api/common/bindings.h"
 #include "src/tint/api/common/resource_table_config.h"
 #include "src/tint/api/common/substitute_overrides_config.h"
+#include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 #include "src/tint/utils/reflection.h"
 
 namespace tint::spirv::writer {
@@ -81,7 +82,8 @@ struct Options {
         bool scalarize_max_min_clamp = false;
 
         /// Set to `true` if handles should be transformed by direct variable access.
-        bool dva_transform_handle = false;
+        core::ir::transform::HandleTransformLevel dva_transform_handle =
+            core::ir::transform::HandleTransformLevel::kNone;
 
         /// Set to `true` to generate polyfill for `pack4x8snorm`, `pack4x8unorm`, `unpack4x8snorm`
         /// and `unpack4x8unorm` builtins
