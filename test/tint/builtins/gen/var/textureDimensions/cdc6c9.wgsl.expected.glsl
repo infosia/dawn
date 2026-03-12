@@ -38,12 +38,12 @@ layout(binding = 0, std430)
 buffer f_prevent_dce_block_ssbo {
   uvec2 inner;
 } v;
-uniform highp sampler2D f_arg_0_plane0;
-uniform highp sampler2D f_arg_0_plane1;
 layout(binding = 3, std140)
 uniform f_arg_0_params_block_ubo {
   uvec4 inner[17];
 } v_1;
+uniform highp sampler2D f_arg_0_plane0;
+uniform highp sampler2D f_arg_0_plane1;
 mat3x2 v_2(uint start_byte_offset) {
   uvec4 v_3 = v_1.inner[(start_byte_offset / 16u)];
   vec2 v_4 = uintBitsToFloat(mix(v_3.xy, v_3.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u))));
@@ -136,12 +136,12 @@ layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec2 inner;
 } v;
-uniform highp sampler2D arg_0_plane0;
-uniform highp sampler2D arg_0_plane1;
 layout(binding = 3, std140)
 uniform arg_0_params_block_1_ubo {
   uvec4 inner[17];
 } v_1;
+uniform highp sampler2D arg_0_plane0;
+uniform highp sampler2D arg_0_plane1;
 mat3x2 v_2(uint start_byte_offset) {
   uvec4 v_3 = v_1.inner[(start_byte_offset / 16u)];
   vec2 v_4 = uintBitsToFloat(mix(v_3.xy, v_3.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u))));
@@ -236,12 +236,12 @@ struct VertexOutput {
   uvec2 prevent_dce;
 };
 
-uniform highp sampler2D v_arg_0_plane0;
-uniform highp sampler2D v_arg_0_plane1;
 layout(binding = 2, std140)
 uniform v_arg_0_params_block_ubo {
   uvec4 inner[17];
 } v;
+uniform highp sampler2D v_arg_0_plane0;
+uniform highp sampler2D v_arg_0_plane1;
 layout(location = 0) flat out uvec2 tint_interstage_location0;
 mat3x2 v_1(uint start_byte_offset) {
   uvec4 v_2 = v.inner[(start_byte_offset / 16u)];

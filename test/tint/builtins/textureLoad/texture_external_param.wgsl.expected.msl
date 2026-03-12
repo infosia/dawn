@@ -68,9 +68,9 @@ struct tint_ExternalTextureParams_packed_vec3 {
 };
 
 struct tint_module_vars_struct {
+  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
   texture2d<float, access::sample> arg_0_plane0;
   texture2d<float, access::sample> arg_0_plane1;
-  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
 };
 
 struct vertex_main_outputs {
@@ -82,7 +82,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
 }
 
-float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 const v_2 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
   uint2 const v_3 = uint2(v_2);
   float3 v_4 = 0.0f;
@@ -107,7 +107,7 @@ float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, textur
 }
 
 float4 textureLoad2d(texture2d<float, access::sample> texture_plane0, texture2d<float, access::sample> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -130,8 +130,8 @@ float4 vertex_main_inner(tint_module_vars_struct tint_module_vars) {
   return float4(0.0f);
 }
 
-vertex vertex_main_outputs vertex_main(texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]], const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1, .arg_0_params=arg_0_params};
+vertex vertex_main_outputs vertex_main(const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]], texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_params=arg_0_params, .arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1};
   vertex_main_outputs tint_wrapper_result = {};
   tint_wrapper_result.tint_symbol = vertex_main_inner(tint_module_vars);
   return tint_wrapper_result;
@@ -206,9 +206,9 @@ struct tint_ExternalTextureParams_packed_vec3 {
 };
 
 struct tint_module_vars_struct {
+  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
   texture2d<float, access::sample> arg_0_plane0;
   texture2d<float, access::sample> arg_0_plane1;
-  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
 };
 
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
@@ -216,7 +216,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
 }
 
-float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 const v_2 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
   uint2 const v_3 = uint2(v_2);
   float3 v_4 = 0.0f;
@@ -241,7 +241,7 @@ float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, textur
 }
 
 float4 textureLoad2d(texture2d<float, access::sample> texture_plane0, texture2d<float, access::sample> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -259,8 +259,8 @@ void doTextureLoad(tint_module_vars_struct tint_module_vars) {
   float4 res = textureLoad2d(tint_module_vars.arg_0_plane0, tint_module_vars.arg_0_plane1, tint_load_struct_packed_vec3(tint_module_vars.arg_0_params), int2(0));
 }
 
-fragment void fragment_main(texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]], const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1, .arg_0_params=arg_0_params};
+fragment void fragment_main(const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]], texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_params=arg_0_params, .arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1};
   doTextureLoad(tint_module_vars);
 }
 //
@@ -333,9 +333,9 @@ struct tint_ExternalTextureParams_packed_vec3 {
 };
 
 struct tint_module_vars_struct {
+  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
   texture2d<float, access::sample> arg_0_plane0;
   texture2d<float, access::sample> arg_0_plane1;
-  const constant tint_ExternalTextureParams_packed_vec3* arg_0_params;
 };
 
 float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
@@ -343,7 +343,7 @@ float3 tint_GammaCorrection(float3 v, tint_GammaTransferParams params) {
   return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
 }
 
-float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
+float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
   float2 const v_2 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
   uint2 const v_3 = uint2(v_2);
   float3 v_4 = 0.0f;
@@ -368,7 +368,7 @@ float4 tint_TextureLoadExternal(texture2d<float, access::sample> plane_0, textur
 }
 
 float4 textureLoad2d(texture2d<float, access::sample> texture_plane0, texture2d<float, access::sample> texture_plane1, tint_ExternalTextureParams texture_params, int2 coords) {
-  return tint_TextureLoadExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
+  return tint_TextureLoadMultiplanarExternal(texture_plane0, texture_plane1, texture_params, min(uint2(coords), ((texture_params.apparentSize + uint2(1u)) - uint2(1u))));
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
@@ -387,7 +387,7 @@ void doTextureLoad(tint_module_vars_struct tint_module_vars) {
 }
 
 [[max_total_threads_per_threadgroup(1)]]
-kernel void compute_main(texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]], const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1, .arg_0_params=arg_0_params};
+kernel void compute_main(const constant tint_ExternalTextureParams_packed_vec3* arg_0_params [[buffer(0)]], texture2d<float, access::sample> arg_0_plane0 [[texture(0)]], texture2d<float, access::sample> arg_0_plane1 [[texture(1)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arg_0_params=arg_0_params, .arg_0_plane0=arg_0_plane0, .arg_0_plane1=arg_0_plane1};
   doTextureLoad(tint_module_vars);
 }

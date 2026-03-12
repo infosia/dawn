@@ -31,11 +31,11 @@ struct tint_ExternalTextureParams {
 
 
 RWByteAddressBuffer prevent_dce : register(u0);
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 float3x2 v(uint start_byte_offset) {
   uint4 v_1 = arg_0_params[(start_byte_offset / 16u)];
   float2 v_2 = asfloat((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_1.zw) : (v_1.xy)));
@@ -125,11 +125,11 @@ struct tint_ExternalTextureParams {
 
 
 RWByteAddressBuffer prevent_dce : register(u0);
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 float3x2 v(uint start_byte_offset) {
   uint4 v_1 = arg_0_params[(start_byte_offset / 16u)];
   float2 v_2 = asfloat((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_1.zw) : (v_1.xy)));
@@ -229,11 +229,11 @@ struct vertex_main_outputs {
 };
 
 
-Texture2D<float4> arg_0_plane0 : register(t0, space1);
-Texture2D<float4> arg_0_plane1 : register(t1, space1);
 cbuffer cbuffer_arg_0_params : register(b2, space1) {
   uint4 arg_0_params[17];
 };
+Texture2D<float4> arg_0_plane0 : register(t0, space1);
+Texture2D<float4> arg_0_plane1 : register(t1, space1);
 float3x2 v(uint start_byte_offset) {
   uint4 v_1 = arg_0_params[(start_byte_offset / 16u)];
   float2 v_2 = asfloat((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_1.zw) : (v_1.xy)));
