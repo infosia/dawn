@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7e532fa_9deda366",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-12T19:47:56Z",
+      "side": 1,
+      "message": "PTAL.\n\ncwallez@ this is probably the interesting place for you to test from, the CL after this just adds some tint e2e tests.",
+      "revId": "7299f45be4da40edecb6dab2c5b1891e1e5dec39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
