@@ -48,7 +48,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_3 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_3) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureSampleExternal(tint_ExternalTextureParams params, vec2 coords) {
+vec4 tint_TextureSampleClampToEdgeMultiplanarExternal(tint_ExternalTextureParams params, vec2 coords) {
   vec2 v_4 = (params.sampleTransform * vec3(coords, 1.0f));
   vec3 v_5 = vec3(0.0f);
   float v_6 = 0.0f;
@@ -119,7 +119,7 @@ tint_ExternalTextureParams v_27(uint start_byte_offset) {
 vec4 textureSampleBaseClampToEdge_7c04e6() {
   vec2 arg_2 = vec2(1.0f);
   tint_ExternalTextureParams v_47 = v_27(0u);
-  vec4 res = tint_TextureSampleExternal(v_47, arg_2);
+  vec4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(v_47, arg_2);
   return res;
 }
 void main() {
@@ -173,7 +173,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_3 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_3) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureSampleExternal(tint_ExternalTextureParams params, vec2 coords) {
+vec4 tint_TextureSampleClampToEdgeMultiplanarExternal(tint_ExternalTextureParams params, vec2 coords) {
   vec2 v_4 = (params.sampleTransform * vec3(coords, 1.0f));
   vec3 v_5 = vec3(0.0f);
   float v_6 = 0.0f;
@@ -244,7 +244,7 @@ tint_ExternalTextureParams v_27(uint start_byte_offset) {
 vec4 textureSampleBaseClampToEdge_7c04e6() {
   vec2 arg_2 = vec2(1.0f);
   tint_ExternalTextureParams v_47 = v_27(0u);
-  vec4 res = tint_TextureSampleExternal(v_47, arg_2);
+  vec4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(v_47, arg_2);
   return res;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -301,7 +301,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
-vec4 tint_TextureSampleExternal(tint_ExternalTextureParams params, vec2 coords) {
+vec4 tint_TextureSampleClampToEdgeMultiplanarExternal(tint_ExternalTextureParams params, vec2 coords) {
   vec2 v_3 = (params.sampleTransform * vec3(coords, 1.0f));
   vec3 v_4 = vec3(0.0f);
   float v_5 = 0.0f;
@@ -372,7 +372,7 @@ tint_ExternalTextureParams v_26(uint start_byte_offset) {
 vec4 textureSampleBaseClampToEdge_7c04e6() {
   vec2 arg_2 = vec2(1.0f);
   tint_ExternalTextureParams v_46 = v_26(0u);
-  vec4 res = tint_TextureSampleExternal(v_46, arg_2);
+  vec4 res = tint_TextureSampleClampToEdgeMultiplanarExternal(v_46, arg_2);
   return res;
 }
 VertexOutput vertex_main_inner() {
