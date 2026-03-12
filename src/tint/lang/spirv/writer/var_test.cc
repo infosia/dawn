@@ -657,7 +657,8 @@ TEST_F(SpirvWriterTest, TextureVar_TextureParamTextureLoad_ExternalDva) {
         tint::BindingPoint{0, 1},
         ExternalMultiplanarTexture{tint::BindingPoint{2, 0}, tint::BindingPoint{3, 0}});
 
-    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
     EXPECT_INST("%texparam = OpFunctionParameter");
     // Consider a EXPECT_NOT_INST macro.
     ASSERT_TRUE(output_.find("%external_tex_params = OpFunctionParameter") == std::string::npos)
