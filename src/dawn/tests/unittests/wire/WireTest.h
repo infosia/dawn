@@ -126,6 +126,7 @@ MATCHER_P(CHandleIs, cType, "") {
     } while (0)
 
 namespace wire {
+class CommandSerializer;
 class WireClient;
 class WireServer;
 namespace client {
@@ -176,8 +177,11 @@ class WireTest : virtual public testing::Test {
     WGPUDevice cDevice;
     WGPUQueue cQueue;
 
-    dawn::wire::WireServer* GetWireServer();
-    dawn::wire::WireClient* GetWireClient();
+    wire::WireServer* GetWireServer();
+    wire::WireClient* GetWireClient();
+
+    wire::CommandSerializer* GetC2SSerializer();
+    wire::CommandSerializer* GetS2CSerializer();
 
     size_t GetC2SMaxAllocationSize();
 
@@ -187,13 +191,13 @@ class WireTest : virtual public testing::Test {
   private:
     void SetupIgnoredCallExpectations();
 
-    virtual dawn::wire::client::MemoryTransferService* GetClientMemoryTransferService();
-    virtual dawn::wire::server::MemoryTransferService* GetServerMemoryTransferService();
+    virtual wire::client::MemoryTransferService* GetClientMemoryTransferService();
+    virtual wire::server::MemoryTransferService* GetServerMemoryTransferService();
 
-    std::unique_ptr<dawn::wire::WireServer> mWireServer;
-    std::unique_ptr<dawn::wire::WireClient> mWireClient;
-    std::unique_ptr<dawn::utils::TerribleCommandBuffer> mS2cBuf;
-    std::unique_ptr<dawn::utils::TerribleCommandBuffer> mC2sBuf;
+    std::unique_ptr<wire::WireServer> mWireServer;
+    std::unique_ptr<wire::WireClient> mWireClient;
+    std::unique_ptr<utils::TerribleCommandBuffer> mS2cBuf;
+    std::unique_ptr<utils::TerribleCommandBuffer> mC2sBuf;
 };
 
 }  // namespace dawn
