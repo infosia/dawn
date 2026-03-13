@@ -16,6 +16,23 @@
       "message": "PTAL\n\nSkipping the missing explicit on constructor checks, because all of the hit lines already have a NOLINT about not being explicit. My understanding is that we want these constructors to be implicit so that different vector-like things will be converted without needing many explicit constructors to be defined and touching lots of callsites.\n\nSkipping the trailing comma check, because from what I can tell it is broken with multi-line initializers. It always triggers irregardless of how I format the statment and its \u0027suggestion\u0027 is to just replace the later lines with a single comma...",
       "revId": "a9a40d3ea1310cf994f8bf8aed3b8065cb48fa36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05788d80_be4ddd94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T21:57:08Z",
+      "side": 1,
+      "message": "Thanks for continuing to work through these changes. There\u0027s a lot of small details here but this all looks reasonable to me, and I think we have pretty good test coverage so LGTM.",
+      "revId": "a9a40d3ea1310cf994f8bf8aed3b8065cb48fa36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
