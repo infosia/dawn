@@ -34,6 +34,24 @@
       "parentUuid": "c55ab9fe_fe4c3ec2",
       "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68472fbc_c28c6174",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-13T03:02:54Z",
+      "side": 1,
+      "message": "Does that mean this CL is not needed, or to be updated?",
+      "parentUuid": "b32cdbcb_bb813914",
+      "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
