@@ -146,5 +146,21 @@ TEST_F(AtomicVec2uMinMaxExtensionTest, AtomicMax_WithExtension) {
     EXPECT_TRUE(r()->Resolve()) << r()->error();
 }
 
+TEST_F(AtomicVec2uMinMaxExtensionTest, AtomicVec2u_FeatureReq) {
+    ExpectError(
+        R"(
+
+@group(0) @binding(0) var<storage, read_write> a : atomic<vec2u>;
+fn f() {
+  atomicStoreMax(&a, vec2u(1u, 2u));
+}
+)",
+        R"(
+input.wgsl:3:59 error:  The type 'atomic<vec2u>' cannot be used without the extension 'atomic_vec2u_min_max'
+@group(0) @binding(0) var<storage, read_write> a : atomic<vec2u>;
+                                                          ^^^^^
+)");
+}
+
 }  // namespace
 }  // namespace tint::resolver
