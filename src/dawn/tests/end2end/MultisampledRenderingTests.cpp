@@ -55,6 +55,11 @@ class MultisampledRenderingTest : public DawnTest {
         // TODO(crbug.com/468061892): Fails on Windows 11/NVIDIA GTX 1660.
         DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() &&
                               IsBackendValidationEnabled());
+
+        // TODO(crbug.com/468061892): Fails on Windows 11/AMD RX 5500 XT w/
+        // backend validation.
+        DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() &&
+                              IsBackendValidationEnabled());
     }
 
     void InitTexturesForTest() {
