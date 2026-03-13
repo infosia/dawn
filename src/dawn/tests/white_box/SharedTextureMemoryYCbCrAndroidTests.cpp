@@ -642,6 +642,33 @@ TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests, SampleY8Cb8Cr8AHB) {
     CheckPixel(yData[3], cbData[0], crData[0], 1, 1);
 }
 
+// TODO
+//  - Test that creates an ExternalTexture with OpaqueYCbCrAndroid and samples it.
+//  - BindGroup ... the external texture will be created, but need to skip actually doing anything
+//  for the BindGroup in the Vulkan backend.
+//      Assert in the getter that the bindgroup has a value before applying?
+//      Or create but with nothing for the YCbCr texture?
+//          Can this help us prep descriptors for the rest and copy them?
+//  - In Pipeline skip and mark that it needs to be JITed
+//  - Start with compute pipeline.
+//  Add to BGL way to ask for a static sampler to be added instead of plane1
+//    - Add to BGL way to create same but with different static samplers.
+//    - Add to pipeline layout way to create the same but with different static samplers.
+//    Assert it works and will not break somehow.
+//  In Draw / dispatch check if need JIT, then do the JIT.
+//    Get current BGs
+//    Compute YCbCr information from texture views bound to plane0, "the" sampler used for sampling.
+//    Cached with these parameters
+//      Create YCbCr samplers (or not)
+//      Recreate PipelineLayout with YCbCr samplers
+//      Only thing that changes in the pipeline?
+//      Put in the cache
+//    Recreate the BGs from the BGL (so they have the static samplers)
+//    Rebind them.
+//    Bind the JITed pipeline.
+//    Do the operation.
+//    Dirty stuff!
+
 DAWN_INSTANTIATE_TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests,
                         {VulkanBackend()},
                         {
