@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe4839f0_76a18996",
+        "filename": "src/dawn/tests/unittests/validation/BufferValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-13T22:42:48Z",
+      "side": 1,
+      "message": "nit. Seems like the style guide is recommending: crbug.com/X these days. (Same for below)",
+      "range": {
+        "startLine": 582,
+        "startChar": 12,
+        "endLine": 582,
+        "endChar": 48
+      },
+      "revId": "92b95acd120a265730d5d67cf1fa5dbcead4671a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
