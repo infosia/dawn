@@ -85,6 +85,11 @@ static constexpr std::string_view kFragmentShader = R"(
         @fragment fn main() {}
     )";
 
+// Use a sampler that's not the default as it would reuse the placeholder sampler, which only gets
+// destroyed during device destruction.
+static constexpr SamplerDescriptor kSamplerDesc = {.label = "",
+                                                   .minFilter = wgpu::FilterMode::Linear};
+
 // Stores and scopes a raw mock object ptr expectation. This is particularly useful on objects that
 // are expected to be destroyed at the end of the scope. In most cases, when the validation in this
 // class's destructor is ran, the pointer is probably already freed.
@@ -613,9 +618,7 @@ TEST_F(DestroyObjectTests, RenderPipelineImplicit) {
 }
 
 TEST_F(DestroyObjectTests, SamplerNativeExplicit) {
-    SamplerDescriptor desc = {};
-
-    Ref<SamplerMock> samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &desc));
+    Ref<SamplerMock> samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &kSamplerDesc));
     EXPECT_CALL(*samplerMock.Get(), DestroyImpl).Times(1);
 
     EXPECT_TRUE(samplerMock->IsAlive());
@@ -626,16 +629,14 @@ TEST_F(DestroyObjectTests, SamplerNativeExplicit) {
 // If the reference count on API objects reach 0, they should delete themselves. Note that GTest
 // will also complain if there is a memory leak.
 TEST_F(DestroyObjectTests, SamplerImplicit) {
-    SamplerDescriptor desc = {};
-
-    Ref<SamplerMock> samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &desc));
+    Ref<SamplerMock> samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &kSamplerDesc));
     EXPECT_CALL(*samplerMock.Get(), DestroyImpl).Times(1);
     {
         ScopedRawPtrExpectation scoped(samplerMock.Get());
 
         EXPECT_CALL(*mDeviceMock, CreateSamplerImpl)
             .WillOnce(Return(ByMove(std::move(samplerMock))));
-        wgpu::Sampler sampler = device.CreateSampler(ToCppAPI(&desc));
+        wgpu::Sampler sampler = device.CreateSampler(ToCppAPI(&kSamplerDesc));
 
         EXPECT_TRUE(FromAPI(sampler.Get())->IsAlive());
     }
@@ -965,12 +966,10 @@ TEST_F(DestroyObjectTests, DestroyObjectsApiExplicit) {
     Ref<SamplerMock> samplerMock;
     wgpu::Sampler sampler;
     {
-        SamplerDescriptor desc = {};
-
         ScopedRawPtrExpectation scoped(mDeviceMock);
-        samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &desc));
+        samplerMock = AcquireRef(new SamplerMock(mDeviceMock, &kSamplerDesc));
         EXPECT_CALL(*mDeviceMock, CreateSamplerImpl).WillOnce(Return(samplerMock));
-        sampler = device.CreateSampler(ToCppAPI(&desc));
+        sampler = device.CreateSampler(ToCppAPI(&kSamplerDesc));
     }
 
     Ref<TextureMock> textureMock;
