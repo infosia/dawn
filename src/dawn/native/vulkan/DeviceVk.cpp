@@ -1121,6 +1121,11 @@ float Device::GetTimestampPeriodInNS() const {
     return mDeviceInfo.properties.limits.timestampPeriod;
 }
 
+bool Device::NeedsStaticSamplerForExternalTexture() const {
+    return HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture) ||
+           IsToggleEnabled(Toggle::VulkanForceStaticSamplersForExternalTextures);
+}
+
 AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     AllocatorMemoryInfo info = {};

@@ -147,6 +147,7 @@ class Device final : public DeviceBase {
     bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                       wgpu::BufferUsage originalUsage,
                                                       size_t bufferSize) const override;
+    bool NeedsStaticSamplerForExternalTexture() const override;
 
     QuerySetBase* GetEmptyPassQuerySet();
 
