@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "261a75ca_2f8a3ab1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "LGTM with one question.\nLeaving +2 as I believe Corentin will be testing this with API side changes.",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f663530c_38da377d",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "Do we really want to use the same params struct for both types of external texture? Seems like at least a few of the fields are only relevant for multiplanar.",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed52a371_4b040868",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "Nit: I know you\u0027re saving a small amount of code duplicaion here, but I\u0027d lean towards just putting this inside each of the `Replace*Var()` calls as it makes it clearer what\u0027s going on IMO.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 39
+      },
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497fc70f_bcc6f8bf",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "Nit: Could use `std::visit()` and then we get compile-time checking that we\u0027ve handled all variants.",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b7597cf_69cd8b32",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "Nit: extra `M` in the name",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b4f58c0_ac2ee2b1",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T22:14:55Z",
+      "side": 1,
+      "message": "Nit: sampler",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
