@@ -1698,6 +1698,9 @@ TEST_P(CopyTests_T2B, ReallyLargeBytesPerRow) {
     // the workaround.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && (IsD3D12() || IsVulkan()));
 
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     TextureSpec textureSpec;
     textureSpec.textureSize = {2, 2, 2};
 
@@ -1713,6 +1716,10 @@ TEST_P(CopyTests_T2B, ReallyLargeBytesPerRow) {
 TEST_P(CopyTests_T2B, Texture2DArrayFull) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kLayers = 6u;
@@ -1727,6 +1734,10 @@ TEST_P(CopyTests_T2B, Texture2DArrayFull) {
 TEST_P(CopyTests_T2B, Texture2DArraySubRegion) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kLayers = 6u;
@@ -1745,6 +1756,10 @@ TEST_P(CopyTests_T2B, Texture2DArraySubRegion) {
 TEST_P(CopyTests_T2B, Texture2DArrayMip) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kLayers = 6u;
@@ -1767,6 +1782,10 @@ TEST_P(CopyTests_T2B, Texture2DArrayMip) {
 TEST_P(CopyTests_T2B, Texture2DArrayRegionNonzeroRowsPerImage) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kLayers = 6u;
@@ -1813,6 +1832,10 @@ TEST_P(CopyTests_T2B, Texture2DArrayRegionWithOffsetOddRowsPerImage) {
 TEST_P(CopyTests_T2B, Texture2DArrayRegionWithOffsetEvenRowsPerImage) {
     // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
+    // TODO(crbug.com/500445353): Fails to copy region on Win/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kWidth = 64;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kLayers = 8u;
