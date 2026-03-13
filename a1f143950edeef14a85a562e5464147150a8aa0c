@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a785cf3c_1e233fc7",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T14:41:40Z",
+      "side": 1,
+      "message": "Ya i should have caught that this had workgroup.",
+      "parentUuid": "85d84d35_a815bfdb",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be88b935_16ff9d59",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0276f2f8_19cb029d",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T14:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be88b935_16ff9d59",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b7d9316_5356f1e0",
@@ -54,6 +96,24 @@
       "writtenOn": "2026-03-12T15:29:08Z",
       "side": 1,
       "message": "Nit: The test name is a bit weird now since we\u0027re not really testing the CanGenerate() function any more.\n\nTBH I think it\u0027d be fine to remove these unit tests now and rely on the E2E tests for this, since they\u0027re covering the same thing now.",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40b95abf_1bbf379f",
+        "filename": "src/tint/lang/msl/writer/writer_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T14:41:40Z",
+      "side": 1,
+      "message": "Is there a downside to keeping this test?",
+      "parentUuid": "1b7d9316_5356f1e0",
       "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

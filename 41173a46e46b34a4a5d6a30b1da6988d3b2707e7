@@ -228,6 +228,24 @@
       "parentUuid": "91c007b7_fe34e743",
       "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eef096b8_b8db9dd5",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 23
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T14:41:40Z",
+      "side": 1,
+      "message": "I will revisit this one final time.",
+      "parentUuid": "f05df5f7_8eeb4fce",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
