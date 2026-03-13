@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1041548_3d8db6b8",
+        "filename": "src/tint/lang/msl/writer/writer_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T18:03:53Z",
+      "side": 1,
+      "message": "I don\u0027t have a problem with keeping it, I\u0027m just noting that I don\u0027t think it adds much to our coverage at this point.",
+      "parentUuid": "40b95abf_1bbf379f",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23cc7e54_be044120",
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "23cc7e54_be044120",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f371af69_8ed33181",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-13T18:03:53Z",
+      "side": 1,
+      "message": "I meant all of them, not just this specific one. Feels like it\u0027d be good to keep all the tests for this extension together in that file.",
+      "parentUuid": "18483e26_5c7ee0af",
       "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
