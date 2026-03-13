@@ -132,7 +132,6 @@ void SharedTextureMemoryTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
                              !SupportsFeatures({wgpu::FeatureName::FlexibleTextureViews}) &&
                              GetParam().mLayerCount > 1);
-
     GetParam().mBackend->SetUp(device);
 }
 
