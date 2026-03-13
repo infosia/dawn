@@ -971,6 +971,9 @@ TEST_P(CreatePipelineAsyncTest, CreateRenderPipelineWithMultisampleState) {
     // TODO(crbug.com/468047555): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
 
+    // TODO(crbug.com/468047555): Fails on Win11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     wgpu::TextureDescriptor textureDescriptor;
     textureDescriptor.size = {1, 1, 1};
     textureDescriptor.format = wgpu::TextureFormat::RGBA8Unorm;

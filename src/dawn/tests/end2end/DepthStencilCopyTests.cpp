@@ -1495,6 +1495,10 @@ TEST_P(DepthStencilCopyTests_RegressionDawn1083, Run) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
+    // TODO(crbug.com/500766618): Fails on Windows 11/AMD RX 5500 XT w/ Vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() &&
+                          GetParam().mTextureFormat == wgpu::TextureFormat::Depth32FloatStencil8);
+
     uint32_t mipLevelCount = 3;
     uint32_t arrayLayerCount = 3;
     wgpu::TextureDescriptor texDesc = {};
