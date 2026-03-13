@@ -255,6 +255,10 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
+    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
+    // RX 5500 XT w/ backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -300,6 +304,14 @@ TEST_P(SurfaceTests, ReconfigureAfterUnconfigure) {
 
 // Test unconfiguring after GetCurrentTexture but before the Present
 TEST_P(SurfaceTests, UnconfigureAfterGet) {
+    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
+    // RX 5500 XT w/ backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
     wgpu::SurfaceTexture surfaceTexture;
@@ -378,6 +390,10 @@ TEST_P(SurfaceTests, ResizingSurfaceOnly) {
     // TODO(crbug.com/468228358): Flaky on Snapdragon X Elite SoCs w/ D3D12.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
 
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
 
     for (int i = 0; i < 10; i++) {
@@ -399,6 +415,10 @@ TEST_P(SurfaceTests, ResizingWindowOnly) {
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
     // TODO(crbug.com/42241486): Crashes on Linux NVIDIA GTX 1660 with 535.183.01 driver
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
+
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
 
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
@@ -424,6 +444,10 @@ TEST_P(SurfaceTests, ResizingWindowAndSurface) {
     // TODO(crbug.com/465497433): Flakily loses device on Snapdragon X Elite
     // SoCs.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
 
     wgpu::Surface surface = CreateTestSurface();
 
@@ -583,6 +607,10 @@ TEST_P(SurfaceTests, Sampling) {
 
 // Test copying from the surface when it is supported.
 TEST_P(SurfaceTests, CopyFrom) {
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);
@@ -611,6 +639,10 @@ TEST_P(SurfaceTests, CopyFrom) {
 
 // Test copying to the surface when it is supported.
 TEST_P(SurfaceTests, CopyTo) {
+    // TODO(crbug.com/500766623): Fails due to backend validation errors on
+    // Windows 11/AMD RX 5500 XT w/ D3D12.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);

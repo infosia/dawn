@@ -280,6 +280,9 @@ TEST_P(TextureZeroInitTest, CopyTextureToBufferSource) {
 // This tests that the code path of CopyTextureToBuffer with multiple texture array layers clears
 // correctly to Zero after first usage
 TEST_P(TextureZeroInitTest, CopyMultipleTextureArrayLayersToBufferSource) {
+    // TODO(crbug.com/500793610): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kArrayLayers = 6u;
 
     const wgpu::TextureDescriptor descriptor = CreateTextureDescriptor(
@@ -965,6 +968,9 @@ TEST_P(TextureZeroInitTest, StencilCopyThenDiscardAndCopyToTextureThenReadByCopy
 
     // TODO(crbug.com/468047554): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
+
+    // TODO(crbug.com/468047554): Fails on Win11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
 
     for (wgpu::TextureFormat format :
          {wgpu::TextureFormat::Stencil8, wgpu::TextureFormat::Depth24PlusStencil8}) {

@@ -180,6 +180,12 @@ void MatrixVectorMultiplyPerf::SetUpPerfTest() {
 
     DAWN_TEST_UNSUPPORTED_IF(!mAllFeaturesSupported);
 
+    // TODO(crbug.com/501147570): Flakily kills Swarming bots when run on
+    // Windows 11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && (IsD3D12() || IsVulkan()) &&
+                          GetParam().mRows == 32768 && GetParam().mCols == 2048 &&
+                          GetParam().mStoreType == StoreType::U8);
+
     // D3D12 device must be using DXC to support subgroups feature.
     DAWN_ASSERT(!mUsingSubgroups || !IsD3D12() || IsDXC());
 

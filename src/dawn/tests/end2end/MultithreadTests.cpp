@@ -1360,6 +1360,9 @@ TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
     // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
 
+    // TODO(crbug.com/468047550): Fails on Win11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
+
     // TODO(crbug.com/473899151): [Capture] multisampled.
     DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
 
@@ -1407,6 +1410,9 @@ TEST_P(MultithreadEncodingTests, RenderPassEncodersInParallel) {
 TEST_P(MultithreadEncodingTests, RenderPassEncoders_ResolveToMipLevelOne_InParallel) {
     // TODO(crbug.com/468047550): Fails on Win11/NVIDIA GTX 1660.
     DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsNvidia() && IsD3D12() && IsBackendValidationEnabled());
+
+    // TODO(crbug.com/468047550): Fails on Win11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D12() && IsBackendValidationEnabled());
 
     // TODO(crbug.com/473899151): [Capture] multisampled.
     DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
