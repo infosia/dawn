@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72295d30_a8a72b64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-13T03:02:00Z",
+      "side": 1,
+      "message": "I think landing this is fine, and can see the argument with moving this into Generate itself, but we should audit this and other CanGenerate for any other places we\u0027re iterating ir.Instructions() and move all of those into the Generate checks.",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e6caf5bf_a5c21d6f",
         "filename": "src/tint/lang/spirv/writer/writer.cc",
         "patchSetId": 1
@@ -49,6 +66,24 @@
       "side": 1,
       "message": "We very likely do have issues like this, which is why I\u0027m keen to remove these checks from `CanGenerate()`. It makes a lot more sense to me to put the checks next to (or in) the code that they are protecting. Making `CanGenerate()` do more complicated checks here feels unappealing when we already have the information we want to check in the transform that consumes it.\n\nSee https://dawn-review.googlesource.com/c/dawn/+/283697 for another example where we moved validation from `CanGenerate()` to the relevant transform, to avoid duplicating logic between the two places.\n\nCan you explain your concern about `Print()`? By the time we get to `Print()` there is exactly one entry point, so there shouldn\u0027t be any problems there?",
       "parentUuid": "e6caf5bf_a5c21d6f",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43f64199_8618da7f",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-13T03:02:00Z",
+      "side": 1,
+      "message": "On line 128, we check if `Print` is used in _any_ instruction. This means, if I have a `dbg_shader` and a `rel_shader` switching between them would still trigger a can generate error because this code doesn\u0027t respect the selected entry point.\n\nSo, the same issue getResource and hasResource encounter, a non-ep shader causing a generate error in the current entry point, would trigger for Print, and any of the CanGenerate methods were we check for specific method usages.",
+      "parentUuid": "4a1a9262_82377ec9",
       "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
