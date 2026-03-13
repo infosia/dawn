@@ -248,6 +248,9 @@ TEST_P(OcclusionQueryTests, QueryWithDepthStencilTest) {
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
 
+    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     // Disable depth/stencil testing, the samples always pass the testing, the expected occlusion
     // result is non-zero.
     TestOcclusionQueryWithDepthStencilTest(false, false, OcclusionExpectation::Result::NonZero);
@@ -270,6 +273,9 @@ TEST_P(OcclusionQueryTests, QueryWithScissorTest) {
     DAWN_SUPPRESS_TEST_IF(IsImgTec());
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
+
+    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
 
     // Test there are samples passed scissor testing, the expected occlusion result is non-zero.
     TestOcclusionQueryWithScissorTest({2, 1, 2, 1}, OcclusionExpectation::Result::NonZero);
@@ -401,6 +407,9 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
     // TODO(42242119): hang/crash on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
 
+    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kQueryCount = 1;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -445,6 +454,9 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZeroSeparateSubmit) {
     // TODO(42242119): hang/crash on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
 
+    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
+
     constexpr uint32_t kQueryCount = 1;
 
     wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
@@ -487,6 +499,9 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZeroSeparateSubmit) {
 TEST_P(OcclusionQueryTests, RewriteToZeroWithDraw) {
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
+
+    // TODO(crbug.com/500774797): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
 
     constexpr uint32_t kQueryCount = 1;
 

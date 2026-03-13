@@ -528,6 +528,8 @@ fn main() {
 TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+    // TODO(crbug.com/492539239): Access violation during test teardown.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
 
     MatrixOp op = GetParam().mMatrixOp;
     bool columnMajor = GetParam().mColumnMajor;
@@ -731,6 +733,10 @@ TEST_P(SubgroupMatrix_MatrixScalarArithmeticTest, MatrixScalar) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // TODO(crbug.com/500774798): Backend validation failures on Windows 11/AMD
+    // RX 5500 XT w/ Vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
     MatrixOp op = GetParam().mMatrixOp;
     bool columnMajor = GetParam().mColumnMajor;
 
@@ -900,6 +906,10 @@ TEST_P(SubgroupMatrix_MatrixStoreTest, MatrixStoreWithOffset) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // TODO(crbug.com/500774798): Backend validation failures on Windows 11/AMD
+    // RX 5500 XT w/ Vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;
     wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
@@ -1059,6 +1069,9 @@ TEST_P(SubgroupMatrix_MatrixConstructorTest, MatrixConstruct) {
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
 
+    // TODO(crbug.com/492539239): Access violation during test teardown.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
+
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;
     wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
@@ -1131,6 +1144,9 @@ TEST_P(SubgroupMatrix_TiledMatrixMultiplyTest, MatrixMultiply) {
 
     DAWN_TEST_UNSUPPORTED_IF(
         !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+
+    // TODO(crbug.com/492539239): Access violation during test teardown.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
 
     // Query the supported subgroup matrix configurations.
     wgpu::AdapterInfo info;
