@@ -187,6 +187,24 @@
       "parentUuid": "18483e26_5c7ee0af",
       "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9a7b48b_b021ed05",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T18:53:42Z",
+      "side": 1,
+      "message": "Ah ya i can put all of them in the other file 😊",
+      "parentUuid": "f371af69_8ed33181",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
