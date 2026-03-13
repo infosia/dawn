@@ -187,8 +187,9 @@ class DeviceBase : public ErrorSink,
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor,
         PipelineCompatibilityToken pipelineCompatibilityToken = kExplicitPCT);
 
-    BindGroupLayoutBase* GetEmptyBindGroupLayout();
-    PipelineLayoutBase* GetEmptyPipelineLayout();
+    BindGroupLayoutBase* GetEmptyBindGroupLayout() const;
+    PipelineLayoutBase* GetEmptyPipelineLayout() const;
+    SamplerBase* GetPlaceholderSampler() const;
 
     ResultOrError<Ref<TextureViewBase>> GetOrCreatePlaceholderTextureViewForExternalTexture();
 
@@ -413,6 +414,9 @@ class DeviceBase : public ErrorSink,
     virtual bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                               wgpu::BufferUsage originalUsage,
                                                               size_t bufferSize) const;
+
+    // Whether the backend needs to use static samplers to support YCbCr ExternalTextures.
+    virtual bool NeedsStaticSamplerForExternalTexture() const;
 
     // Whether the backend needs to validate the indirect buffer on GPU.
     virtual bool NeedsIndirectGPUValidation() const;
@@ -639,6 +643,7 @@ class DeviceBase : public ErrorSink,
 
     Ref<BindGroupLayoutBase> mEmptyBindGroupLayout;
     Ref<PipelineLayoutBase> mEmptyPipelineLayout;
+    Ref<SamplerBase> mPlaceholderSampler;
 
     Ref<TextureViewBase> mExternalTexturePlaceholderView;
 
