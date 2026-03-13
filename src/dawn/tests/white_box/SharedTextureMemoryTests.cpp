@@ -92,6 +92,11 @@ void SharedTextureMemoryNoFeatureTests::SetUp() {
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
     // TODO(crbug.com/483147423): Implement Capture.
     DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
+    // TODO(crbug.com/500418205): Fails on Win11/AMD RX 5500 XT w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11() && IsBackendValidationEnabled());
+
     GetParam().mBackend->SetUp(device);
 }
 
@@ -132,6 +137,10 @@ void SharedTextureMemoryTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
                              !SupportsFeatures({wgpu::FeatureName::FlexibleTextureViews}) &&
                              GetParam().mLayerCount > 1);
+
+    // TODO(crbug.com/500418205): Fails on Win11/AMD RX 5500 XT w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11() && IsBackendValidationEnabled());
 
     GetParam().mBackend->SetUp(device);
 }
