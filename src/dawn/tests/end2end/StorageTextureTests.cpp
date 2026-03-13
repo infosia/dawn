@@ -2076,6 +2076,9 @@ TEST_P(Tier1StorageValidationTests, WriteonlyStorageTextureInFragmentShader) {
 // Test that kTier1AdditionalStorageFormats formats have the "read-only" GPUStorageTextureAccess
 //  capability if 'texture-formats-tier1' is enabled.
 TEST_P(Tier1StorageValidationTests, ReadOnlyStorageTextureInFragmentShader) {
+    // TODO(crbug.com/500766627): Fails on Windows 11/AMD RX 5500 XT w/ Vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
+
     for (const auto format : utils::kTier1AdditionalStorageFormats) {
         SCOPED_TRACE(
             absl::StrFormat("Test format: %s", utils::GetWGSLImageFormatQualifier(format)));

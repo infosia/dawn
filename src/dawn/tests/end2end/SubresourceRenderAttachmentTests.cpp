@@ -163,6 +163,8 @@ class SubresourceRenderAttachmentTest : public DawnTest {
 
 // Test rendering into a subresource of a color texture
 TEST_P(SubresourceRenderAttachmentTest, ColorTexture) {
+    // TODO(crbug.com/500793605): Fails on Windows 11/AMD RX 5500 XT w/ D3D11.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11());
     DoTest(Type::Color);
 }
 

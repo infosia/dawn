@@ -585,6 +585,9 @@ TEST_P(ExternalTextureTests, SampleMultiplanarExternalTexture) {
     // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
     DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
 
+    // TODO(crbug.com/500766620): Fails on Windows 11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD());
+
     wgpu::Texture sampledTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
                         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
@@ -1357,6 +1360,9 @@ TEST_P(ExternalTextureTests, CropMultiplanar) {
 
     // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
     DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
+
+    // TODO(crbug.com/500766620): Fails on Windows 11/AMD RX 5500 XT.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD());
 
     wgpu::Texture sourceTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
