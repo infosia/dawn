@@ -429,6 +429,20 @@ BindingInfo CreateUniformBindingForExternalTexture(BindingNumber binding,
     };
 }
 
+BindingInfo CreateStaticSamplerBindingForExternalTexture(const DeviceBase* device,
+                                                         BindingNumber binding,
+                                                         wgpu::ShaderStage visibility) {
+    return {
+        .binding = binding,
+        .visibility = visibility,
+        .bindingLayout =
+            StaticSamplerBindingInfo{
+                .sampler = device->GetPlaceholderSampler(),
+                .isUsedForSingleTexture = true,
+            },
+    };
+}
+
 BindingInfo ConvertToBindingInfo(const UnpackedPtr<BindGroupLayoutEntry>& binding) {
     BindingInfo bindingInfo;
     bindingInfo.binding = BindingNumber(binding->binding);
@@ -507,6 +521,7 @@ struct ExpandedBindingInfo {
     ityp::vector<BindingIndex, BindingInfo> entries;
 };
 ExpandedBindingInfo ConvertAndExpandBGLEntries(
+    const DeviceBase* device,
     const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor) {
     // When new BGL entries are created, we use binding numbers decreasing from the max uint32_t
     // to ensure there are no collisions and that validation will prevent using these BindingNumbers
@@ -521,8 +536,9 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
     // below to link the ExternalTextureBindingInfo to the BindingIndex of the additional bindings.
     struct ExternalTextureExpansion {
         BindingNumber plane0;
-        BindingNumber plane1;
+        BindingNumber plane1 = {};
         BindingNumber metadata;
+        std::optional<BindingNumber> staticSampler = {};
     };
     absl::flat_hash_map<BindingNumber, ExternalTextureExpansion> externalTextureExpansions;
 
@@ -533,9 +549,11 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
     for (uint32_t i = 0; i < descriptor->entryCount; i++) {
         UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
 
-        // External textures are expanded to add two sampled texture bindings and one uniform buffer
-        // binding. The external texture is still added to the entries to be used in validation and
-        // to know where the additional bindings are located.
+        // External textures are expanded with additional bindings:
+        //  - Two sampled texture bindings and one uniform buffer
+        //  - (optionally) a static sampler that may be used to sample plane0.
+        // The external texture is still added to the entries to be used in validation and to know
+        // where the additional bindings are located.
         if (entry.Has<ExternalTextureBindingLayout>()) {
             DAWN_ASSERT(entry->bindingArraySize <= 1);
 
@@ -544,21 +562,35 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
             entries.push_back(plane0Entry);
             internalEntries.insert(plane0Entry.binding);
 
+            BindingInfo metadataEntry = CreateUniformBindingForExternalTexture(
+                nextOpenBindingNumberForNewEntry--, entry->visibility);
+            entries.push_back(metadataEntry);
+            internalEntries.insert(metadataEntry.binding);
+
             BindingInfo plane1Entry = CreateSampledTextureBindingForExternalTexture(
                 nextOpenBindingNumberForNewEntry--, entry->visibility);
             entries.push_back(plane1Entry);
             internalEntries.insert(plane1Entry.binding);
 
-            BindingInfo metadataEntry = CreateUniformBindingForExternalTexture(
-                nextOpenBindingNumberForNewEntry--, entry->visibility);
-            entries.push_back(metadataEntry);
-            internalEntries.insert(metadataEntry.binding);
+            // External textures may alternatively use a static sampler to sample plane0, add it and
+            // ensure its sampledTextureIndex is remapped.
+            std::optional<BindingNumber> staticSamplerBinding = {};
+            if (device->NeedsStaticSamplerForExternalTexture()) {
+                BindingInfo staticSamplerEntry = CreateStaticSamplerBindingForExternalTexture(
+                    device, nextOpenBindingNumberForNewEntry--, entry->visibility);
+                entries.push_back(staticSamplerEntry);
+                internalEntries.insert(staticSamplerEntry.binding);
+
+                staticSamplerToSingleTextureBinding.insert(
+                    {staticSamplerEntry.binding, plane0Entry.binding});
+            }
 
             externalTextureExpansions.insert({BindingNumber(entry->binding),
                                               {
                                                   .plane0 = BindingNumber(plane0Entry.binding),
                                                   .plane1 = BindingNumber(plane1Entry.binding),
                                                   .metadata = BindingNumber(metadataEntry.binding),
+                                                  .staticSampler = staticSamplerBinding,
                                               }});
         }
 
@@ -592,11 +624,16 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
 
     // Store the location of expanded entries in ExternalTexture layouts.
     for (const auto& [etBindingNumber, expansion] : externalTextureExpansions) {
-        auto& layout = entries[fullBindingMap[etBindingNumber]];
-        layout.bindingLayout = ExternalTextureBindingInfo{{
+        std::optional<BindingIndex> staticSamplerBinding = {};
+        if (expansion.staticSampler) {
+            staticSamplerBinding = {fullBindingMap[expansion.staticSampler.value()]};
+        }
+
+        entries[fullBindingMap[etBindingNumber]].bindingLayout = ExternalTextureBindingInfo{{
             .metadata = fullBindingMap[expansion.metadata],
             .plane0 = fullBindingMap[expansion.plane0],
             .plane1 = fullBindingMap[expansion.plane1],
+            .staticSampler = staticSamplerBinding,
         }};
     }
 
@@ -652,7 +689,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
     const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor,
     ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(device, descriptor->label) {
-    ExpandedBindingInfo unpackedBindings = ConvertAndExpandBGLEntries(descriptor);
+    ExpandedBindingInfo unpackedBindings = ConvertAndExpandBGLEntries(device, descriptor);
     mBindingInfo = std::move(unpackedBindings.entries);
     mBindingMap = std::move(unpackedBindings.apiBindingMap);
 
