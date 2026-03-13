@@ -140,6 +140,24 @@
       "parentUuid": "76a319d1_adda4556",
       "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73ce04da_22955bd3",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-03-13T15:25:11Z",
+      "side": 1,
+      "message": "What about populating the file list exception to include the file where the override happens? This is a legitimate reason. From there we have implicit `base::span` \u003c\u003d\u003e `std::span` conversion.\n\nWe already have a few file opted out for the same reason.\nhttps://source.chromium.org/chromium/chromium/src/+/main:PRESUBMIT.py;l\u003d968?q\u003dPRESU\u0026ss\u003dchromium%2Fchromium%2Fsrc\n\nIf this doesn\u0027t address the issue, we can discuss introducing some `// ALLOW_STD_SPAN` opt-outs or `using allow_std_span \u003d std::span;` alias, but I think that should be enough?",
+      "parentUuid": "ebd1f0ba_1981e90c",
+      "revId": "7fd530c014bc1b0f0bcdbd373427b1b0565f082b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
