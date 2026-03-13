@@ -133,6 +133,24 @@
       "message": "These tests look like they sort of replace the ones in `atomic_vec2u_min_max_extension_test.cc`?\n\nI\u0027d lean towards keeping these test separate in that file (otherwise this one will grow extremely large eventually). You can still use the `ExpectError()` helpers to write them in WGSL though.",
       "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18483e26_5c7ee0af",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-13T16:53:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cc7e54_be044120",
+      "revId": "a1f143950edeef14a85a562e5464147150a8aa0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
