@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad03ca0b_b3d294df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-13T17:16:08Z",
+      "side": 1,
+      "message": "Wow I tried so hard and forgot that `Has` doesn\u0027t mean that we use it xD\n\nCan you cherry-pick it in Google3 and run the TAP presubmit just to make sure it doesn\u0027t break MLDrift?",
+      "revId": "bc9a6de3d9d6fa2b910dd2c679b9fad8a39fd0b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
