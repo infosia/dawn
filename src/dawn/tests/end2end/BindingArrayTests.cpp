@@ -452,6 +452,8 @@ TEST_P(SizedBindingArrayTests, BindingArrayOfSampledTexturesPassedAsArgument) {
     DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
     // Crashes on the Intel Windows Vulkan shader compiler.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntel());
+    // TODO(crbug.com/492539239): Access violation during test teardown.
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsAMD() && IsVulkan() && UsesWire());
 
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
