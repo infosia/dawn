@@ -255,6 +255,10 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
+    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
+    // RX 5500 XT w/ backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -300,6 +304,10 @@ TEST_P(SurfaceTests, ReconfigureAfterUnconfigure) {
 
 // Test unconfiguring after GetCurrentTexture but before the Present
 TEST_P(SurfaceTests, UnconfigureAfterGet) {
+    // TODO(crbug.com/500793592): Causes cascading failures on Windows 11/AMD
+    // RX 5500 XT w/ backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan() && IsBackendValidationEnabled());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
     wgpu::SurfaceTexture surfaceTexture;
