@@ -89,6 +89,9 @@ SharedTextureMemoryTestVulkanBackend::ChainBeginState(
 
 void SharedTextureMemoryNoFeatureTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
+    // TODO(crbug.com/500418205): Fails on Win11/AMD RX 5500 XT w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11() && IsBackendValidationEnabled());
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
     // TODO(crbug.com/483147423): Implement Capture.
     DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
@@ -119,6 +122,9 @@ std::vector<wgpu::FeatureName> SharedTextureMemoryTests::GetRequiredFeatures() {
 
 void SharedTextureMemoryTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
+    // TODO(crbug.com/500418205): Fails on Win11/AMD RX 5500 XT w/ D3D11 and
+    // backend validation.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsD3D11() && IsBackendValidationEnabled());
     DawnTestWithParams<SharedTextureMemoryTestParams>::SetUp();
     DAWN_TEST_UNSUPPORTED_IF(
         !SupportsFeatures(GetParam().mBackend->RequiredFeatures(GetAdapter().Get())));
@@ -132,7 +138,6 @@ void SharedTextureMemoryTests::SetUp() {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
                              !SupportsFeatures({wgpu::FeatureName::FlexibleTextureViews}) &&
                              GetParam().mLayerCount > 1);
-
     GetParam().mBackend->SetUp(device);
 }
 
