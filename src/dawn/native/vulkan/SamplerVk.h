@@ -36,6 +36,21 @@ namespace dawn::native::vulkan {
 
 class Device;
 
+// XXX more stuff
+struct StaticSamplerSpecialization {
+    wgpu::FilterMode minFilter;
+    wgpu::FilterMode magFilter;
+    uint32_t androidExternalFormat;
+
+    template <typename H>
+    friend H AbslHashValue(H h, const StaticSamplerSpecialization& s) {
+        return H::combine(std::move(h), s.minFilter, s.magFilter, s.androidExternalFormat);
+    }
+
+    bool operator==(const StaticSamplerSpecialization& other) const = default;
+    // YCbCr garbage.
+};
+
 class Sampler final : public SamplerBase {
   public:
     static ResultOrError<Ref<Sampler>> Create(Device* device, const SamplerDescriptor* descriptor);

@@ -53,7 +53,10 @@ struct VulkanStaticBindings {
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
     absl::flat_hash_map<BindingIndex, BindingIndex> textureToStaticSamplerIndex;
 };
-VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBase* layout) {
+VulkanStaticBindings ComputeVulkanStaticBindings(
+    const Device* device,
+    const BindGroupLayoutInternalBase* layout,
+    const BindGroupLayout::Specialization& specialization = {}) {
     VulkanStaticBindings res;
 
     // Build a map of texture indices to sampler indices. This maps the texture to
@@ -102,6 +105,13 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
         if (std::holds_alternative<StaticSamplerBindingInfo>(bindingInfo.bindingLayout)) {
             auto samplerLayout = std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
             auto sampler = ToBackend(samplerLayout.sampler);
+
+            // XXX
+            if (auto it = specialization.staticSamplers.find(bindingIndex);
+                it != specialization.staticSamplers.end()) {
+                sampler = device->GetOrCreateSpecializedSampler();
+            }
+
             vkBinding.pImmutableSamplers = &sampler->GetHandle().GetHandle();
 
             if (sampler->IsYCbCr()) {
@@ -196,7 +206,7 @@ BindGroupLayout::~BindGroupLayout() = default;
 MaybeError BindGroupLayout::Initialize() {
     Device* device = ToBackend(GetDevice());
 
-    VulkanStaticBindings bindings = ComputeVulkanStaticBindings(this);
+    VulkanStaticBindings bindings = ComputeVulkanStaticBindings(device, this);
 
     mDescriptorSetAllocator =
         DescriptorSetAllocator::Create(device, std::move(bindings.descriptorCountPerType));
@@ -217,10 +227,36 @@ MaybeError BindGroupLayout::Initialize() {
     DAWN_TRY(CheckVkSuccess(device->fn.CreateDescriptorSetLayout(device->GetVkDevice(), &createInfo,
                                                                  nullptr, &*mHandle),
                             "CreateDescriptorSetLayout"));
+    mSpecializations.insert({{}, mHandle});
 
     SetLabelImpl();
 
     return {};
+}
+
+ResultOrError<VkDescriptorSetLayout> BindGroupLayout::GetOrCreateSpecializedHandle(
+    const Specialization& specialization) {
+    if (auto it = mSpecializations.find(specialization); it != mSpecializations.end()) {
+        return it->second;
+    }
+
+    Device* device = ToBackend(GetDevice());
+    VulkanStaticBindings bindings = ComputeVulkanStaticBindings(device, this);
+    VkDescriptorSetLayoutCreateInfo createInfo{
+        .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+        .pNext = nullptr,
+        .flags = 0,
+        .bindingCount = uint32_t(bindings.bindings.size()),
+        .pBindings = bindings.bindings.data(),
+    };
+
+    VkDescriptorSetLayout specialized;
+    DAWN_TRY(CheckVkSuccess(device->fn.CreateDescriptorSetLayout(device->GetVkDevice(), &createInfo,
+                                                                 nullptr, &*specialized),
+                            "CreateDescriptorSetLayout"));
+
+    mSpecializations.insert({specialization, specialized});
+    return specialized;
 }
 
 void BindGroupLayout::DestroyImpl(DestroyReason reason) {
@@ -234,6 +270,10 @@ void BindGroupLayout::DestroyImpl(DestroyReason reason) {
         device->fn.DestroyDescriptorSetLayout(device->GetVkDevice(), mHandle, nullptr);
         mHandle = VK_NULL_HANDLE;
     }
+    for (auto& [_, handle] : mSpecializations) {
+        device->fn.DestroyDescriptorSetLayout(device->GetVkDevice(), handle, nullptr);
+    }
+    mSpecializations.clear();
 
     mDescriptorSetAllocator = nullptr;
 }

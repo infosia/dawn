@@ -651,9 +651,9 @@ TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests, SampleY8Cb8Cr8AHB) {
 //          Can this help us prep descriptors for the rest and copy them?
 //  - In Pipeline skip and mark that it needs to be JITed
 //  - Start with compute pipeline.
-//  Add to BGL way to ask for a static sampler to be added instead of plane1
-//    - Add to BGL way to create same but with different static samplers.
-//    - Add to pipeline layout way to create the same but with different static samplers.
+//  OK Add to BGL way to ask for a static sampler to be added in addition to plane1
+//    OK Add to Vk BGL way to recreate same but with different static samplers, add a cache?
+//    OK Add to Vk pipeline layout way to create the same but with different static samplers.
 //    Assert it works and will not break somehow.
 //  In Draw / dispatch check if need JIT, then do the JIT.
 //    Get current BGs

@@ -36,6 +36,7 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
+#include "dawn/native/vulkan/SamplerVk.h"
 
 namespace dawn::native {
 class CacheKey;
@@ -59,6 +60,19 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
         const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor);
 
     VkDescriptorSetLayout GetHandle() const;
+
+    // XXX
+    struct Specialization {
+        absl::flat_hash_map<BindingIndex, StaticSamplerSpecialization> staticSamplers;
+
+        template <typename H>
+        friend H AbslHashValue(H h, const Specialization& s) {
+            return H::combine(std::move(h), s.staticSamplers);
+        }
+        bool operator==(const Specialization& other) const = default;
+    };
+    ResultOrError<VkDescriptorSetLayout> GetOrCreateSpecializedHandle(
+        const Specialization& specialization);
 
     ResultOrError<Ref<BindGroup>> AllocateBindGroup(
         const UnpackedPtr<BindGroupDescriptor>& descriptor);
@@ -85,6 +99,9 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     void SetLabelImpl() override;
 
     VkDescriptorSetLayout mHandle = VK_NULL_HANDLE;
+
+    // XXX
+    absl::flat_hash_map<Specialization, VkDescriptorSetLayout> mSpecializations;
 
     // Maps from indices of texture entries that are paired with static samplers
     // to indices of the entries of their respective samplers.
