@@ -762,6 +762,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Treat the stride operand for cooperative matrix load and store instructions as matrix "
       "elements instead of a source/dest pointee elements.",
       "https://crbug.com/460209126", ToggleStage::Device}},
+    {Toggle::VulkanForceStaticSamplersForExternalTextures,
+     {"vulkan_force_static_samplers_for_external_textures",
+      "Enables the code path to take static samplers for external textures. While static YCbCr "
+      "samplers are only require to sample YCbCr AHB on Android, this is useful for testing on "
+      "other devices.",
+      "https://crbug.com/468988322", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
