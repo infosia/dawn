@@ -120,7 +120,8 @@ DAWN_SERIALIZABLE(struct, SamplerBindingInfo, SAMPLER_BINDING_INFO_MEMBER) {
 #define EXTERNAL_TEXTURE_BINDING_INFO_MEMBER(X) \
     X(BindingIndex, metadata)                   \
     X(BindingIndex, plane0)                     \
-    X(BindingIndex, plane1)
+    X(BindingIndex, plane1)                     \
+    X(std::optional<BindingIndex>, staticSampler)
 DAWN_SERIALIZABLE(struct, ExternalTextureBindingInfo, EXTERNAL_TEXTURE_BINDING_INFO_MEMBER){};
 #undef EXTERNAL_TEXTURE_BINDING_INFO_MEMBER
 
