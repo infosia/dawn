@@ -500,6 +500,7 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
 
     DAWN_TRY_ASSIGN(mEmptyBindGroupLayout, CreateEmptyBindGroupLayout());
     DAWN_TRY_ASSIGN(mEmptyPipelineLayout, CreateEmptyPipelineLayout());
+    DAWN_TRY_ASSIGN(mPlaceholderSampler, CreateSampler());
 
     // If placeholder fragment shader module is needed, initialize it
     if (IsToggleEnabled(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline)) {
@@ -717,6 +718,7 @@ void DeviceBase::Destroy(DestroyReason reason) {
     mDynamicUploader = nullptr;
     mEmptyBindGroupLayout = nullptr;
     mEmptyPipelineLayout = nullptr;
+    mPlaceholderSampler = nullptr;
     mInternalPipelineStore = nullptr;
     mExternalTexturePlaceholderView = nullptr;
     mTemporaryUniformBuffer = nullptr;
@@ -1166,14 +1168,19 @@ ResultOrError<Ref<PipelineLayoutBase>> DeviceBase::CreateEmptyPipelineLayout() {
     return GetOrCreatePipelineLayout(Unpack(&desc));
 }
 
-BindGroupLayoutBase* DeviceBase::GetEmptyBindGroupLayout() {
+BindGroupLayoutBase* DeviceBase::GetEmptyBindGroupLayout() const {
     DAWN_ASSERT(mEmptyBindGroupLayout != nullptr);
     return mEmptyBindGroupLayout.Get();
 }
 
-PipelineLayoutBase* DeviceBase::GetEmptyPipelineLayout() {
+PipelineLayoutBase* DeviceBase::GetEmptyPipelineLayout() const {
     DAWN_ASSERT(mEmptyPipelineLayout != nullptr);
     return mEmptyPipelineLayout.Get();
+}
+
+SamplerBase* DeviceBase::GetPlaceholderSampler() const {
+    DAWN_ASSERT(mPlaceholderSampler != nullptr);
+    return mPlaceholderSampler.Get();
 }
 
 Ref<ComputePipelineBase> DeviceBase::GetCachedComputePipeline(
@@ -2649,6 +2656,10 @@ bool DeviceBase::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage 
                                                               wgpu::BufferUsage originalUsage,
                                                               size_t bufferSize) const {
     return true;
+}
+
+bool DeviceBase::NeedsStaticSamplerForExternalTexture() const {
+    return false;
 }
 
 bool DeviceBase::NeedsIndirectGPUValidation() const {
