@@ -438,6 +438,7 @@ DAWN_INSTANTIATE_TEST(CopyExternalTextureForBrowserTests_Aspect,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend(),
+                      VulkanBackend({"vulkan_force_static_samplers_for_external_textures"}),
                       WebGPUBackend());
 
 }  // anonymous namespace

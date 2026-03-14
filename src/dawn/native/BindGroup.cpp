@@ -440,9 +440,14 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
         }
 
         const SamplerBase* sampler = staticSamplerLayout->sampler.Get();
-        uint32_t textureEntryIndex =
-            textureIndexToEntryIndex.at(staticSamplerLayout->sampledTextureIndex);
-        const TextureViewBase* textureView = descriptor->entries[textureEntryIndex].textureView;
+        auto textureEntryIndex =
+            textureIndexToEntryIndex.find(staticSamplerLayout->sampledTextureIndex);
+        // TODO make proper validation, or reorder the loops
+        if (textureEntryIndex == textureIndexToEntryIndex.end()) {
+            continue;
+        }
+        const TextureViewBase* textureView =
+            descriptor->entries[textureEntryIndex->second].textureView;
 
         // Compare static sampler and sampled textures to make sure they are compatible.
         if (sampler->IsYCbCr()) {
@@ -464,7 +469,7 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
                             "unfilterable YCbCr %s.",
                             sampler, bindingInfo.binding, textureView);
 
-            sampledYcbcrTextures.set(textureEntryIndex);
+            sampledYcbcrTextures.set(textureEntryIndex->second);
         } else {
             DAWN_INVALID_IF(textureView->IsYCbCr(),
                             "Non-YCbCr static sampler at binding (%u) samples a YCbCr texture.",
