@@ -989,6 +989,13 @@ BeginEndRange<BindingIndex> BindGroupLayoutInternalBase::GetInputAttachmentIndic
                  GetBindingTypeEnd(BindingTypeOrder_InputAttachment));
 }
 
+BeginEndRange<APIBindingIndex> BindGroupLayoutInternalBase::GetExternalTextureIndices() const {
+    // Cast the result of GetBindingType* as mBindingTypeStart works for ExternalTextures as well
+    // but they are the only binding type that should be indexed with APIBindingIndex.
+    return Range(APIBindingIndex{uint32_t{GetBindingTypeStart(BindingTypeOrder_ExternalTexture)}},
+                 APIBindingIndex{uint32_t{GetBindingTypeEnd(BindingTypeOrder_ExternalTexture)}});
+}
+
 bool BindGroupLayoutInternalBase::NeedsCrossBindingValidation() const {
     DAWN_ASSERT(!IsError());
     return mNeedsCrossBindingValidation;

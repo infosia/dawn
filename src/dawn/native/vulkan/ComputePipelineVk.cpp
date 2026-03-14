@@ -52,25 +52,69 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 }
 
 ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
-    Device* device = ToBackend(GetDevice());
-    PipelineLayout* layout = ToBackend(GetLayout());
+    if (GetDevice()->NeedsStaticSamplerForExternalTexture() && GetLayout()->HasExternalTextures()) {
+        DAWN_ASSERT(!GetLayout()->HasStaticSamplers());
+        mRequiresSpecialization = true;
+    }
 
     // The cache key is only used for storing VkPipelineCache objects in BlobStore. That's not
     // done with the monolithic pipeline cache so it's unnecessary work and memory usage.
     bool buildCacheKey =
-        !device->GetTogglesState().IsEnabled(Toggle::VulkanMonolithicPipelineCache);
+        !GetDevice()->GetTogglesState().IsEnabled(Toggle::VulkanMonolithicPipelineCache);
+
+    Specialization specialization = {
+        .layout = {.pushConstantBytes = ToPushConstantBytes(mImmediateMask)},
+    };
+
+    SpecializationResult r;
+    DAWN_TRY_ASSIGN(r, InitializeSpecialization({}, buildCacheKey));
+    mHandle = r.pipeline->Get();
+    mVkLayout = r.layout->Get();
+    Extent3D workgroupSize = r.workgroupSize;
+
+    mSpecializations.emplace(std::move(specialization), std::move(r));
+
+    return workgroupSize;
+}
+
+ResultOrError<ComputePipeline::SpecializedHandles> ComputePipeline::GetOrCreateSpecializedHandle(
+    Specialization&& specialization) {
+    specialization.layout.pushConstantBytes = ToPushConstantBytes(mImmediateMask);
+
+    if (auto it = mSpecializations.find(specialization); it != mSpecializations.end()) {
+        return SpecializedHandles{.pipeline = it->second.pipeline->Get(),
+                                  .layout = it->second.layout->Get()};
+    }
+
+    SpecializationResult r;
+    DAWN_TRY_ASSIGN(r, InitializeSpecialization({}, /*buildCacheKey=*/false));
+
+    auto handles = SpecializedHandles{.pipeline = r.pipeline->Get(), .layout = r.layout->Get()};
+
+    mSpecializations.emplace(std::move(specialization), std::move(r));
+    return handles;
+}
+
+ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::InitializeSpecialization(
+    Specialization&& specialization,
+    bool buildCacheKey) {
+    Device* device = ToBackend(GetDevice());
+    PipelineLayout* layout = ToBackend(GetLayout());
+
     if (buildCacheKey) {
         // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
-    DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(mImmediateMask));
+    SpecializationResult result;
+    DAWN_TRY_ASSIGN(result.layout,
+                    layout->GetOrCreateVkLayoutObject(std::move(specialization.layout)));
 
     VkComputePipelineCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.layout = GetVkLayout();
+    createInfo.layout = result.layout->Get();
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
 
@@ -83,11 +127,14 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     ShaderModule* module = ToBackend(computeStage.module.Get());
 
     ShaderModule::ModuleAndSpirv moduleAndSpirv;
-    DAWN_TRY_ASSIGN(moduleAndSpirv, module->GetHandleAndSpirv({
-                                        .stage = &computeStage,
-                                        .layout = layout,
-                                        .immediateMask = GetImmediateMask(),
-                                    }));
+    DAWN_TRY_ASSIGN(moduleAndSpirv,
+                    module->GetHandleAndSpirv({
+                        .stage = &computeStage,
+                        .layout = layout,
+                        .immediateMask = GetImmediateMask(),
+                        .ycbcrExternalTextures = std::move(specialization.ycbcrExternalTextures),
+                    }));
+    result.workgroupSize = moduleAndSpirv.workgroupSize;
 
     createInfo.stage.module = moduleAndSpirv.module;
     // string_view returned by GetIsolatedEntryPointName() points to a null-terminated string.
@@ -134,13 +181,16 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         StreamIn(&mCacheKey, createInfo, layout, moduleAndSpirv.spirv);
     }
 
-    // Try to see if we have anything in the blob cache.
+    // Try to see if we have anything in the blob cache. Use the same cache for all specializations
+    // as they may end up being the exact same pipeline on the driver side.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());
     Ref<PipelineCache> cache = ToBackend(GetDevice()->GetOrCreatePipelineCache(GetCacheKey()));
+    VkPipeline pipeline;
     DAWN_TRY(
         CheckVkSuccess(device->fn.CreateComputePipelines(device->GetVkDevice(), cache->GetHandle(),
-                                                         1, &createInfo, nullptr, &*mHandle),
+                                                         1, &createInfo, nullptr, &*pipeline),
                        "CreateComputePipelines"));
+    result.pipeline = AcquireRef(new RefCountedVkHandle<VkPipeline>(device, pipeline));
     cacheTimer.RecordMicroseconds(cache->CacheHit() ? "Vulkan.CreateComputePipelines.CacheHit"
                                                     : "Vulkan.CreateComputePipelines.CacheMiss");
 
@@ -150,7 +200,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
 
     device->fn.DestroyShaderModule(device->GetVkDevice(), moduleAndSpirv.module, nullptr);
 
-    return {moduleAndSpirv.workgroupSize};
+    return result;
 }
 
 void ComputePipeline::SetLabelImpl() {
@@ -161,11 +211,16 @@ ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl(DestroyReason reason) {
     ComputePipelineBase::DestroyImpl(reason);
-    if (mHandle != VK_NULL_HANDLE) {
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
-        mHandle = VK_NULL_HANDLE;
-    }
+
+    mSpecializations.clear();
+
+    // Both of these were owned by refs in mSpecializations that were just deleted.
+    mHandle = VK_NULL_HANDLE;
     mVkLayout = nullptr;
+}
+
+bool ComputePipeline::RequiresSpecialization() const {
+    return mRequiresSpecialization;
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
@@ -175,7 +230,7 @@ VkPipeline ComputePipeline::GetHandle() const {
 
 VkPipelineLayout ComputePipeline::GetVkLayout() const {
     DAWN_ASSERT(mVkLayout != nullptr);
-    return mVkLayout->Get();
+    return mVkLayout;
 }
 
 }  // namespace dawn::native::vulkan
