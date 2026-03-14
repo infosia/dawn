@@ -362,6 +362,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
         EnableFeature(Feature::YCbCrVulkanSamplers);
+        EnableFeature(Feature::OpaqueYCbCrAndroidForExternalTexture);
     }
 
     VkFormatProperties rg11b10Properties;

@@ -648,5 +648,113 @@ DAWN_INSTANTIATE_TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests,
                         },
                         {VkYCbCrRange::Full, VkYCbCrRange::Narrow});
 
+class SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture : public DawnTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
+                wgpu::FeatureName::SharedFenceSyncFD,
+                wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture};
+    }
+
+    struct ImportedAHB {
+        wgpu::SharedTextureMemory stm;
+        wgpu::Texture texture;
+    };
+    ImportedAHB ImportAHB(AHardwareBuffer* ahb) {
+        wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc{};
+        stmAHardwareBufferDesc.handle = ahb;
+        wgpu::SharedTextureMemoryDescriptor stmDesc{};
+        stmDesc.nextInChain = &stmAHardwareBufferDesc;
+        wgpu::SharedTextureMemory stm = device.ImportSharedTextureMemory(&stmDesc);
+
+        wgpu::Texture texture = stm.CreateTexture();
+
+        wgpu::SharedTextureMemoryBeginAccessDescriptor beginDesc{};
+        beginDesc.initialized = true;
+        wgpu::SharedTextureMemoryVkImageLayoutBeginState beginLayout{};
+        beginDesc.nextInChain = &beginLayout;
+        EXPECT_EQ(stm.BeginAccess(texture, &beginDesc), wgpu::Status::Success);
+
+        return {stm, texture};
+    }
+};
+
+TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, NoopSampleY8Cb8Cr8AHB) {
+    // Make the AHB and import it as an STM and wgpu::Texture.
+    const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
+    const std::array<uint8_t, 1> cbData = {130};
+    const std::array<uint8_t, 1> crData = {140};
+    AHardwareBuffer* ahb = MakeY8Cb8Cr8AHB(2, 2, yData, cbData, crData);
+
+    ImportedAHB imported = ImportAHB(ahb);
+
+    AHardwareBuffer_release(ahb);
+
+    // Create the ExternalTexture from the AHB.
+    utils::ColorSpaceConversionInfo noopConversion = utils::GetNoopColorSpaceConversionInfo();
+    wgpu::ExternalTextureDescriptor etDesc = {
+        .plane0 = imported.texture.CreateView(),
+        .cropOrigin = {0, 0},
+        .cropSize = {imported.texture.GetWidth(), imported.texture.GetHeight()},
+        .apparentSize = {imported.texture.GetWidth(), imported.texture.GetHeight()},
+        .yuvToRgbConversionMatrix = noopConversion.yuvToRgbConversionMatrix.data(),
+        .srcTransferFunctionParameters = noopConversion.srcTransferFunctionParameters.data(),
+        .dstTransferFunctionParameters = noopConversion.dstTransferFunctionParameters.data(),
+        .gamutConversionMatrix = noopConversion.gamutConversionMatrix.data(),
+    };
+    wgpu::ExternalTexture externalTexture = device.CreateExternalTexture(&etDesc);
+
+    // Create the pipeline that copies from the external texture to an RGBA one.
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        @vertex fn quad(@builtin(vertex_index) i : u32) -> @builtin(position) vec4f {
+            const pos = array(
+                vec2f(-1.0, -1.0),
+                vec2f( 3.0, -1.0),
+                vec2f(-1.0,  3.0));
+            return vec4f(pos[i], 0.0, 1.0);
+        }
+
+        @group(0) @binding(0) var s : sampler;
+        @group(0) @binding(1) var t : texture_external;
+        @fragment fn fs(@builtin(position) pos : vec4f) -> @location(0) vec4f {
+            return textureSampleBaseClampToEdge(t, s, pos.xy / 2);
+        }
+    )");
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    pDesc.vertex.module = module;
+    pDesc.cFragment.module = module;
+    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Do the copy.
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                              {{0, device.CreateSampler()}, {1, externalTexture}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    utils::BasicRenderPass renderPass =
+        utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bg);
+    pass.Draw(3);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // The YCbCr data should have been copied into RGBA without any transformation.
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[0], cbData[0], crData[0], 255), renderPass.color, 0,
+                          0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[1], cbData[0], crData[0], 255), renderPass.color, 1,
+                          0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[2], cbData[0], crData[0], 255), renderPass.color, 0,
+                          1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[3], cbData[0], crData[0], 255), renderPass.color, 1,
+                          1);
+}
+
+DAWN_INSTANTIATE_TEST(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, VulkanBackend());
+
 }  // anonymous namespace
 }  // namespace dawn
