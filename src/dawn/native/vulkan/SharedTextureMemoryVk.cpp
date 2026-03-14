@@ -569,8 +569,10 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                     "Multi-planar AHardwareBuffer not supported yet.");
 
     // Create the SharedTextureMemory object.
-    Ref<SharedTextureMemory> sharedTextureMemory = SharedTextureMemory::Create(
-        device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT, yCbCrAHBInfo);
+    Ref<SharedTextureMemory> sharedTextureMemory =
+        SharedTextureMemory::Create(device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT);
+
+    sharedTextureMemory->mYCbCrVkDesc = yCbCrAHBInfo;
 
     // Reflect properties to reify them.
     sharedTextureMemory->APIGetProperties(&properties);
@@ -954,12 +956,8 @@ Ref<SharedTextureMemory> SharedTextureMemory::Create(
 SharedTextureMemory::SharedTextureMemory(Device* device,
                                          StringView label,
                                          const SharedTextureMemoryProperties& properties,
-                                         uint32_t queueFamilyIndex,
-
-                                         const YCbCrVkDescriptor& yCbCrVkDesc)
-    : SharedTextureMemoryBase(device, label, properties),
-      mQueueFamilyIndex(queueFamilyIndex),
-      mYCbCrVkDesc(yCbCrVkDesc) {}
+                                         uint32_t queueFamilyIndex)
+    : SharedTextureMemoryBase(device, label, properties), mQueueFamilyIndex(queueFamilyIndex) {}
 
 RefCountedVkHandle<VkDeviceMemory>* SharedTextureMemory::GetVkDeviceMemory() const {
     return mVkDeviceMemory.Get();

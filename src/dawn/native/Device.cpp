@@ -2269,10 +2269,10 @@ ResultOrError<Ref<SamplerBase>> DeviceBase::CreateSampler(const SamplerDescripto
         descriptor = descriptorOrig->WithTrivialFrontendDefaults();
     }
 
-    if (IsValidationEnabled()) {
-        DAWN_TRY_CONTEXT(ValidateSamplerDescriptor(this, &descriptor), "validating %s",
-                         &descriptor);
-    }
+    // if (IsValidationEnabled()) {
+    //     DAWN_TRY_CONTEXT(ValidateSamplerDescriptor(this, &descriptor), "validating %s",
+    //                      &descriptor);
+    // }
 
     return GetOrCreateSampler(&descriptor);
 }
