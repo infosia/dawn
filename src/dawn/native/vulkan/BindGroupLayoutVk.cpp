@@ -329,12 +329,41 @@ void BindGroupLayout::ReduceMemoryUsage() {
     mBindGroupAllocator->DeleteEmptySlabs();
 }
 
+ResultOrError<std::unique_ptr<OwnedDescriptorSet>> BindGroupLayout::GetSpecializedSetFor(
+    const BindGroup* bg,
+    const Specialization& specialization) {
+    DAWN_ASSERT(bg->GetLayout() == this);
+
+    VkDescriptorSetLayout dsLayout;
+    DAWN_TRY_ASSIGN(dsLayout, GetOrCreateSpecializedHandle(specialization));
+
+    DescriptorSetAllocation dsAllocation;
+    DAWN_TRY_ASSIGN(dsAllocation, mDescriptorSetAllocator->Allocate(dsLayout));
+
+    bg->WriteDescriptorSet(dsAllocation.set, mTextureToStaticSampler);
+    return std::make_unique<OwnedDescriptorSet>(this, dsAllocation);
+}
+
 const TextureToStaticSamplerMap& BindGroupLayout::GetTextureToStaticSamplerMap() const {
     return mTextureToStaticSampler;
 }
 
 void BindGroupLayout::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_BindGroupLayout", GetLabel());
+}
+
+// OwnedDescriptorSet
+
+OwnedDescriptorSet::OwnedDescriptorSet(BindGroupLayout* bgl, DescriptorSetAllocation allocation)
+    : mAllocation(allocation), mBindGroupLayout(bgl) {}
+
+OwnedDescriptorSet::~OwnedDescriptorSet() {
+    mBindGroupLayout->DeallocateDescriptorSet(&mAllocation);
+    mBindGroupLayout = nullptr;
+}
+
+VkDescriptorSet OwnedDescriptorSet::GetHandle() const {
+    return mAllocation.set;
 }
 
 }  // namespace dawn::native::vulkan

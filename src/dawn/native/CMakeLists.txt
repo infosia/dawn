@@ -904,6 +904,7 @@ set(dawn_native_public_depends
     ${conditional_public_depends}
 )
 set(dawn_native_private_depends
+    absl::function_ref
     absl::flat_hash_map
     absl::flat_hash_set
     absl::inlined_vector

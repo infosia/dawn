@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/MutexProtected.h"
+#include "dawn/common/NonCopyable.h"
 #include "dawn/common/SlabAllocator.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -48,6 +49,7 @@ namespace dawn::native::vulkan {
 struct DescriptorSetAllocation;
 class DescriptorSetAllocator;
 class Device;
+class OwnedDescriptorSet;
 
 VkDescriptorType VulkanDescriptorType(const BindingInfo& bindingInfo);
 
@@ -86,6 +88,15 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     void DeallocateDescriptorSet(DescriptorSetAllocation* descriptorSetAllocation);
     void ReduceMemoryUsage() override;
 
+    // Returns a VkDescriptorSet corresponding to a BindGroup but with the necessary modifications
+    // for the specialization.
+    // TODO(https://crbug.com/496616832): This returns a unique_ptr because
+    // ResultOrError<SomethingNonCopyable> doesn't compile at the moment, but unique_ptr has a
+    // specialization that works.
+    ResultOrError<std::unique_ptr<OwnedDescriptorSet>> GetSpecializedSetFor(
+        const BindGroup* bg,
+        const Specialization& specialization);
+
     const TextureToStaticSamplerMap& GetTextureToStaticSamplerMap() const;
 
   protected:
@@ -113,6 +124,21 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     TextureToStaticSamplerMap mTextureToStaticSampler;
 
     Ref<DescriptorSetAllocator> mDescriptorSetAllocator;
+};
+
+// RAII wrapper around a VkDescriptorSet for use when the VkDescriptorSet is not part of a BindGroup
+// object.
+class OwnedDescriptorSet : public NonCopyable {
+  public:
+    OwnedDescriptorSet() = default;
+    OwnedDescriptorSet(BindGroupLayout* bgl, DescriptorSetAllocation allocation);
+    ~OwnedDescriptorSet();
+
+    VkDescriptorSet GetHandle() const;
+
+  private:
+    DescriptorSetAllocation mAllocation;
+    Ref<BindGroupLayout> mBindGroupLayout = nullptr;
 };
 
 }  // namespace dawn::native::vulkan

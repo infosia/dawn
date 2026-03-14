@@ -29,9 +29,11 @@
 
 #include <algorithm>
 #include <limits>
+#include <memory>
 #include <utility>
 #include <vector>
 
+#include "absl/functional/function_ref.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
@@ -214,6 +216,12 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
 
     const BindGroupBase* GetBindGroup(BindGroupIndex index) const { return mBindGroups[index]; }
 
+    void DirtyAll() {
+        mDirtyBindGroupsObjectChangedOrIsDynamic.set();
+        mDirtyBindGroups.set();
+        mLastResourceTable = nullptr;
+    }
+
     template <typename VkPipelineType>
     void OnSetPipeline(VkPipelineType* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
@@ -228,6 +236,15 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
     void Apply(const VulkanFunctions& vk,
                VkCommandBuffer commandBuffer,
                VkPipelineBindPoint bindPoint) {
+        Apply(vk, commandBuffer, bindPoint,
+              [&](BindGroupIndex i) { return ToBackend(mBindGroups[i])->GetHandle(); });
+    }
+
+    template <typename F>
+    void Apply(const VulkanFunctions& vk,
+               VkCommandBuffer commandBuffer,
+               VkPipelineBindPoint bindPoint,
+               F GetDescriptorSet) {
         BeforeApply();
 
         BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
@@ -256,8 +273,8 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
 
         for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
-            VkDescriptorSet set = ToBackend(mBindGroups[dirtyBGIndex])->GetHandle();
-            uint32_t setIndex = uint32_t(dirtyBGIndex + startOfBindGroups);
+            VkDescriptorSet set = GetDescriptorSet(dirtyBGIndex);
+            uint32_t setIndex = uint32_t{dirtyBGIndex + startOfBindGroups};
 
             const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyBGIndex);
             uint32_t count = static_cast<uint32_t>(dynamicOffsetSpan.size());
@@ -289,20 +306,26 @@ class ImmediateConstantTracker : public T {
   public:
     ImmediateConstantTracker() = default;
 
+    void DirtyAll() { this->mDirty.set(); }
+
     void Apply(const VulkanFunctions& vk, VkCommandBuffer commandBuffer) {
         DAWN_ASSERT(this->mLastPipeline != nullptr);
+        Apply(vk, commandBuffer, ToBackend(this->mLastPipeline)->GetVkLayout(),
+              this->mLastPipeline->GetImmediateMask());
+    }
 
-        auto* lastPipeline = this->mLastPipeline;
-        const ImmediateConstantMask& pipelineMask = lastPipeline->GetImmediateMask();
-        ImmediateConstantMask uploadBits = this->mDirty & lastPipeline->GetImmediateMask();
-        for (auto&& [offset, size] : IterateRanges(uploadBits)) {
+    void Apply(const VulkanFunctions& vk,
+               VkCommandBuffer commandBuffer,
+               VkPipelineLayout layout,
+               ImmediateConstantMask pipelineMask) {
+        for (auto&& [offset, size] : IterateRanges(this->mDirty & pipelineMask)) {
             uint32_t immediateContentStartOffset =
                 static_cast<uint32_t>(offset) * kImmediateConstantElementByteSize;
             uint32_t pushConstantRangeStartOffset =
                 GetImmediateIndexInPipeline(static_cast<uint32_t>(offset), pipelineMask) *
                 kImmediateConstantElementByteSize;
-            vk.CmdPushConstants(commandBuffer, ToBackend(lastPipeline)->GetVkLayout(),
-                                kImmediateShaderStages, pushConstantRangeStartOffset,
+            vk.CmdPushConstants(commandBuffer, layout, kImmediateShaderStages,
+                                pushConstantRangeStartOffset,
                                 size * kImmediateConstantElementByteSize,
                                 this->mContent.template Get<uint32_t>(immediateContentStartOffset));
         }
@@ -563,6 +586,10 @@ struct ProgrammablePassState : public StackAllocated {
         VkCommandBuffer commands = recordingContext->commandBuffer;
 
         if (lastAppliedPipeline != lastPipeline) {
+            if (lastPipeline->RequiresSpecialization()) {
+                return RunWithSpecialization(DoOperation);
+            }
+
             vk.CmdBindPipeline(commands, PipelineBindPoint, lastPipeline->GetHandle());
             lastAppliedPipeline = lastPipeline;
         }
@@ -628,6 +655,57 @@ struct ProgrammablePassState : public StackAllocated {
         }
 
         return s;
+    }
+
+    // The handling of specialization of pipelines is split to a separate method that's not
+    // templated, to try to avoid inlining, so as to not hugely increase the stack size of the
+    // callees.
+    MaybeError RunWithSpecialization(
+        absl::FunctionRef<void(const VulkanFunctions&, VkCommandBuffer)> DoOperation) {
+        // Make sure to reapply all the state in case the specialization changes something in how
+        // the state should be applied (for example with the VkPipelineLayout).
+        DirtyAll();
+
+        // At the moment the only specialization is for using static samplers in ExternalTextures.
+        DAWN_ASSERT(lastPipeline->GetDevice()->NeedsStaticSamplerForExternalTexture() &&
+                    lastPipeline->GetLayout()->HasExternalTextures());
+        PipelineSpecialization specialization = ComputeSpecializationBaseOnState();
+
+        // Recreate the descriptor sets using the specialized VkDescriptorSetLayout.
+        PerBindGroup<std::unique_ptr<OwnedDescriptorSet>> newDescriptorSets;
+        for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
+            auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
+            auto boundBG = ToBackend(descriptorSets.GetBindGroup(group));
+            DAWN_TRY_ASSIGN(
+                newDescriptorSets[group],
+                bgl->GetSpecializedSetFor(boundBG, specialization.layout.bindGroups[group]));
+        }
+
+        // Get the specialized pipeline.
+        PipelineHandles pipelineHandles;
+        DAWN_TRY_ASSIGN(pipelineHandles,
+                        lastPipeline->GetOrCreateSpecializedHandle(std::move(specialization)));
+
+        // Reapply all the state and run the operation.
+        VkCommandBuffer commands = recordingContext->commandBuffer;
+
+        vk.CmdBindPipeline(commands, PipelineBindPoint, pipelineHandles.pipeline);
+        descriptorSets.Apply(vk, commands, PipelineBindPoint,
+                             [&](BindGroupIndex i) { return newDescriptorSets[i]->GetHandle(); });
+        immediates.Apply(vk, commands, pipelineHandles.layout, lastPipeline->GetImmediateMask());
+
+        DoOperation(vk, commands);
+
+        // Make sure none of the state applied for the specialization is used in further commands.
+        DirtyAll();
+
+        return {};
+    }
+
+    void DirtyAll() {
+        descriptorSets.DirtyAll();
+        immediates.DirtyAll();
+        lastAppliedPipeline = nullptr;
     }
 
     const VulkanFunctions& vk;

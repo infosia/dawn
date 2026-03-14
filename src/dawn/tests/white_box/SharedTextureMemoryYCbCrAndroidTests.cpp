@@ -648,5 +648,315 @@ DAWN_INSTANTIATE_TEST_P(SharedTextureMemoryVulkanYCbCrParamsTests,
                         },
                         {VkYCbCrRange::Full, VkYCbCrRange::Narrow});
 
+class SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture : public DawnTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
+                wgpu::FeatureName::SharedFenceSyncFD,
+                wgpu::FeatureName::OpaqueYCbCrAndroidForExternalTexture};
+    }
+
+    struct ImportedAHB {
+        wgpu::SharedTextureMemory stm;
+        wgpu::Texture texture;
+    };
+    ImportedAHB ImportAHB(AHardwareBuffer* ahb) {
+        wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc{};
+        stmAHardwareBufferDesc.handle = ahb;
+        wgpu::SharedTextureMemoryDescriptor stmDesc{};
+        stmDesc.nextInChain = &stmAHardwareBufferDesc;
+        wgpu::SharedTextureMemory stm = device.ImportSharedTextureMemory(&stmDesc);
+
+        wgpu::Texture texture = stm.CreateTexture();
+
+        wgpu::SharedTextureMemoryBeginAccessDescriptor beginDesc{};
+        beginDesc.initialized = true;
+        wgpu::SharedTextureMemoryVkImageLayoutBeginState beginLayout{};
+        beginDesc.nextInChain = &beginLayout;
+        EXPECT_EQ(stm.BeginAccess(texture, &beginDesc), wgpu::Status::Success);
+
+        return {stm, texture};
+    }
+
+    wgpu::Texture MakeTestTexture(wgpu::TextureFormat format,
+                                  uint32_t width,
+                                  uint32_t height,
+                                  wgpu::Color color) {
+        wgpu::TextureDescriptor tDesc = {
+            .usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TextureBinding,
+            .size = {width, height},
+            .format = format,
+        };
+        wgpu::Texture texture = device.CreateTexture(&tDesc);
+
+        // Use a render pass clear to set the value for the texture so that it works whatever the
+        // format.
+        wgpu::RenderPassColorAttachment attachment = {
+            .view = texture.CreateView(),
+            .loadOp = wgpu::LoadOp::Clear,
+            .storeOp = wgpu::StoreOp::Store,
+            .clearValue = color,
+        };
+        wgpu::RenderPassDescriptor rpDesc = {
+            .colorAttachmentCount = 1,
+            .colorAttachments = &attachment,
+        };
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&rpDesc);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        return texture;
+    }
+};
+
+// Check that sampling a YCbCr AHB (causing pipelines to be JITed) works.
+TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, NoopSampleY8Cb8Cr8AHB) {
+    // Make the AHB and import it as an STM and wgpu::Texture.
+    const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
+    const std::array<uint8_t, 1> cbData = {130};
+    const std::array<uint8_t, 1> crData = {140};
+    AHardwareBuffer* ahb = MakeY8Cb8Cr8AHB(2, 2, yData, cbData, crData);
+
+    ImportedAHB imported = ImportAHB(ahb);
+    AHardwareBuffer_release(ahb);
+
+    wgpu::ExternalTexture externalTexture =
+        utils::MakePassthroughExternalTexture(device, imported.texture);
+
+    // Create the pipeline that copies from the external texture to an RGBA one.
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        @vertex fn quad(@builtin(vertex_index) i : u32) -> @builtin(position) vec4f {
+            const pos = array(
+                vec2f(-1.0, -1.0),
+                vec2f( 3.0, -1.0),
+                vec2f(-1.0,  3.0));
+            return vec4f(pos[i], 0.0, 1.0);
+        }
+
+        @group(0) @binding(0) var s : sampler;
+        @group(0) @binding(1) var t : texture_external;
+        @fragment fn fs(@builtin(position) pos : vec4f) -> @location(0) vec4f {
+            return textureSampleBaseClampToEdge(t, s, pos.xy / 2);
+        }
+    )");
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    pDesc.vertex.module = module;
+    pDesc.cFragment.module = module;
+    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Do the copy.
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                              {{0, device.CreateSampler()}, {1, externalTexture}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    utils::BasicRenderPass renderPass =
+        utils::CreateBasicRenderPass(device, 2, 2, wgpu::TextureFormat::RGBA8Unorm);
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+    pass.SetPipeline(pipeline);
+    pass.SetBindGroup(0, bg);
+    pass.Draw(3);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // The YCbCr data should have been copied into RGBA without any transformation.
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[0], cbData[0], crData[0], 255), renderPass.color, 0,
+                          0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[1], cbData[0], crData[0], 255), renderPass.color, 1,
+                          0);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[2], cbData[0], crData[0], 255), renderPass.color, 0,
+                          1);
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(yData[3], cbData[0], crData[0], 255), renderPass.color, 1,
+                          1);
+}
+
+// Check that a pipeline works when JITted with a mixture of RGBA / YCbCr / Multiplanar external
+// textures. Rotate the external textures in multiple draws to check that the JIT caching doesn't
+// reuse when it shouldn't.
+//
+// Case with all in the same bindgroup layout.
+TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, SampleDifferentKindsSameBindGroup) {
+    // Using multiple YCbCr samplers in the same VkDescriptorSet seems to make ARM GPUs sample
+    // zeroes for all textures.
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsARM());
+
+    // Create our three test external of different kinds as well as the expected data.
+    std::vector<wgpu::ExternalTexture> externalTextures;
+    std::vector<utils::RGBA8> colors;
+
+    // The YCbCr AHB external texture.
+    const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
+    const std::array<uint8_t, 1> cbData = {130};
+    const std::array<uint8_t, 1> crData = {140};
+    AHardwareBuffer* ahb = MakeY8Cb8Cr8AHB(2, 2, yData, cbData, crData);
+
+    ImportedAHB imported = ImportAHB(ahb);
+    AHardwareBuffer_release(ahb);
+
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(device, imported.texture));
+    colors.push_back(utils::RGBA8(50, 130, 140, 255));
+
+    // The RGBA external texture.
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(
+        device, MakeTestTexture(wgpu::TextureFormat::RGBA8Unorm, 1, 1,
+                                {1.0 / 255.0, 2.0 / 255.0, 3.0 / 255.0, 4.0 / 255.0})));
+    colors.push_back(utils::RGBA8(1, 2, 3, 4));
+
+    // The multiplanar external texture.
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(
+        device, MakeTestTexture(wgpu::TextureFormat::R8Unorm, 2, 2, {10.0 / 255.0, 0, 0, 0}),
+        MakeTestTexture(wgpu::TextureFormat::RG8Unorm, 1, 1, {20.0 / 255.0, 30.0 / 255.0, 0, 0})));
+    colors.push_back(utils::RGBA8(10, 20, 30, 255));
+
+    // Create the pipeline that copies from the three external texture to a buffer.
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var s : sampler;
+        @group(0) @binding(1) var<storage, read_write> results : array<u32, 3>;
+
+        @group(0) @binding(2) var t0 : texture_external;
+        @group(0) @binding(3) var t1 : texture_external;
+        @group(0) @binding(4) var t2 : texture_external;
+        @compute @workgroup_size(1) fn main() {
+            results[0] = pack4x8unorm(textureSampleBaseClampToEdge(t0, s, vec2(0)));
+            results[1] = pack4x8unorm(textureSampleBaseClampToEdge(t1, s, vec2(0)));
+            results[2] = pack4x8unorm(textureSampleBaseClampToEdge(t2, s, vec2(0)));
+        }
+    )");
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    wgpu::BufferDescriptor resultDesc = {
+        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+        .size = 3 * sizeof(uint32_t),
+    };
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&resultDesc);
+
+    // Run the pipeline, rolling the external textures in the bindgroup such that a new
+    // specialization of the shader should be created each time.
+    for (size_t roll = 0; roll < externalTextures.size(); roll++) {
+        wgpu::BindGroup bg = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                  {
+                                                      {0, device.CreateSampler()},
+                                                      {1, resultBuffer},
+                                                      {2, externalTextures[(0 + roll) % 3]},
+                                                      {3, externalTextures[(1 + roll) % 3]},
+                                                      {4, externalTextures[(2 + roll) % 3]},
+                                                  });
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetBindGroup(0, bg);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER_RGBA8_EQ(colors[(0 + roll) % 3], resultBuffer, 0);
+        EXPECT_BUFFER_RGBA8_EQ(colors[(1 + roll) % 3], resultBuffer, 4);
+        EXPECT_BUFFER_RGBA8_EQ(colors[(2 + roll) % 3], resultBuffer, 8);
+    }
+}
+
+// Case with all in different bind group layouts.
+TEST_P(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture,
+       SampleDifferentKindsDifferentBindGroups) {
+    // Create our three test external of different kinds as well as the expected data.
+    std::vector<wgpu::ExternalTexture> externalTextures;
+    std::vector<utils::RGBA8> colors;
+
+    // The YCbCr AHB external texture.
+    const std::array<uint8_t, 4> yData = {50, 100, 150, 200};
+    const std::array<uint8_t, 1> cbData = {130};
+    const std::array<uint8_t, 1> crData = {140};
+    AHardwareBuffer* ahb = MakeY8Cb8Cr8AHB(2, 2, yData, cbData, crData);
+
+    ImportedAHB imported = ImportAHB(ahb);
+    AHardwareBuffer_release(ahb);
+
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(device, imported.texture));
+    colors.push_back(utils::RGBA8(50, 130, 140, 255));
+
+    // The RGBA external texture.
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(
+        device, MakeTestTexture(wgpu::TextureFormat::RGBA8Unorm, 1, 1,
+                                {1.0 / 255.0, 2.0 / 255.0, 3.0 / 255.0, 4.0 / 255.0})));
+    colors.push_back(utils::RGBA8(1, 2, 3, 4));
+
+    // The multiplanar external texture.
+    externalTextures.push_back(utils::MakePassthroughExternalTexture(
+        device, MakeTestTexture(wgpu::TextureFormat::R8Unorm, 2, 2, {10.0 / 255.0, 0, 0, 0}),
+        MakeTestTexture(wgpu::TextureFormat::RG8Unorm, 1, 1, {20.0 / 255.0, 30.0 / 255.0, 0, 0})));
+    colors.push_back(utils::RGBA8(10, 20, 30, 255));
+
+    // Create the pipeline that copies from the three external texture to a buffer.
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var s : sampler;
+        @group(0) @binding(1) var<storage, read_write> results : array<u32, 3>;
+
+        @group(1) @binding(0) var t0 : texture_external;
+        @group(2) @binding(0) var t1 : texture_external;
+        @group(3) @binding(0) var t2 : texture_external;
+        @compute @workgroup_size(1) fn main() {
+            results[0] = pack4x8unorm(textureSampleBaseClampToEdge(t0, s, vec2(0)));
+            results[1] = pack4x8unorm(textureSampleBaseClampToEdge(t1, s, vec2(0)));
+            results[2] = pack4x8unorm(textureSampleBaseClampToEdge(t2, s, vec2(0)));
+        }
+    )");
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    wgpu::BufferDescriptor resultDesc = {
+        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+        .size = 3 * sizeof(uint32_t),
+    };
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&resultDesc);
+
+    // Run the pipeline, rolling the external textures in the bindgroup such that a new
+    // specialization of the shader should be created each time.
+    for (size_t roll = 0; roll < externalTextures.size(); roll++) {
+        wgpu::BindGroup bg0 = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                   {
+                                                       {0, device.CreateSampler()},
+                                                       {1, resultBuffer},
+                                                   });
+
+        wgpu::BindGroup bg1 = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(1),
+                                                   {{0, externalTextures[(0 + roll) % 3]}});
+        wgpu::BindGroup bg2 = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(2),
+                                                   {{0, externalTextures[(1 + roll) % 3]}});
+        wgpu::BindGroup bg3 = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(3),
+                                                   {{0, externalTextures[(2 + roll) % 3]}});
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetBindGroup(0, bg0);
+        pass.SetBindGroup(1, bg1);
+        pass.SetBindGroup(2, bg2);
+        pass.SetBindGroup(3, bg3);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER_RGBA8_EQ(colors[(0 + roll) % 3], resultBuffer, 0);
+        EXPECT_BUFFER_RGBA8_EQ(colors[(1 + roll) % 3], resultBuffer, 4);
+        EXPECT_BUFFER_RGBA8_EQ(colors[(2 + roll) % 3], resultBuffer, 8);
+    }
+}
+
+// TODO
+//  - Same pipeline check bindgroups get reapplied? Same pipeline check immediates get reapplied.
+
+DAWN_INSTANTIATE_TEST(SharedTextureMemoryOpaqueYCbCrAndroidForExternalTexture, VulkanBackend());
+
 }  // anonymous namespace
 }  // namespace dawn
