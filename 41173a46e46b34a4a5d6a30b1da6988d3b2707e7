@@ -246,6 +246,24 @@
       "parentUuid": "f05df5f7_8eeb4fce",
       "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06e206f3_069bd62b",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 23
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-14T03:15:19Z",
+      "side": 1,
+      "message": "It is required to avoid removing extra spaces in existing generated tests.",
+      "parentUuid": "eef096b8_b8db9dd5",
+      "revId": "41173a46e46b34a4a5d6a30b1da6988d3b2707e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
