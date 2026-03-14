@@ -79,6 +79,7 @@ class ExternalTextureBase : public ApiObjectBase {
     BufferBase* GetParamsBuffer() const;
     const std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat>& GetTextureViews() const;
     ObjectType GetType() const override;
+    bool HasSingleView() const;
 
     MaybeError ValidateCanUseInSubmitNow() const;
     static Ref<ExternalTextureBase> MakeError(DeviceBase* device, StringView label = {});

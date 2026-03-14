@@ -40,6 +40,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
@@ -210,6 +211,8 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
     }
+
+    BindGroupBase* GetBindGroup(BindGroupIndex index) { return mBindGroups[index]; }
 
     template <typename VkPipelineType>
     void OnSetPipeline(VkPipelineType* pipeline) {
@@ -561,6 +564,10 @@ struct ProgrammablePassState : public StackAllocated {
         VkCommandBuffer commands = recordingContext->commandBuffer;
 
         if (lastAppliedPipeline != lastPipeline) {
+            if (lastPipeline->RequiresSpecialization()) {
+                return RunWithSpecialization(DoOperation);
+            }
+
             vk.CmdBindPipeline(commands, PipelineBindPoint, lastPipeline->GetHandle());
             lastAppliedPipeline = lastPipeline;
         }
@@ -569,6 +576,72 @@ struct ProgrammablePassState : public StackAllocated {
         immediates.Apply(vk, commands);
 
         DoOperation(vk, commands);
+        return {};
+    }
+
+    // The handling of specialization of pipelines is split to a separate method that's not
+    // templated, to try to avoid inlining, so as to not hugely increase the stack size of the
+    // callees.
+    MaybeError RunWithSpecialization(
+        std::function<void(const VulkanFunctions&, VkCommandBuffer)> DoOperation) {
+        DeviceBase* device = lastPipeline->GetDevice();
+
+        // At the moment the only specialization is for using static samplers in ExternalTextures.
+        DAWN_ASSERT(lastPipeline->GetDevice()->NeedsStaticSamplerForExternalTexture() &&
+                    lastPipeline->GetLayout()->HasExternalTextures());
+
+        using ETBindPoint = std::pair<BindGroupIndex, APIBindingIndex>;
+        using SamplerBindPoint = std::pair<BindGroupIndex, BindingIndex>;
+        absl::flat_hash_map<ETBindPoint, std::optional<SamplerBindPoint>> usedETSamplerPairs;
+        // XXX gather lol
+
+        using Specialization = ComputePipeline::Specialization;
+        Specialization s;
+
+        for (const auto& [etBindPoint, maybeSamplerBindPoint] : usedETSamplerPairs) {
+            const BindGroupBase* etBindGroup = descriptorSets.GetBindGroup(etBindPoint.first);
+            const ExternalTextureBase* et =
+                etBindGroup->GetBoundExternalTexture(etBindPoint.second).Get();
+
+            if (!et->HasSingleView()) {
+                continue;
+            }
+            const TextureView* view = ToBackend(et->GetTextureViews()[0]).Get();
+            DAWN_ASSERT(view != nullptr);
+
+            if (view->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid &&
+                !device->IsToggleEnabled(Toggle::VulkanForceStaticSamplersForExternalTextures)) {
+                continue;
+            }
+
+            const Sampler* sampler = nullptr;
+            if (maybeSamplerBindPoint) {
+                sampler = ToBackend(descriptorSets.GetBindGroup(maybeSamplerBindPoint->first)
+                                        ->GetBindingAsSampler(maybeSamplerBindPoint->second));
+            }
+
+            const auto& bindingInfo =
+                etBindGroup->GetLayout()->GetAPIBindingInfo(etBindPoint.second);
+            const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
+            DAWN_ASSERT(etInfo.staticSampler.has_value());
+
+            s.ycbcrExternalTextures.insert(etBindPoint);
+            s.layout.bindGroups[etBindPoint.first].staticSamplers[*etInfo.staticSampler] =
+                StaticSamplerSpecialization::From(view, sampler);
+            s.layout.bindGroups[etBindPoint.first].textureToStaticSampler.emplace(
+                etInfo.plane0, *etInfo.staticSampler);
+        }
+
+        // Allocate new VkDescriptorSet for each used one, using the specialization.
+        //      - Make sure they get freed afterwards.
+
+        // Make the new pipeline + layout with specialization.
+        // Bind the pipeline.
+        // Dirty all immediates, apply with new layout.
+        // Apply the new bindgroups. CAREFUL OF THE RESOURCE TABLE NEEDS test.
+        // DoOperation.
+        // Dirty all the state.
+
         return {};
     }
 
