@@ -180,7 +180,7 @@ crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,buil
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:*;offset=true [ Skip ] # CAT:Accuracy
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:*;offset=true [ Skip ] # CAT:Accuracy
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:* [ Skip ] # CAT:Accuracy
-crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:*;offset=true [ Skip ] # CAT:Accuracy
+crbug.com/364595481 [ android arm ] webgpu:shader,executionwebgpu:shader,execution,memory_layout:write_layout:case="atomic_align4";aspace="storage",expression,call,builtin,textureSample:sampled_array_2d_coords:*;offset=true [ Skip ] # CAT:Accuracy
 
 # Fine derivatives are course on Intel Mac
 crbug.com/449521989 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ] # CAT:Accuracy
@@ -1505,6 +1505,21 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,robust_access:linear
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="workgroup";access="read";containerType="vector";shadowingMode="function-scope";isAtomic=false;baseType="f16" [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="workgroup";access="read";containerType="vector";shadowingMode="module-scope";isAtomic=false;baseType="f16" [ Failure ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="workgroup";access="read";containerType="vector";shadowingMode="none";isAtomic=false;baseType="f16" [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mapped: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappedAgain: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappedAtCreation: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappingPending: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:mapAsync,abort_over_invalid_error: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:mapAsync,earlyRejection: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:mapAsync,state,mapped: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:mapAsync,state,mappedAtCreation: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:mapAsync,state,mappingPending: [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,memory_layout:write_layout:case="array_mat4x3f_stride";aspace="storage" [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3E%3E";type="i32";vectorize=2 [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3E%3E";type="i32";vectorize=3 [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3E%3E";type="i32";vectorize=4 [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment" [ Failure ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,memory_layout:write_layout:case="atomic_align4";aspace="storage" [ Failure ]
 
 # Known bug in immediates implementation
 crbug.com/479563279 webgpu:api,validation,encoding,programmable,pipeline_immediate:required_slots_set:encoderType="*";scenario="struct_padding";* [ Failure ]
