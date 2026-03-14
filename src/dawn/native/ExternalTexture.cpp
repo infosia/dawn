@@ -175,15 +175,35 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     // YUV-to-RGB conversion is performed by multiplying the source YUV values with a 4x3 matrix
     // passed from Chromium. The matrix was originally sourced from /skia/src/core/SkYUVMath.cpp.
     // This matrix is only used in multiplanar scenarios.
-    if (params.numPlanes == 2) {
-        DAWN_ASSERT(descriptor->yuvToRgbConversionMatrix);
-        const float* yMat = descriptor->yuvToRgbConversionMatrix;
-        params.yuvToRgbConversionMatrix = {
-            {yMat[0], yMat[1], yMat[2], yMat[3]},  //
-            {yMat[4], yMat[5], yMat[6], yMat[7]},  //
-            {yMat[8], yMat[9], yMat[10], yMat[11]},
+
+    // TODO change to always required
+    math::Mat3x4f yMat = {
+        {1, 0, 0, 0},  //
+        {0, 1, 0, 0},  //
+        {0, 0, 1, 0},  //
+    };
+    if (descriptor->yuvToRgbConversionMatrix) {
+        const float* yMatIn = descriptor->yuvToRgbConversionMatrix;
+        yMat = {
+            {yMatIn[0], yMatIn[1], yMatIn[2], yMatIn[3]},  //
+            {yMatIn[4], yMatIn[5], yMatIn[6], yMatIn[7]},  //
+            {yMatIn[8], yMatIn[9], yMatIn[10], yMatIn[11]},
         };
     }
+
+    // XXX
+    if (descriptor->plane0->GetTexture()->GetFormat().format ==
+        wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        constexpr math::Mat4x4f kUndoVulkanSwizzle = {
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {1, 0, 0, 0},
+            {0, 0, 0, 1},
+        };
+        yMat = math::Mul(kUndoVulkanSwizzle, yMat);
+    }
+
+    params.yuvToRgbConversionMatrix = yMat;
 
     // Gamut correction is performed by multiplying a 3x3 matrix passed from Chromium. The
     // matrix was computed by multiplying the appropriate source and destination gamut
@@ -359,8 +379,10 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
     mTextureViews[0] = descriptor->plane0;
 
     if (descriptor->plane1) {
+        mViewCount = 2;
         mTextureViews[1] = descriptor->plane1;
     } else {
+        mViewCount = 1;
         DAWN_TRY_ASSIGN(mTextureViews[1],
                         device->GetOrCreatePlaceholderTextureViewForExternalTexture());
     }
@@ -443,6 +465,10 @@ Ref<ExternalTextureBase> ExternalTextureBase::MakeError(DeviceBase* device, Stri
 
 BufferBase* ExternalTextureBase::GetParamsBuffer() const {
     return mParamsBuffer.Get();
+}
+
+bool ExternalTextureBase::HasSingleView() const {
+    return mViewCount == 1;
 }
 
 ObjectType ExternalTextureBase::GetType() const {
