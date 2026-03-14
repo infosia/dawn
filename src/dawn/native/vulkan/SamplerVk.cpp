@@ -152,4 +152,36 @@ void Sampler::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_Sampler", GetLabel());
 }
 
+// static
+StaticSamplerSpecialization StaticSamplerSpecialization::From(const Texture* tex, const Sampler* sampler) {
+    AYAYAYA
+}
+
+ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
+    DeviceBase* device) const {
+    SamplerDescriptor samplerDesc;
+    samplerDesc.magFilter = this->magFilter;
+    samplerDesc.minFilter = this->minFilter;
+
+    YCbCrVkDescriptor yCbCrDesc;
+    if (isYCbCr) {
+        yCbCrDesc.vkFormat = this->format;
+        yCbCrDesc.externalFormat = this->androidExternalFormat;
+        yCbCrDesc.vkYCbCrModel = this->model;
+        yCbCrDesc.vkYCbCrRange = this->range;
+        yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
+        yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
+        yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
+        yCbCrDesc.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
+        yCbCrDesc.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT_KHR;
+        yCbCrDesc.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT_KHR;
+        yCbCrDesc.vkChromaFilter = wgpu::FilterMode::Nearest;
+        yCbCrDesc.forceExplicitReconstruction = false;
+
+        samplerDesc.nextInChain = &yCbCrDesc;
+    }
+
+    return device->CreateSampler(&samplerDesc);
+}
+
 }  // namespace dawn::native::vulkan
