@@ -1916,6 +1916,7 @@ DAWN_INSTANTIATE_TEST(ExternalTextureTests,
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend(),
+                      VulkanBackend({"vulkan_force_static_samplers_for_external_textures"}),
                       WebGPUBackend());
 
 enum class AccessMode { Sample, Load };
@@ -2127,7 +2128,8 @@ TEST_P(ExternalTextureOOBTests, ExternalTextureOOB) {
 DAWN_INSTANTIATE_TEST_P(
     ExternalTextureOOBTests,
     {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"d3d12_use_root_signature_version_1_1"}),
-     MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend(), WebGPUBackend()},
+     MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"vulkan_force_static_samplers_for_external_textures"}), WebGPUBackend()},
     std::vector<wgpu::ExternalTextureRotation>({wgpu::ExternalTextureRotation::Rotate0Degrees,
                                                 wgpu::ExternalTextureRotation::Rotate90Degrees,
                                                 wgpu::ExternalTextureRotation::Rotate180Degrees,
