@@ -53,6 +53,11 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
               const UnpackedPtr<BindGroupDescriptor>& descriptor,
               DescriptorSetAllocation descriptorSetAllocation);
 
+    // Write the descriptors to the provided VkDescriptorSet, this is also used to write to new
+    // allocation from specific vulkan::BindGroupLayout specializations.
+    void WriteDescriptorSet(VkDescriptorSet dsSet,
+                            const TextureToStaticSamplerMap& textureToStaticSampler) const;
+
     VkDescriptorSet GetHandle() const;
 
   private:
@@ -61,9 +66,6 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     MaybeError InitializeImpl() override;
     void DestroyImpl(DestroyReason reason) override;
     void DeleteThis() override;
-
-    void WriteDescriptorSet(VkDescriptorSet dsSet,
-                            const TextureToStaticSamplerMap& textureToStaticSampler);
 
     // Dawn API
     void SetLabelImpl() override;
