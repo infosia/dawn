@@ -31,6 +31,15 @@
 
 namespace dawn::wire {
 
+// Forward GetProcs to the autogen code. It needs to be defined here so that it is exported. (the
+// autogen code is part of the code that's agnostic to static vs. shared).
+namespace client {
+const DawnProcTable& GetAutogenProcs();
+const DawnProcTable& GetProcs() {
+    return GetAutogenProcs();
+}
+}  // namespace client
+
 WireClient::WireClient(const WireClientDescriptor& descriptor)
     : mImpl(new client::Client(descriptor.serializer, descriptor.memoryTransferService)) {}
 
