@@ -55,6 +55,29 @@ class Sampler final : public SamplerBase {
     VkSamplerYcbcrConversion mSamplerYCbCrConversion = VK_NULL_HANDLE;
 };
 
+// All the information needed to create a StaticSampler for YCbCr sampling.
+struct StaticSamplerSpecialization {
+    wgpu::FilterMode minFilter;
+    wgpu::FilterMode magFilter;
+    VkFormat format;
+    uint32_t androidExternalFormat;
+    VkSamplerYcbcrModelConversion model;
+    VkSamplerYcbcrRange range;
+    // Assumes that:
+    //  - component mapping is the identity.
+    //  - chroma offsets are mid-point.
+    //  - chroma filter is nearest.
+
+    template <typename H>
+    friend H AbslHashValue(H h, const StaticSamplerSpecialization& s) {
+        return H::combine(std::move(h), s.minFilter, s.magFilter, s.format, s.androidExternalFormat,
+                          s.model, s.range);
+    }
+
+    ResultOrError<Ref<SamplerBase>> CreateSampler(DeviceBase* device) const;
+    bool operator==(const StaticSamplerSpecialization& other) const = default;
+};
+
 }  // namespace dawn::native::vulkan
 
 #endif  // SRC_DAWN_NATIVE_VULKAN_SAMPLERVK_H_

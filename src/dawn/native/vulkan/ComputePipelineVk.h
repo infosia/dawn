@@ -32,6 +32,7 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
@@ -48,6 +49,22 @@ class ComputePipeline final : public ComputePipelineBase {
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
 
+    // Specializations used to JIT pipelines.
+    struct Specialization {
+        PipelineLayout::Specialization layout;
+
+        template <typename H>
+        friend H AbslHashValue(H h, const Specialization& s) {
+            return H::combine(std::move(h), s.layout);
+        }
+        bool operator==(const Specialization& other) const = default;
+    };
+    struct SpecializedHandles {
+        VkPipeline pipeline;
+        VkPipelineLayout layout;
+    };
+    ResultOrError<SpecializedHandles> GetOrCreateSpecializedHandle(Specialization&& specialization);
+
     // Dawn API
     void SetLabelImpl() override;
 
@@ -57,8 +74,23 @@ class ComputePipeline final : public ComputePipelineBase {
     using ComputePipelineBase::ComputePipelineBase;
     ResultOrError<Extent3D> InitializeImpl() override;
 
+    // Initializes a pipeline for the specialization and stores it in mSpecializations.
+    struct SpecializationResult {
+        Extent3D workgroupSize;
+        Ref<RefCountedVkHandle<VkPipeline>> pipeline;
+        Ref<RefCountedVkHandle<VkPipelineLayout>> layout;
+    };
+    ResultOrError<SpecializationResult> InitializeSpecialization(Specialization&& specialization,
+                                                                 bool buildCacheKey);
+
+    // The handles are owned by a ref in mSpecializations.
     VkPipeline mHandle = VK_NULL_HANDLE;
-    Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
+    VkPipelineLayout mVkLayout = VK_NULL_HANDLE;
+
+    // Caches the specializations as we are most likely to reuse the overtime. Note that noop
+    // specialization has mHandle cached directly but mHandle is also kept separately for
+    // efficiency.
+    absl::flat_hash_map<Specialization, SpecializationResult> mSpecializations;
 };
 
 }  // namespace dawn::native::vulkan
