@@ -90,6 +90,10 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     void DeallocateDescriptorSet(DescriptorSetAllocation* descriptorSetAllocation);
     void ReduceMemoryUsage() override;
 
+    ResultOrError<DescriptorSetAllocation> GetSpecializedSetFor(
+        const BindGroup* bg,
+        const Specialization& specialization);
+
     const TextureToStaticSamplerMap& GetTextureToStaticSamplerMap() const;
 
   protected:
