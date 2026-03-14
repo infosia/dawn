@@ -37,7 +37,9 @@ VkPipelineLayout PipelineVk::GetVkLayout() const {
 
 MaybeError PipelineVk::InitializeBase(PipelineLayout* layout,
                                       const ImmediateConstantMask& immediateConstantMask) {
-    DAWN_TRY_ASSIGN(mVkPipelineLayout, layout->GetOrCreateVkLayoutObject(immediateConstantMask));
+    uint32_t pushConstantBytes = immediateConstantMask.count() * kImmediateConstantElementByteSize;
+    DAWN_TRY_ASSIGN(mVkPipelineLayout,
+                    layout->GetOrCreateVkLayoutObject({.pushConstantBytes = pushConstantBytes}));
 
     return {};
 }

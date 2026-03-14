@@ -32,6 +32,7 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/PipelineVk.h"
 
 namespace dawn::native::vulkan {
@@ -47,6 +48,17 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineVk {
 
     VkPipeline GetHandle() const;
 
+    // Specializations used to JIT pipelines.
+    struct Specialization {
+        PipelineLayout::Specialization layout;
+
+        template <typename H>
+        friend H AbslHashValue(H h, const Specialization& s) {
+            return H::combine(std::move(h), s.layout);
+        }
+        bool operator==(const Specialization& other) const = default;
+    };
+    ResultOrError<VkPipeline> GetOrCreateSpecializedHandle(const Specialization& specialization);
 
     // Dawn API
     void SetLabelImpl() override;
@@ -57,7 +69,15 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineVk {
     using ComputePipelineBase::ComputePipelineBase;
     ResultOrError<Extent3D> InitializeImpl() override;
 
+    // Initializes a pipeline for the specialization and stores it in mSpecializations.
+    ResultOrError<Extent3D> InitializeSpecialization(const Specialization& specialization,
+                                                     bool buildCacheKey);
+
     VkPipeline mHandle = VK_NULL_HANDLE;
+    // Caches the specializations as we are most likely to reuse the overtime. Note that noop
+    // specialization has mHandle cached directly but mHandle is also kept separately for
+    // efficiency.
+    absl::flat_hash_map<Specialization, VkPipeline> mSpecializations;
 };
 
 }  // namespace dawn::native::vulkan
