@@ -569,8 +569,10 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                     "Multi-planar AHardwareBuffer not supported yet.");
 
     // Create the SharedTextureMemory object.
-    Ref<SharedTextureMemory> sharedTextureMemory = SharedTextureMemory::Create(
-        device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT, yCbCrAHBInfo);
+    Ref<SharedTextureMemory> sharedTextureMemory =
+        SharedTextureMemory::Create(device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT);
+
+    sharedTextureMemory->mYCbCrVkDesc = yCbCrAHBInfo;
 
     // Reflect properties to reify them.
     sharedTextureMemory->APIGetProperties(&properties);
