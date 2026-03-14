@@ -445,6 +445,10 @@ BufferBase* ExternalTextureBase::GetParamsBuffer() const {
     return mParamsBuffer.Get();
 }
 
+bool ExternalTextureBase::HasSingleView() const {
+    return mTextureViews[1] == nullptr;
+}
+
 ObjectType ExternalTextureBase::GetType() const {
     return ObjectType::ExternalTexture;
 }

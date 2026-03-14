@@ -44,6 +44,8 @@ class RenderPipeline final : public RenderPipelineBase {
         Device* device,
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
 
+    bool RequiresSpecialization() const { return false; }  // XXX
+
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
 
