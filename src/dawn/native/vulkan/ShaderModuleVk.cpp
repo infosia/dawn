@@ -148,13 +148,20 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         };
     }
 
-    tint::Bindings bindings = GenerateBindingRemapping(
-        in.layout, in.stage->metadata->stage, [&](BindGroupIndex group, BindingIndex index) {
-            return tint::BindingPoint{
-                .group = uint32_t(startOfBindGroups + group),
-                .binding = uint32_t(index),
-            };
-        });
+    auto ToWGSLBindPoint = [&](BindGroupIndex group, BindingNumber binding) -> tint::BindingPoint {
+        return {
+            .group = uint32_t(group),
+            .binding = uint32_t(binding),
+        };
+    };
+    auto ToSPIRVBindPoint = [&](BindGroupIndex group, BindingIndex index) -> tint::BindingPoint {
+        return {
+            .group = uint32_t(startOfBindGroups + group),
+            .binding = uint32_t(index),
+        };
+    };
+    tint::Bindings bindings =
+        GenerateBindingRemapping(in.layout, in.stage->metadata->stage, ToSPIRVBindPoint);
 
     // Post process the binding remapping to make statically paired texture point at the sampler
     // binding point instead.
@@ -167,11 +174,24 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             const auto& bindingInfo = bgl->GetBindingInfo(index);
 
             if (auto it = textureToStaticSampler.find(index); it != textureToStaticSampler.end()) {
-                tint::BindingPoint wgslBindingPoint = {.group = uint32_t(startOfBindGroups + group),
-                                                       .binding = uint32_t(bindingInfo.binding)};
+                auto wgslBindingPoint = ToWGSLBindPoint(group, bindingInfo.binding);
                 bindings.texture[wgslBindingPoint].binding = uint32_t(it->second);
                 staticallyPairedTextureBindingPoints.insert(wgslBindingPoint);
             }
+        }
+
+        for (APIBindingIndex index : bgl->GetExternalTextureIndices()) {
+            if (!in.ycbcrExternalTextures.contains({group, index})) {
+                continue;
+            }
+
+            const auto& bindingInfo = bgl->GetAPIBindingInfo(index);
+            const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
+            bindings.external_texture[ToWGSLBindPoint(group, bindingInfo.binding)] =
+                tint::ExternalYCBCRTexture{
+                    .metadata = ToSPIRVBindPoint(group, etInfo.metadata),
+                    .texture = ToSPIRVBindPoint(group, etInfo.plane0),
+                    .sampler = ToSPIRVBindPoint(group, etInfo.staticSampler.value())};
         }
     }
 

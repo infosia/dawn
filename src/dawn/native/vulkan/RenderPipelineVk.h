@@ -44,6 +44,14 @@ class RenderPipeline final : public RenderPipelineBase {
         Device* device,
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
 
+    // TODO
+    struct SpecializedHandles {
+        VkPipeline pipeline;
+        VkPipelineLayout layout;
+    };
+    bool RequiresSpecialization() const { return false; }  // XXX
+    ResultOrError<SpecializedHandles> GetOrCreateSpecializedHandle(Specialization&& specialization);
+
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
 
