@@ -370,7 +370,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     // Initialize the layout after all modifications to mImmediateMask.
-    DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(mImmediateMask));
+    DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(
+                                   {.pushConstantBytes = ToPushConstantBytes(mImmediateMask)}));
 
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;

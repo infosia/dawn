@@ -91,6 +91,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     const BindGroupLayoutBase* GetFrontendBindGroupLayout(BindGroupIndex group) const;
     BindGroupLayoutBase* GetFrontendBindGroupLayout(BindGroupIndex group);
     const BindGroupLayoutInternalBase* GetBindGroupLayout(BindGroupIndex group) const;
+    BindGroupLayoutInternalBase* GetBindGroupLayout(BindGroupIndex group);
     const BindGroupMask& GetBindGroupLayoutsMask() const;
 
     bool HasPixelLocalStorage() const;

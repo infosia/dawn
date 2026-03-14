@@ -666,6 +666,12 @@ BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(BindGroupInd
 
 const BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(
     BindGroupIndex group) const {
+    DAWN_ASSERT(!IsError());
+    return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
+}
+
+BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(BindGroupIndex group) {
+    DAWN_ASSERT(!IsError());
     return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
 }
 
