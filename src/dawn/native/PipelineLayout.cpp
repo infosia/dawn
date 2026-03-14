@@ -666,6 +666,12 @@ BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(BindGroupInd
 
 const BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(
     BindGroupIndex group) const {
+    DAWN_ASSERT(!IsError());
+    return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
+}
+
+BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(BindGroupIndex group) {
+    DAWN_ASSERT(!IsError());
     return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
 }
 
@@ -685,6 +691,24 @@ const std::vector<wgpu::TextureFormat>& PipelineLayoutBase::GetStorageAttachment
 bool PipelineLayoutBase::HasAnyStorageAttachments() const {
     for (auto format : mStorageAttachmentSlots) {
         if (format != wgpu::TextureFormat::Undefined) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PipelineLayoutBase::HasExternalTextures() const {
+    for (BindGroupIndex g : mMask) {
+        if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetExternalTextureCount() != 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PipelineLayoutBase::HasStaticSamplers() const {
+    for (BindGroupIndex g : mMask) {
+        if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetStaticSamplerCount() != 0) {
             return true;
         }
     }
