@@ -172,18 +172,39 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
 
     params.doYuvToRgbConversionOnly = descriptor->doYuvToRgbConversionOnly ? 1 : 0;
 
-    // YUV-to-RGB conversion is performed by multiplying the source YUV values with a 4x3 matrix
-    // passed from Chromium. The matrix was originally sourced from /skia/src/core/SkYUVMath.cpp.
-    // This matrix is only used in multiplanar scenarios.
-    if (params.numPlanes == 2) {
-        DAWN_ASSERT(descriptor->yuvToRgbConversionMatrix);
-        const float* yMat = descriptor->yuvToRgbConversionMatrix;
-        params.yuvToRgbConversionMatrix = {
-            {yMat[0], yMat[1], yMat[2], yMat[3]},  //
-            {yMat[4], yMat[5], yMat[6], yMat[7]},  //
-            {yMat[8], yMat[9], yMat[10], yMat[11]},
+    // YUV-to-RGB conversion is performed by multiplying the source YUV values with a 3x4 matrix on
+    // the right. This is to use 36 bytes of uniform buffer instead of 48 for a 4x3 matrix.
+
+    // TODO(https://crbug.com/496604550): Make the conversion matrix required, users can pass the
+    // identity if needed.
+    math::Mat3x4f yMat = {
+        {1, 0, 0, 0},  //
+        {0, 1, 0, 0},  //
+        {0, 0, 1, 0},  //
+    };
+    if (descriptor->yuvToRgbConversionMatrix) {
+        const float* yMatIn = descriptor->yuvToRgbConversionMatrix;
+        yMat = {
+            {yMatIn[0], yMatIn[1], yMatIn[2], yMatIn[3]},  //
+            {yMatIn[4], yMatIn[5], yMatIn[6], yMatIn[7]},  //
+            {yMatIn[8], yMatIn[9], yMatIn[10], yMatIn[11]},
         };
     }
+
+    // Vulkan's YCbCr sampling returns components in Cb, Y, Cr, 1 order while yMat expect Y, Cb,
+    // Cr, 1. Reorder them by appending a "swizzling" matrix first.
+    if (descriptor->plane0->GetTexture()->GetFormat().format ==
+        wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        constexpr math::Mat4x4f kUndoVulkanSwizzle = {
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {1, 0, 0, 0},
+            {0, 0, 0, 1},
+        };
+        yMat = math::Mul(kUndoVulkanSwizzle, yMat);
+    }
+
+    params.yuvToRgbConversionMatrix = yMat;
 
     // Gamut correction is performed by multiplying a 3x3 matrix passed from Chromium. The
     // matrix was computed by multiplying the appropriate source and destination gamut
