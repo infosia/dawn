@@ -2121,6 +2121,31 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
 
         createInfo.pNext = &samplerYCbCrInfo;
+    } else if (GetTexture()->GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        auto stm = static_cast<SharedTextureMemoryContentsVk*>(
+            GetTexture()->GetSharedResourceMemoryContents());
+
+        YCbCrVkDescriptor yCbCr;
+        yCbCr.vkFormat = static_cast<VkFormat>(stm->GetYCbCrVkDesc().vkFormat);
+        yCbCr.externalFormat = stm->GetYCbCrVkDesc().externalFormat;
+        yCbCr.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
+        yCbCr.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
+        yCbCr.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
+        yCbCr.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
+        yCbCr.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
+        yCbCr.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
+        yCbCr.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+        yCbCr.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+        yCbCr.vkChromaFilter = wgpu::FilterMode::Nearest;
+        yCbCr.forceExplicitReconstruction = false;
+
+        DAWN_TRY_ASSIGN(mSamplerYCbCrConversion, CreateSamplerYCbCrConversion(device, yCbCr));
+
+        samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
+        samplerYCbCrInfo.pNext = nullptr;
+        samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
+
+        createInfo.pNext = &samplerYCbCrInfo;
     }
 
     DAWN_TRY(CheckVkSuccess(
