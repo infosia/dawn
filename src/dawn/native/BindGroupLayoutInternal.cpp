@@ -580,6 +580,7 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
                     device, nextOpenBindingNumberForNewEntry--, entry->visibility);
                 entries.push_back(staticSamplerEntry);
                 internalEntries.insert(staticSamplerEntry.binding);
+                staticSamplerBinding = staticSamplerEntry.binding;
 
                 staticSamplerToSingleTextureBinding.insert(
                     {staticSamplerEntry.binding, plane0Entry.binding});
@@ -922,6 +923,11 @@ uint32_t BindGroupLayoutInternalBase::GetUnverifiedBufferCount() const {
     return mUnverifiedBufferCount;
 }
 
+uint32_t BindGroupLayoutInternalBase::GetAPIStaticSamplerCount() const {
+    DAWN_ASSERT(!IsError());
+    return mValidationBindingCounts.staticSamplerCount;
+}
+
 uint32_t BindGroupLayoutInternalBase::GetStaticSamplerCount() const {
     DAWN_ASSERT(!IsError());
     return uint32_t(GetBindingTypeEnd(BindingTypeOrder_StaticSampler) -
@@ -987,6 +993,13 @@ BeginEndRange<BindingIndex> BindGroupLayoutInternalBase::GetNonStaticSamplerIndi
 BeginEndRange<BindingIndex> BindGroupLayoutInternalBase::GetInputAttachmentIndices() const {
     return Range(GetBindingTypeStart(BindingTypeOrder_InputAttachment),
                  GetBindingTypeEnd(BindingTypeOrder_InputAttachment));
+}
+
+BeginEndRange<APIBindingIndex> BindGroupLayoutInternalBase::GetExternalTextureIndices() const {
+    // Cast the result of GetBindingType* as mBindingTypeStart works for ExternalTextures as well
+    // but they are the only binding type that should be indexed with APIBindingIndex.
+    return Range(APIBindingIndex{uint32_t{GetBindingTypeStart(BindingTypeOrder_ExternalTexture)}},
+                 APIBindingIndex{uint32_t{GetBindingTypeEnd(BindingTypeOrder_ExternalTexture)}});
 }
 
 bool BindGroupLayoutInternalBase::NeedsCrossBindingValidation() const {
