@@ -40,6 +40,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
@@ -211,6 +212,13 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
     }
 
+    BindGroupBase* GetBindGroup(BindGroupIndex index) const { return mBindGroups[index]; }
+    void DirtyAll() {
+        mDirtyBindGroupsObjectChangedOrIsDynamic.set();
+        mDirtyBindGroups.set();
+        mLastResourceTable = nullptr;
+    }
+
     template <typename VkPipelineType>
     void OnSetPipeline(VkPipelineType* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
@@ -286,20 +294,26 @@ class ImmediateConstantTracker : public T {
   public:
     ImmediateConstantTracker() = default;
 
+    void DirtyAll() { this->mDirty.set(); }
+
     void Apply(const VulkanFunctions& vk, VkCommandBuffer commandBuffer) {
         DAWN_ASSERT(this->mLastPipeline != nullptr);
+        Apply(vk, commandBuffer, ToBackend(this->mLastPipeline)->GetVkLayout(),
+              this->mLastPipeline->GetImmediateMask());
+    }
 
-        auto* lastPipeline = this->mLastPipeline;
-        const ImmediateConstantMask& pipelineMask = lastPipeline->GetImmediateMask();
-        ImmediateConstantMask uploadBits = this->mDirty & lastPipeline->GetImmediateMask();
-        for (auto&& [offset, size] : IterateRanges(uploadBits)) {
+    void Apply(const VulkanFunctions& vk,
+               VkCommandBuffer commandBuffer,
+               VkPipelineLayout layout,
+               ImmediateConstantMask pipelineMask) {
+        for (auto&& [offset, size] : IterateRanges(this->mDirty & pipelineMask)) {
             uint32_t immediateContentStartOffset =
                 static_cast<uint32_t>(offset) * kImmediateConstantElementByteSize;
             uint32_t pushConstantRangeStartOffset =
                 GetImmediateIndexInPipeline(static_cast<uint32_t>(offset), pipelineMask) *
                 kImmediateConstantElementByteSize;
-            vk.CmdPushConstants(commandBuffer, ToBackend(lastPipeline)->GetVkLayout(),
-                                kImmediateShaderStages, pushConstantRangeStartOffset,
+            vk.CmdPushConstants(commandBuffer, layout, kImmediateShaderStages,
+                                pushConstantRangeStartOffset,
                                 size * kImmediateConstantElementByteSize,
                                 this->mContent.template Get<uint32_t>(immediateContentStartOffset));
         }
@@ -560,6 +574,10 @@ struct ProgrammablePassState : public StackAllocated {
         VkCommandBuffer commands = recordingContext->commandBuffer;
 
         if (lastAppliedPipeline != lastPipeline) {
+            if (lastPipeline->RequiresSpecialization()) {
+                return RunWithSpecialization(DoOperation);
+            }
+
             vk.CmdBindPipeline(commands, PipelineBindPoint, lastPipeline->GetHandle());
             lastAppliedPipeline = lastPipeline;
         }
@@ -569,6 +587,120 @@ struct ProgrammablePassState : public StackAllocated {
 
         DoOperation(vk, commands);
         return {};
+    }
+
+    using PipelineSpecialization = typename Pipeline::Specialization;
+    PipelineSpecialization ComputeSpecializationBaseOnState() const {
+        PipelineSpecialization s;
+
+        // Add the specialization to use a static samplers for external textures that need them.
+        PipelineBase::SamplerForExternalTextureMap samplerForET =
+            lastPipeline->ComputeSamplerForExternalTextureMap();
+        for (const auto& [etBindPoint, maybeSamplerBindPoint] : samplerForET) {
+            const BindGroupBase* etBindGroup = descriptorSets.GetBindGroup(etBindPoint.group);
+
+            // Multiplanar external textures never use a static sampler. (et may be null when a 2D
+            // view is bound directly in lieu of an external texture).
+            const ExternalTextureBase* et =
+                etBindGroup->GetBoundExternalTexture(etBindPoint.binding).Get();
+            if (et != nullptr && !et->HasSingleView()) {
+                continue;
+            }
+
+            // Get the ExternalTextureBindingInfo from which we can get the indices for its plane0
+            // and staticSampler bind points.
+            const auto& bindingInfo =
+                etBindGroup->GetLayout()->GetAPIBindingInfo(etBindPoint.binding);
+            const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
+            DAWN_ASSERT(etInfo.staticSampler.has_value());
+
+            const TextureView* view =
+                ToBackend(etBindGroup->GetBindingAsTextureView(etInfo.plane0));
+            DAWN_ASSERT(view != nullptr);
+
+            // Use static samplers for YCbCr external textures. However when the toggle is enabled,
+            // we use a static sampler for all the single-planar external textures, which helps with
+            // testing the code paths on any Vulkan-capable device.
+            if (view->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid &&
+                !lastPipeline->GetDevice()->IsToggleEnabled(
+                    Toggle::VulkanForceStaticSamplersForExternalTextures)) {
+                continue;
+            }
+
+            // Find the sampler it's used with.
+            const Sampler* sampler = nullptr;
+            if (maybeSamplerBindPoint) {
+                sampler = ToBackend(descriptorSets.GetBindGroup(maybeSamplerBindPoint->group)
+                                        ->GetBindingAsSampler(maybeSamplerBindPoint->binding));
+            }
+
+            // Tell both the shader that we'll be using a YCbCr external texture at the bindpoint,
+            // and tell BindGroupLayouts to use a specific static sampler.
+            s.ycbcrExternalTextures.insert(etBindPoint);
+            s.layout.bindGroups[etBindPoint.group].staticSamplers[*etInfo.staticSampler] =
+                StaticSamplerSpecialization::From(view, sampler);
+        }
+
+        return s;
+    }
+
+    // The handling of specialization of pipelines is split to a separate method that's not
+    // templated, to try to avoid inlining, so as to not hugely increase the stack size of the
+    // callees.
+    MaybeError RunWithSpecialization(
+        std::function<void(const VulkanFunctions&, VkCommandBuffer)> DoOperation) {
+        // At the moment the only specialization is for using static samplers in ExternalTextures.
+        DAWN_ASSERT(lastPipeline->GetDevice()->NeedsStaticSamplerForExternalTexture() &&
+                    lastPipeline->GetLayout()->HasExternalTextures());
+
+        PipelineSpecialization specialization = ComputeSpecializationBaseOnState();
+
+        // XXX RAII somehow?
+        PerBindGroup<DescriptorSetAllocation> newDescriptorSets;
+        for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
+            auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
+            auto boundBG = ToBackend(descriptorSets.GetBindGroup(group));
+            DAWN_TRY_ASSIGN(
+                newDescriptorSets[group],
+                bgl->GetSpecializedSetFor(boundBG, specialization.layout.bindGroups[group]));
+        }
+
+        typename Pipeline::SpecializedHandles pipelineHandles;
+        DAWN_TRY_ASSIGN(pipelineHandles,
+                        lastPipeline->GetOrCreateSpecializedHandle(std::move(specialization)));
+
+        DirtyAll();
+
+        VkCommandBuffer commands = recordingContext->commandBuffer;
+        vk.CmdBindPipeline(commands, PipelineBindPoint, pipelineHandles.pipeline);
+
+        immediates.Apply(vk, commands, pipelineHandles.layout, lastPipeline->GetImmediateMask());
+        // XXX TODO Need to handle resource table.
+        // XXX TODO Need to handle dynamic offests.
+        // XXX TODO merged with the DescriptorSetTracker
+        for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
+            vk.CmdBindDescriptorSets(commands, PipelineBindPoint, pipelineHandles.layout,
+                                     uint32_t(group), 1, &*newDescriptorSets[group].set, 0,
+                                     nullptr);
+        }
+
+        DoOperation(vk, commands);
+
+        DirtyAll();
+
+        // Make better
+        for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
+            auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
+            bgl->DeallocateDescriptorSet(&newDescriptorSets[group]);
+        }
+
+        return {};
+    }
+
+    void DirtyAll() {
+        descriptorSets.DirtyAll();
+        immediates.DirtyAll();
+        lastAppliedPipeline = nullptr;
     }
 
     const VulkanFunctions& vk;
