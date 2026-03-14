@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17410d0e_2197e0a4",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-14T19:04:38Z",
+      "side": 1,
+      "message": "Yeah Dawn will provide the same data, and most of it is relevant for both, only the plane count and plane1 parames aren\u0027t needed for YCbCr but it\u0027d be better to keep them just so the structure doesn\u0027t change (it would be a bit annoying in Dawn as well).",
+      "parentUuid": "f663530c_38da377d",
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed52a371_4b040868",
         "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
         "patchSetId": 10
