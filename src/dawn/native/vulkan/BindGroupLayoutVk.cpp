@@ -333,6 +333,21 @@ void BindGroupLayout::ReduceMemoryUsage() {
     mBindGroupAllocator->DeleteEmptySlabs();
 }
 
+ResultOrError<DescriptorSetAllocation> BindGroupLayout::GetSpecializedSetFor(
+    const BindGroup* bg,
+    const Specialization& specialization) {
+    DAWN_ASSERT(bg->GetLayout() == this);
+
+    VkDescriptorSetLayout dsLayout;
+    DAWN_TRY_ASSIGN(dsLayout, GetOrCreateSpecializedHandle(specialization));
+
+    DescriptorSetAllocation dsAllocation;
+    DAWN_TRY_ASSIGN(dsAllocation, mDescriptorSetAllocator->Allocate(dsLayout));
+
+    bg->WriteDescriptorSet(dsAllocation.set, specialization.textureToStaticSampler);
+    return {dsAllocation};
+}
+
 const TextureToStaticSamplerMap& BindGroupLayout::GetTextureToStaticSamplerMap() const {
     return mTextureToStaticSampler;
 }
