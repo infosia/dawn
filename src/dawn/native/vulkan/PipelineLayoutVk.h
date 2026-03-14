@@ -93,6 +93,7 @@ class PipelineLayout final : public PipelineLayoutBase {
         mVkPipelineLayouts;
 
     // Immediate data requires unique range among shader stages.
+    // XXX
     VkShaderStageFlags kImmediateDataRangeShaderStage =
         VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
 };
