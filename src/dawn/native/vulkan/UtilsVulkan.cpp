@@ -62,6 +62,10 @@ VK_OBJECT_TYPE_GETTER(VkImageView, VK_OBJECT_TYPE_IMAGE_VIEW)
 
 #undef VK_OBJECT_TYPE_GETTER
 
+uint32_t ToPushConstantBytes(const ImmediateConstantMask& immediates) {
+    return static_cast<uint32_t>(immediates.count()) * kImmediateConstantElementByteSize;
+}
+
 VkCompareOp ToVulkanCompareOp(wgpu::CompareFunction op) {
     switch (op) {
         case wgpu::CompareFunction::Never:
