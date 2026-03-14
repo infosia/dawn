@@ -43,6 +43,7 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
   public:
     static ResultOrError<Ref<BindGroup>> Create(Device* device,
                                                 const UnpackedPtr<BindGroupDescriptor>& descriptor);
+    // TODO layout override that returns a DescriptorSetAllocation?
 
     BindGroup(Device* device,
               const UnpackedPtr<BindGroupDescriptor>& descriptor,

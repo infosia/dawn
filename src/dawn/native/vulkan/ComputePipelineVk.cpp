@@ -52,27 +52,48 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 }
 
 ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
-    Device* device = ToBackend(GetDevice());
-    PipelineLayout* layout = ToBackend(GetLayout());
+    // Compute pipeline doesn't have clamp depth feature.
+    // TODO(crbug.com/366291600): Setting immediate data size if needed.
+    DAWN_TRY(PipelineVk::InitializeBase(ToBackend(GetLayout()), mImmediateMask));
+
+    Extent3D workgroupSize;
 
     // The cache key is only used for storing VkPipelineCache objects in BlobStore. That's not
     // done with the monolithic pipeline cache so it's unnecessary work and memory usage.
     bool buildCacheKey =
-        !device->GetTogglesState().IsEnabled(Toggle::VulkanMonolithicPipelineCache);
+        !GetDevice()->GetTogglesState().IsEnabled(Toggle::VulkanMonolithicPipelineCache);
+
+    DAWN_TRY_ASSIGN(workgroupSize, InitializeSpecialization({}, buildCacheKey));
+    mHandle = mSpecializations.at({});
+
+    return workgroupSize;
+}
+
+ResultOrError<VkPipeline> ComputePipeline::GetOrCreateSpecializedHandle(
+    const Specialization& specialization) {
+    if (!mSpecializations.contains(specialization)) {
+        Extent3D _;
+        DAWN_TRY_ASSIGN(_, InitializeSpecialization(specialization, /*buildCacheKey=*/false));
+    }
+    return mSpecializations.at(specialization);
+}
+
+ResultOrError<Extent3D> ComputePipeline::InitializeSpecialization(
+    Specialization&& specialization,
+    bool buildCacheKey) {
+    Device* device = ToBackend(GetDevice());
+    PipelineLayout* layout = ToBackend(GetLayout());
+
     if (buildCacheKey) {
         // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
-    // Compute pipeline doesn't have clamp depth feature.
-    // TODO(crbug.com/366291600): Setting immediate data size if needed.
-    DAWN_TRY(PipelineVk::InitializeBase(layout, mImmediateMask));
-
     VkComputePipelineCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.layout = GetVkLayout();
+    createInfo.layout = GetVkLayout();  // XXX
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
 
@@ -136,7 +157,8 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         StreamIn(&mCacheKey, createInfo, layout, moduleAndSpirv.spirv);
     }
 
-    // Try to see if we have anything in the blob cache.
+    // Try to see if we have anything in the blob cache. Use the same cache for all specializations
+    // as they may end up being the exact same pipeline on the driver side.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());
     Ref<PipelineCache> cache = ToBackend(GetDevice()->GetOrCreatePipelineCache(GetCacheKey()));
     DAWN_TRY(
@@ -164,10 +186,12 @@ ComputePipeline::~ComputePipeline() = default;
 void ComputePipeline::DestroyImpl(DestroyReason reason) {
     ComputePipelineBase::DestroyImpl(reason);
     PipelineVk::DestroyImpl(reason);
-    if (mHandle != VK_NULL_HANDLE) {
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
-        mHandle = VK_NULL_HANDLE;
+
+    for (auto& [_, handle] : mSpecializations) {
+        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(handle);
     }
+    mSpecializations.clear();
+    mHandle = VK_NULL_HANDLE;  // Handled in the loop above already.
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
