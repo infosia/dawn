@@ -74,7 +74,7 @@ MaybeError BindGroup::InitializeImpl() {
 }
 
 void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
-                                   const TextureToStaticSamplerMap& textureToStaticSampler) {
+                                   const TextureToStaticSamplerMap& textureToStaticSampler) const {
     const auto* layout = ToBackend(GetLayout());
 
     // Now do a write of a single descriptor set with all possible chained data allocated on the

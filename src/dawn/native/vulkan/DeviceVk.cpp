@@ -618,7 +618,8 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         usedKnobs.features.shaderStorageImageExtendedFormats = VK_TRUE;
     }
 
-    if (HasFeature(Feature::YCbCrVulkanSamplers) &&
+    if ((HasFeature(Feature::YCbCrVulkanSamplers) ||
+         HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture)) &&
         mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer)) {
         usedKnobs.samplerYCbCrConversionFeatures.samplerYcbcrConversion = VK_TRUE;
         featuresChain.Add(&usedKnobs.samplerYCbCrConversionFeatures,
