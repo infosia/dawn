@@ -76,14 +76,12 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
     static Ref<SharedTextureMemory> Create(Device* device,
                                            StringView label,
                                            const SharedTextureMemoryProperties& properties,
-                                           uint32_t queueFamilyIndex,
-                                           const YCbCrVkDescriptor& yCbCrVkDesc = {});
+                                           uint32_t queueFamilyIndex);
 
     SharedTextureMemory(Device* device,
                         StringView label,
                         const SharedTextureMemoryProperties& properties,
-                        uint32_t queueFamilyIndex,
-                        const YCbCrVkDescriptor& yCbCrVkDesc);
+                        uint32_t queueFamilyIndex);
     void DestroyImpl(DestroyReason reason) override;
 
     Ref<SharedResourceMemoryContents> CreateContents() override;
