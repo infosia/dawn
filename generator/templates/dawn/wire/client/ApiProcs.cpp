@@ -183,7 +183,7 @@ namespace dawn::wire::client {
 
     static {{Prefix}}ProcTable gProcTable = MakeProcTable();
 
-    const {{Prefix}}ProcTable& GetProcs() {
+    const {{Prefix}}ProcTable& GetAutogenProcs() {
         return gProcTable;
     }
 
