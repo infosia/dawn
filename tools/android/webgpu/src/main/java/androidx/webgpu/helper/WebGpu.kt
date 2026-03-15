@@ -130,6 +130,11 @@ private suspend inline fun requestDevice(
     if (deviceDescriptor.uncapturedErrorCallback == null) {
         deviceDescriptor.uncapturedErrorCallback = defaultUncapturedErrorCallback
     }
+    val f = deviceDescriptor.requiredFeatures.toMutableList()
+    // TODO(Feature hardcoded, not available in bindings)
+    f.add(0x0005001E) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
+    f.add(0x00050027) //WGPUFeatureName_SharedFenceSyncFD
+    deviceDescriptor.requiredFeatures = f.toIntArray()
     return adapter.requestDevice(deviceDescriptor)
 }
 

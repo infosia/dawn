@@ -35,7 +35,8 @@ plugins {
 android {
     namespace 'net.android.webgpu'
     defaultConfig {
-        minSdkVersion 24
+        //TODO(AHardwareBuffer_fromHardwareBuffer requires Android API level 26 or higher.)
+        minSdkVersion 26
         compileSdk 34
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         externalNativeBuild {
