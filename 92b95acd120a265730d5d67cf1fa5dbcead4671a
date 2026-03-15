@@ -22,6 +22,64 @@
       },
       "revId": "92b95acd120a265730d5d67cf1fa5dbcead4671a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35e4fbdc_c888ba56",
+        "filename": "src/dawn/tests/unittests/validation/BufferValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-15T12:56:16Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(https://crbug.com/42240407): Unmap buffers in the wire client when\n```",
+      "revId": "92b95acd120a265730d5d67cf1fa5dbcead4671a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6415883_5b3fea92",
+        "filename": "src/dawn/tests/unittests/validation/BufferValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-15T12:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe4839f0_76a18996",
+      "range": {
+        "startLine": 582,
+        "startChar": 12,
+        "endLine": 582,
+        "endChar": 48
+      },
+      "revId": "92b95acd120a265730d5d67cf1fa5dbcead4671a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "130a79e9_b8170600",
+        "filename": "src/dawn/tests/unittests/validation/BufferValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-15T12:56:16Z",
+      "side": 1,
+      "message": "```suggestion\n    // TODO(https://crbug.com/42240407): Unmap buffers in the wire client when\n```",
+      "revId": "92b95acd120a265730d5d67cf1fa5dbcead4671a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
