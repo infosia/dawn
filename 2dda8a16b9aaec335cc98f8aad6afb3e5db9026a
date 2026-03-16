@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5d4d3c89_d49d7a70",
+        "filename": "src/tint/lang/wgsl/resolver/address_space_validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T18:47:28Z",
+      "side": 1,
+      "message": "Yeah I don\u0027t think we need to conditionalize the Tint tests, just CTS.",
+      "parentUuid": "6f3a2924_b2f3f908",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d576147c_20ac6d9c",
         "filename": "src/tint/lang/wgsl/resolver/buffer_test.cc",
         "patchSetId": 4
