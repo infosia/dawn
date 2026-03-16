@@ -1120,7 +1120,7 @@ ObjectType TextureBase::GetType() const {
 void TextureBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
 
-    const std::string& label = GetLabel();
+    auto label = GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     } else if (!IsError()) {
@@ -1869,7 +1869,7 @@ ObjectType TextureViewBase::GetType() const {
 void TextureViewBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
 
-    const std::string& label = GetLabel();
+    auto label = GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     }

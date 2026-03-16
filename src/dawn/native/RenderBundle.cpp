@@ -80,7 +80,7 @@ ObjectType RenderBundleBase::GetType() const {
 void RenderBundleBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
 
-    const std::string& label = GetLabel();
+    auto label = GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     }

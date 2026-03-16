@@ -38,6 +38,7 @@
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/ObjectLabel.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
@@ -156,7 +157,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
     virtual ObjectType GetType() const = 0;
     void SetLabel(std::string label);
-    const std::string& GetLabel() const;
+    ObjectLabel::View GetLabel() const;
 
     virtual void FormatLabel(absl::FormatSink* s) const;
 
@@ -201,7 +202,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
   private:
     friend class ApiObjectList;
 
-    std::string mLabel;
+    ObjectLabel::AtomicRef mLabel;
 };
 
 template <typename T>
