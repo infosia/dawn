@@ -369,8 +369,6 @@ MaybeError RenderPipeline::InitializeImpl() {
             offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
     }
 
-    bool needsMultisampledFramebufferFetch = UseSampleRateShading() && UsesFramebufferFetch();
-
     // Initialize the layout after all modifications to mImmediateMask.
     DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(mImmediateMask));
 
@@ -378,14 +376,10 @@ MaybeError RenderPipeline::InitializeImpl() {
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
 
-    auto AddShaderStage = [&](SingleShaderStage stage, bool emitPointSize) -> MaybeError {
-        const ProgrammableStage& programmableStage = GetStage(stage);
+    auto AddShaderStage = [&](const ShaderModule::CompileParameters& compileParams) -> MaybeError {
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                emitPointSize, polyfillPixelCenter,
-                                                                needsMultisampledFramebufferFetch,
-                                                                GetImmediateMask()));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                        ToBackend(compileParams.stage->module)->GetHandleAndSpirv(compileParams));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         if (buildCacheKey) {
             // Record cache key for each shader since it will become inaccessible later on.
@@ -398,7 +392,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         shaderStage->pNext = nullptr;
         shaderStage->flags = 0;
         shaderStage->pSpecializationInfo = nullptr;
-        shaderStage->stage = VulkanShaderStage(stage);
+        shaderStage->stage = VulkanShaderStage(compileParams.stage->metadata->stage);
         // string_view returned by GetIsolatedEntryPointName() points to a null-terminated string.
         shaderStage->pName = device->GetIsolatedEntryPointName().data();
 
@@ -407,13 +401,23 @@ MaybeError RenderPipeline::InitializeImpl() {
     };
 
     // Add the vertex stage that's always present.
-    DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex,
-                            GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
+    DAWN_TRY(AddShaderStage({
+        .stage = &GetStage(SingleShaderStage::Vertex),
+        .layout = layout,
+        .immediateMask = GetImmediateMask(),
+        .emitPointSize = GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
+        .polyfillPixelCenter = polyfillPixelCenter,
+    }));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-        DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment,
-                                /*emitPointSize*/ false));
+        DAWN_TRY(AddShaderStage({
+            .stage = &GetStage(SingleShaderStage::Fragment),
+            .layout = layout,
+            .immediateMask = GetImmediateMask(),
+            .polyfillPixelCenter = polyfillPixelCenter,
+            .needsMultisampledFramebufferFetch = UseSampleRateShading() && UsesFramebufferFetch(),
+        }));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;
