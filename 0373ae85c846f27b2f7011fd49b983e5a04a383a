@@ -50,6 +50,24 @@
       "message": "I have some slight concern about this, for example in https://dawn-review.googlesource.com/c/dawn/+/296817 I needed to make sure that `GetMappedRange` returned something instead of the default of nullptr as it changed the behavior of the test. Is there a way to make some of the methods nice mocks, but keep most of them strict somehow? Or have tests be able to override which ones are nice and which ones are strict?\n\nI don\u0027t want to block this too much so LGTM and we\u0027ll figure out as follow-ups.",
       "revId": "0373ae85c846f27b2f7011fd49b983e5a04a383a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd037c3_0e7664d3",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-16T18:13:21Z",
+      "side": 1,
+      "message": "I think the general rule in that case is where you are expecting a call to `GetMappedRange` and the results are important, you should be setting a `EXPECT_CALL` explicitly on the mock object for that call, and adding a `Return` in it to get what you need.",
+      "parentUuid": "98b9ccfd_90372120",
+      "revId": "0373ae85c846f27b2f7011fd49b983e5a04a383a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
