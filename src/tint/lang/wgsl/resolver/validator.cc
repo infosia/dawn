@@ -27,7 +27,9 @@
 
 #include "src/tint/lang/wgsl/resolver/validator.h"
 
+#include <algorithm>
 #include <bitset>
+#include <limits>
 #include <string_view>
 #include <tuple>
 #include <utility>
@@ -896,14 +898,19 @@ bool Validator::Var(const sem::Variable* v) const {
         }
     }
 
-    if (auto* buffer = store_ty->As<core::type::Buffer>()) {
-        if (buffer->Count()->Is<core::type::RuntimeArrayCount>() &&
-            (v->AddressSpace() == core::AddressSpace::kUniform ||
-             v->AddressSpace() == core::AddressSpace::kWorkgroup)) {
-            AddError(var->source) << "buffer type must be sized in "
-                                  << style::Enum(v->AddressSpace()) << " address space";
-            return false;
+    // With buffer_view, this is alternative validation to runtime-sized array checks.
+    if (allowed_features_.features.contains(wgsl::LanguageFeature::kBufferView)) {
+        if (v->AddressSpace() != core::AddressSpace::kStorage &&
+            v->AddressSpace() != core::AddressSpace::kHandle) {
+            if (!store_ty->HasFixedFootprint()) {
+                AddError(var->source) << "variables in " << style::Enum(v->AddressSpace())
+                                      << " address space must have a fixed footprint";
+                return false;
+            }
         }
+    }
+
+    if (auto* buffer = store_ty->As<core::type::Buffer>()) {
         if (!(buffer->Count()->Is<core::type::RuntimeArrayCount>() ||
               buffer->Count()->Is<core::type::ConstantArrayCount>()) &&
             v->AddressSpace() != core::AddressSpace::kWorkgroup) {
@@ -2160,47 +2167,144 @@ bool Validator::BufferView(const sem::Call* call) const {
             << "return type of " << builtin->str() << " cannot contain an atomic type";
         return false;
     }
+    if (builtin->Fn() == wgsl::BuiltinFn::kBufferArrayView) {
+        if (ret_store_type->HasFixedFootprint()) {
+            AddError(call->Declaration()->source)
+                << "return type of " << builtin->str() << " cannot have a fixed footprint";
+            return false;
+        }
+    }
 
     if (!CheckTypeAccessAddressSpace(ret_store_type, ret_ptr_type->Access(),
                                      ret_ptr_type->AddressSpace(), call->Declaration()->source)) {
         return false;
     }
 
-    TINT_ASSERT(call->Arguments().Length() == 2);
+    TINT_ASSERT(builtin->Fn() == wgsl::BuiltinFn::kBufferView ? call->Arguments().Length() == 2
+                                                              : call->Arguments().Length() == 3);
 
     auto* buffer_ptr = call->Arguments()[0];
     auto* buffer_type =
         buffer_ptr->Type()->As<core::type::Pointer>()->StoreType()->As<core::type::Buffer>();
     auto* offset = call->Arguments()[1];
-    auto* constant_value = offset->ConstantValue();
-    if (!constant_value || !offset->Type()->IsIntegerScalar()) {
+    auto* offset_constant_value = offset->ConstantValue();
+    uint64_t offset_value = 0;
+    if (offset_constant_value) {
+        if (offset->Type()->IsUnsignedIntegerScalar()) {
+            offset_value = offset_constant_value->ValueAs<u32>();
+        } else {
+            TINT_ASSERT(offset->Type()->IsSignedIntegerScalar());
+            int32_t ivalue = offset_constant_value->ValueAs<i32>();
+            if (ivalue < 0) {
+                AddError(offset->Declaration()->source)
+                    << "the offset argument of " << builtin->str() << " must be non-negative";
+                return false;
+            }
+            offset_value = static_cast<uint32_t>(ivalue);
+        }
+        if (offset_value % ret_store_type->Align() != 0) {
+            AddError(offset->Declaration()->source)
+                << "the offset argument of " << builtin->str()
+                << " must evenly divide the alignment of the return type ("
+                << ret_store_type->Align() << ")";
+            return false;
+        }
+    }
+
+    auto count = buffer_type->ConstantCount();
+    if (builtin->Fn() == wgsl::BuiltinFn::kBufferView) {
+        if (offset_value + ret_store_type->Size() > std::numeric_limits<uint32_t>::max()) {
+            AddError(offset->Declaration()->source)
+                << "the offset argument of " << builtin->str()
+                << " plus the size of the return type must not overflow a 32-bit unsigned integer";
+            return false;
+        }
+        if (count != std::nullopt && offset_value + ret_store_type->Size() >= count.value()) {
+            AddError(offset->Declaration()->source)
+                << "the offset argument of " << builtin->str()
+                << " plus the size of the return type must be smaller than the buffer size";
+            return false;
+        }
+
         return true;
     }
 
-    uint32_t value;
-    if (offset->Type()->IsUnsignedIntegerScalar()) {
-        value = constant_value->ValueAs<u32>();
+    // bufferArrayView specific checks
+    // Return type must not have a fixed footprint.
+    uint64_t ret_offset = 0;
+    uint64_t ret_stride = 0;
+    if (const auto* str_ty = ret_store_type->As<core::type::Struct>()) {
+        auto members = str_ty->Members();
+        const auto* last = members[members.Length() - 1];
+        const auto* last_type = last->Type();
+        TINT_ASSERT(last_type->Is<core::type::Array>());
+        ret_offset = last->Offset();
+        ret_stride = last_type->As<core::type::Array>()->ImplicitStride();
     } else {
-        int32_t ivalue = constant_value->ValueAs<i32>();
-        if (ivalue < 0) {
-            AddError(offset->Declaration()->source)
-                << "the offset argument of " << builtin->str() << " must be non-negative";
+        TINT_ASSERT(ret_store_type->Is<core::type::Array>());
+        ret_stride = ret_store_type->As<core::type::Array>()->ImplicitStride();
+    }
+    uint64_t ret_min_size = ret_offset + ret_stride;
+
+    uint64_t size_value = 0;
+    auto* size = call->Arguments()[2];
+    auto* size_constant_value = size->ConstantValue();
+    if (size_constant_value) {
+        size_value = std::numeric_limits<uint32_t>::max();
+        if (size->Type()->IsUnsignedIntegerScalar()) {
+            size_value = size_constant_value->ValueAs<u32>();
+        } else {
+            TINT_ASSERT(size->Type()->IsSignedIntegerScalar());
+            int32_t ivalue = size_constant_value->ValueAs<i32>();
+            if (ivalue < 0) {
+                AddError(size->Declaration()->source)
+                    << "the size argument of " << builtin->str() << " must be non-negative";
+                return false;
+            }
+            size_value = static_cast<uint32_t>(ivalue);
+        }
+
+        if (size_value < ret_min_size) {
+            AddError(size->Declaration()->source)
+                << "the size argument (" << size_value << " bytes) of " << builtin->str()
+                << " must be large enough to include one element of the runtime-sized array ("
+                << ret_min_size << " bytes)";
             return false;
         }
-        value = static_cast<uint32_t>(ivalue);
+
+        if ((size_value - ret_offset) % ret_stride != 0) {
+            AddError(size->Declaration()->source)
+                << "the size argument (" << size_value << " bytes) of " << builtin->str()
+                << " minus the return type offset (" << ret_offset
+                << " bytes) must be evenly divisible by the stride of the runtime-sized array ("
+                << ret_stride << " bytes)";
+            return false;
+        }
     }
-    if (value % ret_store_type->Align() != 0) {
-        AddError(offset->Declaration()->source)
-            << "the offset argument of " << builtin->str()
-            << " must evenly divide the alignment of the return type (" << ret_store_type->Align()
-            << ")";
+
+    if (offset_value + size_value + ret_min_size > std::numeric_limits<uint32_t>::max()) {
+        AddError(call->Declaration()->source)
+            << "the offset and size arguments of " << builtin->str()
+            << " plus the minimum return type size must not overflow a 32-bit unsigned integer";
         return false;
     }
-    auto count = buffer_type->ConstantCount();
-    if (count != std::nullopt && value + ret_store_type->Size() >= count.value()) {
-        AddError(offset->Declaration()->source)
-            << "the offset argument of " << builtin->str()
-            << " plus the size of the return type must be smaller than the buffer size";
+    if (count != std::nullopt &&
+        (offset_value + std::max(size_value, ret_min_size) > count.value())) {
+        std::string msg;
+        std::ostringstream str(msg);
+        str << "the buffer (" << count.value()
+            << " bytes) must be large enough to include one element of the runtime-sized array ("
+            << ret_min_size << " bytes)";
+        if (offset_value != 0 || size_value != 0) {
+            str << " with the given";
+        }
+        if (offset_value != 0) {
+            str << " offset (" << offset_value << " bytes)";
+        }
+        if (size_value != 0) {
+            str << (offset_value != 0 ? " and" : "") << " size (" << size_value << " bytes)";
+        }
+        AddError(call->Declaration()->source) << str.str();
         return false;
     }
 

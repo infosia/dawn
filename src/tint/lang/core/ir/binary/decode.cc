@@ -2124,6 +2124,8 @@ struct Decoder {
                 return core::BuiltinFn::kBufferView;
             case pb::BuiltinFn::buffer_length:
                 return core::BuiltinFn::kBufferLength;
+            case pb::BuiltinFn::buffer_array_view:
+                return core::BuiltinFn::kBufferArrayView;
 
             case pb::BuiltinFn::BuiltinFn_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::BuiltinFn::BuiltinFn_INT_MAX_SENTINEL_DO_NOT_USE_:

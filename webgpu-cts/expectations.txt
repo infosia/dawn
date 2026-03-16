@@ -194,6 +194,12 @@ crbug.com/449521989 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call
 # point.
 ################################################################################
 
+# Pointer validation due to buffer_view
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="functionRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="uniformRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="workgroupRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="privateRTArray" [ Skip ]
+
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
 crbug.com/40782602 [ linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:* [ Skip ]

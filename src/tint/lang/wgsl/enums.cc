@@ -825,6 +825,9 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "bufferView") {
         return BuiltinFn::kBufferView;
     }
+    if (name == "bufferArrayView") {
+        return BuiltinFn::kBufferArrayView;
+    }
     if (name == "bufferLength") {
         return BuiltinFn::kBufferLength;
     }
@@ -1158,6 +1161,8 @@ const char* str(BuiltinFn i) {
             return "subgroupMatrixScalarMultiply";
         case BuiltinFn::kBufferView:
             return "bufferView";
+        case BuiltinFn::kBufferArrayView:
+            return "bufferArrayView";
         case BuiltinFn::kBufferLength:
             return "bufferLength";
         case BuiltinFn::kPrint:
