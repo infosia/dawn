@@ -50,6 +50,74 @@
       "message": "Removing*",
       "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc30f26_7b66fefd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T17:06:00Z",
+      "side": 1,
+      "message": "LGTM, would just like a couple of extra tests for the builtin polyfill transform which had the most changes.",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36d06bbb_8abd231c",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T17:06:00Z",
+      "side": 1,
+      "message": "Can you add one or two transform unit tests for this code path please (in `builtin_polyfill_test.cc`)?",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c874bf10_06cb956f",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T17:06:00Z",
+      "side": 1,
+      "message": "Please also add a unit test for this new path",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1b2be4d_b442250a",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T17:06:00Z",
+      "side": 1,
+      "message": "And for this new path too please.",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
