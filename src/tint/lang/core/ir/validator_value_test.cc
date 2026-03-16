@@ -953,9 +953,10 @@ TEST_F(IR_ValidatorTest, Var_RuntimeArray_NonStorage) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason,
-                testing::HasSubstr(
-                    R"(:2:3 error: var: runtime arrays must be in the 'storage' address space
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:2:3 error: var: vars not in the 'storage' or 'handle' address spaces must have a fixed footprint
   %1:ptr<private, array<f32>, read_write> = var undef
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -973,9 +974,10 @@ TEST_F(IR_ValidatorTest, Var_RuntimeArray_NonStorageInStruct) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason,
-                testing::HasSubstr(
-                    R"(:6:3 error: var: runtime arrays must be in the 'storage' address space
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:6:3 error: var: vars not in the 'storage' or 'handle' address spaces must have a fixed footprint
   %1:ptr<uniform, MyStruct, read> = var undef @binding_point(0, 0) @input_attachment_index(0)
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
