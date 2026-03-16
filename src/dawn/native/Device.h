@@ -44,6 +44,7 @@
 #include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/common/StackAllocated.h"
 #include "dawn/common/ThreadLocal.h"
+#include "dawn/common/WGPUDeviceCallbackInfos.h"
 #include "dawn/native/AsyncTask.h"
 #include "dawn/native/CacheKey.h"
 #include "dawn/native/Commands.h"
@@ -620,11 +621,7 @@ class DeviceBase : public ErrorSink,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
 
-    WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
-        WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
-
-    std::shared_mutex mLoggingMutex;
-    WGPULoggingCallbackInfo mLoggingCallbackInfo = WGPU_LOGGING_CALLBACK_INFO_INIT;
+    WGPUDeviceCallbackInfos mCallbackInfos;
 
     // Error scopes need to be thread local, but also need to be cleaned up when the device is
     // destroyed. To do this, we can't use thread_local natively because we wouldn't have a way to
