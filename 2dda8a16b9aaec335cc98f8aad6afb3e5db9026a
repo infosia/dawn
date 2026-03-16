@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5a8923d_0b46bfb4",
+        "filename": "src/tint/lang/wgsl/resolver/address_space_validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T16:46:22Z",
+      "side": 1,
+      "message": "Should these validation changes be guarded by the language feature for buffer_view?\n\nThese sorts of things are not valid in WGSL today, and presumably Firefox and Safari also reject them, so I wouldn\u0027t expect that we can just change CTS to start allowing them unconditionally.",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d576147c_20ac6d9c",
+        "filename": "src/tint/lang/wgsl/resolver/buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T16:46:22Z",
+      "side": 1,
+      "message": "No change needed here, but just FYI it\u0027s now possible (and maybe encouraged) to write these sorts of validation tests using WGSL strings instead of programatically building the AST. See `resolver/validation_test.cc` for examples of how to use the new helper for both the success and fail cases.",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "52c1153c_239b0a2a",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 4
@@ -44,6 +78,23 @@
         "endLine": 2212,
         "endChar": 74
       },
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebc47fca_46ba057c",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T16:46:22Z",
+      "side": 1,
+      "message": "Does it matter if the array element stride is larger than the element size? Wondering if we could end up access more data than provided for something like an array\u003cvec3u\u003e for example.",
       "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
