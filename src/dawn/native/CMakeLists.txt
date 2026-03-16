@@ -108,6 +108,7 @@ set(private_headers
     "Limits.h"
     "LogEmitter.h"
     "ObjectBase.h"
+    "ObjectLabel.h"
     "ObjectContentHasher.h"
     "PassResourceUsage.h"
     "PassResourceUsageTracker.h"
