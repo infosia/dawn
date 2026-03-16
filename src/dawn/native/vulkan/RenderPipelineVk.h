@@ -31,20 +31,21 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/RenderPipeline.h"
-#include "dawn/native/vulkan/PipelineVk.h"
+#include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
 
 class Device;
 struct VkPipelineLayoutObject;
 
-class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
+class RenderPipeline final : public RenderPipelineBase {
   public:
     static Ref<RenderPipeline> CreateUninitialized(
         Device* device,
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
 
     VkPipeline GetHandle() const;
+    VkPipelineLayout GetVkLayout() const;
 
     MaybeError InitializeImpl() override;
 
@@ -65,6 +66,7 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
     VkPipelineDepthStencilStateCreateInfo ComputeDepthStencilDesc();
 
     VkPipeline mHandle = VK_NULL_HANDLE;
+    Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
 
     // Whether the pipeline has any input attachment being used in the frag shader.
     bool mHasInputAttachment = false;
