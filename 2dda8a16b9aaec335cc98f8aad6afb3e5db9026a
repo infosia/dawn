@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52c1153c_239b0a2a",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-16T15:40:43Z",
+      "side": 1,
+      "message": "we don\u0027t clamp the offset value, so could this wrap?",
+      "range": {
+        "startLine": 2212,
+        "startChar": 37,
+        "endLine": 2212,
+        "endChar": 74
+      },
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
