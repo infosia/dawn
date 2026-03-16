@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e7fe544_de835ff3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-16T23:06:47Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure I understand why this fixes the compilation error?? But the change itself seems fine since it\u0027s probably better to avoid the additional copies when iterating anyways.",
+      "revId": "020a256293478a4aeeea0f77fa68216711917541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
