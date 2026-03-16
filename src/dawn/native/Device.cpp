@@ -143,11 +143,6 @@ auto GetOrCreate(ContentLessObjectCache<RefCountedT>& cache,
 
 namespace {
 
-static constexpr WGPUUncapturedErrorCallbackInfo kEmptyUncapturedErrorCallbackInfo = {
-    nullptr, nullptr, nullptr, nullptr};
-static constexpr WGPULoggingCallbackInfo kEmptyLoggingCallbackInfo = {nullptr, nullptr, nullptr,
-                                                                      nullptr};
-
 void TrimErrorScopeStacks(
     absl::flat_hash_map<ThreadUniqueId, std::unique_ptr<ErrorScopeStack>>& errorScopeStacks) {
     for (auto it = errorScopeStacks.begin(); it != errorScopeStacks.end();) {
@@ -176,30 +171,8 @@ DeviceBase::DeviceLostEvent::~DeviceLostEvent() {
 Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
     const DeviceDescriptor* descriptor) {
     DAWN_ASSERT(descriptor != nullptr);
-
-#if defined(DAWN_ENABLE_ASSERTS)
-    static constexpr WGPUDeviceLostCallbackInfo kDefaultDeviceLostCallbackInfo = {
-        nullptr, WGPUCallbackMode_AllowSpontaneous,
-        [](WGPUDevice const*, WGPUDeviceLostReason, WGPUStringView, void*, void*) {
-            static bool calledOnce = false;
-            if (!calledOnce) {
-                calledOnce = true;
-                dawn::WarningLog() << "No Dawn device lost callback was set. This is probably not "
-                                      "intended. If you really want to ignore device lost and "
-                                      "suppress this message, set the callback explicitly.";
-            }
-        },
-        nullptr, nullptr};
-#else
-    static constexpr WGPUDeviceLostCallbackInfo kDefaultDeviceLostCallbackInfo = {
-        nullptr, WGPUCallbackMode_AllowProcessEvents, nullptr, nullptr, nullptr};
-#endif  // DAWN_ENABLE_ASSERTS
-
-    WGPUDeviceLostCallbackInfo deviceLostCallbackInfo = kDefaultDeviceLostCallbackInfo;
-    if (descriptor->deviceLostCallbackInfo.callback != nullptr) {
-        deviceLostCallbackInfo = descriptor->deviceLostCallbackInfo;
-    }
-    return AcquireRef(new DeviceBase::DeviceLostEvent(deviceLostCallbackInfo));
+    return AcquireRef(
+        new DeviceBase::DeviceLostEvent(GetDeviceLostCallbackInfoOrDefault(ToAPI(descriptor))));
 }
 
 void DeviceBase::DeviceLostEvent::SetLost(EventManager* eventManager,
@@ -216,15 +189,11 @@ void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType) {
         mMessage = "A valid external Instance reference no longer exists.";
     }
 
-    // Some users may use the device lost callback to deallocate resources allocated for the
-    // uncaptured error and logging callbacks, so reset these callbacks before calling the
-    // device lost callback.
     if (mDevice != nullptr) {
-        mDevice->mUncapturedErrorCallbackInfo = kEmptyUncapturedErrorCallbackInfo;
-        {
-            std::lock_guard<std::shared_mutex> lock(mDevice->mLoggingMutex);
-            mDevice->mLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
-        }
+        // The uncaptured error and logging callbacks are spontaneous and must not be called
+        // after we call the device lost's |mCallback| below, so we clear them and wait for them to
+        // be no longer referenced before moving forwards.
+        mDevice->mCallbackInfos.Clear();
     }
 
     auto device = ToAPI(mDevice.Get());
@@ -301,6 +270,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
                        const TogglesState& deviceToggles,
                        Ref<DeviceLostEvent>&& lostEvent)
     : mLostEvent(std::move(lostEvent)),
+      mCallbackInfos(ToAPI(*descriptor)),
       mAdapter(adapter),
       mToggles(deviceToggles),
       mNextPipelineCompatibilityToken(1) {
@@ -308,45 +278,6 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     DAWN_ASSERT(mLostEvent);
     mLostEvent->mDevice = this;
-
-#if defined(DAWN_ENABLE_ASSERTS)
-    static constexpr WGPUUncapturedErrorCallbackInfo kDefaultUncapturedErrorCallbackInfo = {
-        nullptr,
-        [](WGPUDevice const*, WGPUErrorType, WGPUStringView, void*, void*) {
-            static bool calledOnce = false;
-            if (!calledOnce) {
-                calledOnce = true;
-                dawn::WarningLog() << "No Dawn device uncaptured error callback was set. This is "
-                                      "probably not intended. If you really want to ignore errors "
-                                      "and suppress this message, set the callback explicitly.";
-            }
-        },
-        nullptr, nullptr};
-    static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo = {
-        nullptr,
-        [](WGPULoggingType, WGPUStringView, void*, void*) {
-            static bool calledOnce = false;
-            if (!calledOnce) {
-                calledOnce = true;
-                dawn::WarningLog() << "No Dawn device logging callback callback was set. This is "
-                                      "probably not intended. If you really want to ignore logs "
-                                      "and suppress this message, set the callback explicitly.";
-            }
-        },
-        nullptr, nullptr};
-#else
-    static constexpr WGPUUncapturedErrorCallbackInfo kDefaultUncapturedErrorCallbackInfo =
-        kEmptyUncapturedErrorCallbackInfo;
-    static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo =
-        kEmptyLoggingCallbackInfo;
-#endif  // DAWN_ENABLE_ASSERTS
-
-    mUncapturedErrorCallbackInfo = kDefaultUncapturedErrorCallbackInfo;
-    if (descriptor->uncapturedErrorCallbackInfo.callback != nullptr) {
-        mUncapturedErrorCallbackInfo = descriptor->uncapturedErrorCallbackInfo;
-    }
-
-    mLoggingCallbackInfo = kDefaultLoggingCallbackInfo;
 
     AdapterInfo adapterInfo;
     adapter->APIGetInfo(&adapterInfo);
@@ -573,11 +504,7 @@ void DeviceBase::WillDropLastExternalRef() {
 
     // Reset callbacks since after dropping the last external reference, the application may have
     // freed any device-scope memory needed to run the callback.
-    mUncapturedErrorCallbackInfo = kEmptyUncapturedErrorCallbackInfo;
-    {
-        std::lock_guard<std::shared_mutex> lock(mLoggingMutex);
-        mLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
-    }
+    mCallbackInfos.Clear();
 
     GetInstance()->RemoveDevice(this);
 
@@ -823,15 +750,13 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
     if (forwardToErrorScope == ForwardToErrorScope::Yes) {
         captured = GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
     }
-
-    // Only call the uncaptured error callback if the device is alive. After the
-    // device is lost, the uncaptured error callback should cease firing.
-    if (!captured && mUncapturedErrorCallbackInfo.callback != nullptr && mState == State::Alive) {
-        auto device = ToAPI(this);
-        mUncapturedErrorCallbackInfo.callback(
-            &device, ToAPI(ToWGPUErrorType(type)), ToOutputStringView(messageStr),
-            mUncapturedErrorCallbackInfo.userdata1, mUncapturedErrorCallbackInfo.userdata2);
+    if (captured || mState != State::Alive) {
+        return;
     }
+
+    auto device = ToAPI(this);
+    mCallbackInfos.CallErrorCallback(&device, ToAPI(ToWGPUErrorType(type)),
+                                     ToOutputStringView(messageStr));
 }
 
 void DeviceBase::HandleErrorGeneratingAsyncTask(Ref<ErrorGeneratingAsyncTask> task,
@@ -870,11 +795,10 @@ void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
 }
 
 void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {
-    if (mState != State::Alive) {
+    if (mState != State::Alive || callbackInfo.callback == nullptr) {
         return;
     }
-    std::lock_guard<std::shared_mutex> lock(mLoggingMutex);
-    mLoggingCallbackInfo = callbackInfo;
+    mCallbackInfos.SetLoggingCallbackInfo(callbackInfo);
 }
 
 ErrorScopeStack* DeviceBase::GetErrorScopeStack() {
@@ -1952,16 +1876,7 @@ void DeviceBase::EmitLog(std::string_view message) {
 }
 
 void DeviceBase::EmitLog(wgpu::LoggingType type, std::string_view message) {
-    // Acquire a shared lock. This allows multiple threads to emit logs,
-    // or even logs to be emitted re-entrantly. It will block if there is a call
-    // to SetLoggingCallback. Applications should not call SetLoggingCallback inside
-    // the logging callback or they will deadlock.
-    std::shared_lock<std::shared_mutex> lock(mLoggingMutex);
-    if (mLoggingCallbackInfo.callback) {
-        mLoggingCallbackInfo.callback(ToAPI(type), ToOutputStringView(message),
-                                      mLoggingCallbackInfo.userdata1,
-                                      mLoggingCallbackInfo.userdata2);
-    }
+    mCallbackInfos.CallLoggingCallback(ToAPI(type), ToOutputStringView(message));
 }
 
 wgpu::Status DeviceBase::APIGetAHardwareBufferProperties(void* handle,
