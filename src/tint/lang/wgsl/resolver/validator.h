@@ -545,7 +545,7 @@ class Validator {
     /// @returns true on success, false otherwise
     bool QuadBroadcast(const sem::Call* call) const;
 
-    /// Validates a bufferView builtin function
+    /// Validates a bufferView or bufferArrayView builtin function
     /// @param call the builtin call to validate
     /// @returns true on success, false otherwise
     bool BufferView(const sem::Call* call) const;

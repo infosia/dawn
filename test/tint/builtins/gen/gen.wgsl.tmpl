@@ -20,7 +20,10 @@ See:
               and
               (not (HasPrefix .Name "getResource")) (not (HasPrefix .Name "hasResource"))
             )
-            (not (HasPrefix .Name "bufferView"))
+            (
+              and
+              (not (HasPrefix .Name "bufferView")) (not (HasPrefix .Name "bufferArrayView"))
+            )
           )
           (not (HasPrefix .Name "bufferLength")) }}
 {{-     range .Overloads  -}}
