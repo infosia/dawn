@@ -16,6 +16,24 @@
       "message": "parts[1].size()",
       "revId": "f37bed79465d9a1e9e23c6c40c3644f7ffe3b731",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a668486_a2de1927",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-16T16:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864d8977_dd126008",
+      "revId": "f37bed79465d9a1e9e23c6c40c3644f7ffe3b731",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
