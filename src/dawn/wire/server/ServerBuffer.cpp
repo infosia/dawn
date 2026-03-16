@@ -179,7 +179,6 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
             }
             DAWN_ASSERT(writeHandle != nullptr);
             mapState->writeHandle.reset(writeHandle);
-            writeHandle->SetDataLength(descriptor->size);
 
             if (descriptor->mappedAtCreation) {
                 void* mapping = mProcs->bufferGetMappedRange(buffer->handle, 0, descriptor->size);
@@ -192,7 +191,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                     return WireResult::Success;
                 }
                 DAWN_ASSERT(mapping != nullptr);
-                writeHandle->SetTarget(mapping);
+                writeHandle->SetTargetData(static_cast<uint8_t*>(mapping), descriptor->size);
 
                 mapState->writeState = BufferMapWriteState::Mapped;
             }
@@ -309,9 +308,10 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
                 // call getMappedRange exactly with the range of data that is potentially modified
                 // (i.e. we don't want getMappedRange(0, wholeBufferSize) if only a subset of the
                 // buffer is actually mapped) in case the implementation does some range tracking.
-                mapState->writeHandle->SetTarget(static_cast<uint8_t*>(mProcs->bufferGetMappedRange(
-                                                     data->bufferObj, data->offset, data->size)) -
-                                                 data->offset);
+                uint8_t* targetData = static_cast<uint8_t*>(mProcs->bufferGetMappedRange(
+                                          data->bufferObj, data->offset, data->size)) -
+                                      data->offset;
+                mapState->writeHandle->SetTargetData(targetData, data->size);
             });
             SerializeCommand(cmd);
             break;

@@ -131,11 +131,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
 
         // Set the target for writes from the client. DeserializeFlush should copy data
         // into the target.
-        // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data and
-        // instead pass them directly as a span in DeserializeDataUpdate.
-        void SetTarget(void* data);
-        // Set Staging data length for OOB check
-        void SetDataLength(size_t dataLength);
+        void SetTargetData(uint8_t* data, size_t size);
 
         // This function takes in the serialized result of
         // client::MemoryTransferService::WriteHandle::SerializeDataUpdate.
@@ -162,8 +158,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         virtual uint8_t* GetSourceData() const { return nullptr; }
         virtual size_t GetSourceSize() const { return 0; }
 
-        uint8_t* mTargetData = nullptr;
-        size_t mDataLength = 0;
+        std::span<uint8_t> mTargetData;
     };
 
   private:
