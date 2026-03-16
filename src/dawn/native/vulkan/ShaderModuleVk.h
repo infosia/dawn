@@ -52,6 +52,12 @@ class PipelineLayout;
 
 class ShaderModule final : public ShaderModuleBase {
   public:
+    static ResultOrError<Ref<ShaderModule>> Create(
+        Device* device,
+        const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
+        const std::vector<tint::wgsl::Extension>& internalExtensions);
+
+    // Caller is responsible for destroying the `VkShaderModule` returned.
     struct ModuleAndSpirv {
         VkShaderModule module;
         std::vector<uint32_t> spirv;
@@ -59,20 +65,18 @@ class ShaderModule final : public ShaderModuleBase {
         Extent3D workgroupSize;
         std::optional<uint32_t> explicitSubgroupSize;
     };
+    struct CompileParameters {
+        // Kept without defaults as they must be provided.
+        raw_ptr<const ProgrammableStage> stage;
+        raw_ptr<const PipelineLayout> layout;
+        ImmediateConstantMask immediateMask;
 
-    static ResultOrError<Ref<ShaderModule>> Create(
-        Device* device,
-        const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions);
+        bool emitPointSize = false;
+        bool polyfillPixelCenter = false;
+        bool needsMultisampledFramebufferFetch = false;
+    };
 
-    // Caller is responsible for destroying the `VkShaderModule` returned.
-    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(SingleShaderStage stage,
-                                                    const ProgrammableStage& programmableStage,
-                                                    const PipelineLayout* layout,
-                                                    bool emitPointSize,
-                                                    bool polyfillPixelCenter,
-                                                    bool needsMultisampledFramebufferFetch,
-                                                    const ImmediateConstantMask& pipelineMask);
+    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(const CompileParameters& p);
 
   private:
     ShaderModule(Device* device,
