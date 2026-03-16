@@ -302,7 +302,7 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
         return {true};
     }
     s->Append("[Device");
-    const std::string& label = value->GetLabel();
+    auto label = value->GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     }
@@ -403,7 +403,7 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
         return {true};
     }
     s->Append("[Surface");
-    const std::string& label = value->GetLabel();
+    auto label = value->GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     }
@@ -704,6 +704,14 @@ AbslFormatConvert(StringView value, const absl::FormatConversionSpec& spec, absl
     s->Append("\"");
     s->Append(absl::string_view(value));
     s->Append("\"");
+    return {true};
+}
+
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    ObjectLabel::View value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s) {
+    s->Append(static_cast<std::string_view>(value));
     return {true};
 }
 

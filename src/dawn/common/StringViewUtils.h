@@ -43,7 +43,6 @@ namespace dawn {
 
 // Helper functions to work with the C WGPUStringView in tests, since it doesn't have all the
 // niceties of wgpu::StringView.
-WGPUStringView ToOutputStringView(const std::string& s);
 WGPUStringView ToOutputStringView(const std::string_view& s);
 template <size_t N>
 constexpr WGPUStringView ToOutputStringView(const char (&s)[N]) {

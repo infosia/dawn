@@ -161,7 +161,7 @@ ObjectType QueueBase::GetType() const {
 // prevents that. Consider removing when multiqueue is implemented.
 void QueueBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
-    const std::string& label = GetLabel();
+    auto label = GetLabel();
     if (!label.empty()) {
         s->Append(absl::StrFormat(" \"%s\"", label));
     }

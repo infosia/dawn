@@ -41,12 +41,8 @@ bool operator==(StringView a, StringView b) {
 
 namespace dawn {
 
-WGPUStringView ToOutputStringView(const std::string& s) {
-    return {s.data(), s.size()};
-}
-
 WGPUStringView ToOutputStringView(const std::string_view& s) {
-    return {s.data(), s.size()};
+    return {s.data(), s.length()};
 }
 
 std::string ToString(WGPUStringView s) {

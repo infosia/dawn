@@ -31,6 +31,7 @@
 #include <optional>
 
 #include "absl/strings/str_format.h"
+#include "dawn/native/ObjectLabel.h"
 #include "dawn/native/dawn_platform.h"
 #include "dawn/native/webgpu_absl_format_autogen.h"
 
@@ -331,6 +332,11 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kNumeric> AbslFormatCon
 
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString>
 AbslFormatConvert(StringView value, const absl::FormatConversionSpec& spec, absl::FormatSink* s);
+
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    ObjectLabel::View value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
 
 }  // namespace dawn::native
 
