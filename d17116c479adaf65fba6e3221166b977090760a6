@@ -16,6 +16,23 @@
       "message": "Does it matter than this is using the texture indices for all the binding points, whereas for YCbCr it\u0027s actually a sampler? i.e. shouldn\u0027t we be using `next_sampler_idx` for the YCbCr case here?",
       "revId": "d17116c479adaf65fba6e3221166b977090760a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672e25d1_cfdbb7c2",
+        "filename": "test/tint/types/texture/external/external.wgsl",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T14:45:21Z",
+      "side": 1,
+      "message": "Nit: Usual annoying nit about storing the result somewhere so it won\u0027t get DCE\u0027d away.",
+      "revId": "d17116c479adaf65fba6e3221166b977090760a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
