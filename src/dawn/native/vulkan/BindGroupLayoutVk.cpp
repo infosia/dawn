@@ -76,6 +76,17 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
     res.bindings.reserve(layout->GetBindingCount());
 
     for (BindingIndex bindingIndex : Range(layout->GetBindingCount())) {
+        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+
+        // Skip over bindings that cannot be seen by any shaders as they could cause us to create
+        // bindgroups with more bindings than the VkDevice's limits. However keep dynamic buffers
+        // as the amount of dynamic offsets need to stay the same as WebGPU's so we can passthrough
+        // the dynamic offsets.
+        if (bindingInfo.visibility == wgpu::ShaderStage::None &&
+            bindingIndex >= layout->GetDynamicBufferCount()) {
+            continue;
+        }
+
         // This texture will be bound into the VkDescriptorSet at the index for the sampler itself.
         if (res.textureToStaticSamplerIndex.contains(bindingIndex)) {
             continue;
@@ -84,7 +95,6 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
         // Vulkan descriptor set layouts have one entry for binding_array. Only handle their first
         // element as subsequent ones will be part of the already added
         // VkDescriptorSetLayoutBinding.
-        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
         if (bindingInfo.indexInArray != BindingIndex(0)) {
             continue;
         }
