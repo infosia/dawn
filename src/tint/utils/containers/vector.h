@@ -1284,6 +1284,9 @@ class VectorRef {
             tint::Slice<U>{Bitcast<U*>(slice_->buffer.data()), slice_->len, slice_->buffer.size()}};
     }
 
+    /// @returns the internal data of the vector as a std::span
+    std::span<const T> AsSpan() const { return slice_->buffer.subspan(0, slice_->len); }
+
     /// @returns the internal slice of the vector
     tint::Slice<T> Slice() {
         return tint::Slice<T>{slice_->buffer.data(), slice_->len, slice_->buffer.size()};
