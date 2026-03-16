@@ -269,6 +269,146 @@ TEST_F(ResolverVariableValidationTest, LocalLetRedeclared) {
               "12:34 error: redeclaration of 'l'\nnote: 'l' previously declared here");
 }
 
+TEST_F(ResolverVariableValidationTest, TextureFilterableToUnfilterable_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var tex: texture_2d<f32, filterable>;
+
+fn f() {
+  let t: texture_2d<f32, unfilterable> = tex;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, TextureFilterableToUnknown_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var tex: texture_2d<f32, filterable>;
+
+fn f() {
+  let t: texture_2d<f32> = tex;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, TextureUnknownToUnfilterable_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var tex: texture_2d<f32>;
+
+fn f() {
+  let t: texture_2d<f32, unfilterable> = tex;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, TextureUnknownToFilterable_Disallowed) {
+    ExpectError(R"(
+@group(0) @binding(0) var tex: texture_2d<f32>;
+
+fn f() {
+  let t: texture_2d<f32, filterable> = tex;
+}
+)",
+                R"(
+input.wgsl:5:7 error: cannot initialize 'let' of type 'texture_2d<f32, filterable>' with value of type 'texture_2d<f32>'
+  let t: texture_2d<f32, filterable> = tex;
+      ^
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, TextureUnFilterableToUnknown_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var tex: texture_2d<f32, unfilterable>;
+
+fn f() {
+  let t: texture_2d<f32> = tex;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, TextureUnFilterableToFilterable_Disallowed) {
+    ExpectError(R"(
+@group(0) @binding(0) var tex: texture_2d<f32, unfilterable>;
+
+fn f() {
+  let t: texture_2d<f32, filterable> = tex;
+}
+)",
+                R"(
+input.wgsl:5:7 error: cannot initialize 'let' of type 'texture_2d<f32, filterable>' with value of type 'texture_2d<f32, unfilterable>'
+  let t: texture_2d<f32, filterable> = tex;
+      ^
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerFilteringToNonFiltering_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var samp: sampler<filtering>;
+
+fn f() {
+  let s: sampler<non_filtering> = samp;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerFilteringToUnknown_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var samp: sampler<filtering>;
+
+fn f() {
+  let s: sampler = samp;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerUnknownToNonFiltering_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var samp: sampler;
+
+fn f() {
+  let s: sampler<non_filtering> = samp;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerUnknownToFiltering_Disallowed) {
+    ExpectError(R"(
+@group(0) @binding(0) var samp: sampler;
+
+fn f() {
+  let s: sampler<filtering> = samp;
+}
+)",
+                R"(
+input.wgsl:5:7 error: cannot initialize 'let' of type 'sampler<filtering>' with value of type 'sampler'
+  let s: sampler<filtering> = samp;
+      ^
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerNonFilteringUnknown_Allowed) {
+    ExpectSuccess(R"(
+@group(0) @binding(0) var samp: sampler<non_filtering>;
+
+fn f() {
+  let s: sampler = samp;
+}
+)");
+}
+
+TEST_F(ResolverVariableValidationTest, SamplerNonFilteringToFiltering_Disllowed) {
+    ExpectError(R"(
+@group(0) @binding(0) var samp: sampler<non_filtering>;
+
+fn f() {
+  let s: sampler<filtering> = samp;
+}
+)",
+                R"(
+input.wgsl:5:7 error: cannot initialize 'let' of type 'sampler<filtering>' with value of type 'sampler<non_filtering>'
+  let s: sampler<filtering> = samp;
+      ^
+)");
+}
+
 TEST_F(ResolverVariableValidationTest, GlobalVarRedeclaredAsLocal) {
     // var v : f32 = 2.1;
     // fn my_func() {

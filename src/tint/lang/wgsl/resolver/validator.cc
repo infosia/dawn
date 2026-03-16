@@ -580,6 +580,52 @@ bool Validator::VariableInitializer(const ast::Variable* v,
     auto* initializer_ty = initializer->Type();
     auto* value_type = initializer_ty->UnwrapRef();  // Implicit load of RHS
 
+    {
+        // For storage textures, we need to validate the filterability separately
+        auto* storage_tex_ty = storage_ty->As<core::type::SampledTexture>();
+        auto* value_tex_ty = value_type->As<core::type::SampledTexture>();
+        if (storage_tex_ty && value_tex_ty && storage_tex_ty->Type() == value_tex_ty->Type() &&
+            storage_tex_ty->Dim() == value_tex_ty->Dim()) {
+            // `filterable` can store into anything
+            if (value_tex_ty->Filterable() == core::TextureFilterable::kFilterable) {
+                return true;
+            }
+            // Store a `unknown` into an `unfilterable`
+            if (storage_tex_ty->Filterable() == core::TextureFilterable::kUnfilterable &&
+                value_tex_ty->Filterable() == core::TextureFilterable::kUndefined) {
+                return true;
+            }
+            // Store a `unfilterable` into an `unknown`
+            if (storage_tex_ty->Filterable() == core::TextureFilterable::kUndefined &&
+                value_tex_ty->Filterable() == core::TextureFilterable::kUnfilterable) {
+                return true;
+            }
+        }
+    }
+
+    {
+        // For samplers, check the filtering separately
+        auto* storage_samp_ty = storage_ty->As<core::type::Sampler>();
+        auto* value_samp_ty = value_type->As<core::type::Sampler>();
+        if (storage_samp_ty && value_samp_ty && storage_samp_ty->Kind() == value_samp_ty->Kind() &&
+            !storage_samp_ty->IsComparison()) {
+            // `filtering` can store into anything
+            if (value_samp_ty->Filtering() == core::SamplerFiltering::kFiltering) {
+                return true;
+            }
+            // Store a `unknown` into a `non_filtering`
+            if (storage_samp_ty->Filtering() == core::SamplerFiltering::kNonFiltering &&
+                value_samp_ty->Filtering() == core::SamplerFiltering::kUndefined) {
+                return true;
+            }
+            // Store a `non_filtering` into an `unknown`
+            if (storage_samp_ty->Filtering() == core::SamplerFiltering::kUndefined &&
+                value_samp_ty->Filtering() == core::SamplerFiltering::kNonFiltering) {
+                return true;
+            }
+        }
+    }
+
     // Value type has to match storage type
     if (storage_ty != value_type) {
         AddError(v->source) << "cannot initialize " << style::Keyword(v->Kind()) << " of type "
