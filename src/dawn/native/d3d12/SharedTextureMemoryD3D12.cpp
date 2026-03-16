@@ -96,8 +96,13 @@ SharedTextureMemory::CreateSharedTextureMemoryFromD3D12Resource(
                     "Resource Height (%u) exceeds maxTextureDimension2D (%u).", desc.Height,
                     limits.v1.maxTextureDimension2D);
 
-    DAWN_INVALID_IF(!(desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS),
-                    "Resource did not have D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS flag");
+    // Cross-adapter textures with D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER
+    // inherently support simultaneous access. For regular textures, we still
+    // require the ALLOW_SIMULTANEOUS_ACCESS flag.
+    bool isCrossAdapter = (desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER) != 0;
+    DAWN_INVALID_IF(
+        !isCrossAdapter && !(desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS),
+        "Resource did not have D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS flag");
 
     SharedTextureMemoryProperties properties;
     properties.size = {static_cast<uint32_t>(desc.Width), static_cast<uint32_t>(desc.Height), 1};
