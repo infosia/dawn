@@ -1437,6 +1437,8 @@ struct Encoder {
                 return pb::BuiltinFn::buffer_view;
             case core::BuiltinFn::kBufferLength:
                 return pb::BuiltinFn::buffer_length;
+            case core::BuiltinFn::kBufferArrayView:
+                return pb::BuiltinFn::buffer_array_view;
             case core::BuiltinFn::kNone:
                 break;
         }

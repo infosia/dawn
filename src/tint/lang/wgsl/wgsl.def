@@ -2758,22 +2758,23 @@ match uniform_or_storage
 //////////////////////////////////////////
 // buffer view
 //////////////////////////////////////////
-@must_use implicit(R: read, AS: uniform_or_storage, N: num)
-  fn bufferView<T>(ptr<AS, buffer<N>, R>, offset: u32) -> ptr<AS, T, R>
-@must_use implicit(R: read, AS: uniform_or_storage, N: num)
-  fn bufferView<T>(ptr<AS, buffer<N>, R>, offset: i32) -> ptr<AS, T, R>
-@must_use implicit(W: read_write, AS: workgroup_or_storage, N: num)
-  fn bufferView<T>(ptr<AS, buffer<N>, W>, offset: u32) -> ptr<AS, T, W>
-@must_use implicit(W: read_write, AS: workgroup_or_storage, N: num)
-  fn bufferView<T>(ptr<AS, buffer<N>, W>, offset: i32) -> ptr<AS, T, W>
-@must_use implicit(R: read, AS: uniform_or_storage)
-  fn bufferView<T>(ptr<AS, unsized_buffer, R>, offset: u32) -> ptr<AS, T, R>
-@must_use implicit(R: read, AS: uniform_or_storage)
-  fn bufferView<T>(ptr<AS, unsized_buffer, R>, offset: i32) -> ptr<AS, T, R>
-@must_use implicit(W: read_write, AS: workgroup_or_storage)
-  fn bufferView<T>(ptr<AS, unsized_buffer, W>, offset: u32) -> ptr<AS, T, W>
-@must_use implicit(W: read_write, AS: workgroup_or_storage)
-  fn bufferView<T>(ptr<AS, unsized_buffer, W>, offset: i32) -> ptr<AS, T, W>
+@must_use implicit(R: read, AS: uniform_or_storage, N: num, I: iu32)
+  fn bufferView<T>(ptr<AS, buffer<N>, R>, offset: I) -> ptr<AS, T, R>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, N: num, I: iu32)
+  fn bufferView<T>(ptr<AS, buffer<N>, W>, offset: I) -> ptr<AS, T, W>
+@must_use implicit(R: read, AS: uniform_or_storage, I: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, R>, offset: I) -> ptr<AS, T, R>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, I: iu32)
+  fn bufferView<T>(ptr<AS, unsized_buffer, W>, offset: I) -> ptr<AS, T, W>
+
+@must_use implicit(R: read, AS: uniform_or_storage, N: num, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, buffer<N>, R>, offset: O, s: S) -> ptr<AS, T, R>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, N: num, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, buffer<N>, W>, offset: O, s: S) -> ptr<AS, T, W>
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, unsized_buffer, R>, offset: O, s: S) -> ptr<AS, T, R>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, unsized_buffer, W>, offset: O, s: S) -> ptr<AS, T, W>
 
 @must_use implicit(R: read, AS: uniform_or_storage, N: num)
   fn bufferLength(ptr<AS, buffer<N>, R>) -> u32

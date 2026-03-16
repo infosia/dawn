@@ -2365,12 +2365,7 @@ void Validator::CheckType(const core::type::Type* root,
                            << ", must have creation-fixed footprint";
                     return false;
                 }
-                if (arr->Count()->Is<core::type::RuntimeArrayCount>()) {
-                    if (addrspace != AddressSpace::kStorage) {
-                        diag() << "runtime arrays must be in the 'storage' address space";
-                        return false;
-                    }
-                } else if (auto* count = arr->Count()->As<core::type::ConstantArrayCount>()) {
+                if (auto* count = arr->Count()->As<core::type::ConstantArrayCount>()) {
                     if (count->value == 0) {
                         diag() << "array requires a constant array size > 0";
                         return false;
@@ -3495,6 +3490,17 @@ void Validator::CheckVar(const Var* var) {
             mv->AddressSpace() != AddressSpace::kPrivate) {
             AddError(var) << "vars in a function scope must be in the 'function' address space";
             return;
+        }
+    }
+
+    if (mv->AddressSpace() != AddressSpace::kStorage &&
+        mv->AddressSpace() != AddressSpace::kHandle) {
+        if (!capabilities_.Contains(Capability::kMslAllowEntryPointInterface)) {
+            if (!mv->StoreType()->HasFixedFootprint()) {
+                AddResultError(var, 0) << "vars not in the 'storage' or 'handle' address spaces "
+                                          "must have a fixed footprint";
+                return;
+            }
         }
     }
 
