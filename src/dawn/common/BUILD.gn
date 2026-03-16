@@ -401,6 +401,13 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
     ]
     sources += get_target_outputs(":dawn_gpu_info_gen")
 
+    if (!is_wasm) {
+      sources += [
+        "WGPUDeviceCallbackInfos.cpp",
+        "WGPUDeviceCallbackInfos.h",
+      ]
+    }
+
     public_deps = [
       ":dawn_gpu_info_gen",
       ":dawn_version_gen",
