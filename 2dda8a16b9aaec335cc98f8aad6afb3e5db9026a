@@ -22,6 +22,30 @@
       },
       "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "198d2c5e_ac7b8f66",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2212,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-16T15:50:40Z",
+      "side": 1,
+      "message": "I suppose yes it could. I guess I could change these to use 64-bit values.",
+      "parentUuid": "52c1153c_239b0a2a",
+      "range": {
+        "startLine": 2212,
+        "startChar": 37,
+        "endLine": 2212,
+        "endChar": 74
+      },
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
