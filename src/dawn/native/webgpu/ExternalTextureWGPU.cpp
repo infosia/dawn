@@ -66,9 +66,10 @@ ExternalTexture::ExternalTexture(Device* device, const ExternalTextureDescriptor
       RecordableObject(schema::ObjectType::ExternalTexture),
       ObjectWGPU(device->wgpu->externalTextureRelease),
       mCreationParams(descriptor) {
+    std::string label = GetLabel();
     WGPUExternalTextureDescriptor desc = {
         .nextInChain = nullptr,
-        .label = ToOutputStringView(GetLabel()),
+        .label = ToOutputStringView(label),
         .plane0 = ToBackend(descriptor->plane0)->GetInnerHandle(),
         .plane1 = descriptor->plane1 ? ToBackend(descriptor->plane1)->GetInnerHandle() : nullptr,
         .cropOrigin = ToWGPU(descriptor->cropOrigin),

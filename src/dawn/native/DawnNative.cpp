@@ -258,9 +258,9 @@ bool CheckIsErrorForTesting(void* objectHandle) {
     return reinterpret_cast<ErrorMonad*>(objectHandle)->IsError();
 }
 
-const char* GetObjectLabelForTesting(void* objectHandle) {
+std::string GetObjectLabelForTesting(void* objectHandle) {
     ApiObjectBase* object = reinterpret_cast<ApiObjectBase*>(objectHandle);
-    return object->GetLabel().c_str();
+    return object->GetLabel();
 }
 
 uint64_t GetAllocatedSizeForTesting(WGPUBuffer buffer) {

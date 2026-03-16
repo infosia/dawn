@@ -35,6 +35,7 @@
 #include "absl/strings/str_format.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ObjectLabel.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
@@ -146,23 +147,30 @@ void ApiObjectList::Destroy(DestroyReason reason) {
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label) : ObjectBase(device) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, ErrorTag tag, StringView label)
     : ObjectBase(device, tag) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, DelayedInitializationTag tag, StringView label)
     : ObjectBase(device, tag) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag) : ObjectBase(device) {}
 
 ApiObjectBase::~ApiObjectBase() {
     DAWN_ASSERT(!IsAlive());
+    delete mLabel;
 }
 
 void ApiObjectBase::APISetLabel(StringView label) {
@@ -170,18 +178,27 @@ void ApiObjectBase::APISetLabel(StringView label) {
 }
 
 void ApiObjectBase::SetLabel(std::string label) {
-    mLabel = std::move(label);
+    if (label.empty()) {
+        return;
+    }
+    std::call_once(mLabelInitialized, [this] { mLabel = new ObjectLabel(); });
+    mLabel->SetValue(std::move(label));
     SetLabelImpl();
 }
 
-const std::string& ApiObjectBase::GetLabel() const {
-    return mLabel;
+std::string ApiObjectBase::GetLabel() const {
+    ObjectLabel* label = mLabel;
+    if (label == nullptr) {
+        return "";
+    }
+    return label->GetValue();
 }
 
 void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
-    if (!mLabel.empty()) {
-        s->Append(absl::StrFormat(" \"%s\"", mLabel));
+    const std::string& label = GetLabel();
+    if (!label.empty()) {
+        s->Append(absl::StrFormat(" \"%s\"", label));
     } else {
         s->Append(" (unlabeled)");
     }

@@ -50,9 +50,10 @@ PipelineLayout::PipelineLayout(Device* device,
     : PipelineLayoutBase(device, descriptor),
       RecordableObject(schema::ObjectType::PipelineLayout),
       ObjectWGPU(device->wgpu->pipelineLayoutRelease) {
+    std::string label = GetLabel();
     WGPUPipelineLayoutDescriptor desc;
     desc.nextInChain = nullptr;
-    desc.label = ToOutputStringView(GetLabel());
+    desc.label = ToOutputStringView(label);
 
     std::array<WGPUBindGroupLayout, kMaxBindGroups> bindGroupLayouts;
     bindGroupLayouts.fill(nullptr);

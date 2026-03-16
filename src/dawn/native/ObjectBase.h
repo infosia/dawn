@@ -33,6 +33,7 @@
 #include <string>
 
 #include "absl/strings/str_format.h"
+#include "dawn/common/Atomic.h"
 #include "dawn/common/LinkedList.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Ref.h"
@@ -41,6 +42,8 @@
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
+
+class ObjectLabel;
 
 namespace detail {
 
@@ -156,7 +159,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
     virtual ObjectType GetType() const = 0;
     void SetLabel(std::string label);
-    const std::string& GetLabel() const;
+    std::string GetLabel() const;
 
     virtual void FormatLabel(absl::FormatSink* s) const;
 
@@ -201,7 +204,9 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
   private:
     friend class ApiObjectList;
 
-    std::string mLabel;
+    std::once_flag mLabelInitialized;
+    dawn::Atomic<ObjectLabel*, std::memory_order::acquire, std::memory_order::release> mLabel{
+        nullptr};
 };
 
 template <typename T>
