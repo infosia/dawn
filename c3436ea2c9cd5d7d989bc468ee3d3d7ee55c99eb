@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec56f4d5_62457bbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-16T16:34:15Z",
+      "side": 1,
+      "message": "LGTM as well, I haven\u0027t had time to use it as the API side is taking a bit longer than expected and I was distracted by security issues. The functions look like they will work and I\u0027ll file an issue if they don\u0027t.",
+      "revId": "c3436ea2c9cd5d7d989bc468ee3d3d7ee55c99eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "018402b1_b686d176",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-16T16:34:15Z",
+      "side": 1,
+      "message": "nit: this could use `src/dawn/common/MatchVariant.h` split off to `src/utils`.",
+      "revId": "c3436ea2c9cd5d7d989bc468ee3d3d7ee55c99eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
