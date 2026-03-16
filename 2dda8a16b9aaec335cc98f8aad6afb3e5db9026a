@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f214de4_998dd6e6",
+        "filename": "src/tint/lang/wgsl/resolver/address_space_validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-16T21:42:07Z",
+      "side": 1,
+      "message": "Eventually 100%, but it seems too early to commit that change to CTS yet (hence the suppressions). I will go and guard the validation based on the feature in case we ever use the kill switch though.",
+      "parentUuid": "5d4d3c89_d49d7a70",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d576147c_20ac6d9c",
         "filename": "src/tint/lang/wgsl/resolver/buffer_test.cc",
         "patchSetId": 4
