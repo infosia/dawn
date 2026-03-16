@@ -31,13 +31,13 @@
 #include <stdint.h>
 
 #include <limits>
+#include <span>
 #include <string>
 
 #include "src/tint/lang/core/constant/eval.h"
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/evaluation_stage.h"
 #include "src/tint/utils/containers/enum_set.h"
-#include "src/tint/utils/containers/slice.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/text_style.h"
 
@@ -540,23 +540,23 @@ struct TableData {
     }
 
     /// The list of templates used by the intrinsic overloads
-    const Slice<const TemplateInfo> templates;
+    const std::span<const TemplateInfo> templates;
     /// The list of type matcher indices
-    const Slice<const MatcherIndex> matcher_indices;
+    const std::span<const MatcherIndex> matcher_indices;
     /// The list of type matchers used by the intrinsic overloads
-    const Slice<const TypeMatcher> type_matchers;
+    const std::span<const TypeMatcher> type_matchers;
     /// The list of number matchers used by the intrinsic overloads
-    const Slice<const NumberMatcher> number_matchers;
+    const std::span<const NumberMatcher> number_matchers;
     /// The list of parameters used by the intrinsic overloads
-    const Slice<const ParameterInfo> parameters;
+    const std::span<const ParameterInfo> parameters;
     /// The list of overloads used by the intrinsics
-    const Slice<const OverloadInfo> overloads;
+    const std::span<const OverloadInfo> overloads;
     /// The list of constant evaluation functions used by the intrinsics
-    const Slice<const constant::Eval::Function> const_eval_functions;
+    const std::span<const constant::Eval::Function> const_eval_functions;
     /// The type constructor and convertor intrinsics
-    const Slice<const IntrinsicInfo> ctor_conv;
+    const std::span<const IntrinsicInfo> ctor_conv;
     /// The builtin function intrinsic
-    const Slice<const IntrinsicInfo> builtins;
+    const std::span<const IntrinsicInfo> builtins;
     /// The IntrinsicInfo for the binary operator 'plus'
     const IntrinsicInfo& binary_plus;
     /// The IntrinsicInfo for the binary operator 'minus'

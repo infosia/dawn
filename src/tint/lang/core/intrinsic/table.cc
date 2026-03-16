@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <limits>
 #include <ostream>
+#include <span>
 #include <utility>
 
 #include "src/tint/lang/core/evaluation_stage.h"
@@ -37,7 +38,6 @@
 #include "src/tint/lang/core/type/invalid.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/core/type/void.h"
-#include "src/tint/utils/containers/slice.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/macros/defer.h"
 #include "src/tint/utils/text/string_stream.h"
