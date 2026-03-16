@@ -33,6 +33,23 @@
       "message": "This is purely Tint-side, reviewing myself from reviewers.",
       "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "303243da_535ec978",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-16T09:32:01Z",
+      "side": 1,
+      "message": "Removing*",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
