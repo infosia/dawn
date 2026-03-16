@@ -2324,9 +2324,10 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
         value = r.Get();
     }
 
-    // If the builtin is bufferView, set the root identifier based on the first argument.
+    // If the builtin is bufferView or bufferArrayView, set the root identifier based on the first
+    // argument.
     const sem::Variable* root_ident = nullptr;
-    if (fn == wgsl::BuiltinFn::kBufferView) {
+    if (fn == wgsl::BuiltinFn::kBufferView || fn == wgsl::BuiltinFn::kBufferArrayView) {
         root_ident = args[0]->RootIdentifier();
     }
     auto* call = b.create<sem::Call>(expr, target, stage, std::move(args), current_statement_,
@@ -2402,7 +2403,8 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             RegisterStore(args[0]);
             break;
 
-        case wgsl::BuiltinFn::kBufferView: {
+        case wgsl::BuiltinFn::kBufferView:
+        case wgsl::BuiltinFn::kBufferArrayView: {
             auto address_space =
                 call->Target()->ReturnType()->template As<core::type::Pointer>()->AddressSpace();
             auto* store_type =
@@ -4904,12 +4906,14 @@ bool Resolver::ApplyAddressSpaceUsageToType(core::AddressSpace address_space,
 
     if (auto* arr = ty->As<sem::Array>()) {
         if (address_space != core::AddressSpace::kStorage) {
-            if (arr->Count()->Is<core::type::RuntimeArrayCount>()) {
-                AddError(usage)
-                    << "runtime-sized arrays can only be used in the <storage> address space";
-                return false;
+            // With buffer_view, runtime-sized arrays can appear in more locations.
+            if (!allowed_features_.features.contains(wgsl::LanguageFeature::kBufferView)) {
+                if (arr->Count()->Is<core::type::RuntimeArrayCount>()) {
+                    AddError(usage)
+                        << "runtime-sized arrays can only be used in the <storage> address space";
+                    return false;
+                }
             }
-
             auto count = arr->ConstantCount();
             if (count.has_value() && count.value() >= internal_limits::kMaxArrayElementCount) {
                 AddError(usage) << "array count (" << count.value() << ") must be less than "

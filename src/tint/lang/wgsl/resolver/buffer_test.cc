@@ -191,7 +191,8 @@ TEST_F(ResolverBufferTest, Var_Uniform_Unsized) {
     GlobalVar("v", uniform, ty.buffer(), Group(0_a), Binding(0_a));
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(), R"(error: buffer type must be sized in 'uniform' address space)");
+    EXPECT_EQ(r()->error(),
+              R"(error: variables in 'uniform' address space must have a fixed footprint)");
 }
 
 TEST_F(ResolverBufferTest, Var_Uniform_Override) {
@@ -221,7 +222,8 @@ TEST_F(ResolverBufferTest, Var_Workgroup_Unsized) {
     GlobalVar("v", workgroup, ty.buffer(), Group(0_a), Binding(0_a));
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(), R"(error: buffer type must be sized in 'workgroup' address space)");
+    EXPECT_EQ(r()->error(),
+              R"(error: variables in 'workgroup' address space must have a fixed footprint)");
 }
 
 TEST_F(ResolverBufferTest, FunctionParameter) {
@@ -396,6 +398,312 @@ TEST_F(ResolverBufferViewTest, Return_NonHostShareable) {
     EXPECT_EQ(r()->error(),
               R"(error: override-sized arrays can only be used in the <workgroup> address space
 note:  while instantiating bufferView)");
+}
+
+TEST_F(ResolverBufferViewTest, Offset_Overflow) {
+    ExpectError(
+        R"(
+@group(0) @binding(0) var<storage, read_write> v : buffer<24>;
+fn foo() {
+  _ = bufferView<vec4u>(&v, 4294967280u);
+}
+)",
+        R"(
+input.wgsl:4:29 error: the offset argument of bufferView plus the size of the return type must not overflow a 32-bit unsigned integer
+  _ = bufferView<vec4u>(&v, 4294967280u);
+                            ^^^^^^^^^^^
+)");
+}
+
+using ResolverBufferArrayViewTest = ResolverTest;
+
+TEST_F(ResolverBufferArrayViewTest, Storage_Unsized) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     0_u, 4_u))});
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverBufferArrayViewTest, Uniform_Unsized) {
+    auto* gv = GlobalVar("v", uniform, ty.buffer(16_u), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     0_u, 4_u))});
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverBufferArrayViewTest, Workgroup_Unsized) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_u), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     0_u, 4_u))});
+
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverBufferArrayViewTest, Storage_Sized) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32(), 4_u)),
+                                     AddressOf(gv), 0_u, 16_u))});
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+    EXPECT_EQ(r()->error(),
+              R"(error: return type of bufferArrayView cannot have a fixed footprint)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Uniform_Sized) {
+    auto* gv = GlobalVar("v", uniform, ty.buffer(64_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32(), 4_u)),
+                                     AddressOf(gv), 0_u, 16_u))});
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+    EXPECT_EQ(r()->error(),
+              R"(error: return type of bufferArrayView cannot have a fixed footprint)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Workgroup_Sized) {
+    auto* gv = GlobalVar("v", workgroup, ty.buffer(64_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32(), 4_u)),
+                                     AddressOf(gv), 0_u, 16_u))});
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+    EXPECT_EQ(r()->error(),
+              R"(error: return type of bufferArrayView cannot have a fixed footprint)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, ReturnTypeContainsAtomic) {
+    Structure("S", Vector{Member("a", ty.array(ty.atomic(ty.u32())))});
+    auto* gv = GlobalVar("v", storage, ty.buffer(), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", Expr(Ident("S"))), AddressOf(gv), 0_u, 4_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              R"(error: return type of bufferArrayView cannot contain an atomic type)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Offset_Unsigned_TooSmall) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Decl(Let("a", ty.u32(), Expr(4_u))),
+                Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     20_u, Ident("a")))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the buffer (16 bytes) must be large enough to include one element of the runtime-sized array (4 bytes) with the given offset (20 bytes))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Offset_Unsigned_Unaligned) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     1_u, 4_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the offset argument of bufferArrayView must evenly divide the alignment of the return type (4))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Offset_Signed_TooSmall) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Decl(Let("a", ty.u32(), Expr(4_u))),
+                Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     20_i, Ident("a")))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the buffer (16 bytes) must be large enough to include one element of the runtime-sized array (4 bytes) with the given offset (20 bytes))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Offset_Signed_Unaligned) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     1_a, 4_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the offset argument of bufferArrayView must evenly divide the alignment of the return type (4))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Offset_Signed_Negative) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferArrayView", ty.array(ty.u32())), AddressOf(gv),
+                                     -1_i, 4_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              R"(error: the offset argument of bufferArrayView must be non-negative)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Return_Buffer_Unsized) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", ty.buffer()), AddressOf(gv), 0_i, 4_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(error: return type of bufferArrayView cannot be a buffer)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Return_Buffer_Sized) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", ty.buffer(16_u)), AddressOf(gv), 0_i, 16_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(error: return type of bufferArrayView cannot be a buffer)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Size_Unsigned_TooSmall) {
+    Structure("S", Vector{Member("a", ty.vec2(ty.u32())), Member("b", ty.array(ty.u32()))});
+    auto* gv = GlobalVar("v", storage, ty.buffer(8_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{
+             Assign(Phony(), Call(Ident("bufferArrayView", Ident("S")), AddressOf(gv), 0_u, 8_u))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the size argument (8 bytes) of bufferArrayView must be large enough to include one element of the runtime-sized array (12 bytes))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Size_Signed_TooSmall) {
+    Structure("S", Vector{Member("a", ty.vec2(ty.u32())), Member("b", ty.array(ty.u32()))});
+    auto* gv = GlobalVar("v", storage, ty.buffer(8_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{
+             Assign(Phony(), Call(Ident("bufferArrayView", Ident("S")), AddressOf(gv), 0_u, 8_i))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the size argument (8 bytes) of bufferArrayView must be large enough to include one element of the runtime-sized array (12 bytes))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Size_Signed_Negative) {
+    Structure("S", Vector{Member("a", ty.vec2(ty.u32())), Member("b", ty.array(ty.u32()))});
+    auto* gv = GlobalVar("v", storage, ty.buffer(8_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", Ident("S")), AddressOf(gv), 0_u, -1_a))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(error: the size argument of bufferArrayView must be non-negative)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_TooSmall) {
+    Structure("S", Vector{Member("a", ty.vec2(ty.u32())), Member("b", ty.array(ty.u32()))});
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", Ident("S")), AddressOf(gv), 8_u, 12_a))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: the buffer (16 bytes) must be large enough to include one element of the runtime-sized array (12 bytes) with the given offset (8 bytes) and size (12 bytes))");
+}
+
+TEST_F(ResolverBufferArrayViewTest, InvalidType) {
+    auto* gv = GlobalVar("v", storage, ty.buffer(16_a), Group(0_a), Binding(0_a));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(),
+                       Call(Ident("bufferArrayView", ty.sampler(core::type::SamplerKind::kSampler)),
+                            AddressOf(gv), 8_u, 12_a))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(
+        r()->error(),
+        R"(error: type 'sampler' cannot be used in address space 'storage' as it is non-host-shareable
+note:  while instantiating bufferView)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_TooSmall_Vec3) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec2<u32>,
+  b : array<vec3u>,
+}
+@group(0) @binding(0) var<storage, read_write> v : buffer<24>;
+fn foo() {
+  _ = bufferArrayView<S>(&v, 16, 32);
+}
+)",
+        R"(
+input.wgsl:8:7 error: the buffer (24 bytes) must be large enough to include one element of the runtime-sized array (32 bytes) with the given offset (16 bytes) and size (32 bytes)
+  _ = bufferArrayView<S>(&v, 16, 32);
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_Overflow) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec2<u32>,
+  b : array<vec3u>,
+}
+@group(0) @binding(0) var<storage, read_write> v : buffer<24>;
+fn foo() {
+  _ = bufferArrayView<S>(&v, 2147483648u, 2147483648u);
+}
+)",
+        R"(
+input.wgsl:8:7 error: the offset and size arguments of bufferArrayView plus the minimum return type size must not overflow a 32-bit unsigned integer
+  _ = bufferArrayView<S>(&v, 2147483648u, 2147483648u);
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Size_StrideDivisble) {
+    ExpectError(
+        R"(
+@group(0) @binding(0) var<storage, read_write> v : buffer;
+fn foo() {
+  _ = bufferArrayView<array<u32>>(&v, 0, 5);
+}
+)",
+        R"(
+input.wgsl:4:42 error: the size argument (5 bytes) of bufferArrayView minus the return type offset (0 bytes) must be evenly divisible by the stride of the runtime-sized array (4 bytes)
+  _ = bufferArrayView<array<u32>>(&v, 0, 5);
+                                         ^
+)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Size_StrideDivisbleWithReturnOffset) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec2<u32>,
+  b : array<u32>,
+}
+@group(0) @binding(0) var<storage, read_write> v : buffer;
+fn foo() {
+  _ = bufferArrayView<S>(&v, 0, 13);
+}
+)",
+        R"(
+input.wgsl:8:33 error: the size argument (13 bytes) of bufferArrayView minus the return type offset (8 bytes) must be evenly divisible by the stride of the runtime-sized array (4 bytes)
+  _ = bufferArrayView<S>(&v, 0, 13);
+                                ^^
+)");
 }
 
 }  // namespace

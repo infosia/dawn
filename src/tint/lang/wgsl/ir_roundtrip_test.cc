@@ -3618,5 +3618,58 @@ fn foo(p : ptr<workgroup, buffer>) {
 )");
 }
 
+TEST_F(IRToProgramRoundtripTest, BufferArrayView_Storage) {
+    RUN_TEST(R"(
+@group(0u) @binding(0u) var<storage, read> v1 : buffer;
+
+@group(0u) @binding(1u) var<storage, read_write> v2 : buffer<32>;
+
+struct S {
+  a : u32,
+  b : array<u32>,
+}
+
+fn f() {
+  let a = bufferArrayView<array<u32>>(&(v1), 0u, 8u);
+  let b = bufferArrayView<S>(&(v2), 4u, 8u);
+  let c = bufferArrayView<array<u32>>(&(v2), 0u, 8u);
+}
+)");
+}
+
+TEST_F(IRToProgramRoundtripTest, BufferArrayView_Uniform) {
+    RUN_TEST(R"(
+@group(0u) @binding(0u) var<uniform> v : buffer<128>;
+
+struct S {
+  a : u32,
+  b : array<u32>,
+}
+
+fn foo(p : ptr<uniform, buffer>) {
+  let a = bufferArrayView<array<u32>>(&(v), 0u, 8u);
+  let b = bufferArrayView<S>(p, 4u, 8u);
+  let c = bufferArrayView<array<u32>>(p, 0u, 8u);
+}
+)");
+}
+
+TEST_F(IRToProgramRoundtripTest, BufferArrayView_Workgroup) {
+    RUN_TEST(R"(
+var<workgroup> v : buffer<128>;
+
+struct S {
+  a : u32,
+  b : array<u32>,
+}
+
+fn foo(p : ptr<workgroup, buffer>) {
+  let a = bufferArrayView<array<u32>>(&(v), 0u, 8u);
+  let b = bufferArrayView<S>(p, 4u, 8u);
+  let c = bufferArrayView<array<u32>>(p, 0u, 8u);
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::wgsl

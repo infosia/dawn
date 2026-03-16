@@ -134,6 +134,12 @@ crbug.com/407076121 [ linux nvidia ] webgpu:shader,execution,limits:const_array_
 # point.
 ################################################################################
 
+# Pointer validation due to buffer_view
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="functionRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="uniformRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="workgroupRTArray" [ Skip ]
+crbug.com/474820386 webgpu:shader,validation,types,pointer:ptr_not_instantiable:case="privateRTArray" [ Skip ]
+
 ### TEMPORARY ANDROID SKIPS
 
 # Compressed texture image_copy failures on Pixel 6

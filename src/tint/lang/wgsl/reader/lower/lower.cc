@@ -203,6 +203,7 @@ core::BuiltinFn Convert(wgsl::BuiltinFn fn) {
         CASE(kGetResource)
         CASE(kBufferView)
         CASE(kBufferLength)
+        CASE(kBufferArrayView)
         case tint::wgsl::BuiltinFn::kBitcast:               // should lower to ir::Bitcast
         case tint::wgsl::BuiltinFn::kWorkgroupUniformLoad:  // should be handled in Lower()
         case tint::wgsl::BuiltinFn::kNone:
