@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f3a2924_b2f3f908",
+        "filename": "src/tint/lang/wgsl/resolver/address_space_validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-16T18:21:51Z",
+      "side": 1,
+      "message": "I could definitely see making the code changes depend on the language feature. I\u0027m not sure about the tests though. Would they ever be run with the feature disabled?",
+      "parentUuid": "c5a8923d_0b46bfb4",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d576147c_20ac6d9c",
         "filename": "src/tint/lang/wgsl/resolver/buffer_test.cc",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-16T16:46:22Z",
       "side": 1,
       "message": "No change needed here, but just FYI it\u0027s now possible (and maybe encouraged) to write these sorts of validation tests using WGSL strings instead of programatically building the AST. See `resolver/validation_test.cc` for examples of how to use the new helper for both the success and fail cases.",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b4e1caf_e7291f47",
+        "filename": "src/tint/lang/wgsl/resolver/buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-16T18:21:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d576147c_20ac6d9c",
       "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -95,6 +131,24 @@
       "writtenOn": "2026-03-16T16:46:22Z",
       "side": 1,
       "message": "Does it matter if the array element stride is larger than the element size? Wondering if we could end up access more data than provided for something like an array\u003cvec3u\u003e for example.",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ead93066_dee549e0",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-16T18:21:51Z",
+      "side": 1,
+      "message": "I think dynamic robustness would be based on stride so maybe it makes more sense to base everything on stride.",
+      "parentUuid": "ebc47fca_46ba057c",
       "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
