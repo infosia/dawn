@@ -145,19 +145,17 @@ void ApiObjectList::Destroy(DestroyReason reason) {
     }
 }
 
-ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label) : ObjectBase(device) {
-    mLabel = std::string(label);
-}
+ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label)
+    : ObjectBase(device),
+      mLabel(!label.IsUndefined() ? AcquireRef(new ObjectLabel(std::string(label))) : nullptr) {}
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, ErrorTag tag, StringView label)
-    : ObjectBase(device, tag) {
-    mLabel = std::string(label);
-}
+    : ObjectBase(device, tag),
+      mLabel(!label.IsUndefined() ? AcquireRef(new ObjectLabel(std::string(label))) : nullptr) {}
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, DelayedInitializationTag tag, StringView label)
-    : ObjectBase(device, tag) {
-    mLabel = std::string(label);
-}
+    : ObjectBase(device, tag),
+      mLabel(!label.IsUndefined() ? AcquireRef(new ObjectLabel(std::string(label))) : nullptr) {}
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag) : ObjectBase(device) {}
 
@@ -170,18 +168,20 @@ void ApiObjectBase::APISetLabel(StringView label) {
 }
 
 void ApiObjectBase::SetLabel(std::string label) {
-    mLabel = std::move(label);
+    Ref<ObjectLabel> ref = label.empty() ? nullptr : AcquireRef(new ObjectLabel(std::move(label)));
+    mLabel.Set(std::move(ref));
     SetLabelImpl();
 }
 
-const std::string& ApiObjectBase::GetLabel() const {
-    return mLabel;
+ObjectLabel::View ApiObjectBase::GetLabel() const {
+    return mLabel.Get();
 }
 
 void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
-    if (!mLabel.empty()) {
-        s->Append(absl::StrFormat(" \"%s\"", mLabel));
+    auto label = GetLabel();
+    if (!label.empty()) {
+        s->Append(absl::StrFormat(" \"%s\"", label));
     } else {
         s->Append(" (unlabeled)");
     }

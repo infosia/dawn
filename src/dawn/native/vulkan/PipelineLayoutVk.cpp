@@ -162,7 +162,7 @@ void PipelineLayout::DestroyImpl(DestroyReason reason) {
 
 void PipelineLayout::SetLabelImpl() {
     Device* device = ToBackend(GetDevice());
-    const std::string& label = GetLabel();
+    auto label = GetLabel();
 
     mVkPipelineLayouts.Use([&](auto vkPipelineLayouts) {
         for (const auto& [_, vkLayout] : *vkPipelineLayouts) {
