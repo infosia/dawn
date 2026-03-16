@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "864d8977_dd126008",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T16:05:26Z",
+      "side": 1,
+      "message": "parts[1].size()",
+      "revId": "f37bed79465d9a1e9e23c6c40c3644f7ffe3b731",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
