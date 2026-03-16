@@ -127,13 +127,7 @@ DAWN_MAKE_CACHE_REQUEST(SpirvCompilationRequest, SPIRV_COMPILATION_REQUEST_MEMBE
 #endif  // TINT_BUILD_SPV_WRITER
 
 ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
-    SingleShaderStage stage,
-    const ProgrammableStage& programmableStage,
-    const PipelineLayout* layout,
-    bool emitPointSize,
-    bool polyfillPixelCenter,
-    bool needsMultisampledFramebufferFetch,
-    const ImmediateConstantMask& pipelineImmediateMask) {
+    const CompileParameters& in) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
 #if TINT_BUILD_SPV_WRITER
@@ -143,7 +137,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // bindings for all other bindgroups by 1.
     BindGroupIndex startOfBindGroups{0};
     std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
-    if (layout->UsesResourceTable()) {
+    if (in.layout->UsesResourceTable()) {
         startOfBindGroups = BindGroupIndex(1);
 
         auto bindingTypeOrder = ResourceTableDefaultResources::GetOrder();
@@ -154,8 +148,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         };
     }
 
-    tint::Bindings bindings =
-        GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
+    tint::Bindings bindings = GenerateBindingRemapping(
+        in.layout, in.stage->metadata->stage, [&](BindGroupIndex group, BindingIndex index) {
             return tint::BindingPoint{
                 .group = uint32_t(startOfBindGroups + group),
                 .binding = uint32_t(index),
@@ -165,8 +159,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // Post process the binding remapping to make statically paired texture point at the sampler
     // binding point instead.
     std::unordered_set<tint::BindingPoint> staticallyPairedTextureBindingPoints;
-    for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
-        const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+    for (BindGroupIndex group : in.layout->GetBindGroupLayoutsMask()) {
+        const BindGroupLayout* bgl = ToBackend(in.layout->GetBindGroupLayout(group));
 
         for (BindingIndex index : bgl->GetSampledTextureIndices()) {
             const auto& bindingInfo = bgl->GetBindingInfo(index);
@@ -183,25 +177,25 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const bool hasInputAttachment = !bindings.input_attachment.empty();
 
     SpirvCompilationRequest req = {};
-    req.stage = stage;
+    req.stage = in.stage->metadata->stage;
     req.shaderModuleHash = GetHash();
     req.inputProgram = UnsafeUnserializedValue(UseTintProgram());
     req.platform = UnsafeUnserializedValue(GetDevice()->GetPlatform());
-    req.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
+    req.usesSubgroupMatrix = in.stage->metadata->usesSubgroupMatrix;
 
     // TODO(464008240): Cleanup the exposing of `EnumerateSubgroupMatrixConfigs` when possible.
     req.subgroupMatrixConfig =
         ToBackend(GetDevice()->GetPhysicalDevice())
             ->EnumerateSubgroupMatrixConfigs(GetDevice()->GetAdapter()->GetTogglesState());
 
-    req.tintOptions.entry_point_name = programmableStage.entryPoint;
+    req.tintOptions.entry_point_name = in.stage->entryPoint;
     req.tintOptions.remapped_entry_point_name = GetDevice()->GetIsolatedEntryPointName();
     req.tintOptions.strip_all_names = !GetDevice()->IsToggleEnabled(Toggle::DisableSymbolRenaming);
 
     req.tintOptions.statically_paired_texture_binding_points =
         std::move(staticallyPairedTextureBindingPoints);
     req.tintOptions.substitute_overrides_config = {
-        .map = BuildSubstituteOverridesTransformConfig(programmableStage),
+        .map = BuildSubstituteOverridesTransformConfig(*in.stage),
     };
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.resource_table = std::move(resourceTableConfig);
@@ -217,9 +211,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.disable_polyfill_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
 
-    req.tintOptions.emit_vertex_point_size = emitPointSize;
-    req.tintOptions.polyfill_pixel_center = polyfillPixelCenter;
-    req.tintOptions.multisampled_framebuffer_fetch = needsMultisampledFramebufferFetch;
+    req.tintOptions.emit_vertex_point_size = in.emitPointSize;
+    req.tintOptions.polyfill_pixel_center = in.polyfillPixelCenter;
+    req.tintOptions.multisampled_framebuffer_fetch = in.needsMultisampledFramebufferFetch;
 
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
                                         ? tint::spirv::writer::SpvVersion::kSpv14
@@ -276,9 +270,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     }
 
     // Set internal immediate constant offsets
-    if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, pipelineImmediateMask)) {
+    if (HasImmediateConstants(&RenderImmediateConstants::clampFragDepth, in.immediateMask)) {
         uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
-            &RenderImmediateConstants::clampFragDepth, pipelineImmediateMask);
+            &RenderImmediateConstants::clampFragDepth, in.immediateMask);
         req.tintOptions.depth_range_offsets = {
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }
