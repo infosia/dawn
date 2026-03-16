@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb54b938_bfab9199",
+        "filename": "src/tint/api/helpers/generate_bindings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T14:44:28Z",
+      "side": 1,
+      "message": "Does it matter than this is using the texture indices for all the binding points, whereas for YCbCr it\u0027s actually a sampler? i.e. shouldn\u0027t we be using `next_sampler_idx` for the YCbCr case here?",
+      "revId": "d17116c479adaf65fba6e3221166b977090760a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
