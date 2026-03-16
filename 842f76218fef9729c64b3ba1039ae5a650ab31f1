@@ -118,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eccf80f1_28c4cb96",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-16T14:47:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9abc1b1b_60f1095b",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 39
+      },
+      "revId": "842f76218fef9729c64b3ba1039ae5a650ab31f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "497fc70f_bcc6f8bf",
