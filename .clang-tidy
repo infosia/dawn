@@ -192,6 +192,7 @@ Checks: "-*,\
           -readability-convert-member-functions-to-static,\
           -readability-else-after-return,\
           -readability-enum-initial-value,\
+          -readability-fn_size,\
           -readability-function-cognitive-complexity,\
           -readability-function-size,\
           -readability-identifier-length,\
