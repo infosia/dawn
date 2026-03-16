@@ -162,6 +162,8 @@ struct Options {
 #if TINT_BUILD_SPV_WRITER
     bool use_storage_input_output_16 = true;
     tint::spirv::writer::SpvVersion spirv_version = tint::spirv::writer::SpvVersion::kSpv13;
+
+    std::unordered_set<tint::BindingPoint> ycbcr_bindings;
 #endif  // TINT_BULD_SPV_WRITER
 
 #if TINT_BUILD_MSL_WRITER
@@ -445,6 +447,15 @@ violations that may be produced)",
 Valid values are 1.3 and 1.4)",
         version_enum_names, Default{tint::spirv::writer::SpvVersion::kSpv13});
     TINT_DEFER(opts->spirv_version = *spirv_version.value);
+
+    auto& ycbcr_binding_data = options.Add<StringOption>(
+        "ycbcr-bindings",
+        "Allows setting an external texture as YCBCR. "
+        "This allows specifying that the external texture at the given binding point should be "
+        "considered a YCBCR texture. Entries are provided as binding point pairs (group, binding) "
+        "(e.g. 1,2). Multiple entries should be separated with a space.",
+        Default{""});
+
 #endif  // TINT_BUILD_SPV_WRITER
 
 #if TINT_BUILD_GLSL_WRITER
@@ -615,6 +626,37 @@ Options:
         }
     }
 #endif  // TINT_BUILD_SPV_READER
+
+#if TINT_BUILD_SPV_WRITER
+    if (!ycbcr_binding_data.value->empty()) {
+        auto str_to_bp = [](const std::string_view& str) -> std::optional<tint::BindingPoint> {
+            auto parts = tint::Split(str, ",");
+            if (parts.Length() != 2) {
+                std::cerr << "A binding point requires a 'group,binding' pair, found "
+                          << parts.Length() << " components instead of 2.\n";
+                return std::nullopt;
+            }
+
+            uint32_t group = 0;
+            std::from_chars(parts[0].data(), parts[0].data() + parts[0].size(), group);
+
+            uint32_t binding = 0;
+            std::from_chars(parts[1].data(), parts[1].data() + parts[1].size(), binding);
+
+            return {tint::BindingPoint{group, binding}};
+        };
+
+        for (auto mapping : tint::Split(*ycbcr_binding_data.value, " ")) {
+            auto opt_src = str_to_bp(mapping);
+            if (!opt_src.has_value()) {
+                return false;
+            }
+            tint::BindingPoint src_bp = opt_src.value();
+            opts->ycbcr_bindings.emplace(src_bp);
+        }
+    }
+
+#endif
 
 #if TINT_BUILD_MSL_WRITER
     if (arg_buffer.value.has_value()) {
@@ -931,7 +973,8 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
         offset += 8;
     }
 
-    gen_options.bindings = tint::GenerateBindings(ir, options.ep_name, false, false);
+    gen_options.bindings =
+        tint::GenerateBindings(ir, options.ep_name, false, false, options.ycbcr_bindings);
     gen_options.resource_table = tint::core::ir::transform::GenerateResourceTableConfig(ir);
 
     // Enable the Vulkan Memory Model if needed.
