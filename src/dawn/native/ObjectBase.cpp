@@ -37,6 +37,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectLabel.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -183,6 +184,14 @@ void ApiObjectBase::SetLabel(std::string label) {
     }
     std::call_once(mLabelInitialized, [this] { mLabel = new ObjectLabel(); });
     mLabel->SetValue(std::move(label));
+
+    if (!GetDevice()->IsToggleEnabled(Toggle::UseUserDefinedLabelsInBackend)) {
+        return;
+    }
+
+    // TODO(479457809): remove this once all backends' SetLabelImpl() implementations are thread
+    // safe
+    auto deviceGuard = GetDevice()->GetGuard();
     SetLabelImpl();
 }
 
