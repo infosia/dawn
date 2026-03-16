@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "923833e5_367fc5cf",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-16T23:32:26Z",
+      "side": 1,
+      "message": "This is my recap of EndAccess output sharedfences condtions:\n\n\n| BeginAccess Input Fences | Texture Used by Dawn? | EndAccess Output Fences                       |\n|--------------------------|-----------------------|-----------------------------------------------|\n| 0                        | Yes                   | 1 (The Queue\u0027s SharedFence @ lastUsageSerial) |\n| 0                        | No                    | 0                                             |\n| N                        | Yes                   | 1 (The Queue\u0027s SharedFence @ lastUsageSerial) |\n| N                        | No                    | N (The input fences)                          |",
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
