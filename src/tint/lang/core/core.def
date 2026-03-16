@@ -2908,6 +2908,15 @@ type u64
 @must_use implicit(W: read_write, AS: workgroup_or_storage, O: iu32, N: num)
   fn bufferView<T>(ptr<AS, buffer<N>, W>, O) -> ptr<AS, T, W>
 
+@must_use implicit(R: read, AS: uniform_or_storage, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, unsized_buffer, R>, O, S) -> ptr<AS, T, R>
+@must_use implicit(R: read, AS: uniform_or_storage, N: num, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, buffer<N>, R>, O, S) -> ptr<AS, T, R>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, unsized_buffer, W>, O, S) -> ptr<AS, T, W>
+@must_use implicit(W: read_write, AS: workgroup_or_storage, N: num, O: iu32, S: iu32)
+  fn bufferArrayView<T>(ptr<AS, buffer<N>, W>, O, S) -> ptr<AS, T, W>
+
 @must_use implicit(R: read, AS: uniform_or_storage)
   fn bufferLength(ptr<AS, unsized_buffer, R>) -> u32
 @must_use implicit(R: read, AS: uniform_or_storage, N: num)

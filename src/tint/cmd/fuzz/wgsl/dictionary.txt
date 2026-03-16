@@ -158,6 +158,7 @@
 "bool"
 "break"
 "buffer"
+"bufferArrayView"
 "bufferLength"
 "bufferView"
 "buffer_view"
