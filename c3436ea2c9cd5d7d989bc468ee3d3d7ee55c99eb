@@ -33,6 +33,24 @@
       "message": "nit: this could use `src/dawn/common/MatchVariant.h` split off to `src/utils`.",
       "revId": "c3436ea2c9cd5d7d989bc468ee3d3d7ee55c99eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d354b4fd_cefaafa4",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-16T16:53:35Z",
+      "side": 1,
+      "message": "May do that in a followup.",
+      "parentUuid": "018402b1_b686d176",
+      "revId": "c3436ea2c9cd5d7d989bc468ee3d3d7ee55c99eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
