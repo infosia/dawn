@@ -309,6 +309,8 @@ source_set("sources") {
     "IntegerTypes.h",
     "InternalPipelineStore.cpp",
     "InternalPipelineStore.h",
+    "LabeledObject.cpp",
+    "LabeledObject.h",
     "Limits.cpp",
     "Limits.h",
     "LogEmitter.h",

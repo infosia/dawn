@@ -27,8 +27,6 @@
 
 #include "dawn/native/ObjectBase.h"
 
-#include <atomic>
-#include <mutex>
 #include <utility>
 #include <vector>
 
@@ -146,17 +144,23 @@ void ApiObjectList::Destroy(DestroyReason reason) {
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label) : ObjectBase(device) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, ErrorTag tag, StringView label)
     : ObjectBase(device, tag) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, DelayedInitializationTag tag, StringView label)
     : ObjectBase(device, tag) {
-    mLabel = std::string(label);
+    if (!label.IsUndefined()) {
+        SetLabel(std::string(label));
+    }
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag) : ObjectBase(device) {}
@@ -170,18 +174,15 @@ void ApiObjectBase::APISetLabel(StringView label) {
 }
 
 void ApiObjectBase::SetLabel(std::string label) {
-    mLabel = std::move(label);
+    LabeledObject::SetLabel(std::move(label));
     SetLabelImpl();
-}
-
-const std::string& ApiObjectBase::GetLabel() const {
-    return mLabel;
 }
 
 void ApiObjectBase::FormatLabel(absl::FormatSink* s) const {
     s->Append(ObjectTypeAsString(GetType()));
-    if (!mLabel.empty()) {
-        s->Append(absl::StrFormat(" \"%s\"", mLabel));
+    const std::string& label = GetLabel();
+    if (!label.empty()) {
+        s->Append(absl::StrFormat(" \"%s\"", label));
     } else {
         s->Append(" (unlabeled)");
     }

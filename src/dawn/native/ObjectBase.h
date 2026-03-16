@@ -38,6 +38,7 @@
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/LabeledObject.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
@@ -141,7 +142,7 @@ class ApiObjectList {
     MutexProtected<LinkedList<ApiObjectBase>> mObjects;
 };
 
-class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
+class ApiObjectBase : public ObjectBase, public LabeledObject, public LinkNode<ApiObjectBase> {
   public:
     struct LabelNotImplementedTag {};
     static constexpr LabelNotImplementedTag kLabelNotImplemented = {};
@@ -156,7 +157,6 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
     virtual ObjectType GetType() const = 0;
     void SetLabel(std::string label);
-    const std::string& GetLabel() const;
 
     virtual void FormatLabel(absl::FormatSink* s) const;
 
@@ -200,8 +200,6 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
   private:
     friend class ApiObjectList;
-
-    std::string mLabel;
 };
 
 template <typename T>
