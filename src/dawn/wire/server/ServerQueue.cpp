@@ -110,12 +110,11 @@ WireResult Server::DoQueueWriteBufferXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<char[]>(AllocNoThrow<char>(size));
+    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
     if (!backingData) {
         return WireResult::FatalError;
     }
-    writeHandle->SetTarget(backingData.get());
-    writeHandle->SetDataLength(size);
+    writeHandle->SetTargetData(backingData.get(), size);
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
@@ -183,12 +182,11 @@ WireResult Server::DoQueueWriteTextureXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<char[]>(AllocNoThrow<char>(dataSize));
+    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(dataSize));
     if (!backingData) {
         return WireResult::FatalError;
     }
-    writeHandle->SetTarget(backingData.get());
-    writeHandle->SetDataLength(dataSize);
+    writeHandle->SetTargetData(backingData.get(), dataSize);
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.

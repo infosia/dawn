@@ -142,6 +142,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
     buffer->handle = mProcs->deviceCreateBuffer(device->handle, descriptor);
     buffer->usage = descriptor->usage;
     buffer->mappedAtCreation = (descriptor->mappedAtCreation != 0u);
+    buffer->size = static_cast<size_t>(descriptor->size);
 
     // isReadMode and isWriteMode could be true at the same time if usage contains
     // WGPUBufferUsage_MapRead and buffer is mappedAtCreation
@@ -179,7 +180,6 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
             }
             DAWN_ASSERT(writeHandle != nullptr);
             mapState->writeHandle.reset(writeHandle);
-            writeHandle->SetDataLength(descriptor->size);
 
             if (descriptor->mappedAtCreation) {
                 void* mapping = mProcs->bufferGetMappedRange(buffer->handle, 0, descriptor->size);
@@ -192,7 +192,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                     return WireResult::Success;
                 }
                 DAWN_ASSERT(mapping != nullptr);
-                writeHandle->SetTarget(mapping);
+                writeHandle->SetTargetData(static_cast<uint8_t*>(mapping), buffer->size);
 
                 mapState->writeState = BufferMapWriteState::Mapped;
             }
@@ -309,9 +309,10 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
                 // call getMappedRange exactly with the range of data that is potentially modified
                 // (i.e. we don't want getMappedRange(0, wholeBufferSize) if only a subset of the
                 // buffer is actually mapped) in case the implementation does some range tracking.
-                mapState->writeHandle->SetTarget(static_cast<uint8_t*>(mProcs->bufferGetMappedRange(
-                                                     data->bufferObj, data->offset, data->size)) -
-                                                 data->offset);
+                uint8_t* targetData = static_cast<uint8_t*>(mProcs->bufferGetMappedRange(
+                                          data->bufferObj, data->offset, data->size)) -
+                                      data->offset;
+                mapState->writeHandle->SetTargetData(targetData, buffer->size);
             });
             SerializeCommand(cmd);
             break;
