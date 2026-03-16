@@ -16,6 +16,40 @@
       "message": "I can\u0027t see the bug so I don\u0027t understand why the old code didn\u0027t work, but LGTM",
       "revId": "0373ae85c846f27b2f7011fd49b983e5a04a383a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a66ec39_0718b2aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-16T10:45:51Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "0373ae85c846f27b2f7011fd49b983e5a04a383a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98b9ccfd_90372120",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-16T10:45:51Z",
+      "side": 1,
+      "message": "I have some slight concern about this, for example in https://dawn-review.googlesource.com/c/dawn/+/296817 I needed to make sure that `GetMappedRange` returned something instead of the default of nullptr as it changed the behavior of the test. Is there a way to make some of the methods nice mocks, but keep most of them strict somehow? Or have tests be able to override which ones are nice and which ones are strict?\n\nI don\u0027t want to block this too much so LGTM and we\u0027ll figure out as follow-ups.",
+      "revId": "0373ae85c846f27b2f7011fd49b983e5a04a383a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
