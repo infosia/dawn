@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84cad7fb_ad49ff2c",
+        "filename": "src/tint/api/helpers/generate_bindings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-16T15:00:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it woudl matter, this is just for testing purposes, but I\u0027ve fixed it regardless.\n\n(It also wouldn\u0027t kickin at this point, YCBCR is Vulkan only, this is for if you have flattened spaces, which vulkan doesn\u0027t)",
+      "parentUuid": "eb54b938_bfab9199",
+      "revId": "d17116c479adaf65fba6e3221166b977090760a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "672e25d1_cfdbb7c2",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-16T14:45:21Z",
       "side": 1,
       "message": "Nit: Usual annoying nit about storing the result somewhere so it won\u0027t get DCE\u0027d away.",
+      "revId": "d17116c479adaf65fba6e3221166b977090760a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "020098a1_fd26a5b6",
+        "filename": "test/tint/types/texture/external/external.wgsl",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-16T15:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672e25d1_cfdbb7c2",
       "revId": "d17116c479adaf65fba6e3221166b977090760a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
