@@ -64,9 +64,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
     }
 
-    // Compute pipeline doesn't have clamp depth feature.
-    // TODO(crbug.com/366291600): Setting immediate data size if needed.
-    DAWN_TRY(PipelineVk::InitializeBase(layout, mImmediateMask));
+    DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(mImmediateMask));
 
     VkComputePipelineCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
@@ -163,15 +161,21 @@ ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl(DestroyReason reason) {
     ComputePipelineBase::DestroyImpl(reason);
-    PipelineVk::DestroyImpl(reason);
     if (mHandle != VK_NULL_HANDLE) {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+    mVkLayout = nullptr;
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
+    DAWN_ASSERT(mHandle != VK_NULL_HANDLE);
     return mHandle;
+}
+
+VkPipelineLayout ComputePipeline::GetVkLayout() const {
+    DAWN_ASSERT(mVkLayout != nullptr);
+    return mVkLayout->Get();
 }
 
 }  // namespace dawn::native::vulkan

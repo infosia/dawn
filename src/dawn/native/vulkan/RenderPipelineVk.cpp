@@ -371,6 +371,9 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     bool needsMultisampledFramebufferFetch = UseSampleRateShading() && UsesFramebufferFetch();
 
+    // Initialize the layout after all modifications to mImmediateMask.
+    DAWN_TRY_ASSIGN(mVkLayout, layout->GetOrCreateVkLayoutObject(mImmediateMask));
+
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     uint32_t stageCount = 0;
@@ -535,8 +538,6 @@ MaybeError RenderPipeline::InitializeImpl() {
     dynamic.flags = 0;
     dynamic.dynamicStateCount = sizeof(dynamicStates) / sizeof(dynamicStates[0]);
     dynamic.pDynamicStates = dynamicStates;
-
-    DAWN_TRY(PipelineVk::InitializeBase(layout, mImmediateMask));
 
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
@@ -808,15 +809,21 @@ RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl(DestroyReason reason) {
     RenderPipelineBase::DestroyImpl(reason);
-    PipelineVk::DestroyImpl(reason);
     if (mHandle != VK_NULL_HANDLE) {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+    mVkLayout = nullptr;
 }
 
 VkPipeline RenderPipeline::GetHandle() const {
+    DAWN_ASSERT(mHandle != VK_NULL_HANDLE);
     return mHandle;
+}
+
+VkPipelineLayout RenderPipeline::GetVkLayout() const {
+    DAWN_ASSERT(mVkLayout != nullptr);
+    return mVkLayout->Get();
 }
 
 }  // namespace dawn::native::vulkan

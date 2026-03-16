@@ -32,21 +32,21 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
-#include "dawn/native/vulkan/PipelineVk.h"
+#include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
 
 class Device;
 struct VkPipelineLayoutObject;
 
-class ComputePipeline final : public ComputePipelineBase, public PipelineVk {
+class ComputePipeline final : public ComputePipelineBase {
   public:
     static Ref<ComputePipeline> CreateUninitialized(
         Device* device,
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
 
     VkPipeline GetHandle() const;
-
+    VkPipelineLayout GetVkLayout() const;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -58,6 +58,7 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineVk {
     ResultOrError<Extent3D> InitializeImpl() override;
 
     VkPipeline mHandle = VK_NULL_HANDLE;
+    Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
 };
 
 }  // namespace dawn::native::vulkan
