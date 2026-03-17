@@ -16,6 +16,46 @@
       "message": "PTAL!",
       "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0a4ef7_9e009196",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-17T19:23:49Z",
+      "side": 1,
+      "message": "Why the newline in the middle of the designated initializer (also below).",
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb0087e2_a3dfb443",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-17T19:23:49Z",
+      "side": 1,
+      "message": "These need a `\u003d nullptr` as raw_ptr won\u0027t [always default initialize](https://chromium.googlesource.com/chromium/src/+/main/base/memory/raw_ptr.md#quick-rules) it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
