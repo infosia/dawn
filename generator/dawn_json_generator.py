@@ -152,7 +152,7 @@ class EnumType(Type):
         self.startValue = None
         lastValue = None
         for m in self.json_data['values']:
-            if not is_enabled(m):
+            if not is_enabled(m, parent_name=name):
                 continue
             value = m['value']
             value_name = m['name']
@@ -215,7 +215,8 @@ class BitmaskType(Type):
         Type.__init__(self, name, json_data)
         self.values = [
             BitmaskValue(Name(m['name']), m['value'], m)
-            for m in self.json_data['values'] if is_enabled(m)
+            for m in self.json_data['values']
+            if is_enabled(m, parent_name=name)
         ]
         self.full_mask = 0
         for value in self.values:
@@ -328,7 +329,8 @@ class ObjectType(Type):
         json_data_override = {'methods': []}
         if 'methods' in json_data:
             json_data_override['methods'] = [
-                m for m in json_data['methods'] if is_enabled(m)
+                m for m in json_data['methods']
+                if is_enabled(m, parent_name=name)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
 
@@ -374,7 +376,8 @@ class StructureType(Record, Type):
         json_data_override = {}
         if 'members' in json_data:
             json_data_override['members'] = [
-                m for m in json_data['members'] if is_enabled(m)
+                m for m in json_data['members']
+                if is_enabled(m, parent_name=name)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
         self.out = json_data.get('out', False)
@@ -658,10 +661,10 @@ def topo_sort_object(objects):
     return result
 
 
-def parse_json(json, enabled_tags, disabled_tags=None):
-    is_enabled = lambda json_data: item_is_enabled(
-        enabled_tags, json_data) and not item_is_disabled(
-            disabled_tags, json_data)
+def parse_json(json, enabled_tags, disabled_tags=None, match_names=None):
+    is_enabled = lambda json_data, item_name=None, parent_name=None: item_is_enabled(
+        enabled_tags, json_data, item_name=item_name, parent_name=parent_name, match_names=match_names) \
+        and not item_is_disabled(disabled_tags, json_data)
     category_to_parser = {
         'bitmask': BitmaskType,
         'callback function': CallbackFunctionType,
@@ -683,7 +686,7 @@ def parse_json(json, enabled_tags, disabled_tags=None):
         by_category[name] = []
 
     for (name, json_data) in json.items():
-        if name[0] == '_' or not is_enabled(json_data):
+        if name[0] == '_' or not is_enabled(json_data, name):
             continue
         category = json_data['category']
         parsed = category_to_parser[category](is_enabled, name, json_data)
@@ -926,11 +929,99 @@ def analyze_converter_usage(params_kotlin):
                 mark_k2n(arg.type)
 
 
+def expand_force_enable_items(loaded_json, initial_items, enabled_tags):
+    """
+    Expands a list of user-requested items to include their code generation dependencies.
+
+    For example, if `"external texture"` is forced, this will recursively pull in
+    its dependencies (like `"texture descriptor"` and method argument types).
+    """
+    force_enabled = set(initial_items)
+    queue = list(initial_items)
+
+    def is_naturally_enabled(item_name):
+        # Items with no tags or tags matching `enabled_tags` are implicitly generated
+        item_data = loaded_json.get(item_name)
+        if not item_data: return False
+        tags = validate_and_get_tags(item_data)
+        if tags is None: return True
+        return any(tag in enabled_tags for tag in tags)
+
+    def add_item(item):
+        if item and item not in force_enabled:
+            # Skip items already compiled by default (like "texture format")
+            # to avoid incorrectly overriding their internal tagged values.
+            if not is_naturally_enabled(item):
+                force_enabled.add(item)
+                queue.append(item)
+
+    # 1. Pre-index all object methods so we can map a forced method back to its parent object
+    method_to_parent = {}
+    for type_name, type_data in loaded_json.items():
+        if type_name.startswith('_'): continue
+        if type_data.get('category') == 'object':
+            for method in type_data.get('methods', []):
+                method_name = method.get('name', '')
+                method_full_name = type_name + ' ' + method_name
+                # e.g. "create external texture" -> ("device", {...})
+                method_to_parent[method_name] = (type_name, method)
+                method_to_parent[method_full_name] = (type_name, method)
+
+    # 2. Process queue to recursively fetch dependencies
+    while queue:
+        item_name = queue.pop(0)
+
+        # 3. If the item is a known struct or object
+        item_data = loaded_json.get(item_name)
+        if item_data:
+            # Add the types of all its members (e.g. "external texture descriptor" -> "extent 2D")
+            for member in item_data.get('members', []):
+                add_item(member.get('type'))
+
+            # Add argument types if it's a callback function (e.g. "request adapter callback")
+            if item_data.get('category') in [
+                    'function pointer', 'callback function'
+            ]:
+                for arg in item_data.get('args', []):
+                    add_item(arg.get('type'))
+
+            # Ensure any structures it chains to are also compiled
+            for root in item_data.get('chain roots', []):
+                add_item(root)
+
+        # 4. If the item is a method (e.g. "create external texture")
+        if item_name in method_to_parent:
+            parent_type, method = method_to_parent[item_name]
+
+            # Force the method's parent object (e.g. "device")
+            add_item(parent_type)
+
+            # Force the method's return type (e.g. "external texture")
+            method_returns = method.get('returns')
+            if isinstance(method_returns, str):
+                add_item(method_returns)
+            elif isinstance(method_returns, dict):
+                add_item(method_returns.get('type'))
+
+            # Force all method argument types (e.g. "external texture descriptor")
+            for arg in method.get('args', []):
+                add_item(arg.get('type'))
+
+    return force_enabled
+
 def compute_kotlin_params(loaded_json,
                           kotlin_json,
                           webgpu_kt_docs_data=None,
                           doc_warn_log_file_path=None):
-    params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
+    force_enable_items = expand_force_enable_items(loaded_json,
+                                                   kotlin_json.get(
+                                                       'force_enable_items',
+                                                       []),
+                                                   enabled_tags=['art'])
+
+    params_kotlin = parse_json(loaded_json,
+                               enabled_tags=['art'],
+                               match_names=force_enable_items)
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
@@ -998,8 +1089,10 @@ def compute_kotlin_params(loaded_json,
             if arg.type.category in [
                     'callback function', 'callback info', 'function pointer',
                     'object', 'structure'
-            ]:
+            ] or arg.type.name.get() == 'char':
                 return 'arrayOf()'
+            if arg.type.name.get() == 'float':
+                return 'floatArrayOf()'
             return 'intArrayOf()'
 
         # All other optional types default to 'null'.
@@ -1328,7 +1421,25 @@ def annotate(typ, arg, *, make_const_member=False, with_nullability=False):
     return result
 
 
-def item_is_enabled(enabled_tags, json_data):
+def item_is_enabled(enabled_tags,
+                    json_data,
+                    item_name=None,
+                    parent_name=None,
+                    match_names=None):
+    """
+    Determines if a JSON item (object, struct, member,enum value) should be generated.
+    Returns True if:
+      - The item's specific name or parent's name is manually forced via `match_names`.
+        (e.g., if parent_name="external texture" is forced, all its inner methods are implicitly generated).
+      - Its tags overlap with natively `enabled_tags` (e.g. ['art']).
+    """
+    name_to_check = item_name or json_data.get('name')
+    if match_names:
+        if name_to_check and name_to_check in match_names:
+            return True
+        if parent_name and parent_name in match_names:
+            return True
+
     tags = validate_and_get_tags(json_data)
     if tags is None: return True
     return any(tag in enabled_tags for tag in tags)
