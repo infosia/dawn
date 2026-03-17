@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fcc93c7_a2866b62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-17T08:54:56Z",
+      "side": 1,
+      "message": "PTAL! Antonio, I\u0027m hitting a segfault(?) on MSVC DBG but have no idea where and why does it repro for you? I really need to get a Windows machine :/",
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
