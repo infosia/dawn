@@ -440,12 +440,35 @@ class Vector {
     }
     TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor from an immutable slice
     /// @param other the slice to copy
     template <typename U>
     Vector(const Slice<U>& other) {  // NOLINT(runtime/explicit)
         Copy(internal::Slice<U>{std::span<U>{other.data, other.cap}, other.len});
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+    /// Copy constructor from a span
+    /// @param span the span to copy
+    template <size_t Extent>
+    Vector(std::span<T, Extent> span) {  // NOLINT(runtime/explicit)
+        Copy(internal::Slice<T>{std::span<T>{span.data(), span.size()}, span.size()});
+    }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+    /// Copy constructor from a span
+    /// @param span the span to copy
+    template <typename U, size_t Extent>
+    Vector(std::span<U, Extent> span) {  // NOLINT(runtime/explicit)
+        Copy(internal::Slice<U>{std::span<U>{span.data(), span.size()}, span.size()});
+    }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// Destructor
     ~Vector() { ClearAndFree(); }
@@ -513,6 +536,15 @@ class Vector {
     /// @returns this vector so calls can be chained
     Vector& operator=(const Slice<T>& other) {
         Copy(internal::Slice<T>{std::span<T>{other.data, other.cap}, other.len});
+        return *this;
+    }
+
+    /// Assignment operator for std::span
+    /// @param span the span to copy
+    /// @returns this vector so calls can be chained
+    template <size_t Extent>
+    Vector& operator=(std::span<T, Extent> span) {
+        Copy(internal::Slice<T>{std::span<T>{span.data(), span.size()}, span.size()});
         return *this;
     }
 
@@ -1363,13 +1395,13 @@ std::vector<T> ToStdVector(const Vector<T, N>& vector) {
 /// declared. Furthermore, Slices are often of const pointer/reference type, but a Vector cannot be
 /// of const pointer/reference type, again requiring the caller to be explicit. This helper makes it
 /// possible to only specify the size.
-template <size_t N, typename T>
-auto ToVector(const tint::Slice<T>& slice) {
-    // If Slice is of type 'T* const', make it 'T*' (or 'T& const', make it 'T&') as Vectors cannot
+template <size_t N, typename T, size_t Extent>
+auto ToVector(std::span<T, Extent> span) {
+    // If span is of type 'T* const', make it 'T*' (or 'T& const', make it 'T&') as Vectors cannot
     // be of const pointer/reference type.
     using U = std::conditional_t<std::is_pointer_v<T> || std::is_reference_v<T>,
                                  std::remove_const_t<T>, T>;
-    return Vector<U, N>{slice};
+    return Vector<U, N>{span};
 }
 
 /// Helper for converting a std::vector to a Vector.
