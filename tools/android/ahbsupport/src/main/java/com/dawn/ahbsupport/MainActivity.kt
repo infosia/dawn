@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
     DemoInfo("ZeroCopyRGBAImage") { modifier, options -> ZeroCopyRGBAImage(modifier, options) },
     DemoInfo("ZeroCopyRGBVideo") { modifier, options -> ZeroCopyRGBVideo(modifier, options) },
     DemoInfo("RenderTriangle") { modifier, options -> RenderTriangle(modifier, options) },
+    DemoInfo("ZeroCopyVideoYuv") { modifier, options -> ZeroCopyVideoYuv(modifier, options) },
   )
 
   override fun onCreate(savedInstanceState: Bundle?) {
