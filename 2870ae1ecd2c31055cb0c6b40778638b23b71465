@@ -61,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8fc49da7_1dc36222",
+        "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T19:07:43Z",
+      "side": 1,
+      "message": "We should also add a test where we use a non-zero offset and return `nullptr` also. (I think that would cause the UB in the other comment I put in the validation side.)",
+      "parentUuid": "d8be71b1_c824264e",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "173a14a7_5b274162",
         "filename": "src/dawn/wire/server/ServerBuffer.cpp",
         "patchSetId": 9
