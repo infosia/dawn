@@ -1427,7 +1427,17 @@ class Impl {
                 // `texture_and_sampler_let` enabled and we want to just strip the let and use the
                 // originating value.
                 if (init->Type()->IsAnyOf<core::type::Texture, core::type::Sampler>()) {
-                    scopes_.Set(l->name->symbol, init);
+                    auto* store_ty = sem->Type()->Clone(clone_ctx_.type_ctx);
+
+                    // If the types don't match, then we've had a filterability change during the
+                    // assignment. We need to create a `texture_convert` call to change the type and
+                    // then use the new converted type in place of the let
+                    core::ir::Value* result = init;
+                    if (init->Type() != store_ty) {
+                        // result = current_block_->Append(builder_.TextureConvert(store_ty,
+                        // init)->Result();
+                    }
+                    scopes_.Set(l->name->symbol, result);
                     return;
                 }
 

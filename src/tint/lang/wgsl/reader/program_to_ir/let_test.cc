@@ -30,6 +30,7 @@
 namespace tint::wgsl::reader {
 namespace {
 
+using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
 using ProgramToIRLetTest = helpers::IRProgramTest;
@@ -80,6 +81,131 @@ TEST_F(ProgramToIRLetTest, Chain) {
     %a:i32 = let 1i
     %b:i32 = let %a
     %c:i32 = let %b
+    ret
+  }
+}
+)");
+}
+
+TEST_F(ProgramToIRLetTest, TextureAssignment) {
+    GlobalVar("t", ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+              Vector{Group(2_u), Binding(3_u)});
+    WrapInFunction(Let("a", Expr("t")),  //
+                   Call("textureLoad", Expr("a"), Call<vec2<i32>>(), 0_u));
+
+    auto m = Build();
+    ASSERT_EQ(m, Success);
+
+    EXPECT_EQ(Dis(m.Get()),
+              R"($B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(2, 3)
+}
+
+%test_function = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:texture_2d<f32> = load %t
+    %4:vec4<f32> = textureLoad %3, vec2<i32>(0i), 0u
+    %tint_symbol:vec4<f32> = let %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(ProgramToIRLetTest, TextureAssignment_FilterableToUnfilterable) {
+    GlobalVar("t",
+              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
+                                 core::TextureFilterable::kFilterable),
+              Vector{Group(2_u), Binding(3_u)});
+    WrapInFunction(Let("a",
+                       ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
+                                          core::TextureFilterable::kUnfilterable),
+                       Expr("t")),  //
+                   Call("textureLoad", Expr("a"), Call<vec2<i32>>(), 0_u));
+
+    auto m = Build();
+    ASSERT_EQ(m, Success);
+
+    EXPECT_EQ(Dis(m.Get()),
+              R"($B1: {  # root
+  %t:ptr<handle, texture_2d<f32, filterable>, read> = var undef @binding_point(2, 3)
+}
+
+%test_function = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:texture_2d<f32, filterable> = load %t
+    %4:texture_2d<f32, unfilterable> = texture_convert %3
+    %4:vec4<f32> = textureLoad %4, vec2<i32>(0i), 0u
+    %tint_symbol:vec4<f32> = let %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(ProgramToIRLetTest, SamplerAssignment) {
+    GlobalVar("t", ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+              Vector{Group(1_u), Binding(3_u)});
+    GlobalVar("s", ty.sampler(core::type::SamplerKind::kSampler), Vector{Group(2_u), Binding(3_u)});
+
+    auto stmts = Vector{WrapInStatement(Let("a", Expr("s"))),  //
+                        WrapInStatement(Call("textureSample", Expr("t"), Expr("a"),
+                                             Call<vec2<f32>>(), Call<vec2<i32>>()))};
+
+    Func("test_function", {}, ty.void_(), std::move(stmts),
+         Vector{create<ast::StageAttribute>(ast::PipelineStage::kFragment)});
+
+    auto m = Build();
+    ASSERT_EQ(m, Success);
+
+    EXPECT_EQ(Dis(m.Get()),
+              R"($B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(1, 3)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(2, 3)
+}
+
+%test_function = @fragment func():void {
+  $B2: {
+    %4:sampler = load %s
+    %5:texture_2d<f32> = load %t
+    %6:vec4<f32> = textureSample %5, %4, vec2<f32>(0.0f), vec2<i32>(0i)
+    %tint_symbol:vec4<f32> = let %6
+    ret
+  }
+}
+)");
+}
+
+TEST_F(ProgramToIRLetTest, SamplerAssignmentNonFilteringFromFiltering) {
+    GlobalVar("t", ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+              Vector{Group(1_u), Binding(3_u)});
+    GlobalVar("s", ty.sampler(core::SamplerFiltering::kFiltering),
+              Vector{Group(2_u), Binding(3_u)});
+
+    auto stmts = Vector{
+        WrapInStatement(Let("a", ty.sampler(core::SamplerFiltering::kNonFiltering), Expr("s"))),  //
+        WrapInStatement(
+            Call("textureSample", Expr("t"), Expr("a"), Call<vec2<f32>>(), Call<vec2<i32>>()))};
+
+    Func("test_function", {}, ty.void_(), std::move(stmts),
+         Vector{create<ast::StageAttribute>(ast::PipelineStage::kFragment)});
+
+    auto m = Build();
+    ASSERT_EQ(m, Success);
+
+    EXPECT_EQ(Dis(m.Get()),
+              R"($B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(1, 3)
+  %s:ptr<handle, sampler<filtering>, read> = var undef @binding_point(2, 3)
+}
+
+%test_function = @fragment func():void {
+  $B2: {
+    %4:sampler<filtering> = load %s
+    %5:sampler<non_filtering> = sampler_convert %4
+    %6:texture_2d<f32> = load %t
+    %7:vec4<f32> = textureSample %6, %5, vec2<f32>(0.0f), vec2<i32>(0i)
+    %tint_symbol:vec4<f32> = let %7
     ret
   }
 }
