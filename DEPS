@@ -389,7 +389,7 @@ deps = {
 
   # WebGPU CTS - Used both by the dawn_node tests and transitively by Chromium.
   'third_party/webgpu-cts': {
-    'url': '{chromium_git}/external/github.com/gpuweb/cts@4cafebf949704ccc7b415ef868cf3506324ec124',
+    'url': '{chromium_git}/external/github.com/gpuweb/cts@81bf5e91ec26da6b531ff95ae85997bb330fc6be',
     'condition': 'build_with_chromium or dawn_standalone',
   },
 
