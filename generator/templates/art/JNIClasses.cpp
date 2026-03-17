@@ -43,6 +43,7 @@ JNIClasses::JNIClasses(JNIEnv* env) {
     gpuCallbackRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackRunnable")));
     gpuCallbackErrorTypeRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackErrorTypeRunnable")));
     gpuCallbackVoidRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackVoidRunnable")));
+    stringClass = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("java/lang/String")));
 
 }
 
