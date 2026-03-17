@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a907d74b_6a7bcc01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-17T23:53:39Z",
+      "side": 1,
+      "message": "Oops! Guess I was overly confident in the type checks when I made this change (https://dawn-review.googlesource.com/c/dawn/+/286158). Thanks for the fix :)\n\nWould you be willing to add a test to `src/emdawnwebgpu/tests/SpotTests.cpp` that would have caught this bug? I don\u0027t know exactly how you observed it. If it was just through `GetMapState()`, then I think you can test it by just adding some more `EXPECT`s to [the test from that CL](https://dawn-review.googlesource.com/c/dawn/+/286158/11/src/emdawnwebgpu/tests/SpotTests.cpp).\nHowever you will need to run the test locally as we don\u0027t run it automatically on PRs right now.",
+      "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
