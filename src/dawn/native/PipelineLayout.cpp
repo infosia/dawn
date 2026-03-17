@@ -201,21 +201,6 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
     if (auto* rt = descriptor.Get<PipelineLayoutResourceTable>()) {
         mUsesResourceTable = rt->usesResourceTable;
     }
-
-    BindingCounts bindingCounts = {};
-    for (BindGroupIndex i : mMask) {
-        AccumulateBindingCounts(
-            &bindingCounts,
-            mBindGroupLayouts[i]->GetInternalBindGroupLayout()->GetValidationBindingCounts());
-    }
-    mNumStorageBufferBindingsInVertexStage =
-        bindingCounts.perStage[SingleShaderStage::Vertex].storageBufferCount;
-    mNumStorageTextureBindingsInVertexStage =
-        bindingCounts.perStage[SingleShaderStage::Vertex].storageTextureCount;
-    mNumStorageBufferBindingsInFragmentStage =
-        bindingCounts.perStage[SingleShaderStage::Fragment].storageBufferCount;
-    mNumStorageTextureBindingsInFragmentStage =
-        bindingCounts.perStage[SingleShaderStage::Fragment].storageTextureCount;
 }
 
 PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
@@ -785,22 +770,6 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
 
 uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
     return mImmediateDataRangeByteSize;
-}
-
-uint32_t PipelineLayoutBase::GetNumStorageBufferBindingsInVertexStage() const {
-    return mNumStorageBufferBindingsInVertexStage;
-}
-
-uint32_t PipelineLayoutBase::GetNumStorageTextureBindingsInVertexStage() const {
-    return mNumStorageTextureBindingsInVertexStage;
-}
-
-uint32_t PipelineLayoutBase::GetNumStorageBufferBindingsInFragmentStage() const {
-    return mNumStorageBufferBindingsInFragmentStage;
-}
-
-uint32_t PipelineLayoutBase::GetNumStorageTextureBindingsInFragmentStage() const {
-    return mNumStorageTextureBindingsInFragmentStage;
 }
 
 bool PipelineLayoutBase::UsesResourceTable() const {
