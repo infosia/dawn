@@ -122,7 +122,7 @@
 
                             {# Generate the C++ variable conversions (e.g. _status, _message) #}
                             {%- for arg in kotlin_record_members(member.type.arguments) -%}
-                                {{ convert_to_kotlin(arg.name.camelCase(), '_' + arg.name.camelCase(), 'input->' + arg.length.name.camelCase() if arg.length.name, arg) }}
+                                {{ convert_to_kotlin(arg.name.camelCase(), '_' + arg.name.camelCase(), 'input->' + arg.length.name.camelCase() if arg.length and arg.length != 'constant' else (arg.constant_length | string if arg.length == 'constant' and arg.constant_length != 1 else None), arg) }}
                                 {%- set vName = '_' + arg.name.camelCase() -%}
                                 {%- set aName = arg.name.get() -%}
                                 {%- if aName == 'status' %}
@@ -198,37 +198,52 @@
                         {{ unreachable_code() }}
                     {% endif %}
                 {% elif member.length %}
-                    auto& outLength = outStruct->{{member.length.name.camelCase()}};
-                    {% if member.constant_length %}
-                        {{ unreachable_code() }}
-                    {% endif %}
-                    //* Convert container, including the length field.
-                    {% if member.type.name.get() == 'uint32_t' or member.type.category in ['bitmask', 'enum'] %}
-                        out = reinterpret_cast<const {{ as_cType(member.type.name) }}*>(c->GetIntArrayElements(in));
-                        outLength = env->GetArrayLength(in);
-                    {% elif member.type.name.get() == 'void' %}
-                        out = env->GetDirectBufferAddress(in);
-                        outLength = env->GetDirectBufferCapacity(in);
-                    {% else %}
-                        //* These container types are represented in Kotlin as arrays of objects.
-                        outLength = env->GetArrayLength(in);
-                        auto array = c->AllocArray<{{ as_cType(member.type.name) }}>(outLength);
-                        out = array;
-
-                        {% if member.type.category == 'object' %}
-                            jclass memberClass = classes->{{ member.type.name.camelCase() }};
-                            jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
+                    {% if member.length != 'constant' %}
+                        auto& outLength = outStruct->{{member.length.name.camelCase()}};
+                        //* Convert container, including the length field.
+                        {% if member.type.name.get() == 'uint32_t' or member.type.category in ['bitmask', 'enum'] %}
+                            out = reinterpret_cast<const {{ as_cType(member.type.name) }}*>(c->GetIntArrayElements(in));
+                            outLength = env->GetArrayLength(in);
+                        {% elif member.type.name.get() == 'void' %}
+                            out = env->GetDirectBufferAddress(in);
+                            outLength = env->GetDirectBufferCapacity(in);
+                        {% elif member.type.name.get() == 'char' %}
+                            outLength = env->GetArrayLength(in);
+                            auto array = c->AllocArray<const char*>(outLength);
                             for (int idx = 0; idx != outLength; idx++) {
-                                jobject element = env->GetObjectArrayElement(in, idx);
-                                array[idx] = reinterpret_cast<{{ as_cType(member.type.name) }}>(
-                                        env->CallLongMethod(element, getHandle));
+                                jstring element = static_cast<jstring>(env->GetObjectArrayElement(in, idx));
+                                array[idx] = c->GetStringUTFChars(element);
                             }
-                        {% elif member.type.category == 'structure' %}
-                            for (int idx = 0; idx != outLength; idx++) {
-                                ToNative(c, env, env->GetObjectArrayElement(in, idx), &array[idx]);
-                            }
+                            out = array;
                         {% else %}
-                            {{ unreachable_code() }}
+                            //* These container types are represented in Kotlin as arrays of objects.
+                            outLength = env->GetArrayLength(in);
+                            auto array = c->AllocArray<{{ as_cType(member.type.name) }}>(outLength);
+                            out = array;
+
+                            {% if member.type.category == 'object' %}
+                                jclass memberClass = classes->{{ member.type.name.camelCase() }};
+                                jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
+                                for (int idx = 0; idx != outLength; idx++) {
+                                    jobject element = env->GetObjectArrayElement(in, idx);
+                                    array[idx] = reinterpret_cast<{{ as_cType(member.type.name) }}>(
+                                            env->CallLongMethod(element, getHandle));
+                                }
+                            {% elif member.type.category == 'structure' %}
+                                for (int idx = 0; idx != outLength; idx++) {
+                                    ToNative(c, env, env->GetObjectArrayElement(in, idx), &array[idx]);
+                                }
+                            {% else %}
+                                {{ unreachable_code() }}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if member.type.name.get() == 'float' %}
+                            auto array = c->AllocArray<float>({{ member.constant_length }});
+                            env->GetFloatArrayRegion(static_cast<jfloatArray>(in), 0, {{ member.constant_length }}, array);
+                            out = array;
+                        {% else %}
+                            {{ unreachable_code('Unsupported constant array type: ' ~ member.type.name.get()) }}
                         {% endif %}
                     {% endif %}
                 //* From here members are single values.
