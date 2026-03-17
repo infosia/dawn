@@ -39,12 +39,13 @@
 #include <utility>
 #include <vector>
 
-#include "src/tint/utils/containers/slice.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/macros/compiler.h"
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/memory/aligned_storage.h"
 #include "src/tint/utils/memory/bitcast.h"
+#include "src/tint/utils/rtti/castable.h"
+#include "src/tint/utils/rtti/traits.h"
 
 // This file implements a custom STL style container & iterator in a performant manner, using
 // C-style data access. It is not unexpected that -Wunsafe-buffer-usage (UBU triggers in this code,
@@ -70,8 +71,81 @@
 
 /// Forward declarations
 namespace tint {
-template <typename>
+template <typename T>
 class VectorRef;
+
+/// A type used to indicate an empty array.
+struct EmptyType {};
+
+/// An instance of the EmptyType.
+inline constexpr EmptyType Empty;
+
+/// Mode enumerator for ReinterpretSlice
+enum class ReinterpretMode {
+    /// Only upcasts of pointers are permitted
+    kSafe,
+    /// Potentially unsafe downcasts of pointers are also permitted
+    kUnsafe,
+};
+
+namespace detail {
+
+template <typename TO, typename FROM>
+static constexpr bool ConstRemoved = std::is_const_v<FROM> && !std::is_const_v<TO>;
+
+/// Private implementation of tint::CanReinterpretSlice.
+/// Specialized for the case of TO equal to FROM, which is the common case, and avoids inspection of
+/// the base classes, which can be troublesome if the slice is of an incomplete type.
+template <ReinterpretMode MODE, typename TO, typename FROM>
+struct CanReinterpretSlice {
+  private:
+    using TO_EL = std::remove_pointer_t<std::decay_t<TO>>;
+    using FROM_EL = std::remove_pointer_t<std::decay_t<FROM>>;
+
+  public:
+    /// @see tint::CanReinterpretSlice
+    static constexpr bool value =
+        // const can only be applied, not removed
+        !ConstRemoved<TO, FROM> &&
+
+        // Both TO and FROM are the same type (ignoring const)
+        (std::is_same_v<std::remove_const_t<TO>, std::remove_const_t<FROM>> ||
+
+         // Both TO and FROM are pointers...
+         ((std::is_pointer_v<TO> && std::is_pointer_v<FROM>) &&
+
+          // const can only be applied to element type, not removed
+          !ConstRemoved<TO_EL, FROM_EL> &&
+
+          // Either:
+          // * Both the pointer elements are of the same type (ignoring const)
+          // * Both the pointer elements are both Castable, and MODE is kUnsafe, or FROM is of,
+          // or
+          //   derives from TO
+          (std::is_same_v<std::remove_const_t<FROM_EL>, std::remove_const_t<TO_EL>> ||
+           (IsCastable<FROM_EL, TO_EL> &&
+            (MODE == ReinterpretMode::kUnsafe || tint::traits::IsTypeOrDerived<FROM_EL, TO_EL>)))));
+};
+
+/// Specialization of 'CanReinterpretSlice' for when TO and FROM are equal types.
+template <typename T, ReinterpretMode MODE>
+struct CanReinterpretSlice<MODE, T, T> {
+    /// Always `true` as TO and FROM are the same type.
+    static constexpr bool value = true;
+};
+
+}  // namespace detail
+
+/// Evaluates whether a `Slice<FROM>` and be reinterpreted as a `Slice<TO>`.
+/// Slices can be reinterpreted if:
+///  * TO has the same or more 'constness' than FROM.
+///  * And either:
+///  * `FROM` and `TO` are pointers to the same type
+///  * `FROM` and `TO` are pointers to CastableBase (or derived), and the pointee type of `TO` is of
+///     the same type as, or is an ancestor of the pointee type of `FROM`.
+template <ReinterpretMode MODE, typename TO, typename FROM>
+static constexpr bool CanReinterpretSlice =
+    tint::detail::CanReinterpretSlice<MODE, TO, FROM>::value;
 
 namespace internal {
 
@@ -85,7 +159,7 @@ namespace internal {
 template <typename T>
 struct Slice {
     /// The backing memory for the vector (capacity)
-    std::span<T> buffer;
+    std::span<T> buffer = {};
     /// The number of elements currently accessible in the Vector
     size_t len = 0;
 };
@@ -422,36 +496,6 @@ class Vector {
 
     // {ptr, size} style span construction will always cause this warning to fire
     TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-    /// Copy constructor from an immutable slice
-    /// @param other the slice to copy
-    Vector(const Slice<T>& other) {  // NOLINT(runtime/explicit)
-        Copy(internal::Slice<T>{std::span<T>{other.data, other.cap}, other.len});
-    }
-    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-
-    // {ptr, size} style span construction will always cause this warning to fire
-    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-    /// Copy constructor from an immutable slice
-    /// @param other the slice to copy
-    /// @note This overload only exists to keep MSVC happy. The compiler should be able to match
-    /// `Slice<U>`.
-    Vector(const Slice<const T>& other) {  // NOLINT(runtime/explicit)
-        Copy(internal::Slice<const T>{std::span<const T>{other.data, other.cap}, other.len});
-    }
-    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-
-    // {ptr, size} style span construction will always cause this warning to fire
-    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-    /// Copy constructor from an immutable slice
-    /// @param other the slice to copy
-    template <typename U>
-    Vector(const Slice<U>& other) {  // NOLINT(runtime/explicit)
-        Copy(internal::Slice<U>{std::span<U>{other.data, other.cap}, other.len});
-    }
-    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-
-    // {ptr, size} style span construction will always cause this warning to fire
-    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// Copy constructor from a span
     /// @param span the span to copy
     template <size_t Extent>
@@ -528,14 +572,6 @@ class Vector {
         if (other.slice_ != &impl_.slice) {
             MoveOrCopy(std::move(other));
         }
-        return *this;
-    }
-
-    /// Assignment operator for Slice
-    /// @param other the slice to copy
-    /// @returns this vector so calls can be chained
-    Vector& operator=(const Slice<T>& other) {
-        Copy(internal::Slice<T>{std::span<T>{other.data, other.cap}, other.len});
         return *this;
     }
 
@@ -922,18 +958,6 @@ class Vector {
         return !(*this == other);
     }
 
-    /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() {
-        return tint::Slice<T>{impl_.slice.buffer.data(), impl_.slice.len,
-                              impl_.slice.buffer.size()};
-    }
-
-    /// @returns the internal slice of the vector
-    tint::Slice<const T> Slice() const {
-        return tint::Slice<const T>{impl_.slice.buffer.data(), impl_.slice.len,
-                                    impl_.slice.buffer.size()};
-    }
-
     /// @returns the internal data of the vector as a std::span
     std::span<T> AsSpan() { return impl_.slice.buffer.subspan(0, impl_.slice.len); }
 
@@ -1006,7 +1030,6 @@ class Vector {
                 return;
             }
         }
-        TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
         // Can't steal the data, so we have to move the elements instead.
 
@@ -1028,6 +1051,7 @@ class Vector {
         // Clear other
         other.Clear();
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     // {ptr, size} style span construction will always cause this warning to fire
     TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
@@ -1181,11 +1205,25 @@ class VectorRef {
 
     // {ptr, size} style span construction will always cause this warning to fire
     TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
-    /// Constructor from a Slice
-    /// @param slice the slice
-    VectorRef(const tint::Slice<T>& slice)  // NOLINT(runtime/explicit)
-        : local_slice_{std::span<T>{slice.data, slice.cap}, slice.len}, slice_(&local_slice_) {}
+    /// Constructor from a span
+    /// @param span the span
+    template <size_t Extent>
+    VectorRef(std::span<T, Extent> span)  // NOLINT(runtime/explicit)
+        : local_slice_{std::span<T>{span.data(), span.size()}, span.size()},
+          slice_(&local_slice_) {}
+
+    /// Constructor from a span
+    /// @param span the span
+    template <typename U, size_t Extent>
+    VectorRef(std::span<U, Extent> span)  // NOLINT(runtime/explicit)
+        : local_slice_{std::span<T>{Bitcast<T*>(span.data()), span.size()}, span.size()},
+          slice_(&local_slice_) {}
     TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+
+    /// Constructor from an internal::Slice
+    /// @param slice the internal slice
+    VectorRef(const internal::Slice<T>& slice)  // NOLINT(runtime/explicit)
+        : local_slice_(slice), slice_(&local_slice_) {}
 
     /// Constructor from a Vector
     /// @param vector the vector to create a reference of
@@ -1208,13 +1246,13 @@ class VectorRef {
     /// Copy constructor
     /// @param other the vector reference
     VectorRef(const VectorRef& other)
-        : local_slice_(other.LocalSlice()),
+        : local_slice_(*other.slice_),
           slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_) {}
 
     /// Move constructor
     /// @param other the vector reference
     VectorRef(VectorRef&& other)
-        : local_slice_(other.LocalSlice()),
+        : local_slice_(*other.slice_),
           slice_(other.slice_ == &other.local_slice_ ? &local_slice_ : other.slice_),
           can_move_(other.can_move_) {
         other.can_move_ = false;
@@ -1283,22 +1321,26 @@ class VectorRef {
     /// be made
     size_t Capacity() const { return slice_->buffer.size(); }
 
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
     /// @return a reinterpretation of this VectorRef as elements of type U.
     /// @note this is doing a reinterpret_cast of elements. It is up to the caller to ensure that
     /// this is a safe operation.
     template <typename U>
     VectorRef<U> ReinterpretCast() const {
-        return VectorRef<U>{
-            tint::Slice<U>{Bitcast<U*>(slice_->buffer.data()), slice_->len, slice_->buffer.size()}};
+        return VectorRef<U>{internal::Slice<U>{
+            std::span<U>{Bitcast<U*>(slice_->buffer.data()), slice_->buffer.size()}, slice_->len}};
     }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+
+    // {ptr, size} style span construction will always cause this warning to fire
+    TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
+    /// @returns the internal data of the vector as a std::span
+    std::span<T> AsSpan() { return std::span<T>{slice_->buffer.data(), slice_->len}; }
+    TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
     /// @returns the internal data of the vector as a std::span
     std::span<const T> AsSpan() const { return slice_->buffer.subspan(0, slice_->len); }
-
-    /// @returns the internal slice of the vector
-    tint::Slice<T> Slice() {
-        return tint::Slice<T>{slice_->buffer.data(), slice_->len, slice_->buffer.size()};
-    }
 
     /// @returns true if the vector is empty.
     bool IsEmpty() const { return slice_->len == 0; }
@@ -1362,9 +1404,6 @@ class VectorRef {
     template <typename>
     friend class VectorRef;
 
-    /// @returns the internal slice
-    internal::Slice<T> LocalSlice() const { return *slice_; }
-
     /// A local InternalSlice used when the VectorRef does not point to a Vector's internal slice.
     internal::Slice<T> local_slice_ = {{}, 0};
 
@@ -1389,13 +1428,13 @@ std::vector<T> ToStdVector(const Vector<T, N>& vector) {
     return out;
 }
 
-/// Helper for constructing a Vector from a Slice. Only the size must be supplied as the type is
+/// Helper for constructing a Vector from a span. Only the size must be supplied as the type is
 /// deduced.
-/// @param slice the input slice
+/// @param span the input span
 /// @return the converted vector
 /// @note This helper is useful because Vectors require a size parameter, but because it is the
 /// second template parameter to a Vector, both the type and size parameters must be explicitly
-/// declared. Furthermore, Slices are often of const pointer/reference type, but a Vector cannot be
+/// declared. Furthermore, spans are often of const pointer/reference type, but a Vector cannot be
 /// of const pointer/reference type, again requiring the caller to be explicit. This helper makes it
 /// possible to only specify the size.
 template <size_t N, typename T, size_t Extent>
