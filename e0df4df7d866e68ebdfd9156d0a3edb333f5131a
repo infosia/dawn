@@ -1,0 +1,458 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a9b9ef1_aaaf4f97",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is not needed. `useIntermediateCopyBuffer` is only true if the buffer doesn\u0027t have `Storage` usage. As I mentioned offline, if we change `d3d11::CanAddStorageUsageToBufferWithoutSideEffects` to return true, the `Storage` usage will be added implicitly by the front-end. Thus avoding creating a temp buffer here.",
+      "range": {
+        "startLine": 1179,
+        "startChar": 4,
+        "endLine": 1184,
+        "endChar": 82
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c02e655_32e47691",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is not needed on front-end.",
+      "range": {
+        "startLine": 407,
+        "startChar": 17,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b959e452_89d57a16",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "nit: Can you move this function to below `CanUseCPUUploadBuffer`. Probably should just name it `CanMappableUseSingleStorage`. Also add a short comment explain that this function checks whether we can use single storage for a mappable buffer.",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "382d830e_6299f8a1",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is mandatory by [spec](https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#5.6.1.3%20Map()%20on%20DEFAULT%20Buffers%20used%20as%20SRVs%20or%20UAVs). I don\u0027t think it\u0027s driver specific.\n\n\n```suggestion\n    // Default storage cannot be used with Vertex, Index or Indirect usage.\n    // See https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#5.6.1.3%20Map()%20on%20DEFAULT%20Buffers%20used%20as%20SRVs%20or%20UAVs\n```",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 60
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf4317f_71b00c49",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "We should add a check for device-\u003eCanMapOnDefaultBuffer() here:\n\n```suggestion\n    DAWN_ASSERT(IsMappable(usage);\n    if (!device-\u003eCanMapOnDefaultBuffer()) {\n        return false;\n    }\n    if (usage \u0026 wgpu::BufferUsage::Uniform) {\n        return false;\n    }\n    // Move the above comment to here.\n    return !(usage \u0026\n             (wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Index | wgpu::BufferUsage::Indirect));\n```",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 99
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f2d4ed_412d64c6",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "Note: we only want to use DEFAULT usage for `MapRead` (readback cases) for now.\nI think on dedicated GPUs, using DEFAULT usage for buffers might make it slow to write on CPU. That\u0027s because the buffers might be on VRAM.\n```suggestion\n        if ((originalUsage \u0026 wgpu::BufferUsage::MapRead)\n            \u0026\u0026 CanMappableUseSingleStorage(device, originalUsage)) {\n            // If we can use DEFAULT usage for MapRead, then it\u0027s ok to add Storage usage.\n            return true;\n        }\n        // D3D11 mappable buffers cannot be used as UAV natively. So avoid that.\n        return !(originalUsage \u0026 kMappableBufferUsages);\n```",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 56
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8491a650_045891e5",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "Since you already add `CPUAccessFlags` flags handling below. We can remove the redundant kMappableBufferUsages handling here.\n```suggestion\n        switch (mD3d11Usage) {\n            case D3D11_USAGE_STAGING:\n            case D3D11_USAGE_DEFAULT:\n                mMappableCopyableFlags |\u003d wgpu::BufferUsage::CopyDst;\n                break;\n            default:\n                break;\n        }\n```",
+      "range": {
+        "startLine": 828,
+        "startChar": 8,
+        "endLine": 840,
+        "endChar": 9
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2996607b_8cd33d31",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "I think we should handle these things implicitly in `GetOrCreateStorage` function. We don\u0027t need to do anything special here.\n\nIn other words, `GetOrCreateStorage` should create DEFAULT storage or STAGING storage depending on `device-\u003eCanMapOnDefaultBuffer()`.",
+      "range": {
+        "startLine": 944,
+        "startChar": 4,
+        "endLine": 962,
+        "endChar": 87
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa4eba6e_bea80bf5",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "Similarly, don\u0027t need to do anything special here. `GetOrCreateStorage(GPUWritableNonConstantBuffer)` should implicitly handle it.",
+      "range": {
+        "startLine": 992,
+        "startChar": 4,
+        "endLine": 1000,
+        "endChar": 99
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b498f1d_ede6917a",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "ditto. Let `GetOrCreateStorage(StorageType::GPUWritableNonConstantBuffer)` do it implicitly.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 8,
+        "endLine": 1030,
+        "endChar": 9
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54efcff5_2a389a66",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "We can add an early return for single storage special case here:\n```suggestion\n    }\n\n    if (IsMappable(GetInternalUsage())\n        \u0026\u0026 CanMappableUseSingleStorage(GetInternalUsage())) {\n        // Share a single MappableAndGPUWritable storage.\n        DAWN_TRY_ASSIGN(\n            mStorages[storageType],\n            GetOrCreateStorage(StorageType::MappableAndGPUWritable));\n        return mStorages[storageType].Get();\n    }\n```",
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7107428f_046e5842",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 1089,
+        "startChar": 8,
+        "endLine": 1096,
+        "endChar": 16
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9feb9005_9710a10b",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is redundant. If `GPUWritableNonConstantBuffer` shares the same storage as DEFAULT, the below code already handles it.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 4,
+        "endLine": 1120,
+        "endChar": 5
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dee8534_72f884b3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is redundant because the SyncStorage function below already skips copying the same storages [[1]](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/BufferD3D11.cpp;drc\u003d5c9117f00e0fc05c1a5a5a9ea97de29f2526b851;l\u003d1080).",
+      "range": {
+        "startLine": 1214,
+        "startChar": 4,
+        "endLine": 1216,
+        "endChar": 5
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df3fa120_43fc8b2c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to remove the old code.\nStaging storage should use DEFAULT usage if we can MapOnDefaultBuffers.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 4,
+        "endLine": 1222,
+        "endChar": 57
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63e91091_1c1f6fad",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "I think we should reuse the old name \"SyncGPUWritesToStaging\". Staging here means the CPU readable buffer which can either be `D3D11_USAGE_STAGING` or `D3D11_USAGE_DEFAULT`. Doesn\u0027t strictly mean `D3D11_USAGE_STAGING` only.",
+      "range": {
+        "startLine": 248,
+        "startChar": 15,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c5ccf82_e971840e",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to update comments here",
+      "range": {
+        "startLine": 315,
+        "startChar": 14,
+        "endLine": 316,
+        "endChar": 38
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76115d4f_afb60097",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "```suggestion\n        MappableAndGPUWritable,\n```",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 15
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72e09fcb_0e7392ca",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This is not needed if we store the flag in `DeviceInfo` struct.",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97e4be20_cc662ca2",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "This should be a flag in `DeviceInfoD3D11.h`",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

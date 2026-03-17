@@ -33,6 +33,24 @@
       "message": "`MapOnDefaultBuffers` should be a capability on PhysicalDevice11 instead of here.\n\nWe should move all the capability checks to `DeviceInfoD3D11` (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/DeviceInfoD3D11.cpp;l\u003d39).",
       "revId": "22485e0eeb1003f93645b68f703eec97359eeaac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a42aa2f9_e5fbdb19",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T11:59:22Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "98e3071b_bb15ef54",
+      "revId": "22485e0eeb1003f93645b68f703eec97359eeaac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
