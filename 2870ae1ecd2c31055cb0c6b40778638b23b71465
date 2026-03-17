@@ -34,6 +34,98 @@
       "parentUuid": "3fcc93c7_a2866b62",
       "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8be71b1_c824264e",
+        "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T19:05:40Z",
+      "side": 1,
+      "message": "It\u0027s not obvious why this needs to be injected here? The only difference (that I can tell) of injecting this versus just calling `device.Destroy()` is that we set the device state on the client? I wasn\u0027t able to easily figure out why that would change the behavior below?\n\nFrom what I can tell, this test seems like it would do the same thing with or without the destroy call in between? Basically, because we force the expectation of `BufferGetMappedRange` to return `nullptr`, we are already validating the new behavior. If that\u0027s true, then I also don\u0027t think we need to change the wire stuff in the parent CL.",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "173a14a7_5b274162",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T19:05:40Z",
+      "side": 1,
+      "message": "Does this work if `GetMappedRange` initially fails and returns `nullptr`? I\u0027m not actually sure what happens if you decrement `nullptr` intuitively it\u0027s probably UB? I think it might be important to check that case because the fuzzers will be able to invoke this path since it will just be generating a bunch of commands, and inevitably try to write to an unmapped buffer.",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e68b67c6_cbf038b4",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T19:05:40Z",
+      "side": 1,
+      "message": "nit. Note",
+      "range": {
+        "startLine": 228,
+        "startChar": 11,
+        "endLine": 228,
+        "endChar": 14
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e5c6ac0_2b5b610d",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T19:05:40Z",
+      "side": 1,
+      "message": "nit. However it is easy to check for misuses",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 23
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
