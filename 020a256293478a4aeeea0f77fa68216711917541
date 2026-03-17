@@ -16,6 +16,24 @@
       "message": "Hmm... I\u0027m not sure I understand why this fixes the compilation error?? But the change itself seems fine since it\u0027s probably better to avoid the additional copies when iterating anyways.",
       "revId": "020a256293478a4aeeea0f77fa68216711917541",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53d5133_c2a2f735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-03-17T18:45:31Z",
+      "side": 1,
+      "message": "It\u0027s not an error, it\u0027s just a scary warning. And, it\u0027s a false positive. But, for whatever reason, this change avoids the false positive.",
+      "parentUuid": "8e7fe544_de835ff3",
+      "revId": "020a256293478a4aeeea0f77fa68216711917541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
