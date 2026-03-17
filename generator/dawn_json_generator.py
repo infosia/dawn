@@ -152,7 +152,7 @@ class EnumType(Type):
         self.startValue = None
         lastValue = None
         for m in self.json_data['values']:
-            if not is_enabled(m):
+            if not is_enabled(m, name + ' ' + m.get('name', '')) and not is_enabled(m):
                 continue
             value = m['value']
             value_name = m['name']
@@ -216,7 +216,7 @@ class BitmaskType(Type):
         Type.__init__(self, name, json_data)
         self.values = [
             BitmaskValue(Name(m['name']), m['value'], m)
-            for m in self.json_data['values'] if is_enabled(m)
+            for m in self.json_data['values'] if is_enabled(m, name + ' ' + m.get('name', '')) or is_enabled(m)
         ]
         self.full_mask = 0
         for value in self.values:
@@ -329,7 +329,7 @@ class ObjectType(Type):
         json_data_override = {'methods': []}
         if 'methods' in json_data:
             json_data_override['methods'] = [
-                m for m in json_data['methods'] if is_enabled(m)
+                m for m in json_data['methods'] if is_enabled(m, name + ' ' + m.get('name', '')) or is_enabled(m)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
 
@@ -375,7 +375,7 @@ class StructureType(Record, Type):
         json_data_override = {}
         if 'members' in json_data:
             json_data_override['members'] = [
-                m for m in json_data['members'] if is_enabled(m)
+                m for m in json_data['members'] if is_enabled(m, name + ' ' + m.get('name', '')) or is_enabled(m)
             ]
         Type.__init__(self, name, dict(json_data, **json_data_override))
         self.out = json_data.get('out', False)
@@ -659,9 +659,9 @@ def topo_sort_object(objects):
     return result
 
 
-def parse_json(json, enabled_tags, disabled_tags=None):
-    is_enabled = lambda json_data: item_is_enabled(
-        enabled_tags, json_data) and not item_is_disabled(
+def parse_json(json, enabled_tags, disabled_tags=None, match_names=None):
+    is_enabled = lambda json_data, item_name=None: item_is_enabled(
+        enabled_tags, json_data, item_name, match_names) and not item_is_disabled(
             disabled_tags, json_data)
     category_to_parser = {
         'bitmask': BitmaskType,
@@ -684,7 +684,7 @@ def parse_json(json, enabled_tags, disabled_tags=None):
         by_category[name] = []
 
     for (name, json_data) in json.items():
-        if name[0] == '_' or not is_enabled(json_data):
+        if name[0] == '_' or not is_enabled(json_data, name):
             continue
         category = json_data['category']
         parsed = category_to_parser[category](is_enabled, name, json_data)
@@ -931,7 +931,9 @@ def compute_kotlin_params(loaded_json,
                           kotlin_json,
                           webgpu_kt_docs_data=None,
                           doc_warn_log_file_path=None):
-    params_kotlin = parse_json(loaded_json, enabled_tags=['art'])
+    force_enable_items = set(kotlin_json.get('force_enable_items', []))
+
+    params_kotlin = parse_json(loaded_json, enabled_tags=['art'], match_names=force_enable_items)
     params_kotlin['kotlin_package'] = kotlin_json['kotlin_package']
     params_kotlin['jni_primitives'] = kotlin_json['jni_primitives']
     params_kotlin['jni_signatures'] = kotlin_json['jni_signatures']
@@ -1329,7 +1331,11 @@ def annotate(typ, arg, *, make_const_member=False, with_nullability=False):
     return result
 
 
-def item_is_enabled(enabled_tags, json_data):
+def item_is_enabled(enabled_tags, json_data, item_name=None, match_names=None):
+    name_to_check = item_name or json_data.get('name')
+    if match_names and name_to_check in match_names:
+        print("Enabling", name_to_check)
+        return True
     tags = validate_and_get_tags(json_data)
     if tags is None: return True
     return any(tag in enabled_tags for tag in tags)

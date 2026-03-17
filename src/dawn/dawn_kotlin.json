@@ -122,5 +122,18 @@
                 "omitted": true
             }
         }
-    }
+    },
+    "force_enable_items": [
+      "shared texture memory a hardware buffer",
+      "external texture",
+      "external texture destroy",
+      "external texture expire",
+      "external texture refresh",
+      "create external texture",
+      "create error external texture",
+      "external texture descriptor",
+      "origin 2D",
+      "extent 2D",
+      "external texture rotation"
+    ]
 }
