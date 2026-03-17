@@ -33,6 +33,24 @@
       "message": "Please hold on to changes to this file, I have a WIP security issue fix that will conflict with it https://dawn-review.googlesource.com/c/dawn/+/296817",
       "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5364909e_ce0f8d04",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-17T08:46:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79ea3d17_f0e37b34",
+      "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
