@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f28a84f_3651ebed",
+        "filename": "src/tint/lang/wgsl/resolver/address_space_validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-17T01:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f214de4_998dd6e6",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d576147c_20ac6d9c",
@@ -154,6 +172,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a42bb7f7_7d2c0788",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2212,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-17T01:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "198d2c5e_ac7b8f66",
+      "range": {
+        "startLine": 2212,
+        "startChar": 37,
+        "endLine": 2212,
+        "endChar": 74
+      },
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebc47fca_46ba057c",
@@ -185,6 +227,24 @@
       "side": 1,
       "message": "I think dynamic robustness would be based on stride so maybe it makes more sense to base everything on stride.",
       "parentUuid": "ebc47fca_46ba057c",
+      "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab7c357_cd4b8bc0",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-17T01:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead93066_dee549e0",
       "revId": "2dda8a16b9aaec335cc98f8aad6afb3e5db9026a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
