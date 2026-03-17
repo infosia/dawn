@@ -16,6 +16,29 @@
       "message": "PTAL.\nPls let me if this approach is OK or do you prefer returning a string copy in `GetLabel()`.",
       "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d655d8c_fb736909",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-17T19:46:26Z",
+      "side": 1,
+      "message": "What is sizeof(ObjectLabel::AtomicRef) compared to sizeof(std::string)? I\u0027d be kind of worried about making all the ApiObjectBase objects bigger.\n\nAn alternative approach is to have this hold an atomic pointer to mutex+string. That way ApiObjectBase holds a small object until it has a label set. I had something like this locally I hadn\u0027t quite got ready to land:\n\n```\nclass ObjectLabel {\n  public:\n    ObjectLabel();\n    ObjectLabel(std::string label);\n    ~ObjectLabel();\n\n    void SetLabel(std::string label);\n    std::string GetLabel() const;\n\n  private:\n    struct Impl {\n        std::string label;\n        std::mutex mutex;\n    };\n\n    std::atomic\u003cImpl*\u003e data_ \u003d nullptr;\n};\n\nvoid ObjectLabel::SetLabel(std::string label) {\n    Impl* impl \u003d data_.load(std::memory_order::acquire);\n    if (!impl) {\n        Impl* created \u003d new Impl();\n        if (data_.compare_exchange_strong(impl, created, std::memory_order::acq_rel)) {\n            impl \u003d created;\n        } else {\n            // Another thread created the label already so use that.\n            delete created;\n        }\n    }\n\n    DAWN_CHECK(impl);\n    std::scoped_lock lock(impl-\u003emutex);\n    impl-\u003elabel \u003d std::move(label);\n}\n\nstd::string ObjectLabel::GetLabel() const {\n    Impl* impl \u003d data_.load(std::memory_order::acquire);\n    if (!impl) {\n        return \"\";\n    }\n    std::scoped_lock lock(impl-\u003emutex);\n    return impl-\u003elabel;\n}\n```",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
