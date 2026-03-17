@@ -3,6 +3,7 @@ import android.hardware.HardwareBuffer
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.webgpu.GPUDevice
+import androidx.webgpu.GPUExternalTextureDescriptor
 
 public object DawnAhbUtil {
 
@@ -12,4 +13,23 @@ public object DawnAhbUtil {
     }
 
     private external fun importRgbAhbNative(device: GPUDevice, ahb: HardwareBuffer): GPUImportedRGBHardwareBuffer
+
+    public fun importYuvAhb(
+        device: GPUDevice,
+        ahb: HardwareBuffer,
+        descriptor: GPUExternalTextureDescriptor
+    ): GPUImportedYuvHardwareBuffer {
+
+        val result = importYuvAhbNative(device, ahb, descriptor)
+            ?: throw IllegalStateException("Dawn failed to import YUV HardwareBuffer")
+
+        return result
+    }
+
+    @JvmStatic
+    private external fun importYuvAhbNative(
+        device: GPUDevice,
+        ahb: HardwareBuffer,
+        descriptor: GPUExternalTextureDescriptor
+    ): GPUImportedYuvHardwareBuffer?
 }
