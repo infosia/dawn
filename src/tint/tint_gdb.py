@@ -70,18 +70,29 @@ class Printer(object):
         return self.val.type.template_argument(index)
 
 
-class UtilsSlicePrinter(Printer):
-    '''Printer for tint::Slice<T>'''
+class UtilsInternalSlicePrinter(object):
+    '''Helper for printing tint::internal::Slice<T>'''
 
     def __init__(self, val):
-        super(UtilsSlicePrinter, self).__init__(val)
-        self.len = self.val['len']
-        self.cap = self.val['cap']
-        self.data = self.val['data']
+        self.val = val
+        self.len = int(self.val['len'])
+        self.buffer = self.val['buffer']
+        # Try to find the data pointer and capacity in the std::span
+        if '_M_ptr' in self.buffer.type.keys():
+            # libstdc++
+            self.data = self.buffer['_M_ptr']
+            self.cap = int(self.buffer['_M_len'])
+        else:
+            # guess for others
+            self.data = self.buffer['data_']
+            self.cap = int(self.buffer['size_'])
         self.elem_type = self.data.type.target().unqualified()
 
     def length(self):
         return self.len
+
+    def capacity(self):
+        return self.cap
 
     def value_at(self, index):
         '''Returns array value at index'''
@@ -90,26 +101,9 @@ class UtilsSlicePrinter(Printer):
     def to_string(self):
         return 'length={} capacity={}'.format(self.len, self.cap)
 
-    def members(self):
-        if _DISPLAY_MEMBERS_AS_CHILDREN:
-            return [
-                ('length', self.len),
-                ('capacity', self.cap),
-            ]
-        else:
-            return []
-
     def children(self):
-        for m in self.members():
-            yield m
         for i in range(self.len):
             yield str(i), self.value_at(i)
-
-    def display_hint(self):
-        return 'array'
-
-
-pp_set.add_printer('UtilsSlicePrinter', '^tint::Slice<.*>$', UtilsSlicePrinter)
 
 
 class UtilsVectorPrinter(Printer):
@@ -117,25 +111,24 @@ class UtilsVectorPrinter(Printer):
 
     def __init__(self, val):
         super(UtilsVectorPrinter, self).__init__(val)
-        self.slice = self.val['impl_']['slice']
-        self.using_heap = self.slice['cap'] > self.template_type(1)
-
-    def slice_printer(self):
-        return UtilsSlicePrinter(self.slice)
+        self.slice = UtilsInternalSlicePrinter(self.val['impl_']['slice'])
+        self.using_heap = self.slice.capacity() > self.template_type(1)
 
     def to_string(self):
-        return 'heap={} {}'.format(self.using_heap, self.slice)
+        return 'heap={} {}'.format(self.using_heap, self.slice.to_string())
 
     def members(self):
         if _DISPLAY_MEMBERS_AS_CHILDREN:
             return [
                 ('heap', self.using_heap),
+                ('length', self.slice.length()),
+                ('capacity', self.slice.capacity()),
             ]
         else:
             return []
 
     def children(self):
-        return chain(self.members(), self.slice_printer().children())
+        return chain(self.members(), self.slice.children())
 
     def display_hint(self):
         return 'array'
@@ -149,28 +142,31 @@ class UtilsVectorRefPrinter(Printer):
 
     def __init__(self, val):
         super(UtilsVectorRefPrinter, self).__init__(val)
-        self.slice = self.val['slice_']
+        self.slice = UtilsInternalSlicePrinter(
+            self.val['slice_'].dereference())
         self.can_move = self.val['can_move_']
 
     def to_string(self):
-        return 'can_move={} {}'.format(self.can_move, self.slice)
+        return 'can_move={} {}'.format(self.can_move, self.slice.to_string())
 
     def members(self):
         if _DISPLAY_MEMBERS_AS_CHILDREN:
             return [
                 ('can_move', self.can_move),
+                ('length', self.slice.length()),
+                ('capacity', self.slice.capacity()),
             ]
         else:
             return []
 
     def children(self):
-        return chain(self.members(), UtilsSlicePrinter(self.slice).children())
+        return chain(self.members(), self.slice.children())
 
     def display_hint(self):
         return 'array'
 
 
-pp_set.add_printer('UtilsVector', '^tint::VectorRef<.*>$',
+pp_set.add_printer('UtilsVectorRef', '^tint::VectorRef<.*>$',
                    UtilsVectorRefPrinter)
 
 
@@ -179,7 +175,8 @@ class UtilsHashmapBasePrinter(Printer):
 
     def __init__(self, val):
         super(UtilsHashmapBasePrinter, self).__init__(val)
-        self.slice = UtilsVectorPrinter(self.val['slots_']).slice_printer()
+        self.slice = UtilsInternalSlicePrinter(
+            self.val['slots_']['impl_']['slice'])
         self.try_read_std_optional_func = self.try_read_std_optional
 
     def to_string(self):
