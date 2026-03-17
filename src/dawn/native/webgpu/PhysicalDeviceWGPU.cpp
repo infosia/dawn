@@ -150,6 +150,23 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     if (auto* wgpuProperties = info.Get<AdapterPropertiesWGPU>()) {
         wgpuProperties->backendType = FromAPI(mInnerBackendType);
     }
+    if (auto* explicitSubgroupSizeConfigs =
+            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
+        WGPUAdapterInfo innerAdapterInfo = {};
+        WGPUAdapterPropertiesExplicitComputeSubgroupSizeConfigs explicitComputeSubgroupSizeConfigs =
+            {};
+        explicitComputeSubgroupSizeConfigs.chain.sType =
+            WGPUSType_AdapterPropertiesExplicitComputeSubgroupSizeConfigs;
+        innerAdapterInfo.nextInChain = &explicitComputeSubgroupSizeConfigs.chain;
+        GetFunctions().adapterGetInfo(mInnerAdapter, &innerAdapterInfo);
+        explicitSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
+            explicitComputeSubgroupSizeConfigs.minExplicitComputeSubgroupSize;
+        explicitSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
+            explicitComputeSubgroupSizeConfigs.maxExplicitComputeSubgroupSize;
+        explicitSubgroupSizeConfigs->maxComputeWorkgroupSubgroups =
+            explicitComputeSubgroupSizeConfigs.maxComputeWorkgroupSubgroups;
+        GetFunctions().adapterInfoFreeMembers(innerAdapterInfo);
+    }
 }
 
 FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
