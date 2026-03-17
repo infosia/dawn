@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f95a2dc7_1e318c0a",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-17T08:37:34Z",
+      "side": 1,
+      "message": "Could this take a span and be `SetTarget` to match `GetTarget`? (but also the other TODOs mean that maybe we don\u0027t need such a stateful API and instead pass the data in `DeserializeDataUpdate` directly?)",
+      "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79ea3d17_f0e37b34",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-17T08:37:34Z",
+      "side": 1,
+      "message": "Please hold on to changes to this file, I have a WIP security issue fix that will conflict with it https://dawn-review.googlesource.com/c/dawn/+/296817",
+      "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
