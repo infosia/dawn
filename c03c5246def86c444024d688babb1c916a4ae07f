@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9007c385_6937ece0",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-17T20:17:32Z",
+      "side": 1,
+      "message": "Why not pass `computeStage` here like in the previous code?",
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f0a4ef7_9e009196",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 4
