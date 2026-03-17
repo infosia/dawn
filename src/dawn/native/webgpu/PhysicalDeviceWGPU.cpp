@@ -51,6 +51,10 @@ PhysicalDevice::PhysicalDevice(Backend* backend, WGPUAdapter innerAdapter)
       mBackend(backend),
       mInnerAdapter(innerAdapter) {
     WGPUAdapterInfo info = {};
+    WGPUAdapterPropertiesExplicitComputeSubgroupSizeConfigs explicitComputeSubgroupSizeConfigs = {};
+    explicitComputeSubgroupSizeConfigs.chain.sType =
+        WGPUSType_AdapterPropertiesExplicitComputeSubgroupSizeConfigs;
+    info.nextInChain = &explicitComputeSubgroupSizeConfigs.chain;
     WGPUStatus status = GetFunctions().adapterGetInfo(mInnerAdapter, &info);
     DAWN_ASSERT(status == WGPUStatus_Success);
     DAWN_ASSERT(info.backendType != WGPUBackendType_WebGPU);
@@ -66,6 +70,12 @@ PhysicalDevice::PhysicalDevice(Backend* backend, WGPUAdapter innerAdapter)
     mSubgroupMinSize = info.subgroupMinSize;
     mSubgroupMaxSize = info.subgroupMaxSize;
     mInnerBackendType = info.backendType;
+
+    mMinExplicitComputeSubgroupSize =
+        explicitComputeSubgroupSizeConfigs.minExplicitComputeSubgroupSize;
+    mMaxExplicitComputeSubgroupSize =
+        explicitComputeSubgroupSizeConfigs.maxExplicitComputeSubgroupSize;
+    mMaxComputeWorkgroupSubgroups = explicitComputeSubgroupSizeConfigs.maxComputeWorkgroupSubgroups;
 
     GetFunctions().adapterInfoFreeMembers(info);
 }
@@ -149,6 +159,14 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     // TODO(crbug.com/413053623): Populate other AdapterInfo Chained extensions when necessary.
     if (auto* wgpuProperties = info.Get<AdapterPropertiesWGPU>()) {
         wgpuProperties->backendType = FromAPI(mInnerBackendType);
+    }
+    if (auto* explicitSubgroupSizeConfigs =
+            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
+        explicitSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
+            mMinExplicitComputeSubgroupSize;
+        explicitSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
+            mMaxExplicitComputeSubgroupSize;
+        explicitSubgroupSizeConfigs->maxComputeWorkgroupSubgroups = mMaxComputeWorkgroupSubgroups;
     }
 }
 
