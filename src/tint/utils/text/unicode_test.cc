@@ -294,22 +294,24 @@ TEST_P(UTF8Test, Decode) {
 }
 TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
+TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 TEST_P(UTF8Test, Encode) {
     auto param = GetParam();
 
-    Slice<const uint8_t> str{reinterpret_cast<const uint8_t*>(param.string.data()),
-                             param.string.size()};
+    std::span<const uint8_t> str{reinterpret_cast<const uint8_t*>(param.string.data()),
+                                 param.string.size()};
     for (auto codepoint : param.code_points) {
         EXPECT_EQ(utf8::Encode(codepoint.code_point, nullptr), codepoint.width);
 
         uint8_t encoded[4];
         size_t len = utf8::Encode(codepoint.code_point, encoded);
         ASSERT_EQ(len, codepoint.width);
-        EXPECT_THAT(Slice<const uint8_t>(encoded, len),
-                    ::testing::ElementsAreArray(str.Truncate(len)));
-        str = str.Offset(len);
+        EXPECT_THAT(std::span<const uint8_t>(encoded, len),
+                    ::testing::ElementsAreArray(str.subspan(0, len)));
+        str = str.subspan(len);
     }
 }
+TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
 INSTANTIATE_TEST_SUITE_P(AsciiLetters,
                          UTF8Test,
@@ -612,22 +614,24 @@ TEST_P(UTF16Test, Decode) {
 }
 TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
+TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 TEST_P(UTF16Test, Encode) {
     auto param = GetParam();
 
-    Slice<const uint16_t> str{reinterpret_cast<const uint16_t*>(param.string.data()),
-                              param.string.size()};
+    std::span<const uint16_t> str{reinterpret_cast<const uint16_t*>(param.string.data()),
+                                  param.string.size()};
     for (auto codepoint : param.code_points) {
         EXPECT_EQ(utf16::Encode(codepoint.code_point, nullptr), codepoint.width);
 
         uint16_t encoded[2];
         size_t len = utf16::Encode(codepoint.code_point, encoded);
         ASSERT_EQ(len, codepoint.width);
-        EXPECT_THAT(Slice<const uint16_t>(encoded, len),
-                    ::testing::ElementsAreArray(str.Truncate(len)));
-        str = str.Offset(len);
+        EXPECT_THAT(std::span<const uint16_t>(encoded, len),
+                    ::testing::ElementsAreArray(str.subspan(0, len)));
+        str = str.subspan(len);
     }
 }
+TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE_IN_CONTAINER);
 
 INSTANTIATE_TEST_SUITE_P(AsciiLetters,
                          UTF16Test,
