@@ -134,6 +134,8 @@ private suspend inline fun requestDevice(
     // TODO(Feature hardcoded, not available in bindings)
     f.add(0x0005001E) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
     f.add(0x00050027) //WGPUFeatureName_SharedFenceSyncFD
+    //TODO(Invalid feature required: Feature y-cb-cr-vulkan-samplers is guarded by toggle allow_unsafe_apis.)
+    // f.add(0x0005002D) //WGPUFeatureName_YCbCrVulkanSamplers
     deviceDescriptor.requiredFeatures = f.toIntArray()
     return adapter.requestDevice(deviceDescriptor)
 }
