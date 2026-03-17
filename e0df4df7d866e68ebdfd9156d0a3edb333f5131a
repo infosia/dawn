@@ -273,6 +273,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f418547_bacca0a9",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-17T12:02:03Z",
+      "side": 1,
+      "message": "Sorry wrong comment. We should keep it. But rename `Default` to `MappableAndGPUWritable`.",
+      "parentUuid": "7107428f_046e5842",
+      "range": {
+        "startLine": 1089,
+        "startChar": 8,
+        "endLine": 1096,
+        "endChar": 16
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9feb9005_9710a10b",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 7
