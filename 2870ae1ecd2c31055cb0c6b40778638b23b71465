@@ -38,6 +38,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "356f7a99_3e723fb0",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-17T19:09:31Z",
+      "side": 1,
+      "message": "I debugged the msvc-debug crash, and it basically comes down to the fact that this variable needs to be static (or global). Basically we\u0027re passing in the address of a local variable to `ExpectMappedRangedCall`, so there\u0027s a UAF later. I don\u0027t know why this doesn\u0027t get caught by ASAN on the clang builds.",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 43
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d8be71b1_c824264e",
         "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
         "patchSetId": 9
@@ -96,6 +119,30 @@
       "writtenOn": "2026-03-17T19:05:40Z",
       "side": 1,
       "message": "Does this work if `GetMappedRange` initially fails and returns `nullptr`? I\u0027m not actually sure what happens if you decrement `nullptr` intuitively it\u0027s probably UB? I think it might be important to check that case because the fuzzers will be able to invoke this path since it will just be generating a bunch of commands, and inevitably try to write to an unmapped buffer.",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee6198ad_6f9d936b",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-17T19:09:31Z",
+      "side": 1,
+      "message": "I had the same comment to make. It should be UB. We should move the nullptr check up before decrementing the pointer.",
+      "parentUuid": "173a14a7_5b274162",
       "range": {
         "startLine": 208,
         "startChar": 8,
