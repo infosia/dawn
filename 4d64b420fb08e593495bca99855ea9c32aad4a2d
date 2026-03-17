@@ -86,6 +86,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a5f2b03_e9360b8e",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-03-17T05:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36d06bbb_8abd231c",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c874bf10_06cb956f",
@@ -103,6 +121,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d460c42_01410041",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-03-17T05:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c874bf10_06cb956f",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1b2be4d_b442250a",
@@ -116,6 +152,24 @@
       "writtenOn": "2026-03-16T17:06:00Z",
       "side": 1,
       "message": "And for this new path too please.",
+      "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "167d46c5_b6b7efef",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-03-17T05:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1b2be4d_b442250a",
       "revId": "4d64b420fb08e593495bca99855ea9c32aad4a2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
