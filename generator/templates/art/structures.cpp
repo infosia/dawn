@@ -117,7 +117,7 @@ jobject ToKotlin(JNIEnv* env, const WGPUStringView* s) {
             //* Each field converted using the individual value converter.
             {% for member in kotlin_record_members(structure.members) %}
                 {{ convert_to_kotlin('input->' + member.name.camelCase(), member.name.camelCase(),
-                                     'input->' + member.length.name.camelCase() if member.length.name,
+                                     'input->' + member.length.name.camelCase() if member.length and member.length != 'constant' else (member.constant_length | string if member.length == 'constant' and member.constant_length != 1 else None),
                                      member) | indent(4) -}}
             {% endfor %}
             //* Allow conversion of every child structure.
