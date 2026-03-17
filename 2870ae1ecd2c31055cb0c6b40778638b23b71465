@@ -61,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abc8e865_daa29450",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-17T20:20:27Z",
+      "side": 1,
+      "message": "Ah.. hmm yea, we could probably move this to a single static since I think a similar `bufferContent` value is used in a couple other places in this file also.",
+      "parentUuid": "356f7a99_3e723fb0",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 43
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d8be71b1_c824264e",
         "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
         "patchSetId": 9
