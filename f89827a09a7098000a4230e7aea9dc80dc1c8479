@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "f89827a09a7098000a4230e7aea9dc80dc1c8479",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2068d2bf_c59e489b",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-17T08:48:18Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f89827a09a7098000a4230e7aea9dc80dc1c8479",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4320f1f_82711b37",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-17T08:48:18Z",
+      "side": 1,
+      "message": "Could we do this on startup by chaining where we already are getting the info (if the extension is present on the adapter) and caching here? It would be ideal to have a single place where inner adapter info is retrieved.",
+      "revId": "f89827a09a7098000a4230e7aea9dc80dc1c8479",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
