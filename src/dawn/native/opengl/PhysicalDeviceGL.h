@@ -81,7 +81,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
         AdapterBase* adapter,
         const UnpackedPtr<DeviceDescriptor>& descriptor,
         const TogglesState& deviceToggles,
-        Ref<DeviceBase::DeviceLostEvent>&& lostEvent) override;
+        Ref<DeviceBase::DeviceLostEvent>& lostEvent) override;
 
     void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
                                    const TogglesState& adapterToggles) const override;

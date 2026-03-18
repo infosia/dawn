@@ -260,7 +260,7 @@ DeviceBase* AdapterBase::APICreateDevice(const DeviceDescriptor* descriptor) {
 
 ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     const DeviceDescriptor* rawDescriptor,
-    Ref<DeviceBase::DeviceLostEvent> lostEvent) {
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
     DAWN_ASSERT(rawDescriptor != nullptr);
 
     // Create device toggles state from required toggles descriptor and inherited adapter toggles
@@ -326,8 +326,7 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     DAWN_INVALID_IF(mAdapterIsConsumed,
                     "adapter is \"consumed\": it has already been used to create a device");
 
-    auto result =
-        mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, std::move(lostEvent));
+    auto result = mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, lostEvent);
 
     // The adapter should be consumed only upon successful device creation if the instance doesn't
     // allow multiple devices per adapter, or if the descriptor explicitly requests consumption.
@@ -356,13 +355,11 @@ AdapterBase::CreateDevice(const DeviceDescriptor* descriptor) {
                            "Failed to create device:\n" + error->GetFormattedMessage());
 
         // When the device fails to initialize, we need to both promote the device ref to an
-        // external ref to clean up resources, and drop it, so we acquire it in this scope.
+        // external ref to clean up resources, and drop it, so we acquire it in this scope. Note
+        // that we move the device ref out of the event to also let the event know that the event
+        // should be resolved.
         APIRef<DeviceBase> device;
         device.Acquire(ReturnToAPI(std::move(lostEvent->mDevice)));
-        // Reset the device's lost event to avoid double SetLost during destruction.
-        if (device) {
-            device->ResetLostEvent();
-        }
         return {lostEvent, std::move(error)};
     }
 

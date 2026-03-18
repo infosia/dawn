@@ -125,10 +125,10 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           NSPRef<id<MTLDevice>> mtlDevice,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
                                           const TogglesState& deviceToggles,
-                                          Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
+                                          Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
     @autoreleasepool {
-        Ref<Device> device = AcquireRef(new Device(adapter, std::move(mtlDevice), descriptor,
-                                                   deviceToggles, std::move(lostEvent)));
+        Ref<Device> device = AcquireRef(
+            new Device(adapter, std::move(mtlDevice), descriptor, deviceToggles, lostEvent));
         DAWN_TRY(device->Initialize(descriptor));
 
         return device;
@@ -139,9 +139,8 @@ Device::Device(AdapterBase* adapter,
                NSPRef<id<MTLDevice>> mtlDevice,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
-               Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
-      mMtlDevice(std::move(mtlDevice)) {
+               Ref<DeviceBase::DeviceLostEvent>& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, lostEvent), mMtlDevice(std::move(mtlDevice)) {
     // Counter only can be sampled between command boundary using sampleCountersInBuffer API if it's
     // supported.
 

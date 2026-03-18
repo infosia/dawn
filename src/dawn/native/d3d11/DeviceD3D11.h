@@ -57,7 +57,7 @@ class Device final : public d3d::Device {
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
                                              const UnpackedPtr<DeviceDescriptor>& descriptor,
                                              const TogglesState& deviceToggles,
-                                             Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+                                             Ref<DeviceBase::DeviceLostEvent>& lostEvent);
     ~Device() override;
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
@@ -132,7 +132,7 @@ class Device final : public d3d::Device {
     Device(AdapterBase* adapter,
            const UnpackedPtr<DeviceDescriptor>& descriptor,
            const TogglesState& deviceToggles,
-           Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+           Ref<DeviceBase::DeviceLostEvent>& lostEvent);
     static constexpr uint64_t kMaxStagingBufferSize = 512 * 1024;
 
     ResultOrError<Ref<BindGroupBase>> CreateBindGroupImpl(

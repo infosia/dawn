@@ -52,7 +52,7 @@ class DeviceMock : public DeviceBase {
     DeviceMock(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
-               Ref<DeviceLostEvent>&& lostEvent);
+               Ref<DeviceLostEvent>& lostEvent);
     ~DeviceMock() override;
 
     // Mock specific functionality.

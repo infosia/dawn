@@ -379,8 +379,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     AdapterBase* adapter,
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
-    Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    return Device::Create(adapter, mDevice, descriptor, deviceToggles, std::move(lostEvent));
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    return Device::Create(adapter, mDevice, descriptor, deviceToggles, lostEvent);
 }
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,

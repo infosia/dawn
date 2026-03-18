@@ -76,7 +76,7 @@ class PhysicalDeviceBase : public RefCounted {
     ResultOrError<Ref<DeviceBase>> CreateDevice(AdapterBase* adapter,
                                                 const UnpackedPtr<DeviceDescriptor>& descriptor,
                                                 const TogglesState& deviceToggles,
-                                                Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+                                                Ref<DeviceBase::DeviceLostEvent>& lostEvent);
 
     uint32_t GetVendorId() const;
     uint32_t GetDeviceId() const;
@@ -169,7 +169,7 @@ class PhysicalDeviceBase : public RefCounted {
         AdapterBase* adapter,
         const UnpackedPtr<DeviceDescriptor>& descriptor,
         const TogglesState& deviceToggles,
-        Ref<DeviceBase::DeviceLostEvent>&& lostEvent) = 0;
+        Ref<DeviceBase::DeviceLostEvent>& lostEvent) = 0;
 
     virtual MaybeError InitializeImpl() = 0;
 
