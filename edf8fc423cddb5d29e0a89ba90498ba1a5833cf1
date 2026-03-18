@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f0e64d3_84cf9e16",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aab1c63_e46fa59f",
+      "revId": "edf8fc423cddb5d29e0a89ba90498ba1a5833cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa41f101_d7e7ef91",
@@ -82,6 +100,24 @@
       "writtenOn": "2026-03-17T19:10:34Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "edf8fc423cddb5d29e0a89ba90498ba1a5833cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08314db1_1deff3fd",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa41f101_d7e7ef91",
       "revId": "edf8fc423cddb5d29e0a89ba90498ba1a5833cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
