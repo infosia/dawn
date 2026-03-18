@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "766094a7_53325256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-18T21:26:51Z",
+      "side": 1,
+      "message": "Thoughts? Seems useful due to auto-conversions of buffer types.",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
