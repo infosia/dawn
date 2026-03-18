@@ -144,7 +144,7 @@ class Backend : public SharedTextureMemoryTestBackend {
             uint32_t bytesPerElement;
             wgpu::FeatureName requiredFeature = wgpu::FeatureName(0u);
         };
-        const std::array<IOSurfaceFormat, 17> kFormats{
+        const std::array<IOSurfaceFormat, 21> kFormats{
             {{kCVPixelFormatType_64RGBAHalf, 8},
              {kCVPixelFormatType_TwoComponent16Half, 4},
              {kCVPixelFormatType_OneComponent16Half, 2},
@@ -168,7 +168,11 @@ class Backend : public SharedTextureMemoryTestBackend {
              {kCVPixelFormatType_422YpCbCr10BiPlanarVideoRange, 8,
               wgpu::FeatureName::MultiPlanarFormatP210},
              {kCVPixelFormatType_444YpCbCr10BiPlanarVideoRange, 8,
-              wgpu::FeatureName::MultiPlanarFormatP410}}};
+              wgpu::FeatureName::MultiPlanarFormatP410},
+             {kCVPixelFormatType_DepthFloat16, 2},
+             {kCVPixelFormatType_DepthFloat32, 4},
+             {kCVPixelFormatType_DisparityFloat16, 2},
+             {kCVPixelFormatType_DisparityFloat32, 4}}};
 
         for (auto f : kFormats) {
             for (uint32_t size : {4, 64}) {
