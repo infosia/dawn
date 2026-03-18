@@ -70,6 +70,23 @@
       "parentUuid": "95e43951_d6e7bfd8",
       "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e47d7ea_52fe3a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T19:56:48Z",
+      "side": 1,
+      "message": "While adding a test I realized I misunderstood exactly what this change does. Will need to think a bit further.",
+      "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
