@@ -616,6 +616,16 @@ def topo_sort_structure(structs):
         del struct.visited
         del struct.subdag_depth
 
+    # This is a hack to move the texture view descriptor to come after the
+    # texture component swizzle. This makes the ordering match the webgpu-native
+    # header ordering.
+    tvd_idx = next(i for i, struct in enumerate(result)
+                   if struct.name.get() == "texture view descriptor")
+    tcs_idx = next(i for i, struct in enumerate(result)
+                   if struct.name.get() == "texture component swizzle")
+    tvd = result.pop(tvd_idx)
+    result.insert(tcs_idx + 1, tvd)
+
     return result
 
 
