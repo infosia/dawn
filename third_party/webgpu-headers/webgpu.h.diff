@@ -1,70 +1,9 @@
 --- webgpu_header
 +++ dawn_header
 @@
--typedef struct WGPUExternalTextureImpl* WGPUExternalTexture WGPU_OBJECT_ATTRIBUTE;
-@@
-+struct WGPUBindGroupEntry;
-@@
--struct WGPUExternalTextureBindingEntry;
--struct WGPUExternalTextureBindingLayout;
-@@
 -struct WGPUTextureViewDescriptor;
 @@
--struct WGPUBindGroupEntry;
-+struct WGPUBindGroupDescriptor;
-@@
--struct WGPUBindGroupDescriptor;
-@@
 +struct WGPUTextureViewDescriptor;
-@@
--    WGPUSType_ExternalTextureBindingLayout = 0x0000000D,
--    WGPUSType_ExternalTextureBindingEntry = 0x0000000E,
-@@
-+typedef struct WGPUBindGroupEntry {
-+    WGPUChainedStruct * nextInChain;
-+    uint32_t binding;
-+    WGPU_NULLABLE WGPUBuffer buffer;
-+    uint64_t offset;
-+    uint64_t size;
-+    WGPU_NULLABLE WGPUSampler sampler;
-+    WGPU_NULLABLE WGPUTextureView textureView;
-+} WGPUBindGroupEntry WGPU_STRUCTURE_ATTRIBUTE;
-+
-+#define WGPU_BIND_GROUP_ENTRY_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupEntry, { \
-+    /*.nextInChain=*/NULL _wgpu_COMMA \
-+    /*.binding=*/0 _wgpu_COMMA \
-+    /*.buffer=*/NULL _wgpu_COMMA \
-+    /*.offset=*/0 _wgpu_COMMA \
-+    /*.size=*/WGPU_WHOLE_SIZE _wgpu_COMMA \
-+    /*.sampler=*/NULL _wgpu_COMMA \
-+    /*.textureView=*/NULL _wgpu_COMMA \
-+})
-+
-@@
--})
--
--typedef struct WGPUExternalTextureBindingEntry {
--    WGPUChainedStruct chain;
--    WGPUExternalTexture externalTexture;
--} WGPUExternalTextureBindingEntry WGPU_STRUCTURE_ATTRIBUTE;
--
--#define WGPU_EXTERNAL_TEXTURE_BINDING_ENTRY_INIT _wgpu_MAKE_INIT_STRUCT(WGPUExternalTextureBindingEntry, { \
--    /*.chain=*/_wgpu_MAKE_INIT_STRUCT(WGPUChainedStruct, { \
--        /*.next=*/NULL _wgpu_COMMA \
--        /*.sType=*/WGPUSType_ExternalTextureBindingEntry _wgpu_COMMA \
--    }) _wgpu_COMMA \
--    /*.externalTexture=*/NULL _wgpu_COMMA \
--})
--
--typedef struct WGPUExternalTextureBindingLayout {
--    WGPUChainedStruct chain;
--} WGPUExternalTextureBindingLayout WGPU_STRUCTURE_ATTRIBUTE;
--
--#define WGPU_EXTERNAL_TEXTURE_BINDING_LAYOUT_INIT _wgpu_MAKE_INIT_STRUCT(WGPUExternalTextureBindingLayout, { \
--    /*.chain=*/_wgpu_MAKE_INIT_STRUCT(WGPUChainedStruct, { \
--        /*.next=*/NULL _wgpu_COMMA \
--        /*.sType=*/WGPUSType_ExternalTextureBindingLayout _wgpu_COMMA \
--    }) _wgpu_COMMA \
 @@
 -typedef struct WGPUTextureViewDescriptor {
 -    WGPUChainedStruct * nextInChain;
@@ -93,58 +32,6 @@
 -})
 -
 @@
--typedef struct WGPUBindGroupEntry {
--    WGPUChainedStruct * nextInChain;
--    uint32_t binding;
--    WGPU_NULLABLE WGPUBuffer buffer;
--    uint64_t offset;
--    uint64_t size;
--    WGPU_NULLABLE WGPUSampler sampler;
--    WGPU_NULLABLE WGPUTextureView textureView;
--} WGPUBindGroupEntry WGPU_STRUCTURE_ATTRIBUTE;
--
--#define WGPU_BIND_GROUP_ENTRY_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupEntry, { \
--    /*.nextInChain=*/NULL _wgpu_COMMA \
--    /*.binding=*/0 _wgpu_COMMA \
--    /*.buffer=*/NULL _wgpu_COMMA \
--    /*.offset=*/0 _wgpu_COMMA \
--    /*.size=*/WGPU_WHOLE_SIZE _wgpu_COMMA \
--    /*.sampler=*/NULL _wgpu_COMMA \
--    /*.textureView=*/NULL _wgpu_COMMA \
-+typedef struct WGPUBindGroupDescriptor {
-+    WGPUChainedStruct * nextInChain;
-+    WGPUStringView label;
-+    WGPUBindGroupLayout layout;
-+    size_t entryCount;
-+    WGPUBindGroupEntry const * entries;
-+} WGPUBindGroupDescriptor WGPU_STRUCTURE_ATTRIBUTE;
-+
-+#define WGPU_BIND_GROUP_DESCRIPTOR_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupDescriptor, { \
-+    /*.nextInChain=*/NULL _wgpu_COMMA \
-+    /*.label=*/WGPU_STRING_VIEW_INIT _wgpu_COMMA \
-+    /*.layout=*/NULL _wgpu_COMMA \
-+    /*.entryCount=*/0 _wgpu_COMMA \
-+    /*.entries=*/NULL _wgpu_COMMA \
-@@
--typedef struct WGPUBindGroupDescriptor {
--    WGPUChainedStruct * nextInChain;
--    WGPUStringView label;
--    WGPUBindGroupLayout layout;
--    size_t entryCount;
--    WGPUBindGroupEntry const * entries;
--} WGPUBindGroupDescriptor WGPU_STRUCTURE_ATTRIBUTE;
--
--#define WGPU_BIND_GROUP_DESCRIPTOR_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupDescriptor, { \
--    /*.nextInChain=*/NULL _wgpu_COMMA \
--    /*.label=*/WGPU_STRING_VIEW_INIT _wgpu_COMMA \
--    /*.layout=*/NULL _wgpu_COMMA \
--    /*.entryCount=*/0 _wgpu_COMMA \
--    /*.entries=*/NULL _wgpu_COMMA \
--})
--
-@@
-+})
-+
 +typedef struct WGPUTextureViewDescriptor {
 +    WGPUChainedStruct * nextInChain;
 +    WGPUStringView label;
@@ -169,13 +56,5 @@
 +    /*.arrayLayerCount=*/WGPU_ARRAY_LAYER_COUNT_UNDEFINED _wgpu_COMMA \
 +    /*.aspect=*/WGPUTextureAspect_Undefined _wgpu_COMMA \
 +    /*.usage=*/WGPUTextureUsage_None _wgpu_COMMA \
-@@
--typedef void (*WGPUProcExternalTextureSetLabel)(WGPUExternalTexture externalTexture, WGPUStringView label) WGPU_FUNCTION_ATTRIBUTE;
--typedef void (*WGPUProcExternalTextureAddRef)(WGPUExternalTexture externalTexture) WGPU_FUNCTION_ATTRIBUTE;
--typedef void (*WGPUProcExternalTextureRelease)(WGPUExternalTexture externalTexture) WGPU_FUNCTION_ATTRIBUTE;
--
-@@
--WGPU_EXPORT void wgpuExternalTextureSetLabel(WGPUExternalTexture externalTexture, WGPUStringView label) WGPU_FUNCTION_ATTRIBUTE;
--WGPU_EXPORT void wgpuExternalTextureAddRef(WGPUExternalTexture externalTexture) WGPU_FUNCTION_ATTRIBUTE;
--WGPU_EXPORT void wgpuExternalTextureRelease(WGPUExternalTexture externalTexture) WGPU_FUNCTION_ATTRIBUTE;
--
++})
++
