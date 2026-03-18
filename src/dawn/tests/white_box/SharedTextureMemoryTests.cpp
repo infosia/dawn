@@ -765,6 +765,7 @@ void SharedTextureMemoryTests::CheckFourColors(wgpu::Device& deviceObj,
             };
             expectedAlpha = 0xFF;
             break;
+        case wgpu::TextureFormat::R32Float:
         case wgpu::TextureFormat::R16Float:
         case wgpu::TextureFormat::R16Unorm:
         case wgpu::TextureFormat::R8Unorm:
