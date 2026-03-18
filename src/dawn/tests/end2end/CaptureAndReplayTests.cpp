@@ -52,10 +52,12 @@ class CaptureAndReplayTests : public DawnTest {
         // This test is already testing capture and replay, we don't need to wrap it and test again.
         DAWN_TEST_UNSUPPORTED_IF(IsCaptureReplayCheckingEnabled());
 
+        // StartCapture/EndCapture are dawn::native APIs that require a native
+        // WGPUDevice. When the wire is enabled, device.Get() returns a wire
+        // client device which cannot be cast to a native device, causing a crash.
         // TODO(crbug.com/452924800): Remove once these tests work properly with
         // the WebGPU on WebGPU backend with wire.
-        DAWN_SUPPRESS_TEST_IF(IsWebGPUOn(wgpu::BackendType::Metal) && UsesWire());
-        DAWN_SUPPRESS_TEST_IF(IsWebGPUOn(wgpu::BackendType::Vulkan) && UsesWire());
+        DAWN_SUPPRESS_TEST_IF(UsesWire());
     }
 
     class Capture {
