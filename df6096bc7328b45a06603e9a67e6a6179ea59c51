@@ -16,6 +16,24 @@
       "message": "Should work now that https://dawn-review.googlesource.com/c/dawn/+/298095 is landed.",
       "revId": "df6096bc7328b45a06603e9a67e6a6179ea59c51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "435f8331_ddee7c46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:40:15Z",
+      "side": 1,
+      "message": "Hm, there\u0027s still a merge conflict (this CL depended on another that isn\u0027t in M146).",
+      "parentUuid": "0da19863_d7ef5ba7",
+      "revId": "df6096bc7328b45a06603e9a67e6a6179ea59c51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
