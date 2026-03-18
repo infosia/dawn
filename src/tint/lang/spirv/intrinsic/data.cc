@@ -2701,9 +2701,9 @@ constexpr MatcherIndex kMatcherIndices[] = {
   /* [1172] */ MatcherIndex(0),
   /* [1173] */ MatcherIndex(26),
   /* [1174] */ MatcherIndex(0),
-  /* [1175] */ MatcherIndex(46),
-  /* [1176] */ MatcherIndex(43),
-  /* [1177] */ MatcherIndex(42),
+  /* [1175] */ MatcherIndex(42),
+  /* [1176] */ MatcherIndex(46),
+  /* [1177] */ MatcherIndex(43),
   /* [1178] */ MatcherIndex(9),
   /* [1179] */ MatcherIndex(45),
   /* [1180] */ MatcherIndex(44),
@@ -8170,7 +8170,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [29] */
     /* name */ "T",
-    /* matcher_indices */ MatcherIndicesIndex(1010),
+    /* matcher_indices */ MatcherIndicesIndex(1175),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8224,7 +8224,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [38] */
     /* name */ "T",
-    /* matcher_indices */ MatcherIndicesIndex(1176),
+    /* matcher_indices */ MatcherIndicesIndex(1177),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8242,7 +8242,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [41] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1177),
+    /* matcher_indices */ MatcherIndicesIndex(1175),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8350,7 +8350,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [59] */
     /* name */ "T",
-    /* matcher_indices */ MatcherIndicesIndex(1177),
+    /* matcher_indices */ MatcherIndicesIndex(1175),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8494,7 +8494,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [83] */
     /* name */ "T",
-    /* matcher_indices */ MatcherIndicesIndex(1010),
+    /* matcher_indices */ MatcherIndicesIndex(1175),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8614,7 +8614,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [103] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8662,7 +8662,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [111] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8710,7 +8710,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [119] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -8758,7 +8758,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [127] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -9082,7 +9082,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [181] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -9100,7 +9100,7 @@ constexpr TemplateInfo kTemplates[] = {
   {
     /* [184] */
     /* name */ "S",
-    /* matcher_indices */ MatcherIndicesIndex(1175),
+    /* matcher_indices */ MatcherIndicesIndex(1176),
     /* kind */ TemplateInfo::Kind::kType,
   },
   {
@@ -13166,8 +13166,8 @@ constexpr IntrinsicInfo kBuiltins[] = {
     /* fn image_read[F : f32_texel_format, A : readable, C : iu32](image: image<f32, dim_3d, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>, coords: vec3<C>, image_operands: literal) -> vec4<f32> */
     /* fn image_read[F : i32_texel_format, A : readable, C : iu32](image: image<i32, dim_3d, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>, coords: vec3<C>, image_operands: literal) -> vec4<i32> */
     /* fn image_read[F : u32_texel_format, A : readable, C : iu32](image: image<u32, dim_3d, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>, coords: vec3<C>, image_operands: literal) -> vec4<u32> */
-    /* fn image_read[F : texel_format, T : fiu32, C : iu32, A : readable](image: image<T, dim_subpass, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>, coords: vec2<C>) -> vec4<T> */
-    /* fn image_read[F : texel_format, T : fiu32, Z : iu32, C : iu32, A : readable](image: image<T, dim_subpass, non_depth, non_arrayed, multi_sampled, rw_op_compatible, F, A>, coords: vec2<C>, image_operands: literal, sample: Z) -> vec4<T> */
+    /* fn image_read[F : texel_format, T : fiu32_f16, C : iu32, A : readable](image: image<T, dim_subpass, non_depth, non_arrayed, single_sampled, rw_op_compatible, F, A>, coords: vec2<C>) -> vec4<T> */
+    /* fn image_read[F : texel_format, T : fiu32_f16, Z : iu32, C : iu32, A : readable](image: image<T, dim_subpass, non_depth, non_arrayed, multi_sampled, rw_op_compatible, F, A>, coords: vec2<C>, image_operands: literal, sample: Z) -> vec4<T> */
     /* num overloads */ 17,
     /* overloads */ OverloadIndex(73),
   },

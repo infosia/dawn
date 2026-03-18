@@ -1,0 +1,55 @@
+SKIP: FAILED
+
+1:1: [VUID-StandaloneSpirv-OpTypeImage-04656] Expected Sampled Type to be a 32-bit int, 64-bit int or 32-bit float scalar type for Vulkan environment
+  %3 = OpTypeImage %half SubpassData 0 0 0 2 Unknown
+
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 22
+; Schema: 0
+               OpCapability Shader
+               OpCapability InputAttachment
+               OpCapability Float16
+               OpCapability StorageBuffer16BitAccess
+               OpCapability StorageInputOutput16
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %f "f" %f_loc0_Output
+               OpExecutionMode %f OriginUpperLeft
+               OpName %f_Input "f_Input"
+               OpName %f_loc0_Output "f_loc0_Output"
+               OpName %f_inner "f_inner"
+               OpName %fbf "fbf"
+               OpName %f "f"
+               OpDecorate %f_Input DescriptorSet 66
+               OpDecorate %f_Input Binding 0
+               OpDecorate %f_Input InputAttachmentIndex 0
+               OpDecorate %f_loc0_Output Location 0
+       %half = OpTypeFloat 16
+          %3 = OpTypeImage %half SubpassData 0 0 0 2 Unknown
+%_ptr_UniformConstant_3 = OpTypePointer UniformConstant %3
+    %f_Input = OpVariable %_ptr_UniformConstant_3 UniformConstant
+     %v4half = OpTypeVector %half 4
+%_ptr_Output_v4half = OpTypePointer Output %v4half
+%f_loc0_Output = OpVariable %_ptr_Output_v4half Output
+         %10 = OpTypeFunction %v4half %v4half
+       %void = OpTypeVoid
+         %14 = OpTypeFunction %void
+        %int = OpTypeInt 32 1
+      %v2int = OpTypeVector %int 2
+         %18 = OpConstantNull %v2int
+    %f_inner = OpFunction %v4half None %10
+        %fbf = OpFunctionParameter %v4half
+         %11 = OpLabel
+               OpReturnValue %fbf
+               OpFunctionEnd
+          %f = OpFunction %void None %14
+         %15 = OpLabel
+         %16 = OpLoad %3 %f_Input None
+         %17 = OpImageRead %v4half %16 %18
+         %21 = OpFunctionCall %v4half %f_inner %17
+               OpStore %f_loc0_Output %21 None
+               OpReturn
+               OpFunctionEnd
+
+tint executable returned error: exit status 1

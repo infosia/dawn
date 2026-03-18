@@ -2133,7 +2133,7 @@ TEST_F(IR_ValidatorTest, Function_Param_Color_InvalidType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
-                                          R"(:1:27 error: color must be a scalar or vector
+                                          R"(:1:27 error: color must be a numeric scalar or vector
 %my_func = @fragment func(%my_param:mat4x4<f32> [@color(0)]):void {
                           ^^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -3187,6 +3187,35 @@ TEST_F(IR_ValidatorTest, Function_ParamPixelLocal) {
                                           R"(:1:21 error: pixel_local param must be of type struct
 %f = @fragment func(%invalid:ptr<pixel_local, i32, read_write>):void {
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Function_Param_Color_F16) {
+    auto* f = FragmentEntryPoint("my_func");
+    auto* p = b.FunctionParam("my_param", ty.f16());
+    p->SetColor(0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    EXPECT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, Function_Param_Color_Bool) {
+    auto* f = FragmentEntryPoint("my_func");
+    auto* p = b.FunctionParam("my_param", ty.bool_());
+    p->SetColor(0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr(
+                                          R"(:1:27 error: color must be a numeric scalar or vector
+%my_func = @fragment func(%my_param:bool [@color(0)]):void {
+                          ^^^^^^^^^^^^^^
 )")) << res.Failure();
 }
 
