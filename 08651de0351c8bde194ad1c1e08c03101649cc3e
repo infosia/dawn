@@ -87,6 +87,24 @@
       "message": "While adding a test I realized I misunderstood exactly what this change does. Will need to think a bit further.",
       "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27e3d635_935ac1e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T21:15:03Z",
+      "side": 1,
+      "message": "OK, I understand it now. It only changes whether `IsImported()` returns true or not, which only impacts that patch because we don\u0027t otherwise use it. So there\u0027s nothing to test.",
+      "parentUuid": "3e47d7ea_52fe3a7d",
+      "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
