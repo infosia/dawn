@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1251fec1_b71731bd",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9007c385_6937ece0",
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f0a4ef7_9e009196",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d193d8a_e52a224a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:34:05Z",
+      "side": 1,
+      "message": "It was to separate options common to all modules from the ones specific to the stage. Removed.",
+      "parentUuid": "5f0a4ef7_9e009196",
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb0087e2_a3dfb443",
@@ -65,6 +101,30 @@
       "writtenOn": "2026-03-17T19:23:49Z",
       "side": 1,
       "message": "These need a `\u003d nullptr` as raw_ptr won\u0027t [always default initialize](https://chromium.googlesource.com/chromium/src/+/main/base/memory/raw_ptr.md#quick-rules) it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "c03c5246def86c444024d688babb1c916a4ae07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d7f7ac3_e48dfa76",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:34:05Z",
+      "side": 1,
+      "message": "That\u0027s on purpose as we require that the value is set by the caller. There is no good default. There is a warning if you forget to set it:\n\n```\n../../src/dawn/native/vulkan/ComputePipelineVk.cpp:89:37: error: missing field \u0027layout\u0027 initializer [-Werror,-Wmissing-designated-field-initializers]\n   89 |                                     }));\n```",
+      "parentUuid": "fb0087e2_a3dfb443",
       "range": {
         "startLine": 69,
         "startChar": 0,
