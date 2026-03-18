@@ -34,6 +34,24 @@
       "parentUuid": "a907d74b_6a7bcc01",
       "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95e43951_d6e7bfd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2026-03-18T04:28:45Z",
+      "side": 1,
+      "message": "This is found by our patch that allows destroy buffer in wgpuBufferRelease() if it\u0027s created in C++: https://github.com/microsoft/onnxruntime/blob/main/cmake/patches/dawn/dawn_destroy_buffer_on_destructor.patch\n\nThis behavior matches that of native dawn, where wgpuBufferRelease() calls Destroy() internally if refcount decreased to 0.\n\nRegarding the test, I am not sure how to exactly write the test to cover that, especially without the patch from onnxruntime. Could you suggest on that?",
+      "parentUuid": "aecf54f8_9bd487ab",
+      "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
