@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e73de676_ed3a09e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:55:21Z",
+      "side": 1,
+      "message": "LGTM, one nit",
+      "revId": "1bb94eb333c0aa2bf9d818b248869a133226ae19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdebee3a_739aee9d",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_apple.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:55:21Z",
+      "side": 1,
+      "message": "Does this comment apply to the new formats? I don\u0027t think so. If not, please move the new entries above the Planar formats, OR edit this comment to specifically mention planar formats so it\u0027s not misleading.",
+      "revId": "1bb94eb333c0aa2bf9d818b248869a133226ae19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
