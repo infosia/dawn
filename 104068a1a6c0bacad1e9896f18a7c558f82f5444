@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "249218ea_3e5be8b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-03-18T20:17:17Z",
+      "side": 1,
+      "message": "this CL breaks chrome without flags. Immediates haven\u0027t shipped (only available with --enable-unsafe-webgpu) but with this change they\u0027re required to work.\n\nExample: Works on stable with no flags. Fails on canary with no flags\n\nhttps://gpuweb.github.io/cts/standalone/?runnow\u003d1\u0026q\u003dwebgpu:api,operation,memory_sync,buffer,multiple_buffers:rw:boundary\u003d%22command-buffer%22;readOp\u003d%22input-indirect-dispatch%22;readContext\u003d%22compute-pass-encoder%22;writeOp\u003d%22b2b-copy%22;writeContext\u003d%22command-encoder%22",
+      "revId": "104068a1a6c0bacad1e9896f18a7c558f82f5444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
