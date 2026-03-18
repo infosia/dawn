@@ -16,6 +16,23 @@
       "message": "Kai, PTAL at this one as well.",
       "revId": "dea57eaefc06cf530055168547d1f7c3a6585b01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f2fb96e_dd61e0d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T18:45:10Z",
+      "side": 1,
+      "message": "Landing while still waiting for merge approval because this only affects Dawn infra which isn\u0027t used at all in Chromium (that uses Chromium infra).",
+      "revId": "dea57eaefc06cf530055168547d1f7c3a6585b01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
