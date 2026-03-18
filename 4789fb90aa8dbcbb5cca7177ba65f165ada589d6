@@ -121,6 +121,24 @@
       "parentUuid": "9c55956e_0b6c0c3e",
       "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c4232dd_c327ac1f",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-18T22:24:34Z",
+      "side": 1,
+      "message": "Also updated the latest code to use the last pipeline instead of having the last dynamic state passed in from the calling code. Made it a bit cleaner and establishes a pattern that makes it less fragile to bind the pipeline.",
+      "parentUuid": "07e30716_479e267b",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f82083b2_a925313e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-18T22:24:34Z",
+      "side": 1,
+      "message": "Worth noting that the code is currently failing with stencil use cases like https://webgpu.github.io/webgpu-samples/?sample\u003dstencilMask and several stencil tests. As far as I can test the failure is introduced when simply enabling the extension even if you don\u0027t mark the stencil state as dynamic. It is very consistent across all devices that I\u0027ve tested, though, so I assume I\u0027m still doing something wrong.",
+      "revId": "fe3ea07adac5a9a678d02618f2f8a8f7b6448a11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
