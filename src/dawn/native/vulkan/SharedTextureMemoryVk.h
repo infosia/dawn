@@ -40,16 +40,17 @@ class Device;
 class SharedTextureMemoryContentsVk final : public SharedTextureMemoryContents {
   public:
     SharedTextureMemoryContentsVk(WeakRef<SharedTextureMemoryBase> sharedTextureMemory,
-                                  bool isYCbCrFilterable);
+                                  YCbCrVkDescriptor ycbcrVkDesc);
 
     // Returns whether a YCbCr texture is filterable. This is necessary because the filterability
     // doesn't only depend on the format (it's always OpaqueYCbCrAndroid) but on the specific
     // imported object. The filterability validation is done against the specific static sampler
     // used with the YCbCr texture insteod of with the SampleType.
     bool IsYCbCrFilterable() const;
+    const YCbCrVkDescriptor& GetYCbCrVkDesc() const;
 
   private:
-    bool mIsYCbCrFilterable = false;
+    YCbCrVkDescriptor mYCbCrVkDesc;
 };
 
 class SharedTextureMemory final : public SharedTextureMemoryBase {
@@ -101,8 +102,7 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
     const uint32_t mQueueFamilyIndex;
 
     // Populated if this instance was created from an AHardwareBuffer.
-    YCbCrVkDescriptor mYCbCrAHBInfo;
-    bool mIsYCbCrFilterable;
+    YCbCrVkDescriptor mYCbCrVkDesc;
 };
 
 }  // namespace dawn::native::vulkan

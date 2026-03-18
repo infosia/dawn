@@ -501,7 +501,6 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 
     VkFormat vkFormat;
     YCbCrVkDescriptor yCbCrAHBInfo;
-    bool isYCbCrFilterable = false;
     VkAndroidHardwareBufferPropertiesANDROID bufferProperties = {
         .sType = VK_STRUCTURE_TYPE_ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
     };
@@ -555,10 +554,8 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
         uint32_t formatFeatures = bufferFormatProperties.formatFeatures;
         if (formatFeatures & VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT) {
             yCbCrAHBInfo.vkChromaFilter = wgpu::FilterMode::Linear;
-            isYCbCrFilterable = true;
         } else {
             yCbCrAHBInfo.vkChromaFilter = wgpu::FilterMode::Nearest;
-            isYCbCrFilterable = false;
         }
         yCbCrAHBInfo.forceExplicitReconstruction =
             formatFeatures &
@@ -575,8 +572,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Ref<SharedTextureMemory> sharedTextureMemory =
         SharedTextureMemory::Create(device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT);
 
-    sharedTextureMemory->mYCbCrAHBInfo = yCbCrAHBInfo;
-    sharedTextureMemory->mIsYCbCrFilterable = isYCbCrFilterable;
+    sharedTextureMemory->mYCbCrVkDesc = yCbCrAHBInfo;
 
     // Reflect properties to reify them.
     sharedTextureMemory->APIGetProperties(&properties);
@@ -980,7 +976,7 @@ void SharedTextureMemory::DestroyImpl(DestroyReason reason) {
 }
 
 Ref<SharedResourceMemoryContents> SharedTextureMemory::CreateContents() {
-    return AcquireRef(new SharedTextureMemoryContentsVk(GetWeakRef(this), mIsYCbCrFilterable));
+    return AcquireRef(new SharedTextureMemoryContentsVk(GetWeakRef(this), mYCbCrVkDesc));
 }
 
 ResultOrError<Ref<TextureBase>> SharedTextureMemory::CreateTextureImpl(
@@ -1118,7 +1114,7 @@ MaybeError SharedTextureMemory::GetChainedProperties(
             "struct.");
     }
 
-    ahbProperties->yCbCrInfo = mYCbCrAHBInfo;
+    ahbProperties->yCbCrInfo = mYCbCrVkDesc;
 
     return {};
 }
@@ -1127,12 +1123,15 @@ MaybeError SharedTextureMemory::GetChainedProperties(
 
 SharedTextureMemoryContentsVk::SharedTextureMemoryContentsVk(
     WeakRef<SharedTextureMemoryBase> sharedTextureMemory,
-    bool isYCbCrFilterable)
-    : SharedTextureMemoryContents(std::move(sharedTextureMemory)),
-      mIsYCbCrFilterable(isYCbCrFilterable) {}
+    YCbCrVkDescriptor ycbcrVkDesc)
+    : SharedTextureMemoryContents(std::move(sharedTextureMemory)), mYCbCrVkDesc(ycbcrVkDesc) {}
 
 bool SharedTextureMemoryContentsVk::IsYCbCrFilterable() const {
-    return mIsYCbCrFilterable;
+    return mYCbCrVkDesc.vkChromaFilter != wgpu::FilterMode::Nearest;
+}
+
+const YCbCrVkDescriptor& SharedTextureMemoryContentsVk::GetYCbCrVkDesc() const {
+    return mYCbCrVkDesc;
 }
 
 }  // namespace dawn::native::vulkan
