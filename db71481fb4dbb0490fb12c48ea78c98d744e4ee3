@@ -39,6 +39,30 @@
       },
       "revId": "db71481fb4dbb0490fb12c48ea78c98d744e4ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e12a8c2a_12920012",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T18:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4886a382_922cb8c3",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "db71481fb4dbb0490fb12c48ea78c98d744e4ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
