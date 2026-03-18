@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dca7fa60_f54abafa",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12be3da1_0d6eadfb",
+      "range": {
+        "startLine": 300,
+        "startChar": 6,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3dfbb95b_a1eafc21",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-16T23:55:12Z",
       "side": 1,
       "message": "nit. Why do we need to make a new event class override for this? Can\u0027t we just use the future returned from a call to `OnSubmittedWorkDone` directly?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84b79bdf_d4ad0ac3",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done (Was to align with QueueMTL.mm and get rid of a noop callback)",
+      "parentUuid": "3dfbb95b_a1eafc21",
       "range": {
         "startLine": 79,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1126e94c_40ca1e19",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c9568e_6eeb7189",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c0c7b95_8280f878",
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1983827_03a3d891",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c0c7b95_8280f878",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b711310a_7ec31fa3",
@@ -123,6 +219,30 @@
       "writtenOn": "2026-03-16T23:55:12Z",
       "side": 1,
       "message": "[1]",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6c4bcb4_d685b9d3",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b711310a_7ec31fa3",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -173,6 +293,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f6beb72_fb537d65",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e98801e4_895fb72f",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b58343c8_d02d4c91",
@@ -186,6 +330,30 @@
       "writtenOn": "2026-03-16T23:55:12Z",
       "side": 1,
       "message": "nit. We should probably just put this at the beginning of the test so that it\u0027s easier to see.",
+      "range": {
+        "startLine": 322,
+        "startChar": 4,
+        "endLine": 324,
+        "endChar": 49
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6384d2e6_945ee4b4",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_apple.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-18T21:46:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b58343c8_d02d4c91",
       "range": {
         "startLine": 322,
         "startChar": 4,
