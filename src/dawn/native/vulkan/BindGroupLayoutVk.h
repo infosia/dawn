@@ -66,10 +66,7 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     void DeallocateDescriptorSet(DescriptorSetAllocation* descriptorSetAllocation);
     void ReduceMemoryUsage() override;
 
-    // If the client specified that the texture at `textureBinding` should be
-    // combined with a static sampler, returns the binding index of the static
-    // sampler that is sampling this texture.
-    std::optional<BindingIndex> GetStaticSamplerIndexForTexture(BindingIndex textureBinding) const;
+    const TextureToStaticSamplerMap& GetTextureToStaticSamplerMap() const;
 
   protected:
     BindGroupLayout(DeviceBase* device, const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor);
@@ -88,7 +85,7 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
 
     // Maps from indices of texture entries that are paired with static samplers
     // to indices of the entries of their respective samplers.
-    absl::flat_hash_map<BindingIndex, BindingIndex> mTextureToStaticSamplerIndex;
+    TextureToStaticSamplerMap mTextureToStaticSampler;
 
     Ref<DescriptorSetAllocator> mDescriptorSetAllocator;
 };
