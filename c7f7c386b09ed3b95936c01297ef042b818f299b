@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c51d43_76952e80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:50:31Z",
+      "side": 1,
+      "message": "There\u0027s _something_ different about the sorting orders between [dawn](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;l\u003d583;drc\u003d387e0e70f0cbda5e0ad7e63aae5bd3f5dafc1c8d) and [webgpu-headers](https://github.com/webgpu-native/webgpu-headers/blob/3eb62edb1ea5b018ea97b2b7036dc89645ec9bae/gen/yml.go#L110), maybe one of them is sorting the canonical name and one is sorting the C name, or maybe it\u0027s due to this comment in Dawn, or something.\n\n\u003e (though the sort isn\u0027t technically stable)\n\nBut whatever.",
+      "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17859829_fbee70a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:50:31Z",
+      "side": 1,
+      "message": "`Fixed: 465339954`",
+      "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96271274_0ea26aee",
@@ -14,6 +48,23 @@
       "writtenOn": "2026-03-18T22:39:07Z",
       "side": 1,
       "message": "Thoughts? This one is a hack, but I couldn\u0027t get it to sort correctly. This resolves the last difference between our header and upstream.",
+      "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65c1e1b3_458717ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T23:50:31Z",
+      "side": 1,
+      "message": "Nice, thank you!",
       "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
