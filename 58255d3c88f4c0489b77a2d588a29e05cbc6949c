@@ -16,6 +16,24 @@
       "message": "Why did this ad more unsafe usage?",
       "revId": "58255d3c88f4c0489b77a2d588a29e05cbc6949c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a92554f6_2568a908",
+        "filename": "src/tint/utils/text/unicode_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000896
+      },
+      "writtenOn": "2026-03-18T16:13:51Z",
+      "side": 1,
+      "message": "The unsafe usage was hidden by using a tint::Slice before, since it has a suppression around its constructor.\n\nInitializing a std::span using the two param constructor using runtime values always triggers this warning, because the compiler cannot confirm that the size is valid. But if the .size() of a std::string is wrong at runtime, it will break both a std::span and a tint::Slice, so I don\u0027t think this is any worse than the current code.",
+      "parentUuid": "b525c919_5e8a1d53",
+      "revId": "58255d3c88f4c0489b77a2d588a29e05cbc6949c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
