@@ -415,6 +415,49 @@ input.wgsl:4:29 error: the offset argument of bufferView plus the size of the re
 )");
 }
 
+TEST_F(ResolverBufferViewTest, Variable_TooSmall_ThroughFunction) {
+    ExpectError(
+        R"(
+@group(0) @binding(0) var<storage, read_write> v : buffer<64>;
+fn foo(p : ptr<storage, buffer, read_write>) {
+  _ = bufferView<u32>(p, 64);
+}
+fn bar() {
+  foo(&v);
+}
+)",
+        R"(
+input.wgsl:2:23 error: buffer size (64 bytes) is smaller than the minimum view size (68 bytes)
+@group(0) @binding(0) var<storage, read_write> v : buffer<64>;
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+input.wgsl:4:7 note: due to call here
+  _ = bufferView<u32>(p, 64);
+      ^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferViewTest, Parameter_TooSmall_ThroughFunction) {
+    ExpectError(
+        R"(
+fn foo(p : ptr<storage, buffer, read_write>) {
+  _ = bufferView<u32>(p, 64);
+}
+fn bar(p : ptr<storage, buffer<64>, read_write>) {
+  foo(p);
+}
+)",
+        R"(
+input.wgsl:5:8 error: buffer size (64 bytes) is smaller than the minimum view size (68 bytes)
+fn bar(p : ptr<storage, buffer<64>, read_write>) {
+       ^
+
+input.wgsl:3:7 note: due to call here
+  _ = bufferView<u32>(p, 64);
+      ^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
 using ResolverBufferArrayViewTest = ResolverTest;
 
 TEST_F(ResolverBufferArrayViewTest, Storage_Unsized) {
@@ -703,6 +746,53 @@ fn foo() {
 input.wgsl:8:33 error: the size argument (13 bytes) of bufferArrayView minus the return type offset (8 bytes) must be evenly divisible by the stride of the runtime-sized array (4 bytes)
   _ = bufferArrayView<S>(&v, 0, 13);
                                 ^^
+)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Variable_TooSmall_ThroughFunction) {
+    ExpectError(
+        R"(
+@group(0) @binding(0) var<storage, read_write> v : buffer<64>;
+fn foo(p : ptr<storage, buffer, read_write>) {
+  _ = bufferArrayView<array<u32>>(p, 64, 4);
+}
+fn bar() {
+  foo(&v);
+}
+)",
+        R"(
+input.wgsl:2:23 error: buffer size (64 bytes) is smaller than the minimum view size (68 bytes)
+@group(0) @binding(0) var<storage, read_write> v : buffer<64>;
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+input.wgsl:4:7 note: due to call here
+  _ = bufferArrayView<array<u32>>(p, 64, 4);
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferArrayViewTest, Parameter_TooSmall_ThroughFunction) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec2u,
+  b : array<u32>,
+}
+fn foo(p : ptr<storage, buffer, read_write>) {
+  _ = bufferArrayView<S>(p, 56, 12);
+}
+fn bar(p : ptr<storage, buffer<64>, read_write>) {
+  foo(p);
+}
+)",
+        R"(
+input.wgsl:9:8 error: buffer size (64 bytes) is smaller than the minimum view size (68 bytes)
+fn bar(p : ptr<storage, buffer<64>, read_write>) {
+       ^
+
+input.wgsl:7:7 note: due to call here
+  _ = bufferArrayView<S>(p, 56, 12);
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 )");
 }
 

@@ -307,9 +307,16 @@ class Resolver {
     /// perform alias analysis.
     void RegisterLoad(const sem::ValueExpression* expr);
 
+    /// Register a bufferView or bufferArrayView call to track size compatibility.
+    void RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn);
+
     /// Perform pointer alias analysis for `call`.
     /// @returns true is the call arguments are free from aliasing issues, false otherwise.
     bool AliasAnalysis(const sem::Call* call);
+
+    /// Perform an analysis of buffer sizes for `call`.
+    /// @returns true if the call arguments are all appropriately sized.
+    bool CheckBufferViews(const sem::Call* call);
 
     /// If `expr` is of a reference type, then Load will create and return a sem::Load node wrapping
     /// `expr`. If `expr` is not of a reference type, then Load will just return `expr`.
@@ -662,6 +669,12 @@ class Resolver {
         Hashset<const sem::Variable*, 4> parameter_reads;
     };
 
+    // BufferViewInfo tracks info for invalid buffer sizes.
+    struct BufferViewInfo {
+        uint64_t size = 0;
+        const Source* source = nullptr;
+    };
+
     ProgramBuilder& b;
     diag::List& diagnostics_;
     core::constant::Eval const_eval_;
@@ -681,6 +694,7 @@ class Resolver {
     Hashmap<ArrayConstructorSig, sem::CallTarget*, 8> array_ctors_;
     Hashmap<StructConstructorSig, sem::CallTarget*, 8> struct_ctors_;
     Hashmap<SubgroupMatrixConstructorSig, sem::CallTarget*, 8> subgroup_matrix_ctors_;
+    Hashmap<const sem::Variable*, BufferViewInfo, 8> buffer_view_sizes_;
     sem::Function* current_function_ = nullptr;
     sem::Statement* current_statement_ = nullptr;
     sem::CompoundStatement* current_compound_statement_ = nullptr;

@@ -1548,6 +1548,131 @@ void Resolver::RegisterLoad(const sem::ValueExpression* expr) {
         });
 }
 
+void Resolver::RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn) {
+    uint64_t buffer_size = 0;
+    auto* ret_type = call->Target()->ReturnType();
+    auto* ret_ptr_type = ret_type->As<core::type::Pointer>();
+    auto* ret_store_type = ret_ptr_type->StoreType();
+    if (ret_store_type->HasFixedFootprint()) {
+        buffer_size = ret_store_type->Size();
+    } else {
+        if (const auto* str_ty = ret_store_type->As<core::type::Struct>()) {
+            auto members = str_ty->Members();
+            const auto* last = members[members.Length() - 1];
+            const auto* last_type = last->Type();
+            TINT_ASSERT(last_type->Is<core::type::Array>());
+            buffer_size = last->Offset() + last_type->As<core::type::Array>()->ImplicitStride();
+        } else if (const auto* arr_ty = ret_store_type->As<core::type::Array>()) {
+            buffer_size = arr_ty->ImplicitStride();
+        }
+        // Any other type should be caught be validation as an error.
+    }
+
+    auto* offset = call->Arguments()[1];
+    auto* offset_constant_value = offset->ConstantValue();
+    uint64_t offset_value = 0;
+    if (offset_constant_value) {
+        if (offset->Type()->IsUnsignedIntegerScalar()) {
+            offset_value = offset_constant_value->ValueAs<u32>();
+        } else {
+            TINT_ASSERT(offset->Type()->IsSignedIntegerScalar());
+            int32_t ivalue = offset_constant_value->ValueAs<i32>();
+            offset_value = static_cast<uint32_t>(ivalue);
+        }
+    }
+    if (fn == wgsl::BuiltinFn::kBufferView) {
+        buffer_size += offset_value;
+    } else {
+        TINT_ASSERT(fn == wgsl::BuiltinFn::kBufferArrayView);
+        uint64_t size_value = 0;
+        auto* size = call->Arguments()[2];
+        auto* size_constant_value = size->ConstantValue();
+        if (size_constant_value) {
+            size_value = std::numeric_limits<uint32_t>::max();
+            if (size->Type()->IsUnsignedIntegerScalar()) {
+                size_value = size_constant_value->ValueAs<u32>();
+            } else {
+                TINT_ASSERT(size->Type()->IsSignedIntegerScalar());
+                int32_t ivalue = size_constant_value->ValueAs<i32>();
+                size_value = static_cast<uint32_t>(ivalue);
+            }
+        }
+        buffer_size = offset_value + std::max(size_value, buffer_size);
+    }
+
+    // Don't need to check global variables since they will be checked directly through validation.
+    if (const auto* param = call->RootIdentifier()->As<sem::Parameter>()) {
+        auto where = buffer_view_sizes_.GetOrAddEntry(param, [buffer_size, call]() {
+            BufferViewInfo info;
+            info.size = buffer_size;
+            info.source = &call->Declaration()->source;
+            return info;
+        });
+        where.value = {std::max(buffer_size, where.value.size), where.value.source};
+    }
+}
+
+bool Resolver::CheckBufferViews(const sem::Call* call) {
+    auto* target = call->Target()->As<sem::Function>();
+    if (!target) {
+        return true;
+    }
+
+    auto& args = call->Arguments();
+    for (size_t i = 0; i < args.Length(); i++) {
+        auto* arg = args[i];
+        if (!arg->Type()->Is<core::type::Pointer>()) {
+            continue;
+        }
+
+        auto* root = arg->RootIdentifier();
+        auto where = buffer_view_sizes_.Get(target->Parameters()[i]);
+        if (where) {
+            bool ret = Switch(
+                root,
+                [&](const sem::GlobalVariable* global) {
+                    const auto* ty = global->Type()->UnwrapPtrOrRef();
+                    if (const auto* buffer_ty = ty->As<core::type::Buffer>()) {
+                        auto count = buffer_ty->ConstantCount();
+                        if (count != std::nullopt && count.value() < where->size) {
+                            AddError(global->Declaration()->source)
+                                << "buffer size (" << count.value()
+                                << " bytes) is smaller than the minimum view size (" << where->size
+                                << " bytes)";
+                            AddNote(*where->source) << "due to call here";
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+                [&](const sem::Parameter* param) {
+                    const auto* ty = param->Type()->UnwrapPtrOrRef();
+                    if (const auto* buffer_ty = ty->As<core::type::Buffer>()) {
+                        auto count = buffer_ty->ConstantCount();
+                        if (count != std::nullopt && count.value() < where->size) {
+                            AddError(param->Declaration()->source)
+                                << "buffer size (" << count.value()
+                                << " bytes) is smaller than the minimum view size (" << where->size
+                                << " bytes)";
+                            AddNote(*where->source) << "due to call here";
+                            return false;
+                        }
+                    }
+                    auto param_where =
+                        buffer_view_sizes_.GetOrAddEntry(param, [where]() { return *where; });
+                    param_where.value = {std::max(param_where.value.size, where->size),
+                                         where->source};
+                    return true;
+                });
+            if (!ret) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 bool Resolver::AliasAnalysis(const sem::Call* call) {
     auto* target = call->Target()->As<sem::Function>();
     if (!target) {
@@ -2405,6 +2530,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
 
         case wgsl::BuiltinFn::kBufferView:
         case wgsl::BuiltinFn::kBufferArrayView: {
+            RegisterBufferView(call, fn);
             auto address_space =
                 call->Target()->ReturnType()->template As<core::type::Pointer>()->AddressSpace();
             auto* store_type =
@@ -3254,6 +3380,9 @@ sem::Call* Resolver::FunctionCall(const ast::CallExpression* expr,
         }
 
         if (!AliasAnalysis(call)) {
+            return nullptr;
+        }
+        if (!CheckBufferViews(call)) {
             return nullptr;
         }
     }
