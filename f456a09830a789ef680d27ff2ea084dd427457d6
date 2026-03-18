@@ -161,6 +161,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c772dc42_92585dd5",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-18T12:55:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters much in this particular case since everything StackAllocated defines is private already but style guide says \"All inheritance should be public\".",
+      "parentUuid": "d090aa90_c4749e05",
+      "range": {
+        "startLine": 548,
+        "startChar": 31,
+        "endLine": 548,
+        "endChar": 45
+      },
+      "revId": "f456a09830a789ef680d27ff2ea084dd427457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "74d1b864_9b75e4e0",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 2
@@ -266,6 +290,30 @@
       "side": 1,
       "message": "It will return an error in the future see the WIP at https://dawn-review.googlesource.com/c/dawn/+/297196/11/src/dawn/native/vulkan/CommandBufferVk.cpp which adds a code path that will JIT pipelines (and need error handling). I\u0027m trying to frontload some of the diff as that CL will be pretty big and unsplittable.",
       "parentUuid": "85f04b19_fb818ac3",
+      "range": {
+        "startLine": 569,
+        "startChar": 4,
+        "endLine": 569,
+        "endChar": 14
+      },
+      "revId": "f456a09830a789ef680d27ff2ea084dd427457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13525ff5_ed2aa87c",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-18T12:55:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7ba550e5_6bd3847e",
       "range": {
         "startLine": 569,
         "startChar": 4,
