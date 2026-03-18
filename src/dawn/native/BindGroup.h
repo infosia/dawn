@@ -74,11 +74,11 @@ class BindGroupBase : public ApiObjectBase {
     const BindGroupLayoutInternalBase* GetLayout() const;
 
     // Getters for bindings part.
-    BufferBase* GetBindingAsBuffer(BindingIndex bindingIndex);
+    BufferBase* GetBindingAsBuffer(BindingIndex bindingIndex) const;
     SamplerBase* GetBindingAsSampler(BindingIndex bindingIndex) const;
-    TextureViewBase* GetBindingAsTextureView(BindingIndex bindingIndex);
-    BufferBinding GetBindingAsBufferBinding(BindingIndex bindingIndex);
-    TexelBufferViewBase* GetBindingAsTexelBufferView(BindingIndex bindingIndex);
+    TextureViewBase* GetBindingAsTextureView(BindingIndex bindingIndex) const;
+    BufferBinding GetBindingAsBufferBinding(BindingIndex bindingIndex) const;
+    TexelBufferViewBase* GetBindingAsTexelBufferView(BindingIndex bindingIndex) const;
     const ityp::span<uint32_t, uint64_t>& GetUnverifiedBufferSizes() const;
 
     // Returns the ExternalTexture bound at `bindingIndex` or nullptr if a Texture was bound in

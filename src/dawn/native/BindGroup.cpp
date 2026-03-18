@@ -796,7 +796,7 @@ const ityp::span<uint32_t, uint64_t>& BindGroupBase::GetUnverifiedBufferSizes() 
     return mBindingData.unverifiedBufferSizes;
 }
 
-BufferBase* BindGroupBase::GetBindingAsBuffer(BindingIndex bindingIndex) {
+BufferBase* BindGroupBase::GetBindingAsBuffer(BindingIndex bindingIndex) const {
     DAWN_ASSERT(!IsError());
     const BindGroupLayoutInternalBase* layout = GetLayout();
     DAWN_ASSERT(bindingIndex < layout->GetBindingCount());
@@ -814,7 +814,7 @@ SamplerBase* BindGroupBase::GetBindingAsSampler(BindingIndex bindingIndex) const
     return static_cast<SamplerBase*>(mBindingData.bindings[bindingIndex].Get());
 }
 
-TextureViewBase* BindGroupBase::GetBindingAsTextureView(BindingIndex bindingIndex) {
+TextureViewBase* BindGroupBase::GetBindingAsTextureView(BindingIndex bindingIndex) const {
     DAWN_ASSERT(!IsError());
     const BindGroupLayoutInternalBase* layout = GetLayout();
     DAWN_ASSERT(bindingIndex < layout->GetBindingCount());
@@ -827,13 +827,13 @@ TextureViewBase* BindGroupBase::GetBindingAsTextureView(BindingIndex bindingInde
     return static_cast<TextureViewBase*>(mBindingData.bindings[bindingIndex].Get());
 }
 
-BufferBinding BindGroupBase::GetBindingAsBufferBinding(BindingIndex bindingIndex) {
+BufferBinding BindGroupBase::GetBindingAsBufferBinding(BindingIndex bindingIndex) const {
     DAWN_ASSERT(!IsError());
     return {GetBindingAsBuffer(bindingIndex), mBindingData.bufferData[bindingIndex].offset,
             mBindingData.bufferData[bindingIndex].size};
 }
 
-TexelBufferViewBase* BindGroupBase::GetBindingAsTexelBufferView(BindingIndex bindingIndex) {
+TexelBufferViewBase* BindGroupBase::GetBindingAsTexelBufferView(BindingIndex bindingIndex) const {
     DAWN_ASSERT(!IsError());
     const BindGroupLayoutInternalBase* layout = GetLayout();
     DAWN_ASSERT(bindingIndex < layout->GetBindingCount());
