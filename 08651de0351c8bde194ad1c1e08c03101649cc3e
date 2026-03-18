@@ -52,6 +52,24 @@
       "parentUuid": "aecf54f8_9bd487ab",
       "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c70be9d0_318e3540",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-18T19:49:31Z",
+      "side": 1,
+      "message": "Ahh I see. That patch isn\u0027t supported officially because it will destroy buffers that according the the official API aren\u0027t supposed to be destroyed. (The bug to do this properly is https://crbug.com/399153008.)\n\nIn that case I\u0027ll just land this and make another CL to add a basic test based on GetMapState.",
+      "parentUuid": "95e43951_d6e7bfd8",
+      "revId": "08651de0351c8bde194ad1c1e08c03101649cc3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
