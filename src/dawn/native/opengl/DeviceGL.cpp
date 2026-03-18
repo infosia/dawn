@@ -133,9 +133,9 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           const OpenGLFunctions& functions,
                                           std::unique_ptr<ContextEGL> context,
                                           const TogglesState& deviceToggles,
-                                          Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    Ref<Device> device = AcquireRef(new Device(adapter, descriptor, functions, std::move(context),
-                                               deviceToggles, std::move(lostEvent)));
+                                          Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    Ref<Device> device = AcquireRef(
+        new Device(adapter, descriptor, functions, std::move(context), deviceToggles, lostEvent));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
 }
@@ -145,8 +145,8 @@ Device::Device(AdapterBase* adapter,
                const OpenGLFunctions& functions,
                std::unique_ptr<ContextEGL> context,
                const TogglesState& deviceToggles,
-               Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
+               Ref<DeviceBase::DeviceLostEvent>& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, lostEvent),
       mGL(functions),
       mContext(std::move(context)) {}
 

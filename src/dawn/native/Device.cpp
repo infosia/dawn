@@ -178,6 +178,10 @@ Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
 void DeviceBase::DeviceLostEvent::SetLost(EventManager* eventManager,
                                           wgpu::DeviceLostReason reason,
                                           std::string_view message) {
+    // If this event is already ready, don't bother overriding the cause.
+    if (IsReadyToComplete()) {
+        return;
+    }
     mReason = reason;
     mMessage = message;
     eventManager->SetFutureReady(this);
@@ -201,19 +205,18 @@ void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType) {
     void* userdata2 = mUserdata2.ExtractAsDangling();
 
     if (mReason == wgpu::DeviceLostReason::CallbackCancelled ||
-        mReason == wgpu::DeviceLostReason::FailedCreation) {
+        mReason == wgpu::DeviceLostReason::FailedCreation ||
+        (mDevice && mDevice->DroppedLastExternalRef())) {
         device = nullptr;
     }
     if (mCallback) {
         mCallback(&device, ToAPI(mReason), ToOutputStringView(mMessage), userdata1, userdata2);
     }
 
-    // Break the ref cycle between DeviceBase and DeviceLostEvent.
-    if (mDevice) {
-        // If the device was already set, then the device must be associated with this event. Since
-        // the event should only be set and triggered once, unset the event in the device now.
+    if (mDevice != nullptr) {
+        // Since the event should only be set and triggered once, store the event's future in the
+        // device as we will no longer hold the event.
         mDevice->mLostFuture = GetFuture();
-        mDevice->mLostEvent = nullptr;
         mDevice = nullptr;
     }
 }
@@ -268,16 +271,16 @@ ResultOrError<Ref<PipelineLayoutBase>> ValidateLayoutAndGetRenderPipelineDescrip
 DeviceBase::DeviceBase(AdapterBase* adapter,
                        const UnpackedPtr<DeviceDescriptor>& descriptor,
                        const TogglesState& deviceToggles,
-                       Ref<DeviceLostEvent>&& lostEvent)
-    : mLostEvent(std::move(lostEvent)),
+                       Ref<DeviceLostEvent>& lostEvent)
+    : mLostEvent(GetWeakRef(lostEvent)),
       mCallbackInfos(ToAPI(*descriptor)),
       mAdapter(adapter),
       mToggles(deviceToggles),
       mNextPipelineCompatibilityToken(1) {
     DAWN_ASSERT(descriptor);
+    DAWN_ASSERT(lostEvent);
 
-    DAWN_ASSERT(mLostEvent);
-    mLostEvent->mDevice = this;
+    lostEvent->mDevice = this;
 
     AdapterInfo adapterInfo;
     adapter->APIGetInfo(&adapterInfo);
@@ -384,18 +387,6 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     StreamIn(&mDeviceCacheKey, kDawnVersion, hash);
 }
 
-DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
-    GetDefaultLimits(&mLimits, wgpu::FeatureLevel::Core);
-    EnforceLimitSpecInvariants(&mLimits, wgpu::FeatureLevel::Core);
-    mFormatTable = BuildFormatTable(this);
-
-    DeviceDescriptor desc = {};
-    desc.deviceLostCallbackInfo = {nullptr, WGPUCallbackMode_AllowSpontaneous, nullptr, nullptr,
-                                   nullptr};
-    mLostEvent = DeviceLostEvent::Create(&desc);
-    mLostEvent->mDevice = this;
-}
-
 DeviceBase::~DeviceBase() {
     // We need to explicitly release the Queue before we complete the destructor so that the
     // Queue does not get destroyed after the Device.
@@ -463,13 +454,6 @@ void DeviceBase::WillDropLastExternalRef() {
         // the lock.
         auto deviceGuard = GetGuard();
 
-        // Set DeviceLostEvent to pass a null device to the callback (which may happen in Destroy()
-        // depending on the CallbackMode). This also makes DeviceLostEvent skip unregistering the
-        // UncapturedError and Logging callbacks; they'll be unregistered later in this function.
-        if (mLostEvent) {
-            mLostEvent->mDevice = nullptr;
-        }
-
         // DeviceBase uses RefCountedWithExternalCount to break refcycles.
         //
         // DeviceBase holds multiple Refs to various API objects (pipelines, buffers, etc.) which
@@ -501,10 +485,6 @@ void DeviceBase::WillDropLastExternalRef() {
     // Drop the device's reference to the queue. Because the application dropped the last external
     // reference, it's UB if they try to get the queue from APIGetQueue().
     mQueue = nullptr;
-
-    // Reset callbacks since after dropping the last external reference, the application may have
-    // freed any device-scope memory needed to run the callback.
-    mCallbackInfos.Clear();
 
     GetInstance()->RemoveDevice(this);
 
@@ -670,8 +650,8 @@ void DeviceBase::HandleEncoderError(std::unique_ptr<ErrorData> error) {
 }
 
 void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_view message) {
-    if (mLostEvent != nullptr) {
-        mLostEvent->SetLost(GetInstance()->GetEventManager(), reason, message);
+    if (Ref<DeviceLostEvent> lostEvent = mLostEvent.Promote()) {
+        lostEvent->SetLost(GetInstance()->GetEventManager(), reason, message);
     }
 }
 
@@ -1923,9 +1903,12 @@ wgpu::Status DeviceBase::APIGetAdapterInfo(AdapterInfo* adapterInfo) const {
     return mAdapter->APIGetInfo(adapterInfo);
 }
 
-Future DeviceBase::APIGetLostFuture() const {
-    if (mLostEvent) {
-        return mLostEvent->GetFuture();
+Future DeviceBase::APIGetLostFuture() {
+    if (mLostFuture.id != kNullFutureID) {
+        return mLostFuture;
+    }
+    if (Ref<DeviceLostEvent> lostEvent = mLostEvent.Promote()) {
+        mLostFuture = lostEvent->GetFuture();
     }
     DAWN_ASSERT(mLostFuture.id != kNullFutureID);
     return mLostFuture;
@@ -2723,10 +2706,6 @@ bool DeviceBase::HasFlexibleTextureViews() const {
 
 std::string_view DeviceBase::GetIsolatedEntryPointName() const {
     return mIsolatedEntryPointName;
-}
-
-void DeviceBase::ResetLostEvent() {
-    mLostEvent.Reset();
 }
 
 IgnoreLazyClearCountScope::IgnoreLazyClearCountScope(DeviceBase* device)

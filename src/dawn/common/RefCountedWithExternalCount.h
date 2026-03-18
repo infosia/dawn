@@ -56,6 +56,7 @@ class RefCountedWithExternalCount : public T {
 
     void APIRelease() {
         if (mExternalRefCount.Decrement()) {
+            mLastExternalRefDropped = true;
             WillDropLastExternalRef();
         }
         T::APIRelease();
@@ -71,10 +72,14 @@ class RefCountedWithExternalCount : public T {
         return mExternalRefCount.GetValueForTesting();
     }
 
+  protected:
+    bool DroppedLastExternalRef() const { return mLastExternalRefDropped; }
+
   private:
     virtual void WillAddFirstExternalRef() {}
     virtual void WillDropLastExternalRef() = 0;
 
+    bool mLastExternalRefDropped = false;
     RefCount mExternalRefCount{/*initCount=*/0, /*payload=*/0};
 };
 

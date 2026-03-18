@@ -49,7 +49,7 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
                                              WGPUAdapter innerAdapter,
                                              const UnpackedPtr<DeviceDescriptor>& descriptor,
                                              const TogglesState& deviceToggles,
-                                             Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+                                             Ref<DeviceBase::DeviceLostEvent>& lostEvent);
     ~Device() override;
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
@@ -84,7 +84,7 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
            const UnpackedPtr<DeviceDescriptor>& descriptor,
            const TogglesState& deviceToggles,
            const TogglesState& innerDeviceToggles,
-           Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+           Ref<DeviceBase::DeviceLostEvent>& lostEvent);
 
     ResultOrError<Ref<BindGroupBase>> CreateBindGroupImpl(
         const UnpackedPtr<BindGroupDescriptor>& descriptor) override;

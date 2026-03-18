@@ -94,7 +94,8 @@ class DeviceBase : public ErrorSink,
                    public WeakRefSupport<DeviceBase>,
                    public LogEmitter {
   public:
-    struct DeviceLostEvent final : public EventManager::TrackedEvent {
+    struct DeviceLostEvent final : public EventManager::TrackedEvent,
+                                   public WeakRefSupport<DeviceLostEvent> {
         static Ref<DeviceLostEvent> Create(const DeviceDescriptor* descriptor);
 
         // Sets the device lost event's fields and sets the event to be ready.
@@ -122,7 +123,7 @@ class DeviceBase : public ErrorSink,
     DeviceBase(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
-               Ref<DeviceLostEvent>&& lostEvent);
+               Ref<DeviceLostEvent>& lostEvent);
     ~DeviceBase() override;
 
     void HandleEncoderError(std::unique_ptr<ErrorData> error);
@@ -299,7 +300,7 @@ class DeviceBase : public ErrorSink,
     void APIGetFeatures(wgpu::SupportedFeatures* features) const;
     void APIGetFeatures(SupportedFeatures* features) const;
     wgpu::Status APIGetAdapterInfo(AdapterInfo* adapterInfo) const;
-    Future APIGetLostFuture() const;
+    Future APIGetLostFuture();
     void APIInjectError(wgpu::ErrorType type, StringView message);
     bool APITick();
     void APIValidateTextureDescriptor(const TextureDescriptor* desc);
@@ -478,15 +479,7 @@ class DeviceBase : public ErrorSink,
 
     tint::InternalCompilerErrorCallbackInfo GetTintInternalCompilerErrorCallback();
 
-    // During adapter's creation of devices, if device initialization fails, adapter will trigger
-    // the device lost event. After that, adapter should reset the lost event to avoid double
-    // triggering it when the device object get destructed.
-    void ResetLostEvent();
-
   protected:
-    // Constructor used only for mocking and testing.
-    DeviceBase();
-
     void ForceEnableFeatureForTesting(Feature feature);
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor,
@@ -503,7 +496,7 @@ class DeviceBase : public ErrorSink,
     // Device lost event needs to be protected for now because mock device needs it.
     // TODO(dawn:1702) Make this private and move the class in the implementation file when we mock
     // the adapter.
-    Ref<DeviceLostEvent> mLostEvent = nullptr;
+    WeakRef<DeviceLostEvent> mLostEvent = nullptr;
     Future mLostFuture = {kNullFutureID};
 
     // Returns a pair of a filename and a boolean indicating whether to start tracing

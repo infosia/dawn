@@ -517,7 +517,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     AdapterBase* adapter,
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
-    Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
     bool useANGLETextureSharing = false;
     for (size_t i = 0; i < descriptor->requiredFeatureCount; ++i) {
         if (descriptor->requiredFeatures[i] == wgpu::FeatureName::ANGLETextureSharing) {
@@ -541,7 +541,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
                                                 mAngleVirtualizationGroup));
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
-                          std::move(lostEvent));
+                          lostEvent);
 }
 
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,

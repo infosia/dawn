@@ -51,8 +51,8 @@ using ::testing::WithArgs;
 DeviceMock::DeviceMock(AdapterBase* adapter,
                        const UnpackedPtr<DeviceDescriptor>& descriptor,
                        const TogglesState& deviceToggles,
-                       Ref<DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)) {
+                       Ref<DeviceLostEvent>& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, lostEvent) {
     // Set all default creation functions to return nice mock objects.
     ON_CALL(*this, CreateBindGroupImpl)
         .WillByDefault(WithArgs<0>([this](const UnpackedPtr<BindGroupDescriptor>& descriptor)
@@ -129,7 +129,6 @@ DeviceMock::DeviceMock(AdapterBase* adapter,
     QueueDescriptor desc = {};
     EXPECT_FALSE(
         Initialize(descriptor, AcquireRef(new NiceMock<QueueMock>(this, &desc))).IsError());
-    GetInstance()->GetEventManager()->TrackEvent(mLostEvent);
 }
 
 DeviceMock::~DeviceMock() = default;

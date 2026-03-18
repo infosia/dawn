@@ -40,8 +40,8 @@ namespace dawn::native::d3d {
 Device::Device(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
-               Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)) {}
+               Ref<DeviceBase::DeviceLostEvent>& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, lostEvent) {}
 
 Device::~Device() {
     Destroy(DestroyReason::CppDestructor);
