@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "066f8d6a_e67e84e5",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-18T13:11:07Z",
+      "side": 1,
+      "message": "\u003e However, after auditing the code, it looks like GetLabel is called quite rarely. Only when error happens, or when backends need to set the labels (disabled by default). So maybe copying strings is acceptable?\n\nYeah I agree it should be fine to return by string copy.",
+      "parentUuid": "7aeb9246_cb688031",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b9151ef_3f87d407",
         "filename": "src/dawn/native/webgpu_absl_format.h",
         "patchSetId": 3
