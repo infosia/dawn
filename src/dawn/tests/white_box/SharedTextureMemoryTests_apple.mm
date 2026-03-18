@@ -144,7 +144,7 @@ class Backend : public SharedTextureMemoryTestBackend {
             uint32_t bytesPerElement;
             wgpu::FeatureName requiredFeature = wgpu::FeatureName(0u);
         };
-        const std::array<IOSurfaceFormat, 17> kFormats{
+        const std::array<IOSurfaceFormat, 21> kFormats{
             {{kCVPixelFormatType_64RGBAHalf, 8},
              {kCVPixelFormatType_TwoComponent16Half, 4},
              {kCVPixelFormatType_OneComponent16Half, 2},
@@ -155,6 +155,10 @@ class Backend : public SharedTextureMemoryTestBackend {
              {kCVPixelFormatType_32BGRA, 4},
              {kCVPixelFormatType_TwoComponent8, 2},
              {kCVPixelFormatType_OneComponent8, 1},
+             {kCVPixelFormatType_DepthFloat16, 2},
+             {kCVPixelFormatType_DepthFloat32, 4},
+             {kCVPixelFormatType_DisparityFloat16, 2},
+             {kCVPixelFormatType_DisparityFloat32, 4},
              // Below bytes per element isn't correct.
              {kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, 4},
              {kCVPixelFormatType_422YpCbCr8BiPlanarVideoRange, 4,
