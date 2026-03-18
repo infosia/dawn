@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a16558ef_9c280b2f",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9b9ef1_aaaf4f97",
+      "range": {
+        "startLine": 1179,
+        "startChar": 4,
+        "endLine": 1184,
+        "endChar": 82
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c02e655_32e47691",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "This is not needed on front-end.",
+      "range": {
+        "startLine": 407,
+        "startChar": 17,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25cf9827_7974f665",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c02e655_32e47691",
       "range": {
         "startLine": 407,
         "startChar": 17,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f2f6481_6fdd29fe",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b959e452_89d57a16",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "382d830e_6299f8a1",
@@ -83,6 +155,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "This is mandatory by [spec](https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#5.6.1.3%20Map()%20on%20DEFAULT%20Buffers%20used%20as%20SRVs%20or%20UAVs). I don\u0027t think it\u0027s driver specific.\n\n\n```suggestion\n    // Default storage cannot be used with Vertex, Index or Indirect usage.\n    // See https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#5.6.1.3%20Map()%20on%20DEFAULT%20Buffers%20used%20as%20SRVs%20or%20UAVs\n```",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 60
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c89193cc_a1e2db03",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382d830e_6299f8a1",
       "range": {
         "startLine": 94,
         "startChar": 7,
@@ -116,6 +212,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99408243_f71c97ed",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf4317f_71b00c49",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 99
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37f2d4ed_412d64c6",
@@ -129,6 +249,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "Note: we only want to use DEFAULT usage for `MapRead` (readback cases) for now.\nI think on dedicated GPUs, using DEFAULT usage for buffers might make it slow to write on CPU. That\u0027s because the buffers might be on VRAM.\n```suggestion\n        if ((originalUsage \u0026 wgpu::BufferUsage::MapRead)\n            \u0026\u0026 CanMappableUseSingleStorage(device, originalUsage)) {\n            // If we can use DEFAULT usage for MapRead, then it\u0027s ok to add Storage usage.\n            return true;\n        }\n        // D3D11 mappable buffers cannot be used as UAV natively. So avoid that.\n        return !(originalUsage \u0026 kMappableBufferUsages);\n```",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 56
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b49f4783_22fc87f9",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f2d4ed_412d64c6",
       "range": {
         "startLine": 287,
         "startChar": 8,
@@ -162,6 +306,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1087056_6f681709",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8491a650_045891e5",
+      "range": {
+        "startLine": 828,
+        "startChar": 8,
+        "endLine": 840,
+        "endChar": 9
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2996607b_8cd33d31",
@@ -175,6 +343,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "I think we should handle these things implicitly in `GetOrCreateStorage` function. We don\u0027t need to do anything special here.\n\nIn other words, `GetOrCreateStorage` should create DEFAULT storage or STAGING storage depending on `device-\u003eCanMapOnDefaultBuffer()`.",
+      "range": {
+        "startLine": 944,
+        "startChar": 4,
+        "endLine": 962,
+        "endChar": 87
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b36b2ad_bd9c9bb3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2996607b_8cd33d31",
       "range": {
         "startLine": 944,
         "startChar": 4,
@@ -208,6 +400,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e290b9cb_a4ab8db3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4eba6e_bea80bf5",
+      "range": {
+        "startLine": 992,
+        "startChar": 4,
+        "endLine": 1000,
+        "endChar": 99
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b498f1d_ede6917a",
@@ -231,6 +447,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1f05dd5_d3234a58",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b498f1d_ede6917a",
+      "range": {
+        "startLine": 1021,
+        "startChar": 8,
+        "endLine": 1030,
+        "endChar": 9
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54efcff5_2a389a66",
@@ -244,6 +484,24 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "We can add an early return for single storage special case here:\n```suggestion\n    }\n\n    if (IsMappable(GetInternalUsage())\n        \u0026\u0026 CanMappableUseSingleStorage(GetInternalUsage())) {\n        // Share a single MappableAndGPUWritable storage.\n        DAWN_TRY_ASSIGN(\n            mStorages[storageType],\n            GetOrCreateStorage(StorageType::MappableAndGPUWritable));\n        return mStorages[storageType].Get();\n    }\n```",
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad47fd04_2966a5a3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54efcff5_2a389a66",
       "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -295,6 +553,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d551eeb2_76b76c8a",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f418547_bacca0a9",
+      "range": {
+        "startLine": 1089,
+        "startChar": 8,
+        "endLine": 1096,
+        "endChar": 16
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9feb9005_9710a10b",
@@ -308,6 +590,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "This is redundant. If `GPUWritableNonConstantBuffer` shares the same storage as DEFAULT, the below code already handles it.",
+      "range": {
+        "startLine": 1117,
+        "startChar": 4,
+        "endLine": 1120,
+        "endChar": 5
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef484836_ef73ad3b",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9feb9005_9710a10b",
       "range": {
         "startLine": 1117,
         "startChar": 4,
@@ -341,6 +647,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60719e85_824cc80c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dee8534_72f884b3",
+      "range": {
+        "startLine": 1214,
+        "startChar": 4,
+        "endLine": 1216,
+        "endChar": 5
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df3fa120_43fc8b2c",
@@ -354,6 +684,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "I don\u0027t think we need to remove the old code.\nStaging storage should use DEFAULT usage if we can MapOnDefaultBuffers.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 4,
+        "endLine": 1222,
+        "endChar": 57
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2ec10b_e964843c",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3fa120_43fc8b2c",
       "range": {
         "startLine": 1218,
         "startChar": 4,
@@ -387,6 +741,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16f733bc_9d59aaed",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e91091_1c1f6fad",
+      "range": {
+        "startLine": 248,
+        "startChar": 15,
+        "endLine": 248,
+        "endChar": 45
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c5ccf82_e971840e",
@@ -400,6 +778,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "nit: we don\u0027t need to update comments here",
+      "range": {
+        "startLine": 315,
+        "startChar": 14,
+        "endLine": 316,
+        "endChar": 38
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21cfab3b_f7e0c1d8",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5ccf82_e971840e",
       "range": {
         "startLine": 315,
         "startChar": 14,
@@ -433,6 +835,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "322cf33d_5296ffdf",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76115d4f_afb60097",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 15
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72e09fcb_0e7392ca",
@@ -456,6 +882,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b6e593a_9b6bf250",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e09fcb_0e7392ca",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 30
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97e4be20_cc662ca2",
@@ -469,6 +919,30 @@
       "writtenOn": "2026-03-17T11:59:22Z",
       "side": 1,
       "message": "This should be a flag in `DeviceInfoD3D11.h`",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "e0df4df7d866e68ebdfd9156d0a3edb333f5131a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb7c1e82_5447cf47",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-18T14:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e4be20_cc662ca2",
       "range": {
         "startLine": 213,
         "startChar": 9,
