@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b525c919_5e8a1d53",
+        "filename": "src/tint/utils/text/unicode_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:38:49Z",
+      "side": 1,
+      "message": "Why did this ad more unsafe usage?",
+      "revId": "58255d3c88f4c0489b77a2d588a29e05cbc6949c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
