@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43f255c9_ec7f97ec",
+        "filename": "test/tint/extensions/framebuffer_fetch/multiple_outputs/f16.wgsl.expected.spvasm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:28:37Z",
+      "side": 1,
+      "message": "For SPV, HLSL, GLSL these should be `SKIP: INVALID` instead of FAILED since it\u0027s just not valid input (same with the other expectation results)",
+      "revId": "7576552d5768ac88e25cf6ea16122ac5692cdfd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5081e295_95ceb6aa",
+        "filename": "test/tint/extensions/framebuffer_fetch/one_output/bool.wgsl",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:28:37Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add this as it will never pass anywhere, ti should be a unittest instead of an e2e test.",
+      "revId": "7576552d5768ac88e25cf6ea16122ac5692cdfd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
