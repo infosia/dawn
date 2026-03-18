@@ -95,8 +95,9 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
   private:
     std::pair<Ref<DeviceBase::DeviceLostEvent>, ResultOrError<Ref<DeviceBase>>> CreateDevice(
         const DeviceDescriptor* rawDescriptor);
-    ResultOrError<Ref<DeviceBase>> CreateDeviceInternal(const DeviceDescriptor* rawDescriptor,
-                                                        Ref<DeviceBase::DeviceLostEvent> lostEvent);
+    ResultOrError<Ref<DeviceBase>> CreateDeviceInternal(
+        const DeviceDescriptor* rawDescriptor,
+        Ref<DeviceBase::DeviceLostEvent>& lostEvent);
 
     // Generate the adapter's limits based on current adapter status. Should be called during
     // AdapterBase creation and when the adapter's limits-related status changes, e.g.

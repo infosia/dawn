@@ -108,8 +108,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     AdapterBase* adapter,
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
-    Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    return Device::Create(adapter, descriptor, deviceToggles, std::move(lostEvent));
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    return Device::Create(adapter, descriptor, deviceToggles, lostEvent);
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
@@ -187,9 +187,8 @@ struct CopyFromStagingToBufferOperation : PendingOperation {
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
                                           const TogglesState& deviceToggles,
-                                          Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    Ref<Device> device =
-        AcquireRef(new Device(adapter, descriptor, deviceToggles, std::move(lostEvent)));
+                                          Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    Ref<Device> device = AcquireRef(new Device(adapter, descriptor, deviceToggles, lostEvent));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
 }

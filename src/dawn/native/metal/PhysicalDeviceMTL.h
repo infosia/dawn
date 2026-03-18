@@ -55,7 +55,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
         AdapterBase* adapter,
         const UnpackedPtr<DeviceDescriptor>& descriptor,
         const TogglesState& deviceToggles,
-        Ref<DeviceBase::DeviceLostEvent>&& lostEvent) override;
+        Ref<DeviceBase::DeviceLostEvent>& lostEvent) override;
 
     void SetupBackendAdapterToggles(dawn::platform::Platform* platform,
                                     TogglesState* adapterToggles) const override;

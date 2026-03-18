@@ -67,7 +67,7 @@ class PhysicalDevice : public d3d::PhysicalDevice {
         AdapterBase* adapter,
         const UnpackedPtr<DeviceDescriptor>& descriptor,
         const TogglesState& deviceToggles,
-        Ref<DeviceBase::DeviceLostEvent>&& lostEvent) override;
+        Ref<DeviceBase::DeviceLostEvent>& lostEvent) override;
 
     MaybeError ResetInternalDeviceForTestingImpl() override;
 

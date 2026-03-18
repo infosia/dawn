@@ -43,7 +43,7 @@ class Device : public DeviceBase {
     Device(AdapterBase* adapter,
            const UnpackedPtr<DeviceDescriptor>& descriptor,
            const TogglesState& deviceToggles,
-           Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
+           Ref<DeviceBase::DeviceLostEvent>& lostEvent);
     ~Device() override;
 
     const PlatformFunctions* GetFunctions() const;

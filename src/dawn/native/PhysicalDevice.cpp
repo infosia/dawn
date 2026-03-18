@@ -83,8 +83,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDeviceBase::CreateDevice(
     AdapterBase* adapter,
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
-    Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    return CreateDeviceImpl(adapter, descriptor, deviceToggles, std::move(lostEvent));
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    return CreateDeviceImpl(adapter, descriptor, deviceToggles, lostEvent);
 }
 
 void PhysicalDeviceBase::InitializeVendorArchitectureImpl() {

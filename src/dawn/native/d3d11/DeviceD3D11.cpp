@@ -189,8 +189,8 @@ uint64_t AppendDebugLayerMessagesToError(ID3D11InfoQueue* infoQueue,
 Device::Device(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
-               Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : Base(adapter, descriptor, deviceToggles, std::move(lostEvent)),
+               Ref<DeviceBase::DeviceLostEvent>& lostEvent)
+    : Base(adapter, descriptor, deviceToggles, lostEvent),
       mVertexShaderCache(1024),
       mPixelShaderCache(1024),
       mComputeShaderCache(1024) {}
@@ -199,9 +199,8 @@ Device::Device(AdapterBase* adapter,
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
                                           const TogglesState& deviceToggles,
-                                          Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    Ref<Device> device =
-        AcquireRef(new Device(adapter, descriptor, deviceToggles, std::move(lostEvent)));
+                                          Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    Ref<Device> device = AcquireRef(new Device(adapter, descriptor, deviceToggles, lostEvent));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
 }

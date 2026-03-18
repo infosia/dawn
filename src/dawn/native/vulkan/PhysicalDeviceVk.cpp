@@ -1239,8 +1239,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     AdapterBase* adapter,
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
-    Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    return Device::Create(adapter, descriptor, deviceToggles, std::move(lostEvent));
+    Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
+    return Device::Create(adapter, descriptor, deviceToggles, lostEvent);
 }
 
 FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(

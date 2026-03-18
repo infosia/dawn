@@ -94,7 +94,7 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           WGPUAdapter innerAdapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
                                           const TogglesState& deviceToggles,
-                                          Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
+                                          Ref<DeviceBase::DeviceLostEvent>& lostEvent) {
     TogglesState outerDeviceToggles = deviceToggles;
 
     // For the inner device, we want to enable the toggles if they are enabled in deviceToggles.
@@ -122,9 +122,8 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
         }
     }
 
-    Ref<Device> device =
-        AcquireRef(new Device(adapter, innerAdapter, descriptor, outerDeviceToggles, deviceToggles,
-                              std::move(lostEvent)));
+    Ref<Device> device = AcquireRef(new Device(adapter, innerAdapter, descriptor,
+                                               outerDeviceToggles, deviceToggles, lostEvent));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
 }
@@ -134,8 +133,8 @@ Device::Device(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
                const TogglesState& deviceToggles,
                const TogglesState& innerDeviceToggles,
-               Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
+               Ref<DeviceBase::DeviceLostEvent>& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, lostEvent),
       ObjectWGPU(ToBackend(adapter->GetPhysicalDevice())->GetFunctions().deviceRelease),
       wgpu(ToBackend(adapter->GetPhysicalDevice())->GetFunctions()) {
     DAWN_ASSERT(adapter->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::WebGPU);
