@@ -844,7 +844,7 @@ constexpr IOAttributeChecker kColorChecker{
     .type_check = [](const core::type::Type* ty, const Capabilities&) -> bool {
         return ty->IsNumericScalarOrVector();
     },
-    .type_error = "must be a scalar or vector",
+    .type_error = "must be a numeric scalar or vector",
 };
 
 constexpr IOAttributeChecker kInputAttachmentIndexChecker{

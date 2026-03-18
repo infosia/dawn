@@ -22,7 +22,7 @@ In `Device::CreateRenderPipeline` or `Device::CreateRenderPipelineAsync`:
 
 * Requires `enable chromium_experimental_framebuffer_fetch`
 * Requires fragment shader
-* Requires T to be `i32`, `u32`, `f32`, `vec{2,3,4}{f,u,i}`
+* Requires T to be `i32`, `u32`, `f32`, or `vec{2,3,4}{f,u,i}`. In the Metal backend, `f16` amd `vec{2,3,4}h` are also supported.
 * Requires `N` to be unique per `color`
 * The `N` value must be in the range of `[0..7]`
 
@@ -35,7 +35,7 @@ In `Device::CreateRenderPipeline` or `Device::CreateRenderPipelineAsync`:
 * Requires a `group`, `binding` value provided for each `color` `N` value from Host
 * Add the `OpCapability InputAttachment`
 * For each `color(N)` entry
-  * Create an `OpTypeImage %float SubpassData 0 0 0 2 Unknown`  where `float` is the `f32`, `i32` or`u32`
+  * Create an `OpTypeImage %float SubpassData 0 0 0 2 Unknown`  where `float` is the `f32`, `i32` or `u32`
   * Create a `OpTypePointer UniformConstant %image`
   * Create a `OpVariable %ptr_uniform_image UniformConstant`
   * Decorate the var with `OpDecorate %inputVar InputAttachmentIndex N`
