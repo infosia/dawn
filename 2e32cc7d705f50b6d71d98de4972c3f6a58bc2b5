@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57518a09_94297dc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T12:05:35Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2e32cc7d705f50b6d71d98de4972c3f6a58bc2b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "233e4385_6fd220db",
+        "filename": "src/dawn/common/WGPUDeviceCallbackInfos.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T12:05:35Z",
+      "side": 1,
+      "message": "Is this mechanism done to allow multiple callbacks to be running in parallel but having any modifications wait on the callbacks to be finished?\n\nIt sounds like a reader-writer mutex, maybe we should have at least a TODO to add that.",
+      "revId": "2e32cc7d705f50b6d71d98de4972c3f6a58bc2b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5691c14f_9ccd3f63",
+        "filename": "src/dawn/common/WGPUDeviceCallbackInfos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T12:05:35Z",
+      "side": 1,
+      "message": "nit: methods could start with a verb, maybe `CallErrorCallback`?",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "2e32cc7d705f50b6d71d98de4972c3f6a58bc2b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
