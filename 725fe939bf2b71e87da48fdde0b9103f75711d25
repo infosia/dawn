@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd33909_1ee4b5e0",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "You are correct.\n\nI caught this in a later CL in the stack when reviewing and fixed it there. I will fix it here and propegate the change.",
+      "parentUuid": "9f3d31c1_a20d111f",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "102bfc36_7eb1721a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-18T15:43:16Z",
       "side": 1,
       "message": "ditto",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1efe7e82_3b5259f9",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "102bfc36_7eb1721a",
       "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcae1cb6_8e8a19ba",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c943ce3_edd7f9b5",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ca2ace3_5fd3eeef",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-03-18T15:43:16Z",
       "side": 1,
       "message": "```suggestion\n/// Helper for constructing a Vector from a span. Only the size must be supplied as the type is\n```",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20eeb13_3f9e95eb",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca2ace3_5fd3eeef",
       "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db93f0a9_36881e8f",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1e08a7_610ba82d",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5594e246_3cc5f307",
@@ -99,6 +189,24 @@
       "writtenOn": "2026-03-18T15:43:16Z",
       "side": 1,
       "message": "```suggestion\n/// declared. Furthermore, Spans are often of const pointer/reference type, but a Vector cannot be\n```",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d21cfd3_e6b02b2e",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5594e246_3cc5f307",
       "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
