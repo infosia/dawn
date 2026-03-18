@@ -16,6 +16,57 @@
       "message": "First pass at implementing some pipeline dynamic state handling in Dawn/Vulkan. PTAL!\n\nStill thinking about the best way to get metrics from this describing how many additional pipeline cache hits it enables, but for the moment I just want to focus on the mechanics behind how it\u0027s handling the dynamic state in terms of setting the pipeline hash and applying the state when needed.",
       "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdb49104_dddc87af",
+        "filename": "src/dawn/native/RenderPipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T16:52:14Z",
+      "side": 1,
+      "message": "Why did this need to be in the content hash?",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d421dbf1_c5ddb0ae",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T16:52:14Z",
+      "side": 1,
+      "message": "That\u0027s ... not that much. We could rely on what some of the [Vulkan Android Profiles](https://github.com/KhronosGroup/Vulkan-Profiles/tree/main/profiles/Android) require (although I don\u0027t see anything required T_T)",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c55956e_0b6c0c3e",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T16:52:14Z",
+      "side": 1,
+      "message": "We could pass in the previous pipeline directly and do the diff with it?\n\nAlso there might be some state diffing idioms from ANGLE that we could use (I assume they have some in the Vulkan backend)",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
