@@ -39,6 +39,30 @@
       },
       "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0d0f79c_2d1df887",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-18T06:14:31Z",
+      "side": 1,
+      "message": "`AtomicRef` is around 48 bytes whereas std::string is around 32 bytes. The biggest portion is `std::mutex`.\n\nOriginally I prefer not returning `std::string` copy in `GetLabel` because most of Graphite\u0027s labels are quite long and don\u0027t use short string optimizations. Thus every `GetLabel` call would copy the string and allocate a new heap memory. So my 1st approach makes the `ObjectLabel` immutable. `ObjectBase::SetLabel` create a new `ObjectLabel` and `ObjectBase::GetLabel` returns a ref instead.\n\nHowever, after auditing the code, it looks like `GetLabel` is called quite rarely. Only when error happens, or when backends need to set the labels (disabled by default). So maybe copying strings is acceptable?",
+      "parentUuid": "0d655d8c_fb736909",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
