@@ -63,6 +63,47 @@
       },
       "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aeb9246_cb688031",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T12:22:28Z",
+      "side": 1,
+      "message": "+1 to Kyle proposal, for now doing a copy seems fine as it\u0027s always in cold or opt-in paths. If it becomes an issue in the future, we could make it return a mutex guard for the label (but that\u0027s slightly overkill for now).",
+      "parentUuid": "f0d0f79c_2d1df887",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b9151ef_3f87d407",
+        "filename": "src/dawn/native/webgpu_absl_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T12:22:28Z",
+      "side": 1,
+      "message": "Could this be a forward declaration instead with `ObjectLabelRef` put in a separate class (and not a nested class?)",
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
