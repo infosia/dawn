@@ -593,7 +593,7 @@ struct ProgrammablePassState : public StackAllocated {
         using ETBindPoint = std::pair<BindGroupIndex, APIBindingIndex>;
         using SamplerBindPoint = std::pair<BindGroupIndex, BindingIndex>;
         absl::flat_hash_map<ETBindPoint, std::optional<SamplerBindPoint>> usedETSamplerPairs;
-        // gather lol
+        // XXX gather lol
 
         using Specialization = ComputePipeline::Specialization;
         Specialization s;
@@ -627,7 +627,7 @@ struct ProgrammablePassState : public StackAllocated {
 
             s.ycbcrExternalTextures.insert(etBindPoint);
             s.layout.bindGroups[etBindPoint.first].staticSamplers[*etInfo.staticSampler] =
-                StaticSamplerSpecialization::From(ToBackend(view->GetTexture()), sampler);
+                StaticSamplerSpecialization::From(view, sampler);
             s.layout.bindGroups[etBindPoint.first].textureToStaticSampler.emplace(
                 etInfo.plane0, *etInfo.staticSampler);
         }
@@ -642,15 +642,6 @@ struct ProgrammablePassState : public StackAllocated {
         // DoOperation.
         // Dirty all the state.
 
-
-        // bool filterable = view->GetFormat() != wgpu::TextureFormat::OpaqueYCbCrAndroid ||
-        // view->IsYCbCrFilterable()
-        //     .minFilter = (sampler != nullptr && filterable) : sampler->GetMinFilter() :
-        //     wgpu::FilterMode::Nearest, .magFilter = (sampler != nullptr && filterable) :
-        //     sampler->GetMagFilter() : wgpu::FilterMode::Nearest,
-        //  TODO IsYCbCr??
-        //    .format = VulkanImageFormat()
-        // };
         return {};
     }
 

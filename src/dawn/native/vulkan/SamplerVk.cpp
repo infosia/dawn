@@ -32,8 +32,10 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
+#include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "vulkan/vulkan_core.h"
 
 namespace dawn::native::vulkan {
 
@@ -153,9 +155,37 @@ void Sampler::SetLabelImpl() {
 }
 
 // static
-StaticSamplerSpecialization StaticSamplerSpecialization::From(const Texture* tex, const Sampler* sampler) {
-    //AYAYAYA
-    return {};
+StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView* view,
+                                                              const Sampler* sampler) {
+    bool isYCbCr =
+        view->GetTexture()->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid;
+    bool filterable = !isYCbCr || view->IsYCbCrFilterable();
+
+    StaticSamplerSpecialization spec = {
+        .minFilter = (sampler != nullptr && filterable) ? sampler->GetMinFilter()
+                                                        : wgpu::FilterMode::Nearest,
+        .magFilter = (sampler != nullptr && filterable) ? sampler->GetMagFilter()
+                                                        : wgpu::FilterMode::Nearest,
+        .isYCbCr = isYCbCr,
+        // Put default values for the YCbCr part.
+        .vkFormat = VK_FORMAT_UNDEFINED,
+        .androidExternalFormat = 0,
+        .model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY,
+        .range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL,
+    };
+
+    if (isYCbCr) {
+        auto stm = static_cast<SharedTextureMemoryContentsVk*>(
+            view->GetTexture()->GetSharedResourceMemoryContents());
+        DAWN_ASSERT(stm != nullptr);
+
+        spec.vkFormat = static_cast<VkFormat>(stm->GetYCbCrVkDesc().vkFormat);
+        spec.androidExternalFormat = stm->GetYCbCrVkDesc().externalFormat;
+        spec.model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
+        spec.range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
+    }
+
+    return spec;
 }
 
 ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
@@ -166,7 +196,7 @@ ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
 
     YCbCrVkDescriptor yCbCrDesc;
     if (isYCbCr) {
-        yCbCrDesc.vkFormat = this->format;
+        yCbCrDesc.vkFormat = this->vkFormat;
         yCbCrDesc.externalFormat = this->androidExternalFormat;
         yCbCrDesc.vkYCbCrModel = this->model;
         yCbCrDesc.vkYCbCrRange = this->range;

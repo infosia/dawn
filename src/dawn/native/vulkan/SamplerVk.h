@@ -35,7 +35,7 @@
 namespace dawn::native::vulkan {
 
 class Device;
-class Texture;
+class TextureView;
 
 class Sampler final : public SamplerBase {
   public:
@@ -58,14 +58,14 @@ class Sampler final : public SamplerBase {
 
 // All the information needed to create a StaticSampler for YCbCr sampling.
 struct StaticSamplerSpecialization {
-    static StaticSamplerSpecialization From(const Texture* tex, const Sampler* sampler);
+    static StaticSamplerSpecialization From(const TextureView* view, const Sampler* sampler);
 
     wgpu::FilterMode minFilter;
     wgpu::FilterMode magFilter;
     bool isYCbCr;
 
     // Members that are only used when isYcbCr
-    VkFormat format;
+    VkFormat vkFormat;
     uint32_t androidExternalFormat;
     VkSamplerYcbcrModelConversion model;
     VkSamplerYcbcrRange range;
@@ -77,8 +77,8 @@ struct StaticSamplerSpecialization {
 
     template <typename H>
     friend H AbslHashValue(H h, const StaticSamplerSpecialization& s) {
-        return H::combine(std::move(h), s.minFilter, s.magFilter, s.isYCbCr, s.format, s.androidExternalFormat,
-                          s.model, s.range);
+        return H::combine(std::move(h), s.minFilter, s.magFilter, s.isYCbCr, s.vkFormat,
+                          s.androidExternalFormat, s.model, s.range);
     }
 
     ResultOrError<Ref<SamplerBase>> CreateSampler(DeviceBase* device) const;
