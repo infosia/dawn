@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f32aca3_43a420aa",
+        "filename": "test/tint/extensions/framebuffer_fetch/multiple_outputs/f16.wgsl.expected.spvasm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-03-18T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f255c9_ec7f97ec",
+      "revId": "7576552d5768ac88e25cf6ea16122ac5692cdfd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5081e295_95ceb6aa",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-18T15:28:37Z",
       "side": 1,
       "message": "I don\u0027t think we should add this as it will never pass anywhere, ti should be a unittest instead of an e2e test.",
+      "revId": "7576552d5768ac88e25cf6ea16122ac5692cdfd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c436e13_8f31d6f4",
+        "filename": "test/tint/extensions/framebuffer_fetch/one_output/bool.wgsl",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-03-18T17:14:07Z",
+      "side": 1,
+      "message": "Makes sense, I already have an IR validation test here for bool, and for the frontend it\u0027s already covered by the Invalid  FramebufferFetchExtensionTest_Types parametrized tests, so just removed these.",
+      "parentUuid": "5081e295_95ceb6aa",
       "revId": "7576552d5768ac88e25cf6ea16122ac5692cdfd7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
