@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f3d31c1_a20d111f",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "Why does this need to make a new span internally, can\u0027t it just pass through `span`? The size() should be Extent already, no?",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "102bfc36_7eb1721a",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c943ce3_edd7f9b5",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca2ace3_5fd3eeef",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "```suggestion\n/// Helper for constructing a Vector from a span. Only the size must be supplied as the type is\n```",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff1e08a7_610ba82d",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "```suggestion\n/// @param span the input span\n```",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5594e246_3cc5f307",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-18T15:43:16Z",
+      "side": 1,
+      "message": "```suggestion\n/// declared. Furthermore, Spans are often of const pointer/reference type, but a Vector cannot be\n```",
+      "revId": "725fe939bf2b71e87da48fdde0b9103f75711d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
