@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "db71481fb4dbb0490fb12c48ea78c98d744e4ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4886a382_922cb8c3",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T16:22:08Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-member-init\n\ninitializer for member \u0027gamutConversio...\n\ncheck: readability-redundant-member-init\n\ninitializer for member \u0027gamutConversionMatrix\u0027 is redundant (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-member-init.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-member-init` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "db71481fb4dbb0490fb12c48ea78c98d744e4ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
