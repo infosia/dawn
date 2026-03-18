@@ -178,16 +178,20 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     if (params.numPlanes == 2) {
         DAWN_ASSERT(descriptor->yuvToRgbConversionMatrix);
         const float* yMat = descriptor->yuvToRgbConversionMatrix;
-        std::copy(yMat, yMat + 12, params.yuvToRgbConversionMatrix.begin());
+        params.yuvToRgbConversionMatrix = {
+            {yMat[0], yMat[1], yMat[2], yMat[3]},  //
+            {yMat[4], yMat[5], yMat[6], yMat[7]},  //
+            {yMat[8], yMat[9], yMat[10], yMat[11]},
+        };
     }
 
     // Gamut correction is performed by multiplying a 3x3 matrix passed from Chromium. The
     // matrix was computed by multiplying the appropriate source and destination gamut
     // matrices sourced from ui/gfx/color_space.cc.
     const float* gMat = descriptor->gamutConversionMatrix;
-    params.gamutConversionMatrix = {gMat[0], gMat[1], gMat[2], 0.0f,  //
-                                    gMat[3], gMat[4], gMat[5], 0.0f,  //
-                                    gMat[6], gMat[7], gMat[8], 0.0f};
+    params.gamutConversionMatrix = {{gMat[0], gMat[1], gMat[2]},  //
+                                    {gMat[3], gMat[4], gMat[5]},  //
+                                    {gMat[6], gMat[7], gMat[8]}};
 
     // Gamma decode/encode is performed by the logic:
     //    if (abs(v) < params.D) {

@@ -44,11 +44,11 @@ struct ExternalTextureParams {
     uint32_t numPlanes;
     // TODO(crbug.com/dawn/1466): Only go as few steps as necessary.
     uint32_t doYuvToRgbConversionOnly;
-    std::array<uint32_t, 2> padding;
-    std::array<float, 12> yuvToRgbConversionMatrix;
+    // Multiplied with the vector on the left (Mat4x3 would use 16 more bytes).
+    math::Mat3x4f yuvToRgbConversionMatrix;
     std::array<float, 8> gammaDecodingParams = {};
     std::array<float, 8> gammaEncodingParams = {};
-    std::array<float, 12> gamutConversionMatrix = {};
+    math::Mat3x3f gamutConversionMatrix;
     math::Mat3x2f sampleTransform;
     math::Mat3x2f loadTransform;
     math::Vec2f samplePlane0RectMin;
