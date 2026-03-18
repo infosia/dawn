@@ -632,11 +632,25 @@ struct ProgrammablePassState : public StackAllocated {
                 etInfo.plane0, *etInfo.staticSampler);
         }
 
-        // Allocate new VkDescriptorSet for each used one, using the specialization.
-        //      - Make sure they get freed afterwards.
+        // XXX RAII somehow?
+        PerBindGroup<DescriptorSetAllocation> newDescriptorSets;
+        for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
+            auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
+            auto boundBG = ToBackend(descriptorSets.GetBindGroup(group));
+            DAWN_TRY_ASSIGN(newDescriptorSets[group],
+                            bgl->GetSpecializedSetFor(boundBG, s.layout.bindGroups[group]));
+        }
 
-        // Make the new pipeline + layout with specialization.
-        // Bind the pipeline.
+        typename Pipeline::SpecializedHandles pipelineHandles;
+        DAWN_TRY_ASSIGN(pipelineHandles, lastPipeline->GetOrCreateSpecializedHandle(std::move(s)));
+
+        VkCommandBuffer commands = recordingContext->commandBuffer;
+        vk.CmdBindPipeline(commands, PipelineBindPoint, pipelineHandles.pipeline);
+
+        // Bind descriptor sets.
+        // Need to handle resource table.
+        // Need to handle dynamic offests.
+
         // Dirty all immediates, apply with new layout.
         // Apply the new bindgroups. CAREFUL OF THE RESOURCE TABLE NEEDS test.
         // DoOperation.
