@@ -161,14 +161,15 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     std::unordered_set<tint::BindingPoint> staticallyPairedTextureBindingPoints;
     for (BindGroupIndex group : in.layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bgl = ToBackend(in.layout->GetBindGroupLayout(group));
+        const auto& textureToStaticSampler = bgl->GetTextureToStaticSamplerMap();
 
         for (BindingIndex index : bgl->GetSampledTextureIndices()) {
             const auto& bindingInfo = bgl->GetBindingInfo(index);
 
-            if (auto samplerIndex = bgl->GetStaticSamplerIndexForTexture(index)) {
+            if (auto it = textureToStaticSampler.find(index); it != textureToStaticSampler.end()) {
                 tint::BindingPoint wgslBindingPoint = {.group = uint32_t(startOfBindGroups + group),
                                                        .binding = uint32_t(bindingInfo.binding)};
-                bindings.texture[wgslBindingPoint].binding = uint32_t(samplerIndex.value());
+                bindings.texture[wgslBindingPoint].binding = uint32_t(it->second);
                 staticallyPairedTextureBindingPoints.insert(wgslBindingPoint);
             }
         }

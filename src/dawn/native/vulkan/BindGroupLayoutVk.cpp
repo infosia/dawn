@@ -51,7 +51,7 @@ namespace {
 struct VulkanStaticBindings {
     ityp::vector<BindingIndex, VkDescriptorSetLayoutBinding> bindings;
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
-    absl::flat_hash_map<BindingIndex, BindingIndex> textureToStaticSamplerIndex;
+    TextureToStaticSamplerMap textureToStaticSampler;
 };
 VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBase* layout) {
     VulkanStaticBindings res;
@@ -67,7 +67,7 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
             continue;
         }
 
-        res.textureToStaticSamplerIndex[samplerBindingInfo.sampledTextureIndex] = bindingIndex;
+        res.textureToStaticSampler[samplerBindingInfo.sampledTextureIndex] = bindingIndex;
     }
 
     // Compute the bindings that will be chained in the DescriptorSetLayout create info. We add
@@ -88,7 +88,7 @@ VulkanStaticBindings ComputeVulkanStaticBindings(const BindGroupLayoutInternalBa
         }
 
         // This texture will be bound into the VkDescriptorSet at the index for the sampler itself.
-        if (res.textureToStaticSamplerIndex.contains(bindingIndex)) {
+        if (res.textureToStaticSampler.contains(bindingIndex)) {
             continue;
         }
 
@@ -211,7 +211,7 @@ MaybeError BindGroupLayout::Initialize() {
     mDescriptorSetAllocator =
         DescriptorSetAllocator::Create(device, std::move(bindings.descriptorCountPerType));
 
-    mTextureToStaticSamplerIndex = std::move(bindings.textureToStaticSamplerIndex);
+    mTextureToStaticSampler = std::move(bindings.textureToStaticSampler);
 
     VkDescriptorSetLayoutCreateInfo createInfo{
         .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
@@ -273,12 +273,8 @@ void BindGroupLayout::ReduceMemoryUsage() {
     mBindGroupAllocator->DeleteEmptySlabs();
 }
 
-std::optional<BindingIndex> BindGroupLayout::GetStaticSamplerIndexForTexture(
-    BindingIndex textureBinding) const {
-    if (mTextureToStaticSamplerIndex.contains(textureBinding)) {
-        return mTextureToStaticSamplerIndex.at(textureBinding);
-    }
-    return {};
+const TextureToStaticSamplerMap& BindGroupLayout::GetTextureToStaticSamplerMap() const {
+    return mTextureToStaticSampler;
 }
 
 void BindGroupLayout::SetLabelImpl() {

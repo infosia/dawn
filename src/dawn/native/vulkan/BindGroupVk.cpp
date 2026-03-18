@@ -66,6 +66,14 @@ BindGroup::BindGroup(Device* device,
 BindGroup::~BindGroup() = default;
 
 MaybeError BindGroup::InitializeImpl() {
+    WriteDescriptorSet(GetHandle(), ToBackend(GetLayout())->GetTextureToStaticSamplerMap());
+
+    SetLabelImpl();
+    return {};
+}
+
+void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
+                                   const TextureToStaticSamplerMap& textureToStaticSampler) {
     const auto* layout = ToBackend(GetLayout());
 
     // Now do a write of a single descriptor set with all possible chained data allocated on the
@@ -73,7 +81,7 @@ MaybeError BindGroup::InitializeImpl() {
     // invalidate the pointers chained in `writes`.
     // TODO(https://crbug.com/438554018): Use Vulkan's descriptor set update template so as to need
     // a single allocation, and one that could be reused at the layout level.
-    const uint32_t bindingCount = static_cast<uint32_t>((GetLayout()->GetBindingCount()));
+    const uint32_t bindingCount = static_cast<uint32_t>((layout->GetBindingCount()));
     ityp::stack_vec<uint32_t, VkWriteDescriptorSet, kMaxOptimalBindingsPerGroup> writes(
         bindingCount);
     ityp::stack_vec<uint32_t, VkDescriptorBufferInfo, kMaxOptimalBindingsPerGroup> writeBufferInfo(
@@ -100,7 +108,7 @@ MaybeError BindGroup::InitializeImpl() {
         auto& write = writes[writeIndex];
         write.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
         write.pNext = nullptr;
-        write.dstSet = GetHandle();
+        write.dstSet = dsSet;
         // Arrays all have a single binding, so compute the binding index for the array, which is
         // the same as the binding index for the 0th element.
         write.dstBinding = uint32_t(bindingIndex - bindingInfo.indexInArray);
@@ -166,9 +174,9 @@ MaybeError BindGroup::InitializeImpl() {
             // TODO(https://crbug.com/438554018): Alternatively take advantage of the precomputed
             // descriptor update template to do set this up once in the layout and have it be
             // transparent in the BindGroup.
-            if (auto samplerIndex = ToBackend(GetLayout())->GetStaticSamplerIndexForTexture(i)) {
+            if (auto it = textureToStaticSampler.find(i); it != textureToStaticSampler.end()) {
                 // Write the info of the texture at the binding index for the sampler.
-                write->dstBinding = static_cast<uint32_t>(samplerIndex.value());
+                write->dstBinding = static_cast<uint32_t>(it->second);
                 write->descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
             }
 
@@ -217,9 +225,6 @@ MaybeError BindGroup::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
     // TODO(https://crbug.com/42242088): Batch these updates
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), numWrites, writes.data(), 0, nullptr);
-
-    SetLabelImpl();
-    return {};
 }
 
 void BindGroup::DestroyImpl(DestroyReason reason) {
