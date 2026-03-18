@@ -16,6 +16,23 @@
       "message": "Thoughts? Seems useful due to auto-conversions of buffer types.",
       "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cca9e3f_a5f2a278",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-18T21:51:52Z",
+      "side": 1,
+      "message": "A lot of this is repetitive with validation code. Happy to hear any refactoring ideas.",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
