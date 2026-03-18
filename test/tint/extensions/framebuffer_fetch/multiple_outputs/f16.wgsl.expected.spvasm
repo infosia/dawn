@@ -1,0 +1,5 @@
+SKIP: FAILED
+
+@color attribute on f16 type is not supported by the Vulkan SPIR-V backend
+
+tint executable returned error: exit status 1
