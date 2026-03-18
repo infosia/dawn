@@ -68,6 +68,24 @@
       "message": "Why not just set `local_slice_{span}` ?",
       "revId": "855e736777619d95831a58f7eb60ad978abf0f01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a06ac3e_18148192",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-18T16:54:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d9a389_58bd4a0e",
+      "revId": "855e736777619d95831a58f7eb60ad978abf0f01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
