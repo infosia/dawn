@@ -83,6 +83,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60eae5c5_602651ab",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:27:28Z",
+      "side": 1,
+      "message": "Oh wow, thanks for figuring this out! Changed to use a member variable for the buffer contents, always.",
+      "parentUuid": "abc8e865_daa29450",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 43
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8be71b1_c824264e",
@@ -120,6 +144,30 @@
       "side": 1,
       "message": "We should also add a test where we use a non-zero offset and return `nullptr` also. (I think that would cause the UB in the other comment I put in the validation side.)",
       "parentUuid": "d8be71b1_c824264e",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 30
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee5aa84_c09da523",
+        "filename": "src/dawn/tests/unittests/wire/WireSpecificCommandTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:27:28Z",
+      "side": 1,
+      "message": "The client should be unmapping the buffer on device.Destroy to match the dawn::native behavior but it doesn\u0027t currently. I should have commented on the CL that this will be needed to test the behavior when https://issues.chromium.org/42240407 is resolved.\n\nI\u0027ve also wanted some way to test with specific commands in the wire for a long time as we\u0027ve had multiple fuzzer issues and bug reports that we couldn\u0027t write regression tests for as they were not possible to express with the dawn::wire::client procs. So we just fixed them and hope that it doesn\u0027t regress :/\n\nI\u0027ll add a test case with an offset as well.",
+      "parentUuid": "8fc49da7_1dc36222",
       "range": {
         "startLine": 76,
         "startChar": 4,
@@ -177,6 +225,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3787e34d_12050730",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:27:28Z",
+      "side": 1,
+      "message": "Yeah this totally should be below the nullptr check, especially since an offset would allow bypassing the nullptr check.",
+      "parentUuid": "ee6198ad_6f9d936b",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e68b67c6_cbf038b4",
@@ -200,6 +272,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74280db9_f4fa5186",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68b67c6_cbf038b4",
+      "range": {
+        "startLine": 228,
+        "startChar": 11,
+        "endLine": 228,
+        "endChar": 14
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e5c6ac0_2b5b610d",
@@ -213,6 +309,30 @@
       "writtenOn": "2026-03-17T19:05:40Z",
       "side": 1,
       "message": "nit. However it is easy to check for misuses",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 23
+      },
+      "revId": "2870ae1ecd2c31055cb0c6b40778638b23b71465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5066d775_e8c63103",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-18T10:27:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e5c6ac0_2b5b610d",
       "range": {
         "startLine": 231,
         "startChar": 8,
