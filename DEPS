@@ -370,7 +370,7 @@ deps = {
   },
 
   'third_party/dxc': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@054e0f5076cf2ab6ff48442adab9c38e95824629',
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@ea53cb53ba1ce62bf5bbc139ec65aeba40251526',
   },
 
   'third_party/dxheaders': {
@@ -836,6 +836,19 @@ hooks = [
                'build/config/siso/configure_siso.py',
                '--rbe_instance',
                Var('rbe_instance'),
+               ],
+  },
+  # Download D3D12 Agility SDK for x64 builds
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and host_os == "win" and host_cpu == "x64"',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--output',
+               'third_party/agility_sdk',
+               '--version',
+               '1.720.0-preview',
                ],
   },
 ]
