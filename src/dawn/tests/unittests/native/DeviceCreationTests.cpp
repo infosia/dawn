@@ -195,6 +195,13 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
         Feature feature = static_cast<Feature>(i);
         wgpu::FeatureName featureName = ToAPI(feature);
 
+        // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it should only be
+        // added by dawn::wire.
+        if (featureName ==
+            wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+            continue;
+        }
+
         // Only test experimental features.
         if (kFeatureNameAndInfoList[feature].featureState == FeatureInfo::FeatureState::Stable) {
             continue;
@@ -222,10 +229,22 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             wgpu::SupportedFeatures supportedFeatures;
             device.GetFeatures(&supportedFeatures);
+
+            size_t supportedFeaturesCount = supportedFeatures.featureCount;
+            for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
+                // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it should only
+                // be added by dawn::wire.
+                if (supportedFeatures.features[fi] ==
+                    wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+                    supportedFeaturesCount--;
+                    break;
+                }
+            }
+
             uint32_t expectedFeatureCount = kDefaultExpectedFeatureCount +
                                             utils::FeatureAndImplicitlyEnabled(featureName).size();
 
-            ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+            ASSERT_EQ(expectedFeatureCount, supportedFeaturesCount);
 
             bool foundFeatureName = false;
             for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
@@ -257,7 +276,19 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                     kDefaultExpectedFeatureCount +
                     utils::FeatureAndImplicitlyEnabled(featureName).size();
 
-                ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+                size_t supportedFeaturesCount = supportedFeatures.featureCount;
+                for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
+                    // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it should
+                    // only be added by dawn::wire.
+                    if (supportedFeatures.features[fi] ==
+                        wgpu::FeatureName::
+                            DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+                        supportedFeaturesCount--;
+                        break;
+                    }
+                }
+
+                ASSERT_EQ(expectedFeatureCount, supportedFeaturesCount);
 
                 bool foundFeatureName = false;
                 for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
@@ -280,7 +311,19 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                     kDefaultExpectedFeatureCount +
                     utils::FeatureAndImplicitlyEnabled(featureName).size();
 
-                ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+                size_t supportedFeaturesCount = supportedFeatures.featureCount;
+                for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
+                    // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it should
+                    // only be added by dawn::wire.
+                    if (supportedFeatures.features[fi] ==
+                        wgpu::FeatureName::
+                            DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+                        supportedFeaturesCount--;
+                        break;
+                    }
+                }
+
+                ASSERT_EQ(expectedFeatureCount, supportedFeaturesCount);
 
                 bool foundFeatureName = false;
                 for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {

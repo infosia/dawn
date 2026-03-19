@@ -1820,6 +1820,8 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         mEnabledFeatures.EnableFeature(wgpu::FeatureName::CoreFeaturesAndLimits);
     }
 
+    ApplyUseSharedMemoryFileMappingHandleInWire();
+
     // TODO(384921944): Enable Compat's optional features by default in Core Mode.
 }
 
@@ -2866,6 +2868,14 @@ tint::InternalCompilerErrorCallbackInfo DeviceBase::GetTintInternalCompilerError
         .callback = tintInternalCompilerErrorCallback,
         .userdata = this,
     };
+}
+
+void DeviceBase::ApplyUseSharedMemoryFileMappingHandleInWire() {
+    constexpr wgpu::FeatureName kFeatureName =
+        wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping;
+    if (GetPhysicalDevice()->SupportsAllRequiredFeatures({&kFeatureName, 1}, mToggles)) {
+        mEnabledFeatures.EnableFeature(kFeatureName);
+    }
 }
 
 }  // namespace dawn::native

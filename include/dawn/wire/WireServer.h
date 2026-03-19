@@ -97,6 +97,16 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     virtual bool DeserializeWriteHandle(const void* deserializePointer,
                                         size_t deserializeSize,
                                         WriteHandle** writeHandle) = 0;
+    virtual bool DeserializeReadHandleWithSharedMemory(const void* deserializePointer,
+                                                       size_t deserializeSize,
+                                                       ReadHandle** readHandle) {
+        return DeserializeReadHandle(deserializePointer, deserializeSize, readHandle);
+    }
+    virtual bool DeserializeWriteHandleWithSharedMemory(const void* deserializePointer,
+                                                        size_t deserializeSize,
+                                                        WriteHandle** writeHandle) {
+        return DeserializeWriteHandle(deserializePointer, deserializeSize, writeHandle);
+    }
 
     class DAWN_WIRE_EXPORT ReadHandle {
       public:

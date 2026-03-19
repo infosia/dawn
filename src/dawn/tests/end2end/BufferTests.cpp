@@ -721,14 +721,13 @@ TEST_P(BufferMappingTests, WaitForOnSubmittedWorkDoneThenMap) {
     mapReadBuffer.Unmap();
 }
 
-DAWN_INSTANTIATE_TEST_P(BufferMappingTests,
-                        {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
-                         D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
-                         D3D12Backend(), MetalBackend(), OpenGLBackend(), OpenGLESBackend(),
-                         OpenGLESBackend({"gl_defer"}), VulkanBackend(), WebGPUBackend()},
-                        std::initializer_list<wgpu::CallbackMode>{
-                            wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
-                            wgpu::CallbackMode::AllowSpontaneous});
+DAWN_INSTANTIATE_TEST_P(
+    BufferMappingTests,
+    {D3D12Backend(),
+     D3D12Backend({"use_shared_memory_file_mapping_handle_for_wire_buffer_mapping"})},
+    std::initializer_list<wgpu::CallbackMode>{wgpu::CallbackMode::WaitAnyOnly,
+                                              wgpu::CallbackMode::AllowProcessEvents,
+                                              wgpu::CallbackMode::AllowSpontaneous});
 
 class BufferMappingCallbackTests : public BufferMappingTests {
   protected:
@@ -900,13 +899,15 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionWriteAndThenMap) {
     buffer.Unmap();
 }
 
-DAWN_INSTANTIATE_TEST_P(BufferMappingCallbackTests,
-                        {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
-                         D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
-                         D3D12Backend(), MetalBackend(), VulkanBackend(), WebGPUBackend()},
-                        std::initializer_list<wgpu::CallbackMode>{
-                            wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
-                            wgpu::CallbackMode::AllowSpontaneous});
+DAWN_INSTANTIATE_TEST_P(
+    BufferMappingCallbackTests,
+    {D3D11Backend(), D3D11Backend({"d3d11_disable_cpu_buffers"}),
+     D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}), D3D12Backend(),
+     D3D12Backend({"use_shared_memory_file_mapping_handle_for_wire_buffer_mapping"}),
+     MetalBackend(), VulkanBackend(), WebGPUBackend()},
+    std::initializer_list<wgpu::CallbackMode>{wgpu::CallbackMode::WaitAnyOnly,
+                                              wgpu::CallbackMode::AllowProcessEvents,
+                                              wgpu::CallbackMode::AllowSpontaneous});
 
 class BufferMappedAtCreationTests : public DawnTest {
   protected:
@@ -1154,18 +1155,20 @@ TEST_P(BufferMappedAtCreationTests, GetMappedRangeZeroSized) {
     buffer.Unmap();
 }
 
-DAWN_INSTANTIATE_TEST(BufferMappedAtCreationTests,
-                      D3D11Backend(),
-                      D3D11Backend({"d3d11_disable_cpu_buffers"}),
-                      D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      OpenGLESBackend({"gl_defer"}),
-                      VulkanBackend(),
-                      WebGPUBackend());
+DAWN_INSTANTIATE_TEST(
+    BufferMappedAtCreationTests,
+    D3D11Backend(),
+    D3D11Backend({"d3d11_disable_cpu_buffers"}),
+    D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers"}),
+    D3D12Backend(),
+    D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+    D3D12Backend({"use_shared_memory_file_mapping_handle_for_wire_buffer_mapping"}),
+    MetalBackend(),
+    OpenGLBackend(),
+    OpenGLESBackend(),
+    OpenGLESBackend({"gl_defer"}),
+    VulkanBackend(),
+    WebGPUBackend());
 
 class BufferTests : public DawnTest {};
 
@@ -1422,15 +1425,17 @@ TEST_P(BufferTests, CreateBufferOOMMapAsync) {
     }
 }
 
-DAWN_INSTANTIATE_TEST(BufferTests,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      OpenGLESBackend({"gl_defer"}),
-                      VulkanBackend(),
-                      WebGPUBackend());
+DAWN_INSTANTIATE_TEST(
+    BufferTests,
+    D3D11Backend(),
+    D3D12Backend(),
+    D3D12Backend({"use_shared_memory_file_mapping_handle_for_wire_buffer_mapping"}),
+    MetalBackend(),
+    OpenGLBackend(),
+    OpenGLESBackend(),
+    OpenGLESBackend({"gl_defer"}),
+    VulkanBackend(),
+    WebGPUBackend());
 
 class BufferNoSuballocationTests : public DawnTest {};
 
