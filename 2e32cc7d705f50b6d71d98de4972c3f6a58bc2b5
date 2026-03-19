@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce0bd64_6d8d6c16",
+        "filename": "src/dawn/common/WGPUDeviceCallbackInfos.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-19T19:26:23Z",
+      "side": 1,
+      "message": "Yea, it\u0027s very similar to a read-write mutex. I actually considered using that, but for these callbacks, I wanted to explicitly avoid holding locks while using them in case of re-entrancy issues. With the semaphore, it\u0027s easier to ensure re-entrancy is handled properly without deadlocking.",
+      "parentUuid": "233e4385_6fd220db",
+      "revId": "2e32cc7d705f50b6d71d98de4972c3f6a58bc2b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5691c14f_9ccd3f63",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-03-18T12:05:35Z",
       "side": 1,
       "message": "nit: methods could start with a verb, maybe `CallErrorCallback`?",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "2e32cc7d705f50b6d71d98de4972c3f6a58bc2b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db08eff_58802d4e",
+        "filename": "src/dawn/common/WGPUDeviceCallbackInfos.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-19T19:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5691c14f_9ccd3f63",
       "range": {
         "startLine": 51,
         "startChar": 3,
