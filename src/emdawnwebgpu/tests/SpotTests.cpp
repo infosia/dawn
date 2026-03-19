@@ -465,6 +465,20 @@ TEST_P(SpotTests, ImportExternalTexture) {
     });
 }
 
+TEST_P(SpotTests, ImportBuffer) {
+    auto cBuffer = static_cast<WGPUBuffer>(EM_ASM_PTR(
+        {
+            const cDevice = $0;
+            const device = WebGPU.getJsObject(cDevice);
+
+            const jsBuffer = device.createBuffer({size : 4, usage : GPUBufferUsage.COPY_SRC});
+            const cBuffer = WebGPU.importJsBuffer(jsBuffer);
+            return cBuffer;
+        },
+        mDevice.Get()));
+    auto buffer = wgpu::Buffer::Acquire(cBuffer);
+}
+
 TEST_P(SpotTests, MapReadGetMappedRange) {
     wgpu::BufferDescriptor readbackDesc{
         .usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead,

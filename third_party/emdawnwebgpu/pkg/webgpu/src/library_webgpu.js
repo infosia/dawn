@@ -164,11 +164,11 @@ var LibraryWebGPU = {
     {{{ gpu.makeImportJsObject('Adapter') }}}
     {{{ gpu.makeImportJsObject('BindGroup') }}}
     {{{ gpu.makeImportJsObject('BindGroupLayout') }}}
-    importJsBuffer__deps: ['emwgpuCreateBuffer'],
+    importJsBuffer__deps: ['emwgpuImportBuffer'],
     importJsBuffer: (buffer, parentPtr = 0) => {
       // At the moment, we do not allow importing pending buffers.
       assert(buffer.mapState === "unmapped");
-      var bufferPtr = _emwgpuCreateBuffer(parentPtr);
+      var bufferPtr = _emwgpuImportBuffer(parentPtr);
       WebGPU.Internals.jsObjectInsert(bufferPtr, buffer);
       return bufferPtr;
     },
