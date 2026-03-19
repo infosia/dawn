@@ -63,6 +63,30 @@
       },
       "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c493058f_349385d4",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-19T13:34:45Z",
+      "side": 1,
+      "message": "No, I wasn\u0027t really thinking this through fully. That makes sense. IMO using `std::string label \u003d GetLabel()` makes more obvious it\u0027s keeping a copy around but you\u0027re right it\u0027s safe.",
+      "parentUuid": "ee55c56d_52b3c77e",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
