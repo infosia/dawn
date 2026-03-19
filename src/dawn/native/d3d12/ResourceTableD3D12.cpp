@@ -39,18 +39,19 @@
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PipelineLayoutD3D12.h"
+#include "dawn/native/d3d12/SamplerD3D12.h"
 #include "dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h"
 #include "dawn/native/d3d12/StagingDescriptorAllocatorD3D12.h"
 
 namespace dawn::native::d3d12 {
 
 // static
-std::vector<D3D12_DESCRIPTOR_RANGE1> ResourceTable::GetCbvUavSrvDescriptorRanges(
+ResultOrError<ResourceTable::DescriptorRanges> ResourceTable::GetDescriptorRanges(
     const PipelineLayout& layout) {
     // For SM 6.5-, we need to create one descriptor table with multiple overlapping ranges,
-    // each in its own register space, per resource type. This is because HLSL does not allow
-    // overlapping register ranges, and we need separate unbounded array types for each resource
-    // type: HLSL example:
+    // each in its own register space (group), per resource type. This is because HLSL does not
+    // allow overlapping register ranges, and we need separate unbounded array types for each
+    // resource type: HLSL example:
     //    Texture2D<float4> TextureTable1[] : register(t0, space1);
     //    Texture2D<uint4> TextureTable2[] : register(t0, space2);
     //    ...
@@ -65,37 +66,68 @@ std::vector<D3D12_DESCRIPTOR_RANGE1> ResourceTable::GetCbvUavSrvDescriptorRanges
     //
     // TODO(crbug.com/480110521): Add support for the SM >= 6.6 path
 
-    std::vector<D3D12_DESCRIPTOR_RANGE1> ranges;
+    DescriptorRanges ranges;
 
     const uint32_t baseRegisterSpace = layout.GetBaseResourceTableRegisterSpace();
-    const uint32_t defaultResourceCount =
-        static_cast<uint32_t>(ResourceTableDefaultResources::GetCount());
+
+    auto* device = ToBackend(layout.GetDevice());
+    auto* defaultResources = device->GetResourceTableDefaultResources();
+    const uint32_t defaultNonSamplersCount =
+        uint32_t{defaultResources->GetNonSamplerResources().size()};
 
     // The metadata storage buffer is bound to (kBaseResourceTableRegisterSpace, 0)
-    ranges.push_back(D3D12_DESCRIPTOR_RANGE1{
+    ranges.cbvUavSrvs.push_back(D3D12_DESCRIPTOR_RANGE1{
         .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
         .NumDescriptors = 1,
         .BaseShaderRegister = 0,
         .RegisterSpace = baseRegisterSpace,
         .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
-        .OffsetInDescriptorsFromTableStart = 0,  // Only one in this space
+        // Metadata is at register (binding) 0, the rest of the arrays in this range overlap
+        // starting at register (binding) 1.
+        .OffsetInDescriptorsFromTableStart = 0,
     });
 
-    // Create multiple overlapping ranges, one per resource type,
-    // bound to (1 + baseRegisterSpace + i, 0)
-    for (uint32_t i : Range(defaultResourceCount)) {
-        ranges.push_back(D3D12_DESCRIPTOR_RANGE1{
-            .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
-            .NumDescriptors = kMaxResourceTableSize + defaultResourceCount,
-            // HLSL doesn't allow overlapping register ranges, so each one is in its own space
-            // (group), and starts at register (binding) 0 with no other range bound after it.
-            .BaseShaderRegister = 0,
-            .RegisterSpace = 1 + baseRegisterSpace + i,
-            // Volatile required for bindless
-            .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
-            // Force the same offset in the descriptor table to overlaps these ranges
-            .OffsetInDescriptorsFromTableStart = 1,
-        });
+    // Create multiple overlapping ranges for non-sampler default resources, one per type, bound to
+    // (1 + baseRegisterSpace + i, 0)
+    for (auto [i, defaultResource] : Enumerate(defaultResources->GetResources())) {
+        MatchVariant(
+            defaultResource,
+            [&](Ref<TextureViewBase>) {
+                ranges.cbvUavSrvs.push_back(D3D12_DESCRIPTOR_RANGE1{
+                    .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV,
+                    .NumDescriptors = kMaxResourceTableSize + defaultNonSamplersCount,
+                    // HLSL doesn't allow overlapping register ranges, so each one is in its own
+                    // space (group), and starts at register (binding) 0 with no other range bound
+                    // after it.
+                    .BaseShaderRegister = 0,
+                    // Offset by 1 because metadata is in space baseRegisterSpace
+                    .RegisterSpace = baseRegisterSpace + 1 + uint32_t{i},
+                    // Volatile required for bindless
+                    .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
+                    // Force the same offset in the descriptor table to overlaps these ranges,
+                    // starting at offset 1 because metadata is in register (binding) 0.
+                    .OffsetInDescriptorsFromTableStart = 1,
+                });
+            },
+            [&](Ref<SamplerBase>) {
+                ranges.samplers.push_back(D3D12_DESCRIPTOR_RANGE1{
+                    .RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SAMPLER,
+                    // This size must includes both user and default samplers
+                    .NumDescriptors = D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE,
+                    // HLSL doesn't allow overlapping register ranges, so each one is in its own
+                    // space (group), and starts at register (binding) 0 with no other range bound
+                    // after it.
+                    .BaseShaderRegister = 0,
+                    // Offset by 1 because metadata is in space baseRegisterSpace
+                    .RegisterSpace = baseRegisterSpace + 1 + uint32_t{i},
+                    // Volatile required for bindless
+                    .Flags = D3D12_DESCRIPTOR_RANGE_FLAG_DESCRIPTORS_VOLATILE,
+                    // Force the same offset in the descriptor table to overlaps these ranges.
+                    // Unlike for SRVs, we can overlap them at register (binding) 0 since as there's
+                    // no metadata entry in this range.
+                    .OffsetInDescriptorsFromTableStart = 0,
+                });
+            });
     }
 
     return ranges;
@@ -117,12 +149,36 @@ MaybeError ResourceTable::Initialize() {
     Device* device = ToBackend(GetDevice());
     ID3D12Device* d3d12Device = device->GetD3D12Device();
 
-    // Allocate the CPU descriptor heap
-    const uint32_t descriptorCount = 1u + static_cast<uint32_t>(GetSizeWithDefaultResources());
-    DAWN_TRY(AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, descriptorCount));
+    // Allocate the CPU descriptor heaps
 
-    // Only write the metadata buffer to the heap initially, all the other bindings will be written
-    // as needed when they are inserted in the ResourceTable.
+    const uint32_t apiSize = uint32_t{GetAPISize()};
+    auto* defaultResources = device->GetResourceTableDefaultResources();
+
+    const uint32_t defaultNonSamplersCount =
+        uint32_t{defaultResources->GetNonSamplerResources().size()};
+    const uint32_t numViewDescriptors = 1u + apiSize + defaultNonSamplersCount;
+    DAWN_TRY_ASSIGN(mViewHeap,
+                    AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, numViewDescriptors));
+
+    // Samplers are capped to D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE
+    // TODO(amaiorano): Detect and OOM if user adds more than
+    // (D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE - defaultSamplersCount) samplers to the table
+    const uint32_t defaultSamplersCount = uint32_t{defaultResources->GetSamplerResources().size()};
+    const uint32_t numSamplerDescriptors = std::min<uint32_t>(
+        apiSize + defaultSamplersCount, D3D12_MAX_SHADER_VISIBLE_SAMPLER_HEAP_SIZE);
+    DAWN_TRY_ASSIGN(mSamplerHeap,
+                    AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER, numSamplerDescriptors));
+
+    // Init unused sampler indices with 0..numSamplerDescriptors-1
+    mUnusedSamplerIndices.resize(numSamplerDescriptors);
+    for (uint16_t i = 0; i < mUnusedSamplerIndices.size(); ++i) {
+        mUnusedSamplerIndices[i] = i;
+    }
+    // Reserve space for all possible slots
+    mSlotToSamplerIndex.reserve(size_t{GetSizeWithDefaultResources()});
+
+    // Only write the metadata buffer to the view heap initially, all the other bindings will be
+    // written as needed when they are inserted in the ResourceTable.
     Buffer* metadataBuffer = ToBackend(GetMetadataBuffer());
     ID3D12Resource* resource = metadataBuffer->GetD3D12Resource();
     DAWN_ASSERT(resource != nullptr);
@@ -142,15 +198,14 @@ MaybeError ResourceTable::Initialize() {
     uint32_t offsetInDescriptorCount = 0;  // Metadata buffer is the first element in the table
     d3d12Device->CreateShaderResourceView(
         resource, &desc,
-        mCPUViewAllocation.OffsetFrom(mViewSizeIncrement, offsetInDescriptorCount));
+        mViewHeap.cpuAllocation.OffsetFrom(mViewHeap.sizeIncrement, offsetInDescriptorCount));
 
     return {};
 }
 
-MaybeError ResourceTable::AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType,
-                                          uint32_t descriptorCount) {
-    DAWN_ASSERT(!mCPUHeap);
-
+ResultOrError<ResourceTable::Heap> ResourceTable::AllocateCPUHeap(
+    D3D12_DESCRIPTOR_HEAP_TYPE heapType,
+    uint32_t descriptorCount) {
     Device* device = ToBackend(GetDevice());
     ID3D12Device* d3d12Device = device->GetD3D12Device();
 
@@ -160,35 +215,44 @@ MaybeError ResourceTable::AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType,
     heapDescriptor.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
     heapDescriptor.NodeMask = 0;
 
-    ComPtr<ID3D12DescriptorHeap> heap;
-    DAWN_TRY(CheckHRESULT(d3d12Device->CreateDescriptorHeap(&heapDescriptor, IID_PPV_ARGS(&heap)),
+    ComPtr<ID3D12DescriptorHeap> handle;
+    DAWN_TRY(CheckHRESULT(d3d12Device->CreateDescriptorHeap(&heapDescriptor, IID_PPV_ARGS(&handle)),
                           "ID3D12Device::CreateDescriptorHeap"));
 
     const D3D12_CPU_DESCRIPTOR_HANDLE baseCPUDescriptor = {
-        heap->GetCPUDescriptorHandleForHeapStart().ptr};
+        handle->GetCPUDescriptorHandleForHeapStart().ptr};
 
-    mCPUHeap = std::move(heap);
-    mCPUViewAllocation = CPUDescriptorHeapAllocation{baseCPUDescriptor, 0};
-    mViewSizeIncrement = d3d12Device->GetDescriptorHandleIncrementSize(heapType);
-
-    return {};
+    return ResourceTable::Heap{
+        .handle = std::move(handle),
+        .cpuAllocation = CPUDescriptorHeapAllocation{baseCPUDescriptor, 0},
+        .gpuAllocation = {},  // Allocated by Populate*
+        .sizeIncrement = d3d12Device->GetDescriptorHandleIncrementSize(heapType),
+        .numDescriptors = descriptorCount,
+    };
 }
 
-void ResourceTable::FreeCPUHeap() {
-    mCPUHeap.Reset();
-    mCPUViewAllocation.Invalidate();
-    mViewSizeIncrement = 0;
+void ResourceTable::FreeCPUHeap(ResourceTable::Heap& heap) {
+    heap.handle.Reset();
+    heap.cpuAllocation.Invalidate();
+    heap.sizeIncrement = 0;
+    heap.numDescriptors = 0;
 }
 
 // Apply updates to resources or to the metadata buffers that are pending.
 MaybeError ResourceTable::ApplyPendingUpdates(CommandRecordingContext* recordingContext) {
     Updates updates = AcquireDirtySlotUpdates();
 
-    if (!updates.metadataUpdates.empty()) {
-        DAWN_TRY(UpdateMetadataBuffer(recordingContext, updates.metadataUpdates));
+    // Remove resource bindings first to return sampler indices to the unused list so that
+    // enough are available during update.
+    if (!updates.resourceRemovals.empty()) {
+        DAWN_TRY(RemoveResourceBindings(updates.resourceRemovals));
     }
+    // Update resource bindings before metadata to ensure mSlotToSamplerIndex is up-to-date
     if (!updates.resourceUpdates.empty()) {
         DAWN_TRY(UpdateResourceBindings(updates.resourceUpdates));
+    }
+    if (!updates.metadataUpdates.empty()) {
+        DAWN_TRY(UpdateMetadataBuffer(recordingContext, updates.metadataUpdates));
     }
 
     return {};
@@ -196,6 +260,8 @@ MaybeError ResourceTable::ApplyPendingUpdates(CommandRecordingContext* recording
 
 MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordingContext,
                                                const std::vector<MetadataUpdate>& updates) {
+    // For metadata updates, we already created an SRV for metadata buffer in Initialize(), so all
+    // we need to do is update the buffer.
     Device* device = ToBackend(GetDevice());
 
     // Allocate enough space for all the data to modify and schedule the copies.
@@ -214,7 +280,15 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
             // Record a CopyBufferRegion for each update
             // TODO(crbug.com/473354062): reduce number of calls by copying contiguous regions
             for (auto [i, update] : Enumerate(updates)) {
-                stagedData[i] = update.data;  // Copy to staged
+                if (auto it = mSlotToSamplerIndex.find(update.slot);
+                    it != mSlotToSamplerIndex.end()) {
+                    // Store sampler index in high 16 bits, type id in low 16 bits
+                    auto samplerIndex = it->second;
+                    stagedData[i] = update.data | (samplerIndex << 16);
+                } else {
+                    stagedData[i] = update.data;  // Copy to staged
+                }
+
                 // Copy staged to metadata buffer
                 recordingContext->GetCommandList1()->CopyBufferRegion(
                     metadataBuffer->GetD3D12Resource(), update.offset,
@@ -230,6 +304,20 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
         });
 }
 
+MaybeError ResourceTable::RemoveResourceBindings(const std::vector<ResourceUpdate>& removals) {
+    for (const ResourceUpdate& removal : removals) {
+        if (std::holds_alternative<raw_ptr<SamplerBase>>(removal.resource)) {
+            // Return the sampler index to the unused list, and remove the slot from the map
+            auto it = mSlotToSamplerIndex.find(removal.slot);
+            DAWN_ASSERT(it != mSlotToSamplerIndex.end());
+            uint16_t samplerIndex = it->second;
+            mUnusedSamplerIndices.push_back(samplerIndex);
+            mSlotToSamplerIndex.erase(it);
+        }
+    }
+    return {};
+}
+
 MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& updates) {
     Device* device = ToBackend(GetDevice());
     ID3D12Device* d3d12Device = device->GetD3D12Device();
@@ -237,10 +325,16 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
     for (const ResourceUpdate& update : updates) {
         // TODO(https://issues.chromium.org/473444515): Support buffer, texel buffers and storage
         // textures.
-
         MatchVariant(
             update.resource,
             [&](TextureViewBase* textureView) {
+                if (auto it = mSlotToSamplerIndex.find(update.slot);
+                    it != mSlotToSamplerIndex.end()) {
+                    // Replacing a sampler, mark its index as unused
+                    mUnusedSamplerIndices.push_back(it->second);
+                    mSlotToSamplerIndex.erase(it);
+                }
+
                 auto* view = ToBackend(textureView);
                 ID3D12Resource* resource = ToBackend(view->GetTexture())->GetD3D12Resource();
                 if (resource == nullptr) {
@@ -253,12 +347,36 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
 
                 d3d12Device->CreateShaderResourceView(
                     resource, &view->GetSRVDescriptor(),
-                    mCPUViewAllocation.OffsetFrom(mViewSizeIncrement, offsetInDescriptorCount));
+                    mViewHeap.cpuAllocation.OffsetFrom(mViewHeap.sizeIncrement,
+                                                       offsetInDescriptorCount));
             },
-            [&](SamplerBase* sampler) {
-                // TODO(https://issues.chromium.org/473354063): Support samplers updates.
-                // Skip for now to allow most e2e tests to pass when attempting to add default
-                // samplers.
+            [&](SamplerBase* samplerBase) {
+                auto* sampler = ToBackend(samplerBase);
+                if (sampler == nullptr) {
+                    // Skip resource if it was destroyed
+                    return;
+                }
+                const auto& samplerDesc = sampler->GetSamplerDescriptor();
+
+                uint16_t samplerIndex = 0;
+
+                if (auto it = mSlotToSamplerIndex.find(update.slot);
+                    it != mSlotToSamplerIndex.end()) {
+                    // Replacing a sampler with sampler, reuse the same index
+                    samplerIndex = it->second;
+                } else {
+                    // Take a new one and update the map
+                    DAWN_ASSERT(!mUnusedSamplerIndices.empty());
+                    samplerIndex = mUnusedSamplerIndices.back();
+                    mUnusedSamplerIndices.pop_back();
+                    mSlotToSamplerIndex[update.slot] = samplerIndex;
+                }
+
+                uint32_t offsetInDescriptorCount = samplerIndex;
+
+                d3d12Device->CreateSampler(
+                    &samplerDesc, mSamplerHeap.cpuAllocation.OffsetFrom(mSamplerHeap.sizeIncrement,
+                                                                        offsetInDescriptorCount));
             });
     }
 
@@ -266,7 +384,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
 }
 
 bool ResourceTable::PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator) {
-    if (viewAllocator->IsAllocationStillValid(mGPUViewAllocation)) {
+    if (viewAllocator->IsAllocationStillValid(mViewHeap.gpuAllocation)) {
         return true;
     }
 
@@ -276,32 +394,65 @@ bool ResourceTable::PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocato
     Device* device = ToBackend(GetDevice());
 
     // Copy metadata + resource descriptors
-    const uint32_t descriptorCount = 1u + static_cast<uint32_t>(GetSizeWithDefaultResources());
 
     D3D12_CPU_DESCRIPTOR_HANDLE baseCPUDescriptor;
-    if (!viewAllocator->AllocateGPUDescriptors(descriptorCount,
+    if (!viewAllocator->AllocateGPUDescriptors(mViewHeap.numDescriptors,
                                                device->GetQueue()->GetPendingCommandSerial(),
-                                               &baseCPUDescriptor, &mGPUViewAllocation)) {
+                                               &baseCPUDescriptor, &mViewHeap.gpuAllocation)) {
         return false;
     }
 
     // CPU bindgroups are sparsely allocated across CPU heaps. Instead of doing
     // simple copies per bindgroup, a single non-simple copy could be issued.
     // TODO(dawn:155): Consider doing this optimization.
-    device->GetD3D12Device()->CopyDescriptorsSimple(descriptorCount, baseCPUDescriptor,
-                                                    mCPUViewAllocation.GetBaseDescriptor(),
+    device->GetD3D12Device()->CopyDescriptorsSimple(mViewHeap.numDescriptors, baseCPUDescriptor,
+                                                    mViewHeap.cpuAllocation.GetBaseDescriptor(),
                                                     D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
     return true;
 }
 
+bool ResourceTable::PopulateSamplers(ShaderVisibleDescriptorAllocator* samplerAllocator) {
+    if (samplerAllocator->IsAllocationStillValid(mSamplerHeap.gpuAllocation)) {
+        return true;
+    }
+
+    // Attempt to allocate descriptors for the currently bound shader-visible heaps.
+    // Return false if allocation fails to indicate that AllocateAndSwitchShaderVisibleHeap should
+    // be called.
+    Device* device = ToBackend(GetDevice());
+
+    // Copy sampler descriptors
+
+    D3D12_CPU_DESCRIPTOR_HANDLE baseCPUDescriptor;
+    if (!samplerAllocator->AllocateGPUDescriptors(
+            mSamplerHeap.numDescriptors, device->GetQueue()->GetPendingCommandSerial(),
+            &baseCPUDescriptor, &mSamplerHeap.gpuAllocation)) {
+        return false;
+    }
+
+    // CPU bindgroups are sparsely allocated across CPU heaps. Instead of doing
+    // simple copies per bindgroup, a single non-simple copy could be issued.
+    // TODO(dawn:155): Consider doing this optimization.
+    device->GetD3D12Device()->CopyDescriptorsSimple(mSamplerHeap.numDescriptors, baseCPUDescriptor,
+                                                    mSamplerHeap.cpuAllocation.GetBaseDescriptor(),
+                                                    D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER);
+
+    return true;
+}
+
 D3D12_GPU_DESCRIPTOR_HANDLE ResourceTable::GetBaseViewDescriptor() const {
-    return mGPUViewAllocation.GetBaseDescriptor();
+    return mViewHeap.gpuAllocation.GetBaseDescriptor();
+}
+
+D3D12_GPU_DESCRIPTOR_HANDLE ResourceTable::GetBaseSamplerDescriptor() const {
+    return mSamplerHeap.gpuAllocation.GetBaseDescriptor();
 }
 
 void ResourceTable::DestroyImpl(DestroyReason reason) {
     ResourceTableBase::DestroyImpl(reason);
-    FreeCPUHeap();
+    FreeCPUHeap(mViewHeap);
+    FreeCPUHeap(mSamplerHeap);
 }
 
 void ResourceTable::SetLabelImpl() {

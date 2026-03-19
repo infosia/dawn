@@ -481,10 +481,6 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     mDynamicUploader = std::make_unique<DynamicUploader>(this);
     mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
     mInternalPipelineStore = std::make_unique<InternalPipelineStore>(this);
-    if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
-        mResourceTableDefaultResources = std::make_unique<ResourceTableDefaultResources>();
-    }
-
     DAWN_ASSERT(GetPlatform() != nullptr);
     mWorkerTaskPool = GetPlatform()->CreateWorkerTaskPool();
     mAsyncTaskManager = std::make_unique<AsyncTaskManager>(mWorkerTaskPool.get());
@@ -518,6 +514,11 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
         mMutex = AcquireRef(new DeviceMutex);
     } else {
         mMutex = nullptr;
+    }
+
+    if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
+        DAWN_TRY_ASSIGN(mResourceTableDefaultResources,
+                        ResourceTableDefaultResources::Create(this));
     }
 
     GetInstance()->AddDevice(this);

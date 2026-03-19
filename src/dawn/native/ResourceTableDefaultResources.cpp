@@ -88,6 +88,10 @@ constexpr auto kIndexOfDefault = [] {
     return indices;
 }();
 
+constexpr auto kFirstDefaultSamplerIndex =
+    ResourceTableSlot{kIndexOfDefault[tint::ResourceType::kSampler_filtering]};
+constexpr auto kNumDefaultSamplers = ResourceTableSlot{3};
+
 // This helper function is used in ASSERTs to check that the default resources are compatible with
 // the typeIds that they will be used as defaults for.
 [[maybe_unused]] bool AreTypeIDCompatible(tint::ResourceType resourceTypeId,
@@ -144,11 +148,10 @@ ResourceTableSlot ResourceTableDefaultResources::IndexOf(tint::ResourceType reso
     return ResourceTableSlot{kIndexOfDefault[resourceType]};
 }
 
-ResultOrError<ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource>>
-ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
-    if (!mDefaultResources.empty()) {
-        return {{mDefaultResources.data(), mDefaultResources.size()}};
-    }
+// static
+ResultOrError<std::unique_ptr<ResourceTableDefaultResources>> ResourceTableDefaultResources::Create(
+    DeviceBase* device) {
+    ityp::vector<ResourceTableSlot, Resource> resources;
 
     // Each resource is added in the order specified by GetOrder()
     auto AddDefaultTextureView = [&](TextureBase* texture, const TextureViewDescriptor* viewDesc =
@@ -161,8 +164,8 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
         DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(view),
-                                        GetOrder()[mDefaultResources.size()]));
-        mDefaultResources.push_back(view);
+                                        GetOrder()[resources.size()]));
+        resources.push_back(view);
 
         return {};
     };
@@ -171,8 +174,8 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
         DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(sampler),
-                                        GetOrder()[mDefaultResources.size()]));
-        mDefaultResources.push_back(sampler);
+                                        GetOrder()[resources.size()]));
+        resources.push_back(sampler);
     };
 
     // Create the color format single-sampled views.
@@ -314,7 +317,23 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         }
     }
 
-    return {{mDefaultResources.data(), mDefaultResources.size()}};
+    return std::unique_ptr<ResourceTableDefaultResources>(
+        new ResourceTableDefaultResources{resources});
+}
+
+ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource>
+ResourceTableDefaultResources::GetResources() {
+    return {mDefaultResources.data(), mDefaultResources.size()};
+}
+
+ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource>
+ResourceTableDefaultResources::GetSamplerResources() {
+    return {&mDefaultResources[kFirstDefaultSamplerIndex], kNumDefaultSamplers};
+}
+
+ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource>
+ResourceTableDefaultResources::GetNonSamplerResources() {
+    return {mDefaultResources.data(), mDefaultResources.size() - kNumDefaultSamplers};
 }
 
 }  // namespace dawn::native

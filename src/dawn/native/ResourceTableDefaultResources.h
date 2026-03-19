@@ -59,10 +59,22 @@ class ResourceTableDefaultResources : public NonMovable {
     // Returns the index of `resourceType` in the span returned by `GetOrder()`
     static ResourceTableSlot IndexOf(tint::ResourceType resourceType);
 
-    // Lazily creates and returns the default resources
-    ResultOrError<ityp::span<ResourceTableSlot, Resource>> GetOrCreate(DeviceBase* device);
+    // Creates a ResourceTableDefaultResources instance
+    static ResultOrError<std::unique_ptr<ResourceTableDefaultResources>> Create(DeviceBase* device);
+
+    // Returns a span of all default resources
+    ityp::span<ResourceTableSlot, Resource> GetResources();
+
+    // Returns a span of all sampler default resources
+    ityp::span<ResourceTableSlot, Resource> GetSamplerResources();
+
+    // Returns a span of all non-sampler default resources
+    ityp::span<ResourceTableSlot, Resource> GetNonSamplerResources();
 
   private:
+    ResourceTableDefaultResources(ityp::vector<ResourceTableSlot, Resource> resources)
+        : mDefaultResources(std::move(resources)) {}
+
     ityp::vector<ResourceTableSlot, Resource> mDefaultResources;
 };
 

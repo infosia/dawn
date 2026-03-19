@@ -508,19 +508,38 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
         if (usesResourceTable) {
             DAWN_ASSERT(mResourceTable);
             // We don't track resource table dirtiness like we do for BindGroups, so always call
-            // PopulateViews. We also do this after bind groups because resource tables are more
-            // likely to make the largest GPU sub-allocation, so if it returns false, we don't waste
-            // extra time copying a large table to GPU heap memory twice.
+            // PopulateViews/Samplers. We also do this after bind groups because resource tables are
+            // more likely to make the largest GPU sub-allocation, so if it returns false, we don't
+            // waste extra time copying a large table to GPU heap memory twice.
             populatedViews = populatedViews && mResourceTable->PopulateViews(viewAllocator);
+            populatedSamplers =
+                populatedSamplers && mResourceTable->PopulateSamplers(samplerAllocator);
         }
 
         if (!populatedViews || !populatedSamplers) {
-            if (!populatedViews) {
-                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
-            }
+            // Keep growing the gpu heaps until they're large enough
+            while (!populatedViews || !populatedSamplers) {
+                if (!populatedViews) {
+                    DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
+                }
 
-            if (!populatedSamplers) {
-                DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap());
+                if (!populatedSamplers) {
+                    DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap());
+                }
+
+                for (BindGroupIndex index : mBindGroupLayoutsMask) {
+                    BindGroup* group = ToBackend(mBindGroups[index]);
+                    populatedViews = group->PopulateViews(viewAllocator);
+                    populatedSamplers = group->PopulateSamplers(samplerAllocator);
+                    // DAWN_ASSERT(populatedViews);
+                    // DAWN_ASSERT(populatedSamplers);
+                }
+                if (usesResourceTable) {
+                    populatedViews = mResourceTable->PopulateViews(viewAllocator);
+                    populatedSamplers = mResourceTable->PopulateSamplers(samplerAllocator);
+                    // DAWN_ASSERT(populatedViews);
+                    // DAWN_ASSERT(populatedSamplers);
+                }
             }
 
             mDirtyBindGroupsObjectChangedOrIsDynamic |= mBindGroupLayoutsMask;
@@ -529,18 +548,6 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
             // Must be called before applying the bindgroups. This sets the descriptor heaps for
             // both render and compute pipelines.
             SetID3D12DescriptorHeaps(commandList);
-
-            for (BindGroupIndex index : mBindGroupLayoutsMask) {
-                BindGroup* group = ToBackend(mBindGroups[index]);
-                populatedViews = group->PopulateViews(viewAllocator);
-                populatedSamplers = group->PopulateSamplers(samplerAllocator);
-                DAWN_ASSERT(populatedViews);
-                DAWN_ASSERT(populatedSamplers);
-            }
-            if (usesResourceTable) {
-                populatedViews = mResourceTable->PopulateViews(viewAllocator);
-                DAWN_ASSERT(populatedViews);
-            }
         }
 
         // With the shader-visible heaps updated, we can now apply the ResourceTable and BindGroups
@@ -661,11 +668,21 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
                             const PipelineLayout* pipelineLayout) {
         DAWN_ASSERT(mPipelineLayout->UsesResourceTable() && mResourceTable);
 
-        // Set the one root descriptor table that contains both the metadata buffer and resource
-        // descriptors
-        uint32_t parameterIndex = pipelineLayout->GetResourceTableRootParameterIndex();
-        const D3D12_GPU_DESCRIPTOR_HANDLE baseDescriptor = mResourceTable->GetBaseViewDescriptor();
-        SetRootDescriptorTable(commandList, parameterIndex, baseDescriptor);
+        // Set the root descriptor table that contains both the metadata buffer and textures/buffers
+        {
+            uint32_t parameterIndex = pipelineLayout->GetResourceTableCbvUavSrvRootParameterIndex();
+            const D3D12_GPU_DESCRIPTOR_HANDLE baseDescriptor =
+                mResourceTable->GetBaseViewDescriptor();
+            SetRootDescriptorTable(commandList, parameterIndex, baseDescriptor);
+        }
+
+        // Set the root descriptor table that contains samplers
+        {
+            uint32_t parameterIndex = pipelineLayout->GetResourceTableSamplerRootParameterIndex();
+            const D3D12_GPU_DESCRIPTOR_HANDLE baseDescriptor =
+                mResourceTable->GetBaseSamplerDescriptor();
+            SetRootDescriptorTable(commandList, parameterIndex, baseDescriptor);
+        }
     }
 
     void ApplyBindGroup(ID3D12GraphicsCommandList* commandList,
