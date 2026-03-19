@@ -28,15 +28,22 @@
 #include "dawn/native/d3d12/BackendD3D12.h"
 
 #include <memory>
+#include <mutex>
 #include <utility>
 
 #include "dawn/common/Log.h"
 #include "dawn/native/D3D12Backend.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
+#include "dawn/native/d3d12/AgilitySDK.h"
 #include "dawn/native/d3d12/PhysicalDeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
+
+#if defined(DAWN_USE_AGILITY_SDK)
+// Auto-generated header: contains AGILITY_SDK_VERSION.
+#include "agility_sdk_version.h"
+#endif
 
 namespace dawn::native::d3d12 {
 
@@ -51,6 +58,36 @@ MaybeError Backend::Initialize() {
 
         DAWN_TRY(Base::Initialize(std::move(functions)));
     }
+
+#if defined(DAWN_USE_AGILITY_SDK)
+    // Activate Agility SDK via programmatic API.
+    //
+    // The exe-export approach (D3D12SDKVersion / D3D12SDKPath symbols in
+    // AgilitySDK.cpp) only works when those symbols are in the .exe module.
+    // When Dawn is built as a DLL, d3d12.dll's loader ignores them.
+    //
+    // ID3D12SDKConfiguration::SetSDKVersion() is the alternative: it works
+    // from any module and must be called before the first D3D12CreateDevice.
+    static std::once_flag sAgilitySDKInit;
+    std::call_once(
+        sAgilitySDKInit, [this]() {
+            if (GetFunctions()->d3d12GetInterface) {
+                ComPtr<ID3D12SDKConfiguration> sdkConfig;
+                if (SUCCEEDED(GetFunctions()->d3d12GetInterface(CLSID_D3D12SDKConfiguration,
+                                                                IID_PPV_ARGS(&sdkConfig)))) {
+                    sdkConfig->SetSDKVersion(AGILITY_SDK_VERSION, ".\\D3D12\\");
+                    dawn::InfoLog()
+                        << "[AgilitySDK] SetSDKVersion(" << AGILITY_SDK_VERSION
+                        << ") called - D3D12Core.dll will be loaded on first D3D12CreateDevice";
+                } else {
+                    dawn::InfoLog()
+                        << "[AgilitySDK] ID3D12SDKConfiguration unavailable — inbox runtime";
+                }
+            } else {
+                dawn::InfoLog() << "[AgilitySDK] D3D12GetInterface not found — inbox runtime";
+            }
+        });
+#endif
 
     // Enable the debug layer (requires the Graphics Tools "optional feature").
     const auto instance = GetInstance();
