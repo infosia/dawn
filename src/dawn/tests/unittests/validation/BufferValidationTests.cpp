@@ -248,6 +248,18 @@ TEST_P(BufferMappingValidationTest, MapAsync_ErrorBuffer) {
     AssertMapAsyncError(buffer, GetParam(), 0, 4);
 }
 
+// Test map async with a mode that includes exactly one valid mode, but is an invalid value.
+TEST_P(BufferMappingValidationTest, MapAsync_UnsupportedMode) {
+    wgpu::Buffer buffer = CreateBuffer(4);
+
+    // Create an invalid map mode that includes the valid mode.
+    static constexpr wgpu::MapMode kInvalidMapModeBits =
+        ~(wgpu::MapMode::Read | wgpu::MapMode::Write);
+    wgpu::MapMode mode = kInvalidMapModeBits | GetParam();
+
+    AssertMapAsyncError(buffer, mode, 0, 4);
+}
+
 // Test map async with an invalid offset and size alignment.
 TEST_P(BufferMappingValidationTest, MapAsync_OffsetSizeAlignment) {
     // Control case, offset aligned to 8 and size to 4 is valid
