@@ -16,6 +16,24 @@
       "message": "Unfortunately tests are failing, it seems to crash during `dawn_end2end_tests`. You can try reproducing this locally by building `dawn_end2end_tests` and running it with\n`--gtest_filter\u003d\u0027Metal/SharedTextureMemoryTests.RenderThenSampleEncodeAfterBeginAccess/Metal_*_Backend_IOSurface_LayerCount_1\u0027`",
       "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96c08c4_2c4ea0ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-19T20:49:21Z",
+      "side": 1,
+      "message": "Local runs give:\n```\nError: Assertion failure at ../../src/dawn/tests/white_box/SharedTextureMemoryTests.cpp:780 (CheckFourColors): (0) \u0026\u0026 \"Unreachable code hit\"\n```\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/white_box/SharedTextureMemoryTests.cpp;l\u003d780;drc\u003db32188a3d9fc7a06abcababa7f67fc1ce9e923c3\n\nThe test needs adding some more switch cases for the new formats",
+      "parentUuid": "470dd60e_39d28646",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
