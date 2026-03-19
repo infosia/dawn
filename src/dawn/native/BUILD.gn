@@ -169,8 +169,6 @@ if (dawn_enable_d3d12 && dawn_use_agility_sdk) {
     _bin_dir = "$dawn_agility_sdk_dir/src/build/native/bin/x64"
   } else if (target_cpu == "x86") {
     _bin_dir = "$dawn_agility_sdk_dir/src/build/native/bin/win32"
-  } else if (target_cpu == "arm64") {
-    _bin_dir = "$dawn_agility_sdk_dir/src/build/native/bin/arm64"
   }
   assert(defined(_bin_dir), "Agility SDK not supported on $target_cpu")
 
