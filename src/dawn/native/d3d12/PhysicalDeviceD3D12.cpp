@@ -44,6 +44,7 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
+#include "dawn/native/d3d12/AgilitySDK.h"
 #include "dawn/native/d3d12/BackendD3D12.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
@@ -105,11 +106,31 @@ MaybeError PhysicalDevice::InitializeImpl() {
     // D3D12 cannot check for feature support without a device.
     // Create the device to populate the adapter properties then reuse it when needed for actual
     // rendering.
-    const PlatformFunctions* functions = GetBackend()->GetFunctions();
-    if (FAILED(functions->d3d12CreateDevice(GetHardwareAdapter(), D3D_FEATURE_LEVEL_11_0,
-                                            __uuidof(ID3D12Device), &mD3d12Device))) {
+    HRESULT hr = E_FAIL;
+
+    // Prefer the ID3D12DeviceFactory obtained via CreateDeviceFactory so that
+    // the Agility SDK runtime is used regardless of how Dawn is linked (static
+    // lib, shared lib, or DLL).
+    ID3D12DeviceFactory* factory = GetBackend()->GetDeviceFactory();
+    if (factory) {
+        hr = factory->CreateDevice(GetHardwareAdapter(), D3D_FEATURE_LEVEL_11_0,
+                                   IID_PPV_ARGS(&mD3d12Device));
+    }
+
+    if (FAILED(hr)) {
+        // Fallback to the global D3D12CreateDevice (no Agility SDK override,
+        // or CreateDeviceFactory was not available).
+        const PlatformFunctions* functions = GetBackend()->GetFunctions();
+        hr = functions->d3d12CreateDevice(GetHardwareAdapter(), D3D_FEATURE_LEVEL_11_0,
+                                          __uuidof(ID3D12Device), &mD3d12Device);
+    }
+
+    if (FAILED(hr)) {
         return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
     }
+
+    // Query and log the SDK version actually used by the newly created device.
+    dawn::native::d3d12::LogAgilitySDKStatus(mD3d12Device.Get());
 
     // Check if we should block the use of D3D12 on the current device.
     DAWN_TRY(ValidateUseOfD3D12());
