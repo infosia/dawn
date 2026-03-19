@@ -152,8 +152,8 @@
 	path = third_party/dxheaders
 	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectX-Headers
 	gclient-condition = host_os != "win"
-[submodule "third_party/khronos/OpenGL-Registry"]
-	path = third_party/khronos/OpenGL-Registry
+[submodule "third_party/OpenGL-Registry/src"]
+	path = third_party/OpenGL-Registry/src
 	url = https://chromium.googlesource.com/external/github.com/KhronosGroup/OpenGL-Registry
 [submodule "third_party/khronos/EGL-Registry"]
 	path = third_party/khronos/EGL-Registry
