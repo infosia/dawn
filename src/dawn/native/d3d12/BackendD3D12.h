@@ -59,6 +59,11 @@ class Backend final : public d3d::Backend {
 
     const PlatformFunctions* GetFunctions() const;
 
+    // Creates an ID3D12Device for the given adapter, using the Agility SDK
+    // device factory if available and falling back to the global
+    // D3D12CreateDevice otherwise.
+    MaybeError CreateD3DDevice(IUnknown* adapter, ComPtr<ID3D12Device>* device);
+
   protected:
     ResultOrError<Ref<PhysicalDeviceBase>> CreatePhysicalDeviceFromIDXGIAdapter(
         ComPtr<IDXGIAdapter> dxgiAdapter) override;

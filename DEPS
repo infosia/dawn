@@ -854,6 +854,25 @@ hooks = [
                Var('rbe_instance'),
                ],
   },
+  # Download D3D12 Agility SDK for x64 builds.
+  # The SDK is extracted into a versioned directory (e.g.
+  # third_party/agility_sdk_1.619.2/) so that bumping the version
+  # creates a new sibling directory and gclient automatically re-runs the
+  # download.  Keep the version below in sync with:
+  #   - src/dawn/native/BUILD.gn        (_agility_sdk_dir)
+  #   - src/dawn/native/d3d12/AgilitySDK.h (kAgilitySDKVersion)
+  # NOTE: Preview Agility SDK builds may require Windows Developer Mode to be
+  # enabled at runtime for CreateDeviceFactory / SDK activation to succeed.
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and host_os == "win" and (host_cpu == "x64" or host_cpu == "x86")',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--version',
+               '1.619.2',
+               ],
+  },
 ]
 
 recursedeps = [
