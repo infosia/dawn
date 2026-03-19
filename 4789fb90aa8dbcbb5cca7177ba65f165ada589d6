@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a745e263_b8d82bd9",
+        "filename": "src/dawn/native/RenderPipeline.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:59:32Z",
+      "side": 1,
+      "message": "Thanks! That makes sense. Is there any way (in the future) to test that the caching is indeed updated correctly?",
+      "parentUuid": "1fdf816a_686e7503",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d421dbf1_c5ddb0ae",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 3
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I\u0027ve expanded it in the latest patch, now includes primitive topology, cull mode, front face, and stencil ops.",
       "parentUuid": "d421dbf1_c5ddb0ae",
+      "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3863d9_d8cd3612",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:59:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4a109fbd_20ec3de3",
       "revId": "4789fb90aa8dbcbb5cca7177ba65f165ada589d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
