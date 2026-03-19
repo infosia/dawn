@@ -31,7 +31,22 @@
 #include "dawn/native/d3d/d3d_platform.h"
 
 // clang-format off
+// Prefer the Agility SDK d3d12.h when the package has been fetched (gclient
+// sync).  Fall back to the Windows SDK header otherwise so that builds without
+// the Agility SDK still compile.
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmicrosoft-enum-value"
+#pragma clang diagnostic ignored "-Wnested-anon-types"
+#endif
+#if __has_include("third_party/agility-sdk/src/build/native/include/d3d12.h")
+#include "third_party/agility-sdk/src/build/native/include/d3d12.h"
+#else
 #include <d3d12.h>
+#endif
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 #include <d3d11on12.h>
 // clang-format on
 
