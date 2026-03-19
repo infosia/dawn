@@ -21,7 +21,7 @@
 /third_party/depot_tools
 /third_party/dxc
 /third_party/dxheaders
-/third_party/glfw
+/third_party/glfw/src
 /third_party/glslang/src/
 /third_party/google_benchmark/src
 /third_party/googletest
