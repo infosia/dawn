@@ -67,6 +67,23 @@
       "message": "Nice, thank you!",
       "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ceeb1ca_b8906898",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T09:39:08Z",
+      "side": 1,
+      "message": "This is the correct fix: https://github.com/Kangz/webgpu-headers/pull/new/fix_swizzle",
+      "revId": "c7f7c386b09ed3b95936c01297ef042b818f299b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
