@@ -180,6 +180,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             .resource_table_binding = tint::BindingPoint(baseGroup + 1, 0),
             .storage_buffer_binding = tint::BindingPoint(baseGroup, 0),
             .default_binding_type_order = {bindingTypeOrder.begin(), bindingTypeOrder.end()},
+            .get_sampler_index_from_metadata = true,
         };
     }
 

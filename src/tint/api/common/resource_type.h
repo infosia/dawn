@@ -76,6 +76,19 @@ enum class ResourceType : uint32_t {
 };
 TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kSampler_comparison);
 
+constexpr bool IsSampler(ResourceType res_type) {
+    switch (res_type) {
+        case ResourceType::kSampler_filtering:
+        case ResourceType::kSampler_non_filtering:
+        case ResourceType::kSampler_comparison:
+            return true;
+
+        default:
+            break;
+    }
+    return false;
+}
+
 }  // namespace tint
 
 #endif  // SRC_TINT_API_COMMON_RESOURCE_TYPE_H_

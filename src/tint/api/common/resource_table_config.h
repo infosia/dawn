@@ -88,10 +88,16 @@ struct ResourceTableConfig {
     //
     std::vector<ResourceType> default_binding_type_order;
 
+    // If true, the sampler index is stored in the metadata table alongside the type id: sampler
+    // index in the high 16 bits, type id in the low 16 bits. This is used on backends that limit
+    // the number of bound shader samplers.
+    bool get_sampler_index_from_metadata = false;
+
     TINT_REFLECT(ResourceTableConfig,
                  resource_table_binding,
                  storage_buffer_binding,
-                 default_binding_type_order);
+                 default_binding_type_order,
+                 get_sampler_index_from_metadata);
     bool operator==(const ResourceTableConfig&) const = default;
 };
 
