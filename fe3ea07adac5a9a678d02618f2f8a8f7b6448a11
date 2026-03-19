@@ -33,6 +33,23 @@
       "message": "That would make sense I think, or we could at least ASSERT it.",
       "revId": "fe3ea07adac5a9a678d02618f2f8a8f7b6448a11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "466e838c_3fd93a1f",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-19T14:40:03Z",
+      "side": 1,
+      "message": "`mDynamicState` contains the state for the first wgpu::RenderPipeline that gets created. The hash/equality function is updated to ignore those pieces of state so the same RenderPipelineVk object will be used internally for a wgpu::RenderPipeline with different dynmic state, right? Where does the second wgpu::RenderPipeline store and then set the dynamic state differently though?",
+      "revId": "fe3ea07adac5a9a678d02618f2f8a8f7b6448a11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
