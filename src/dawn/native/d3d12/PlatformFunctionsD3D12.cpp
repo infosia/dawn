@@ -32,6 +32,7 @@
 #include <string>
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/SystemUtils.h"
 
 namespace dawn::native::d3d12 {
@@ -45,6 +46,9 @@ MaybeError PlatformFunctions::Initialize(std::span<const std::string> searchPath
     DAWN_TRY(LoadD3D12());
     DAWN_TRY(LoadD3D11());
     LoadPIXRuntime(searchPaths);
+#ifdef DAWN_USE_AGILITY_SDK
+    DAWN_TRY(EnsureAgilitySDKDeviceFactory());
+#endif
     return {};
 }
 
@@ -70,6 +74,8 @@ MaybeError PlatformFunctions::LoadD3D12() {
                            "D3D12CreateVersionedRootSignatureDeserializer", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
+    // Optional: only present in Agility SDK / newer d3d12.dll. Absence is not an error.
+    mD3D12Lib.GetProc(&d3d12GetInterface, "D3D12GetInterface", &error);
 #endif
 
     return {};
@@ -92,6 +98,34 @@ MaybeError PlatformFunctions::LoadD3D11() {
 bool PlatformFunctions::IsPIXEventRuntimeLoaded() const {
     return mPIXEventRuntimeLib.Valid();
 }
+
+#ifdef DAWN_USE_AGILITY_SDK
+MaybeError PlatformFunctions::EnsureAgilitySDKDeviceFactory() {
+    // Already created; subsequent calls are no-ops.
+    if (deviceFactory) {
+        return {};
+    }
+    if (d3d12GetInterface) {
+        ComPtr<ID3D12SDKConfiguration1> sdkConfig1;
+        if (SUCCEEDED(d3d12GetInterface(CLSID_D3D12SDKConfiguration, IID_PPV_ARGS(&sdkConfig1)))) {
+            if (SUCCEEDED(sdkConfig1->CreateDeviceFactory(D3D12_SDK_VERSION, ".\\D3D12\\",
+                                                          IID_PPV_ARGS(&deviceFactory)))) {
+                // Allow the factory to return an existing compatible device rather than
+                // always creating a new one. Without this flag, Dawn and the Chromium media
+                // engine would each load a separate UMD instance, wasting memory.
+                deviceFactory->SetFlags(D3D12_DEVICE_FACTORY_FLAG_ALLOW_RETURNING_EXISTING_DEVICE);
+            }
+        }
+    }
+    if (!deviceFactory) {
+        return DAWN_INTERNAL_ERROR(
+            "[AgilitySDK] CreateDeviceFactory failed - "
+            "Agility SDK DLLs may be missing from .\\D3D12\\");
+    }
+    dawn::InfoLog() << "[AgilitySDK] active: SDK version = " << D3D12_SDK_VERSION;
+    return {};
+}
+#endif  // DAWN_USE_AGILITY_SDK
 
 void PlatformFunctions::LoadPIXRuntime(std::span<const std::string> searchPaths) {
     // TODO(dawn:766):

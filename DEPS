@@ -854,6 +854,19 @@ hooks = [
                Var('rbe_instance'),
                ],
   },
+  # Download D3D12 Agility SDK for x64 and x86 builds.
+  # NOTE: Preview Agility SDK builds may require Windows Developer Mode to be
+  # enabled at runtime for CreateDeviceFactory / SDK activation to succeed.
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and host_os == "win" and (host_cpu == "x64" or host_cpu == "x86")',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--version',
+               '1.619.2',
+               ],
+  },
 ]
 
 recursedeps = [

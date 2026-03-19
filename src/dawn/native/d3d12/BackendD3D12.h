@@ -59,6 +59,11 @@ class Backend final : public d3d::Backend {
 
     const PlatformFunctions* GetFunctions() const;
 
+    // Creates an ID3D12Device for the given adapter. Uses the Agility SDK
+    // device factory when DAWN_USE_AGILITY_SDK is defined, otherwise uses
+    // the global D3D12CreateDevice.
+    ResultOrError<ComPtr<ID3D12Device>> CreateD3DDevice(IUnknown* adapter);
+
   protected:
     ResultOrError<Ref<PhysicalDeviceBase>> CreatePhysicalDeviceFromIDXGIAdapter(
         ComPtr<IDXGIAdapter> dxgiAdapter) override;
