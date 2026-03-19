@@ -951,22 +951,25 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode, size_t offset, size_
                     "Mapping range (offset:%u, size: %u) doesn't fit in the size (%u) of %s.",
                     offset, size, mSize, this);
 
-    bool isReadMode = mode & wgpu::MapMode::Read;
-    bool isWriteMode = mode & wgpu::MapMode::Write;
-    DAWN_INVALID_IF(!(isReadMode ^ isWriteMode), "Map mode (%s) is not one of %s or %s.", mode,
-                    wgpu::MapMode::Write, wgpu::MapMode::Read);
-
-    if (mode & wgpu::MapMode::Read) {
-        DAWN_INVALID_IF(!(mInternalUsage & wgpu::BufferUsage::MapRead),
-                        "The buffer usages (%s) do not contain %s.", mInternalUsage,
-                        wgpu::BufferUsage::MapRead);
-    } else {
-        DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        DAWN_INVALID_IF(!(mInternalUsage & wgpu::BufferUsage::MapWrite),
-                        "The buffer usages (%s) do not contain %s.", mInternalUsage,
-                        wgpu::BufferUsage::MapWrite);
+    // If/when we allow multiple map modes at the same time for a map call, relax the restrictions
+    // that using a switch/case implicitly implies for the bitmask.
+    switch (mode) {
+        case wgpu::MapMode::Read: {
+            DAWN_INVALID_IF(!(mInternalUsage & wgpu::BufferUsage::MapRead),
+                            "The buffer usages (%s) do not contain %s.", mInternalUsage,
+                            wgpu::BufferUsage::MapRead);
+            break;
+        }
+        case wgpu::MapMode::Write: {
+            DAWN_INVALID_IF(!(mInternalUsage & wgpu::BufferUsage::MapWrite),
+                            "The buffer usages (%s) do not contain %s.", mInternalUsage,
+                            wgpu::BufferUsage::MapWrite);
+            break;
+        }
+        default:
+            return DAWN_VALIDATION_ERROR("Map mode (%s) is not one of %s or %s.", mode,
+                                         wgpu::MapMode::Write, wgpu::MapMode::Read);
     }
-
     return {};
 }
 
