@@ -87,6 +87,30 @@
       },
       "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ababdc60_b236eada",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-19T13:51:11Z",
+      "side": 1,
+      "message": "it should have been `const auto label \u003d GetLabel()` to allow GetLabel to change the return type in future. But well, this is AI generated code. And in a lot of our current code, we are also using `const std::string\u0026 label \u003d ...`. So it would need a lot of refactorings.",
+      "parentUuid": "c493058f_349385d4",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
