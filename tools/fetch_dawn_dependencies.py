@@ -101,7 +101,7 @@ def main(args):
         'third_party/dxheaders',
         'third_party/glfw',
         'third_party/jinja2',
-        'third_party/khronos/EGL-Registry',
+        'third_party/EGL-Registry/src',
         'third_party/OpenGL-Registry/src',
         'third_party/libprotobuf-mutator/src',
         'third_party/protobuf',

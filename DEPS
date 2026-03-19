@@ -383,7 +383,7 @@ deps = {
     'url': '{chromium_git}/external/github.com/KhronosGroup/OpenGL-Registry@5bae8738b23d06968e7c3a41308568120943ae77',
   },
 
-  'third_party/khronos/EGL-Registry': {
+  'third_party/EGL-Registry/src': {
     'url': '{chromium_git}/external/github.com/KhronosGroup/EGL-Registry@7dea2ed79187cd13f76183c4b9100159b9e3e071',
   },
 
