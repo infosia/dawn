@@ -33,6 +33,182 @@
       "message": "Hi, could you PTAL and vote? Thanks!",
       "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8dc286b_5f85fad4",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "This includes the vector versions as well, yea? Can we update the comment to make it clear that this is both the scalar and vector conversions?",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98d858d4_2cb298d2",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "Does this also handle vec, or just scalar?",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ab4078c_18829fe5",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "Maybe `Replace16BitBitcastWith16BitConstruct` to make it a lot clearer this was specific to 16-bit elements, didn\u0027t realize that from th usage above.",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd2d859f_f4568efc",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "```suggestion\n                auto* f16_vec_ty \u003d src_is_u16 ? ty.MatchWidth(ty.f16(), src_vec) : src_type;\n```",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdab1838_2406caf5",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "```suggestion\n                    auto* cast \u003d b.Convert(ty.MatchWidth(ty.f32(), src_vec), f16_src);\n```",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52fc018a_5e0a3d8a",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "```suggestion\n                        b.Let(\"r\", b.Call\u003chlsl::ir::BuiltinCall\u003e(ty.MatchWidth(ty.u32(), src),\n```",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d8dd14f_0e3073af",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "width isn\u0027t used above so this can be changed back.",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d87a87_5771fda9",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "```suggestion\n                auto* f16_vec_ty \u003d dst_is_u16 ? ty.MatchWidth(ty.f16(), dst_vec) : dst_type;\n```",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "842a08a5_0afe9f83",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "```suggestion\n                    if (dst_is_u16) {\n                        b.Return(f, b.Call\u003chlsl::ir::BuiltinCall\u003e(dst_type, BuiltinFn::kAsuint16,\n                                                                  f16_result));\n                    }\n                    b.Return(f, f16_result);\n```\n\nDon\u0027t need else as if returns",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 797,
+        "endChar": 21
+      },
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5c8e4ff_56230827",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-19T14:59:52Z",
+      "side": 1,
+      "message": "Can we get a BitcastVec2U16ToVec2F16 test?",
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
