@@ -116,7 +116,7 @@ MaybeError ResourceTable::Initialize() {
 
     Device* device = ToBackend(GetDevice());
 
-    uint32_t sampledImageCount = uint32_t(GetSizeWithDefaultResources());
+    uint32_t sampledImageCount = uint32_t{GetSizeWithDefaultResources()};
 
     // Allocate mPool.
     {
@@ -252,9 +252,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
 MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& updates) {
     Device* device = ToBackend(GetDevice());
 
-    ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource> defaultResources;
-    DAWN_TRY_ASSIGN(defaultResources,
-                    device->GetResourceTableDefaultResources()->GetOrCreate(device));
+    auto defaultResources = device->GetResourceTableDefaultResources()->GetResources();
 
     // For combined texture samplers, the exact type of texture or sampler we set in the descriptor
     // doesn't matter as long as it's not used by the shader, so we grab any one of each.

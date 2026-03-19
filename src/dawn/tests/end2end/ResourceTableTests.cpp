@@ -1239,9 +1239,6 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 
 // Test that a resource table texture can be sampled by a resource table sampler.
 TEST_P(ResourceTableTests, Sampler) {
-    // TODO(https://issues.chromium.org/473354063): Support samplers on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1307,9 +1304,6 @@ TEST_P(ResourceTableTests, Sampler) {
 
 // Test that a resource table texture can be sampled by multiple resource table samplers.
 TEST_P(ResourceTableTests, MultipleSamplers) {
-    // TODO(https://issues.chromium.org/473354063): Support samplers on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1347,94 +1341,116 @@ TEST_P(ResourceTableTests, MultipleSamplers) {
         return device.CreateSampler(&descriptor);
     };
 
-    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
-        enable chromium_experimental_resource_table;
-
-        @group(0) @binding(0) var<storage, read_write> results : array<vec4f>;
-
-        @vertex fn vs() -> @builtin(position) vec4f {
-            return vec4f(0, 0, 0.5, 0.5);
-        }
-
-        @fragment fn fs() -> @location(0) vec4f {
-            let samplerRepeat = getResource<sampler<non_filtering>>(0);
-            let samplerMirror = getResource<sampler<non_filtering>>(1);
-            let samplerClamp = getResource<sampler<non_filtering>>(2);
-            let t = getResource<texture_2d<f32, filterable>>(3);
-
-            results[0] = textureSample(t, samplerRepeat, vec2f(1, 0));
-            results[1] = textureSample(t, samplerRepeat, vec2f(1.5, 0));
-
-            results[2] = textureSample(t, samplerMirror, vec2f(1, 0));
-            results[3] = textureSample(t, samplerMirror, vec2f(1.5, 0));
-
-            results[4] = textureSample(t, samplerClamp, vec2f(1, 0));
-            results[5] = textureSample(t, samplerClamp, vec2f(1.5, 0));
-
-            return vec4f(0);
-        }
-    )");
-
-    // Create the pipeline.
-    utils::ComboRenderPipelineDescriptor pDesc;
-    pDesc.vertex.module = module;
-    pDesc.cFragment.module = module;
-    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
-    pDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
-    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
-
-    // Create the texture
-    wgpu::Texture texture = CreateCheckerboardTexture();
-
-    // Create 3 samplers
-    wgpu::Sampler samplerRepeat = CreateSampler(wgpu::AddressMode::Repeat);
-    wgpu::Sampler samplerMirror = CreateSampler(wgpu::AddressMode::MirrorRepeat);
-    wgpu::Sampler samplerClamp = CreateSampler(wgpu::AddressMode::ClampToEdge);
-
-    // Create the result buffer resource
-    wgpu::BufferDescriptor bDesc = {
-        .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
-        .size = sizeof(float) * 4 * 6,  // 6 vec4fs
+    struct Case {
+        size_t tableSize;
+        uint32_t samplerIndex0;
+        uint32_t samplerIndex1;
+        uint32_t samplerIndex2;
+        uint32_t textureIndex;
     };
-    wgpu::Buffer resultBuffer = device.CreateBuffer(&bDesc);
-    wgpu::BindGroup resultBG =
-        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, resultBuffer}});
+    constexpr auto kMax = kMaxResourceTableSize;
+    Case cases[] = {
+        {4, 0, 1, 2, 3},
+        {2048, 2048 - 1, 2048 - 2, 2048 - 3, 2048 - 4},
+        {kMax, kMax - 1, kMax - 2, kMax - 3, kMax - 4},
+        {2048, 2048 / 4 * 1 - 1, 2048 / 4 * 2 - 1, 2048 / 4 * 3 - 1, 2048 / 4 * 4 - 1},
+        {kMax, kMax / 4 * 1 - 1, kMax / 4 * 2 - 1, kMax / 4 * 3 - 1, kMax / 4 * 4 - 1},
+    };
 
-    // Create resource table and add the samplers and texture view to it
-    texture.Pin(wgpu::TextureUsage::TextureBinding);
-    wgpu::ResourceTable table = MakeResourceTable(4, {
-                                                         {0, {.sampler = samplerRepeat}},
-                                                         {1, {.sampler = samplerMirror}},
-                                                         {2, {.sampler = samplerClamp}},
-                                                         {3, {.textureView = texture.CreateView()}},
-                                                     });
+    for (auto c : cases) {
+        wgpu::ShaderModule module =
+            utils::CreateShaderModule(device, absl::StrFormat(R"(
+            enable chromium_experimental_resource_table;
 
-    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
+            @group(0) @binding(0) var<storage, read_write> results : array<vec4f>;
 
-    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
-    pass.SetPipeline(pipeline);
-    pass.SetBindGroup(0, resultBG);
-    pass.SetResourceTable(table);
-    pass.Draw(1);
-    pass.End();
-    wgpu::CommandBuffer commands = encoder.Finish();
-    queue.Submit(1, &commands);
+            @vertex fn vs() -> @builtin(position) vec4f {
+                return vec4f(0, 0, 0.5, 0.5);
+            }
 
-    float expectedGreen[4] = {0.0, 1.0, 0.0, 1.0};
-    float expectedRed[4] = {1.0, 0.0, 0.0, 1.0};
+            @fragment fn fs() -> @location(0) vec4f {
+                let samplerRepeat = getResource<sampler<non_filtering>>(%u);
+                let samplerMirror = getResource<sampler<non_filtering>>(%u);
+                let samplerClamp = getResource<sampler<non_filtering>>(%u);
+                let t = getResource<texture_2d<f32, filterable>>(%u);
 
-    // repeat: 1,0 -> red, 1.5,0 -> green
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedRed, resultBuffer, 0 * 4 * sizeof(float), 4);
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 1 * 4 * sizeof(float), 4);
+                results[0] = textureSample(t, samplerRepeat, vec2f(1, 0));
+                results[1] = textureSample(t, samplerRepeat, vec2f(1.5, 0));
 
-    // mirror: 1,0 -> green, 1.5,0 -> red
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 2 * 4 * sizeof(float), 4);
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedRed, resultBuffer, 3 * 4 * sizeof(float), 4);
+                results[2] = textureSample(t, samplerMirror, vec2f(1, 0));
+                results[3] = textureSample(t, samplerMirror, vec2f(1.5, 0));
 
-    // clamp: 1,0 -> green, 1.5,0 -> green
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 4 * 4 * sizeof(float), 4);
-    EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 5 * 4 * sizeof(float), 4);
+                results[4] = textureSample(t, samplerClamp, vec2f(1, 0));
+                results[5] = textureSample(t, samplerClamp, vec2f(1.5, 0));
+
+                return vec4f(0);
+            }
+        )",
+                                                              c.samplerIndex0, c.samplerIndex1,
+                                                              c.samplerIndex2, c.textureIndex));
+
+        // Create the pipeline.
+        utils::ComboRenderPipelineDescriptor pDesc;
+        pDesc.vertex.module = module;
+        pDesc.cFragment.module = module;
+        pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+        pDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
+        wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
+
+        // Create the texture
+        wgpu::Texture texture = CreateCheckerboardTexture();
+
+        // Create 3 samplers
+        wgpu::Sampler samplerRepeat = CreateSampler(wgpu::AddressMode::Repeat);
+        wgpu::Sampler samplerMirror = CreateSampler(wgpu::AddressMode::MirrorRepeat);
+        wgpu::Sampler samplerClamp = CreateSampler(wgpu::AddressMode::ClampToEdge);
+
+        // Create the result buffer resource
+        wgpu::BufferDescriptor bDesc = {
+            .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc,
+            .size = sizeof(float) * 4 * 6,  // 6 vec4fs
+        };
+        wgpu::Buffer resultBuffer = device.CreateBuffer(&bDesc);
+        wgpu::BindGroup resultBG =
+            utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, resultBuffer}});
+
+        // Create resource table and add the samplers and texture view to it
+        texture.Pin(wgpu::TextureUsage::TextureBinding);
+        wgpu::ResourceTable table = MakeResourceTable(
+            c.tableSize, {
+                             {c.samplerIndex0, {.sampler = samplerRepeat}},
+                             {c.samplerIndex1, {.sampler = samplerMirror}},
+                             {c.samplerIndex2, {.sampler = samplerClamp}},
+                             {c.textureIndex, {.textureView = texture.CreateView()}},
+                         });
+
+        utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, resultBG);
+        pass.SetResourceTable(table);
+        pass.Draw(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        float expectedGreen[4] = {0.0, 1.0, 0.0, 1.0};
+        float expectedRed[4] = {1.0, 0.0, 0.0, 1.0};
+
+        // repeat: 1,0 -> red, 1.5,0 -> green
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedRed, resultBuffer, 0 * 4 * sizeof(float), 4);
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 1 * 4 * sizeof(float), 4);
+
+        // mirror: 1,0 -> green, 1.5,0 -> red
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 2 * 4 * sizeof(float), 4);
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedRed, resultBuffer, 3 * 4 * sizeof(float), 4);
+
+        // clamp: 1,0 -> green, 1.5,0 -> green
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 4 * 4 * sizeof(float), 4);
+        EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 5 * 4 * sizeof(float), 4);
+    }
 }
 
 // Check that Pin forces zero-initialization of the resources.

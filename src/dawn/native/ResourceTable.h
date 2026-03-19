@@ -124,6 +124,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     // of the ResourceTable (since the last call to AcquireDirtySlotUpdates or creation of the
     // ResourceTable).
     struct MetadataUpdate {
+        ResourceTableSlot slot;
         uint32_t offset;
         uint32_t data;
     };

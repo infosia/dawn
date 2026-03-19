@@ -82,7 +82,7 @@ class EnumerateRange final {
 template <typename T,
           typename Index = decltype(std::declval<T>().size()),
           typename Value = std::remove_pointer_t<decltype(std::declval<T>().data())>>
-EnumerateRange<Index, Value> Enumerate(T& v) {
+EnumerateRange<Index, Value> Enumerate(T&& v) {
     return {v.size(), v.data()};
 }
 }  // namespace dawn
