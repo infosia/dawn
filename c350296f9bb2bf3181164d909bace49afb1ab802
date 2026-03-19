@@ -39,6 +39,30 @@
       },
       "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee55c56d_52b3c77e",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-19T13:30:07Z",
+      "side": 1,
+      "message": "It is safe since it\u0027s just a reference to a temp variable returned by `GetLabel` anw. `GetLabel` already returns a copy. Const reference will extend the lifetime of the temp variable.\n\nOr are you worrying that syntax is potentially bug prone in future?",
+      "parentUuid": "072c1274_61b475de",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
