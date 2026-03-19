@@ -74,10 +74,13 @@ constexpr auto kDefaults = std::array{
     tint::ResourceType::kTextureDepthCubeArray,
     tint::ResourceType::kTextureDepthMultisampled2d,
 
+    // If more samplers are added, update kNumDefaultSamplers.
     tint::ResourceType::kSampler_filtering,
     tint::ResourceType::kSampler_non_filtering,
     tint::ResourceType::kSampler_comparison,
 };
+
+constexpr auto kNumDefaultSamplers = ResourceTableSlot{3};
 
 // Mapping of tint::ResourceType to its index in kDefaults, computed at compile time.
 constexpr auto kIndexOfDefault = [] {
@@ -137,6 +140,16 @@ ityp::span<ResourceTableSlot, const tint::ResourceType> ResourceTableDefaultReso
 // static
 ResourceTableSlot ResourceTableDefaultResources::GetCount() {
     return GetOrder().size();
+}
+
+// static
+ResourceTableSlot ResourceTableDefaultResources::GetSamplerCount() {
+    return kNumDefaultSamplers;
+}
+
+// static
+ResourceTableSlot ResourceTableDefaultResources::GetNonSamplerCount() {
+    return GetCount() - GetSamplerCount();
 }
 
 // static
