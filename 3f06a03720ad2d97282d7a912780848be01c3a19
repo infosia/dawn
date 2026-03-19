@@ -33,6 +33,24 @@
       "message": "This is blocked on immediates landing as enabled, yea?",
       "revId": "3f06a03720ad2d97282d7a912780848be01c3a19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65928d66_54bea390",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-03-19T15:15:44Z",
+      "side": 1,
+      "message": "Yes. Pls land this after immediates enable by default in Dawn.",
+      "parentUuid": "4245131c_c77c7aa9",
+      "revId": "3f06a03720ad2d97282d7a912780848be01c3a19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
