@@ -4,6 +4,7 @@ gclient_gn_args_file = 'build/config/gclient_args.gni'
 
 gclient_gn_args = [
   'build_with_chromium',
+  'dawn_use_agility_sdk',
   'dawn_wasm',
   'generate_location_tags',
 ]
@@ -79,6 +80,11 @@ vars = {
   # Checkout //tools/code_coverage from Chromium and fetches the
   # prebuilt versions of llvm-cov and llvm-profdata.
   'checkout_clang_coverage_tools': False,
+
+  # Whether to download and use the D3D12 Agility SDK.
+  # When enabled, the fetch_agility_sdk hook downloads the SDK and GN defaults
+  # to using its headers and runtime DLLs.
+  'dawn_use_agility_sdk': False,
 }
 
 deps = {
@@ -852,6 +858,19 @@ hooks = [
                'build/config/siso/configure_siso.py',
                '--rbe_instance',
                Var('rbe_instance'),
+               ],
+  },
+  # Download D3D12 Agility SDK for x64 and x86 builds.
+  # NOTE: Preview Agility SDK builds may require Windows Developer Mode to be
+  # enabled at runtime for CreateDeviceFactory / SDK activation to succeed.
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and dawn_use_agility_sdk and host_os == "win" and (host_cpu == "x64" or host_cpu == "x86")',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--version',
+               '1.619.2',
                ],
   },
 ]
