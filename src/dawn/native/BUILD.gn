@@ -152,6 +152,37 @@ if (dawn_standalone && (dawn_enable_d3d11 || dawn_enable_d3d12)) {
 # The meat of the compilation for dawn native so that we can cheaply have
 # shared_library / static_library versions of it. It compiles all the files
 # except those that define exported symbols.
+
+# Optional: D3D12 Agility SDK
+if (dawn_use_agility_sdk && target_cpu == "x64") {
+  _agility_sdk_dir = "//third_party/agility_sdk"
+
+  config("agility_sdk_config") {
+    # Use -imsvc instead of -I so clang-cl treats Agility SDK headers as
+    # system headers, suppressing Microsoft-extension warnings in d3d12.h
+    # (e.g. -Wmicrosoft-enum-value, -Wnested-anon-types).
+    _native_include =
+        rebase_path("$_agility_sdk_dir/build/native/include", root_build_dir)
+    _sdk_root = rebase_path(_agility_sdk_dir, root_build_dir)
+    cflags = [
+      "-imsvc$_native_include",
+
+      # The generated agility_sdk_version.h lives at the root of the SDK dir.
+      "-imsvc$_sdk_root",
+    ]
+    defines = [ "DAWN_USE_AGILITY_SDK" ]
+  }
+
+  copy("copy_agility_sdk_dlls") {
+    _bin_dir = "$_agility_sdk_dir/build/native/bin/x64"
+    sources = [
+      "$_bin_dir/D3D12Core.dll",
+      "$_bin_dir/d3d12SDKLayers.dll",
+    ]
+    outputs = [ "$root_out_dir/D3D12/{{source_file_part}}" ]
+  }
+}
+
 source_set("sources") {
   deps = [
     ":headers",
@@ -553,6 +584,11 @@ source_set("sources") {
       defines += [ "DAWN_USE_BUILT_DXC" ]
       data_deps += [ "$dawn_root/third_party/gn/dxc:copy_dxil_dll" ]
     }
+    if (dawn_use_agility_sdk && target_cpu == "x64") {
+      public_configs += [ ":agility_sdk_config" ]
+      data_deps += [ ":copy_agility_sdk_dlls" ]
+      libs += [ "d3d12.lib" ]
+    }
     libs += [ "dxguid.lib" ]
     sources += [
       "d3d12/BackendD3D12.cpp",
@@ -634,6 +670,9 @@ source_set("sources") {
       "d3d12/UtilsD3D12.h",
       "d3d12/d3d12_platform.h",
     ]
+    if (dawn_use_agility_sdk && target_cpu == "x64") {
+      sources += [ "d3d12/AgilitySDK.cpp" ]
+    }
   }
 
   if (dawn_enable_metal) {
