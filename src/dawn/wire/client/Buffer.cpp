@@ -209,6 +209,12 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor) {
     Client* wireClient = device->GetClient();
 
+    // We can transfer buffer mapped data with named shared memory file mapping handle when the
+    // below feature is enabled (which means the platform has the capability and the required
+    // toggle is enabled).
+    const bool useSharedMemoryFileMappingHandle = device->APIHasFeature(
+        WGPUFeatureName_DawnWireUseSharedMemoryFileMappingHandleForBufferMapping);
+
     bool fakeOOMAtWireClientMap = false;
     for (const auto* chain = descriptor->nextInChain; chain != nullptr; chain = chain->next) {
         switch (chain->sType) {
@@ -236,6 +242,7 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     DeviceCreateBufferCmd cmd;
     cmd.deviceId = device->GetWireHandle(wireClient).id;
     cmd.descriptor = descriptor;
+    cmd.useSharedMemoryFileMappingHandle = useSharedMemoryFileMappingHandle;
     // Set the pointer lengths, but the pointed-to data itself won't be serialized as usual (due
     // to skip_serialize). Instead, the custom CommandExtensions below fill that memory.
     cmd.readHandleCreateInfoLength = 0;
@@ -248,8 +255,14 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     if (mappable) {
         if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
             // Create the read handle on buffer creation.
-            readHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            if (useSharedMemoryFileMappingHandle) {
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandleWithSharedMemory(
+                        descriptor->size));
+            } else {
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            }
             if (readHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }
@@ -259,8 +272,14 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
 
         if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 || descriptor->mappedAtCreation) {
             // Create the write handle on buffer creation.
-            writeHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            if (useSharedMemoryFileMappingHandle) {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandleWithSharedMemory(
+                        descriptor->size));
+            } else {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            }
             if (writeHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }

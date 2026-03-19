@@ -245,6 +245,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // architectures.
     if (GetDeviceInfo().supportsExistingHeap && SupportsBufferMapExtendedUsages()) {
         EnableFeature(Feature::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle);
+        EnableFeature(Feature::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping);
     }
 
     // Only check one format here because of D3D12 "Supported as a Set" mechanism: if any format
@@ -491,6 +492,12 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
             break;
         default:
             break;
+    }
+
+    constexpr Toggle kToggle = Toggle::UseSharedMemoryFileMappingHandleForWireBufferMapping;
+    if (feature == wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping &&
+        !toggles.IsEnabled(kToggle)) {
+        return FeatureValidationResult(absl::StrFormat("%s requires a toggle", feature));
     }
 
     return {};

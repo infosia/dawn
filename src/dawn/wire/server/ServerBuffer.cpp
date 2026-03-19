@@ -132,6 +132,7 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
 WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                                         const WGPUBufferDescriptor* descriptor,
                                         ObjectHandle bufferHandle,
+                                        WGPUBool useSharedMemoryFileMappingHandle,
                                         uint64_t readHandleCreateInfoLength,
                                         const uint8_t* readHandleCreateInfo,
                                         uint64_t writeHandleCreateInfoLength,
@@ -172,10 +173,18 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
 
             MemoryTransferService::WriteHandle* writeHandle = nullptr;
             // Deserialize metadata produced from the client to create a companion server handle.
-            if (!mMemoryTransferService->DeserializeWriteHandle(
-                    writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
-                    &writeHandle)) {
-                return WireResult::FatalError;
+            if (useSharedMemoryFileMappingHandle) {
+                if (!mMemoryTransferService->DeserializeWriteHandleWithSharedMemory(
+                        writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                        &writeHandle)) {
+                    return WireResult::FatalError;
+                }
+            } else {
+                if (!mMemoryTransferService->DeserializeWriteHandle(
+                        writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                        &writeHandle)) {
+                    return WireResult::FatalError;
+                }
             }
             DAWN_ASSERT(writeHandle != nullptr);
             mapState->writeHandle.reset(writeHandle);
@@ -201,10 +210,18 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
         if (isReadMode) {
             MemoryTransferService::ReadHandle* readHandle = nullptr;
             // Deserialize metadata produced from the client to create a companion server handle.
-            if (!mMemoryTransferService->DeserializeReadHandle(
-                    readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
-                    &readHandle)) {
-                return WireResult::FatalError;
+            if (useSharedMemoryFileMappingHandle) {
+                if (!mMemoryTransferService->DeserializeReadHandleWithSharedMemory(
+                        readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                        &readHandle)) {
+                    return WireResult::FatalError;
+                }
+            } else {
+                if (!mMemoryTransferService->DeserializeReadHandle(
+                        readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                        &readHandle)) {
+                    return WireResult::FatalError;
+                }
             }
             DAWN_ASSERT(readHandle != nullptr);
 

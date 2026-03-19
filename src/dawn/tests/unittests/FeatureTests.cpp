@@ -144,6 +144,13 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
         native::Feature feature = static_cast<native::Feature>(i);
         wgpu::FeatureName featureName = ToAPI(feature);
 
+        // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it should only be
+        // added by dawn::wire.
+        if (featureName ==
+            wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+            continue;
+        }
+
         // Enable features that are implicitly enabled by other features.
         absl::flat_hash_set<wgpu::FeatureName> requiredFeaturesSet =
             utils::FeatureAndImplicitlyEnabled(featureName);
@@ -161,24 +168,47 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
         deviceDescriptor.requiredFeatureCount = features.size();
 
         // Helper to check the returned device has all required features
-        auto ExpectDeviceHasRequiredFeatures =
-            [&requiredFeaturesSet](native::DeviceBase* deviceBase) {
-                native::SupportedFeatures enabledFeatures;
-                deviceBase->APIGetFeatures(&enabledFeatures);
-                bool explicitlyRequireCore =
-                    requiredFeaturesSet.contains(wgpu::FeatureName::CoreFeaturesAndLimits);
-                // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
-                ASSERT_EQ(requiredFeaturesSet.size() + (explicitlyRequireCore ? 0 : 1),
-                          enabledFeatures.featureCount);
-                for (uint32_t i = 0; i < enabledFeatures.featureCount; ++i) {
-                    wgpu::FeatureName enabledFeature = enabledFeatures.features[i];
-                    if (!explicitlyRequireCore &&
-                        enabledFeature == wgpu::FeatureName::CoreFeaturesAndLimits) {
-                        continue;
-                    }
-                    EXPECT_TRUE(requiredFeaturesSet.contains(enabledFeature));
+        auto ExpectDeviceHasRequiredFeatures = [&requiredFeaturesSet](
+                                                   native::DeviceBase* deviceBase) {
+            native::SupportedFeatures enabledFeatures;
+            deviceBase->APIGetFeatures(&enabledFeatures);
+
+            bool explicitlyRequireCore =
+                requiredFeaturesSet.contains(wgpu::FeatureName::CoreFeaturesAndLimits);
+            size_t enabledFeatureCount = enabledFeatures.featureCount;
+            for (uint32_t i = 0; i < enabledFeatures.featureCount; ++i) {
+                wgpu::FeatureName enabledFeature = enabledFeatures.features[i];
+                if (!explicitlyRequireCore &&
+                    enabledFeature == wgpu::FeatureName::CoreFeaturesAndLimits) {
+                    continue;
                 }
-            };
+                // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it is added by
+                // dawn::wire.
+                if (enabledFeature ==
+                    wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+                    enabledFeatureCount--;
+                    break;
+                }
+            }
+
+            // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
+            ASSERT_EQ(requiredFeaturesSet.size() + (explicitlyRequireCore ? 0 : 1),
+                      enabledFeatureCount);
+            for (uint32_t i = 0; i < enabledFeatures.featureCount; ++i) {
+                wgpu::FeatureName enabledFeature = enabledFeatures.features[i];
+                if (!explicitlyRequireCore &&
+                    enabledFeature == wgpu::FeatureName::CoreFeaturesAndLimits) {
+                    continue;
+                }
+                // Remove DawnWireUseSharedMemoryFileMappingHandleForBufferMapping as it is added by
+                // dawn::wire.
+                if (enabledFeature ==
+                    wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping) {
+                    continue;
+                }
+                EXPECT_TRUE(requiredFeaturesSet.contains(enabledFeature));
+            }
+        };
 
         // Test with the default adapter.
         {
