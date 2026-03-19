@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea8186a_a670b27a",
+        "filename": "third_party/glfw3/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-19T21:04:01Z",
+      "side": 1,
+      "message": "This may need to be `Zlib`\nhttps://source.chromium.org/chromium/chromium/tools/depot_tools/+/main:metadata/fields/custom/license_allowlist.py;l\u003d122;drc\u003d9c69e0d57324b4f2cc35c9cb0748bc7b0f3c5a9a",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "dbdb7c46f53ebc1e7fadfb2de1f06617a155a1ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
