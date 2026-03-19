@@ -47,7 +47,7 @@ if (!defined(dawn_jinja2_dir)) {
 }
 
 if (!defined(dawn_glfw_dir)) {
-  dawn_glfw_dir = "//third_party/glfw"
+  dawn_glfw_dir = "//third_party/glfw3/src"
 }
 
 if (!defined(dawn_googletest_dir)) {
