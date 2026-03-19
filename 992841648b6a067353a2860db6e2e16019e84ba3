@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "470dd60e_39d28646",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-19T20:20:11Z",
+      "side": 1,
+      "message": "Unfortunately tests are failing, it seems to crash during `dawn_end2end_tests`. You can try reproducing this locally by building `dawn_end2end_tests` and running it with\n`--gtest_filter\u003d\u0027Metal/SharedTextureMemoryTests.RenderThenSampleEncodeAfterBeginAccess/Metal_*_Backend_IOSurface_LayerCount_1\u0027`",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
