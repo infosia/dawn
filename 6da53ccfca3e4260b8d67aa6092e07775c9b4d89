@@ -52,6 +52,23 @@
       "parentUuid": "f4f00432_eb13a4d4",
       "revId": "6da53ccfca3e4260b8d67aa6092e07775c9b4d89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afb5f0c0_62728be3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-19T22:57:40Z",
+      "side": 1,
+      "message": "BTW do you have record of merge approval for these two CLs?",
+      "revId": "6da53ccfca3e4260b8d67aa6092e07775c9b4d89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
