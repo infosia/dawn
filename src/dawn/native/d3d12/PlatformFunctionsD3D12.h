@@ -50,6 +50,11 @@ class PlatformFunctions final : public d3d::PlatformFunctions {
     PFN_D3D12_CREATE_DEVICE d3d12CreateDevice = nullptr;
     PFN_D3D12_GET_DEBUG_INTERFACE d3d12GetDebugInterface = nullptr;
 
+    // D3D12GetInterface was added with the Agility SDK / newer Windows.
+    // Loaded optionally — nullptr on older systems without Agility SDK support.
+    using PFN_D3D12_GET_INTERFACE = HRESULT(WINAPI*)(REFCLSID rclsid, REFIID riid, void** ppvDebug);
+    PFN_D3D12_GET_INTERFACE d3d12GetInterface = nullptr;
+
     PFN_D3D12_SERIALIZE_ROOT_SIGNATURE d3d12SerializeRootSignature = nullptr;
     PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER d3d12CreateRootSignatureDeserializer = nullptr;
     PFN_D3D12_SERIALIZE_VERSIONED_ROOT_SIGNATURE d3d12SerializeVersionedRootSignature = nullptr;

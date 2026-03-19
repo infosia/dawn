@@ -40,6 +40,9 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d12/BackendD3D12.h"
+#if defined(DAWN_USE_AGILITY_SDK)
+#include "dawn/native/d3d12/AgilitySDK.h"
+#endif
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
@@ -105,6 +108,12 @@ MaybeError PhysicalDevice::InitializeImpl() {
                                             __uuidof(ID3D12Device), &mD3d12Device))) {
         return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
     }
+
+#if defined(DAWN_USE_AGILITY_SDK)
+    // D3D12Core.dll is loaded lazily by d3d12.dll on the first D3D12CreateDevice.
+    // Now that the device is created, log which runtime is actually active.
+    dawn::native::d3d12::LogAgilitySDKStatus();
+#endif
 
     // Check if we should block the use of D3D12 on the current device.
     DAWN_TRY(ValidateUseOfD3D12());
