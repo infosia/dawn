@@ -59,6 +59,11 @@ class Backend final : public d3d::Backend {
 
     const PlatformFunctions* GetFunctions() const;
 
+    // Returns the ID3D12DeviceFactory obtained via CreateDeviceFactory, or
+    // nullptr if the Agility SDK runtime is unavailable. Callers should fall
+    // back to the global D3D12CreateDevice when this is nullptr.
+    ID3D12DeviceFactory* GetDeviceFactory() const;
+
   protected:
     ResultOrError<Ref<PhysicalDeviceBase>> CreatePhysicalDeviceFromIDXGIAdapter(
         ComPtr<IDXGIAdapter> dxgiAdapter) override;

@@ -875,6 +875,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Backend will automatically map the buffer when it's not in use by GPU, to allow "
       "front-end's MapAsync and Unmap calls to become cheap without acquiring any lock internally.",
       "https://crbug.com/dawn/481158754", ToggleStage::Device}},
+    {Toggle::UseAgilitySDK,
+     {"use_agility_sdk",
+      "Attempt to activate the D3D12 Agility SDK redistributable runtime via "
+      "ID3D12SDKConfiguration1::CreateDeviceFactory. When disabled, Dawn uses the system "
+      "D3D12CreateDevice without Agility SDK override.",
+      "https://crbug.com/507448270", ToggleStage::Instance}},
 
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};

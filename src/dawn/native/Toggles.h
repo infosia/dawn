@@ -214,6 +214,7 @@ enum class Toggle {
     ShadowCopyMapWrite,
     DisableTransientAttachment,
     AutoMapBackendBuffer,
+    UseAgilitySDK,
 
     EnumCount,
     InvalidEnum = EnumCount,
