@@ -542,5 +542,166 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_ResourceTableTest, HasResource_GetSamplerIndexFromMetadata) {
+    auto* sampler_ty = ty.sampler(SamplerFiltering::kNonFiltering);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        b.Let("t",
+              b.CallExplicit(ty.bool_(), core::BuiltinFn::kHasResource, Vector{sampler_ty}, 1_u));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func():void {
+  $B1: {
+    %2:bool = hasResource<sampler<non_filtering>> 1u
+    %t:bool = let %2
+    ret
+  }
+}
+)";
+
+    auto* expect = R"(
+tint_resource_table_metadata_struct = struct @align(4) {
+  array_length:u32 @offset(0)
+  bindings:array<u32> @offset(4)
+}
+
+$B1: {  # root
+  %1:ptr<handle, resource_table<sampler<non_filtering>>, read> = var undef @binding_point(0, 1)
+  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
+}
+
+%foo = func():void {
+  $B2: {
+    %4:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %5:u32 = load %4
+    %6:bool = lt 1u, %5
+    %7:bool = if %6 [t: $B3, f: $B4] {  # if_1
+      $B3: {  # true
+        %8:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %9:u32 = load %8
+        %10:u32 = and %9, 65535u
+        %11:vec2<u32> = construct %10
+        %12:vec2<u32> = construct 34u, 33u
+        %13:vec2<bool> = eq %11, %12
+        %14:bool = any %13
+        exit_if %14  # if_1
+      }
+      $B4: {  # false
+        exit_if false  # if_1
+      }
+    }
+    %t:bool = let %7
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    Helper helper;
+    Run(ResourceTable,
+        ResourceTableConfig{
+            .resource_table_binding = {0, 1},
+            .storage_buffer_binding = {1, 2},
+            .default_binding_type_order =
+                {
+                    ResourceType::kSampler_non_filtering,
+                },
+            .get_sampler_index_from_metadata = true,
+        },
+        &helper);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ResourceTableTest, GetResource_GetSamplerIndexFromMetadata) {
+    auto* sampler_ty = ty.sampler(SamplerFiltering::kNonFiltering);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        b.CallExplicit(sampler_ty, core::BuiltinFn::kGetResource, Vector{sampler_ty}, 1_u);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func():void {
+  $B1: {
+    %2:sampler<non_filtering> = getResource<sampler<non_filtering>> 1u
+    ret
+  }
+}
+)";
+
+    auto* expect = R"(
+tint_resource_table_metadata_struct = struct @align(4) {
+  array_length:u32 @offset(0)
+  bindings:array<u32> @offset(4)
+}
+
+$B1: {  # root
+  %1:ptr<handle, resource_table<sampler<non_filtering>>, read> = var undef @binding_point(0, 1)
+  %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
+}
+
+%foo = func():void {
+  $B2: {
+    %4:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %5:u32 = load %4
+    %6:bool = lt 1u, %5
+    %7:bool = if %6 [t: $B3, f: $B4] {  # if_1
+      $B3: {  # true
+        %8:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %9:u32 = load %8
+        %10:u32 = and %9, 65535u
+        %11:vec2<u32> = construct %10
+        %12:vec2<u32> = construct 34u, 33u
+        %13:vec2<bool> = eq %11, %12
+        %14:bool = any %13
+        exit_if %14  # if_1
+      }
+      $B4: {  # false
+        exit_if false  # if_1
+      }
+    }
+    %15:u32 = if %7 [t: $B5, f: $B6] {  # if_2
+      $B5: {  # true
+        exit_if 1u  # if_2
+      }
+      $B6: {  # false
+        %16:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %17:u32 = load %16
+        %18:u32 = add 0u, %17
+        exit_if %18  # if_2
+      }
+    }
+    %19:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, %15
+    %20:u32 = load %19
+    %21:u32 = shr %20, 16u
+    %22:ptr<handle, sampler<non_filtering>, read> = access %1, %21
+    %23:sampler<non_filtering> = load %22
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    Helper helper;
+    Run(ResourceTable,
+        ResourceTableConfig{
+            .resource_table_binding = {0, 1},
+            .storage_buffer_binding = {1, 2},
+            .default_binding_type_order =
+                {
+                    ResourceType::kSampler_non_filtering,
+                },
+            .get_sampler_index_from_metadata = true,
+        },
+        &helper);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform

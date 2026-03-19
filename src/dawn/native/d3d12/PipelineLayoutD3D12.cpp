@@ -186,10 +186,10 @@ MaybeError PipelineLayout::Initialize() {
         staticSamplerCount += bindGroupLayout->GetStaticSamplerCount();
     }
 
-    std::vector<D3D12_DESCRIPTOR_RANGE1> resourceTableCbvUavSrvDescriptorRanges;
+    ResourceTable::DescriptorRanges resourceTableRanges;
     if (UsesResourceTable()) {
-        resourceTableCbvUavSrvDescriptorRanges = ResourceTable::GetCbvUavSrvDescriptorRanges(*this);
-        rangesCount += resourceTableCbvUavSrvDescriptorRanges.size();
+        DAWN_TRY_ASSIGN(resourceTableRanges, ResourceTable::GetDescriptorRanges(*this));
+        rangesCount += resourceTableRanges.cbvUavSrvs.size() + resourceTableRanges.samplers.size();
     }
 
     // We are taking pointers to `ranges`, so we cannot let it resize while we're pushing to it.
@@ -227,10 +227,14 @@ MaybeError PipelineLayout::Initialize() {
         return static_cast<uint32_t>(rootParameters.size() - 1);
     };
 
-    mResourceTableRootParameterIndex = kInvalidResourceTableRootParameterIndex;
+    mResourceTableCbvUavSrvRootParameterIndex = kInvalidResourceTableRootParameterIndex;
+    mResourceTableSamplerRootParameterIndex = kInvalidResourceTableRootParameterIndex;
     if (UsesResourceTable()) {
-        if (auto paramIndex = SetRootDescriptorTable(resourceTableCbvUavSrvDescriptorRanges)) {
-            mResourceTableRootParameterIndex = *paramIndex;
+        if (auto paramIndex = SetRootDescriptorTable(resourceTableRanges.cbvUavSrvs)) {
+            mResourceTableCbvUavSrvRootParameterIndex = *paramIndex;
+        }
+        if (auto paramIndex = SetRootDescriptorTable(resourceTableRanges.samplers)) {
+            mResourceTableSamplerRootParameterIndex = *paramIndex;
         }
     }
 
@@ -464,9 +468,15 @@ void PipelineLayout::DestroyImpl(DestroyReason reason) {
     }
 }
 
-uint32_t PipelineLayout::GetResourceTableRootParameterIndex() const {
-    DAWN_ASSERT(mResourceTableRootParameterIndex != kInvalidResourceTableRootParameterIndex);
-    return mResourceTableRootParameterIndex;
+uint32_t PipelineLayout::GetResourceTableCbvUavSrvRootParameterIndex() const {
+    DAWN_ASSERT(mResourceTableCbvUavSrvRootParameterIndex !=
+                kInvalidResourceTableRootParameterIndex);
+    return mResourceTableCbvUavSrvRootParameterIndex;
+}
+
+uint32_t PipelineLayout::GetResourceTableSamplerRootParameterIndex() const {
+    DAWN_ASSERT(mResourceTableSamplerRootParameterIndex != kInvalidResourceTableRootParameterIndex);
+    return mResourceTableSamplerRootParameterIndex;
 }
 
 uint32_t PipelineLayout::GetBaseResourceTableRegisterSpace() const {

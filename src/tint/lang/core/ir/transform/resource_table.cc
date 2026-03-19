@@ -120,11 +120,17 @@ struct State {
         return Success;
     }
 
+    bool IsSampler(const core::type::Type* binding_type) const {
+        auto res_type = core::type::TypeToResourceType(binding_type);
+        return tint::IsSampler(res_type);
+    }
+
     // Note, assumes it's called inside a builder append block.
     void GenHasResource(core::ir::InstructionResult* result,
-                        const core::type::Type* type,
+                        const core::type::Type* binding_type,
                         core::ir::Value* idx,
                         core::ir::Var* storage_buffer) {
+        // Get the table's API size, which is stored at index 0 in the metadata buffer
         auto* length = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
         auto* len_check = b.LessThan(idx, b.Load(length));
 
@@ -132,16 +138,25 @@ struct State {
         has_check->SetResult(result);
 
         b.Append(has_check->True(), [&] {
-            auto* type_val = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, idx);
-            auto* v = b.Load(type_val);
+            // Get the type id from the metadata buffer
+            auto* metadata_access =
+                b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, idx);
+            auto* metadata_val = b.Load(metadata_access);
+            ir::Value* type_id = nullptr;
+            if (config->get_sampler_index_from_metadata) {
+                // Type id is in lower 16 bits
+                type_id = b.And(metadata_val, u32(0xFFFF))->Result();
+            } else {
+                type_id = metadata_val->Result();
+            }
 
-            ResourceType resource_ty = core::type::TypeToResourceType(type);
+            ResourceType resource_ty = core::type::TypeToResourceType(binding_type);
 
             core::ir::Value* eq = nullptr;
-            std::vector<ResourceType> conv = core::type::ConvertsFrom(type);
+            std::vector<ResourceType> conv = core::type::ConvertsFrom(binding_type);
             if (!conv.empty()) {
                 auto* conv_ty = ty.vec(ty.u32(), static_cast<uint32_t>(conv.size()) + 1);
-                auto* lhs = b.Construct(conv_ty, v);
+                auto* lhs = b.Construct(conv_ty, type_id);
 
                 Vector<Value*, 4> vals;
                 vals.Push(b.Value(u32(resource_ty)));
@@ -153,7 +168,7 @@ struct State {
                 auto* cmp = b.Equal(lhs, rhs);
                 eq = b.Call(ty.bool_(), core::BuiltinFn::kAny, cmp)->Result();
             } else {
-                eq = b.Equal(v, u32(resource_ty))->Result();
+                eq = b.Equal(type_id, u32(resource_ty))->Result();
             }
             b.ExitIf(has_check, eq);
         });
@@ -163,28 +178,36 @@ struct State {
 
     // Note, assumes it's called inside a builder append block.
     void GenGetResource(core::ir::InstructionResult* result,
-                        const core::type::Type* type,
+                        const core::type::Type* binding_type,
                         core::ir::Value* idx,
                         core::ir::Var* storage_buffer,
                         const Hashmap<const core::type::Type*, core::ir::Var*, 4>& alias_for_type,
                         const std::unordered_map<ResourceType, uint32_t>& resource_type_to_idx) {
         auto* has_result = b.InstructionResult(ty.bool_());
-        GenHasResource(has_result, type, idx, storage_buffer);
+        GenHasResource(has_result, binding_type, idx, storage_buffer);
 
         auto* get_check = b.If(has_result);
         auto* res = b.InstructionResult(ty.u32());
         get_check->SetResult(res);
 
-        auto alias = alias_for_type.Get(type);
+        auto alias = alias_for_type.Get(binding_type);
         TINT_IR_ASSERT(ir, alias);
 
-        b.Append(get_check->True(), [&] { b.ExitIf(get_check, idx); });
+        b.Append(get_check->True(), [&] {
+            // Table lookup succeeded, use the input index
+            b.ExitIf(get_check, idx);
+        });
 
         b.Append(get_check->False(), [&] {
-            auto res_type = core::type::TypeToResourceType(type);
+            // Table lookup failed, so get default resource located at the end of the table,
+            // at API size + resource type index.
+
+            // Get the resource type index
+            auto res_type = core::type::TypeToResourceType(binding_type);
             auto idx_iter = resource_type_to_idx.find(res_type);
             TINT_IR_ASSERT(ir, idx_iter != resource_type_to_idx.end());
 
+            // Get the table's API size, which is stored at index 0 in the metadata buffer
             auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
             auto* num_elements = b.Load(len_access);
 
@@ -193,9 +216,20 @@ struct State {
             b.ExitIf(get_check, r);
         });
 
+        ir::Value* final_index = res;
+        if (config->get_sampler_index_from_metadata && IsSampler(binding_type)) {
+            // Get the sampler index from the metadata entry (high 16 bits)
+            // TODO(crbug.com/503755700): Optimize to avoid loading twice from storage_buffer[idx].
+            auto* metadata_access =
+                b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 1_u, res);
+            auto* metadata_val = b.Load(metadata_access);
+            auto* sampler_index = b.ShiftRight(metadata_val, u32(16));
+            final_index = sampler_index->Result();
+        }
+
         // TODO(439627523): Fix pointer access
-        auto* ptr_ty = ty.ptr(handle, type, read);
-        auto* access = b.Access(ptr_ty, (*alias)->Result(), res);
+        auto* ptr_ty = ty.ptr(handle, binding_type, read);
+        auto* access = b.Access(ptr_ty, (*alias)->Result(), final_index);
         b.LoadWithResult(result, access);
     }
 
