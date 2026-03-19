@@ -31,7 +31,19 @@
 #include "dawn/native/d3d/d3d_platform.h"
 
 // clang-format off
+#if defined(DAWN_USE_AGILITY_SDK)
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmicrosoft-enum-value"
+#pragma clang diagnostic ignored "-Wnested-anon-types"
+#endif
+#include "third_party/agility_sdk/build/native/include/d3d12.h"
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
+#else
 #include <d3d12.h>
+#endif
 #include <d3d11on12.h>
 // clang-format on
 
