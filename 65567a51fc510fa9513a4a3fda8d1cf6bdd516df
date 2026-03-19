@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aedb5867_ff755d8a",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-19T08:42:51Z",
+      "side": 1,
+      "message": "Done. I adopted Kyle\u0027s lazy atomic allocation approach. However, it wasn\u0027t clear to me whether we want the lazy allocation happens in the `ObjectLabel` class itself or in `ApiObjectBase`.\n\nFrom http://crbug.com/479457809#comment2, it looks like Corentin prefers to have separate `ObjectLabel` allocation to support future deduplications, so I chose the latter. Otherwise, we would have had 2 heap allocations (1 for ObjectLabel and 1 for its inner Impl).\n\n\u003e we could make it return a mutex guard for the label\n\nanw, I also thought about this but returning a scoped mutex + string could increase the locked scope and potentially add lock inversion risks that are hard to control.",
+      "parentUuid": "066f8d6a_e67e84e5",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b9151ef_3f87d407",
@@ -126,6 +150,24 @@
       "writtenOn": "2026-03-18T12:22:28Z",
       "side": 1,
       "message": "Could this be a forward declaration instead with `ObjectLabelRef` put in a separate class (and not a nested class?)",
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34da7b97_785dbd85",
+        "filename": "src/dawn/native/webgpu_absl_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-19T08:42:51Z",
+      "side": 1,
+      "message": "Removed. Since we decided to return std::string copy instead of a custom class. There is no need for a custom formatter anymore.",
+      "parentUuid": "0b9151ef_3f87d407",
       "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
