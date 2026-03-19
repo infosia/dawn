@@ -28,6 +28,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/common/Platform.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/DawnNative.h"

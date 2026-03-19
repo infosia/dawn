@@ -46,9 +46,23 @@ class PlatformFunctions final : public d3d::PlatformFunctions {
     MaybeError EnsureDXCLibraries(std::span<const std::string> searchPaths);
     bool IsPIXEventRuntimeLoaded() const;
 
+#ifdef DAWN_USE_AGILITY_SDK
+    // Initializes deviceFactory via the Agility SDK. Called automatically by Initialize().
+    // Only creates the device factory once; subsequent calls are no-ops.
+    // Returns an error if the factory cannot be created (Agility SDK DLLs missing).
+    MaybeError EnsureAgilitySDKDeviceFactory();
+
+    // Non-null after a successful EnsureAgilitySDKDeviceFactory() call.
+    ComPtr<ID3D12DeviceFactory> deviceFactory;
+#endif  // DAWN_USE_AGILITY_SDK
+
     // Functions from d3d12.dll
     PFN_D3D12_CREATE_DEVICE d3d12CreateDevice = nullptr;
     PFN_D3D12_GET_DEBUG_INTERFACE d3d12GetDebugInterface = nullptr;
+
+    // D3D12GetInterface is present in Agility SDK / newer Windows builds.
+    // Loaded optionally — nullptr on older systems.
+    PFN_D3D12_GET_INTERFACE d3d12GetInterface = nullptr;
 
     PFN_D3D12_SERIALIZE_ROOT_SIGNATURE d3d12SerializeRootSignature = nullptr;
     PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER d3d12CreateRootSignatureDeserializer = nullptr;
