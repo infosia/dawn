@@ -50,6 +50,24 @@
       "message": "`mDynamicState` contains the state for the first wgpu::RenderPipeline that gets created. The hash/equality function is updated to ignore those pieces of state so the same RenderPipelineVk object will be used internally for a wgpu::RenderPipeline with different dynmic state, right? Where does the second wgpu::RenderPipeline store and then set the dynamic state differently though?",
       "revId": "fe3ea07adac5a9a678d02618f2f8a8f7b6448a11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4766e0b5_13401a82",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-19T23:29:33Z",
+      "side": 1,
+      "message": "Ah, I approached this with the wrong mental model initially. I misread some of the caching logic and thought that the hash that was built in RenderPipeline.cpp was being used to query from the Vulkan blob cache, but it\u0027s actually being used for a Device-level cache, which means (as you point out) that we\u0027d only get back a single Dawn-level pipeline object for any pipelines that only differ in dynamic state. This probably explains some of the issues I\u0027ve been seeing in the tests/samples.\n\nBeen doing some more digging today and giving some thought to how to best surface this. The goal continues to be to create separate Dawn objects for every pipeline (unless they\u0027re fully identical) but have some of them share VkPipeline objects. There\u0027s a couple of ways we could approach that, not sure what I feel best about just yet. On further reflection I don\u0027t know if it\u0027s a good idea to rely solely on the Vulkan pipeline caching mechanisms.\n\nLatest patch removes the changes to the pipeline hash as an intermediate step, so now we\u0027ll always get a new dawn pipeline object, may or may not get a cached VkPipeline, and it\u0027ll still apply the dynamic state. That fixed the test issues I was seeing, but likely isn\u0027t giving us too much benefit so I want to iterate a bit more before attempting to land this.",
+      "parentUuid": "466e838c_3fd93a1f",
+      "revId": "fe3ea07adac5a9a678d02618f2f8a8f7b6448a11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
