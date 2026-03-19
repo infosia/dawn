@@ -427,6 +427,7 @@ if (DAWN_ENABLE_D3D12)
         "${DAWN_INCLUDE_DIR}/dawn/native/D3D12Backend.h"
     )
     list(APPEND private_headers
+        "d3d12/AgilitySDK.h"
         "d3d12/BackendD3D12.h"
         "d3d12/BindGroupD3D12.h"
         "d3d12/BindGroupLayoutD3D12.h"
@@ -469,6 +470,7 @@ if (DAWN_ENABLE_D3D12)
         "d3d12/UtilsD3D12.h"
     )
     list(APPEND sources
+        "d3d12/AgilitySDK.cpp"
         "d3d12/BackendD3D12.cpp"
         "d3d12/BindGroupD3D12.cpp"
         "d3d12/BindGroupLayoutD3D12.cpp"

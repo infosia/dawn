@@ -70,6 +70,8 @@ MaybeError PlatformFunctions::LoadD3D12() {
                            "D3D12CreateVersionedRootSignatureDeserializer", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
+    // Optional: only present in Agility SDK / newer d3d12.dll. Absence is not an error.
+    mD3D12Lib.GetProc(&d3d12GetInterface, "D3D12GetInterface", &error);
 #endif
 
     return {};
@@ -91,6 +93,17 @@ MaybeError PlatformFunctions::LoadD3D11() {
 
 bool PlatformFunctions::IsPIXEventRuntimeLoaded() const {
     return mPIXEventRuntimeLib.Valid();
+}
+
+void PlatformFunctions::InitAgilitySDK() {
+    if (!d3d12GetInterface) {
+        return;
+    }
+    ComPtr<ID3D12SDKConfiguration1> sdkConfig1;
+    if (FAILED(d3d12GetInterface(CLSID_D3D12SDKConfiguration, IID_PPV_ARGS(&sdkConfig1)))) {
+        return;
+    }
+    sdkConfig1->CreateDeviceFactory(kAgilitySDKVersion, ".\\D3D12\\", IID_PPV_ARGS(&deviceFactory));
 }
 
 void PlatformFunctions::LoadPIXRuntime(std::span<const std::string> searchPaths) {
