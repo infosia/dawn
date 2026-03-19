@@ -1,6 +1,6 @@
-Name: Khronos EGL
-Short Name: khronos
-URL: https://www.khronos.org
+Name: EGL-Registry
+Short Name: EGL-Registry
+URL: https://github.com/KhronosGroup/EGL-Registry/
 Update Mechanism: Manual
 Security Critical: no
 Version: N/A

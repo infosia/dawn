@@ -779,7 +779,7 @@ source_set("sources") {
     public_deps += [
       ":opengl_loader_gen",
       "${dawn_root}/src/tint/api/common",
-      "${dawn_root}/third_party/khronos:khronos_platform",
+      "${dawn_root}/third_party/EGL-Registry:khronos_platform",
     ]
     sources += get_target_outputs(":opengl_loader_gen")
     sources += [
@@ -847,7 +847,7 @@ source_set("sources") {
       "opengl/UtilsGL.h",
       "opengl/opengl_platform.h",
     ]
-    include_dirs += [ "//third_party/khronos" ]
+    include_dirs += [ "//third_party/EGL-Registry" ]
   }
 
   if (dawn_enable_vulkan) {
