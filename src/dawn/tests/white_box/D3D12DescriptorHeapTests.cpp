@@ -1455,7 +1455,7 @@ DAWN_INSTANTIATE_TEST(D3D12DescriptorHeapTests,
 
 class D3D12ResourceTableDescriptorHeapTests : public D3D12DescriptorHeapTests {
   protected:
-    // Number of descriptors implicitly allocated by a ResourceTable, which are
+    // Number of view descriptors implicitly allocated by a ResourceTable, which are
     // for the default resources plus one for the metadata buffer.
     uint32_t mImplicitDescriptorCount;
 
@@ -1472,7 +1472,8 @@ class D3D12ResourceTableDescriptorHeapTests : public D3D12DescriptorHeapTests {
                 return vec4f(0);
             })");
 
-        mImplicitDescriptorCount = uint32_t{ResourceTableDefaultResources::GetCount()} + 1;
+        mImplicitDescriptorCount =
+            uint32_t{ResourceTableDefaultResources::GetNonSamplerCount()} + 1;
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
