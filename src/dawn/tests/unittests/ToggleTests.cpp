@@ -28,6 +28,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/common/Platform.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/DawnNative.h"
@@ -77,16 +78,27 @@ using InstanceToggleTest = ToggleTest;
 
 // Test that instance toggles are set by requirement or default as expected.
 TEST_F(InstanceToggleTest, InstanceTogglesSet) {
-    auto validateInstanceToggles = [](const native::Instance* nativeInstance,
-                                      std::initializer_list<const char*> enableToggles,
-                                      std::initializer_list<const char*> disableToggles) {
+    // On Windows, UseAgilitySDK is enabled by default at instance level.
+    std::vector<const char*> platformDefaultEnabled;
+#if DAWN_PLATFORM_IS(WINDOWS)
+    platformDefaultEnabled.push_back("use_agility_sdk");
+#endif
+
+    auto validateInstanceToggles = [&platformDefaultEnabled](
+                                       const native::Instance* nativeInstance,
+                                       std::initializer_list<const char*> enableToggles,
+                                       std::initializer_list<const char*> disableToggles) {
         const native::InstanceBase* instance = native::FromAPI(nativeInstance->Get());
         const native::TogglesState& instanceTogglesState = instance->GetTogglesState();
         std::vector<const char*> enabledToggles = instanceTogglesState.GetEnabledToggleNames();
         std::vector<const char*> disabledToggles = instanceTogglesState.GetDisabledToggleNames();
+        // Merge platform-default toggles into expected enabled list.
+        std::vector<const char*> expectedEnabled(enableToggles);
+        expectedEnabled.insert(expectedEnabled.end(), platformDefaultEnabled.begin(),
+                               platformDefaultEnabled.end());
         EXPECT_EQ(disabledToggles.size(), disableToggles.size());
-        EXPECT_EQ(enabledToggles.size(), enableToggles.size());
-        for (auto* enableToggle : enableToggles) {
+        EXPECT_EQ(enabledToggles.size(), expectedEnabled.size());
+        for (auto* enableToggle : expectedEnabled) {
             EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle)));
         }
         for (auto* disableToggle : disableToggles) {
@@ -238,16 +250,27 @@ TEST_F(AdapterToggleTest, AdapterTogglesSetAndInheritToDevice) {
     native::InstanceBase* instanceBase = native::FromAPI(instance->Get());
     ASSERT_FALSE(instanceBase->GetTogglesState().IsEnabled(native::Toggle::AllowUnsafeAPIs));
 
+    // On Windows, UseAgilitySDK is enabled by default and inherited to adapters.
+    std::vector<const char*> platformDefaultEnabled;
+#if DAWN_PLATFORM_IS(WINDOWS)
+    platformDefaultEnabled.push_back("use_agility_sdk");
+#endif
+
     // Validate an adapter has expected toggles state.
-    auto ValidateAdapterToggles = [](const native::AdapterBase* adapterBase,
-                                     std::initializer_list<const char*> enableToggles,
-                                     std::initializer_list<const char*> disableToggles) {
+    auto ValidateAdapterToggles = [&platformDefaultEnabled](
+                                      const native::AdapterBase* adapterBase,
+                                      std::initializer_list<const char*> enableToggles,
+                                      std::initializer_list<const char*> disableToggles) {
         const native::TogglesState& adapterTogglesState = adapterBase->GetTogglesState();
         std::vector<const char*> enabledToggles = adapterTogglesState.GetEnabledToggleNames();
         std::vector<const char*> disabledToggles = adapterTogglesState.GetDisabledToggleNames();
+        // Merge platform-default toggles into expected enabled list.
+        std::vector<const char*> expectedEnabled(enableToggles);
+        expectedEnabled.insert(expectedEnabled.end(), platformDefaultEnabled.begin(),
+                               platformDefaultEnabled.end());
         EXPECT_EQ(disabledToggles.size(), disableToggles.size());
-        EXPECT_EQ(enabledToggles.size(), enableToggles.size());
-        for (auto* enableToggle : enableToggles) {
+        EXPECT_EQ(enabledToggles.size(), expectedEnabled.size());
+        for (auto* enableToggle : expectedEnabled) {
             EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle)));
         }
         for (auto* disableToggle : disableToggles) {

@@ -33,7 +33,9 @@
 #include "dawn/common/Log.h"
 #include "dawn/native/D3D12Backend.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/d3d/D3DError.h"
+#include "dawn/native/d3d12/AgilitySDK.h"
 #include "dawn/native/d3d12/PhysicalDeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
@@ -50,6 +52,15 @@ MaybeError Backend::Initialize() {
         DAWN_TRY(functions->Initialize(GetInstance()->GetRuntimeSearchPaths()));
 
         DAWN_TRY(Base::Initialize(std::move(functions)));
+    }
+
+    // Always set up the Agility SDK device factory.
+    const_cast<PlatformFunctions*>(GetFunctions())->CreateAgilitySDKDeviceFactory();
+    if (!GetFunctions()->deviceFactory) {
+        dawn::WarningLog() << "[AgilitySDK] CreateDeviceFactory failed - "
+                              "Agility SDK DLLs may be missing from .\\D3D12\\";
+    } else {
+        dawn::InfoLog() << "[AgilitySDK] active: SDK version = " << kAgilitySDKVersion;
     }
 
     // Enable the debug layer (requires the Graphics Tools "optional feature").
@@ -78,6 +89,29 @@ MaybeError Backend::Initialize() {
 
 const PlatformFunctions* Backend::GetFunctions() const {
     return static_cast<const PlatformFunctions*>(Base::GetFunctions());
+}
+
+MaybeError Backend::CreateD3DDevice(IUnknown* adapter, ComPtr<ID3D12Device>* device) {
+    HRESULT hr = E_FAIL;
+    const bool useAgilityFactory =
+        GetInstance()->GetTogglesState().IsEnabled(Toggle::UseAgilitySDK) &&
+        GetFunctions()->deviceFactory != nullptr;
+    ID3D12DeviceFactory* factory =
+        useAgilityFactory ? GetFunctions()->deviceFactory.Get() : nullptr;
+    if (factory) {
+        hr = factory->CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0,
+                                   IID_PPV_ARGS(device->GetAddressOf()));
+    }
+    if (FAILED(hr)) {
+        // Fallback to the global D3D12CreateDevice (no Agility SDK override,
+        // or CreateDeviceFactory was not available).
+        hr = GetFunctions()->d3d12CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0,
+                                               IID_PPV_ARGS(device->GetAddressOf()));
+    }
+    if (FAILED(hr)) {
+        return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
+    }
+    return {};
 }
 
 MaybeError Backend::EnsureDXC() {
