@@ -466,6 +466,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "render_pass_render_area.md",
       FeatureInfo::FeatureState::Experimental}},
+    {Feature::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping,
+     {"Support using shared memory file mapping handle for buffer mapping over the wire.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "buffer_map_extended_usages.md",
+      FeatureInfo::FeatureState::Experimental}},
 
     // Comment to separate the } so it is clearer what to copy-paste to add a feature.
 };

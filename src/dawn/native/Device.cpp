@@ -1820,6 +1820,11 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         mEnabledFeatures.EnableFeature(wgpu::FeatureName::CoreFeaturesAndLimits);
     }
 
+    // `DawnWireUseSharedMemoryFileMappingHandleForBufferMapping` is enabled implicitly to indicate
+    // that we can use shared memory file mapping handle in dawn wire for transferring mapped data.
+    // Note that it should only be used inside dawn wire.
+    ApplyUseSharedMemoryFileMappingHandleInWire();
+
     // TODO(384921944): Enable Compat's optional features by default in Core Mode.
 }
 
@@ -2866,6 +2871,14 @@ tint::InternalCompilerErrorCallbackInfo DeviceBase::GetTintInternalCompilerError
         .callback = tintInternalCompilerErrorCallback,
         .userdata = this,
     };
+}
+
+void DeviceBase::ApplyUseSharedMemoryFileMappingHandleInWire() {
+    constexpr wgpu::FeatureName kFeatureName =
+        wgpu::FeatureName::DawnWireUseSharedMemoryFileMappingHandleForBufferMapping;
+    if (GetPhysicalDevice()->SupportsAllRequiredFeatures({&kFeatureName, 1}, mToggles)) {
+        mEnabledFeatures.EnableFeature(kFeatureName);
+    }
 }
 
 }  // namespace dawn::native

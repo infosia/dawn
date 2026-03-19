@@ -620,6 +620,8 @@ class DeviceBase : public ErrorSink,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
 
+    void ApplyUseSharedMemoryFileMappingHandleInWire();
+
     WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
         WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
 
