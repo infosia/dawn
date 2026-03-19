@@ -70,6 +70,8 @@ MaybeError PlatformFunctions::LoadD3D12() {
                            "D3D12CreateVersionedRootSignatureDeserializer", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
+    // Optional: only present in Agility SDK / newer d3d12.dll. Absence is not an error.
+    mD3D12Lib.GetProc(&d3d12GetInterface, "D3D12GetInterface", &error);
 #endif
 
     return {};
