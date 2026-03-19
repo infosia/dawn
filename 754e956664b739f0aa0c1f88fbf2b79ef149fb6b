@@ -16,6 +16,41 @@
       "message": "It seems correct but PTAL, thanks!",
       "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d1e2e4c_aa85f662",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T08:47:12Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "parentUuid": "6ac7d2c9_b82546ba",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ec01929_2b7abc4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T08:47:12Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "754e956664b739f0aa0c1f88fbf2b79ef149fb6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
