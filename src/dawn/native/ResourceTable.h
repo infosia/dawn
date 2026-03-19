@@ -124,16 +124,20 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     // of the ResourceTable (since the last call to AcquireDirtySlotUpdates or creation of the
     // ResourceTable).
     struct MetadataUpdate {
-        uint32_t offset;
-        uint32_t data;
+        ResourceTableSlot slot;  // Slot index to update
+        uint32_t offset;         // Byte offset resource array
+        uint32_t data;           // tint::ResourceType in the low 16 bits
     };
-    struct ResourceUpdate {
+    struct ResourceDiff {
+        using Resource =
+            std::variant<std::monostate, raw_ptr<TextureViewBase>, raw_ptr<SamplerBase>>;
         ResourceTableSlot slot;
-        std::variant<raw_ptr<TextureViewBase>, raw_ptr<SamplerBase>> resource;
+        Resource removed;  // Resource removed from 'slot', if any
+        Resource added;    // Resource added to 'slot', if any
     };
     struct Updates {
         std::vector<MetadataUpdate> metadataUpdates;
-        std::vector<ResourceUpdate> resourceUpdates;
+        std::vector<ResourceDiff> resourceDiffs;
     };
     Updates AcquireDirtySlotUpdates();
 
@@ -163,7 +167,11 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     Ref<BufferBase> mMetadataBuffer;
 
     struct SlotState {
-        std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>> resource;
+        using Resource = std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>>;
+        // The last bound resource
+        Resource lastResource;
+        // The currently bound resource
+        Resource resource;
 
         // Matches the value of the Tint enum for type IDs but kept as u32 to keep usage of Tint
         // headers local.
