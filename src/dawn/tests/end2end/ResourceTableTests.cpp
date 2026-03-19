@@ -1239,9 +1239,6 @@ TEST_P(ResourceTableTests, DefaultBindingsAreZeroAndSizeOne) {
 
 // Test that a resource table texture can be sampled by a resource table sampler.
 TEST_P(ResourceTableTests, Sampler) {
-    // TODO(https://issues.chromium.org/473354063): Support samplers on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
@@ -1307,9 +1304,6 @@ TEST_P(ResourceTableTests, Sampler) {
 
 // Test that a resource table texture can be sampled by multiple resource table samplers.
 TEST_P(ResourceTableTests, MultipleSamplers) {
-    // TODO(https://issues.chromium.org/473354063): Support samplers on D3D12
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 

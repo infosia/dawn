@@ -45,10 +45,13 @@ class PipelineLayout;
 
 class ResourceTable final : public ResourceTableBase {
   public:
-    // Returns descriptor ranges for metadata buffer and unbounded resource arrays. Used to add a
-    // root descriptor table to the root signature.
-    static std::vector<D3D12_DESCRIPTOR_RANGE1> GetCbvUavSrvDescriptorRanges(
-        const PipelineLayout& layout);
+    // Returns descriptor ranges for metadata buffer and unbounded resource arrays. Used to add
+    // root descriptor tables to the root signature.
+    struct DescriptorRanges {
+        std::vector<D3D12_DESCRIPTOR_RANGE1> cbvUavSrvs;
+        std::vector<D3D12_DESCRIPTOR_RANGE1> samplers;
+    };
+    static ResultOrError<DescriptorRanges> GetDescriptorRanges(const PipelineLayout& layout);
 
     static ResultOrError<Ref<ResourceTable>> Create(Device* device,
                                                     const ResourceTableDescriptor* descriptor);
@@ -60,11 +63,13 @@ class ResourceTable final : public ResourceTableBase {
     // in the current allocator's heap. If false is returned, caller should
     // AllocateAndSwitchShaderVisibleHeap and populate again.
     bool PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator);
+    bool PopulateSamplers(ShaderVisibleDescriptorAllocator* samplerAllocator);
 
     // Returns a GPU heap handle handle to the base descriptor of the set of descriptors
-    // that were copied there in PopulateViews. This should be set as a root descriptor table on the
-    // command list to match the definition in the root signature.
+    // that were copied there in PopulateViews/Samplers. This should be set as a root descriptor
+    // table on the command list to match the definition in the root signature.
     D3D12_GPU_DESCRIPTOR_HANDLE GetBaseViewDescriptor() const;
+    D3D12_GPU_DESCRIPTOR_HANDLE GetBaseSamplerDescriptor() const;
 
   protected:
     void DestroyImpl(DestroyReason reason) override;
@@ -75,16 +80,24 @@ class ResourceTable final : public ResourceTableBase {
 
     using ResourceTableBase::ResourceTableBase;
     MaybeError Initialize();
-    MaybeError AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, uint32_t descriptorCount);
-    void FreeCPUHeap();
+
+    struct Heap {
+        ComPtr<ID3D12DescriptorHeap> handle;
+        CPUDescriptorHeapAllocation cpuAllocation;
+        GPUDescriptorHeapAllocation gpuAllocation;
+        uint32_t sizeIncrement = 0;
+    };
+
+    ResultOrError<Heap> AllocateCPUHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType,
+                                        uint32_t descriptorCount);
+    void FreeCPUHeap(Heap& heap);
+
     MaybeError UpdateMetadataBuffer(CommandRecordingContext* recordingContext,
                                     const std::vector<MetadataUpdate>& updates);
     MaybeError UpdateResourceBindings(const std::vector<ResourceUpdate>& updates);
 
-    ComPtr<ID3D12DescriptorHeap> mCPUHeap;
-    CPUDescriptorHeapAllocation mCPUViewAllocation;
-    GPUDescriptorHeapAllocation mGPUViewAllocation;
-    uint32_t mViewSizeIncrement = 0;
+    Heap mViewHeap;
+    Heap mSamplerHeap;
 };
 
 }  // namespace dawn::native::d3d12

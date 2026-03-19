@@ -47,7 +47,8 @@ class PipelineLayout final : public PipelineLayoutBase {
         Device* device,
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
 
-    uint32_t GetResourceTableRootParameterIndex() const;
+    uint32_t GetResourceTableCbvUavSrvRootParameterIndex() const;
+    uint32_t GetResourceTableSamplerRootParameterIndex() const;
     uint32_t GetBaseResourceTableRegisterSpace() const;
 
     uint32_t GetCbvUavSrvRootParameterIndex(BindGroupIndex group) const;
@@ -118,7 +119,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     PerBindGroup<uint32_t> mSamplerRootParameterIndices;
     PerBindGroup<ityp::vector<BindingIndex, uint32_t>> mDynamicUniformRootParameterIndices;
     DynamicStorageBufferInfo mDynamicStorageBufferInfo;
-    uint32_t mResourceTableRootParameterIndex;
+    uint32_t mResourceTableCbvUavSrvRootParameterIndex;
+    uint32_t mResourceTableSamplerRootParameterIndex;
     uint32_t mFirstIndexOffsetParameterIndex;
     uint32_t mNumWorkgroupsParameterIndex;
     uint32_t mDynamicStorageBufferLengthsParameterIndex;

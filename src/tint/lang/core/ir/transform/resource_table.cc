@@ -185,6 +185,7 @@ struct State {
             auto idx_iter = resource_type_to_idx.find(res_type);
             TINT_IR_ASSERT(ir, idx_iter != resource_type_to_idx.end());
 
+            // The metadata table's length is stored at index 0
             auto* len_access = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
             auto* num_elements = b.Load(len_access);
 
