@@ -168,7 +168,7 @@ MaybeError ResourceTableBase::InitializeBase() {
     DeviceBase* device = GetDevice();
 
     // Create a storage buffer that will hold the shader-visible metadata for the dynamic array.
-    uint32_t metadataArrayLength = uint32_t(GetSizeWithDefaultResources());
+    uint32_t metadataArrayLength = uint32_t{GetSizeWithDefaultResources()};
     BufferDescriptor metadataDesc{
         .label = "resource table metadata",
         .usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst,
@@ -184,7 +184,9 @@ MaybeError ResourceTableBase::InitializeBase() {
     // also apply the initial dirty slots in this mapping instead of on the first use of the
     // resource table.
     uint32_t* data = static_cast<uint32_t*>(mMetadataBuffer->GetMappedRange(0, metadataDesc.size));
-    *data = uint32_t(mAPISize);
+    // Store APISize at element 0 in the metadata buffer, which will be used in the shader to index
+    // default resources at APISize + resource type index.
+    data[0] = uint32_t(mAPISize);
     memset(data + 1, 0, metadataDesc.size - sizeof(uint32_t));
     DAWN_TRY(mMetadataBuffer->Unmap());
 
@@ -517,6 +519,7 @@ void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* 
     // Update to new state
     state.resource = {};
     state.pinned = false;
+    // Note: state.lastResource is only updated by AcquireDirtySlotUpdates
 
     if (TextureViewBase* view = contents->textureView) {
         // Add the mapping to the slot stored in the textures.
@@ -537,8 +540,8 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
     DAWN_ASSERT(!mDestroyed);
 
     Updates updates;
-    for (ResourceTableSlot dirtyIndex : mDirtySlots) {
-        SlotState& state = mSlots[dirtyIndex];
+    for (ResourceTableSlot dirtySlot : mDirtySlots) {
+        SlotState& state = mSlots[dirtySlot];
         DAWN_ASSERT(state.dirty);
         state.dirty = false;
 
@@ -550,8 +553,10 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
         }
 
         // Add the update for the metadata buffer.
-        size_t offset = sizeof(uint32_t) * (uint32_t(dirtyIndex) + 1);
+        // Add 1 because the 0th element holds the table size (APISize).
+        size_t offset = sizeof(uint32_t) * (uint32_t(dirtySlot) + 1);
         updates.metadataUpdates.push_back({
+            .slot = dirtySlot,
             .offset = uint32_t(offset),
             .data = uint32_t(effectiveType),
         });
@@ -562,24 +567,31 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
         }
         state.resourceDirty = false;
 
-        // Don't add updates for removing resources because the shader-side validation will prevent
-        // accesses anyway.
-        if (std::holds_alternative<std::monostate>(state.resource)) {
-            continue;
-        }
+        auto ToResourceDiffResource =
+            [](const SlotState::Resource& resource) -> ResourceDiff::Resource {
+            if (auto view = GetRef<TextureViewBase>(resource)) {
+                return view.Get();
+            }
+            if (auto sampler = GetRef<SamplerBase>(resource)) {
+                return sampler.Get();
+            }
+            return std::monostate{};
+        };
 
-        if (auto view = GetRef<TextureViewBase>(state.resource)) {
-            updates.resourceUpdates.push_back({
-                .slot = dirtyIndex,
-                .resource = view.Get(),
-            });
-        } else if (auto sampler = GetRef<SamplerBase>(state.resource)) {
-            updates.resourceUpdates.push_back({
-                .slot = dirtyIndex,
-                .resource = sampler.Get(),
-            });
-        }
+        ResourceDiff update{.slot = dirtySlot,
+                            .removed = ToResourceDiffResource(state.lastResource),
+                            .added = ToResourceDiffResource(state.resource)};
+
+        // At least one of removed and added must be set
+        DAWN_ASSERT(!(std::holds_alternative<std::monostate>(update.removed) &&
+                      std::holds_alternative<std::monostate>(update.added)));
+
+        updates.resourceDiffs.push_back(update);
+
+        // Update the last resource for future slot updates
+        state.lastResource = state.resource;
     }
+
     mDirtySlots.clear();
 
     return updates;

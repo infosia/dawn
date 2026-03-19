@@ -116,7 +116,7 @@ MaybeError ResourceTable::Initialize() {
 
     Device* device = ToBackend(GetDevice());
 
-    uint32_t sampledImageCount = uint32_t(GetSizeWithDefaultResources());
+    uint32_t sampledImageCount = uint32_t{GetSizeWithDefaultResources()};
 
     // Allocate mPool.
     {
@@ -194,8 +194,8 @@ MaybeError ResourceTable::ApplyPendingUpdates(CommandRecordingContext* recording
     if (!updates.metadataUpdates.empty()) {
         DAWN_TRY(UpdateMetadataBuffer(recordingContext, updates.metadataUpdates));
     }
-    if (!updates.resourceUpdates.empty()) {
-        DAWN_TRY(UpdateResourceBindings(updates.resourceUpdates));
+    if (!updates.resourceDiffs.empty()) {
+        DAWN_TRY(UpdateResourceBindings(updates.resourceDiffs));
     }
 
     return {};
@@ -249,7 +249,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
         });
 }
 
-MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdate>& updates) {
+MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>& diffs) {
     Device* device = ToBackend(GetDevice());
 
     ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource> defaultResources;
@@ -268,12 +268,15 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
     std::vector<VkDescriptorImageInfo> imageWrites;
     std::vector<uint32_t> arrayElements;
 
-    for (const ResourceUpdate& update : updates) {
+    for (const ResourceDiff& diff : diffs) {
         // TODO(https://issues.chromium.org/473444515): Support buffer, texel buffers and storage
         // textures.
 
         MatchVariant(
-            update.resource,
+            diff.added,
+            [&](std::monostate) {
+                // Nothing to do
+            },
             [&](TextureViewBase* textureView) {
                 VkImageView handle = ToBackend(textureView)->GetHandle();
                 if (handle == nullptr) {
@@ -287,7 +290,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
                                                      wgpu::TextureUsage::TextureBinding),
                 };
                 imageWrites.push_back(imageWrite);
-                arrayElements.push_back(uint32_t{update.slot});
+                arrayElements.push_back(uint32_t{diff.slot});
             },
             [&](SamplerBase* sampler) {
                 VkSampler handle = ToBackend(sampler)->GetHandle();
@@ -301,7 +304,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
                     .imageLayout = VK_IMAGE_LAYOUT_GENERAL,
                 };
                 imageWrites.push_back(imageWrite);
-                arrayElements.push_back(uint32_t{update.slot});
+                arrayElements.push_back(uint32_t{diff.slot});
             });
     }
 
