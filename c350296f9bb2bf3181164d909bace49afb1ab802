@@ -16,6 +16,29 @@
       "message": "LGTM!",
       "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "072c1274_61b475de",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-19T13:23:57Z",
+      "side": 1,
+      "message": "This needs to be a copy to be safe since it\u0027s not holding the lock.",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

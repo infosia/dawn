@@ -139,6 +139,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "200b3434_b1e9125e",
+        "filename": "src/dawn/native/ObjectBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-19T13:23:57Z",
+      "side": 1,
+      "message": "\u003e Otherwise, we would have had 2 heap allocations (1 for ObjectLabel and 1 for its inner Impl).\n\nHere is what I was thinking originally. The current `ObjectLabel` class just has to become `ObjectLabel::Impl` and the logic that was added in `ApiObjectBase` moves into a new `ObjectLabel` class. `ApiObjectBase` owns a `ObjectLabel` directly with no heap allocations. `ObjectLabel` owns the `std::atomic\u003cImpl*\u003e` which has one heap allocation. I think that is the same number of heap allocations and the logic is encapsulated in it\u0027s own class that can be tested independently.\n\nFWIW it\u0027s easy to make that change as a follow up and this is going to be a big improvement already.",
+      "parentUuid": "aedb5867_ff755d8a",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 26
+      },
+      "revId": "65567a51fc510fa9513a4a3fda8d1cf6bdd516df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b9151ef_3f87d407",
         "filename": "src/dawn/native/webgpu_absl_format.h",
         "patchSetId": 3
