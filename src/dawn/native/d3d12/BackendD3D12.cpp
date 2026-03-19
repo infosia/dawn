@@ -30,7 +30,6 @@
 #include <memory>
 #include <utility>
 
-#include "dawn/common/Log.h"
 #include "dawn/native/D3D12Backend.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -78,6 +77,16 @@ MaybeError Backend::Initialize() {
 
 const PlatformFunctions* Backend::GetFunctions() const {
     return static_cast<const PlatformFunctions*>(Base::GetFunctions());
+}
+
+ResultOrError<ComPtr<ID3D12Device>> Backend::CreateD3DDevice(IUnknown* adapter) {
+    ComPtr<ID3D12Device> device;
+    HRESULT hr =
+        GetFunctions()->CreateDevice(adapter, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&device));
+    if (FAILED(hr)) {
+        return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
+    }
+    return device;
 }
 
 MaybeError Backend::EnsureDXC() {
