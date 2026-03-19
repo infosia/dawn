@@ -382,9 +382,10 @@ deps = {
   },
 
   'third_party/directx-headers/src': {
-    # The non-Windows build of DXC depends on DirectX-Headers, and at a specific commit (not ToT)
-    'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@980971e835876dc0cde415e8f9bc646e64667bf7',
-    'condition': 'host_os != "win"',
+    # Preview branch of DirectX-Headers, provides d3d12.h with Agility SDK
+    # interfaces (ID3D12SDKConfiguration1, ID3D12DeviceFactory, etc.).
+    # Also used by DXC on non-Windows.
+    'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@98f4de70db9976cbd03e405194bdd06bad59d40a',
   },
 
   'third_party/OpenGL-Registry/src': {
@@ -852,6 +853,23 @@ hooks = [
                'build/config/siso/configure_siso.py',
                '--rbe_instance',
                Var('rbe_instance'),
+               ],
+  },
+  # Download D3D12 Agility SDK for x64 builds.
+  # The SDK is extracted into a versioned directory (e.g.
+  # third_party/agility_sdk_1.720.0-preview/) so that bumping the version
+  # creates a new sibling directory and gclient automatically re-runs the
+  # download.  Keep the version below in sync with:
+  #   - src/dawn/native/BUILD.gn        (_agility_sdk_dir)
+  #   - src/dawn/native/d3d12/AgilitySDK.h (kAgilitySDKVersion)
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and host_os == "win" and host_cpu == "x64"',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--version',
+               '1.720.0-preview',
                ],
   },
 ]

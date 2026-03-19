@@ -31,7 +31,15 @@
 #include "dawn/native/d3d/d3d_platform.h"
 
 // clang-format off
-#include <d3d12.h>
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmicrosoft-enum-value"
+#pragma clang diagnostic ignored "-Wnested-anon-types"
+#endif
+#include "third_party/directx-headers/src/include/directx/d3d12.h"
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 #include <d3d11on12.h>
 // clang-format on
 
