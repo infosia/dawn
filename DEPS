@@ -838,6 +838,18 @@ hooks = [
                Var('rbe_instance'),
                ],
   },
+  # Download D3D12 Agility SDK for x64 builds
+  {
+    'name': 'fetch_agility_sdk',
+    'pattern': '.',
+    'condition': 'dawn_standalone and host_os == "win"',
+    'action': ['vpython3',
+               'tools/fetch_agility_sdk.py',
+               '--output',
+               'third_party/agility_sdk',
+               '--latest',
+               ],
+  },
 ]
 
 recursedeps = [
