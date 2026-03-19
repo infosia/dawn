@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6998bde_0ef04f54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-19T23:44:58Z",
+      "side": 1,
+      "message": "Let me see if rubber-stamper can do this because it verifies it\u0027s a clean merge.",
+      "revId": "4c0d0cfa3f6ab66115eaaaf851b1d2635d6348e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
