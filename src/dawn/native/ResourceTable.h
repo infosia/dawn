@@ -124,6 +124,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     // of the ResourceTable (since the last call to AcquireDirtySlotUpdates or creation of the
     // ResourceTable).
     struct MetadataUpdate {
+        ResourceTableSlot slot;
         uint32_t offset;
         uint32_t data;
     };
@@ -134,6 +135,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     struct Updates {
         std::vector<MetadataUpdate> metadataUpdates;
         std::vector<ResourceUpdate> resourceUpdates;
+        std::vector<ResourceUpdate> resourceRemovals;
     };
     Updates AcquireDirtySlotUpdates();
 
@@ -163,7 +165,10 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
     Ref<BufferBase> mMetadataBuffer;
 
     struct SlotState {
+        // The currently bound resource
         std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>> resource;
+        // The last bound resource, used for removal
+        std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>> lastResource;
 
         // Matches the value of the Tint enum for type IDs but kept as u32 to keep usage of Tint
         // headers local.

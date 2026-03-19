@@ -56,6 +56,12 @@ class ResourceTableDefaultResources : public NonMovable {
     // Returns the total number of default bindings
     static ResourceTableSlot GetCount();
 
+    // Returns the total number of sampler default bindings
+    static ResourceTableSlot GetSamplerCount();
+
+    // Returns the total number of non-sampler default bindings
+    static ResourceTableSlot GetNonSamplerCount();
+
     // Returns the index of `resourceType` in the span returned by `GetOrder()`
     static ResourceTableSlot IndexOf(tint::ResourceType resourceType);
 
