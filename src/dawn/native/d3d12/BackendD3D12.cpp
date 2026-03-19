@@ -33,6 +33,7 @@
 #include "dawn/common/Log.h"
 #include "dawn/native/D3D12Backend.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d12/PhysicalDeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
@@ -50,6 +51,17 @@ MaybeError Backend::Initialize() {
         DAWN_TRY(functions->Initialize(GetInstance()->GetRuntimeSearchPaths()));
 
         DAWN_TRY(Base::Initialize(std::move(functions)));
+    }
+
+    // Activate Agility SDK if the UseAgilitySDK toggle is enabled.
+    //
+    // CreateDeviceFactory is the programmatic alternative to the
+    // exe-export approach (D3D12SDKVersion / D3D12SDKPath symbols).
+    // It returns an ID3D12DeviceFactory bound to the specified SDK
+    // version and path, which works from any module (static lib,
+    // shared lib, or DLL).
+    if (GetInstance()->GetTogglesState().IsEnabled(Toggle::UseAgilitySDK)) {
+        const_cast<PlatformFunctions*>(GetFunctions())->InitAgilitySDK();
     }
 
     // Enable the debug layer (requires the Graphics Tools "optional feature").
@@ -78,6 +90,10 @@ MaybeError Backend::Initialize() {
 
 const PlatformFunctions* Backend::GetFunctions() const {
     return static_cast<const PlatformFunctions*>(Base::GetFunctions());
+}
+
+ID3D12DeviceFactory* Backend::GetDeviceFactory() const {
+    return GetFunctions()->deviceFactory.Get();
 }
 
 MaybeError Backend::EnsureDXC() {
