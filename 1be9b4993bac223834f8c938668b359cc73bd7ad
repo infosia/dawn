@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79209b40_ebb32f59",
+        "filename": "src/dawn/common/WGPUDeviceCallbackInfos.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-19T20:52:30Z",
+      "side": 1,
+      "message": "nit: Sounds like it would always return `kDefaultUncapturedErrorCallbackInfo`. Use \"Defaulted\" or \"GetUncapturedErrorCallbackInfoOrDefault\" or something.",
+      "range": {
+        "startLine": 78,
+        "startChar": 42,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "1be9b4993bac223834f8c938668b359cc73bd7ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
