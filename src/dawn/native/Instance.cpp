@@ -254,6 +254,11 @@ ResultOrError<Ref<InstanceBase>> InstanceBase::Create(const InstanceDescriptor* 
     // By default disable the AllowUnsafeAPIs instance toggle, it will be inherited to adapters
     // and devices created by this instance if not overriden.
     instanceToggles.Default(Toggle::AllowUnsafeAPIs, false);
+    // By default enable UseAgilitySDK. When the Agility SDK DLLs are present,
+    // Dawn will use the newer redistributable D3D12 runtime. When the DLLs are
+    // absent, CreateDeviceFactory fails gracefully and Dawn falls back to
+    // system D3D12CreateDevice.
+    instanceToggles.Default(Toggle::UseAgilitySDK, true);
 
     Ref<InstanceBase> instance = AcquireRef(new InstanceBase(instanceToggles));
     DAWN_TRY(instance->Initialize(unpacked));
