@@ -134,14 +134,23 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
         info.supportsExistingHeap = existingHeapInfo.Supported;
     }
 
+    // Query supported shader models from highest to lowest.
+    // D3D_SHADER_MODEL_6_10 is only defined in the Agility SDK headers; guard it
+    // so builds that fall back to the Windows SDK header still compile.
     D3D12_FEATURE_DATA_SHADER_MODEL knownShaderModels[] = {
-        {D3D_SHADER_MODEL_6_6}, {D3D_SHADER_MODEL_6_5}, {D3D_SHADER_MODEL_6_4},
-        {D3D_SHADER_MODEL_6_3}, {D3D_SHADER_MODEL_6_2}, {D3D_SHADER_MODEL_6_1},
-        {D3D_SHADER_MODEL_6_0}, {D3D_SHADER_MODEL_5_1}};
+#ifdef DAWN_USE_AGILITY_SDK
+        {D3D_SHADER_MODEL_6_10},
+#endif
+        {D3D_SHADER_MODEL_6_9},  {D3D_SHADER_MODEL_6_8}, {D3D_SHADER_MODEL_6_7},
+        {D3D_SHADER_MODEL_6_6},  {D3D_SHADER_MODEL_6_5}, {D3D_SHADER_MODEL_6_4},
+        {D3D_SHADER_MODEL_6_3},  {D3D_SHADER_MODEL_6_2}, {D3D_SHADER_MODEL_6_1},
+        {D3D_SHADER_MODEL_6_0},  {D3D_SHADER_MODEL_5_1}};
+
     uint32_t driverShaderModel = 0;
     for (D3D12_FEATURE_DATA_SHADER_MODEL shaderModel : knownShaderModels) {
-        if (SUCCEEDED(physicalDevice.GetDevice()->CheckFeatureSupport(
-                D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel)))) {
+        HRESULT hr = physicalDevice.GetDevice()->CheckFeatureSupport(
+            D3D12_FEATURE_SHADER_MODEL, &shaderModel, sizeof(shaderModel));
+        if (SUCCEEDED(hr)) {
             driverShaderModel = shaderModel.HighestShaderModel;
             break;
         }
@@ -151,13 +160,14 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
         return DAWN_INTERNAL_ERROR("Driver doesn't support Shader Model 5.1 or higher");
     }
 
-    // D3D_SHADER_MODEL is encoded as 0xMm with M the major version and m the minor version
+    // D3D_SHADER_MODEL is encoded as 0xMm (M=major, m=minor).
+    // e.g. SM 6.6 = 0x66, SM 6.10 = 0x6a.
     DAWN_ASSERT(driverShaderModel <= 0xFF);
     uint32_t shaderModelMajor = (driverShaderModel & 0xF0) >> 4;
     uint32_t shaderModelMinor = (driverShaderModel & 0xF);
 
     DAWN_ASSERT(shaderModelMajor < 10);
-    DAWN_ASSERT(shaderModelMinor < 10);
+    DAWN_ASSERT(shaderModelMinor < 16);
     info.highestSupportedShaderModel = 10 * shaderModelMajor + shaderModelMinor;
 
     // Device support wave intrinsics if shader model >= SM6.0 and capabilities flag WaveOps is set.
