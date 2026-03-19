@@ -1,0 +1,497 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "065eb1fb_b082fc10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "Nice work getting it passing some tests, I have a bunch of comments but this is a good direction.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c895af_c2959377",
+        "filename": "src/dawn/native/SharedResourceMemory.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "[2] In all the backends we defer the waiting on fences etc to the first time the resource is used after a BeginAcess. Could we do the same in the WebGPU backend such that the `BeginAccess` is done in `SynchronizeTextureBeforeUse` which avoid the need to `AlwaysCallEndAccessInternal`.\n\nThis is to make the WebGPU backend more consistent with the others.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc71c61e_a608be09",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "For each subresource, this marks the whole texture as initialized. Did you mean to only mark that subresource as initialized?",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc9c0512_318c12bf",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This could be in `LazyClearSyncScope` which would become `PrepareResourcesForSyncScope` (that\u0027s what it is in the Vulkan backend) or something like that.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2def845_bb3a8d6c",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "We should also add the sync scope handling to the dispatch calls.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "871934be_5af6bea3",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed on macOS. But also that function is a leftover of when STM was being rolled out. It should now be the only supported path and we should remove it.\n\nThe only two callsites in Chromium are at https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/webgpu_decoder_impl.cc;drc\u003d2fff3fdd8ba33169c02b49c8ceb92b424f8e9a56;l\u003d1831 and we can update them to check for STM extensions on all OSes. Can you keep this returning false unconditionnally and file a bug to remove `SupportsExternalImage` as it\u0027s no longer needed?",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ad535db_0248538c",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This is a bit heavy handed. What do you think instead of blocking at [3] until the commands are scheduled? It\u0027s a bit unfortunate as well but should be more efficient because instead of causing GPU-CPU bubbles in Chromium. It will do a much smaller wait on the CPU (without a GPU bubble).",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "289756f1_e0d445a0",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This has already been validate in the device right?",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b86b7cf_5a3267eb",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "Should already be validated in the frontend code.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6f9c668_648a8e34",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdacefd0_116898eb",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "Is this a debug assert essentially to make sure we don\u0027t forget a branch at [1]? Maybe we could have an `if, else if, else if, else UNREACHABLE()` chain in [1] that makes sure that we handle the newly enabled kinds of fences. It would avoid the need to the export just for what could be an ASSERT.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9912bd02_ebfd665c",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "ditto, it should already be validated earlier",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de222110_1dec41e9",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "Note: These might not need to be captured as they are only part of the STM handling.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea96def7_ef022b86",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This constructor static function doesn\u0027t need to take the label as it is in the descriptor.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f819017b_64ea79ae",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "The descriptor could be passed as `const UnpackedPtr\u003cSharedFenceDescriptor\u003e\u0026` to avoid unpacking again in the constructor.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1412e04d_7a0e60c5",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "```suggestion\n    raw_ptr\u003cvoid\u003e mSharedResourceHandle \u003d nullptr;\n```",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ebaebf2_e4bd55c5",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "ditto, this should already be validated by the frontend.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acf6dfec_2cee4183",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "This returns a status that we can check instead of relying on format being undefined.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb2a7261_9708eb8e",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "If this return is taken the innerHandle will be leaked. We could create the STM earlier and do the query for the properties in a `MaybeError Initialize()`",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "049c83d2_669db3d9",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311f823c_9ff04ab7",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "Do we have a macro to check WGPUStatus? If not, now would be a good time to add one. It could be similar to CheckHRESULT or CheckVkSuccess.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6e0a98_9ac73c28",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "What is this block trying to do? The `initialized` boolean returned by `EndAccess` is to let the user of Dawn know if the next user of the texture should zero-init it. It seems that in this CL we are tracking the initialized state twice: internally in the WebGPU backend, and in the inner device itself. Both should match because it\u0027s all Dawn frontend that does the logic. Maybe we could have an ASSERT here instead that the two states (the inner texture\u0027s initialized state, and our tracking of the initialized state) match?",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59e9998d_e39a1436",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "With the comment at [2], this condition and the same one below will always be true.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81e2a0cc_bdb653ff",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8518cf32_ac0bee5d",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this, do we expect the inner fence to always be the same? I don\u0027t know if it is true on the Vulkan backend for example.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42110e72_92209e66",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "ditto to use `CheckStatus` or a similar helper.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f78767ee_d6a84d5e",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "ditto, I\u0027m not sure if we\u0027ll need to record them.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96b4439_c8c1f9e6",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "nit: the label doesn\u0027t need to be passed as it is in the descriptor.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d2395d7_eb4864ac",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-19T12:56:07Z",
+      "side": 1,
+      "message": "nit: it might be worth separating the two constructors to avoid having two converging code paths that split up again. (and factor out the descriptor creation)",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
