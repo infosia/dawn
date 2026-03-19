@@ -59,6 +59,12 @@ declare_args() {
   # See crbug.com/tint/1753.
   dawn_use_built_dxc = is_win && target_cpu != "x86"
 
+  # Whether to include the D3D12 Agility SDK runtime DLLs in the build output.
+  # When enabled, D3D12Core.dll and d3d12SDKLayers.dll are copied to the output
+  # directory so the D3D12 runtime picks up the newer redistributable DLLs.
+  # Also uses D3D12 headers from the Agility SDK package in third_party.
+  dawn_use_agility_sdk = false
+
   # Force Dawn to load components like d3dcompiler_47.dll and vulkan-1.dll from
   # system directories instead of local directories.
   dawn_force_system_component_load = false
