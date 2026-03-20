@@ -211,7 +211,7 @@ class ExternalTextureTestsBase : public Parent {
     wgpu::ShaderModule vsModule;
     wgpu::ShaderModule fsSampleExternalTextureModule;
 
-    utils::ColorSpaceConversionInfo noopRGBConversion = utils::GetNoopRGBColorSpaceConversionInfo();
+    utils::ColorSpaceConversionInfo noopRGBConversion = utils::GetNoopColorSpaceConversionInfo();
     utils::ColorSpaceConversionInfo bt709Conversion =
         utils::GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
 };
