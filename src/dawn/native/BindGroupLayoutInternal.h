@@ -170,7 +170,9 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
     // used to get the stored counts.
     const BindingCounts& GetValidationBindingCounts() const;
 
-    uint32_t GetUnexpandedBindingCount() const;
+    // Returns the number of bindings that's expected in the BindGroupDescriptor for BindGroups
+    // created from this layout.
+    uint32_t GetBindingCountForBindGroupCreation() const;
 
     bool NeedsCrossBindingValidation() const;
 
