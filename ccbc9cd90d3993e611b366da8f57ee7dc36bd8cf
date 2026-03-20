@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef56d68a_52021d78",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-03-20T05:06:09Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "6757b0da_b322c221",
+      "revId": "ccbc9cd90d3993e611b366da8f57ee7dc36bd8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81e6f986_b1630489",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-19T14:59:52Z",
       "side": 0,
       "message": "Ditto keep the comment please",
+      "revId": "ccbc9cd90d3993e611b366da8f57ee7dc36bd8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dac9576_0950440e",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-03-20T05:06:09Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "81e6f986_b1630489",
       "revId": "ccbc9cd90d3993e611b366da8f57ee7dc36bd8cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
