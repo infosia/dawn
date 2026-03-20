@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -350,6 +351,7 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 }
 
 MaybeError RenderPipeline::InitializeImpl() {
+    DAWN_DEBUG();
     // Gather list of internal immediate constants used by this pipeline
     bool polyfillPixelCenter = UseSampleRateShading() && UsesFragPosition();
     if ((polyfillPixelCenter || UsesFragDepth()) && !HasUnclippedDepth()) {
@@ -383,6 +385,7 @@ MaybeError RenderPipeline::InitializeImpl() {
 
 ResultOrError<RenderPipeline::SpecializedHandles> RenderPipeline::GetOrCreateSpecializedHandle(
     Specialization&& specialization) {
+    DAWN_DEBUG();
     specialization.layout.pushConstantBytes = ToPushConstantBytes(mImmediateMask);
 
     if (auto it = mSpecializations.find(specialization); it != mSpecializations.end()) {
@@ -402,6 +405,7 @@ ResultOrError<RenderPipeline::SpecializedHandles> RenderPipeline::GetOrCreateSpe
 ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSpecialization(
     Specialization&& specialization,
     bool buildCacheKey) {
+    DAWN_DEBUG();
     Device* device = ToBackend(GetDevice());
     PipelineLayout* layout = ToBackend(GetLayout());
 
