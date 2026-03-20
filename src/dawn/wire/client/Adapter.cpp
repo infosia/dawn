@@ -64,13 +64,15 @@ class RequestDeviceEvent : public TrackedEvent {
                          WGPUStringView message,
                          const WGPULimits* limits,
                          uint32_t featuresCount,
-                         const WGPUFeatureName* features) {
+                         const WGPUFeatureName* features,
+                         WGPUBool supportsSharedTransferBufferInWire) {
         DAWN_ASSERT(mDevice != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestDeviceStatus_Success) {
             mDevice->SetLimits(limits);
             mDevice->SetFeatures(features, featuresCount);
+            mDevice->SetSupportsSharedTransferBufferInWire(supportsSharedTransferBufferInWire);
         }
         return WireResult::Success;
     }
@@ -354,9 +356,11 @@ WireResult Client::DoAdapterRequestDeviceCallback(ObjectHandle eventManager,
                                                   WGPUStringView message,
                                                   const WGPULimits* limits,
                                                   uint32_t featuresCount,
-                                                  const WGPUFeatureName* features) {
+                                                  const WGPUFeatureName* features,
+                                                  WGPUBool supportsSharedTransferBufferInWire) {
     return SetFutureReady<RequestDeviceEvent>(eventManager, future.id, status, message, limits,
-                                              featuresCount, features);
+                                              featuresCount, features,
+                                              supportsSharedTransferBufferInWire);
 }
 
 WGPUInstance Adapter::APIGetInstance() const {

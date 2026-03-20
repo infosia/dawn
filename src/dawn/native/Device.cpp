@@ -451,6 +451,13 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
         mMutex = nullptr;
     }
 
+    if (APISupportsSharedTransferBufferInWire()) {
+        // We need to enable this feature to import Windows shared memory file mapping handle as
+        // shared buffer memory in wire server.
+        mEnabledFeatures.EnableFeature(
+            Feature::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle);
+    }
+
     GetInstance()->AddDevice(this);
 
     return {};
@@ -2781,6 +2788,14 @@ tint::InternalCompilerErrorCallbackInfo DeviceBase::GetTintInternalCompilerError
         .callback = tintInternalCompilerErrorCallback,
         .userdata = this,
     };
+}
+
+bool DeviceBase::APISupportsSharedTransferBufferInWire() const {
+    return SupportsSharedTransferBufferInWireImpl();
+}
+
+bool DeviceBase::SupportsSharedTransferBufferInWireImpl() const {
+    return false;
 }
 
 }  // namespace dawn::native

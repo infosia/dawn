@@ -98,6 +98,25 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
                                         size_t deserializeSize,
                                         WriteHandle** writeHandle) = 0;
 
+    class TransferBuffer {
+      public:
+        virtual ~TransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual bool IsEmpty() const { return true; }
+
+        virtual WGPUSharedBufferMemory CreateSharedBufferMemory(const DawnProcTable* procs,
+                                                                WGPUDevice device) {
+            return nullptr;
+        }
+    };
+
+    virtual std::unique_ptr<TransferBuffer> DeserializeTransferBufferInfo(
+        const void* deserializePointer,
+        size_t deserializeSize) {
+        return {};
+    }
+
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
         ReadHandle();
