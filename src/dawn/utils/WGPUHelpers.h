@@ -222,7 +222,7 @@ struct ColorSpaceConversionInfo {
     std::array<float, 7> dstTransferFunctionParameters;
 };
 ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
-ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
+ColorSpaceConversionInfo GetNoopColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
 

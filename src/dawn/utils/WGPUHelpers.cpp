@@ -430,11 +430,13 @@ ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo() {
     return info;
 }
 
-ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo() {
+ColorSpaceConversionInfo GetNoopColorSpaceConversionInfo() {
     ColorSpaceConversionInfo info;
 
     // YUV to RGB is not used as the data is RGB.
-    info.yuvToRgbConversionMatrix = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    info.yuvToRgbConversionMatrix = {1, 0, 0, 0,  //
+                                     0, 1, 0, 0,  //
+                                     0, 0, 1, 0};
     // Identity gamut conversion matrix.
     info.gamutConversionMatrix = {1.0f, 0.0f, 0.0f,  //
                                   0.0f, 1.0f, 0.0f,  //

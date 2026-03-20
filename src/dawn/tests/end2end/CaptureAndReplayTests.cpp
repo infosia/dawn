@@ -2448,7 +2448,7 @@ TEST_P(CaptureAndReplayTests, BindGroupWithExternalTexture) {
     wgpu::Texture texture = device.CreateTexture(&textureDesc);
     wgpu::TextureView plane0 = texture.CreateView();
 
-    auto conversion = utils::GetNoopRGBColorSpaceConversionInfo();
+    auto conversion = utils::GetNoopColorSpaceConversionInfo();
     wgpu::ExternalTextureDescriptor ethDesc;
     ethDesc.plane0 = plane0;
     ethDesc.yuvToRgbConversionMatrix = conversion.yuvToRgbConversionMatrix.data();
