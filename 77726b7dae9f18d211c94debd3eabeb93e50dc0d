@@ -33,6 +33,24 @@
       "message": "Optional nit: Maybe a comment here to loosen validation if we ever begin treating this as a bitmask?",
       "revId": "77726b7dae9f18d211c94debd3eabeb93e50dc0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74f9220b_378fccb2",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-20T23:34:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f645e4bf_a71d5cf8",
+      "revId": "77726b7dae9f18d211c94debd3eabeb93e50dc0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
