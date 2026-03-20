@@ -362,6 +362,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fae377c3_91d55fc0",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-20T21:42:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "402d9732_79092ac9",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 797,
+        "endChar": 21
+      },
+      "revId": "2d4dec11e3aa36732b071f4ea747cbc31c577b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5c8e4ff_56230827",
