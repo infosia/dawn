@@ -16,6 +16,23 @@
       "message": "I\u0027m not sure what the process is for deciding to denylist, but this feature reliably fails on my gLinux AMD workstation. The bug is actually covered by an existing Dawn E2E test that (before this change) fails for me (https://crbug.com/494566064#comment4). Filed a follow up bug to check other E2E tests: crbug.com/494600600.",
       "revId": "e6be6755c8c74dbe0d2c8fa719179958792be1e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "478a9f4f_560b0d1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-20T18:38:33Z",
+      "side": 1,
+      "message": "Arguably could tighten this check to `IsAmdMesa()` but we\u0027re probably not testing this on the proprietary AMD drivers either so probably fine to denylist all AMD for now.",
+      "revId": "e6be6755c8c74dbe0d2c8fa719179958792be1e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
