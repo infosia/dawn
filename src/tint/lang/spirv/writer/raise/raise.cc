@@ -161,6 +161,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // flattened.
     TINT_CHECK_RESULT(core::ir::transform::MultiplanarExternalTexture(module, multiplanar_map));
 
+    TINT_CHECK_RESULT(core::ir::transform::DirectVariableAccess(module, dva_options));
+
     // Fixup loads of binding_arrays of handles that may have been introduced by
     // DirectVariableAccess (DVA). Vulkan drivers that need DVA of handle expect binding_arrays to
     // stay as pointer and many mishandle by-value binding_arrays.

@@ -35,6 +35,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Ref.h"
 #include "dawn/native/Adapter.h"
@@ -181,9 +182,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         }
 
         for (APIBindingIndex index : bgl->GetExternalTextureIndices()) {
+            DAWN_DEBUG() << "searching in ycbcrExternalTextures " << group << " " << index;
             if (!in.ycbcrExternalTextures.contains({group, index})) {
                 continue;
             }
+            DAWN_DEBUG() << "found in ycbcrExternalTextures";
 
             const auto& bindingInfo = bgl->GetAPIBindingInfo(index);
             const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
@@ -192,6 +195,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     .metadata = ToSPIRVBindPoint(group, etInfo.metadata),
                     .texture = ToSPIRVBindPoint(group, etInfo.plane0),
                     .sampler = ToSPIRVBindPoint(group, etInfo.staticSampler.value())};
+            DAWN_DEBUG() << "metadata goes to " << etInfo.metadata;
+            DAWN_DEBUG() << "plane0 goes to " << etInfo.plane0;
+            DAWN_DEBUG() << "sampler goes to " << etInfo.staticSampler.value();
         }
     }
 
@@ -368,20 +374,20 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         },
         "Vulkan.CompileShaderToSPIRV");
 
-#ifdef DAWN_ENABLE_SPIRV_VALIDATION
-    if (GetDevice()->IsToggleEnabled(Toggle::DumpShaders)) {
-        DumpSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size());
-    }
+    // #ifdef DAWN_ENABLE_SPIRV_VALIDATION
+    // if (GetDevice()->IsToggleEnabled(Toggle::DumpShaders)) {
+    // DumpSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size());
+    //}
 
-    if (GetDevice()->IsToggleEnabled(Toggle::EnableSpirvValidation)) {
-        SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "Vulkan.ValidateSpirv");
+    // if (GetDevice()->IsToggleEnabled(Toggle::EnableSpirvValidation)) {
+    SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetDevice()->GetPlatform(), "Vulkan.ValidateSpirv");
 
-        // Validate and if required dump the compiled SPIR-V code.
-        const bool spv14 = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14);
-        DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(),
-                               spv14));
-    }
-#endif
+    // Validate and if required dump the compiled SPIR-V code.
+    const bool spv14 = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14);
+    DAWN_TRY(
+        ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(), spv14));
+    //}
+    // #endif
 
     VkShaderModuleCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

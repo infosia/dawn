@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/CommandEncoder.h"
@@ -596,6 +597,7 @@ struct ProgrammablePassState : public StackAllocated {
     // callees.
     MaybeError RunWithSpecialization(
         std::function<void(const VulkanFunctions&, VkCommandBuffer)> DoOperation) {
+        DAWN_DEBUG();
         DeviceBase* device = lastPipeline->GetDevice();
 
         // At the moment the only specialization is for using static samplers in ExternalTextures.
@@ -624,6 +626,8 @@ struct ProgrammablePassState : public StackAllocated {
                 bool hasSamplerAlready = usedETSamplerPairs[etBindPoint].has_value();
 
                 if (pair.sampler == EntryPointMetadata::nonSamplerBindingPoint) {
+                    DAWN_DEBUG() << "ET @group(" << pair.texture.group << ") @binding("
+                                 << pair.texture.binding << ") is YCbCr but doesn't get a sampler.";
                     continue;
                 }
                 if (hasSamplerAlready &&
@@ -637,6 +641,9 @@ struct ProgrammablePassState : public StackAllocated {
                     pair.sampler.group, samplerBGL->AsBindingIndex(
                                             samplerBGL->GetAPIBindingIndex(pair.sampler.binding))};
 
+                DAWN_DEBUG() << "ET @group(" << pair.texture.group << ") @binding("
+                             << pair.texture.binding << ") is set with sampler @group("
+                             << pair.sampler.group << ") @binding(" << pair.sampler.binding << ").";
                 usedETSamplerPairs[etBindPoint] = {samplerBindPoint};
             }
         }
@@ -650,6 +657,7 @@ struct ProgrammablePassState : public StackAllocated {
                 etBindGroup->GetBoundExternalTexture(etBindPoint.second).Get();
 
             if (et == nullptr || !et->HasSingleView()) {
+                DAWN_DEBUG();
                 continue;
             }
             const TextureView* view = ToBackend(et->GetTextureViews()[0]).Get();
@@ -657,6 +665,7 @@ struct ProgrammablePassState : public StackAllocated {
 
             if (view->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid &&
                 !device->IsToggleEnabled(Toggle::VulkanForceStaticSamplersForExternalTextures)) {
+                DAWN_DEBUG();
                 continue;
             }
 
@@ -679,6 +688,8 @@ struct ProgrammablePassState : public StackAllocated {
         }
 
         // XXX RAII somehow?
+
+        DAWN_DEBUG() << "Creating BindGroups";
         PerBindGroup<DescriptorSetAllocation> newDescriptorSets;
         for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
             auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
@@ -687,11 +698,13 @@ struct ProgrammablePassState : public StackAllocated {
                             bgl->GetSpecializedSetFor(boundBG, s.layout.bindGroups[group]));
         }
 
+        DAWN_DEBUG() << "Creating Pipeline";
         typename Pipeline::SpecializedHandles pipelineHandles;
         DAWN_TRY_ASSIGN(pipelineHandles, lastPipeline->GetOrCreateSpecializedHandle(std::move(s)));
 
         DirtyAll();
 
+        DAWN_DEBUG() << "Doing op";
         VkCommandBuffer commands = recordingContext->commandBuffer;
         vk.CmdBindPipeline(commands, PipelineBindPoint, pipelineHandles.pipeline);
 
@@ -705,6 +718,7 @@ struct ProgrammablePassState : public StackAllocated {
                                      nullptr);
         }
 
+        DAWN_DEBUG();
         DoOperation(vk, commands);
 
         DirtyAll();

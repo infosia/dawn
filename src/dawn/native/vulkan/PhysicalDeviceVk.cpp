@@ -1016,6 +1016,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround, true);
 #endif
     }
+    deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
 
     if (IsIntelMesa()) {
         // chromium:448873316: Non-scalar (vector) saturate from uniform fails.

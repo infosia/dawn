@@ -29,6 +29,7 @@
 
 #include <algorithm>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
@@ -157,6 +158,7 @@ void Sampler::SetLabelImpl() {
 // static
 StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView* view,
                                                               const Sampler* sampler) {
+    DAWN_DEBUG();
     bool isYCbCr =
         view->GetTexture()->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid;
     bool filterable = !isYCbCr || view->IsYCbCrFilterable();
@@ -194,8 +196,13 @@ ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
     samplerDesc.magFilter = this->magFilter;
     samplerDesc.minFilter = this->minFilter;
 
+    DAWN_DEBUG() << "Sampler for static sampler";
+
     YCbCrVkDescriptor yCbCrDesc;
     if (isYCbCr) {
+        DAWN_DEBUG() << "isYCbCr and " << " VkFormat=" << this->vkFormat
+                     << " androidExternalFormat=" << this->androidExternalFormat
+                     << " model=" << this->model << " range=" << this->range;
         yCbCrDesc.vkFormat = this->vkFormat;
         yCbCrDesc.externalFormat = this->androidExternalFormat;
         yCbCrDesc.vkYCbCrModel = this->model;
