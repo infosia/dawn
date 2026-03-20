@@ -537,7 +537,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
     }
 
-    if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
+    // HostMappedPointer is currently disabled on AMD due to a driver bug: crbug.com/494566064
+    if (!gpu_info::IsAMD(GetVendorId()) && mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
         mDeviceInfo.externalMemoryHostProperties.minImportedHostPointerAlignment <=
             kMinimumHostMappedPointerAlignment) {
         EnableFeature(Feature::HostMappedPointer);
@@ -1293,6 +1294,14 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
                     absl::StrFormat("Feature %s requires either the VulkanUseDynamicRendering or "
                                     "VulkanUseCreateRenderPass2 toggle on Vulkan",
                                     feature));
+            }
+            break;
+
+        // HostMappedPointer is currently disabled on AMD due to a driver bug: crbug.com/494566064
+        case wgpu::FeatureName::HostMappedPointer:
+            if (gpu_info::IsAMD(GetVendorId())) {
+                return FeatureValidationResult(
+                    absl::StrFormat("Feature %s is not yet supported on AMD GPUs", feature));
             }
             break;
 
