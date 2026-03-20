@@ -103,8 +103,6 @@ class SharedTextureMemoryYCbCrVulkanSamplersTests : public DawnTest {
 // instance.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
        InvalidSharedTextureMemoryAHardwareBufferProperties) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
     // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
 
@@ -113,6 +111,7 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
         .height = 4,
         .layers = 1,
         .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
     EXPECT_EQ(AHardwareBuffer_allocate(&aHardwareBufferDesc, &aHardwareBuffer), 0);
@@ -139,9 +138,6 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests,
 
 // Test querying YCbCr info from the Device.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoFromDevice) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
-
     // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
 
@@ -150,6 +146,7 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoFromDevice) {
         .height = 4,
         .layers = 1,
         .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
     EXPECT_EQ(AHardwareBuffer_allocate(&aHardwareBufferDesc, &aHardwareBuffer), 0);
@@ -198,17 +195,14 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoFromDevice) {
             : wgpu::FilterMode::Nearest;
     EXPECT_EQ(expectedFilter, yCbCrInfo.vkChromaFilter);
     EXPECT_EQ(
-        formatFeatures &
-            VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT,
+        bool(formatFeatures &
+             VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT),
         yCbCrInfo.forceExplicitReconstruction);
     EXPECT_EQ(bufferFormatProperties.externalFormat, yCbCrInfo.externalFormat);
 }
 
 // Test querying YCbCr info from the SharedTextureMemory without external format.
 TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoWithoutYCbCrFormat) {
-    // TODO(crbug.com/40238674): Fails on Pixel 10 vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
-
     // TODO(crbug.com/444741058): Fails on Intel-based brya devices running Android Desktop.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsIntel() && IsAndroid());
 
@@ -217,6 +211,7 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoWithoutYCbCrFo
         .height = 4,
         .layers = 1,
         .format = AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM,
+        .usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE,
     };
     AHardwareBuffer* aHardwareBuffer;
     EXPECT_EQ(AHardwareBuffer_allocate(&aHardwareBufferDesc, &aHardwareBuffer), 0);
@@ -276,8 +271,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoWithoutYCbCrFo
             : wgpu::FilterMode::Nearest;
     EXPECT_EQ(expectedFilter, yCbCrInfo.vkChromaFilter);
     EXPECT_EQ(
-        formatFeatures &
-            VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT,
+        bool(formatFeatures &
+             VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT),
         yCbCrInfo.forceExplicitReconstruction);
     uint64_t expectedExternalFormat = 0u;
     EXPECT_EQ(expectedExternalFormat, yCbCrInfo.externalFormat);
@@ -351,8 +346,8 @@ TEST_P(SharedTextureMemoryYCbCrVulkanSamplersTests, QueryYCbCrInfoWithExternalFo
             : wgpu::FilterMode::Nearest;
     EXPECT_EQ(expectedFilter, yCbCrInfo.vkChromaFilter);
     EXPECT_EQ(
-        formatFeatures &
-            VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT,
+        bool(formatFeatures &
+             VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT),
         yCbCrInfo.forceExplicitReconstruction);
     EXPECT_EQ(bufferFormatProperties.externalFormat, yCbCrInfo.externalFormat);
 }
