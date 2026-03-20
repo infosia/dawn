@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "883c7a6b_da51776d",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-20T09:39:48Z",
+      "side": 1,
+      "message": "Any chance for a unittest for an invalid map mode?",
+      "revId": "e39659b9954ac0c2f3933ce00afc8c70cf7daad9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
