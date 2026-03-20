@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5f77d42_7b1c48dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-03-20T18:27:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the process is for deciding to denylist, but this feature reliably fails on my gLinux AMD workstation. The bug is actually covered by an existing Dawn E2E test that (before this change) fails for me (https://crbug.com/494566064#comment4). Filed a follow up bug to check other E2E tests: crbug.com/494600600.",
+      "revId": "e6be6755c8c74dbe0d2c8fa719179958792be1e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
