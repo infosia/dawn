@@ -285,6 +285,10 @@ void Device::SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount
     mLimitsAndFeatures.SetFeatures(features, featuresCount);
 }
 
+void Device::SetSupportsSharedTransferBufferInWire(bool supports) {
+    mSupportsSharedTransferBufferInWire = supports;
+}
+
 void Device::HandleError(WGPUErrorType errorType, WGPUStringView message) {
     const auto device = ToAPI(this);
     mCallbackInfos.CallErrorCallback(&device, errorType, message);
@@ -415,6 +419,10 @@ WGPUFuture Device::APICreateComputePipelineAsync(
     const WGPUCreateComputePipelineAsyncCallbackInfo& callbackInfo) {
     return CreatePipelineAsync<CreateComputePipelineEvent, DeviceCreateComputePipelineAsyncCmd>(
         descriptor, callbackInfo);
+}
+
+bool Device::APISupportsSharedTransferBufferInWire() const {
+    return mSupportsSharedTransferBufferInWire;
 }
 
 WireResult Client::DoDeviceCreateComputePipelineAsyncCallback(ObjectHandle eventManager,

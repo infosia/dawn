@@ -205,6 +205,8 @@ enum class Toggle {
     DisableTransientAttachment,
     AutoMapBackendBuffer,
 
+    EnableSharedTransferBufferInWire,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };

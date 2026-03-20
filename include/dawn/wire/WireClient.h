@@ -119,6 +119,32 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     // This may fail and return nullptr.
     virtual WriteHandle* CreateWriteHandle(size_t) = 0;
 
+    class TransferBuffer {
+      public:
+        virtual ~TransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual size_t SerializeCreateSize() const { return 0; }
+        virtual void SerializeCreate(void* ptr) const {}
+
+        virtual bool IsEmpty() const { return true; }
+        virtual void* GetMappedPointer() const { return nullptr; }
+    };
+
+    virtual std::unique_ptr<TransferBuffer> AllocateTransferBuffer(size_t size) { return {}; }
+
+    // Create a handle for reading server data with a piece of memory shared with server
+    virtual ReadHandle* CreateReadHandleWithSharedTransferBuffer(
+        TransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
+    // Create a handle for writing server data with a piece of memory shared with server
+    virtual WriteHandle* CreateWriteHandleWithSharedTransferBuffer(
+        TransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
         ReadHandle();

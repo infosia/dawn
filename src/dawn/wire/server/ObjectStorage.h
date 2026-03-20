@@ -66,6 +66,7 @@ struct ObjectData : public ObjectDataBase<T> {};
 struct BufferMapState {
     std::unique_ptr<MemoryTransferService::ReadHandle> readHandle = nullptr;
     std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle = nullptr;
+    bool mapAtCreationComplete = false;
 };
 
 template <>
@@ -75,6 +76,8 @@ struct ObjectData<WGPUBuffer> : public ObjectDataBase<WGPUBuffer> {
     WGPUBufferUsage usage = WGPUBufferUsage_None;
     // Indicate if writeHandle needs to be destroyed on unmap
     bool mappedAtCreation = false;
+    WGPUSharedBufferMemory sharedBufferMemory = nullptr;
+    std::unique_ptr<MemoryTransferService::TransferBuffer> transferBuffer;
 };
 
 struct DeviceInfo {

@@ -129,6 +129,13 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     UnpackedPtr<BufferDescriptor> descriptor;
     DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(GetDevice(), rawDescriptor));
 
+    bool fakeOOMAtNativeMap = false;
+    bool fakeOOMAtDevice = false;
+    if (auto* ext = descriptor.Get<DawnFakeBufferOOMForTesting>()) {
+        fakeOOMAtNativeMap = ext->fakeOOMAtNativeMap;
+        fakeOOMAtDevice = ext->fakeOOMAtDevice;
+    }
+
     // Emit a specific error message if the user attempts to create a buffer with Uniform usage.
     DAWN_INVALID_IF(descriptor->usage & wgpu::BufferUsage::Uniform,
                     "The buffer usage (%s) contains (%s), which is not allowed on buffers created "
@@ -141,14 +148,34 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
                     descriptor->usage, mProperties.usage);
 
     // Validate that the buffer size exactly matches the shared buffer memory's size.
-    DAWN_INVALID_IF(descriptor->size != mProperties.size,
+    DAWN_INVALID_IF(descriptor->size > mProperties.size,
                     "SharedBufferMemory size (%u) doesn't match descriptor size (%u).",
                     mProperties.size, descriptor->size);
 
     Ref<BufferBase> buffer;
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
-    // Access is not allowed until BeginAccess has been called.
-    buffer->OnEndAccess();
+
+    if (descriptor->mappedAtCreation) {
+        MaybeError mapResult =
+            fakeOOMAtNativeMap
+                ? DAWN_OUT_OF_MEMORY_ERROR("DawnFakeBufferOOMForTesting fakeOOMAtNativeMap")
+                : buffer->MapAtCreation(true);
+        // If we can't map, do "implementation-defined logging" and return null.
+        if (mapResult.IsError()) {
+            auto error = mapResult.AcquireError();
+            GetDevice()->EmitLog(wgpu::LoggingType::Error, error->GetFormattedMessage());
+            // deferredError is silenced because we drop it here.
+            return nullptr;
+        }
+    } else {
+        // Access is not allowed until BeginAccess has been called.
+        buffer->OnEndAccess();
+    }
+
+    if (fakeOOMAtDevice) {
+        return DAWN_OUT_OF_MEMORY_ERROR("DawnFakeBufferOOMForTesting fakeOOMAtDevice");
+    }
+
     return buffer;
 }
 

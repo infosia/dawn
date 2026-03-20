@@ -209,6 +209,8 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor) {
     Client* wireClient = device->GetClient();
 
+    bool canUseSharedTransferBufferInWire = device->APISupportsSharedTransferBufferInWire();
+
     bool fakeOOMAtWireClientMap = false;
     for (const auto* chain = descriptor->nextInChain; chain != nullptr; chain = chain->next) {
         switch (chain->sType) {
@@ -232,6 +234,7 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
 
     std::unique_ptr<MemoryTransferService::ReadHandle> readHandle = nullptr;
     std::unique_ptr<MemoryTransferService::WriteHandle> writeHandle = nullptr;
+    std::unique_ptr<MemoryTransferService::TransferBuffer> transferBuffer = nullptr;
 
     DeviceCreateBufferCmd cmd;
     cmd.deviceId = device->GetWireHandle(wireClient).id;
@@ -242,30 +245,67 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     cmd.readHandleCreateInfo = nullptr;  // Skipped by skip_serialize.
     cmd.writeHandleCreateInfoLength = 0;
     cmd.writeHandleCreateInfo = nullptr;  // Skipped by skip_serialize.
+    cmd.useSharedTransferBuffer = false;
 
     size_t readHandleCreateInfoLength = 0;
     size_t writeHandleCreateInfoLength = 0;
     if (mappable) {
-        if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
-            // Create the read handle on buffer creation.
-            readHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
-            if (readHandle == nullptr) {
-                return ReturnOOMAtClient(device, descriptor);
+        if (canUseSharedTransferBufferInWire && mappable) {
+            transferBuffer =
+                wireClient->GetMemoryTransferService()->AllocateTransferBuffer(descriptor->size);
+            if (!transferBuffer->IsEmpty()) {
+                if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
+                    // Create the read handle on buffer creation.
+                    readHandle.reset(
+                        wireClient->GetMemoryTransferService()
+                            ->CreateReadHandleWithSharedTransferBuffer(transferBuffer.get()));
+                    if (readHandle != nullptr) {
+                        readHandleCreateInfoLength = readHandle->SerializeCreateSize();
+                        cmd.readHandleCreateInfoLength = readHandleCreateInfoLength;
+                    }
+                }
+
+                if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 ||
+                    descriptor->mappedAtCreation) {
+                    // Create the write handle on buffer creation.
+                    writeHandle.reset(
+                        wireClient->GetMemoryTransferService()
+                            ->CreateWriteHandleWithSharedTransferBuffer(transferBuffer.get()));
+                    if (writeHandle != nullptr) {
+                        writeHandleCreateInfoLength = writeHandle->SerializeCreateSize();
+                        cmd.writeHandleCreateInfoLength = writeHandleCreateInfoLength;
+                    }
+                }
+
+                if (readHandle != nullptr || writeHandle != nullptr) {
+                    cmd.useSharedTransferBuffer = true;
+                }
             }
-            readHandleCreateInfoLength = readHandle->SerializeCreateSize();
-            cmd.readHandleCreateInfoLength = readHandleCreateInfoLength;
         }
 
-        if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 || descriptor->mappedAtCreation) {
-            // Create the write handle on buffer creation.
-            writeHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
-            if (writeHandle == nullptr) {
-                return ReturnOOMAtClient(device, descriptor);
+        if (!cmd.useSharedTransferBuffer) {
+            if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
+                // Create the read handle on buffer creation.
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+                if (readHandle == nullptr) {
+                    return ReturnOOMAtClient(device, descriptor);
+                }
+                readHandleCreateInfoLength = readHandle->SerializeCreateSize();
+                cmd.readHandleCreateInfoLength = readHandleCreateInfoLength;
             }
-            writeHandleCreateInfoLength = writeHandle->SerializeCreateSize();
-            cmd.writeHandleCreateInfoLength = writeHandleCreateInfoLength;
+
+            if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 ||
+                descriptor->mappedAtCreation) {
+                // Create the write handle on buffer creation.
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+                if (writeHandle == nullptr) {
+                    return ReturnOOMAtClient(device, descriptor);
+                }
+                writeHandleCreateInfoLength = writeHandle->SerializeCreateSize();
+                cmd.writeHandleCreateInfoLength = writeHandleCreateInfoLength;
+            }
         }
     }
 
@@ -276,6 +316,7 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
         wireClient->Make<Buffer>(device->GetEventManagerHandle(), device, descriptor);
     buffer->mReadHandle = std::move(readHandle);
     buffer->mWriteHandle = std::move(writeHandle);
+    buffer->mTransferBuffer = std::move(transferBuffer);
 
     if (descriptor->mappedAtCreation) {
         // If the buffer is mapped at creation, a write handle is created and will be

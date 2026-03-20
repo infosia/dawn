@@ -133,7 +133,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     wgpu::BufferUsage GetInternalUsage() const;
     wgpu::BufferUsage GetUsage() const;
 
-    MaybeError MapAtCreation();
+    MaybeError MapAtCreation(bool neverClearToZero = false);
 
     // Changes buffer state to denote it's being used. The buffer must be unmapped so this isn't
     // suitable for buffers that could be used by external API calls. `ScopedUseBuffer` will resets
@@ -210,6 +210,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     wgpu::MapMode MapMode() const;
     size_t MapOffset() const;
     size_t MapSize() const;
+    void AddInternalUsage(wgpu::BufferUsage usage);
 
     uint64_t mAllocatedSize = 0;
 
@@ -252,7 +253,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
 
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
-    const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
+    wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
     const bool mIsHostMapped = false;
     bool mIsDataInitialized = false;
 

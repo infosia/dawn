@@ -166,7 +166,17 @@ MaybeError Buffer::InitializeAsExternalBuffer(ComPtr<ID3D12Resource> d3d12Buffer
     AllocationInfo info;
     info.mMethod = AllocationMethod::kExternal;
     info.mRequestedSize = mAllocatedSize;
+
+    D3D12_HEAP_FLAGS heapFlags;
+    D3D12_HEAP_PROPERTIES heapProperties;
+    DAWN_TRY(CheckHRESULT(d3d12Buffer->GetHeapProperties(&heapProperties, &heapFlags),
+                          "d3d12Buffer.GetHeapProperties"));
+    if (heapProperties.CPUPageProperty & D3D12_CPU_PAGE_PROPERTY_WRITE_BACK) {
+        AddInternalUsage(wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite);
+    }
+
     mResourceAllocation = {info, 0, std::move(d3d12Buffer), nullptr, ResourceHeapKind::InvalidEnum};
+
     return {};
 }
 

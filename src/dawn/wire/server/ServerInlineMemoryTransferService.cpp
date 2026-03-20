@@ -32,10 +32,18 @@
 
 #include <cstring>
 #include <memory>
+#include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Platform.h"
 #include "dawn/wire/WireServer.h"
 #include "dawn/wire/server/Server.h"
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+#include <Windows.h>
+
+#include <string>
+#endif
 
 namespace dawn::wire::server {
 
@@ -100,6 +108,64 @@ class InlineMemoryTransferService : public MemoryTransferService {
         *writeHandle = new WriteHandleImpl();
         return true;
     }
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+    class TransferBufferImpl : public TransferBuffer {
+      public:
+        TransferBufferImpl(HANDLE handle, size_t bufferSize) : mHandle(handle), mSize(bufferSize) {}
+        ~TransferBufferImpl() override { Release(); }
+
+        void Release() override {
+            if (mHandle != nullptr) {
+                CloseHandle(mHandle);
+                mHandle = nullptr;
+            }
+        }
+
+        bool IsEmpty() const override { return mHandle == nullptr; }
+
+        WGPUSharedBufferMemory CreateSharedBufferMemory(const DawnProcTable* procs,
+                                                        WGPUDevice device) override {
+            DAWN_ASSERT(mHandle != nullptr);
+
+            WGPUSharedBufferMemoryD3D12SharedMemoryFileMappingHandleDescriptor fileMappingDesc = {};
+            fileMappingDesc.chain.sType =
+                WGPUSType_SharedBufferMemoryD3D12SharedMemoryFileMappingHandleDescriptor;
+            fileMappingDesc.handle = mHandle;
+            fileMappingDesc.size =
+                Align(mSize, kD3D12SharedBufferMemoryFileMappingHandleSizeAlignment);
+            if (fileMappingDesc.size == 0) {
+                fileMappingDesc.size = kD3D12SharedBufferMemoryFileMappingHandleSizeAlignment;
+            }
+            WGPUSharedBufferMemoryDescriptor sharedBufferMemoryDescriptor = {};
+            sharedBufferMemoryDescriptor.nextInChain = &fileMappingDesc.chain;
+            return procs->deviceImportSharedBufferMemory(device, &sharedBufferMemoryDescriptor);
+        }
+
+      private:
+        HANDLE mHandle = nullptr;
+        size_t mSize = 0;
+    };
+
+    std::unique_ptr<TransferBuffer> DeserializeTransferBufferInfo(const void* deserializePointer,
+                                                                  size_t deserializeSize) override {
+        DAWN_ASSERT(deserializeSize == sizeof(size_t) + sizeof(HANDLE));
+
+        size_t bufferSize = 0;
+        memcpy(&bufferSize, deserializePointer, sizeof(size_t));
+
+        HANDLE fileMappingHandle = nullptr;
+        memcpy(&fileMappingHandle, static_cast<const uint8_t*>(deserializePointer) + sizeof(size_t),
+               sizeof(HANDLE));
+
+        if (fileMappingHandle == nullptr) {
+            return nullptr;
+        }
+
+        return std::make_unique<TransferBufferImpl>(fileMappingHandle, bufferSize);
+    }
+
+#endif
 };
 
 std::unique_ptr<MemoryTransferService> CreateInlineMemoryTransferService() {

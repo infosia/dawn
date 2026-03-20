@@ -540,6 +540,10 @@ wgpu::BufferUsage BufferBase::APIGetUsage() const {
     return mUsage;
 }
 
+void BufferBase::AddInternalUsage(wgpu::BufferUsage usage) {
+    mInternalUsage |= usage;
+}
+
 wgpu::BufferMapState BufferBase::APIGetMapState() const {
     switch (mState.load(std::memory_order::acquire)) {
         case BufferState::Mapped:
@@ -582,7 +586,7 @@ MaybeError BufferBase::FinalizeMap(BufferState newState) {
     return {};
 }
 
-MaybeError BufferBase::MapAtCreation() {
+MaybeError BufferBase::MapAtCreation(bool neverClearToZero) {
     bool usingStagingBuffer = false;
     DAWN_TRY_ASSIGN(usingStagingBuffer, MapAtCreationInternal());
 
@@ -598,7 +602,7 @@ MaybeError BufferBase::MapAtCreation() {
         // The staging buffer is created with `MappedAtCreation == true` and the main buffer will
         // actually get initialized when the staging data is copied in. (But we mark the main buffer
         // as initialized now.)
-        if (!usingStagingBuffer) {
+        if (!neverClearToZero && !usingStagingBuffer) {
             memset(ptr, uint8_t(0u), size);
             device->IncrementLazyClearCountForTesting();
         }

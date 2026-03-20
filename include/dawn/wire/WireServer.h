@@ -98,6 +98,25 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
                                         size_t deserializeSize,
                                         WriteHandle** writeHandle) = 0;
 
+    class TransferBuffer {
+      public:
+        virtual ~TransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual bool IsEmpty() const { return true; }
+
+        virtual WGPUSharedBufferMemory CreateSharedBufferMemory(const DawnProcTable* procs,
+                                                                WGPUDevice device) {
+            return nullptr;
+        }
+    };
+
+    virtual std::unique_ptr<TransferBuffer> DeserializeTransferBufferInfo(
+        const void* deserializePointer,
+        size_t deserializeSize) {
+        return {};
+    }
+
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
         ReadHandle();
@@ -131,8 +150,8 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
 
         // Set the target for writes from the client. DeserializeFlush should copy data
         // into the target.
-        // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data and
-        // instead pass them directly as a span in DeserializeDataUpdate.
+        // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data
+        // and instead pass them directly as a span in DeserializeDataUpdate.
         void SetTarget(void* data);
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);
