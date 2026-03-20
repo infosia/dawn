@@ -576,10 +576,7 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
     }
 
     // Check that we have all the required entries.
-    // NOTE: Static sampler layout bindings should not have bind group entries, as the sampler is
-    // specified in the layout itself.
-    const auto expectedEntryCount =
-        layout->GetUnexpandedBindingCount() - layout->GetStaticSamplerCount();
+    const uint32_t expectedEntryCount = layout->GetBindingCountForBindGroupCreation();
 
     DAWN_INVALID_IF(
         descriptor->entryCount != expectedEntryCount,

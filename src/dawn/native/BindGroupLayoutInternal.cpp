@@ -957,9 +957,9 @@ bool BindGroupLayoutInternalBase::NeedsCrossBindingValidation() const {
     return mNeedsCrossBindingValidation;
 }
 
-uint32_t BindGroupLayoutInternalBase::GetUnexpandedBindingCount() const {
+uint32_t BindGroupLayoutInternalBase::GetBindingCountForBindGroupCreation() const {
     DAWN_ASSERT(!IsError());
-    return mValidationBindingCounts.totalCount;
+    return mValidationBindingCounts.totalCount - mValidationBindingCounts.staticSamplerCount;
 }
 
 size_t BindGroupLayoutInternalBase::GetBindingDataSize() const {
