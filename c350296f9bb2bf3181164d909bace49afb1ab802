@@ -111,6 +111,30 @@
       },
       "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d71345f_4d97bd0e",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-20T09:45:02Z",
+      "side": 1,
+      "message": "(note that \"AI generated code\" should not be an argument, but the rest of the code using the pattern already is)",
+      "parentUuid": "ababdc60_b236eada",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "c350296f9bb2bf3181164d909bace49afb1ab802",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
