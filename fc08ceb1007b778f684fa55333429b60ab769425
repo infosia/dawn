@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f248025f_b6e13472",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-20T21:23:38Z",
+      "side": 1,
+      "message": "Yeah I think if we\u0027re doing the auto-conversions then this is probably worth doing.",
+      "parentUuid": "766094a7_53325256",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cca9e3f_a5f2a278",
@@ -31,6 +49,41 @@
       "writtenOn": "2026-03-18T21:51:52Z",
       "side": 1,
       "message": "A lot of this is repetitive with validation code. Happy to hear any refactoring ideas.",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8b2a771_d2967a5a",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-20T21:23:38Z",
+      "side": 1,
+      "message": "Haven\u0027t thought this all the way through, but I\u0027m wondering if we could change `Validator::BufferView()` to take a `sem::GlobalVariable()`, and then we pass in the originating global variable along with the callsite as soon as that is known.\n\nSo `RegisterBufferView` would look at the first `bufferView` argument, and would either:\n  - Call `Validator::BufferView()` if it\u0027s a global variable\n  - Add the `sem::Parameter* -\u003e BufferViewInfo` pair to a map if not\n\nWe\u0027d call `RegisterBufferView` (maybe renamed?) from the buffer view callsites as you already do, and also on each `sem::Parameter` that exists in the map when we have a user function call.\n\nI\u0027m happy for us to get this landed as is and then cleanup afterwards though.",
+      "parentUuid": "9cca9e3f_a5f2a278",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17924708_c1376ac9",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-20T21:23:38Z",
+      "side": 1,
+      "message": "Maybe `else { TINT_UNREACHABLE(); }` in that case",
       "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
