@@ -117,6 +117,18 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     // This may fail and return nullptr.
     virtual WriteHandle* CreateWriteHandle(size_t) = 0;
 
+    // Create a handle for reading server data with a piece of memory shared with server
+    virtual ReadHandle* CreateReadHandleWithSharedTransferBuffer(size_t size) {
+        // Call `CreateReadHandle` by default in case there is no crash to access a nullptr.
+        return CreateReadHandle(size);
+    }
+
+    // Create a handle for writing server data with a piece of memory shared with server
+    virtual WriteHandle* CreateWriteHandleWithSharedTransferBuffer(size_t size) {
+        // Call `CreateWriteHandle` by default in case there is no crash to access a nullptr.
+        return CreateWriteHandle(size);
+    }
+
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
         ReadHandle();

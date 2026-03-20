@@ -97,6 +97,18 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
     virtual bool DeserializeWriteHandle(const void* deserializePointer,
                                         size_t deserializeSize,
                                         WriteHandle** writeHandle) = 0;
+    virtual bool DeserializeReadHandleWithSharedTransferBuffer(const void* deserializePointer,
+                                                               size_t deserializeSize,
+                                                               ReadHandle** readHandle) {
+        // Call `DeserializeReadHandle` by default in case there is no crash to access a nullptr.
+        return DeserializeReadHandle(deserializePointer, deserializeSize, readHandle);
+    }
+    virtual bool DeserializeWriteHandleWithSharedTransferBuffer(const void* deserializePointer,
+                                                                size_t deserializeSize,
+                                                                WriteHandle** writeHandle) {
+        // Call `DeserializeWriteHandle` by default in case there is no crash to access a nullptr.
+        return DeserializeWriteHandle(deserializePointer, deserializeSize, writeHandle);
+    }
 
     class DAWN_WIRE_EXPORT ReadHandle {
       public:
@@ -131,8 +143,8 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
 
         // Set the target for writes from the client. DeserializeFlush should copy data
         // into the target.
-        // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data and
-        // instead pass them directly as a span in DeserializeDataUpdate.
+        // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data
+        // and instead pass them directly as a span in DeserializeDataUpdate.
         void SetTarget(void* data);
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);

@@ -58,6 +58,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
 
     void SetLimits(const WGPULimits* limits);
     void SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount);
+    void SetSupportsSharedTransferBufferInWire(bool supports);
 
     bool IsAlive() const;
     Queue* GetQueue();
@@ -92,6 +93,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     WGPUStatus APIGetAdapterInfo(WGPUAdapterInfo* info) const;
     WGPUAdapter APIGetAdapter() const;
     WGPUQueue APIGetQueue();
+    bool APISupportsSharedTransferBufferInWire() const;
 
     void APIDestroy();
 
@@ -107,6 +109,8 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     std::variant<Ref<TrackedEvent>, FutureID> mDeviceLostInfo;
 
     WGPUDeviceCallbackInfos mCallbackInfos;
+
+    bool mSupportsSharedTransferBufferInWire = false;
 
     Ref<Adapter> mAdapter;
     Ref<Queue> mQueue;

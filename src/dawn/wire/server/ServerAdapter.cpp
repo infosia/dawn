@@ -132,6 +132,9 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
     mProcs->deviceGetLimits(device, &limits);
     cmd.limits = &limits;
 
+    cmd.supportsSharedTransferBufferInWire =
+        mProcs->deviceSupportsSharedTransferBufferInWire(device);
+
     // Assign the handle and allocated status if the device is created successfully.
     Known<WGPUDevice> reservation;
     if (FillReservation(data->deviceObjectId, device, &reservation) == WireResult::FatalError) {

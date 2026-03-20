@@ -900,4 +900,8 @@ const PerStage<std::wstring>& Device::GetDxcShaderProfiles() const {
     return mDxcShaderProfiles;
 }
 
+bool Device::SupportsSharedTransferBufferInWireImpl() const {
+    return IsToggleEnabled(Toggle::EnableSharedTransferBufferInWire);
+}
+
 }  // namespace dawn::native::d3d12

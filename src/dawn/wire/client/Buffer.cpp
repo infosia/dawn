@@ -209,6 +209,8 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor) {
     Client* wireClient = device->GetClient();
 
+    bool canUseSharedTransferBufferInWire = device->APISupportsSharedTransferBufferInWire();
+
     bool fakeOOMAtWireClientMap = false;
     for (const auto* chain = descriptor->nextInChain; chain != nullptr; chain = chain->next) {
         switch (chain->sType) {
@@ -242,14 +244,20 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
     cmd.readHandleCreateInfo = nullptr;  // Skipped by skip_serialize.
     cmd.writeHandleCreateInfoLength = 0;
     cmd.writeHandleCreateInfo = nullptr;  // Skipped by skip_serialize.
+    cmd.useSharedTransferBuffer = canUseSharedTransferBufferInWire;
 
     size_t readHandleCreateInfoLength = 0;
     size_t writeHandleCreateInfoLength = 0;
     if (mappable) {
         if ((descriptor->usage & WGPUBufferUsage_MapRead) != 0) {
             // Create the read handle on buffer creation.
-            readHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            if (canUseSharedTransferBufferInWire) {
+                readHandle.reset(wireClient->GetMemoryTransferService()
+                                     ->CreateReadHandleWithSharedTransferBuffer(descriptor->size));
+            } else {
+                readHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateReadHandle(descriptor->size));
+            }
             if (readHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }
@@ -259,8 +267,14 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
 
         if ((descriptor->usage & WGPUBufferUsage_MapWrite) != 0 || descriptor->mappedAtCreation) {
             // Create the write handle on buffer creation.
-            writeHandle.reset(
-                wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            if (canUseSharedTransferBufferInWire) {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()
+                        ->CreateWriteHandleWithSharedTransferBuffer(descriptor->size));
+            } else {
+                writeHandle.reset(
+                    wireClient->GetMemoryTransferService()->CreateWriteHandle(descriptor->size));
+            }
             if (writeHandle == nullptr) {
                 return ReturnOOMAtClient(device, descriptor);
             }

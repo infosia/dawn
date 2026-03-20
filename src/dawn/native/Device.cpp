@@ -2783,4 +2783,12 @@ tint::InternalCompilerErrorCallbackInfo DeviceBase::GetTintInternalCompilerError
     };
 }
 
+bool DeviceBase::APISupportsSharedTransferBufferInWire() const {
+    return SupportsSharedTransferBufferInWireImpl();
+}
+
+bool DeviceBase::SupportsSharedTransferBufferInWireImpl() const {
+    return false;
+}
+
 }  // namespace dawn::native

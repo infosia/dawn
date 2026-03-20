@@ -307,6 +307,7 @@ class DeviceBase : public ErrorSink,
     void APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo);
     void APIPushErrorScope(wgpu::ErrorFilter filter);
     Future APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackInfo);
+    bool APISupportsSharedTransferBufferInWire() const;
 
     MaybeError ValidateIsAlive() const;
 
@@ -582,6 +583,8 @@ class DeviceBase : public ErrorSink,
     virtual Ref<PipelineCacheBase> GetOrCreatePipelineCacheImpl(const CacheKey& key);
     virtual void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event);
     virtual void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event);
+
+    virtual bool SupportsSharedTransferBufferInWireImpl() const;
 
     void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
                        wgpu::FeatureLevel level);
