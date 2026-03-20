@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/common/ityp_vector.h"
@@ -103,6 +104,9 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
             continue;
         }
 
+        DAWN_DEBUG() << "Adding binding " << bindingIndex << " of type "
+                     << VulkanDescriptorType(bindingInfo);
+
         VkDescriptorSetLayoutBinding vkBinding{
             .binding = uint32_t(bindingIndex),
             .descriptorType = VulkanDescriptorType(bindingInfo),
@@ -125,6 +129,8 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
             }
 
             vkBinding.pImmutableSamplers = &ToBackend(sampler)->GetHandle().GetHandle();
+            DAWN_DEBUG() << "binding " << bindingIndex << " StaticSampler"
+                         << *vkBinding.pImmutableSamplers;
 
             if (sampler->IsYCbCr()) {
                 // A YCbCr sampler can take up multiple Vk descriptor slots.  There is a

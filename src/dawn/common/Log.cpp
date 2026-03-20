@@ -111,7 +111,7 @@ LogMessage::~LogMessage() {
 
     const char* severityName = SeverityName(mSeverity);
 
-#if DAWN_PLATFORM_IS(ANDROID)
+#if !DAWN_PLATFORM_IS(ANDROID)
     android_LogPriority androidPriority = AndroidLogPriority(mSeverity);
     __android_log_print(androidPriority, "Dawn", "%s: %s\n", severityName, fullMessage.c_str());
 #else  // DAWN_PLATFORM_IS(ANDROID)
