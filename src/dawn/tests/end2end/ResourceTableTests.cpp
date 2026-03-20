@@ -49,11 +49,11 @@ class ResourceTableTests : public DawnTest {
         DAWN_TEST_UNSUPPORTED_IF(
             !SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}));
 
-        // TODO(https://issues.chromium.org/435317394): The Subzero compiler used by Swiftshader
-        // produces bad code and crashes on some VK_EXT_descriptor_indexing workloads. Skip tests on
-        // it, but still run them with Swiftshader LLVM 10.0. On ARM64 the only supported compiler
-        // is LLVM10.0 so use that signal to choose when Swiftshader can be tested.
-        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() && !DAWN_PLATFORM_IS(ARM64));
+        // Swiftshader doesn't support variable count descriptor sets used in draw operations. In
+        // vk::DescriptorSet::ParseDescriptors it iterates over all the descriptors to prep various
+        // things but iterates over the whole size defined in the vkDescriptorSetLayout instead of
+        // taking into account the variable count.
+        DAWN_SUPPRESS_TEST_IF(IsSwiftshader());
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -1778,12 +1778,6 @@ TEST_P(ResourceTableTests, SinglePassMultipleResourceTables) {
 // Check that logic to dirty or reuse VkDescriptorSet takes into account the resource table in the
 // Vulkan backend.
 TEST_P(ResourceTableTests, SwitchUseResourceTableAndNot) {
-    // Swiftshader doesn't support variable count descriptor sets used in draw operations. In
-    // vk::DescriptorSet::ParseDescriptors it iterates over all the descriptors to prep various
-    // things but iterates over the whole size defined in the vkDescriptorSetLayout instead of
-    // taking into account the variable count.
-    DAWN_SUPPRESS_TEST_IF(IsSwiftshader());
-
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
 
