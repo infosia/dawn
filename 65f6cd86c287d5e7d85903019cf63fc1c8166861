@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2aaad4ac_363493e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-20T16:54:38Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "65f6cd86c287d5e7d85903019cf63fc1c8166861",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21668be3_da767817",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-20T16:54:38Z",
+      "side": 1,
+      "message": "It might be worth converting all the `uint32(N)` to `uint32_t{N}` in bulk at some point to avoid the noise from warnings. I believe the curly braced initialization has stronger guarantees against narrowing conversions as well.",
+      "revId": "65f6cd86c287d5e7d85903019cf63fc1c8166861",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
