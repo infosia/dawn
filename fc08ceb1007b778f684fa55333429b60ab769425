@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "baff5072_af05e83a",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-21T19:08:21Z",
+      "side": 1,
+      "message": "Filed crbug.com/tint/494875050 for the cleanup",
+      "parentUuid": "e8b2a771_d2967a5a",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17924708_c1376ac9",
@@ -84,6 +102,24 @@
       "writtenOn": "2026-03-20T21:23:38Z",
       "side": 1,
       "message": "Maybe `else { TINT_UNREACHABLE(); }` in that case",
+      "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7812672f_d7c871f4",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-21T19:08:21Z",
+      "side": 1,
+      "message": "Left for clean up since currently actual validation happens later.",
+      "parentUuid": "17924708_c1376ac9",
       "revId": "fc08ceb1007b778f684fa55333429b60ab769425",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
