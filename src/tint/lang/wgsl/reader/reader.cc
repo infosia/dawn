@@ -76,7 +76,6 @@ Result<core::ir::Module> ProgramToLoweredIR(const Program& program,
         }
     }
     // Lower from WGSL-dialect to core-dialect
-    auto res = Lower(ir);
     TINT_CHECK_RESULT(Lower(ir));
 
     return ir;
