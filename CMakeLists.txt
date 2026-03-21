@@ -199,6 +199,7 @@ set_if_not_defined(DAWN_GLSLANG_DIR "${DAWN_THIRD_PARTY_DIR}/glslang/src" "Direc
 set_if_not_defined(DAWN_VULKAN_HEADERS_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-headers/src" "Directory in which to find Vulkan-Headers")
 set_if_not_defined(DAWN_VULKAN_LOADER_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-loader/src" "Directory in which to find Vulkan-Loader")
 set_if_not_defined(DAWN_VULKAN_UTILITY_LIBRARIES_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-utility-libraries/src" "Directory in which to find Vulkan-Utility-Libraries")
+set_if_not_defined(DAWN_VULKAN_VALIDATION_LAYERS_DIR "${DAWN_THIRD_PARTY_DIR}/vulkan-validation-layers/src" "Directory in which to find Vulkan-Validation-Layrs")
 set_if_not_defined(DAWN_WEBGPU_HEADERS_DIR "${DAWN_THIRD_PARTY_DIR}/webgpu-headers/src" "Directory in which to find webgpu headers")
 
 

@@ -204,6 +204,11 @@ if (NOT TARGET Vulkan::UtilityHeaders AND DAWN_ENABLE_VULKAN)
     add_subdirectory(${DAWN_VULKAN_UTILITY_LIBRARIES_DIR} "${CMAKE_CURRENT_BINARY_DIR}/vulkan-utility-libraries/src")
 endif()
 
+if (NOT TARGET vvl AND DAWN_ENABLE_VULKAN)
+    message(STATUS "Dawn: using VulkanValidationLayers at ${DAWN_VULKAN_VALIDATION_LAYERS_DIR}")
+    add_subdirectory(${DAWN_VULKAN_VALIDATION_LAYERS_DIR} "${CMAKE_CURRENT_BINARY_DIR}/vulkan-validation-layers/src")
+endif()
+
 if (DAWN_ENABLE_SWIFTSHADER AND NOT TARGET vk_swiftshader)
     set(SWIFTSHADER_BUILD_TESTS OFF CACHE BOOL "" FORCE)
     set(SWIFTSHADER_BUILD_BENCHMARKS OFF CACHE BOOL "" FORCE)
