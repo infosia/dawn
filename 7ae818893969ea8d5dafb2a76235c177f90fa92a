@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2921fde_8c6ab504",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "[11]",
+      "parentUuid": "dca7fa60_f54abafa",
+      "range": {
+        "startLine": 300,
+        "startChar": 6,
+        "endLine": 321,
+        "endChar": 5
+      },
+      "revId": "7ae818893969ea8d5dafb2a76235c177f90fa92a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3dfbb95b_a1eafc21",

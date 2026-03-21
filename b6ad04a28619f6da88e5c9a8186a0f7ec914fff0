@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d527720e_bd9dffaa",
+        "filename": "src/dawn/native/SharedResourceMemory.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done (I think you mean the pattern is only before the texture is actually going to be used (`SynchronizeTextureBeforeUse`) we call `wgpu.sharedTextureMemoryBeginAccess` (in other backend it\u0027s waiting on platform fences) )",
+      "parentUuid": "c1c895af_c2959377",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc71c61e_a608be09",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "For each subresource, this marks the whole texture as initialized. Did you mean to only mark that subresource as initialized?",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b920ab_98f4c039",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc71c61e_a608be09",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c3624f_0927ad20",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9c0512_318c12bf",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2def845_bb3a8d6c",
@@ -82,6 +136,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "We should also add the sync scope handling to the dispatch calls.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae39ecb_7f3bb7fa",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2def845_bb3a8d6c",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93a67b29_153451f0",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "crbug.com/494307326",
+      "parentUuid": "871934be_5af6bea3",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ad535db_0248538c",
@@ -116,6 +206,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "This is a bit heavy handed. What do you think instead of blocking at [3] until the commands are scheduled? It\u0027s a bit unfortunate as well but should be more efficient because instead of causing GPU-CPU bubbles in Chromium. It will do a much smaller wait on the CPU (without a GPU bubble).",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe7ac7d3_7705c51e",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad535db_0248538c",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +245,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "959cdcef_dc212ad4",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done (Validated now in DeviceWGPU.cpp)",
+      "parentUuid": "289756f1_e0d445a0",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b86b7cf_5a3267eb",
@@ -150,6 +276,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "Should already be validated in the frontend code.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35a69d67_7b323805",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "No validation of each of these platform specific descriptor is scattered in their backend impl (e.g. SharedFenceMTL.mm: DAWN_INVALID_IF(descriptor-\u003esharedEvent \u003d\u003d nullptr, ...)",
+      "parentUuid": "7b86b7cf_5a3267eb",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -188,6 +332,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f371e64_b6d4e436",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done. (Recover the branches at [11] as well to match)",
+      "parentUuid": "fdacefd0_116898eb",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9912bd02_ebfd665c",
@@ -201,6 +363,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "ditto, it should already be validated earlier",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3424651a_aebc5f28",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "No I think this ValidateSubset is not performed (frontend SharedFence::ExportInfo does `ValidateAndUnpack` but that doesn\u0027t do ValidateSubset?)",
+      "parentUuid": "9912bd02_ebfd665c",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -239,6 +419,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e076ac4d_1ef3c653",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea96def7_ef022b86",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f819017b_64ea79ae",
@@ -252,6 +450,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "The descriptor could be passed as `const UnpackedPtr\u003cSharedFenceDescriptor\u003e\u0026` to avoid unpacking again in the constructor.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78ae227b_9eef23fc",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f819017b_64ea79ae",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -273,6 +489,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8307790f_b2226010",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1412e04d_7a0e60c5",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ebaebf2_e4bd55c5",
@@ -286,6 +520,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "ditto, this should already be validated by the frontend.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e5fc99a_f2c53b6d",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done (validated in DeviceWGPU)",
+      "parentUuid": "3ebaebf2_e4bd55c5",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -307,6 +559,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ad8631_28f340b1",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf6dfec_2cee4183",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb2a7261_9708eb8e",
@@ -320,6 +590,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "If this return is taken the innerHandle will be leaked. We could create the STM earlier and do the query for the properties in a `MaybeError Initialize()`",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88cf263e_a07acb0f",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb2a7261_9708eb8e",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -341,6 +629,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37fbf984_0b2d29d4",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "No (ditto, ValidateUnpack in SharedResourceMemory doesn\u0027t do ValidateSubset)",
+      "parentUuid": "049c83d2_669db3d9",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "311f823c_9ff04ab7",
@@ -354,6 +660,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "Do we have a macro to check WGPUStatus? If not, now would be a good time to add one. It could be similar to CheckHRESULT or CheckVkSuccess.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "360e9f07_fff10986",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done (Oops we do already)",
+      "parentUuid": "311f823c_9ff04ab7",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -375,6 +699,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e987cff9_60e008f2",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Frontend (of outer webgpu backend) texture state needs to be synced to make sure correct path are hit (e.g. lazy zero clearing). Added a comment and ASSERT afterwards to make sure outer and inner state are same.",
+      "parentUuid": "6d6e0a98_9ac73c28",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59e9998d_e39a1436",
@@ -388,6 +730,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "With the comment at [2], this condition and the same one below will always be true.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe9a73ec_4753b1c6",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59e9998d_e39a1436",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -426,6 +786,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe404e60_31e2644d",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "I conclude this table from spec and test:\n\u003e | BeginAccess Input Fences | Texture Used by Dawn? | EndAccess Output Fences                       |\n\u003e |--------------------------|-----------------------|-----------------------------------------------|\n\u003e | 0                        | Yes                   | 1 (The Queue\u0027s SharedFence @ lastUsageSerial) |\n\u003e | 0                        | No                    | 0                                             |\n\u003e | N                        | Yes                   | 1 (The Queue\u0027s SharedFence @ lastUsageSerial) |\n\u003e | N                        | No                    | N (The input fences)                          |\n\nWhen texture is used by gpu, `SharedTexture::OnBeforeSubmit` calls `AcquirePendingFences` to wait and clear on all fences and return a new fence from queue in `EndAccessInternal`\nI believe this is also true for vulkan (vulkan::SharedTextureMemory::EndAccessImpl ) also only return one `Ref\u003cSharedFence\u003e fence`. Does vk semaphore has any special cases?",
+      "parentUuid": "8518cf32_ac0bee5d",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42110e72_92209e66",
@@ -439,6 +817,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "ditto to use `CheckStatus` or a similar helper.",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6c0000e_408adfb1",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42110e72_92209e66",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -460,6 +856,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15d9910f_25543536",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "I don\u0027t know yet. But remove now and add later if needed.",
+      "parentUuid": "f78767ee_d6a84d5e",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a96b4439_c8c1f9e6",
@@ -477,6 +891,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "164fd4db_e4165cfb",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96b4439_c8c1f9e6",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d2395d7_eb4864ac",
@@ -490,6 +922,24 @@
       "writtenOn": "2026-03-19T12:56:07Z",
       "side": 1,
       "message": "nit: it might be worth separating the two constructors to avoid having two converging code paths that split up again. (and factor out the descriptor creation)",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a498c578_1d5ba567",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-21T00:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d2395d7_eb4864ac",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
