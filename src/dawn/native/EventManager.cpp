@@ -339,7 +339,7 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
     return futureID;
 }
 
-void EventManager::SetFutureReady(TrackedEvent* event) {
+void EventManager::SetFutureReady(Ref<TrackedEvent> event) {
     event->SetReadyToComplete();
 
     // Sometimes, events might become ready before they are even tracked. This can happen because

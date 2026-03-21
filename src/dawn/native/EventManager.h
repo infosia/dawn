@@ -72,7 +72,13 @@ class EventManager final : NonMovable {
     class TrackedEvent;
     // Track a TrackedEvent and give it a FutureID.
     FutureID TrackEvent(Ref<TrackedEvent>&&);
-    void SetFutureReady(TrackedEvent* event);
+
+    // Note that SetFutureReady takes a Ref<TrackedEvent> instead of a TrackedEvent* because TSAN
+    // found that this function uses the event after setting it ready meaning another thread can
+    // race to complete the event as soon as it's ready, i.e. via a WaitAny call, potentially
+    // completing and freeing the event leaving the remainder of this call referencing a freed
+    // event.
+    void SetFutureReady(Ref<TrackedEvent> event);
 
     // Returns true if future ProcessEvents is needed.
     bool ProcessPollEvents();
