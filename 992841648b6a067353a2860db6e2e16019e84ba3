@@ -34,6 +34,23 @@
       "parentUuid": "470dd60e_39d28646",
       "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df004b79_26392ad5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4714522
+      },
+      "writtenOn": "2026-03-21T00:20:18Z",
+      "side": 1,
+      "message": "Tested locally on Apple M2, macOS 26.3.1 — all 57 SharedTextureMemoryTests pass including RenderThenSampleEncodeAfterBeginAccess. Can you share which OS/GPU/macOS version was failing?",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
