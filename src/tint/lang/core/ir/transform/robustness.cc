@@ -70,6 +70,7 @@ struct State {
         Vector<ir::StoreVectorElement*, 64> vector_stores;
         Vector<ir::CoreBuiltinCall*, 64> subgroup_matrix_calls;
         Vector<ir::CoreBuiltinCall*, 64> texture_calls;
+        Vector<ir::CoreBuiltinCall*, 64> buffer_view_calls;
 
         if (config.use_integer_range_analysis) {
             integer_range_analysis.emplace(&ir);
