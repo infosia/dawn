@@ -70,6 +70,7 @@ struct State {
         Vector<ir::StoreVectorElement*, 64> vector_stores;
         Vector<ir::CoreBuiltinCall*, 64> subgroup_matrix_calls;
         Vector<ir::CoreBuiltinCall*, 64> texture_calls;
+        Vector<ir::CoreBuiltinCall*, 64> buffer_view_calls;
 
         if (config.use_integer_range_analysis) {
             integer_range_analysis.emplace(&ir);
@@ -113,6 +114,11 @@ struct State {
                         call->Func() == core::BuiltinFn::kSubgroupMatrixStore) {
                         subgroup_matrix_calls.Push(call);
                     }
+                    // Check if this is a buffer view builtin that needs to be clamped.
+                    if (call->Func() == core::BuiltinFn::kBufferView ||
+                        call->Func() == core::BuiltinFn::kBufferArrayView) {
+                        buffer_view_calls.Push(call);
+                    }
                 });
         }
 
@@ -152,6 +158,12 @@ struct State {
         for (auto* call : subgroup_matrix_calls) {
             b.InsertBefore(call, [&] {  //
                 PredicateSubgroupMatrixCall(call);
+            });
+        }
+
+        for (auto* call : buffer_view_calls) {
+            b.InsertBefore(call, [&] {  //
+                ClampBufferViewArgs(call);
             });
         }
     }
@@ -511,6 +523,8 @@ struct State {
             }
         });
     }
+
+    void ClampBufferViewArgs(ir::CoreBuiltinCall* call) {}
 
     // Returns the root Var for `value` by walking up the chain of instructions,
     // or nullptr if none is found.
