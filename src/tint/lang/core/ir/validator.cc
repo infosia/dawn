@@ -4368,7 +4368,23 @@ void Validator::CheckUserCall(const UserCall* call) {
     }
 
     for (size_t i = 0; i < args.size(); i++) {
-        if (args[i]->Type() != params[i]->Type()) {
+        bool allow_mismatch = false;
+        if (auto* arg_buffer_ty = args[i]->Type()->UnwrapPtrOrRef()->As<core::type::Buffer>()) {
+            auto* arg_ptr_ty = args[i]->Type()->As<core::type::Pointer>();
+            if (auto* param_ptr_ty = params[i]->Type()->As<core::type::Pointer>()) {
+                if (auto* param_buffer_ty =
+                        param_ptr_ty->UnwrapPtrOrRef()->As<core::type::Buffer>()) {
+                    allow_mismatch = arg_ptr_ty->AddressSpace() == param_ptr_ty->AddressSpace() &&
+                                     arg_ptr_ty->Access() == param_ptr_ty->Access();
+                    uint32_t arg_size = arg_buffer_ty->ConstantCount().value_or(0);
+                    uint32_t param_size = param_buffer_ty->ConstantCount().value_or(0);
+                    allow_mismatch &=
+                        param_buffer_ty->Count()->Is<core::type::RuntimeArrayCount>() ||
+                        param_size < arg_size;
+                }
+            }
+        }
+        if (!allow_mismatch && args[i]->Type() != params[i]->Type()) {
             AddError(call, UserCall::kArgsOperandOffset + i)
                 << "type " << NameOf(params[i]->Type()) << " of function parameter " << i
                 << " does not match argument type " << NameOf(args[i]->Type());
