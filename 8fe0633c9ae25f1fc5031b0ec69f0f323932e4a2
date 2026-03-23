@@ -34,6 +34,24 @@
       "parentUuid": "af02b405_4410b051",
       "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec6f182e_684d335f",
+        "filename": "third_party/OpenGL-Registry/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-23T15:12:53Z",
+      "side": 1,
+      "message": "Sorry, it\u0027s the original third_party/khronos/LICENSE file that we had in the repo already, not from the upstream KhronosGroup repo.",
+      "parentUuid": "2f791a2a_0fd851b2",
+      "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
