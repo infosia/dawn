@@ -2567,6 +2567,81 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, BGLComparisonessMatchesS
     ASSERT_DEVICE_ERROR(device.CreateComputePipeline(&csDesc));
 }
 
+// Test that static samplers and external textures are not allowed in the same BGL.
+TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
+       StaticSamplerNotAllowedWithExternalTexture_BindGroupLayout) {
+    wgpu::StaticSamplerBindingLayout staticSamplerBindingLayout = {};
+    staticSamplerBindingLayout.sampler = device.CreateSampler();
+    wgpu::BindGroupLayoutEntry staticSamplerBinding = {};
+    staticSamplerBinding.binding = 0;
+    staticSamplerBinding.visibility = wgpu::ShaderStage::Compute;
+    staticSamplerBinding.nextInChain = &staticSamplerBindingLayout;
+
+    wgpu::ExternalTextureBindingLayout externalTextureBindingLayout = {};
+    wgpu::BindGroupLayoutEntry externalTextureBinding = {};
+    externalTextureBinding.binding = 0;
+    externalTextureBinding.visibility = wgpu::ShaderStage::Compute;
+    externalTextureBinding.nextInChain = &externalTextureBindingLayout;
+
+    // Success case: just the static sampler is valid.
+    {
+        wgpu::BindGroupLayoutDescriptor desc = {};
+        desc.entryCount = 1;
+        desc.entries = &staticSamplerBinding;
+        device.CreateBindGroupLayout(&desc);
+    }
+
+    // Success case: just the external texture is valid.
+    {
+        wgpu::BindGroupLayoutDescriptor desc = {};
+        desc.entryCount = 1;
+        desc.entries = &externalTextureBinding;
+        device.CreateBindGroupLayout(&desc);
+    }
+
+    // Error case: both together is an error.
+    {
+        std::array<wgpu::BindGroupLayoutEntry, 2> bindings = {staticSamplerBinding,
+                                                              externalTextureBinding};
+
+        wgpu::BindGroupLayoutDescriptor desc = {};
+        desc.entryCount = bindings.size();
+        desc.entries = bindings.data();
+        ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+    }
+}
+
+// Test that static samplers and external textures are not allowed in the same pipeline layout.
+TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
+       StaticSamplerNotAllowedWithExternalTexture_PipelineLayout) {
+    wgpu::BindGroupLayout staticSamplerBGL;
+    {
+        wgpu::StaticSamplerBindingLayout staticSamplerBindingLayout = {};
+        staticSamplerBindingLayout.sampler = device.CreateSampler();
+        wgpu::BindGroupLayoutEntry staticSamplerBinding = {};
+        staticSamplerBinding.binding = 0;
+        staticSamplerBinding.visibility = wgpu::ShaderStage::Compute;
+        staticSamplerBinding.nextInChain = &staticSamplerBindingLayout;
+
+        wgpu::BindGroupLayoutDescriptor desc = {};
+        desc.entryCount = 1;
+        desc.entries = &staticSamplerBinding;
+        staticSamplerBGL = device.CreateBindGroupLayout(&desc);
+    }
+
+    wgpu::BindGroupLayout externalTextureBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Compute, &utils::kExternalTextureBindingLayout}});
+
+    // Success case: just the static sampler is valid.
+    utils::MakePipelineLayout(device, {staticSamplerBGL});
+
+    // Success case: just the external texture is valid.
+    utils::MakePipelineLayout(device, {externalTextureBGL});
+
+    // Error case: both together is an error.
+    utils::MakePipelineLayout(device, {staticSamplerBGL, externalTextureBGL});
+}
+
 constexpr uint32_t kBindingSize = 8;
 
 class SetBindGroupValidationTest : public ValidationTest {
