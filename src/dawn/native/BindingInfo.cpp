@@ -174,6 +174,14 @@ void AccumulateBindingCounts(BindingCounts* bindingCounts, const BindingCounts& 
 MaybeError ValidateBindingCounts(const CombinedLimits& limits,
                                  const BindingCounts& bindingCounts,
                                  const AdapterBase* adapter) {
+    // Prevent combinations that are not supported (static sampler + external texture).
+    for (SingleShaderStage stage : IterateStages(kAllStages)) {
+        DAWN_INVALID_IF(bindingCounts.staticSamplerCount != 0 &&
+                            bindingCounts.perStage[stage].externalTextureCount != 0,
+                        "Static samplers and external textures are used in the same pipeline.");
+    }
+
+    // Validation against the device limits.
     uint32_t maxDynamicUniformBuffersPerPipelineLayout =
         limits.v1.maxDynamicUniformBuffersPerPipelineLayout;
     DAWN_INVALID_IF(
