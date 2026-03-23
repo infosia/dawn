@@ -29,10 +29,12 @@
 #define SRC_DAWN_NATIVE_VULKAN_PIPELINELAYOUTVK_H_
 
 #include <memory>
+#include <utility>
 
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/PipelineLayout.h"
+#include "dawn/native/vulkan/BindGroupLayoutVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
@@ -47,9 +49,22 @@ class PipelineLayout final : public PipelineLayoutBase {
 
     // Pipeline might use different amounts of immediate data internally which cause difference in
     // VkPipelineLayout push constant range part. Pass internalImmediateDataSize to
-    // get correct VkPipelineLayout.
+    // get correct VkPipelineLayout. Also allow for BindGroupLayout specialization.
+    struct Specialization {
+        PerBindGroup<BindGroupLayout::Specialization> bindGroups = {};
+        uint32_t pushConstantBytes;
+
+        template <typename H>
+        friend H AbslHashValue(H h, const Specialization& s) {
+            for (auto& bg : s.bindGroups) {
+                h = H::combine(std::move(h), bg);
+            }
+            return H::combine(std::move(h), s.pushConstantBytes);
+        }
+        bool operator==(const Specialization& other) const = default;
+    };
     ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> GetOrCreateVkLayoutObject(
-        const ImmediateConstantMask& immediateConstantMask);
+        const Specialization& specialization);
 
     // Friend definition of StreamIn which can be found by ADL to override stream::StreamIn<T>.
     friend void StreamIn(stream::Sink* sink, const PipelineLayout& obj) {
@@ -64,7 +79,7 @@ class PipelineLayout final : public PipelineLayoutBase {
     MaybeError Initialize();
 
     ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> CreateVkPipelineLayout(
-        uint32_t immediateConstantSize);
+        const Specialization& specialization);
 
     // Dawn API
     void SetLabelImpl() override;
@@ -72,7 +87,7 @@ class PipelineLayout final : public PipelineLayoutBase {
     // Multiple VkPipelineLayouts is possible because variant internal immediate data size.
     // Using map to manage 1 PipelineLayout to N VkPipelineLayouts relationship with
     // total immediate data size as key.
-    MutexProtected<absl::flat_hash_map<uint32_t, Ref<RefCountedVkHandle<VkPipelineLayout>>>>
+    MutexProtected<absl::flat_hash_map<Specialization, Ref<RefCountedVkHandle<VkPipelineLayout>>>>
         mVkPipelineLayouts;
 };
 

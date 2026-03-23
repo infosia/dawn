@@ -426,6 +426,10 @@ void Device::EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator) {
                                                       GetQueue()->GetPendingCommandSerial());
 }
 
+void Device::CacheStaticSampler(const Ref<Sampler>& s) {
+    mStaticSamplerCache.insert(s);
+}
+
 ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysicalDevice) {
     VulkanDeviceKnobs usedKnobs = {};
 
@@ -1021,6 +1025,8 @@ void Device::DestroyImpl(DestroyReason reason) {
     // deinitialization.
 
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StopListeningForDeviceMessages(this);
+
+    mStaticSamplerCache.clear();
 
     if (mResourceTableLayout != VK_NULL_HANDLE) {
         fn.DestroyDescriptorSetLayout(mVkDevice, mResourceTableLayout, nullptr);

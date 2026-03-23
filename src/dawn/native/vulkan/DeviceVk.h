@@ -94,6 +94,8 @@ class Device final : public DeviceBase {
 
     void EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator);
 
+    void CacheStaticSampler(const Ref<Sampler>& s);
+
     // Dawn Native API
 
     Ref<TextureBase> CreateTextureWrappingVulkanImage(
@@ -227,6 +229,7 @@ class Device final : public DeviceBase {
     std::unique_ptr<MutexProtected<ResourceMemoryAllocator>> mResourceMemoryAllocator;
     std::unique_ptr<FramebufferCache> mFramebufferCache;
     std::unique_ptr<RenderPassCache> mRenderPassCache;
+    absl::flat_hash_set<Ref<Sampler>> mStaticSamplerCache;
 
     std::unique_ptr<external_memory::Service> mExternalMemoryService;
     std::unique_ptr<external_semaphore::Service> mExternalSemaphoreService;
