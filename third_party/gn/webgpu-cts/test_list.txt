@@ -271102,6 +271102,7 @@ webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="subgroup_id"
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="subgroup_uniformity"
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="swizzle_assignment"
 webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="linear_indexing"
+webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="texture_formats_tier1"
 webgpu:shader,validation,parse,semicolon:module_scope_single:
 webgpu:shader,validation,parse,semicolon:module_scope_multiple:
 webgpu:shader,validation,parse,semicolon:after_enable:
