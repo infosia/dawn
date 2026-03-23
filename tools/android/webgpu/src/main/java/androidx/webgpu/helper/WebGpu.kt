@@ -28,6 +28,7 @@ import androidx.webgpu.DeviceLostCallback
 import androidx.webgpu.DeviceLostException
 import androidx.webgpu.DeviceLostReason
 import androidx.webgpu.ErrorType
+import androidx.webgpu.FeatureName
 import androidx.webgpu.GPUInstance
 import androidx.webgpu.GPUInstanceDescriptor
 import androidx.webgpu.InternalException
@@ -42,6 +43,7 @@ import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.UnknownException
 import androidx.webgpu.ValidationException
 import androidx.webgpu.GPU.createInstance
+import androidx.webgpu.GPUDawnTogglesDescriptor
 import androidx.webgpu.WebGpuRuntimeException
 import androidx.webgpu.helper.Util.windowFromSurface
 import java.util.concurrent.Executor
@@ -79,6 +81,18 @@ public suspend fun createWebGpu(
         }
 
     val adapter = requestAdapter(instance, requestAdapterOptions)
+    deviceDescriptor.dawnTogglesDescriptor =
+        GPUDawnTogglesDescriptor(enabledToggles = arrayOf("allow_unsafe_apis"))
+    val f = deviceDescriptor.requiredFeatures.toMutableList()
+    // TODO(Feature hardcoded, not available in bindings)
+    f.add(FeatureName.SharedTextureMemoryAHardwareBuffer) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
+    f.add(FeatureName.SharedFenceSyncFD) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
+    f.add(FeatureName.YCbCrVulkanSamplers) //WGPUFeatureName_YCbCrVulkanSamplers
+    if(adapter.hasFeature(FeatureName.OpaqueYCbCrAndroidForExternalTexture)){
+        //TODO("opaque y cb cr android for external texture" is not supported)
+        f.add(FeatureName.OpaqueYCbCrAndroidForExternalTexture)
+    }
+    deviceDescriptor.requiredFeatures = f.toIntArray()
     val device = requestDevice(adapter, deviceDescriptor)
 
     var isClosing = false
@@ -130,13 +144,6 @@ private suspend inline fun requestDevice(
     if (deviceDescriptor.uncapturedErrorCallback == null) {
         deviceDescriptor.uncapturedErrorCallback = defaultUncapturedErrorCallback
     }
-    val f = deviceDescriptor.requiredFeatures.toMutableList()
-    // TODO(Feature hardcoded, not available in bindings)
-    f.add(0x0005001E) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
-    f.add(0x00050027) //WGPUFeatureName_SharedFenceSyncFD
-    //TODO(Invalid feature required: Feature y-cb-cr-vulkan-samplers is guarded by toggle allow_unsafe_apis.)
-    // f.add(0x0005002D) //WGPUFeatureName_YCbCrVulkanSamplers
-    deviceDescriptor.requiredFeatures = f.toIntArray()
     return adapter.requestDevice(deviceDescriptor)
 }
 
