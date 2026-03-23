@@ -51,7 +51,7 @@ public class {{ enum.name.CamelCase() }} private constructor() {
           {% endfor %}
       )
       @JvmStatic
-      public fun toString(@{{ enum.name.CamelCase() }}.Type value: Int): String = names[value] ?: value.toString()
+      public fun toString(@Type value: Int): String = names[value] ?: value.toString()
   }
 
   @Retention(AnnotationRetention.SOURCE)
@@ -62,7 +62,7 @@ public class {{ enum.name.CamelCase() }} private constructor() {
       {% endif %}
       value = [
           {% for value in enum.values %}
-              {{ enum.name.CamelCase() }}.{{ as_ktName(value.name.CamelCase()) }},
+              {{ as_ktName(value.name.CamelCase()) }},
           {% endfor %}
       ]
   )
