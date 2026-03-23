@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8e3be80c_1e346a8a",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9ca84fd_506c92cf",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1c0eca76_77fa1bdc",
         "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
         "patchSetId": 31
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0552f2f5_48dfb6b5",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31e8f67_5dfd5596",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fe3be66_fe7a404d",
@@ -82,6 +118,24 @@
       "writtenOn": "2026-03-23T15:33:11Z",
       "side": 1,
       "message": "Same comment here and below as in `WriteTextureImpl`",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7225ec91_c8d1e09a",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fe3be66_fe7a404d",
       "revId": "6df9450ad6400757f10e441d423f752697e69f91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +157,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c44e6ec_b3e4bcd3",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b56b9cec_cea46093",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db9756c9_25b5147e",
@@ -120,6 +192,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ae8e26f_59003505",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done (Alternative way. Add a if to check WGPUStatus of sharedTextureMemoryGetProperties and release innerHandle if error)",
+      "parentUuid": "db9756c9_25b5147e",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ded0598_2144fa66",
@@ -133,6 +223,24 @@
       "writtenOn": "2026-03-23T15:33:11Z",
       "side": 1,
       "message": "This will make Chromium wait in such a way that makes a GPU bubble. Is there a way to create an already completed future? (since nothing needs to happen now that we wait synchronously in this function)",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e252a89e_919751e4",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-23T23:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ded0598_2144fa66",
       "revId": "6df9450ad6400757f10e441d423f752697e69f91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
