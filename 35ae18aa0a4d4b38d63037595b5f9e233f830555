@@ -16,6 +16,86 @@
       "message": "PTAL, thanks!",
       "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bae33cf_006ce259",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:59:28Z",
+      "side": 1,
+      "message": "Ideally these are a span\u003cconst uint8_t\u003e as well.",
+      "range": {
+        "startLine": 151,
+        "startChar": 43,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71e33ca5_46b8d12b",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:59:28Z",
+      "side": 1,
+      "message": "This will instead be `target.size()` so we don\u0027t need it anymore.",
+      "range": {
+        "startLine": 155,
+        "startChar": 34,
+        "endLine": 155,
+        "endChar": 54
+      },
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c21a44_36227bf6",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:59:28Z",
+      "side": 1,
+      "message": "I would like to remove this hack while we\u0027re at it. We should bass a target span that\u0027s known to be at `offset` in the buffer. The temporary -\u003d would be done in the shim `DeserializeDataUpdate`.",
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3861d9fe_c40604c4",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:59:28Z",
+      "side": 1,
+      "message": "That\u0027s the same span as `mappedRange` so why introduce a new variable?",
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
