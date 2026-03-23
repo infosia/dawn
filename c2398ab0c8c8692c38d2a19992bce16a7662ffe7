@@ -51,6 +51,24 @@
       "parentUuid": "2300f6d7_9cd1f8ef",
       "revId": "c2398ab0c8c8692c38d2a19992bce16a7662ffe7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dba8176_511bc05a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-23T18:13:54Z",
+      "side": 1,
+      "message": "Yeah, force-submit SGTM.",
+      "parentUuid": "36aaeeca_c50948ba",
+      "revId": "c2398ab0c8c8692c38d2a19992bce16a7662ffe7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
