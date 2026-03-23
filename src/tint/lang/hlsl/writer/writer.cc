@@ -62,12 +62,12 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
                     return Failure("runtime binding array not supported by the HLSL FXC backend");
                 }
             }
+            if (ty->Is<core::type::U16>()) {
+                return Failure("16-bit integers are not supported by the HLSL FXC backend");
+            }
         }
         if (ty->Is<core::type::Buffer>()) {
             return Failure("buffers are not supported by the HLSL backend");
-        }
-        if (ty->Is<core::type::U16>()) {
-            return Failure("16-bit unsigned integers are not supported by the HLSL backend");
         }
     }
 
