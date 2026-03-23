@@ -16,6 +16,23 @@
       "message": "ToT dawn build is failing for me locally, looks like some got missed maybe due to changes since rebase?",
       "revId": "c2398ab0c8c8692c38d2a19992bce16a7662ffe7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2300f6d7_9cd1f8ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-03-23T18:07:57Z",
+      "side": 1,
+      "message": "Looks like the \"compile (without patch)\" step is failing, so guessing this was a bad luck rebase with old CQ results. Seem reasonable to force submit?",
+      "revId": "c2398ab0c8c8692c38d2a19992bce16a7662ffe7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
