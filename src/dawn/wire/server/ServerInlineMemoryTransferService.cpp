@@ -65,11 +65,28 @@ class InlineMemoryTransferService : public MemoryTransferService {
         WriteHandleImpl() {}
         ~WriteHandleImpl() override = default;
 
+        // TODO(492456046): Remove this overload once it has been removed in Chromium.
         bool DeserializeDataUpdate(const void* deserializePointer,
                                    size_t deserializeSize,
                                    size_t offset,
                                    size_t size) override {
             auto target = GetTarget();
+            if (deserializeSize != size || target.data() == nullptr ||
+                deserializePointer == nullptr) {
+                return false;
+            }
+            if (offset > target.size() || size > target.size() - offset) {
+                return false;
+            }
+            memcpy(target.data() + offset, deserializePointer, size);
+            return true;
+        }
+
+        bool DeserializeDataUpdate(const void* deserializePointer,
+                                   size_t deserializeSize,
+                                   std::span<uint8_t> target,
+                                   size_t offset,
+                                   size_t size) override {
             if (deserializeSize != size || target.data() == nullptr ||
                 deserializePointer == nullptr) {
                 return false;

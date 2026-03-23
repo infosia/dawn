@@ -235,12 +235,10 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
         }
 
         // Deserialize the flush info and flush updated data from the handle into the target
-        // of the handle. The target is set via WriteHandle::SetTarget/SetDataLength.
-        mapState->writeHandle->SetDataLength(mappedRange.size());
-        mapState->writeHandle->SetTarget(mappedRange.data());
-
+        // of the handle.
+        std::span<uint8_t> target(mappedRange.data(), mappedRange.size());
         if (!mapState->writeHandle->DeserializeDataUpdate(
-                writeDataUpdateInfo, static_cast<size_t>(writeDataUpdateInfoLength),
+                writeDataUpdateInfo, static_cast<size_t>(writeDataUpdateInfoLength), target,
                 static_cast<size_t>(offset), static_cast<size_t>(size))) {
             return WireResult::FatalError;
         }

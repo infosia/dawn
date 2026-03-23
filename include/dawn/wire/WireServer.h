@@ -137,13 +137,27 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);
 
-        // This function takes in the serialized result of
-        // client::MemoryTransferService::WriteHandle::SerializeDataUpdate.
-        // Needs to check potential offset/size OOB and overflow
+        // TODO(492456046): Remove this overload once it has been removed in Chromium.
         virtual bool DeserializeDataUpdate(const void* deserializePointer,
                                            size_t deserializeSize,
                                            size_t offset,
                                            size_t size) = 0;
+
+        // This function takes in the serialized result of
+        // client::MemoryTransferService::WriteHandle::SerializeDataUpdate.
+        // Needs to check potential offset/size OOB and overflow
+        // TODO(492456046): Declare this function as a pure-virtual one once it has been implemented
+        // in Chromium.
+        virtual bool DeserializeDataUpdate(const void* deserializePointer,
+                                           size_t deserializeSize,
+                                           std::span<uint8_t> target,
+                                           size_t offset,
+                                           size_t size) {
+            SetTarget(target.data());
+            SetDataLength(target.size());
+            return DeserializeDataUpdate(deserializePointer, deserializeSize, offset, size);
+        }
+
         std::span<uint8_t> GetTarget() const;
 
         std::span<uint8_t> GetSource() const {

@@ -295,7 +295,15 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             return;
         }
 
-        EXPECT_CALL(*serverHandle, DeserializeDataUpdate(_, kBufferSize, 0, kBufferSize))
+        std::span<uint8_t> target(reinterpret_cast<uint8_t*>(&mServerBufferContent),
+                                  sizeof(mServerBufferContent));
+        // We need `testing::Truly` here because `std::span` doesn't have `operator==` in C++20.
+        EXPECT_CALL(*serverHandle,
+                    DeserializeDataUpdate(
+                        _, kBufferSize, testing::Truly([target](std::span<uint8_t> arg) {
+                            return arg.data() == target.data() && arg.size() == target.size();
+                        }),
+                        0, kBufferSize))
             .WillOnce(WithArg<0>([&, success](const void* deserializePointer) {
                 if (success) {
                     // Copy the data manually here.
