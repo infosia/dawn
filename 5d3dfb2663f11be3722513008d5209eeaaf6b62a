@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50e83e5d_e159812c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-23T19:38:16Z",
+      "side": 1,
+      "message": "LGTM with one question is answered.",
+      "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34a049c3_b277cfc2",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-23T19:38:16Z",
+      "side": 1,
+      "message": "The description says that some test used Draw(3). Were any using Draw(6)? If so they would still likely be giving the correct results on some hardware, but I don\u0027t know if it\u0027s strictly defined which positions would be read in which order?",
+      "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
