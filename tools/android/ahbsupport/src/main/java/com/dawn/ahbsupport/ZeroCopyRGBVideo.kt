@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedRGBHardwareBuffer
+import androidx.webgpu.helper.GPUImportedRgbAhbTexture
 import androidx.webgpu.helper.asString
 import androidx.compose.ui.graphics.nativeCanvas
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -204,7 +204,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
         )
       )
 
-      var activeAhbWrapper: GPUImportedRGBHardwareBuffer? = null
+      var activeAhbWrapper: GPUImportedRgbAhbTexture? = null
       var activeYuvImage: Image? = null
 
       var frameCount = 0
@@ -279,7 +279,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
 
           // RUN WEBGPU RENDER PIPELINE
           if (cameraTextures.isNotEmpty() && activeAhbWrapper != null) {
-            activeAhbWrapper!!.beginAccessNative()
+            activeAhbWrapper!!.beginAccess()
 
 
             val commandBuffers = mutableListOf<GPUCommandBuffer>()
@@ -316,7 +316,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             }
 
             device.queue.submit(commandBuffers.toTypedArray())
-            activeAhbWrapper!!.endAccessNative()
+            activeAhbWrapper!!.endAccess()
 
           }
           val submitEnd = System.nanoTime()

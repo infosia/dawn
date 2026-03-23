@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedYuvHardwareBuffer
+import androidx.webgpu.helper.GPUImportedYuvAhbTexture
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
 
@@ -161,7 +161,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
       doYuvToRgbConversionOnly = true,
     )
 
-    var activeYuvWrapper: GPUImportedYuvHardwareBuffer? = null
+    var activeYuvWrapper: GPUImportedYuvAhbTexture? = null
 
     object : Renderer() {
       override suspend fun render(frameTimeNanos: Long) {
@@ -181,7 +181,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
         }
 
         if (activeYuvWrapper != null) {
-          activeYuvWrapper!!.beginAccessNative()
+          activeYuvWrapper!!.beginAccess()
 
           device.createCommandEncoder().run {
             with(beginRenderPass(renderPassDescriptor)) {
@@ -209,7 +209,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
             }
             device.queue.submit(arrayOf(finish()))
           }
-          activeYuvWrapper.endAccessNative()
+          activeYuvWrapper.endAccess()
         }
         webgpu.webgpuSurface.present()
       }
