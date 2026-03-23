@@ -130,6 +130,9 @@
       "create error external texture",
       "external texture binding entry",
       "external texture binding layout",
-      "dawn toggles descriptor"
+      "dawn toggles descriptor",
+      "y cb cr vulkan samplers",
+      "shared fence sync FD",
+      "opaque y cb cr android for external texture"
     ]
 }
