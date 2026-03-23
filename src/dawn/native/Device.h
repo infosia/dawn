@@ -89,6 +89,11 @@ struct CallbackTask;
 struct InternalPipelineStore;
 struct ShaderModuleParseResult;
 
+enum class ValidationMode {
+    Validate,
+    Skip,
+};
+
 class DeviceBase : public ErrorSink,
                    public RefCountedWithExternalCount<RefCounted>,
                    public WeakRefSupport<DeviceBase>,
@@ -237,7 +242,9 @@ class DeviceBase : public ErrorSink,
         bool allowInternalBinding = false);
     ResultOrError<Ref<ResourceTableBase>> CreateResourceTable(
         const ResourceTableDescriptor* descriptor);
-    ResultOrError<Ref<SamplerBase>> CreateSampler(const SamplerDescriptor* descriptor = nullptr);
+    ResultOrError<Ref<SamplerBase>> CreateSampler(
+        const SamplerDescriptor* descriptor = nullptr,
+        ValidationMode validate = ValidationMode::Validate);
     ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
         const ShaderModuleDescriptor* descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions = {});
