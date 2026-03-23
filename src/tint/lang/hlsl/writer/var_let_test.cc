@@ -667,7 +667,8 @@ TEST_F(HlslWriterTest, VarWorkgroupU16) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(struct main_inputs {
   uint tint_local_index : SV_GroupIndex;
 };
@@ -701,7 +702,8 @@ TEST_F(HlslWriterTest, VarPrivateU16) {
         b.Return(eb);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 static uint16_t u = uint16_t(0u);
 [numthreads(1, 1, 1)]
@@ -724,7 +726,8 @@ TEST_F(HlslWriterTest, VarStorageReadU16) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 ByteAddressBuffer u : register(t0);
 void main() {
@@ -746,7 +749,8 @@ TEST_F(HlslWriterTest, VarStorageReadVec4U16) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 ByteAddressBuffer u : register(t0);
 void main() {
@@ -768,7 +772,8 @@ TEST_F(HlslWriterTest, VarStorageWriteU16) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer u : register(u0);
 void main() {
@@ -790,7 +795,8 @@ TEST_F(HlslWriterTest, VarStorageWriteVec4U16) {
         b.Return(func);
     });
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer u : register(u0);
 void main() {
