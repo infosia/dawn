@@ -359,8 +359,10 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
     mTextureViews[0] = descriptor->plane0;
 
     if (descriptor->plane1) {
+        mViewCount = 2;
         mTextureViews[1] = descriptor->plane1;
     } else {
+        mViewCount = 1;
         DAWN_TRY_ASSIGN(mTextureViews[1],
                         device->GetOrCreatePlaceholderTextureViewForExternalTexture());
     }
@@ -443,6 +445,10 @@ Ref<ExternalTextureBase> ExternalTextureBase::MakeError(DeviceBase* device, Stri
 
 BufferBase* ExternalTextureBase::GetParamsBuffer() const {
     return mParamsBuffer.Get();
+}
+
+bool ExternalTextureBase::HasSingleView() const {
+    return mViewCount == 1;
 }
 
 ObjectType ExternalTextureBase::GetType() const {
