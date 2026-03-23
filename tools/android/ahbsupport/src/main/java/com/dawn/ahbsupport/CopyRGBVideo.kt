@@ -10,9 +10,12 @@ import android.media.Image
 import android.media.ImageReader
 import android.media.MediaPlayer
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,26 +24,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
 import androidx.webgpu.*
 import androidx.webgpu.helper.asString
-import androidx.compose.ui.graphics.nativeCanvas
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 
+@RequiresApi(34)
 @Composable
 fun CopyRGBVideo(modifier: Modifier, options: Options) {
   val context = LocalContext.current
@@ -92,6 +91,7 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
   val applyFilter = remember { mutableStateOf(false) }
   val statsText = remember { mutableStateOf("Calculating stats...") }
   val graphData = remember { mutableStateOf(floatArrayOf()) }
+
   Column(
     modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -173,6 +173,7 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
           minFilter = FilterMode.Linear
         )
       )
+
       val renderPassDescriptor = GPURenderPassDescriptor(
         colorAttachments = arrayOf(
           GPURenderPassColorAttachment(
@@ -203,9 +204,8 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
       var frameCount = 0
       var newImageCount = 0
       var sumRenderTime = 0.0
-      var sumCpuSubmitTime = 0.0
-      var sumCpuCopyTime = 0.0
-      var sumGpuWaitTime = 0.0
+      var sumCpuOverhead = 0.0 // Unified variable to match AHB demo
+      var lastFpsTime = System.nanoTime()
 
       val historySize = 120
       val frameHistory = FloatArray(historySize)
@@ -227,17 +227,14 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
             if (yuvAhb != null) {
               newImageCount++
 
-              // BLIT YUV TO RGB USING ANDROID HARDWARE
+              // 1. BLIT YUV TO RGB USING ANDROID HARDWARE
               val syncFence = convertYuvToRgbAhb(yuvAhb, rgbOutputAhb, videoWidth, videoHeight)
 
               // Wait for the GPU to finish the conversion
-              val waitStart = System.nanoTime()
+              // We do NOT time this, keeping CPU overhead isolated.
               syncFence.awaitForever()
-              val waitEnd = System.nanoTime()
-              sumGpuWaitTime += (waitEnd - waitStart) / 1_000_000.0
               syncFence.close()
 
-              val cpuStart = System.nanoTime()
               if (cameraTextures.isEmpty()) {
                 val size = GPUExtent3D(width = videoWidth, height = videoHeight)
                 cameraTextures = Array(2) { _ ->
@@ -251,16 +248,19 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
                 pixelsBuffer = ByteBuffer.allocateDirect(videoWidth * videoHeight * 4)
               }
 
-              // Extract pixels from AHB and upload to WebGPU Texture
+              // 2. TIME CPU COPY OVERHEAD (This is the massive bottleneck being demonstrated)
+              val cpuCopyStart = System.nanoTime()
+
               val hwBitmap = Bitmap.wrapHardwareBuffer(rgbOutputAhb, ColorSpace.get(ColorSpace.Named.SRGB))
               if (hwBitmap != null) {
                 // hardware bitmaps cannot be directly read into a buffer, convert to software
                 val swBitmap = hwBitmap.copy(Bitmap.Config.ARGB_8888, false)
                 pixelsBuffer?.let { buffer ->
                   buffer.rewind()
-                  swBitmap.copyPixelsToBuffer(buffer)
+                  swBitmap.copyPixelsToBuffer(buffer) // MASSIVE CPU HIT
                   buffer.rewind()
-                  device.queue.writeTexture(
+
+                  device.queue.writeTexture( // MASSIVE CPU/JNI HIT
                     dataLayout = GPUTexelCopyBufferLayout(
                       bytesPerRow = videoWidth * 4,
                       rowsPerImage = videoHeight
@@ -270,11 +270,11 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
                     writeSize = GPUExtent3D(width = videoWidth, height = videoHeight)
                   )
                 }
-                swBitmap.recycle() // Clean up software bitmap
+                swBitmap.recycle()
               }
-              val cpuEnd = System.nanoTime()
-              currentCopyTime = (cpuEnd - cpuStart) / 1_000_000.0
-              sumCpuCopyTime += currentCopyTime
+
+              val cpuCopyEnd = System.nanoTime()
+              currentCopyTime = (cpuCopyEnd - cpuCopyStart) / 1_000_000.0
             }
 
             // Close the old video frame, keep the new one active
@@ -282,14 +282,14 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
             activeYuvImage = newYuvImage
           }
 
+          // 3. TIME WEBGPU SUBMISSION OVERHEAD
           val submitStart = System.nanoTime()
-          // RUN WEBGPU RENDER PIPELINE
+
           if (cameraTextures.isNotEmpty()) {
             val commandBuffers = mutableListOf<GPUCommandBuffer>()
             var frameIndex = 0
             if (applyFilter.value) {
               frameIndex = 1
-              // Run compute filter on the RGB Video Frame
               commandBuffers.add(cameraTextures[0].filter(device, filterModule, cameraTextures[1]))
             }
 
@@ -306,7 +306,7 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
                       GPUBindGroupEntry(
                         binding = 1,
                         textureView = cameraTextures[frameIndex].createView()
-                      ) // Draw filtered texture
+                      )
                     )
                   )
                 )
@@ -320,31 +320,39 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
 
             device.queue.submit(commandBuffers.toTypedArray())
           }
+
           val submitEnd = System.nanoTime()
           val currentSubmitTime = (submitEnd - submitStart) / 1_000_000.0
-          sumCpuSubmitTime += currentSubmitTime
 
-          frameHistory[frameHistoryIndex] = (currentCopyTime + currentSubmitTime).toFloat()
+          // 4. CALCULATE AND GRAPH TOTAL CPU EFFORT
+          val totalCpuOverhead = currentCopyTime + currentSubmitTime
+
+          sumCpuOverhead += totalCpuOverhead
+
+          frameHistory[frameHistoryIndex] = totalCpuOverhead.toFloat()
           frameHistoryIndex = (frameHistoryIndex + 1) % historySize
 
           webgpu.webgpuSurface.present()
 
           val renderEnd = System.nanoTime()
           sumRenderTime += (renderEnd - renderStart) / 1_000_000.0
+
           frameCount++
 
+          // 5. UPDATE STATS EVERY 30 FRAMES (Perfectly aligned with Zero-Copy version)
           if (frameCount >= 30) {
+            val now = System.nanoTime()
+            val fps = 30 * 1_000_000_000.0 / (now - lastFpsTime)
+            lastFpsTime = now
+
             val avgRender = sumRenderTime / frameCount
-            val avgSubmit = sumCpuSubmitTime / frameCount
-            val avgCpuCopy = if (newImageCount > 0) sumCpuCopyTime / newImageCount else 0.0
+            val avgCpu = sumCpuOverhead / frameCount
 
             statsText.value = """
-              Total CPU Frame Time: %.2f ms
-              1) RGB to WebGPU (writeTexture): %.2f ms
-              2) WebGPU Draw Submit: %.2f ms
-            """.trimIndent().format(
-              avgRender, avgCpuCopy, avgSubmit
-            )
+                FPS: %.1f
+                Render Loop Time: %.2f ms
+                CPU Overhead (Copy): %.2f ms
+            """.trimIndent().format(fps, avgRender, avgCpu)
 
             val orderedHistory = FloatArray(historySize)
             for (i in 0 until historySize) {
@@ -355,9 +363,7 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
             frameCount = 0
             newImageCount = 0
             sumRenderTime = 0.0
-            sumCpuSubmitTime = 0.0
-            sumCpuCopyTime = 0.0
-            sumGpuWaitTime = 0.0
+            sumCpuOverhead = 0.0
           }
         }
 
@@ -367,6 +373,7 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
         }
       }
     }
+
     Button(onClick = { applyFilter.value = !applyFilter.value }) {
       Text("Toggle Filter")
     }
@@ -375,11 +382,10 @@ fun CopyRGBVideo(modifier: Modifier, options: Options) {
       data = graphData.value,
       modifier = Modifier
         .fillMaxWidth()
-        .height(100.dp)
+        .height(180.dp)
         .padding(16.dp)
     )
   }
-
 }
 
 @Composable
@@ -426,18 +432,40 @@ private fun CopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Modifi
         10f,
         35f,
         android.graphics.Paint().apply {
-          color = android.graphics.Color.WHITE
+          color = android.graphics.Color.BLACK
           textSize = 30f
         }
       )
+      // Y axis label
+      drawText(
+        "Time (ms)",
+        10f,
+        75f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.BLACK
+          textSize = 25f
+        }
+      )
+
       // X axis max text
       drawText(
         "${data.size}",
         size.width - 60f,
         height - 10f,
         android.graphics.Paint().apply {
-          color = android.graphics.Color.WHITE
+          color = android.graphics.Color.BLACK
           textSize = 30f
+        }
+      )
+      // X axis label
+      drawText(
+        "Frames",
+        size.width / 2f,
+        height - 10f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.BLACK
+          textSize = 25f
+          textAlign = android.graphics.Paint.Align.CENTER
         }
       )
 
