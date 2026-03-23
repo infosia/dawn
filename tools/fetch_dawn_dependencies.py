@@ -99,7 +99,7 @@ def main(args):
         'third_party/abseil-cpp',
         'third_party/dxc',
         'third_party/dxheaders',
-        'third_party/glfw',
+        'third_party/glfw3/src',
         'third_party/jinja2',
         'third_party/khronos/EGL-Registry',
         'third_party/khronos/OpenGL-Registry',

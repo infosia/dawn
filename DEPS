@@ -295,8 +295,12 @@ deps = {
   },
 
   # GLFW for tests and samples
+  # This entry will be removed after we roll into Chromium and update that to use glfw3/src
   'third_party/glfw': {
     'url': '{chromium_git}/external/github.com/glfw/glfw@b35641f4a3c62aa86a0b3c983d163bc0fe36026d',
+  },
+  'third_party/glfw3/src': {
+    'url': '{chromium_git}/external/github.com/glfw/glfw@043378876a67b092f5d0d3d9748660121a336dd3',
   },
 
   'third_party/vulkan_memory_allocator': {
