@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b32b01bc_72fbbed0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-23T21:05:56Z",
+      "side": 1,
+      "message": "Ugh, I apparently missed the warning about memcpy *smh*",
+      "revId": "507415033a48f6daf56cd2cf9b3629c48e47b11e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
