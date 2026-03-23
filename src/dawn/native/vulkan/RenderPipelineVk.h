@@ -31,6 +31,8 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/vulkan/PipelineLayoutVk.h"
+#include "dawn/native/vulkan/PipelineVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
@@ -44,10 +46,13 @@ class RenderPipeline final : public RenderPipelineBase {
         Device* device,
         const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
 
+    // Specializations used to JIT pipelines.
+    using Specialization = CommonPipelineSpecialization;
+    ResultOrError<PipelineHandles> GetOrCreateSpecializedHandle(Specialization&& specialization);
+    bool RequiresSpecialization() const;
+
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
-
-    MaybeError InitializeImpl() override;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -56,7 +61,20 @@ class RenderPipeline final : public RenderPipelineBase {
     ~RenderPipeline() override;
     void DestroyImpl(DestroyReason reason) override;
     using RenderPipelineBase::RenderPipelineBase;
+    MaybeError InitializeImpl() override;
 
+    bool NeedsPixelCenterPolyfill() const;
+
+    // Initializes a pipeline for the specialization and stores it in mSpecializations.
+    struct SpecializationResult {
+        Ref<RefCountedVkHandle<VkPipeline>> pipeline;
+        Ref<RefCountedVkHandle<VkPipelineLayout>> layout;
+    };
+    ResultOrError<SpecializationResult> InitializeSpecialization(
+        const Specialization& specialization,
+        bool buildCacheKey);
+
+    // Helpers used while building the VkPipelineCreateInfo.
     struct PipelineVertexInputStateCreateInfoTemporaryAllocations {
         std::array<VkVertexInputBindingDescription, kMaxVertexBuffers> bindings;
         std::array<VkVertexInputAttributeDescription, kMaxVertexAttributes> attributes;
@@ -65,8 +83,14 @@ class RenderPipeline final : public RenderPipelineBase {
         PipelineVertexInputStateCreateInfoTemporaryAllocations* temporaryAllocations);
     VkPipelineDepthStencilStateCreateInfo ComputeDepthStencilDesc();
 
-    VkPipeline mHandle = VK_NULL_HANDLE;
-    Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
+    // The handles are owned by a ref in mSpecializations.
+    PipelineHandles mHandles = {};
+
+    // Caches the specializations as we are most likely to reuse the overtime. Note that noop
+    // specialization has mHandle cached directly but mHandle is also kept separately for
+    // efficiency.
+    bool mRequiresSpecialization = false;
+    absl::flat_hash_map<Specialization, SpecializationResult> mSpecializations;
 
     // Whether the pipeline has any input attachment being used in the frag shader.
     bool mHasInputAttachment = false;

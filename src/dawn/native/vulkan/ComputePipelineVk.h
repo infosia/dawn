@@ -32,6 +32,8 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/vulkan/PipelineLayoutVk.h"
+#include "dawn/native/vulkan/PipelineVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
@@ -48,6 +50,11 @@ class ComputePipeline final : public ComputePipelineBase {
     VkPipeline GetHandle() const;
     VkPipelineLayout GetVkLayout() const;
 
+    // Specializations used to JIT pipelines.
+    using Specialization = CommonPipelineSpecialization;
+    ResultOrError<PipelineHandles> GetOrCreateSpecializedHandle(Specialization&& specialization);
+    bool RequiresSpecialization() const;
+
     // Dawn API
     void SetLabelImpl() override;
 
@@ -57,8 +64,24 @@ class ComputePipeline final : public ComputePipelineBase {
     using ComputePipelineBase::ComputePipelineBase;
     ResultOrError<Extent3D> InitializeImpl() override;
 
-    VkPipeline mHandle = VK_NULL_HANDLE;
-    Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
+    // Initializes a pipeline for the specialization and stores it in mSpecializations.
+    struct SpecializationResult {
+        Extent3D workgroupSize;
+        Ref<RefCountedVkHandle<VkPipeline>> pipeline;
+        Ref<RefCountedVkHandle<VkPipelineLayout>> layout;
+    };
+    ResultOrError<SpecializationResult> InitializeSpecialization(
+        const Specialization& specialization,
+        bool buildCacheKey);
+
+    // The handles are owned by a ref in mSpecializations.
+    PipelineHandles mHandles = {};
+
+    // Caches the specializations as we are most likely to reuse the overtime. Note that noop
+    // specialization has mHandle cached directly but mHandle is also kept separately for
+    // efficiency.
+    bool mRequiresSpecialization = false;
+    absl::flat_hash_map<Specialization, SpecializationResult> mSpecializations;
 };
 
 }  // namespace dawn::native::vulkan
