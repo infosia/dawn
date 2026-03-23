@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 // WebGPU imports
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedRGBHardwareBuffer
+import androidx.webgpu.helper.GPUImportedRgbAhbTexture
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
 
@@ -112,7 +112,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
       GPUShaderModuleDescriptor(shaderSourceWGSL = GPUShaderSourceWGSL(code = assets.open("cameraInput/mosaic.wgsl").asString()))
     )
 
-    var activeAhbWrapper: GPUImportedRGBHardwareBuffer? = null
+    var activeAhbWrapper: GPUImportedRgbAhbTexture? = null
     var activeImage: Image? = null
 
     object : Renderer() {
@@ -146,7 +146,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
         if (filterTextures.isNotEmpty() && activeAhbWrapper != null) {
 
           // Tell Vulkan we are about to read the Android memory
-          activeAhbWrapper!!.beginAccessNative()
+          activeAhbWrapper!!.beginAccess()
 
           val commandBuffers = mutableListOf<GPUCommandBuffer>()
 
@@ -177,7 +177,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
 
           device.queue.submit(commandBuffers.toTypedArray())
 
-          activeAhbWrapper!!.endAccessNative()
+          activeAhbWrapper!!.endAccess()
         }
 
         webgpu.webgpuSurface.present()
