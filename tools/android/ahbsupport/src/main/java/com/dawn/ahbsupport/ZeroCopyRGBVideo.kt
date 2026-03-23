@@ -23,10 +23,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.dp
+
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
 import androidx.webgpu.helper.GPUImportedRGBHardwareBuffer
 import androidx.webgpu.helper.asString
+import androidx.compose.ui.graphics.nativeCanvas
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
@@ -82,12 +92,19 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
     }
   }
   val applyFilter = remember { mutableStateOf(false) }
+  val statsText = remember { mutableStateOf("Calculating stats...") }
+  val graphData = remember { mutableStateOf(floatArrayOf()) }
+
   Column(
     modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween,
   ) {
-    GraphicsSurface(Modifier.weight(1f).fillMaxWidth(), options) { webgpu, width, height ->
+    GraphicsSurface(
+      Modifier
+        .fillMaxWidth()
+        .height(540.dp), options
+    ) { webgpu, width, height ->
       val device = webgpu.device
       var cameraTextures = arrayOf<GPUTexture>()
 
@@ -190,8 +207,22 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
       var activeAhbWrapper: GPUImportedRGBHardwareBuffer? = null
       var activeYuvImage: Image? = null
 
+      var frameCount = 0
+      var newImageCount = 0
+      var sumRenderTime = 0.0
+      var sumCpuSubmitTime = 0.0
+      var sumCpuCopyTime = 0.0
+      var sumGpuWaitTime = 0.0
+
+      val historySize = 120
+      val frameHistory = FloatArray(historySize)
+      var frameHistoryIndex = 0
+
       object : Renderer() {
         override suspend fun render(frameTimeNanos: Long) {
+          val renderStart = System.nanoTime()
+          var currentCopyTime = 0.0
+
           renderPassDescriptor.colorAttachments[0].view =
             webgpu.webgpuSurface.getCurrentTexture().texture.createView()
 
@@ -201,15 +232,24 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
           if (newYuvImage != null) {
             val yuvAhb = newYuvImage.hardwareBuffer
             if (yuvAhb != null) {
+              newImageCount++
+
 
               // BLIT YUV TO RGB USING ANDROID HARDWARE
               val syncFence = convertYuvToRgbAhb(yuvAhb, rgbOutputAhb, videoWidth, videoHeight)
 
               // Wait for the GPU to finish the conversion before Dawn touches it
+              val waitStart = System.nanoTime()
+
               syncFence.awaitForever()
+              val waitEnd = System.nanoTime()
+
+              sumGpuWaitTime += (waitEnd - waitStart) / 1_000_000.0
+
               syncFence.close()
 
-              // 4c. Import the now-populated RGB buffer into WebGPU (Only happens once)
+              val cpuStart = System.nanoTime()
+
               if (activeAhbWrapper == null) {
                 activeAhbWrapper = DawnAhbUtil.importRgbAhb(device, rgbOutputAhb)
                 val size = GPUExtent3D(width = videoWidth, height = videoHeight)
@@ -223,6 +263,11 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
                   )
                 }
               }
+              val cpuEnd = System.nanoTime()
+
+              currentCopyTime = (cpuEnd - cpuStart) / 1_000_000.0
+              sumCpuCopyTime += currentCopyTime
+
             }
 
             // Close the old video frame, keep the new one active
@@ -230,9 +275,12 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             activeYuvImage = newYuvImage
           }
 
+          val submitStart = System.nanoTime()
+
           // RUN WEBGPU RENDER PIPELINE
           if (cameraTextures.isNotEmpty() && activeAhbWrapper != null) {
-            activeAhbWrapper.beginAccessNative()
+            activeAhbWrapper!!.beginAccessNative()
+
 
             val commandBuffers = mutableListOf<GPUCommandBuffer>()
             var frameIndex = 0
@@ -268,10 +316,52 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             }
 
             device.queue.submit(commandBuffers.toTypedArray())
-            activeAhbWrapper.endAccessNative()
+            activeAhbWrapper!!.endAccessNative()
+
           }
+          val submitEnd = System.nanoTime()
+
+          val currentSubmitTime = (submitEnd - submitStart) / 1_000_000.0
+          sumCpuSubmitTime += currentSubmitTime
+
+          frameHistory[frameHistoryIndex] = (currentCopyTime + currentSubmitTime).toFloat()
+          frameHistoryIndex = (frameHistoryIndex + 1) % historySize
+
 
           webgpu.webgpuSurface.present()
+          val renderEnd = System.nanoTime()
+
+          sumRenderTime += (renderEnd - renderStart) / 1_000_000.0
+
+          frameCount++
+
+          if (frameCount >= 30) {
+            val avgRender = sumRenderTime / frameCount
+            val avgSubmit = sumCpuSubmitTime / frameCount
+            val avgCpuCopy = if (newImageCount > 0) sumCpuCopyTime / newImageCount else 0.0
+
+            statsText.value = """
+    Total CPU Frame Time: %.2f ms
+    1) RGB to WebGPU (Zero-Copy Import): %.2f ms
+    2) WebGPU Draw Submit: %.2f ms
+  """.trimIndent().format(
+              avgRender, avgCpuCopy, avgSubmit
+            )
+
+            val orderedHistory = FloatArray(historySize)
+            for (i in 0 until historySize) {
+              orderedHistory[i] = frameHistory[(frameHistoryIndex + i) % historySize]
+            }
+            graphData.value = orderedHistory
+
+            frameCount = 0
+            newImageCount = 0
+            sumRenderTime = 0.0
+            sumCpuSubmitTime = 0.0
+            sumCpuCopyTime = 0.0
+            sumGpuWaitTime = 0.0
+          }
+
         }
 
         override fun close() {
@@ -284,8 +374,95 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
     Button(onClick = { applyFilter.value = !applyFilter.value }) {
       Text("Toggle Filter")
     }
+    Text(statsText.value)
+    ZeroCopyRGBRenderTimeGraph(
+      data = graphData.value,
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(100.dp)
+        .padding(16.dp)
+    )
+
   }
 
+}
+
+@Composable
+private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Modifier) {
+  if (data.isEmpty()) return
+  Canvas(modifier = modifier) {
+    val maxOrZero = data.maxOrNull() ?: 0f
+    val maxTime = if (maxOrZero > 10f) maxOrZero else 10f
+
+    val widthPerPoint = size.width / (data.size - 1).coerceAtLeast(1)
+    val height = size.height
+
+    val path = Path()
+    path.moveTo(0f, height - (data[0] / maxTime) * height)
+    var peakIndex = 0
+    var peakValue = data[0]
+
+    for (i in 1 until data.size) {
+      val v = data[i]
+      if (v > peakValue) {
+        peakValue = v
+        peakIndex = i
+      }
+      path.lineTo(i * widthPerPoint, height - (v / maxTime) * height)
+    }
+    drawPath(
+      path = path,
+      color = Color.Green,
+      style = Stroke(width = 4f)
+    )
+
+    // X and Y axes
+    drawLine(Color.Gray, Offset(0f, height), Offset(size.width, height), strokeWidth = 2f) // X axis
+    drawLine(Color.Gray, Offset(0f, 0f), Offset(0f, height), strokeWidth = 2f) // Y axis
+
+    val peakX = peakIndex * widthPerPoint
+    val peakY = height - (peakValue / maxTime) * height
+    drawCircle(Color.Red, radius = 8f, center = Offset(peakX, peakY))
+
+    drawContext.canvas.nativeCanvas.apply {
+      // Y axis max text
+      drawText(
+        String.format("%.1f ms", maxTime),
+        10f,
+        35f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.WHITE
+          textSize = 30f
+        }
+      )
+      // X axis max text
+      drawText(
+        "${data.size}",
+        size.width - 60f,
+        height - 10f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.WHITE
+          textSize = 30f
+        }
+      )
+
+      // Peak value
+      var textX = peakX
+      if (textX > size.width - 250f) textX = size.width - 250f
+      var textY = peakY - 15f
+      if (textY < 30f) textY = peakY + 45f
+
+      drawText(
+        String.format("Peak: %.1f ms at X:%d", peakValue, peakIndex),
+        textX,
+        textY,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.RED
+          textSize = 30f
+        }
+      )
+    }
+  }
 }
 
 // --- HELPER FUNCTION PROVIDED BY THE PR ---

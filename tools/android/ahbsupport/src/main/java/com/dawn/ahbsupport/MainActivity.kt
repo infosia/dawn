@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -30,8 +32,9 @@ class MainActivity : ComponentActivity() {
   private val demos = listOf(
     DemoInfo("ZeroCopyRGBAImage") { modifier, options -> ZeroCopyRGBAImage(modifier, options) },
     DemoInfo("ZeroCopyRGBVideo") { modifier, options -> ZeroCopyRGBVideo(modifier, options) },
+    DemoInfo("CopyRGBVideo") { modifier, options -> CopyRGBVideo(modifier, options) },
     DemoInfo("RenderTriangle") { modifier, options -> RenderTriangle(modifier, options) },
-    DemoInfo("ZeroCopyVideoYuv") { modifier, options -> ZeroCopyVideoYuv(modifier, options) },
+    // DemoInfo("ZeroCopyVideoYuv") { modifier, options -> ZeroCopyVideoYuv(modifier, options) },
   )
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +50,7 @@ class MainActivity : ComponentActivity() {
         ) {
           demos[currentDemo.intValue].renderer(
             Modifier
-              .height(600.dp),
+              .height(720.dp),
             Options(
               requestAdapterOptions = GPURequestAdapterOptions(
                 featureLevel = FeatureLevel.Core,
@@ -56,11 +59,24 @@ class MainActivity : ComponentActivity() {
             )
           )
           Text(demos[currentDemo.intValue].label)
-          Button(onClick = {
-            currentDemo.intValue = (currentDemo.intValue + 1) % demos.size
-          }) {
-            Text("Next")
+          Row(
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(vertical = 10.dp)
+          ) {
+            Button(onClick = {
+              currentDemo.intValue = (demos.size + currentDemo.intValue - 1) % demos.size
+            }) {
+              Text("Previous")
+            }
+            Button(onClick = {
+              currentDemo.intValue = (currentDemo.intValue + 1) % demos.size
+            }) {
+              Text("Next")
+            }
           }
+
         }
 
       }

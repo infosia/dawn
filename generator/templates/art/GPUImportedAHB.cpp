@@ -241,6 +241,8 @@ Java_androidx_webgpu_helper_DawnAhbUtil_importYuvAhbNative(
 
   WGPUSharedTextureMemoryProperties props = {};
   wgpuSharedTextureMemoryGetProperties(stm, &props);
+  if (env->ExceptionCheck()) return nullptr;
+
   if (props.format == WGPUTextureFormat_Undefined) {
     wgpuSharedTextureMemoryRelease(stm);
     env->ThrowNew(env->FindClass("java/lang/UnsupportedOperationException"),
@@ -258,7 +260,7 @@ Java_androidx_webgpu_helper_DawnAhbUtil_importYuvAhbNative(
 
   WGPUTexture texture = wgpuSharedTextureMemoryCreateTexture(stm, &texDesc);
   WGPUTextureView view = wgpuTextureCreateView(texture, nullptr);
-
+  if (env->ExceptionCheck()) return nullptr;
   // 4. Map the Kotlin Descriptor to WGPUExternalTextureDescriptor
   WGPUExternalTextureDescriptor extDesc = {};
   extDesc.plane0 = view; // OVERRIDE the Kotlin dummy with the real view!
