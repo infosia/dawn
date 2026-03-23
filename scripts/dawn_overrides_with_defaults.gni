@@ -102,7 +102,7 @@ if (!defined(dawn_version_file)) {
 }
 
 if (!defined(dawn_opengl_registry_dir)) {
-  dawn_opengl_registry_dir = "${dawn_root}/third_party/khronos/OpenGL-Registry"
+  dawn_opengl_registry_dir = "${dawn_root}/third_party/OpenGL-Registry/src"
 }
 
 if (!defined(dawn_egl_registry_dir)) {
