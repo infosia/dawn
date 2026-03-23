@@ -86,12 +86,9 @@ class ExternalTextureTestsBase : public Parent {
         vsModule = utils::CreateShaderModule(this->device, R"(
             @vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
                 var positions = array(
-                    vec4f(-1.0, 1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0),
-                    vec4f(1.0, -1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0)
+                    vec4f(-3, -1, 0, 1),
+                    vec4f( 3, -1, 0, 1),
+                    vec4f( 0,  2, 0, 1),
                 );
                 return positions[VertexIndex];
             })");
