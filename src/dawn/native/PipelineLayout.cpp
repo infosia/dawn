@@ -666,6 +666,12 @@ BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(BindGroupInd
 
 const BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(
     BindGroupIndex group) const {
+    DAWN_ASSERT(!IsError());
+    return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
+}
+
+BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(BindGroupIndex group) {
+    DAWN_ASSERT(!IsError());
     return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
 }
 
@@ -675,16 +681,42 @@ const BindGroupMask& PipelineLayoutBase::GetBindGroupLayoutsMask() const {
 }
 
 bool PipelineLayoutBase::HasPixelLocalStorage() const {
+    DAWN_ASSERT(!IsError());
     return mHasPLS;
 }
 
 const std::vector<wgpu::TextureFormat>& PipelineLayoutBase::GetStorageAttachmentSlots() const {
+    DAWN_ASSERT(!IsError());
     return mStorageAttachmentSlots;
 }
 
 bool PipelineLayoutBase::HasAnyStorageAttachments() const {
+    DAWN_ASSERT(!IsError());
+
     for (auto format : mStorageAttachmentSlots) {
         if (format != wgpu::TextureFormat::Undefined) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PipelineLayoutBase::HasExternalTextures() const {
+    DAWN_ASSERT(!IsError());
+
+    for (BindGroupIndex g : mMask) {
+        if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetExternalTextureCount() != 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool PipelineLayoutBase::HasAPIStaticSamplers() const {
+    DAWN_ASSERT(!IsError());
+
+    for (BindGroupIndex g : mMask) {
+        if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetAPIStaticSamplerCount() != 0) {
             return true;
         }
     }
@@ -769,10 +801,12 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
 }
 
 uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
+    DAWN_ASSERT(!IsError());
     return mImmediateDataRangeByteSize;
 }
 
 bool PipelineLayoutBase::UsesResourceTable() const {
+    DAWN_ASSERT(!IsError());
     return mUsesResourceTable;
 }
 
