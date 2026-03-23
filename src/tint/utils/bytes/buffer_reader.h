@@ -46,19 +46,16 @@ class BufferReader final : public Reader {
     /// Constructor
     /// @param data the data to read from
     /// @param size the number of bytes in the buffer
-    BufferReader(const std::byte* data, size_t size) : data_(data), bytes_remaining_(size) {
-        TINT_ASSERT(data);
-    }
+    BufferReader(const std::byte* data, size_t size) : data_(data, size) { TINT_ASSERT(data); }
 
     /// Constructor
     /// @param str the string to read from
     explicit BufferReader(std::string_view str)
-        : data_(reinterpret_cast<const std::byte*>(str.data())), bytes_remaining_(str.length()) {}
+        : data_(reinterpret_cast<const std::byte*>(str.data()), str.length()) {}
 
     /// Constructor
     /// @param span the byte span to read from
-    explicit BufferReader(std::span<const std::byte> span)
-        : data_(span.data()), bytes_remaining_(span.size()) {
+    explicit BufferReader(std::span<const std::byte> span) : data_(span) {
         TINT_ASSERT(span.data());
     }
 
@@ -70,10 +67,7 @@ class BufferReader final : public Reader {
 
   private:
     /// The data to read from
-    const std::byte* data_ = nullptr;
-
-    /// The number of bytes remaining
-    size_t bytes_remaining_ = 0;
+    std::span<const std::byte> data_;
 };
 
 }  // namespace tint::bytes
