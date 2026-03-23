@@ -52,6 +52,24 @@
       "parentUuid": "b32cdbcb_bb813914",
       "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce852d4_5ef666ad",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-23T03:08:06Z",
+      "side": 1,
+      "message": "Reworked, PTAL.",
+      "parentUuid": "68472fbc_c28c6174",
+      "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
