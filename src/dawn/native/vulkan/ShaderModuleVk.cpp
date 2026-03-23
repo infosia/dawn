@@ -148,29 +148,60 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         };
     }
 
-    tint::Bindings bindings = GenerateBindingRemapping(
-        in.layout, in.stage->metadata->stage, [&](BindGroupIndex group, BindingIndex index) {
-            return tint::BindingPoint{
-                .group = uint32_t(startOfBindGroups + group),
-                .binding = uint32_t(index),
-            };
-        });
+    auto ToWGSLBindPoint = [&](BindGroupIndex group, BindingNumber binding) -> tint::BindingPoint {
+        return {
+            .group = uint32_t{group},
+            .binding = uint32_t{binding},
+        };
+    };
+    auto ToSPIRVBindPoint = [&](BindGroupIndex group, BindingIndex index) -> tint::BindingPoint {
+        return {
+            .group = uint32_t{startOfBindGroups + group},
+            .binding = uint32_t{index},
+        };
+    };
+    tint::Bindings bindings =
+        GenerateBindingRemapping(in.layout, in.stage->metadata->stage, ToSPIRVBindPoint);
 
-    // Post process the binding remapping to make statically paired texture point at the sampler
-    // binding point instead.
+    // Tint checks that bindings don't overlap and uses this map to allow-list some mappings.
     std::unordered_set<tint::BindingPoint> staticallyPairedTextureBindingPoints;
     for (BindGroupIndex group : in.layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bgl = ToBackend(in.layout->GetBindGroupLayout(group));
-        const auto& textureToStaticSampler = bgl->GetTextureToStaticSamplerMap();
 
+        // Post process the binding remapping to make statically paired texture point at the sampler
+        // binding point instead.
+        const auto& textureToStaticSampler = bgl->GetTextureToStaticSamplerMap();
         for (BindingIndex index : bgl->GetSampledTextureIndices()) {
             const auto& bindingInfo = bgl->GetBindingInfo(index);
 
             if (auto it = textureToStaticSampler.find(index); it != textureToStaticSampler.end()) {
-                tint::BindingPoint wgslBindingPoint = {.group = uint32_t(startOfBindGroups + group),
-                                                       .binding = uint32_t(bindingInfo.binding)};
-                bindings.texture[wgslBindingPoint].binding = uint32_t(it->second);
+                auto wgslBindingPoint = ToWGSLBindPoint(group, bindingInfo.binding);
+                bindings.texture[wgslBindingPoint].binding = uint32_t{it->second};
                 staticallyPairedTextureBindingPoints.insert(wgslBindingPoint);
+            }
+        }
+
+        // Likewise remap external texture's plane 0 to use the static sampler's bind point (if a
+        // static sampler is used). Also replace the multiplanar external textures with YCbCr
+        // external textures as requested by the CompileParams.
+        for (APIBindingIndex index : bgl->GetExternalTextureIndices()) {
+            const auto& bindingInfo = bgl->GetAPIBindingInfo(index);
+            const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
+
+            if (in.ycbcrExternalTextures->contains({group, index})) {
+                // Use a YCbCr external texture.
+                bindings.external_texture[ToWGSLBindPoint(group, bindingInfo.binding)] =
+                    tint::ExternalYCBCRTexture{
+                        .metadata = ToSPIRVBindPoint(group, etInfo.metadata),
+                        .texture = ToSPIRVBindPoint(group, etInfo.staticSampler.value()),
+                        .sampler = ToSPIRVBindPoint(group, etInfo.staticSampler.value())};
+            } else {
+                // Remap plane 0 to the static sampler bind point.
+                auto& et = std::get<tint::ExternalMultiplanarTexture>(
+                    bindings.external_texture[ToWGSLBindPoint(group, bindingInfo.binding)]);
+                if (etInfo.staticSampler.has_value()) {
+                    et.plane0 = ToSPIRVBindPoint(group, etInfo.staticSampler.value());
+                }
             }
         }
     }
