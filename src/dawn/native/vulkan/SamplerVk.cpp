@@ -29,6 +29,7 @@
 
 #include <algorithm>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
@@ -75,6 +76,8 @@ ResultOrError<Ref<Sampler>> Sampler::Create(Device* device, const SamplerDescrip
 }
 
 MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
+    DAWN_DEBUG() << "Sampler creation";
+
     VkSamplerCreateInfo createInfo = {};
     createInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
     createInfo.pNext = nullptr;
@@ -111,6 +114,25 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
         createInfo.maxAnisotropy = 1;
     }
 
+    DAWN_DEBUG() << "Sampler creation";
+    DAWN_DEBUG() << "sType=" << createInfo.sType;
+    DAWN_DEBUG() << "flags=" << createInfo.flags;
+    DAWN_DEBUG() << "magFilter=" << createInfo.magFilter;
+    DAWN_DEBUG() << "minFilter=" << createInfo.minFilter;
+    DAWN_DEBUG() << "mipmapMode=" << createInfo.mipmapMode;
+    DAWN_DEBUG() << "addressModeU=" << createInfo.addressModeU;
+    DAWN_DEBUG() << "addressModeV=" << createInfo.addressModeV;
+    DAWN_DEBUG() << "addressModeW=" << createInfo.addressModeW;
+    DAWN_DEBUG() << "mipLodBias=" << createInfo.mipLodBias;
+    DAWN_DEBUG() << "compareOp=" << createInfo.compareOp;
+    DAWN_DEBUG() << "compareEnable=" << createInfo.compareEnable;
+    DAWN_DEBUG() << "minLod=" << createInfo.minLod;
+    DAWN_DEBUG() << "maxLod=" << createInfo.maxLod;
+    DAWN_DEBUG() << "unnormalizedCoordinates=" << createInfo.unnormalizedCoordinates;
+    DAWN_DEBUG() << "anisotropyEnable=" << createInfo.anisotropyEnable;
+    DAWN_DEBUG() << "maxAnisotropy=" << createInfo.maxAnisotropy;
+
+
     VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
     if (IsYCbCr()) {
         DAWN_TRY_ASSIGN(mSamplerYCbCrConversion,
@@ -120,12 +142,18 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
         samplerYCbCrInfo.pNext = nullptr;
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
 
+        DAWN_DEBUG() << "samplerYCbCrInfo.sType=" << samplerYCbCrInfo.sType;
+        DAWN_DEBUG() << "samplerYCbCrInfo.pNext=" << samplerYCbCrInfo.pNext;
+        DAWN_DEBUG() << "samplerYCbCrInfo.conversion=" << samplerYCbCrInfo.conversion;
         createInfo.pNext = &samplerYCbCrInfo;
     }
 
+    DAWN_DEBUG() << "pNext=" << createInfo.pNext;
     DAWN_TRY(CheckVkSuccess(
         device->fn.CreateSampler(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
         "CreateSampler"));
+
+    DAWN_DEBUG() << "Made sampler " << *mHandle;
 
     SetLabelImpl();
 
@@ -136,6 +164,7 @@ Sampler::~Sampler() = default;
 
 void Sampler::DestroyImpl(DestroyReason reason) {
     SamplerBase::DestroyImpl(reason);
+    DAWN_DEBUG() << "*88888888888*******88***888*8*8*8*8*8*8******888********888*****";
     if (mSamplerYCbCrConversion != VK_NULL_HANDLE) {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mSamplerYCbCrConversion);
         mSamplerYCbCrConversion = VK_NULL_HANDLE;
@@ -183,6 +212,9 @@ StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView*
         spec.androidExternalFormat = stm->GetYCbCrVkDesc().externalFormat;
         spec.model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
         spec.range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
+        spec.xChromaOffset = static_cast<VkChromaLocation>(stm->GetYCbCrVkDesc().vkXChromaOffset);
+        spec.yChromaOffset = static_cast<VkChromaLocation>(stm->GetYCbCrVkDesc().vkYChromaOffset);
+        spec.forceReconstruction = stm->GetYCbCrVkDesc().forceExplicitReconstruction;
     }
 
     return spec;
@@ -204,10 +236,10 @@ ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
         yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
         yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
         yCbCrDesc.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
-        yCbCrDesc.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT_KHR;
-        yCbCrDesc.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT_KHR;
+        yCbCrDesc.vkXChromaOffset = this->xChromaOffset;
+        yCbCrDesc.vkYChromaOffset = this->yChromaOffset;
         yCbCrDesc.vkChromaFilter = wgpu::FilterMode::Nearest;
-        yCbCrDesc.forceExplicitReconstruction = false;
+        yCbCrDesc.forceExplicitReconstruction = this->forceReconstruction;
 
         samplerDesc.nextInChain = &yCbCrDesc;
     }
