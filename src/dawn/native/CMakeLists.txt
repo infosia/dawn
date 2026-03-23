@@ -763,6 +763,7 @@ if (DAWN_ENABLE_VULKAN)
         "vulkan/PhysicalDeviceVk.h"
         "vulkan/PipelineCacheVk.h"
         "vulkan/PipelineLayoutVk.h"
+        "vulkan/PipelineVk.h"
         "vulkan/QuerySetVk.h"
         "vulkan/QueueVk.h"
         "vulkan/RefCountedVkHandle.h"

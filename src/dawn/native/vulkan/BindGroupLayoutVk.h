@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_VULKAN_BINDGROUPLAYOUTVK_H_
 
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "dawn/common/MutexProtected.h"
@@ -36,6 +37,7 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
+#include "dawn/native/vulkan/SamplerVk.h"
 
 namespace dawn::native {
 class CacheKey;
@@ -60,6 +62,24 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
 
     VkDescriptorSetLayout GetHandle() const;
 
+    // BindGroupLayouts can be specialized when doing pipeline JITing to return
+    // VkDescriptorSetLayouts that have some parts changed.
+    using StaticSamplerSpecializationMap =
+        absl::flat_hash_map<BindingIndex, StaticSamplerSpecialization>;
+    struct Specialization {
+        // Replaces the static sampler at BindingIndex with a different sampler created from the
+        // StaticSamplerSpecialization.
+        StaticSamplerSpecializationMap staticSamplers;
+
+        template <typename H>
+        friend H AbslHashValue(H h, const Specialization& s) {
+            return H::combine(std::move(h), s.staticSamplers);
+        }
+        bool operator==(const Specialization& other) const = default;
+    };
+    ResultOrError<VkDescriptorSetLayout> GetOrCreateSpecializedHandle(
+        const Specialization& specialization);
+
     ResultOrError<Ref<BindGroup>> AllocateBindGroup(
         const UnpackedPtr<BindGroupDescriptor>& descriptor);
     void DeallocateBindGroup(BindGroup* bindGroup);
@@ -82,6 +102,11 @@ class BindGroupLayout : public BindGroupLayoutInternalBase {
     void SetLabelImpl() override;
 
     VkDescriptorSetLayout mHandle = VK_NULL_HANDLE;
+
+    // Caches VkDescriptorSetLayouts for specializations so that the lifetime guarantees are the
+    // same as for mHandle. Note that the noop specialization has mHandle cached directly, but
+    // mHandle is also kept separate for efficiency when creating BindGroups.
+    absl::flat_hash_map<Specialization, VkDescriptorSetLayout> mSpecializations;
 
     // Maps from indices of texture entries that are paired with static samplers
     // to indices of the entries of their respective samplers.
