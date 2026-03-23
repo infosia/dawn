@@ -91,6 +91,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     const BindGroupLayoutBase* GetFrontendBindGroupLayout(BindGroupIndex group) const;
     BindGroupLayoutBase* GetFrontendBindGroupLayout(BindGroupIndex group);
     const BindGroupLayoutInternalBase* GetBindGroupLayout(BindGroupIndex group) const;
+    BindGroupLayoutInternalBase* GetBindGroupLayout(BindGroupIndex group);
     const BindGroupMask& GetBindGroupLayoutsMask() const;
 
     bool HasPixelLocalStorage() const;
@@ -98,6 +99,9 @@ class PipelineLayoutBase : public ApiObjectBase,
     bool HasAnyStorageAttachments() const;
 
     bool UsesResourceTable() const;
+
+    bool HasExternalTextures() const;
+    bool HasAPIStaticSamplers() const;
 
     // Utility functions to compute inherited bind groups.
     // Returns the inherited bind groups as a mask.
