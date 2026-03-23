@@ -2261,7 +2261,8 @@ ResultOrError<Ref<ResourceTableBase>> DeviceBase::CreateResourceTable(
     return CreateResourceTableImpl(descriptor);
 }
 
-ResultOrError<Ref<SamplerBase>> DeviceBase::CreateSampler(const SamplerDescriptor* descriptorOrig) {
+ResultOrError<Ref<SamplerBase>> DeviceBase::CreateSampler(const SamplerDescriptor* descriptorOrig,
+                                                          ValidationMode validate) {
     DAWN_TRY(ValidateIsAlive());
 
     SamplerDescriptor descriptor = {};
@@ -2269,7 +2270,7 @@ ResultOrError<Ref<SamplerBase>> DeviceBase::CreateSampler(const SamplerDescripto
         descriptor = descriptorOrig->WithTrivialFrontendDefaults();
     }
 
-    if (IsValidationEnabled()) {
+    if (IsValidationEnabled() && validate == ValidationMode::Validate) {
         DAWN_TRY_CONTEXT(ValidateSamplerDescriptor(this, &descriptor), "validating %s",
                          &descriptor);
     }
