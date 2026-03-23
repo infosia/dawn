@@ -43,7 +43,10 @@ JNIClasses::JNIClasses(JNIEnv* env) {
     gpuCallbackRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackRunnable")));
     gpuCallbackErrorTypeRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackErrorTypeRunnable")));
     gpuCallbackVoidRunnable = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/GPURequestCallbackVoidRunnable")));
-    gpuImportedYuvHardwareBuffer = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/helper/GPUImportedYuvHardwareBuffer")));
+    gpuImportedYuvAhbTexture = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/helper/GPUImportedYuvAhbTexture")));
+    gpuImportedRgbAhbTexture = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("androidx/webgpu/helper/GPUImportedRgbAhbTexture")));
+    javaIllegalStateException = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("java/lang/IllegalStateException")));
+    javaUnsupportedOperationException = reinterpret_cast<jclass>(env->NewGlobalRef(env->FindClass("java/lang/UnsupportedOperationException")));
 
 }
 
