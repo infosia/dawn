@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5f60b44_1d816e56",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-23T08:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95a2dc7_1e318c0a",
+      "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79ea3d17_f0e37b34",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "79ea3d17_f0e37b34",
+      "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4003331_5578b371",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-23T08:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5364909e_ce0f8d04",
       "revId": "d7fd0339852e2792bbcc9e5fc22e379015d6b374",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
