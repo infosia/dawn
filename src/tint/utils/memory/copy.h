@@ -28,6 +28,8 @@
 #ifndef SRC_TINT_UTILS_MEMORY_COPY_H_
 #define SRC_TINT_UTILS_MEMORY_COPY_H_
 
+#include <sys/stat.h>
+
 #include <cstring>
 #include <span>
 
@@ -45,6 +47,9 @@
 // call site where this is occurring be explicitly marked as unsafe, instead of trying to hide the
 // warning. The idiomatic way to do this is to construct a std::span using the two-part constructor,
 // which will need a warning suppression. And then call the std::span -> std::span version of Copy.
+//
+// There is an implementation of T -> std::span, so that stack allocated variables can be copied,
+// without having to construct a span on the fly and suppress the associated warning.
 
 namespace tint {
 
@@ -58,12 +63,17 @@ namespace tint {
 // The usage of std::memcpy will always trigger this warning
 TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 template <typename T, size_t N, typename U, size_t M>
-inline void Copy(std::span<T, N> dst, std::span<U, M> src)
-    requires(N >= M)
-{
-    static_assert(sizeof(T) == sizeof(U));
+inline void Copy(std::span<T, N> dst, std::span<U, M> src) {
     TINT_ASSERT(src.data());
     TINT_ASSERT(dst.data());
+
+    // Check there is enough space in destination
+    static_assert(N * sizeof(T) >= M * sizeof(U));
+
+    // Allow for copies of different sized element types, iff the copy will be completely fill the
+    // elements it is using in destination
+    static_assert((M * sizeof(U)) % sizeof(T) == 0);
+
     if (!src.empty()) {
         std::memcpy(dst.data(), src.data(), src.size_bytes());
     }
@@ -81,10 +91,16 @@ TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 template <typename T, typename U, size_t M>
 inline void Copy(T* dst, size_t dst_count, std::span<U, M> src) {
-    static_assert(sizeof(T) == sizeof(U));
     TINT_ASSERT(src.data());
     TINT_ASSERT(dst);
-    TINT_ASSERT(dst_count >= src.size());
+
+    // Check there is enough space in destination
+    TINT_ASSERT(dst_count * sizeof(T) >= src.size() * sizeof(U));
+
+    // Allow for copies of different sized element types, iff the copy will be completely fill the
+    // elements it is using in the destination
+    static_assert((M * sizeof(U)) % sizeof(T) == 0);
+
     if (!src.empty()) {
         std::memcpy(dst, src.data(), src.size_bytes());
     }
@@ -94,6 +110,29 @@ TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 // template <typename T, typename U, size_t M>
 // inline void Copy(std::span<T, M> dest, T* src, size_t src_count)
 // is intentionally omitted, see above
+
+/// Copy copies the bytes from a value @p src to a span @p dst.
+/// @param dst the destination span
+/// @param src the source value
+/// @tparam T the type of destination elements
+/// @tparam N the size of the destination span
+/// @tparam U the type of source value
+// The usage of std::memcpy will always trigger this warning
+TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+template <typename T, typename U, size_t N>
+inline void Copy(std::span<T, N> dst, U src) {
+    TINT_ASSERT(dst.data());
+
+    // Check there is enough space in destination
+    static_assert(N * sizeof(T) >= sizeof(U));
+
+    // Allow for copies of different sized element types, iff the copy will be completely fill the
+    // elements it is using in the destination
+    static_assert(sizeof(U) % sizeof(T) == 0);
+
+    std::memcpy(dst.data(), &src, sizeof(U));
+}
+TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 }  // namespace tint
 
