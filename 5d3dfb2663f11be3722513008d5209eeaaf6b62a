@@ -68,6 +68,24 @@
       "parentUuid": "34a049c3_b277cfc2",
       "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e4037f1_fbb1d2c4",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-23T19:41:56Z",
+      "side": 1,
+      "message": "Yes please!",
+      "parentUuid": "86e1b9a5_ae63e032",
+      "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
