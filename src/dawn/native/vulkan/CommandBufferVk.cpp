@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/CommandEncoder.h"
@@ -688,12 +689,15 @@ struct ProgrammablePassState : public StackAllocated {
         for (BindGroupIndex group : lastPipeline->GetLayout()->GetBindGroupLayoutsMask()) {
             auto bgl = ToBackend(lastPipeline->GetLayout()->GetBindGroupLayout(group));
             auto boundBG = ToBackend(descriptorSets.GetBindGroup(group));
+            DAWN_DEBUG() << "Makeing specialized BGL for " << group;
             DAWN_TRY_ASSIGN(newDescriptorSets[group],
                             bgl->GetSpecializedSetFor(boundBG, s.layout.bindGroups[group]));
         }
 
+        DAWN_DEBUG() << "Before specialized handles";
         typename Pipeline::SpecializedHandles pipelineHandles;
         DAWN_TRY_ASSIGN(pipelineHandles, lastPipeline->GetOrCreateSpecializedHandle(std::move(s)));
+        DAWN_DEBUG() << "After specialized handles";
 
         DirtyAll();
 

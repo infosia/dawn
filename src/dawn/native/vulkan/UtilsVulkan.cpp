@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/EnumMaskIterator.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Pipeline.h"
@@ -435,23 +436,45 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
     vulkanYCbCrCreateInfo.forceExplicitReconstruction =
         static_cast<VkBool32>(yCbCrDescriptor.forceExplicitReconstruction);
 
+    DAWN_DEBUG() << "Dump of the YCbCrConversion";
+    DAWN_DEBUG() << "sType=" << vulkanYCbCrCreateInfo.sType;
+    DAWN_DEBUG() << "format=" << vulkanYCbCrCreateInfo.format;
+    DAWN_DEBUG() << "ycbcrModel=" << vulkanYCbCrCreateInfo.ycbcrModel;
+    DAWN_DEBUG() << "ycbcrRange=" << vulkanYCbCrCreateInfo.ycbcrRange;
+    DAWN_DEBUG() << "components.r=" << vulkanYCbCrCreateInfo.components.r;
+    DAWN_DEBUG() << "components.g=" << vulkanYCbCrCreateInfo.components.g;
+    DAWN_DEBUG() << "components.b=" << vulkanYCbCrCreateInfo.components.b;
+    DAWN_DEBUG() << "components.a=" << vulkanYCbCrCreateInfo.components.a;
+    DAWN_DEBUG() << "xChromaOffset=" << vulkanYCbCrCreateInfo.xChromaOffset;
+    DAWN_DEBUG() << "yChromaOffset=" << vulkanYCbCrCreateInfo.yChromaOffset;
+    DAWN_DEBUG() << "chromaFilter=" << vulkanYCbCrCreateInfo.chromaFilter;
+    DAWN_DEBUG() << "forceExplicitReconstruction="
+                 << vulkanYCbCrCreateInfo.forceExplicitReconstruction;
+
 #if DAWN_PLATFORM_IS(ANDROID)
     VkExternalFormatANDROID vulkanExternalFormat;
     // Chain VkExternalFormatANDROID only if needed.
     if (externalFormat != 0) {
+        DAWN_DEBUG() << "With";
         vulkanExternalFormat.sType = VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID;
         vulkanExternalFormat.pNext = nullptr;
         vulkanExternalFormat.externalFormat = externalFormat;
+        DAWN_DEBUG() << "vkExternalFormat.sType=" << vulkanExternalFormat.sType;
+        DAWN_DEBUG() << "vkExternalFormat.pNext=" << vulkanExternalFormat.pNext;
+        DAWN_DEBUG() << "vkExternalFormat.externalFormat=" << vulkanExternalFormat.externalFormat;
 
         vulkanYCbCrCreateInfo.pNext = &vulkanExternalFormat;
     }
 #endif  // DAWN_PLATFORM_IS(ANDROID)
+    DAWN_DEBUG() << "pNext=" << vulkanYCbCrCreateInfo.pNext;
 
     VkSamplerYcbcrConversion samplerYCbCrConversion = VK_NULL_HANDLE;
     DAWN_TRY(CheckVkSuccess(
         device->fn.CreateSamplerYcbcrConversion(device->GetVkDevice(), &vulkanYCbCrCreateInfo,
                                                 nullptr, &*samplerYCbCrConversion),
         "CreateSamplerYcbcrConversion"));
+    DAWN_DEBUG() << "result is " << samplerYCbCrConversion;
+    DAWN_DEBUG();
 
     return samplerYCbCrConversion;
 }

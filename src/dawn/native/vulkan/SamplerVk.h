@@ -69,6 +69,9 @@ struct StaticSamplerSpecialization {
     uint32_t androidExternalFormat;
     VkSamplerYcbcrModelConversion model;
     VkSamplerYcbcrRange range;
+    VkChromaLocation xChromaOffset;
+    VkChromaLocation yChromaOffset;
+    bool forceReconstruction;
 
     // Assumes that:
     //  - component mapping is the identity.
@@ -78,7 +81,8 @@ struct StaticSamplerSpecialization {
     template <typename H>
     friend H AbslHashValue(H h, const StaticSamplerSpecialization& s) {
         return H::combine(std::move(h), s.minFilter, s.magFilter, s.isYCbCr, s.vkFormat,
-                          s.androidExternalFormat, s.model, s.range);
+                          s.androidExternalFormat, s.model, s.range, s.xChromaOffset,
+                          s.yChromaOffset, s.forceReconstruction);
     }
 
     ResultOrError<Ref<SamplerBase>> CreateSampler(DeviceBase* device) const;
