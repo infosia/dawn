@@ -16,6 +16,24 @@
       "message": "khrplatform.h (at least) is also MIT",
       "revId": "c9674b8f102e7117757438e0d1167e8f51d43bad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b2a995_7b022987",
+        "filename": "third_party/EGL-Registry/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-23T18:57:05Z",
+      "side": 1,
+      "message": "Added MIT",
+      "parentUuid": "1300a11b_8b9dde55",
+      "revId": "c9674b8f102e7117757438e0d1167e8f51d43bad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
