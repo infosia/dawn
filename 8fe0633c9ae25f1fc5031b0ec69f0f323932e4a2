@@ -16,6 +16,24 @@
       "message": "Not sure how you collected all these licenses since there seems to be a separate license on every file, but there\u0027s at least one more: the headers (at least `gl3.h`) are MIT. I don\u0027t even know which part of the repo we are using.",
       "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f791a2a_0fd851b2",
+        "filename": "third_party/OpenGL-Registry/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-23T14:29:06Z",
+      "side": 1,
+      "message": "This is the LICENSE.md file from the repo itself. I guess it\u0027s possible the Khronos license is wrong?",
+      "parentUuid": "af02b405_4410b051",
+      "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
