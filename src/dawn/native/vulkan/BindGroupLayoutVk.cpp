@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/common/ityp_vector.h"
@@ -50,6 +51,8 @@ namespace {
 // bindings that might be for Vulkan BindGroupLayout.
 struct VulkanStaticBindings {
     ityp::vector<BindingIndex, VkDescriptorSetLayoutBinding> bindings;
+    std::vector<std::unique_ptr<VkSampler>>
+        staticSamplers;  // Static samplers kept out of the stack.
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
     TextureToStaticSamplerMap textureToStaticSampler;
 };
@@ -129,7 +132,12 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
                 DAWN_TRY_ASSIGN(sampler, it->second.CreateSampler(device));
             }
 
-            vkBinding.pImmutableSamplers = &ToBackend(sampler)->GetHandle().GetHandle();
+            auto staticSampler = std::make_unique<VkSampler>(ToBackend(sampler)->GetHandle());
+            vkBinding.pImmutableSamplers = &staticSampler->GetHandle();
+            res.staticSamplers.push_back(std::move(staticSampler));
+            DAWN_DEBUG() << "Here the immutable sampler pointer is "
+                         << vkBinding.pImmutableSamplers;
+            DAWN_DEBUG() << "Here the immutable sampler is " << *vkBinding.pImmutableSamplers;
 
             if (sampler->IsYCbCr()) {
                 // A YCbCr sampler can take up multiple Vk descriptor slots.  There is a
@@ -155,7 +163,7 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
         res.descriptorCountPerType[vkBinding.descriptorType] += descriptorCount;
     }
 
-    return {res};
+    return {std::move(res)};
 }
 
 }  // anonymous namespace
@@ -242,6 +250,28 @@ MaybeError BindGroupLayout::Initialize() {
     // Record cache key information now since the createInfo is not stored.
     StreamIn(&mCacheKey, createInfo);
 
+    DAWN_DEBUG() << "Creating DSL";
+    DAWN_DEBUG() << "createInfo.sType=" << createInfo.sType;
+    DAWN_DEBUG() << "createInfo.pNext=" << createInfo.pNext;
+    DAWN_DEBUG() << "createInfo.flags=" << createInfo.flags;
+    DAWN_DEBUG() << "createInfo.bindingCount=" << createInfo.bindingCount;
+    for (uint32_t i = 0; i < createInfo.bindingCount; i++) {
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].binding=" << createInfo.pBindings[i].binding;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].descriptorType=" << createInfo.pBindings[i].descriptorType;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].descriptorCount=" << createInfo.pBindings[i].descriptorCount;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].stageFlags=" << createInfo.pBindings[i].stageFlags;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].pImmutableSamplers=" << createInfo.pBindings[i].pImmutableSamplers;
+        if (createInfo.pBindings[i].pImmutableSamplers != nullptr) {
+            DAWN_DEBUG() << "*createInfo.pBindings[" << i << "].pImmutableSamplers="
+                         << (*createInfo.pBindings[i].pImmutableSamplers);
+        }
+    }
+
     DAWN_TRY(CheckVkSuccess(device->fn.CreateDescriptorSetLayout(device->GetVkDevice(), &createInfo,
                                                                  nullptr, &*mHandle),
                             "CreateDescriptorSetLayout"));
@@ -269,6 +299,28 @@ ResultOrError<VkDescriptorSetLayout> BindGroupLayout::GetOrCreateSpecializedHand
         .bindingCount = uint32_t(bindings.bindings.size()),
         .pBindings = bindings.bindings.data(),
     };
+
+    DAWN_DEBUG() << "Creating DSL";
+    DAWN_DEBUG() << "createInfo.sType=" << createInfo.sType;
+    DAWN_DEBUG() << "createInfo.pNext=" << createInfo.pNext;
+    DAWN_DEBUG() << "createInfo.flags=" << createInfo.flags;
+    DAWN_DEBUG() << "createInfo.bindingCount=" << createInfo.bindingCount;
+    for (uint32_t i = 0; i < createInfo.bindingCount; i++) {
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].binding=" << createInfo.pBindings[i].binding;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].descriptorType=" << createInfo.pBindings[i].descriptorType;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].descriptorCount=" << createInfo.pBindings[i].descriptorCount;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].stageFlags=" << createInfo.pBindings[i].stageFlags;
+        DAWN_DEBUG() << "createInfo.pBindings[" << i
+                     << "].pImmutableSamplers=" << createInfo.pBindings[i].pImmutableSamplers;
+        if (createInfo.pBindings[i].pImmutableSamplers != nullptr) {
+            DAWN_DEBUG() << "*createInfo.pBindings[" << i << "].pImmutableSamplers="
+                         << (*createInfo.pBindings[i].pImmutableSamplers);
+        }
+    }
 
     VkDescriptorSetLayout specialized;
     DAWN_TRY(CheckVkSuccess(device->fn.CreateDescriptorSetLayout(device->GetVkDevice(), &createInfo,
