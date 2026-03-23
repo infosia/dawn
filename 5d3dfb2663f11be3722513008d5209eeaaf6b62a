@@ -50,6 +50,24 @@
       "message": "The description says that some test used Draw(3). Were any using Draw(6)? If so they would still likely be giving the correct results on some hardware, but I don\u0027t know if it\u0027s strictly defined which positions would be read in which order?",
       "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e1b9a5_ae63e032",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T19:39:57Z",
+      "side": 1,
+      "message": "There are some, would updating them to `Draw(3)` work for you?",
+      "parentUuid": "34a049c3_b277cfc2",
+      "revId": "5d3dfb2663f11be3722513008d5209eeaaf6b62a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
