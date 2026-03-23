@@ -202,6 +202,30 @@ DAWN_SERIALIZABLE(struct, WGSLBindPoint, WGSL_BIND_POINT_MEMBER){
 // clang-format on
 #undef BINDING_SLOT_MEMBER
 
+// Represents a single binding in a pipeline.
+struct BindPoint {
+    BindGroupIndex group;
+    BindingIndex binding;
+
+    template <typename H>
+    friend H AbslHashValue(H h, const BindPoint& b) {
+        return H::combine(std::move(h), b.group, b.binding);
+    }
+    constexpr bool operator==(const BindPoint& other) const = default;
+};
+
+// Represents a single pre-expansion binding in a pipeline.
+struct APIBindPoint {
+    BindGroupIndex group;
+    APIBindingIndex binding;
+
+    template <typename H>
+    friend H AbslHashValue(H h, const APIBindPoint& b) {
+        return H::combine(std::move(h), b.group, b.binding);
+    }
+    constexpr bool operator==(const APIBindPoint& other) const = default;
+};
+
 struct PerStageBindingCounts {
     uint32_t sampledTextureCount;
     uint32_t samplerCount;

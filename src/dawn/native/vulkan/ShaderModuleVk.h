@@ -70,6 +70,7 @@ class ShaderModule final : public ShaderModuleBase {
         raw_ptr<const ProgrammableStage> stage;
         raw_ptr<const PipelineLayout> layout;
         ImmediateConstantMask immediateMask;
+        raw_ptr<const absl::flat_hash_set<APIBindPoint>> ycbcrExternalTextures;
 
         bool emitPointSize = false;
         bool polyfillPixelCenter = false;
