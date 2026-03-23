@@ -70,6 +70,24 @@
       "parentUuid": "68472fbc_c28c6174",
       "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "248e3c79_28b9616d",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-23T14:53:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fce852d4_5ef666ad",
+      "revId": "26c3234548438feaecd24b90e01e4c9c624c4c94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
