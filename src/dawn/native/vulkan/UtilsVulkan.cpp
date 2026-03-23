@@ -401,9 +401,9 @@ ResultOrError<VkDrmFormatModifierPropertiesEXT> GetFormatModifierProps(
     return DAWN_VALIDATION_ERROR("DRM format modifier %u not supported.", modifier);
 }
 
-ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
-    YCbCrVkDescriptor yCbCrDescriptor,
-    Device* device) {
+ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversion(
+    const Device* device,
+    const YCbCrVkDescriptor& yCbCrDescriptor) {
     uint64_t externalFormat = yCbCrDescriptor.externalFormat;
     VkFormat vulkanFormat = static_cast<VkFormat>(yCbCrDescriptor.vkFormat);
     DAWN_ASSERT(externalFormat != 0 || vulkanFormat != VK_FORMAT_UNDEFINED);

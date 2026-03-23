@@ -199,9 +199,9 @@ ResultOrError<VkDrmFormatModifierPropertiesEXT> GetFormatModifierProps(
     VkFormat format,
     uint64_t modifier);
 
-ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
-    YCbCrVkDescriptor yCbCrDescriptor,
-    Device* device);
+ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversion(
+    const Device* device,
+    const YCbCrVkDescriptor& yCbCrDescriptor);
 
 // TODO(42240963): properly surface the limit.
 // Linux nearly always exposes 4096.

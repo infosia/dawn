@@ -2114,8 +2114,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         YCbCrVkDescriptor yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
         yCbCr.nextInChain = nullptr;
 
-        DAWN_TRY_ASSIGN(mSamplerYCbCrConversion,
-                        CreateSamplerYCbCrConversionCreateInfo(yCbCr, device));
+        DAWN_TRY_ASSIGN(mSamplerYCbCrConversion, CreateSamplerYCbCrConversion(device, yCbCr));
 
         samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
         samplerYCbCrInfo.pNext = nullptr;
