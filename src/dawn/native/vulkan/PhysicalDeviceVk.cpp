@@ -1234,6 +1234,15 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // Enable validation of generated SPIR-V by default.
     // Graphite and other native clients may turn this off.
     deviceToggles->Default(Toggle::EnableSpirvValidation, true);
+
+    // Use ExtendedDynamicState by default if the corresponding extension is available.
+    if (!GetDeviceInfo().HasExt(DeviceExt::ExtendedDynamicState) ||
+        GetDeviceInfo().extendedDynamicStateFeatures.extendedDynamicState == VK_FALSE) {
+        deviceToggles->ForceSet(Toggle::VulkanUseExtendedDynamicState, false);
+    } else {
+        // TODO(463893795): Default to true when support is fully implemented.
+        deviceToggles->Default(Toggle::VulkanUseExtendedDynamicState, false);
+    }
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
