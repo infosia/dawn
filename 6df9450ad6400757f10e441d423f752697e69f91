@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0096a12d_11b75b83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9ca84fd_506c92cf",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "nit: comment needs updating for this backend. We only mark as initialized but rely on the inner device to do the clearing.",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c0eca76_77fa1bdc",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f31e8f67_5dfd5596",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant with [1]?",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fe3be66_fe7a404d",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "Same comment here and below as in `WriteTextureImpl`",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b56b9cec_cea46093",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "I think the inner device will only initialize the touched subresources so we could mark only these with `GetSubresourcesAffectedByCopy(textureCopy, writeSizePixel)`",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db9756c9_25b5147e",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "In a follow-up can we try to fold the `SetProperty` to instead be an argument passed in `Initialize`?\n\nAlternatively we can create the inner STM in `SharedTextureMemory::Create` and pass the inner STM and the properties in the constructor of SharedTextureMemory. This is to avoid mutation where it is not needed because it makes reasoning about the dataflow more complex.",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ded0598_2144fa66",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "This will make Chromium wait in such a way that makes a GPU bubble. Is there a way to create an already completed future? (since nothing needs to happen now that we wait synchronously in this function)",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ba231d8_3b2e809a",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "6df9450ad6400757f10e441d423f752697e69f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

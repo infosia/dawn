@@ -300,6 +300,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0176edf0_d5db9370",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "Ugh, that\u0027s annoying. Do you think it would be possible to merge them in the fronteng (at least that the chain doesn\u0027t contain unsupported links) in a medium-term follow-up?",
+      "parentUuid": "35a69d67_7b323805",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b6f9c668_648a8e34",
         "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
         "patchSetId": 26
@@ -381,6 +399,24 @@
       "side": 1,
       "message": "No I think this ValidateSubset is not performed (frontend SharedFence::ExportInfo does `ValidateAndUnpack` but that doesn\u0027t do ValidateSubset?)",
       "parentUuid": "9912bd02_ebfd665c",
+      "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c7aab67_3054f0fd",
+        "filename": "src/dawn/native/webgpu/SharedFenceWGPU.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-23T15:33:11Z",
+      "side": 1,
+      "message": "Likewise it\u0027d be nice to do it there at some point (unless there is something preventing it)",
+      "parentUuid": "3424651a_aebc5f28",
       "revId": "b6ad04a28619f6da88e5c9a8186a0f7ec914fff0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
