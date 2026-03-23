@@ -52,6 +52,24 @@
       "parentUuid": "2f791a2a_0fd851b2",
       "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87ef9dde_562f7442",
+        "filename": "third_party/OpenGL-Registry/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-23T18:10:00Z",
+      "side": 1,
+      "message": "Added the MIT license. I grep\u0027d for SPDX-License. The only other one was a CC on the xml/README.adoc file which I don\u0027t think is relevant for us?",
+      "parentUuid": "ec6f182e_684d335f",
+      "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
