@@ -32,8 +32,10 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
+#include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "vulkan/vulkan_core.h"
 
 namespace dawn::native::vulkan {
 
@@ -150,6 +152,67 @@ const VkSampler& Sampler::GetHandle() const {
 
 void Sampler::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_Sampler", GetLabel());
+}
+
+// static
+StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView* view,
+                                                              const Sampler* sampler) {
+    bool isYCbCr =
+        view->GetTexture()->GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid;
+    bool filterable = !isYCbCr || view->IsYCbCrFilterable();
+
+    StaticSamplerSpecialization spec = {
+        .minFilter = (sampler != nullptr && filterable) ? sampler->GetMinFilter()
+                                                        : wgpu::FilterMode::Nearest,
+        .magFilter = (sampler != nullptr && filterable) ? sampler->GetMagFilter()
+                                                        : wgpu::FilterMode::Nearest,
+        .isYCbCr = isYCbCr,
+        // Put default values for the YCbCr part.
+        .vkFormat = VK_FORMAT_UNDEFINED,
+        .androidExternalFormat = 0,
+        .model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY,
+        .range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL,
+    };
+
+    if (isYCbCr) {
+        auto stm = static_cast<SharedTextureMemoryContentsVk*>(
+            view->GetTexture()->GetSharedResourceMemoryContents());
+        DAWN_ASSERT(stm != nullptr);
+
+        spec.vkFormat = static_cast<VkFormat>(stm->GetYCbCrVkDesc().vkFormat);
+        spec.androidExternalFormat = stm->GetYCbCrVkDesc().externalFormat;
+        spec.model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
+        spec.range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
+    }
+
+    return spec;
+}
+
+ResultOrError<Ref<SamplerBase>> StaticSamplerSpecialization::CreateSampler(
+    DeviceBase* device) const {
+    SamplerDescriptor samplerDesc;
+    samplerDesc.magFilter = this->magFilter;
+    samplerDesc.minFilter = this->minFilter;
+
+    YCbCrVkDescriptor yCbCrDesc;
+    if (isYCbCr) {
+        yCbCrDesc.vkFormat = this->vkFormat;
+        yCbCrDesc.externalFormat = this->androidExternalFormat;
+        yCbCrDesc.vkYCbCrModel = this->model;
+        yCbCrDesc.vkYCbCrRange = this->range;
+        yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
+        yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
+        yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
+        yCbCrDesc.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
+        yCbCrDesc.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+        yCbCrDesc.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+        yCbCrDesc.vkChromaFilter = wgpu::FilterMode::Nearest;
+        yCbCrDesc.forceExplicitReconstruction = false;
+
+        samplerDesc.nextInChain = &yCbCrDesc;
+    }
+
+    return device->CreateSampler(&samplerDesc);
 }
 
 }  // namespace dawn::native::vulkan
