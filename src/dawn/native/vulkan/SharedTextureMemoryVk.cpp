@@ -569,10 +569,8 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                     "Multi-planar AHardwareBuffer not supported yet.");
 
     // Create the SharedTextureMemory object.
-    Ref<SharedTextureMemory> sharedTextureMemory =
-        SharedTextureMemory::Create(device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT);
-
-    sharedTextureMemory->mYCbCrVkDesc = yCbCrAHBInfo;
+    Ref<SharedTextureMemory> sharedTextureMemory = SharedTextureMemory::Create(
+        device, label, properties, VK_QUEUE_FAMILY_FOREIGN_EXT, yCbCrAHBInfo);
 
     // Reflect properties to reify them.
     sharedTextureMemory->APIGetProperties(&properties);
@@ -945,9 +943,10 @@ Ref<SharedTextureMemory> SharedTextureMemory::Create(
     Device* device,
     StringView label,
     const SharedTextureMemoryProperties& properties,
-    uint32_t queueFamilyIndex) {
-    Ref<SharedTextureMemory> sharedTextureMemory =
-        AcquireRef(new SharedTextureMemory(device, label, properties, queueFamilyIndex));
+    uint32_t queueFamilyIndex,
+    const YCbCrVkDescriptor& yCbCrVkDesc) {
+    Ref<SharedTextureMemory> sharedTextureMemory = AcquireRef(
+        new SharedTextureMemory(device, label, properties, queueFamilyIndex, yCbCrVkDesc));
     sharedTextureMemory->Initialize();
     return sharedTextureMemory;
 }
@@ -955,8 +954,11 @@ Ref<SharedTextureMemory> SharedTextureMemory::Create(
 SharedTextureMemory::SharedTextureMemory(Device* device,
                                          StringView label,
                                          const SharedTextureMemoryProperties& properties,
-                                         uint32_t queueFamilyIndex)
-    : SharedTextureMemoryBase(device, label, properties), mQueueFamilyIndex(queueFamilyIndex) {}
+                                         uint32_t queueFamilyIndex,
+                                         const YCbCrVkDescriptor& yCbCrVkDesc)
+    : SharedTextureMemoryBase(device, label, properties),
+      mQueueFamilyIndex(queueFamilyIndex),
+      mYCbCrVkDesc(yCbCrVkDesc) {}
 
 RefCountedVkHandle<VkDeviceMemory>* SharedTextureMemory::GetVkDeviceMemory() const {
     return mVkDeviceMemory.Get();
