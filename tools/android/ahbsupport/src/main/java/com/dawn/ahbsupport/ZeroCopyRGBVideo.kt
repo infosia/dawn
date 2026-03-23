@@ -10,9 +10,12 @@ import android.media.Image
 import android.media.ImageReader
 import android.media.MediaPlayer
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,28 +24,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedRGBHardwareBuffer
+import androidx.webgpu.helper.GPUImportedRgbAhbTexture
 import androidx.webgpu.helper.asString
-import androidx.compose.ui.graphics.nativeCanvas
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 
-//https://source.corp.google.com/h/dawn-android-samples/dawn-demo/+/main:app/src/main/java/com/android/dawndemo/CameraInputRenderer.kt
+@RequiresApi(34)
 @Composable
 fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
   val context = LocalContext.current
@@ -180,6 +178,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
           minFilter = FilterMode.Linear
         )
       )
+
       val renderPassDescriptor = GPURenderPassDescriptor(
         colorAttachments = arrayOf(
           GPURenderPassColorAttachment(
@@ -204,15 +203,14 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
         )
       )
 
-      var activeAhbWrapper: GPUImportedRGBHardwareBuffer? = null
+      var activeAhbWrapper: GPUImportedRgbAhbTexture? = null
       var activeYuvImage: Image? = null
 
       var frameCount = 0
       var newImageCount = 0
       var sumRenderTime = 0.0
-      var sumCpuSubmitTime = 0.0
-      var sumCpuCopyTime = 0.0
-      var sumGpuWaitTime = 0.0
+      var sumCpuOverhead = 0.0
+      var lastFpsTime = System.nanoTime()
 
       val historySize = 120
       val frameHistory = FloatArray(historySize)
@@ -221,7 +219,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
       object : Renderer() {
         override suspend fun render(frameTimeNanos: Long) {
           val renderStart = System.nanoTime()
-          var currentCopyTime = 0.0
+          var currentSetupTime = 0.0
 
           renderPassDescriptor.colorAttachments[0].view =
             webgpu.webgpuSurface.getCurrentTexture().texture.createView()
@@ -234,28 +232,22 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             if (yuvAhb != null) {
               newImageCount++
 
-
-              // BLIT YUV TO RGB USING ANDROID HARDWARE
+              // 1. BLIT YUV TO RGB USING ANDROID HARDWARE
               val syncFence = convertYuvToRgbAhb(yuvAhb, rgbOutputAhb, videoWidth, videoHeight)
 
-              // Wait for the GPU to finish the conversion before Dawn touches it
-              val waitStart = System.nanoTime()
-
+              // We intentionally do NOT time this wait to isolate pure CPU overhead
               syncFence.awaitForever()
-              val waitEnd = System.nanoTime()
-
-              sumGpuWaitTime += (waitEnd - waitStart) / 1_000_000.0
-
               syncFence.close()
 
-              val cpuStart = System.nanoTime()
+              // 2. TIME CPU SETUP OVERHEAD (Runs once, 0ms on subsequent frames)
+              val setupStart = System.nanoTime()
 
               if (activeAhbWrapper == null) {
                 activeAhbWrapper = DawnAhbUtil.importRgbAhb(device, rgbOutputAhb)
                 val size = GPUExtent3D(width = videoWidth, height = videoHeight)
 
                 cameraTextures = Array(2) { index ->
-                  if (index == 0) activeAhbWrapper.texture else device.createTexture(
+                  if (index == 0) activeAhbWrapper!!.texture else device.createTexture(
                     GPUTextureDescriptor(
                       size = size, format = TextureFormat.RGBA8Unorm,
                       usage = TextureUsage.TextureBinding or TextureUsage.StorageBinding
@@ -263,11 +255,8 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
                   )
                 }
               }
-              val cpuEnd = System.nanoTime()
-
-              currentCopyTime = (cpuEnd - cpuStart) / 1_000_000.0
-              sumCpuCopyTime += currentCopyTime
-
+              val setupEnd = System.nanoTime()
+              currentSetupTime = (setupEnd - setupStart) / 1_000_000.0
             }
 
             // Close the old video frame, keep the new one active
@@ -275,12 +264,11 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             activeYuvImage = newYuvImage
           }
 
+          // 3. TIME WEBGPU SUBMISSION OVERHEAD
           val submitStart = System.nanoTime()
 
-          // RUN WEBGPU RENDER PIPELINE
           if (cameraTextures.isNotEmpty() && activeAhbWrapper != null) {
-            activeAhbWrapper!!.beginAccessNative()
-
+            activeAhbWrapper!!.beginAccess()
 
             val commandBuffers = mutableListOf<GPUCommandBuffer>()
             var frameIndex = 0
@@ -316,17 +304,19 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             }
 
             device.queue.submit(commandBuffers.toTypedArray())
-            activeAhbWrapper!!.endAccessNative()
-
+            activeAhbWrapper!!.endAccess()
           }
           val submitEnd = System.nanoTime()
 
+          // 4. CALCULATE AND GRAPH TOTAL CPU EFFORT
           val currentSubmitTime = (submitEnd - submitStart) / 1_000_000.0
-          sumCpuSubmitTime += currentSubmitTime
+          val totalCpuOverhead = currentSetupTime + currentSubmitTime
 
-          frameHistory[frameHistoryIndex] = (currentCopyTime + currentSubmitTime).toFloat()
+          sumCpuOverhead += totalCpuOverhead
+
+          // Add to graph buffer
+          frameHistory[frameHistoryIndex] = totalCpuOverhead.toFloat()
           frameHistoryIndex = (frameHistoryIndex + 1) % historySize
-
 
           webgpu.webgpuSurface.present()
           val renderEnd = System.nanoTime()
@@ -335,18 +325,20 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
 
           frameCount++
 
+          // 5. UPDATE STATS EVERY 30 FRAMES
           if (frameCount >= 30) {
+            val now = System.nanoTime()
+            val fps = 30 * 1_000_000_000.0 / (now - lastFpsTime)
+            lastFpsTime = now
+
             val avgRender = sumRenderTime / frameCount
-            val avgSubmit = sumCpuSubmitTime / frameCount
-            val avgCpuCopy = if (newImageCount > 0) sumCpuCopyTime / newImageCount else 0.0
+            val avgCpu = sumCpuOverhead / frameCount
 
             statsText.value = """
-    Total CPU Frame Time: %.2f ms
-    1) RGB to WebGPU (Zero-Copy Import): %.2f ms
-    2) WebGPU Draw Submit: %.2f ms
-  """.trimIndent().format(
-              avgRender, avgCpuCopy, avgSubmit
-            )
+                            FPS: %.1f
+                            Render Loop Time: %.2f ms
+                            CPU Overhead (0-Copy): %.2f ms
+                        """.trimIndent().format(fps, avgRender, avgCpu)
 
             val orderedHistory = FloatArray(historySize)
             for (i in 0 until historySize) {
@@ -357,11 +349,8 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             frameCount = 0
             newImageCount = 0
             sumRenderTime = 0.0
-            sumCpuSubmitTime = 0.0
-            sumCpuCopyTime = 0.0
-            sumGpuWaitTime = 0.0
+            sumCpuOverhead = 0.0
           }
-
         }
 
         override fun close() {
@@ -371,6 +360,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
         }
       }
     }
+
     Button(onClick = { applyFilter.value = !applyFilter.value }) {
       Text("Toggle Filter")
     }
@@ -379,12 +369,10 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
       data = graphData.value,
       modifier = Modifier
         .fillMaxWidth()
-        .height(100.dp)
+        .height(180.dp)
         .padding(16.dp)
     )
-
   }
-
 }
 
 @Composable
@@ -431,18 +419,40 @@ private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Mo
         10f,
         35f,
         android.graphics.Paint().apply {
-          color = android.graphics.Color.WHITE
+          color = android.graphics.Color.BLACK
           textSize = 30f
         }
       )
+      // Y axis label
+      drawText(
+        "Time (ms)",
+        10f,
+        75f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.BLACK
+          textSize = 25f
+        }
+      )
+
       // X axis max text
       drawText(
         "${data.size}",
         size.width - 60f,
         height - 10f,
         android.graphics.Paint().apply {
-          color = android.graphics.Color.WHITE
+          color = android.graphics.Color.BLACK
           textSize = 30f
+        }
+      )
+      // X axis label
+      drawText(
+        "Frames",
+        size.width / 2f,
+        height - 10f,
+        android.graphics.Paint().apply {
+          color = android.graphics.Color.BLACK
+          textSize = 25f
+          textAlign = android.graphics.Paint.Align.CENTER
         }
       )
 
