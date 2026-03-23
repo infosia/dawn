@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fdd0a43_05cd91aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-23T20:53:40Z",
+      "side": 1,
+      "message": "While working on the dynamic state implementation (https://dawn-review.googlesource.com/c/dawn/+/290915) I felt like it was getting a bit too large to comfortable be reviewed as a single CL. Broke out this one that does nothing but expose the necessary extension bits and adds a toggle (defaulted to false for now). PTAL!",
+      "revId": "4efe92f1eff6cf2bb33c676dd66a8106e1ad411c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
