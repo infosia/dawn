@@ -86,12 +86,9 @@ class ExternalTextureTestsBase : public Parent {
         vsModule = utils::CreateShaderModule(this->device, R"(
             @vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
                 var positions = array(
-                    vec4f(-1.0, 1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0),
-                    vec4f(1.0, -1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0)
+                    vec4f(-3, -1, 0, 1),
+                    vec4f( 3, -1, 0, 1),
+                    vec4f( 0,  2, 0, 1),
                 );
                 return positions[VertexIndex];
             })");
@@ -735,7 +732,7 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleSinglePlane) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -804,7 +801,7 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleSinglePlane) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -914,7 +911,7 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipTextureLoadSinglePlaneNotSquare) {
         wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
         pass.SetPipeline(pipeline);
         pass.SetBindGroup(0, bindGroup);
-        pass.Draw(6);
+        pass.Draw(3);
         pass.End();
 
         {
@@ -997,7 +994,7 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleMultiplanar) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -1067,7 +1064,7 @@ TEST_P(ExternalTextureTests, RotateAndOrFlipSampleMultiplanar) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -1208,7 +1205,7 @@ TEST_P(ExternalTextureTests, CropSinglePlane) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -1284,7 +1281,7 @@ TEST_P(ExternalTextureTests, ApparentSizeEffect) {
     {
         pass.SetPipeline(pipeline);
         pass.SetBindGroup(0, bindGroup);
-        pass.Draw(6);
+        pass.Draw(3);
         pass.End();
     }
 
@@ -1443,7 +1440,7 @@ TEST_P(ExternalTextureTests, CropMultiplanar) {
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
@@ -1685,15 +1682,12 @@ class ExternalTextureOOBTests : public ExternalTextureTestsBase<DawnTestWithPara
 
         oobTestShaderModule = utils::CreateShaderModule(device, R"(
         @vertex fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
-                var positions = array(
-                    vec4f(-1.0, 1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0),
-                    vec4f(1.0, -1.0, 0.0, 1.0),
-                    vec4f(-1.0, -1.0, 0.0, 1.0),
-                    vec4f(1.0, 1.0, 0.0, 1.0)
-                );
-                return positions[VertexIndex];
+            var positions = array(
+                vec4f(-3, -1, 0, 1),
+                vec4f( 3, -1, 0, 1),
+                vec4f( 0,  2, 0, 1),
+            );
+            return positions[VertexIndex];
         }
 
         @group(0) @binding(0) var s : sampler;
@@ -1785,7 +1779,7 @@ class ExternalTextureOOBTests : public ExternalTextureTestsBase<DawnTestWithPara
         {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
-            pass.Draw(6);
+            pass.Draw(3);
             pass.End();
         }
 
