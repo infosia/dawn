@@ -16,6 +16,92 @@
       "message": "PTAL, thanks!",
       "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "282d3ac8_23f0b668",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-23T20:07:09Z",
+      "side": 1,
+      "message": "Sorry for the delay. I\u0027m hesitant with the current implementation because it seems like it is actively deviating from the existing pathway to do something similar. Please take a look at the comments and let me know what you think. Probably also a good idea to discuss with Corentin more on the approach.",
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a485785_a92193c6",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-23T20:07:09Z",
+      "side": 1,
+      "message": "I think that instead of adding these feature checks as an API on the native side, we should just add a virtual function that returns an enum or something in the `MemoryTransferService` so that we can check what type of memory transfer server it is. Then on the client and server can verify that their transfer services are compatible.",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2792,
+        "endChar": 1
+      },
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e86947c_5ae5e7a0",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-23T20:07:09Z",
+      "side": 1,
+      "message": "Looking at this, it feels like all the new API isn\u0027t actually needed, and instead, we just need to pass a new implementation of the `MemoryTransferService` and pass it at the creation of the server via the field in the `WireServerDescriptor`, and similarly pass a different implementation to the client via the `WireClientDescriptor`.\n\nI think our testing infra will need to be updated a bit to check the toggle and then create the correct `MemoryTransferService` implementations, but that should be doable in `DawnTest.cpp`.",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 13
+      },
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebd2e235_cf3d7eeb",
+        "filename": "src/dawn/wire/server/ServerInlineMemoryTransferService.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-23T20:07:09Z",
+      "side": 1,
+      "message": "The changes in this file and in `ClientInlineMemoryTransferService.cpp` feel like they should just be in entirely separate files that are only included in the source set if we are compiling for Windows.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
