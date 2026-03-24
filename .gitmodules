@@ -86,9 +86,6 @@
 	path = third_party/markupsafe
 	url = https://chromium.googlesource.com/chromium/src/third_party/markupsafe
 	gclient-condition = dawn_standalone
-[submodule "third_party/glfw"]
-	path = third_party/glfw
-	url = https://chromium.googlesource.com/external/github.com/glfw/glfw
 [submodule "third_party/vulkan_memory_allocator"]
 	path = third_party/vulkan_memory_allocator
 	url = https://chromium.googlesource.com/external/github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
