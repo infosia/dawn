@@ -3588,219 +3588,6 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_LoadStruct) {
-    auto* sb = ty.Struct(mod.symbols.New("SB"), {
-                                                    {mod.symbols.New("a"), ty.u16()},
-                                                    {mod.symbols.New("b"), ty.array(ty.u32(), 2_u)},
-                                                });
-    auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
-    b.ir.root_block->Append(var);
-
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
-    b.Append(func->Block(), [&] {
-        b.Let("a", b.Load(var)->Result());
-        b.Return(func);
-    });
-
-    auto* src = R"(
-SB = struct @align(4) {
-  a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
-}
-
-$B1: {  # root
-  %v:ptr<workgroup, SB, read_write> = var undef
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    %3:SB = load %v
-    %a:SB = let %3
-    ret
-  }
-}
-)";
-
-    ASSERT_EQ(src, str());
-
-    auto* expect = R"(
-SB = struct @align(4) {
-  a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
-}
-
-$B1: {  # root
-  %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    %3:SB = call %4, 0u
-    %a:SB = let %3
-    ret
-  }
-}
-%4 = func(%start_byte_offset:u32):SB {
-  $B3: {
-    %7:u32 = div %start_byte_offset, 2u
-    %8:ptr<workgroup, u16, read_write> = access %v, %7
-    %9:u16 = load %8
-    %10:u32 = add 4u, %start_byte_offset
-    %11:array<u32, 2> = call %12, %10
-    %13:SB = construct %9, %11
-    ret %13
-  }
-}
-%12 = func(%start_byte_offset_1:u32):array<u32, 2> {  # %start_byte_offset_1: 'start_byte_offset'
-  $B4: {
-    %a_1:ptr<function, array<u32, 2>, read_write> = var array<u32, 2>(0u)  # %a_1: 'a'
-    loop [i: $B5, b: $B6, c: $B7] {  # loop_1
-      $B5: {  # initializer
-        next_iteration 0u  # -> $B6
-      }
-      $B6 (%idx:u32): {  # body
-        %17:bool = gte %idx, 2u
-        if %17 [t: $B8] {  # if_1
-          $B8: {  # true
-            exit_loop  # loop_1
-          }
-        }
-        %18:u32 = mul %idx, 4u
-        %19:u32 = add %start_byte_offset_1, %18
-        %20:ptr<function, u32, read_write> = access %a_1, %idx
-        %21:u32 = div %19, 2u
-        %22:ptr<workgroup, u16, read_write> = access %v, %21
-        %23:u16 = load %22
-        %24:u32 = add %21, 1u
-        %25:ptr<workgroup, u16, read_write> = access %v, %24
-        %26:u16 = load %25
-        %27:vec2<u16> = construct %23, %26
-        %28:u32 = bitcast<u32> %27
-        store %20, %28
-        continue  # -> $B7
-      }
-      $B7: {  # continuing
-        %29:u32 = add %idx, 1u
-        next_iteration %29  # -> $B6
-      }
-    }
-    %30:array<u32, 2> = load %a_1
-    ret %30
-  }
-}
-)";
-
-    capabilities.Add(Capability::kAllow16BitIntegers);
-    DecomposeAccessOptions options{.workgroup = true};
-    Run(DecomposeAccess, options);
-    EXPECT_EQ(expect, str());
-}
-
-TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_StoreStruct) {
-    auto* sb = ty.Struct(mod.symbols.New("SB"), {
-                                                    {mod.symbols.New("a"), ty.u16()},
-                                                    {mod.symbols.New("b"), ty.array(ty.u32(), 2_u)},
-                                                });
-    auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
-    b.ir.root_block->Append(var);
-
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
-    b.Append(func->Block(), [&] {
-        b.Store(var, b.Zero(sb));
-        b.Return(func);
-    });
-
-    auto* src = R"(
-SB = struct @align(4) {
-  a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
-}
-
-$B1: {  # root
-  %v:ptr<workgroup, SB, read_write> = var undef
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    store %v, SB(0u16, array<u32, 2>(0u))
-    ret
-  }
-}
-)";
-
-    ASSERT_EQ(src, str());
-
-    auto* expect = R"(
-SB = struct @align(4) {
-  a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
-}
-
-$B1: {  # root
-  %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    %3:void = call %4, 0u, SB(0u16, array<u32, 2>(0u))
-    ret
-  }
-}
-%4 = func(%start_byte_offset:u32, %object:SB):void {
-  $B3: {
-    %7:u16 = access %object, 0u
-    %8:u32 = div %start_byte_offset, 2u
-    %9:ptr<workgroup, u16, read_write> = access %v, %8
-    store %9, %7
-    %10:u32 = add 4u, %start_byte_offset
-    %11:array<u32, 2> = access %object, 1u
-    %12:void = call %13, %10, %11
-    ret
-  }
-}
-%13 = func(%start_byte_offset_1:u32, %object_1:array<u32, 2>):void {  # %start_byte_offset_1: 'start_byte_offset', %object_1: 'object'
-  $B4: {
-    loop [i: $B5, b: $B6, c: $B7] {  # loop_1
-      $B5: {  # initializer
-        next_iteration 0u  # -> $B6
-      }
-      $B6 (%idx:u32): {  # body
-        %17:bool = gte %idx, 2u
-        if %17 [t: $B8] {  # if_1
-          $B8: {  # true
-            exit_loop  # loop_1
-          }
-        }
-        %18:u32 = mul %idx, 4u
-        %19:u32 = add %start_byte_offset_1, %18
-        %20:u32 = access %object_1, %idx
-        %21:u32 = div %19, 2u
-        %22:vec2<u16> = bitcast<vec2<u16>> %20
-        %23:ptr<workgroup, u16, read_write> = access %v, %21
-        %24:u16 = access %22, 0u
-        store %23, %24
-        %25:u32 = add %21, 1u
-        %26:ptr<workgroup, u16, read_write> = access %v, %25
-        %27:u16 = access %22, 1u
-        store %26, %27
-        continue  # -> $B7
-      }
-      $B7: {  # continuing
-        %28:u32 = add %idx, 1u
-        next_iteration %28  # -> $B6
-      }
-    }
-    ret
-  }
-}
-)";
-
-    capabilities.Add(Capability::kAllow16BitIntegers);
-    DecomposeAccessOptions options{.workgroup = true};
-    Run(DecomposeAccess, options);
-    EXPECT_EQ(expect, str());
-}
-
 TEST_F(IR_DecomposeAccessTest, Store_AccessU16_StoreF16) {
     auto* var = b.Var("v", storage, ty.f16(), core::Access::kReadWrite);
     var->SetBindingPoint(0, 0);
@@ -3985,6 +3772,68 @@ $B1: {  # root
 
     capabilities.Add(Capability::kAllow16BitIntegers);
     DecomposeAccessOptions options{.storage = true};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, Workgroup_LoadStructContainingMatrix) {
+    auto* sb = ty.Struct(mod.symbols.New("S"), {
+                                                   {mod.symbols.New("x"), ty.u32()},
+                                                   {mod.symbols.New("y"), ty.mat4x4<f16>()},
+                                               });
+    auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Load(b.Access(ty.ptr(workgroup, ty.u32(), core::Access::kReadWrite), var, 0_u)
+                              ->Result()));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat4x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %v:ptr<workgroup, S, read_write> = var undef
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<workgroup, u32, read_write> = access %v, 0u
+    %4:u32 = load %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(8) {
+  x:u32 @offset(0)
+  y:mat4x4<f16> @offset(8)
+}
+
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 10>, read_write> = var undef
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<workgroup, u32, read_write> = access %v, 0u
+    %4:u32 = load %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{.workgroup = true};
     Run(DecomposeAccess, options);
     EXPECT_EQ(expect, str());
 }

@@ -744,6 +744,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     uint32_t deviceId = GetDeviceId();
     uint32_t vendorId = GetVendorId();
 
+    // Enable workgroup decomposition by default on selected Intel GPUs.
+    if (gpu_info::IsIntelGen12LP(vendorId, deviceId) ||
+        gpu_info::IsIntelGen12HP(vendorId, deviceId) ||
+        gpu_info::IsIntelXeLPG(vendorId, deviceId) || gpu_info::IsIntelXe2LPG(vendorId, deviceId) ||
+        gpu_info::IsIntelXe2HPG(vendorId, deviceId)) {
+        deviceToggles->Default(Toggle::DecomposeWorkgroupAccess, true);
+    }
+
     // Currently this workaround is only needed on Intel Gen9, Gen9.5 and Gen11 GPUs.
     // See http://crbug.com/1161355 for more information.
     if (gpu_info::IsIntelGen9(vendorId, deviceId) || gpu_info::IsIntelGen11(vendorId, deviceId)) {
