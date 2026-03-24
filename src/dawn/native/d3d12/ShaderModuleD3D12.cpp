@@ -270,6 +270,12 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
     req.hlsl.tintOptions.disable_workgroup_init =
         device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
+    req.hlsl.tintOptions.decompose_workgroup_access =
+        device->IsToggleEnabled(Toggle::DecomposeWorkgroupAccess) ||
+        device->IsToggleEnabled(Toggle::DecomposeWorkgroupMatrixAccess);
+    req.hlsl.tintOptions.decompose_workgroup_matrix_only =
+        device->IsToggleEnabled(Toggle::DecomposeWorkgroupMatrixAccess) &&
+        !device->IsToggleEnabled(Toggle::DecomposeWorkgroupAccess);
     req.hlsl.tintOptions.disable_polyfill_integer_div_mod =
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.hlsl.tintOptions.disable_integer_range_analysis =

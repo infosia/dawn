@@ -44,6 +44,9 @@ struct DecomposeAccessOptions {
     bool storage = false;
     bool uniform = false;
     bool workgroup = false;
+    /// When true (and workgroup is also true), only decompose workgroup variables whose store
+    /// type contains a matrix. When false, all workgroup variables are decomposed.
+    bool workgroup_matrix_only = false;
     bool immediate = false;
 
     // The minimum size of the resulting array, in bytes.
