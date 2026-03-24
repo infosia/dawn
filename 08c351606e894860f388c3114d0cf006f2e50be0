@@ -67,6 +67,24 @@
       "message": "This should probably default to 0 so it\u0027s not undefined in an error oject.",
       "revId": "08c351606e894860f388c3114d0cf006f2e50be0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f249e03_7d86b6c8",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T22:22:00Z",
+      "side": 1,
+      "message": "Added a bunch of asserts for !IsError as we do in many getters that are not supposed to be used on invalid objects (because the check for invalidity are always done super early and gate all uses of objects) PTAL again!",
+      "parentUuid": "9fa405ca_96aa5328",
+      "revId": "08c351606e894860f388c3114d0cf006f2e50be0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
