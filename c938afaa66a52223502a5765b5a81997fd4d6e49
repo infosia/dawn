@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1626ad93_4a0199ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T19:47:13Z",
+      "side": 1,
+      "message": "So I\u0027m trying to understand what this code is trying to achieve because it doesn\u0027t seem to get us closed to the 0-copy UMA path. Is it purposefully trying to replicate something similar to the Chromium transfer buffers so we can use it in tests? +1 to Loko\u0027s comment if that\u0027s the case. What are the next steps you envision?",
+      "parentUuid": "282d3ac8_23f0b668",
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a485785_a92193c6",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-03-23T20:07:09Z",
       "side": 1,
       "message": "I think that instead of adding these feature checks as an API on the native side, we should just add a virtual function that returns an enum or something in the `MemoryTransferService` so that we can check what type of memory transfer server it is. Then on the client and server can verify that their transfer services are compatible.",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2792,
+        "endChar": 1
+      },
+      "revId": "c938afaa66a52223502a5765b5a81997fd4d6e49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0e6dc4_26fd88ab",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2792,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T19:47:13Z",
+      "side": 1,
+      "message": "Isn\u0027t that something that\u0027s the embedder\u0027s responsibility? We can check it but also it\u0027s not supported to set up different revisions of the wire client and server together.",
+      "parentUuid": "8a485785_a92193c6",
       "range": {
         "startLine": 2786,
         "startChar": 0,
