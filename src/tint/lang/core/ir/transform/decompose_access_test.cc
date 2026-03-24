@@ -5915,52 +5915,6 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_DecomposeAccessTest, DISABLED_BufferLength_Sized_FromOperand) {
-    auto* var = b.Var("v", uniform, ty.buffer(128u), core::Access::kRead);
-    var->SetBindingPoint(0, 0);
-    b.ir.root_block->Append(var);
-
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
-    b.Append(func->Block(), [&] {
-        auto* call = b.Call(ty.u32(), core::BuiltinFn::kBufferLength, var, 64_u);
-        b.Let("a", call->Result());
-        b.Return(func);
-    });
-
-    auto* src = R"(
-$B1: {  # root
-  %v:ptr<uniform, buffer<128>, read> = var undef @binding_point(0, 0)
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    %3:u32 = bufferLength %v, 64u
-    %a:u32 = let %3
-    ret
-  }
-}
-)";
-    ASSERT_EQ(src, str());
-
-    auto* expect = R"(
-$B1: {  # root
-  %v:ptr<uniform, array<vec4<u32>, 8>, read> = var undef @binding_point(0, 0)
-}
-
-%foo = @fragment func():void {
-  $B2: {
-    %a:u32 = let 64u
-    ret
-  }
-}
-)";
-
-    capabilities.Add(Capability::kAllow16BitIntegers);
-    DecomposeAccessOptions options{.uniform = true};
-    Run(DecomposeAccess, options);
-    EXPECT_EQ(expect, str());
-}
-
 TEST_F(IR_DecomposeAccessTest, BufferLength_Unsized) {
     auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kRead);
     var->SetBindingPoint(0, 0);
