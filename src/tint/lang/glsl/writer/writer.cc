@@ -112,32 +112,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
 
         if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
             const core::type::Type* handle_type = ptr->StoreType();
-            uint32_t count = 1;
-            if (auto* ba = handle_type->As<core::type::BindingArray>()) {
-                handle_type = ba->ElemType();
-                count = ba->Count()->As<core::type::ConstantArrayCount>()->value;
-            }
-
-            // Check texture types that need metadata for texture_builtins_from_uniform.
-            if (handle_type->Is<core::type::Texture>() &&
-                !handle_type->IsAnyOf<core::type::StorageTexture, core::type::ExternalTexture>()) {
-                bool found = false;
-                auto binding = options.bindings.texture.at(var->BindingPoint().value());
-                for (auto& bp : options.texture_builtins_from_uniform.ubo_contents) {
-                    if (bp.binding == binding) {
-                        if (bp.count < count) {
-                            return Failure(
-                                "binding_array of textures doesn't have enough data in "
-                                "texture_builtins_from_uniform list");
-                        }
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    return Failure("texture missing from texture_builtins_from_uniform list");
-                }
-            }
 
             // Check texel formats for read-write storage textures when targeting ES.
             if (options.version.IsES()) {
