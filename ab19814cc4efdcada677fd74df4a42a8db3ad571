@@ -51,6 +51,24 @@
       "parentUuid": "ff25f94f_a1b8d67a",
       "revId": "ab19814cc4efdcada677fd74df4a42a8db3ad571",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df8904a_c6fb5e26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-24T22:12:22Z",
+      "side": 1,
+      "message": "This happened to me recently too. It\u0027s a problem with the PR mirroring tool. It happens because:\n```\nGITHUB_PR_HEAD_SHA\u003dc4ef1f862954967f3144b37e7753f45db0801f23\nORIGINAL_AUTHOR\u003dReece Hagan \u003cdrogonmar@tuyuji.com\u003e\n```\nisn\u0027t in the correct Git footer format, so the `commit-msg` hook decides that\u0027s not the footer paragraph, and adds a new footer paragraph below it, with a new Change-Id.\nYou can fix it by separating those two lines from the actual footer (and deleting the extra Change-Id) and then reuploading.",
+      "parentUuid": "4c09ae78_3b609151",
+      "revId": "ab19814cc4efdcada677fd74df4a42a8db3ad571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
