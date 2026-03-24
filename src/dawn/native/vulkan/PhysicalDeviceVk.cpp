@@ -1236,11 +1236,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::EnableSpirvValidation, true);
 
     // Use ExtendedDynamicState by default if the corresponding extension is available.
+    // Blocked on SwiftShader, which has been observed to have some issues with it.
     if (!GetDeviceInfo().HasExt(DeviceExt::ExtendedDynamicState) ||
-        GetDeviceInfo().extendedDynamicStateFeatures.extendedDynamicState == VK_FALSE) {
+        GetDeviceInfo().extendedDynamicStateFeatures.extendedDynamicState == VK_FALSE ||
+        IsSwiftshader()) {
         deviceToggles->ForceSet(Toggle::VulkanUseExtendedDynamicState, false);
     } else {
-        // TODO(463893795): Default to true when support is fully implemented.
         deviceToggles->Default(Toggle::VulkanUseExtendedDynamicState, false);
     }
 }
