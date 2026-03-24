@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5ffa800_c2214281",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-24T05:39:45Z",
+      "side": 1,
+      "message": "nit: this line shouldn\u0027t be necessary since this file isn\u0027t checked into the repository?",
+      "revId": "43295cf12648946476ff3e9ae829da107ccdfed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
