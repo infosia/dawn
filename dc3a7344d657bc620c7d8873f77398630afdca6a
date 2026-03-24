@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e28d6dac_552068a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-24T19:21:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "72295d30_a8a72b64",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6caf5bf_a5c21d6f",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "On line 128, we check if `Print` is used in _any_ instruction. This means, if I have a `dbg_shader` and a `rel_shader` switching between them would still trigger a can generate error because this code doesn\u0027t respect the selected entry point.\n\nSo, the same issue getResource and hasResource encounter, a non-ep shader causing a generate error in the current entry point, would trigger for Print, and any of the CanGenerate methods were we check for specific method usages.",
       "parentUuid": "4a1a9262_82377ec9",
+      "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2b48df_9f54d6d2",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-24T19:21:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "43f64199_8618da7f",
       "revId": "dc3a7344d657bc620c7d8873f77398630afdca6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
