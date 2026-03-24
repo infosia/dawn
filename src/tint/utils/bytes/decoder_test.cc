@@ -82,8 +82,8 @@ TEST(BytesDecoderTest, Uint16) {
 TEST(BytesDecoderTest, Uint32) {
     auto data = Data(0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80);
     auto reader = BufferReader{std::span{data}};
-    EXPECT_EQ(Decode<uint32_t>(reader, Endianness::kBig).Get(), 0x10203040u);
-    EXPECT_EQ(Decode<uint32_t>(reader, Endianness::kBig).Get(), 0x50607080u);
+    EXPECT_EQ(Decode<uint32_t>(reader, std::endian::big).Get(), 0x10203040u);
+    EXPECT_EQ(Decode<uint32_t>(reader, std::endian::big).Get(), 0x50607080u);
     EXPECT_NE(Decode<uint32_t>(reader), Success);
 }
 
