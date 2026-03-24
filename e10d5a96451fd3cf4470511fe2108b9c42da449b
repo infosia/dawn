@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "188f57f2_94d5128e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-24T11:31:20Z",
+      "side": 1,
+      "message": "Added the test, just not 100% sure on how to handle the cmake / gn files for it.",
+      "parentUuid": "c04e97a9_dddd5f41",
+      "revId": "e10d5a96451fd3cf4470511fe2108b9c42da449b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c5fa624_2dd32d59",
         "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-24T09:18:12Z",
       "side": 1,
       "message": "nit: the new case can be added here to share the comment about Vk 1.1",
+      "revId": "e10d5a96451fd3cf4470511fe2108b9c42da449b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e13d70c_9f0ef6e6",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-24T11:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5fa624_2dd32d59",
       "revId": "e10d5a96451fd3cf4470511fe2108b9c42da449b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
