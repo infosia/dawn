@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83a49565_125d212e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T13:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04e97a9_dddd5f41",
+      "revId": "e10d5a96451fd3cf4470511fe2108b9c42da449b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c5fa624_2dd32d59",
@@ -81,6 +99,24 @@
         "id": 4712139
       },
       "writtenOn": "2026-03-24T11:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5fa624_2dd32d59",
+      "revId": "e10d5a96451fd3cf4470511fe2108b9c42da449b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bbc803a_8727fdb1",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T13:29:12Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "2c5fa624_2dd32d59",
