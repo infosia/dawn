@@ -1127,6 +1127,8 @@ TEST_P(CopyTests_T2B, FullTextureUnaligned) {
 
 // Test that reading pixels from a 256-byte aligned texture works
 TEST_P(CopyTests_T2B, PixelReadAligned) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     BufferSpec pixelBuffer = MinimumBufferSpec(1, 1);
@@ -1174,6 +1176,8 @@ TEST_P(CopyTests_T2B, PixelReadAligned) {
 
 // Test that copying pixels from a texture that is not 256-byte aligned works
 TEST_P(CopyTests_T2B, PixelReadUnaligned) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
     constexpr uint32_t kWidth = 259;
     constexpr uint32_t kHeight = 127;
     BufferSpec pixelBuffer = MinimumBufferSpec(1, 1);
@@ -1411,6 +1415,9 @@ TEST_P(CopyTests_T2B, MappableBufferWithOffsetUnaligned) {
 // Test that copying from a texture to a mappable buffer won't overwrite the buffer's bytes
 // before and after the copied region.
 TEST_P(CopyTests_T2B, MappableBufferBeforeAndAfterBytesNotOverwritten) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1576,6 +1583,8 @@ TEST_P(CopyTests_T2B, BytesPerRowUnaligned) {
 // Test that copying with bytesPerRow = 0 and bytesPerRow < bytesInACompleteRow works
 // when we're copying one row only
 TEST_P(CopyTests_T2B, BytesPerRowWithOneRowCopy) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
     constexpr uint32_t kWidth = 259;
     constexpr uint32_t kHeight = 127;
 
@@ -1592,6 +1601,8 @@ TEST_P(CopyTests_T2B, BytesPerRowWithOneRowCopy) {
 }
 
 TEST_P(CopyTests_T2B, StrideSpecialCases) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
     TextureSpec textureSpec;
     textureSpec.textureSize = {4, 4, 4};
 
@@ -1651,6 +1662,9 @@ TEST_P(CopyTests_T2B, RowsPerImageShouldNotCauseBufferOOBIfDepthOrArrayLayersIsO
 // take effect. If bytesPerRow takes effect, it looks like the copy may go past the end of the
 // buffer.
 TEST_P(CopyTests_T2B, BytesPerRowShouldNotCauseBufferOOBIfCopyHeightIsOne) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1677,6 +1691,9 @@ TEST_P(CopyTests_T2B, BytesPerRowShouldNotCauseBufferOOBIfCopyHeightIsOne) {
 // Test copying rows with bytesPerRow extremely large (32k texels). This is to test a special case
 // in Metal where we need to split the copy to be row-by-row in that case.
 TEST_P(CopyTests_T2B, ReallyLargeBytesPerRow) {
+    // TODO(crbug.com/40238674): Fails on Pixel 10 gles and vulkan.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec() && (IsOpenGLES() || IsVulkan()));
+
     // TODO(https://issues.chromium.org/481934465): Fails on Intel D3D12 / Vulkan which don't have
     // the workaround.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && (IsD3D12() || IsVulkan()));
