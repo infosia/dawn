@@ -224,6 +224,14 @@ struct ColorSpaceConversionInfo {
 ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
 ColorSpaceConversionInfo GetNoopColorSpaceConversionInfo();
 
+#ifndef __EMSCRIPTEN__
+// Make an external texture from one or two planes that doesn't perform any color-space conversion
+// or YUV to RGB conversion. The planes are given as textures so that we can reflect their size.
+wgpu::ExternalTexture MakePassthroughExternalTexture(const wgpu::Device& device,
+                                                     const wgpu::Texture& plane0,
+                                                     const wgpu::Texture& plane1 = {});
+#endif  // __EMSCRIPTEN__
+
 bool BackendRequiresCompat(wgpu::BackendType backend);
 
 absl::flat_hash_set<wgpu::FeatureName> FeatureAndImplicitlyEnabled(wgpu::FeatureName featureName);
