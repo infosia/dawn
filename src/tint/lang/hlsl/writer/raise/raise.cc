@@ -341,6 +341,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // DecomposeAccess must come after DecomposeStorageAccess, ChangeImmediateToUniform, and
     // ArrayOffsetFrom* transforms
     core::ir::transform::DecomposeAccessOptions decompose_config{.uniform = true};
+    decompose_config.workgroup = options.decompose_workgroup_access;
+    decompose_config.workgroup_matrix_only = options.decompose_workgroup_matrix_only;
     TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
 
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.

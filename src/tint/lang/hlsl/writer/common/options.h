@@ -211,6 +211,13 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
+    /// Set to `true` to decompose workgroup accesses via DecomposeAccess.
+    bool decompose_workgroup_access = false;
+
+    /// When true (and decompose_workgroup_access is also true), only decompose workgroup
+    /// variables whose store type contains a matrix.
+    bool decompose_workgroup_matrix_only = false;
+
     /// Any enabled workarounds
     Workarounds workarounds{};
 
@@ -272,6 +279,8 @@ struct Options {
                  disable_workgroup_init,
                  truncate_interstage_variables,
                  disable_polyfill_integer_div_mod,
+                 decompose_workgroup_access,
+                 decompose_workgroup_matrix_only,
                  workarounds,
                  extensions,
                  compiler,
