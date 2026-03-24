@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e0b4805_81750ee6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T13:13:56Z",
+      "side": 1,
+      "message": "PTAL! There is no change but the reland pre-commit that update GN files rolled successfully in Chromium.",
+      "revId": "4886d15e7fea91dc769954120c414ed62b628eb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
