@@ -69,6 +69,24 @@
       "parentUuid": "df004b79_26392ad5",
       "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0617e937_aad777ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-24T21:17:44Z",
+      "side": 1,
+      "message": "The (possibly relevant) GN args from `lookup GN args` on failing bots:\n```\ndcheck_always_on \u003d true\nis_clang \u003d true\nis_component_build \u003d true\nis_debug \u003d false\ntarget_cpu \u003d \"arm64\"\ntarget_os \u003d \"mac\"\n```\n\n```\ndcheck_always_on \u003d true\nis_clang \u003d true\nis_component_build \u003d true\nis_debug \u003d false\ntarget_cpu \u003d \"x64\"\ntarget_os \u003d \"mac\"\n```\n\nIf you\u0027re using CMake, check `DAWN_ALWAYS_ASSERT` and `CMAKE_BUILD_TYPE`",
+      "parentUuid": "e14f1bcd_557a8885",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
