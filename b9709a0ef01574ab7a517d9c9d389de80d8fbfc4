@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "488104bb_a927f353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-24T22:24:57Z",
+      "side": 1,
+      "message": "PTAL! Doesn\u0027t turn this on by default yet, but gets the basics of the state tracking in place. Does not attempt to de-dupe on the Dawn side, though the blob cache may be hit more often.",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
