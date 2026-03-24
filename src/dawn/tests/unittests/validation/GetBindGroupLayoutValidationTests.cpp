@@ -386,6 +386,350 @@ TEST_F(GetBindGroupLayoutTests, DefaultTextureSampleType) {
     }
 }
 
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnknown_SamplerFiltering_Used) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+
+            _ = textureSample(myTexture, mySampler, vec2f());
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnknown_SamplerFiltering_Unused) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::UnfilterableFloat},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnknown_SamplerNonFiltering) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureFilterable_SamplerUnknown) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnfilterable_SamplerUnknown) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureFilterable_SamplerFiltering) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout expectedBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(expectedBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnfilterable_SamplerFiltering) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout filteringBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::UnfilterableFloat},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::Filtering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler<filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(filteringBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureUnfilterable_SamplerNonFiltering) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout filteringBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::UnfilterableFloat},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::NonFiltering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(filteringBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureFilterable_SamplerNonFiltering) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout filteringBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::NonFiltering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::BindGroupLayout bgl = device.CreateRenderPipeline(&descriptor).GetBindGroupLayout(0);
+    EXPECT_THAT(bgl, BindGroupLayoutCacheEq(filteringBGL));
+}
+
+TEST_F(GetBindGroupLayoutTests, Default_TextureStageMismatchError) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayout filteringBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::TextureSampleType::Float},
+                 {1, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment,
+                  wgpu::SamplerBindingType::NonFiltering}});
+
+    wgpu::ShaderModule vertexModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, unfilterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @vertex fn main() -> @builtin(position) vec4f {
+            _ = myTexture;
+            _ = mySampler;
+            return vec4f();
+        })");
+
+    wgpu::ShaderModule fragmentModule = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var myTexture : texture_2d<f32, filterable>;
+        @group(0) @binding(1) var mySampler : sampler<non_filtering>;
+        @fragment fn main() {
+            _ = myTexture;
+            _ = mySampler;
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vertexModule;
+    descriptor.cFragment.module = fragmentModule;
+    descriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+
+    ASSERT_DEVICE_ERROR(
+        device.CreateRenderPipeline(&descriptor),
+        testing::HasSubstr("TextureSampleType::UnfilterableFloat vs TextureSampleType::Float)"));
+}
+
 // Test GetBindGroupLayout works with a compute pipeline
 TEST_F(GetBindGroupLayoutTests, ComputePipeline) {
     DAWN_SKIP_TEST_IF(UsesWire());
@@ -1491,7 +1835,6 @@ TEST_F(GetBindGroupLayoutTests, SamplerUsedWithExternalTexture) {
 // TODO(https://issues.chromium.org/487593147): Add tests for GetBindGroupLayout with explicit
 // filterability and filteringness annotations. An incomplete test plan is:
 //
-//  - Check that explicit filteringness / filterability is correctly reflected.
 //  - Check that conflicting filteringness / filterability between stages produces an error.
 //  - Check that unknowns get defaulted to the other stage's explicit value (in both orders)
 //  - Check that unknown samplers used with non-filterable textures become unfilterable, and that
