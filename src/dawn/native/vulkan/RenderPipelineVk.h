@@ -49,11 +49,26 @@ class RenderPipeline final : public RenderPipelineBase {
 
     MaybeError InitializeImpl() override;
 
+    void ApplyDynamicState(VkCommandBuffer& commands, const RenderPipeline* prevPipeline) const;
+
     // Dawn API
     void SetLabelImpl() override;
 
   private:
+    struct DynamicState {
+        VkPrimitiveTopology primitiveTopology;
+        VkCullModeFlags cullMode;
+        VkFrontFace frontFace;
+        VkBool32 depthTestEnable;
+        VkBool32 depthWriteEnable;
+        VkCompareOp depthCompareOp;
+        VkBool32 stencilTestEnable;
+        uint16_t packedFrontStencil;
+        uint16_t packedBackStencil;
+    };
+
     ~RenderPipeline() override;
+
     void DestroyImpl(DestroyReason reason) override;
     using RenderPipelineBase::RenderPipelineBase;
 
@@ -67,6 +82,7 @@ class RenderPipeline final : public RenderPipelineBase {
 
     VkPipeline mHandle = VK_NULL_HANDLE;
     Ref<RefCountedVkHandle<VkPipelineLayout>> mVkLayout;
+    DynamicState mDynamicState = {};
 
     // Whether the pipeline has any input attachment being used in the frag shader.
     bool mHasInputAttachment = false;
