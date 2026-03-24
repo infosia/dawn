@@ -56,6 +56,30 @@
       },
       "revId": "c65ebf9cc02cfe5a4e87b9a601419f81c9681a00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cedbca96_422b41b7",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-24T17:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4024cc2_39fcb3b3",
+      "range": {
+        "startLine": 175,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 10
+      },
+      "revId": "c65ebf9cc02cfe5a4e87b9a601419f81c9681a00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
