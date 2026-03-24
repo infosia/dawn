@@ -209,6 +209,12 @@ if (UNIX)
     )
 endif()
 
+if (UNIX AND NOT ANDROID)
+    list(APPEND end2end_sources
+        "end2end/AdapterPropertiesDrmTests.cpp"
+    )
+endif ()
+
 if (WIN32)
     list(APPEND end2end_sources
         "end2end/BufferHostMappedPointerTests_win.cpp"
