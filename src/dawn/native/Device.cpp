@@ -867,9 +867,9 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
                 for (auto& pendingTask : mPendingAsyncTasks) {
                     ErrorGeneratingAsyncTask* task = pendingTask.task.Get();
                     // All the tasks should have completed unless this event was canceled.
-                    DAWN_ASSERT(task->GetState() == AsyncTaskState::Completed ||
+                    DAWN_ASSERT(task->IsCompleted() ||
                                 completionType != EventCompletionType::Ready);
-                    if (task->GetState() == AsyncTaskState::Completed && task->IsError() &&
+                    if (task->IsCompleted() && task->IsError() &&
                         pendingTask.captureErrorType == ToWGPUErrorType(task->GetErrorType())) {
                         std::unique_ptr<ErrorData> error = task->AcquireError();
                         mScope->CaptureError(ToWGPUErrorType(error->GetType()),
