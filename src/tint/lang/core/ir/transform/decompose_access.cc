@@ -92,7 +92,8 @@ struct State {
                 var_worklist.Push(var);
             } else if ((var_ty->AddressSpace() == AddressSpace::kStorage && options.storage) ||
                        (var_ty->AddressSpace() == AddressSpace::kUniform && options.uniform) ||
-                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup) ||
+                       (var_ty->AddressSpace() == AddressSpace::kWorkgroup && options.workgroup &&
+                        ContainsMatrix(var_ty->StoreType())) ||
                        (var_ty->AddressSpace() == AddressSpace::kImmediate && options.immediate)) {
                 // Atomics could be handled in some backends, but not in a generic way.
                 if (!ContainsAtomic(var_ty->StoreType())) {
@@ -213,6 +214,22 @@ struct State {
             [&](const type::Struct* struct_ty) {
                 for (auto* member : struct_ty->Members()) {
                     if (ContainsAtomic(member->Type())) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            [&](Default) { return false; });
+    }
+
+    bool ContainsMatrix(const type::Type* type) const {
+        return tint::Switch(
+            type,  //
+            [&](const type::Matrix*) { return true; },
+            [&](const type::Array* array_ty) { return ContainsMatrix(array_ty->ElemType()); },
+            [&](const type::Struct* struct_ty) {
+                for (auto* member : struct_ty->Members()) {
+                    if (ContainsMatrix(member->Type())) {
                         return true;
                     }
                 }
