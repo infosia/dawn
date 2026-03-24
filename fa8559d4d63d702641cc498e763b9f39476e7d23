@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e935ffea_749e866d",
+        "filename": "src/tint/utils/memory/copy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-24T19:41:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "24553434_d514dcfc",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "fa8559d4d63d702641cc498e763b9f39476e7d23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2305c87b_d185f81f",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-24T19:19:34Z",
       "side": 1,
       "message": "```suggestion\n    static_assert((M * sizeof(U)) % sizeof(T) \u003d\u003d 0);\n```",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 48
+      },
+      "revId": "fa8559d4d63d702641cc498e763b9f39476e7d23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6dac03_56f13ae9",
+        "filename": "src/tint/utils/memory/copy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-24T19:41:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "2305c87b_d185f81f",
       "range": {
         "startLine": 102,
         "startChar": 17,
