@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8658d84_b993debb",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-24T20:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4639c29_aa0f9c0a",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be01b71b_397ce304",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-11-13T08:56:36Z",
       "side": 1,
       "message": "This seems to be missing handling of `wgpu::BufferUsage::TexelBuffer`.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26236c67_43beeaa0",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-24T20:38:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "be01b71b_397ce304",
       "revId": "2478513794034e7a9120289e7299523be07ad9a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7806bd8a_6278d75a",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-24T20:38:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "351cf82a_9ebbffea",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d91245a_ea3b9dc0",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-11-13T08:56:36Z",
       "side": 1,
       "message": "This should have a TODO to have a new binding type in the remapping instead of using `storage_texture`.",
+      "revId": "2478513794034e7a9120289e7299523be07ad9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0608d2c3_4a170605",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-24T20:38:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6d91245a_ea3b9dc0",
       "revId": "2478513794034e7a9120289e7299523be07ad9a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
