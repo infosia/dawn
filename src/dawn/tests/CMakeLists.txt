@@ -47,6 +47,7 @@ set(end2end_sources
     "end2end/AdapterFormatCapabilitiesVkTests.cpp"
     "end2end/AdapterPropertiesD3DTests.cpp"
     "end2end/AdapterPropertiesVkTests.cpp"
+    "end2end/AdapterPropertiesDrmTests.cpp"
     "end2end/ArchTierLimitsExhaustive.cpp"
     "end2end/BasicTests.cpp"
     "end2end/BindGroupTests.cpp"
