@@ -70,6 +70,24 @@
       "parentUuid": "ec6f182e_684d335f",
       "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47f2c1d2_f621525d",
+        "filename": "third_party/OpenGL-Registry/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-24T05:37:14Z",
+      "side": 1,
+      "message": "sounds fine, but, I don\u0027t see MIT here?",
+      "parentUuid": "87ef9dde_562f7442",
+      "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
