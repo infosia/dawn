@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e97b59e_ce93aacd",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-24T17:55:00Z",
+      "side": 1,
+      "message": "Maybe we should just default this to spontaneous? Otherwise, we should put some comments here to note that if its not waited for and or process event is called, the result will just kind of leak.",
+      "range": {
+        "startLine": 129,
+        "startChar": 57,
+        "endLine": 129,
+        "endChar": 88
+      },
+      "revId": "e1098095db62a598ba7d1ed0fa25c273f9e8fb8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
