@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5777f5eb_39de9e97",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-24T19:43:10Z",
+      "side": 0,
+      "message": "Huh. Kind of crazy that this wasn\u0027t being used at all!",
+      "revId": "30b8e274565900a28d26567da0e31baf9c522d53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
