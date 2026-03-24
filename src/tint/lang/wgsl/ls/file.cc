@@ -210,7 +210,7 @@ Source::Location File::Conv(langsvr::lsp::Position pos) const {
                 break;
             }
             loc.column += n;
-            i += utf16::Encode(code_point, nullptr);
+            i += utf16::Encode(code_point, {});
         }
     }
 
@@ -231,7 +231,7 @@ langsvr::lsp::Position File::Conv(Source::Location loc) const {
             if (n == 0) {
                 break;
             }
-            pos.character += utf16::Encode(code_point, nullptr);
+            pos.character += utf16::Encode(code_point, {});
             i += n;
         }
     }
