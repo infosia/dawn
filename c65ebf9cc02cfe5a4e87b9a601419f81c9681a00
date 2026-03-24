@@ -16,6 +16,29 @@
       "message": "(tint_unittests failure seems unrelated)",
       "revId": "c65ebf9cc02cfe5a4e87b9a601419f81c9681a00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4024cc2_39fcb3b3",
+        "filename": "src/dawn/native/webgpu/SharedTextureMemoryWGPU.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-24T00:21:45Z",
+      "side": 1,
+      "message": "I think it might be worthwhile to move this directly into the `EventManager` files, and then have a factory function `TrackedEvent::CreateAlreadyCompletedEvent` that returns the `Ref\u003cTrackedEvent\u003e`. That function could also by default already call `TrackEvent` on the returned event if we pass it the event manager at instantiation.",
+      "range": {
+        "startLine": 175,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 10
+      },
+      "revId": "c65ebf9cc02cfe5a4e87b9a601419f81c9681a00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
