@@ -881,6 +881,9 @@ TEST_P(BindGroupTests, DynamicBufferInOneStageNotAppliedToOtherStage2) {
     // TODO(crbug.com/40287156): Remove when test is no longer flaky on Pixel 6
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
 
+    // TODO(crbug.com/40238674): Fails on Pixel 10.
+    DAWN_SUPPRESS_TEST_IF(IsImgTec());
+
     wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
         @group(0) @binding(0) var<storage, read> my_storage: array<f32>; // Visible to both vertex and fragment shaders
         @group(0) @binding(1) var<storage, read> my_dynamic_storage: array<f32>; // Visible to only vertex shader
