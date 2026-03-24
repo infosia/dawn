@@ -1731,6 +1731,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::AdapterPropertiesD3D:
         case wgpu::FeatureName::AdapterPropertiesMemoryHeaps:
         case wgpu::FeatureName::AdapterPropertiesVk:
+        case wgpu::FeatureName::AdapterPropertiesDrm:
         case wgpu::FeatureName::ANGLETextureSharing:
         case wgpu::FeatureName::BufferMapExtendedUsages:
         case wgpu::FeatureName::ChromiumExperimentalTimestampQueryInsidePasses:

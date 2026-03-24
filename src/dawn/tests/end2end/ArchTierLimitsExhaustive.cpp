@@ -509,6 +509,7 @@ AddDevice({0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 
     std::set<wgpu::FeatureName> ignored_features = {
         wgpu::FeatureName::RenderPassRenderArea,
         wgpu::FeatureName::DawnNativeSpontaneousQueueEvents,
+        wgpu::FeatureName::AdapterPropertiesDrm,
     };
 
     std::set<wgpu::FeatureName> supported_features;
