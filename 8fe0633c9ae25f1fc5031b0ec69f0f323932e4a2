@@ -88,6 +88,24 @@
       "parentUuid": "87ef9dde_562f7442",
       "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e23cfbd5_24b22f10",
+        "filename": "third_party/OpenGL-Registry/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-24T13:08:25Z",
+      "side": 1,
+      "message": "I copied the header from the khronos file, the line 52 is license MIT,",
+      "parentUuid": "47f2c1d2_f621525d",
+      "revId": "8fe0633c9ae25f1fc5031b0ec69f0f323932e4a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
