@@ -456,6 +456,26 @@ ColorSpaceConversionInfo GetNoopColorSpaceConversionInfo() {
     return info;
 }
 
+#ifndef __EMSCRIPTEN__
+wgpu::ExternalTexture MakePassthroughExternalTexture(const wgpu::Device& device,
+                                                     const wgpu::Texture& plane0,
+                                                     const wgpu::Texture& plane1) {
+    utils::ColorSpaceConversionInfo noopConversion = utils::GetNoopColorSpaceConversionInfo();
+    wgpu::ExternalTextureDescriptor etDesc = {
+        .plane0 = plane0.CreateView(),
+        .plane1 = plane1 ? plane1.CreateView() : nullptr,
+        .cropOrigin = {0, 0},
+        .cropSize = {plane0.GetWidth(), plane0.GetHeight()},
+        .apparentSize = {plane0.GetWidth(), plane0.GetHeight()},
+        .yuvToRgbConversionMatrix = noopConversion.yuvToRgbConversionMatrix.data(),
+        .srcTransferFunctionParameters = noopConversion.srcTransferFunctionParameters.data(),
+        .dstTransferFunctionParameters = noopConversion.dstTransferFunctionParameters.data(),
+        .gamutConversionMatrix = noopConversion.gamutConversionMatrix.data(),
+    };
+    return device.CreateExternalTexture(&etDesc);
+}
+#endif  // __EMSCRIPTEN__
+
 bool BackendRequiresCompat(wgpu::BackendType backend) {
     switch (backend) {
         case wgpu::BackendType::D3D12:
