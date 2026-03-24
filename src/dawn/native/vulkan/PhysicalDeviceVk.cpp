@@ -1084,6 +1084,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // OpCompositeExtract which happens when a binding_array is indexed "by value" instead of
         // through a pointer.
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
+
+        // Disable use of ExtendedDynamicState on SwitfShader. It doesn't appear to be handling all
+        // dynamic states properly, specifically some stencil ops.
+        deviceToggles->ForceSet(Toggle::VulkanUseExtendedDynamicState, false);
     }
 
     if (IsIntelMesa()) {
@@ -1246,7 +1250,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         GetDeviceInfo().extendedDynamicStateFeatures.extendedDynamicState == VK_FALSE) {
         deviceToggles->ForceSet(Toggle::VulkanUseExtendedDynamicState, false);
     } else {
-        // TODO(463893795): Default to true when support is fully implemented.
         deviceToggles->Default(Toggle::VulkanUseExtendedDynamicState, false);
     }
 }

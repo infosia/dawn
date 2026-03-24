@@ -55,6 +55,8 @@ class ComputePipeline final : public ComputePipelineBase {
     ResultOrError<PipelineHandles> GetOrCreateSpecializedHandle(Specialization&& specialization);
     bool RequiresSpecialization() const;
 
+    void ApplyDynamicState(VkCommandBuffer& commands, const ComputePipeline* prevPipeline) const {}
+
     // Dawn API
     void SetLabelImpl() override;
 

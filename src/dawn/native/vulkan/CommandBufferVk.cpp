@@ -591,6 +591,7 @@ struct ProgrammablePassState : public StackAllocated {
             }
 
             vk.CmdBindPipeline(commands, PipelineBindPoint, lastPipeline->GetHandle());
+            lastPipeline->ApplyDynamicState(commands, lastAppliedPipeline);
             lastAppliedPipeline = lastPipeline;
         }
 

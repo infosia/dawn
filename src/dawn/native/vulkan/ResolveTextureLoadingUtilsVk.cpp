@@ -282,6 +282,7 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
 
     device->fn.CmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                *pipelineVk->GetHandle());
+    pipelineVk->ApplyDynamicState(commandBuffer, nullptr);
     device->fn.CmdBindDescriptorSets(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                      *pipelineVk->GetVkLayout(), 0, 1, &*bindGroupVk->GetHandle(),
                                      0, nullptr);

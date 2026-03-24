@@ -340,6 +340,48 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
     DAWN_UNREACHABLE();
 }
 
+uint16_t PackStencilOpState(VkStencilOpState state, VkBool32 enabled) {
+    // Both VkStencilOp and VkCompareOp have values ranging from 0-7, so they fit in 3 bits.
+    // So we can encode the full dynamic stencil state in 12 bits.
+    DAWN_ASSERT(static_cast<uint32_t>(state.failOp) < 8);
+    DAWN_ASSERT(static_cast<uint32_t>(state.passOp) < 8);
+    DAWN_ASSERT(static_cast<uint32_t>(state.depthFailOp) < 8);
+    DAWN_ASSERT(static_cast<uint32_t>(state.compareOp) < 8);
+    uint16_t packed = state.failOp | state.passOp << 3 | state.depthFailOp << 6 |
+                      state.compareOp << 9 |
+                      (enabled ? 0x8000 : 0);  // Set high bit if stencil is enabled.
+    return packed;
+}
+
+VkStencilOpState UnpackStencilOpState(uint16_t packed) {
+    VkStencilOpState state = {
+        .failOp = static_cast<VkStencilOp>(packed & 0x0007),
+        .passOp = static_cast<VkStencilOp>((packed >> 3) & 0x0007),
+        .depthFailOp = static_cast<VkStencilOp>((packed >> 6) & 0x0007),
+        .compareOp = static_cast<VkCompareOp>((packed >> 9) & 0x0007),
+        .compareMask = 0,
+        .writeMask = 0,
+        .reference = 0,
+    };
+    return state;
+}
+
+VkPrimitiveTopology GetTopologyClass(VkPrimitiveTopology topology) {
+    switch (topology) {
+        case VK_PRIMITIVE_TOPOLOGY_POINT_LIST:
+            return VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
+        case VK_PRIMITIVE_TOPOLOGY_LINE_LIST:
+        case VK_PRIMITIVE_TOPOLOGY_LINE_STRIP:
+            return VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
+        case VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST:
+        case VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP:
+            return VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+        default:
+            DAWN_UNREACHABLE();
+            return VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
+    }
+}
+
 }  // anonymous namespace
 
 // static
@@ -576,17 +618,70 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
     }
 
     // Tag all state as dynamic but stencil masks and depth bias.
-    VkDynamicState dynamicStates[] = {
+    const uint32_t kMaxDynamicStates = 14;
+    absl::InlinedVector<VkDynamicState, kMaxDynamicStates> dynamicStates = {
         VK_DYNAMIC_STATE_VIEWPORT,     VK_DYNAMIC_STATE_SCISSOR,
         VK_DYNAMIC_STATE_LINE_WIDTH,   VK_DYNAMIC_STATE_BLEND_CONSTANTS,
         VK_DYNAMIC_STATE_DEPTH_BOUNDS, VK_DYNAMIC_STATE_STENCIL_REFERENCE,
     };
+
+    // If ExtendedDynamicState is available tag several other states as dynamic.
+    // The states will be ignored by CreateGraphicsPipelines, but they are reset to a constant value
+    // here (0 where possible) to ensure the Vulkan cache key is compatible between pipelines.
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        dynamicStates.push_back(VK_DYNAMIC_STATE_PRIMITIVE_TOPOLOGY_EXT);
+        mDynamicState.primitiveTopology = inputAssembly.topology;
+        // TODO(463893795): Look into using dynamicPrimitiveTopologyUnrestricted from
+        // VK_EXT_extended_dynamic_state3 to remove the requirement that this needs to be set to the
+        // same topology class (point/line/triangle) as the dynamic state it will be used with.
+        inputAssembly.topology = GetTopologyClass(inputAssembly.topology);
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_CULL_MODE_EXT);
+        mDynamicState.cullMode = rasterization.cullMode;
+        rasterization.cullMode = VK_CULL_MODE_NONE;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_FRONT_FACE_EXT);
+        mDynamicState.frontFace = rasterization.frontFace;
+        rasterization.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_TEST_ENABLE_EXT);
+        mDynamicState.depthTestEnable = depthStencilState.depthTestEnable;
+        depthStencilState.depthTestEnable = VK_FALSE;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_WRITE_ENABLE_EXT);
+        mDynamicState.depthWriteEnable = depthStencilState.depthWriteEnable;
+        depthStencilState.depthWriteEnable = VK_FALSE;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_DEPTH_COMPARE_OP_EXT);
+        mDynamicState.depthCompareOp = depthStencilState.depthCompareOp;
+        depthStencilState.depthCompareOp = VK_COMPARE_OP_NEVER;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_STENCIL_TEST_ENABLE_EXT);
+        mDynamicState.stencilTestEnable = depthStencilState.stencilTestEnable;
+        depthStencilState.stencilTestEnable = VK_FALSE;
+
+        dynamicStates.push_back(VK_DYNAMIC_STATE_STENCIL_OP_EXT);
+        mDynamicState.packedFrontStencil =
+            PackStencilOpState(depthStencilState.front, depthStencilState.stencilTestEnable);
+        depthStencilState.front.failOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.front.passOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.front.depthFailOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.front.compareOp = VK_COMPARE_OP_NEVER;
+
+        mDynamicState.packedBackStencil =
+            PackStencilOpState(depthStencilState.back, depthStencilState.stencilTestEnable);
+        depthStencilState.back.failOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.back.passOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.back.depthFailOp = VK_STENCIL_OP_KEEP;
+        depthStencilState.back.compareOp = VK_COMPARE_OP_NEVER;
+    }
+
     VkPipelineDynamicStateCreateInfo dynamic;
     dynamic.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
     dynamic.pNext = nullptr;
     dynamic.flags = 0;
-    dynamic.dynamicStateCount = sizeof(dynamicStates) / sizeof(dynamicStates[0]);
-    dynamic.pDynamicStates = dynamicStates;
+    dynamic.dynamicStateCount = dynamicStates.size();
+    dynamic.pDynamicStates = dynamicStates.data();
 
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
@@ -765,6 +860,49 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
 
     return result;
 }
+
+#define SetDynamicState(function, state)                       \
+    if (!prevState || prevState->state != mDynamicState.state) \
+    device->fn.function(commands, mDynamicState.state)
+
+void RenderPipeline::ApplyDynamicState(VkCommandBuffer& commands,
+                                       const RenderPipeline* prevPipeline) const {
+    Device* device = ToBackend(GetDevice());
+
+    // If Dynamic state is enabled, apply state changes between this pipeline and the previous one.
+    if (device->IsToggleEnabled(Toggle::VulkanUseExtendedDynamicState)) {
+        const RenderPipeline::DynamicState* prevState = nullptr;
+        if (prevPipeline) {
+            prevState = &prevPipeline->mDynamicState;
+        }
+
+        SetDynamicState(CmdSetPrimitiveTopologyEXT, primitiveTopology);
+        SetDynamicState(CmdSetCullModeEXT, cullMode);
+        SetDynamicState(CmdSetFrontFaceEXT, frontFace);
+        SetDynamicState(CmdSetDepthTestEnableEXT, depthTestEnable);
+        SetDynamicState(CmdSetDepthWriteEnableEXT, depthWriteEnable);
+        SetDynamicState(CmdSetDepthCompareOpEXT, depthCompareOp);
+        SetDynamicState(CmdSetStencilTestEnableEXT, stencilTestEnable);
+
+        if (mDynamicState.stencilTestEnable) {
+            if (!prevState || prevState->packedFrontStencil != mDynamicState.packedFrontStencil) {
+                VkStencilOpState stencilOp = UnpackStencilOpState(mDynamicState.packedFrontStencil);
+                device->fn.CmdSetStencilOpEXT(commands, VK_STENCIL_FACE_FRONT_BIT, stencilOp.failOp,
+                                              stencilOp.passOp, stencilOp.depthFailOp,
+                                              stencilOp.compareOp);
+            }
+
+            if (!prevState || prevState->packedBackStencil != mDynamicState.packedBackStencil) {
+                VkStencilOpState stencilOp = UnpackStencilOpState(mDynamicState.packedBackStencil);
+                device->fn.CmdSetStencilOpEXT(commands, VK_STENCIL_FACE_BACK_BIT, stencilOp.failOp,
+                                              stencilOp.passOp, stencilOp.depthFailOp,
+                                              stencilOp.compareOp);
+            }
+        }
+    }
+}
+
+#undef SetDynamicState
 
 void RenderPipeline::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandles.pipeline, "Dawn_RenderPipeline", GetLabel());
