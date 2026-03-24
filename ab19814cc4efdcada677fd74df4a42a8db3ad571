@@ -33,6 +33,24 @@
       "message": "I took the liberty to do minor changes, let\u0027s see what the CQ says.",
       "revId": "ab19814cc4efdcada677fd74df4a42a8db3ad571",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c09ae78_3b609151",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-24T13:30:44Z",
+      "side": 1,
+      "message": "Weird, it made a new code review. These are the two new chunks:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/299235/1/docs/dawn/features/adapter_properties.md\n\nhttps://dawn-review.googlesource.com/c/dawn/+/299235/1/src/dawn/node/binding/Converter.cpp#1741",
+      "parentUuid": "ff25f94f_a1b8d67a",
+      "revId": "ab19814cc4efdcada677fd74df4a42a8db3ad571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
