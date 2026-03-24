@@ -16,6 +16,29 @@
       "message": "PTAL, I am expecting this to be pass on the bots now",
       "revId": "ba63317275b09f8606f63b46b4dd9873e3c5b9a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ceb9e33_b9ef7c3a",
+        "filename": "src/tint/utils/memory/copy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-24T16:00:16Z",
+      "side": 1,
+      "message": "I think you can do:\n\n```suggestion\ninline void Copy(std::span\u003cT, N\u003e dst, std::span\u003cU, M\u003e src) \n  requires(N \u003e\u003d M) {\n    static_assert(sizeof(T) \u003d\u003d sizeof(U));\n    TINT_ASSERT(src.data());\n    TINT_ASSERT(dst.data());\n```\n\nwhich will make it a compile error instead of a runtime error if the sizes are bad",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "ba63317275b09f8606f63b46b4dd9873e3c5b9a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
