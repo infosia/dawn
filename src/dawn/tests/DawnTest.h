@@ -93,6 +93,14 @@
     EXPECT_BUFFER(buffer, offset, sizeof(uint32_t) * (count),       \
                   new ::dawn::detail::ExpectEq<uint32_t>(expected, count))
 
+#define EXPECT_BUFFER_RGBA8_EQ(expected, buffer, offset) \
+    EXPECT_BUFFER(buffer, offset, sizeof(utils::RGBA8),  \
+                  new ::dawn::detail::ExpectEq<utils::RGBA8>(expected))
+
+#define EXPECT_BUFFER_RGBA8_RANGE_EQ(expected, buffer, offset, count) \
+    EXPECT_BUFFER(buffer, offset, sizeof(utils::RGBA8) * (count),     \
+                  new ::dawn::detail::ExpectEq<utils::RGBA8>(expected, count))
+
 #define EXPECT_BUFFER_U64_EQ(expected, buffer, offset) \
     EXPECT_BUFFER(buffer, offset, sizeof(uint64_t),    \
                   new ::dawn::detail::ExpectEq<uint64_t>(expected))
