@@ -84,6 +84,10 @@ class SizedBindingArrayTests : public DawnTest {
 
 // Test accessing a binding_array with constant values.
 TEST_P(SizedBindingArrayTests, IndexingWithConstants) {
+    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
+    // the texture builtin polyfills.
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
+
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -199,6 +203,10 @@ TEST_P(SizedBindingArrayTests, IndexingWithDynamicallyUniformValues) {
 
 // Test accessing a binding_array surrounded with other bindings in the layout.
 TEST_P(SizedBindingArrayTests, ArrayEntryOversizedAndSurrounded) {
+    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
+    // the texture builtin polyfills.
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
+
     // Create the BGL with an array larger than the declaration in the shader such the trailing
     // binding will be unused.
     wgpu::BindGroupLayout bgl;
@@ -453,6 +461,10 @@ TEST_P(SizedBindingArrayTests, BindingArrayOfSampledTexturesPassedAsArgument) {
     // Crashes on the Intel Windows Vulkan shader compiler.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsWindows() && IsIntel());
 
+    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
+    // the texture builtin polyfills.
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
+
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -569,6 +581,10 @@ TEST_P(SizedBindingArrayTests, TextureAndSamplerCombination) {
 // Test that calling textureNumLevels on an element of a binding_array returns the correct value,
 // this is targeted for the GL backend that has emulation of that builtin with a UBO.
 TEST_P(SizedBindingArrayTests, TextureNumLevels) {
+    // TODO(https://crbug.com/496253718): The OpenGL backend is not passing the correct metadata for
+    // the texture builtin polyfills.
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
+
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
