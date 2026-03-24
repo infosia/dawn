@@ -175,6 +175,8 @@ enum class Toggle {
     EnableShaderPrint,
     BlobCacheHashValidation,
     DecomposeUniformBuffers,
+    DecomposeWorkgroupAccess,
+    DecomposeWorkgroupMatrixAccess,
     VulkanEnableF16OnNvidia,
     EnableRenderDocProcessInjection,
     VulkanUseDynamicRendering,
