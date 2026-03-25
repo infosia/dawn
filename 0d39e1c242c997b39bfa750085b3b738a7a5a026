@@ -103,6 +103,24 @@
       "parentUuid": "6e1b4476_a70c75ee",
       "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5a1e019_07417b23",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:11:56Z",
+      "side": 1,
+      "message": "Ah I must have been confused about where this came up.\n\nI think I will argue against it in the group then because bindless support for uniform buffers and uniform texel buffers is not very prevalent on Vulkan. If we want to make readonly texel buffers support in bindless, we\u0027ll have to use storage texel buffers instead.\n\nAt the minimum, can you add a TODO to investigate using storage vs. uniform in the context of bindless?",
+      "parentUuid": "c4b925f2_5dd23d18",
+      "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
