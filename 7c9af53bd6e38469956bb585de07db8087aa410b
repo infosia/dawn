@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b79dca3f_3b9bffc1",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-25T18:08:57Z",
+      "side": 1,
+      "message": "good catch, .begin() is a runtime check, where .first\u003c1\u003e()[0] will be a compile time.",
+      "parentUuid": "c27b2dea_0ec18ec0",
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba61f6cd_b7314c30",
@@ -31,6 +49,54 @@
       "writtenOn": "2026-03-25T17:56:37Z",
       "side": 1,
       "message": "```suggestion\n            break;\n        }\n```",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a8c2d74_1a06c141",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-25T18:08:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ba61f6cd_b7314c30",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b43d8c5_303d5b7c",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-25T18:08:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ba61f6cd_b7314c30",
       "range": {
         "startLine": 403,
         "startChar": 0,
@@ -64,6 +130,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1f803a1_3f1288e0",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-25T18:08:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8278bc03_095dd42f",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2462632_3b0c5c05",
@@ -77,6 +167,30 @@
       "writtenOn": "2026-03-25T17:56:37Z",
       "side": 1,
       "message": "```suggestion\n            break;\n        }\n```",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c1a2283_62c4d575",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-03-25T18:08:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b2462632_3b0c5c05",
       "range": {
         "startLine": 418,
         "startChar": 0,
