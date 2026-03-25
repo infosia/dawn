@@ -65,11 +65,6 @@ PhysicalDevice::~PhysicalDevice() {
     CleanUpDebugLayerFilters();
 }
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    // Via dawn::native::d3d::ExternalImageDXGI::Create
-    return true;
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel, InstanceBase* instance) const {
     return true;
 }

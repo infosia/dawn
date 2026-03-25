@@ -40,8 +40,6 @@ class PhysicalDevice : public PhysicalDeviceBase {
 
     ~PhysicalDevice() override;
 
-    bool SupportsExternalImages() const override;
-
     bool SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                               InstanceBase* instance) const override;
 

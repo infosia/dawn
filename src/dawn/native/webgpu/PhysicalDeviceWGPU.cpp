@@ -106,11 +106,6 @@ Backend* PhysicalDevice::GetBackend() const {
     return mBackend;
 }
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    // TODO(crbug.com/494307326): remove the function.
-    return false;
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                                           InstanceBase* instance) const {
     return true;

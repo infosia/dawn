@@ -44,7 +44,6 @@ class PhysicalDevice : public PhysicalDeviceBase {
     bool IsMetalValidationEnabled() const;
 
     // PhysicalDeviceBase Implementation
-    bool SupportsExternalImages() const override;
     bool SupportsFeatureLevel(wgpu::FeatureLevel, InstanceBase* instance) const override;
     ResultOrError<PhysicalDeviceSurfaceCapabilities> GetSurfaceCapabilities(
         InstanceBase* instance,

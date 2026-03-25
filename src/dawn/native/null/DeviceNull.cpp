@@ -62,10 +62,6 @@ PhysicalDevice::PhysicalDevice() : PhysicalDeviceBase(wgpu::BackendType::Null) {
 
 PhysicalDevice::~PhysicalDevice() = default;
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    return false;
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel, InstanceBase*) const {
     return true;
 }

@@ -44,8 +44,6 @@ class PhysicalDevice : public d3d::PhysicalDevice {
     ~PhysicalDevice() override;
 
     // PhysicalDeviceBase Implementation
-    bool SupportsExternalImages() const override;
-
     bool SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                               InstanceBase* instance) const override;
 

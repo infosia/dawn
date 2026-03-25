@@ -917,13 +917,6 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     return {};
 }
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    // Via dawn::native::vulkan::WrapVulkanImage
-    return external_memory::Service::CheckSupport(mDeviceInfo) &&
-           external_semaphore::Service::CheckSupport(mDeviceInfo, mVkPhysicalDevice,
-                                                     mVulkanInstance->GetFunctions());
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                                           InstanceBase* instance) const {
     if (featureLevel == wgpu::FeatureLevel::Core && !mSupportsCoreFeatureLevel) {

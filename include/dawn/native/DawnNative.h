@@ -91,10 +91,6 @@ class DAWN_NATIVE_EXPORT Adapter {
 
     void SetUseTieredLimits(bool useTieredLimits);
 
-    // Check that the Adapter is able to support importing external images. This is necessary
-    // to implement the swapchain and interop APIs in Chromium.
-    bool SupportsExternalImages() const;
-
     explicit operator bool() const;
 
     // Create a device on this adapter. On an error, nullptr is returned.

@@ -101,8 +101,6 @@ class PhysicalDeviceBase : public RefCounted {
 
     const CombinedLimits& GetLimits() const;
 
-    virtual bool SupportsExternalImages() const = 0;
-
     // `instance` is an optional parameter used to log warnings but may be null.
     virtual bool SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                                       InstanceBase* instance) const = 0;

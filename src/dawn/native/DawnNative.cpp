@@ -102,10 +102,6 @@ void Adapter::SetUseTieredLimits(bool useTieredLimits) {
     mImpl->SetUseTieredLimits(useTieredLimits);
 }
 
-bool Adapter::SupportsExternalImages() const {
-    return mImpl->GetPhysicalDevice()->SupportsExternalImages();
-}
-
 Adapter::operator bool() const {
     return mImpl != nullptr;
 }

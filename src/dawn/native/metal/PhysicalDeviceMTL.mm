@@ -334,11 +334,6 @@ bool PhysicalDevice::IsMetalValidationEnabled() const {
 }
 
 // PhysicalDeviceBase Implementation
-bool PhysicalDevice::SupportsExternalImages() const {
-    // SharedTextureMemory is the supported means of importing IOSurfaces.
-    return false;
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel, InstanceBase* instance) const {
     return true;
 }

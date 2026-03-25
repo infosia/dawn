@@ -144,11 +144,6 @@ DisplayEGL* PhysicalDevice::GetDisplay() const {
     return mDisplay.Get();
 }
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    // Via dawn::native::opengl::WrapExternalEGLImage
-    return GetBackendType() == wgpu::BackendType::OpenGLES;
-}
-
 MaybeError PhysicalDevice::InitializeImpl() {
     DAWN_TRY(mFunctions.Initialize(mDisplay->egl->GetProcAddress));
 

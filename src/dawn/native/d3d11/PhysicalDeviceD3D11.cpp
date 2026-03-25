@@ -53,10 +53,6 @@ PhysicalDevice::PhysicalDevice(Backend* backend,
 
 PhysicalDevice::~PhysicalDevice() = default;
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    return true;
-}
-
 bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
                                           InstanceBase* instance) const {
     // TODO(dawn:1820): compare D3D11 feature levels with Dawn feature levels.
