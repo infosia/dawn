@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "044a1423_ea8c887c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003841
+      },
+      "writtenOn": "2026-03-25T03:37:32Z",
+      "side": 1,
+      "message": "I created a bot pool `luci.dawn.trusted-robots`: https://chrome-swarming.appspot.com/botlist?c\u003did\u0026c\u003dtask\u0026c\u003dos\u0026c\u003dstatus\u0026d\u003dasc\u0026f\u003dpool%3Aluci.dawn.trusted-robots\u0026s\u003did",
+      "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
