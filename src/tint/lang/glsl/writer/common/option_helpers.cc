@@ -34,44 +34,17 @@
 
 namespace tint::glsl::writer {
 
-namespace {
-
-enum class BindingType : uint8_t {
-    kUniform,
-    kStorage,
-    kSampler,
-    kTexture,
-    kStorageTexture,
-    kExternalTexture
-};
-
-std::string_view ToString(BindingType value) {
-    switch (value) {
-        case BindingType::kUniform:
-            return "uniform";
-        case BindingType::kStorage:
-            return "storage";
-        case BindingType::kSampler:
-            return "sampler";
-        case BindingType::kTexture:
-            return "texture";
-        case BindingType::kStorageTexture:
-            return "storage_texture";
-        case BindingType::kExternalTexture:
-            return "external_texture";
-    }
-    TINT_ICE() << "Unknown enum passed to ToString(::BindingType)";
-}
-
-}  // namespace
-
 Result<SuccessType> ValidateBindingOptions(const Options& options) {
     diag::List diagnostics;
 
-    tint::Hashmap<tint::BindingPoint, BindingPoint, 8> seen_wgsl_bindings{};
-    tint::Hashmap<BindingPoint, tint::BindingPoint, 8> seen_glsl_texture_bindings{};
-    tint::Hashmap<BindingPoint, tint::BindingPoint, 8> seen_glsl_sampler_bindings{};
-    tint::Hashmap<BindingPoint, tint::BindingPoint, 8> seen_glsl_other_bindings{};
+    using PointToPointMap = tint::Hashmap<tint::BindingPoint, tint::BindingPoint, 8>;
+    PointToPointMap seen_wgsl_bindings{};
+    PointToPointMap seen_glsl_texture_bindings{};
+    PointToPointMap seen_glsl_sampler_bindings{};
+    PointToPointMap seen_glsl_uniform_bindings{};
+    PointToPointMap seen_glsl_storage_bindings{};
+    PointToPointMap seen_glsl_storage_texture_bindings{};
+
     // Both wgsl_seen and glsl_seen check to see if the pair of [src, dst] are unique. If
     // we have multiple entries that map the same [src, dst] pair, that's fine. We treat it as valid
     // as it's possible for multiple entry points to use the remapper at the same time. If the pair
@@ -87,76 +60,47 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
         return false;
     };
 
-    auto glsl_seen = [&diagnostics, &seen_glsl_texture_bindings, &seen_glsl_sampler_bindings,
-                      &seen_glsl_other_bindings](const BindingPoint& src,
-                                                 const tint::BindingPoint& dst,
-                                                 BindingType type) -> bool {
-        auto disallowed_duplicate =
-            [&diagnostics, &src, &dst](
-                const tint::Hashmap<BindingPoint, tint::BindingPoint, 8>& seen_bindings) -> bool {
-            if (auto binding = seen_bindings.Get(src)) {
-                if (*binding != dst) {
-                    diagnostics.AddError(Source{})
-                        << "found duplicate GLSL binding point: [binding: " << src.binding << "]";
-                    return true;
-                }
+    auto glsl_seen = [&diagnostics](const BindingPoint& src, const tint::BindingPoint& dst,
+                                    PointToPointMap& seen_glsl_bindings) -> bool {
+        if (auto binding = seen_glsl_bindings.Get(src)) {
+            if (*binding != dst) {
+                diagnostics.AddError(Source{})
+                    << "found duplicate GLSL binding point: [binding: " << src.binding << "]";
+                return true;
             }
-            return false;
-        };
-
-        switch (type) {
-            case BindingType::kTexture:
-                if (disallowed_duplicate(seen_glsl_texture_bindings) ||
-                    disallowed_duplicate(seen_glsl_other_bindings)) {
-                    return true;
-                }
-                seen_glsl_texture_bindings.Add(src, dst);
-                break;
-            case BindingType::kSampler:
-                if (disallowed_duplicate(seen_glsl_sampler_bindings) ||
-                    disallowed_duplicate(seen_glsl_other_bindings)) {
-                    return true;
-                }
-                seen_glsl_sampler_bindings.Add(src, dst);
-                break;
-            default:
-                if (disallowed_duplicate(seen_glsl_sampler_bindings) ||
-                    disallowed_duplicate(seen_glsl_texture_bindings) ||
-                    disallowed_duplicate(seen_glsl_other_bindings)) {
-                    return true;
-                }
-                seen_glsl_other_bindings.Add(src, dst);
-                break;
         }
+
+        seen_glsl_bindings.Add(src, dst);
         return false;
     };
 
-    auto valid = [&wgsl_seen, &glsl_seen, &diagnostics](const auto& hsh, BindingType type) -> bool {
+    auto valid = [&wgsl_seen, &glsl_seen](const auto& hsh,
+                                          PointToPointMap& seen_glsl_bindings) -> bool {
         for (const auto& it : hsh) {
             const auto& src_binding = it.first;
             const auto& dst_binding = it.second;
 
-            if (wgsl_seen(src_binding, dst_binding) || glsl_seen(dst_binding, src_binding, type)) {
-                diagnostics.AddNote(Source{}) << "when processing " << ToString(type);
+            if (wgsl_seen(src_binding, dst_binding) ||
+                glsl_seen(dst_binding, src_binding, seen_glsl_bindings)) {
                 return false;
             }
         }
         return true;
     };
 
-    if (!valid(options.bindings.uniform, BindingType::kUniform)) {
+    if (!valid(options.bindings.uniform, seen_glsl_uniform_bindings)) {
         return Failure{diagnostics.Str()};
     }
-    if (!valid(options.bindings.storage, BindingType::kStorage)) {
+    if (!valid(options.bindings.storage, seen_glsl_storage_bindings)) {
         return Failure{diagnostics.Str()};
     }
-    if (!valid(options.bindings.sampler, BindingType::kSampler)) {
+    if (!valid(options.bindings.sampler, seen_glsl_sampler_bindings)) {
         return Failure{diagnostics.Str()};
     }
-    if (!valid(options.bindings.texture, BindingType::kTexture)) {
+    if (!valid(options.bindings.texture, seen_glsl_texture_bindings)) {
         return Failure{diagnostics.Str()};
     }
-    if (!valid(options.bindings.storage_texture, BindingType::kStorageTexture)) {
+    if (!valid(options.bindings.storage_texture, seen_glsl_storage_texture_bindings)) {
         return Failure{diagnostics.Str()};
     }
 
@@ -165,18 +109,31 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
 
         auto& data = it.second;
         BindingPoint src;
-        BindingPoint helper;
         BindingPoint metadata;
         if (std::holds_alternative<ExternalMultiplanarTexture>(data)) {
             ExternalMultiplanarTexture et = std::get<ExternalMultiplanarTexture>(data);
             src = et.plane0;
-            helper = et.plane1;
             metadata = et.metadata;
+
+            if (glsl_seen(et.plane0, src_binding, seen_glsl_texture_bindings)) {
+                return Failure{diagnostics.Str()};
+            }
+            if (glsl_seen(et.plane1, src_binding, seen_glsl_texture_bindings)) {
+                return Failure{diagnostics.Str()};
+            }
+
         } else if (std::holds_alternative<ExternalYCBCRTexture>(data)) {
             ExternalYCBCRTexture ycb = std::get<ExternalYCBCRTexture>(data);
             src = ycb.texture;
-            helper = ycb.sampler;
             metadata = ycb.metadata;
+
+            if (glsl_seen(ycb.texture, src_binding, seen_glsl_texture_bindings)) {
+                return Failure{diagnostics.Str()};
+            }
+            if (glsl_seen(ycb.sampler, src_binding, seen_glsl_sampler_bindings)) {
+                return Failure{diagnostics.Str()};
+            }
+
         } else {
             TINT_UNREACHABLE();
         }
@@ -187,13 +144,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
             return Failure{diagnostics.Str()};
         }
 
-        if (glsl_seen(src, src_binding, BindingType::kExternalTexture)) {
-            return Failure{diagnostics.Str()};
-        }
-        if (glsl_seen(helper, src_binding, BindingType::kExternalTexture)) {
-            return Failure{diagnostics.Str()};
-        }
-        if (glsl_seen(metadata, src_binding, BindingType::kExternalTexture)) {
+        // Metadata is a uniform buffer.
+        if (glsl_seen(metadata, src_binding, seen_glsl_uniform_bindings)) {
             return Failure{diagnostics.Str()};
         }
     }
