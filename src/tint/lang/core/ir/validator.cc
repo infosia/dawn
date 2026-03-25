@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <functional>
+#include <iostream>
 #include <string>
 #include <string_view>
 #include <utility>
@@ -113,15 +114,8 @@
 #include "src/tint/utils/rtti/castable.h"
 #include "src/tint/utils/rtti/switch.h"
 #include "src/tint/utils/text/styled_text.h"
-#include "src/tint/utils/text/text_style.h"
-
-/// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
-#if TINT_DUMP_IR_WHEN_VALIDATING
-#include <iostream>
-
 #include "src/tint/utils/text/styled_text_printer.h"
-#endif
+#include "src/tint/utils/text/text_style.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
 
@@ -134,17 +128,15 @@ struct ValidatedType {
 
 namespace {
 
-/// Prints out the current IR state, iff TINT_DUMP_IR_WHEN_VALIDATING is set.
-void DumpIRIfEnabled([[maybe_unused]] const Module& ir,
-                     [[maybe_unused]] const char* msg = "",
-                     [[maybe_unused]] std::string_view timing = "") {
-#if TINT_DUMP_IR_WHEN_VALIDATING
-    auto printer = StyledTextPrinter::Create(stdout);
-    std::cout << "=========================================================\n";
-    std::cout << "== IR dump " << timing << " " << msg << ":\n";
-    std::cout << "=========================================================\n";
-    printer->Print(Disassembler(ir).Text());
-#endif
+/// Prints out the current IR state, iff ir.dump_ir_when_validating is set.
+void DumpIRIfEnabled(const Module& ir, const char* msg, std::string_view timing = "") {
+    if (ir.dump_ir_when_validating) {
+        auto printer = StyledTextPrinter::Create(stdout);
+        std::cout << "=========================================================\n";
+        std::cout << "== IR dump " << timing << " " << msg << ":\n";
+        std::cout << "=========================================================\n";
+        printer->Print(Disassembler(ir).Text());
+    }
 }
 
 using SupportedStages = tint::EnumSet<Function::PipelineStage>;
