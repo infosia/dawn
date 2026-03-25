@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23dd5537_23c5e5c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-25T20:51:34Z",
+      "side": 1,
+      "message": "PTAL, this is the main motivation for the AssertValid() change.",
+      "revId": "b000f5530a6c44fa75e9eeddd543e2af9c843dfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
