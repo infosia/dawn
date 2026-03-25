@@ -197,13 +197,12 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ValueToLet(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(
-        core::ir::ValidateBeforeIfNeeded(ir,
-                                         core::ir::Capabilities{
-                                             core::ir::Capability::kAllowMultipleEntryPoints,
-                                             core::ir::Capability::kAllowOverrides,
-                                         },
-                                         "wgsl.ValueToLet"));
+    core::ir::AssertValidBefore(ir,
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllowMultipleEntryPoints,
+                                    core::ir::Capability::kAllowOverrides,
+                                },
+                                "wgsl.ValueToLet");
 
     State{ir}.Process();
 

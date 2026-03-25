@@ -106,8 +106,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ModuleConstant(core::ir::Module& ir, const ModuleConstantConfig& config) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kModuleConstantCapabilities, "msl.ModuleConstant"));
+    AssertValidBefore(ir, kModuleConstantCapabilities, "msl.ModuleConstant");
 
     State{ir, config}.Process();
 
