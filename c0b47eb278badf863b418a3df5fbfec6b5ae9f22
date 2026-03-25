@@ -16,6 +16,23 @@
       "message": "This is ready for a first-pass review. I\u0027ll eventually add someone from Tint (Dan, probably) to review the Tint changes (I probably need to add a tint_unittest for those changes, actually).",
       "revId": "c0b47eb278badf863b418a3df5fbfec6b5ae9f22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0779cad3_578bdd68",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-25T18:00:55Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027m going to split this out to a different CL and hopefully make a better fix than this.",
+      "revId": "c0b47eb278badf863b418a3df5fbfec6b5ae9f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
