@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b68f364_83417e62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T19:03:27Z",
+      "side": 1,
+      "message": "I suggest reviewing this in dependency order, so starting from Sampler (and the small addition to DeviceVk), BGL, PL, ShaderModule then pipelines.",
+      "revId": "0bdc0eacce6d03c6b8b2dcf67ceee9b1b1954d1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
