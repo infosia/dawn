@@ -204,6 +204,9 @@ class Module {
     /// If true, the AssertValid*() methods will perform validation.
     bool enable_validation_asserts = TINT_ENABLE_IR_VALIDATION;
 
+    /// If true, dump the IR whenever validation is performed.
+    bool dump_ir_when_validating = false;
+
     /// An optional callback to receive an ICE generated while processing this module.
     InternalCompilerErrorCallback ice_callback;
 
