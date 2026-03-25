@@ -1370,18 +1370,17 @@ struct State {
 }  // namespace
 
 Result<SuccessType> DecomposeAccess(core::ir::Module& ir, const DecomposeAccessOptions& options) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir,
-                               core::ir::Capabilities{
-                                   core::ir::Capability::kAllow8BitIntegers,
-                                   core::ir::Capability::kAllow16BitIntegers,
-                                   core::ir::Capability::kAllowHandleVarsWithoutBindings,
-                                   core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
-                                   core::ir::Capability::kAllowDuplicateBindings,
-                                   core::ir::Capability::kAllowNonCoreTypes,
-                                   core::ir::Capability::kLoosenValidationForShaderIO,
-                               },
-                               "core.DecomposeUniformAccess"));
+    core::ir::AssertValidBefore(ir,
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllow8BitIntegers,
+                                    core::ir::Capability::kAllow16BitIntegers,
+                                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
+                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                                    core::ir::Capability::kAllowDuplicateBindings,
+                                    core::ir::Capability::kAllowNonCoreTypes,
+                                    core::ir::Capability::kLoosenValidationForShaderIO,
+                                },
+                                "core.DecomposeUniformAccess");
 
     State{ir, options}.Process();
 

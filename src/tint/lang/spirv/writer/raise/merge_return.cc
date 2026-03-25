@@ -271,8 +271,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> MergeReturn(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(
-        core::ir::ValidateBeforeIfNeeded(ir, kMergeReturnCapabilities, "spirv.MergeReturn"));
+    core::ir::AssertValidBefore(ir, kMergeReturnCapabilities, "spirv.MergeReturn");
 
     // Process each function.
     for (auto& fn : ir.functions) {

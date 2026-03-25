@@ -525,9 +525,8 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(
-        ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
-        "glsl.BuiltinPolyfill"));
+    AssertValidBefore(ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
+                      "glsl.BuiltinPolyfill");
 
     State{ir}.Process();
 
