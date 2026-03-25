@@ -16,6 +16,40 @@
       "message": "I created a bot pool `luci.dawn.trusted-robots`: https://chrome-swarming.appspot.com/botlist?c\u003did\u0026c\u003dtask\u0026c\u003dos\u0026c\u003dstatus\u0026d\u003dasc\u0026f\u003dpool%3Aluci.dawn.trusted-robots\u0026s\u003did",
       "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b9c491a_aa71590b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T09:41:46Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba6a860d_35bfaeb6",
+        "filename": "infra/config/global/trusted_robots.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T09:41:46Z",
+      "side": 1,
+      "message": "The OS changed to be a specific OS instead of `get_dimension(os.LINUX)`, I assume that\u0027s because the trusted-robots pool uses that specific version and doesn\u0027t have any from `get_dimension(os.LINUX)`?",
+      "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
