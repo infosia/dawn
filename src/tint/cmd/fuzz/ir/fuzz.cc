@@ -92,6 +92,10 @@ void Register(const IRFuzzer& fuzzer) {
                 return;
             }
 
+            // Enable validation assertions.
+            // Any validation failure after this point is a bug in Tint which we want to find.
+            ir.Get().enable_validation_asserts = true;
+
             // Copy relevant options from wgsl::Context to ir::Context
             fuzz::ir::Context ir_context;
             ir_context.options.filter = context.options.filter;
@@ -158,6 +162,10 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                     }
                     return;
                 }
+
+                // Enable validation assertions.
+                // Any validation failure after this point is a bug in Tint which we want to find.
+                mod.enable_validation_asserts = true;
 
                 if (auto result = fuzzer.fn(mod, context, data); result != Success) {
                     if (context.options.verbose) {
