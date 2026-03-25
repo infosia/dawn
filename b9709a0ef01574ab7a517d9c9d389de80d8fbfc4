@@ -16,6 +16,131 @@
       "message": "PTAL! Doesn\u0027t turn this on by default yet, but gets the basics of the state tracking in place. Does not attempt to de-dupe on the Dawn side, though the blob cache may be hit more often.",
       "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89b9d4d0_ffd91250",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "u-nit: We could have it as a separate branch for clarity (so it\u0027s not buried inside a big condition) with its own `ForceSet(Toggle::VulkanUseExtendedDynamicState, false)`",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d443b6bc_75c19600",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "nit: `PackStencilState` because hashing is an unpredictable bit mixing, and also in Dawn for hashing that impacts correctness we need to use crypto hashes.\n\nAlso can we have ASSERTs that the values are in the correct range?",
+      "range": {
+        "startLine": 343,
+        "startChar": 9,
+        "endLine": 343,
+        "endChar": 25
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa4240b9_32ea8879",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "Can we have a TODO to use `VK_EXT_extended_dynamic_state3`\u0027s `dynamicPrimitiveTopologyUnrestricted` to remove the topology class at some point?",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae14053e_cb74f266",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "I know that I advocated for merging the pipeline and dynamic state together in a previous CL, but the single-bind approach like this is going to conflict with the changes for YUV AHBs:\n\nCode in https://dawn-review.googlesource.com/c/dawn/+/297196/34/src/dawn/native/vulkan/CommandBufferVk.cpp#695 has something like:\n\n```\n        typename Pipeline::SpecializedHandles pipelineHandles;\n        DAWN_TRY_ASSIGN(pipelineHandles, lastPipeline-\u003eGetOrCreateSpecializedHandle(std::move(s)));\n\n        DirtyAll();\n\n        VkCommandBuffer commands \u003d recordingContext-\u003ecommandBuffer;\n        vk.CmdBindPipeline(commands, PipelineBindPoint, pipelineHandles.pipeline);\n```\n\nwhere a specialized VkPipeline is created and needs to be bound by the `RunWithSpecialization` code. With `Bind` in this CL tying up both the pipeline and the dynamic state, it becomes harder to change the handle used for the `vkCmdBindPipeline`.\n\nMaybe this function could be `void ApplyDynamicState(command, prevPipeline)`?",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4344dc0d_11707b46",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "```suggestion\n        uint16_t packedFrontStencil;\n```",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b8c96b3_a04c3247",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "nit: that information seems redundant with `packedFrontStencil`, can we add an `UnpackStencilState` that does the reverse operation so we need to store less information?",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2ce46e1_d1f56994",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T10:35:17Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
