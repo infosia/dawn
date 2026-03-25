@@ -509,6 +509,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "967b2585_21e6fcb2",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-03-25T16:06:22Z",
+      "side": 1,
+      "message": "That said, you _can_ make this work by actually splitting the render pass in 2, and using \"read-only input attachments\" that are not mapped to any render pass attachments in the first pass to do the unresolve. That split has no perf difference on IMRs, and on TBRs you can rely on VK_EXT_msrtss. But in that case, using a texture instead of input attachment also works like Corentin was suggesting (i.e. you don\u0027t need DRLR).\n\n_However_, if the user (Skia) can use MSAA images and _not_ invalidate them, avoiding the need to ever unresolve because MSAA data is still there, then on IMRs it should be even faster to avoid doing any of this. The unresolve pass is costly on IMRs, and it\u0027ll be better to not expose this functionality.\n\nThe only reason I see why you\u0027d want to expose it on IMRs is if for example Skia does some rendering single-sampled, then wants to blend something multisampled over it, and this gives a convenience function... but again, Skia could have done a texture-based unresolve in that case itself.",
+      "parentUuid": "a63e5771_f0a5a2f5",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
