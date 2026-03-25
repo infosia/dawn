@@ -105,6 +105,24 @@
       "parentUuid": "0617e937_aad777ae",
       "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d965504a_9b9a04a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-25T20:41:24Z",
+      "side": 1,
+      "message": "Was `DAWN_UNREACHABLE` disabled even in a `CMAKE_BUILD_TYPE\u003dDebug` build? Or did you have `CMAKE_BUILD_TYPE\u003d` (empty string) or `Release`? Just curious.",
+      "parentUuid": "27e2a467_09bc5cea",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
