@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "774ac2b8_7e7eb4ea",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-25T09:57:52Z",
+      "side": 1,
+      "message": "Forgot to add this alignment validation, end2end were hitting these anyway so it would be fine to land it on this CL.",
+      "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
