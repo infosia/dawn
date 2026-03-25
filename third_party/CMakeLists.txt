@@ -196,6 +196,18 @@ endif()
 
 if (NOT TARGET Vulkan::Loader AND DAWN_ENABLE_VULKAN AND TINT_BUILD_FUZZER_VULKAN_SUPPORT)
     message(STATUS "Dawn: using Vulkan::Loader at ${DAWN_VULKAN_LOADER_DIR}")
+
+    # Vulkan-Loader's CMakeLists.txt expects VulkanHeaders_VERSION to
+    # be found by find_package during configuration, but this does not
+    # happen until building/installation of the library.
+    #
+    # Set it to a default value to prevent an invalid syntax error when
+    # ${VulkanHeaders_VERSION} is referenced.
+
+    if (NOT DEFINED VulkanHeaders_VERSION)
+        set(VulkanHeaders_VERSION "0.0.0")
+    endif()
+
     add_subdirectory(${DAWN_VULKAN_LOADER_DIR} "${CMAKE_CURRENT_BINARY_DIR}/vulkan-loader/src")
 endif()
 
