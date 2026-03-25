@@ -115,6 +115,7 @@ enum class DeviceExt {
     MultisampledRenderToSingleSampled,
 
     // External* extensions
+    ExternalFenceFD,
     ExternalMemoryAndroidHardwareBuffer,
     ExternalMemoryFD,
     ExternalMemoryDmaBuf,
