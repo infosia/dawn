@@ -56,6 +56,7 @@ class RefCountedWithExternalCount : public T {
 
     void APIRelease() {
         if (mExternalRefCount.Decrement()) {
+            mExternalRefCount.PayloadFetchAnd(0);
             WillDropLastExternalRef();
         }
         T::APIRelease();
@@ -63,6 +64,7 @@ class RefCountedWithExternalCount : public T {
 
     void IncrementExternalRefCount() {
         if (mExternalRefCount.Increment()) {
+            mExternalRefCount.PayloadFetchOr(1);
             WillAddFirstExternalRef();
         }
     }
@@ -71,10 +73,16 @@ class RefCountedWithExternalCount : public T {
         return mExternalRefCount.GetValueForTesting();
     }
 
+  protected:
+    bool HasExternalRef() const { return mExternalRefCount.GetPayload(); }
+
   private:
     virtual void WillAddFirstExternalRef() {}
     virtual void WillDropLastExternalRef() = 0;
 
+    // Note that the payload is used to indicate whether the last external ref was dropped. A value
+    // of 0 indicates that there is currently no external ref to the object. A value of 1 indicates
+    // that there exists at least one external ref.
     RefCount mExternalRefCount{/*initCount=*/0, /*payload=*/0};
 };
 
