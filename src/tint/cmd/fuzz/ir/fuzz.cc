@@ -73,7 +73,13 @@ void Register(const IRFuzzer& fuzzer) {
                 return;
             }
 
-            auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
+            // Enable validation assertions.
+            // Any validation failure after this point is a bug in Tint which we want to find.
+            tint::wgsl::reader::IROptions ir_options{
+                .enable_validation_asserts = true,
+            };
+
+            auto ir = tint::wgsl::reader::ProgramToLoweredIR(program, ir_options);
             if (ir != Success) {
                 return;
             }
@@ -158,6 +164,10 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                     }
                     return;
                 }
+
+                // Enable validation assertions.
+                // Any validation failure after this point is a bug in Tint which we want to find.
+                mod.enable_validation_asserts = true;
 
                 if (auto result = fuzzer.fn(mod, context, data); result != Success) {
                     if (context.options.verbose) {
