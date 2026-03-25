@@ -163,8 +163,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> RemoveTerminatorArgs(Module& ir) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kRemoveTerminatorArgsCapabilities, "core.RemoveTerminatorArgs"));
+    core::ir::AssertValidBefore(ir, kRemoveTerminatorArgsCapabilities, "core.RemoveTerminatorArgs");
 
     State{ir}.Process();
 
