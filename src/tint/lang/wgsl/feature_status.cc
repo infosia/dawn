@@ -43,7 +43,6 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
         case LanguageFeature::kBufferView:
         case LanguageFeature::kFilteringParameters:
         case LanguageFeature::kSwizzleAssignment:
-        case LanguageFeature::kLinearIndexing:
             return FeatureStatus::kUnsafeExperimental;
 
             ////////////////////////////////////////////////////////////////////
@@ -64,6 +63,7 @@ FeatureStatus GetLanguageFeatureStatus(LanguageFeature f) {
         case LanguageFeature::kSubgroupUniformity:
         case LanguageFeature::kTextureAndSamplerLet:
         case LanguageFeature::kTextureFormatsTier1:
+        case LanguageFeature::kLinearIndexing:
             return FeatureStatus::kShippedWithKillswitch;
 
             ////////////////////////////////////////////////////////////////////
