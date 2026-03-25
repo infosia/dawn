@@ -248,16 +248,12 @@ struct State {
 }  // namespace
 
 Result<SuccessType> AtomicVec2uToFromU64(core::ir::Module& ir, AtomicVec2uU64Direction direction) {
-    auto result =
-        core::ir::ValidateBeforeIfNeeded(ir,
-                                         core::ir::Capabilities{
-                                             core::ir::Capability::kAllowMultipleEntryPoints,
-                                             core::ir::Capability::kAllowOverrides,
-                                         },
-                                         "transform::AtomicVec2uToFromU64");
-    if (result != Success) {
-        return result;
-    }
+    core::ir::AssertValidBefore(ir,
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllowMultipleEntryPoints,
+                                    core::ir::Capability::kAllowOverrides,
+                                },
+                                "transform::AtomicVec2uToFromU64");
 
     State{ir, direction}.Process();
 

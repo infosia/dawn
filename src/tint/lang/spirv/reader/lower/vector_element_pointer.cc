@@ -154,20 +154,19 @@ struct State {
 }  // namespace
 
 Result<SuccessType> VectorElementPointer(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(
-        core::ir::ValidateBeforeIfNeeded(ir,
-                                         core::ir::Capabilities{
-                                             core::ir::Capability::kAllowMultipleEntryPoints,
-                                             core::ir::Capability::kAllowOverrides,
-                                             core::ir::Capability::kAllowVectorElementPointer,
-                                             core::ir::Capability::kAllowPhonyInstructions,
-                                             core::ir::Capability::kAllowNonCoreTypes,
-                                             core::ir::Capability::kAllowStructMatrixDecorations,
-                                             core::ir::Capability::kAllowLocationForNumericElements,
-                                             core::ir::Capability::kAllowPointerToHandle,
-                                             core::ir::Capability::kLoosenValidationForShaderIO,
-                                         },
-                                         "spirv.VectorElementPointer"));
+    core::ir::AssertValidBefore(ir,
+                                core::ir::Capabilities{
+                                    core::ir::Capability::kAllowMultipleEntryPoints,
+                                    core::ir::Capability::kAllowOverrides,
+                                    core::ir::Capability::kAllowVectorElementPointer,
+                                    core::ir::Capability::kAllowPhonyInstructions,
+                                    core::ir::Capability::kAllowNonCoreTypes,
+                                    core::ir::Capability::kAllowStructMatrixDecorations,
+                                    core::ir::Capability::kAllowLocationForNumericElements,
+                                    core::ir::Capability::kAllowPointerToHandle,
+                                    core::ir::Capability::kLoosenValidationForShaderIO,
+                                },
+                                "spirv.VectorElementPointer");
 
     State{ir}.Process();
 
