@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfae1753_c59ff776",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-25T20:07:15Z",
+      "side": 1,
+      "message": "This seems wrong, I don\u0027t think you should have to do this. It feels like something else has gotten off kilter. I\u0027ve built the loader in other projects without having to fake the header version.",
+      "revId": "27a09ef6da78a88834ddf6050e138f9bee0fe635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
