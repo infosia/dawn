@@ -77,6 +77,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36b12232_238e1baa",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-25T19:18:05Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this transformation is necessary?",
+      "range": {
+        "startLine": 572,
+        "startChar": 33,
+        "endLine": 572,
+        "endChar": 49
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "580517d8_47fdb720",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-25T19:18:05Z",
+      "side": 1,
+      "message": "\u003e VK_DYNAMIC_STATE_CULL_MODE specifies that the cullMode state in VkPipelineRasterizationStateCreateInfo will be ignored and must be set dynamically with vkCmdSetCullMode before any drawing commands.\n\nThis is now ignored by Vulkan so IIUC it\u0027s only used when generating the cache key. This still seems problematic to me? Here is an example where we have pipeline that only vary in cullMode: \n\n1. First pipeline is created that uses VK_CULL_MODE_FRONT_BIT. It gets turned into dynamic state and rasterization.cullMode is set to VK_CULL_MODE_NONE before generating the cache key.\n2. Second almost identical pipeline is created that uses VK_CULL_MODE_BACK_BIT. The cached entry has VK_CULL_MODE_NONE so cache lookup fails and a new pipeline is created. After the new pipeline is created the cache key will be the same as pipeline #1 which is a collision.\n3. A third pipeline identical to the first is created that uses VK_CULL_MODE_FRONT_BIT. The cached entry has VK_CULL_MODE_NONE so we don\u0027t find the cached entry and create a new pipeline again.\n4. A fourth almost identical pipeline is created with VK_CULL_MODE_NONE. This matches the cached entry, which dynamic sets the state to VK_CULL_MODE_FRONT_BIT, and produces the wrong results.",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a144cfb_874e5a56",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-25T19:18:05Z",
+      "side": 1,
+      "message": "It would be nice to not have to set all if they\u0027re ignored.",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 605,
+        "endChar": 64
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ae14053e_cb74f266",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 1
