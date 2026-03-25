@@ -554,14 +554,14 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Atomics(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(ir,
-                                             core::ir::Capabilities{
-                                                 core::ir::Capability::kAllowMultipleEntryPoints,
-                                                 core::ir::Capability::kAllowOverrides,
-                                                 core::ir::Capability::kAllowNonCoreTypes,
-                                                 core::ir::Capability::kAllowPointerToHandle,
-                                             },
-                                             "spirv.Atomics"));
+    AssertValidBefore(ir,
+                      core::ir::Capabilities{
+                          core::ir::Capability::kAllowMultipleEntryPoints,
+                          core::ir::Capability::kAllowOverrides,
+                          core::ir::Capability::kAllowNonCoreTypes,
+                          core::ir::Capability::kAllowPointerToHandle,
+                      },
+                      "spirv.Atomics");
 
     State{ir}.Process();
 

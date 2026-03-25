@@ -122,7 +122,7 @@ class Printer : public tint::TextGenerator {
 
     /// @returns the generated GLSL shader
     tint::Result<Output> Generate() {
-        TINT_CHECK_RESULT(ValidateBeforeIfNeeded(ir_, kPrinterCapabilities, "glsl.Printer"));
+        AssertValidBefore(ir_, kPrinterCapabilities, "glsl.Printer");
 
         {
             TINT_SCOPED_ASSIGNMENT(current_buffer_, &header_buffer_);

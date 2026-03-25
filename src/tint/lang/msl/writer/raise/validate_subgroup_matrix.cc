@@ -76,11 +76,11 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ValidateSubgroupMatrix(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(ir,
-                                             tint::core::ir::Capabilities{
-                                                 core::ir::Capability::kAllow8BitIntegers,
-                                             },
-                                             "msl.ValidateSubgroupMatrix"));
+    AssertValidBefore(ir,
+                      tint::core::ir::Capabilities{
+                          core::ir::Capability::kAllow8BitIntegers,
+                      },
+                      "msl.ValidateSubgroupMatrix");
 
     auto res = State{ir}.Process();
     if (res != Success) {

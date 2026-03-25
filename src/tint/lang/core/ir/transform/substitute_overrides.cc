@@ -385,8 +385,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesConfig& cfg) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kSubstituteOverridesCapabilities, "core.SubstituteOverrides"));
+    AssertValidBefore(ir, kSubstituteOverridesCapabilities, "core.SubstituteOverrides");
     {
         auto result = State{ir, cfg}.Process();
         if (result != Success) {
