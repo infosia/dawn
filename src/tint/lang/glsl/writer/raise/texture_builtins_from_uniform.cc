@@ -205,8 +205,8 @@ struct State {
 
 Result<SuccessType> TextureBuiltinsFromUniform(core::ir::Module& ir,
                                                const TextureBuiltinsFromUniformOptions& cfg) {
-    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(ir, kTextureBuiltinFromUniformCapabilities,
-                                             "glsl.TextureBuiltinsFromUniform"));
+    AssertValidBefore(ir, kTextureBuiltinFromUniformCapabilities,
+                      "glsl.TextureBuiltinsFromUniform");
 
     State{ir, cfg}.Process();
 

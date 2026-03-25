@@ -145,8 +145,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Bgra8UnormPolyfill(Module& ir) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kBgra8UnormPolyfillCapabilities, "core.Bgra8UnormPolyfill"));
+    core::ir::AssertValidBefore(ir, kBgra8UnormPolyfillCapabilities, "core.Bgra8UnormPolyfill");
 
     State{ir}.Process();
 
