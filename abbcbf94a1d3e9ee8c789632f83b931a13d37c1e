@@ -491,6 +491,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a63e5771_f0a5a2f5",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2026-03-25T15:00:05Z",
+      "side": 1,
+      "message": "After much back and forth, the WG decision was that this is illegal. DRLR simply never intended to allow input attachments to map to resolve attachments, and my test is never going to work on some hardware.",
+      "parentUuid": "54b7bb2b_b61dec00",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
