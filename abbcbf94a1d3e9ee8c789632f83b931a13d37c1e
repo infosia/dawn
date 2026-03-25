@@ -527,6 +527,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c052a80_0e2fad55",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:22:44Z",
+      "side": 1,
+      "message": "\u003e However, if the user (Skia) can use MSAA images and not invalidate them, avoiding the need to ever unresolve because MSAA data is still there, then on IMRs it should be even faster to avoid doing any of this\n\nUsing MSAA without unresolves might be faster on IMRs. However, unresolves are still useful for Skia to reuse MSAA texture between render passes. In order to reuse, we have to treat the MSAA texture as a scratch texture. It can also allows using a MSAA texture smaller than the resolve texture itself. It can massively save memory usage, (at least observed on Windows). Without this, the memory usage of Graphite is much more than Ganesh.\n\nThat\u0027s said. I think we can skip exposing this feature on IMRs. Without it, Skia will emulate the unresolves using separate render passes already. It\u0027s similar to the approach you mentioned.",
+      "parentUuid": "967b2585_21e6fcb2",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28cd7e1c_aef10a92",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 5
