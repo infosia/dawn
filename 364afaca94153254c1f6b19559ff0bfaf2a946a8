@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12f945aa_085c41e6",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-25T20:21:16Z",
+      "side": 1,
+      "message": "Nope, the way that `MutexCondVarProtected` is implemented guarantees that when we call wait, we release the lock.",
+      "parentUuid": "8dbf40c2_e12d8812",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "364afaca94153254c1f6b19559ff0bfaf2a946a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87f6a625_db397918",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-25T14:42:37Z",
       "side": 1,
       "message": "It would be nice to avoid passing the task manager to the tasks themselves just for this one call. Looks like we\u0027d have to allocate something to pass both the task manager and task pointer to `AsyncTaskManager::RunTask` which doesn\u0027t seem worth it.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 73
+      },
+      "revId": "364afaca94153254c1f6b19559ff0bfaf2a946a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d29dd090_fcddc455",
+        "filename": "src/dawn/native/AsyncTask.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-25T20:21:16Z",
+      "side": 1,
+      "message": "Yea, before we created the intermediate `WaitableTask` struct to do that, but that was just an additional allocation whereas moving the pointer back into the task allows us to allocate it up front when we are allocating the task. I\u0027m not sure if there\u0027s necessarily a better way to do this atm. If we think of a better way, we can update it in a follow up.",
+      "parentUuid": "87f6a625_db397918",
       "range": {
         "startLine": 95,
         "startChar": 0,
