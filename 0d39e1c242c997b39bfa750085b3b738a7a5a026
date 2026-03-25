@@ -139,6 +139,24 @@
       "parentUuid": "b5a1e019_07417b23",
       "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea417fae_f4a91e07",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-25T11:42:56Z",
+      "side": 1,
+      "message": "Agreed on keeping storage texel buffers for both access modes for now. Supporting bindless uniform texel buffers would require a second descriptor array in the resource table and a separate Tint opcode path (`OpImageFetch` vs `OpImageRead`), and the cross-backend format gain is limited since D3D12 and Metal would still block most of the formats uniform texel buffers would unlock on Vulkan.\n\nIf we do want to support uniform texel buffers in the future, I think the right approach would be something like a `texel-buffer-extended-formats` feature gate. That way format capability queries happen once at device initialization rather than becoming per-format runtime queries that propagate through descriptor type selection and shader compilation.\n\nOn the usage bits, actually, I think the proposal recommends setting both bits at buffer creation. My understanding is that both bits can coexist on the same buffer since the actual descriptor type choice happens later at bind group creation time, `VkBufferView` can be used for either.",
+      "parentUuid": "b5a1e019_07417b23",
+      "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
