@@ -33,6 +33,52 @@
       "message": "Forgot to add this alignment validation, end2end were hitting these anyway so it would be fine to land it on this CL.",
       "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1460d16a_e15b1e74",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-25T20:34:43Z",
+      "side": 1,
+      "message": "I briefly looked at the Vulkan docs, and while I couldn\u0027t find explicit text saying anything about the order that the Buffer and BufferView need to be destroyed in, would it be safer to destroy BufferViews before the Buffers? i.e. reverse the order of them in this list?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd4ced8f_fcd5f154",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-25T20:34:43Z",
+      "side": 1,
+      "message": "nit. Since this CLs inception, I think we have also added a CMake build for the tests. Could you also add the test to the CMake file? Fine to do in a follow up if you want to land this one first though cause I **think** that if you make a change in that file, it might require 2 reviewers to +2 again.",
+      "range": {
+        "startLine": 721,
+        "startChar": 4,
+        "endLine": 721,
+        "endChar": 35
+      },
+      "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
