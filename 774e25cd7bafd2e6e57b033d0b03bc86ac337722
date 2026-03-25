@@ -16,6 +16,24 @@
       "message": "Adding Dawn IOSurface format mappings for iOS LiDAR depth/disparity data (DepthFloat16, DepthFloat32, DisparityFloat16, DisparityFloat32). These have identical memory layout to the already-mapped OneComponent16Half/OneComponent32Float — just different FourCC tags. Enables zero-copy SharedTextureMemory import of AVCaptureDepthDataOutput on iPhone Pro devices.",
       "revId": "774e25cd7bafd2e6e57b033d0b03bc86ac337722",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd6665f_bc7971bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-03-25T22:29:20Z",
+      "side": 1,
+      "message": "(Mark as resolved)",
+      "parentUuid": "3e6200d0_547dd5e6",
+      "revId": "774e25cd7bafd2e6e57b033d0b03bc86ac337722",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
