@@ -5229,8 +5229,7 @@ Result<SuccessType> Validate(const Module& mod,
                              [[maybe_unused]] std::string_view timing) {
     DumpIRIfEnabled(mod, msg, timing);
     Validator v(mod, capabilities);
-    TINT_CHECK_RESULT(v.Run());
-    return Success;
+    return v.Run();
 }
 
 Result<SuccessType> ValidateBefore(const Module& mod, Capabilities capabilities, const char* msg) {
@@ -5241,21 +5240,22 @@ Result<SuccessType> ValidateAfter(const Module& mod, Capabilities capabilities, 
     return Validate(mod, capabilities, msg, "after");
 }
 
-void AssertValid([[maybe_unused]] const Module& mod,
-                 [[maybe_unused]] Capabilities capabilities,
-                 [[maybe_unused]] const char* msg,
-                 [[maybe_unused]] std::string_view timing) {
+void AssertValid(const Module& mod,
+                 Capabilities capabilities,
+                 const char* msg,
+                 std::string_view timing) {
     DumpIRIfEnabled(mod, msg, timing);
-#if TINT_ENABLE_IR_VALIDATION
-    Validator v(mod, capabilities);
-    auto result = v.Run();
-    if (result != Success) {
-        TINT_ICE() << "\n========================================================="
-                   << "\n== IR validation failed " << timing << " " << msg << ":"
-                   << "\n=========================================================\n"
-                   << result.Failure().reason;
+
+    if (mod.enable_validation_asserts) {
+        Validator v(mod, capabilities);
+        auto result = v.Run();
+        if (result != Success) {
+            TINT_ICE() << "\n========================================================="
+                       << "\n== IR validation failed " << timing << " " << msg << ":"
+                       << "\n=========================================================\n"
+                       << result.Failure().reason;
+        }
     }
-#endif
 }
 
 void AssertValidBefore(const Module& mod, Capabilities capabilities, const char* msg) {
