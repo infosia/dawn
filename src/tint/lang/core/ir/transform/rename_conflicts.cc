@@ -301,8 +301,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> RenameConflicts(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kRenameConflictsCapabilities, "core.RenameConflicts"));
+    core::ir::AssertValidBefore(ir, kRenameConflictsCapabilities, "core.RenameConflicts");
 
     State{ir}.Process();
 

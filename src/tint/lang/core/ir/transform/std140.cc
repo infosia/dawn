@@ -448,7 +448,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Std140(Module& ir) {
-    TINT_CHECK_RESULT(ValidateBeforeIfNeeded(ir, kStd140Capabilities, "core.Std140"));
+    AssertValidBefore(ir, kStd140Capabilities, "core.Std140");
 
     State{ir}.Process();
 

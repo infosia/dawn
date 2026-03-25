@@ -165,8 +165,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ConversionPolyfill(Module& ir, const ConversionPolyfillConfig& config) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kConversionPolyfillCapabilities, "core.ConversionPolyfill"));
+    core::ir::AssertValidBefore(ir, kConversionPolyfillCapabilities, "core.ConversionPolyfill");
 
     State{config, ir}.Process();
 

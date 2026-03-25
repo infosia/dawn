@@ -1243,8 +1243,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(Module& ir, const BuiltinPolyfillConfig& config) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kBuiltinPolyfillCapabilities, "core.BuiltinPolyfill"));
+    core::ir::AssertValidBefore(ir, kBuiltinPolyfillCapabilities, "core.BuiltinPolyfill");
 
     State{config, ir}.Process();
 
