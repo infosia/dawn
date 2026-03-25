@@ -51,8 +51,6 @@ class PipelineLayout final : public PipelineLayoutBase {
     ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> GetOrCreateVkLayoutObject(
         const ImmediateConstantMask& immediateConstantMask);
 
-    VkShaderStageFlags GetImmediateDataRangeStage() const;
-
     // Friend definition of StreamIn which can be found by ADL to override stream::StreamIn<T>.
     friend void StreamIn(stream::Sink* sink, const PipelineLayout& obj) {
         StreamIn(sink, static_cast<const CachedObject&>(obj));
@@ -76,11 +74,12 @@ class PipelineLayout final : public PipelineLayoutBase {
     // total immediate data size as key.
     MutexProtected<absl::flat_hash_map<uint32_t, Ref<RefCountedVkHandle<VkPipelineLayout>>>>
         mVkPipelineLayouts;
-
-    // Immediate data requires unique range among shader stages.
-    VkShaderStageFlags kImmediateDataRangeShaderStage =
-        VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
 };
+
+// Contrary to WebGPU, Vulkan sets pipelines per-shader stage. Map WebGPU immediates to all the
+// Vulkan stages.
+inline constexpr VkShaderStageFlags kImmediateShaderStages =
+    VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
 
 }  // namespace dawn::native::vulkan
 
