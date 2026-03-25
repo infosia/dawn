@@ -287,9 +287,9 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ReplaceNonIndexableMatVecStores(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(core::ir::ValidateBeforeIfNeeded(
+    core::ir::AssertValidBefore(
         ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
-        "hlsl.ReplaceNonIndexableMatVecStores"));
+        "hlsl.ReplaceNonIndexableMatVecStores");
 
     State{ir}.Process();
 

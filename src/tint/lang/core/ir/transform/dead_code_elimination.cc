@@ -105,8 +105,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> DeadCodeElimination(Module& ir) {
-    TINT_CHECK_RESULT(
-        ValidateBeforeIfNeeded(ir, kDeadCodeEliminationCapabilities, "core.DeadCodeElimination"));
+    core::ir::AssertValidBefore(ir, kDeadCodeEliminationCapabilities, "core.DeadCodeElimination");
 
     State{ir}.Process();
 
