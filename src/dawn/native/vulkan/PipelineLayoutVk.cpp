@@ -85,7 +85,7 @@ ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> PipelineLayout::CreateV
 
     VkPushConstantRange pushConstantRange;
     if (immediateConstantSize > 0) {
-        pushConstantRange.stageFlags = kImmediateDataRangeShaderStage;
+        pushConstantRange.stageFlags = kImmediateShaderStages;
         pushConstantRange.offset = 0;
         pushConstantRange.size = immediateConstantSize;
         createInfo.pushConstantRangeCount = 1;
@@ -147,10 +147,6 @@ ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> PipelineLayout::GetOrCr
         return vkPipelineLayouts->insert({immediateConstantSize, std::move(pipelineLayoutVk)})
             .first->second;
     });
-}
-
-VkShaderStageFlags PipelineLayout::GetImmediateDataRangeStage() const {
-    return kImmediateDataRangeShaderStage;
 }
 
 PipelineLayout::~PipelineLayout() = default;

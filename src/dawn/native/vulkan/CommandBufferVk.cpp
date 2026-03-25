@@ -299,8 +299,7 @@ class ImmediateConstantTracker : public T {
                 GetImmediateIndexInPipeline(static_cast<uint32_t>(offset), pipelineMask) *
                 kImmediateConstantElementByteSize;
             vk.CmdPushConstants(commandBuffer, ToBackend(lastPipeline)->GetVkLayout(),
-                                ToBackend(lastPipeline->GetLayout())->GetImmediateDataRangeStage(),
-                                pushConstantRangeStartOffset,
+                                kImmediateShaderStages, pushConstantRangeStartOffset,
                                 size * kImmediateConstantElementByteSize,
                                 this->mContent.template Get<uint32_t>(immediateContentStartOffset));
         }
