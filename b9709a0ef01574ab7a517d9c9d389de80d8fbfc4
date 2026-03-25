@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6aa3d3_347e4bed",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b9d4d0_ffd91250",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d443b6bc_75c19600",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-03-25T10:35:17Z",
       "side": 1,
       "message": "nit: `PackStencilState` because hashing is an unpredictable bit mixing, and also in Dawn for hashing that impacts correctness we need to use crypto hashes.\n\nAlso can we have ASSERTs that the values are in the correct range?",
+      "range": {
+        "startLine": 343,
+        "startChar": 9,
+        "endLine": 343,
+        "endChar": 25
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45947554_40880399",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d443b6bc_75c19600",
       "range": {
         "startLine": 343,
         "startChar": 9,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dfc75c4_fb172066",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4240b9_32ea8879",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36b12232_238e1baa",
@@ -88,6 +148,30 @@
       "writtenOn": "2026-03-25T19:18:05Z",
       "side": 1,
       "message": "Can you add a comment explaining why this transformation is necessary?",
+      "range": {
+        "startLine": 572,
+        "startChar": 33,
+        "endLine": 572,
+        "endChar": 49
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9798ff95_1b64ecac",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36b12232_238e1baa",
       "range": {
         "startLine": 572,
         "startChar": 33,
@@ -115,6 +199,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "41d7ad2b_1f7b90ec",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "I worried about this initially as well. After some digging I found that the cache key also takes into account the dynamic state array that is set as part of the VkPipelineDynamicStateCreateInfo, so a pipeline with VK_DYNAMIC_STATE_CULL_MODE_EXT and VK_CULL_MODE_NONE will be considered distinct from a pipeline with only VK_CULL_MODE_NONE. (Also, we shouldn\u0027t be in a state where some pipelines use dynamic state and some don\u0027t, but even if we are that should be handled correctly here.)",
+      "parentUuid": "580517d8_47fdb720",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7a144cfb_874e5a56",
@@ -128,6 +230,30 @@
       "writtenOn": "2026-03-25T19:18:05Z",
       "side": 1,
       "message": "It would be nice to not have to set all if they\u0027re ignored.",
+      "range": {
+        "startLine": 602,
+        "startChar": 0,
+        "endLine": 605,
+        "endChar": 64
+      },
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52f51e23_02532985",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Agreed, but given how we are creating the cache keys this seemed like the best option. (I tried `depthStencilState.front \u003d {};` but that discards the `compareMask` and `writeMask`, which we still need.)",
+      "parentUuid": "7a144cfb_874e5a56",
       "range": {
         "startLine": 602,
         "startChar": 0,
@@ -155,6 +281,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20d7425a_391b1a67",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "I did this initially as `ApplyDynamicState()`, actually, and got tripped up by the `CmdBindPipeline()` in `ResolveTextureLoadingUtilsVk.cpp`. My goal was to hopefully normalize using a helper method like this across the board so that callers wouldn\u0027t easily forget to apply Dynamic State. However, if that\u0027s going to interfere with the YUV changes I\u0027m happy to go back to the `ApplyDynamicState()` pattern.",
+      "parentUuid": "ae14053e_cb74f266",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4344dc0d_11707b46",
@@ -168,6 +312,24 @@
       "writtenOn": "2026-03-25T10:35:17Z",
       "side": 1,
       "message": "```suggestion\n        uint16_t packedFrontStencil;\n```",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c74f1e9b_490b9f65",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4344dc0d_11707b46",
       "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -189,6 +351,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b94a0014_50674d5a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b8c96b3_a04c3247",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2ce46e1_d1f56994",
@@ -202,6 +382,24 @@
       "writtenOn": "2026-03-25T10:35:17Z",
       "side": 1,
       "message": "ditto",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "174a2bab_84f0b2cb",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T23:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ce46e1_d1f56994",
       "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
