@@ -90,8 +90,8 @@ struct State {
 }  // namespace
 
 Result<SuccessType> KeepBindingArrayAsPointer(core::ir::Module& ir) {
-    TINT_CHECK_RESULT(core::ir::ValidateBeforeIfNeeded(ir, kKeepBindingArrayAsPointerCapabilities,
-                                                       "spirv.KeepBindingArrayAsPointer"));
+    core::ir::AssertValidBefore(ir, kKeepBindingArrayAsPointerCapabilities,
+                                "spirv.KeepBindingArrayAsPointer");
 
     State{ir}.Process();
 

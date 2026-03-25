@@ -5241,28 +5241,29 @@ Result<SuccessType> ValidateAfter(const Module& mod, Capabilities capabilities, 
     return Validate(mod, capabilities, msg, "after");
 }
 
-Result<SuccessType> ValidateIfNeeded([[maybe_unused]] const Module& mod,
-                                     [[maybe_unused]] Capabilities capabilities,
-                                     [[maybe_unused]] const char* msg,
-                                     [[maybe_unused]] std::string_view timing) {
+void AssertValid([[maybe_unused]] const Module& mod,
+                 [[maybe_unused]] Capabilities capabilities,
+                 [[maybe_unused]] const char* msg,
+                 [[maybe_unused]] std::string_view timing) {
     DumpIRIfEnabled(mod, msg, timing);
 #if TINT_ENABLE_IR_VALIDATION
     Validator v(mod, capabilities);
-    TINT_CHECK_RESULT(v.Run());
+    auto result = v.Run();
+    if (result != Success) {
+        TINT_ICE() << "\n========================================================="
+                   << "\n== IR validation failed " << timing << " " << msg << ":"
+                   << "\n=========================================================\n"
+                   << result.Failure().reason;
+    }
 #endif
-    return Success;
 }
 
-Result<SuccessType> ValidateBeforeIfNeeded(const Module& mod,
-                                           Capabilities capabilities,
-                                           const char* msg) {
-    return ValidateIfNeeded(mod, capabilities, msg, "before");
+void AssertValidBefore(const Module& mod, Capabilities capabilities, const char* msg) {
+    return AssertValid(mod, capabilities, msg, "before");
 }
 
-Result<SuccessType> ValidateAfterIfNeeded(const Module& mod,
-                                          Capabilities capabilities,
-                                          const char* msg) {
-    return ValidateIfNeeded(mod, capabilities, msg, "after");
+void AssertValidAfter(const Module& mod, Capabilities capabilities, const char* msg) {
+    return AssertValid(mod, capabilities, msg, "after");
 }
 
 }  // namespace tint::core::ir
