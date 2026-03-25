@@ -60,6 +60,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "eaedc1c8_2727a4cd",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-25T22:32:16Z",
+      "side": 1,
+      "message": "Done. Makes sense that a view should be destroyed before the buffer it references.",
+      "parentUuid": "1460d16a_e15b1e74",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fd4ced8f_fcd5f154",
         "filename": "src/dawn/tests/BUILD.gn",
         "patchSetId": 13
@@ -71,6 +95,30 @@
       "writtenOn": "2026-03-25T20:34:43Z",
       "side": 1,
       "message": "nit. Since this CLs inception, I think we have also added a CMake build for the tests. Could you also add the test to the CMake file? Fine to do in a follow up if you want to land this one first though cause I **think** that if you make a change in that file, it might require 2 reviewers to +2 again.",
+      "range": {
+        "startLine": 721,
+        "startChar": 4,
+        "endLine": 721,
+        "endChar": 35
+      },
+      "revId": "bfbd351f5b21a117ccf036210345fb66e0db218c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "329b0edf_fd71df34",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-03-25T22:32:16Z",
+      "side": 1,
+      "message": "Included the tests to CMake since we already needed a re-review for the other changes.",
+      "parentUuid": "fd4ced8f_fcd5f154",
       "range": {
         "startLine": 721,
         "startChar": 4,
