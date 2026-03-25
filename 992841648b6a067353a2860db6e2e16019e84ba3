@@ -87,6 +87,24 @@
       "parentUuid": "e14f1bcd_557a8885",
       "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27e2a467_09bc5cea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4714522
+      },
+      "writtenOn": "2026-03-25T20:25:12Z",
+      "side": 1,
+      "message": "Thanks for the details! The issue was a missing R32Float case in the CheckFourColors switch — the depth/disparity formats that map to R32Float would enter the render tests and hit DAWN_UNREACHABLE() at line 780.\n\nI couldn\u0027t reproduce locally because my CMake build didn\u0027t have DAWN_ALWAYS_ASSERT enabled, so the assertion was silently a no-op. PS4 adds the missing switch case.\n\n(Note: this is technically a pre-existing gap — OneComponent32Float also maps to R32Float and is renderable, so it could have hit the same path.)",
+      "parentUuid": "0617e937_aad777ae",
+      "revId": "992841648b6a067353a2860db6e2e16019e84ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
