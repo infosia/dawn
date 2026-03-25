@@ -3591,7 +3591,7 @@ $B1: {  # root
 TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_LoadStruct) {
     auto* sb = ty.Struct(mod.symbols.New("SB"), {
                                                     {mod.symbols.New("a"), ty.u16()},
-                                                    {mod.symbols.New("b"), ty.array(ty.u32(), 2_u)},
+                                                    {mod.symbols.New("b"), ty.mat2x2<f32>()},
                                                 });
     auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
     b.ir.root_block->Append(var);
@@ -3603,9 +3603,9 @@ TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_LoadStruct) {
     });
 
     auto* src = R"(
-SB = struct @align(4) {
+SB = struct @align(8) {
   a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
+  b:mat2x2<f32> @offset(8)
 }
 
 $B1: {  # root
@@ -3624,13 +3624,13 @@ $B1: {  # root
     ASSERT_EQ(src, str());
 
     auto* expect = R"(
-SB = struct @align(4) {
+SB = struct @align(8) {
   a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
+  b:mat2x2<f32> @offset(8)
 }
 
 $B1: {  # root
-  %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
+  %v:ptr<workgroup, array<u16, 12>, read_write> = var undef
 }
 
 %foo = @fragment func():void {
@@ -3645,47 +3645,53 @@ $B1: {  # root
     %7:u32 = div %start_byte_offset, 2u
     %8:ptr<workgroup, u16, read_write> = access %v, %7
     %9:u16 = load %8
-    %10:u32 = add 4u, %start_byte_offset
-    %11:array<u32, 2> = call %12, %10
+    %10:u32 = add 8u, %start_byte_offset
+    %11:mat2x2<f32> = call %12, %10
     %13:SB = construct %9, %11
     ret %13
   }
 }
-%12 = func(%start_byte_offset_1:u32):array<u32, 2> {  # %start_byte_offset_1: 'start_byte_offset'
+%12 = func(%start_byte_offset_1:u32):mat2x2<f32> {  # %start_byte_offset_1: 'start_byte_offset'
   $B4: {
-    %a_1:ptr<function, array<u32, 2>, read_write> = var array<u32, 2>(0u)  # %a_1: 'a'
-    loop [i: $B5, b: $B6, c: $B7] {  # loop_1
-      $B5: {  # initializer
-        next_iteration 0u  # -> $B6
-      }
-      $B6 (%idx:u32): {  # body
-        %17:bool = gte %idx, 2u
-        if %17 [t: $B8] {  # if_1
-          $B8: {  # true
-            exit_loop  # loop_1
-          }
-        }
-        %18:u32 = mul %idx, 4u
-        %19:u32 = add %start_byte_offset_1, %18
-        %20:ptr<function, u32, read_write> = access %a_1, %idx
-        %21:u32 = div %19, 2u
-        %22:ptr<workgroup, u16, read_write> = access %v, %21
-        %23:u16 = load %22
-        %24:u32 = add %21, 1u
-        %25:ptr<workgroup, u16, read_write> = access %v, %24
-        %26:u16 = load %25
-        %27:vec2<u16> = construct %23, %26
-        %28:u32 = bitcast<u32> %27
-        store %20, %28
-        continue  # -> $B7
-      }
-      $B7: {  # continuing
-        %29:u32 = add %idx, 1u
-        next_iteration %29  # -> $B6
-      }
-    }
-    %30:array<u32, 2> = load %a_1
-    ret %30
+    %15:u32 = div %start_byte_offset_1, 2u
+    %16:ptr<workgroup, u16, read_write> = access %v, %15
+    %17:u16 = load %16
+    %18:u32 = add %15, 1u
+    %19:ptr<workgroup, u16, read_write> = access %v, %18
+    %20:u16 = load %19
+    %21:u32 = add %18, 1u
+    %22:ptr<workgroup, u16, read_write> = access %v, %21
+    %23:u16 = load %22
+    %24:u32 = add %21, 1u
+    %25:ptr<workgroup, u16, read_write> = access %v, %24
+    %26:u16 = load %25
+    %27:vec2<u16> = construct %17, %20
+    %28:u32 = bitcast<u32> %27
+    %29:vec2<u16> = construct %23, %26
+    %30:u32 = bitcast<u32> %29
+    %31:vec2<u32> = construct %28, %30
+    %32:vec2<f32> = bitcast<vec2<f32>> %31
+    %33:u32 = add 8u, %start_byte_offset_1
+    %34:u32 = div %33, 2u
+    %35:ptr<workgroup, u16, read_write> = access %v, %34
+    %36:u16 = load %35
+    %37:u32 = add %34, 1u
+    %38:ptr<workgroup, u16, read_write> = access %v, %37
+    %39:u16 = load %38
+    %40:u32 = add %37, 1u
+    %41:ptr<workgroup, u16, read_write> = access %v, %40
+    %42:u16 = load %41
+    %43:u32 = add %40, 1u
+    %44:ptr<workgroup, u16, read_write> = access %v, %43
+    %45:u16 = load %44
+    %46:vec2<u16> = construct %36, %39
+    %47:u32 = bitcast<u32> %46
+    %48:vec2<u16> = construct %42, %45
+    %49:u32 = bitcast<u32> %48
+    %50:vec2<u32> = construct %47, %49
+    %51:vec2<f32> = bitcast<vec2<f32>> %50
+    %52:mat2x2<f32> = construct %32, %51
+    ret %52
   }
 }
 )";
@@ -3699,7 +3705,7 @@ $B1: {  # root
 TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_StoreStruct) {
     auto* sb = ty.Struct(mod.symbols.New("SB"), {
                                                     {mod.symbols.New("a"), ty.u16()},
-                                                    {mod.symbols.New("b"), ty.array(ty.u32(), 2_u)},
+                                                    {mod.symbols.New("b"), ty.mat2x2<f32>()},
                                                 });
     auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
     b.ir.root_block->Append(var);
@@ -3711,9 +3717,9 @@ TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_StoreStruct) {
     });
 
     auto* src = R"(
-SB = struct @align(4) {
+SB = struct @align(8) {
   a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
+  b:mat2x2<f32> @offset(8)
 }
 
 $B1: {  # root
@@ -3722,7 +3728,7 @@ $B1: {  # root
 
 %foo = @fragment func():void {
   $B2: {
-    store %v, SB(0u16, array<u32, 2>(0u))
+    store %v, SB(0u16, mat2x2<f32>(vec2<f32>(0.0f)))
     ret
   }
 }
@@ -3731,18 +3737,18 @@ $B1: {  # root
     ASSERT_EQ(src, str());
 
     auto* expect = R"(
-SB = struct @align(4) {
+SB = struct @align(8) {
   a:u16 @offset(0)
-  b:array<u32, 2> @offset(4)
+  b:mat2x2<f32> @offset(8)
 }
 
 $B1: {  # root
-  %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
+  %v:ptr<workgroup, array<u16, 12>, read_write> = var undef
 }
 
 %foo = @fragment func():void {
   $B2: {
-    %3:void = call %4, 0u, SB(0u16, array<u32, 2>(0u))
+    %3:void = call %4, 0u, SB(0u16, mat2x2<f32>(vec2<f32>(0.0f)))
     ret
   }
 }
@@ -3752,44 +3758,65 @@ $B1: {  # root
     %8:u32 = div %start_byte_offset, 2u
     %9:ptr<workgroup, u16, read_write> = access %v, %8
     store %9, %7
-    %10:u32 = add 4u, %start_byte_offset
-    %11:array<u32, 2> = access %object, 1u
+    %10:u32 = add 8u, %start_byte_offset
+    %11:mat2x2<f32> = access %object, 1u
     %12:void = call %13, %10, %11
     ret
   }
 }
-%13 = func(%start_byte_offset_1:u32, %object_1:array<u32, 2>):void {  # %start_byte_offset_1: 'start_byte_offset', %object_1: 'object'
+%13 = func(%start_byte_offset_1:u32, %object_1:mat2x2<f32>):void {  # %start_byte_offset_1: 'start_byte_offset', %object_1: 'object'
   $B4: {
-    loop [i: $B5, b: $B6, c: $B7] {  # loop_1
-      $B5: {  # initializer
-        next_iteration 0u  # -> $B6
-      }
-      $B6 (%idx:u32): {  # body
-        %17:bool = gte %idx, 2u
-        if %17 [t: $B8] {  # if_1
-          $B8: {  # true
-            exit_loop  # loop_1
-          }
-        }
-        %18:u32 = mul %idx, 4u
-        %19:u32 = add %start_byte_offset_1, %18
-        %20:u32 = access %object_1, %idx
-        %21:u32 = div %19, 2u
-        %22:vec2<u16> = bitcast<vec2<u16>> %20
-        %23:ptr<workgroup, u16, read_write> = access %v, %21
-        %24:u16 = access %22, 0u
-        store %23, %24
-        %25:u32 = add %21, 1u
-        %26:ptr<workgroup, u16, read_write> = access %v, %25
-        %27:u16 = access %22, 1u
-        store %26, %27
-        continue  # -> $B7
-      }
-      $B7: {  # continuing
-        %28:u32 = add %idx, 1u
-        next_iteration %28  # -> $B6
-      }
-    }
+    %16:vec2<f32> = access %object_1, 0u
+    %17:u32 = div %start_byte_offset_1, 2u
+    %18:f32 = access %16, 0u
+    %19:vec2<u16> = bitcast<vec2<u16>> %18
+    %20:u16 = access %19, 0u
+    %21:ptr<workgroup, u16, read_write> = access %v, %17
+    store %21, %20
+    %22:u32 = add %17, 1u
+    %23:f32 = access %16, 0u
+    %24:vec2<u16> = bitcast<vec2<u16>> %23
+    %25:u16 = access %24, 1u
+    %26:ptr<workgroup, u16, read_write> = access %v, %22
+    store %26, %25
+    %27:u32 = add %22, 1u
+    %28:f32 = access %16, 1u
+    %29:vec2<u16> = bitcast<vec2<u16>> %28
+    %30:u16 = access %29, 0u
+    %31:ptr<workgroup, u16, read_write> = access %v, %27
+    store %31, %30
+    %32:u32 = add %27, 1u
+    %33:f32 = access %16, 1u
+    %34:vec2<u16> = bitcast<vec2<u16>> %33
+    %35:u16 = access %34, 1u
+    %36:ptr<workgroup, u16, read_write> = access %v, %32
+    store %36, %35
+    %37:u32 = add 8u, %start_byte_offset_1
+    %38:vec2<f32> = access %object_1, 1u
+    %39:u32 = div %37, 2u
+    %40:f32 = access %38, 0u
+    %41:vec2<u16> = bitcast<vec2<u16>> %40
+    %42:u16 = access %41, 0u
+    %43:ptr<workgroup, u16, read_write> = access %v, %39
+    store %43, %42
+    %44:u32 = add %39, 1u
+    %45:f32 = access %38, 0u
+    %46:vec2<u16> = bitcast<vec2<u16>> %45
+    %47:u16 = access %46, 1u
+    %48:ptr<workgroup, u16, read_write> = access %v, %44
+    store %48, %47
+    %49:u32 = add %44, 1u
+    %50:f32 = access %38, 1u
+    %51:vec2<u16> = bitcast<vec2<u16>> %50
+    %52:u16 = access %51, 0u
+    %53:ptr<workgroup, u16, read_write> = access %v, %49
+    store %53, %52
+    %54:u32 = add %49, 1u
+    %55:f32 = access %38, 1u
+    %56:vec2<u16> = bitcast<vec2<u16>> %55
+    %57:u16 = access %56, 1u
+    %58:ptr<workgroup, u16, read_write> = access %v, %54
+    store %58, %57
     ret
   }
 }
