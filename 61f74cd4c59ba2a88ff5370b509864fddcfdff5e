@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d4dd354_49e39981",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-25T20:50:54Z",
+      "side": 1,
+      "message": "Thoughts?",
+      "revId": "61f74cd4c59ba2a88ff5370b509864fddcfdff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "438fc474_e93fa123",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-25T20:50:54Z",
+      "side": 1,
+      "message": "Once we have are explicitly setting this flag from the various flows (fuzzers, Tint exe, Dawn), then I\u0027ll probably remove the build flag and default this to `false` here.",
+      "revId": "61f74cd4c59ba2a88ff5370b509864fddcfdff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
