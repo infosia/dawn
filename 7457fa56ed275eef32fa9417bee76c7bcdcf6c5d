@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a088f339_fbaca378",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T20:17:17Z",
+      "side": 1,
+      "message": "LGTM with one question.",
+      "revId": "7457fa56ed275eef32fa9417bee76c7bcdcf6c5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b5b4c24_d3a3c928",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-25T20:17:17Z",
+      "side": 1,
+      "message": "Is this still intended to be commented out? Seems like you still want it to look through every variant.",
+      "revId": "7457fa56ed275eef32fa9417bee76c7bcdcf6c5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
