@@ -16,6 +16,115 @@
       "message": "Updated. PTAL",
       "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30848ab_647d2de1",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:36:10Z",
+      "side": 1,
+      "message": "nit: think this can be removed. \"CPUWritable\" already implies that this is mappable.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 16,
+        "endLine": 1057,
+        "endChar": 46
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92aad482_e08d9f7d",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:36:10Z",
+      "side": 1,
+      "message": "nit: similarly, this could be removed.",
+      "range": {
+        "startLine": 1092,
+        "startChar": 16,
+        "endLine": 1092,
+        "endChar": 46
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7ae8be4_02b3a92b",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:36:10Z",
+      "side": 1,
+      "message": "nit: maybe we should add a TODO to invesigate the performance of both read \u0026 write access flags.\n\n\n```suggestion\n            // TODO(crbug.com/479047477): Investigate the performance of including both read \u0026 write accesses.\n            bufferDescriptor.CPUAccessFlags \u003d D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;\n```",
+      "range": {
+        "startLine": 1105,
+        "startChar": 12,
+        "endLine": 1105,
+        "endChar": 93
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33d52de8_8403e2e2",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:36:10Z",
+      "side": 1,
+      "message": "nit: I think this can be made shorter\n\n\n```suggestion\n        // If this buffer is mappable and the last updated storage is GPU writable, we need to\n        // update the staging storage when the command buffer is flushed.\n        // This is to make sure the staging storage will contain the up-to-date GPU modified data.\n        // Note: we only do this if the mappable and GPU writable storages are separate.\n```",
+      "range": {
+        "startLine": 1209,
+        "startChar": 8,
+        "endLine": 1213,
+        "endChar": 93
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "048f506f_71c344cb",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-25T16:36:10Z",
+      "side": 1,
+      "message": "nit: I think we should keep the old statement \"We don\u0027t need multiple CPU writable buffers to exist.\"",
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
