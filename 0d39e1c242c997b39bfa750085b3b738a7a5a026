@@ -16,6 +16,57 @@
       "message": "Sorry for the massive delay :/, I\u0027m planning on coming back to land this CL at least.",
       "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "865b186b_6e214109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T09:52:59Z",
+      "side": 1,
+      "message": "LGTM still, no worries about the delay, your GSoC was over and we were planning on having the team at Google finish up the texel buffer prototype some time in Q2/3 to not have a dangling project.",
+      "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1660f3f0_26bc777b",
+        "filename": "src/dawn/native/TintUtils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T09:52:59Z",
+      "side": 1,
+      "message": "nit: this can be more precise, explaining that there\u0027s a hack in ShaderModuleVk and that this is where the remapping should be instead.",
+      "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e1b4476_a70c75ee",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-25T09:52:59Z",
+      "side": 1,
+      "message": "Are you sure about this? IIRC we said we\u0027d only support storage texel buffers and not uniform ones.",
+      "revId": "0d39e1c242c997b39bfa750085b3b738a7a5a026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
