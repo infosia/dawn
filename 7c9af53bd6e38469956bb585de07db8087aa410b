@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c27b2dea_0ec18ec0",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-25T17:56:37Z",
+      "side": 1,
+      "message": "Is this the same as `buffer\u003efirst\u003c1\u003e()` ?",
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba61f6cd_b7314c30",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-25T17:56:37Z",
+      "side": 1,
+      "message": "```suggestion\n            break;\n        }\n```",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8278bc03_095dd42f",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-25T17:56:37Z",
+      "side": 1,
+      "message": "```suggestion\n            break;\n        }\n```",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2462632_3b0c5c05",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-25T17:56:37Z",
+      "side": 1,
+      "message": "```suggestion\n            break;\n        }\n```",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 16
+      },
+      "revId": "7c9af53bd6e38469956bb585de07db8087aa410b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
