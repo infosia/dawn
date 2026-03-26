@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02fce6b6_946f31a8",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-26T21:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caefa8c3_808127be",
+      "range": {
+        "startLine": 811,
+        "startChar": 2,
+        "endLine": 813,
+        "endChar": 3
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0575ed00_bdeb5ce1",
@@ -71,6 +95,30 @@
       "writtenOn": "2026-03-26T17:55:49Z",
       "side": 1,
       "message": "This looks like it will be true for Apple devices. I think we can use `CMAKE_HOST_SYSTEM_NAME STREQUAL \"Linux\"` (unfortunately `LINUX` isn\u0027t available in the version of CMake we claim to support in the toplevel file)",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "886e054b_123e2297",
+        "filename": "src/dawn/tests/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-26T21:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0575ed00_bdeb5ce1",
       "range": {
         "startLine": 212,
         "startChar": 4,
@@ -128,6 +176,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d724d3b_998cbc3d",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-26T21:40:45Z",
+      "side": 1,
+      "message": "Good to know for the future.",
+      "parentUuid": "f57d7237_0bbf873a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15cfd31d_944e9fe4",
@@ -141,6 +213,30 @@
       "writtenOn": "2026-03-26T17:45:01Z",
       "side": 1,
       "message": "nit. For feature gated tests, I think we usually override the `SetUp` function to skip appropriately and also the `GetRequiredFeatures` function to require the feature on the created device. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/PixelLocalStorageTests.cpp;l\u003d37;bpv\u003d1;bpt\u003d0 for an example with feature gated test suites.\n\nSince the feature is enabled unconditionally though, I think you can probably ignore overriding `GetRequiredFeatures`, but I think putting the skip in `SetUp` would be better.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 91
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8733d7_0cf1d519",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-26T21:40:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15cfd31d_944e9fe4",
       "range": {
         "startLine": 36,
         "startChar": 4,
