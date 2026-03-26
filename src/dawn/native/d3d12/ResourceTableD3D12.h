@@ -61,6 +61,10 @@ class ResourceTable final : public ResourceTableBase {
     // AllocateAndSwitchShaderVisibleHeap and populate again.
     bool PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocator);
 
+    // Returns the number of view descriptors currently allocated on the CPU heap, and copied to the
+    // GPU heap by PopulateViews.
+    uint32_t GetViewDescriptorCount() const;
+
     // Returns a GPU heap handle handle to the base descriptor of the set of descriptors
     // that were copied there in PopulateViews. This should be set as a root descriptor table on the
     // command list to match the definition in the root signature.
