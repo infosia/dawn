@@ -153,7 +153,9 @@ struct Options {
     bool ir_roundtrip = false;
 
 #if TINT_BUILD_SPV_READER
-    tint::spirv::reader::Options spirv_reader_options;
+    tint::spirv::reader::Options spirv_reader_options{
+        .enable_validation_asserts = true,
+    };
 #endif  // TINT_BUILD_SPV_READER
 #if TINT_BUILD_WGSL_WRITER
     tint::wgsl::writer::Options wgsl_writer_options;
@@ -1487,6 +1489,7 @@ bool Generate([[maybe_unused]] const Options& options,
     // Convert the AST program to an IR module.
     tint::wgsl::reader::IROptions ir_options{
         .dump_ir_when_validating = options.dump_ir,
+        .enable_validation_asserts = true,
     };
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(program, ir_options);
     if (ir != tint::Success) {
@@ -1581,6 +1584,7 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
     if (options.ir_roundtrip) {
         tint::wgsl::reader::IROptions ir_options{
             .dump_ir_when_validating = options.dump_ir,
+            .enable_validation_asserts = true,
         };
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(info.program, ir_options);
         if (ir != tint::Success) {
