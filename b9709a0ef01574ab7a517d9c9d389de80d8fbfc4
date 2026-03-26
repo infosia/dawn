@@ -217,6 +217,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f77e938f_1f0a3ca9",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T13:14:50Z",
+      "side": 1,
+      "message": "\u003e After some digging I found that the cache key also takes into account the dynamic state array that is set as part of the VkPipelineDynamicStateCreateInfo, so a pipeline with VK_DYNAMIC_STATE_CULL_MODE_EXT and VK_CULL_MODE_NONE\n\nHow does that work exactly? `VkPipelineDynamicStateCreateInfo::pDynamicStates` only has enum `VK_DYNAMIC_STATE_CULL_MODE_EXT` to identify which piece of state is dynamic and not the state value itself. \n\nI guess more generally this CL could use a test to show that creating a second pipeline which varies only in dynamic state is a cache miss that creates a unique RenderPipeline object and creating a second pipeline that is identical to the first is still a cache hit.",
+      "parentUuid": "41d7ad2b_1f7b90ec",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7a144cfb_874e5a56",
