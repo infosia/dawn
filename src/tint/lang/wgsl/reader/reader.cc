@@ -60,6 +60,8 @@ Result<core::ir::Module> ProgramToLoweredIR(const Program& program, const IROpti
     TINT_CHECK_RESULT_UNWRAP(ir, ProgramToIR(program));
     ir.ice_callback = options.ice_callback;
     ir.dump_ir_when_validating = options.dump_ir_when_validating;
+    ir.enable_validation_asserts = options.enable_validation_asserts;
+
     bool atomic_vec2u_min_max = false;
     for (auto* enable : program.AST().Enables()) {
         if (enable->HasExtension(wgsl::Extension::kAtomicVec2UMinMax)) {
