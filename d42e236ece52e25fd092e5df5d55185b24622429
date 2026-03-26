@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c09f7142_68451019",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T13:08:00Z",
+      "side": 1,
+      "message": "Makes sense, I\u0027ll write up a test and fix this.",
+      "parentUuid": "d42f9fda_63b0febe",
+      "range": {
+        "startLine": 525,
+        "startChar": 1,
+        "endLine": 530,
+        "endChar": 8
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62dfb08b_42db3e3c",
         "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-26T11:25:49Z",
       "side": 1,
       "message": "We have integer helpers in `Math.h` that will be faster than converting to float and using the float logs. `mDescriptorCount \u003d 1 \u003c\u003c (Log(desiredHeapCount) + 1);`?",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07a590d6_dcd87d54",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T13:08:00Z",
+      "side": 1,
+      "message": "Ah nice, I was going to do bitwise directly, but I wanted to make this readable. I\u0027ll use `Log2` from Math.h, and add a `Pow2` to it as well instead of shifting `1` left.",
+      "parentUuid": "62dfb08b_42db3e3c",
       "range": {
         "startLine": 188,
         "startChar": 0,
