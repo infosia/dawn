@@ -46,6 +46,9 @@ struct IROptions {
 
     /// If true, dump the IR whenever validation is performed.
     bool dump_ir_when_validating = false;
+
+    /// If true, enable validation assertions.
+    bool enable_validation_asserts = false;
 };
 
 /// Parses the WGSL source, returning the parsed program.
