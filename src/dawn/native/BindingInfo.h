@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_BINDINGINFO_H_
 
 #include <cstdint>
+#include <utility>
 #include <variant>
 #include <vector>
 
@@ -173,20 +174,16 @@ BindingInfoType GetBindingInfoType(const BindingInfo& bindingInfo);
 BindingInfoType GetBindingInfoType(const BindGroupLayoutEntry* entry);
 
 // Match tint::BindingPoint, can convert to/from tint::BindingPoint using ToTint and FromTint.
-#define BINDING_SLOT_MEMBER(X) \
-    X(BindGroupIndex, group)   \
+#define WGSL_BIND_POINT_MEMBER(X) \
+    X(BindGroupIndex, group)      \
     X(BindingNumber, binding)
 // clang-format off
-DAWN_SERIALIZABLE(struct, BindingSlot, BINDING_SLOT_MEMBER){
-    constexpr bool operator==(const BindingSlot& rhs) const {
-        return group == rhs.group && binding == rhs.binding;
-    }
+DAWN_SERIALIZABLE(struct, WGSLBindPoint, WGSL_BIND_POINT_MEMBER){
+    constexpr WGSLBindPoint() = default;
+    constexpr WGSLBindPoint(BindGroupIndex groupIn, BindingNumber bindingIn)
+        : Contents{groupIn, bindingIn} {}
 
-    constexpr bool operator!=(const BindingSlot& rhs) const {
-        return !(*this == rhs);
-    }
-
-    constexpr bool operator<(const BindingSlot& rhs) const {
+    constexpr bool operator<(const WGSLBindPoint& rhs) const {
         if (group < rhs.group) {
             return true;
         }
@@ -194,6 +191,11 @@ DAWN_SERIALIZABLE(struct, BindingSlot, BINDING_SLOT_MEMBER){
             return false;
         }
         return binding < rhs.binding;
+    }
+
+    template <typename H>
+    friend H AbslHashValue(H h, const WGSLBindPoint& b) {
+        return H::combine(std::move(h), b.group, b.binding);
     }
 };
 // clang-format on

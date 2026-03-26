@@ -79,12 +79,12 @@ class Stream<T> {
 };
 }  // namespace stream
 
-constexpr tint::BindingPoint ToTint(const BindingSlot& slot) {
-    return {static_cast<uint32_t>(slot.group), static_cast<uint32_t>(slot.binding)};
+constexpr tint::BindingPoint ToTint(const WGSLBindPoint& b) {
+    return {static_cast<uint32_t>(b.group), static_cast<uint32_t>(b.binding)};
 }
 
-constexpr BindingSlot FromTint(const tint::BindingPoint& tintBindingPoint) {
-    return {{BindGroupIndex(tintBindingPoint.group), BindingNumber(tintBindingPoint.binding)}};
+constexpr WGSLBindPoint FromTint(const tint::BindingPoint& tintBindingPoint) {
+    return {BindGroupIndex(tintBindingPoint.group), BindingNumber(tintBindingPoint.binding)};
 }
 
 // Helper function to generate the binding remapping information for Tint compilation. Each backend
