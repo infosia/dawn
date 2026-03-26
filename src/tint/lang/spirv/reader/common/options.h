@@ -42,6 +42,9 @@ struct Options {
     /// If this map is empty, any binding conflicts will be automatically resolved by incrementing
     /// binding numbers until they are unique.
     std::unordered_map<BindingPoint, BindingPoint> sampler_mappings{};
+
+    /// If true, dump the IR whenever validation is performed.
+    bool dump_ir_when_validating = false;
 };
 
 }  // namespace tint::spirv::reader
