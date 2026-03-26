@@ -150,6 +150,7 @@ struct Options {
     bool enable_robustness = true;
 
     bool dump_ir = false;
+    bool enable_ir_validation_asserts = true;
     bool ir_roundtrip = false;
 
 #if TINT_BUILD_SPV_READER
@@ -532,6 +533,15 @@ When specified, automatically enables HLSL validation)",
     TINT_DEFER(opts->dump_ir = *dump_ir.value);
 #if TINT_BUILD_SPV_READER
     TINT_DEFER(opts->spirv_reader_options.dump_ir_when_validating = *dump_ir.value);
+#endif
+
+    auto& disable_validation_asserts = options.Add<BoolOption>(
+        "disable-ir-validation-asserts",
+        "Disable IR validation assertions at each stage of the compilation flow", Default{false});
+    TINT_DEFER(opts->enable_ir_validation_asserts = !*disable_validation_asserts.value);
+#if TINT_BUILD_SPV_READER
+    TINT_DEFER(opts->spirv_reader_options.enable_validation_asserts =
+                   !*disable_validation_asserts.value);
 #endif
 
     auto& ir_roundtrip = options.Add<BoolOption>(
@@ -1489,6 +1499,7 @@ bool Generate([[maybe_unused]] const Options& options,
     // Convert the AST program to an IR module.
     tint::wgsl::reader::IROptions ir_options{
         .dump_ir_when_validating = options.dump_ir,
+        .enable_validation_asserts = options.enable_ir_validation_asserts,
     };
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(program, ir_options);
     if (ir != tint::Success) {
@@ -1583,6 +1594,7 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
     if (options.ir_roundtrip) {
         tint::wgsl::reader::IROptions ir_options{
             .dump_ir_when_validating = options.dump_ir,
+            .enable_validation_asserts = options.enable_ir_validation_asserts,
         };
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(info.program, ir_options);
         if (ir != tint::Success) {
