@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77e8144b_dc11d0e1",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T11:25:49Z",
+      "side": 1,
+      "message": "Could we compute an exact value for this in the condition at [1]?",
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d42f9fda_63b0febe",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T11:25:49Z",
+      "side": 1,
+      "message": "[1] Something like that eventually when there\u0027s also samplers.\n\nA test with bindgroups and a resource table of size 2^n - 1 should be able to show an issue in the current approach.\n\n```suggestion\n        if (!populatedViews || !populatedSamplers) {\n            // Compute the minimum number of samplers needed to ensure everything can be bound at once.\n            uint32_t minDescriptorCount \u003d 0;\n            uint32_t minSamplerCount \u003d 0;\n            if (usesResourceTable) {\n                minDescriptorCount +\u003d mResourceTable-\u003eGetViewDescriptorCount();\n                // sampler\n            }\n            for (BindGroupIndex index : mBindGroupLayoutsMask) {\n                BindGroup* group \u003d ToBackend(mBindGroups[index]);\n                // etc\n            }\n\n            if (!populatedViews) {\n                DAWN_TRY(viewAllocator-\u003eAllocateAndSwitchShaderVisibleHeap(desiredViewHeapCount));\n            }\n\n            if (!populatedSamplers) {\n```",
+      "range": {
+        "startLine": 525,
+        "startChar": 1,
+        "endLine": 530,
+        "endChar": 8
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62dfb08b_42db3e3c",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T11:25:49Z",
+      "side": 1,
+      "message": "We have integer helpers in `Math.h` that will be faster than converting to float and using the float logs. `mDescriptorCount \u003d 1 \u003c\u003c (Log(desiredHeapCount) + 1);`?",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de45288a_8e4541d0",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T11:25:49Z",
+      "side": 1,
+      "message": "```suggestion\n    MaybeError AllocateAndSwitchShaderVisibleHeap(uint32_t minDescriptorCount);\n```\n\nBut also I think that we could require a value that\u0027s not 0 to make sure the caller provides something.",
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
