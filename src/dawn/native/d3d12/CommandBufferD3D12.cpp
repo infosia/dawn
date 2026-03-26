@@ -505,18 +505,26 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
             populatedViews = populatedViews && group->PopulateViews(viewAllocator);
             populatedSamplers = populatedSamplers && group->PopulateSamplers(samplerAllocator);
         }
+        uint32_t desiredViewHeapCount = 0;
         if (usesResourceTable) {
             DAWN_ASSERT(mResourceTable);
             // We don't track resource table dirtiness like we do for BindGroups, so always call
             // PopulateViews. We also do this after bind groups because resource tables are more
             // likely to make the largest GPU sub-allocation, so if it returns false, we don't waste
             // extra time copying a large table to GPU heap memory twice.
-            populatedViews = populatedViews && mResourceTable->PopulateViews(viewAllocator);
+            if (populatedViews) {
+                populatedViews = mResourceTable->PopulateViews(viewAllocator);
+                if (!populatedViews) {
+                    // Get descriptor count to allocate as ResourceTables sizes can vary widely
+                    // between dispatches/draws.
+                    desiredViewHeapCount = mResourceTable->GetViewDescriptorCount();
+                }
+            }
         }
 
         if (!populatedViews || !populatedSamplers) {
             if (!populatedViews) {
-                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
+                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap(desiredViewHeapCount));
             }
 
             if (!populatedSamplers) {

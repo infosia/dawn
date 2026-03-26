@@ -181,7 +181,15 @@ ShaderVisibleDescriptorAllocator::AllocateHeap(uint32_t descriptorCount) const {
 }
 
 // Creates a GPU descriptor heap that manages descriptors in a FIFO queue.
-MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap() {
+MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap(
+    uint32_t desiredHeapCount) {
+    if (desiredHeapCount > mDescriptorCount) {
+        // Align to the next power of two heap size (e.g 4096, 8192, 16384, etc.)
+        auto log = static_cast<uint32_t>(std::log2(desiredHeapCount));
+        auto align = pow(2, log + 1);
+        mDescriptorCount = Align(desiredHeapCount, align);
+    }
+
     std::unique_ptr<ShaderVisibleDescriptorHeap> descriptorHeap;
     // Dynamically allocate using a two-phase allocation strategy.
     // The first phase increasingly grows a small heap in binary sizes for light users while the

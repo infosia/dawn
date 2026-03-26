@@ -81,7 +81,9 @@ class ShaderVisibleDescriptorAllocator {
 
     // Switches the current heap to either a larger one (allocated) or a max size one (retrieved
     // from a pool), and bumps heap serial, invalidating existing GPU descriptor sub-allocations.
-    MaybeError AllocateAndSwitchShaderVisibleHeap();
+    // Optional desiredHeapCount can be passed in to make sure it allocates/retrieves a heap
+    // that fits, which is required if the next larger one isn't big enough.
+    MaybeError AllocateAndSwitchShaderVisibleHeap(uint32_t desiredHeapCount = 0);
 
     // For testing purposes only.
     HeapVersionID GetShaderVisibleHeapSerialForTesting() const;

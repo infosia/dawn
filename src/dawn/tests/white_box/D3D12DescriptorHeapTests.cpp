@@ -1432,5 +1432,198 @@ DAWN_INSTANTIATE_TEST(D3D12DescriptorHeapTests,
                       D3D12Backend(),
                       D3D12Backend({"use_d3d12_small_shader_visible_heap"}));
 
+class D3D12ResourceTableDescriptorHeapTests : public D3D12DescriptorHeapTests {
+  protected:
+    // Roughly how many default resources created by the table. This doesn't need
+    // to be precise. Used to make sure we don't overflow descriptors because
+    // of these implicitly created default resources when creating tables.
+    static constexpr uint32_t kDefaultResourceCount = 100;
+
+    void SetUp() override {
+        D3D12DescriptorHeapTests::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(
+            !SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}));
+
+        // Override the fragment shader from base
+        mSimpleFSModule = utils::CreateShaderModule(device, R"(
+            enable chromium_experimental_resource_table;
+            @fragment fn main() -> @location(0) vec4f {
+                _ = hasResource<texture_2d<u32>>(0);
+                return vec4f(0);
+            })");
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable})) {
+            return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};
+        }
+        return {};
+    }
+
+    wgpu::ResourceTable MakeResourceTable(uint32_t size) {
+        wgpu::ResourceTableDescriptor desc;
+        desc.size = size;
+        wgpu::ResourceTable table = device.CreateResourceTable(&desc);
+        return table;
+    }
+
+    wgpu::PipelineLayout MakePipelineLayoutWithTable(std::vector<wgpu::BindGroupLayout> bgls = {},
+                                                     uint32_t immediateSize = 0) {
+        wgpu::PipelineLayoutResourceTable plTable;
+        plTable.usesResourceTable = true;
+
+        wgpu::PipelineLayoutDescriptor desc{
+            .nextInChain = &plTable,
+            .bindGroupLayoutCount = bgls.size(),
+            .bindGroupLayouts = bgls.data(),
+            .immediateSize = immediateSize,
+        };
+
+        return device.CreatePipelineLayout(&desc);
+    }
+};
+
+// Verify the shader visible view heaps switch over every submit when binding a resource table that
+// doubles in size
+TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapGradually) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        mD3DDevice->IsToggleEnabled(native::Toggle::UseD3D12SmallShaderVisibleHeapForTesting));
+
+    utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
+    renderPipelineDescriptor.layout = MakePipelineLayoutWithTable();
+    renderPipelineDescriptor.vertex.module = mSimpleVSModule;
+    renderPipelineDescriptor.cFragment.module = mSimpleFSModule;
+
+    wgpu::RenderPipeline renderPipeline = device.CreateRenderPipeline(&renderPipelineDescriptor);
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+
+    Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
+    auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
+    const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
+    DAWN_ASSERT(heapSize >
+                kDefaultResourceCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
+
+    const HeapVersionID heapSerial = allocator->GetShaderVisibleHeapSerialForTesting();
+
+    uint32_t tableSize = heapSize;
+    for (int i = 0;; ++i) {
+        wgpu::ResourceTable table = MakeResourceTable(tableSize - kDefaultResourceCount);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(renderPipeline);
+        pass.SetResourceTable(table);
+        pass.Draw(3);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_EQ(allocator->GetShaderVisibleHeapSerialForTesting(), heapSerial + HeapVersionID(i));
+
+        // Make the table grow so that each iteration is double the previous heap size
+        // to force the allocator to grow by double its current size.
+        tableSize *= 2;
+        if ((tableSize - kDefaultResourceCount) >= kMaxResourceTableSize) {
+            break;
+        }
+    }
+}
+
+// Verify the shader visible view heaps switch over every submit when binding a resource table that
+// quadruples in size
+TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapLargeJumps) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        mD3DDevice->IsToggleEnabled(native::Toggle::UseD3D12SmallShaderVisibleHeapForTesting));
+
+    utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
+    renderPipelineDescriptor.layout = MakePipelineLayoutWithTable();
+    renderPipelineDescriptor.vertex.module = mSimpleVSModule;
+    renderPipelineDescriptor.cFragment.module = mSimpleFSModule;
+
+    wgpu::RenderPipeline renderPipeline = device.CreateRenderPipeline(&renderPipelineDescriptor);
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+
+    Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
+    auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
+    const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
+    DAWN_ASSERT(heapSize >
+                kDefaultResourceCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
+
+    const HeapVersionID heapSerial = allocator->GetShaderVisibleHeapSerialForTesting();
+
+    uint32_t tableSize = heapSize;
+    for (int i = 0;; ++i) {
+        wgpu::ResourceTable table = MakeResourceTable(tableSize - kDefaultResourceCount);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(renderPipeline);
+        pass.SetResourceTable(table);
+        pass.Draw(3);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_EQ(allocator->GetShaderVisibleHeapSerialForTesting(), heapSerial + HeapVersionID(i));
+
+        // Make the table grow so that each iteration is quadruple the previous heap size
+        // to force the allocator to grow by quadruple its current size.
+        tableSize *= 4;
+        if ((tableSize - kDefaultResourceCount) >= kMaxResourceTableSize) {
+            break;
+        }
+    }
+}
+
+// Verify the shader visible view heaps switch over every submit when binding a resource table that
+// goes from smallest to largest size
+TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapLargestJump) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        mD3DDevice->IsToggleEnabled(native::Toggle::UseD3D12SmallShaderVisibleHeapForTesting));
+
+    utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
+    renderPipelineDescriptor.layout = MakePipelineLayoutWithTable();
+    renderPipelineDescriptor.vertex.module = mSimpleVSModule;
+    renderPipelineDescriptor.cFragment.module = mSimpleFSModule;
+
+    wgpu::RenderPipeline renderPipeline = device.CreateRenderPipeline(&renderPipelineDescriptor);
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+
+    Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
+    auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
+    const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
+    DAWN_ASSERT(heapSize >
+                kDefaultResourceCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
+
+    const HeapVersionID heapSerial = allocator->GetShaderVisibleHeapSerialForTesting();
+
+    auto draw = [&](wgpu::ResourceTable table) {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(renderPipeline);
+        pass.SetResourceTable(table);
+        pass.Draw(3);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    };
+
+    // Make min size table
+    {
+        wgpu::ResourceTable table = MakeResourceTable(heapSize - kDefaultResourceCount);
+        draw(table);
+        EXPECT_EQ(allocator->GetShaderVisibleHeapSerialForTesting(), heapSerial + HeapVersionID(0));
+    }
+    // Make largest table
+    {
+        wgpu::ResourceTable table =
+            MakeResourceTable(kMaxResourceTableSize - kDefaultResourceCount);
+        draw(table);
+        EXPECT_EQ(allocator->GetShaderVisibleHeapSerialForTesting(), heapSerial + HeapVersionID(1));
+    }
+}
+
+DAWN_INSTANTIATE_TEST(D3D12ResourceTableDescriptorHeapTests, D3D12Backend(), );
+
 }  // anonymous namespace
 }  // namespace dawn::native::d3d12
