@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5653dfee_c477e187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T20:55:23Z",
+      "side": 1,
+      "message": "I only made it half way through the CL but here are my comments so far.",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b306b4f3_fbcc4150",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T20:55:23Z",
+      "side": 1,
+      "message": "Related to the comment on StaticSamplerBindingInfo it would be nice if we could assert from StaticSamplerBindingInfo that this isn\u0027t for non-external YCbCr sampler.",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4adc5347_23c21deb",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T20:55:23Z",
+      "side": 1,
+      "message": "Is this set always non-empty for `specialization` passed in here?",
+      "range": {
+        "startLine": 257,
+        "startChar": 62,
+        "endLine": 257,
+        "endChar": 91
+      },
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
