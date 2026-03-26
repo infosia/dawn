@@ -1486,6 +1486,7 @@ bool Generate([[maybe_unused]] const Options& options,
     // Convert the AST program to an IR module.
     tint::wgsl::reader::IROptions ir_options{
         .dump_ir_when_validating = options.dump_ir,
+        .enable_validation_asserts = true,
     };
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(program, ir_options);
     if (ir != tint::Success) {
