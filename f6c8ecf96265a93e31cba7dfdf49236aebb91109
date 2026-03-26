@@ -87,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9d69825_1771f27e",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T15:45:26Z",
+      "side": 1,
+      "message": "Ah yes, because we process ranges one by one based on the default resource (and the typeID in the future), that\u0027s ok.",
+      "parentUuid": "c7583677_58e0381a",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13b0cb80_810268fe",
@@ -322,6 +340,24 @@
       "side": 1,
       "message": "I didn\u0027t want to put that here because this could be different depending on the backend. I could add \"for e.g. on D3D12...\"",
       "parentUuid": "503032f1_02e459b1",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f2f3efa_94068cd6",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T15:45:26Z",
+      "side": 1,
+      "message": "But the generated WGSL code does one specific thing, irrespective of which backend it is called from, so I think it\u0027s worth detailing it. Tint is independent of Dawn in that sense.",
+      "parentUuid": "c066f92f_c78b5829",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
