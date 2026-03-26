@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae29d7b1_948a2099",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T17:32:58Z",
+      "side": 1,
+      "message": "Superseeded by https://dawn-review.git.corp.google.com/c/dawn/+/299575",
+      "revId": "355cdaed70cbef10ec27f3fa3b160df11043c1cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
