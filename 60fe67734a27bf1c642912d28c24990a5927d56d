@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae6fc6c9_f0041be1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "Apologies, I\u0027ve only gotten through part of this so far. Will get to the rest tomorrow. Going in the order you suggested, I made my way up to the BGL at least.",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b306b4f3_fbcc4150",
@@ -31,6 +48,23 @@
       "writtenOn": "2026-03-26T20:55:23Z",
       "side": 1,
       "message": "Related to the comment on StaticSamplerBindingInfo it would be nice if we could assert from StaticSamplerBindingInfo that this isn\u0027t for non-external YCbCr sampler.",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f518fb91_50f5a389",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "The `{}` as the first initializer argument here creates a `Specialization` with a zeroed out `StaticSamplerSpecializations`, right? Isn\u0027t that a valid `StaticSamplerSpecializations`, which could produce a different handle than `mHandle` if requested explicitly. By inserting `mHandle` here, though you would get a \"cache hit\" when later calling `GetOrCreateSpecializedHandle()` with a zeroed `Specialization`, which would return the wrong handle.\n\nOr am I misunderstanding the relationship between the specializations and the \"normal\" BGL?",
       "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +88,74 @@
         "endLine": 257,
         "endChar": 91
       },
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c9df2c0_c638cbb3",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "```suggestion\n    // Caches VkDescriptorSetLayouts for specializations so that the lifetime guarantees are the same\n```",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78da0360_d1d91ef2",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "Nit that you\u0027re free to ignore: This feels a little weird, as it\u0027s effectively a descriptor with the create method on the descriptor itself? It works, but it seems to go against the patterns used in the rest of Dawn.\n\nWould it be too confusing to put the CreateSampler method on the Sampler object at the top of the file?",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc616793_bea31a3b",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "Despite this comment, I\u0027m not sure I understand the rationale of the caching strategy? Samplers are added to the cache but never retrieved, and the cache is only cleared on device destroy. I guess that implies that you expect a fairly low number of unique samplers in this context, and are relying on the frontend de-duplication? Wouldn\u0027t the front end cache already be keeping them alive, though?",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0577c72d_6c97d30e",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T23:23:34Z",
+      "side": 1,
+      "message": "Why does this return a SamplerBase instead of the Sampler directly?",
       "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
