@@ -16,6 +16,295 @@
       "message": "CC\u0027ing Kai as some of this will be similar to what we need to do for Metal.",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6f27cca_ba9918f9",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "It is possible to have a case where both a new resource is added and a previous one is removed. What about renaming `resourceUpdates` to `resourceDiff` that may contain an addition, a removal, or both.\n\nExample of how we\u0027d get in the case with both an addition and a removal:\n\n```\ntable.Update(0, textureA);\nqueue.Submit(stuff that uses the resource table);\n\ntable.RemoveBinding(0)\nWaitForAllOperations()\ntable.Update(0, textureB);\n\n// Potentially multiple times, the backend should only see the removal of A and the latest addition, here C\ntable.RemoveBinding(0)\nWaitForAllOperations()\ntable.Update(0, textureC);\n\nqueue.Submit(stuff that uses the resource table);\n```\n\nLet\u0027s have tests for both the cases outlined above.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5ae4d74_ce700eae",
+        "filename": "src/dawn/native/ResourceTable.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Can this mention that the data is only the typeID and stuffed in the low 16 bits? With maybe an ASSERT in the D3D12 backend that this is indeed the case?",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651c328e_90e9ee37",
+        "filename": "src/dawn/native/ResourceTableDefaultResources.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "nit: also comment that they need to stay last.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13b0cb80_810268fe",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Instead of getting the resources here, can we use the two new getters for `Get[Non]SamplerCount` to decide whether to add a sampler or srv range? Alternatively we could get the tint::ResourceType in the shader\u0027s order and call some `IsSampler(tint::ResourceType)`.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a155a6d3_d764746b",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "With the `IsSampler`, this code can maybe be factored a bit.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66768048_97aa56ce",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "nit: assign a TODO to an issue, not a person :)",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196d0691_eee26244",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Can we also have a TODO to deduplicate the samplers that are the same? The current code allows for max 2k samplers in the resource table, when we could allow max 2x *unique* samplers.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914b69e1_bffa955f",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "nit: this and `FreeCPUHeap` seems like they could be freestanding helper functions in an anonymous namespace.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6436e5b_7003a991",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "nit: assert the data fits in 16 bits",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e167bf4a_09468b64",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "This should never happen as the \"diff\" would tell us to remove the sampler before we try adding something in the slot.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f8b781c_ea8c6b8a",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Samplers cannot be destroyed. This branch should never be taken.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efce75bd_9787f42c",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Ditto, this should never happen.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed963946_5baa2bdb",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "nit: we should also clear `mUnusedSamplerIndices` and `mSlotToSamplerIndex`",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54b9fe33_88944246",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "This could probably be a vector sized for each resource, it\u0027s cheap compared to all the other allocations done for the ResourceTable anyway.\n\nAlso we could introduce a typed integer scoped to this class for `SamplerIndex`.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "823c4424_6fe5eb2c",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "There\u0027s going to be a few iterations on the Dawn part, so maybe we can split this one off and land it first as it looks less risked (and have Tint reviewers for it?)",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503032f1_02e459b1",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "Can this explain that it is in the high 16 bits of the u32 value and the type id is in the low 16?",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47f1cdac_46d223ac",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T13:16:10Z",
+      "side": 1,
+      "message": "This is going to cause a second lookup in the metadata buffer even in the success case because there\u0027s one in getResource and a second one here that may or may not be the same. It\u0027s ok for now, but can we have a TODO to optimize it to remove the double pointer chasing?",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
