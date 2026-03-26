@@ -22,6 +22,30 @@
       },
       "revId": "0370751ebf297e9d6a7c763def58804d6048a50a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6becb57e_76fb5946",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T18:16:42Z",
+      "side": 1,
+      "message": "Only the YCbCr external textures need the static sampler (or the RGB ones in with a testing toggle), but we don\u0027t know which external texture will be YCbCr so we reserve a sampler for all of them. I tried keeping everything on the backend-side but it was extremely difficult. These minimal frontend changes help keep things more consistent with Dawn\u0027s assumption that the frontend is in control.\n\n(as a side note, I also tried keeping all the logic in the frontend but it put Vk-isms everywhere so I backtracked).",
+      "parentUuid": "630c3e2a_c8ca50a4",
+      "range": {
+        "startLine": 578,
+        "startChar": 22,
+        "endLine": 578,
+        "endChar": 63
+      },
+      "revId": "0370751ebf297e9d6a7c763def58804d6048a50a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
