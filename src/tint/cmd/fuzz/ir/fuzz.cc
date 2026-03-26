@@ -39,9 +39,7 @@
 #include "src/tint/utils/macros/defer.h"
 
 #if TINT_BUILD_WGSL_READER
-#include "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config.h"
 #include "src/tint/cmd/fuzz/wgsl/fuzz.h"
-#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/reader/reader.h"
@@ -77,16 +75,6 @@ void Register(const IRFuzzer& fuzzer) {
 
             auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
             if (ir != Success) {
-                return;
-            }
-
-            auto cfg = SubstituteOverridesConfig(ir.Get());
-            auto substituteOverridesResult =
-                tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
-            if (substituteOverridesResult != Success) {
-                if (context.options.verbose) {
-                    std::cout << "   - Substitute overrides failed.\n";
-                }
                 return;
             }
 
