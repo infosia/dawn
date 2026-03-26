@@ -60,6 +60,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0575ed00_bdeb5ce1",
+        "filename": "src/dawn/tests/CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-26T17:55:49Z",
+      "side": 1,
+      "message": "This looks like it will be true for Apple devices. I think we can use `CMAKE_HOST_SYSTEM_NAME STREQUAL \"Linux\"` (unfortunately `LINUX` isn\u0027t available in the version of CMake we claim to support in the toplevel file)",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c066a861_c9e27d70",
         "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
         "patchSetId": 5
@@ -71,6 +94,30 @@
       "writtenOn": "2026-03-26T17:45:01Z",
       "side": 1,
       "message": "nit. 2026",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57d7237_0bbf873a",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-26T17:55:49Z",
+      "side": 1,
+      "message": "BTW `git cl upload` would have caught this (it did for me)",
+      "parentUuid": "c066a861_c9e27d70",
       "range": {
         "startLine": 1,
         "startChar": 13,
