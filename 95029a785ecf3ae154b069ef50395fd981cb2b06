@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "702597fc_3b797022",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-26T02:22:46Z",
+      "side": 1,
+      "message": "It seems OK to make an exception for the external refcount (and in this case it\u0027s only whether it\u0027s \u003e0). Normally payloads are for the refcounted objects to use, not for use within RefCounted. If we use them internally then it seems like it\u0027ll conflict with that? (e.g. in ObjectBase)",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "95029a785ecf3ae154b069ef50395fd981cb2b06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c3ea265_7c3faa91",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-26T02:22:46Z",
+      "side": 1,
+      "message": "Device has a ref to the DeviceLostEvent... Could we just unset `DeviceLostEvent::mDevice` in `Device::WillDropLastExternalRef()`?",
+      "range": {
+        "startLine": 209,
+        "startChar": 9,
+        "endLine": 209,
+        "endChar": 46
+      },
+      "revId": "95029a785ecf3ae154b069ef50395fd981cb2b06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
