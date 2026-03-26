@@ -476,6 +476,10 @@ match storage
   : address_space.storage
 match workgroup
   : address_space.workgroup
+match workgroup_uniform_storage
+  : address_space.workgroup
+  | address_space.uniform
+  | address_space.storage
 
 ////////////////////////////////////////////////////////////////////////////////
 // Builtin Functions                                                          //
@@ -507,8 +511,8 @@ match workgroup
 @must_use @const implicit(N: num)
   fn any(vec<N, bool>) -> bool
 
-@must_use implicit(T, A: access)
-  fn arrayLength(ptr<storage, runtime_array<T>, A>) -> u32
+@must_use implicit(T, AS: workgroup_uniform_storage, A: access)
+  fn arrayLength(ptr<AS, runtime_array<T>, A>) -> u32
 
 @must_use @const implicit(T: f32_f16)
   fn asin(@test_value(0.479425538604) T) -> T
