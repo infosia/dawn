@@ -110,18 +110,17 @@ WireResult Server::DoQueueWriteBufferXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<char[]>(AllocNoThrow<char>(size));
+    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
     if (!backingData) {
         return WireResult::FatalError;
     }
-    writeHandle->SetTarget(backingData.get());
-    writeHandle->SetDataLength(size);
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo,
-                                            static_cast<size_t>(writeDataUpdateInfoLength), 0u,
-                                            static_cast<size_t>(size))) {
+    std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
+                                                     writeDataUpdateInfoLength);
+    std::span<uint8_t> target(backingData.get(), size);
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
         return WireResult::FatalError;
     }
 
@@ -183,18 +182,17 @@ WireResult Server::DoQueueWriteTextureXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<char[]>(AllocNoThrow<char>(dataSize));
+    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(dataSize));
     if (!backingData) {
         return WireResult::FatalError;
     }
-    writeHandle->SetTarget(backingData.get());
-    writeHandle->SetDataLength(dataSize);
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo,
-                                            static_cast<size_t>(writeDataUpdateInfoLength), 0u,
-                                            static_cast<size_t>(dataSize))) {
+    std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
+                                                     writeDataUpdateInfoLength);
+    std::span<uint8_t> target(backingData.get(), dataSize);
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
         return WireResult::FatalError;
     }
 
