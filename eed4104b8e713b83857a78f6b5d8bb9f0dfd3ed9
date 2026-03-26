@@ -33,6 +33,75 @@
       "message": "LGTM, Loko PTAL for second review!",
       "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caefa8c3_808127be",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-26T17:45:01Z",
+      "side": 1,
+      "message": "I think that this should compile regardless of OS, so I think you could just add it to the sources list directly. Same for the CMakeLists.txt.\n\nThe test itself can just filter the backends it doesn\u0027t expect to work for.",
+      "range": {
+        "startLine": 811,
+        "startChar": 2,
+        "endLine": 813,
+        "endChar": 3
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c066a861_c9e27d70",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-26T17:45:01Z",
+      "side": 1,
+      "message": "nit. 2026",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15cfd31d_944e9fe4",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-26T17:45:01Z",
+      "side": 1,
+      "message": "nit. For feature gated tests, I think we usually override the `SetUp` function to skip appropriately and also the `GetRequiredFeatures` function to require the feature on the created device. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/PixelLocalStorageTests.cpp;l\u003d37;bpv\u003d1;bpt\u003d0 for an example with feature gated test suites.\n\nSince the feature is enabled unconditionally though, I think you can probably ignore overriding `GetRequiredFeatures`, but I think putting the skip in `SetUp` would be better.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 91
+      },
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
