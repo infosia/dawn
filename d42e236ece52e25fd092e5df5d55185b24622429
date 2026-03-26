@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1680151_4144189b",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T19:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e8144b_dc11d0e1",
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d42f9fda_63b0febe",
@@ -55,6 +73,30 @@
       "side": 1,
       "message": "Makes sense, I\u0027ll write up a test and fix this.",
       "parentUuid": "d42f9fda_63b0febe",
+      "range": {
+        "startLine": 525,
+        "startChar": 1,
+        "endLine": 530,
+        "endChar": 8
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa4878c_765221ea",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T19:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09f7142_68451019",
       "range": {
         "startLine": 525,
         "startChar": 1,
@@ -112,6 +154,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f7439cf_41f0c0ee",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T19:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a590d6_dcd87d54",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de45288a_8e4541d0",
@@ -125,6 +191,24 @@
       "writtenOn": "2026-03-26T11:25:49Z",
       "side": 1,
       "message": "```suggestion\n    MaybeError AllocateAndSwitchShaderVisibleHeap(uint32_t minDescriptorCount);\n```\n\nBut also I think that we could require a value that\u0027s not 0 to make sure the caller provides something.",
+      "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab7c0382_769af986",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T19:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de45288a_8e4541d0",
       "revId": "d42e236ece52e25fd092e5df5d55185b24622429",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
