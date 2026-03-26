@@ -526,8 +526,9 @@ When specified, automatically enables HLSL validation)",
         "validate", "Validates the generated shader with all available validators", Default{false});
     TINT_DEFER(opts->validate = *validate.value);
 
-    auto& dump_ir = options.Add<BoolOption>("dump-ir", "Writes the IR to stdout", Alias{"emit-ir"},
-                                            Default{false});
+    auto& dump_ir =
+        options.Add<BoolOption>("dump-ir", "Dump IR at each stage of the compilation flow",
+                                Alias{"emit-ir"}, Default{false});
     TINT_DEFER(opts->dump_ir = *dump_ir.value);
 
     auto& ir_roundtrip = options.Add<BoolOption>(
@@ -1483,7 +1484,10 @@ bool Generate([[maybe_unused]] const Options& options,
               [[maybe_unused]] const tint::Program& program) {
 #if TINT_BUILD_WGSL_READER
     // Convert the AST program to an IR module.
-    auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
+    tint::wgsl::reader::IROptions ir_options{
+        .dump_ir_when_validating = options.dump_ir,
+    };
+    auto ir = tint::wgsl::reader::ProgramToLoweredIR(program, ir_options);
     if (ir != tint::Success) {
         std::cerr << "Failed to generate IR: " << ir << "\n";
         return false;
@@ -1565,7 +1569,7 @@ int Run(tint::VectorRef<std::string_view> arguments, ExeMode exe_mode) {
         return 1;
     }
 
-    if (options.dump_ir || options.format == Format::kIr) {
+    if (options.format == Format::kIr) {
         auto res = DumpIR(info.program, options);
         if (options.format == Format::kIr) {
             return static_cast<int>(res);
