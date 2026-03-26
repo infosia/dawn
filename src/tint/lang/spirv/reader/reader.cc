@@ -39,6 +39,7 @@ namespace tint::spirv::reader {
 Result<core::ir::Module> ReadIR(const std::vector<uint32_t>& input, const Options& options) {
     // Parse the input SPIR-V to the SPIR-V dialect of the IR.
     TINT_CHECK_RESULT_UNWRAP(mod, Parse(input, options));
+    mod.dump_ir_when_validating = options.dump_ir_when_validating;
 
     // Lower the module to the core dialect of the IR.
     TINT_CHECK_RESULT(Lower(mod));
