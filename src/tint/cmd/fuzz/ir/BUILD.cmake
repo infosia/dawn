@@ -143,11 +143,9 @@ tint_add_target(tint_cmd_fuzz_ir_fuzz fuzz
 
 tint_target_add_dependencies(tint_cmd_fuzz_ir_fuzz fuzz
   tint_api_common
-  tint_cmd_fuzz_ir_helpers
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
-  tint_lang_core_ir_transform
   tint_lang_core_type
   tint_lang_wgsl
   tint_lang_wgsl_ast

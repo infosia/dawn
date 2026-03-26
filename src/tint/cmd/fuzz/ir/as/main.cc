@@ -32,11 +32,9 @@
 
 #include "src/tint/api/tint.h"
 #include "src/tint/cmd/common/helper.h"
-#include "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config.h"
 #include "src/tint/lang/core/ir/binary/encode.h"
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/core/ir/module.h"
-#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/reader/reader.h"
@@ -183,8 +181,6 @@ tint::Result<tint::core::ir::Module> GenerateIrModule(const tint::Program& progr
 
     TINT_CHECK_RESULT_UNWRAP(ir, tint::wgsl::reader::ProgramToLoweredIR(program));
 
-    auto cfg = tint::fuzz::ir::SubstituteOverridesConfig(ir);
-    TINT_CHECK_RESULT(tint::core::ir::transform::SubstituteOverrides(ir, cfg));
     TINT_CHECK_RESULT(tint::core::ir::Validate(ir));
 
     return ir;
