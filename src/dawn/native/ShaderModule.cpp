@@ -1276,7 +1276,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     // ToTint(EntryPointMetadata::nonSamplerBindingPoint), so that we have
     // FromTint(tintNonSamplerBindingPoint) == EntryPointMetadata::nonSamplerBindingPoint, and we
     // don't need to explicitly check if a tint BindingPoint is tintNonSamplerBindingPoint when
-    // converting them to BindingSlot.
+    // converting them to WGSLBindPoint.
     constexpr tint::BindingPoint tintNonSamplerBindingPoint =
         ToTint(EntryPointMetadata::nonSamplerBindingPoint);
     static_assert(FromTint(tintNonSamplerBindingPoint) ==

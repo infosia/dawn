@@ -53,9 +53,9 @@ namespace {
 // Note: this is only used in compatibility mode.
 uint32_t ComputeNumTextureSamplerCombinations(const dawn::native::EntryPointMetadata& metadata) {
     // separate sampled from non-sampled and put sampled in set
-    std::set<BindingSlot> sampledTextures;
-    std::set<BindingSlot> sampledExternalTextures;
-    std::vector<BindingSlot> nonSampled;
+    std::set<WGSLBindPoint> sampledTextures;
+    std::set<WGSLBindPoint> sampledExternalTextures;
+    std::vector<WGSLBindPoint> nonSampled;
     uint32_t numSamplerTexturePairs = 0;
     uint32_t numSamplerExternalTexturePairs = 0;
 
@@ -78,7 +78,7 @@ uint32_t ComputeNumTextureSamplerCombinations(const dawn::native::EntryPointMeta
 
     // count the number of non-sampled that are not referenced by sampled pairs.
     auto numNonSampled = std::count_if(nonSampled.begin(), nonSampled.end(),
-                                       [&](const BindingSlot& nonSampledBindingPoint) {
+                                       [&](const WGSLBindPoint& nonSampledBindingPoint) {
                                            return !sampledTextures.contains(nonSampledBindingPoint);
                                        });
     return numSamplerTexturePairs + numNonSampled + numSamplerExternalTexturePairs * 3 +
