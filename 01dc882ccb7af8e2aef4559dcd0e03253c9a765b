@@ -50,6 +50,42 @@
       "message": "The OS changed to be a specific OS instead of `get_dimension(os.LINUX)`, I assume that\u0027s because the trusted-robots pool uses that specific version and doesn\u0027t have any from `get_dimension(os.LINUX)`?",
       "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "141554f4_c6317682",
+        "filename": "infra/config/global/trusted_robots.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003841
+      },
+      "writtenOn": "2026-03-26T02:46:11Z",
+      "side": 1,
+      "message": "Short answer: functionally yes.\n\nLooking at `get_dimension`, this would return \"Ubuntu-24.04\" for `os.LINUX`, so it happens to match for now. If someone were to update the value returned by `get_dimension` without updating the `luci.dawn.trusted-robots` pool, the CTS roller will fail to build due to resource exhaustion.",
+      "parentUuid": "ba6a860d_35bfaeb6",
+      "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc552103_45c4aa3b",
+        "filename": "infra/config/global/trusted_robots.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003841
+      },
+      "writtenOn": "2026-03-26T02:46:11Z",
+      "side": 1,
+      "message": "The pool has a singl",
+      "parentUuid": "ba6a860d_35bfaeb6",
+      "revId": "01dc882ccb7af8e2aef4559dcd0e03253c9a765b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
