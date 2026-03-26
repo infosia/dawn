@@ -66,7 +66,7 @@ vars = {
 
   # Version of Chromium the DEPS entries synced by scripts/roll_chromium_deps.py
   # were last synced to.
-  'chromium_revision': 'fb6e84290b6ac144ea3ca05384ef4c9bc5992220',
+  'chromium_revision': '6bc1cd1221263cd08d2afd94bf136c29b421fda0',
   # We never want to actually checkout Chromium, but we need a fake DEPS entry
   # in order for the Chromium -> Dawn DEPS autoroller to work.
   'checkout_placeholder_chromium': False,
@@ -79,7 +79,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@95ed44cf5f06dbb5861030b91c9db9ccb4316762',
+    'url': '{chromium_git}/chromium/src/buildtools@22e55595e15ebbbbb4bef118d5a654b185b0b30d',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -128,7 +128,7 @@ deps = {
 
   # Required by libc++
   'third_party/llvm-libc/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@adccc443070c58badd6414fd9a4380ca8c78e7c4',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@416d1a76abbb44110443306a2c03188f709c2191',
     'condition': 'dawn_standalone',
   },
 
@@ -143,7 +143,7 @@ deps = {
   # The //build and //tools/* deps should all be updated in unison, as
   #  there are dependencies between them.
   'build': {
-  'url': '{chromium_git}/chromium/src/build@4f3f3e34ddfc6f4df4fa398cbe6996fcddc9bf3d',
+  'url': '{chromium_git}/chromium/src/build@3b1b46fa405ab409c111daace69071552e4cd409',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
@@ -253,7 +253,7 @@ deps = {
 
   # Testing, GTest and GMock
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@10cdfcaef770e4e963619edd3fe4eb2ce13ec24a',
+    'url': '{chromium_git}/chromium/src/testing@0ed6d486e69b3940b758d3082fa6ade48b565536',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
@@ -266,7 +266,7 @@ deps = {
   },
   # This is a dependency of //testing
   'third_party/catapult': {
-    'url': '{chromium_git}/catapult.git@d7bc9113b86bdc56239ff7a7d5d1f773d37ca567',
+    'url': '{chromium_git}/catapult.git@5a34891efa6e41c8aca8842386b8ee528963ffdf',
     'condition': 'dawn_standalone',
   },
   'third_party/google_benchmark/src': {
