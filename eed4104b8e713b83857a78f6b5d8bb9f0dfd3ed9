@@ -16,6 +16,23 @@
       "message": "Adding you since you were the reviewer for the first CL 😊",
       "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5225093e_e74ef088",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-26T09:09:30Z",
+      "side": 1,
+      "message": "LGTM, Loko PTAL for second review!",
+      "revId": "eed4104b8e713b83857a78f6b5d8bb9f0dfd3ed9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
