@@ -50,6 +50,24 @@
       "message": "As discussed offline, I\u0027m going to split this out to a different CL and hopefully make a better fix than this.",
       "revId": "c0b47eb278badf863b418a3df5fbfec6b5ae9f22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1270a3dc_82763e63",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-26T04:25:39Z",
+      "side": 1,
+      "message": "CL: https://dawn-review.git.corp.google.com/c/dawn/+/299595\n\nThat one doesn\u0027t include what\u0027s needed for samplers, of course, but once we land it, I\u0027ll rebase this CL on it and make the necessary adjustments (and add tests).",
+      "parentUuid": "0779cad3_578bdd68",
+      "revId": "c0b47eb278badf863b418a3df5fbfec6b5ae9f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
