@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd3a219d_d8686b52",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T17:40:20Z",
+      "side": 0,
+      "message": "Does GetStaticSamplerIndicies() only return indicies for samplers that have isUsedForSingleTexture true?",
+      "range": {
+        "startLine": 438,
+        "startChar": 37,
+        "endLine": 438,
+        "endChar": 80
+      },
+      "revId": "8cbcfccbf4cdcf550ab342d6cb3476e78c2bd608",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

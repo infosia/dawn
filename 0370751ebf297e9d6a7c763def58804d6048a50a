@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "630c3e2a_c8ca50a4",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-26T17:40:20Z",
+      "side": 1,
+      "message": "Q: Isn\u0027t it still only YCbCr external textures that need that a static stampler? This is adding the binding entry for all external textures if OpaqueYCbCrAndroidForExternalTexture is enabled.",
+      "range": {
+        "startLine": 578,
+        "startChar": 22,
+        "endLine": 578,
+        "endChar": 63
+      },
+      "revId": "0370751ebf297e9d6a7c763def58804d6048a50a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
