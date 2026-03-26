@@ -79,9 +79,13 @@ class ShaderVisibleDescriptorAllocator {
     // Returns the current heap.
     ID3D12DescriptorHeap* GetShaderVisibleHeap() const;
 
-    // Switches the current heap to either a larger one (allocated) or a max size one (retrieved
-    // from a pool), and bumps heap serial, invalidating existing GPU descriptor sub-allocations.
-    MaybeError AllocateAndSwitchShaderVisibleHeap();
+    uint32_t GetShaderVisibleHeapMinSize() const;
+    uint32_t GetShaderVisibleHeapMaxSize() const;
+
+    // Switches the current heap to one that can fit `minDescriptorCount`, and bumps heap serial,
+    // invalidating existing GPU descriptor sub-allocations. If the required heap size reaches
+    // `GetShaderVisibleHeapMaxSize`, it pools the heaps, and returns an unused heap from the pool.
+    MaybeError AllocateAndSwitchShaderVisibleHeap(uint32_t minDescriptorCount);
 
     // For testing purposes only.
     HeapVersionID GetShaderVisibleHeapSerialForTesting() const;

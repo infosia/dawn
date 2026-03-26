@@ -29,6 +29,7 @@
 #define SRC_DAWN_COMMON_MATH_H_
 
 #include <climits>
+#include <concepts>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -49,6 +50,12 @@ namespace dawn {
 uint32_t Log2(uint32_t value);
 uint32_t Log2(uint64_t value);
 bool IsPowerOfTwo(uint64_t n);
+
+// Returns 2^exp for integrals
+template <std::integral T>
+T Pow2(T exp) {
+    return (T{1} << exp);
+}
 
 // Rounds n to the nearest multiple of m
 // e.g. RoundUp(7, 3) rounds 7 to 9 (3*3)

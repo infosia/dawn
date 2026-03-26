@@ -275,11 +275,10 @@ bool ResourceTable::PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocato
     // be called.
     Device* device = ToBackend(GetDevice());
 
-    // Copy metadata + resource descriptors
-    const uint32_t descriptorCount = 1u + static_cast<uint32_t>(GetSizeWithDefaultResources());
+    const uint32_t descriptorCount = GetViewDescriptorCount();
 
     D3D12_CPU_DESCRIPTOR_HANDLE baseCPUDescriptor;
-    if (!viewAllocator->AllocateGPUDescriptors(descriptorCount,
+    if (!viewAllocator->AllocateGPUDescriptors(GetViewDescriptorCount(),
                                                device->GetQueue()->GetPendingCommandSerial(),
                                                &baseCPUDescriptor, &mGPUViewAllocation)) {
         return false;
@@ -293,6 +292,11 @@ bool ResourceTable::PopulateViews(ShaderVisibleDescriptorAllocator* viewAllocato
                                                     D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
     return true;
+}
+
+uint32_t ResourceTable::GetViewDescriptorCount() const {
+    // Metadata + all resource descriptors
+    return 1u + static_cast<uint32_t>(GetSizeWithDefaultResources());
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE ResourceTable::GetBaseViewDescriptor() const {

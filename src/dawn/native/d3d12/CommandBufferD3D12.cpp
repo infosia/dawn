@@ -515,12 +515,27 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
         }
 
         if (!populatedViews || !populatedSamplers) {
+            // Compute the minimum number of descriptors needed to allocate in the GPU heaps
+            // to ensure populating them succeeds.
+            uint32_t minViewDescriptorCount = 0;
+            uint32_t minSamplerDescriptorCount = 0;
+
+            if (usesResourceTable) {
+                minViewDescriptorCount += mResourceTable->GetViewDescriptorCount();
+            }
+            for (BindGroupIndex index : mBindGroupLayoutsMask) {
+                BindGroupLayout* layout = ToBackend(mBindGroups[index]->GetLayout());
+                minViewDescriptorCount += layout->GetCbvUavSrvDescriptorCount();
+                minSamplerDescriptorCount += layout->GetSamplerDescriptorCount();
+            }
+
             if (!populatedViews) {
-                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap());
+                DAWN_TRY(viewAllocator->AllocateAndSwitchShaderVisibleHeap(minViewDescriptorCount));
             }
 
             if (!populatedSamplers) {
-                DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap());
+                DAWN_TRY(samplerAllocator->AllocateAndSwitchShaderVisibleHeap(
+                    minSamplerDescriptorCount));
             }
 
             mDirtyBindGroupsObjectChangedOrIsDynamic |= mBindGroupLayoutsMask;
