@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "242e650c_a481a4e3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30848ab_647d2de1",
+      "range": {
+        "startLine": 1057,
+        "startChar": 16,
+        "endLine": 1057,
+        "endChar": 46
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92aad482_e08d9f7d",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-25T16:36:10Z",
       "side": 1,
       "message": "nit: similarly, this could be removed.",
+      "range": {
+        "startLine": 1092,
+        "startChar": 16,
+        "endLine": 1092,
+        "endChar": 46
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f65fa2a7_26a76cdd",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92aad482_e08d9f7d",
       "range": {
         "startLine": 1092,
         "startChar": 16,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1843d02_4fd2f415",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ae8be4_02b3a92b",
+      "range": {
+        "startLine": 1105,
+        "startChar": 12,
+        "endLine": 1105,
+        "endChar": 93
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33d52de8_8403e2e2",
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f397a4aa_9b31257a",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d52de8_8403e2e2",
+      "range": {
+        "startLine": 1209,
+        "startChar": 8,
+        "endLine": 1213,
+        "endChar": 93
+      },
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "048f506f_71c344cb",
@@ -123,6 +219,24 @@
       "writtenOn": "2026-03-25T16:36:10Z",
       "side": 1,
       "message": "nit: I think we should keep the old statement \"We don\u0027t need multiple CPU writable buffers to exist.\"",
+      "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e454128_41ef7c91",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "048f506f_71c344cb",
       "revId": "82691a340d3ea381898fc249a6cbf04c943e548d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

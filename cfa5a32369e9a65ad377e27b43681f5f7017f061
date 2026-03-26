@@ -176,6 +176,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "790cb0dd_926382b3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43fedfe_5bd5e7a2",
+      "range": {
+        "startLine": 164,
+        "startChar": 42,
+        "endLine": 164,
+        "endChar": 66
+      },
+      "revId": "cfa5a32369e9a65ad377e27b43681f5f7017f061",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c13aab0e_f6f4b14a",
@@ -659,6 +683,30 @@
       "side": 1,
       "message": "Keep this change in both and BufferTests.cpp CopyTests.cpp.\nbecause I can see saved copy in both.",
       "parentUuid": "4b164c7a_0c45d09d",
+      "range": {
+        "startLine": 2203,
+        "startChar": 41,
+        "endLine": 2203,
+        "endChar": 69
+      },
+      "revId": "cfa5a32369e9a65ad377e27b43681f5f7017f061",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e357b3_3c413814",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-03-26T13:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e010e87f_ef3a1ca0",
       "range": {
         "startLine": 2203,
         "startChar": 41,
