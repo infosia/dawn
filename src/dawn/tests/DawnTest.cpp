@@ -1272,6 +1272,11 @@ bool DawnTestBase::Is32Bit() const {
 #endif
 }
 
+bool DawnTestBase::BackendDeviceHasFeature(wgpu::FeatureName feature) const {
+    return native::GetProcs().deviceHasFeature(backendDevice,
+                                               static_cast<WGPUFeatureName>(feature));
+}
+
 bool DawnTestBase::IsMesa(const std::string& mesaVersion) const {
 #if DAWN_PLATFORM_IS(LINUX)
     std::string mesaString = "Mesa " + mesaVersion;
