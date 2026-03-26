@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb6e6de9_861ddacc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T20:46:11Z",
+      "side": 1,
+      "message": "LGTM as long as Kyle is satisfied with your response.",
+      "revId": "d72ca1f6608aaef9f3c254e8831bed0c4acdb4f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
