@@ -295,11 +295,23 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             return;
         }
 
-        EXPECT_CALL(*serverHandle, DeserializeDataUpdate(_, kBufferSize, 0, kBufferSize))
-            .WillOnce(WithArg<0>([&, success](const void* deserializePointer) {
+        std::span<uint8_t> target(reinterpret_cast<uint8_t*>(&mServerBufferContent),
+                                  sizeof(mServerBufferContent));
+        // Match by size and content rather than pointer identity, since the server receives data
+        // in a wire deserialization buffer, not directly at mClientBufferContent's address.
+        EXPECT_CALL(
+            *serverHandle,
+            DeserializeDataUpdate(
+                testing::Matcher<std::span<const uint8_t>>(testing::A<std::span<const uint8_t>>()),
+                testing::Matcher<std::span<uint8_t>>(
+                    testing::Truly([target](std::span<uint8_t> arg) {
+                        return arg.data() == target.data() && arg.size() == target.size();
+                    })),
+                static_cast<size_t>(0u), kBufferSize))
+            .WillOnce(WithArg<0>([&, success](std::span<const uint8_t> deserializePointer) {
                 if (success) {
                     // Copy the data manually here.
-                    memcpy(&mServerBufferContent, deserializePointer, kBufferSize);
+                    memcpy(&mServerBufferContent, deserializePointer.data(), kBufferSize);
                 }
                 return success;
             }));
