@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a344500f_c5008889",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-26T09:05:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bae33cf_006ce259",
+      "range": {
+        "startLine": 151,
+        "startChar": 43,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71e33ca5_46b8d12b",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-23T15:59:28Z",
       "side": 1,
       "message": "This will instead be `target.size()` so we don\u0027t need it anymore.",
+      "range": {
+        "startLine": 155,
+        "startChar": 34,
+        "endLine": 155,
+        "endChar": 54
+      },
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5d54a62_d2ab4010",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-26T09:05:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e33ca5_46b8d12b",
       "range": {
         "startLine": 155,
         "startChar": 34,
@@ -81,6 +129,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31d8dff_ab2386df",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-26T09:05:35Z",
+      "side": 1,
+      "message": "Ack\n\nＩ will change it in the next CL.",
+      "parentUuid": "31c21a44_36227bf6",
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3861d9fe_c40604c4",
@@ -94,6 +160,24 @@
       "writtenOn": "2026-03-23T15:59:28Z",
       "side": 1,
       "message": "That\u0027s the same span as `mappedRange` so why introduce a new variable?",
+      "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb3ecd0_cd327f2b",
+        "filename": "src/dawn/wire/server/ServerBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-26T09:05:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3861d9fe_c40604c4",
       "revId": "35ae18aa0a4d4b38d63037595b5f9e233f830555",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
