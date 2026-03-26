@@ -332,6 +332,43 @@ TEST_F(YCbCrVulkanSamplersTest, CreateBindGroupLayoutWithYCbCrSamplerDuplicateSa
     ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&layoutDesc));
 }
 
+// Regression test where BindGroup validation checked for sampledTextureBinding even when none was
+// specified on the API side.
+TEST_F(YCbCrVulkanSamplersTest, CreateBindGroupLayoutWithYCbCrSamplerDuplicateSampledTextures2) {
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    yCbCrDesc.vkFormat = VK_FORMAT_R8G8B8A8_UNORM;
+
+    // Static sampler that has a sampledTextureBinding.
+    auto& binding0 = entries.emplace_back();
+    binding0.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding0 = {};
+    staticSamplerBinding0.sampler = CreateYCbCrSampler(&yCbCrDesc);
+    staticSamplerBinding0.sampledTextureBinding = 1;
+    binding0.nextInChain = &staticSamplerBinding0;
+
+    // The texture for that sampler.
+    auto& binding1 = entries.emplace_back();
+    binding1.binding = 1;
+    binding1.texture.sampleType = wgpu::TextureSampleType::Float;
+
+    // A second static sampler that shouldn't check for its sampledTextureBinding since it doesn't
+    // have one.
+    auto& binding2 = entries.emplace_back();
+    binding2.binding = 2;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding2 = {};
+    staticSamplerBinding2.sampler = device.CreateSampler();
+    binding2.nextInChain = &staticSamplerBinding2;
+
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = entries.size();
+    layoutDesc.entries = entries.data();
+    auto bgl = device.CreateBindGroupLayout(&layoutDesc);
+
+    utils::MakeBindGroup(device, bgl, {{1, CreateYCbCrView(&yCbCrDesc)}});
+}
+
 // Verifies that creation of a correctly-specified bind group for a layout that
 // has a sampler and a static sampler succeeds.
 TEST_F(YCbCrVulkanSamplersTest, CreateBindGroupWithSamplerAndStaticSamplerSupported) {
