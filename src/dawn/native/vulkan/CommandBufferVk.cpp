@@ -40,6 +40,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
@@ -210,6 +211,8 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
     }
+
+    const BindGroupBase* GetBindGroup(BindGroupIndex index) const { return mBindGroups[index]; }
 
     template <typename VkPipelineType>
     void OnSetPipeline(VkPipelineType* pipeline) {
@@ -569,6 +572,62 @@ struct ProgrammablePassState : public StackAllocated {
 
         DoOperation(vk, commands);
         return {};
+    }
+
+    using PipelineSpecialization = Pipeline::Specialization;
+    PipelineSpecialization ComputeSpecializationBaseOnState() const {
+        PipelineSpecialization s;
+
+        // Add the specialization to use a static samplers for external textures that need them.
+        PipelineBase::SamplerForExternalTextureMap samplerForET =
+            lastPipeline->ComputeSamplerForExternalTextureMap();
+        for (const auto& [etBindPoint, maybeSamplerBindPoint] : samplerForET) {
+            const BindGroupBase* etBindGroup = descriptorSets.GetBindGroup(etBindPoint.group);
+
+            // Multiplanar external textures never use a static sampler. (et may be null when a 2D
+            // view is bound directly in lieu of an external texture).
+            const ExternalTextureBase* et =
+                etBindGroup->GetBoundExternalTexture(etBindPoint.binding).Get();
+            if (et != nullptr && !et->HasSingleView()) {
+                continue;
+            }
+
+            // Get the ExternalTextureBindingInfo from which we can get the indices for its plane0
+            // and staticSampler bind points.
+            const auto& bindingInfo =
+                etBindGroup->GetLayout()->GetAPIBindingInfo(etBindPoint.binding);
+            const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
+            DAWN_ASSERT(etInfo.staticSampler.has_value());
+
+            const TextureView* view =
+                ToBackend(etBindGroup->GetBindingAsTextureView(etInfo.plane0));
+            DAWN_ASSERT(view != nullptr);
+
+            // Use static samplers for YCbCr external textures. However when the toggle is enabled,
+            // we use a static sampler for all the single-planar external textures, which helps with
+            // testing the code paths on any Vulkan-capable device.
+            if (view->GetFormat().format != wgpu::TextureFormat::OpaqueYCbCrAndroid &&
+                !lastPipeline->GetDevice()->IsToggleEnabled(
+                    Toggle::VulkanForceStaticSamplersForExternalTextures)) {
+                continue;
+            }
+
+            // Find the sampler it's used with, its filtering parameters will be copied in the
+            // static sampler (or use "near" if no sampler is used with the external texture).
+            const Sampler* sampler = nullptr;
+            if (maybeSamplerBindPoint) {
+                sampler = ToBackend(descriptorSets.GetBindGroup(maybeSamplerBindPoint->group)
+                                        ->GetBindingAsSampler(maybeSamplerBindPoint->binding));
+            }
+
+            // Tell both the shader that we'll be using a YCbCr external texture at the bindpoint,
+            // and tell BindGroupLayouts to use a specific static sampler.
+            s.ycbcrExternalTextures.insert(etBindPoint);
+            s.layout.bindGroups[etBindPoint.group].staticSamplers[*etInfo.staticSampler] =
+                StaticSamplerSpecialization::From(view, sampler);
+        }
+
+        return s;
     }
 
     const VulkanFunctions& vk;

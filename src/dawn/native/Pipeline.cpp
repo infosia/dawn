@@ -458,4 +458,56 @@ ImmediateConstantMask PipelineBase::GetUserImmediateSlots() const {
     return mUserImmdiateSlots;
 }
 
+PipelineBase::SamplerForExternalTextureMap PipelineBase::ComputeSamplerForExternalTextureMap()
+    const {
+    SamplerForExternalTextureMap map;
+
+    // Insert all external textures bind point, so even those not used with a sampler are present.
+    for (BindGroupIndex group : GetLayout()->GetBindGroupLayoutsMask()) {
+        const auto* bgl = GetLayout()->GetBindGroupLayout(group);
+
+        for (APIBindingIndex etIndex : bgl->GetExternalTextureIndices()) {
+            map.insert({APIBindPoint{group, etIndex}, std::nullopt});
+        }
+    }
+
+    for (SingleShaderStage stage : IterateStages(GetStageMask())) {
+        for (const auto& pair : GetStage(stage).metadata->samplerAndNonSamplerTexturePairs) {
+            const auto* textureBGL = GetLayout()->GetBindGroupLayout(pair.texture.group);
+            APIBindingIndex textureBinding = textureBGL->GetAPIBindingIndex(pair.texture.binding);
+
+            // Find external texture used with samplers.
+            if (!textureBGL->IsExternalTextureBinding(textureBinding) ||
+                pair.sampler == EntryPointMetadata::nonSamplerBindingPoint) {
+                continue;
+            }
+
+            // This function must return the sampler that's used to sample the external texture (if
+            // there's one). While WebGPU allows multiple different samplers to be used with an
+            // external texture, the static YCbCr sampler mechanism in Vulkan needs to have a 1-1
+            // relationship between the YCbCr texture and its static sampler. In the unlikely case
+            // where the external texture is used by two different samplers, emit a warning (as
+            // that's just a minor correctness issue).
+            auto it = map.find({pair.texture.group, textureBinding});
+            DAWN_ASSERT(it != map.end());
+            auto& mapValue = it->second;
+
+            const auto* samplerBGL = GetLayout()->GetBindGroupLayout(pair.sampler.group);
+            BindPoint samplerBindPoint = {
+                pair.sampler.group,
+                samplerBGL->AsBindingIndex(samplerBGL->GetAPIBindingIndex(pair.sampler.binding))};
+
+            if (mapValue.has_value() && mapValue.value() != samplerBindPoint) {
+                GetDevice()->EmitWarningOnce(
+                    "ExternalTexture used by multiple samplers in the pipeline: only using the "
+                    "first one to sample.");
+                continue;
+            }
+            mapValue = {samplerBindPoint};
+        }
+    }
+
+    return map;
+}
+
 }  // namespace dawn::native
