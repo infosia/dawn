@@ -543,6 +543,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cfba55a_11b62e7a",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-26T22:36:44Z",
+      "side": 1,
+      "message": "Thank you for continuing to follow up on this, Shahbaz! I really appreciate you doing such a thorough investigation.\n\nEchoing what Quyen said, given that we\u0027re not exposing this to browsers (at least, not yet) and Skia has it\u0027s own workaround for when it\u0027s not available, I\u0027m inclined to abandon this CL unless we hear a stronger need for implementing the two-pass fallback. Thanks to everyone that contributed to the discussion in the meantime!",
+      "parentUuid": "8c052a80_0e2fad55",
+      "revId": "abbcbf94a1d3e9ee8c789632f83b931a13d37c1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28cd7e1c_aef10a92",
