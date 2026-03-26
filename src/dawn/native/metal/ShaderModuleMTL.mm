@@ -380,9 +380,11 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             {
                 SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                    "ShaderModuleProgramToIR");
-                ir = tint::wgsl::reader::ProgramToLoweredIR(
-                    *tintInputProgram,
-                    shaderModule->GetDevice()->GetTintInternalCompilerErrorCallback());
+                tint::wgsl::reader::IROptions irOptions{
+                    .ice_callback =
+                        shaderModule->GetDevice()->GetTintInternalCompilerErrorCallback(),
+                };
+                ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram, irOptions);
                 DAWN_INVALID_IF(ir != tint::Success,
                                 "An error occurred while generating Tint IR\n%s",
                                 ir.Failure().reason);
