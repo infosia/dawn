@@ -142,6 +142,7 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
     uint32_t GetAPIStaticSamplerCount() const;
     uint32_t GetStaticSamplerCount() const;
     bool IsStorageBufferBinding(BindingIndex bindingIndex) const;
+    bool IsExternalTextureBinding(APIBindingIndex bindingIndex) const;
 
     uint32_t GetExternalTextureCount() const;
 

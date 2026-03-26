@@ -1065,6 +1065,11 @@ bool BindGroupLayoutInternalBase::IsStorageBufferBinding(BindingIndex bindingInd
     DAWN_UNREACHABLE();
 }
 
+bool BindGroupLayoutInternalBase::IsExternalTextureBinding(APIBindingIndex bindingIndex) const {
+    return std::holds_alternative<ExternalTextureBindingInfo>(
+        GetAPIBindingInfo(bindingIndex).bindingLayout);
+}
+
 std::string BindGroupLayoutInternalBase::EntriesToString() const {
     std::string entries = "[";
     std::string sep = "";

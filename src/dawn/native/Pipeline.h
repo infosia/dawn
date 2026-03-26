@@ -107,6 +107,13 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     void SetImmediateMaskForTesting(ImmediateConstantMask immediateConstantMask);
 
+    // Returns for each ExternalTexture bind point for this pipeline, which sampler bind point it is
+    // used with (if any). If it is used with multiple samplers, only one is returned and a warning
+    // emitted.
+    using SamplerForExternalTextureMap =
+        absl::flat_hash_map<APIBindPoint, std::optional<BindPoint>>;
+    SamplerForExternalTextureMap ComputeSamplerForExternalTextureMap() const;
+
   protected:
     PipelineBase(DeviceBase* device,
                  PipelineLayoutBase* layout,
