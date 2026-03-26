@@ -25,9 +25,16 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef UNSAFE_BUFFERS_BUILD
+// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
+#pragma allow_unsafe_buffers
+#endif
+
 #ifndef INCLUDE_DAWN_WIRE_WIRESERVER_H_
 #define INCLUDE_DAWN_WIRE_WIRESERVER_H_
 
+#include <cstdint>
+#include <limits>
 #include <memory>
 #include <span>
 
@@ -137,9 +144,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);
 
-        // This function takes in the serialized result of
-        // client::MemoryTransferService::WriteHandle::SerializeDataUpdate.
-        // Needs to check potential offset/size OOB and overflow
+        // TODO(492456046): Remove this overload once it has been removed in Chromium.
         virtual bool DeserializeDataUpdate(const void* deserializePointer,
                                            size_t deserializeSize,
                                            size_t offset,
@@ -148,6 +153,50 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
 
         std::span<uint8_t> GetSource() const {
             return std::span<uint8_t>(GetSourceData(), GetSourceSize());
+        }
+
+        // Deserialize a data update produced by
+        // `client::MemoryTransferService::WriteHandle::SerializeDataUpdate` and apply it to
+        // the mapped buffer memory.
+        //
+        // Parameters:
+        //  - `deserializeData`: The serialized payload from the client specifying the updated
+        //    buffer contents.
+        //  - `target`: The range of data that is written by the update.
+        //  - `offset`: The byte offset for target.data() in the GPU buffer, used by Chromium's
+        //    implementation to offset into the shmem.
+        //
+        // Returns true on success, or false if the deserialization is invalid (e.g. OOB access).
+        //
+        // The default implementation calls the old 4-parameter overload by calling
+        // SetTarget/SetDataLength just for the current Chromium implementation to work with
+        // the current Dawn implementation.
+        // TODO(492456046): Make this pure-virtual once the old overload is removed from
+        // Chromium.
+        virtual bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
+                                           std::span<uint8_t> target,
+                                           size_t offset) {
+            if (offset > std::numeric_limits<size_t>::max() - target.size()) {
+                return false;
+            }
+
+            if (target.data() != nullptr && reinterpret_cast<uintptr_t>(target.data()) < offset) {
+                return false;
+            }
+
+            // In the new `DeserializeDataUpdate` (with 3 parameters) `target` should already be the
+            // correct subspan of the buffer to write into, so we just need to check for OOB and
+            // then write into it.
+            // However, in the old `DeserializeDataUpdate` (with 4 parameters) implementation in
+            // Chromium, `target` is always the full buffer and `offset` is used to offset into both
+            // the target data and the shmem pointer, so we need to do the same offsetting here to
+            // be compatible with both implementations.
+            uint8_t* bufferStart = target.data() - offset;
+            size_t lengthFromStart = target.size() + offset;
+            SetTarget(bufferStart);
+            SetDataLength(lengthFromStart);
+            return DeserializeDataUpdate(deserializeData.data(), deserializeData.size(), offset,
+                                         target.size());
         }
 
       private:
