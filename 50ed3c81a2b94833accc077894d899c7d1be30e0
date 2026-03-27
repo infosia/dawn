@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba2990a5_ad0f6d1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T23:26:46Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve hit every file!",
+      "revId": "50ed3c81a2b94833accc077894d899c7d1be30e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e730b78b_fe084c9c",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T23:26:46Z",
+      "side": 1,
+      "message": "Since the cache key is built using the createInfo (which will differ based on the specialization) how is this intended to use the same cache each time?",
+      "revId": "50ed3c81a2b94833accc077894d899c7d1be30e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bee6290_c16ec488",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T23:26:46Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate how much of this is duplicated between the two pipeline types, but I know that you struggled with multiple inheritance issues here previously so I\u0027m not sure there\u0027s a better way.",
+      "revId": "50ed3c81a2b94833accc077894d899c7d1be30e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6954627b_22f41fcb",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T23:26:46Z",
+      "side": 1,
+      "message": "Not relevant for render pipeline?",
+      "revId": "50ed3c81a2b94833accc077894d899c7d1be30e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
