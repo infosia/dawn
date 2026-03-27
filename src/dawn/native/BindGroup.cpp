@@ -435,21 +435,15 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
         const BindingInfo& bindingInfo = layout->GetBindingInfo(samplerIndex);
         const auto& staticSamplerLayout =
             std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
-        if (!staticSamplerLayout.isUsedForSingleTexture) {
+        if (staticSamplerLayout.use != StaticSamplerUse::SingleTextureYCbCr) {
             continue;
         }
 
-        // Some static samplers are added internally for ExternalTextures so their
-        // sampledTextureIndex is not for a texture passed by the application. Skip checking them.
-        auto textureEntryIndex =
-            textureIndexToEntryIndex.find(staticSamplerLayout.sampledTextureIndex);
-        if (textureEntryIndex == textureIndexToEntryIndex.end()) {
-            continue;
-        }
+        uint32_t textureEntryIndex =
+            textureIndexToEntryIndex.at(staticSamplerLayout.sampledTextureIndex);
 
         const SamplerBase* sampler = staticSamplerLayout.sampler.Get();
-        const TextureViewBase* textureView =
-            descriptor->entries[textureEntryIndex->second].textureView;
+        const TextureViewBase* textureView = descriptor->entries[textureEntryIndex].textureView;
 
         // Compare static sampler and sampled textures to make sure they are compatible.
         if (sampler->IsYCbCr()) {
@@ -471,7 +465,7 @@ MaybeError ValidateStaticSamplersWithSampledTextures(
                             "unfilterable YCbCr %s.",
                             sampler, bindingInfo.binding, textureView);
 
-            sampledYcbcrTextures.set(textureEntryIndex->second);
+            sampledYcbcrTextures.set(textureEntryIndex);
         } else {
             DAWN_INVALID_IF(textureView->IsYCbCr(),
                             "Non-YCbCr static sampler at binding (%u) samples a YCbCr texture.",
