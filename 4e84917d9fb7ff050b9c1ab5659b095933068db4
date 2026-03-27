@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccab2faa_a564dad7",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T11:54:40Z",
+      "side": 1,
+      "message": "The previous order was correct, why did you have to swap it?",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
