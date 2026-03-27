@@ -374,6 +374,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             // Requires Tint Program here right before actual using.
             auto shaderModule = r.inputProgram.UnsafeGetValue();
             auto inputProgram = shaderModule->GetTintProgram();
+            auto device = shaderModule->GetDevice();
             const tint::Program* tintInputProgram = &(inputProgram->program);
             // Convert the AST program to an IR module.
             tint::Result<tint::core::ir::Module> ir;
@@ -381,8 +382,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                 SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                    "ShaderModuleProgramToIR");
                 tint::wgsl::reader::IROptions irOptions{
-                    .ice_callback =
-                        shaderModule->GetDevice()->GetTintInternalCompilerErrorCallback(),
+                    .ice_callback = device->GetTintInternalCompilerErrorCallback(),
+                    .dump_ir_when_validating = device->IsToggleEnabled(Toggle::DumpTintIR),
                 };
                 ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram, irOptions);
                 DAWN_INVALID_IF(ir != tint::Success,
