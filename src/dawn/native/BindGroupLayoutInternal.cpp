@@ -438,7 +438,7 @@ BindingInfo CreateStaticSamplerBindingForExternalTexture(const DeviceBase* devic
         .bindingLayout =
             StaticSamplerBindingInfo{
                 .sampler = device->GetPlaceholderSampler(),
-                .isUsedForSingleTexture = true,
+                .use = StaticSamplerUse::InternalForExternalTexture,
             },
     };
 }
@@ -729,7 +729,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
             [&](const SamplerBindingInfo&) { counts[BindingTypeOrder_RegularSampler]++; },
             [&](const StaticSamplerBindingInfo& layout) {
                 counts[BindingTypeOrder_StaticSampler]++;
-                if (layout.isUsedForSingleTexture) {
+                if (layout.use == StaticSamplerUse::SingleTextureYCbCr) {
                     mNeedsCrossBindingValidation = true;
                 }
             },
