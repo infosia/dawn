@@ -61,7 +61,10 @@ class SpirvReaderTestHelperBase : public BASE {
         TINT_CHECK_RESULT_UNWRAP(binary, Assemble(spirv_asm));
 
         // Parse the SPIR-V to produce a core IR module.
-        TINT_CHECK_RESULT_UNWRAP(parsed, ReadIR(binary));
+        Options options{
+            .enable_validation_asserts = true,
+        };
+        TINT_CHECK_RESULT_UNWRAP(parsed, ReadIR(binary, options));
 
         // Validate the IR module against the capabilities supported by the core dialect.
         TINT_CHECK_RESULT(
