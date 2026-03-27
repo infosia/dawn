@@ -33,6 +33,24 @@
       "message": "```suggestion\n    //  1. Not using a static sampler, nothing to do.\n```",
       "revId": "67b802c1f914e95eeb58b1a9f04735fdeb79697a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea21280c_5eef5588",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T21:52:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74018172_4ce05a2e",
+      "revId": "67b802c1f914e95eeb58b1a9f04735fdeb79697a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
