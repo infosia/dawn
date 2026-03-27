@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2eec62_d174f6f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T09:40:02Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8197962a_f5953a0f",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T09:40:02Z",
+      "side": 1,
+      "message": "nit: can we have an ASSERT that `maxDescriptorCount \u003c GetShaderVisibleHeapMaxSize()` here still? The logic above could go past it in some cases potentially.\n\nAlternatively we can add another `std::min`.",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "717d8e2e_cc40b2f7",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T09:40:02Z",
+      "side": 1,
+      "message": "This shouldn\u0027t bee needed since the test isn\u0027t instantiated with the toggle.",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bcf179a_3eccea66",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T09:40:02Z",
+      "side": 1,
+      "message": "The size passed to the creation of the table doesn\u0027t seem to match the comment?",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
