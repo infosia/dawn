@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6825fb9e_781974a6",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-03-27T04:02:30Z",
+      "side": 1,
+      "message": "I think if we made this a refcounted object we could potentially avoid the cleanup loops in `WaitAny` and instead just rely on the waiters getting cleaned up once all the events it was queued in have completed. The issue with this is that I was worried that you could end up with events that have a lot of waiters which is probably not efficient either... (Lots of waiters could happen if a user is looping and calling WaitAny on a large list until everything is done, so the last thing to complete would have N number of waiters in its list.)",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 51
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
