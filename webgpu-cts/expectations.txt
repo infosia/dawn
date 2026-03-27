@@ -536,6 +536,10 @@ crbug.com/489786288 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_i
 crbug.com/408250017 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="c";*;offset=true [ Failure ] # CAT:Accuracy
 crbug.com/408250017 [ intel-0x3e9b mac ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:arrayed_2d_coords:stage="c";*;offset=true [ Failure ] # CAT:Accuracy
 
+# textureSampleCompareLevel failures on Mac Intel
+crbug.com/497010034 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth32float-stencil8";* [ Failure ] # CAT:Accuracy
+crbug.com/497010034 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth24plus-stencil8";* [ Failure ] # CAT:Accuracy
+
 # All textureSampleCompareLevel:2d_coords/3d_coords fail on Pixel 4
 crbug.com/408244895 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:* [ Failure ] # CAT:Accuracy
 crbug.com/408244895 [ android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:3d_coords:* [ Failure ] # CAT:Accuracy
