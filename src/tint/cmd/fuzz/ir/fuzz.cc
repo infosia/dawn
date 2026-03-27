@@ -76,6 +76,7 @@ void Register(const IRFuzzer& fuzzer) {
             // Enable validation assertions.
             // Any validation failure after this point is a bug in Tint which we want to find.
             tint::wgsl::reader::IROptions ir_options{
+                .dump_ir_when_validating = context.options.dump_ir_when_validating,
                 .enable_validation_asserts = true,
             };
 
@@ -108,6 +109,7 @@ void Register(const IRFuzzer& fuzzer) {
             ir_context.options.vk_icd = context.options.vk_icd;
 #endif
             ir_context.options.dump = context.options.dump;
+            ir_context.options.dump_ir_when_validating = context.options.dump_ir_when_validating;
             auto result = fn(ir.Get(), ir_context, data);
             if (result != Success && context.options.verbose) {
                 std::cout << "   " << result.Failure() << "\n";
@@ -153,6 +155,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                     std::cout << " • [" << i << "] Running: " << currently_running << '\n';
                 }
                 auto mod = acquire_module();
+                mod.dump_ir_when_validating = context.options.dump_ir_when_validating;
+
                 if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
                                              std::string(currently_running).c_str(),
                                              "start") != tint::Success) {
