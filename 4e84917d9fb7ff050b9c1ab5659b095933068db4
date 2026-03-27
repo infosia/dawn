@@ -34,6 +34,24 @@
       "parentUuid": "ccab2faa_a564dad7",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6f4b07f_b776e41c",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-27T22:05:00Z",
+      "side": 1,
+      "message": "I did test patchset 9 and 10 on my machine and I needed 10 so the program wouldn\u0027t assert.",
+      "parentUuid": "2f6d0944_2543a384",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
