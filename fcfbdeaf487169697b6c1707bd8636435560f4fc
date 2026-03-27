@@ -51,6 +51,24 @@
       "parentUuid": "588d9053_fc47d1f2",
       "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "155795c5_11a8612d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-27T09:49:20Z",
+      "side": 1,
+      "message": "I ran the end2end tests using `--use-wire` and I\u0027m getting a assertion failure `Error: Assertion failure at /mnt/dev/projs/dawn/src/dawn/common/Mutex.h:109 (Lock): mOwner.load(std::memory_order_acquire) !\u003d currentThread`\n\nNot sure the best way of giving you logs but heres the call stack: https://gist.github.com/DrogonMar/945663202b9534beab62b8fad5477928",
+      "parentUuid": "ba6d0fb7_3171795d",
+      "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
