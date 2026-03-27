@@ -118,6 +118,8 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
     auto& opt_vk_icd = opts.Add<tint::cli::StringOption>("vk_icd", "path to Vulkan ICD JSON");
 #endif
+    auto& opt_dump_ir =
+        opts.Add<tint::cli::BoolOption>("dump-ir", "Dump IR at each stage of the compilation flow");
 
     tint::cli::ParseOptions parse_opts;
     parse_opts.ignore_unknown = true;
@@ -138,6 +140,8 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
     options.vk_icd = opt_vk_icd.value.value_or("");
 #endif
+    options.dump_ir_when_validating = opt_dump_ir.value.value_or(false);
+
     return 0;
 }
 
