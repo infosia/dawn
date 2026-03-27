@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf99bea7_658d1228",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T20:34:46Z",
+      "side": 1,
+      "message": "Unfortunately I\u0027ve had something urgent come up and won\u0027t be able to finish this review today. I\u0027ve looking through everything except ComputePipelineVk, RenderPipelineVk, and PipelineVk, and they all LGTM. I\u0027ll catch up on the remaining ones when I get a chance. Sorry!",
+      "revId": "67b802c1f914e95eeb58b1a9f04735fdeb79697a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74018172_4ce05a2e",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T20:34:46Z",
+      "side": 1,
+      "message": "```suggestion\n    //  1. Not using a static sampler, nothing to do.\n```",
+      "revId": "67b802c1f914e95eeb58b1a9f04735fdeb79697a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
