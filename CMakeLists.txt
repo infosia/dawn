@@ -259,7 +259,6 @@ endif()
 
 option(TINT_BUILD_TINTD "Build the WGSL language server" OFF)
 
-option(TINT_ENABLE_IR_VALIDATION "Enable IR validation for backend codegen" ${IS_DEBUG_BUILD})
 option(TINT_ENABLE_BREAK_IN_DEBUGGER "Enable tint::debugger::Break()" OFF)
 option(TINT_CHECK_CHROMIUM_STYLE "Check for [chromium-style] issues during build" OFF)
 option(TINT_RANDOMIZE_HASHES "Randomize the hash seed value to detect non-deterministic output" OFF)
@@ -334,7 +333,6 @@ message(STATUS "Tint build fuzzing vulkan drivers: ${TINT_BUILD_FUZZER_VULKAN_SU
 message(STATUS "Tint build benchmarks: ${TINT_BUILD_BENCHMARKS}")
 message(STATUS "Tint build tests: ${TINT_BUILD_TESTS}")
 message(STATUS "Tint build tintd: ${TINT_BUILD_TINTD}")
-message(STATUS "Tint enable IR validation: ${TINT_ENABLE_IR_VALIDATION}")
 message(STATUS "Tint enable break in debugger: ${TINT_ENABLE_BREAK_IN_DEBUGGER}")
 message(STATUS "Tint build checking [chromium-style]: ${TINT_CHECK_CHROMIUM_STYLE}")
 message(STATUS "Tint randomize hashes: ${TINT_RANDOMIZE_HASHES}")
