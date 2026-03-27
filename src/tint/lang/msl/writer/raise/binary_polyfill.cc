@@ -103,15 +103,15 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BinaryPolyfill(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllow8BitIntegers,
-                          core::ir::Capability::kAllowPointSizeBuiltin,
-                          core::ir::Capability::kAllowAnyLetType,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                          core::ir::Capability::kMslAllowEntryPointInterface,
-                      },
-                      "msl.BinaryPolyfill");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllow8BitIntegers,
+                    core::ir::Capability::kAllowPointSizeBuiltin,
+                    core::ir::Capability::kAllowAnyLetType,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                    core::ir::Capability::kMslAllowEntryPointInterface,
+                },
+                "before msl.BinaryPolyfill");
 
     State{ir}.Process();
 

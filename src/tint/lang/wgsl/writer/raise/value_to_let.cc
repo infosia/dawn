@@ -197,12 +197,12 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ValueToLet(core::ir::Module& ir) {
-    core::ir::AssertValidBefore(ir,
-                                core::ir::Capabilities{
-                                    core::ir::Capability::kAllowMultipleEntryPoints,
-                                    core::ir::Capability::kAllowOverrides,
-                                },
-                                "wgsl.ValueToLet");
+    core::ir::AssertValid(ir,
+                          core::ir::Capabilities{
+                              core::ir::Capability::kAllowMultipleEntryPoints,
+                              core::ir::Capability::kAllowOverrides,
+                          },
+                          "before wgsl.ValueToLet");
 
     State{ir}.Process();
 

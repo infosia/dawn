@@ -370,7 +370,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ForkExplicitLayoutTypes(core::ir::Module& ir, SpvVersion version) {
-    AssertValidBefore(ir, kForkExplicitLayoutTypesCapabilities, "spirv.ForkExplicitLayoutTypes");
+    AssertValid(ir, kForkExplicitLayoutTypesCapabilities, "before spirv.ForkExplicitLayoutTypes");
 
     State{ir, version}.Process();
 

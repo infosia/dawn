@@ -90,8 +90,8 @@ struct State {
 }  // namespace
 
 Result<SuccessType> KeepBindingArrayAsPointer(core::ir::Module& ir) {
-    core::ir::AssertValidBefore(ir, kKeepBindingArrayAsPointerCapabilities,
-                                "spirv.KeepBindingArrayAsPointer");
+    core::ir::AssertValid(ir, kKeepBindingArrayAsPointerCapabilities,
+                          "before spirv.KeepBindingArrayAsPointer");
 
     State{ir}.Process();
 

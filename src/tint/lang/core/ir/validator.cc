@@ -129,11 +129,11 @@ struct ValidatedType {
 namespace {
 
 /// Prints out the current IR state, iff ir.dump_ir_when_validating is set.
-void DumpIRIfEnabled(const Module& ir, const char* msg, std::string_view timing = "") {
+void DumpIRIfEnabled(const Module& ir, std::string_view msg) {
     if (ir.dump_ir_when_validating) {
         auto printer = StyledTextPrinter::Create(stdout);
         std::cout << "=========================================================\n";
-        std::cout << "== IR dump " << timing << " " << msg << ":\n";
+        std::cout << "== IR dump " << msg << ":\n";
         std::cout << "=========================================================\n";
         printer->Print(Disassembler(ir).Text());
     }
@@ -5215,47 +5215,25 @@ const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* in
 
 }  // namespace
 
-Result<SuccessType> Validate(const Module& mod,
-                             Capabilities capabilities,
-                             [[maybe_unused]] const char* msg,
-                             [[maybe_unused]] std::string_view timing) {
-    DumpIRIfEnabled(mod, msg, timing);
+Result<SuccessType> Validate(const Module& mod, Capabilities capabilities, std::string_view msg) {
+    DumpIRIfEnabled(mod, msg);
     Validator v(mod, capabilities);
     return v.Run();
 }
 
-Result<SuccessType> ValidateBefore(const Module& mod, Capabilities capabilities, const char* msg) {
-    return Validate(mod, capabilities, msg, "before");
-}
-
-Result<SuccessType> ValidateAfter(const Module& mod, Capabilities capabilities, const char* msg) {
-    return Validate(mod, capabilities, msg, "after");
-}
-
-void AssertValid(const Module& mod,
-                 Capabilities capabilities,
-                 const char* msg,
-                 std::string_view timing) {
-    DumpIRIfEnabled(mod, msg, timing);
+void AssertValid(const Module& mod, Capabilities capabilities, std::string_view msg) {
+    DumpIRIfEnabled(mod, msg);
 
     if (mod.enable_validation_asserts) {
         Validator v(mod, capabilities);
         auto result = v.Run();
         if (result != Success) {
             TINT_ICE() << "\n========================================================="
-                       << "\n== IR validation failed " << timing << " " << msg << ":"
+                       << "\n== IR validation failed " << msg << ":"
                        << "\n=========================================================\n"
                        << result.Failure().reason;
         }
     }
-}
-
-void AssertValidBefore(const Module& mod, Capabilities capabilities, const char* msg) {
-    return AssertValid(mod, capabilities, msg, "before");
-}
-
-void AssertValidAfter(const Module& mod, Capabilities capabilities, const char* msg) {
-    return AssertValid(mod, capabilities, msg, "after");
 }
 
 }  // namespace tint::core::ir

@@ -562,7 +562,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Robustness(Module& ir, const RobustnessConfig& config) {
-    AssertValidBefore(ir, kRobustnessCapabilities, "core.Robustness");
+    AssertValid(ir, kRobustnessCapabilities, "before core.Robustness");
 
     State{config, ir}.Process();
 
