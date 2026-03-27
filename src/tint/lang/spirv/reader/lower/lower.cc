@@ -65,12 +65,12 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
     // `||` statements.
     TINT_CHECK_RESULT(core::ir::transform::RemoveTerminatorArgs(mod));
 
-    core::ir::AssertValidAfter(mod,
-                               core::ir::Capabilities{
-                                   core::ir::Capability::kAllowMultipleEntryPoints,
-                                   core::ir::Capability::kAllowOverrides,
-                               },
-                               "spirv.Lower");
+    core::ir::AssertValid(mod,
+                          core::ir::Capabilities{
+                              core::ir::Capability::kAllowMultipleEntryPoints,
+                              core::ir::Capability::kAllowOverrides,
+                          },
+                          "after spirv.Lower");
 
     return Success;
 }
