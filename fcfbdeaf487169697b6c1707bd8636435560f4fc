@@ -69,6 +69,24 @@
       "parentUuid": "ba6d0fb7_3171795d",
       "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6d384fa_b7e7653e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-27T09:58:24Z",
+      "side": 1,
+      "message": "`SupportsFeatures` in the test reports that the adapter supports it on wire which shouldn\u0027t be valid and when it tries to create the device with the invalid feature.",
+      "parentUuid": "155795c5_11a8612d",
+      "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
