@@ -696,14 +696,14 @@ struct State {
 }  // namespace
 
 Result<SuccessType> FixTypeLayout(core::ir::Module& ir, const FixTypeLayoutOptions& options) {
-    AssertValidBefore(ir,
-                      tint::core::ir::Capabilities{
-                          core::ir::Capability::kAllow8BitIntegers,
-                          tint::core::ir::Capability::kAllowPointSizeBuiltin,
-                          tint::core::ir::Capability::kAllowDuplicateBindings,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                      },
-                      "msl.FixTypeLayout");
+    AssertValid(ir,
+                tint::core::ir::Capabilities{
+                    core::ir::Capability::kAllow8BitIntegers,
+                    tint::core::ir::Capability::kAllowPointSizeBuiltin,
+                    tint::core::ir::Capability::kAllowDuplicateBindings,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                },
+                "before msl.FixTypeLayout");
 
     State{ir, options}.Process();
 

@@ -448,7 +448,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Std140(Module& ir) {
-    AssertValidBefore(ir, kStd140Capabilities, "core.Std140");
+    AssertValid(ir, kStd140Capabilities, "before core.Std140");
 
     State{ir}.Process();
 
