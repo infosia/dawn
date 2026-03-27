@@ -75,6 +75,7 @@ enum class Toggle {
     DumpShaders,
     DumpShadersOnFailure,
     DumpTintIR,
+    EnableIRValidationAsserts,
     DisableWorkgroupInit,
     DisableDemoteToHelper,
     VulkanUseDemoteToHelperInvocationExtension,
