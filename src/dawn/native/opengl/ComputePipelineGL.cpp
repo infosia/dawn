@@ -82,6 +82,8 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     // Convert the AST program to an IR module.
     tint::wgsl::reader::IROptions irOptions{
         .dump_ir_when_validating = GetDevice()->IsToggleEnabled(Toggle::DumpTintIR),
+        .enable_validation_asserts =
+            GetDevice()->IsToggleEnabled(Toggle::EnableTintIRValidationAsserts),
     };
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(computeStage.module->GetTintProgram()->program,
                                                      irOptions);

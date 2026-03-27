@@ -506,6 +506,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                                    "ShaderModuleProgramToIR");
                 tint::wgsl::reader::IROptions irOptions{
                     .dump_ir_when_validating = device->IsToggleEnabled(Toggle::DumpTintIR),
+                    .enable_validation_asserts =
+                        device->IsToggleEnabled(Toggle::EnableTintIRValidationAsserts),
                 };
                 ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram, irOptions);
                 DAWN_INVALID_IF(ir != tint::Success,
