@@ -64,7 +64,7 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
     for (BindingIndex bindingIndex : layout->GetStaticSamplerIndices()) {
         auto samplerBindingInfo =
             std::get<StaticSamplerBindingInfo>(layout->GetBindingInfo(bindingIndex).bindingLayout);
-        if (!samplerBindingInfo.isUsedForSingleTexture) {
+        if (samplerBindingInfo.use != StaticSamplerUse::Freestanding) {
             // The client did not specify that this sampler should be paired
             // with a single texture binding.
             continue;
@@ -120,6 +120,7 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
             // samplers with the correct YCbCr sampler when JITing pipelines.
             if (auto it = staticSamplerSpecializations.find(bindingIndex);
                 it != staticSamplerSpecializations.end()) {
+                DAWN_ASSERT(samplerLayout.use == StaticSamplerUse::InternalForExternalTexture);
                 DAWN_TRY_ASSIGN(sampler, Sampler::Create(device, it->second));
             }
 
@@ -183,8 +184,9 @@ VkDescriptorType VulkanDescriptorType(const BindingInfo& bindingInfo) {
         [](const StaticSamplerBindingInfo& layout) {
             // Make this entry into a combined image sampler iff the client
             // specified a single texture binding to be paired with it.
-            return (layout.isUsedForSingleTexture) ? VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER
-                                                   : VK_DESCRIPTOR_TYPE_SAMPLER;
+            return (layout.use == StaticSamplerUse::Freestanding)
+                       ? VK_DESCRIPTOR_TYPE_SAMPLER
+                       : VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
         },
         [](const TextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; },
         [](const StorageTextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_STORAGE_IMAGE; },
