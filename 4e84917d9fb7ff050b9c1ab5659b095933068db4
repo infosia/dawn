@@ -16,6 +16,24 @@
       "message": "The previous order was correct, why did you have to swap it?",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f6d0944_2543a384",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-27T12:08:38Z",
+      "side": 1,
+      "message": "It stalls at DawnTest::SetUp() or on my machine it asserts. We need to bail out of the test before SetUp is called, I noticed the job was stalling with the `UseWire` in patchset 9 too.",
+      "parentUuid": "ccab2faa_a564dad7",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
