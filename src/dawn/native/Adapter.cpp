@@ -284,6 +284,10 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     // no longer necessary.
     deviceToggles.Default(Toggle::BlobCacheHashValidation, true);
 
+#if defined(DAWN_ENABLE_ASSERTS)
+    deviceToggles.Default(Toggle::EnableTintIRValidationAsserts, true);
+#endif
+
     // Backend-specific forced and default device toggles
     mPhysicalDevice->SetupBackendDeviceToggles(mInstance->GetPlatform(), &deviceToggles);
 

@@ -91,6 +91,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
 
     tint::wgsl::reader::IROptions irOptions{
         .dump_ir_when_validating = device->IsToggleEnabled(Toggle::DumpTintIR),
+        .enable_validation_asserts = device->IsToggleEnabled(Toggle::EnableTintIRValidationAsserts),
     };
 
     // Convert the AST program to an IR module.
