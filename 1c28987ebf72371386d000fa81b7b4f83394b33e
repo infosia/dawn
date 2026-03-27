@@ -16,6 +16,131 @@
       "message": "PTAL, thanks!",
       "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9777f558_f50b2b85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "LGTM! From experience I know how fiddly this interface is :)",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "399f73be_71c397d7",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "This might not be needed if the implementation of `DeserializeDataUpdate` were in the .cpp.",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ff6efd3_8ed18b85",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "nit: the deserializeData may not contain the actual bytes (when backed by shmem in Chromium for example).\n```suggestion\n        //  - `deserializeData`: The serialized payload from the client specifying the updated\n```",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206dc21c_aea2813c",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "That\u0027s how it\u0027s used but not the constaint for the API. Maybe:\n```suggestion\n        //  - `target`: The range of data that is written by the update.\n        //  - `offset`: The byte offset for target.data() in the GPU buffer, used by Chromium\u0027s implementation to offset into the shmem.\n```\n\nI\u0027m thinking that adding offset to this interface might have been a mistake and instead we should have passed the offset in `deserializeData` in the Chromium implementation. But it\u0027s something that we can fix one day (not now).",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28fc0c6f_35205e40",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "Is that ever the case when called by the wire server?",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8453cbb3_c7bb8863",
+        "filename": "src/dawn/wire/server/ServerInlineMemoryTransferService.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "I would imagine that it is the caller\u0027s responsiblity to not pass null spans. Does that ever happen in the WireServer (with size !\u003d 0)?",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35001c71_8c9ac512",
+        "filename": "src/dawn/wire/server/ServerInlineMemoryTransferService.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:00:20Z",
+      "side": 1,
+      "message": "```suggestion\n            if (deserializeData.size() !\u003d target.size()) {\n```",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
