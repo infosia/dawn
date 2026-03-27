@@ -62,6 +62,8 @@ struct Options {
 #endif
     /// If true, dump shader input/output text to stdout
     bool dump = false;
+    /// If true, dump the IR whenever validation is performed.
+    bool dump_ir_when_validating = false;
 };
 
 /// Context holds information about the fuzzer options and the input program.
