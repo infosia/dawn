@@ -400,7 +400,9 @@ SamplerBindingInfo SamplerBindingInfo::From(const SamplerBindingLayout& layout) 
 StaticSamplerBindingInfo StaticSamplerBindingInfo::From(const StaticSamplerBindingLayout& layout) {
     return {
         .sampler = layout.sampler,
-        .isUsedForSingleTexture = layout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED,
+        .use = (layout.sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED)
+                   ? StaticSamplerUse::Freestanding
+                   : StaticSamplerUse::SingleTextureYCbCr,
     };
 }
 
