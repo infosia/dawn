@@ -213,6 +213,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Dump shaders only on failure. Used for logging purposes. Dumped shaders will be log via "
       "EmitLog, thus printed in Chrome console or consumed by user-defined callback function.",
       "https://crbug.com/dawn/792", ToggleStage::Device}},
+    {Toggle::DumpTintIR,
+     {"dump_tint_ir", "Dump Tint IR for debugging.", "https://crbug.com/496709352",
+      ToggleStage::Device}},
     {Toggle::DisableWorkgroupInit,
      {"disable_workgroup_init",
       "Disables the workgroup memory zero-initialization for compute shaders.",

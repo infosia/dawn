@@ -89,9 +89,13 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         .map = BuildSubstituteOverridesTransformConfig(computeStage),
     };
 
+    tint::wgsl::reader::IROptions irOptions{
+        .dump_ir_when_validating = device->IsToggleEnabled(Toggle::DumpTintIR),
+    };
+
     // Convert the AST program to an IR module.
-    auto ir =
-        tint::wgsl::reader::ProgramToLoweredIR(computeStage.module->GetTintProgram()->program);
+    auto ir = tint::wgsl::reader::ProgramToLoweredIR(computeStage.module->GetTintProgram()->program,
+                                                     irOptions);
     DAWN_INVALID_IF(ir != tint::Success, "An error occurred while generating Tint IR\n%s",
                     ir.Failure().reason);
 
