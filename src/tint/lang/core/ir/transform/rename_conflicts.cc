@@ -301,7 +301,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> RenameConflicts(core::ir::Module& ir) {
-    core::ir::AssertValidBefore(ir, kRenameConflictsCapabilities, "core.RenameConflicts");
+    core::ir::AssertValid(ir, kRenameConflictsCapabilities, "before core.RenameConflicts");
 
     State{ir}.Process();
 
