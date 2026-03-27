@@ -16,6 +16,23 @@
       "message": "Figured out my issues with the `git cl` commands and fixed up the issues reported by the runs.",
       "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "588d9053_fc47d1f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-27T09:38:03Z",
+      "side": 1,
+      "message": "Seems like the test is timing out when its running under wire, thought returning false in `dawn::wire::IsFeatureSupported` would be enough.",
+      "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
