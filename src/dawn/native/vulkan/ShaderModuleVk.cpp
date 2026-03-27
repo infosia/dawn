@@ -186,7 +186,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     }
 
     // External textures also need special cases as they may be in one of three configurations:
-    //  1. No using a static sampler, nothing to do.
+    //  1. Not using a static sampler, nothing to do.
     //  2. Using the multiplanar path with a static sampler: the texture has been remapped to use
     //     its static sampler binding above, but we also need to update the
     //     ExternalMultiplanarTexture's information.
