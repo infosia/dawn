@@ -140,12 +140,6 @@ config("tint_public_config") {
     defines += [ "TINT_BUILD_IS_LINUX=0" ]
   }
 
-  if (tint_enable_ir_validation) {
-    defines += [ "TINT_ENABLE_IR_VALIDATION=1" ]
-  } else {
-    defines += [ "TINT_ENABLE_IR_VALIDATION=0" ]
-  }
-
   if (tint_build_fuzzer_vulkan_support) {
     defines += [ "TINT_BUILD_FUZZER_VULKAN_SUPPORT=1" ]
   } else {
