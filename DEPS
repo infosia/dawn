@@ -66,7 +66,7 @@ vars = {
 
   # Version of Chromium the DEPS entries synced by scripts/roll_chromium_deps.py
   # were last synced to.
-  'chromium_revision': '6bc1cd1221263cd08d2afd94bf136c29b421fda0',
+  'chromium_revision': '39bd962b58821e1bc07c039e9066e64024b0c11b',
   # We never want to actually checkout Chromium, but we need a fake DEPS entry
   # in order for the Chromium -> Dawn DEPS autoroller to work.
   'checkout_placeholder_chromium': False,
@@ -112,7 +112,7 @@ deps = {
   },
 
   'third_party/depot_tools': {
-    'url': '{chromium_git}/chromium/tools/depot_tools.git@ce1ebad2c35c9387186f01d77edeea28a254c955',
+    'url': '{chromium_git}/chromium/tools/depot_tools.git@69860df12750599058da2ed7bb69294ae1b99c59',
     'condition': 'dawn_standalone',
   },
 
@@ -143,7 +143,7 @@ deps = {
   # The //build and //tools/* deps should all be updated in unison, as
   #  there are dependencies between them.
   'build': {
-  'url': '{chromium_git}/chromium/src/build@3b1b46fa405ab409c111daace69071552e4cd409',
+  'url': '{chromium_git}/chromium/src/build@d1cac3b4c4cf07811ba99cdbc1f1cf2fc881b1ac',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
@@ -253,7 +253,7 @@ deps = {
 
   # Testing, GTest and GMock
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@0ed6d486e69b3940b758d3082fa6ade48b565536',
+    'url': '{chromium_git}/chromium/src/testing@e0bc8d4f98ece2440823e71b8282550c307bfa62',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
@@ -608,7 +608,7 @@ deps = {
   # Dependencies for PartitionAlloc.
   # Doc: https://docs.google.com/document/d/1wz45t0alQthsIU9P7_rQcfQyqnrBMXzrOjSzdQo-V-A
   'third_party/partition_alloc': {
-    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@ad516b327b0d4b30694bcb19ccaddcaf48da39ba',
+    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@3b21b53f577117db1fcbe80558f85e474e4f2f12',
     'condition': 'dawn_standalone',
   },
 
