@@ -679,7 +679,8 @@ struct State {
 }  // namespace
 
 Result<SuccessType> DirectVariableAccess(Module& ir, const DirectVariableAccessOptions& options) {
-    core::ir::AssertValidBefore(ir, kDirectVariableAccessCapabilities, "core.DirectVariableAccess");
+    core::ir::AssertValid(ir, kDirectVariableAccessCapabilities,
+                          "before core.DirectVariableAccess");
 
     State{ir, options}.Process();
 

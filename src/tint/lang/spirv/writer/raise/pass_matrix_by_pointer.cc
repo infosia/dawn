@@ -128,7 +128,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> PassMatrixByPointer(core::ir::Module& ir) {
-    core::ir::AssertValidBefore(ir, {}, "spirv.PassMatrixByPointer");
+    core::ir::AssertValid(ir, {}, "before spirv.PassMatrixByPointer");
 
     State{ir}.Process();
 

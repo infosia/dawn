@@ -756,15 +756,15 @@ struct State {
 }  // namespace
 
 Result<SuccessType> TransposeRowMajor(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllowMultipleEntryPoints,
-                          core::ir::Capability::kAllowStructMatrixDecorations,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                          core::ir::Capability::kAllowOverrides,
-                          core::ir::Capability::kAllowPointerToHandle,
-                      },
-                      "spirv.TransposeRowMajor");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllowMultipleEntryPoints,
+                    core::ir::Capability::kAllowStructMatrixDecorations,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                    core::ir::Capability::kAllowOverrides,
+                    core::ir::Capability::kAllowPointerToHandle,
+                },
+                "before spirv.TransposeRowMajor");
 
     State{ir}.Process();
 

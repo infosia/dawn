@@ -47,12 +47,12 @@ Result<core::ir::Module> ReadIR(const std::vector<uint32_t>& input, const Option
 
     // Always validate the core IR, so that we fail somewhat gracefully on invalid inputs instead of
     // just ICEing later on.
-    TINT_CHECK_RESULT(core::ir::ValidateAfter(mod,
-                                              core::ir::Capabilities{
-                                                  core::ir::Capability::kAllowMultipleEntryPoints,
-                                                  core::ir::Capability::kAllowOverrides,
-                                              },
-                                              "spirv::ReadIR"));
+    TINT_CHECK_RESULT(core::ir::Validate(mod,
+                                         core::ir::Capabilities{
+                                             core::ir::Capability::kAllowMultipleEntryPoints,
+                                             core::ir::Capability::kAllowOverrides,
+                                         },
+                                         "after spirv::ReadIR"));
 
     return mod;
 }
