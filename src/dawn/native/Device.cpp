@@ -943,12 +943,28 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
                 // Resolve errors from async tasks
                 for (auto task : mPendingAsyncTasks) {
                     // All the tasks should have completed unless this event was canceled.
+<<<<<<< HEAD   (adcf333bd486a7f0a1c5c4a52c8ea5ae54e15c32 [M146] [dawn][wire] Ensure that Devices on the Server always)
                     DAWN_ASSERT(task.task->GetState() == AsyncTaskState::Completed ||
+||||||| BASE   (ee97f6ef913806678d8cae0bdb090ce09ab60b07 metal: Map iOS depth/disparity IOSurface formats in SharedTe)
+                    DAWN_ASSERT(task->GetState() == AsyncTaskState::Completed ||
+=======
+                    DAWN_ASSERT(task->IsCompleted() ||
+>>>>>>> CHANGE (6742999c0f402758e439277ac9d6787acd14d022 [dawn][native] Updates AsyncTasks to remove need of Waitable)
                                 completionType != EventCompletionType::Ready);
+<<<<<<< HEAD   (adcf333bd486a7f0a1c5c4a52c8ea5ae54e15c32 [M146] [dawn][wire] Ensure that Devices on the Server always)
                     if (task.task->GetState() == AsyncTaskState::Completed &&
                         task.task->IsError() &&
                         task.captureErrorType == ToWGPUErrorType(task.task->GetErrorType())) {
                         std::unique_ptr<ErrorData> error = task.task->AcquireError();
+||||||| BASE   (ee97f6ef913806678d8cae0bdb090ce09ab60b07 metal: Map iOS depth/disparity IOSurface formats in SharedTe)
+                    if (task->GetState() == AsyncTaskState::Completed && task->IsError() &&
+                        pendingTask.captureErrorType == ToWGPUErrorType(task->GetErrorType())) {
+                        std::unique_ptr<ErrorData> error = task->AcquireError();
+=======
+                    if (task->IsCompleted() && task->IsError() &&
+                        pendingTask.captureErrorType == ToWGPUErrorType(task->GetErrorType())) {
+                        std::unique_ptr<ErrorData> error = task->AcquireError();
+>>>>>>> CHANGE (6742999c0f402758e439277ac9d6787acd14d022 [dawn][native] Updates AsyncTasks to remove need of Waitable)
                         mScope->CaptureError(ToWGPUErrorType(error->GetType()),
                                              error->GetMessage());
                     }
