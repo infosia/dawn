@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c802177f_05a8aa6e",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-03-27T23:28:49Z",
+      "side": 1,
+      "message": "Oh! I just realized it\u0027s because buildCacheKey is false when generating specializations. Ignore this! (My confusion might indicate that this comment is better off in `GetOrCreateSpecializedHandle()`, though.)",
+      "parentUuid": "e730b78b_fe084c9c",
+      "revId": "50ed3c81a2b94833accc077894d899c7d1be30e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3bee6290_c16ec488",
