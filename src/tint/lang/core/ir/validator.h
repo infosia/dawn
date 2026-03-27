@@ -103,54 +103,16 @@ using Capabilities = EnumSet<Capability>;
 /// @param mod the module to validate
 /// @param capabilities the optional capabilities that are allowed
 /// @param msg the msg to accompany the output
-/// @param timing when the validation is run.
 /// @returns success or failure
 Result<SuccessType> Validate(const Module& mod,
                              Capabilities capabilities = {},
-                             const char* msg = "",
-                             std::string_view timing = "");
-
-/// Validates the module @p ir is correctly formed before an operation
-/// @param mod the module to validate
-/// @param capabilities the optional capabilities that are allowed
-/// @param msg the msg to accompany the output to indicate the operation
-/// @returns success or failure
-Result<SuccessType> ValidateBefore(const Module& mod,
-                                   Capabilities capabilities = {},
-                                   const char* msg = "");
-
-/// Validates the module @p ir is correctly formed after an operation
-/// @param mod the module to validate
-/// @param capabilities the optional capabilities that are allowed
-/// @param msg the msg to accompany the output to indicate the step
-/// @returns success or failure
-Result<SuccessType> ValidateAfter(const Module& mod,
-                                  Capabilities capabilities = {},
-                                  const char* msg = "");
+                             std::string_view msg = "");
 
 /// Validates the module @p ir is correctly formed, iff required by the build configuration.
 /// @param mod the module to transform
 /// @param capabilities the optional capabilities that are allowed
 /// @param msg the msg to accompany the output
-/// @param timing when the validation is run.
-void AssertValid(const Module& mod,
-                 Capabilities capabilities = {},
-                 const char* msg = "",
-                 std::string_view timing = "");
-
-/// Validates the module @p ir is correctly formed before an operation, iff required by the build
-/// configuration.
-/// @param mod the module to validate
-/// @param capabilities the optional capabilities that are allowed
-/// @param msg the msg to accompany the output to indicate the operation
-void AssertValidBefore(const Module& mod, Capabilities capabilities = {}, const char* msg = "");
-
-/// Validates the module @p ir is correctly formed after an operation, iff required by the build
-/// configuration.
-/// @param mod the module to validate
-/// @param capabilities the optional capabilities that are allowed
-/// @param msg the msg to accompany the output to indicate the operation
-void AssertValidAfter(const Module& mod, Capabilities capabilities = {}, const char* msg = "");
+void AssertValid(const Module& mod, Capabilities capabilities = {}, std::string_view msg = "");
 
 }  // namespace tint::core::ir
 

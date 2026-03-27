@@ -112,13 +112,13 @@ struct State {
 }  // namespace
 
 Result<SuccessType> OffsetFirstIndex(core::ir::Module& ir, const OffsetFirstIndexConfig& config) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllowHandleVarsWithoutBindings,
-                          core::ir::Capability::kAllowDuplicateBindings,
-                          core::ir::Capability::kLoosenValidationForShaderIO,
-                      },
-                      "glsl.OffsetFirstIndex");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllowHandleVarsWithoutBindings,
+                    core::ir::Capability::kAllowDuplicateBindings,
+                    core::ir::Capability::kLoosenValidationForShaderIO,
+                },
+                "before glsl.OffsetFirstIndex");
 
     State{config, ir}.Process();
 

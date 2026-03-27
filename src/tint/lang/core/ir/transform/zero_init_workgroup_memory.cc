@@ -306,7 +306,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ZeroInitWorkgroupMemory(Module& ir) {
-    AssertValidBefore(ir, kZeroInitWorkgroupMemoryCapabilities, "core.ZeroInitWorkgroupMemory");
+    AssertValid(ir, kZeroInitWorkgroupMemoryCapabilities, "before core.ZeroInitWorkgroupMemory");
 
     State{ir}.Process();
 

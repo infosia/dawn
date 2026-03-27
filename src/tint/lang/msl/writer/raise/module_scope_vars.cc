@@ -341,15 +341,15 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ModuleScopeVars(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllow8BitIntegers,
-                          core::ir::Capability::kAllowPointSizeBuiltin,
-                          core::ir::Capability::kMslAllowEntryPointInterface,
-                          core::ir::Capability::kAllowDuplicateBindings,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                      },
-                      "msl.ModuleScopeVars");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllow8BitIntegers,
+                    core::ir::Capability::kAllowPointSizeBuiltin,
+                    core::ir::Capability::kMslAllowEntryPointInterface,
+                    core::ir::Capability::kAllowDuplicateBindings,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                },
+                "before msl.ModuleScopeVars");
 
     State{ir}.Process();
 

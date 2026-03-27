@@ -135,7 +135,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ExpandImplicitSplats(core::ir::Module& ir) {
-    AssertValidBefore(ir, kExpandImplicitSplatsCapabilities, "spirv.ExpandImplicitSplats");
+    AssertValid(ir, kExpandImplicitSplatsCapabilities, "before spirv.ExpandImplicitSplats");
 
     State{ir}.Process();
 

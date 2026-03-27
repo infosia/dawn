@@ -686,7 +686,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> VertexPulling(core::ir::Module& ir, const VertexPullingConfig& config) {
-    AssertValidBefore(ir, kVertexPullingCapabilities, "core.VertexPulling");
+    AssertValid(ir, kVertexPullingCapabilities, "before core.VertexPulling");
 
     State{config, ir}.Process();
 

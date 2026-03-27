@@ -849,8 +849,8 @@ struct State {
 Result<SuccessType> MultiplanarExternalTexture(
     Module& ir,
     const tint::transform::multiplanar::BindingsMap& multiplanar_map) {
-    core::ir::AssertValidBefore(ir, kMultiplanarExternalTextureCapabilities,
-                                "core.MultiplanarExternalTexture");
+    core::ir::AssertValid(ir, kMultiplanarExternalTextureCapabilities,
+                          "before core.MultiplanarExternalTexture");
 
     return State{multiplanar_map, ir}.Process();
 }
