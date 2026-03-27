@@ -495,14 +495,19 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
         compilationResult, GetDevice(), std::move(req), GLSLCompilation::FromValidatedBlob,
         [](GLSLCompilationRequest r) -> ResultOrError<GLSLCompilation> {
             // Requires Tint Program here right before actual using.
-            auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
+            auto shaderModule = r.inputProgram.UnsafeGetValue();
+            auto inputProgram = shaderModule->GetTintProgram();
+            auto device = shaderModule->GetDevice();
             const tint::Program* tintInputProgram = &(inputProgram->program);
             // Convert the AST program to an IR module.
             tint::Result<tint::core::ir::Module> ir;
             {
                 SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                    "ShaderModuleProgramToIR");
-                ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram);
+                tint::wgsl::reader::IROptions irOptions{
+                    .dump_ir_when_validating = device->IsToggleEnabled(Toggle::DumpTintIR),
+                };
+                ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram, irOptions);
                 DAWN_INVALID_IF(ir != tint::Success,
                                 "An error occurred while generating Tint IR\n%s",
                                 ir.Failure().reason);
