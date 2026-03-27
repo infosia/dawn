@@ -131,6 +131,18 @@ DAWN_SERIALIZABLE(struct, ExternalTextureBindingInfo, EXTERNAL_TEXTURE_BINDING_I
 DAWN_SERIALIZABLE(struct, InputAttachmentBindingInfo, INPUT_ATTACHMENT_BINDING_INFO_MEMBER){};
 #undef INPUT_ATTACHMENT_BINDING_INFO_MEMBER
 
+// Describes what a static sampler binding is used for. While it could just be a boolean for whether
+// or not a single texture is required, having the enums lets us do more precise assertions.
+enum class StaticSamplerUse : uint8_t {
+    // A static sampler that can be combined with any (non-YCbCr) texture in the shader.
+    Freestanding,
+    // A YCbCr sampler that can only be used to sample the texture at `sampledTextureIndex`.
+    SingleTextureYCbCr,
+    // A static sampler created in the expansion of an ExternalTexture, so a YCbCr sampler may be
+    // swapped in if needed during pipeline specialization in the Vulkan backend.
+    InternalForExternalTexture,
+};
+
 // A mirror of wgpu::StaticSamplerBindingLayout for use inside dawn::native.
 struct StaticSamplerBindingInfo {
     // Note that this doesn't initialize the BindingIndex member as it is computed after sorting the
@@ -142,8 +154,8 @@ struct StaticSamplerBindingInfo {
     // Holds the BindingIndex of the single texture with which this sampler is statically paired, if
     // any.
     BindingIndex sampledTextureIndex = BindingIndex(0);
-    // Whether this instance is statically paired with a single texture.
-    bool isUsedForSingleTexture = false;
+    // What this sampler will be used for.
+    StaticSamplerUse use;
 
     bool operator==(const StaticSamplerBindingInfo& other) const = default;
 };
