@@ -456,22 +456,19 @@ TEST_P(ExternalTextureTests, TextureDimensionsWithTextureView) {
 // externalTexture binding.
 TEST_P(ExternalTextureTests, TextureLoadWithTextureView) {
     wgpu::Texture texture =
-        Create2DTexture(device, kWidth, kHeight, kFormat,
-                        wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
+        MakeTestTexture(kFormat, kWidth, kHeight, {1.0 / 255.0, 2.0 / 255.0, 3.0 / 255.0, 1.0});
 
     // Create buffer that will store textureLoad result
-    std::vector<float> data = {42, 42, 42, 42};
-    std::vector<float> expected = {0, 0, 0, 0};
-    uint64_t bufferSize = static_cast<uint64_t>(data.size() * sizeof(float));
+    uint32_t kZero = 0;
     wgpu::Buffer buffer = utils::CreateBufferFromData(
-        device, data.data(), bufferSize, wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc);
+        device, &kZero, sizeof(uint32_t), wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @group(0) @binding(0) var texture : texture_external;
-        @group(0) @binding(1) var<storage, read_write> buffer: vec4f;
+        @group(0) @binding(1) var<storage, read_write> buffer: u32;
 
         @compute @workgroup_size(1) fn main() {
-            buffer = textureLoad(texture, vec2(0, 0));
+            buffer = pack4x8unorm(textureLoad(texture, vec2(0, 0)));
         })");
 
     // Pipeline Creation
@@ -480,9 +477,8 @@ TEST_P(ExternalTextureTests, TextureLoadWithTextureView) {
     wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
 
     // Set up bind group that uses a TextureView for the external_texture in WGSL
-    wgpu::BindGroup bindGroup =
-        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
-                             {{0, texture.CreateView()}, {1, buffer, 0, bufferSize}});
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, texture.CreateView()}, {1, buffer}});
 
     // Issue dispatch
     wgpu::CommandBuffer commands;
@@ -495,10 +491,7 @@ TEST_P(ExternalTextureTests, TextureLoadWithTextureView) {
     commands = encoder.Finish();
     queue.Submit(1, &commands);
 
-    EXPECT_BUFFER_FLOAT_EQ(expected[0], buffer, 0);
-    EXPECT_BUFFER_FLOAT_EQ(expected[1], buffer, 4);
-    EXPECT_BUFFER_FLOAT_EQ(expected[2], buffer, 8);
-    EXPECT_BUFFER_FLOAT_EQ(expected[3], buffer, 12);
+    EXPECT_BUFFER_RGBA8_EQ(utils::RGBA8(1, 2, 3, 255), buffer, 0);
 }
 
 // https://crbug.com/1515439
