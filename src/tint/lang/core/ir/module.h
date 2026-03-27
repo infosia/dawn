@@ -202,7 +202,7 @@ class Module {
     Hashmap<const core::constant::Value*, ir::Constant*, 16> constants;
 
     /// If true, the AssertValid*() methods will perform validation.
-    bool enable_validation_asserts = TINT_ENABLE_IR_VALIDATION;
+    bool enable_validation_asserts = false;
 
     /// If true, dump the IR whenever validation is performed.
     bool dump_ir_when_validating = false;
