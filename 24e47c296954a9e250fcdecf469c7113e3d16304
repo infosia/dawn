@@ -22,6 +22,182 @@
       },
       "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb1ccb39_510e4f15",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "Can we keep this as an atomic since it makes the `IsSignaled()` check very cheap? If you keep it as an atomic, it will have to be outside the `State` (otherwise there\u0027s no point in making it atomic) in which case `State` should perhaps be renamed to `WaitLists` (or `WaitListState`)\n\nKeeping it separate also lets us refactor the code later to split the completion condition from the wait lists e.g. if we want multiple events to share the same wait lists with different completion conditions.",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b81282c_003dfa72",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "This has a subtle issue - while you\u0027re iterating through the list, an event might become signaled. If that event has duplicate waits, you could mark some waits as not ready, before the event is signaled, and some waits as ready, after the event is signaled. We want all waits for a single event to return the same status.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3834b19f_67ca2214",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "nit: it might be more clear if we use the concrete type here instead of `auto` which I understand is `State*`.",
+      "range": {
+        "startLine": 119,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 92
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "aba725c6_a83ed556",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/WaitListEvent.h",
+              "range": {
+                "startLine": 99,
+                "startChar": 0,
+                "endLine": 100,
+                "endChar": 0
+              },
+              "replacement": "        event-\u003emState.Use([\u0026](State* state) {\n"
+            },
+            {
+              "path": "src/dawn/native/WaitListEvent.h",
+              "range": {
+                "startLine": 119,
+                "startChar": 0,
+                "endLine": 120,
+                "endChar": 0
+              },
+              "replacement": "            event-\u003emState.Use([\u0026](State* state) { std::erase(state-\u003esyncWaiters, \u0026waiter); });\n"
+            },
+            {
+              "path": "src/dawn/native/WaitListEvent.h",
+              "range": {
+                "startLine": 131,
+                "startChar": 0,
+                "endLine": 132,
+                "endChar": 0
+              },
+              "replacement": "        event-\u003emState.Use([\u0026](State* state) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd005975_73939c99",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "nit: and concrete types here too i.e. `bool*` instead of `auto`.",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 96
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01840691_32cf0f4b",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "Just an observation that the `MutexCondVarProtected` API feels a bit odd to me. Why should the caller have to call `Use()` on it to just `Wait(For)`? Why can\u0027t `Wait(For)` be methods on the `MutexCondVarProtected` instead of the `CondVarGuard` which probably shouldn\u0027t exist in the first place. I.e. there should be a `Use()` method on the `MutexCondVarProtected` but it should just return a mutex `Guard` instead of `CondVarGuard`.\n\nAnd finally, the predicate should ideally get a const ref to the state so that it can\u0027t mutate it, right? WDYT?",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 96
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80f63841_dbe168ff",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-03-27T21:15:29Z",
+      "side": 1,
+      "message": "This is also susceptible to inconsistent ready states for multiple waits on the same event.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 13
+      },
+      "revId": "24e47c296954a9e250fcdecf469c7113e3d16304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
