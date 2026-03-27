@@ -87,6 +87,24 @@
       "parentUuid": "155795c5_11a8612d",
       "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "926aeb82_547301d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T10:06:36Z",
+      "side": 1,
+      "message": "Thank you for checking, that\u0027s a bug in our test harness that it checks only the \"native\" adapter for the feature support and not the wire one when running in wire mode. I added to https://crbug.com/491515776. In the meantime can you stick an additional `DAWN_TEST_UNSUPPORTED_IF(UsesWire());`.",
+      "parentUuid": "d6d384fa_b7e7653e",
+      "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
