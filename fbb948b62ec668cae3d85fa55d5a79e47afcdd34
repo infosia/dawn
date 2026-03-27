@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4c8e0c6_6f131402",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-03-27T19:23:53Z",
+      "side": 1,
+      "message": "First real change in my jj repo so it goes to you",
+      "revId": "fbb948b62ec668cae3d85fa55d5a79e47afcdd34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
