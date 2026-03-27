@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17afcdae_4b6af1f3",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-27T14:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8197962a_f5953a0f",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "717d8e2e_cc40b2f7",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17ab18e2_f1f5bb36",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-27T14:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "717d8e2e_cc40b2f7",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bcf179a_3eccea66",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-03-27T09:40:02Z",
       "side": 1,
       "message": "The size passed to the creation of the table doesn\u0027t seem to match the comment?",
+      "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14757de5_8c208105",
+        "filename": "src/dawn/tests/white_box/D3D12DescriptorHeapTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-27T14:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bcf179a_3eccea66",
       "revId": "1afa393690ec68a35dbf70052e70060abfe4b61a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
