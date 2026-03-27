@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bd3f688_ed3b2835",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905ff06e_e1e0cc90",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed05afbe_91d5e4ff",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9bced57_ad025348",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ae603e_fcf0d64a",
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f21bcad_a5fb1d64",
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "099cb1b3_925fba34",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "I gave it a try and its a ton of work to extract both, tentatively giving up on that.",
+      "parentUuid": "8f21bcad_a5fb1d64",
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6531ab4a_dd6a3a0f",
@@ -88,6 +148,30 @@
       "writtenOn": "2026-03-27T16:27:51Z",
       "side": 1,
       "message": "Can you move these to L59 so that class order matches the style guide?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06077f00_557e4eb2",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6531ab4a_dd6a3a0f",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -121,6 +205,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e89ca2_dd5a6fe6",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8586de_03e746a9",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01ff27d8_84b80c67",
@@ -134,6 +242,30 @@
       "writtenOn": "2026-03-27T16:27:51Z",
       "side": 1,
       "message": "Capture isn\u0027t needed here.",
+      "range": {
+        "startLine": 151,
+        "startChar": 28,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5161c611_f0a1bf05",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ff27d8_84b80c67",
       "range": {
         "startLine": 151,
         "startChar": 28,
@@ -167,6 +299,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b956b370_4c299fd0",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done, expanded the comment and separated the loops.",
+      "parentUuid": "24049d83_ca7179ca",
+      "range": {
+        "startLine": 184,
+        "startChar": 9,
+        "endLine": 186,
+        "endChar": 63
+      },
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39c1c3e5_0c452a37",
@@ -180,6 +336,24 @@
       "writtenOn": "2026-03-27T16:27:51Z",
       "side": 1,
       "message": "This has a default value so comment above is wrong. Should this be grouped below? A comment explaining intended usage might be helpful here too.",
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e14555bd_63c513a6",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c1c3e5_0c452a37",
       "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86accf16_5678b66f",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Added a WIP in the stack that I\u0027ll refine and send as a follow-up.",
+      "parentUuid": "90ba3617_6f444873",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 39
+      },
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bc44ce2_8ccfbb5d",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-03-26T20:55:23Z",
       "side": 1,
       "message": "Q: Why is validation turned off?",
+      "range": {
+        "startLine": 2273,
+        "startChar": 33,
+        "endLine": 2273,
+        "endChar": 69
+      },
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c746959c_79e9f75a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "You might not have gotten to [3] yet:\n\n```\n    // Create the Sampler, skipping validation because YCbCrVkDescriptor is not allowed when\n    // OpaqueYCbCrAndroidForExternalTexture is on.\n    Ref\u003cSamplerBase\u003e s;\n    DAWN_TRY_ASSIGN(s, device-\u003eCreateSampler(\u0026samplerDesc, ValidationMode::Skip));\n    device-\u003eCacheStaticSampler(ToBackend(s));\n    return s;\n```\n\nI\u0027ll expand the comment a bit.",
+      "parentUuid": "6bc44ce2_8ccfbb5d",
       "range": {
         "startLine": 2273,
         "startChar": 33,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69c0e5f_895b9f43",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be1ec7d_52791d51",
+      "range": {
+        "startLine": 59,
+        "startChar": 57,
+        "endLine": 59,
+        "endChar": 58
+      },
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcaa0488_76520d0a",
@@ -110,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aca1980_9b66e210",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "With the change to return a `ResultOrError\u003cT\u003e` instaed of a `T`, we cannot rely on return-value-optimization anymore. `std::move` avoids doing a copy of `res` for the `ResultOrError` construction, just before destroying `res`.",
+      "parentUuid": "dcaa0488_76520d0a",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 20
+      },
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "993b50f9_87353b65",
@@ -123,6 +219,30 @@
       "writtenOn": "2026-03-26T20:55:23Z",
       "side": 1,
       "message": "nit: extra .",
+      "range": {
+        "startLine": 66,
+        "startChar": 58,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd5d4044_969198b9",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993b50f9_87353b65",
       "range": {
         "startLine": 66,
         "startChar": 58,

@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "304ec788_0dba7b9a",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Added to the stack.",
+      "parentUuid": "b306b4f3_fbcc4150",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f518fb91_50f5a389",
@@ -65,6 +83,58 @@
       "writtenOn": "2026-03-26T23:23:34Z",
       "side": 1,
       "message": "The `{}` as the first initializer argument here creates a `Specialization` with a zeroed out `StaticSamplerSpecializations`, right? Isn\u0027t that a valid `StaticSamplerSpecializations`, which could produce a different handle than `mHandle` if requested explicitly. By inserting `mHandle` here, though you would get a \"cache hit\" when later calling `GetOrCreateSpecializedHandle()` with a zeroed `Specialization`, which would return the wrong handle.\n\nOr am I misunderstanding the relationship between the specializations and the \"normal\" BGL?",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4f9260f_268340a2",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9de4a630_22c35e4f",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "The `{}` would turn into an empty `flat_hash_map` so no `StaticSamplerSpecialization` is created. I realized that the difference between the types calles `StaticSamplerSpecialization` and `StaticSamplerSpecializations` (extra `s`) is almost unnoticeable so I renamed to have a `Map` suffix instead.",
+      "parentUuid": "f518fb91_50f5a389",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3da1d6b_7a950577",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "[2]",
       "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +162,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23963103_51ab5176",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "It may be empty at the start of the function, for example when using textures that are not YCbCr for the external texture. However in that case the branch at [2] will be taken since we insert the noop specialization at [1].",
+      "parentUuid": "4adc5347_23c21deb",
+      "range": {
+        "startLine": 257,
+        "startChar": 62,
+        "endLine": 257,
+        "endChar": 91
+      },
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c9df2c0_c638cbb3",
@@ -105,6 +199,41 @@
       "writtenOn": "2026-03-26T23:23:34Z",
       "side": 1,
       "message": "```suggestion\n    // Caches VkDescriptorSetLayouts for specializations so that the lifetime guarantees are the same\n```",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e9f7ce4_ee12caff",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9df2c0_c638cbb3",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee24dfb9_7e799c08",
+        "filename": "src/dawn/native/vulkan/SamplerVk.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "[3]",
       "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +255,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c8be11f_fc78314c",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "It was an attempt to keep the logic to turn the `StaticSamplerSpecialization` into a `SamplerDescriptor` more local. But that\u0027s probably not super needed given how small `SamplerVk.cpp` is. Done",
+      "parentUuid": "78da0360_d1d91ef2",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc616793_bea31a3b",
@@ -143,6 +290,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "602a4e9f_2c517bbc",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "The frontend cache uses `ContentlessObjectCache` that doesn\u0027t keep the object alive but instead [keeps `WeakRefs`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/ContentLessObjectCache.h;drc\u003d9da3eaf710d7c5ae6c81f2a6af42b078ecab3b40;l\u003d231). That means that if an object is added to the cache, then dropped, it will be destroyed before we have a chance to use it.\n\nExpanded the comment a bit in the new patchset.",
+      "parentUuid": "cc616793_bea31a3b",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0577c72d_6c97d30e",
@@ -156,6 +321,24 @@
       "writtenOn": "2026-03-26T23:23:34Z",
       "side": 1,
       "message": "Why does this return a SamplerBase instead of the Sampler directly?",
+      "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4f0e020_098fef45",
+        "filename": "src/dawn/native/vulkan/SamplerVk.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:39:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0577c72d_6c97d30e",
       "revId": "60fe67734a27bf1c642912d28c24990a5927d56d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
