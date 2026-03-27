@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63f47bae_9373b813",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:42:52Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"prexisting\" is a possible misspelling of \"preexisting\".\n\nTo bypass Spellchecker...\n\n\"prexisting\" is a possible misspelling of \"preexisting\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 193,
+        "startChar": 70,
+        "endLine": 193,
+        "endChar": 80
+      },
+      "revId": "d368493ce5f8bca8e36527bd145f361bd5e3c7cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

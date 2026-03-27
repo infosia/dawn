@@ -268,6 +268,24 @@
       "message": "Well this is kind of exactly the opposite of what we need for dynamic state. This maps one `RenderPipeline` to many `VkPipeline`. For dynamic state we need to map many `RendererPipeline` to one `VkPipeline`. Probably nothing to do in this CL but IDK if we can combine the concepts somehow.",
       "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4574dc26_c2095748",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:42:52Z",
+      "side": 1,
+      "message": "Yeah it\u0027s exactly the opposite and I think we\u0027ll have the need to decouple the VkPipeline from the Render/ComputePipeline eventually (yet another level of indirection?) but for Graphite the monolithic blob cache should be doing all the work right?",
+      "parentUuid": "a2fe5b69_4cbc6ff9",
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

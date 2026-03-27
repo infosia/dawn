@@ -65,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cf9d7f8_af0a9d92",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T18:42:52Z",
+      "side": 1,
+      "message": "It\u0027s meant to keep the objects alive, see this comment thread https://dawn-review.git.corp.google.com/c/dawn/+/298996/comment/cc616793_bea31a3b/",
+      "parentUuid": "ed05afbe_91d5e4ff",
+      "revId": "ffaee2672f9f39f54530f98e26d942b0ab0e6e91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2ae603e_fcf0d64a",
