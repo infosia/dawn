@@ -36,6 +36,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/common/Time.h"
 #include "dawn/native/SystemEvent.h"
@@ -58,16 +59,16 @@ class WaitListEvent : public RefCounted {
   private:
     ~WaitListEvent() override;
 
-    struct SyncWaiter {
-        std::condition_variable cv;
-        std::mutex mutex;
-        bool waitDone = false;
-    };
+    using SyncWaiter = MutexCondVarProtected<bool>;
 
-    mutable std::mutex mMutex;
-    std::atomic<uint64_t> mRemainingSignalCount;
-    std::vector<raw_ptr<SyncWaiter>> mSyncWaiters;
-    std::vector<SystemEventPipeSender> mAsyncWaiters;
+    struct State {
+        uint64_t remainingSignalCount;
+        std::vector<raw_ptr<SyncWaiter>> syncWaiters;
+        std::vector<SystemEventPipeSender> asyncWaiters;
+
+        bool IsSignaled() const;
+    };
+    MutexProtected<State> mState;
 };
 
 template <typename It>
@@ -88,121 +89,54 @@ bool WaitListEvent::WaitAny(It eventAndReadyStateBegin,
         return false;
     }
 
-    struct EventState {
-        raw_ptr<WaitListEvent> event = nullptr;
-        size_t origIndex;
-        bool isReady = false;
-    };
-    std::vector<EventState> events(count);
-
-    for (size_t i = 0; i < count; i++) {
-        const auto& event = (*(eventAndReadyStateBegin + i)).first;
-        events[i].event = event.Get();
-        events[i].origIndex = i;
-    }
-    // Sort the events by address to get a globally consistent order.
-    std::sort(events.begin(), events.end(),
-              [](const auto& lhs, const auto& rhs) { return lhs.event < rhs.event; });
-
-    // Acquire locks in order and enqueue our waiter.
+    // For each event, we take the event lock and queue the waiter if the event is not already
+    // signaled.
+    SyncWaiter waiter;
     bool foundSignaled = false;
     for (size_t i = 0; i < count; i++) {
-        WaitListEvent* event = events[i].event;
-        // Skip over multiple waits on the same event, but ensure that we store the same ready state
-        // for duplicates.
-        if (i > 0 && event == events[i - 1].event) {
-            events[i].isReady = events[i - 1].isReady;
-            continue;
-        }
-        event->mMutex.lock();
-        // Check `IsSignaled()` after acquiring the lock so that it doesn't become true immediately
-        // before we acquire the lock - we assume that it is safe to enqueue our waiter after this
-        // point if the event is not already signaled.
-        if (event->IsSignaled()) {
-            events[i].isReady = true;
-            foundSignaled = true;
-        }
+        auto [eventRef, readyPtr] = (*(eventAndReadyStateBegin + i));
+        WaitListEvent* event = eventRef.Get();
+        event->mState.Use([&](auto state) {
+            // If the event was already signaled, set the flag so we don't need to wait. We still
+            // iterate through the rest of the list though because duplicate events need their
+            // respective |ready| value set appropriately.
+            if (state->IsSignaled()) {
+                *readyPtr = true;
+                foundSignaled = true;
+                return;
+            }
+
+            // Otherwise, we add the SyncWaiter to the event.
+            state->syncWaiters.push_back(&waiter);
+        });
     }
 
-    // If any of the events were already signaled, early out after unlocking the events in reverse
-    // order - note that unlocking in reverse order is not strictly needed for avoiding deadlocks.
+    // If an event was already signaled, we can return early out now after removing the waiter from
+    // all events.
     if (foundSignaled) {
         for (size_t i = 0; i < count; i++) {
-            WaitListEvent* event = events[count - 1 - i].event;
-            // Use the cached value of `IsSignaled()` because we might have unlocked the event
-            // already if it was a duplicate and checking `IsSignaled()` without the lock is racy
-            // and can cause different values of isReady for multiple waits on the same event.
-            if (events[count - 1 - i].isReady) {
-                bool* isReady =
-                    (*(eventAndReadyStateBegin + events[count - 1 - i].origIndex)).second;
-                *isReady = true;
-            }
-            // Skip over multiple waits on the same event.
-            if (i > 0 && event == events[count - i].event) {
-                continue;
-            }
-            event->mMutex.unlock();
+            WaitListEvent* event = (*(eventAndReadyStateBegin + i)).first.Get();
+            event->mState.Use([&](auto state) { std::erase(state->syncWaiters, &waiter); });
         }
         return true;
     }
 
-    // We have acquired locks for all the events we're going to wait on - enqueue our waiter now
-    // after locking it since it could be woken up as soon as any of the events are unlocked. Unlock
-    // the events in reverse order - note that this is not strictly needed for avoiding deadlocks.
-    SyncWaiter waiter;
-    std::unique_lock<std::mutex> waiterLock(waiter.mutex);
-    for (size_t i = 0; i < count; i++) {
-        WaitListEvent* event = events[count - 1 - i].event;
-        // Skip over multiple waits on the same event.
-        if (i > 0 && event == events[count - i].event) {
-            continue;
-        }
-        event->mSyncWaiters.push_back(&waiter);
-        event->mMutex.unlock();
-    }
+    bool result =
+        waiter.Use([timeout](auto w) { return w.WaitFor(timeout, [](auto& x) { return x; }); });
 
-    // Any values larger than those representatable by std::chrono::nanoseconds will be treated as
-    // infinite waits - in particular this covers values greater than INT64_MAX.
-    [[maybe_unused]] bool waitDone = false;
-    if (timeout > kMaxDurationNanos) {
-        waiter.cv.wait(waiterLock, [&waiter]() { return waiter.waitDone; });
-        DAWN_ASSERT(waiter.waitDone);
-        waitDone = true;
-    } else {
-        waitDone =
-            waiter.cv.wait_for(waiterLock, std::chrono::nanoseconds(static_cast<uint64_t>(timeout)),
-                               [&waiter]() { return waiter.waitDone; });
-    }
-    // Release the `waiterLock` so that TSAN doesn't complain about a benign lock order inversion
-    // between `waiter.mutex` and `event.mMutex`.
-    waiterLock.unlock();
-
-    // Remove our waiter from the events.
+    // Iterate the events one more time to update any events and erase the waiter.
     for (size_t i = 0; i < count; i++) {
-        WaitListEvent* event = events[i].event;
-        // Skip over multiple waits on the same event, but ensure that we store the same ready state
-        // for duplicates.
-        if (i > 0 && event == events[i - 1].event) {
-            events[i].isReady = events[i - 1].isReady;
-        } else {
-            // We could be woken by the condition variable before the atomic release store to
-            // `mSignaled` is visible - locking the mutex ensures that the atomic acquire load in
-            // `IsSignaled()` sees the correct value.
-            std::lock_guard<std::mutex> eventLock(event->mMutex);
-            if (event->IsSignaled()) {
-                events[i].isReady = true;
+        auto [eventRef, readyPtr] = (*(eventAndReadyStateBegin + i));
+        WaitListEvent* event = eventRef.Get();
+        event->mState.Use([&](auto state) {
+            if (state->IsSignaled()) {
+                *readyPtr = true;
             }
-            std::erase(event->mSyncWaiters, &waiter);
-        }
-        if (events[i].isReady) {
-            bool* isReady = (*(eventAndReadyStateBegin + events[i].origIndex)).second;
-            *isReady = true;
-            foundSignaled = true;
-        }
+            std::erase(state->syncWaiters, &waiter);
+        });
     }
 
-    DAWN_ASSERT(!waitDone || foundSignaled);
-    return foundSignaled;
+    return result;
 }
 
 }  // namespace dawn::native

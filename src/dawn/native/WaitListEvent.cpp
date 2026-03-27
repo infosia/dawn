@@ -33,30 +33,32 @@
 
 namespace dawn::native {
 
-WaitListEvent::WaitListEvent(uint64_t requiredSignalCount)
-    : mRemainingSignalCount(requiredSignalCount) {}
+bool WaitListEvent::State::IsSignaled() const {
+    return remainingSignalCount == 0;
+}
+
+WaitListEvent::WaitListEvent(uint64_t requiredSignalCount) : mState(requiredSignalCount) {}
+
 WaitListEvent::~WaitListEvent() = default;
 
 bool WaitListEvent::IsSignaled() const {
-    return mRemainingSignalCount.load(std::memory_order_acquire) == 0;
+    return mState.Use([](auto state) { return state->IsSignaled(); });
 }
 
 void WaitListEvent::Signal() {
-    uint64_t prevSignalCount = mRemainingSignalCount.fetch_sub(1, std::memory_order_release);
-    DAWN_ASSERT(prevSignalCount != 0);
-    if (prevSignalCount == 1) {
-        std::lock_guard<std::mutex> lock(mMutex);
-        for (SyncWaiter* w : std::move(mSyncWaiters)) {
-            {
-                std::lock_guard<std::mutex> waiterLock(w->mutex);
-                w->waitDone = true;
+    mState.Use([](auto state) {
+        DAWN_ASSERT(state->remainingSignalCount > 0);
+        state->remainingSignalCount -= 1;
+
+        if (state->IsSignaled()) {
+            for (SyncWaiter* w : std::move(state->syncWaiters)) {
+                w->Use([](auto done) { *done = true; });
             }
-            w->cv.notify_all();
+            for (auto& sender : std::move(state->asyncWaiters)) {
+                std::move(sender).Signal();
+            }
         }
-        for (auto& sender : std::move(mAsyncWaiters)) {
-            std::move(sender).Signal();
-        }
-    }
+    });
 }
 
 bool WaitListEvent::Wait(Nanoseconds timeout) {
@@ -66,15 +68,16 @@ bool WaitListEvent::Wait(Nanoseconds timeout) {
 }
 
 SystemEventReceiver WaitListEvent::WaitAsync() {
-    std::lock_guard<std::mutex> lock(mMutex);
-    if (IsSignaled()) {
-        return SystemEventReceiver::CreateAlreadySignaled();
-    }
-    SystemEventPipeSender sender;
-    SystemEventReceiver receiver;
-    std::tie(sender, receiver) = CreateSystemEventPipe();
-    mAsyncWaiters.push_back(std::move(sender));
-    return receiver;
+    return mState.Use([](auto state) {
+        if (state->IsSignaled()) {
+            return SystemEventReceiver::CreateAlreadySignaled();
+        }
+        SystemEventPipeSender sender;
+        SystemEventReceiver receiver;
+        std::tie(sender, receiver) = CreateSystemEventPipe();
+        state->asyncWaiters.push_back(std::move(sender));
+        return receiver;
+    });
 }
 
 }  // namespace dawn::native
