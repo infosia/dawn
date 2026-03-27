@@ -33,6 +33,24 @@
       "message": "Seems like the test is timing out when its running under wire, thought returning false in `dawn::wire::IsFeatureSupported` would be enough.",
       "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba6d0fb7_3171795d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-27T09:41:22Z",
+      "side": 1,
+      "message": "Yeah that should work and skip the test. I\u0027m not sure why it isn\u0027t enough. Are you able to reproduce locally with `dawn_end2end_tests -w --gtest_filter\u003dAdapterPropertiesDrmTest*`?",
+      "parentUuid": "588d9053_fc47d1f2",
+      "revId": "fcfbdeaf487169697b6c1707bd8636435560f4fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
