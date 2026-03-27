@@ -279,11 +279,11 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BitcastPolyfill(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{core::ir::Capability::kAllowHandleVarsWithoutBindings,
-                                             core::ir::Capability::kAllowDuplicateBindings,
-                                             core::ir::Capability::kLoosenValidationForShaderIO},
-                      "glsl.BitcastPolyfill");
+    AssertValid(ir,
+                core::ir::Capabilities{core::ir::Capability::kAllowHandleVarsWithoutBindings,
+                                       core::ir::Capability::kAllowDuplicateBindings,
+                                       core::ir::Capability::kLoosenValidationForShaderIO},
+                "before glsl.BitcastPolyfill");
 
     State{ir}.Process();
 

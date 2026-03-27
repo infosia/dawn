@@ -105,7 +105,7 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
 }  // namespace
 
 Result<SuccessType> SingleEntryPoint(Module& ir, std::string_view entry_point_name) {
-    AssertValidBefore(ir, kSingleEntryPointCapabilities, "core.SingleEntryPoint");
+    AssertValid(ir, kSingleEntryPointCapabilities, "before core.SingleEntryPoint");
 
     return Run(ir, entry_point_name);
 }

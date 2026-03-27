@@ -1112,14 +1112,14 @@ struct State {
 }  // namespace
 
 Result<SuccessType> Texture(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllowMultipleEntryPoints,
-                          core::ir::Capability::kAllowOverrides,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                          core::ir::Capability::kAllowPointerToHandle,
-                      },
-                      "spirv.Texture");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllowMultipleEntryPoints,
+                    core::ir::Capability::kAllowOverrides,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                    core::ir::Capability::kAllowPointerToHandle,
+                },
+                "before spirv.Texture");
 
     State{ir}.Process();
 

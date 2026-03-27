@@ -149,14 +149,14 @@ struct State {
 
 Result<ImmediateDataLayout> PrepareImmediateData(Module& ir,
                                                  const PrepareImmediateDataConfig& config) {
-    core::ir::AssertValidBefore(ir,
-                                core::ir::Capabilities{
-                                    core::ir::Capability::kAllowDuplicateBindings,
-                                    core::ir::Capability::kAllow8BitIntegers,
-                                    core::ir::Capability::kAllow16BitIntegers,
-                                    core::ir::Capability::kAllowNonCoreTypes,
-                                },
-                                "core.PrepareImmediateData");
+    core::ir::AssertValid(ir,
+                          core::ir::Capabilities{
+                              core::ir::Capability::kAllowDuplicateBindings,
+                              core::ir::Capability::kAllow8BitIntegers,
+                              core::ir::Capability::kAllow16BitIntegers,
+                              core::ir::Capability::kAllowNonCoreTypes,
+                          },
+                          "before core.PrepareImmediateData");
 
     return State{config, ir}.Run();
 }

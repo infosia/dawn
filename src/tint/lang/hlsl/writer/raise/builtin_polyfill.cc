@@ -1991,14 +1991,14 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllow16BitIntegers,
-                          core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
-                          core::ir::Capability::kAllowDuplicateBindings,
-                          core::ir::Capability::kAllowNonCoreTypes,
-                      },
-                      "hlsl.BuiltinPolyfill");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllow16BitIntegers,
+                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                    core::ir::Capability::kAllowDuplicateBindings,
+                    core::ir::Capability::kAllowNonCoreTypes,
+                },
+                "before hlsl.BuiltinPolyfill");
 
     State{ir}.Process();
     return Success;

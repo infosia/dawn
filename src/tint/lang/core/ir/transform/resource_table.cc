@@ -221,13 +221,13 @@ ResourceTableHelper::~ResourceTableHelper() = default;
 Result<SuccessType> ResourceTable(core::ir::Module& ir,
                                   const std::optional<ResourceTableConfig>& config,
                                   ResourceTableHelper* helper) {
-    AssertValidBefore(ir,
-                      core::ir::Capabilities{
-                          core::ir::Capability::kAllowDuplicateBindings,
-                          core::ir::Capability::kAllow8BitIntegers,
-                          core::ir::Capability::kAllow16BitIntegers,
-                      },
-                      "core.ResourceTable");
+    AssertValid(ir,
+                core::ir::Capabilities{
+                    core::ir::Capability::kAllowDuplicateBindings,
+                    core::ir::Capability::kAllow8BitIntegers,
+                    core::ir::Capability::kAllow16BitIntegers,
+                },
+                "before core.ResourceTable");
 
     return State{config, ir, helper}.Process();
 }

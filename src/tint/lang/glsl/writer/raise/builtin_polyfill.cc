@@ -525,8 +525,8 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
-    AssertValidBefore(ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
-                      "glsl.BuiltinPolyfill");
+    AssertValid(ir, core::ir::Capabilities{core::ir::Capability::kAllowDuplicateBindings},
+                "before glsl.BuiltinPolyfill");
 
     State{ir}.Process();
 

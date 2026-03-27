@@ -242,14 +242,14 @@ struct State {
 }  // namespace
 
 Result<SuccessType> PixelLocal(core::ir::Module& ir, const PixelLocalConfig& config) {
-    core::ir::AssertValidBefore(ir,
-                                core::ir::Capabilities{
-                                    core::ir::Capability::kAllow16BitIntegers,
-                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
-                                    core::ir::Capability::kAllowDuplicateBindings,
-                                    core::ir::Capability::kAllowNonCoreTypes,
-                                },
-                                "hlsl.PixelLocal");
+    core::ir::AssertValid(ir,
+                          core::ir::Capabilities{
+                              core::ir::Capability::kAllow16BitIntegers,
+                              core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                              core::ir::Capability::kAllowDuplicateBindings,
+                              core::ir::Capability::kAllowNonCoreTypes,
+                          },
+                          "before hlsl.PixelLocal");
 
     State{config.options, ir}.Process();
 
