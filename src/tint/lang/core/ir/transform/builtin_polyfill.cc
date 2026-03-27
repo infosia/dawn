@@ -1243,7 +1243,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(Module& ir, const BuiltinPolyfillConfig& config) {
-    core::ir::AssertValidBefore(ir, kBuiltinPolyfillCapabilities, "core.BuiltinPolyfill");
+    core::ir::AssertValid(ir, kBuiltinPolyfillCapabilities, "before core.BuiltinPolyfill");
 
     State{config, ir}.Process();
 

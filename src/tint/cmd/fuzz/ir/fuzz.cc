@@ -90,7 +90,7 @@ void Register(const IRFuzzer& fuzzer) {
             // there is a bug somewhere in the components run above. Those components have their own
             // IR fuzzers.
             if (auto val = core::ir::Validate(ir.Get(), pre_capabilities,
-                                              std::string(fuzzer.name).c_str(), "finish");
+                                              "finish " + std::string(fuzzer.name));
                 val != Success) {
                 if (context.options.verbose) {
                     std::cout
@@ -158,8 +158,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                 mod.dump_ir_when_validating = context.options.dump_ir_when_validating;
 
                 if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
-                                             std::string(currently_running).c_str(),
-                                             "start") != tint::Success) {
+                                             "start " + std::string(currently_running)) !=
+                    tint::Success) {
                     // Failing before running indicates that this input violates the pre-conditions
                     // for this pass, so should be skipped.
                     if (context.options.verbose) {
@@ -179,9 +179,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                     }
                 }
 
-                if (auto result =
-                        tint::core::ir::Validate(mod, fuzzer.post_capabilities,
-                                                 std::string(currently_running).c_str(), "finish");
+                if (auto result = tint::core::ir::Validate(
+                        mod, fuzzer.post_capabilities, "finish " + std::string(currently_running));
                     result != Success) {
                     // Failing after running indicates the pass is doing something unexpected and
                     // has violated its own post-conditions.
@@ -207,8 +206,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
             }
             auto mod = acquire_module();
             if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
-                                         std::string(currently_running).c_str(),
-                                         "start") != tint::Success) {
+                                         "start " + std::string(currently_running)) !=
+                tint::Success) {
                 // Failing before running indicates that this input violates the pre-conditions for
                 // this pass, so should be skipped.
                 if (options.verbose) {
@@ -225,9 +224,8 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                 continue;
             }
 
-            if (auto result =
-                    tint::core::ir::Validate(mod, fuzzer.post_capabilities,
-                                             std::string(currently_running).c_str(), "finish");
+            if (auto result = tint::core::ir::Validate(mod, fuzzer.post_capabilities,
+                                                       "finish " + std::string(currently_running));
                 result != Success) {
                 // Failing after running indicates the pass is doing something unexpected and
                 // has violated its own post-conditions.

@@ -908,13 +908,13 @@ struct State {
 }  // namespace
 
 Result<SuccessType> DecomposeStorageAccess(core::ir::Module& ir) {
-    core::ir::AssertValidBefore(ir,
-                                core::ir::Capabilities{
-                                    core::ir::Capability::kAllow16BitIntegers,
-                                    core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
-                                    core::ir::Capability::kAllowDuplicateBindings,
-                                },
-                                "hlsl.DecomposeStorageAccess");
+    core::ir::AssertValid(ir,
+                          core::ir::Capabilities{
+                              core::ir::Capability::kAllow16BitIntegers,
+                              core::ir::Capability::kAllowClipDistancesOnF32ScalarAndVector,
+                              core::ir::Capability::kAllowDuplicateBindings,
+                          },
+                          "before hlsl.DecomposeStorageAccess");
 
     State{ir}.Process();
 
