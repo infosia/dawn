@@ -209,6 +209,14 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillF32Negation);
     req.tintOptions.workarounds.polyfill_f32_abs =
         GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillF32Abs);
+
+    // Normally this is controlled by
+    //  GetDevice()->IsToggleEnabled(Toggle::VulkanPolyfillF32Abs);
+    // But for now we test on the farm.
+    req.tintOptions.workarounds.polyfill_length_scalar_f32 = true;
+
+    req.tintOptions.workarounds.polyfill_distance_scalar_f32 = true;
+
     req.tintOptions.disable_polyfill_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
 
