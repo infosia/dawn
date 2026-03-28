@@ -1034,8 +1034,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanPolyfillSwitchWithIf, true);
     }
 
-    // AMD mesa front end optimizer bug for unary negation and abs.
+    // AMD Mesa front end optimizer bug for unary negation and abs.
     // Fixed in 25.3 - See crbug.com/448294721
+    // See crbug.com/93692702 for variations of this bug.
     if (IsAmdMesa()) {
         const gpu_info::DriverVersion kGoodMesaDriver = {25, 3, 0, 0};
         const bool badDriver = GetDriverVersion() < kGoodMesaDriver;
