@@ -53,8 +53,7 @@ class CommandsScheduledEvent : public EventManager::TrackedEvent {
   public:
     // It's important to use AllowSpontaneous for these events since we don't want to leak them if
     // the client forgets about the associated future and never calls WaitAny on it.
-    CommandsScheduledEvent()
-        : TrackedEvent(wgpu::CallbackMode::AllowSpontaneous, AcquireRef(new WaitListEvent())) {}
+    CommandsScheduledEvent() : TrackedEvent(wgpu::CallbackMode::AllowSpontaneous, false) {}
 
   private:
     void Complete(EventCompletionType completionType) override {

@@ -85,7 +85,6 @@
 #include "dawn/native/TexelBufferView.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
-#include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
@@ -789,33 +788,28 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         WGPUPopErrorScopeCallback mCallback;
         raw_ptr<void> mUserdata1;
         raw_ptr<void> mUserdata2;
+
         std::optional<ErrorScope> mScope;
         std::vector<ErrorScopePendingAsyncTask> mPendingAsyncTasks;
+        std::atomic<uint64_t> mRemainingTasks = 0;
 
-        static Ref<WaitListEvent> CreateWaitListEventForErrorScopeCompletion(
-            const std::optional<ErrorScope>& scope) {
-            uint64_t taskCount = 0;
-            if (scope) {
-                taskCount = scope->GetPendingAsyncTaskCount();
-            }
-            return AcquireRef(new WaitListEvent(taskCount));
-        }
+        explicit PopErrorScopeEvent(const WGPUPopErrorScopeCallbackInfo& callbackInfo)
+            : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), Completed{}),
+              mCallback(callbackInfo.callback),
+              mUserdata1(callbackInfo.userdata1),
+              mUserdata2(callbackInfo.userdata2) {}
 
         PopErrorScopeEvent(const WGPUPopErrorScopeCallbackInfo& callbackInfo,
-                           std::optional<ErrorScope>&& scope)
+                           ErrorScope&& scope,
+                           const std::vector<ErrorScopePendingAsyncTask>& pendingAsyncTasks)
             : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                           CreateWaitListEventForErrorScopeCompletion(scope)),
+                           pendingAsyncTasks.empty()),
               mCallback(callbackInfo.callback),
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2),
-              mScope(std::move(scope)) {
-            if (mScope) {
-                mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
-                for (auto task : mPendingAsyncTasks) {
-                    task.task->AddCompletionCallback([this]() { GetIfWaitListEvent()->Signal(); });
-                }
-            }
-        }
+              mScope(std::move(scope)),
+              mPendingAsyncTasks(pendingAsyncTasks),
+              mRemainingTasks(pendingAsyncTasks.size()) {}
 
         ~PopErrorScopeEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
 
@@ -852,21 +846,36 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         }
     };
 
-    std::optional<ErrorScope> scope;
+    Ref<PopErrorScopeEvent> event;
     {
         // TODO(crbug.com/dawn/831) Manually acquire device lock instead of relying on code-gen for
         // re-entrancy.
         auto deviceGuard = GetGuard();
 
         if (IsLost()) {
-            scope = ErrorScope(wgpu::ErrorType::NoError, "");
+            event = AcquireRef(
+                new PopErrorScopeEvent(callbackInfo, ErrorScope(wgpu::ErrorType::NoError, ""), {}));
         } else if (!GetErrorScopeStack()->Empty()) {
-            scope = GetErrorScopeStack()->Pop();
+            ErrorScope scope = GetErrorScopeStack()->Pop();
+            std::vector<ErrorScopePendingAsyncTask> pendingAsyncTasks =
+                scope.AcquirePendingAsyncTasks();
+            event = AcquireRef(
+                new PopErrorScopeEvent(callbackInfo, std::move(scope), pendingAsyncTasks));
+            for (const auto& task : pendingAsyncTasks) {
+                task.task->AddCompletionCallback(
+                    [event, eventManager = GetInstance()->GetEventManager()] {
+                        if (--event->mRemainingTasks == 0) {
+                            eventManager->SetFutureReady(event);
+                        }
+                    });
+            }
+        } else {
+            event = AcquireRef(new PopErrorScopeEvent(callbackInfo));
         }
     }
+    DAWN_ASSERT(event);
 
-    FutureID futureID = GetInstance()->GetEventManager()->TrackEvent(
-        AcquireRef(new PopErrorScopeEvent(callbackInfo, std::move(scope))));
+    FutureID futureID = GetInstance()->GetEventManager()->TrackEvent(std::move(event));
     return {futureID};
 }
 
@@ -1336,13 +1345,12 @@ Future DeviceBase::APICreateComputePipelineAsync(
     if (cachedComputePipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
         return GetFuture(AcquireRef(new CreateComputePipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedComputePipeline))));
+            this, callbackInfo, std::move(cachedComputePipeline), /*readyAtCreation=*/true)));
     }
 
-    // New pipeline: create an event backed by system event that is really async.
+    // New pipeline: create an event that is really async.
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedComputePipeline),
-        AcquireRef(new WaitListEvent())));
+        this, callbackInfo, std::move(uninitializedComputePipeline), /*readyAtCreation=*/false));
     Future future = GetFuture(event);
     InitializeComputePipelineAsyncImpl(std::move(event));
     return future;
@@ -1414,13 +1422,12 @@ Future DeviceBase::APICreateRenderPipelineAsync(
     if (cachedRenderPipeline.Get() != nullptr) {
         // Cached pipeline: create an async event that completes when created.
         return GetFuture(AcquireRef(new CreateRenderPipelineAsyncEvent(
-            this, callbackInfo, std::move(cachedRenderPipeline))));
+            this, callbackInfo, std::move(cachedRenderPipeline), /*readyAtCreation=*/true)));
     }
 
-    // New pipeline: create an event backed by system event that is really async.
+    // New pipeline: create an event that is really async.
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedRenderPipeline),
-        AcquireRef(new WaitListEvent())));
+        this, callbackInfo, std::move(uninitializedRenderPipeline), /*readyAtCreation=*/false));
     Future future = GetFuture(event);
     InitializeRenderPipelineAsyncImpl(std::move(event));
     return future;
