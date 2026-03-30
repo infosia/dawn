@@ -1835,6 +1835,54 @@
             {"name": "rotation", "type": "external texture rotation", "default": "rotate 0 degrees"}
         ]
     },
+    "color space primaries dawn": {
+        "category": "enum",
+        "tags": ["dawn", "art"],
+        "values": [
+            {"value": 1, "name": "sRGB", "enum_value_conflict": true},
+            {"value": 1, "name": "rec 709", "enum_value_conflict": true, "is_proxy": true, "_comment": "sRGB and Rec709 have the same primaries"},
+            {"value": 2, "name": "rec 601"},
+            {"value": 3, "name": "rec 2020"},
+            {"value": 4, "name": "display p3"}
+        ]
+    },
+    "color space transfer dawn": {
+        "category": "enum",
+        "tags": ["dawn", "art"],
+        "values": [
+            {"value": 1, "name": "sRGB"},
+            {"value": 2, "name": "display p3"}
+        ]
+    },
+    "color space y cb cr range dawn": {
+        "category": "enum",
+        "tags": ["dawn", "art"],
+        "values": [
+            {"value": 1, "name": "narrow"},
+            {"value": 2, "name": "full"}
+        ]
+    },
+    "color space y cb cr matrix dawn": {
+        "category": "enum",
+        "tags": ["dawn", "art"],
+        "values": [
+            {"value": 1, "name": "identity"},
+            {"value": 2, "name": "rec 601"},
+            {"value": 3, "name": "rec 709"},
+            {"value": 4, "name": "rec 2020"}
+        ]
+    },
+    "color space dawn" : {
+        "category": "structure",
+        "extensible": "in",
+        "tags": ["dawn", "art"],
+        "members": [
+            {"name": "primaries", "type": "color space primaries dawn"},
+            {"name": "transfer", "type": "color space transfer dawn"},
+            {"name": "y cb cr range", "type": "color space y cb cr range dawn"},
+            {"name": "y cb cr matrix", "type": "color space y cb cr matrix dawn"}
+        ]
+    },
     "status": {
         "category": "enum",
         "values": [
@@ -3943,7 +3991,9 @@
         "category": "enum",
         "values": [
             {"value": 1, "name": "sRGB"},
-            {"value": 2, "name": "display p3"}
+            {"value": 2, "name": "display p3"},
+            {"value": 3, "name": "sRGB linear", "tags": ["dawn", "art"]},
+            {"value": 4, "name": "display p3 linear", "tags": ["dawn", "art"]}
         ]
     },
     "tone mapping mode": {
