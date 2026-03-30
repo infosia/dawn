@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03d3e2e2_20051873",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-03-30T02:11:31Z",
+      "side": 1,
+      "message": "I assume you will resolve these conflicts?",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1114,
+        "endChar": 0
+      },
+      "revId": "766038056a73d05c0887ba0a03c4c3fcf25c29ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
