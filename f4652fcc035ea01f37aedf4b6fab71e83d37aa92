@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015398c8_cc157ab7",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T15:00:44Z",
+      "side": 1,
+      "message": "Can you use `const auto\u0026 [group, binding]` here? I\u0027m not sure if that type is an aggregate type.",
+      "range": {
+        "startLine": 475,
+        "startChar": 13,
+        "endLine": 475,
+        "endChar": 29
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c51a1dd4_a68eec6a",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T15:00:44Z",
+      "side": 1,
+      "message": "This is kinda unclear, Based on the wording it sounds like emits a warning if there isn\u0027t one there already which is opposite of what it does.\n\nAlso shouldn\u0027t validation catch if there is more than one sampler for the external texture?",
+      "range": {
+        "startLine": 485,
+        "startChar": 57,
+        "endLine": 485,
+        "endChar": 85
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01a473bc_31fa6ec8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T15:00:44Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm....\n\ncheck: readability-redundant-typename\n\nredundant \u0027typename\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-typename.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-typename` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 577,
+        "startChar": 0,
+        "endLine": 578,
+        "endChar": 0
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5131ac25_b360d1ad",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T15:00:44Z",
+      "side": 1,
+      "message": "Can `sampler` be null after this runs and if so what does that mean?",
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
