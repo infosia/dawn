@@ -30,10 +30,14 @@
 
 #include <atomic>
 #include <cstdint>
+#include <memory>
 #include <mutex>
 #include <optional>
+#include <span>
 #include <variant>
+#include <vector>
 
+#include "absl/container/btree_map.h"
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/MutexProtected.h"
@@ -44,7 +48,6 @@
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/IntegerTypes.h"
-#include "dawn/native/WaitListEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -63,10 +66,11 @@ class QueueBase;
 //   serials advance, e.g. Submit, or when checking a later wait before an earlier wait.
 class EventManager final : NonMovable {
   public:
+    class TrackedEvent;
+
     explicit EventManager(InstanceBase* instance);
     ~EventManager();
 
-    class TrackedEvent;
     // Track a TrackedEvent and give it a FutureID.
     FutureID TrackEvent(Ref<TrackedEvent>&&);
 
@@ -79,20 +83,28 @@ class EventManager final : NonMovable {
 
     // Returns true if future ProcessEvents is needed.
     bool ProcessPollEvents();
-    [[nodiscard]] wgpu::WaitStatus WaitAny(size_t count,
-                                           FutureWaitInfo* infos,
-                                           Nanoseconds timeout);
+    [[nodiscard]] wgpu::WaitStatus WaitAny(std::span<FutureWaitInfo> infos, Nanoseconds timeout);
 
   private:
+    // Internal waiter class that's signaled when specific events become ready.
+    class Waiter;
+
+    using EventMap = absl::flat_hash_map<FutureID, Ref<TrackedEvent>>;
+    using SortedEventMap = absl::btree_map<FutureID, Ref<TrackedEvent>>;
+
     // Raw pointer to the Instance to allow for logging. The Instance owns the EventManager, so a
     // raw pointer here is always safe.
     raw_ptr<const InstanceBase> mInstance;
     std::atomic<FutureID> mNextFutureID = 1;
 
-    // Freed once the user has dropped their last ref to the Instance, so can't call WaitAny or
-    // ProcessEvents anymore. This breaks reference cycles.
-    using EventMap = absl::flat_hash_map<FutureID, Ref<TrackedEvent>>;
-    MutexProtected<EventMap> mEvents;
+    struct State {
+        EventMap events;
+        // The Waiter's always live on the stack of a calling thread to WaitAny and are removed as
+        // soon as that thread yields from the wait. Therefore the pointers are guaranteed to be
+        // valid if they are in the list.
+        absl::flat_hash_map<FutureID, std::vector<raw_ptr<Waiter>>> waiters;
+    };
+    MutexProtected<State> mState;
 
     // Records last process event id in order to properly return whether or not there are still
     // events to process when we have re-entrant callbacks.
@@ -137,24 +149,15 @@ class EventManager::TrackedEvent : public RefCounted {
 
     bool IsReadyToComplete() const;
 
-    QueueAndSerial* GetIfQueueAndSerial() { return std::get_if<QueueAndSerial>(&mCompletionData); }
-    const QueueAndSerial* GetIfQueueAndSerial() const {
-        return std::get_if<QueueAndSerial>(&mCompletionData);
-    }
-
-    Ref<WaitListEvent> GetIfWaitListEvent() const {
-        if (auto* event = std::get_if<Ref<WaitListEvent>>(&mCompletionData)) {
-            return *event;
-        }
-        return nullptr;
-    }
+    QueueAndSerial* GetIfQueueAndSerial();
+    const QueueAndSerial* GetIfQueueAndSerial() const;
+    std::atomic<bool>* GetIfAtomicBool();
+    const std::atomic<bool>* GetIfAtomicBool() const;
 
     // Events may be one of two types:
     // - A queue and the ExecutionSerial after which the event will be completed.
     //   Used for queue completion.
-    // - A WaitListEvent which will be signaled from our code, usually on a separate thread. It also
-    //   stores an atomic boolean that we can check instead of waiting synchronously, or it can be
-    //   transformed into a SystemEventReceiver for asynchronous waits.
+    // - A boolean which will be updated from our code.
     // The queue ref creates a temporary ref cycle
     // (Queue->Device->Instance->EventManager->TrackedEvent). This is OK because the instance will
     // clear out the EventManager on shutdown.
@@ -162,12 +165,10 @@ class EventManager::TrackedEvent : public RefCounted {
   protected:
     friend class EventManager;
 
-    using CompletionData = std::variant<QueueAndSerial, Ref<WaitListEvent>>;
+    using CompletionData = std::variant<QueueAndSerial, std::unique_ptr<std::atomic<bool>>>;
 
-    // Create an event from a WaitListEvent that can be signaled and waited-on in user-space only in
-    // the current process. Note that events like RequestAdapter and RequestDevice complete
-    // immediately in dawn native, and may use an already-completed event.
-    TrackedEvent(wgpu::CallbackMode callbackMode, Ref<WaitListEvent> completionEvent);
+    // Create an event from a boolean that can be signaled.
+    TrackedEvent(wgpu::CallbackMode callbackMode, bool value);
 
     // Create a TrackedEvent from a queue completion serial.
     TrackedEvent(wgpu::CallbackMode callbackMode,
@@ -183,8 +184,6 @@ class EventManager::TrackedEvent : public RefCounted {
     struct NonProgressing {};
     TrackedEvent(wgpu::CallbackMode callbackMode, NonProgressing tag);
 
-    void SetReadyToComplete();
-
     void EnsureComplete(EventCompletionType);
     virtual void Complete(EventCompletionType) = 0;
 
@@ -192,6 +191,11 @@ class EventManager::TrackedEvent : public RefCounted {
     FutureID mFutureID = kNullFutureID;
 
   private:
+    // The EventManager is the only place that should ever call |SetReadyToComplete| because it is
+    // the one responsible for notifying/waking threads up for newly completed events.
+    friend class EventManager;
+    void SetReadyToComplete();
+
     CompletionData mCompletionData;
     const bool mIsProgressing = true;
 
