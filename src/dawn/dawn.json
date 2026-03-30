@@ -1851,7 +1851,9 @@
         "tags": ["dawn", "art"],
         "values": [
             {"value": 1, "name": "sRGB"},
-            {"value": 2, "name": "display p3"}
+            {"value": 2, "name": "display p3"},
+            {"value": 3, "name": "HLG"},
+            {"value": 4, "name": "PQ"}
         ]
     },
     "color space y cb cr range dawn": {
