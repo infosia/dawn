@@ -156,9 +156,11 @@ endif()
 
 if (NOT EMSCRIPTEN)
     list(APPEND private_headers
+        "ExternalTextureParams.h"
         "WGPUDeviceCallbackInfos.h"
     )
     list(APPEND sources
+        "ExternalTextureParams.cpp"
         "WGPUDeviceCallbackInfos.cpp"
     )
 endif()

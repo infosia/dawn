@@ -1850,16 +1850,21 @@
         "category": "enum",
         "tags": ["dawn", "art"],
         "values": [
-            {"value": 1, "name": "sRGB"},
-            {"value": 2, "name": "display p3"}
+            {"value": 1, "name": "identity"},
+            {"value": 2, "name": "sRGB"},
+            {"value": 3, "name": "display p3"},
+            {"value": 4, "name": "SMPTE_170M"},
+            {"value": 5, "name": "HLG"},
+            {"value": 6, "name": "PQ"}
         ]
     },
     "color space y cb cr range dawn": {
         "category": "enum",
         "tags": ["dawn", "art"],
         "values": [
-            {"value": 1, "name": "narrow"},
-            {"value": 2, "name": "full"}
+            {"value": 1, "name": "identity"},
+            {"value": 2, "name": "narrow"},
+            {"value": 3, "name": "full"}
         ]
     },
     "color space y cb cr matrix dawn": {
