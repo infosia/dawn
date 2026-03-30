@@ -276,10 +276,8 @@ TEST_F(ResolverTypeValidationTest, ArraySize_FloatLiteral) {
     // var<private> a : array<f32, 10.0>;
     GlobalVar("a", ty.array(ty.f32(), Expr(Source{{12, 34}}, 10_f)), core::AddressSpace::kPrivate);
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        "12:34 error: array count must evaluate to a constant integer expression, but is type "
-        "'f32'");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: array count must evaluate to an integer expression, but is type 'f32'");
 }
 
 TEST_F(ResolverTypeValidationTest, ArraySize_IVecLiteral) {
@@ -289,8 +287,7 @@ TEST_F(ResolverTypeValidationTest, ArraySize_IVecLiteral) {
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(
         r()->error(),
-        "12:34 error: array count must evaluate to a constant integer expression, but is type "
-        "'vec2<i32>'");
+        "12:34 error: array count must evaluate to an integer expression, but is type 'vec2<i32>'");
 }
 
 TEST_F(ResolverTypeValidationTest, ArraySize_FloatConst) {
@@ -300,10 +297,8 @@ TEST_F(ResolverTypeValidationTest, ArraySize_FloatConst) {
     GlobalVar("a", ty.array(ty.f32(), Expr(Source{{12, 34}}, "size")),
               core::AddressSpace::kPrivate);
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        "12:34 error: array count must evaluate to a constant integer expression, but is type "
-        "'f32'");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: array count must evaluate to an integer expression, but is type 'f32'");
 }
 
 TEST_F(ResolverTypeValidationTest, ArraySize_IVecConst) {
@@ -315,8 +310,19 @@ TEST_F(ResolverTypeValidationTest, ArraySize_IVecConst) {
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(
         r()->error(),
-        "12:34 error: array count must evaluate to a constant integer expression, but is type "
-        "'vec2<i32>'");
+        "12:34 error: array count must evaluate to an integer expression, but is type 'vec2<i32>'");
+}
+
+TEST_F(ResolverTypeValidationTest, ArraySize_FloatOverride) {
+    ExpectError(
+        R"(
+override size = 10.0;
+var<private> a : array<f32, size>;
+)",
+        R"(input.wgsl:3:29 error: array count must evaluate to an integer expression, but is type 'f32'
+var<private> a : array<f32, size>;
+                            ^^^^
+)");
 }
 
 TEST_F(ResolverTypeValidationTest, ArraySize_UnderElementCountLimit) {
