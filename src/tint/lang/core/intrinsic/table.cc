@@ -222,6 +222,7 @@ Result<Overload, StyledText> MatchIntrinsic(Context& context,
     // How many candidates matched?
     if (DAWN_UNLIKELY(num_matched == 0)) {
         // Perform the full scoring of each overload
+        size_t candidate_idx = 0;
         for (size_t overload_idx = 0; overload_idx < num_overloads; overload_idx++) {
             auto& overload = context.data[intrinsic.overloads + overload_idx];
 
@@ -230,7 +231,7 @@ Result<Overload, StyledText> MatchIntrinsic(Context& context,
                 continue;
             }
 
-            candidates[overload_idx] = ScoreOverload<ScoreMode::kFull>(
+            candidates[candidate_idx++] = ScoreOverload<ScoreMode::kFull>(
                 context, overload, template_args, args, earliest_eval_stage);
         }
         // Sort the candidates with the most promising first
