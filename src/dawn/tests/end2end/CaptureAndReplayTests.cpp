@@ -2446,19 +2446,8 @@ TEST_P(CaptureAndReplayTests, BindGroupWithExternalTexture) {
     textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
     textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
     wgpu::Texture texture = device.CreateTexture(&textureDesc);
-    wgpu::TextureView plane0 = texture.CreateView();
 
-    auto conversion = utils::GetNoopColorSpaceConversionInfo();
-    wgpu::ExternalTextureDescriptor ethDesc;
-    ethDesc.plane0 = plane0;
-    ethDesc.yuvToRgbConversionMatrix = conversion.yuvToRgbConversionMatrix.data();
-    ethDesc.gamutConversionMatrix = conversion.gamutConversionMatrix.data();
-    ethDesc.srcTransferFunctionParameters = conversion.srcTransferFunctionParameters.data();
-    ethDesc.dstTransferFunctionParameters = conversion.dstTransferFunctionParameters.data();
-    ethDesc.cropOrigin = {0, 0};
-    ethDesc.cropSize = {texture.GetWidth(), texture.GetHeight()};
-    ethDesc.apparentSize = {texture.GetWidth(), texture.GetHeight()};
-    wgpu::ExternalTexture externalTexture = device.CreateExternalTexture(&ethDesc);
+    wgpu::ExternalTexture externalTexture = utils::MakePassthroughExternalTexture(device, texture);
 
     const char* shader = R"(
         @vertex fn vs() -> @builtin(position) vec4f {

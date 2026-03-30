@@ -215,15 +215,6 @@ wgpu::BindGroup MakeBindGroup(
     const wgpu::BindGroupLayout& layout,
     std::initializer_list<BindingInitializationHelper> entriesInitializer);
 
-struct ColorSpaceConversionInfo {
-    std::array<float, 12> yuvToRgbConversionMatrix;
-    std::array<float, 9> gamutConversionMatrix;
-    std::array<float, 7> srcTransferFunctionParameters;
-    std::array<float, 7> dstTransferFunctionParameters;
-};
-ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
-ColorSpaceConversionInfo GetNoopColorSpaceConversionInfo();
-
 #ifndef __EMSCRIPTEN__
 // Make an external texture from one or two planes that doesn't perform any color-space conversion
 // or YUV to RGB conversion. The planes are given as textures so that we can reflect their size.

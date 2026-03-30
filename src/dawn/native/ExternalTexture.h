@@ -41,8 +41,13 @@ namespace dawn::native {
 class TextureViewBase;
 
 // Matches the structure defined in Tint's multiplanar_external_texture.cc transform.
+enum class TransferFunctionMode : uint32_t {
+    Gamma = 0,
+    HLG = 1,
+    PQ = 2,
+};
 struct TransferFunctionParams {
-    uint32_t mode;
+    TransferFunctionMode mode;
     float a, b, c, d, e, f, g;
 };
 
