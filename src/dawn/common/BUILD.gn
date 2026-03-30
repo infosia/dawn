@@ -403,6 +403,8 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
 
     if (!is_wasm) {
       sources += [
+        "ExternalTextureParams.cpp",
+        "ExternalTextureParams.h",
         "WGPUDeviceCallbackInfos.cpp",
         "WGPUDeviceCallbackInfos.h",
       ]
