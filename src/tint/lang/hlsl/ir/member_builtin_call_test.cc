@@ -171,6 +171,61 @@ $B1: {  # root
 )");
 }
 
+TEST_F(IR_HlslMemberBuiltinCallTest, DoesNotMatchIncorrectType_NotAllOverloadsAreMemberCalls) {
+    auto* buf_ty = ty.Get<hlsl::type::ByteAddressBuffer>(core::Access::kReadWrite);
+    auto* t = b.Var("t", buf_ty);
+    t->SetBindingPoint(0, 0);
+    mod.root_block->Append(t);
+
+    auto* func = b.Function("foo", ty.u32());
+    b.Append(func->Block(), [&] {
+        auto* var = b.Var<function, i32>("var");
+        auto* builtin = b.MemberCall<MemberBuiltinCall>(ty.void_(), BuiltinFn::kInterlockedExchange,
+                                                        t, 4_f, 123_i, var);
+        b.Return(func, builtin);
+    });
+
+    auto res = core::ir::Validate(mod, core::ir::Capabilities{
+                                           core::ir::Capability::kAllowNonCoreTypes,
+                                       });
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        res.Failure().reason,
+        R"(:8:18 error: InterlockedExchange: no matching call to 'InterlockedExchange(hlsl.byte_address_buffer<read_write>, f32, i32, ptr<function, i32, read_write>)'
+
+1 candidate function:
+ • 'InterlockedExchange(byte_address_buffer<read' or 'read_write>  ✓ , offset: u32  ✗ , value: i32' or 'u32  ✓ , original_value: ptr<function, i32' or 'u32, read_write>  ✓ )'
+
+    %4:void = %t.InterlockedExchange 4.0f, 123i, %var
+                 ^^^^^^^^^^^^^^^^^^^
+
+:6:3 note: in block
+  $B2: {
+  ^^^
+
+:9:5 error: return: return value type 'void' does not match function return type 'u32'
+    ret %4
+    ^^^^^^
+
+:6:3 note: in block
+  $B2: {
+  ^^^
+
+note: # Disassembly
+$B1: {  # root
+  %t:hlsl.byte_address_buffer<read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():u32 {
+  $B2: {
+    %var:ptr<function, i32, read_write> = var undef
+    %4:void = %t.InterlockedExchange 4.0f, 123i, %var
+    ret %4
+  }
+}
+)");
+}
+
 TEST_F(IR_HlslMemberBuiltinCallTest, Valid) {
     auto* buf_ty = ty.Get<hlsl::type::ByteAddressBuffer>(core::Access::kRead);
     auto* t = b.Var("t", buf_ty);
