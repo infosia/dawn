@@ -162,6 +162,90 @@ inline constexpr math::Mat3x3f kYCbCrToRGB_Rec2020 = {
     {1.4746, -(0.38737742 / 0.6780), 0.0},
 };
 
+// RGB to XYZ (D65) for various standards.
+// TODO(https://crbug.com/468988322): Define an XYZPrimaries structure and compute the matrices from
+// it. The wx and wy give the coordinates of the white point and would allow adapting to D50 if
+// needed.
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#PRIMARIES_BT601_EBU
+// Rec 601 625-line.
+inline constexpr math::Mat3x3f kRGBToXYZ_Rec601 = {{0.430554, 0.222004, 0.020182},
+                                                   {0.341550, 0.706655, 0.129553},
+                                                   {0.178352, 0.071341, 0.939322}};
+inline constexpr math::Mat3x3f kXYZToRGB_Rec601 = kRGBToXYZ_Rec601.Inverse();
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#PRIMARIES_BT709
+inline constexpr math::Mat3x3f kRGBToXYZ_Rec709 = {
+    {0.412391, 0.212639, 0.019331},
+    {0.357584, 0.715169, 0.119195},
+    {0.180481, 0.072192, 0.950532},
+};
+inline constexpr math::Mat3x3f kXYZToRGB_Rec709 = kRGBToXYZ_Rec709.Inverse();
+
+// sRGB is the same as Rec709.
+inline constexpr math::Mat3x3f kRGBToXYZ_sRGB = kRGBToXYZ_Rec709;
+inline constexpr math::Mat3x3f kXYZToRGB_sRGB = kXYZToRGB_Rec709;
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#PRIMARIES_BT2020
+inline constexpr math::Mat3x3f kRGBToXYZ_Rec2020 = {
+    {0.636958, 0.262700, 0.000000},
+    {0.144617, 0.677998, 0.028073},
+    {0.168881, 0.059302, 1.060985},
+};
+inline constexpr math::Mat3x3f kXYZToRGB_Rec2020 = kRGBToXYZ_Rec2020.Inverse();
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#PRIMARIES_BT2020
+inline constexpr math::Mat3x3f kRGBToXYZ_DisplayP3 = {
+    {0.4865709486, 0.2289745641, 0.0000000000},
+    {0.2656676932, 0.6917385218, 0.0451133819},
+    {0.1982172852, 0.0792869141, 1.0439443689},
+};
+inline constexpr math::Mat3x3f kXYZToRGB_DisplayP3 = kRGBToXYZ_DisplayP3.Inverse();
+
+// Transfer functions for various standards, in a format.
+
+// Returns an EOTF that performs the following transformation.
+//
+//    if (abs(v) < D) {
+//        return sign(v) * (C * abs(v) + F);
+//    }
+//    return pow(A * x + B, G) + E
+//
+// TODO(https://crbug.com/497571469): Add support for PQ and HLG.
+struct TransferFunction {
+    float g = 1;
+    float a = 1;
+    float b = 0;
+    float c = 0;
+    float d = 0;
+    float e = 0;
+    float f = 0;
+};
+
+inline constexpr TransferFunction kEOTF_Linear = {};
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#TRANSFER_SRGB
+inline constexpr TransferFunction kEOTF_sRGB = {.g = 2.4,
+                                                .a = 1.0 / 1.055,
+                                                .b = 0.055 / 1.055,
+                                                .c = 1.0 / 12.92,
+                                                .d = 0.04045,
+                                                .e = 0,
+                                                .f = 0};
+inline constexpr TransferFunction kEOTFInverse_sRGB = {.g = 1.0 / 2.4,
+                                                       .a = 1.13711,  // 1.055 ^ 2.4
+                                                       .b = 0,
+                                                       .c = 12.92,
+                                                       .d = 0.0031308,
+                                                       .e = -0.055,
+                                                       .f = 0};
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#TRANSFER_DCIP3
+inline constexpr TransferFunction kEOTF_DisplayP3 =
+    {.g = 2.6, .a = 1.0, .b = 0, .c = 0, .d = 0, .e = 0, .f = 0};
+inline constexpr TransferFunction kEOTFInverse_DisplayP3 =
+    {.g = 1.0 / 2.6, .a = 1.0, .b = 0, .c = 0, .d = 0, .e = 0, .f = 0};
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_COLORSPACE_H_
