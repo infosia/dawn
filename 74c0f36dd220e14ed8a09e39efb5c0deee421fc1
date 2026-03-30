@@ -16,6 +16,24 @@
       "message": "Why is Metal the only backend setting the ice callback? Even tint main isn\u0027t setting it?",
       "revId": "74c0f36dd220e14ed8a09e39efb5c0deee421fc1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13408aea_3278c4db",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T14:54:47Z",
+      "side": 1,
+      "message": "The callback is optional. It\u0027s used by Dawn to capture ICEs and dump crashes before we crash the GPU process. We just haven\u0027t go around to wiring it up for the other backends yet.\n\nTint main doesn\u0027t need it, it\u0027s fine to just let the process crash and dump the error to stderr.",
+      "parentUuid": "d0f8970c_598c7e58",
+      "revId": "74c0f36dd220e14ed8a09e39efb5c0deee421fc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
