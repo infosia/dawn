@@ -48,6 +48,7 @@
 #include "dawn/native/vulkan/QueueVk.h"
 #include "dawn/native/vulkan/ResourceHeapVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
+#include "dawn/native/vulkan/SamplerVk.h"
 #include "dawn/native/vulkan/SharedFenceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -2105,22 +2106,43 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     usageInfo.usage = VulkanImageUsage(device, GetInternalUsage(), GetFormat());
     createInfo.pNext = &usageInfo;
 
+    // Compute and link the VkSamplerYCbCrConversion, if any is needed.
     VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
-    if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
-        mIsYCbCrFilterable = static_cast<SharedTextureMemoryContentsVk*>(
-                                 GetTexture()->GetSharedResourceMemoryContents())
-                                 ->IsYCbCrFilterable();
+    if (GetTexture()->GetFormat().format == wgpu::TextureFormat::OpaqueYCbCrAndroid) {
+        auto stmContents = static_cast<SharedTextureMemoryContentsVk*>(
+            GetTexture()->GetSharedResourceMemoryContents());
+        mIsYCbCrFilterable = stmContents->IsYCbCrFilterable();
 
-        YCbCrVkDescriptor yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
-        yCbCr.nextInChain = nullptr;
+        YCbCrVkDescriptor yCbCr;
+        if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
+            // The YCbCr conversion can be specified by the user with the YCbCrVulkanSamplers
+            // feature.
+            DAWN_ASSERT(device->HasFeature(Feature::YCbCrVulkanSamplers));
 
+            yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
+            yCbCr.nextInChain = nullptr;
+        } else {
+            // When using OpaqueYCbCrAndroidForExternalTexture, the YCbCr conversion is the same one
+            // that's going to be used for the ExternalTexture static samplers.
+            // TODO(https://crbug.com/497675620): Specialize the conversion at the same time as all
+            // the other state, in order to take advantage of hardware YCbCr to RGB conversion when
+            // present.
+            DAWN_ASSERT(device->HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture));
+
+            yCbCr = StaticSamplerSpecialization::GetYCbCrForTextureView(
+                static_cast<VkFormat>(stmContents->GetYCbCrVkDesc().vkFormat),
+                stmContents->GetYCbCrVkDesc().externalFormat);
+        }
+
+        // Create the VkSamplerYCbCrConversion and link it in the createInfo.
         DAWN_TRY_ASSIGN(mSamplerYCbCrConversion, CreateSamplerYCbCrConversion(device, yCbCr));
 
         samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
         samplerYCbCrInfo.pNext = nullptr;
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
-
         createInfo.pNext = &samplerYCbCrInfo;
+    } else {
+        DAWN_ASSERT(!descriptor.Has<YCbCrVkDescriptor>());
     }
 
     DAWN_TRY(CheckVkSuccess(
