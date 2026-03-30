@@ -222,29 +222,58 @@ struct TransferFunction {
     float f = 0;
 };
 
-inline constexpr TransferFunction kEOTF_Linear = {};
+inline constexpr TransferFunction kEOTF_Identity = {};
 
 // https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#TRANSFER_SRGB
-inline constexpr TransferFunction kEOTF_sRGB = {.g = 2.4,
-                                                .a = 1.0 / 1.055,
-                                                .b = 0.055 / 1.055,
-                                                .c = 1.0 / 12.92,
-                                                .d = 0.04045,
-                                                .e = 0,
-                                                .f = 0};
-inline constexpr TransferFunction kEOTFInverse_sRGB = {.g = 1.0 / 2.4,
-                                                       .a = 1.13711,  // 1.055 ^ 2.4
-                                                       .b = 0,
-                                                       .c = 12.92,
-                                                       .d = 0.0031308,
-                                                       .e = -0.055,
-                                                       .f = 0};
+inline constexpr TransferFunction kEOTF_sRGB = {
+    .g = 2.4,
+    .a = 1.0 / 1.055,
+    .b = 0.055 / 1.055,
+    .c = 1.0 / 12.92,
+    .d = 0.04045,
+    .e = 0,
+    .f = 0,
+};
+inline constexpr TransferFunction kEOTFInverse_sRGB = {
+    .g = 1.0 / 2.4,
+    .a = 1.13711,  // 1.055 ^ 2.4
+    .b = 0,
+    .c = 12.92,
+    .d = 0.0031308,
+    .e = -0.055,
+    .f = 0,
+};
 
 // https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#TRANSFER_DCIP3
-inline constexpr TransferFunction kEOTF_DisplayP3 =
-    {.g = 2.6, .a = 1.0, .b = 0, .c = 0, .d = 0, .e = 0, .f = 0};
-inline constexpr TransferFunction kEOTFInverse_DisplayP3 =
-    {.g = 1.0 / 2.6, .a = 1.0, .b = 0, .c = 0, .d = 0, .e = 0, .f = 0};
+inline constexpr TransferFunction kEOTF_DisplayP3 = {
+    .g = 2.6,
+    .a = 1.0,
+    .b = 0,
+    .c = 0,
+    .d = 0,
+    .e = 0,
+    .f = 0,
+};
+inline constexpr TransferFunction kEOTFInverse_DisplayP3 = {
+    .g = 1.0 / 2.6,
+    .a = 1.0,
+    .b = 0,
+    .c = 0,
+    .d = 0,
+    .e = 0,
+    .f = 0,
+};
+
+// https://registry.khronos.org/DataFormat/specs/1.4/dataformat.1.4.html#TRANSFER_ITU
+inline constexpr TransferFunction kEOTF_SMPTE_170M = {
+    .g = 1.0 / 0.45,
+    .a = 1.0 / 1.099,
+    .b = 0.099 / 1.099,
+    .c = 1.0 / 4.5,
+    .d = 0.0812,
+    .e = 0,
+    .f = 0,
+};
 
 }  // namespace dawn
 
