@@ -82,19 +82,8 @@ ResultOrError<Ref<Sampler>> Sampler::Create(Device* device, const StaticSamplerS
 
     YCbCrVkDescriptor yCbCrDesc;
     if (s.isYCbCr) {
-        yCbCrDesc.vkFormat = s.vkFormat;
-        yCbCrDesc.externalFormat = s.androidExternalFormat;
-        yCbCrDesc.vkYCbCrModel = s.model;
-        yCbCrDesc.vkYCbCrRange = s.range;
-        yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
-        yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
-        yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
-        yCbCrDesc.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
-        yCbCrDesc.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
-        yCbCrDesc.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
-        yCbCrDesc.vkChromaFilter = wgpu::FilterMode::Nearest;
-        yCbCrDesc.forceExplicitReconstruction = false;
-
+        yCbCrDesc = StaticSamplerSpecialization::GetYCbCrForTextureView(s.vkFormat,
+                                                                        s.androidExternalFormat);
         samplerDesc.nextInChain = &yCbCrDesc;
     }
 
@@ -205,8 +194,6 @@ StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView*
         // Put default values for the YCbCr part.
         .vkFormat = VK_FORMAT_UNDEFINED,
         .androidExternalFormat = 0,
-        .model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY,
-        .range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL,
     };
 
     if (isYCbCr) {
@@ -216,11 +203,29 @@ StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView*
 
         spec.vkFormat = static_cast<VkFormat>(stm->GetYCbCrVkDesc().vkFormat);
         spec.androidExternalFormat = stm->GetYCbCrVkDesc().externalFormat;
-        spec.model = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
-        spec.range = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
     }
 
     return spec;
+}
+
+// static
+YCbCrVkDescriptor StaticSamplerSpecialization::GetYCbCrForTextureView(
+    VkFormat vkFormat,
+    uint32_t androidExternalFormat) {
+    YCbCrVkDescriptor yCbCrDesc;
+    yCbCrDesc.vkFormat = vkFormat;
+    yCbCrDesc.externalFormat = androidExternalFormat;
+    yCbCrDesc.vkYCbCrModel = VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY;
+    yCbCrDesc.vkYCbCrRange = VK_SAMPLER_YCBCR_RANGE_ITU_FULL;
+    yCbCrDesc.vkComponentSwizzleRed = VK_COMPONENT_SWIZZLE_R;
+    yCbCrDesc.vkComponentSwizzleGreen = VK_COMPONENT_SWIZZLE_G;
+    yCbCrDesc.vkComponentSwizzleBlue = VK_COMPONENT_SWIZZLE_B;
+    yCbCrDesc.vkComponentSwizzleAlpha = VK_COMPONENT_SWIZZLE_A;
+    yCbCrDesc.vkXChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+    yCbCrDesc.vkYChromaOffset = VK_CHROMA_LOCATION_MIDPOINT;
+    yCbCrDesc.vkChromaFilter = wgpu::FilterMode::Nearest;
+    yCbCrDesc.forceExplicitReconstruction = false;
+    return yCbCrDesc;
 }
 
 }  // namespace dawn::native::vulkan

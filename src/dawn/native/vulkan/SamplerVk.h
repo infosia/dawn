@@ -71,6 +71,13 @@ class Sampler final : public SamplerBase {
 struct StaticSamplerSpecialization {
     static StaticSamplerSpecialization From(const TextureView* view, const Sampler* sampler);
 
+    // TODO(https://crbug.com/497675620): All the views use the same RGB identity, range full YCbCr
+    // conversion information at the moment. However to take advantage of hardware support we'll
+    // need to use different model/range values, at which point the views will need to be
+    // specialized either at ExternalTexture creation, or when the rest of the state is specialized.
+    static YCbCrVkDescriptor GetYCbCrForTextureView(VkFormat vkFormat,
+                                                    uint32_t androidExternalFormat);
+
     wgpu::FilterMode minFilter;
     wgpu::FilterMode magFilter;
     bool isYCbCr;
@@ -78,10 +85,10 @@ struct StaticSamplerSpecialization {
     // Members that are only used when isYcbCr
     VkFormat vkFormat;
     uint32_t androidExternalFormat;
-    VkSamplerYcbcrModelConversion model;
-    VkSamplerYcbcrRange range;
 
     // Assumes that:
+    //  - Model is the RGB identity
+    //  - Range is full.
     //  - component mapping is the identity.
     //  - chroma offsets are mid-point.
     //  - chroma filter is nearest.
@@ -89,7 +96,7 @@ struct StaticSamplerSpecialization {
     template <typename H>
     friend H AbslHashValue(H h, const StaticSamplerSpecialization& s) {
         return H::combine(std::move(h), s.minFilter, s.magFilter, s.isYCbCr, s.vkFormat,
-                          s.androidExternalFormat, s.model, s.range);
+                          s.androidExternalFormat);
     }
 
     bool operator==(const StaticSamplerSpecialization& other) const = default;
