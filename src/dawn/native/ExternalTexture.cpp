@@ -222,15 +222,26 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     //
     // Constants are passed from Chromium and originally sourced from ui/gfx/color_space.cc
     auto ToTransferFunctionParams = [](const float* params) -> TransferFunctionParams {
+        TransferFunctionMode mode = TransferFunctionMode::Gamma;
+
+        // TODO(https://crbug.com/496604550): Passing the mode as a negative value for G is a hack.
+        // Have a dedicated mode enum at the Dawn API level instead.
+        if (params[0] < 0) {
+            mode = static_cast<TransferFunctionMode>(static_cast<uint32_t>(-params[0]));
+        }
+
         return {
-            .mode = 0,
+            .mode = mode,
             .a = params[1],
             .b = params[2],
             .c = params[3],
             .d = params[4],
             .e = params[5],
             .f = params[6],
-            .g = params[0],  // This is the first param for historical reasons.
+            // This is the first param for historical reasons.
+            // TODO(https://crbug.com/496604550): Make the parameters to Dawn a struct with members
+            // in alphabetical order.
+            .g = params[0],
         };
     };
     params.srcTransferFunction =

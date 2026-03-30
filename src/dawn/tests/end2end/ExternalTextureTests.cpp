@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/ExternalTextureParams.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -71,11 +72,11 @@ static const YUVTestData kGreen = {
 static const YUVTestData kBlue = {
     0.0722, 1.0, 0.4937, {0.0, 0.0, 1.0, 1.0}, utils::RGBA8::kBlue,
 };
-static const YUVTestData kColor1 = {0.6382,
-                                    0.3232,
-                                    0.6644,
-                                    {246 / 255.0, 169 / 255.0, 90 / 255.0, 1},
-                                    {246, 169, 90, 255}};
+static const YUVTestData kColor1 = {0.6402,
+                                    0.3214,
+                                    0.6624,
+                                    {246 / 255.0, 169 / 255.0, 89 / 255.0, 1},
+                                    {246, 169, 89, 255}};
 
 template <typename Parent>
 class ExternalTextureTestsBase : public Parent {
@@ -101,6 +102,17 @@ class ExternalTextureTestsBase : public Parent {
                                      -> @location(0) vec4f {
                 return textureSampleBaseClampToEdge(t, s, FragCoord.xy / vec2f(4.0, 4.0));
             })");
+
+        // Set up the BT709 to sRGB color space conversion.
+        wgpu::Status status = ComputeExternalTextureParams(
+            {
+                .primaries = wgpu::ColorSpacePrimariesDawn::Rec709,
+                .transfer = wgpu::ColorSpaceTransferDawn::SMPTE_170M,
+                .yCbCrRange = wgpu::ColorSpaceYCbCrRangeDawn::Narrow,
+                .yCbCrMatrix = wgpu::ColorSpaceYCbCrMatrixDawn::Rec709,
+            },
+            wgpu::PredefinedColorSpace::SRGB, &bt709ColorSpaceParams);
+        DAWN_ASSERT(status == wgpu::Status::Success);
     }
 
     wgpu::ExternalTextureDescriptor InitExternalTextureDescriptor(wgpu::Texture plane0,
@@ -109,11 +121,12 @@ class ExternalTextureTestsBase : public Parent {
         desc.plane0 = plane0.CreateView();
         desc.plane1 = plane1 != nullptr ? plane1.CreateView() : nullptr;
 
-        const auto& conversion = plane1 == nullptr ? noopRGBConversion : bt709Conversion;
-        desc.yuvToRgbConversionMatrix = conversion.yuvToRgbConversionMatrix.data();
-        desc.gamutConversionMatrix = conversion.gamutConversionMatrix.data();
-        desc.srcTransferFunctionParameters = conversion.srcTransferFunctionParameters.data();
-        desc.dstTransferFunctionParameters = conversion.dstTransferFunctionParameters.data();
+        const auto& params = plane1 == nullptr ? noopRGBColorSpaceParams : bt709ColorSpaceParams;
+
+        desc.yuvToRgbConversionMatrix = params.yuvToRgbConversionMatrix.data();
+        desc.gamutConversionMatrix = params.gamutConversionMatrix.data();
+        desc.srcTransferFunctionParameters = params.srcTransferFunction.data();
+        desc.dstTransferFunctionParameters = params.dstTransferFunction.data();
         desc.cropOrigin = {0, 0};
         desc.cropSize = {plane0.GetWidth(), plane0.GetHeight()};
         desc.apparentSize = {plane0.GetWidth(), plane0.GetHeight()};
@@ -241,9 +254,8 @@ class ExternalTextureTestsBase : public Parent {
     wgpu::ShaderModule vsModule;
     wgpu::ShaderModule fsSampleExternalTextureModule;
 
-    utils::ColorSpaceConversionInfo noopRGBConversion = utils::GetNoopColorSpaceConversionInfo();
-    utils::ColorSpaceConversionInfo bt709Conversion =
-        utils::GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
+    ExternalTextureColorSpaceParams noopRGBColorSpaceParams = GetNoopColorSpaceParams();
+    ExternalTextureColorSpaceParams bt709ColorSpaceParams;
 };
 
 class ExternalTextureTests : public ExternalTextureTestsBase<DawnTest> {
@@ -569,6 +581,9 @@ TEST_P(ExternalTextureTests, SampleExternalTextureDifferingGroup) {
 TEST_P(ExternalTextureTests, SampleMultiplanarExternalTexture) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
+
+    // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
+    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
 
     wgpu::Texture sampledTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
@@ -1339,6 +1354,9 @@ TEST_P(ExternalTextureTests, ApparentSizeEffect) {
 TEST_P(ExternalTextureTests, CropMultiplanar) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
+
+    // TODO(https://crbug.com/468988322): Fails because of precision issues on Mac AMD.
+    DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
 
     wgpu::Texture sourceTexturePlane0 =
         Create2DTexture(device, kWidth, kHeight, wgpu::TextureFormat::R8Unorm,
