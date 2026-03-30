@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4bd9700_0bd70916",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Yes we can remove this and the implementation of `DeserializeDataUpdate` in `WireServer.h` completely after we land the changes in Chromium (in dawn_service_memory_transfer_service.cc).",
+      "parentUuid": "399f73be_71c397d7",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ff6efd3_8ed18b85",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-03-27T10:00:20Z",
       "side": 1,
       "message": "nit: the deserializeData may not contain the actual bytes (when backed by shmem in Chromium for example).\n```suggestion\n        //  - `deserializeData`: The serialized payload from the client specifying the updated\n```",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0453aaaf_5d0975ea",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff6efd3_8ed18b85",
       "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +128,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9aa2d64e_f76b3e17",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "206dc21c_aea2813c",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28fc0c6f_35205e40",
@@ -105,6 +165,24 @@
       "writtenOn": "2026-03-27T10:00:20Z",
       "side": 1,
       "message": "Is that ever the case when called by the wire server?",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39ac63ef_5dfdbccd",
+        "filename": "include/dawn/wire/WireServer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28fc0c6f_35205e40",
       "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "deb4aa35_4bd4cf93",
+        "filename": "src/dawn/wire/server/ServerInlineMemoryTransferService.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8453cbb3_c7bb8863",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35001c71_8c9ac512",
@@ -139,6 +235,24 @@
       "writtenOn": "2026-03-27T10:00:20Z",
       "side": 1,
       "message": "```suggestion\n            if (deserializeData.size() !\u003d target.size()) {\n```",
+      "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d49e7cca_c6dd5205",
+        "filename": "src/dawn/wire/server/ServerInlineMemoryTransferService.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-03-30T06:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35001c71_8c9ac512",
       "revId": "1c28987ebf72371386d000fa81b7b4f83394b33e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
