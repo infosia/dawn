@@ -286,6 +286,24 @@
       "parentUuid": "a2fe5b69_4cbc6ff9",
       "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8624f4e3_9e1e6b1b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T13:15:37Z",
+      "side": 1,
+      "message": "Monolithic VkPipelineCache certainly helps but I don\u0027t think it\u0027s a silver bullet. It\u0027s hard to know because VkPipelineCache is opaque, we have no way to know if a pipeline was a cache hit or not.\n\nFrom looking at traces where WGSL-\u003eSPIRV compilation was a cache hit for both vertex and fragment shader, the VkPipeline creation time can still be tens or hundreds of milliseconds. We don\u0027t actually know that the full pipeline was a cache hit in the VkPipelineCache though. Maybe it was a cache hit where the driver thread got descheduled but the cache lookup was actually very quick. Maybe the pipeline had to be fully recompiled due to some fixed state change and the driver had to do significant work.\n\nI wouldn\u0027t assume that compiling a new VkPipeline is ever cheap though.",
+      "parentUuid": "4574dc26_c2095748",
+      "revId": "9d1e57706245f6af0e026e4a3c117a5485b761cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
