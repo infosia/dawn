@@ -22,6 +22,30 @@
       },
       "revId": "8d81e56b762ed1d3e0cee2f5a99aca83b3ff52dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad323bc2_1db66c46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T14:44:41Z",
+      "side": 1,
+      "message": "Yes, so a fuzzer will indicate whether or not it supports overrides via that capability. This is more precise then just always running SubstituteOverrides to get rid of them before invoking the fuzzer.",
+      "parentUuid": "73000ce7_ad3c39ac",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "8d81e56b762ed1d3e0cee2f5a99aca83b3ff52dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
