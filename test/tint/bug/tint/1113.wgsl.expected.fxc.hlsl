@@ -67,7 +67,7 @@ void doIgnore() {
   LUT.GetDimensions(v_10);
   uint v_11 = ((v_10 / 4u) - 1u);
   int v_12 = int(0);
-  LUT.InterlockedOr(int((0u + (min(uint(int(0)), v_11) * 4u))), int(0), v_12);
+  LUT.InterlockedOr((0u + (min(uint(int(0)), v_11) * 4u)), int(0), v_12);
   int g55 = v_12;
 }
 
@@ -147,7 +147,7 @@ void doIgnore() {
   LUT.GetDimensions(v_7);
   uint v_8 = ((v_7 / 4u) - 1u);
   int v_9 = int(0);
-  LUT.InterlockedOr(int((0u + (min(uint(int(0)), v_8) * 4u))), int(0), v_9);
+  LUT.InterlockedOr((0u + (min(uint(int(0)), v_8) * 4u)), int(0), v_9);
   int g55 = v_9;
 }
 
@@ -171,9 +171,8 @@ void main_create_lut_inner(uint3 GlobalInvocationID) {
   }
   uint v_13 = 0u;
   LUT.GetDimensions(v_13);
-  int v_14 = offset;
-  int v_15 = int(0);
-  LUT.InterlockedExchange(int((0u + (min(voxelIndex, ((v_13 / 4u) - 1u)) * 4u))), v_14, v_15);
+  int v_14 = int(0);
+  LUT.InterlockedExchange((0u + (min(voxelIndex, ((v_13 / 4u) - 1u)) * 4u)), offset, v_14);
 }
 
 [numthreads(128, 1, 1)]
@@ -250,7 +249,7 @@ void doIgnore() {
   LUT.GetDimensions(v_10);
   uint v_11 = ((v_10 / 4u) - 1u);
   int v_12 = int(0);
-  LUT.InterlockedOr(int((0u + (min(uint(int(0)), v_11) * 4u))), int(0), v_12);
+  LUT.InterlockedOr((0u + (min(uint(int(0)), v_11) * 4u)), int(0), v_12);
   int g55 = v_12;
 }
 
@@ -278,7 +277,7 @@ void main_sort_triangles_inner(uint3 GlobalInvocationID) {
   uint v_16 = 0u;
   LUT.GetDimensions(v_16);
   int v_17 = int(0);
-  LUT.InterlockedAdd(int((0u + (min(voxelIndex, ((v_16 / 4u) - 1u)) * 4u))), int(1), v_17);
+  LUT.InterlockedAdd((0u + (min(voxelIndex, ((v_16 / 4u) - 1u)) * 4u)), int(1), v_17);
   int triangleOffset = v_17;
 }
 

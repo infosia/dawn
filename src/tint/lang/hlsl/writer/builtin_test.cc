@@ -189,7 +189,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicStore) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedExchange(int(16u), int(123), v_1);
+  v.InterlockedExchange(16u, int(123), v_1);
 }
 
 )");
@@ -212,7 +212,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicStoreDirect) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedExchange(int(0u), int(123), v_1);
+  v.InterlockedExchange(0u, int(123), v_1);
 }
 
 )");
@@ -242,7 +242,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicLoad) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedOr(int(16u), int(0), v_1);
+  v.InterlockedOr(16u, int(0), v_1);
   int x = v_1;
 }
 
@@ -266,7 +266,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicLoadDirect) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedOr(int(0u), int(0), v_1);
+  v.InterlockedOr(0u, int(0), v_1);
   int x = v_1;
 }
 
@@ -297,7 +297,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicSub) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedAdd(int(16u), asint((asuint(int(0)) - asuint(int(123)))), v_1);
+  v.InterlockedAdd(16u, asint((asuint(int(0)) - asuint(int(123)))), v_1);
   int x = v_1;
 }
 
@@ -321,7 +321,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicSubDirect) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedAdd(int(0u), asint((asuint(int(0)) - asuint(int(123)))), v_1);
+  v.InterlockedAdd(0u, asint((asuint(int(0)) - asuint(int(123)))), v_1);
   int x = v_1;
 }
 
@@ -359,7 +359,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicCompareExchangeWeak) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedCompareExchange(int(16u), int(123), int(345), v_1);
+  v.InterlockedCompareExchange(16u, int(123), int(345), v_1);
   int v_2 = v_1;
   atomic_compare_exchange_result_i32 x = {v_2, (v_2 == int(123))};
 }
@@ -390,7 +390,7 @@ TEST_F(HlslWriterTest, BuiltinStorageAtomicCompareExchangeWeakDirect) {
 RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
-  v.InterlockedCompareExchange(int(0u), int(123), int(345), v_1);
+  v.InterlockedCompareExchange(0u, int(123), int(345), v_1);
   int v_2 = v_1;
   atomic_compare_exchange_result_i32 x = {v_2, (v_2 == int(123))};
 }
@@ -434,7 +434,7 @@ RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
   v.)" + std::string(param.interlock) +
-                                R"((int(16u), int(123), v_1);
+                                R"((16u, int(123), v_1);
   int x = v_1;
 }
 
@@ -460,7 +460,7 @@ RWByteAddressBuffer v : register(u0);
 void main() {
   int v_1 = int(0);
   v.)" + std::string(param.interlock) +
-                                R"((int(0u), int(123), v_1);
+                                R"((0u, int(123), v_1);
   int x = v_1;
 }
 

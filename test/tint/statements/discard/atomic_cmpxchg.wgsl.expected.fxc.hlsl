@@ -16,7 +16,7 @@ int foo_inner() {
   atomic_compare_exchange_result_i32 v = (atomic_compare_exchange_result_i32)0;
   if (continue_execution) {
     int v_1 = int(0);
-    a.InterlockedCompareExchange(int(0u), int(0), int(1), v_1);
+    a.InterlockedCompareExchange(0u, int(0), int(1), v_1);
     int v_2 = v_1;
     atomic_compare_exchange_result_i32 v_3 = {v_2, (v_2 == int(0))};
     v = v_3;
