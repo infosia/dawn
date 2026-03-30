@@ -32,6 +32,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <type_traits>
 
 #include "dawn/common/Assert.h"
 
@@ -156,6 +157,18 @@ class alignas(WGSLVectorAlignment<Scalar>(Size)) Vector {
         *this = *this * s;
         return *this;
     }
+
+    constexpr Self operator/(const Scalar& s) const {
+        Self result;
+        for (size_t i = 0; i < Size; i++) {
+            result[i] = data[i] / s;
+        }
+        return result;
+    }
+    constexpr Self& operator/=(const Scalar& other) {
+        *this = *this / other;
+        return *this;
+    }
 };
 
 template <size_t Size, typename Scalar>
@@ -169,6 +182,8 @@ constexpr Vector<Size, Scalar> operator*(const Scalar& a, const Vector<Size, Sca
 template <size_t Cols, size_t Rows, typename Scalar>
 class Matrix {
   public:
+    static inline constexpr size_t ColumnCount = Cols;
+    static inline constexpr size_t RowCount = Cols;
     using Column = Vector<Rows, Scalar>;
 
   private:
@@ -191,6 +206,11 @@ class Matrix {
     constexpr Matrix(const Column& c1, const Column& c2, const Column& c3, const Column& c4)
         requires(Cols == 4)
         : data{c1, c2, c3, c4} {}
+
+    constexpr Scalar Determinant() const
+        requires std::is_floating_point_v<Scalar> && (Cols == Rows);
+    constexpr Self Inverse() const
+        requires std::is_floating_point_v<Scalar> && (Cols == Rows);
 
     // Returns the identity matrix of that dimensionality.
     constexpr static Self Identity()
@@ -255,6 +275,18 @@ class Matrix {
     constexpr const Column& operator[](size_t i) const { return data[i]; }
 
     constexpr bool operator==(const Self& other) const = default;
+
+    constexpr Self operator/(const Scalar& s) const {
+        Self result;
+        for (size_t i = 0; i < Cols; i++) {
+            result[i] = data[i] / s;
+        }
+        return result;
+    }
+    constexpr Self& operator/=(const Scalar& other) {
+        *this = *this / other;
+        return *this;
+    }
 };
 
 // Returns A * V with A a matrix and V a compatible vector.
@@ -285,6 +317,51 @@ constexpr Vector<Size, Scalar> Max(const Vector<Size, Scalar>& v1, const Vector<
         result[i] = std::max(v1[i], v2[i]);
     }
     return result;
+}
+
+template <size_t Cols, size_t Rows, typename Scalar>
+constexpr Scalar Matrix<Cols, Rows, Scalar>::Determinant() const
+    requires std::is_floating_point_v<Scalar> && (Cols == Rows)
+{
+    if constexpr (Cols == 2) {
+        return data[0][0] * data[1][1] - data[0][1] * data[1][0];
+    } else if constexpr (Cols == 3) {
+        return data[0][0] * (data[2][2] * data[1][1] - data[1][2] * data[2][1]) +  //
+               data[0][1] * (data[1][2] * data[2][0] - data[2][2] * data[1][0]) +  //
+               data[0][2] * (data[2][1] * data[1][0] - data[1][1] * data[2][0]);
+    } else {
+        static_assert(false, "Determinant not implemented for this matrix size.");
+    }
+}
+
+template <size_t Cols, size_t Rows, typename Scalar>
+constexpr Matrix<Cols, Rows, Scalar> Matrix<Cols, Rows, Scalar>::Inverse() const
+    requires std::is_floating_point_v<Scalar> && (Cols == Rows)
+{
+    Scalar det = Determinant();
+
+    if constexpr (Cols == 2) {
+        return Self{{data[1][1], -data[0][1]}, {-data[1][0], data[0][0]}} / det;
+    } else if constexpr (Cols == 3) {
+        return Self{{
+                        data[2][2] * data[1][1] - data[1][2] * data[2][1],
+                        -data[2][2] * data[0][1] + data[0][2] * data[2][1],
+                        data[1][2] * data[0][1] - data[0][2] * data[1][1],
+                    },
+                    {
+                        -data[2][2] * data[1][0] + data[1][2] * data[2][0],
+                        data[2][2] * data[0][0] - data[0][2] * data[2][0],
+                        -data[1][2] * data[0][0] + data[0][2] * data[1][0],
+                    },
+                    {
+                        data[2][1] * data[1][0] - data[1][1] * data[2][0],
+                        -data[2][1] * data[0][0] + data[0][1] * data[2][0],
+                        data[1][1] * data[0][0] - data[0][1] * data[1][0],
+                    }} /
+               det;
+    } else {
+        static_assert(false, "Determinant not implemented for this matrix size.");
+    }
 }
 
 // Shorthand type aliases that match WGSL types (in name, layout and alignment).

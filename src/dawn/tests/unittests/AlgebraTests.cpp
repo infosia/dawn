@@ -179,6 +179,15 @@ TEST(Algebra, VectorScalarMul) {
     EXPECT_EQ(a, Vec3f(3, 6, 9));
 }
 
+// Test the vector-scalar division.
+TEST(Algebra, VectorScalarDiv) {
+    EXPECT_EQ(Vec3f(3, 6, 9) / 3.0f, Vec3f(1, 2, 3));
+
+    Vec3f a = Vec3f(3, 6, 9);
+    a /= 3.0f;
+    EXPECT_EQ(a, Vec3f(1, 2, 3));
+}
+
 // Check that the vector constructor set columns as expected (and implicitly test the indexing
 // operators)
 TEST(Algebra, MatrixConstructorAndIndexing) {
@@ -245,6 +254,56 @@ TEST(Algebra, MatrixScaleHomogeneous) {
 TEST(Algebra, MatrixCropOrExpandFrom) {
     EXPECT_EQ(Mat4x2f::CropOrExpandFrom(Mat2x4f({1, 2, 3, 4}, {5, 6, 7, 8})),
               Mat4x2f({1, 2}, {5, 6}, {0, 0}, {0, 0}));
+}
+
+// Test computation of the determinant.
+TEST(Algebra, MatrixDeterminant) {
+    // Simple test vectors.
+    EXPECT_EQ(Mat2x2f({2, 3}, {5, 7}).Determinant(), -1.0);
+    EXPECT_EQ(Mat3x3f({2, 3, 5}, {7, 11, 13}, {17, 19, 23}).Determinant(), -78.0);
+
+    // Determinant of non-invertible matrices is 0.
+    EXPECT_EQ(Mat2x2f({1, 2}, {2, 4}).Determinant(), 0.0);
+    EXPECT_EQ(Mat3x3f({1, 2, 3}, {1, 3, 5}, {2, 5, 8}).Determinant(), 0.0);
+}
+
+// Test computation of the inverse.
+TEST(Algebra, MatrixInverse) {
+    auto CheckAlmostIdentity = [](auto m) {
+        using Matrix = decltype(m);
+        auto identity = Matrix::Identity();
+        for (size_t x = 0; x < Matrix::ColumnCount; x++) {
+            for (size_t y = 0; y < Matrix::RowCount; y++) {
+                EXPECT_NEAR(m[x][y], identity[x][y], 0.0001);
+            }
+        }
+    };
+
+    // 2x2
+    {
+        // Test with numbers that are not linked with integer relations, just in case.
+        auto testMatrix = Mat2x2f({2.1, 3.1}, {5.1, 7.1});
+        auto invert = testMatrix.Inverse();
+        CheckAlmostIdentity(Mul(testMatrix, invert));
+        CheckAlmostIdentity(Mul(invert, testMatrix));
+    }
+    // 3x3
+    {
+        // Test with numbers that are not linked with integer relations, just in case.
+        auto testMatrix = Mat3x3f({2.1, 3.1, 5.1}, {7.1, 11.1, 13.1}, {17.1, 19.1, 23.1});
+        auto invert = testMatrix.Inverse();
+        CheckAlmostIdentity(Mul(testMatrix, invert));
+        CheckAlmostIdentity(Mul(invert, testMatrix));
+    }
+}
+
+// Test the vector-scalar division.
+TEST(Algebra, MatrixScalarDiv) {
+    EXPECT_EQ(Mat2x2f({3, 6}, {9, 12}) / 3.0f, Mat2x2f({1, 2}, {3, 4}));
+
+    Mat2x2f m = Mat2x2f({3, 6}, {9, 12});
+    m /= 3.0f;
+    EXPECT_EQ(m, Mat2x2f({1, 2}, {3, 4}));
 }
 
 // Test matrix / vector multiplication.
