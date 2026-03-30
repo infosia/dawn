@@ -38,7 +38,7 @@ int foo_inner(float v, float2 coord) {
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         int v_1 = int(0);
-        a.InterlockedAdd(int(0u), int(1), v_1);
+        a.InterlockedAdd(0u, int(1), v_1);
         i = v_1;
       }
     }

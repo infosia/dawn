@@ -64,7 +64,7 @@ void doIgnore() {
   LUT.GetDimensions(v_10);
   uint v_11 = ((v_10 / 4u) - 1u);
   int v_12 = int(0);
-  LUT.InterlockedOr(int((0u + (min(uint(int(0)), v_11) * 4u))), int(0), v_12);
+  LUT.InterlockedOr((0u + (min(uint(int(0)), v_11) * 4u)), int(0), v_12);
   int g55 = v_12;
 }
 
@@ -92,7 +92,7 @@ void main_count_inner(uint3 GlobalInvocationID) {
   uint v_16 = 0u;
   LUT.GetDimensions(v_16);
   int v_17 = int(0);
-  LUT.InterlockedAdd(int((0u + (min(i1, ((v_16 / 4u) - 1u)) * 4u))), int(1), v_17);
+  LUT.InterlockedAdd((0u + (min(i1, ((v_16 / 4u) - 1u)) * 4u)), int(1), v_17);
   int triangleOffset = v_17;
 }
 

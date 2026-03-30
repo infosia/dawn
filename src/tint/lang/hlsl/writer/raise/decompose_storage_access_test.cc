@@ -1420,8 +1420,7 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 16u
-    %5:void = %v.InterlockedExchange %4, 123i, %3
+    %4:void = %v.InterlockedExchange 16u, 123i, %3
     ret
   }
 }
@@ -1505,8 +1504,7 @@ $B1: {  # root
     %6:ptr<function, i32, read_write> = var 0i
     %7:u32 = add 16u, %4
     %8:u32 = add %7, %5
-    %9:i32 = convert %8
-    %10:void = %v.InterlockedExchange %9, 123i, %6
+    %9:void = %v.InterlockedExchange %8, 123i, %6
     ret
   }
 }
@@ -1553,8 +1551,7 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 0u
-    %5:void = %v.InterlockedExchange %4, 123i, %3
+    %4:void = %v.InterlockedExchange 0u, 123i, %3
     ret
   }
 }
@@ -1622,10 +1619,9 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 16u
-    %5:void = %v.InterlockedOr %4, 0i, %3
-    %6:i32 = load %3
-    %x:i32 = let %6
+    %4:void = %v.InterlockedOr 16u, 0i, %3
+    %5:i32 = load %3
+    %x:i32 = let %5
     ret
   }
 }
@@ -1710,10 +1706,9 @@ $B1: {  # root
     %6:ptr<function, i32, read_write> = var 0i
     %7:u32 = add 16u, %4
     %8:u32 = add %7, %5
-    %9:i32 = convert %8
-    %10:void = %v.InterlockedOr %9, 0i, %6
-    %11:i32 = load %6
-    %x:i32 = let %11
+    %9:void = %v.InterlockedOr %8, 0i, %6
+    %10:i32 = load %6
+    %x:i32 = let %10
     ret
   }
 }
@@ -1761,10 +1756,9 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 0u
-    %5:void = %v.InterlockedOr %4, 0i, %3
-    %6:i32 = load %3
-    %x:i32 = let %6
+    %4:void = %v.InterlockedOr 0u, 0i, %3
+    %5:i32 = load %3
+    %x:i32 = let %5
     ret
   }
 }
@@ -1833,10 +1827,9 @@ $B1: {  # root
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
     %4:i32 = sub 0i, 123i
-    %5:i32 = convert 16u
-    %6:void = %v.InterlockedAdd %5, %4, %3
-    %7:i32 = load %3
-    %x:i32 = let %7
+    %5:void = %v.InterlockedAdd 16u, %4, %3
+    %6:i32 = load %3
+    %x:i32 = let %6
     ret
   }
 }
@@ -1922,10 +1915,9 @@ $B1: {  # root
     %7:i32 = sub 0i, 123i
     %8:u32 = add 16u, %4
     %9:u32 = add %8, %5
-    %10:i32 = convert %9
-    %11:void = %v.InterlockedAdd %10, %7, %6
-    %12:i32 = load %6
-    %x:i32 = let %12
+    %10:void = %v.InterlockedAdd %9, %7, %6
+    %11:i32 = load %6
+    %x:i32 = let %11
     ret
   }
 }
@@ -1974,10 +1966,9 @@ $B1: {  # root
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
     %4:i32 = sub 0i, 123i
-    %5:i32 = convert 0u
-    %6:void = %v.InterlockedAdd %5, %4, %3
-    %7:i32 = load %3
-    %x:i32 = let %7
+    %5:void = %v.InterlockedAdd 0u, %4, %3
+    %6:i32 = load %3
+    %x:i32 = let %6
     ret
   }
 }
@@ -2057,12 +2048,11 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 16u
-    %5:void = %v.InterlockedCompareExchange %4, 123i, 345i, %3
-    %6:i32 = load %3
-    %7:bool = eq %6, 123i
-    %8:__atomic_compare_exchange_result_i32 = construct %6, %7
-    %x:__atomic_compare_exchange_result_i32 = let %8
+    %4:void = %v.InterlockedCompareExchange 16u, 123i, 345i, %3
+    %5:i32 = load %3
+    %6:bool = eq %5, 123i
+    %7:__atomic_compare_exchange_result_i32 = construct %5, %6
+    %x:__atomic_compare_exchange_result_i32 = let %7
     ret
   }
 }
@@ -2158,12 +2148,11 @@ $B1: {  # root
     %6:ptr<function, i32, read_write> = var 0i
     %7:u32 = add 16u, %4
     %8:u32 = add %7, %5
-    %9:i32 = convert %8
-    %10:void = %v.InterlockedCompareExchange %9, 123i, 345i, %6
-    %11:i32 = load %6
-    %12:bool = eq %11, 123i
-    %13:__atomic_compare_exchange_result_i32 = construct %11, %12
-    %x:__atomic_compare_exchange_result_i32 = let %13
+    %9:void = %v.InterlockedCompareExchange %8, 123i, 345i, %6
+    %10:i32 = load %6
+    %11:bool = eq %10, 123i
+    %12:__atomic_compare_exchange_result_i32 = construct %10, %11
+    %x:__atomic_compare_exchange_result_i32 = let %12
     ret
   }
 }
@@ -2222,12 +2211,11 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 0u
-    %5:void = %v.InterlockedCompareExchange %4, 123i, 345i, %3
-    %6:i32 = load %3
-    %7:bool = eq %6, 123i
-    %8:__atomic_compare_exchange_result_i32 = construct %6, %7
-    %x:__atomic_compare_exchange_result_i32 = let %8
+    %4:void = %v.InterlockedCompareExchange 0u, 123i, 345i, %3
+    %5:i32 = load %3
+    %6:bool = eq %5, 123i
+    %7:__atomic_compare_exchange_result_i32 = construct %5, %6
+    %x:__atomic_compare_exchange_result_i32 = let %7
     ret
   }
 }
@@ -2308,11 +2296,10 @@ $B1: {  # root
 %foo = @fragment func():void {
   $B2: {
     %3:ptr<function, i32, read_write> = var 0i
-    %4:i32 = convert 16u
-    %5:void = %v.)" +
-                  std::string(params.interlock) + R"( %4, 123i, %3
-    %6:i32 = load %3
-    %x:i32 = let %6
+    %4:void = %v.)" +
+                  std::string(params.interlock) + R"( 16u, 123i, %3
+    %5:i32 = load %3
+    %x:i32 = let %5
     ret
   }
 }

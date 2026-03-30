@@ -13,7 +13,7 @@ int foo_inner() {
   discard;
   int x = int(0);
   int v = int(0);
-  a.InterlockedCompareExchange(int(0u), int(0), int(1), v);
+  a.InterlockedCompareExchange(0u, int(0), int(1), v);
   int v_1 = v;
   atomic_compare_exchange_result_i32 result = {v_1, (v_1 == int(0))};
   if (result.exchanged) {
