@@ -41,7 +41,6 @@
 #include "dawn/native/EventManager.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/RenderPipeline.h"
-#include "dawn/native/WaitListEvent.h"
 #include "dawn/native/dawn_platform_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/native/wgpu_structs_autogen.h"
@@ -94,24 +93,16 @@ CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreateP
     DeviceBase* device,
     const CreatePipelineAsyncCallbackInfo& callbackInfo,
     Ref<PipelineType> pipeline,
-    Ref<WaitListEvent> event)
-    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), std::move(event)),
+    bool readyAtCreation)
+    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), readyAtCreation),
       mCallback(callbackInfo.callback),
       mUserdata1(callbackInfo.userdata1),
       mUserdata2(callbackInfo.userdata2),
-      mPipeline(std::move(pipeline)),
-      mScopedUseShaderPrograms(mPipeline->UseShaderPrograms()) {}
-
-template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
-CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(
-    DeviceBase* device,
-    const CreatePipelineAsyncCallbackInfo& callbackInfo,
-    Ref<PipelineType> pipeline)
-    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), TrackedEvent::Completed{}),
-      mCallback(callbackInfo.callback),
-      mUserdata1(callbackInfo.userdata1),
-      mUserdata2(callbackInfo.userdata2),
-      mPipeline(std::move(pipeline)) {}
+      mPipeline(std::move(pipeline)) {
+    if (!readyAtCreation) {
+        mScopedUseShaderPrograms = mPipeline->UseShaderPrograms();
+    }
+}
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(
@@ -119,7 +110,7 @@ CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreateP
     const CreatePipelineAsyncCallbackInfo& callbackInfo,
     std::unique_ptr<ErrorData> error,
     StringView label)
-    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), TrackedEvent::Completed{}),
+    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), Completed{}),
       mCallback(callbackInfo.callback),
       mUserdata1(callbackInfo.userdata1),
       mUserdata2(callbackInfo.userdata2),
