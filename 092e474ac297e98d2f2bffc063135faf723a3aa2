@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e642b995_6eb1689e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T20:25:55Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "092e474ac297e98d2f2bffc063135faf723a3aa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a44d4d5f_ee1a1dbf",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T20:25:55Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t related to the previous if/else block to get `yCbCr` is it? Can you move it before the if/else block if so to make that obvious.",
+      "revId": "092e474ac297e98d2f2bffc063135faf723a3aa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
