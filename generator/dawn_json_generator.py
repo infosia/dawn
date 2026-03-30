@@ -198,7 +198,6 @@ class EnumType(Type):
         all_values = set()
         for value in self.values:
             if value.value in all_values:
-                #TODO(42241174) remove this condition once wgpu refactoring is complete.
                 if not value.json_data.get('enum_value_conflict', False):
                     raise Exception(
                         "Duplicate value {} for '{}' in enum '{}'".format(
@@ -1445,8 +1444,10 @@ def is_wire_serializable(type):
 
 
 def is_enum_value_proxy(value):
-    return ('deprecated' in value.json_data.get('tags', [])
-            and value.json_data.get('enum_value_conflict', False))
+    conflicts = value.json_data.get('enum_value_conflict', False)
+    is_proxy = 'deprecated' in value.json_data.get(
+        'tags', []) or value.json_data.get('is_proxy', False)
+    return conflicts and is_proxy
 
 
 def unreachable_code(msg="unreachable_code"):
