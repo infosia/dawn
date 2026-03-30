@@ -27,6 +27,7 @@
 
 #include <vector>
 
+#include "dawn/common/ExternalTextureParams.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -151,13 +152,22 @@ class CopyExternalTextureForBrowserTests : public Parent {
                                  &externalTexturePlane1DataLayout, &externalTexturePlane1Desc.size);
 
         // Create an ExternalTextureDescriptor from the texture views
+        ExternalTextureColorSpaceParams params;
+        wgpu::Status status = ComputeExternalTextureParams(
+            {
+                .primaries = wgpu::ColorSpacePrimariesDawn::Rec709,
+                .transfer = wgpu::ColorSpaceTransferDawn::SMPTE_170M,
+                .yCbCrRange = wgpu::ColorSpaceYCbCrRangeDawn::Narrow,
+                .yCbCrMatrix = wgpu::ColorSpaceYCbCrMatrixDawn::Rec709,
+            },
+            wgpu::PredefinedColorSpace::SRGB, &params);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
         wgpu::ExternalTextureDescriptor externalDesc;
-        utils::ColorSpaceConversionInfo info =
-            utils::GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
-        externalDesc.yuvToRgbConversionMatrix = info.yuvToRgbConversionMatrix.data();
-        externalDesc.gamutConversionMatrix = info.gamutConversionMatrix.data();
-        externalDesc.srcTransferFunctionParameters = info.srcTransferFunctionParameters.data();
-        externalDesc.dstTransferFunctionParameters = info.dstTransferFunctionParameters.data();
+        externalDesc.yuvToRgbConversionMatrix = params.yuvToRgbConversionMatrix.data();
+        externalDesc.gamutConversionMatrix = params.gamutConversionMatrix.data();
+        externalDesc.srcTransferFunctionParameters = params.srcTransferFunction.data();
+        externalDesc.dstTransferFunctionParameters = params.dstTransferFunction.data();
 
         externalDesc.plane0 = externalTexturePlane0.CreateView();
         externalDesc.plane1 = externalTexturePlane1.CreateView();
