@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07d5d287_ab436f58",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T18:19:17Z",
+      "side": 1,
+      "message": "Yeah I was on the fence about this. I think it makes sense though. The alternative is that it\u0027s always off by default, which loses us some test coverage unless we go and manually turn the toggle on in various CI configs (and also loses coverage on local dev machines).",
+      "parentUuid": "f1bc8ae7_1ae9abec",
+      "range": {
+        "startLine": 287,
+        "startChar": 12,
+        "endLine": 287,
+        "endChar": 31
+      },
+      "revId": "9d454a8c2d78d7ec26e45e5d43cba779f622e7db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58a43706_a650e403",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-30T15:00:40Z",
       "side": 1,
       "message": "Why not `enable_tint_ir_validation_asserts` to better match the toggle name?",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 37
+      },
+      "revId": "9d454a8c2d78d7ec26e45e5d43cba779f622e7db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd816ca5_22106e7d",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T18:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a43706_a650e403",
       "range": {
         "startLine": 220,
         "startChar": 7,
@@ -60,6 +108,24 @@
       "writtenOn": "2026-03-30T15:00:40Z",
       "side": 1,
       "message": "Would `EnableTintIRValidationAsserts` be better? Seems like a better match to `DawnTintIR`",
+      "revId": "9d454a8c2d78d7ec26e45e5d43cba779f622e7db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8612f19_6b0749f3",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T18:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedb244f_df02c61a",
       "revId": "9d454a8c2d78d7ec26e45e5d43cba779f622e7db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
