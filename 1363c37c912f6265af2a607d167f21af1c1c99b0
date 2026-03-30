@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40ca76fe_646b3327",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T16:11:15Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "1363c37c912f6265af2a607d167f21af1c1c99b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eb81359_19d80c5c",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T16:11:15Z",
+      "side": 1,
+      "message": "Please fix.",
+      "range": {
+        "startLine": 615,
+        "startChar": 53,
+        "endLine": 615,
+        "endChar": 71
+      },
+      "revId": "1363c37c912f6265af2a607d167f21af1c1c99b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a1f0820_4005b84d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-30T16:11:15Z",
+      "side": 1,
+      "message": "Something like `or use \"nearest\" if no sampler`",
+      "range": {
+        "startLine": 616,
+        "startChar": 38,
+        "endLine": 616,
+        "endChar": 40
+      },
+      "revId": "1363c37c912f6265af2a607d167f21af1c1c99b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
