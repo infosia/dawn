@@ -90,7 +90,7 @@ if (!defined(dawn_abseil_dir)) {
 }
 
 if (!defined(dawn_dxc_dir)) {
-  dawn_dxc_dir = "//third_party/dxc"
+  dawn_dxc_dir = "//third_party/directx-shader-compiler/src"
 }
 
 if (!defined(dawn_dxheaders_dir)) {
