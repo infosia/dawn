@@ -43,8 +43,6 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Queue.h"
-#include "dawn/native/SystemEvent.h"
-#include "dawn/native/WaitAnySystemEvent.h"
 
 namespace dawn::native {
 namespace {
@@ -101,24 +99,6 @@ class WrappingIterator {
     typename Traits::WrappedIter mWrappedIt;
 };
 
-struct ExtractSystemEventAndReadyStateTraits {
-    using WrappedIter = std::vector<TrackedFutureWaitInfo>::iterator;
-    using value_type = std::pair<const SystemEventReceiver&, bool*>;
-
-    static value_type Deref(const WrappedIter& wrappedIt) {
-        if (auto event = wrappedIt->event->GetIfWaitListEvent()) {
-            return {event->WaitAsync(), &wrappedIt->ready};
-        }
-        DAWN_ASSERT(wrappedIt->event->GetIfSystemEvent());
-        return {
-            wrappedIt->event->GetIfSystemEvent()->GetOrCreateSystemEventReceiver(),
-            &wrappedIt->ready,
-        };
-    }
-};
-
-using SystemEventAndReadyStateIterator = WrappingIterator<ExtractSystemEventAndReadyStateTraits>;
-
 struct ExtractWaitListEventAndReadyStateTraits {
     using WrappedIter = std::vector<TrackedFutureWaitInfo>::iterator;
     using value_type = std::pair<Ref<WaitListEvent>, bool*>;
@@ -170,14 +150,10 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
 wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
                           std::vector<TrackedFutureWaitInfo>& futures,
                           Nanoseconds timeout) {
-    bool foundSystemEvent = false;
     bool foundWaitListEvent = false;
 
     QueueWaitSerialsMap queueLowestWaitSerials;
     for (const auto& future : futures) {
-        if (future.event->GetIfSystemEvent()) {
-            foundSystemEvent = true;
-        }
         if (future.event->GetIfWaitListEvent()) {
             foundWaitListEvent = true;
         }
@@ -198,10 +174,10 @@ wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
         return PollFutures(futures) ? wgpu::WaitStatus::Success : wgpu::WaitStatus::TimedOut;
     }
 
-    // We can't have a mix of system/wait-list events and queue-serial events or queue-serial events
+    // We can't have a mix of wait-list events and queue-serial events or queue-serial events
     // from multiple queues with a non-zero timeout.
     if (queueLowestWaitSerials.size() > 1 ||
-        (!queueLowestWaitSerials.empty() && (foundWaitListEvent || foundSystemEvent))) {
+        (!queueLowestWaitSerials.empty() && foundWaitListEvent)) {
         // Multi-source wait is unsupported.
         // TODO(dawn:2062): Implement support for this when the device supports it.
         // It should eventually gather the lowest serial from the queue(s), transform them
@@ -213,11 +189,7 @@ wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
     }
 
     bool success = false;
-    if (foundSystemEvent) {
-        // Can upgrade wait list events to system events.
-        success = WaitAnySystemEvent(SystemEventAndReadyStateIterator{futures.begin()},
-                                     SystemEventAndReadyStateIterator{futures.end()}, timeout);
-    } else if (foundWaitListEvent) {
+    if (foundWaitListEvent) {
         success =
             WaitListEvent::WaitAny(WaitListEventAndReadyStateIterator{futures.begin()},
                                    WaitListEventAndReadyStateIterator{futures.end()}, timeout);
@@ -542,10 +514,6 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
     : mCallbackMode(callbackMode), mCompletionData(std::move(completionEvent)) {}
 
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
-                                         Ref<SystemEvent> completionEvent)
-    : mCallbackMode(callbackMode), mCompletionData(std::move(completionEvent)) {}
-
-EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
                                          QueueBase* queue,
                                          ExecutionSerial completionSerial)
     : mCallbackMode(callbackMode),
@@ -574,9 +542,6 @@ Future EventManager::TrackedEvent::GetFuture() const {
 
 bool EventManager::TrackedEvent::IsReadyToComplete() const {
     bool isReady = false;
-    if (auto event = GetIfSystemEvent()) {
-        isReady = event->IsSignaled();
-    }
     if (auto event = GetIfWaitListEvent()) {
         isReady = event->IsSignaled();
     }
@@ -587,9 +552,6 @@ bool EventManager::TrackedEvent::IsReadyToComplete() const {
 }
 
 void EventManager::TrackedEvent::SetReadyToComplete() {
-    if (auto event = GetIfSystemEvent()) {
-        event->Signal();
-    }
     if (auto event = GetIfWaitListEvent()) {
         event->Signal();
     }
