@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f8970c_598c7e58",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-30T14:51:53Z",
+      "side": 1,
+      "message": "Why is Metal the only backend setting the ice callback? Even tint main isn\u0027t setting it?",
+      "revId": "74c0f36dd220e14ed8a09e39efb5c0deee421fc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
