@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f82e4c60_9e90021c",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-30T15:42:20Z",
+      "side": 1,
+      "message": "That\u0027s not possible, this a [vector](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.h;drc\u003d137d4b4ace274ec6e1de60d63aaad811c938ad31;l\u003d285) of a [type that\u0027s a struct](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.h;drc\u003d137d4b4ace274ec6e1de60d63aaad811c938ad31;l\u003d217) and AFAIK you can\u0027t destruct assign structs.",
+      "parentUuid": "015398c8_cc157ab7",
+      "range": {
+        "startLine": 475,
+        "startChar": 13,
+        "endLine": 475,
+        "endChar": 29
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c51a1dd4_a68eec6a",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-03-30T15:00:44Z",
       "side": 1,
       "message": "This is kinda unclear, Based on the wording it sounds like emits a warning if there isn\u0027t one there already which is opposite of what it does.\n\nAlso shouldn\u0027t validation catch if there is more than one sampler for the external texture?",
+      "range": {
+        "startLine": 485,
+        "startChar": 57,
+        "endLine": 485,
+        "endChar": 85
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6080ccdc_7212d7fc",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-30T15:42:20Z",
+      "side": 1,
+      "message": "Reworded the comment completely, I think it makes it more clear that WebGPU allows multiple samplers but the YCbCr sampling in Vulkan doesn\u0027t work with it and that\u0027s why there is a warning.",
+      "parentUuid": "c51a1dd4_a68eec6a",
       "range": {
         "startLine": 485,
         "startChar": 57,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27019a5e_70dc8dc0",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-30T15:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a473bc_31fa6ec8",
+      "range": {
+        "startLine": 577,
+        "startChar": 0,
+        "endLine": 578,
+        "endChar": 0
+      },
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5131ac25_b360d1ad",
@@ -83,6 +155,24 @@
       "writtenOn": "2026-03-30T15:00:44Z",
       "side": 1,
       "message": "Can `sampler` be null after this runs and if so what does that mean?",
+      "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c30286_ddd6ff75",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-30T15:42:20Z",
+      "side": 1,
+      "message": "It will make the static sampler default to \"near\" filtering. Expanded the comment.",
+      "parentUuid": "5131ac25_b360d1ad",
       "revId": "f4652fcc035ea01f37aedf4b6fab71e83d37aa92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
