@@ -1163,8 +1163,6 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
 
     const bool fullSizeCopy = IsFullBufferOverwrittenInTextureToBufferCopy(
         src, dst, blockInfo.ToTexel(copyExtent).ToExtent3D());
-    // Skip clearing the buffer if this is full size copy.
-    dst.buffer->SetInitialized(fullSizeCopy || dst.buffer->IsInitialized());
 
     Ref<BufferBase> destinationBuffer = dst.buffer.Get();
     const uint64_t numBytesToCopy =
@@ -1352,6 +1350,9 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
                                                          },
                                                          UsageValidationMode::Internal));
     }
+
+    // Skip clearing the buffer if this is full size copy.
+    dst.buffer->SetInitialized(fullSizeCopy || dst.buffer->IsInitialized());
 
     Ref<ComputePassEncoder> pass = commandEncoder->BeginComputePass();
     pass->APISetPipeline(pipeline.Get());
