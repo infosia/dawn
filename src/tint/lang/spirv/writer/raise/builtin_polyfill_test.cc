@@ -5747,5 +5747,124 @@ TEST_F(SpirvWriter_BuiltinPolyfillTest,
 
     EXPECT_EQ(expect, str());
 }
+
+TEST_F(SpirvWriter_BuiltinPolyfillTest, TextureSampleCompare_Depth2D_PCFPolyfill) {
+    auto* t = b.FunctionParam("t", ty.depth_texture(core::type::TextureDimension::k2d));
+    auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    auto* coords = b.FunctionParam("coords", ty.vec2f());
+    auto* dref = b.FunctionParam("dref", ty.f32());
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({t, s, coords, dref});
+
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call(ty.f32(), core::BuiltinFn::kTextureSampleCompare, t, s, coords, dref);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %dref:f32):f32 {
+  $B1: {
+    %6:f32 = textureSampleCompare %t, %s, %coords, %dref
+    ret %6
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%t:spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>, %s:sampler_comparison, %coords:vec2<f32>, %dref:f32):f32 {
+  $B1: {
+    %6:vec2<i32> = spirv.image_query_size_lod %t, 0i
+    %7:vec2<f32> = convert %6
+    %8:vec2<f32> = mul %coords, %7
+    %9:vec2<f32> = sub %8, vec2<f32>(0.5f)
+    %10:vec2<f32> = floor %9
+    %11:vec2<f32> = sub %9, %10
+    %12:vec2<f32> = add %10, vec2<f32>(0.5f)
+    %13:vec2<f32> = div %12, %7
+    %14:spirv.sampled_image<spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>> = spirv.op_sampled_image<spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>> %t, %s
+    %15:vec4<f32> = spirv.image_dref_gather %14, %13, %dref, 0u
+    %16:f32 = access %15, 0u
+    %17:f32 = access %15, 1u
+    %18:f32 = access %15, 2u
+    %19:f32 = access %15, 3u
+    %20:f32 = access %11, 0u
+    %21:f32 = access %11, 1u
+    %22:f32 = mix %19, %18, %20
+    %23:f32 = mix %16, %17, %20
+    %24:f32 = mix %22, %23, %21
+    ret %24
+  }
+}
+)";
+
+    PolyfillConfig config;
+    config.texture_sample_compare_pcf_polyfill = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvWriter_BuiltinPolyfillTest, TextureSampleCompare_Depth2D_PCFPolyfill_Offset) {
+    auto* t = b.FunctionParam("t", ty.depth_texture(core::type::TextureDimension::k2d));
+    auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    auto* coords = b.FunctionParam("coords", ty.vec2f());
+    auto* dref = b.FunctionParam("dref", ty.f32());
+    auto* offset = b.Composite(ty.vec2i(), 1_i, 2_i);
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({t, s, coords, dref});
+
+    b.Append(func->Block(), [&] {
+        auto* result =
+            b.Call(ty.f32(), core::BuiltinFn::kTextureSampleCompare, t, s, coords, dref, offset);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %dref:f32):f32 {
+  $B1: {
+    %6:f32 = textureSampleCompare %t, %s, %coords, %dref, vec2<i32>(1i, 2i)
+    ret %6
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%t:spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>, %s:sampler_comparison, %coords:vec2<f32>, %dref:f32):f32 {
+  $B1: {
+    %6:vec2<i32> = spirv.image_query_size_lod %t, 0i
+    %7:vec2<f32> = convert %6
+    %8:vec2<f32> = mul %coords, %7
+    %9:vec2<f32> = sub %8, vec2<f32>(0.5f)
+    %10:vec2<f32> = convert vec2<i32>(1i, 2i)
+    %11:vec2<f32> = add %9, %10
+    %12:vec2<f32> = floor %11
+    %13:vec2<f32> = sub %11, %12
+    %14:vec2<f32> = add %12, vec2<f32>(0.5f)
+    %15:vec2<f32> = div %14, %7
+    %16:spirv.sampled_image<spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>> = spirv.op_sampled_image<spirv.image<f32, 2d, depth, non_arrayed, single_sampled, sampling_compatible, undefined, read_write>> %t, %s
+    %17:vec4<f32> = spirv.image_dref_gather %16, %15, %dref, 0u
+    %18:f32 = access %17, 0u
+    %19:f32 = access %17, 1u
+    %20:f32 = access %17, 2u
+    %21:f32 = access %17, 3u
+    %22:f32 = access %13, 0u
+    %23:f32 = access %13, 1u
+    %24:f32 = mix %21, %20, %22
+    %25:f32 = mix %18, %19, %22
+    %26:f32 = mix %24, %25, %23
+    ret %26
+  }
+}
+)";
+
+    PolyfillConfig config;
+    config.texture_sample_compare_pcf_polyfill = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::spirv::writer::raise

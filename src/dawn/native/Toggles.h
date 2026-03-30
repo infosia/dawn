@@ -152,6 +152,7 @@ enum class Toggle {
     MetalPolyfillClampFloat,
     SubgroupShuffleClamped,
     VulkanSampleCompareDepthCubeArrayWorkaround,
+    VulkanSampleComparePCFWorkaround,
     MetalDisableModuleConstantF16,
     EnableImmediateErrorHandling,
     VulkanUseStorageInputOutput16,
