@@ -16,6 +16,24 @@
       "message": "Do we want a way to turn this off so we can at least see what would happen if run in the prod configuration?",
       "revId": "b56d8eef1da5bda45569615855b6d5d8189b1c1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53d743f6_884812f7",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-30T18:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c4db31_56736232",
+      "revId": "b56d8eef1da5bda45569615855b6d5d8189b1c1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
