@@ -56,16 +56,11 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
   public:
     using CallbackType = decltype(std::declval<CreatePipelineAsyncCallbackInfo>().callback);
 
-    // Create an event backed by the given wait list event (for async pipeline creation goes through
-    // the backend).
+    // Create an async event pipeline creation. If cached is true, this is ready at creation.
     CreatePipelineAsyncEvent(DeviceBase* device,
                              const CreatePipelineAsyncCallbackInfo& callbackInfo,
                              Ref<PipelineType> pipeline,
-                             Ref<WaitListEvent> event);
-    // Create an event that's ready at creation (for cached results)
-    CreatePipelineAsyncEvent(DeviceBase* device,
-                             const CreatePipelineAsyncCallbackInfo& callbackInfo,
-                             Ref<PipelineType> pipeline);
+                             bool readyAtCreation);
     // Create an event that's ready at creation (for errors)
     CreatePipelineAsyncEvent(DeviceBase* device,
                              const CreatePipelineAsyncCallbackInfo& callbackInfo,
