@@ -373,7 +373,14 @@ deps = {
     'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@bb168c9647beb3d80c25926dd8ac3aab864dd134',
   },
 
+  # The third_party/dxheaders entry will be removed after we've rolled and
+  # updated Chromium for the third_party/directx-headers/src entry
   'third_party/dxheaders': {
+    # The non-Windows build of DXC depends on DirectX-Headers, and at a specific commit (not ToT)
+    'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@980971e835876dc0cde415e8f9bc646e64667bf7',
+    'condition': 'host_os != "win"',
+  },
+  'third_party/directx-headers/src': {
     # The non-Windows build of DXC depends on DirectX-Headers, and at a specific commit (not ToT)
     'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@980971e835876dc0cde415e8f9bc646e64667bf7',
     'condition': 'host_os != "win"',

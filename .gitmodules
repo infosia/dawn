@@ -86,6 +86,9 @@
 	path = third_party/markupsafe
 	url = https://chromium.googlesource.com/chromium/src/third_party/markupsafe
 	gclient-condition = dawn_standalone
+[submodule "third_party/glfw3/src"]
+	path = third_party/glfw3/src
+	url = https://chromium.googlesource.com/external/github.com/glfw/glfw
 [submodule "third_party/vulkan_memory_allocator"]
 	path = third_party/vulkan_memory_allocator
 	url = https://chromium.googlesource.com/external/github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
@@ -149,6 +152,10 @@
 	path = third_party/dxheaders
 	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectX-Headers
 	gclient-condition = host_os != "win"
+[submodule "third_party/directx-headers/src"]
+	path = third_party/directx-headers/src
+	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectX-Headers
+	gclient-condition = host_os != "win"
 [submodule "third_party/OpenGL-Registry/src"]
 	path = third_party/OpenGL-Registry/src
 	url = https://chromium.googlesource.com/external/github.com/KhronosGroup/OpenGL-Registry
@@ -202,6 +209,3 @@
 	path = third_party/partition_alloc
 	url = https://chromium.googlesource.com/chromium/src/base/allocator/partition_allocator.git
 	gclient-condition = dawn_standalone
-[submodule "third_party/glfw3/src"]
-	path = third_party/glfw3/src
-	url = https://chromium.googlesource.com/external/github.com/glfw/glfw
