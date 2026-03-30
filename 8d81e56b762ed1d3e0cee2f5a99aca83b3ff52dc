@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73000ce7_ad3c39ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-30T14:39:42Z",
+      "side": 1,
+      "message": "Not all IR transforms support Overrides, it\u0027s a capability. It\u0027s assumed they\u0027re stripped out pretty early in the pipeline I believe.",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "8d81e56b762ed1d3e0cee2f5a99aca83b3ff52dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
