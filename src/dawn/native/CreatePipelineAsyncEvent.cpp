@@ -41,7 +41,6 @@
 #include "dawn/native/EventManager.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/RenderPipeline.h"
-#include "dawn/native/WaitListEvent.h"
 #include "dawn/native/dawn_platform_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/native/wgpu_structs_autogen.h"
@@ -88,19 +87,6 @@ void CreatePipelineAsyncEvent<RenderPipelineBase,
         mPipeline = device->AddOrGetCachedRenderPipeline(std::move(mPipeline));
     }
 }
-
-template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
-CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(
-    DeviceBase* device,
-    const CreatePipelineAsyncCallbackInfo& callbackInfo,
-    Ref<PipelineType> pipeline,
-    Ref<WaitListEvent> event)
-    : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), std::move(event)),
-      mCallback(callbackInfo.callback),
-      mUserdata1(callbackInfo.userdata1),
-      mUserdata2(callbackInfo.userdata2),
-      mPipeline(std::move(pipeline)),
-      mScopedUseShaderPrograms(mPipeline->UseShaderPrograms()) {}
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreatePipelineAsyncEvent(

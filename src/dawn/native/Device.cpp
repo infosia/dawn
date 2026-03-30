@@ -85,7 +85,6 @@
 #include "dawn/native/TexelBufferView.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
-#include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
@@ -830,29 +829,31 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
         raw_ptr<void> mUserdata2;
         std::optional<ErrorScope> mScope;
         std::vector<ErrorScopePendingAsyncTask> mPendingAsyncTasks;
-
-        static Ref<WaitListEvent> CreateWaitListEventForErrorScopeCompletion(
-            const std::optional<ErrorScope>& scope) {
-            uint64_t taskCount = 0;
-            if (scope) {
-                taskCount = scope->GetPendingAsyncTaskCount();
-            }
-            return AcquireRef(new WaitListEvent(taskCount));
-        }
+        std::atomic<uint64_t> mRemainingTasks = 0;
 
         PopErrorScopeEvent(const WGPUPopErrorScopeCallbackInfo& callbackInfo,
                            std::optional<ErrorScope>&& scope)
-            : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                           CreateWaitListEventForErrorScopeCompletion(scope)),
+            : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode), false),
               mCallback(callbackInfo.callback),
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2),
               mScope(std::move(scope)) {
             if (mScope) {
                 mPendingAsyncTasks = mScope->AcquirePendingAsyncTasks();
-                for (auto task : mPendingAsyncTasks) {
-                    task.task->AddCompletionCallback([this]() { GetIfWaitListEvent()->Signal(); });
+                if (mPendingAsyncTasks.empty()) {
+                    SetReadyToComplete();
+                } else {
+                    mRemainingTasks = mPendingAsyncTasks.size();
+                    for (auto task : mPendingAsyncTasks) {
+                        task.task->AddCompletionCallback([this]() {
+                            if (--mRemainingTasks == 0) {
+                                SetReadyToComplete();
+                            }
+                        });
+                    }
                 }
+            } else {
+                SetReadyToComplete();
             }
         }
 
@@ -1373,10 +1374,9 @@ Future DeviceBase::APICreateComputePipelineAsync(
             this, callbackInfo, std::move(cachedComputePipeline))));
     }
 
-    // New pipeline: create an event backed by system event that is really async.
+    // New pipeline: create an event that is really async.
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedComputePipeline),
-        AcquireRef(new WaitListEvent())));
+        this, callbackInfo, std::move(uninitializedComputePipeline)));
     Future future = GetFuture(event);
     InitializeComputePipelineAsyncImpl(std::move(event));
     return future;
@@ -1451,10 +1451,9 @@ Future DeviceBase::APICreateRenderPipelineAsync(
             this, callbackInfo, std::move(cachedRenderPipeline))));
     }
 
-    // New pipeline: create an event backed by system event that is really async.
+    // New pipeline: create an event that is really async.
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedRenderPipeline),
-        AcquireRef(new WaitListEvent())));
+        this, callbackInfo, std::move(uninitializedRenderPipeline)));
     Future future = GetFuture(event);
     InitializeRenderPipelineAsyncImpl(std::move(event));
     return future;
