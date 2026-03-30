@@ -338,6 +338,8 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "DynamicLib.cpp",
       "DynamicLib.h",
       "Enumerator.h",
+      "ExternalTextureParams.cpp",
+      "ExternalTextureParams.h",
       "FutureUtils.cpp",
       "FutureUtils.h",
       "GPUInfo.cpp",
