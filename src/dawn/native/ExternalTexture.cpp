@@ -194,10 +194,18 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
                                     {gMat[6], gMat[7], gMat[8]}};
 
     // Gamma decode/encode is performed by the logic:
-    //    if (abs(v) < params.D) {
-    //        return sign(v) * (params.C * abs(v) + params.F);
+    //    if (Mode == GammaLinear) {
+    //        if (abs(v) < D) {
+    //            return sign(v) * (C * abs(v) + F);
+    //        }
+    //        return sign(v) * pow(A * abs(v) + B, G) + E;
+    //    } else if (Mode == LogGamma) {
+    //        if (abs(v) < 1.0 / 12.0) {
+    //            return sign(v) * sqrt(3 * v);
+    //        } else {
+    //            return sign(v) * A * log(12 * abs(v) - B) + C;
+    //        }
     //    }
-    //    return pow(A * x + B, G) + E
     //
     // Constants are passed from Chromium and originally sourced from ui/gfx/color_space.cc
     const float* srcFn = descriptor->srcTransferFunctionParameters;
