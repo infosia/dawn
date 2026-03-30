@@ -685,7 +685,11 @@ wgpu::WaitStatus InstanceBase::APIWaitAny(size_t count,
             return wgpu::WaitStatus::Error;
         }
     }
-    return mEventManager.WaitAny(count, futures, Nanoseconds(timeoutNS));
+    if (count == 0) {
+        return wgpu::WaitStatus::Success;
+    }
+    auto waitInfos = std::span(futures, count);
+    return mEventManager.WaitAny(waitInfos, Nanoseconds(timeoutNS));
 }
 
 const std::vector<std::string>& InstanceBase::GetRuntimeSearchPaths() const {
