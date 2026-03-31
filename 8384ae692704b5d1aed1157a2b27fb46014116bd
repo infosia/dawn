@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06166610_7b6f0707",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-31T13:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eca4c076_0acd438b",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bbdac2b_b1e32935",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-03-31T12:14:08Z",
       "side": 1,
       "message": "Should we suppress using the toggle as well?",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "353df525_8466247a",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-31T13:35:43Z",
+      "side": 1,
+      "message": "Microsoft engineer told me the failures seem to only happen with validation layer enabled. So keeping the toggle on for QC might still be useful for actual end-users.",
+      "parentUuid": "6bbdac2b_b1e32935",
       "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
