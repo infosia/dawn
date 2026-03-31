@@ -265,7 +265,15 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
         return ExecutionSerial(*old);
     });
 
-    mState.Use<NotifyType::None>([&](auto state) {
+    // Note that we need to determine whether we are waiting for idle before updating the completed
+    // serial because some backends WaitForIdleForDestructionImpl may be implemented via a call to
+    // WaitForQueueSerial which (by default without overrides), waits on the completed serial value.
+    // If we updated the serial value before checking the other pieces of state, a thread destroying
+    // the Queue calling WaitForIdleForDestruction, could end up being woken up and destroying the
+    // Queue device before the rest of this function completes. By checking the state first before
+    // updating the serial, however, we avoid waking up the thread that's waiting for idle until we
+    // have completed using the queue.
+    bool waitingForIdle = mState.Use<NotifyType::None>([&](auto state) {
         if (state->mWaitingForIdle && !forceTasks) {
             // If we are waiting for idle, then the callbacks will be fired there. It is currently
             // necessary to avoid calling the callbacks in this function and doing it in the
@@ -275,7 +283,7 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
             // is trying to update the completed serial and call callbacks, it could deadlock. Once
             // we update |WaitForIdleForDestruction| to release the device lock on the wait, we may
             // be able to simplify the code here.
-            return;
+            return true;
         }
 
         // Wait until we can exclusively call callbacks.
@@ -284,10 +292,15 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
         // Call all callbacks that for the given priority and anything of higher priority as well.
         processors = &state->mWaitingProcessors;
         for (QueuePriority p = QueuePriority::Highest; p >= priority; p -= 1) {
-            PopWaitingTasksInto(serial, state->mWaitingTasks[p], tasks);
+            PopWaitingTasksInto(completedSerial, state->mWaitingTasks[p], tasks);
         }
         state->mCallingCallbacks = true;
+        return false;
     });
+
+    // Update the serial now that we know whether we are waiting for idle.
+    mCompletedSerial.Use(
+        [&](auto old) { *old = std::max(*old, static_cast<uint64_t>(completedSerial)); });
 
     // Always call the processors before processing individual tasks.
     if (processors) {
@@ -304,7 +317,9 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
         task();
     }
 
-    mState->mCallingCallbacks = false;
+    if (!waitingForIdle) {
+        mState->mCallingCallbacks = false;
+    }
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
