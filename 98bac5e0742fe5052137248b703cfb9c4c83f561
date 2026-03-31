@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48bc50a0_3f0dfa9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T21:09:04Z",
+      "side": 1,
+      "message": "PTAL.\n\namaiorano@ for the DXC changes\nkainino@ for the third_party/directx-shader-compiler structure changes.",
+      "revId": "98bac5e0742fe5052137248b703cfb9c4c83f561",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
