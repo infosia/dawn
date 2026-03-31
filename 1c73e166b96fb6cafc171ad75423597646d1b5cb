@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4269f6_fdae97e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-03-31T20:29:56Z",
+      "side": 1,
+      "message": "Note that the CQ failures are unrelated, and am just waiting for https://dawn-review.git.corp.google.com/c/dawn/+/300615 to land.",
+      "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
