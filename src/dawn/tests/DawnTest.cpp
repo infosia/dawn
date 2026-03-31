@@ -1400,13 +1400,14 @@ const dawn::utils::ComboLimits& DawnTestBase::GetSupportedLimits() {
 
 bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& features) {
     DAWN_ASSERT(mBackendAdapter);
-    wgpu::SupportedFeatures supportedFeatures;
-    native::GetProcs().adapterGetFeatures(
-        mBackendAdapter.Get(), reinterpret_cast<WGPUSupportedFeatures*>(&supportedFeatures));
-
     auto supportedSet = GetSupportedFeatures();
     for (wgpu::FeatureName f : features) {
         if (!supportedSet.contains(f)) {
+            return false;
+        }
+        // In wire mode, also check the wire adapter's features. The wire adapter may expose a
+        // different (typically smaller) set of features than the backend adapter.
+        if (UsesWire() && adapter && !adapter.HasFeature(f)) {
             return false;
         }
     }
@@ -1603,6 +1604,14 @@ void DawnTestBase::HandleDeviceCreationFailure() {
         if (case_.matches(mParam)) {
             GTEST_SKIP_(case_.reason);
         }
+    }
+
+    // Skip the test if required features are not supported by the adapter.
+    std::vector<wgpu::FeatureName> requiredFeatures = GetRequiredFeatures();
+    if (!requiredFeatures.empty() && !SupportsFeatures(requiredFeatures)) {
+        GTEST_SKIP_(
+            "Device creation failed because required features are not supported "
+            "by the adapter.");
     }
 
     // Otherwise fail the test.

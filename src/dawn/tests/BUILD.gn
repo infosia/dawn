@@ -643,6 +643,7 @@ source_set("end2end_tests_sources") {
     "end2end/CreateDestroyTests.cpp",
     "end2end/CreatePipelineAsyncTests.cpp",
     "end2end/CullingTests.cpp",
+    "end2end/DawnTestInfraTests.cpp",
     "end2end/DebugMarkerTests.cpp",
     "end2end/DepthBiasTests.cpp",
     "end2end/DepthStencilCopyTests.cpp",
