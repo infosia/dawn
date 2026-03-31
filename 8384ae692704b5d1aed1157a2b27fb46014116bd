@@ -16,6 +16,57 @@
       "message": "This is ready for reviews",
       "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27056150_4e53382e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T12:14:08Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca4c076_0acd438b",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T12:14:08Z",
+      "side": 1,
+      "message": "Maybe we could have `if (nvidia \u0026\u0026 device ID) { default (false)}` else {default true} for readability and explicitness?",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bbdac2b_b1e32935",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T12:14:08Z",
+      "side": 1,
+      "message": "Should we suppress using the toggle as well?",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
