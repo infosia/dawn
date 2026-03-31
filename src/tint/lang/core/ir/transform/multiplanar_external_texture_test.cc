@@ -459,43 +459,134 @@ $B1: {  # root
         %43:tint_TransferFunctionParams = access %params, 3u
         %44:tint_TransferFunctionParams = access %params, 4u
         %45:mat3x3<f32> = access %params, 5u
-        %46:vec3<f32> = call %tint_ApplyTransferFunction, %28, %43
+        %46:vec3<f32> = call %tint_ApplySrcTransferFunction, %28, %43
         %48:vec3<f32> = mul %45, %46
-        %49:vec3<f32> = call %tint_ApplyTransferFunction, %48, %44
+        %49:vec3<f32> = call %tint_ApplyGammaTransferFunction, %48, %44
         exit_if %49  # if_2
       }
       $B7: {  # false
         exit_if %28  # if_2
       }
     }
-    %50:vec4<f32> = construct %42, %29
-    ret %50
+    %51:vec4<f32> = construct %42, %29
+    ret %51
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %53:f32 = access %params_1, 1u
-    %54:f32 = access %params_1, 2u
-    %55:f32 = access %params_1, 3u
-    %56:f32 = access %params_1, 4u
-    %57:f32 = access %params_1, 5u
-    %58:f32 = access %params_1, 6u
-    %59:f32 = access %params_1, 7u
-    %60:vec3<f32> = construct %59
-    %61:vec3<f32> = construct %56
-    %62:vec3<f32> = abs %v
-    %63:vec3<f32> = sign %v
-    %64:vec3<bool> = lt %62, %61
-    %65:vec3<f32> = mul %55, %62
-    %66:vec3<f32> = add %65, %58
-    %67:vec3<f32> = mul %63, %66
-    %68:vec3<f32> = mul %53, %62
-    %69:vec3<f32> = add %68, %54
-    %70:vec3<f32> = pow %69, %60
-    %71:vec3<f32> = add %70, %57
-    %72:vec3<f32> = mul %63, %71
-    %73:vec3<f32> = select %72, %67, %64
-    ret %73
+    %mode:u32 = access %params_1, 0u
+    %55:bool = eq %mode, 0u
+    if %55 [t: $B9, f: $B10] {  # if_3
+      $B9: {  # true
+        %56:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %56
+      }
+      $B10: {  # false
+        %57:bool = eq %mode, 1u
+        if %57 [t: $B11, f: $B12] {  # if_4
+          $B11: {  # true
+            %58:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %58
+          }
+          $B12: {  # false
+            %60:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %60
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B13: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %71:vec3<f32> = construct %G
+    %72:vec3<f32> = construct %D
+    %73:vec3<f32> = abs %v_1
+    %74:vec3<f32> = sign %v_1
+    %75:vec3<bool> = lt %73, %72
+    %76:vec3<f32> = mul %C, %73
+    %77:vec3<f32> = add %76, %F
+    %78:vec3<f32> = mul %74, %77
+    %79:vec3<f32> = mul %A, %73
+    %80:vec3<f32> = add %79, %B
+    %81:vec3<f32> = pow %80, %71
+    %82:vec3<f32> = add %81, %E
+    %83:vec3<f32> = mul %74, %82
+    %84:vec3<f32> = select %83, %78, %75
+    ret %84
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B14: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %94:bool = lte %v_2, %cutoff
+    if %94 [t: $B15, f: $B16] {  # if_5
+      $B15: {  # true
+        %95:f32 = mul %v_2, %v_2
+        %96:f32 = div %95, %lower_scale
+        ret %96
+      }
+      $B16: {  # false
+        %97:f32 = sub %v_2, %C_1
+        %98:f32 = div %97, %A_1
+        %99:f32 = exp %98
+        %100:f32 = add %B_1, %99
+        %101:f32 = div %100, %upper_scale
+        ret %101
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B17: {
+    %104:f32 = swizzle %v_3, x
+    %105:f32 = call %tint_ApplyHLGSingleChannel, %104, %params_4
+    %106:f32 = swizzle %v_3, y
+    %107:f32 = call %tint_ApplyHLGSingleChannel, %106, %params_4
+    %108:f32 = swizzle %v_3, z
+    %109:f32 = call %tint_ApplyHLGSingleChannel, %108, %params_4
+    %110:vec3<f32> = construct %105, %107, %109
+    ret %110
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B18: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %118:vec3<f32> = construct %c1
+    %119:vec3<f32> = construct %c2
+    %120:vec3<f32> = construct %c3
+    %121:vec3<f32> = construct %m1
+    %122:vec3<f32> = construct %m2
+    %123:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %124:vec3<f32> = div vec3<f32>(1.0f), %122
+    %125:vec3<f32> = pow %123, %124
+    %126:vec3<f32> = sub %125, %118
+    %127:vec3<f32> = max %126, vec3<f32>(0.0f)
+    %128:vec3<f32> = mul %120, %125
+    %129:vec3<f32> = sub %119, %128
+    %130:vec3<f32> = div %127, %129
+    %131:vec3<f32> = div vec3<f32>(1.0f), %121
+    %132:vec3<f32> = pow %130, %131
+    ret %132
   }
 }
 )";
@@ -574,43 +665,134 @@ $B1: {  # root
         %30:tint_TransferFunctionParams = access %params, 3u
         %31:tint_TransferFunctionParams = access %params, 4u
         %32:mat3x3<f32> = access %params, 5u
-        %33:vec3<f32> = call %tint_ApplyTransferFunction, %27, %30
+        %33:vec3<f32> = call %tint_ApplySrcTransferFunction, %27, %30
         %35:vec3<f32> = mul %32, %33
-        %36:vec3<f32> = call %tint_ApplyTransferFunction, %35, %31
+        %36:vec3<f32> = call %tint_ApplyGammaTransferFunction, %35, %31
         exit_if %36  # if_1
       }
       $B5: {  # false
         exit_if %27  # if_1
       }
     }
-    %37:vec4<f32> = construct %29, 1.0f
-    ret %37
+    %38:vec4<f32> = construct %29, 1.0f
+    ret %38
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %40:f32 = access %params_1, 1u
-    %41:f32 = access %params_1, 2u
-    %42:f32 = access %params_1, 3u
-    %43:f32 = access %params_1, 4u
-    %44:f32 = access %params_1, 5u
-    %45:f32 = access %params_1, 6u
-    %46:f32 = access %params_1, 7u
-    %47:vec3<f32> = construct %46
-    %48:vec3<f32> = construct %43
-    %49:vec3<f32> = abs %v
-    %50:vec3<f32> = sign %v
-    %51:vec3<bool> = lt %49, %48
-    %52:vec3<f32> = mul %42, %49
-    %53:vec3<f32> = add %52, %45
-    %54:vec3<f32> = mul %50, %53
-    %55:vec3<f32> = mul %40, %49
-    %56:vec3<f32> = add %55, %41
-    %57:vec3<f32> = pow %56, %47
-    %58:vec3<f32> = add %57, %44
-    %59:vec3<f32> = mul %50, %58
-    %60:vec3<f32> = select %59, %54, %51
-    ret %60
+    %mode:u32 = access %params_1, 0u
+    %42:bool = eq %mode, 0u
+    if %42 [t: $B7, f: $B8] {  # if_2
+      $B7: {  # true
+        %43:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %43
+      }
+      $B8: {  # false
+        %44:bool = eq %mode, 1u
+        if %44 [t: $B9, f: $B10] {  # if_3
+          $B9: {  # true
+            %45:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %45
+          }
+          $B10: {  # false
+            %47:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %47
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B11: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %58:vec3<f32> = construct %G
+    %59:vec3<f32> = construct %D
+    %60:vec3<f32> = abs %v_1
+    %61:vec3<f32> = sign %v_1
+    %62:vec3<bool> = lt %60, %59
+    %63:vec3<f32> = mul %C, %60
+    %64:vec3<f32> = add %63, %F
+    %65:vec3<f32> = mul %61, %64
+    %66:vec3<f32> = mul %A, %60
+    %67:vec3<f32> = add %66, %B
+    %68:vec3<f32> = pow %67, %58
+    %69:vec3<f32> = add %68, %E
+    %70:vec3<f32> = mul %61, %69
+    %71:vec3<f32> = select %70, %65, %62
+    ret %71
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B12: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %81:bool = lte %v_2, %cutoff
+    if %81 [t: $B13, f: $B14] {  # if_4
+      $B13: {  # true
+        %82:f32 = mul %v_2, %v_2
+        %83:f32 = div %82, %lower_scale
+        ret %83
+      }
+      $B14: {  # false
+        %84:f32 = sub %v_2, %C_1
+        %85:f32 = div %84, %A_1
+        %86:f32 = exp %85
+        %87:f32 = add %B_1, %86
+        %88:f32 = div %87, %upper_scale
+        ret %88
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B15: {
+    %91:f32 = swizzle %v_3, x
+    %92:f32 = call %tint_ApplyHLGSingleChannel, %91, %params_4
+    %93:f32 = swizzle %v_3, y
+    %94:f32 = call %tint_ApplyHLGSingleChannel, %93, %params_4
+    %95:f32 = swizzle %v_3, z
+    %96:f32 = call %tint_ApplyHLGSingleChannel, %95, %params_4
+    %97:vec3<f32> = construct %92, %94, %96
+    ret %97
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B16: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %105:vec3<f32> = construct %c1
+    %106:vec3<f32> = construct %c2
+    %107:vec3<f32> = construct %c3
+    %108:vec3<f32> = construct %m1
+    %109:vec3<f32> = construct %m2
+    %110:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %111:vec3<f32> = div vec3<f32>(1.0f), %109
+    %112:vec3<f32> = pow %110, %111
+    %113:vec3<f32> = sub %112, %105
+    %114:vec3<f32> = max %113, vec3<f32>(0.0f)
+    %115:vec3<f32> = mul %107, %112
+    %116:vec3<f32> = sub %106, %115
+    %117:vec3<f32> = div %114, %116
+    %118:vec3<f32> = div vec3<f32>(1.0f), %108
+    %119:vec3<f32> = pow %117, %118
+    ret %119
   }
 }
 )";
@@ -708,43 +890,134 @@ $B1: {  # root
         %44:tint_TransferFunctionParams = access %params, 3u
         %45:tint_TransferFunctionParams = access %params, 4u
         %46:mat3x3<f32> = access %params, 5u
-        %47:vec3<f32> = call %tint_ApplyTransferFunction, %29, %44
+        %47:vec3<f32> = call %tint_ApplySrcTransferFunction, %29, %44
         %49:vec3<f32> = mul %46, %47
-        %50:vec3<f32> = call %tint_ApplyTransferFunction, %49, %45
+        %50:vec3<f32> = call %tint_ApplyGammaTransferFunction, %49, %45
         exit_if %50  # if_2
       }
       $B7: {  # false
         exit_if %29  # if_2
       }
     }
-    %51:vec4<f32> = construct %43, %30
-    ret %51
+    %52:vec4<f32> = construct %43, %30
+    ret %52
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %54:f32 = access %params_1, 1u
-    %55:f32 = access %params_1, 2u
-    %56:f32 = access %params_1, 3u
-    %57:f32 = access %params_1, 4u
-    %58:f32 = access %params_1, 5u
-    %59:f32 = access %params_1, 6u
-    %60:f32 = access %params_1, 7u
-    %61:vec3<f32> = construct %60
-    %62:vec3<f32> = construct %57
-    %63:vec3<f32> = abs %v
-    %64:vec3<f32> = sign %v
-    %65:vec3<bool> = lt %63, %62
-    %66:vec3<f32> = mul %56, %63
-    %67:vec3<f32> = add %66, %59
-    %68:vec3<f32> = mul %64, %67
-    %69:vec3<f32> = mul %54, %63
-    %70:vec3<f32> = add %69, %55
-    %71:vec3<f32> = pow %70, %61
-    %72:vec3<f32> = add %71, %58
-    %73:vec3<f32> = mul %64, %72
-    %74:vec3<f32> = select %73, %68, %65
-    ret %74
+    %mode:u32 = access %params_1, 0u
+    %56:bool = eq %mode, 0u
+    if %56 [t: $B9, f: $B10] {  # if_3
+      $B9: {  # true
+        %57:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %57
+      }
+      $B10: {  # false
+        %58:bool = eq %mode, 1u
+        if %58 [t: $B11, f: $B12] {  # if_4
+          $B11: {  # true
+            %59:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %59
+          }
+          $B12: {  # false
+            %61:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %61
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B13: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %72:vec3<f32> = construct %G
+    %73:vec3<f32> = construct %D
+    %74:vec3<f32> = abs %v_1
+    %75:vec3<f32> = sign %v_1
+    %76:vec3<bool> = lt %74, %73
+    %77:vec3<f32> = mul %C, %74
+    %78:vec3<f32> = add %77, %F
+    %79:vec3<f32> = mul %75, %78
+    %80:vec3<f32> = mul %A, %74
+    %81:vec3<f32> = add %80, %B
+    %82:vec3<f32> = pow %81, %72
+    %83:vec3<f32> = add %82, %E
+    %84:vec3<f32> = mul %75, %83
+    %85:vec3<f32> = select %84, %79, %76
+    ret %85
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B14: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %95:bool = lte %v_2, %cutoff
+    if %95 [t: $B15, f: $B16] {  # if_5
+      $B15: {  # true
+        %96:f32 = mul %v_2, %v_2
+        %97:f32 = div %96, %lower_scale
+        ret %97
+      }
+      $B16: {  # false
+        %98:f32 = sub %v_2, %C_1
+        %99:f32 = div %98, %A_1
+        %100:f32 = exp %99
+        %101:f32 = add %B_1, %100
+        %102:f32 = div %101, %upper_scale
+        ret %102
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B17: {
+    %105:f32 = swizzle %v_3, x
+    %106:f32 = call %tint_ApplyHLGSingleChannel, %105, %params_4
+    %107:f32 = swizzle %v_3, y
+    %108:f32 = call %tint_ApplyHLGSingleChannel, %107, %params_4
+    %109:f32 = swizzle %v_3, z
+    %110:f32 = call %tint_ApplyHLGSingleChannel, %109, %params_4
+    %111:vec3<f32> = construct %106, %108, %110
+    ret %111
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B18: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %119:vec3<f32> = construct %c1
+    %120:vec3<f32> = construct %c2
+    %121:vec3<f32> = construct %c3
+    %122:vec3<f32> = construct %m1
+    %123:vec3<f32> = construct %m2
+    %124:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %125:vec3<f32> = div vec3<f32>(1.0f), %123
+    %126:vec3<f32> = pow %124, %125
+    %127:vec3<f32> = sub %126, %119
+    %128:vec3<f32> = max %127, vec3<f32>(0.0f)
+    %129:vec3<f32> = mul %121, %126
+    %130:vec3<f32> = sub %120, %129
+    %131:vec3<f32> = div %128, %130
+    %132:vec3<f32> = div vec3<f32>(1.0f), %122
+    %133:vec3<f32> = pow %131, %132
+    ret %133
   }
 }
 )";
@@ -824,43 +1097,134 @@ $B1: {  # root
         %31:tint_TransferFunctionParams = access %params, 3u
         %32:tint_TransferFunctionParams = access %params, 4u
         %33:mat3x3<f32> = access %params, 5u
-        %34:vec3<f32> = call %tint_ApplyTransferFunction, %28, %31
+        %34:vec3<f32> = call %tint_ApplySrcTransferFunction, %28, %31
         %36:vec3<f32> = mul %33, %34
-        %37:vec3<f32> = call %tint_ApplyTransferFunction, %36, %32
+        %37:vec3<f32> = call %tint_ApplyGammaTransferFunction, %36, %32
         exit_if %37  # if_1
       }
       $B5: {  # false
         exit_if %28  # if_1
       }
     }
-    %38:vec4<f32> = construct %30, 1.0f
-    ret %38
+    %39:vec4<f32> = construct %30, 1.0f
+    ret %39
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %41:f32 = access %params_1, 1u
-    %42:f32 = access %params_1, 2u
-    %43:f32 = access %params_1, 3u
-    %44:f32 = access %params_1, 4u
-    %45:f32 = access %params_1, 5u
-    %46:f32 = access %params_1, 6u
-    %47:f32 = access %params_1, 7u
-    %48:vec3<f32> = construct %47
-    %49:vec3<f32> = construct %44
-    %50:vec3<f32> = abs %v
-    %51:vec3<f32> = sign %v
-    %52:vec3<bool> = lt %50, %49
-    %53:vec3<f32> = mul %43, %50
-    %54:vec3<f32> = add %53, %46
-    %55:vec3<f32> = mul %51, %54
-    %56:vec3<f32> = mul %41, %50
-    %57:vec3<f32> = add %56, %42
-    %58:vec3<f32> = pow %57, %48
-    %59:vec3<f32> = add %58, %45
-    %60:vec3<f32> = mul %51, %59
-    %61:vec3<f32> = select %60, %55, %52
-    ret %61
+    %mode:u32 = access %params_1, 0u
+    %43:bool = eq %mode, 0u
+    if %43 [t: $B7, f: $B8] {  # if_2
+      $B7: {  # true
+        %44:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %44
+      }
+      $B8: {  # false
+        %45:bool = eq %mode, 1u
+        if %45 [t: $B9, f: $B10] {  # if_3
+          $B9: {  # true
+            %46:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %46
+          }
+          $B10: {  # false
+            %48:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %48
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B11: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %59:vec3<f32> = construct %G
+    %60:vec3<f32> = construct %D
+    %61:vec3<f32> = abs %v_1
+    %62:vec3<f32> = sign %v_1
+    %63:vec3<bool> = lt %61, %60
+    %64:vec3<f32> = mul %C, %61
+    %65:vec3<f32> = add %64, %F
+    %66:vec3<f32> = mul %62, %65
+    %67:vec3<f32> = mul %A, %61
+    %68:vec3<f32> = add %67, %B
+    %69:vec3<f32> = pow %68, %59
+    %70:vec3<f32> = add %69, %E
+    %71:vec3<f32> = mul %62, %70
+    %72:vec3<f32> = select %71, %66, %63
+    ret %72
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B12: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %82:bool = lte %v_2, %cutoff
+    if %82 [t: $B13, f: $B14] {  # if_4
+      $B13: {  # true
+        %83:f32 = mul %v_2, %v_2
+        %84:f32 = div %83, %lower_scale
+        ret %84
+      }
+      $B14: {  # false
+        %85:f32 = sub %v_2, %C_1
+        %86:f32 = div %85, %A_1
+        %87:f32 = exp %86
+        %88:f32 = add %B_1, %87
+        %89:f32 = div %88, %upper_scale
+        ret %89
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B15: {
+    %92:f32 = swizzle %v_3, x
+    %93:f32 = call %tint_ApplyHLGSingleChannel, %92, %params_4
+    %94:f32 = swizzle %v_3, y
+    %95:f32 = call %tint_ApplyHLGSingleChannel, %94, %params_4
+    %96:f32 = swizzle %v_3, z
+    %97:f32 = call %tint_ApplyHLGSingleChannel, %96, %params_4
+    %98:vec3<f32> = construct %93, %95, %97
+    ret %98
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B16: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %106:vec3<f32> = construct %c1
+    %107:vec3<f32> = construct %c2
+    %108:vec3<f32> = construct %c3
+    %109:vec3<f32> = construct %m1
+    %110:vec3<f32> = construct %m2
+    %111:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %112:vec3<f32> = div vec3<f32>(1.0f), %110
+    %113:vec3<f32> = pow %111, %112
+    %114:vec3<f32> = sub %113, %106
+    %115:vec3<f32> = max %114, vec3<f32>(0.0f)
+    %116:vec3<f32> = mul %108, %113
+    %117:vec3<f32> = sub %107, %116
+    %118:vec3<f32> = div %115, %117
+    %119:vec3<f32> = div vec3<f32>(1.0f), %109
+    %120:vec3<f32> = pow %118, %119
+    ret %120
   }
 }
 )";
@@ -957,43 +1321,134 @@ $B1: {  # root
         %43:tint_TransferFunctionParams = access %params, 3u
         %44:tint_TransferFunctionParams = access %params, 4u
         %45:mat3x3<f32> = access %params, 5u
-        %46:vec3<f32> = call %tint_ApplyTransferFunction, %29, %43
+        %46:vec3<f32> = call %tint_ApplySrcTransferFunction, %29, %43
         %48:vec3<f32> = mul %45, %46
-        %49:vec3<f32> = call %tint_ApplyTransferFunction, %48, %44
+        %49:vec3<f32> = call %tint_ApplyGammaTransferFunction, %48, %44
         exit_if %49  # if_2
       }
       $B7: {  # false
         exit_if %29  # if_2
       }
     }
-    %50:vec4<f32> = construct %42, %30
-    ret %50
+    %51:vec4<f32> = construct %42, %30
+    ret %51
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %53:f32 = access %params_1, 1u
-    %54:f32 = access %params_1, 2u
-    %55:f32 = access %params_1, 3u
-    %56:f32 = access %params_1, 4u
-    %57:f32 = access %params_1, 5u
-    %58:f32 = access %params_1, 6u
-    %59:f32 = access %params_1, 7u
-    %60:vec3<f32> = construct %59
-    %61:vec3<f32> = construct %56
-    %62:vec3<f32> = abs %v
-    %63:vec3<f32> = sign %v
-    %64:vec3<bool> = lt %62, %61
-    %65:vec3<f32> = mul %55, %62
-    %66:vec3<f32> = add %65, %58
-    %67:vec3<f32> = mul %63, %66
-    %68:vec3<f32> = mul %53, %62
-    %69:vec3<f32> = add %68, %54
-    %70:vec3<f32> = pow %69, %60
-    %71:vec3<f32> = add %70, %57
-    %72:vec3<f32> = mul %63, %71
-    %73:vec3<f32> = select %72, %67, %64
-    ret %73
+    %mode:u32 = access %params_1, 0u
+    %55:bool = eq %mode, 0u
+    if %55 [t: $B9, f: $B10] {  # if_3
+      $B9: {  # true
+        %56:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %56
+      }
+      $B10: {  # false
+        %57:bool = eq %mode, 1u
+        if %57 [t: $B11, f: $B12] {  # if_4
+          $B11: {  # true
+            %58:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %58
+          }
+          $B12: {  # false
+            %60:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %60
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B13: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %71:vec3<f32> = construct %G
+    %72:vec3<f32> = construct %D
+    %73:vec3<f32> = abs %v_1
+    %74:vec3<f32> = sign %v_1
+    %75:vec3<bool> = lt %73, %72
+    %76:vec3<f32> = mul %C, %73
+    %77:vec3<f32> = add %76, %F
+    %78:vec3<f32> = mul %74, %77
+    %79:vec3<f32> = mul %A, %73
+    %80:vec3<f32> = add %79, %B
+    %81:vec3<f32> = pow %80, %71
+    %82:vec3<f32> = add %81, %E
+    %83:vec3<f32> = mul %74, %82
+    %84:vec3<f32> = select %83, %78, %75
+    ret %84
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B14: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %94:bool = lte %v_2, %cutoff
+    if %94 [t: $B15, f: $B16] {  # if_5
+      $B15: {  # true
+        %95:f32 = mul %v_2, %v_2
+        %96:f32 = div %95, %lower_scale
+        ret %96
+      }
+      $B16: {  # false
+        %97:f32 = sub %v_2, %C_1
+        %98:f32 = div %97, %A_1
+        %99:f32 = exp %98
+        %100:f32 = add %B_1, %99
+        %101:f32 = div %100, %upper_scale
+        ret %101
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B17: {
+    %104:f32 = swizzle %v_3, x
+    %105:f32 = call %tint_ApplyHLGSingleChannel, %104, %params_4
+    %106:f32 = swizzle %v_3, y
+    %107:f32 = call %tint_ApplyHLGSingleChannel, %106, %params_4
+    %108:f32 = swizzle %v_3, z
+    %109:f32 = call %tint_ApplyHLGSingleChannel, %108, %params_4
+    %110:vec3<f32> = construct %105, %107, %109
+    ret %110
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B18: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %118:vec3<f32> = construct %c1
+    %119:vec3<f32> = construct %c2
+    %120:vec3<f32> = construct %c3
+    %121:vec3<f32> = construct %m1
+    %122:vec3<f32> = construct %m2
+    %123:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %124:vec3<f32> = div vec3<f32>(1.0f), %122
+    %125:vec3<f32> = pow %123, %124
+    %126:vec3<f32> = sub %125, %118
+    %127:vec3<f32> = max %126, vec3<f32>(0.0f)
+    %128:vec3<f32> = mul %120, %125
+    %129:vec3<f32> = sub %119, %128
+    %130:vec3<f32> = div %127, %129
+    %131:vec3<f32> = div vec3<f32>(1.0f), %121
+    %132:vec3<f32> = pow %130, %131
+    ret %132
   }
 }
 )";
@@ -1073,43 +1528,134 @@ $B1: {  # root
         %31:tint_TransferFunctionParams = access %params, 3u
         %32:tint_TransferFunctionParams = access %params, 4u
         %33:mat3x3<f32> = access %params, 5u
-        %34:vec3<f32> = call %tint_ApplyTransferFunction, %27, %31
+        %34:vec3<f32> = call %tint_ApplySrcTransferFunction, %27, %31
         %36:vec3<f32> = mul %33, %34
-        %37:vec3<f32> = call %tint_ApplyTransferFunction, %36, %32
+        %37:vec3<f32> = call %tint_ApplyGammaTransferFunction, %36, %32
         exit_if %37  # if_1
       }
       $B5: {  # false
         exit_if %27  # if_1
       }
     }
-    %38:vec4<f32> = construct %30, %28
-    ret %38
+    %39:vec4<f32> = construct %30, %28
+    ret %39
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %41:f32 = access %params_1, 1u
-    %42:f32 = access %params_1, 2u
-    %43:f32 = access %params_1, 3u
-    %44:f32 = access %params_1, 4u
-    %45:f32 = access %params_1, 5u
-    %46:f32 = access %params_1, 6u
-    %47:f32 = access %params_1, 7u
-    %48:vec3<f32> = construct %47
-    %49:vec3<f32> = construct %44
-    %50:vec3<f32> = abs %v
-    %51:vec3<f32> = sign %v
-    %52:vec3<bool> = lt %50, %49
-    %53:vec3<f32> = mul %43, %50
-    %54:vec3<f32> = add %53, %46
-    %55:vec3<f32> = mul %51, %54
-    %56:vec3<f32> = mul %41, %50
-    %57:vec3<f32> = add %56, %42
-    %58:vec3<f32> = pow %57, %48
-    %59:vec3<f32> = add %58, %45
-    %60:vec3<f32> = mul %51, %59
-    %61:vec3<f32> = select %60, %55, %52
-    ret %61
+    %mode:u32 = access %params_1, 0u
+    %43:bool = eq %mode, 0u
+    if %43 [t: $B7, f: $B8] {  # if_2
+      $B7: {  # true
+        %44:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %44
+      }
+      $B8: {  # false
+        %45:bool = eq %mode, 1u
+        if %45 [t: $B9, f: $B10] {  # if_3
+          $B9: {  # true
+            %46:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %46
+          }
+          $B10: {  # false
+            %48:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %48
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B11: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %59:vec3<f32> = construct %G
+    %60:vec3<f32> = construct %D
+    %61:vec3<f32> = abs %v_1
+    %62:vec3<f32> = sign %v_1
+    %63:vec3<bool> = lt %61, %60
+    %64:vec3<f32> = mul %C, %61
+    %65:vec3<f32> = add %64, %F
+    %66:vec3<f32> = mul %62, %65
+    %67:vec3<f32> = mul %A, %61
+    %68:vec3<f32> = add %67, %B
+    %69:vec3<f32> = pow %68, %59
+    %70:vec3<f32> = add %69, %E
+    %71:vec3<f32> = mul %62, %70
+    %72:vec3<f32> = select %71, %66, %63
+    ret %72
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B12: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %82:bool = lte %v_2, %cutoff
+    if %82 [t: $B13, f: $B14] {  # if_4
+      $B13: {  # true
+        %83:f32 = mul %v_2, %v_2
+        %84:f32 = div %83, %lower_scale
+        ret %84
+      }
+      $B14: {  # false
+        %85:f32 = sub %v_2, %C_1
+        %86:f32 = div %85, %A_1
+        %87:f32 = exp %86
+        %88:f32 = add %B_1, %87
+        %89:f32 = div %88, %upper_scale
+        ret %89
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B15: {
+    %92:f32 = swizzle %v_3, x
+    %93:f32 = call %tint_ApplyHLGSingleChannel, %92, %params_4
+    %94:f32 = swizzle %v_3, y
+    %95:f32 = call %tint_ApplyHLGSingleChannel, %94, %params_4
+    %96:f32 = swizzle %v_3, z
+    %97:f32 = call %tint_ApplyHLGSingleChannel, %96, %params_4
+    %98:vec3<f32> = construct %93, %95, %97
+    ret %98
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B16: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %106:vec3<f32> = construct %c1
+    %107:vec3<f32> = construct %c2
+    %108:vec3<f32> = construct %c3
+    %109:vec3<f32> = construct %m1
+    %110:vec3<f32> = construct %m2
+    %111:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %112:vec3<f32> = div vec3<f32>(1.0f), %110
+    %113:vec3<f32> = pow %111, %112
+    %114:vec3<f32> = sub %113, %106
+    %115:vec3<f32> = max %114, vec3<f32>(0.0f)
+    %116:vec3<f32> = mul %108, %113
+    %117:vec3<f32> = sub %107, %116
+    %118:vec3<f32> = div %115, %117
+    %119:vec3<f32> = div vec3<f32>(1.0f), %109
+    %120:vec3<f32> = pow %118, %119
+    ret %120
   }
 }
 )";
@@ -1233,43 +1779,134 @@ $B1: {  # root
         %50:tint_TransferFunctionParams = access %params, 3u
         %51:tint_TransferFunctionParams = access %params, 4u
         %52:mat3x3<f32> = access %params, 5u
-        %53:vec3<f32> = call %tint_ApplyTransferFunction, %36, %50
+        %53:vec3<f32> = call %tint_ApplySrcTransferFunction, %36, %50
         %55:vec3<f32> = mul %52, %53
-        %56:vec3<f32> = call %tint_ApplyTransferFunction, %55, %51
+        %56:vec3<f32> = call %tint_ApplyGammaTransferFunction, %55, %51
         exit_if %56  # if_2
       }
       $B8: {  # false
         exit_if %36  # if_2
       }
     }
-    %57:vec4<f32> = construct %49, %37
-    ret %57
+    %58:vec4<f32> = construct %49, %37
+    ret %58
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
-    %60:f32 = access %params_1, 1u
-    %61:f32 = access %params_1, 2u
-    %62:f32 = access %params_1, 3u
-    %63:f32 = access %params_1, 4u
-    %64:f32 = access %params_1, 5u
-    %65:f32 = access %params_1, 6u
-    %66:f32 = access %params_1, 7u
-    %67:vec3<f32> = construct %66
-    %68:vec3<f32> = construct %63
-    %69:vec3<f32> = abs %v
-    %70:vec3<f32> = sign %v
-    %71:vec3<bool> = lt %69, %68
-    %72:vec3<f32> = mul %62, %69
-    %73:vec3<f32> = add %72, %65
-    %74:vec3<f32> = mul %70, %73
-    %75:vec3<f32> = mul %60, %69
-    %76:vec3<f32> = add %75, %61
-    %77:vec3<f32> = pow %76, %67
-    %78:vec3<f32> = add %77, %64
-    %79:vec3<f32> = mul %70, %78
-    %80:vec3<f32> = select %79, %74, %71
-    ret %80
+    %mode:u32 = access %params_1, 0u
+    %62:bool = eq %mode, 0u
+    if %62 [t: $B10, f: $B11] {  # if_3
+      $B10: {  # true
+        %63:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %63
+      }
+      $B11: {  # false
+        %64:bool = eq %mode, 1u
+        if %64 [t: $B12, f: $B13] {  # if_4
+          $B12: {  # true
+            %65:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %65
+          }
+          $B13: {  # false
+            %67:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %67
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B14: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %78:vec3<f32> = construct %G
+    %79:vec3<f32> = construct %D
+    %80:vec3<f32> = abs %v_1
+    %81:vec3<f32> = sign %v_1
+    %82:vec3<bool> = lt %80, %79
+    %83:vec3<f32> = mul %C, %80
+    %84:vec3<f32> = add %83, %F
+    %85:vec3<f32> = mul %81, %84
+    %86:vec3<f32> = mul %A, %80
+    %87:vec3<f32> = add %86, %B
+    %88:vec3<f32> = pow %87, %78
+    %89:vec3<f32> = add %88, %E
+    %90:vec3<f32> = mul %81, %89
+    %91:vec3<f32> = select %90, %85, %82
+    ret %91
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B15: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %101:bool = lte %v_2, %cutoff
+    if %101 [t: $B16, f: $B17] {  # if_5
+      $B16: {  # true
+        %102:f32 = mul %v_2, %v_2
+        %103:f32 = div %102, %lower_scale
+        ret %103
+      }
+      $B17: {  # false
+        %104:f32 = sub %v_2, %C_1
+        %105:f32 = div %104, %A_1
+        %106:f32 = exp %105
+        %107:f32 = add %B_1, %106
+        %108:f32 = div %107, %upper_scale
+        ret %108
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B18: {
+    %111:f32 = swizzle %v_3, x
+    %112:f32 = call %tint_ApplyHLGSingleChannel, %111, %params_4
+    %113:f32 = swizzle %v_3, y
+    %114:f32 = call %tint_ApplyHLGSingleChannel, %113, %params_4
+    %115:f32 = swizzle %v_3, z
+    %116:f32 = call %tint_ApplyHLGSingleChannel, %115, %params_4
+    %117:vec3<f32> = construct %112, %114, %116
+    ret %117
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B19: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %125:vec3<f32> = construct %c1
+    %126:vec3<f32> = construct %c2
+    %127:vec3<f32> = construct %c3
+    %128:vec3<f32> = construct %m1
+    %129:vec3<f32> = construct %m2
+    %130:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %131:vec3<f32> = div vec3<f32>(1.0f), %129
+    %132:vec3<f32> = pow %130, %131
+    %133:vec3<f32> = sub %132, %125
+    %134:vec3<f32> = max %133, vec3<f32>(0.0f)
+    %135:vec3<f32> = mul %127, %132
+    %136:vec3<f32> = sub %126, %135
+    %137:vec3<f32> = div %134, %136
+    %138:vec3<f32> = div vec3<f32>(1.0f), %128
+    %139:vec3<f32> = pow %137, %138
+    ret %139
   }
 }
 )";
@@ -1376,43 +2013,134 @@ $B1: {  # root
         %35:tint_TransferFunctionParams = access %params, 3u
         %36:tint_TransferFunctionParams = access %params, 4u
         %37:mat3x3<f32> = access %params, 5u
-        %38:vec3<f32> = call %tint_ApplyTransferFunction, %31, %35
+        %38:vec3<f32> = call %tint_ApplySrcTransferFunction, %31, %35
         %40:vec3<f32> = mul %37, %38
-        %41:vec3<f32> = call %tint_ApplyTransferFunction, %40, %36
+        %41:vec3<f32> = call %tint_ApplyGammaTransferFunction, %40, %36
         exit_if %41  # if_1
       }
       $B6: {  # false
         exit_if %31  # if_1
       }
     }
-    %42:vec4<f32> = construct %34, %32
-    ret %42
+    %43:vec4<f32> = construct %34, %32
+    ret %43
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B7: {
-    %45:f32 = access %params_1, 1u
-    %46:f32 = access %params_1, 2u
-    %47:f32 = access %params_1, 3u
-    %48:f32 = access %params_1, 4u
-    %49:f32 = access %params_1, 5u
-    %50:f32 = access %params_1, 6u
-    %51:f32 = access %params_1, 7u
-    %52:vec3<f32> = construct %51
-    %53:vec3<f32> = construct %48
-    %54:vec3<f32> = abs %v
-    %55:vec3<f32> = sign %v
-    %56:vec3<bool> = lt %54, %53
-    %57:vec3<f32> = mul %47, %54
-    %58:vec3<f32> = add %57, %50
-    %59:vec3<f32> = mul %55, %58
-    %60:vec3<f32> = mul %45, %54
-    %61:vec3<f32> = add %60, %46
-    %62:vec3<f32> = pow %61, %52
-    %63:vec3<f32> = add %62, %49
-    %64:vec3<f32> = mul %55, %63
-    %65:vec3<f32> = select %64, %59, %56
-    ret %65
+    %mode:u32 = access %params_1, 0u
+    %47:bool = eq %mode, 0u
+    if %47 [t: $B8, f: $B9] {  # if_2
+      $B8: {  # true
+        %48:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %48
+      }
+      $B9: {  # false
+        %49:bool = eq %mode, 1u
+        if %49 [t: $B10, f: $B11] {  # if_3
+          $B10: {  # true
+            %50:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %50
+          }
+          $B11: {  # false
+            %52:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %52
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B12: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %63:vec3<f32> = construct %G
+    %64:vec3<f32> = construct %D
+    %65:vec3<f32> = abs %v_1
+    %66:vec3<f32> = sign %v_1
+    %67:vec3<bool> = lt %65, %64
+    %68:vec3<f32> = mul %C, %65
+    %69:vec3<f32> = add %68, %F
+    %70:vec3<f32> = mul %66, %69
+    %71:vec3<f32> = mul %A, %65
+    %72:vec3<f32> = add %71, %B
+    %73:vec3<f32> = pow %72, %63
+    %74:vec3<f32> = add %73, %E
+    %75:vec3<f32> = mul %66, %74
+    %76:vec3<f32> = select %75, %70, %67
+    ret %76
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B13: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %86:bool = lte %v_2, %cutoff
+    if %86 [t: $B14, f: $B15] {  # if_4
+      $B14: {  # true
+        %87:f32 = mul %v_2, %v_2
+        %88:f32 = div %87, %lower_scale
+        ret %88
+      }
+      $B15: {  # false
+        %89:f32 = sub %v_2, %C_1
+        %90:f32 = div %89, %A_1
+        %91:f32 = exp %90
+        %92:f32 = add %B_1, %91
+        %93:f32 = div %92, %upper_scale
+        ret %93
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B16: {
+    %96:f32 = swizzle %v_3, x
+    %97:f32 = call %tint_ApplyHLGSingleChannel, %96, %params_4
+    %98:f32 = swizzle %v_3, y
+    %99:f32 = call %tint_ApplyHLGSingleChannel, %98, %params_4
+    %100:f32 = swizzle %v_3, z
+    %101:f32 = call %tint_ApplyHLGSingleChannel, %100, %params_4
+    %102:vec3<f32> = construct %97, %99, %101
+    ret %102
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B17: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %110:vec3<f32> = construct %c1
+    %111:vec3<f32> = construct %c2
+    %112:vec3<f32> = construct %c3
+    %113:vec3<f32> = construct %m1
+    %114:vec3<f32> = construct %m2
+    %115:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %116:vec3<f32> = div vec3<f32>(1.0f), %114
+    %117:vec3<f32> = pow %115, %116
+    %118:vec3<f32> = sub %117, %110
+    %119:vec3<f32> = max %118, vec3<f32>(0.0f)
+    %120:vec3<f32> = mul %112, %117
+    %121:vec3<f32> = sub %111, %120
+    %122:vec3<f32> = div %119, %121
+    %123:vec3<f32> = div vec3<f32>(1.0f), %113
+    %124:vec3<f32> = pow %122, %123
+    ret %124
   }
 }
 )";
@@ -1572,43 +2300,134 @@ $B1: {  # root
         %65:tint_TransferFunctionParams = access %params, 3u
         %66:tint_TransferFunctionParams = access %params, 4u
         %67:mat3x3<f32> = access %params, 5u
-        %68:vec3<f32> = call %tint_ApplyTransferFunction, %51, %65
+        %68:vec3<f32> = call %tint_ApplySrcTransferFunction, %51, %65
         %70:vec3<f32> = mul %67, %68
-        %71:vec3<f32> = call %tint_ApplyTransferFunction, %70, %66
+        %71:vec3<f32> = call %tint_ApplyGammaTransferFunction, %70, %66
         exit_if %71  # if_2
       }
       $B8: {  # false
         exit_if %51  # if_2
       }
     }
-    %72:vec4<f32> = construct %64, %52
-    ret %72
+    %73:vec4<f32> = construct %64, %52
+    ret %73
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
-    %75:f32 = access %params_1, 1u
-    %76:f32 = access %params_1, 2u
-    %77:f32 = access %params_1, 3u
-    %78:f32 = access %params_1, 4u
-    %79:f32 = access %params_1, 5u
-    %80:f32 = access %params_1, 6u
-    %81:f32 = access %params_1, 7u
-    %82:vec3<f32> = construct %81
-    %83:vec3<f32> = construct %78
-    %84:vec3<f32> = abs %v
-    %85:vec3<f32> = sign %v
-    %86:vec3<bool> = lt %84, %83
-    %87:vec3<f32> = mul %77, %84
-    %88:vec3<f32> = add %87, %80
-    %89:vec3<f32> = mul %85, %88
-    %90:vec3<f32> = mul %75, %84
-    %91:vec3<f32> = add %90, %76
-    %92:vec3<f32> = pow %91, %82
-    %93:vec3<f32> = add %92, %79
-    %94:vec3<f32> = mul %85, %93
-    %95:vec3<f32> = select %94, %89, %86
-    ret %95
+    %mode:u32 = access %params_1, 0u
+    %77:bool = eq %mode, 0u
+    if %77 [t: $B10, f: $B11] {  # if_3
+      $B10: {  # true
+        %78:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %78
+      }
+      $B11: {  # false
+        %79:bool = eq %mode, 1u
+        if %79 [t: $B12, f: $B13] {  # if_4
+          $B12: {  # true
+            %80:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %80
+          }
+          $B13: {  # false
+            %82:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %82
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B14: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %93:vec3<f32> = construct %G
+    %94:vec3<f32> = construct %D
+    %95:vec3<f32> = abs %v_1
+    %96:vec3<f32> = sign %v_1
+    %97:vec3<bool> = lt %95, %94
+    %98:vec3<f32> = mul %C, %95
+    %99:vec3<f32> = add %98, %F
+    %100:vec3<f32> = mul %96, %99
+    %101:vec3<f32> = mul %A, %95
+    %102:vec3<f32> = add %101, %B
+    %103:vec3<f32> = pow %102, %93
+    %104:vec3<f32> = add %103, %E
+    %105:vec3<f32> = mul %96, %104
+    %106:vec3<f32> = select %105, %100, %97
+    ret %106
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B15: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %116:bool = lte %v_2, %cutoff
+    if %116 [t: $B16, f: $B17] {  # if_5
+      $B16: {  # true
+        %117:f32 = mul %v_2, %v_2
+        %118:f32 = div %117, %lower_scale
+        ret %118
+      }
+      $B17: {  # false
+        %119:f32 = sub %v_2, %C_1
+        %120:f32 = div %119, %A_1
+        %121:f32 = exp %120
+        %122:f32 = add %B_1, %121
+        %123:f32 = div %122, %upper_scale
+        ret %123
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B18: {
+    %126:f32 = swizzle %v_3, x
+    %127:f32 = call %tint_ApplyHLGSingleChannel, %126, %params_4
+    %128:f32 = swizzle %v_3, y
+    %129:f32 = call %tint_ApplyHLGSingleChannel, %128, %params_4
+    %130:f32 = swizzle %v_3, z
+    %131:f32 = call %tint_ApplyHLGSingleChannel, %130, %params_4
+    %132:vec3<f32> = construct %127, %129, %131
+    ret %132
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B19: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %140:vec3<f32> = construct %c1
+    %141:vec3<f32> = construct %c2
+    %142:vec3<f32> = construct %c3
+    %143:vec3<f32> = construct %m1
+    %144:vec3<f32> = construct %m2
+    %145:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %146:vec3<f32> = div vec3<f32>(1.0f), %144
+    %147:vec3<f32> = pow %145, %146
+    %148:vec3<f32> = sub %147, %140
+    %149:vec3<f32> = max %148, vec3<f32>(0.0f)
+    %150:vec3<f32> = mul %142, %147
+    %151:vec3<f32> = sub %141, %150
+    %152:vec3<f32> = div %149, %151
+    %153:vec3<f32> = div vec3<f32>(1.0f), %143
+    %154:vec3<f32> = pow %152, %153
+    ret %154
   }
 }
 )";
@@ -1736,43 +2555,134 @@ $B1: {  # root
         %57:tint_TransferFunctionParams = access %params, 3u
         %58:tint_TransferFunctionParams = access %params, 4u
         %59:mat3x3<f32> = access %params, 5u
-        %60:vec3<f32> = call %tint_ApplyTransferFunction, %42, %57
+        %60:vec3<f32> = call %tint_ApplySrcTransferFunction, %42, %57
         %62:vec3<f32> = mul %59, %60
-        %63:vec3<f32> = call %tint_ApplyTransferFunction, %62, %58
+        %63:vec3<f32> = call %tint_ApplyGammaTransferFunction, %62, %58
         exit_if %63  # if_2
       }
       $B7: {  # false
         exit_if %42  # if_2
       }
     }
-    %64:vec4<f32> = construct %56, %43
-    ret %64
+    %65:vec4<f32> = construct %56, %43
+    ret %65
   }
 }
-%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplySrcTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %67:f32 = access %params_1, 1u
-    %68:f32 = access %params_1, 2u
-    %69:f32 = access %params_1, 3u
-    %70:f32 = access %params_1, 4u
-    %71:f32 = access %params_1, 5u
-    %72:f32 = access %params_1, 6u
-    %73:f32 = access %params_1, 7u
-    %74:vec3<f32> = construct %73
-    %75:vec3<f32> = construct %70
-    %76:vec3<f32> = abs %v
-    %77:vec3<f32> = sign %v
-    %78:vec3<bool> = lt %76, %75
-    %79:vec3<f32> = mul %69, %76
-    %80:vec3<f32> = add %79, %72
-    %81:vec3<f32> = mul %77, %80
-    %82:vec3<f32> = mul %67, %76
-    %83:vec3<f32> = add %82, %68
-    %84:vec3<f32> = pow %83, %74
-    %85:vec3<f32> = add %84, %71
-    %86:vec3<f32> = mul %77, %85
-    %87:vec3<f32> = select %86, %81, %78
-    ret %87
+    %mode:u32 = access %params_1, 0u
+    %69:bool = eq %mode, 0u
+    if %69 [t: $B9, f: $B10] {  # if_3
+      $B9: {  # true
+        %70:vec3<f32> = call %tint_ApplyGammaTransferFunction, %v, %params_1
+        ret %70
+      }
+      $B10: {  # false
+        %71:bool = eq %mode, 1u
+        if %71 [t: $B11, f: $B12] {  # if_4
+          $B11: {  # true
+            %72:vec3<f32> = call %tint_ApplyHLGTransferFunction, %v, %params_1
+            ret %72
+          }
+          $B12: {  # false
+            %74:vec3<f32> = call %tint_ApplyPQTransferFunction, %v, %params_1
+            ret %74
+          }
+        }
+        unreachable
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyGammaTransferFunction = func(%v_1:vec3<f32>, %params_2:tint_TransferFunctionParams):vec3<f32> {  # %v_1: 'v', %params_2: 'params'
+  $B13: {
+    %A:f32 = access %params_2, 1u
+    %B:f32 = access %params_2, 2u
+    %C:f32 = access %params_2, 3u
+    %D:f32 = access %params_2, 4u
+    %E:f32 = access %params_2, 5u
+    %F:f32 = access %params_2, 6u
+    %G:f32 = access %params_2, 7u
+    %85:vec3<f32> = construct %G
+    %86:vec3<f32> = construct %D
+    %87:vec3<f32> = abs %v_1
+    %88:vec3<f32> = sign %v_1
+    %89:vec3<bool> = lt %87, %86
+    %90:vec3<f32> = mul %C, %87
+    %91:vec3<f32> = add %90, %F
+    %92:vec3<f32> = mul %88, %91
+    %93:vec3<f32> = mul %A, %87
+    %94:vec3<f32> = add %93, %B
+    %95:vec3<f32> = pow %94, %85
+    %96:vec3<f32> = add %95, %E
+    %97:vec3<f32> = mul %88, %96
+    %98:vec3<f32> = select %97, %92, %89
+    ret %98
+  }
+}
+%tint_ApplyHLGSingleChannel = func(%v_2:f32, %params_3:tint_TransferFunctionParams):f32 {  # %v_2: 'v', %params_3: 'params'
+  $B14: {
+    %A_1:f32 = access %params_3, 1u  # %A_1: 'A'
+    %B_1:f32 = access %params_3, 2u  # %B_1: 'B'
+    %C_1:f32 = access %params_3, 3u  # %C_1: 'C'
+    %cutoff:f32 = access %params_3, 4u
+    %lower_scale:f32 = access %params_3, 5u
+    %upper_scale:f32 = access %params_3, 6u
+    %108:bool = lte %v_2, %cutoff
+    if %108 [t: $B15, f: $B16] {  # if_5
+      $B15: {  # true
+        %109:f32 = mul %v_2, %v_2
+        %110:f32 = div %109, %lower_scale
+        ret %110
+      }
+      $B16: {  # false
+        %111:f32 = sub %v_2, %C_1
+        %112:f32 = div %111, %A_1
+        %113:f32 = exp %112
+        %114:f32 = add %B_1, %113
+        %115:f32 = div %114, %upper_scale
+        ret %115
+      }
+    }
+    unreachable
+  }
+}
+%tint_ApplyHLGTransferFunction = func(%v_3:vec3<f32>, %params_4:tint_TransferFunctionParams):vec3<f32> {  # %v_3: 'v', %params_4: 'params'
+  $B17: {
+    %118:f32 = swizzle %v_3, x
+    %119:f32 = call %tint_ApplyHLGSingleChannel, %118, %params_4
+    %120:f32 = swizzle %v_3, y
+    %121:f32 = call %tint_ApplyHLGSingleChannel, %120, %params_4
+    %122:f32 = swizzle %v_3, z
+    %123:f32 = call %tint_ApplyHLGSingleChannel, %122, %params_4
+    %124:vec3<f32> = construct %119, %121, %123
+    ret %124
+  }
+}
+%tint_ApplyPQTransferFunction = func(%v_4:vec3<f32>, %params_5:tint_TransferFunctionParams):vec3<f32> {  # %v_4: 'v', %params_5: 'params'
+  $B18: {
+    %m1:f32 = access %params_5, 1u
+    %m2:f32 = access %params_5, 2u
+    %c1:f32 = access %params_5, 3u
+    %c2:f32 = access %params_5, 4u
+    %c3:f32 = access %params_5, 5u
+    %132:vec3<f32> = construct %c1
+    %133:vec3<f32> = construct %c2
+    %134:vec3<f32> = construct %c3
+    %135:vec3<f32> = construct %m1
+    %136:vec3<f32> = construct %m2
+    %137:vec3<f32> = clamp %v_4, vec3<f32>(0.0f), vec3<f32>(1.0f)
+    %138:vec3<f32> = div vec3<f32>(1.0f), %136
+    %139:vec3<f32> = pow %137, %138
+    %140:vec3<f32> = sub %139, %132
+    %141:vec3<f32> = max %140, vec3<f32>(0.0f)
+    %142:vec3<f32> = mul %134, %139
+    %143:vec3<f32> = sub %133, %142
+    %144:vec3<f32> = div %141, %143
+    %145:vec3<f32> = div vec3<f32>(1.0f), %135
+    %146:vec3<f32> = pow %144, %145
+    ret %146
   }
 }
 )";
