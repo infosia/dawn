@@ -185,6 +185,198 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e80e3773_8230af65",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b742e7a7_a155457f",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe4f623c_c1101628",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afa6d8b_0f5b8963",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "854b095a_ea8dc95b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69833f41_a346f97c",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d483bc42_d591d503",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f356a851_9a6f3192",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de9850e2_74dcc7a3",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03afd608_f5d4819b",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3a6b529_e6788408",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "572d77ac_a474b67f",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e780d27a_61c9ac2a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9cf19e3_c18803af",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbaaebe6_9b14e075",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ca19c44_46ced2ad",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cdc7590_c0e197e2",
@@ -198,6 +390,30 @@
       "writtenOn": "2026-03-31T06:41:15Z",
       "side": 1,
       "message": "This `else` block is unreachable. The condition `!isValid` is fully covered by the first `if (mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L))`. You can simplify this logic to a single `if (isValid) { ... } else { ... }`.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82830d9f_830bb63f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cdc7590_c0e197e2",
       "range": {
         "startLine": 54,
         "startChar": 0,
@@ -369,6 +585,174 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6efa0a32_da91e6b0",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd1bbbb_8bed5d5f",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c782cab5_4a85a5b8",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a68b6f2_c0d3d351",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab805dff_e05c3d08",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29387136_7ed10704",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8430d845_84b28f4a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdff80c_1658e34f",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff52f572_632ccc0f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bcc28e0_6671ac40",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da5cf423_3af8eef6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36800625_10394a56",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "890d82d2_d38a251a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c258d3_f1be5351",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6bcae3e_7a25f480",
@@ -438,6 +822,78 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ee72acc_2c70fa3f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b506341_f06f12fb",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00318941_153b7d78",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e9762b_b716c246",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7acb71a_ac34dadb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6bcae3e_7a25f480",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e5fa57d_83d1e004",
@@ -451,6 +907,30 @@
       "writtenOn": "2026-03-31T06:41:15Z",
       "side": 1,
       "message": "Both branches of this `if/else` statement do the same thing. You can remove the conditional and just have one `assertThrows` call.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c15f7336_ae4eebfb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e5fa57d_83d1e004",
       "range": {
         "startLine": 158,
         "startChar": 0,
@@ -635,6 +1115,198 @@
       "writtenOn": "2026-03-31T06:41:15Z",
       "side": 1,
       "message": "It would be helpful to include a bug number in this comment to track the framework issue and know when to re-enable this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54c0d835_f3817d23",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ff3bcce_9696cf23",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ed3baae_246ee016",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "070e1288_6ee39777",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e271ac8_10f3fff6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7430535_008d7d24",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8fde065_6cc88b2d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebe4f36_cbe3deb7",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c8aea9e_c54d623a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44323409_0420e6a1",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f766942_1c8d60f7",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5e5d9d_1e9b0201",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8fafcd6_61ec4a87",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52cda0cf_52b669e1",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0be8a1e_dba893f5",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T09:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f6e1d4_cfc67aa0",
       "range": {
         "startLine": 16,
         "startChar": 0,
