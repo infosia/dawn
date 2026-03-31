@@ -16,6 +16,23 @@
       "message": "Note that the CQ failures are unrelated, and am just waiting for https://dawn-review.git.corp.google.com/c/dawn/+/300615 to land.",
       "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a048c1f7_8d4c825a",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T21:17:17Z",
+      "side": 1,
+      "message": "Despite the `uint64_t`, this math is actually happening in `uint32_t` because that\u0027s the type returned by `ComputeExtraArraySizeForIntelGen12`. I\u0027d suggest something like:\n\n```suggestion\n            static_cast\u003cuint64_t\u003e(revisedDescriptor.DepthOrArraySize) +\n```",
+      "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
