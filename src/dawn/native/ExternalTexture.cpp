@@ -202,14 +202,14 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     // Constants are passed from Chromium and originally sourced from ui/gfx/color_space.cc
     auto ToTransferFunctionParams = [](const float* params) -> TransferFunctionParams {
         return {
-            .g = params[0],
+            .mode = 0,
             .a = params[1],
             .b = params[2],
             .c = params[3],
             .d = params[4],
             .e = params[5],
             .f = params[6],
-            .padding = 0,
+            .g = params[0],  // This is the first param for historical reasons.
         };
     };
     params.srcTransferFunction =

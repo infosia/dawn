@@ -2,14 +2,14 @@
 using namespace metal;
 
 struct tint_TransferFunctionParams {
-  /* 0x0000 */ float G;
+  /* 0x0000 */ uint mode;
   /* 0x0004 */ float A;
   /* 0x0008 */ float B;
   /* 0x000c */ float C;
   /* 0x0010 */ float D;
   /* 0x0014 */ float E;
   /* 0x0018 */ float F;
-  /* 0x001c */ uint padding;
+  /* 0x001c */ float G;
 };
 
 struct tint_ExternalTextureParams {

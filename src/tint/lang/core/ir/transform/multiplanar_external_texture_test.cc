@@ -38,14 +38,14 @@ namespace {
 
 constexpr std::string_view kExternalTextureParams = R"(
 tint_TransferFunctionParams = struct @align(4) {
-  G:f32 @offset(0)
+  mode:u32 @offset(0)
   A:f32 @offset(4)
   B:f32 @offset(8)
   C:f32 @offset(12)
   D:f32 @offset(16)
   E:f32 @offset(20)
   F:f32 @offset(24)
-  padding:u32 @offset(28)
+  G:f32 @offset(28)
 }
 
 tint_ExternalTextureParams = struct @align(16) {
@@ -474,25 +474,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %53:f32 = access %params_1, 0u
-    %54:f32 = access %params_1, 1u
-    %55:f32 = access %params_1, 2u
-    %56:f32 = access %params_1, 3u
-    %57:f32 = access %params_1, 4u
-    %58:f32 = access %params_1, 5u
-    %59:f32 = access %params_1, 6u
-    %60:vec3<f32> = construct %53
-    %61:vec3<f32> = construct %57
+    %53:f32 = access %params_1, 1u
+    %54:f32 = access %params_1, 2u
+    %55:f32 = access %params_1, 3u
+    %56:f32 = access %params_1, 4u
+    %57:f32 = access %params_1, 5u
+    %58:f32 = access %params_1, 6u
+    %59:f32 = access %params_1, 7u
+    %60:vec3<f32> = construct %59
+    %61:vec3<f32> = construct %56
     %62:vec3<f32> = abs %v
     %63:vec3<f32> = sign %v
     %64:vec3<bool> = lt %62, %61
-    %65:vec3<f32> = mul %56, %62
-    %66:vec3<f32> = add %65, %59
+    %65:vec3<f32> = mul %55, %62
+    %66:vec3<f32> = add %65, %58
     %67:vec3<f32> = mul %63, %66
-    %68:vec3<f32> = mul %54, %62
-    %69:vec3<f32> = add %68, %55
+    %68:vec3<f32> = mul %53, %62
+    %69:vec3<f32> = add %68, %54
     %70:vec3<f32> = pow %69, %60
-    %71:vec3<f32> = add %70, %58
+    %71:vec3<f32> = add %70, %57
     %72:vec3<f32> = mul %63, %71
     %73:vec3<f32> = select %72, %67, %64
     ret %73
@@ -589,25 +589,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %40:f32 = access %params_1, 0u
-    %41:f32 = access %params_1, 1u
-    %42:f32 = access %params_1, 2u
-    %43:f32 = access %params_1, 3u
-    %44:f32 = access %params_1, 4u
-    %45:f32 = access %params_1, 5u
-    %46:f32 = access %params_1, 6u
-    %47:vec3<f32> = construct %40
-    %48:vec3<f32> = construct %44
+    %40:f32 = access %params_1, 1u
+    %41:f32 = access %params_1, 2u
+    %42:f32 = access %params_1, 3u
+    %43:f32 = access %params_1, 4u
+    %44:f32 = access %params_1, 5u
+    %45:f32 = access %params_1, 6u
+    %46:f32 = access %params_1, 7u
+    %47:vec3<f32> = construct %46
+    %48:vec3<f32> = construct %43
     %49:vec3<f32> = abs %v
     %50:vec3<f32> = sign %v
     %51:vec3<bool> = lt %49, %48
-    %52:vec3<f32> = mul %43, %49
-    %53:vec3<f32> = add %52, %46
+    %52:vec3<f32> = mul %42, %49
+    %53:vec3<f32> = add %52, %45
     %54:vec3<f32> = mul %50, %53
-    %55:vec3<f32> = mul %41, %49
-    %56:vec3<f32> = add %55, %42
+    %55:vec3<f32> = mul %40, %49
+    %56:vec3<f32> = add %55, %41
     %57:vec3<f32> = pow %56, %47
-    %58:vec3<f32> = add %57, %45
+    %58:vec3<f32> = add %57, %44
     %59:vec3<f32> = mul %50, %58
     %60:vec3<f32> = select %59, %54, %51
     ret %60
@@ -723,25 +723,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %54:f32 = access %params_1, 0u
-    %55:f32 = access %params_1, 1u
-    %56:f32 = access %params_1, 2u
-    %57:f32 = access %params_1, 3u
-    %58:f32 = access %params_1, 4u
-    %59:f32 = access %params_1, 5u
-    %60:f32 = access %params_1, 6u
-    %61:vec3<f32> = construct %54
-    %62:vec3<f32> = construct %58
+    %54:f32 = access %params_1, 1u
+    %55:f32 = access %params_1, 2u
+    %56:f32 = access %params_1, 3u
+    %57:f32 = access %params_1, 4u
+    %58:f32 = access %params_1, 5u
+    %59:f32 = access %params_1, 6u
+    %60:f32 = access %params_1, 7u
+    %61:vec3<f32> = construct %60
+    %62:vec3<f32> = construct %57
     %63:vec3<f32> = abs %v
     %64:vec3<f32> = sign %v
     %65:vec3<bool> = lt %63, %62
-    %66:vec3<f32> = mul %57, %63
-    %67:vec3<f32> = add %66, %60
+    %66:vec3<f32> = mul %56, %63
+    %67:vec3<f32> = add %66, %59
     %68:vec3<f32> = mul %64, %67
-    %69:vec3<f32> = mul %55, %63
-    %70:vec3<f32> = add %69, %56
+    %69:vec3<f32> = mul %54, %63
+    %70:vec3<f32> = add %69, %55
     %71:vec3<f32> = pow %70, %61
-    %72:vec3<f32> = add %71, %59
+    %72:vec3<f32> = add %71, %58
     %73:vec3<f32> = mul %64, %72
     %74:vec3<f32> = select %73, %68, %65
     ret %74
@@ -839,25 +839,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %41:f32 = access %params_1, 0u
-    %42:f32 = access %params_1, 1u
-    %43:f32 = access %params_1, 2u
-    %44:f32 = access %params_1, 3u
-    %45:f32 = access %params_1, 4u
-    %46:f32 = access %params_1, 5u
-    %47:f32 = access %params_1, 6u
-    %48:vec3<f32> = construct %41
-    %49:vec3<f32> = construct %45
+    %41:f32 = access %params_1, 1u
+    %42:f32 = access %params_1, 2u
+    %43:f32 = access %params_1, 3u
+    %44:f32 = access %params_1, 4u
+    %45:f32 = access %params_1, 5u
+    %46:f32 = access %params_1, 6u
+    %47:f32 = access %params_1, 7u
+    %48:vec3<f32> = construct %47
+    %49:vec3<f32> = construct %44
     %50:vec3<f32> = abs %v
     %51:vec3<f32> = sign %v
     %52:vec3<bool> = lt %50, %49
-    %53:vec3<f32> = mul %44, %50
-    %54:vec3<f32> = add %53, %47
+    %53:vec3<f32> = mul %43, %50
+    %54:vec3<f32> = add %53, %46
     %55:vec3<f32> = mul %51, %54
-    %56:vec3<f32> = mul %42, %50
-    %57:vec3<f32> = add %56, %43
+    %56:vec3<f32> = mul %41, %50
+    %57:vec3<f32> = add %56, %42
     %58:vec3<f32> = pow %57, %48
-    %59:vec3<f32> = add %58, %46
+    %59:vec3<f32> = add %58, %45
     %60:vec3<f32> = mul %51, %59
     %61:vec3<f32> = select %60, %55, %52
     ret %61
@@ -972,25 +972,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %53:f32 = access %params_1, 0u
-    %54:f32 = access %params_1, 1u
-    %55:f32 = access %params_1, 2u
-    %56:f32 = access %params_1, 3u
-    %57:f32 = access %params_1, 4u
-    %58:f32 = access %params_1, 5u
-    %59:f32 = access %params_1, 6u
-    %60:vec3<f32> = construct %53
-    %61:vec3<f32> = construct %57
+    %53:f32 = access %params_1, 1u
+    %54:f32 = access %params_1, 2u
+    %55:f32 = access %params_1, 3u
+    %56:f32 = access %params_1, 4u
+    %57:f32 = access %params_1, 5u
+    %58:f32 = access %params_1, 6u
+    %59:f32 = access %params_1, 7u
+    %60:vec3<f32> = construct %59
+    %61:vec3<f32> = construct %56
     %62:vec3<f32> = abs %v
     %63:vec3<f32> = sign %v
     %64:vec3<bool> = lt %62, %61
-    %65:vec3<f32> = mul %56, %62
-    %66:vec3<f32> = add %65, %59
+    %65:vec3<f32> = mul %55, %62
+    %66:vec3<f32> = add %65, %58
     %67:vec3<f32> = mul %63, %66
-    %68:vec3<f32> = mul %54, %62
-    %69:vec3<f32> = add %68, %55
+    %68:vec3<f32> = mul %53, %62
+    %69:vec3<f32> = add %68, %54
     %70:vec3<f32> = pow %69, %60
-    %71:vec3<f32> = add %70, %58
+    %71:vec3<f32> = add %70, %57
     %72:vec3<f32> = mul %63, %71
     %73:vec3<f32> = select %72, %67, %64
     ret %73
@@ -1088,25 +1088,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
-    %41:f32 = access %params_1, 0u
-    %42:f32 = access %params_1, 1u
-    %43:f32 = access %params_1, 2u
-    %44:f32 = access %params_1, 3u
-    %45:f32 = access %params_1, 4u
-    %46:f32 = access %params_1, 5u
-    %47:f32 = access %params_1, 6u
-    %48:vec3<f32> = construct %41
-    %49:vec3<f32> = construct %45
+    %41:f32 = access %params_1, 1u
+    %42:f32 = access %params_1, 2u
+    %43:f32 = access %params_1, 3u
+    %44:f32 = access %params_1, 4u
+    %45:f32 = access %params_1, 5u
+    %46:f32 = access %params_1, 6u
+    %47:f32 = access %params_1, 7u
+    %48:vec3<f32> = construct %47
+    %49:vec3<f32> = construct %44
     %50:vec3<f32> = abs %v
     %51:vec3<f32> = sign %v
     %52:vec3<bool> = lt %50, %49
-    %53:vec3<f32> = mul %44, %50
-    %54:vec3<f32> = add %53, %47
+    %53:vec3<f32> = mul %43, %50
+    %54:vec3<f32> = add %53, %46
     %55:vec3<f32> = mul %51, %54
-    %56:vec3<f32> = mul %42, %50
-    %57:vec3<f32> = add %56, %43
+    %56:vec3<f32> = mul %41, %50
+    %57:vec3<f32> = add %56, %42
     %58:vec3<f32> = pow %57, %48
-    %59:vec3<f32> = add %58, %46
+    %59:vec3<f32> = add %58, %45
     %60:vec3<f32> = mul %51, %59
     %61:vec3<f32> = select %60, %55, %52
     ret %61
@@ -1248,25 +1248,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
-    %60:f32 = access %params_1, 0u
-    %61:f32 = access %params_1, 1u
-    %62:f32 = access %params_1, 2u
-    %63:f32 = access %params_1, 3u
-    %64:f32 = access %params_1, 4u
-    %65:f32 = access %params_1, 5u
-    %66:f32 = access %params_1, 6u
-    %67:vec3<f32> = construct %60
-    %68:vec3<f32> = construct %64
+    %60:f32 = access %params_1, 1u
+    %61:f32 = access %params_1, 2u
+    %62:f32 = access %params_1, 3u
+    %63:f32 = access %params_1, 4u
+    %64:f32 = access %params_1, 5u
+    %65:f32 = access %params_1, 6u
+    %66:f32 = access %params_1, 7u
+    %67:vec3<f32> = construct %66
+    %68:vec3<f32> = construct %63
     %69:vec3<f32> = abs %v
     %70:vec3<f32> = sign %v
     %71:vec3<bool> = lt %69, %68
-    %72:vec3<f32> = mul %63, %69
-    %73:vec3<f32> = add %72, %66
+    %72:vec3<f32> = mul %62, %69
+    %73:vec3<f32> = add %72, %65
     %74:vec3<f32> = mul %70, %73
-    %75:vec3<f32> = mul %61, %69
-    %76:vec3<f32> = add %75, %62
+    %75:vec3<f32> = mul %60, %69
+    %76:vec3<f32> = add %75, %61
     %77:vec3<f32> = pow %76, %67
-    %78:vec3<f32> = add %77, %65
+    %78:vec3<f32> = add %77, %64
     %79:vec3<f32> = mul %70, %78
     %80:vec3<f32> = select %79, %74, %71
     ret %80
@@ -1391,25 +1391,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B7: {
-    %45:f32 = access %params_1, 0u
-    %46:f32 = access %params_1, 1u
-    %47:f32 = access %params_1, 2u
-    %48:f32 = access %params_1, 3u
-    %49:f32 = access %params_1, 4u
-    %50:f32 = access %params_1, 5u
-    %51:f32 = access %params_1, 6u
-    %52:vec3<f32> = construct %45
-    %53:vec3<f32> = construct %49
+    %45:f32 = access %params_1, 1u
+    %46:f32 = access %params_1, 2u
+    %47:f32 = access %params_1, 3u
+    %48:f32 = access %params_1, 4u
+    %49:f32 = access %params_1, 5u
+    %50:f32 = access %params_1, 6u
+    %51:f32 = access %params_1, 7u
+    %52:vec3<f32> = construct %51
+    %53:vec3<f32> = construct %48
     %54:vec3<f32> = abs %v
     %55:vec3<f32> = sign %v
     %56:vec3<bool> = lt %54, %53
-    %57:vec3<f32> = mul %48, %54
-    %58:vec3<f32> = add %57, %51
+    %57:vec3<f32> = mul %47, %54
+    %58:vec3<f32> = add %57, %50
     %59:vec3<f32> = mul %55, %58
-    %60:vec3<f32> = mul %46, %54
-    %61:vec3<f32> = add %60, %47
+    %60:vec3<f32> = mul %45, %54
+    %61:vec3<f32> = add %60, %46
     %62:vec3<f32> = pow %61, %52
-    %63:vec3<f32> = add %62, %50
+    %63:vec3<f32> = add %62, %49
     %64:vec3<f32> = mul %55, %63
     %65:vec3<f32> = select %64, %59, %56
     ret %65
@@ -1587,25 +1587,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
-    %75:f32 = access %params_1, 0u
-    %76:f32 = access %params_1, 1u
-    %77:f32 = access %params_1, 2u
-    %78:f32 = access %params_1, 3u
-    %79:f32 = access %params_1, 4u
-    %80:f32 = access %params_1, 5u
-    %81:f32 = access %params_1, 6u
-    %82:vec3<f32> = construct %75
-    %83:vec3<f32> = construct %79
+    %75:f32 = access %params_1, 1u
+    %76:f32 = access %params_1, 2u
+    %77:f32 = access %params_1, 3u
+    %78:f32 = access %params_1, 4u
+    %79:f32 = access %params_1, 5u
+    %80:f32 = access %params_1, 6u
+    %81:f32 = access %params_1, 7u
+    %82:vec3<f32> = construct %81
+    %83:vec3<f32> = construct %78
     %84:vec3<f32> = abs %v
     %85:vec3<f32> = sign %v
     %86:vec3<bool> = lt %84, %83
-    %87:vec3<f32> = mul %78, %84
-    %88:vec3<f32> = add %87, %81
+    %87:vec3<f32> = mul %77, %84
+    %88:vec3<f32> = add %87, %80
     %89:vec3<f32> = mul %85, %88
-    %90:vec3<f32> = mul %76, %84
-    %91:vec3<f32> = add %90, %77
+    %90:vec3<f32> = mul %75, %84
+    %91:vec3<f32> = add %90, %76
     %92:vec3<f32> = pow %91, %82
-    %93:vec3<f32> = add %92, %80
+    %93:vec3<f32> = add %92, %79
     %94:vec3<f32> = mul %85, %93
     %95:vec3<f32> = select %94, %89, %86
     ret %95
@@ -1751,25 +1751,25 @@ $B1: {  # root
 }
 %tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
-    %67:f32 = access %params_1, 0u
-    %68:f32 = access %params_1, 1u
-    %69:f32 = access %params_1, 2u
-    %70:f32 = access %params_1, 3u
-    %71:f32 = access %params_1, 4u
-    %72:f32 = access %params_1, 5u
-    %73:f32 = access %params_1, 6u
-    %74:vec3<f32> = construct %67
-    %75:vec3<f32> = construct %71
+    %67:f32 = access %params_1, 1u
+    %68:f32 = access %params_1, 2u
+    %69:f32 = access %params_1, 3u
+    %70:f32 = access %params_1, 4u
+    %71:f32 = access %params_1, 5u
+    %72:f32 = access %params_1, 6u
+    %73:f32 = access %params_1, 7u
+    %74:vec3<f32> = construct %73
+    %75:vec3<f32> = construct %70
     %76:vec3<f32> = abs %v
     %77:vec3<f32> = sign %v
     %78:vec3<bool> = lt %76, %75
-    %79:vec3<f32> = mul %70, %76
-    %80:vec3<f32> = add %79, %73
+    %79:vec3<f32> = mul %69, %76
+    %80:vec3<f32> = add %79, %72
     %81:vec3<f32> = mul %77, %80
-    %82:vec3<f32> = mul %68, %76
-    %83:vec3<f32> = add %82, %69
+    %82:vec3<f32> = mul %67, %76
+    %83:vec3<f32> = add %82, %68
     %84:vec3<f32> = pow %83, %74
-    %85:vec3<f32> = add %84, %72
+    %85:vec3<f32> = add %84, %71
     %86:vec3<f32> = mul %77, %85
     %87:vec3<f32> = select %86, %81, %78
     ret %87
