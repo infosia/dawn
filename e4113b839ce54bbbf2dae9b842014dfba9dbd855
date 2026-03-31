@@ -22,6 +22,30 @@
       },
       "revId": "e4113b839ce54bbbf2dae9b842014dfba9dbd855",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "836ae8b4_25a16abc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T15:50:59Z",
+      "side": 1,
+      "message": "This seems fine to me, also means you don\u0027t have to jump through hoops in the spir-v backend to handle ordering of replacements.",
+      "parentUuid": "53a66770_c4111bb8",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "e4113b839ce54bbbf2dae9b842014dfba9dbd855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
