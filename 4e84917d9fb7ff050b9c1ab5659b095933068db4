@@ -106,6 +106,24 @@
       "parentUuid": "803e9ca8_9df28046",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca8c3b68_e7e196b6",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-31T16:25:41Z",
+      "side": 1,
+      "message": "I think I did the dependent CL stuff correctly?\nSorry if I didn\u0027t.",
+      "parentUuid": "757ef1c4_5ecf901e",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
