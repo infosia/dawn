@@ -304,7 +304,7 @@ function(AddSubdirectoryDXC)
     endif()
 
     message(STATUS "\nAdding DXC to build:\n")
-    add_subdirectory(dxc
+    add_subdirectory(directx-shader-compiler/src
         # Disable all targets by default, and enable only the dxc and dxcompiler targets (below)
         EXCLUDE_FROM_ALL
     )
@@ -321,7 +321,7 @@ function(AddSubdirectoryDXC)
         # removes NDEBUG from CMAKE_CXX_FLAGS_*, but we can live with the warnings.
         # TODO(crbug.com/358169277): Once we move the 'dxc' directory one level deeper,
         # use add_definitions instead of getting all targets and setting properties on them.
-        get_all_targets_recursive(ALL_TARGETS ${CMAKE_CURRENT_SOURCE_DIR}/dxc)
+        get_all_targets_recursive(ALL_TARGETS ${CMAKE_CURRENT_SOURCE_DIR}/directx-shader-compiler/src)
         foreach(t IN LISTS ALL_TARGETS)
             set_property(TARGET ${t} APPEND PROPERTY COMPILE_OPTIONS "-UNDEBUG")
             if (NOT MSVC)
