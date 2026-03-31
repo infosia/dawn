@@ -52,6 +52,24 @@
       "parentUuid": "2f6d0944_2543a384",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c103f724_e3c4154f",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T06:49:40Z",
+      "side": 1,
+      "message": "That\u0027s surprising, in other tests we DawnTest::SetUp() first and check UsesWire afterward (either immediately afterward, or later in the test itself). IDK if you know why it\u0027s stalling, but could it be something to do with this feature?\n\nShould be fine either way but it would be nice to understand why...",
+      "parentUuid": "b6f4b07f_b776e41c",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
