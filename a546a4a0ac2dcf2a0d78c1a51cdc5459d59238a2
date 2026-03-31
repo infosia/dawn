@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e64afcd_41885d47",
+        "filename": "src/dawn/common/RefCountedWithExternalCount.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T20:53:16Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"refernce\" is a possible misspelling of \"reference\".\n\nTo bypass Spellchecker, ad...\n\n\"refernce\" is a possible misspelling of \"reference\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 77,
+        "startChar": 78,
+        "endLine": 77,
+        "endChar": 86
+      },
+      "revId": "a546a4a0ac2dcf2a0d78c1a51cdc5459d59238a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

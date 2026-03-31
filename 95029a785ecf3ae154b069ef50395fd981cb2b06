@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82140771_e4cd6615",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T20:53:16Z",
+      "side": 1,
+      "message": "On rereview I realized the reason it was fine was we only expose the payload for the internal refcount and not the external one. (But I still like it better with GetValueForTesting, much easier to tell it\u0027s doing what it says.)",
+      "parentUuid": "37f94ae9_d6243c59",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "95029a785ecf3ae154b069ef50395fd981cb2b06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c3ea265_7c3faa91",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "That\u0027s what we had before, and while that works, it means that logic to clear out device stuff (since `mDevice` is almost always still valid in here in that case) needs to be duplicated here and in `WillDropLastExternalRef`. In my opinion it makes more sense to explicitly check for the last reference being gone here instead because it is a special case for how we call the callback for the spec, but in terms of code, everything else should be handled the same here.",
       "parentUuid": "2c3ea265_7c3faa91",
+      "range": {
+        "startLine": 209,
+        "startChar": 9,
+        "endLine": 209,
+        "endChar": 46
+      },
+      "revId": "95029a785ecf3ae154b069ef50395fd981cb2b06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8e284e6_8478946b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T20:53:16Z",
+      "side": 1,
+      "message": "Ah of course. I didn\u0027t realize that caused the duplication. I now understand the last point in the commit message better and this makes sense.",
+      "parentUuid": "4181ea60_760326b9",
       "range": {
         "startLine": 209,
         "startChar": 9,
