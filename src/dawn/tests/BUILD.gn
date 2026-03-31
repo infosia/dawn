@@ -212,8 +212,8 @@ template("dawn_test") {
           deps = []
         }
         deps += [
-          "$dawn_root/third_party/gn/dxc:copy_dxil_dll",
-          "$dawn_root/third_party/gn/dxc:dxcompiler",
+          "${dawn_dxc_gn_dir}:copy_dxil_dll",
+          "${dawn_dxc_gn_dir}:dxcompiler",
         ]
       } else {
         if (!defined(data_deps)) {
