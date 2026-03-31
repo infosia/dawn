@@ -38,7 +38,6 @@ import("build/cmake_configure_file.gni")
 import("build/generate_version_include.gni")
 import("build/message_compiler.gni")
 
-dawn_dxc_gn_dir = "$dawn_dxc_dir/../gn"
 llvm_target_triple = "dxil-ms-dx"  # Force target triple
 llvm_version_major = 3
 llvm_version_minor = 7
