@@ -1606,6 +1606,22 @@ void DawnTestBase::HandleDeviceCreationFailure() {
         }
     }
 
+    // Skip the test if required features are not supported by the adapter.
+    std::vector<wgpu::FeatureName> requiredFeatures = GetRequiredFeatures();
+    if (!requiredFeatures.empty() && !SupportsFeatures(requiredFeatures)) {
+        std::ostringstream ss;
+        ss << "Required features not supported by the adapter: ";
+        auto supportedSet = GetSupportedFeatures();
+        const char* sep = "";
+        for (wgpu::FeatureName f : requiredFeatures) {
+            if (!supportedSet.contains(f)) {
+                ss << sep << f;
+                sep = ", ";
+            }
+        }
+        GTEST_SKIP_(ss.str().c_str());
+    }
+
     // Otherwise fail the test.
     GTEST_FATAL_FAILURE_("Device creation failed.");
 }
