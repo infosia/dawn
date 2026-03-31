@@ -1399,11 +1399,6 @@ const dawn::utils::ComboLimits& DawnTestBase::GetSupportedLimits() {
 }
 
 bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& features) {
-    DAWN_ASSERT(mBackendAdapter);
-    wgpu::SupportedFeatures supportedFeatures;
-    native::GetProcs().adapterGetFeatures(
-        mBackendAdapter.Get(), reinterpret_cast<WGPUSupportedFeatures*>(&supportedFeatures));
-
     auto supportedSet = GetSupportedFeatures();
     for (wgpu::FeatureName f : features) {
         if (!supportedSet.contains(f)) {
@@ -1414,10 +1409,11 @@ bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& featur
 }
 
 std::set<wgpu::FeatureName> DawnTestBase::GetSupportedFeatures() {
-    DAWN_ASSERT(mBackendAdapter);
+    DAWN_ASSERT(adapter.Get() != nullptr);
+
     wgpu::SupportedFeatures supportedFeatures;
-    native::GetProcs().adapterGetFeatures(
-        mBackendAdapter.Get(), reinterpret_cast<WGPUSupportedFeatures*>(&supportedFeatures));
+    adapter.GetFeatures(&supportedFeatures);
+
     return std::set<wgpu::FeatureName>(supportedFeatures.features,
                                        supportedFeatures.features + supportedFeatures.featureCount);
 }

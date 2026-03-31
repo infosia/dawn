@@ -63,6 +63,12 @@ using TierArchInfoTestBase = DawnTestWithParams<>;
 
 class TierArchInfoTest_TieredMaxLimits : public TierArchInfoTestBase {
   protected:
+    void SetUp() override {
+        TierArchInfoTestBase::SetUp();
+
+        DAWN_TEST_UNSUPPORTED_IF(UsesWire());
+    }
+
     bool GetRequireUseTieredLimits() override { return true; }
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits& required) override {
