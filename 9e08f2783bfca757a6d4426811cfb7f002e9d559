@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36746209_0c1d2a06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T16:40:20Z",
+      "side": 1,
+      "message": "LGTM.",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33cf836f_84c7ce1c",
@@ -53,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "561e4d1b_e556fe85",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T16:40:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ac86feaa_b7ff44bc",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f34cf17e_a4dc1eda",
@@ -84,6 +119,24 @@
       "side": 1,
       "message": "It\u0027s removed in the next CL and replaced with `mode`, any concerns with keeping it like this temporarily in the stack?",
       "parentUuid": "f34cf17e_a4dc1eda",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7c9dc29_24a623d1",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T16:40:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1b8d2235_fffc6f1e",
       "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
