@@ -426,6 +426,8 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     Ref<TintProgram> GetNullableTintProgramForTesting() const;
     int GetTintProgramRecreateCountForTesting() const;
 
+    const std::string& GetWGSL() const { return mWgsl; }
+
   protected:
     void DestroyImpl(DestroyReason reason) override;
 

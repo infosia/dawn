@@ -373,6 +373,13 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_FEATURES_EXT);
     }
 
+    if (info.extensions[DeviceExt::FragmentShadingRate]) {
+        featuresChain.Add(&info.fragmentShadingRateFeatures,
+                          VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR);
+        propertiesChain.Add(&info.fragmentShadingRateProperties,
+                            VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR);
+    }
+
     // Use vkGetPhysicalDevice{Features,Properties}2 if required to gather information about
     // the extensions. DeviceExt::GetPhysicalDeviceProperties2 is guaranteed to be available
     // because these extensions (transitively) depend on it in `EnsureDependencies`

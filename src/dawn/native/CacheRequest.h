@@ -128,17 +128,17 @@ class CacheRequestImpl {
         platform::metrics::DawnHistogramTimer cacheTimer(
             cacheMetricName.empty() ? nullptr : device->GetPlatform());
 
-        auto loadResult = device->GetBlobCache()->Load(key);
+        // auto loadResult = device->GetBlobCache()->Load(key);
         Blob blob;
 
-        if (loadResult.IsError()) {
-            // Cache hit but hash validation failed.
-            detail::LogCacheError(loadResult.AcquireError());
-            DAWN_HISTOGRAM_BOOLEAN(device->GetPlatform(), "BlobCacheHashValidationFailed", true);
-            // Continue as if it was a cache miss.
-        } else {
-            blob = loadResult.AcquireSuccess();
-        }
+        // if (loadResult.IsError()) {
+        //     // Cache hit but hash validation failed.
+        //     detail::LogCacheError(loadResult.AcquireError());
+        //     DAWN_HISTOGRAM_BOOLEAN(device->GetPlatform(), "BlobCacheHashValidationFailed", true);
+        //     // Continue as if it was a cache miss.
+        // } else {
+        //     blob = loadResult.AcquireSuccess();
+        // }
 
         if (!blob.Empty()) {
             // Cache hit. Handle the cached blob.

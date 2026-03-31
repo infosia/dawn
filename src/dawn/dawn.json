@@ -2442,7 +2442,8 @@
             {"value": 61, "name": "unorm16 formats for external texture", "tags": ["dawn"]},
             {"value": 62, "name": "opaque y cb cr android for external texture", "tags": ["dawn"]},
             {"value": 63, "name": "unorm16 filterable", "tags": ["dawn"]},
-            {"value": 64, "name": "render pass render area", "tags": ["dawn"]}
+            {"value": 64, "name": "render pass render area", "tags": ["dawn"]},
+            {"value": 65, "name": "dawn render pipeline fragment shading rate", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -3585,6 +3586,15 @@
             {"name": "fragment", "type": "fragment state", "annotation": "const*", "optional": true}
         ]
     },
+    "dawn render pipeline fragment shading rate": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["render pipeline descriptor"],
+        "tags": ["dawn"],
+        "members": [
+            {"name": "fragment size", "type": "extent 2D"}
+        ]
+    },
     "resource table descriptor": {
         "category": "structure",
         "tags": ["dawn"],
@@ -4041,7 +4051,8 @@
             {"value": 78, "name": "shared texture memory D3D12 resource descriptor", "tags": ["dawn", "native"]},
             {"value": 79, "name": "request adapter options angle virtualization group", "tags": ["dawn", "native"]},
             {"value": 80, "name": "pipeline layout resource table", "tags": ["dawn"]},
-            {"value": 81, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]}
+            {"value": 81, "name": "adapter properties explicit compute subgroup size configs", "tags": ["dawn"]},
+            {"value": 82, "name": "dawn render pipeline fragment shading rate", "tags": ["dawn"]}
         ]
     },
     "texture": {

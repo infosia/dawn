@@ -687,6 +687,21 @@ MaybeError RenderPipeline::InitializeImpl() {
         }
     }
 
+    VkPipelineFragmentShadingRateStateCreateInfoKHR fragmentShadingRateCreateInfo;
+    if (HasFragmentShadingRate()) {
+        DAWN_ASSERT(device->HasFeature(Feature::DawnRenderPipelineFragmentShadingRate));
+
+        createInfoChain.Add(&fragmentShadingRateCreateInfo,
+                            VK_STRUCTURE_TYPE_PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR);
+        const auto& shadingRate = GetFragmentShadingRate();
+        fragmentShadingRateCreateInfo.fragmentSize = {shadingRate.size.width,
+                                                      shadingRate.size.height};
+        fragmentShadingRateCreateInfo.combinerOps[0] =
+            VK_FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_KHR;
+        fragmentShadingRateCreateInfo.combinerOps[1] =
+            VK_FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_KHR;
+    }
+
     if (buildCacheKey) {
         // Record cache key information now since createInfo is not stored.
         StreamIn(&mCacheKey, createInfo, layout->GetCacheKey());

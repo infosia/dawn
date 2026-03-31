@@ -3579,5 +3579,39 @@ TEST_F(RG11B10UfloatRenderablePipelineTest, MultisampleSupportWithFeatureEnabled
     device.CreateRenderPipeline(&descriptor);
 }
 
+class FragmentShadingRateValidationTest : public RenderPipelineValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::DawnRenderPipelineFragmentShadingRate};
+    }
+};
+
+// Test that DawnRenderPipelineFragmentShadingRate extension requires the feature to be enabled.
+TEST_F(RenderPipelineValidationTest, FragmentShadingRateWithoutFeature) {
+    wgpu::DawnRenderPipelineFragmentShadingRate shadingRate;
+    shadingRate.fragmentSize = {2, 2};
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.nextInChain = &shadingRate;
+
+    ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor),
+                        testing::HasSubstr("must be enabled"));
+}
+
+// Test that DawnRenderPipelineFragmentShadingRate extension is allowed with the feature.
+TEST_F(FragmentShadingRateValidationTest, FragmentShadingRateWithFeature) {
+    wgpu::DawnRenderPipelineFragmentShadingRate shadingRate;
+    shadingRate.fragmentSize = {2, 2};
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.nextInChain = &shadingRate;
+
+    device.CreateRenderPipeline(&descriptor);
+}
+
 }  // anonymous namespace
 }  // namespace dawn

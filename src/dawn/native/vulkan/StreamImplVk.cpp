@@ -327,6 +327,14 @@ void stream::Stream<VkPipelineRobustnessCreateInfo>::Write(
     stream::Sink* sink,
     const VkPipelineRobustnessCreateInfo& t) {
     StreamIn(sink, t.vertexInputs, t.images, t.storageBuffers, t.uniformBuffers);
+    SerializePnext<VkPipelineFragmentShadingRateStateCreateInfoKHR>(sink, &t);
+}
+
+template <>
+void stream::Stream<VkPipelineFragmentShadingRateStateCreateInfoKHR>::Write(
+    stream::Sink* sink,
+    const VkPipelineFragmentShadingRateStateCreateInfoKHR& t) {
+    StreamIn(sink, t.fragmentSize, t.combinerOps);
     SerializePnext(sink, &t);
 }
 
@@ -362,7 +370,8 @@ void stream::Stream<VkGraphicsPipelineCreateInfo>::Write(stream::Sink* sink,
              t.pInputAssemblyState, t.pTessellationState, t.pViewportState, t.pRasterizationState,
              t.pMultisampleState, t.pDepthStencilState, t.pColorBlendState, t.pDynamicState,
              t.subpass);
-    SerializePnext<VkPipelineRobustnessCreateInfo, VkPipelineRenderingCreateInfoKHR>(sink, &t);
+    SerializePnext<VkPipelineRobustnessCreateInfo, VkPipelineRenderingCreateInfoKHR,
+                   VkPipelineFragmentShadingRateStateCreateInfoKHR>(sink, &t);
 }
 
 template <>

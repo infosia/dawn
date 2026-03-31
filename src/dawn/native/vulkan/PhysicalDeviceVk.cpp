@@ -359,6 +359,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::MSAARenderToSingleSampled);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::FragmentShadingRate) &&
+        mDeviceInfo.fragmentShadingRateFeatures.pipelineFragmentShadingRate == VK_TRUE) {
+        EnableFeature(Feature::DawnRenderPipelineFragmentShadingRate);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
         EnableFeature(Feature::YCbCrVulkanSamplers);

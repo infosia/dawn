@@ -919,6 +919,18 @@ MaybeError ValidateRenderPipelineDescriptor(DeviceBase* device,
     DAWN_INVALID_IF(!hasColorAttachments && !hasDepthStencilAttachment && !hasStorageAttachments,
                     "No attachment was specified.");
 
+    if (auto* shadingRate = unpacked.Get<DawnRenderPipelineFragmentShadingRate>()) {
+        DAWN_INVALID_IF(
+            !device->HasFeature(Feature::DawnRenderPipelineFragmentShadingRate),
+            "The %s feature must be enabled to use DawnRenderPipelineFragmentShadingRate.",
+            GetFeatureInfo(ToAPI(Feature::DawnRenderPipelineFragmentShadingRate))->name);
+
+        DAWN_INVALID_IF(
+            shadingRate->fragmentSize.width == 0 || shadingRate->fragmentSize.height == 0,
+            "Fragment shading rate size (%u, %u) must be greater than 0.",
+            shadingRate->fragmentSize.width, shadingRate->fragmentSize.height);
+    }
+
     return {};
 }
 
@@ -1077,6 +1089,11 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
     if (HasStage(SingleShaderStage::Vertex)) {
         mUsesVertexIndex = GetStage(SingleShaderStage::Vertex).metadata->usesVertexIndex;
         mUsesInstanceIndex = GetStage(SingleShaderStage::Vertex).metadata->usesInstanceIndex;
+    }
+
+    if (auto* fragmentShadingRateDesc = descriptor.Get<DawnRenderPipelineFragmentShadingRate>()) {
+        mHasFragmentShadingRate = true;
+        mFragmentShadingRate.size = fragmentShadingRateDesc->fragmentSize;
     }
 
     SetContentHash(ComputeContentHash());
@@ -1318,6 +1335,16 @@ bool RenderPipelineBase::UsesFramebufferFetch() const {
     return mUsesFramebufferFetch;
 }
 
+bool RenderPipelineBase::HasFragmentShadingRate() const {
+    DAWN_ASSERT(!IsError());
+    return mHasFragmentShadingRate;
+}
+
+const RenderPipelineBase::FragmentShadingRate& RenderPipelineBase::GetFragmentShadingRate() const {
+    DAWN_ASSERT(!IsError());
+    return mFragmentShadingRate;
+}
+
 size_t RenderPipelineBase::ComputeContentHash() {
     ObjectContentHasher recorder;
 
@@ -1371,6 +1398,11 @@ size_t RenderPipelineBase::ComputeContentHash() {
     // Record multisample state
     // Sample count hashed as part of the attachment state
     recorder.Record(mMultisample.mask, mMultisample.alphaToCoverageEnabled);
+
+    recorder.Record(mHasFragmentShadingRate);
+    if (mHasFragmentShadingRate) {
+        recorder.Record(mFragmentShadingRate.size.width, mFragmentShadingRate.size.height);
+    }
 
     return recorder.GetContentHash();
 }
@@ -1494,6 +1526,16 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
         // Sample count already checked as part of the attachment state.
         if (stateA.mask != stateB.mask ||
             stateA.alphaToCoverageEnabled != stateB.alphaToCoverageEnabled) {
+            return false;
+        }
+    }
+
+    if (a->mHasFragmentShadingRate != b->mHasFragmentShadingRate) {
+        return false;
+    }
+    if (a->mHasFragmentShadingRate) {
+        if (a->mFragmentShadingRate.size.width != b->mFragmentShadingRate.size.width ||
+            a->mFragmentShadingRate.size.height != b->mFragmentShadingRate.size.height) {
             return false;
         }
     }

@@ -145,6 +145,12 @@ class RenderPipelineBase : public PipelineBase,
     bool UsesInstanceIndex() const;
     bool UsesFramebufferFetch() const;
 
+    struct FragmentShadingRate {
+        Extent2D size;
+    };
+    bool HasFragmentShadingRate() const;
+    const FragmentShadingRate& GetFragmentShadingRate() const;
+
     const AttachmentState* GetAttachmentState() const;
 
     // Functions necessary for the unordered_set<RenderPipelineBase*>-based cache.
@@ -193,6 +199,9 @@ class RenderPipelineBase : public PipelineBase,
     bool mUsesVertexIndex = false;
     bool mUsesInstanceIndex = false;
     bool mUsesFramebufferFetch = false;
+
+    bool mHasFragmentShadingRate = false;
+    FragmentShadingRate mFragmentShadingRate;
 };
 
 }  // namespace dawn::native

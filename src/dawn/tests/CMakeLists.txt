@@ -95,6 +95,7 @@ set(end2end_sources
     "end2end/ExternalTextureTests.cpp"
     "end2end/FirstIndexOffsetTests.cpp"
     "end2end/FragDepthTests.cpp"
+    "end2end/FragmentShadingRateTests.cpp"
     "end2end/FramebufferFetchTests.cpp"
     "end2end/GpuMemorySynchronizationTests.cpp"
     "end2end/HistogramTests.cpp"

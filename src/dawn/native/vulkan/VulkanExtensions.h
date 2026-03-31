@@ -112,6 +112,7 @@ enum class DeviceExt {
     DisplayTiming,
     CooperativeMatrix,
     MultisampledRenderToSingleSampled,
+    FragmentShadingRate,
 
     // External* extensions
     ExternalMemoryAndroidHardwareBuffer,

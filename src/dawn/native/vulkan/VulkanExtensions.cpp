@@ -153,6 +153,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::DisplayTiming, "VK_GOOGLE_display_timing"},
     {DeviceExt::CooperativeMatrix, "VK_KHR_cooperative_matrix"},
     {DeviceExt::MultisampledRenderToSingleSampled, "VK_EXT_multisampled_render_to_single_sampled"},
+    {DeviceExt::FragmentShadingRate, "VK_KHR_fragment_shading_rate"},
 
     {DeviceExt::ExternalMemoryAndroidHardwareBuffer,
      "VK_ANDROID_external_memory_android_hardware_buffer"},
@@ -274,6 +275,10 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
 
             case DeviceExt::Maintenance5:
                 hasDependencies = HasDep(DeviceExt::DynamicRendering);
+                break;
+
+            case DeviceExt::FragmentShadingRate:
+                hasDependencies = HasDep(DeviceExt::CreateRenderPass2);
                 break;
 
             case DeviceExt::EnumCount:
