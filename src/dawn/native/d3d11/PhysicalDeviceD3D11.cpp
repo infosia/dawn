@@ -337,6 +337,16 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 
     auto deviceId = GetDeviceId();
     auto vendorId = GetVendorId();
+
+    // Use D3D11's DiscardView for discarding render pass' attachments having StoreOp::Discard.
+    if (gpu_info::IsNvidia(vendorId) && deviceId == 0x1CB3) {
+        // TODO(crbug.com/485540062): Quadro P400 (PCI ID 0x1CB3) has performance regressions if
+        // DiscardView is used.
+        deviceToggles->Default(Toggle::D3D11UseDiscardView, false);
+    } else {
+        deviceToggles->Default(Toggle::D3D11UseDiscardView, true);
+    }
+
     // D3D11 ClearRenderTargetView() could be buggy with some old driver or GPUs. Intel Gen12+ GPUs
     // don't have the problem.
     // https://crbug.com/329702368
