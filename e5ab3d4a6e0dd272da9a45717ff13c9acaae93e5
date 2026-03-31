@@ -1,0 +1,1660 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8afa6d8b_0f5b8963",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The conditional logic here is unnecessarily complex. The first `if` condition is the logical inverse of `isValid`. This entire block can be simplified to a more readable `if (isValid) { ... } else { ... }` structure.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03afd608_f5d4819b",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The logic here can be simplified. The first `if` condition (`mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L)`) is the inverse of `isValid`. This allows you to refactor this into a single `if (isValid) { ... } else { ... }` block.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9cf19e3_c18803af",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The conditional logic here is unnecessarily complex. The first `if` condition is the logical inverse of `isValid`. This entire block can be simplified to a more readable `if (isValid) { ... } else { ... }` structure.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ca19c44_46ced2ad",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if-else if-else` structure can be simplified. The first condition `mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L)` is the negation of `isValid`. The whole block can be simplified to a single `if (isValid) { ... } else { ... }`.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "572d77ac_a474b67f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This logic can be simplified. The first `if` condition is the negation of `isValid`, so this can be refactored into a single `if (isValid) { ... } else { ... }` block.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f356a851_9a6f3192",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This conditional logic can be simplified. The first `if` condition is the logical inverse of `isValid`. This can be refactored into a single `if (isValid) { ... } else { ... }` block to improve readability.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b742e7a7_a155457f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The logic in this loop can be simplified. The condition `mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L)` is the inverse of one of the conditions for `isValid`. You can use a single `if (isValid) { ... } else { ... }` block.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69833f41_a346f97c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This conditional logic seems overly complex and can be simplified. The condition `mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L)` is the negation of `isValid` when `mappedAtCreation` is true. The whole block can be simplified to:\n\n```kotlin\nif (isValid) {\n    device.createBuffer(GPUBufferDescriptor(size \u003d size, usage \u003d usage, mappedAtCreation \u003d mappedAtCreation, label \u003d \"cts\")).destroy()\n} else {\n    assertThrows(Exception::class.java) {\n        device.createBuffer(GPUBufferDescriptor(size \u003d size, usage \u003d usage, mappedAtCreation \u003d mappedAtCreation, label \u003d \"cts\"))\n    }\n}\n```",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cdc7590_c0e197e2",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `else` block is unreachable. The condition `!isValid` is fully covered by the first `if (mappedAtCreation \u0026\u0026 (size % 4L !\u003d 0L))`. You can simplify this logic to a single `if (isValid) { ... } else { ... }`.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bcc28e0_6671ac40",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if/else` statement is redundant as both branches execute the exact same `assertThrows` call. The conditional can be removed entirely.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29387136_7ed10704",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The logic inside the `else` block here seems redundant. Both branches of the `if (isIllegalMask)` statement call `assertThrows`. This can likely be simplified.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64c258d3_f1be5351",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The `if (isIllegalMask)` and the `else` block have identical code. The `isIllegalMask` variable is calculated but its value doesn\u0027t change the outcome. This can be simplified by removing the `if/else` and just keeping one of the `assertThrows` blocks.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fd1bbbb_8bed5d5f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if/else` block is redundant as both branches execute the exact same `assertThrows` call. The conditional check for `isIllegalMask` can be removed.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fdff80c_1658e34f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Both branches of this `if (isIllegalMask)` condition execute the exact same code. The conditional check is therefore redundant and can be removed, simplifying the logic to a single `assertThrows` call.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a68b6f2_c0d3d351",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if/else` statement is redundant as both branches execute the exact same code. The conditional check can be removed.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36800625_10394a56",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Both branches of this `if (isIllegalMask)` condition execute the exact same code. The conditional check is therefore redundant and can be removed, simplifying the logic to a single `assertThrows` call.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6bcae3e_7a25f480",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if/else` has identical logic in both branches. The `else` branch is also unreachable given the test cases. You can simplify this by removing the conditional.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b506341_f06f12fb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The `if (isIllegalMask)` and `else` branches are identical, making the condition redundant. You can remove the conditional and just keep the `assertThrows` block.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26e9762b_b716c246",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This `if/else` statement seems redundant, as both branches execute the same `assertThrows` logic. You can simplify this by removing the conditional.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e5fa57d_83d1e004",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferCreateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Both branches of this `if/else` statement do the same thing. You can remove the conditional and just have one `assertThrows` call.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52cda0cf_52b669e1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "It\u0027s good that you\u0027ve documented the reason for ignoring this test. Could you please also include a bug number for tracking this framework issue? That would make it easier to know when to re-enable this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44323409_0420e6a1",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "For better tracking and maintenance, could you please include a bug reference (e.g., b/12345678) in this comment? This will help in identifying when the underlying framework issue is resolved and this test can be re-enabled.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bebe4f36_cbe3deb7",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "It\u0027s good that this is ignored with a reason. Could you please add a bug number for tracking this framework bug? That would make it easier to follow up and re-enable the test once the bug is fixed.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e5e5d9d_1e9b0201",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "It would be helpful to add a bug tracker ID to this `Ignore` comment. This will make it easier to know when the underlying framework issue is resolved and this test can be re-enabled.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7f6e1d4_cfc67aa0",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "To help with tracking and maintenance, could you please add a bug reference (e.g., b/12345678) to this `@Ignore` comment? It will make it clear when the underlying framework issue is resolved and this test can be re-enabled.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ff3bcce_9696cf23",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "To make this easier to track, could you please add a bug reference (e.g., b/12345) to this comment? It will help with re-enabling this test once the framework bug is fixed.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "070e1288_6ee39777",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Could you add a bug number to this comment for tracking purposes? It will make it much easier to know when to re-enable this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7430535_008d7d24",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "It would be helpful to include a bug number in this comment to track the framework issue and know when to re-enable this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2d0e05_a12f78dd",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The `fail` condition here is incomplete. It only checks for conflicts between different types of storage buffers, but it doesn\u0027t account for conflicts between a storage buffer and other usage types like `Vertex` or `Index` buffers, which this test also sets. For example, a `Storage` and `Vertex` usage on the same buffer should also be a validation error.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ac3da5_6982e85d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The logic for `fail` seems incorrect. A validation error should occur if there\u0027s any read-write or write-write hazard. This happens if at least one usage is writable (`Storage`) and it\u0027s combined with another usage on the same buffer subresource. The current logic doesn\u0027t catch all conflict cases, like two `Storage` usages.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fc37af4_37421e53",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The validation logic here seems incorrect. Without a draw call, some validation errors are deferred. However, this test expects success even for invalid combinations that should be caught when the render pass is ended, such as using the same buffer as both a vertex and index buffer. Please review the validation rules for render pass encoding.",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8f532fb_310ed542",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts `NoError` for several buffer usage combinations that should be invalid within a single compute pass. For example, using the same buffer as a storage binding and as an indirect buffer for `dispatchWorkgroupsIndirect` is a conflict and should result in a validation error.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3d1207c_795411ad",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts that no error occurs for any combination of buffer usages. However, many combinations are invalid and should produce a validation error (e.g., using a buffer as both an index buffer and a storage buffer). The test\u0027s expectation seems to be incorrect.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "405bc317_2f6c07ff",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts `NoError`, but some combinations of buffer usages being tested here should result in a validation error (e.g., using a buffer as both an index and a storage buffer in the same pass). This assertion seems incorrect. Please verify the expected behavior against the WebGPU specification.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13bd11c_5323bbbf",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts that no validation error occurs for various buffer usage combinations. However, many of these combinations, such as using the same buffer as both an index buffer and a storage buffer (`u0\u003dIndex`, `u1\u003dStorage`), are invalid and should produce a validation error. The test\u0027s expectation of success in all cases seems incorrect.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c72896a_956c60fa",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts `NoError` for all buffer usage combinations. However, many combinations are invalid and should produce a validation error (e.g., using a buffer as both an index buffer and a storage buffer in the same pass). Please verify this logic against the WebGPU specification, as it seems to be incorrectly asserting success for invalid cases.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b077ac6_6caa2ea6",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test consistently asserts that no validation error occurs, but according to WebGPU validation rules, using a buffer for conflicting usages within the same pass (e.g., as both an index buffer and a storage buffer) should generate a validation error. This test appears to incorrectly expect success for invalid scenarios.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d4f462_952cd677",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This assertion seems incorrect. The test iterates through various buffer usage combinations (`u0` and `u1`). When `u0` and `u1` are conflicting usages (e.g., one is `Index` and the other is `Storage`) for the same buffer in a render pass, a validation error is expected. However, this test asserts `NoError` in all cases. Please verify the expected behavior.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06fef9ba_63baae79",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test asserts `NoError` for several buffer usage combinations that are invalid within a single render pass. For example, using the same buffer for `Index` and `Storage` should result in a validation error. The test\u0027s expectation of success seems incorrect for many of the tested scenarios.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b8307bb_ba6c6260",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test consistently asserts that no validation error occurs, but according to WebGPU validation rules, using a buffer for conflicting usages within the same pass (e.g., as both an index buffer and a storage buffer) should generate a validation error. This test appears to incorrectly expect success for invalid scenarios.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d567555a_9977d7c5",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsBufferInPassMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test always asserts `NoError`, but it seems like some combinations of `u0` and `u1` should produce validation errors. For example, using a buffer as both an `Index` buffer and a `Storage` buffer in the same pass should be invalid. Please verify the expected behavior against the WebGPU specification for buffer usage conflicts.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17e50b60_8b9ecf95",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This empty `catch` block can silently swallow exceptions, which might cause a test to pass incorrectly. Please add logging or re-throw the exception to ensure that failures are not hidden.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a635007e_cf3220c4",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This empty `catch (e: Exception)` block is dangerous as it can silently swallow any exception, not just the one you might be expecting as a workaround. This can hide legitimate test failures or other unexpected issues. If a specific exception needs to be ignored for certain device configurations, it should be caught explicitly.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ba3e13e_45d152e5",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This empty catch block may be hiding test failures. If this is a temporary workaround, please add a comment explaining its purpose.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d000118f_2b2f2a84",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This empty catch block should probably be explained. If the intention is to ignore specific exceptions from device limits, a comment explaining why would be helpful. Catching a generic `Exception` and doing nothing can hide other unexpected problems.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ebde6bd_b8ee6128",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateBindGroupTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The formatting for this constructor call is a bit unusual. It could be flattened for better readability, like so:\n\n```kotlin\nentry \u003d GPUBindGroupEntry(\n    binding \u003d 0,\n    buffer \u003d buffer,\n    offset \u003d case.offset\n)\n```",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "710b07b9_f2c9e3a3",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateSamplerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This boolean expression for `success` is difficult to parse and could be simplified for clarity. Consider breaking it down, for instance:\n\n```kotlin\nval anisoRequiresLinear \u003d actualAniso \u003e 1 \u0026\u0026 (case.minFilter !\u003d FilterMode.Linear || case.magFilter !\u003d FilterMode.Linear || case.mipmapFilter !\u003d MipmapFilterMode.Linear)\nval success \u003d actualAniso \u003e\u003d 1 \u0026\u0026 !anisoRequiresLinear\n```",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8827446_c2b8eee9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsCreateSamplerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The validation for `maxAnisotropy` seems incomplete. The value must be \u003e\u003d 1. The test includes a case where `maxAnisotropy` is -1. `case.maxAnisotropy.toUShort().toInt()` will convert -1 to 65535, leading to an incorrect `success` expectation. The test should check that `case.maxAnisotropy \u003e\u003d 1` as part of its `success` condition.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff33a78c_609f69ef",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The condition for `shouldError` is incorrect. `getBindGroupLayout(index)` will produce a validation error if `index` is greater than or equal to the number of bind group layouts in the pipeline layout. In this test, the pipeline is created with only one bind group layout.\n\nTherefore, this should be `index \u003e\u003d 1`. The current code uses `maxBindGroups`, which means this test will incorrectly pass for any index between 1 and `maxBindGroups - 1`.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97177070_2466b76c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The validation logic for the index range is incorrect. `shouldError` should be `index \u003e\u003d 1` since the created pipeline layout has only one bind group layout. The current check against `maxBindGroups` does not correctly test the out-of-bounds behavior for `getBindGroupLayout`.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f5f8d36_208c4d07",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The condition for `shouldError` is incorrect. `getBindGroupLayout(index)` will produce a validation error if `index` is greater than or equal to the number of bind group layouts in the pipeline layout. In this test, the pipeline is created with only one bind group layout.\n\nTherefore, this should be `index \u003e\u003d 1`. The current code uses `maxBindGroups`, which means this test will incorrectly pass for any index between 1 and `maxBindGroups - 1`.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b02746b3_ea4f0d4e",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The `shouldError` logic is incorrect. `getBindGroupLayout(index)` validation should check the index against the number of bind group layouts in the pipeline\u0027s layout (which is 1 in this case), not against `maxBindGroups`. Any index \u003e\u003d 1 should produce an error. The same issue is present in `testIndexRangeAutoLayout`.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "348128e0_b0d4c780",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The validation for `getBindGroupLayout` should be against the number of bind group layouts in the pipeline layout, not `maxBindGroups`. For an explicit layout with one bind group layout, any index other than 0 should produce an error.\n\nThis should probably be:\n`val shouldError \u003d index \u003e\u003d pipelineLayout.bindGroupLayouts.size`\n\nAs it is, this test may not be correctly verifying the boundary conditions for `getBindGroupLayout`.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6524f6b_1be55a77",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Similar to `testIndexRangeExplicitLayout`, the condition for `shouldError` is incorrect. `getBindGroupLayout` should fail for any index greater than or equal to the number of bind group layouts in the pipeline.\n\nThe pipeline created here has one bind group layout defined in the shader (`@group(0)`), so this test should check against that. The check should be `index \u003e\u003d 1`, not `index \u003e\u003d maxBindGroups`.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4cb979_53600b27",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Similar to `testIndexRangeExplicitLayout`, the condition for `shouldError` is incorrect. `getBindGroupLayout` should fail for any index greater than or equal to the number of bind group layouts in the pipeline.\n\nThe pipeline created here has one bind group layout defined in the shader (`@group(0)`), so this test should check against that. The check should be `index \u003e\u003d 1`, not `index \u003e\u003d maxBindGroups`.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "000fde5c_68e706e9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsGetBindGroupLayoutTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Similar to `testIndexRangeExplicitLayout`, the check for `shouldError` seems incorrect. For an auto-layout pipeline where the shader only uses `@group(0)`, there will be only one bind group layout. Therefore, `getBindGroupLayout(i)` should fail for any `i \u003e\u003d 1`.\n\nThe current check against `maxBindGroups` might not be testing the intended validation rule correctly.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f227992c_d7c88a69",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsImageCopyBufferTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test incorrectly expects success. According to the WebGPU specification, for `writeTexture`, if `copySize.height \u003e 1`, `bytesPerRow` is required and must be a multiple of 256. In this test, `invalidLayout` uses `bytesPerRow \u003d 255` and the copy height is 2. Therefore, this should be a validation error, and `success` should be `false`.\n\nThe comment on line 55 is also incorrect; `writeTexture` does have alignment requirements.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f8f46e9_9579591c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsNonFilterableTextureTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Please remove logging statements from test code.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e07ee2a9_eef1b16f",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsNonFilterableTextureTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "It would be helpful to add a bug reference (e.g., `b/12345`) here to track the underlying Dawn Native crash.",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c9e30d7_cbb8c91a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsQuerySetDestroyTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Please add a bug reference ID to this `@Ignore` comment to facilitate tracking and eventual re-enabling of this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d1888e5_30d71621",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineFragmentStateTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The success condition `(limit * 8 \u003c\u003d maxBytes)` relies on an 8-byte alignment assumption per target, as noted in the comment. Is this alignment guaranteed by the WebGPU spec, or is it an implementation detail of the backend being used (e.g., Dawn)? Relying on backend-specific details can make tests brittle. It would be better to either confirm this is a cross-vendor requirement or add more detail to the comment explaining the source of this value.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eec06892_87e01113",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test is marked as expecting success for what appears to be an invalid state (shader expects a sampler, but layout provides a texture). The comment \"Not throwing in Android API for some reason\" suggests this is a known issue. This test should expect failure, and the underlying issue should be investigated. A test should not codify a buggy implementation by expecting success on an invalid case.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0aa8037_32958e55",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test case expects success even though there\u0027s a type mismatch between the shader (sampler) and the bind group layout (texture). The comment indicates this is unexpected. This might be masking a validation bug in the underlying implementation. This should probably be `expectedSuccess \u003d false` and investigated if it doesn\u0027t fail.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dcb2ab0_72b7468a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test case (`MismatchSampler`) expects success, but the configuration is invalid. The shader expects a `sampler`, while the bind group layout provides a `texture`. This is a type mismatch that should trigger a validation error. The comment notes that it\u0027s not throwing, which indicates a likely bug in the underlying implementation\u0027s validation. The test should assert failure, and can be marked as a known failure if necessary.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cc08c3d_edb842e9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This test case expects success for a clear type mismatch (shader expects a `sampler`, layout provides a `texture`). As the comment notes, this is strange behavior. The test should assert failure (`expectedSuccess \u003d false`) to correctly validate resource compatibility rules.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ccd5f6a_350d09e0",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "This comment indicates a potential bug in the implementation being tested. It would be good to file a bug for this and reference it here. A mismatch between sampler in the shader and texture in the layout should ideally be a validation error.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e150db6_84cfffcb",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The `MismatchSampler` test case incorrectly expects success. The bind group layout specifies a `texture` binding, while the shader expects a `sampler`. This is a type mismatch that should trigger a validation error during pipeline creation. The test\u0027s comment suggests this might be an issue with the Android API itself, which warrants investigation.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5879036d_8a97fbe9",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsRenderPipelineResourceCompatibilityTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "The comment indicates that this test is expected to fail but doesn\u0027t, which suggests a potential bug in the underlying implementation or the bindings. While it\u0027s good to document this, it might be better to create a bug report for this issue and link to it in the comment. This test, as it is, might be testing for incorrect behavior.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "619b88ce_f074c31d",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsTextureCreateDimensionTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "For consistency with the other tests in this CL, please consider using `destroy()` instead of `close()`. While `close()` is functionally correct as part of AutoCloseable, `destroy()` is more explicit and is used in the vast majority of the other new test files.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4966b037_e4284e21",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsTextureInPassEncoderTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Please add a bug reference ID to this `@Ignore` comment to facilitate tracking and eventual re-enabling of this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb020c63_99b1f83c",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsTextureInRenderCommonTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Please add a bug reference ID to this `@Ignore` comment to facilitate tracking and eventual re-enabling of this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c0b087b_2278307a",
+        "filename": "tools/android/webgpu/src/androidTest/java/androidx/webgpu/WebGpuCtsTextureInRenderMiscTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4269256
+      },
+      "writtenOn": "2026-03-31T06:41:15Z",
+      "side": 1,
+      "message": "Please add a bug reference ID to this `@Ignore` comment to facilitate tracking and eventual re-enabling of this test.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e5ab3d4a6e0dd272da9a45717ff13c9acaae93e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
