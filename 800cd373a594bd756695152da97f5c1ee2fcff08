@@ -16,6 +16,91 @@
       "message": "PTAL, thanks!",
       "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b0d98e8_49b1aca6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T14:34:34Z",
+      "side": 1,
+      "message": "LGTM, will you also audit the `GetRequiredFeatures` to remove the checks for `SupportsFeature` that are unnecessary? (some tests really do optionally support features, but most don\u0027t)",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ee36b63_426fda66",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T14:34:34Z",
+      "side": 1,
+      "message": "That won\u0027t be necessary, by coincidence I\u0027m making https://dawn-review.googlesource.com/c/dawn/+/300495",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1382a081_488f58eb",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T14:34:34Z",
+      "side": 1,
+      "message": "nit: Can we do something like this somehow? `\"Skipping test because \" \u003c\u003c theFeature \u003c\u003c \" is not supported by the adapter\"`.",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a199144_5c232de5",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T14:34:34Z",
+      "side": 1,
+      "message": "nit: not neeeded.",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efe417ec_44950d9a",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T14:34:34Z",
+      "side": 1,
+      "message": "nit: `.contains`",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
