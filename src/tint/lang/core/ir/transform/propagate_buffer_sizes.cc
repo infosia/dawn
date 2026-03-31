@@ -213,7 +213,7 @@ struct State {
 }  // namespace
 
 Result<SuccessType> PropagateBufferSizes(Module& ir) {
-    AssertValidBefore(ir, kPropagateBufferSizesCapabilities, "core.PropagateBufferSizes");
+    AssertValid(ir, kPropagateBufferSizesCapabilities, "before core.PropagateBufferSizes");
 
     State{ir}.Process();
 
