@@ -3596,7 +3596,7 @@ TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_LoadStruct) {
     auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
     b.ir.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {
         b.Let("a", b.Load(var)->Result());
         b.Return(func);
@@ -3612,7 +3612,7 @@ $B1: {  # root
   %v:ptr<workgroup, SB, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     %3:SB = load %v
     %a:SB = let %3
@@ -3633,7 +3633,7 @@ $B1: {  # root
   %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     %3:SB = call %4, 0u
     %a:SB = let %3
@@ -3704,7 +3704,7 @@ TEST_F(IR_DecomposeAccessTest, Workgroup_AccessU16_StoreStruct) {
     auto* var = b.Var("v", workgroup, sb, core::Access::kReadWrite);
     b.ir.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {
         b.Store(var, b.Zero(sb));
         b.Return(func);
@@ -3720,7 +3720,7 @@ $B1: {  # root
   %v:ptr<workgroup, SB, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     store %v, SB(0u16, array<u32, 2>(0u))
     ret
@@ -3740,7 +3740,7 @@ $B1: {  # root
   %v:ptr<workgroup, array<u16, 6>, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     %3:void = call %4, 0u, SB(0u16, array<u32, 2>(0u))
     ret
@@ -5776,7 +5776,7 @@ TEST_F(IR_DecomposeAccessTest, Workgroup_SizedBuffer) {
     auto* var = b.Var("v", workgroup, ty.buffer(64u), core::Access::kReadWrite);
     b.ir.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {
         auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
             ty.ptr(workgroup, ty.u32(), core::Access::kReadWrite), core::BuiltinFn::kBufferView,
@@ -5790,7 +5790,7 @@ $B1: {  # root
   %v:ptr<workgroup, buffer<64>, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     %3:ptr<workgroup, u32, read_write> = bufferView<u32> %v, 16u
     store %3, 33u
@@ -5805,7 +5805,7 @@ $B1: {  # root
   %v:ptr<workgroup, array<u32, 16>, read_write> = var undef
 }
 
-%foo = @fragment func():void {
+%foo = func():void {
   $B2: {
     %3:ptr<workgroup, u32, read_write> = access %v, 4u
     store %3, 33u

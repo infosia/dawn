@@ -628,20 +628,69 @@ TEST_F(IR_ValidatorTest, EntryPoint_Compute_InputLocation_InMSV) {
 )")) << res.Failure();
 }
 
-TEST_F(IR_ValidatorTest, EntryPoint_Compute_OutputLocation) {
-    auto* f = ComputeEntryPoint("my_func");
+TEST_F(IR_ValidatorTest, EntryPoint_Workgroup_NotCompute) {
+    auto* f = FragmentEntryPoint("my_func");
 
-    auto* v = b.Var("v", AddressSpace::kOut, ty.f32());
-    v->SetLocation(0);
+    auto* v = b.Var("v", AddressSpace::kWorkgroup, ty.f32());
     mod.root_block->Append(v);
 
     b.Append(f->Block(), [&] {
-        b.Store(v, 1.0_f);
+        b.Load(v);
         b.Return(f);
     });
 
     auto res = ir::Validate(mod);
-    ASSERT_EQ(res, Success) << res.Failure();
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:2:40 error: var: workgroup variable cannot be used in a fragment shader
+  %v:ptr<workgroup, f32, read_write> = var undef
+                                       ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, EntryPoint_PixelLocal_NotFragment) {
+    auto* f = ComputeEntryPoint("my_func");
+
+    auto* str_ty = ty.Struct(mod.symbols.New("S"), {{mod.symbols.New("a"), ty.u32()}});
+    auto* v = b.Var("v", AddressSpace::kPixelLocal, str_ty);
+    mod.root_block->Append(v);
+
+    b.Append(f->Block(), [&] {
+        b.Load(v);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:6:40 error: var: pixel_local variable cannot be used in a compute shader
+  %v:ptr<pixel_local, S, read_write> = var undef
+                                       ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, EntryPoint_In_Compute) {
+    auto* f = ComputeEntryPoint("my_func");
+
+    auto* v = b.Var("v", AddressSpace::kIn, ty.f32());
+    mod.root_block->Append(v);
+
+    b.Append(f->Block(), [&] {
+        b.Load(v);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:2:29 error: var: module scope variable must have at least one IO annotation, e.g. a binding point, a location, etc
+  %v:ptr<__in, f32, read> = var undef
+                            ^^^
+)")) << res.Failure();
 }
 
 TEST_F(IR_ValidatorTest, EntryPoint_SameLocation_InputAndOutput) {
