@@ -820,6 +820,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "use Instance.WaitAny() to wait for a GPU operation to finish. This toggle is intended to "
       "reduce the fixed overhead associated with each flushing.",
       "https://crbug.com/chromium/377716220", ToggleStage::Device}},
+    {Toggle::D3D11UseDiscardView,
+     {"d3d11_use_discard_view",
+      "Use D3D11's DiscardView for discarding render pass' attachments having StoreOp::Discard",
+      "https://crbug.com/479416037", ToggleStage::Device}},
     {Toggle::IgnoreImportedAHardwareBufferVulkanImageSize,
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
