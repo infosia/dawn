@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2219e802_0d93c88f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-03-31T20:19:40Z",
+      "side": 1,
+      "message": "Pushed a new commit to resolve merge conflicts with an unrelated CL.",
+      "revId": "1420ff9cadfedcee59e7fc50bd8986aa0fcf5108",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
