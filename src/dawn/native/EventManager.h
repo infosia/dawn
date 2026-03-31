@@ -66,8 +66,6 @@ class EventManager final : NonMovable {
     explicit EventManager(InstanceBase* instance);
     ~EventManager();
 
-    MaybeError Initialize(const UnpackedPtr<InstanceDescriptor>& descriptor);
-
     class TrackedEvent;
     // Track a TrackedEvent and give it a FutureID.
     FutureID TrackEvent(Ref<TrackedEvent>&&);
@@ -89,9 +87,6 @@ class EventManager final : NonMovable {
     // Raw pointer to the Instance to allow for logging. The Instance owns the EventManager, so a
     // raw pointer here is always safe.
     raw_ptr<const InstanceBase> mInstance;
-
-    bool mTimedWaitAnyEnable = false;
-    size_t mTimedWaitAnyMaxCount = kTimedWaitAnyMaxCountDefault;
     std::atomic<FutureID> mNextFutureID = 1;
 
     // Freed once the user has dropped their last ref to the Instance, so can't call WaitAny or

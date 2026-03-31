@@ -145,13 +145,53 @@ static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo = {
 
 }  // anonymous namespace
 
+// Instance default limits.
+#define INSTANCE_LIMITS(X)                    \
+    /* class   name                  limit */ \
+    X(Maximum, timedWaitAnyMaxCount, kTimedWaitAnyMaxCountDefault)
+
+void GetDefaultLimits(InstanceLimits* limits) {
+    DAWN_ASSERT(limits != nullptr);
+#define X(Class, limitName, limitValue) limits->limitName = limitValue;
+    INSTANCE_LIMITS(X)
+#undef X
+}
+
+InstanceLimits ReifyDefaultLimits(const InstanceLimits& limits) {
+    InstanceLimits out;
+#define X(Class, limitName, limitValue)                                                  \
+    {                                                                                    \
+        const auto defaultLimit = static_cast<decltype(limits.limitName)>(limitValue);   \
+        if (detail::CheckLimit<detail::LimitClass::Class>::IsBetter(defaultLimit,        \
+                                                                    limits.limitName)) { \
+            /* If the limit is undefined or the default is better, use the default */    \
+            out.limitName = defaultLimit;                                                \
+        } else {                                                                         \
+            out.limitName = limits.limitName;                                            \
+        }                                                                                \
+    }
+    INSTANCE_LIMITS(X)
+#undef X
+    return out;
+}
+
+MaybeError ValidateLimits(const InstanceLimits& requiredLimits) {
+#define X(Class, limitName, supportedLimitValue)                              \
+    DAWN_TRY_CONTEXT(detail::CheckLimit<detail::LimitClass::Class>::Validate( \
+                         supportedLimitValue, requiredLimits.limitName),      \
+                     "validating " #limitName);
+    INSTANCE_LIMITS(X)
+#undef X
+
+    return {};
+}
+
 wgpu::Status APIGetInstanceLimits(InstanceLimits* limits) {
     DAWN_ASSERT(limits != nullptr);
     if (limits->nextInChain != nullptr) {
         return wgpu::Status::Error;
     }
-
-    limits->timedWaitAnyMaxCount = kTimedWaitAnyMaxCountDefault;
+    GetDefaultLimits(limits);
     return wgpu::Status::Success;
 }
 
@@ -287,8 +327,14 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
         mInstanceFeatures = {features.begin(), features.end()};
     }
 
+    if (descriptor->requiredLimits != nullptr) {
+        mLimits = ReifyDefaultLimits(*(descriptor->requiredLimits));
+    } else {
+        GetDefaultLimits(&mLimits);
+    }
+    DAWN_TRY(ValidateLimits(mLimits));
+
     mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
-    DAWN_TRY(mEventManager.Initialize(descriptor));
     GatherWGSLFeatures(descriptor.Get<DawnWGSLBlocklist>());
 
     return {};
@@ -621,6 +667,19 @@ void InstanceBase::APIProcessEvents() {
 wgpu::WaitStatus InstanceBase::APIWaitAny(size_t count,
                                           FutureWaitInfo* futures,
                                           uint64_t timeoutNS) {
+    if (timeoutNS > 0) {
+        if (!HasFeature(wgpu::InstanceFeatureName::TimedWaitAny)) {
+            EmitLog(WGPULoggingType_Error,
+                    "Timeout waits are either not enabled or not supported.");
+            return wgpu::WaitStatus::Error;
+        }
+        if (count > mLimits.timedWaitAnyMaxCount) {
+            EmitLog(WGPULoggingType_Error,
+                    absl::StrFormat("Number of futures to wait on (%d) exceeds maximum (%d).",
+                                    count, mLimits.timedWaitAnyMaxCount));
+            return wgpu::WaitStatus::Error;
+        }
+    }
     return mEventManager.WaitAny(count, futures, Nanoseconds(timeoutNS));
 }
 

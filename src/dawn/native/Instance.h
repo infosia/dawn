@@ -208,6 +208,8 @@ class InstanceBase final : public ErrorSink, public RefCounted {
     TogglesState mToggles;
     TogglesInfo mTogglesInfo;
 
+    InstanceLimits mLimits;
+
     absl::flat_hash_set<wgpu::InstanceFeatureName> mInstanceFeatures;
     absl::flat_hash_set<wgpu::WGSLLanguageFeatureName> mWGSLFeatures;
     absl::flat_hash_set<tint::wgsl::LanguageFeature> mTintLanguageFeatures;

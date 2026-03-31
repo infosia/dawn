@@ -250,29 +250,6 @@ EventManager::~EventManager() {
     });
 }
 
-MaybeError EventManager::Initialize(const UnpackedPtr<InstanceDescriptor>& descriptor) {
-    if (descriptor) {
-        for (auto feature :
-             std::span(descriptor->requiredFeatures, descriptor->requiredFeatureCount)) {
-            if (feature == wgpu::InstanceFeatureName::TimedWaitAny) {
-                mTimedWaitAnyEnable = true;
-                break;
-            }
-        }
-        if (descriptor->requiredLimits) {
-            mTimedWaitAnyMaxCount = std::max(kTimedWaitAnyMaxCountDefault,
-                                             descriptor->requiredLimits->timedWaitAnyMaxCount);
-        }
-    }
-    if (mTimedWaitAnyMaxCount > kTimedWaitAnyMaxCountDefault) {
-        // We don't yet support a higher timedWaitAnyMaxCount because it would be complicated
-        // to implement on Windows, and it isn't that useful to implement only on non-Windows.
-        return DAWN_VALIDATION_ERROR("Requested timedWaitAnyMaxCount is not supported");
-    }
-
-    return {};
-}
-
 FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
     if (!ValidateCallbackMode(ToAPI(event->mCallbackMode))) {
         mInstance->EmitLog(WGPULoggingType_Error,
@@ -404,23 +381,7 @@ bool EventManager::ProcessPollEvents() {
 }
 
 wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nanoseconds timeout) {
-    // Validate for feature support.
-    if (timeout > Nanoseconds(0)) {
-        if (!mTimedWaitAnyEnable) {
-            mInstance->EmitLog(WGPULoggingType_Error,
-                               "Timeout waits are either not enabled or not supported.");
-            return wgpu::WaitStatus::Error;
-        }
-        if (count > mTimedWaitAnyMaxCount) {
-            mInstance->EmitLog(
-                WGPULoggingType_Error,
-                absl::StrFormat("Number of futures to wait on (%d) exceeds maximum (%d).", count,
-                                mTimedWaitAnyMaxCount));
-            return wgpu::WaitStatus::Error;
-        }
-        // UnsupportedMixedSources is validated later, in WaitImpl.
-    }
-
+    // Feature support should already be validated for by the Instance.
     if (count == 0) {
         return wgpu::WaitStatus::Success;
     }
