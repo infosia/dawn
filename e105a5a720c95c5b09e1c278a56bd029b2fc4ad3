@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "e105a5a720c95c5b09e1c278a56bd029b2fc4ad3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63f2d4a4_cda1ada8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4269888
+      },
+      "writtenOn": "2026-03-31T09:53:14Z",
+      "side": 1,
+      "message": "Are these going to be merged into main? Given the bi-weekly Jetpack releases I don\u0027t think we should make these changes part of the public release just yet.",
+      "revId": "e105a5a720c95c5b09e1c278a56bd029b2fc4ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
