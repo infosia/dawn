@@ -98,7 +98,7 @@ def main(args):
     required_submodules = [
         'third_party/abseil-cpp',
         'third_party/dxc',
-        'third_party/dxheaders',
+        'third_party/directx-headers/src',
         'third_party/glfw3/src',
         'third_party/jinja2',
         'third_party/EGL-Registry/src',

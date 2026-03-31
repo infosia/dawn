@@ -107,9 +107,9 @@ SYNCED_REPOS = {
     'third_party/catapult': None,
     'third_party/clang-format/script': None,
     'third_party/depot_tools': None,
-    # third_party/dxheaders is technically used by both Chromium and Dawn, but
-    # for different purposes and on non-overlapping platforms. Thus, there is
-    # no need to sync their revisions.
+    # third_party/directx-headers/src is technically used by both Chromium and
+    # Dawn, but for different purposes and on non-overlapping platforms. Thus,
+    # there is no need to sync their revisions.
     'third_party/google_benchmark/src': None,
     'third_party/googletest': 'third_party/googletest/src',
     'third_party/jsoncpp': 'third_party/jsoncpp/source',
