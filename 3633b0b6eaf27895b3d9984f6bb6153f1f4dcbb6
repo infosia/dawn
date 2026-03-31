@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "56dc6983_ef646e9e",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 2933,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-31T01:01:02Z",
+      "side": 1,
+      "message": "The main reason is to handle a case like:\nsized buffer -\u003e smaller sized buffer -\u003e unsized buffer (parameter chain)\n\nIf we were to just add a bufferLength based on the direct variable usage we\u0027d get the wrong size when working with the unsized buffer. The chain ensures we propagate the smallest size correctly.",
+      "parentUuid": "ae57fa1a_dd3ee5d1",
+      "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d3fed99_8a62dfe9",
         "filename": "src/tint/lang/core/ir/transform/propagate_buffer_sizes.cc",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-30T14:08:53Z",
       "side": 1,
       "message": "Does `calls.GetOrAddZero(param)` work here?",
+      "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de3553f5_71688488",
+        "filename": "src/tint/lang/core/ir/transform/propagate_buffer_sizes.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-31T01:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3fed99_8a62dfe9",
       "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -90,6 +126,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13521ac7_ab6a1e33",
+        "filename": "src/tint/lang/core/ir/transform/propagate_buffer_sizes.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-31T01:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12d975fd_db22e57a",
+      "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3555bc78_3826e376",
@@ -103,6 +157,24 @@
       "writtenOn": "2026-03-30T14:08:53Z",
       "side": 1,
       "message": "Would be good to have a test that covers the propagation of a buffer pointer through a `let` instruction.",
+      "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00d22e3a_b5e50ad2",
+        "filename": "src/tint/lang/core/ir/transform/propagate_buffer_sizes_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-31T01:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3555bc78_3826e376",
       "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
