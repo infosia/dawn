@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3a7cfef_bbe6f3e0",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001671
+      },
+      "writtenOn": "2026-03-31T18:58:46Z",
+      "side": 1,
+      "message": "According to the comment you want this to swizzle from `(Cb, Y, Cr, 1)` to `(Y, Cb, Cr, 1)`, but if my matrix math is correct (and it may very well not be) this matrix would swizzle `(Cb, Y, Cr, 1)` -\u003e `(Y, Cr, Cb, 1)`? That would suggest that either the matrix of the comment is wrong?",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af03382c_d9c036bb",
         "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
         "patchSetId": 62
@@ -60,6 +77,23 @@
       "writtenOn": "2026-03-31T18:05:19Z",
       "side": 1,
       "message": "So this is going to recreate VkDescriptorSets each time the pipeline is drawn rather than reusing it IIUC?",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cf5c8db_ef1031e1",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryYCbCrAndroidTests.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001671
+      },
+      "writtenOn": "2026-03-31T18:58:46Z",
+      "side": 1,
+      "message": "Debugging leftover?",
       "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
