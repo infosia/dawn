@@ -71,55 +71,96 @@ struct tint_module_vars_struct {
   texture2d<float, access::write> outImage;
 };
 
-float3 tint_ApplyTransferFunction(float3 v, tint_TransferFunctionParams params) {
+float3 tint_ApplyGammaTransferFunction(float3 v, tint_TransferFunctionParams params) {
   float3 const v_1 = float3(params.G);
   return select((sign(v) * (powr(((params.A * abs(v)) + params.B), v_1) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), (abs(v) < float3(params.D)));
 }
 
+float tint_ApplyHLGSingleChannel(float v, tint_TransferFunctionParams params) {
+  if ((v <= params.D)) {
+    return ((v * v) / params.E);
+  } else {
+    return ((params.B + exp(((v - params.C) / params.A))) / params.F);
+  }
+  /* unreachable */
+  return 0.0f;
+}
+
+float3 tint_ApplyHLGTransferFunction(float3 v, tint_TransferFunctionParams params) {
+  float const v_2 = tint_ApplyHLGSingleChannel(v.x, params);
+  float const v_3 = tint_ApplyHLGSingleChannel(v.y, params);
+  return float3(v_2, v_3, tint_ApplyHLGSingleChannel(v.z, params));
+}
+
+float3 tint_ApplyPQTransferFunction(float3 v, tint_TransferFunctionParams params) {
+  float3 const v_4 = float3(params.C);
+  float3 const v_5 = float3(params.D);
+  float3 const v_6 = float3(params.E);
+  float3 const v_7 = float3(params.A);
+  float3 const v_8 = powr(clamp(v, float3(0.0f), float3(1.0f)), (float3(1.0f) / float3(params.B)));
+  return powr((max((v_8 - v_4), float3(0.0f)) / (v_5 - (v_6 * v_8))), (float3(1.0f) / v_7));
+}
+
+float3 tint_ApplySrcTransferFunction(float3 v, tint_TransferFunctionParams params) {
+  if ((params.mode == 0u)) {
+    return tint_ApplyGammaTransferFunction(v, params);
+  } else {
+    if ((params.mode == 1u)) {
+      return tint_ApplyHLGTransferFunction(v, params);
+    } else {
+      return tint_ApplyPQTransferFunction(v, params);
+    }
+    /* unreachable */
+    return 0.0f;
+  }
+  /* unreachable */
+  return 0.0f;
+}
+
 float4 tint_TextureLoadMultiplanarExternal(texture2d<float, access::sample> plane_0, texture2d<float, access::sample> plane_1, tint_ExternalTextureParams params, uint2 coords) {
-  float2 const v_2 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
-  uint2 const v_3 = uint2(v_2);
-  float3 v_4 = 0.0f;
-  float v_5 = 0.0f;
+  float2 const v_9 = rint((params.loadTransform * float3(float2(min(coords, params.apparentSize)), 1.0f)));
+  uint2 const v_10 = uint2(v_9);
+  float3 v_11 = 0.0f;
+  float v_12 = 0.0f;
   if ((params.numPlanes == 1u)) {
-    float4 const v_6 = plane_0.read(v_3, 0u);
-    v_4 = v_6.xyz;
-    v_5 = v_6.w;
+    float4 const v_13 = plane_0.read(v_10, 0u);
+    v_11 = v_13.xyz;
+    v_12 = v_13.w;
   } else {
-    float const v_7 = plane_0.read(v_3, 0u).x;
-    v_4 = (float4(v_7, plane_1.read(uint2((v_2 * params.plane1CoordFactor)), 0u).xy, 1.0f) * params.yuvToRgbConversionMatrix);
-    v_5 = 1.0f;
+    float const v_14 = plane_0.read(v_10, 0u).x;
+    v_11 = (float4(v_14, plane_1.read(uint2((v_9 * params.plane1CoordFactor)), 0u).xy, 1.0f) * params.yuvToRgbConversionMatrix);
+    v_12 = 1.0f;
   }
-  float3 const v_8 = v_4;
-  float3 v_9 = 0.0f;
+  float3 const v_15 = v_11;
+  float3 v_16 = 0.0f;
   if ((params.doYuvToRgbConversionOnly == 0u)) {
-    v_9 = tint_ApplyTransferFunction((params.gamutConversionMatrix * tint_ApplyTransferFunction(v_8, params.srcTransferFunction)), params.dstTransferFunction);
+    v_16 = tint_ApplyGammaTransferFunction((params.gamutConversionMatrix * tint_ApplySrcTransferFunction(v_15, params.srcTransferFunction)), params.dstTransferFunction);
   } else {
-    v_9 = v_8;
+    v_16 = v_15;
   }
-  return float4(v_9, v_5);
+  return float4(v_16, v_12);
 }
 
 tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_ExternalTextureParams_packed_vec3* const from) {
-  uint const v_10 = (*from).numPlanes;
-  uint const v_11 = (*from).doYuvToRgbConversionOnly;
-  float3x4 const v_12 = (*from).yuvToRgbConversionMatrix;
-  tint_TransferFunctionParams const v_13 = (*from).srcTransferFunction;
-  tint_TransferFunctionParams const v_14 = (*from).dstTransferFunction;
-  tint_array<tint_packed_vec3_f32_array_element, 3> const v_15 = (*from).gamutConversionMatrix;
-  float3x3 const v_16 = float3x3(float3(v_15[0u].packed), float3(v_15[1u].packed), float3(v_15[2u].packed));
-  return tint_ExternalTextureParams{.numPlanes=v_10, .doYuvToRgbConversionOnly=v_11, .yuvToRgbConversionMatrix=v_12, .srcTransferFunction=v_13, .dstTransferFunction=v_14, .gamutConversionMatrix=v_16, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
+  uint const v_17 = (*from).numPlanes;
+  uint const v_18 = (*from).doYuvToRgbConversionOnly;
+  float3x4 const v_19 = (*from).yuvToRgbConversionMatrix;
+  tint_TransferFunctionParams const v_20 = (*from).srcTransferFunction;
+  tint_TransferFunctionParams const v_21 = (*from).dstTransferFunction;
+  tint_array<tint_packed_vec3_f32_array_element, 3> const v_22 = (*from).gamutConversionMatrix;
+  float3x3 const v_23 = float3x3(float3(v_22[0u].packed), float3(v_22[1u].packed), float3(v_22[2u].packed));
+  return tint_ExternalTextureParams{.numPlanes=v_17, .doYuvToRgbConversionOnly=v_18, .yuvToRgbConversionMatrix=v_19, .srcTransferFunction=v_20, .dstTransferFunction=v_21, .gamutConversionMatrix=v_23, .sampleTransform=(*from).sampleTransform, .loadTransform=(*from).loadTransform, .samplePlane0RectMin=(*from).samplePlane0RectMin, .samplePlane0RectMax=(*from).samplePlane0RectMax, .samplePlane1RectMin=(*from).samplePlane1RectMin, .samplePlane1RectMax=(*from).samplePlane1RectMax, .apparentSize=(*from).apparentSize, .plane1CoordFactor=(*from).plane1CoordFactor};
 }
 
 [[max_total_threads_per_threadgroup(1)]]
-kernel void v_17(const constant tint_ExternalTextureParams_packed_vec3* t_params [[buffer(0)]], texture2d<float, access::sample> t_plane0 [[texture(1)]], texture2d<float, access::sample> t_plane1 [[texture(2)]], texture2d<float, access::write> outImage [[texture(0)]]) {
+kernel void v_24(const constant tint_ExternalTextureParams_packed_vec3* t_params [[buffer(0)]], texture2d<float, access::sample> t_plane0 [[texture(1)]], texture2d<float, access::sample> t_plane1 [[texture(2)]], texture2d<float, access::write> outImage [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.t_params=t_params, .t_plane0=t_plane0, .t_plane1=t_plane1, .outImage=outImage};
-  tint_ExternalTextureParams const v_18 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
-  float4 red = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_18, min(uint2(int2(10)), ((v_18.apparentSize + uint2(1u)) - uint2(1u))));
-  float4 const v_19 = red;
-  tint_module_vars.outImage.write(v_19, uint2(int2(0)));
-  tint_ExternalTextureParams const v_20 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
-  float4 green = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_20, min(uint2(int2(70, 118)), ((v_20.apparentSize + uint2(1u)) - uint2(1u))));
-  float4 const v_21 = green;
-  tint_module_vars.outImage.write(v_21, uint2(int2(1, 0)));
+  tint_ExternalTextureParams const v_25 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
+  float4 red = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_25, min(uint2(int2(10)), ((v_25.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 const v_26 = red;
+  tint_module_vars.outImage.write(v_26, uint2(int2(0)));
+  tint_ExternalTextureParams const v_27 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
+  float4 green = tint_TextureLoadMultiplanarExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_27, min(uint2(int2(70, 118)), ((v_27.apparentSize + uint2(1u)) - uint2(1u))));
+  float4 const v_28 = green;
+  tint_module_vars.outImage.write(v_28, uint2(int2(1, 0)));
 }
