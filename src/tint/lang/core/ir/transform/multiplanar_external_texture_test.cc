@@ -37,7 +37,7 @@ namespace tint::core::ir::transform {
 namespace {
 
 constexpr std::string_view kExternalTextureParams = R"(
-tint_GammaTransferParams = struct @align(4) {
+tint_TransferFunctionParams = struct @align(4) {
   G:f32 @offset(0)
   A:f32 @offset(4)
   B:f32 @offset(8)
@@ -52,8 +52,8 @@ tint_ExternalTextureParams = struct @align(16) {
   numPlanes:u32 @offset(0)
   doYuvToRgbConversionOnly:u32 @offset(4)
   yuvToRgbConversionMatrix:mat3x4<f32> @offset(16)
-  gammaDecodeParams:tint_GammaTransferParams @offset(64)
-  gammaEncodeParams:tint_GammaTransferParams @offset(96)
+  srcTransferFunction:tint_TransferFunctionParams @offset(64)
+  dstTransferFunction:tint_TransferFunctionParams @offset(96)
   gamutConversionMatrix:mat3x3<f32> @offset(128)
   sampleTransform:mat3x2<f32> @offset(176)
   loadTransform:mat3x2<f32> @offset(200)
@@ -456,12 +456,12 @@ $B1: {  # root
     %41:bool = eq %15, 0u
     %42:vec3<f32> = if %41 [t: $B6, f: $B7] {  # if_2
       $B6: {  # true
-        %43:tint_GammaTransferParams = access %params, 3u
-        %44:tint_GammaTransferParams = access %params, 4u
+        %43:tint_TransferFunctionParams = access %params, 3u
+        %44:tint_TransferFunctionParams = access %params, 4u
         %45:mat3x3<f32> = access %params, 5u
-        %46:vec3<f32> = call %tint_GammaCorrection, %28, %43
+        %46:vec3<f32> = call %tint_ApplyTransferFunction, %28, %43
         %48:vec3<f32> = mul %45, %46
-        %49:vec3<f32> = call %tint_GammaCorrection, %48, %44
+        %49:vec3<f32> = call %tint_ApplyTransferFunction, %48, %44
         exit_if %49  # if_2
       }
       $B7: {  # false
@@ -472,7 +472,7 @@ $B1: {  # root
     ret %50
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
     %53:f32 = access %params_1, 0u
     %54:f32 = access %params_1, 1u
@@ -571,12 +571,12 @@ $B1: {  # root
     %28:bool = eq %14, 0u
     %29:vec3<f32> = if %28 [t: $B4, f: $B5] {  # if_1
       $B4: {  # true
-        %30:tint_GammaTransferParams = access %params, 3u
-        %31:tint_GammaTransferParams = access %params, 4u
+        %30:tint_TransferFunctionParams = access %params, 3u
+        %31:tint_TransferFunctionParams = access %params, 4u
         %32:mat3x3<f32> = access %params, 5u
-        %33:vec3<f32> = call %tint_GammaCorrection, %27, %30
+        %33:vec3<f32> = call %tint_ApplyTransferFunction, %27, %30
         %35:vec3<f32> = mul %32, %33
-        %36:vec3<f32> = call %tint_GammaCorrection, %35, %31
+        %36:vec3<f32> = call %tint_ApplyTransferFunction, %35, %31
         exit_if %36  # if_1
       }
       $B5: {  # false
@@ -587,7 +587,7 @@ $B1: {  # root
     ret %37
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
     %40:f32 = access %params_1, 0u
     %41:f32 = access %params_1, 1u
@@ -705,12 +705,12 @@ $B1: {  # root
     %42:bool = eq %16, 0u
     %43:vec3<f32> = if %42 [t: $B6, f: $B7] {  # if_2
       $B6: {  # true
-        %44:tint_GammaTransferParams = access %params, 3u
-        %45:tint_GammaTransferParams = access %params, 4u
+        %44:tint_TransferFunctionParams = access %params, 3u
+        %45:tint_TransferFunctionParams = access %params, 4u
         %46:mat3x3<f32> = access %params, 5u
-        %47:vec3<f32> = call %tint_GammaCorrection, %29, %44
+        %47:vec3<f32> = call %tint_ApplyTransferFunction, %29, %44
         %49:vec3<f32> = mul %46, %47
-        %50:vec3<f32> = call %tint_GammaCorrection, %49, %45
+        %50:vec3<f32> = call %tint_ApplyTransferFunction, %49, %45
         exit_if %50  # if_2
       }
       $B7: {  # false
@@ -721,7 +721,7 @@ $B1: {  # root
     ret %51
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
     %54:f32 = access %params_1, 0u
     %55:f32 = access %params_1, 1u
@@ -821,12 +821,12 @@ $B1: {  # root
     %29:bool = eq %15, 0u
     %30:vec3<f32> = if %29 [t: $B4, f: $B5] {  # if_1
       $B4: {  # true
-        %31:tint_GammaTransferParams = access %params, 3u
-        %32:tint_GammaTransferParams = access %params, 4u
+        %31:tint_TransferFunctionParams = access %params, 3u
+        %32:tint_TransferFunctionParams = access %params, 4u
         %33:mat3x3<f32> = access %params, 5u
-        %34:vec3<f32> = call %tint_GammaCorrection, %28, %31
+        %34:vec3<f32> = call %tint_ApplyTransferFunction, %28, %31
         %36:vec3<f32> = mul %33, %34
-        %37:vec3<f32> = call %tint_GammaCorrection, %36, %32
+        %37:vec3<f32> = call %tint_ApplyTransferFunction, %36, %32
         exit_if %37  # if_1
       }
       $B5: {  # false
@@ -837,7 +837,7 @@ $B1: {  # root
     ret %38
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
     %41:f32 = access %params_1, 0u
     %42:f32 = access %params_1, 1u
@@ -954,12 +954,12 @@ $B1: {  # root
     %41:bool = eq %17, 0u
     %42:vec3<f32> = if %41 [t: $B6, f: $B7] {  # if_2
       $B6: {  # true
-        %43:tint_GammaTransferParams = access %params, 3u
-        %44:tint_GammaTransferParams = access %params, 4u
+        %43:tint_TransferFunctionParams = access %params, 3u
+        %44:tint_TransferFunctionParams = access %params, 4u
         %45:mat3x3<f32> = access %params, 5u
-        %46:vec3<f32> = call %tint_GammaCorrection, %29, %43
+        %46:vec3<f32> = call %tint_ApplyTransferFunction, %29, %43
         %48:vec3<f32> = mul %45, %46
-        %49:vec3<f32> = call %tint_GammaCorrection, %48, %44
+        %49:vec3<f32> = call %tint_ApplyTransferFunction, %48, %44
         exit_if %49  # if_2
       }
       $B7: {  # false
@@ -970,7 +970,7 @@ $B1: {  # root
     ret %50
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
     %53:f32 = access %params_1, 0u
     %54:f32 = access %params_1, 1u
@@ -1070,12 +1070,12 @@ $B1: {  # root
     %29:bool = eq %16, 0u
     %30:vec3<f32> = if %29 [t: $B4, f: $B5] {  # if_1
       $B4: {  # true
-        %31:tint_GammaTransferParams = access %params, 3u
-        %32:tint_GammaTransferParams = access %params, 4u
+        %31:tint_TransferFunctionParams = access %params, 3u
+        %32:tint_TransferFunctionParams = access %params, 4u
         %33:mat3x3<f32> = access %params, 5u
-        %34:vec3<f32> = call %tint_GammaCorrection, %27, %31
+        %34:vec3<f32> = call %tint_ApplyTransferFunction, %27, %31
         %36:vec3<f32> = mul %33, %34
-        %37:vec3<f32> = call %tint_GammaCorrection, %36, %32
+        %37:vec3<f32> = call %tint_ApplyTransferFunction, %36, %32
         exit_if %37  # if_1
       }
       $B5: {  # false
@@ -1086,7 +1086,7 @@ $B1: {  # root
     ret %38
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B6: {
     %41:f32 = access %params_1, 0u
     %42:f32 = access %params_1, 1u
@@ -1230,12 +1230,12 @@ $B1: {  # root
     %48:bool = eq %24, 0u
     %49:vec3<f32> = if %48 [t: $B7, f: $B8] {  # if_2
       $B7: {  # true
-        %50:tint_GammaTransferParams = access %params, 3u
-        %51:tint_GammaTransferParams = access %params, 4u
+        %50:tint_TransferFunctionParams = access %params, 3u
+        %51:tint_TransferFunctionParams = access %params, 4u
         %52:mat3x3<f32> = access %params, 5u
-        %53:vec3<f32> = call %tint_GammaCorrection, %36, %50
+        %53:vec3<f32> = call %tint_ApplyTransferFunction, %36, %50
         %55:vec3<f32> = mul %52, %53
-        %56:vec3<f32> = call %tint_GammaCorrection, %55, %51
+        %56:vec3<f32> = call %tint_ApplyTransferFunction, %55, %51
         exit_if %56  # if_2
       }
       $B8: {  # false
@@ -1246,7 +1246,7 @@ $B1: {  # root
     ret %57
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
     %60:f32 = access %params_1, 0u
     %61:f32 = access %params_1, 1u
@@ -1373,12 +1373,12 @@ $B1: {  # root
     %33:bool = eq %20, 0u
     %34:vec3<f32> = if %33 [t: $B5, f: $B6] {  # if_1
       $B5: {  # true
-        %35:tint_GammaTransferParams = access %params, 3u
-        %36:tint_GammaTransferParams = access %params, 4u
+        %35:tint_TransferFunctionParams = access %params, 3u
+        %36:tint_TransferFunctionParams = access %params, 4u
         %37:mat3x3<f32> = access %params, 5u
-        %38:vec3<f32> = call %tint_GammaCorrection, %31, %35
+        %38:vec3<f32> = call %tint_ApplyTransferFunction, %31, %35
         %40:vec3<f32> = mul %37, %38
-        %41:vec3<f32> = call %tint_GammaCorrection, %40, %36
+        %41:vec3<f32> = call %tint_ApplyTransferFunction, %40, %36
         exit_if %41  # if_1
       }
       $B6: {  # false
@@ -1389,7 +1389,7 @@ $B1: {  # root
     ret %42
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B7: {
     %45:f32 = access %params_1, 0u
     %46:f32 = access %params_1, 1u
@@ -1569,12 +1569,12 @@ $B1: {  # root
     %63:bool = eq %39, 0u
     %64:vec3<f32> = if %63 [t: $B7, f: $B8] {  # if_2
       $B7: {  # true
-        %65:tint_GammaTransferParams = access %params, 3u
-        %66:tint_GammaTransferParams = access %params, 4u
+        %65:tint_TransferFunctionParams = access %params, 3u
+        %66:tint_TransferFunctionParams = access %params, 4u
         %67:mat3x3<f32> = access %params, 5u
-        %68:vec3<f32> = call %tint_GammaCorrection, %51, %65
+        %68:vec3<f32> = call %tint_ApplyTransferFunction, %51, %65
         %70:vec3<f32> = mul %67, %68
-        %71:vec3<f32> = call %tint_GammaCorrection, %70, %66
+        %71:vec3<f32> = call %tint_ApplyTransferFunction, %70, %66
         exit_if %71  # if_2
       }
       $B8: {  # false
@@ -1585,7 +1585,7 @@ $B1: {  # root
     ret %72
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B9: {
     %75:f32 = access %params_1, 0u
     %76:f32 = access %params_1, 1u
@@ -1733,12 +1733,12 @@ $B1: {  # root
     %55:bool = eq %29, 0u
     %56:vec3<f32> = if %55 [t: $B6, f: $B7] {  # if_2
       $B6: {  # true
-        %57:tint_GammaTransferParams = access %params, 3u
-        %58:tint_GammaTransferParams = access %params, 4u
+        %57:tint_TransferFunctionParams = access %params, 3u
+        %58:tint_TransferFunctionParams = access %params, 4u
         %59:mat3x3<f32> = access %params, 5u
-        %60:vec3<f32> = call %tint_GammaCorrection, %42, %57
+        %60:vec3<f32> = call %tint_ApplyTransferFunction, %42, %57
         %62:vec3<f32> = mul %59, %60
-        %63:vec3<f32> = call %tint_GammaCorrection, %62, %58
+        %63:vec3<f32> = call %tint_ApplyTransferFunction, %62, %58
         exit_if %63  # if_2
       }
       $B7: {  # false
@@ -1749,7 +1749,7 @@ $B1: {  # root
     ret %64
   }
 }
-%tint_GammaCorrection = func(%v:vec3<f32>, %params_1:tint_GammaTransferParams):vec3<f32> {  # %params_1: 'params'
+%tint_ApplyTransferFunction = func(%v:vec3<f32>, %params_1:tint_TransferFunctionParams):vec3<f32> {  # %params_1: 'params'
   $B8: {
     %67:f32 = access %params_1, 0u
     %68:f32 = access %params_1, 1u

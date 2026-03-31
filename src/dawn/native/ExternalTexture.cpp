@@ -200,11 +200,22 @@ ExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescript
     //    return pow(A * x + B, G) + E
     //
     // Constants are passed from Chromium and originally sourced from ui/gfx/color_space.cc
-    const float* srcFn = descriptor->srcTransferFunctionParameters;
-    std::copy(srcFn, srcFn + 7, params.gammaDecodingParams.begin());
-
-    const float* dstFn = descriptor->dstTransferFunctionParameters;
-    std::copy(dstFn, dstFn + 7, params.gammaEncodingParams.begin());
+    auto ToTransferFunctionParams = [](const float* params) -> TransferFunctionParams {
+        return {
+            .g = params[0],
+            .a = params[1],
+            .b = params[2],
+            .c = params[3],
+            .d = params[4],
+            .e = params[5],
+            .f = params[6],
+            .padding = 0,
+        };
+    };
+    params.srcTransferFunction =
+        ToTransferFunctionParams(descriptor->srcTransferFunctionParameters);
+    params.dstTransferFunction =
+        ToTransferFunctionParams(descriptor->dstTransferFunctionParameters);
 
     // Compute the various transforms and bounds used for sampling and loading operations. They make
     // them appear as if operating on a `apparentSize` texture but instead they are all happening in

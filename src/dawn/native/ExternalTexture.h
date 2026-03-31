@@ -40,14 +40,21 @@ namespace dawn::native {
 
 class TextureViewBase;
 
+// Matches the structure defined in Tint's multiplanar_external_texture.cc transform.
+struct TransferFunctionParams {
+    float g, a, b, c, d, e, f;
+    uint32_t padding;
+};
+
+// Matches the structure defined in Tint's multiplanar_external_texture.cc transform.
 struct ExternalTextureParams {
     uint32_t numPlanes;
     // TODO(crbug.com/dawn/1466): Only go as few steps as necessary.
     uint32_t doYuvToRgbConversionOnly;
     // Multiplied with the vector on the left (Mat4x3 would use 16 more bytes).
     math::Mat3x4f yuvToRgbConversionMatrix;
-    std::array<float, 8> gammaDecodingParams = {};
-    std::array<float, 8> gammaEncodingParams = {};
+    TransferFunctionParams srcTransferFunction;
+    TransferFunctionParams dstTransferFunction;
     math::Mat3x3f gamutConversionMatrix;
     math::Mat3x2f sampleTransform;
     math::Mat3x2f loadTransform;

@@ -22,17 +22,17 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_GammaTransferParams 0 "G"
-               OpMemberName %tint_GammaTransferParams 1 "A"
-               OpMemberName %tint_GammaTransferParams 2 "B"
-               OpMemberName %tint_GammaTransferParams 3 "C"
-               OpMemberName %tint_GammaTransferParams 4 "D"
-               OpMemberName %tint_GammaTransferParams 5 "E"
-               OpMemberName %tint_GammaTransferParams 6 "F"
-               OpMemberName %tint_GammaTransferParams 7 "padding"
-               OpName %tint_GammaTransferParams "tint_GammaTransferParams"
-               OpMemberName %tint_ExternalTextureParams 3 "gammaDecodeParams"
-               OpMemberName %tint_ExternalTextureParams 4 "gammaEncodeParams"
+               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 1 "A"
+               OpMemberName %tint_TransferFunctionParams 2 "B"
+               OpMemberName %tint_TransferFunctionParams 3 "C"
+               OpMemberName %tint_TransferFunctionParams 4 "D"
+               OpMemberName %tint_TransferFunctionParams 5 "E"
+               OpMemberName %tint_TransferFunctionParams 6 "F"
+               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
+               OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
+               OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
                OpMemberName %tint_ExternalTextureParams 5 "gamutConversionMatrix"
                OpMemberName %tint_ExternalTextureParams 6 "sampleTransform"
                OpMemberName %tint_ExternalTextureParams 7 "loadTransform"
@@ -50,7 +50,7 @@
                OpName %plane_1 "plane_1"
                OpName %params "params"
                OpName %coords "coords"
-               OpName %tint_GammaCorrection "tint_GammaCorrection"
+               OpName %tint_ApplyTransferFunction "tint_ApplyTransferFunction"
                OpName %v "v"
                OpName %params_0 "params"
                OpName %start_byte_offset "start_byte_offset"
@@ -96,13 +96,13 @@
       %int_1 = OpConstant %int 1
          %24 = OpConstantComposite %v2int %int_1 %int_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_GammaTransferParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
     %v2float = OpTypeVector %float 2
 %mat3v2float = OpTypeMatrix %v2float 3
      %v2uint = OpTypeVector %uint 2
-%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_GammaTransferParams %tint_GammaTransferParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
+%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_TransferFunctionParams %tint_TransferFunctionParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
      %uint_0 = OpConstant %uint 0
      %uint_1 = OpConstant %uint 1
          %42 = OpConstantComposite %v2uint %uint_1 %uint_1
@@ -113,7 +113,7 @@
          %64 = OpTypeFunction %v4float %15 %15 %tint_ExternalTextureParams %v2uint
     %float_1 = OpConstant %float 1
        %bool = OpTypeBool
-        %112 = OpTypeFunction %v3float %v3float %tint_GammaTransferParams
+        %112 = OpTypeFunction %v3float %v3float %tint_TransferFunctionParams
      %v3bool = OpTypeVector %bool 3
         %140 = OpTypeFunction %tint_ExternalTextureParams %uint
     %uint_16 = OpConstant %uint 16
@@ -135,7 +135,7 @@
    %uint_264 = OpConstant %uint 264
         %261 = OpTypeFunction %mat3v4float %uint
     %uint_32 = OpConstant %uint 32
-        %280 = OpTypeFunction %tint_GammaTransferParams %uint
+        %280 = OpTypeFunction %tint_TransferFunctionParams %uint
      %uint_8 = OpConstant %uint 8
     %uint_12 = OpConstant %uint 12
     %uint_20 = OpConstant %uint 20
@@ -213,12 +213,12 @@
                OpSelectionMerge %90 None
                OpBranchConditional %89 %91 %92
          %91 = OpLabel
-        %104 = OpCompositeExtract %tint_GammaTransferParams %params 3
-        %105 = OpCompositeExtract %tint_GammaTransferParams %params 4
+        %104 = OpCompositeExtract %tint_TransferFunctionParams %params 3
+        %105 = OpCompositeExtract %tint_TransferFunctionParams %params 4
         %106 = OpCompositeExtract %mat3v3float %params 5
-        %107 = OpFunctionCall %v3float %tint_GammaCorrection %84 %104
+        %107 = OpFunctionCall %v3float %tint_ApplyTransferFunction %84 %104
         %109 = OpMatrixTimesVector %v3float %106 %107
-         %94 = OpFunctionCall %v3float %tint_GammaCorrection %109 %105
+         %94 = OpFunctionCall %v3float %tint_ApplyTransferFunction %109 %105
                OpBranch %90
          %92 = OpLabel
                OpBranch %90
@@ -227,9 +227,9 @@
          %95 = OpCompositeConstruct %v4float %93 %87
                OpReturnValue %95
                OpFunctionEnd
-%tint_GammaCorrection = OpFunction %v3float None %112
+%tint_ApplyTransferFunction = OpFunction %v3float None %112
           %v = OpFunctionParameter %v3float
-   %params_0 = OpFunctionParameter %tint_GammaTransferParams
+   %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %113 = OpLabel
         %114 = OpCompositeExtract %float %params_0 0
         %115 = OpCompositeExtract %float %params_0 1
@@ -276,9 +276,9 @@
         %160 = OpIAdd %uint %uint_16 %start_byte_offset
         %161 = OpFunctionCall %mat3v4float %162 %160
         %163 = OpIAdd %uint %uint_64 %start_byte_offset
-        %165 = OpFunctionCall %tint_GammaTransferParams %166 %163
+        %165 = OpFunctionCall %tint_TransferFunctionParams %166 %163
         %167 = OpIAdd %uint %uint_96 %start_byte_offset
-        %169 = OpFunctionCall %tint_GammaTransferParams %166 %167
+        %169 = OpFunctionCall %tint_TransferFunctionParams %166 %167
         %170 = OpIAdd %uint %uint_128 %start_byte_offset
         %172 = OpFunctionCall %mat3v3float %173 %170
         %174 = OpIAdd %uint %uint_176 %start_byte_offset
@@ -379,7 +379,7 @@
         %278 = OpCompositeConstruct %mat3v4float %266 %271 %277
                OpReturnValue %278
                OpFunctionEnd
-        %166 = OpFunction %tint_GammaTransferParams None %280
+        %166 = OpFunction %tint_TransferFunctionParams None %280
 %start_byte_offset_1 = OpFunctionParameter %uint
         %281 = OpLabel
         %282 = OpUDiv %uint %start_byte_offset_1 %uint_16
@@ -444,7 +444,7 @@
         %346 = OpShiftRightLogical %uint %345 %uint_2
         %347 = OpLoad %v4uint %344 None
         %348 = OpVectorExtractDynamic %uint %347 %346
-        %349 = OpCompositeConstruct %tint_GammaTransferParams %288 %296 %305 %314 %322 %331 %340 %348
+        %349 = OpCompositeConstruct %tint_TransferFunctionParams %288 %296 %305 %314 %322 %331 %340 %348
                OpReturnValue %349
                OpFunctionEnd
         %173 = OpFunction %mat3v3float None %351
@@ -535,17 +535,17 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_GammaTransferParams 0 "G"
-               OpMemberName %tint_GammaTransferParams 1 "A"
-               OpMemberName %tint_GammaTransferParams 2 "B"
-               OpMemberName %tint_GammaTransferParams 3 "C"
-               OpMemberName %tint_GammaTransferParams 4 "D"
-               OpMemberName %tint_GammaTransferParams 5 "E"
-               OpMemberName %tint_GammaTransferParams 6 "F"
-               OpMemberName %tint_GammaTransferParams 7 "padding"
-               OpName %tint_GammaTransferParams "tint_GammaTransferParams"
-               OpMemberName %tint_ExternalTextureParams 3 "gammaDecodeParams"
-               OpMemberName %tint_ExternalTextureParams 4 "gammaEncodeParams"
+               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 1 "A"
+               OpMemberName %tint_TransferFunctionParams 2 "B"
+               OpMemberName %tint_TransferFunctionParams 3 "C"
+               OpMemberName %tint_TransferFunctionParams 4 "D"
+               OpMemberName %tint_TransferFunctionParams 5 "E"
+               OpMemberName %tint_TransferFunctionParams 6 "F"
+               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
+               OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
+               OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
                OpMemberName %tint_ExternalTextureParams 5 "gamutConversionMatrix"
                OpMemberName %tint_ExternalTextureParams 6 "sampleTransform"
                OpMemberName %tint_ExternalTextureParams 7 "loadTransform"
@@ -563,7 +563,7 @@
                OpName %plane_1 "plane_1"
                OpName %params "params"
                OpName %coords "coords"
-               OpName %tint_GammaCorrection "tint_GammaCorrection"
+               OpName %tint_ApplyTransferFunction "tint_ApplyTransferFunction"
                OpName %v "v"
                OpName %params_0 "params"
                OpName %start_byte_offset "start_byte_offset"
@@ -609,13 +609,13 @@
       %int_1 = OpConstant %int 1
          %24 = OpConstantComposite %v2int %int_1 %int_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_GammaTransferParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
     %v2float = OpTypeVector %float 2
 %mat3v2float = OpTypeMatrix %v2float 3
      %v2uint = OpTypeVector %uint 2
-%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_GammaTransferParams %tint_GammaTransferParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
+%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_TransferFunctionParams %tint_TransferFunctionParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
      %uint_0 = OpConstant %uint 0
      %uint_1 = OpConstant %uint 1
          %42 = OpConstantComposite %v2uint %uint_1 %uint_1
@@ -626,7 +626,7 @@
          %64 = OpTypeFunction %v4float %15 %15 %tint_ExternalTextureParams %v2uint
     %float_1 = OpConstant %float 1
        %bool = OpTypeBool
-        %112 = OpTypeFunction %v3float %v3float %tint_GammaTransferParams
+        %112 = OpTypeFunction %v3float %v3float %tint_TransferFunctionParams
      %v3bool = OpTypeVector %bool 3
         %140 = OpTypeFunction %tint_ExternalTextureParams %uint
     %uint_16 = OpConstant %uint 16
@@ -648,7 +648,7 @@
    %uint_264 = OpConstant %uint 264
         %261 = OpTypeFunction %mat3v4float %uint
     %uint_32 = OpConstant %uint 32
-        %280 = OpTypeFunction %tint_GammaTransferParams %uint
+        %280 = OpTypeFunction %tint_TransferFunctionParams %uint
      %uint_8 = OpConstant %uint 8
     %uint_12 = OpConstant %uint 12
     %uint_20 = OpConstant %uint 20
@@ -726,12 +726,12 @@
                OpSelectionMerge %90 None
                OpBranchConditional %89 %91 %92
          %91 = OpLabel
-        %104 = OpCompositeExtract %tint_GammaTransferParams %params 3
-        %105 = OpCompositeExtract %tint_GammaTransferParams %params 4
+        %104 = OpCompositeExtract %tint_TransferFunctionParams %params 3
+        %105 = OpCompositeExtract %tint_TransferFunctionParams %params 4
         %106 = OpCompositeExtract %mat3v3float %params 5
-        %107 = OpFunctionCall %v3float %tint_GammaCorrection %84 %104
+        %107 = OpFunctionCall %v3float %tint_ApplyTransferFunction %84 %104
         %109 = OpMatrixTimesVector %v3float %106 %107
-         %94 = OpFunctionCall %v3float %tint_GammaCorrection %109 %105
+         %94 = OpFunctionCall %v3float %tint_ApplyTransferFunction %109 %105
                OpBranch %90
          %92 = OpLabel
                OpBranch %90
@@ -740,9 +740,9 @@
          %95 = OpCompositeConstruct %v4float %93 %87
                OpReturnValue %95
                OpFunctionEnd
-%tint_GammaCorrection = OpFunction %v3float None %112
+%tint_ApplyTransferFunction = OpFunction %v3float None %112
           %v = OpFunctionParameter %v3float
-   %params_0 = OpFunctionParameter %tint_GammaTransferParams
+   %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %113 = OpLabel
         %114 = OpCompositeExtract %float %params_0 0
         %115 = OpCompositeExtract %float %params_0 1
@@ -789,9 +789,9 @@
         %160 = OpIAdd %uint %uint_16 %start_byte_offset
         %161 = OpFunctionCall %mat3v4float %162 %160
         %163 = OpIAdd %uint %uint_64 %start_byte_offset
-        %165 = OpFunctionCall %tint_GammaTransferParams %166 %163
+        %165 = OpFunctionCall %tint_TransferFunctionParams %166 %163
         %167 = OpIAdd %uint %uint_96 %start_byte_offset
-        %169 = OpFunctionCall %tint_GammaTransferParams %166 %167
+        %169 = OpFunctionCall %tint_TransferFunctionParams %166 %167
         %170 = OpIAdd %uint %uint_128 %start_byte_offset
         %172 = OpFunctionCall %mat3v3float %173 %170
         %174 = OpIAdd %uint %uint_176 %start_byte_offset
@@ -892,7 +892,7 @@
         %278 = OpCompositeConstruct %mat3v4float %266 %271 %277
                OpReturnValue %278
                OpFunctionEnd
-        %166 = OpFunction %tint_GammaTransferParams None %280
+        %166 = OpFunction %tint_TransferFunctionParams None %280
 %start_byte_offset_1 = OpFunctionParameter %uint
         %281 = OpLabel
         %282 = OpUDiv %uint %start_byte_offset_1 %uint_16
@@ -957,7 +957,7 @@
         %346 = OpShiftRightLogical %uint %345 %uint_2
         %347 = OpLoad %v4uint %344 None
         %348 = OpVectorExtractDynamic %uint %347 %346
-        %349 = OpCompositeConstruct %tint_GammaTransferParams %288 %296 %305 %314 %322 %331 %340 %348
+        %349 = OpCompositeConstruct %tint_TransferFunctionParams %288 %296 %305 %314 %322 %331 %340 %348
                OpReturnValue %349
                OpFunctionEnd
         %173 = OpFunction %mat3v3float None %351
@@ -1048,17 +1048,17 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_GammaTransferParams 0 "G"
-               OpMemberName %tint_GammaTransferParams 1 "A"
-               OpMemberName %tint_GammaTransferParams 2 "B"
-               OpMemberName %tint_GammaTransferParams 3 "C"
-               OpMemberName %tint_GammaTransferParams 4 "D"
-               OpMemberName %tint_GammaTransferParams 5 "E"
-               OpMemberName %tint_GammaTransferParams 6 "F"
-               OpMemberName %tint_GammaTransferParams 7 "padding"
-               OpName %tint_GammaTransferParams "tint_GammaTransferParams"
-               OpMemberName %tint_ExternalTextureParams 3 "gammaDecodeParams"
-               OpMemberName %tint_ExternalTextureParams 4 "gammaEncodeParams"
+               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 1 "A"
+               OpMemberName %tint_TransferFunctionParams 2 "B"
+               OpMemberName %tint_TransferFunctionParams 3 "C"
+               OpMemberName %tint_TransferFunctionParams 4 "D"
+               OpMemberName %tint_TransferFunctionParams 5 "E"
+               OpMemberName %tint_TransferFunctionParams 6 "F"
+               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
+               OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
+               OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
                OpMemberName %tint_ExternalTextureParams 5 "gamutConversionMatrix"
                OpMemberName %tint_ExternalTextureParams 6 "sampleTransform"
                OpMemberName %tint_ExternalTextureParams 7 "loadTransform"
@@ -1080,7 +1080,7 @@
                OpName %plane_1 "plane_1"
                OpName %params "params"
                OpName %coords "coords"
-               OpName %tint_GammaCorrection "tint_GammaCorrection"
+               OpName %tint_ApplyTransferFunction "tint_ApplyTransferFunction"
                OpName %v "v"
                OpName %params_0 "params"
                OpName %start_byte_offset "start_byte_offset"
@@ -1128,13 +1128,13 @@
       %int_1 = OpConstant %int 1
          %26 = OpConstantComposite %v2int %int_1 %int_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_GammaTransferParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
     %v2float = OpTypeVector %float 2
 %mat3v2float = OpTypeMatrix %v2float 3
      %v2uint = OpTypeVector %uint 2
-%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_GammaTransferParams %tint_GammaTransferParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
+%tint_ExternalTextureParams = OpTypeStruct %uint %uint %mat3v4float %tint_TransferFunctionParams %tint_TransferFunctionParams %mat3v3float %mat3v2float %mat3v2float %v2float %v2float %v2float %v2float %v2uint %v2float
      %uint_0 = OpConstant %uint 0
      %uint_1 = OpConstant %uint 1
          %44 = OpConstantComposite %v2uint %uint_1 %uint_1
@@ -1147,7 +1147,7 @@
          %71 = OpTypeFunction %v4float %10 %10 %tint_ExternalTextureParams %v2uint
     %float_1 = OpConstant %float 1
        %bool = OpTypeBool
-        %119 = OpTypeFunction %v3float %v3float %tint_GammaTransferParams
+        %119 = OpTypeFunction %v3float %v3float %tint_TransferFunctionParams
      %v3bool = OpTypeVector %bool 3
         %147 = OpTypeFunction %tint_ExternalTextureParams %uint
     %uint_16 = OpConstant %uint 16
@@ -1169,7 +1169,7 @@
    %uint_264 = OpConstant %uint 264
         %268 = OpTypeFunction %mat3v4float %uint
     %uint_32 = OpConstant %uint 32
-        %287 = OpTypeFunction %tint_GammaTransferParams %uint
+        %287 = OpTypeFunction %tint_TransferFunctionParams %uint
      %uint_8 = OpConstant %uint 8
     %uint_12 = OpConstant %uint 12
     %uint_20 = OpConstant %uint 20
@@ -1253,12 +1253,12 @@
                OpSelectionMerge %97 None
                OpBranchConditional %96 %98 %99
          %98 = OpLabel
-        %111 = OpCompositeExtract %tint_GammaTransferParams %params 3
-        %112 = OpCompositeExtract %tint_GammaTransferParams %params 4
+        %111 = OpCompositeExtract %tint_TransferFunctionParams %params 3
+        %112 = OpCompositeExtract %tint_TransferFunctionParams %params 4
         %113 = OpCompositeExtract %mat3v3float %params 5
-        %114 = OpFunctionCall %v3float %tint_GammaCorrection %91 %111
+        %114 = OpFunctionCall %v3float %tint_ApplyTransferFunction %91 %111
         %116 = OpMatrixTimesVector %v3float %113 %114
-        %101 = OpFunctionCall %v3float %tint_GammaCorrection %116 %112
+        %101 = OpFunctionCall %v3float %tint_ApplyTransferFunction %116 %112
                OpBranch %97
          %99 = OpLabel
                OpBranch %97
@@ -1267,9 +1267,9 @@
         %102 = OpCompositeConstruct %v4float %100 %94
                OpReturnValue %102
                OpFunctionEnd
-%tint_GammaCorrection = OpFunction %v3float None %119
+%tint_ApplyTransferFunction = OpFunction %v3float None %119
           %v = OpFunctionParameter %v3float
-   %params_0 = OpFunctionParameter %tint_GammaTransferParams
+   %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %120 = OpLabel
         %121 = OpCompositeExtract %float %params_0 0
         %122 = OpCompositeExtract %float %params_0 1
@@ -1316,9 +1316,9 @@
         %167 = OpIAdd %uint %uint_16 %start_byte_offset
         %168 = OpFunctionCall %mat3v4float %169 %167
         %170 = OpIAdd %uint %uint_64 %start_byte_offset
-        %172 = OpFunctionCall %tint_GammaTransferParams %173 %170
+        %172 = OpFunctionCall %tint_TransferFunctionParams %173 %170
         %174 = OpIAdd %uint %uint_96 %start_byte_offset
-        %176 = OpFunctionCall %tint_GammaTransferParams %173 %174
+        %176 = OpFunctionCall %tint_TransferFunctionParams %173 %174
         %177 = OpIAdd %uint %uint_128 %start_byte_offset
         %179 = OpFunctionCall %mat3v3float %180 %177
         %181 = OpIAdd %uint %uint_176 %start_byte_offset
@@ -1419,7 +1419,7 @@
         %285 = OpCompositeConstruct %mat3v4float %273 %278 %284
                OpReturnValue %285
                OpFunctionEnd
-        %173 = OpFunction %tint_GammaTransferParams None %287
+        %173 = OpFunction %tint_TransferFunctionParams None %287
 %start_byte_offset_1 = OpFunctionParameter %uint
         %288 = OpLabel
         %289 = OpUDiv %uint %start_byte_offset_1 %uint_16
@@ -1484,7 +1484,7 @@
         %353 = OpShiftRightLogical %uint %352 %uint_2
         %354 = OpLoad %v4uint %351 None
         %355 = OpVectorExtractDynamic %uint %354 %353
-        %356 = OpCompositeConstruct %tint_GammaTransferParams %295 %303 %312 %321 %329 %338 %347 %355
+        %356 = OpCompositeConstruct %tint_TransferFunctionParams %295 %303 %312 %321 %329 %338 %347 %355
                OpReturnValue %356
                OpFunctionEnd
         %180 = OpFunction %mat3v3float None %358

@@ -1,7 +1,7 @@
 #version 310 es
 
 
-struct tint_GammaTransferParams {
+struct tint_TransferFunctionParams {
   float G;
   float A;
   float B;
@@ -16,8 +16,8 @@ struct tint_ExternalTextureParams {
   uint numPlanes;
   uint doYuvToRgbConversionOnly;
   mat3x4 yuvToRgbConversionMatrix;
-  tint_GammaTransferParams gammaDecodeParams;
-  tint_GammaTransferParams gammaEncodeParams;
+  tint_TransferFunctionParams srcTransferFunction;
+  tint_TransferFunctionParams dstTransferFunction;
   mat3 gamutConversionMatrix;
   mat3x2 sampleTransform;
   mat3x2 loadTransform;
@@ -35,7 +35,7 @@ uniform t_params_block_1_ubo {
 } v_1;
 uniform highp sampler2D t_plane0;
 uniform highp sampler2D t_plane1;
-vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
+vec3 tint_ApplyTransferFunction(vec3 v, tint_TransferFunctionParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
 }
@@ -59,7 +59,7 @@ vec4 tint_TextureLoadMultiplanarExternal(tint_ExternalTextureParams params, uvec
   vec3 v_12 = v_5;
   vec3 v_13 = vec3(0.0f);
   if ((params.doYuvToRgbConversionOnly == 0u)) {
-    v_13 = tint_GammaCorrection((params.gamutConversionMatrix * tint_GammaCorrection(v_12, params.gammaDecodeParams)), params.gammaEncodeParams);
+    v_13 = tint_ApplyTransferFunction((params.gamutConversionMatrix * tint_ApplyTransferFunction(v_12, params.srcTransferFunction)), params.dstTransferFunction);
   } else {
     v_13 = v_12;
   }
@@ -76,7 +76,7 @@ mat3x2 v_14(uint start_byte_offset) {
 mat3 v_20(uint start_byte_offset) {
   return mat3(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)].xyz), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)].xyz), uintBitsToFloat(v_1.inner[((32u + start_byte_offset) / 16u)].xyz));
 }
-tint_GammaTransferParams v_21(uint start_byte_offset) {
+tint_TransferFunctionParams v_21(uint start_byte_offset) {
   uvec4 v_22 = v_1.inner[(start_byte_offset / 16u)];
   uvec4 v_23 = v_1.inner[((4u + start_byte_offset) / 16u)];
   uvec4 v_24 = v_1.inner[((8u + start_byte_offset) / 16u)];
@@ -85,7 +85,7 @@ tint_GammaTransferParams v_21(uint start_byte_offset) {
   uvec4 v_27 = v_1.inner[((20u + start_byte_offset) / 16u)];
   uvec4 v_28 = v_1.inner[((24u + start_byte_offset) / 16u)];
   uvec4 v_29 = v_1.inner[((28u + start_byte_offset) / 16u)];
-  return tint_GammaTransferParams(uintBitsToFloat(v_22[((start_byte_offset & 15u) >> 2u)]), uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), v_29[(((28u + start_byte_offset) & 15u) >> 2u)]);
+  return tint_TransferFunctionParams(uintBitsToFloat(v_22[((start_byte_offset & 15u) >> 2u)]), uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), v_29[(((28u + start_byte_offset) & 15u) >> 2u)]);
 }
 mat3x4 v_30(uint start_byte_offset) {
   return mat3x4(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)]), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)]), uintBitsToFloat(v_1.inner[((32u + start_byte_offset) / 16u)]));
@@ -94,8 +94,8 @@ tint_ExternalTextureParams v_31(uint start_byte_offset) {
   uvec4 v_32 = v_1.inner[(start_byte_offset / 16u)];
   uvec4 v_33 = v_1.inner[((4u + start_byte_offset) / 16u)];
   mat3x4 v_34 = v_30((16u + start_byte_offset));
-  tint_GammaTransferParams v_35 = v_21((64u + start_byte_offset));
-  tint_GammaTransferParams v_36 = v_21((96u + start_byte_offset));
+  tint_TransferFunctionParams v_35 = v_21((64u + start_byte_offset));
+  tint_TransferFunctionParams v_36 = v_21((96u + start_byte_offset));
   mat3 v_37 = v_20((128u + start_byte_offset));
   mat3x2 v_38 = v_14((176u + start_byte_offset));
   mat3x2 v_39 = v_14((200u + start_byte_offset));
