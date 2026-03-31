@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6002fc93_17c76fa6",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 2933,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T16:41:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "56dc6983_ef646e9e",
+      "revId": "3633b0b6eaf27895b3d9984f6bb6153f1f4dcbb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d3fed99_8a62dfe9",
