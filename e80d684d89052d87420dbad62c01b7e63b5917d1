@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af03382c_d9c036bb",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 62
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-31T18:05:19Z",
+      "side": 1,
+      "message": "nit: `mBindGroupLayout` doesn\u0027t seem too long to type.",
+      "range": {
+        "startLine": 141,
+        "startChar": 25,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e80b0e0_ce48b8f3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-31T18:05:19Z",
+      "side": 1,
+      "message": "You should be able to use absl::FunctionRef here instead which has lower overhead. You don\u0027t bind state or store the function so std::function isn\u0027t needed.",
+      "range": {
+        "startLine": 663,
+        "startChar": 8,
+        "endLine": 663,
+        "endChar": 21
+      },
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fbf4e98_f73f5722",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-03-31T18:05:19Z",
+      "side": 1,
+      "message": "So this is going to recreate VkDescriptorSets each time the pipeline is drawn rather than reusing it IIUC?",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
