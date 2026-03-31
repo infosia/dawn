@@ -16,6 +16,24 @@
       "message": "Nit: FYI you can do `str_ty-\u003eMembers().Back()`",
       "revId": "1aae2339072697532271bd2d7cfb98167741d223",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e029aa4c_83fc4a00",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-03-31T19:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2f652a_58c10891",
+      "revId": "1aae2339072697532271bd2d7cfb98167741d223",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
