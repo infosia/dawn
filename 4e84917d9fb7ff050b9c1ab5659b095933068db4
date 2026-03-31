@@ -88,6 +88,24 @@
       "parentUuid": "c103f724_e3c4154f",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "757ef1c4_5ecf901e",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T13:08:03Z",
+      "side": 1,
+      "message": "Debugged locally, https://dawn-review.googlesource.com/c/dawn/+/300495 should fix the issue.",
+      "parentUuid": "803e9ca8_9df28046",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
