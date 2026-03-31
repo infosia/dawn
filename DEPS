@@ -369,7 +369,12 @@ deps = {
     'condition': 'dawn_standalone',
   },
 
+  # The third_party/dxc entry will be removed after we've rolled and
+  # updated Chromium for the third_party/directx-shader-compiler/src entry
   'third_party/dxc': {
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@bb168c9647beb3d80c25926dd8ac3aab864dd134',
+  },
+  'third_party/directx-shader-compiler/src': {
     'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@bb168c9647beb3d80c25926dd8ac3aab864dd134',
   },
 
