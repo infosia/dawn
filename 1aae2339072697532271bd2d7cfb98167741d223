@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd2f652a_58c10891",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "Nit: FYI you can do `str_ty-\u003eMembers().Back()`",
+      "revId": "1aae2339072697532271bd2d7cfb98167741d223",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

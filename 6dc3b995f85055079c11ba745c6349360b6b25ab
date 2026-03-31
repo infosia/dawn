@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2077d890_dd310130",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "Just to double-check my understanding:\nThis `else` branch will only happen when the root `buffer` declaration is unsized, is that right?",
+      "revId": "6dc3b995f85055079c11ba745c6349360b6b25ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c259425_2222c571",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "Do you need to add the offset back on again? Otherwise it isn\u0027t taken into account for the required size calculations, unless I\u0027m missing something.\n\nI put a comment with a worked example on one of the unit tests to show the scenario that I think might be incorrect.",
+      "revId": "6dc3b995f85055079c11ba745c6349360b6b25ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea3a288_18243021",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "Are these the wrong way around? select is `(false, true, cond)`",
+      "revId": "6dc3b995f85055079c11ba745c6349360b6b25ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f98495d_d348b9ab",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "6dc3b995f85055079c11ba745c6349360b6b25ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3779aa1_349f2f95",
+        "filename": "src/tint/lang/core/ir/transform/robustness_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5930,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-03-31T18:52:24Z",
+      "side": 1,
+      "message": "(worked example for my comment about the struct member offset subtraction)\n\n```\nlet\n  %o \u003d 0  # offset\n  %s \u003d 40 # requested size\n  %5 \u003d 32 # actual buffer length\n\n    %6:u32 \u003d bitcast\u003cu32\u003e %o       # %6 \u003d 0\n    %7:u32 \u003d and %6, 4294967288u   # %7 \u003d 0\n    %8:u32 \u003d bitcast\u003cu32\u003e %s       # %8 \u003d 40\n    %9:u32 \u003d sub %8, 24u           # %9 \u003d 16\n    %10:u32 \u003d div %9, 8u           # %10 \u003d 2\n    %11:u32 \u003d mul %10, 8u          # %11 \u003d 16\n    %12:u32 \u003d max %11, 32u         # %12 \u003d 32\n    %13:u32 \u003d add %7, %12          # %13 \u003d 32\n    %14:bool \u003d lt %5, %13          # %14 \u003d false\n```\nSo it comes out saying the length is not less than the required size, which seems wrong?",
+      "range": {
+        "startLine": 5919,
+        "startChar": 0,
+        "endLine": 5930,
+        "endChar": 34
+      },
+      "revId": "6dc3b995f85055079c11ba745c6349360b6b25ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
