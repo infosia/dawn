@@ -2,14 +2,14 @@
 // main
 //
 struct tint_TransferFunctionParams {
-  float G;
+  uint mode;
   float A;
   float B;
   float C;
   float D;
   float E;
   float F;
-  uint padding;
+  float G;
 };
 
 struct tint_ExternalTextureParams {
@@ -50,7 +50,7 @@ float3x3 v_6(uint start_byte_offset) {
 }
 
 tint_TransferFunctionParams v_7(uint start_byte_offset) {
-  tint_TransferFunctionParams v_8 = {asfloat(randomTexture_params[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]), asfloat(randomTexture_params[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((8u + start_byte_offset) / 16u)][(((8u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((12u + start_byte_offset) / 16u)][(((12u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((16u + start_byte_offset) / 16u)][(((16u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((20u + start_byte_offset) / 16u)][(((20u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((24u + start_byte_offset) / 16u)][(((24u + start_byte_offset) & 15u) >> 2u)]), randomTexture_params[((28u + start_byte_offset) / 16u)][(((28u + start_byte_offset) & 15u) >> 2u)]};
+  tint_TransferFunctionParams v_8 = {randomTexture_params[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)], asfloat(randomTexture_params[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((8u + start_byte_offset) / 16u)][(((8u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((12u + start_byte_offset) / 16u)][(((12u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((16u + start_byte_offset) / 16u)][(((16u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((20u + start_byte_offset) / 16u)][(((20u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((24u + start_byte_offset) / 16u)][(((24u + start_byte_offset) & 15u) >> 2u)]), asfloat(randomTexture_params[((28u + start_byte_offset) / 16u)][(((28u + start_byte_offset) & 15u) >> 2u)])};
   return v_8;
 }
 

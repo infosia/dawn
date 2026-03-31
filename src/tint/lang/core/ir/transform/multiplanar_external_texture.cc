@@ -361,14 +361,14 @@ struct State {
         if (!transfer_function_params_struct) {
             transfer_function_params_struct = ty.Struct(sym.Register("tint_TransferFunctionParams"),
                                                         {
-                                                            {sym.Register("G"), ty.f32()},
+                                                            {sym.Register("mode"), ty.u32()},
                                                             {sym.Register("A"), ty.f32()},
                                                             {sym.Register("B"), ty.f32()},
                                                             {sym.Register("C"), ty.f32()},
                                                             {sym.Register("D"), ty.f32()},
                                                             {sym.Register("E"), ty.f32()},
                                                             {sym.Register("F"), ty.f32()},
-                                                            {sym.Register("padding"), ty.u32()},
+                                                            {sym.Register("G"), ty.f32()},
                                                         });
         }
         return transfer_function_params_struct;
@@ -421,13 +421,13 @@ struct State {
         apply_transfer_function->SetParams({v, params});
         b.Append(apply_transfer_function->Block(), [&] {
             auto* vec3f = ty.vec3f();
-            auto* G = b.Access(ty.f32(), params, 0_u);
             auto* A = b.Access(ty.f32(), params, 1_u);
             auto* B = b.Access(ty.f32(), params, 2_u);
             auto* C = b.Access(ty.f32(), params, 3_u);
             auto* D = b.Access(ty.f32(), params, 4_u);
             auto* E = b.Access(ty.f32(), params, 5_u);
             auto* F = b.Access(ty.f32(), params, 6_u);
+            auto* G = b.Access(ty.f32(), params, 7_u);
             auto* G_splat = b.Construct(vec3f, G);
             auto* D_splat = b.Construct(vec3f, D);
             auto* abs_v = b.Call(vec3f, core::BuiltinFn::kAbs, v);

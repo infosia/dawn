@@ -23,14 +23,14 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 0 "mode"
                OpMemberName %tint_TransferFunctionParams 1 "A"
                OpMemberName %tint_TransferFunctionParams 2 "B"
                OpMemberName %tint_TransferFunctionParams 3 "C"
                OpMemberName %tint_TransferFunctionParams 4 "D"
                OpMemberName %tint_TransferFunctionParams 5 "E"
                OpMemberName %tint_TransferFunctionParams 6 "F"
-               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpMemberName %tint_TransferFunctionParams 7 "G"
                OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
                OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
                OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
@@ -102,7 +102,7 @@
     %float_1 = OpConstant %float 1
          %26 = OpConstantComposite %v2float %float_1 %float_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %uint %float %float %float %float %float %float %float
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
 %mat3v2float = OpTypeMatrix %v2float 3
@@ -234,27 +234,27 @@
           %v = OpFunctionParameter %v3float
    %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %112 = OpLabel
-        %113 = OpCompositeExtract %float %params_0 0
-        %114 = OpCompositeExtract %float %params_0 1
-        %115 = OpCompositeExtract %float %params_0 2
-        %116 = OpCompositeExtract %float %params_0 3
-        %117 = OpCompositeExtract %float %params_0 4
-        %118 = OpCompositeExtract %float %params_0 5
-        %119 = OpCompositeExtract %float %params_0 6
-        %120 = OpCompositeConstruct %v3float %113 %113 %113
-        %121 = OpCompositeConstruct %v3float %117 %117 %117
+        %113 = OpCompositeExtract %float %params_0 1
+        %114 = OpCompositeExtract %float %params_0 2
+        %115 = OpCompositeExtract %float %params_0 3
+        %116 = OpCompositeExtract %float %params_0 4
+        %117 = OpCompositeExtract %float %params_0 5
+        %118 = OpCompositeExtract %float %params_0 6
+        %119 = OpCompositeExtract %float %params_0 7
+        %120 = OpCompositeConstruct %v3float %119 %119 %119
+        %121 = OpCompositeConstruct %v3float %116 %116 %116
         %122 = OpExtInst %v3float %71 FAbs %v
         %123 = OpExtInst %v3float %71 FSign %v
         %124 = OpFOrdLessThan %v3bool %122 %121
-        %126 = OpVectorTimesScalar %v3float %122 %116
-        %127 = OpCompositeConstruct %v3float %119 %119 %119
+        %126 = OpVectorTimesScalar %v3float %122 %115
+        %127 = OpCompositeConstruct %v3float %118 %118 %118
         %128 = OpFAdd %v3float %126 %127
         %129 = OpFMul %v3float %123 %128
-        %130 = OpVectorTimesScalar %v3float %122 %114
-        %131 = OpCompositeConstruct %v3float %115 %115 %115
+        %130 = OpVectorTimesScalar %v3float %122 %113
+        %131 = OpCompositeConstruct %v3float %114 %114 %114
         %132 = OpFAdd %v3float %130 %131
         %133 = OpExtInst %v3float %71 Pow %132 %120
-        %134 = OpCompositeConstruct %v3float %118 %118 %118
+        %134 = OpCompositeConstruct %v3float %117 %117 %117
         %135 = OpFAdd %v3float %133 %134
         %136 = OpFMul %v3float %123 %135
         %137 = OpSelect %v3float %124 %129 %136
@@ -391,63 +391,63 @@
         %284 = OpShiftRightLogical %uint %283 %uint_2
         %285 = OpLoad %v4uint %282 None
         %286 = OpVectorExtractDynamic %uint %285 %284
-        %287 = OpBitcast %float %286
-        %288 = OpIAdd %uint %uint_4 %start_byte_offset_1
-        %289 = OpUDiv %uint %288 %uint_16
-        %290 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %289
-        %291 = OpBitwiseAnd %uint %288 %uint_15
-        %292 = OpShiftRightLogical %uint %291 %uint_2
-        %293 = OpLoad %v4uint %290 None
-        %294 = OpVectorExtractDynamic %uint %293 %292
-        %295 = OpBitcast %float %294
-        %296 = OpIAdd %uint %uint_8 %start_byte_offset_1
-        %298 = OpUDiv %uint %296 %uint_16
-        %299 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %298
-        %300 = OpBitwiseAnd %uint %296 %uint_15
-        %301 = OpShiftRightLogical %uint %300 %uint_2
-        %302 = OpLoad %v4uint %299 None
-        %303 = OpVectorExtractDynamic %uint %302 %301
-        %304 = OpBitcast %float %303
-        %305 = OpIAdd %uint %uint_12 %start_byte_offset_1
-        %307 = OpUDiv %uint %305 %uint_16
-        %308 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %307
-        %309 = OpBitwiseAnd %uint %305 %uint_15
-        %310 = OpShiftRightLogical %uint %309 %uint_2
-        %311 = OpLoad %v4uint %308 None
-        %312 = OpVectorExtractDynamic %uint %311 %310
-        %313 = OpBitcast %float %312
-        %314 = OpIAdd %uint %uint_16 %start_byte_offset_1
-        %315 = OpUDiv %uint %314 %uint_16
-        %316 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %315
-        %317 = OpBitwiseAnd %uint %314 %uint_15
-        %318 = OpShiftRightLogical %uint %317 %uint_2
-        %319 = OpLoad %v4uint %316 None
-        %320 = OpVectorExtractDynamic %uint %319 %318
-        %321 = OpBitcast %float %320
-        %322 = OpIAdd %uint %uint_20 %start_byte_offset_1
-        %324 = OpUDiv %uint %322 %uint_16
-        %325 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %324
-        %326 = OpBitwiseAnd %uint %322 %uint_15
-        %327 = OpShiftRightLogical %uint %326 %uint_2
-        %328 = OpLoad %v4uint %325 None
-        %329 = OpVectorExtractDynamic %uint %328 %327
-        %330 = OpBitcast %float %329
-        %331 = OpIAdd %uint %uint_24 %start_byte_offset_1
-        %333 = OpUDiv %uint %331 %uint_16
-        %334 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %333
-        %335 = OpBitwiseAnd %uint %331 %uint_15
-        %336 = OpShiftRightLogical %uint %335 %uint_2
-        %337 = OpLoad %v4uint %334 None
-        %338 = OpVectorExtractDynamic %uint %337 %336
-        %339 = OpBitcast %float %338
-        %340 = OpIAdd %uint %uint_28 %start_byte_offset_1
-        %342 = OpUDiv %uint %340 %uint_16
-        %343 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %342
-        %344 = OpBitwiseAnd %uint %340 %uint_15
-        %345 = OpShiftRightLogical %uint %344 %uint_2
-        %346 = OpLoad %v4uint %343 None
-        %347 = OpVectorExtractDynamic %uint %346 %345
-        %348 = OpCompositeConstruct %tint_TransferFunctionParams %287 %295 %304 %313 %321 %330 %339 %347
+        %287 = OpIAdd %uint %uint_4 %start_byte_offset_1
+        %288 = OpUDiv %uint %287 %uint_16
+        %289 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %288
+        %290 = OpBitwiseAnd %uint %287 %uint_15
+        %291 = OpShiftRightLogical %uint %290 %uint_2
+        %292 = OpLoad %v4uint %289 None
+        %293 = OpVectorExtractDynamic %uint %292 %291
+        %294 = OpBitcast %float %293
+        %295 = OpIAdd %uint %uint_8 %start_byte_offset_1
+        %297 = OpUDiv %uint %295 %uint_16
+        %298 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %297
+        %299 = OpBitwiseAnd %uint %295 %uint_15
+        %300 = OpShiftRightLogical %uint %299 %uint_2
+        %301 = OpLoad %v4uint %298 None
+        %302 = OpVectorExtractDynamic %uint %301 %300
+        %303 = OpBitcast %float %302
+        %304 = OpIAdd %uint %uint_12 %start_byte_offset_1
+        %306 = OpUDiv %uint %304 %uint_16
+        %307 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %306
+        %308 = OpBitwiseAnd %uint %304 %uint_15
+        %309 = OpShiftRightLogical %uint %308 %uint_2
+        %310 = OpLoad %v4uint %307 None
+        %311 = OpVectorExtractDynamic %uint %310 %309
+        %312 = OpBitcast %float %311
+        %313 = OpIAdd %uint %uint_16 %start_byte_offset_1
+        %314 = OpUDiv %uint %313 %uint_16
+        %315 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %314
+        %316 = OpBitwiseAnd %uint %313 %uint_15
+        %317 = OpShiftRightLogical %uint %316 %uint_2
+        %318 = OpLoad %v4uint %315 None
+        %319 = OpVectorExtractDynamic %uint %318 %317
+        %320 = OpBitcast %float %319
+        %321 = OpIAdd %uint %uint_20 %start_byte_offset_1
+        %323 = OpUDiv %uint %321 %uint_16
+        %324 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %323
+        %325 = OpBitwiseAnd %uint %321 %uint_15
+        %326 = OpShiftRightLogical %uint %325 %uint_2
+        %327 = OpLoad %v4uint %324 None
+        %328 = OpVectorExtractDynamic %uint %327 %326
+        %329 = OpBitcast %float %328
+        %330 = OpIAdd %uint %uint_24 %start_byte_offset_1
+        %332 = OpUDiv %uint %330 %uint_16
+        %333 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %332
+        %334 = OpBitwiseAnd %uint %330 %uint_15
+        %335 = OpShiftRightLogical %uint %334 %uint_2
+        %336 = OpLoad %v4uint %333 None
+        %337 = OpVectorExtractDynamic %uint %336 %335
+        %338 = OpBitcast %float %337
+        %339 = OpIAdd %uint %uint_28 %start_byte_offset_1
+        %341 = OpUDiv %uint %339 %uint_16
+        %342 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %341
+        %343 = OpBitwiseAnd %uint %339 %uint_15
+        %344 = OpShiftRightLogical %uint %343 %uint_2
+        %345 = OpLoad %v4uint %342 None
+        %346 = OpVectorExtractDynamic %uint %345 %344
+        %347 = OpBitcast %float %346
+        %348 = OpCompositeConstruct %tint_TransferFunctionParams %286 %294 %303 %312 %320 %329 %338 %347
                OpReturnValue %348
                OpFunctionEnd
         %172 = OpFunction %mat3v3float None %350
@@ -539,14 +539,14 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 0 "mode"
                OpMemberName %tint_TransferFunctionParams 1 "A"
                OpMemberName %tint_TransferFunctionParams 2 "B"
                OpMemberName %tint_TransferFunctionParams 3 "C"
                OpMemberName %tint_TransferFunctionParams 4 "D"
                OpMemberName %tint_TransferFunctionParams 5 "E"
                OpMemberName %tint_TransferFunctionParams 6 "F"
-               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpMemberName %tint_TransferFunctionParams 7 "G"
                OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
                OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
                OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
@@ -618,7 +618,7 @@
     %float_1 = OpConstant %float 1
          %26 = OpConstantComposite %v2float %float_1 %float_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %uint %float %float %float %float %float %float %float
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
 %mat3v2float = OpTypeMatrix %v2float 3
@@ -750,27 +750,27 @@
           %v = OpFunctionParameter %v3float
    %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %112 = OpLabel
-        %113 = OpCompositeExtract %float %params_0 0
-        %114 = OpCompositeExtract %float %params_0 1
-        %115 = OpCompositeExtract %float %params_0 2
-        %116 = OpCompositeExtract %float %params_0 3
-        %117 = OpCompositeExtract %float %params_0 4
-        %118 = OpCompositeExtract %float %params_0 5
-        %119 = OpCompositeExtract %float %params_0 6
-        %120 = OpCompositeConstruct %v3float %113 %113 %113
-        %121 = OpCompositeConstruct %v3float %117 %117 %117
+        %113 = OpCompositeExtract %float %params_0 1
+        %114 = OpCompositeExtract %float %params_0 2
+        %115 = OpCompositeExtract %float %params_0 3
+        %116 = OpCompositeExtract %float %params_0 4
+        %117 = OpCompositeExtract %float %params_0 5
+        %118 = OpCompositeExtract %float %params_0 6
+        %119 = OpCompositeExtract %float %params_0 7
+        %120 = OpCompositeConstruct %v3float %119 %119 %119
+        %121 = OpCompositeConstruct %v3float %116 %116 %116
         %122 = OpExtInst %v3float %71 FAbs %v
         %123 = OpExtInst %v3float %71 FSign %v
         %124 = OpFOrdLessThan %v3bool %122 %121
-        %126 = OpVectorTimesScalar %v3float %122 %116
-        %127 = OpCompositeConstruct %v3float %119 %119 %119
+        %126 = OpVectorTimesScalar %v3float %122 %115
+        %127 = OpCompositeConstruct %v3float %118 %118 %118
         %128 = OpFAdd %v3float %126 %127
         %129 = OpFMul %v3float %123 %128
-        %130 = OpVectorTimesScalar %v3float %122 %114
-        %131 = OpCompositeConstruct %v3float %115 %115 %115
+        %130 = OpVectorTimesScalar %v3float %122 %113
+        %131 = OpCompositeConstruct %v3float %114 %114 %114
         %132 = OpFAdd %v3float %130 %131
         %133 = OpExtInst %v3float %71 Pow %132 %120
-        %134 = OpCompositeConstruct %v3float %118 %118 %118
+        %134 = OpCompositeConstruct %v3float %117 %117 %117
         %135 = OpFAdd %v3float %133 %134
         %136 = OpFMul %v3float %123 %135
         %137 = OpSelect %v3float %124 %129 %136
@@ -907,63 +907,63 @@
         %284 = OpShiftRightLogical %uint %283 %uint_2
         %285 = OpLoad %v4uint %282 None
         %286 = OpVectorExtractDynamic %uint %285 %284
-        %287 = OpBitcast %float %286
-        %288 = OpIAdd %uint %uint_4 %start_byte_offset_1
-        %289 = OpUDiv %uint %288 %uint_16
-        %290 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %289
-        %291 = OpBitwiseAnd %uint %288 %uint_15
-        %292 = OpShiftRightLogical %uint %291 %uint_2
-        %293 = OpLoad %v4uint %290 None
-        %294 = OpVectorExtractDynamic %uint %293 %292
-        %295 = OpBitcast %float %294
-        %296 = OpIAdd %uint %uint_8 %start_byte_offset_1
-        %298 = OpUDiv %uint %296 %uint_16
-        %299 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %298
-        %300 = OpBitwiseAnd %uint %296 %uint_15
-        %301 = OpShiftRightLogical %uint %300 %uint_2
-        %302 = OpLoad %v4uint %299 None
-        %303 = OpVectorExtractDynamic %uint %302 %301
-        %304 = OpBitcast %float %303
-        %305 = OpIAdd %uint %uint_12 %start_byte_offset_1
-        %307 = OpUDiv %uint %305 %uint_16
-        %308 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %307
-        %309 = OpBitwiseAnd %uint %305 %uint_15
-        %310 = OpShiftRightLogical %uint %309 %uint_2
-        %311 = OpLoad %v4uint %308 None
-        %312 = OpVectorExtractDynamic %uint %311 %310
-        %313 = OpBitcast %float %312
-        %314 = OpIAdd %uint %uint_16 %start_byte_offset_1
-        %315 = OpUDiv %uint %314 %uint_16
-        %316 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %315
-        %317 = OpBitwiseAnd %uint %314 %uint_15
-        %318 = OpShiftRightLogical %uint %317 %uint_2
-        %319 = OpLoad %v4uint %316 None
-        %320 = OpVectorExtractDynamic %uint %319 %318
-        %321 = OpBitcast %float %320
-        %322 = OpIAdd %uint %uint_20 %start_byte_offset_1
-        %324 = OpUDiv %uint %322 %uint_16
-        %325 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %324
-        %326 = OpBitwiseAnd %uint %322 %uint_15
-        %327 = OpShiftRightLogical %uint %326 %uint_2
-        %328 = OpLoad %v4uint %325 None
-        %329 = OpVectorExtractDynamic %uint %328 %327
-        %330 = OpBitcast %float %329
-        %331 = OpIAdd %uint %uint_24 %start_byte_offset_1
-        %333 = OpUDiv %uint %331 %uint_16
-        %334 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %333
-        %335 = OpBitwiseAnd %uint %331 %uint_15
-        %336 = OpShiftRightLogical %uint %335 %uint_2
-        %337 = OpLoad %v4uint %334 None
-        %338 = OpVectorExtractDynamic %uint %337 %336
-        %339 = OpBitcast %float %338
-        %340 = OpIAdd %uint %uint_28 %start_byte_offset_1
-        %342 = OpUDiv %uint %340 %uint_16
-        %343 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %342
-        %344 = OpBitwiseAnd %uint %340 %uint_15
-        %345 = OpShiftRightLogical %uint %344 %uint_2
-        %346 = OpLoad %v4uint %343 None
-        %347 = OpVectorExtractDynamic %uint %346 %345
-        %348 = OpCompositeConstruct %tint_TransferFunctionParams %287 %295 %304 %313 %321 %330 %339 %347
+        %287 = OpIAdd %uint %uint_4 %start_byte_offset_1
+        %288 = OpUDiv %uint %287 %uint_16
+        %289 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %288
+        %290 = OpBitwiseAnd %uint %287 %uint_15
+        %291 = OpShiftRightLogical %uint %290 %uint_2
+        %292 = OpLoad %v4uint %289 None
+        %293 = OpVectorExtractDynamic %uint %292 %291
+        %294 = OpBitcast %float %293
+        %295 = OpIAdd %uint %uint_8 %start_byte_offset_1
+        %297 = OpUDiv %uint %295 %uint_16
+        %298 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %297
+        %299 = OpBitwiseAnd %uint %295 %uint_15
+        %300 = OpShiftRightLogical %uint %299 %uint_2
+        %301 = OpLoad %v4uint %298 None
+        %302 = OpVectorExtractDynamic %uint %301 %300
+        %303 = OpBitcast %float %302
+        %304 = OpIAdd %uint %uint_12 %start_byte_offset_1
+        %306 = OpUDiv %uint %304 %uint_16
+        %307 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %306
+        %308 = OpBitwiseAnd %uint %304 %uint_15
+        %309 = OpShiftRightLogical %uint %308 %uint_2
+        %310 = OpLoad %v4uint %307 None
+        %311 = OpVectorExtractDynamic %uint %310 %309
+        %312 = OpBitcast %float %311
+        %313 = OpIAdd %uint %uint_16 %start_byte_offset_1
+        %314 = OpUDiv %uint %313 %uint_16
+        %315 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %314
+        %316 = OpBitwiseAnd %uint %313 %uint_15
+        %317 = OpShiftRightLogical %uint %316 %uint_2
+        %318 = OpLoad %v4uint %315 None
+        %319 = OpVectorExtractDynamic %uint %318 %317
+        %320 = OpBitcast %float %319
+        %321 = OpIAdd %uint %uint_20 %start_byte_offset_1
+        %323 = OpUDiv %uint %321 %uint_16
+        %324 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %323
+        %325 = OpBitwiseAnd %uint %321 %uint_15
+        %326 = OpShiftRightLogical %uint %325 %uint_2
+        %327 = OpLoad %v4uint %324 None
+        %328 = OpVectorExtractDynamic %uint %327 %326
+        %329 = OpBitcast %float %328
+        %330 = OpIAdd %uint %uint_24 %start_byte_offset_1
+        %332 = OpUDiv %uint %330 %uint_16
+        %333 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %332
+        %334 = OpBitwiseAnd %uint %330 %uint_15
+        %335 = OpShiftRightLogical %uint %334 %uint_2
+        %336 = OpLoad %v4uint %333 None
+        %337 = OpVectorExtractDynamic %uint %336 %335
+        %338 = OpBitcast %float %337
+        %339 = OpIAdd %uint %uint_28 %start_byte_offset_1
+        %341 = OpUDiv %uint %339 %uint_16
+        %342 = OpAccessChain %_ptr_Uniform_v4uint %6 %uint_0 %341
+        %343 = OpBitwiseAnd %uint %339 %uint_15
+        %344 = OpShiftRightLogical %uint %343 %uint_2
+        %345 = OpLoad %v4uint %342 None
+        %346 = OpVectorExtractDynamic %uint %345 %344
+        %347 = OpBitcast %float %346
+        %348 = OpCompositeConstruct %tint_TransferFunctionParams %286 %294 %303 %312 %320 %329 %338 %347
                OpReturnValue %348
                OpFunctionEnd
         %172 = OpFunction %mat3v3float None %350
@@ -1055,14 +1055,14 @@
                OpMemberName %tint_ExternalTextureParams 0 "numPlanes"
                OpMemberName %tint_ExternalTextureParams 1 "doYuvToRgbConversionOnly"
                OpMemberName %tint_ExternalTextureParams 2 "yuvToRgbConversionMatrix"
-               OpMemberName %tint_TransferFunctionParams 0 "G"
+               OpMemberName %tint_TransferFunctionParams 0 "mode"
                OpMemberName %tint_TransferFunctionParams 1 "A"
                OpMemberName %tint_TransferFunctionParams 2 "B"
                OpMemberName %tint_TransferFunctionParams 3 "C"
                OpMemberName %tint_TransferFunctionParams 4 "D"
                OpMemberName %tint_TransferFunctionParams 5 "E"
                OpMemberName %tint_TransferFunctionParams 6 "F"
-               OpMemberName %tint_TransferFunctionParams 7 "padding"
+               OpMemberName %tint_TransferFunctionParams 7 "G"
                OpName %tint_TransferFunctionParams "tint_TransferFunctionParams"
                OpMemberName %tint_ExternalTextureParams 3 "srcTransferFunction"
                OpMemberName %tint_ExternalTextureParams 4 "dstTransferFunction"
@@ -1140,7 +1140,7 @@
     %float_1 = OpConstant %float 1
          %28 = OpConstantComposite %v2float %float_1 %float_1
 %mat3v4float = OpTypeMatrix %v4float 3
-%tint_TransferFunctionParams = OpTypeStruct %float %float %float %float %float %float %float %uint
+%tint_TransferFunctionParams = OpTypeStruct %uint %float %float %float %float %float %float %float
     %v3float = OpTypeVector %float 3
 %mat3v3float = OpTypeMatrix %v3float 3
 %mat3v2float = OpTypeMatrix %v2float 3
@@ -1280,27 +1280,27 @@
           %v = OpFunctionParameter %v3float
    %params_0 = OpFunctionParameter %tint_TransferFunctionParams
         %119 = OpLabel
-        %120 = OpCompositeExtract %float %params_0 0
-        %121 = OpCompositeExtract %float %params_0 1
-        %122 = OpCompositeExtract %float %params_0 2
-        %123 = OpCompositeExtract %float %params_0 3
-        %124 = OpCompositeExtract %float %params_0 4
-        %125 = OpCompositeExtract %float %params_0 5
-        %126 = OpCompositeExtract %float %params_0 6
-        %127 = OpCompositeConstruct %v3float %120 %120 %120
-        %128 = OpCompositeConstruct %v3float %124 %124 %124
+        %120 = OpCompositeExtract %float %params_0 1
+        %121 = OpCompositeExtract %float %params_0 2
+        %122 = OpCompositeExtract %float %params_0 3
+        %123 = OpCompositeExtract %float %params_0 4
+        %124 = OpCompositeExtract %float %params_0 5
+        %125 = OpCompositeExtract %float %params_0 6
+        %126 = OpCompositeExtract %float %params_0 7
+        %127 = OpCompositeConstruct %v3float %126 %126 %126
+        %128 = OpCompositeConstruct %v3float %123 %123 %123
         %129 = OpExtInst %v3float %79 FAbs %v
         %130 = OpExtInst %v3float %79 FSign %v
         %131 = OpFOrdLessThan %v3bool %129 %128
-        %133 = OpVectorTimesScalar %v3float %129 %123
-        %134 = OpCompositeConstruct %v3float %126 %126 %126
+        %133 = OpVectorTimesScalar %v3float %129 %122
+        %134 = OpCompositeConstruct %v3float %125 %125 %125
         %135 = OpFAdd %v3float %133 %134
         %136 = OpFMul %v3float %130 %135
-        %137 = OpVectorTimesScalar %v3float %129 %121
-        %138 = OpCompositeConstruct %v3float %122 %122 %122
+        %137 = OpVectorTimesScalar %v3float %129 %120
+        %138 = OpCompositeConstruct %v3float %121 %121 %121
         %139 = OpFAdd %v3float %137 %138
         %140 = OpExtInst %v3float %79 Pow %139 %127
-        %141 = OpCompositeConstruct %v3float %125 %125 %125
+        %141 = OpCompositeConstruct %v3float %124 %124 %124
         %142 = OpFAdd %v3float %140 %141
         %143 = OpFMul %v3float %130 %142
         %144 = OpSelect %v3float %131 %136 %143
@@ -1437,63 +1437,63 @@
         %291 = OpShiftRightLogical %uint %290 %uint_2
         %292 = OpLoad %v4uint %289 None
         %293 = OpVectorExtractDynamic %uint %292 %291
-        %294 = OpBitcast %float %293
-        %295 = OpIAdd %uint %uint_4 %start_byte_offset_1
-        %296 = OpUDiv %uint %295 %uint_16
-        %297 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %296
-        %298 = OpBitwiseAnd %uint %295 %uint_15
-        %299 = OpShiftRightLogical %uint %298 %uint_2
-        %300 = OpLoad %v4uint %297 None
-        %301 = OpVectorExtractDynamic %uint %300 %299
-        %302 = OpBitcast %float %301
-        %303 = OpIAdd %uint %uint_8 %start_byte_offset_1
-        %305 = OpUDiv %uint %303 %uint_16
-        %306 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %305
-        %307 = OpBitwiseAnd %uint %303 %uint_15
-        %308 = OpShiftRightLogical %uint %307 %uint_2
-        %309 = OpLoad %v4uint %306 None
-        %310 = OpVectorExtractDynamic %uint %309 %308
-        %311 = OpBitcast %float %310
-        %312 = OpIAdd %uint %uint_12 %start_byte_offset_1
-        %314 = OpUDiv %uint %312 %uint_16
-        %315 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %314
-        %316 = OpBitwiseAnd %uint %312 %uint_15
-        %317 = OpShiftRightLogical %uint %316 %uint_2
-        %318 = OpLoad %v4uint %315 None
-        %319 = OpVectorExtractDynamic %uint %318 %317
-        %320 = OpBitcast %float %319
-        %321 = OpIAdd %uint %uint_16 %start_byte_offset_1
-        %322 = OpUDiv %uint %321 %uint_16
-        %323 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %322
-        %324 = OpBitwiseAnd %uint %321 %uint_15
-        %325 = OpShiftRightLogical %uint %324 %uint_2
-        %326 = OpLoad %v4uint %323 None
-        %327 = OpVectorExtractDynamic %uint %326 %325
-        %328 = OpBitcast %float %327
-        %329 = OpIAdd %uint %uint_20 %start_byte_offset_1
-        %331 = OpUDiv %uint %329 %uint_16
-        %332 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %331
-        %333 = OpBitwiseAnd %uint %329 %uint_15
-        %334 = OpShiftRightLogical %uint %333 %uint_2
-        %335 = OpLoad %v4uint %332 None
-        %336 = OpVectorExtractDynamic %uint %335 %334
-        %337 = OpBitcast %float %336
-        %338 = OpIAdd %uint %uint_24 %start_byte_offset_1
-        %340 = OpUDiv %uint %338 %uint_16
-        %341 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %340
-        %342 = OpBitwiseAnd %uint %338 %uint_15
-        %343 = OpShiftRightLogical %uint %342 %uint_2
-        %344 = OpLoad %v4uint %341 None
-        %345 = OpVectorExtractDynamic %uint %344 %343
-        %346 = OpBitcast %float %345
-        %347 = OpIAdd %uint %uint_28 %start_byte_offset_1
-        %349 = OpUDiv %uint %347 %uint_16
-        %350 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %349
-        %351 = OpBitwiseAnd %uint %347 %uint_15
-        %352 = OpShiftRightLogical %uint %351 %uint_2
-        %353 = OpLoad %v4uint %350 None
-        %354 = OpVectorExtractDynamic %uint %353 %352
-        %355 = OpCompositeConstruct %tint_TransferFunctionParams %294 %302 %311 %320 %328 %337 %346 %354
+        %294 = OpIAdd %uint %uint_4 %start_byte_offset_1
+        %295 = OpUDiv %uint %294 %uint_16
+        %296 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %295
+        %297 = OpBitwiseAnd %uint %294 %uint_15
+        %298 = OpShiftRightLogical %uint %297 %uint_2
+        %299 = OpLoad %v4uint %296 None
+        %300 = OpVectorExtractDynamic %uint %299 %298
+        %301 = OpBitcast %float %300
+        %302 = OpIAdd %uint %uint_8 %start_byte_offset_1
+        %304 = OpUDiv %uint %302 %uint_16
+        %305 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %304
+        %306 = OpBitwiseAnd %uint %302 %uint_15
+        %307 = OpShiftRightLogical %uint %306 %uint_2
+        %308 = OpLoad %v4uint %305 None
+        %309 = OpVectorExtractDynamic %uint %308 %307
+        %310 = OpBitcast %float %309
+        %311 = OpIAdd %uint %uint_12 %start_byte_offset_1
+        %313 = OpUDiv %uint %311 %uint_16
+        %314 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %313
+        %315 = OpBitwiseAnd %uint %311 %uint_15
+        %316 = OpShiftRightLogical %uint %315 %uint_2
+        %317 = OpLoad %v4uint %314 None
+        %318 = OpVectorExtractDynamic %uint %317 %316
+        %319 = OpBitcast %float %318
+        %320 = OpIAdd %uint %uint_16 %start_byte_offset_1
+        %321 = OpUDiv %uint %320 %uint_16
+        %322 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %321
+        %323 = OpBitwiseAnd %uint %320 %uint_15
+        %324 = OpShiftRightLogical %uint %323 %uint_2
+        %325 = OpLoad %v4uint %322 None
+        %326 = OpVectorExtractDynamic %uint %325 %324
+        %327 = OpBitcast %float %326
+        %328 = OpIAdd %uint %uint_20 %start_byte_offset_1
+        %330 = OpUDiv %uint %328 %uint_16
+        %331 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %330
+        %332 = OpBitwiseAnd %uint %328 %uint_15
+        %333 = OpShiftRightLogical %uint %332 %uint_2
+        %334 = OpLoad %v4uint %331 None
+        %335 = OpVectorExtractDynamic %uint %334 %333
+        %336 = OpBitcast %float %335
+        %337 = OpIAdd %uint %uint_24 %start_byte_offset_1
+        %339 = OpUDiv %uint %337 %uint_16
+        %340 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %339
+        %341 = OpBitwiseAnd %uint %337 %uint_15
+        %342 = OpShiftRightLogical %uint %341 %uint_2
+        %343 = OpLoad %v4uint %340 None
+        %344 = OpVectorExtractDynamic %uint %343 %342
+        %345 = OpBitcast %float %344
+        %346 = OpIAdd %uint %uint_28 %start_byte_offset_1
+        %348 = OpUDiv %uint %346 %uint_16
+        %349 = OpAccessChain %_ptr_Uniform_v4uint %1 %uint_0 %348
+        %350 = OpBitwiseAnd %uint %346 %uint_15
+        %351 = OpShiftRightLogical %uint %350 %uint_2
+        %352 = OpLoad %v4uint %349 None
+        %353 = OpVectorExtractDynamic %uint %352 %351
+        %354 = OpBitcast %float %353
+        %355 = OpCompositeConstruct %tint_TransferFunctionParams %293 %301 %310 %319 %327 %336 %345 %354
                OpReturnValue %355
                OpFunctionEnd
         %179 = OpFunction %mat3v3float None %357

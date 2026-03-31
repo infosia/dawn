@@ -5,14 +5,14 @@
 
 
 struct tint_TransferFunctionParams {
-  float G;
+  uint mode;
   float A;
   float B;
   float C;
   float D;
   float E;
   float F;
-  uint padding;
+  float G;
 };
 
 struct tint_ExternalTextureParams {
@@ -91,7 +91,7 @@ tint_TransferFunctionParams v_21(uint start_byte_offset) {
   uvec4 v_27 = v_1.inner[((20u + start_byte_offset) / 16u)];
   uvec4 v_28 = v_1.inner[((24u + start_byte_offset) / 16u)];
   uvec4 v_29 = v_1.inner[((28u + start_byte_offset) / 16u)];
-  return tint_TransferFunctionParams(uintBitsToFloat(v_22[((start_byte_offset & 15u) >> 2u)]), uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), v_29[(((28u + start_byte_offset) & 15u) >> 2u)]);
+  return tint_TransferFunctionParams(v_22[((start_byte_offset & 15u) >> 2u)], uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_29[(((28u + start_byte_offset) & 15u) >> 2u)]));
 }
 mat3x4 v_30(uint start_byte_offset) {
   return mat3x4(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)]), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)]), uintBitsToFloat(v_1.inner[((32u + start_byte_offset) / 16u)]));
@@ -139,14 +139,14 @@ precision highp int;
 
 
 struct tint_TransferFunctionParams {
-  float G;
+  uint mode;
   float A;
   float B;
   float C;
   float D;
   float E;
   float F;
-  uint padding;
+  float G;
 };
 
 struct tint_ExternalTextureParams {
@@ -225,7 +225,7 @@ tint_TransferFunctionParams v_21(uint start_byte_offset) {
   uvec4 v_27 = v_1.inner[((20u + start_byte_offset) / 16u)];
   uvec4 v_28 = v_1.inner[((24u + start_byte_offset) / 16u)];
   uvec4 v_29 = v_1.inner[((28u + start_byte_offset) / 16u)];
-  return tint_TransferFunctionParams(uintBitsToFloat(v_22[((start_byte_offset & 15u) >> 2u)]), uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), v_29[(((28u + start_byte_offset) & 15u) >> 2u)]);
+  return tint_TransferFunctionParams(v_22[((start_byte_offset & 15u) >> 2u)], uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_29[(((28u + start_byte_offset) & 15u) >> 2u)]));
 }
 mat3x4 v_30(uint start_byte_offset) {
   return mat3x4(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)]), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)]), uintBitsToFloat(v_1.inner[((32u + start_byte_offset) / 16u)]));
@@ -265,14 +265,14 @@ void main() {
 
 
 struct tint_TransferFunctionParams {
-  float G;
+  uint mode;
   float A;
   float B;
   float C;
   float D;
   float E;
   float F;
-  uint padding;
+  float G;
 };
 
 struct tint_ExternalTextureParams {
@@ -351,7 +351,7 @@ tint_TransferFunctionParams v_21(uint start_byte_offset) {
   uvec4 v_27 = v_1.inner[((20u + start_byte_offset) / 16u)];
   uvec4 v_28 = v_1.inner[((24u + start_byte_offset) / 16u)];
   uvec4 v_29 = v_1.inner[((28u + start_byte_offset) / 16u)];
-  return tint_TransferFunctionParams(uintBitsToFloat(v_22[((start_byte_offset & 15u) >> 2u)]), uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), v_29[(((28u + start_byte_offset) & 15u) >> 2u)]);
+  return tint_TransferFunctionParams(v_22[((start_byte_offset & 15u) >> 2u)], uintBitsToFloat(v_23[(((4u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_24[(((8u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_25[(((12u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_26[(((16u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_27[(((20u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_28[(((24u + start_byte_offset) & 15u) >> 2u)]), uintBitsToFloat(v_29[(((28u + start_byte_offset) & 15u) >> 2u)]));
 }
 mat3x4 v_30(uint start_byte_offset) {
   return mat3x4(uintBitsToFloat(v_1.inner[(start_byte_offset / 16u)]), uintBitsToFloat(v_1.inner[((16u + start_byte_offset) / 16u)]), uintBitsToFloat(v_1.inner[((32u + start_byte_offset) / 16u)]));

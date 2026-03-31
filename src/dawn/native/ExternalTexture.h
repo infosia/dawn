@@ -42,8 +42,8 @@ class TextureViewBase;
 
 // Matches the structure defined in Tint's multiplanar_external_texture.cc transform.
 struct TransferFunctionParams {
-    float g, a, b, c, d, e, f;
-    uint32_t padding;
+    uint32_t mode;
+    float a, b, c, d, e, f, g;
 };
 
 // Matches the structure defined in Tint's multiplanar_external_texture.cc transform.
