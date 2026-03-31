@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ac86feaa_b7ff44bc",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T15:59:51Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "33cf836f_84c7ce1c",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f34cf17e_a4dc1eda",
         "filename": "src/dawn/native/ExternalTexture.h",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2026-03-31T15:55:28Z",
       "side": 1,
       "message": "you can set this as `[[maybe_unused]] uint32_t padding{};` so it has a default value (the maybe_unused is optional) and then you don\u0027t have the set it below",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b8d2235_fffc6f1e",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T15:59:51Z",
+      "side": 1,
+      "message": "It\u0027s removed in the next CL and replaced with `mode`, any concerns with keeping it like this temporarily in the stack?",
+      "parentUuid": "f34cf17e_a4dc1eda",
       "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
