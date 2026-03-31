@@ -70,6 +70,24 @@
       "parentUuid": "b6f4b07f_b776e41c",
       "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803e9ca8_9df28046",
+        "filename": "src/dawn/tests/end2end/AdapterPropertiesDrmTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 4712139
+      },
+      "writtenOn": "2026-03-31T07:12:07Z",
+      "side": 1,
+      "message": "I dont know how dawn works but to me I would think that if a feature isn\u0027t supported on wire then it shouldn\u0027t be exposed as supported.\nIt could be in the normal order if `SupportsFeatures` returned false for the DRM feature on wire but it doesn\u0027t and the feature is set to be unsupported on wire.\n\nSo theres an issue where because `SupportsFeatures` returns true but its not supported on wire the device fails to create.\n`src/dawn/wire/server/ServerAdapter.cpp:107` is where the problem is if we call `SetUp` first",
+      "parentUuid": "c103f724_e3c4154f",
+      "revId": "4e84917d9fb7ff050b9c1ab5659b095933068db4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
