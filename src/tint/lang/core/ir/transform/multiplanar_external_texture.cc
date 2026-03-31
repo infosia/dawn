@@ -80,8 +80,11 @@ struct State {
     Function* texture_sample_clamp_to_edge_multiplanar_external = nullptr;
     Function* texture_sample_clamp_to_edge_ycbcr_external = nullptr;
 
-    /// The transfer function application helper function.
-    Function* apply_transfer_function = nullptr;
+    /// The transfer function application helper functions.
+    Function* apply_src_transfer_function = nullptr;
+    Function* apply_gamma_transfer_function = nullptr;
+    Function* apply_hlg_transfer_function = nullptr;
+    Function* apply_pq_transfer_function = nullptr;
 
     enum class UsedAs : uint8_t {
         kMultiplanar,
@@ -399,15 +402,16 @@ struct State {
         return external_texture_params_struct;
     }
 
-    /// Gets or creates the transfer function application helper function.
+    /// Gets or creates the gamma transfer function application helper function.
     /// @returns the function
-    Function* ApplyTransferFunction() {
-        if (apply_transfer_function) {
-            return apply_transfer_function;
+    Function* ApplyGammaTransferFunction() {
+        if (apply_gamma_transfer_function) {
+            return apply_gamma_transfer_function;
         }
 
         // The helper function implements the following:
-        //   fn tint_ApplyTransferFunction(v : vec3f, params : TransferFunctionParams) -> vec3f {
+        //   fn tint_ApplyGammaTransferFunction(v : vec3f, params : TransferFunctionParams) -> vec3f
+        //   {
         //     let abs_v = abs(v);
         //     let sign_v = sign(v);
         //     let cond = abs_v < vec3f(params.D);
@@ -415,11 +419,11 @@ struct State {
         //     let f = sign_v * (pow((params.A * abs_v) + params.B, vec3f(params.G)) + params.E);
         //     return select(f, t, cond);
         //   }
-        apply_transfer_function = b.Function("tint_ApplyTransferFunction", ty.vec3f());
+        apply_gamma_transfer_function = b.Function("tint_ApplyGammaTransferFunction", ty.vec3f());
         auto* v = b.FunctionParam("v", ty.vec3f());
         auto* params = b.FunctionParam("params", TransferFunctionParams());
-        apply_transfer_function->SetParams({v, params});
-        b.Append(apply_transfer_function->Block(), [&] {
+        apply_gamma_transfer_function->SetParams({v, params});
+        b.Append(apply_gamma_transfer_function->Block(), [&] {
             auto* vec3f = ty.vec3f();
             auto* A = b.Access(ty.f32(), params, 1_u);
             auto* B = b.Access(ty.f32(), params, 2_u);
@@ -428,6 +432,15 @@ struct State {
             auto* E = b.Access(ty.f32(), params, 5_u);
             auto* F = b.Access(ty.f32(), params, 6_u);
             auto* G = b.Access(ty.f32(), params, 7_u);
+
+            b.Name("A", A);
+            b.Name("B", B);
+            b.Name("C", C);
+            b.Name("D", D);
+            b.Name("E", E);
+            b.Name("F", F);
+            b.Name("G", G);
+
             auto* G_splat = b.Construct(vec3f, G);
             auto* D_splat = b.Construct(vec3f, D);
             auto* abs_v = b.Call(vec3f, core::BuiltinFn::kAbs, v);
@@ -437,11 +450,219 @@ struct State {
             auto* f = b.Multiply(sign_v, b.Add(b.Call(vec3f, core::BuiltinFn::kPow,
                                                       b.Add(b.Multiply(A, abs_v), B), G_splat),
                                                E));
-            b.Return(apply_transfer_function, b.Call(vec3f, core::BuiltinFn::kSelect, f, t, cond));
+            b.Return(apply_gamma_transfer_function,
+                     b.Call(vec3f, core::BuiltinFn::kSelect, f, t, cond));
         });
 
-        return apply_transfer_function;
+        return apply_gamma_transfer_function;
     }
+
+    /// Gets or creates the hlg transfer function application helper function.
+    /// @returns the function
+    /// Reference:
+    ///   * https://www.khronos.org/registry/DataFormat/specs/1.3/dataformat.1.3.inline.html#TRANSFER_HLG
+    ///   * Specifically HLG OETF^-1 (normalized)
+    Function* ApplyHLGTransferFunction() {
+        if (apply_hlg_transfer_function) {
+            return apply_hlg_transfer_function;
+        }
+
+        // The helper function implements the following:
+        //   note:      cutoff = params.D
+        //         lower_scale = params.E
+        //         upper_scale = params.F
+
+        //   fn tint_ApplyHLGSingleChannel(v : f32, params: TransferFunctionParams -> f32 {
+        //     if (c <= params.cutoff) {
+        //       return (v * v) / params.lower_scale
+        //     } else {
+        //       return (params.B + exp((v - params.C) / params.A)) / params.upper_scale;
+        //     }
+        //     unreachable();
+        //   }
+        //
+        //   fn tint_ApplyHLGTransferFunction(v : vec3f, params : TransferFunctionParams) -> vec3f {
+        //     let r = tintApplyHLGSingleChannel(v.r, params);
+        //     let g = tintApplyHLGSingleChannel(v.g, params);
+        //     let b = tintApplyHLGSingleChannel(v.b, params);
+        //     return vec3f(r, g, b);
+        //   }
+
+        Function* apply_hlg_single_channel = nullptr;
+        {
+            apply_hlg_single_channel = b.Function("tint_ApplyHLGSingleChannel", ty.f32());
+            auto* v = b.FunctionParam("v", ty.f32());
+            auto* params = b.FunctionParam("params", TransferFunctionParams());
+            apply_hlg_single_channel->SetParams({v, params});
+            b.Append(apply_hlg_single_channel->Block(), [&] {
+                auto* A = b.Access(ty.f32(), params, 1_u);
+                auto* B = b.Access(ty.f32(), params, 2_u);
+                auto* C = b.Access(ty.f32(), params, 3_u);
+                auto* cutoff = b.Access(ty.f32(), params, 4_u);
+                auto* lower_scale = b.Access(ty.f32(), params, 5_u);
+                auto* upper_scale = b.Access(ty.f32(), params, 6_u);
+
+                b.Name("A", A);
+                b.Name("B", B);
+                b.Name("C", C);
+                b.Name("cutoff", cutoff);
+                b.Name("lower_scale", lower_scale);
+                b.Name("upper_scale", upper_scale);
+
+                auto* if_ = b.If(b.LessThanEqual(v, cutoff));
+                b.Append(if_->True(), [&] {
+                    auto* vv = b.Multiply(v, v);
+                    b.Return(apply_hlg_single_channel, b.Divide(vv, lower_scale));
+                });
+                b.Append(if_->False(), [&] {
+                    auto* exp =
+                        b.Call(ty.f32(), core::BuiltinFn::kExp, b.Divide(b.Subtract(v, C), A));
+                    auto* num = b.Add(B, exp);
+                    b.Return(apply_hlg_single_channel, b.Divide(num, upper_scale));
+                });
+                b.Unreachable();
+            });
+        }
+
+        {
+            apply_hlg_transfer_function = b.Function("tint_ApplyHLGTransferFunction", ty.vec3f());
+            auto* v = b.FunctionParam("v", ty.vec3f());
+            auto* params = b.FunctionParam("params", TransferFunctionParams());
+            apply_hlg_transfer_function->SetParams({v, params});
+            b.Append(apply_hlg_transfer_function->Block(), [&] {
+                auto* red = b.Call(ty.f32(), apply_hlg_single_channel,
+                                   b.Swizzle(ty.f32(), v, {0_u}), params);
+                auto* green = b.Call(ty.f32(), apply_hlg_single_channel,
+                                     b.Swizzle(ty.f32(), v, {1_u}), params);
+                auto* blue = b.Call(ty.f32(), apply_hlg_single_channel,
+                                    b.Swizzle(ty.f32(), v, {2_u}), params);
+
+                b.Return(apply_hlg_transfer_function, b.Construct(ty.vec3f(), red, green, blue));
+            });
+        }
+
+        return apply_hlg_transfer_function;
+    }
+
+    /// Gets or creates the pq transfer function application helper function.
+    /// @returns the function
+    // Reference:
+    //   * https://registry.khronos.org/DataFormat/specs/1.3/dataformat.1.3.inline.html#TRANSFER_PQ
+    //   * Specifically the PQ EOTF
+    Function* ApplyPQTransferFunction() {
+        if (apply_pq_transfer_function) {
+            return apply_pq_transfer_function;
+        }
+
+        //
+        // The helper function implements the following:
+        //   note: m1 = params.A
+        //         m2 = params.B
+        //         c1 = params.C
+        //         c2 = params.D
+        //         c3 = params.E
+        //   fn tint_ApplyPQTransferFunction(v : vec3f, params : TransferFunctionParams) -> vec3f {
+        //     let clamped = clamp(v, vec3f(0), vec3f(1));
+        //     let pow = pow(clamped, 1.f / vec3f(m2));
+        //     let num = max(pow - c1, 0.f);
+        //     let denom = c2 - (c3 * pow);
+        //     let res = num / denom
+        //     return pow(res, 1.f / vec3f(m1));
+        //   }
+        apply_pq_transfer_function = b.Function("tint_ApplyPQTransferFunction", ty.vec3f());
+        auto* v = b.FunctionParam("v", ty.vec3f());
+        auto* params = b.FunctionParam("params", TransferFunctionParams());
+        apply_pq_transfer_function->SetParams({v, params});
+        b.Append(apply_pq_transfer_function->Block(), [&] {
+            auto* m1 = b.Access(ty.f32(), params, 1_u);
+            auto* m2 = b.Access(ty.f32(), params, 2_u);
+            auto* c1 = b.Access(ty.f32(), params, 3_u);
+            auto* c2 = b.Access(ty.f32(), params, 4_u);
+            auto* c3 = b.Access(ty.f32(), params, 5_u);
+
+            b.Name("m1", m1);
+            b.Name("m2", m2);
+            b.Name("c1", c1);
+            b.Name("c2", c2);
+            b.Name("c3", c3);
+
+            auto* c1_splat = b.Construct(ty.vec3f(), c1);
+            auto* c2_splat = b.Construct(ty.vec3f(), c2);
+            auto* c3_splat = b.Construct(ty.vec3f(), c3);
+            auto* m1_splat = b.Construct(ty.vec3f(), m1);
+            auto* m2_splat = b.Construct(ty.vec3f(), m2);
+
+            auto* one = b.Splat(ty.vec3f(), 1_f);
+            auto* zero = b.Splat(ty.vec3f(), 0_f);
+
+            auto* clamped = b.Call(ty.vec3f(), core::BuiltinFn::kClamp, v, zero, one);
+            auto* pow = b.Call(ty.vec3f(), core::BuiltinFn::kPow, clamped, b.Divide(one, m2_splat));
+            auto* num = b.Call(ty.vec3f(), core::BuiltinFn::kMax, b.Subtract(pow, c1_splat), zero);
+            auto* denom = b.Subtract(c2_splat, b.Multiply(c3_splat, pow));
+            auto* res = b.Divide(num, denom);
+            b.Return(apply_pq_transfer_function,
+                     b.Call(ty.vec3f(), core::BuiltinFn::kPow, res, b.Divide(one, m1_splat)));
+        });
+
+        return apply_pq_transfer_function;
+    }
+
+    // The src transfer function is based on the mode param
+    Function* ApplySrcTransferFunction() {
+        if (apply_src_transfer_function) {
+            return apply_src_transfer_function;
+        }
+
+        // The helper function implements the following:
+        //   fn tint_ApplySrcTransferFunction(v : vec3f, params : TransferFunctionParams) -> vec3f {
+        //     let mode = params.mode;
+        //     if (mode == 0) {
+        //       return ApplyGammaTransferFunction(v, params);
+        //     } else {
+        //       if (mode == 1) {
+        //         return ApplyHLGTransferFunction(v, params);
+        //       } else {
+        //         return ApplyPQTransferFunction(v, params);
+        //       }
+        //       unreachable();
+        //     }
+        //     unreachable();
+        //   }
+
+        apply_src_transfer_function = b.Function("tint_ApplySrcTransferFunction", ty.vec3f());
+        auto* v = b.FunctionParam("v", ty.vec3f());
+        auto* params = b.FunctionParam("params", TransferFunctionParams());
+        apply_src_transfer_function->SetParams({v, params});
+        b.Append(apply_src_transfer_function->Block(), [&] {
+            auto* mode = b.Access(ty.u32(), params, 0_u);
+            b.Name("mode", mode);
+
+            auto* outer_if = b.If(b.Equal(mode, 0_u));
+            b.Append(outer_if->True(), [&] {
+                b.Return(apply_src_transfer_function,
+                         b.Call(ty.vec3f(), ApplyGammaTransferFunction(), v, params));
+            });
+            b.Append(outer_if->False(), [&] {
+                auto* inner_if = b.If(b.Equal(mode, 1_u));
+                b.Append(inner_if->True(), [&] {
+                    b.Return(apply_src_transfer_function,
+                             b.Call(ty.vec3f(), ApplyHLGTransferFunction(), v, params));
+                });
+
+                b.Append(inner_if->False(), [&] {
+                    b.Return(apply_src_transfer_function,
+                             b.Call(ty.vec3f(), ApplyPQTransferFunction(), v, params));
+                });
+                b.Unreachable();
+            });
+            b.Unreachable();
+        });
+
+        return apply_src_transfer_function;
+    }
+
+    // The destination transfer is always gamma
+    Function* ApplyDstTransferFunction() { return ApplyGammaTransferFunction(); }
 
     /// Gets or creates the multiplanar texture load helper function.
     /// @returns the function
@@ -545,11 +766,11 @@ struct State {
                 auto* src_transfer_function = b.Access(TransferFunctionParams(), params, 3_u);
                 auto* dst_transfer_function = b.Access(TransferFunctionParams(), params, 4_u);
                 auto* gamut_conversion_matrix = b.Access(ty.mat3x3<f32>(), params, 5_u);
-                auto* decoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), rgb_result, src_transfer_function);
+                auto* decoded = b.Call(ty.vec3f(), ApplySrcTransferFunction(), rgb_result,
+                                       src_transfer_function);
                 auto* converted = b.Multiply(gamut_conversion_matrix, decoded);
-                auto* encoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), converted, dst_transfer_function);
+                auto* encoded = b.Call(ty.vec3f(), ApplyDstTransferFunction(), converted,
+                                       dst_transfer_function);
                 b.ExitIf(if_gamma_correct, encoded);
             });
             b.Append(if_gamma_correct->False(), [&] {  //
@@ -621,11 +842,11 @@ struct State {
                 auto* src_transfer_function = b.Access(TransferFunctionParams(), params, 3_u);
                 auto* dst_transfer_function = b.Access(TransferFunctionParams(), params, 4_u);
                 auto* gamut_conversion_matrix = b.Access(ty.mat3x3<f32>(), params, 5_u);
-                auto* decoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), rgb_result, src_transfer_function);
+                auto* decoded = b.Call(ty.vec3f(), ApplySrcTransferFunction(), rgb_result,
+                                       src_transfer_function);
                 auto* converted = b.Multiply(gamut_conversion_matrix, decoded);
-                auto* encoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), converted, dst_transfer_function);
+                auto* encoded = b.Call(ty.vec3f(), ApplyDstTransferFunction(), converted,
+                                       dst_transfer_function);
                 b.ExitIf(if_gamma_correct, encoded);
             });
             b.Append(if_gamma_correct->False(), [&] {  //
@@ -746,11 +967,11 @@ struct State {
                 auto* src_transfer_function = b.Access(TransferFunctionParams(), params, 3_u);
                 auto* dst_transfer_function = b.Access(TransferFunctionParams(), params, 4_u);
                 auto* gamut_conversion_matrix = b.Access(ty.mat3x3<f32>(), params, 5_u);
-                auto* decoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), rgb_result, src_transfer_function);
+                auto* decoded = b.Call(ty.vec3f(), ApplySrcTransferFunction(), rgb_result,
+                                       src_transfer_function);
                 auto* converted = b.Multiply(gamut_conversion_matrix, decoded);
-                auto* encoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), converted, dst_transfer_function);
+                auto* encoded = b.Call(ty.vec3f(), ApplyDstTransferFunction(), converted,
+                                       dst_transfer_function);
                 b.ExitIf(if_gamma_correct, encoded);
             });
             b.Append(if_gamma_correct->False(), [&] {  //
@@ -827,10 +1048,10 @@ struct State {
                 auto* dst_transfer_function = b.Access(TransferFunctionParams(), params, 4_u);
                 auto* gamut_conversion_matrix = b.Access(ty.mat3x3<f32>(), params, 5_u);
                 auto* decoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), colour, src_transfer_function);
+                    b.Call(ty.vec3f(), ApplySrcTransferFunction(), colour, src_transfer_function);
                 auto* converted = b.Multiply(gamut_conversion_matrix, decoded);
-                auto* encoded =
-                    b.Call(ty.vec3f(), ApplyTransferFunction(), converted, dst_transfer_function);
+                auto* encoded = b.Call(ty.vec3f(), ApplyDstTransferFunction(), converted,
+                                       dst_transfer_function);
                 b.ExitIf(do_yuv_to_rgb, encoded);
             });
             b.Append(do_yuv_to_rgb->False(), [&] {  //
