@@ -16,6 +16,40 @@
       "message": "PTAL! (let me know if you\u0027d like one large CL instead of incremental ones like this)",
       "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33cf836f_84c7ce1c",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T15:55:28Z",
+      "side": 1,
+      "message": "This isn\u0027t needed if you set it `{}` in the struct definition.",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f34cf17e_a4dc1eda",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T15:55:28Z",
+      "side": 1,
+      "message": "you can set this as `[[maybe_unused]] uint32_t padding{};` so it has a default value (the maybe_unused is optional) and then you don\u0027t have the set it below",
+      "revId": "9e08f2783bfca757a6d4426811cfb7f002e9d559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
