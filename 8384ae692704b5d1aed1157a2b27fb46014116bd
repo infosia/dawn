@@ -103,6 +103,24 @@
       "parentUuid": "6bbdac2b_b1e32935",
       "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bb7f731_3aa244e4",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-03-31T13:42:07Z",
+      "side": 1,
+      "message": "Can we add `IsBackendValidationEnabled` then?",
+      "parentUuid": "353df525_8466247a",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
