@@ -121,6 +121,24 @@
       "parentUuid": "353df525_8466247a",
       "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7b694cb_3d1f87cf",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-03-31T13:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb7f731_3aa244e4",
+      "revId": "8384ae692704b5d1aed1157a2b27fb46014116bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
