@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc7d8549_cc442176",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-03-31T21:07:33Z",
+      "side": 1,
+      "message": "PTAL.\n\nThis is the first CL, once it lands and rolls into Chromium, I\u0027ll add the `dawn_dxc_gn_dir` override in Chrome. Then when that rolls back into Dawn I can land the other 2 CLs on top of this. Once those land and roll back into Dawn I\u0027ll delete the third_party/dxc, third_party/gn/dxc folders. After that I maybe able to just remove the dawn_dxc_gn_dir again.",
+      "revId": "57aba3ec04470d0a95a6c0ecd5c78da1e4eda15a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
