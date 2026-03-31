@@ -181,9 +181,12 @@ class ExecutionQueueBase : public ApiObjectBase {
     // Submit any pending commands that are enqueued.
     virtual MaybeError SubmitPendingCommandsImpl() = 0;
 
+    // Currently, |forceTasksAfterIdle| is a workaround for AssumeCommandsComplete which may be
+    // called after additional ticks even after waiting for idle. This currently can cause new
+    // cleanup serial tasks to show up and the tasks need to be called to avoid leaking.
     void UpdateCompletedSerialToInternal(QueuePriority priority,
                                          ExecutionSerial completedSerial,
-                                         bool forceTasks = false);
+                                         bool forceTasksAfterIdle = false);
 
     // |mCompletedSerial| tracks the last completed command serial that the fence has returned.
     // |mLastSubmittedSerial| tracks the last submitted command serial.
