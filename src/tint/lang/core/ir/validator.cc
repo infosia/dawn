@@ -2832,22 +2832,37 @@ void Validator::CheckFunction(const Function* func) {
                 continue;
             }
 
-            if (mv->AddressSpace() == AddressSpace::kImmediate) {
-                if (user_declared_immediate) {
-                    AddError(var) << "multiple user-declared immediate data variables referenced "
-                                     "by entry point "
-                                  << NameOf(func);
-                    return;
-                }
-                user_declared_immediate = var;
+            auto address_space = mv->AddressSpace();
+            switch (address_space) {
+                case AddressSpace::kImmediate:
+                    if (user_declared_immediate) {
+                        AddError(var)
+                            << "multiple user-declared immediate data variables referenced "
+                               "by entry point "
+                            << NameOf(func);
+                    }
+                    user_declared_immediate = var;
+                    continue;
+                case AddressSpace::kWorkgroup:
+                    if (!func->IsCompute()) {
+                        AddError(var) << "workgroup variable cannot be used in a " << func->Stage()
+                                      << " shader";
+                    }
+                    continue;
+                case AddressSpace::kPixelLocal:
+                    if (!func->IsFragment()) {
+                        AddError(var) << "pixel_local variable cannot be used in a "
+                                      << func->Stage() << " shader";
+                    }
+                    continue;
+                case AddressSpace::kIn:
+                case AddressSpace::kOut:
+                    break;
+                default:
+                    continue;
             }
 
-            if (mv->AddressSpace() != AddressSpace::kIn &&
-                mv->AddressSpace() != AddressSpace::kOut) {
-                continue;
-            }
-
-            if (func->IsFragment() && mv->AddressSpace() == AddressSpace::kIn) {
+            if (func->IsFragment() && address_space == AddressSpace::kIn) {
                 WalkTypeAndMembers(
                     var, ty, attr, [this](const auto* v, const auto* t, const auto& a) {
                         CheckFrontFacingIfBool(
