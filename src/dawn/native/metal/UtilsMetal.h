@@ -49,6 +49,8 @@ enum class SingleShaderStage;
 
 namespace dawn::native::metal {
 
+MTLTextureType MetalTextureViewType(wgpu::TextureViewDimension dimension, bool multisampled);
+
 MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat format);
 
 NSRef<NSString> MakeDebugName(DeviceBase* device, const char* prefix, std::string_view label = "");

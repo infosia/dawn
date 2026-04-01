@@ -33,6 +33,7 @@
 #include "dawn/native/Surface.h"
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
+#include "dawn/native/metal/UtilsMetal.h"
 
 namespace dawn::native::metal {
 
