@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "338c715e_04bf1ecd",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-01T20:09:12Z",
+      "side": 1,
+      "message": "Thanks for the explanation! It is unfortunately confusing, but I feel like at some point all matrix math in code is. 😞",
+      "parentUuid": "89e4c6ab_c129fb3a",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af03382c_d9c036bb",
