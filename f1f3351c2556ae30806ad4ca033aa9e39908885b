@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bceb991b_65bcfd14",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-01T14:53:11Z",
+      "side": 1,
+      "message": "Thoughts on this? Would it be better to make this u16 and multiply the result by 2?",
+      "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
