@@ -16,6 +16,23 @@
       "message": "Sorry, missed this yesterday. LGTM",
       "revId": "bd30efa68cecbf2bd2a188af1c0021a842448935",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91cfaf5e_99f24f02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T06:37:21Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "bd30efa68cecbf2bd2a188af1c0021a842448935",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
