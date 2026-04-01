@@ -208,9 +208,9 @@ class Matrix {
         : data{c1, c2, c3, c4} {}
 
     constexpr Scalar Determinant() const
-        requires std::is_floating_point_v<Scalar> && (Cols == Rows);
+        requires std::is_floating_point_v<Scalar> && (Cols == Rows) && (Rows < 4);
     constexpr Self Inverse() const
-        requires std::is_floating_point_v<Scalar> && (Cols == Rows);
+        requires std::is_floating_point_v<Scalar> && (Cols == Rows) && (Rows < 4);
 
     // Returns the identity matrix of that dimensionality.
     constexpr static Self Identity()
@@ -321,7 +321,7 @@ constexpr Vector<Size, Scalar> Max(const Vector<Size, Scalar>& v1, const Vector<
 
 template <size_t Cols, size_t Rows, typename Scalar>
 constexpr Scalar Matrix<Cols, Rows, Scalar>::Determinant() const
-    requires std::is_floating_point_v<Scalar> && (Cols == Rows)
+    requires std::is_floating_point_v<Scalar> && (Cols == Rows) && (Rows < 4)
 {
     if constexpr (Cols == 2) {
         return data[0][0] * data[1][1] - data[0][1] * data[1][0];
@@ -329,14 +329,12 @@ constexpr Scalar Matrix<Cols, Rows, Scalar>::Determinant() const
         return data[0][0] * (data[2][2] * data[1][1] - data[1][2] * data[2][1]) +  //
                data[0][1] * (data[1][2] * data[2][0] - data[2][2] * data[1][0]) +  //
                data[0][2] * (data[2][1] * data[1][0] - data[1][1] * data[2][0]);
-    } else {
-        static_assert(false, "Determinant not implemented for this matrix size.");
     }
 }
 
 template <size_t Cols, size_t Rows, typename Scalar>
 constexpr Matrix<Cols, Rows, Scalar> Matrix<Cols, Rows, Scalar>::Inverse() const
-    requires std::is_floating_point_v<Scalar> && (Cols == Rows)
+    requires std::is_floating_point_v<Scalar> && (Cols == Rows) && (Rows < 4)
 {
     Scalar det = Determinant();
 
@@ -359,8 +357,6 @@ constexpr Matrix<Cols, Rows, Scalar> Matrix<Cols, Rows, Scalar>::Inverse() const
                         data[1][1] * data[0][0] - data[0][1] * data[1][0],
                     }} /
                det;
-    } else {
-        static_assert(false, "Determinant not implemented for this matrix size.");
     }
 }
 
