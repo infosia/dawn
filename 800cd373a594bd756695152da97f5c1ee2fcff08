@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64ad6df2_f7398933",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-01T08:59:50Z",
+      "side": 1,
+      "message": "I\u0027ll do it. But when trying locally, I find some test cases which override setup method, needs to do check in their override implementation body. For example:\n```\n@@ -49,6 +49,7 @@ class MultisampledRenderingTest : public DawnTest {\n   protected:\n     void SetUp() override {\n         DawnTest::SetUp();\n+        if (HasFatalFailure() || IsSkipped()) return;\n\n         InitTexturesForTest();\n\n@@ -1420,11 +1421,7 @@ class MultisampledRenderToSingleSampledTest : public MultisampledRenderingTest {\n     }\n\n     std::vector\u003cwgpu::FeatureName\u003e GetRequiredFeatures() override {\n-        std::vector\u003cwgpu::FeatureName\u003e requiredFeatures \u003d {};\n-        if (SupportsFeatures({wgpu::FeatureName::MSAARenderToSingleSampled})) {\n-            requiredFeatures.push_back(wgpu::FeatureName::MSAARenderToSingleSampled);\n-        }\n-        return requiredFeatures;\n+        return {wgpu::FeatureName::MSAARenderToSingleSampled};\n     }\n };\n```\n\nThis is due to parent skip and return doesn\u0027t affect override function. I\u0027m thinking about seperating a standalone step to do adapter feature check. What\u0027s your opinion?",
+      "parentUuid": "7b0d98e8_49b1aca6",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ee36b63_426fda66",
