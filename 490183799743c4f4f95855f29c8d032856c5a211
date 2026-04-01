@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "274fccad_031bde7a",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T17:14:21Z",
+      "side": 1,
+      "message": "I\u0027m guessing this should default to `OFF` as it\u0027s not something anyone other then developers would want to do",
+      "revId": "490183799743c4f4f95855f29c8d032856c5a211",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
