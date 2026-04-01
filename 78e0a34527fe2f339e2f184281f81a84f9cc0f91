@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ebdf8be_9e145eb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T18:24:20Z",
+      "side": 1,
+      "message": "PTAL! This is the last patch needed for Android.\n\nTomorrow I\u0027ll add a tolerance for the YCbCr test vector \"color1\" as the results are dependent on precision, rounding, etc.",
+      "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
