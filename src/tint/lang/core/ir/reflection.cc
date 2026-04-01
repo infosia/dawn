@@ -58,12 +58,13 @@ Result<WorkgroupInfo> GetWorkgroupInfo(core::ir::Module& ir) {
                 continue;
             }
             auto* ty = ptr->StoreType();
-            uint32_t align = ty->Align();
-            uint32_t size = ty->Size();
+            uint64_t align = ty->Align();
+            uint64_t size = ty->Size();
 
             // This essentially matches std430 layout rules from GLSL, which are in
             // turn specified as an upper bound for Vulkan layout sizing.
-            wg_storage_size += tint::RoundUp(16u, tint::RoundUp(align, size));
+            wg_storage_size +=
+                tint::RoundUp(static_cast<uint64_t>(16u), tint::RoundUp(align, size));
         }
     }
     return WorkgroupInfo{(*const_wg_size)[0], (*const_wg_size)[1], (*const_wg_size)[2],

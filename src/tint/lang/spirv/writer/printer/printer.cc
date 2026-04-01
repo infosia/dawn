@@ -2711,12 +2711,13 @@ class Printer {
         auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
         if (ptr->AddressSpace() == core::AddressSpace::kWorkgroup) {
             auto* ty = ptr->StoreType();
-            uint32_t align = ty->Align();
-            uint32_t size = ty->Size();
+            uint64_t align = ty->Align();
+            uint64_t size = ty->Size();
 
             // This essentially matches std430 layout rules from GLSL, which are in
             // turn specified as an upper bound for Vulkan layout sizing.
-            output_.workgroup_info.storage_size += tint::RoundUp(16u, tint::RoundUp(align, size));
+            output_.workgroup_info.storage_size +=
+                tint::RoundUp(static_cast<uint64_t>(16u), tint::RoundUp(align, size));
         }
         EmitVar(var);
     }
