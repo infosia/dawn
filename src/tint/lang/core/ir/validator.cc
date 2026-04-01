@@ -129,7 +129,9 @@ struct ValidatedType {
 namespace {
 
 /// Prints out the current IR state, iff ir.dump_ir_when_validating is set.
-void DumpIRIfEnabled(const Module& ir, std::string_view msg) {
+void DumpIRIfEnabled([[maybe_unused]] const Module& ir,
+                     [[maybe_unused]] const std::string_view msg) {
+#if TINT_ENABLE_IR_DUMPING
     if (ir.dump_ir_when_validating) {
         auto printer = StyledTextPrinter::Create(stdout);
         std::cout << "=========================================================\n";
@@ -137,6 +139,7 @@ void DumpIRIfEnabled(const Module& ir, std::string_view msg) {
         std::cout << "=========================================================\n";
         printer->Print(Disassembler(ir).Text());
     }
+#endif
 }
 
 using SupportedStages = tint::EnumSet<Function::PipelineStage>;
