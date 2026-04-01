@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b302cf87_f0eadc2e",
+        "filename": "tools/android/ahbsupport/src/main/java/com/dawn/ahbsupport/ZeroCopyRGBAImage.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-04-01T16:05:48Z",
+      "side": 1,
+      "message": "if this is coming from ImageReader, we technically have https://developer.android.com/reference/android/media/Image#getFence() method to get a SyncFence.\n\nTechnically, because the Java ImageReader will always provide frames with already-signalled fence.",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 67
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d5e46bcb_4cdec314",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/ahbsupport/src/main/java/com/dawn/ahbsupport/ZeroCopyRGBAImage.kt",
+              "range": {
+                "startLine": 150,
+                "startChar": 0,
+                "endLine": 151,
+                "endChar": 0
+              },
+              "replacement": "          val fence \u003d activeImage?.getFence()\n          activeAhbWrapper!!.beginAccess(if (fence !\u003d null) arrayOf(GPUSyncFence(fence)) else emptyArray\u003cGPUSyncFence\u003e())\n"
+            }
+          ]
+        }
+      ],
+      "revId": "559d65377649683ad1deabbb2eb43beb6901a57e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c4f9754_2e6c4741",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4699002
+      },
+      "writtenOn": "2026-04-01T16:05:48Z",
+      "side": 1,
+      "message": "when is the egl context and surface destroyed?",
+      "revId": "559d65377649683ad1deabbb2eb43beb6901a57e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
