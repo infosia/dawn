@@ -603,8 +603,8 @@ class Printer : public tint::TextGenerator {
                         EmitVar(out, var);
 
                         auto* ty = ptr->StoreType();
-                        uint32_t align = ty->Align();
-                        uint32_t size = ty->Size();
+                        uint64_t align = ty->Align();
+                        uint64_t size = ty->Size();
 
                         // This essentially matches std430 layout rules from GLSL, which are in
                         // turn specified as an upper bound for Vulkan layout sizing.
@@ -612,7 +612,7 @@ class Printer : public tint::TextGenerator {
                         // Since D3D is even less specific, we assume Vulkan behavior as a
                         // good-enough approximation everywhere.
                         result_.workgroup_info.storage_size +=
-                            tint::RoundUp(16u, tint::RoundUp(align, size));
+                            tint::RoundUp(static_cast<uint64_t>(16u), tint::RoundUp(align, size));
 
                         break;
                     }

@@ -162,5 +162,18 @@ TEST_F(HlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
                     "64-bit (vec2u) atomic operations are not yet supported by the HLSL backend"));
 }
 
+TEST_F(HlslWriterTest, WorkgroupStorageSize_OverflowAfterAlign) {
+    auto* var = mod.root_block->Append(b.Var<workgroup, array<u32, 0x3FFFFFFFu>>("a"));
+    auto* foo = b.ComputeFunction("main", 64_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {  //
+        b.Load(b.Access<ptr<workgroup, u32>>(var, 0_u));
+        b.Return(foo);
+    });
+
+    // Note: We ignore the result here because it will fail if DXC validation is enabled.
+    [[maybe_unused]] auto result = Generate();
+    EXPECT_EQ(output_.workgroup_info.storage_size, 0x100000000ull);
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer
