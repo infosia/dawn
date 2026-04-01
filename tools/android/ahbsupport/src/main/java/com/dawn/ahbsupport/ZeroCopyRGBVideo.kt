@@ -9,6 +9,7 @@ import android.hardware.SyncFence
 import android.media.Image
 import android.media.ImageReader
 import android.media.MediaPlayer
+import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
 import androidx.webgpu.helper.GPUImportedRgbAhbTexture
 import androidx.webgpu.helper.asString
+import androidx.webgpu.GPUSyncFence
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
@@ -268,7 +270,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
           val submitStart = System.nanoTime()
 
           if (cameraTextures.isNotEmpty() && activeAhbWrapper != null) {
-            activeAhbWrapper!!.beginAccess()
+            activeAhbWrapper!!.beginAccess(emptyArray<GPUSyncFence>())
 
             val commandBuffers = mutableListOf<GPUCommandBuffer>()
             var frameIndex = 0
@@ -304,7 +306,11 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
             }
 
             device.queue.submit(commandBuffers.toTypedArray())
-            activeAhbWrapper!!.endAccess()
+            val signalFences = activeAhbWrapper!!.endAccess()
+            // EXAMPLE: These fences signal when WebGPU is done reading from the buffer.
+            // In a real app, you would pass these fences back to the producer (e.g., Video Decoder)
+            // so it knows when the buffer is free to be written to again.
+            signalFences.forEach { it.close() }
           }
           val submitEnd = System.nanoTime()
 
