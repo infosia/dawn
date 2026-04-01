@@ -5255,9 +5255,12 @@ Result<SuccessType> Validate(const Module& mod, Capabilities capabilities, std::
     return v.Run();
 }
 
-void AssertValid(const Module& mod, Capabilities capabilities, std::string_view msg) {
+void AssertValid(const Module& mod,
+                 [[maybe_unused]] Capabilities capabilities,
+                 std::string_view msg) {
     DumpIRIfEnabled(mod, msg);
 
+#if TINT_ENABLE_IR_VALIDATION_ASSERTS
     if (mod.enable_validation_asserts) {
         Validator v(mod, capabilities);
         auto result = v.Run();
@@ -5268,6 +5271,7 @@ void AssertValid(const Module& mod, Capabilities capabilities, std::string_view 
                        << result.Failure().reason;
         }
     }
+#endif
 }
 
 }  // namespace tint::core::ir

@@ -152,6 +152,12 @@ config("tint_public_config") {
     defines += [ "TINT_ENABLE_IR_DUMPING=0" ]
   }
 
+  if (tint_enable_ir_validation_asserts || use_libfuzzer) {
+    defines += [ "TINT_ENABLE_IR_VALIDATION_ASSERTS=1" ]
+  } else {
+    defines += [ "TINT_ENABLE_IR_VALIDATION_ASSERTS=0" ]
+  }
+
   include_dirs = [
     "${tint_root_dir}/",
     "${tint_root_dir}/include/",
