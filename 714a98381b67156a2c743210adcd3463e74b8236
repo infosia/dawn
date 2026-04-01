@@ -16,6 +16,24 @@
       "message": "Should probably default to OFF?",
       "revId": "714a98381b67156a2c743210adcd3463e74b8236",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2363e021_9190875f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-01T17:51:22Z",
+      "side": 1,
+      "message": "Not sure, I could go either way.\n\nThis doesn\u0027t actually enable validation asserts, it just compiles in the code to do it. The only impact is binary size until you actually enable them at runtime.\n\nWe decided to compile in the SPIR-V validation code by default and allow people to turn it off:\nhttps://dawn-review.googlesource.com/c/dawn/+/285095/comment/3b911568_29b3a375/\nSo leaving these two options as ON by default would be consistent with that?",
+      "parentUuid": "feefb133_e8f0b3e6",
+      "revId": "714a98381b67156a2c743210adcd3463e74b8236",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
