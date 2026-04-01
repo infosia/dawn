@@ -236,9 +236,12 @@ TEST_P(BindGroupTests, ReusedUBO) {
     };
     wgpu::Buffer buffer =
         utils::CreateBufferFromData(device, &data, sizeof(data), wgpu::BufferUsage::Uniform);
-    wgpu::BindGroup bindGroup = utils::MakeBindGroup(
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(  //
         device, pipeline.GetBindGroupLayout(0),
-        {{0, buffer, 0, sizeof(Data::transform)}, {1, buffer, 256, sizeof(Data::color)}});
+        {
+            {0, buffer, 0, sizeof(Data::transform)},
+            {1, buffer, 256, sizeof(Data::color)},
+        });
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
@@ -395,12 +398,12 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
             return fragmentUbo1.color + fragmentUbo2.color;
         })");
 
-    utils::ComboRenderPipelineDescriptor textureDescriptor;
-    textureDescriptor.vertex.module = vsModule;
-    textureDescriptor.cFragment.module = fsModule;
-    textureDescriptor.cTargets[0].format = renderPass.colorFormat;
+    utils::ComboRenderPipelineDescriptor pipelineDesc;
+    pipelineDesc.vertex.module = vsModule;
+    pipelineDesc.cFragment.module = fsModule;
+    pipelineDesc.cTargets[0].format = renderPass.colorFormat;
 
-    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&textureDescriptor);
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDesc);
 
     struct Data {
         float transform[4];
@@ -410,7 +413,6 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
     DAWN_ASSERT(offsetof(Data, color) == 256);
 
     std::vector<Data> data;
-    std::vector<wgpu::Buffer> buffers;
     std::vector<wgpu::BindGroup> bindGroups;
 
     data.push_back({{1.0f, 0.0f, 0.0f, 0.0f}, {0}, {0.0f, 1.0f, 0.0f, 1.0f}});
@@ -420,10 +422,13 @@ TEST_P(BindGroupTests, MultipleBindLayouts) {
     for (int i = 0; i < 2; i++) {
         wgpu::Buffer buffer =
             utils::CreateBufferFromData(device, &data[i], sizeof(Data), wgpu::BufferUsage::Uniform);
-        buffers.push_back(buffer);
-        bindGroups.push_back(utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
-                                                  {{0, buffers[i], 0, sizeof(Data::transform)},
-                                                   {1, buffers[i], 256, sizeof(Data::color)}}));
+        buffer.SetLabel(absl::StrFormat("buffer_%d", i).c_str());
+        bindGroups.push_back(utils::MakeBindGroup(  //
+            device, pipeline.GetBindGroupLayout(0),
+            {
+                {0, buffer, 0, sizeof(Data::transform)},
+                {1, buffer, 256, sizeof(Data::color)},
+            }));
     }
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
