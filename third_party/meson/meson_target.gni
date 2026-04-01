@@ -83,25 +83,25 @@ template("_meson_setup") {
   if (is_clang) {
     _cc_path = rebase_path("$clang_base_path/bin/clang")
     _cxx_path = rebase_path("$clang_base_path/bin/clang++")
-    _meson_args += [
-      "-Dc_link_args=-fuse-ld=lld",
-      "-Dcpp_link_args=-fuse-ld=lld",
-    ]
 
+    _c_link_args = "-fuse-ld=lld"
+    _cpp_link_args = "-fuse-ld=lld"
     if (use_clang_coverage) {
-      _coverage_flags = [
-        "-fprofile-instr-generate",
-        "-fcoverage-mapping",
+      _c_args = "-fprofile-instr-generate -fcoverage-mapping"
+      _cpp_args = "-fprofile-instr-generate -fcoverage-mapping"
+      _c_link_args += " -fprofile-instr-generate -fcoverage-mapping"
+      _cpp_link_args += " -fprofile-instr-generate -fcoverage-mapping"
+
+      _meson_args += [
+        "-Dc_args=${_c_args}",
+        "-Dcpp_args=${_cpp_args}",
       ]
-      foreach(_flag, _coverage_flags) {
-        _meson_args += [
-          "-Dc_args=$_flag",
-          "-Dcpp_args=$_flag",
-          "-Dc_link_args=$_flag",
-          "-Dcpp_link_args=$_flag",
-        ]
-      }
     }
+
+    _meson_args += [
+      "-Dc_link_args=${_c_link_args}",
+      "-Dcpp_link_args=${_cpp_link_args}",
+    ]
 
     # Used by meson to allow specifying the toolchain elements to use
     _native_file_content = [

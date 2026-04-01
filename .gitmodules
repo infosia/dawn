@@ -46,6 +46,10 @@
 	path = tools/win
 	url = https://chromium.googlesource.com/chromium/src/tools/win
 	gclient-condition = checkout_win and not build_with_chromium
+[submodule "tools/code_coverage"]
+	path = tools/code_coverage
+	url = https://chromium.googlesource.com/chromium/src/tools/code_coverage
+	gclient-condition = dawn_standalone and checkout_clang_coverage_tools
 [submodule "tools/mb"]
 	path = tools/mb
 	url = https://chromium.googlesource.com/chromium/src/tools/mb

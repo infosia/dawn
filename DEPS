@@ -75,6 +75,10 @@ vars = {
   # Not used by Dawn/Tint directly, but is used as part of an
   #  experiment in the fuzzing stack.
   'checkout_mesa': False,
+
+  # Checkout //tools/code_coverage from Chromium and fetches the
+  # prebuilt versions of llvm-cov and llvm-profdata.
+  'checkout_clang_coverage_tools': False,
 }
 
 deps = {
@@ -161,6 +165,10 @@ deps = {
   'tools/win': {
     'url': Var('chromium_git') + '/chromium/src/tools/win@bfff5550ec231441c314c64878d860fdb6fdf174',
     'condition': 'checkout_win and not build_with_chromium',
+  },
+  'tools/code_coverage': {
+    'url': '{chromium_git}/chromium/src/tools/code_coverage@1395378f5864568e3afdf37a51583b7160061464',
+    'condition': 'dawn_standalone and checkout_clang_coverage_tools',
   },
 
   # Linux sysroots for hermetic builds instead of relying on whatever is
@@ -709,6 +717,14 @@ hooks = [
                '--package=objdump'],
     'condition': 'dawn_standalone',
   },
+  {
+    'name': 'coverage_tools',
+    'pattern': '.',
+    'action': ['vpython3', 'tools/clang/scripts/update.py',
+               '--package=coverage_tools'],
+    'condition': 'dawn_standalone and checkout_clang_coverage_tools',
+  },
+
   # Pull dsymutil binaries using checked-in hashes.
   {
     'name': 'dsymutil_mac_arm64',
