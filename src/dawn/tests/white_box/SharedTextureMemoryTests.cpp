@@ -989,6 +989,9 @@ TEST_P(SharedTextureMemoryTests, TextureUsages) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1087,6 +1090,9 @@ TEST_P(SharedTextureMemoryTests, UsageValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1124,6 +1130,9 @@ TEST_P(SharedTextureMemoryTests, FormatValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1145,6 +1154,9 @@ TEST_P(SharedTextureMemoryTests, FormatValidation) {
 TEST_P(SharedTextureMemoryTests, SizeValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
@@ -1177,6 +1189,9 @@ TEST_P(SharedTextureMemoryTests, MipLevelValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1200,6 +1215,9 @@ TEST_P(SharedTextureMemoryTests, SampleCountValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::SharedTextureMemoryProperties properties;
@@ -1222,6 +1240,9 @@ TEST_P(SharedTextureMemoryTests, SampleCountValidation) {
 TEST_P(SharedTextureMemoryTests, DimensionValidation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
@@ -1565,6 +1586,9 @@ TEST_P(SharedTextureMemoryTests, TextureAccessOutlivesMemory) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     // NOTE: UseInRenderPass()/UseInCopy() do not currently support multiplanar
     // formats.
     for (wgpu::SharedTextureMemory memory :
@@ -1597,6 +1621,9 @@ TEST_P(SharedTextureMemoryTests, TextureAccessOutlivesMemory) {
 TEST_P(SharedTextureMemoryTests, UninitializedTextureIsCleared) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     for (wgpu::SharedTextureMemory memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
@@ -1705,6 +1732,9 @@ TEST_P(SharedTextureMemoryTests, UninitializedOnEndAccess) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     // It is not possible to run these tests for multiplanar formats for
     // multiple reasons:
     // * Test basic begin+end access exports the state as uninitialized
@@ -1780,6 +1810,9 @@ TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample) {
 
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     // TODO(crbug.com/468228359): Flaky on Snapdragon X Elite w/ D3D11.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
@@ -1859,6 +1892,9 @@ TEST_P(SharedTextureMemoryTests, EndWithoutUse) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     for (const auto& memory :
          GetParam().mBackend->CreateSharedTextureMemories(device, GetParam().mLayerCount)) {
         wgpu::Texture texture = memory.CreateTexture();
@@ -1887,6 +1923,9 @@ TEST_P(SharedTextureMemoryTests, BeginEndWithoutUse) {
 
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
@@ -2056,6 +2095,9 @@ TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeAfterBeginAccess) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -2111,6 +2153,9 @@ TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeBeforeBeginAccess) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :
          GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
@@ -2163,6 +2208,9 @@ TEST_P(SharedTextureMemoryTests, RenderThenSampleEncodeBeforeBeginAccess) {
 TEST_P(SharedTextureMemoryTests, RenderThenTextureDestroyBeforeEndAccessThenSample) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :
@@ -2218,6 +2266,9 @@ TEST_P(SharedTextureMemoryTests, RenderThenTextureDestroyBeforeEndAccessThenSamp
 TEST_P(SharedTextureMemoryTests, RenderThenDropAllMemoriesThenSample) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (auto memories : GetParam().mBackend->CreatePerDeviceSharedTextureMemoriesFilterByUsage(
@@ -2282,6 +2333,9 @@ TEST_P(SharedTextureMemoryTests, RenderThenLoseOrDestroyDeviceBeforeEndAccessThe
 
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     auto DoTest = [&](auto DestroyOrLoseDevice) {
         std::vector<wgpu::Device> devices = {CreateDevice(), CreateDevice()};
@@ -2349,6 +2403,9 @@ TEST_P(SharedTextureMemoryTests, SeparateDevicesWriteThenConcurrentReadThenWrite
 
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice(), CreateDevice()};
     for (const auto& memories :
@@ -2639,6 +2696,9 @@ TEST_P(SharedTextureMemoryTests, SRGBReinterpretation) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     // TODO(crbug.com/dawn/2304): Investigate if the VVL is wrong here.
     DAWN_SUPPRESS_TEST_IF(GetParam().mBackend->Name().find("dma buf") != std::string::npos &&
                           IsBackendValidationEnabled());
@@ -2735,6 +2795,9 @@ TEST_P(SharedTextureMemoryTests, WriteStorageThenReadSample) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
+
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
 
     for (const auto& memories :
@@ -2794,6 +2857,9 @@ TEST_P(SharedTextureMemoryTests, WriteStorageThenReadSample) {
 TEST_P(SharedTextureMemoryTests, WriteTextureThenReadSample) {
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
+
+    // crbug.com/475503907
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsImgTec());
 
     std::vector<wgpu::Device> devices = {device, CreateDevice()};
     for (const auto& memories :

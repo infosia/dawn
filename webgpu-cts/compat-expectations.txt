@@ -2390,6 +2390,10 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,robust_access:linear
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:* [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,shader_io,* [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,zero_init:compute,zero_init:* [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,const_assert,const_assert:constant_expression_logical_or_no_assert:scope="function" [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="texture_formats_tier1" [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,value_init:vec:addressSpace="private";type="i32";count=4 [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,value_init:scalars:addressSpace="function";type="f32" [ Skip ]
 
 # Failures in immediates tests on all backends
 crbug.com/458102548 webgpu:api,validation,encoding,programmable,pipeline_immediate:unused_variable:encoderType="compute%20pass";usage="none";scenario="not_referenced" [ Failure ]
