@@ -1,6 +1,11 @@
+#include <vector>
+#include <unistd.h>
 #include <jni.h>
 #include <android/hardware_buffer_jni.h>
 #include <webgpu/webgpu.h>
+#include <poll.h>
+#include <errno.h>
+#include <string.h>
 
 #include "JNIClasses.h"
 #include "JNIContext.h"
@@ -20,6 +25,7 @@ struct AhbTextureWrapper {
   WGPUTextureView view = nullptr;              // Used only by YUV (Plane 0)
   WGPUExternalTexture externalTexture = nullptr; // Used only by YUV
   AHardwareBuffer* ahb = nullptr;              // Track AHB to prevent native memory leak
+  WGPUDevice device;
 };
 
 extern "C" {
@@ -111,7 +117,8 @@ Java_androidx_webgpu_helper_DawnAhbUtil_importRgbAhbNative(
     return nullptr;
   }
 
-  auto* wrapper = new AhbTextureWrapper{stm, texture, nullptr, nullptr, ahb};
+  wgpuDeviceAddRef(device);
+  auto* wrapper = new AhbTextureWrapper{stm, texture, nullptr, nullptr, ahb, device};
 
   jobject texture_kt = env->NewObject(classes->texture, env->GetMethodID(classes->texture, "<init>", "(J)V"), reinterpret_cast<jlong>(texture));
 
@@ -233,7 +240,8 @@ Java_androidx_webgpu_helper_DawnAhbUtil_importYuvAhbNative(
 
   env->DeleteLocalRef(descClass);
 
-  auto* wrapper = new AhbTextureWrapper{stm, texture, view, externalTexture, ahb};
+  wgpuDeviceAddRef(device);
+  auto* wrapper = new AhbTextureWrapper{stm, texture, view, externalTexture, ahb, device};
 
   jobject extTex_kt = env->NewObject(classes->externalTexture, env->GetMethodID(classes->externalTexture, "<init>", "(J)V"), reinterpret_cast<jlong>(externalTexture));
 
@@ -244,24 +252,66 @@ Java_androidx_webgpu_helper_DawnAhbUtil_importYuvAhbNative(
 }
 
 JNIEXPORT void JNICALL
-Java_androidx_webgpu_helper_GPUImportedHardwareBuffer_nativeBeginAccess(JNIEnv* env, jobject thiz, jlong handle) {
+Java_androidx_webgpu_helper_GPUImportedHardwareBuffer_nativeBeginAccess(JNIEnv* env, jobject thiz, jlong handle, jobjectArray fences) {
   auto* wrapper = reinterpret_cast<AhbTextureWrapper*>(handle);
 
+  std::vector<WGPUSharedFence> importedFences;
+  if (fences != nullptr) {
+    jsize len = env->GetArrayLength(fences);
+    if (len > 0) {
+      jclass pfdClass = env->FindClass("android/os/ParcelFileDescriptor");
+      jmethodID detachFdMethod = env->GetMethodID(pfdClass, "detachFd", "()I");
+      for (int i = 0; i < len; ++i) {
+        jobject pfdObj = env->GetObjectArrayElement(fences, i);
+        if (pfdObj) {
+          int fd = env->CallIntMethod(pfdObj, detachFdMethod);
+          if (fd >= 0) {
+            WGPUSharedFenceSyncFDDescriptor syncFdDesc = {};
+            syncFdDesc.chain.sType = WGPUSType_SharedFenceSyncFDDescriptor;
+            syncFdDesc.handle = fd;
+
+            WGPUSharedFenceDescriptor fenceDesc = {};
+            fenceDesc.nextInChain = &syncFdDesc.chain;
+
+            // Steps to convert:
+            // 1. Wrap the detached file descriptor in a Dawn shared fence descriptor.
+            // 2. Import it to create a WGPUSharedFence.
+            // 3. Dawn's implementation duplicates the FD internally, so we must close
+            //    the original detached FD to avoid a file descriptor leak!
+            WGPUSharedFence fence = wgpuDeviceImportSharedFence(wrapper->device, &fenceDesc);
+            close(fd);
+            if (fence) {
+                importedFences.push_back(fence);
+            }
+          }
+          env->DeleteLocalRef(pfdObj);
+        }
+      }
+    }
+  }
+
   WGPUSharedTextureMemoryBeginAccessDescriptor beginDesc = {};
+  beginDesc.fenceCount = importedFences.size();
+  beginDesc.fences = importedFences.data();
   beginDesc.concurrentRead = false;
   beginDesc.initialized = true;
 
   WGPUSharedTextureMemoryVkImageLayoutBeginState beginLayout = {};
 
   beginLayout.chain.sType = WGPUSType_SharedTextureMemoryVkImageLayoutBeginState;
+  beginLayout.chain.next = nullptr;
   beginLayout.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
   beginLayout.newLayout = VK_IMAGE_LAYOUT_UNDEFINED;
   beginDesc.nextInChain = reinterpret_cast<WGPUChainedStruct*>(&beginLayout.chain);
 
   wgpuSharedTextureMemoryBeginAccess(wrapper->stm, wrapper->texture, &beginDesc);
+
+  for (WGPUSharedFence f : importedFences) {
+    wgpuSharedFenceRelease(f);
+  }
 }
 
-JNIEXPORT void JNICALL
+JNIEXPORT jobjectArray JNICALL
 Java_androidx_webgpu_helper_GPUImportedHardwareBuffer_nativeEndAccess(JNIEnv* env, jobject thiz, jlong handle) {
   auto* wrapper = reinterpret_cast<AhbTextureWrapper*>(handle);
 
@@ -269,11 +319,47 @@ Java_androidx_webgpu_helper_GPUImportedHardwareBuffer_nativeEndAccess(JNIEnv* en
   WGPUSharedTextureMemoryVkImageLayoutEndState endLayout = {};
 
   endLayout.chain.sType = WGPUSType_SharedTextureMemoryVkImageLayoutEndState;
+  endLayout.chain.next = nullptr;
   endLayout.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
   endLayout.newLayout = VK_IMAGE_LAYOUT_UNDEFINED;
   endState.nextInChain = reinterpret_cast<WGPUChainedStruct*>(&endLayout.chain);
 
   wgpuSharedTextureMemoryEndAccess(wrapper->stm, wrapper->texture, &endState);
+
+  jclass pfdClass = env->FindClass("android/os/ParcelFileDescriptor");
+  jobjectArray resultFenceArray = env->NewObjectArray(endState.fenceCount, pfdClass, nullptr);
+
+  if (endState.fenceCount > 0) {
+    jmethodID adoptFdMethod = env->GetStaticMethodID(pfdClass, "adoptFd", "(I)Landroid/os/ParcelFileDescriptor;");
+    for (size_t i = 0; i < endState.fenceCount; ++i) {
+      WGPUSharedFence cFence = endState.fences[i];
+
+      WGPUSharedFenceExportInfo exportInfo = {};
+      WGPUSharedFenceSyncFDExportInfo syncFdExportInfo = {};
+      syncFdExportInfo.chain.sType = WGPUSType_SharedFenceSyncFDExportInfo;
+      syncFdExportInfo.chain.next = nullptr;
+      exportInfo.nextInChain = &syncFdExportInfo.chain;
+
+      // Steps to convert:
+      // 1. Export fence info to obtain the raw file descriptor.
+      // 2. Note: wgpuSharedFenceExportInfo returns a BORROWED file descriptor
+      //    tied to the fence's lifecycle.
+      // 3. Java's ParcelFileDescriptor.adoptFd takes ownership of the FD passed to it.
+      // 4. Therefore, we must dup() the borrowed FD to give Java its own copy to manage.
+      wgpuSharedFenceExportInfo(cFence, &exportInfo);
+      int fd = syncFdExportInfo.handle;
+      jobject pfdObj = nullptr;
+      if (fd >= 0) {
+        int dupFd = dup(fd);
+        pfdObj = env->CallStaticObjectMethod(pfdClass, adoptFdMethod, dupFd);
+      }
+      env->SetObjectArrayElement(resultFenceArray, i, pfdObj);
+      if (pfdObj) env->DeleteLocalRef(pfdObj);
+    }
+  }
+
+  wgpuSharedTextureMemoryEndAccessStateFreeMembers(endState);
+  return resultFenceArray;
 }
 
 JNIEXPORT void JNICALL
@@ -288,7 +374,27 @@ Java_androidx_webgpu_helper_GPUImportedHardwareBuffer_nativeDestroy(JNIEnv* env,
   // Release Native NDK HardwareBuffer to prevent leak
   if (wrapper->ahb) AHardwareBuffer_release(wrapper->ahb);
 
+  if (wrapper->device) wgpuDeviceRelease(wrapper->device);
   delete wrapper;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_androidx_webgpu_helper_GPUSyncFence_awaitParcelFileDescriptorNative(JNIEnv *env, jobject thiz, jobject pfd, jlong timeoutMillis) {
+    if (!pfd) return JNI_TRUE;
+
+    jclass pfdClass = env->GetObjectClass(pfd);
+    jmethodID getFdMethod = env->GetMethodID(pfdClass, "getFd", "()I");
+    int fd = env->CallIntMethod(pfd, getFdMethod);
+
+    if (fd < 0) return JNI_TRUE;
+
+    struct pollfd pfd_struct = {
+        .fd = fd,
+        .events = POLLIN,
+    };
+
+    int result = poll(&pfd_struct, 1, timeoutMillis);
+    return result > 0 ? JNI_TRUE : JNI_FALSE;
 }
 
 } // extern "C"

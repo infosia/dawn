@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
 import androidx.webgpu.helper.GPUImportedYuvAhbTexture
+import androidx.webgpu.GPUSyncFence
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
 
@@ -181,7 +182,7 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
         }
 
         if (activeYuvWrapper != null) {
-          activeYuvWrapper!!.beginAccess()
+          activeYuvWrapper.beginAccess(emptyArray<GPUSyncFence>())
 
           device.createCommandEncoder().run {
             with(beginRenderPass(renderPassDescriptor)) {
@@ -209,7 +210,11 @@ fun ZeroCopyVideoYuv(modifier: Modifier, options: Options) {
             }
             device.queue.submit(arrayOf(finish()))
           }
-          activeYuvWrapper.endAccess()
+          val signalFences = activeYuvWrapper.endAccess()
+          // EXAMPLE: These fences signal when WebGPU is done reading from the YUV buffer.
+          // In a real app, you would pass these fences back to the producer (e.g., Camera or Decoder)
+          // so it knows when the buffer is free to be written to again.
+          signalFences.forEach { it.close() }
         }
         webgpu.webgpuSurface.present()
       }

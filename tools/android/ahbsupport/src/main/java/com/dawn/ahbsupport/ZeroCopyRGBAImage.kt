@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.webgpu.*
 import androidx.webgpu.helper.DawnAhbUtil
 import androidx.webgpu.helper.GPUImportedRgbAhbTexture
+import androidx.webgpu.GPUSyncFence
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
 
@@ -146,7 +147,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
         if (filterTextures.isNotEmpty() && activeAhbWrapper != null) {
 
           // Tell Vulkan we are about to read the Android memory
-          activeAhbWrapper!!.beginAccess()
+          activeAhbWrapper!!.beginAccess(emptyArray<GPUSyncFence>())
 
           val commandBuffers = mutableListOf<GPUCommandBuffer>()
 
@@ -177,7 +178,11 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
 
           device.queue.submit(commandBuffers.toTypedArray())
 
-          activeAhbWrapper!!.endAccess()
+          val signalFences = activeAhbWrapper!!.endAccess()
+          // EXAMPLE: These fences signal when WebGPU is done reading from the buffer.
+          // In a real app, you would pass these fences back to the producer (e.g., Camera or Decoder)
+          // so it knows when the buffer is free to be written to again.
+          signalFences.forEach { it.close() }
         }
 
         webgpu.webgpuSurface.present()
