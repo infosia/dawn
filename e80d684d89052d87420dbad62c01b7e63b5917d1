@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9015740c_d9346592",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3a7cfef_bbe6f3e0",
@@ -18,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e4c6ab_c129fb3a",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "The `yuvToRgbConversionMatrix` is multiplied on the right (see [1] and the comment in `ExternalTexture.h`), so what ends up happening in the shader is `rgb \u003d yuv * kUndoVulkanSwizzle * yMat` so the transpose of the matrix you\u0027d imagine being used is what\u0027s needed here.\n\nWhat\u0027s totally confusing (and confused me for another 20m when trying to answer this comment and figuring out how this works again) is that this is a column major matrix written with columns all on the same line. What you see in the source code is actually the transpose of the matrix.\n\nI\u0027ll file an issue to add a `Mat*::FromRows()` helper function that makes the matrix in the source look like what you\u0027d write on a piece of paper.",
+      "parentUuid": "d3a7cfef_bbe6f3e0",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af03382c_d9c036bb",
@@ -31,6 +66,30 @@
       "writtenOn": "2026-03-31T18:05:19Z",
       "side": 1,
       "message": "nit: `mBindGroupLayout` doesn\u0027t seem too long to type.",
+      "range": {
+        "startLine": 141,
+        "startChar": 25,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0abf136d_9b634491",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 62
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af03382c_d9c036bb",
       "range": {
         "startLine": 141,
         "startChar": 25,
@@ -64,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6680713d_ec2080b9",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e80b0e0_ce48b8f3",
+      "range": {
+        "startLine": 663,
+        "startChar": 8,
+        "endLine": 663,
+        "endChar": 21
+      },
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fbf4e98_f73f5722",
@@ -81,6 +164,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea18fe0_467608e2",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "That\u0027s correct, and even the ones that don\u0027t contain an external texture. While it\u0027s not great, the pipeline specialization path is a slow path compared to other \"draw\" paths so I decided to go with the more obviously correct approach of recreating all VkDescriptorSets. We can optimize later if it turns out to be a hot spot (most likely not given Vulkan does pool allocation and with the rest of the code here.)",
+      "parentUuid": "2fbf4e98_f73f5722",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cf5c8db_ef1031e1",
@@ -94,6 +195,24 @@
       "writtenOn": "2026-03-31T18:58:46Z",
       "side": 1,
       "message": "Debugging leftover?",
+      "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04cb77d8_dff50346",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryYCbCrAndroidTests.cpp",
+        "patchSetId": 62
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T14:42:25Z",
+      "side": 1,
+      "message": "again xD Done",
+      "parentUuid": "3cf5c8db_ef1031e1",
       "revId": "e80d684d89052d87420dbad62c01b7e63b5917d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
