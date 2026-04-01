@@ -46,8 +46,6 @@ class CommandRecordingContext;
 class Device;
 class SharedTextureMemory;
 
-MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat format);
-
 class Texture final : public TextureBase {
   public:
     static ResultOrError<Ref<Texture>> Create(Device* device,
