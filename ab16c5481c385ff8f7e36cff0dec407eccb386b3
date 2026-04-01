@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "905575b3_cc4853bb",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T12:27:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "17693552_309cad46",
+      "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "938726e5_5a501076",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-04-01T10:40:00Z",
       "side": 1,
       "message": "Unrelated, why can\u0027t the IR builder take the return value (or values) from the lambda and automatically add it to the return of the block?",
+      "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4dbda55_50d30fcc",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T12:27:49Z",
+      "side": 1,
+      "message": "It probably could, but would be a lot less clear and more magical. Adding the `b.Return` isn\u0027t that much extra work.",
+      "parentUuid": "938726e5_5a501076",
       "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
