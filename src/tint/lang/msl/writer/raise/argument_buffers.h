@@ -45,7 +45,7 @@ namespace tint::msl::writer::raise {
 
 // Configuration for argument buffers.
 struct ArgumentBuffersConfig {
-    // The set of bindings which should not go into argument buffers.
+    /// The set of bindings which should not go into argument buffers.
     std::unordered_set<tint::BindingPoint> skip_bindings{};
 
     /// Map from the group id to the argument buffer information for the group
