@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feefb133_e8f0b3e6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T17:15:31Z",
+      "side": 1,
+      "message": "Should probably default to OFF?",
+      "revId": "714a98381b67156a2c743210adcd3463e74b8236",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
