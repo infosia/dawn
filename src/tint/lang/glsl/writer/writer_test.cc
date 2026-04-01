@@ -191,5 +191,43 @@ TEST_F(GlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
                     "64-bit (vec2u) atomic operations are not yet supported by the GLSL backend"));
 }
 
+TEST_F(GlslWriterTest, WorkgroupStorageSize_OverflowAfterAlign) {
+    auto* var = mod.root_block->Append(b.Var<workgroup, array<u32, 0x3FFFFFFFu>>("a"));
+    auto* foo = b.ComputeFunction("main", 64_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {  //
+        b.Load(b.Access<ptr<workgroup, u32>>(var, 0_u));
+        b.Return(foo);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(
+shared uint a[1073741823];
+void main_inner(uint tint_local_index) {
+  {
+    uint v = 0u;
+    v = tint_local_index;
+    while(true) {
+      uint v_1 = v;
+      if ((v_1 >= 1073741823u)) {
+        break;
+      }
+      a[v_1] = 0u;
+      {
+        v = (v_1 + 64u);
+      }
+    }
+  }
+  barrier();
+}
+layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
+void main() {
+  main_inner(gl_LocalInvocationIndex);
+}
+)");
+
+    EXPECT_EQ(output_.workgroup_info.storage_size, 0x100000000ull);
+}
+
 }  // namespace
 }  // namespace tint::glsl::writer

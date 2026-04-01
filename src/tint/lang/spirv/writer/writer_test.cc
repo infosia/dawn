@@ -381,5 +381,18 @@ TEST_F(SpirvWriterTest, StripAllNames) {
 )");
 }
 
+TEST_F(SpirvWriterTest, WorkgroupStorageSize_OverflowAfterAlign) {
+    auto* var = mod.root_block->Append(b.Var<workgroup, array<u32, 0x3FFFFFFFu>>("a"));
+    auto* foo = b.ComputeFunction("main", 64_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {  //
+        b.Load(b.Access<ptr<workgroup, u32>>(var, 0_u));
+        b.Return(foo);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
+    EXPECT_EQ(workgroup_info.storage_size, 0x100000000ull);
+}
+
 }  // namespace
 }  // namespace tint::spirv::writer

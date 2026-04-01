@@ -446,10 +446,10 @@ class Printer : public tint::TextGenerator {
                     // case.
                     for (auto& mem : ty->As<core::type::Struct>()->Members()) {
                         auto mem_ty = mem->Type();
-                        uint32_t align = mem_ty->Align();
-                        uint32_t size = mem_ty->Size();
+                        uint64_t align = mem_ty->Align();
+                        uint64_t size = mem_ty->Size();
                         result_.workgroup_info.storage_size +=
-                            tint::RoundUp(16u, tint::RoundUp(align, size));
+                            tint::RoundUp(static_cast<uint64_t>(16u), tint::RoundUp(align, size));
                     }
                 }
             }

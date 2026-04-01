@@ -106,6 +106,67 @@ kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadg
     EXPECT_THAT(output_.workgroup_allocations, testing::ElementsAre(8u));
 }
 
+TEST_F(MslWriterTest, WorkgroupStorageSize_OverflowAfterAlign) {
+    auto* var = mod.root_block->Append(b.Var<workgroup, array<u32, 0x3FFFFFFFu>>("a"));
+    auto* foo = b.ComputeFunction("entry", 64_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {  //
+        b.Load(b.Access<ptr<workgroup, u32>>(var, 0_u));
+        b.Return(foo);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_.msl;
+    EXPECT_EQ(output_.msl, R"(#include <metal_stdlib>
+using namespace metal;
+
+template<typename T, size_t N>
+struct tint_array {
+  const constant T& operator[](size_t i) const constant { return elements[i]; }
+  device T& operator[](size_t i) device { return elements[i]; }
+  const device T& operator[](size_t i) const device { return elements[i]; }
+  thread T& operator[](size_t i) thread { return elements[i]; }
+  const thread T& operator[](size_t i) const thread { return elements[i]; }
+  threadgroup T& operator[](size_t i) threadgroup { return elements[i]; }
+  const threadgroup T& operator[](size_t i) const threadgroup { return elements[i]; }
+  T elements[N];
+};
+
+struct tint_module_vars_struct {
+  threadgroup tint_array<uint, 1073741823>* a;
+};
+
+struct tint_symbol_1 {
+  tint_array<uint, 1073741823> tint_symbol;
+};
+
+void entry_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
+  {
+    uint v = 0u;
+    v = tint_local_index;
+    while(true) {
+      uint const v_1 = v;
+      if ((v_1 >= 1073741823u)) {
+        break;
+      }
+      (*tint_module_vars.a)[v_1] = 0u;
+      {
+        v = (v_1 + 64u);
+      }
+    }
+  }
+  threadgroup_barrier(mem_flags::mem_threadgroup);
+}
+
+[[max_total_threads_per_threadgroup(64)]]
+kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_2 [[threadgroup(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&(*v_2).tint_symbol)};
+  entry_inner(tint_local_index, tint_module_vars);
+}
+)");
+
+    EXPECT_EQ(output_.workgroup_info.storage_size, 0x100000000ull);
+}
+
 TEST_F(MslWriterTest, NeedsStorageBufferSizes_False) {
     auto* var = b.Var("a", ty.ptr<storage, array<u32>>());
     var->SetBindingPoint(0, 0);
