@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc1a251_ea60d7f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T10:40:00Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17693552_309cad46",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T10:40:00Z",
+      "side": 1,
+      "message": "This can probably be reworked to acts on vectors and use `select` at then end, or alternatively we could make all the transfer functions loop over the components. No need to address in this CL.",
+      "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "938726e5_5a501076",
+        "filename": "src/tint/lang/core/ir/transform/multiplanar_external_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-01T10:40:00Z",
+      "side": 1,
+      "message": "Unrelated, why can\u0027t the IR builder take the return value (or values) from the lambda and automatically add it to the return of the block?",
+      "revId": "ab16c5481c385ff8f7e36cff0dec407eccb386b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
