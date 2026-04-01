@@ -80,27 +80,6 @@ MTLTextureUsage MetalTextureUsage(const Format& format, wgpu::TextureUsage usage
     return result;
 }
 
-MTLTextureType MetalTextureViewType(wgpu::TextureViewDimension dimension,
-                                    unsigned int sampleCount) {
-    switch (dimension) {
-        case wgpu::TextureViewDimension::e1D:
-            return MTLTextureType1D;
-        case wgpu::TextureViewDimension::e2D:
-            return (sampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
-        case wgpu::TextureViewDimension::e2DArray:
-            return MTLTextureType2DArray;
-        case wgpu::TextureViewDimension::Cube:
-            return MTLTextureTypeCube;
-        case wgpu::TextureViewDimension::CubeArray:
-            return MTLTextureTypeCubeArray;
-        case wgpu::TextureViewDimension::e3D:
-            return MTLTextureType3D;
-
-        case wgpu::TextureViewDimension::Undefined:
-            DAWN_UNREACHABLE();
-    }
-}
-
 MTLTextureSwizzle MetalTextureSwizzle(wgpu::ComponentSwizzle swizzle) {
     switch (swizzle) {
         case wgpu::ComponentSwizzle::Zero:
@@ -812,7 +791,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         mMtlTextureView = mtlTexture;
     } else {
         MTLTextureType textureViewType =
-            MetalTextureViewType(descriptor->dimension, texture->GetSampleCount());
+            MetalTextureViewType(descriptor->dimension, texture->GetSampleCount() > 1);
         std::optional<MTLTextureSwizzleChannels> mtlSwizzle = ComputeMetalSwizzle();
 
         MTLPixelFormat viewFormat = MetalPixelFormat(device, descriptor->format);

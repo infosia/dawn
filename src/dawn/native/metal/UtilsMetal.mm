@@ -273,6 +273,26 @@ void MakeResourcesResident(Encoder encoder, const SyncScopeResourceUsage& resour
 
 }  // anonymous namespace
 
+MTLTextureType MetalTextureViewType(wgpu::TextureViewDimension dimension, bool multisampled) {
+    switch (dimension) {
+        case wgpu::TextureViewDimension::e1D:
+            return MTLTextureType1D;
+        case wgpu::TextureViewDimension::e2D:
+            return multisampled ? MTLTextureType2DMultisample : MTLTextureType2D;
+        case wgpu::TextureViewDimension::e2DArray:
+            return MTLTextureType2DArray;
+        case wgpu::TextureViewDimension::Cube:
+            return MTLTextureTypeCube;
+        case wgpu::TextureViewDimension::CubeArray:
+            return MTLTextureTypeCubeArray;
+        case wgpu::TextureViewDimension::e3D:
+            return MTLTextureType3D;
+        case wgpu::TextureViewDimension::Undefined:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
+
 MTLPixelFormat MetalPixelFormat(const DeviceBase* device, wgpu::TextureFormat format) {
     switch (format) {
         case wgpu::TextureFormat::R8Unorm:
