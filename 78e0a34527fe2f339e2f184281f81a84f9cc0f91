@@ -16,6 +16,86 @@
       "message": "PTAL! This is the last patch needed for Android.\n\nTomorrow I\u0027ll add a tolerance for the YCbCr test vector \"color1\" as the results are dependent on precision, rounding, etc.",
       "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb1cd06_3d7ab8d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T19:11:04Z",
+      "side": 1,
+      "message": "lgtm w/ nits",
+      "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "221a2b79_75218b9a",
+        "filename": "src/dawn/common/ExternalTextureParams.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T19:11:04Z",
+      "side": 1,
+      "message": "```suggestion\n// TODO(https://crbug.com/496604550): G \u003d -1 as a mode selector is a hack and instead a proper mode\n```",
+      "range": {
+        "startLine": 35,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8944ae5_29598387",
+        "filename": "src/dawn/common/ExternalTextureParams.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T19:11:04Z",
+      "side": 1,
+      "message": "```suggestion\n// TODO(https://crbug.com/496604550): G \u003d -2 as a mode selector is a hack and instead a proper mode\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 55,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82fadd48_e34fc2d0",
+        "filename": "src/dawn/common/ExternalTextureParams.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-01T19:11:04Z",
+      "side": 1,
+      "message": "nit, we do have a kRGBToXYZ_SRGB which is the same just set to Rec709 but maybe clearer to use it directly?\n```suggestion\n            srcRGBToXYZ \u003d kRGBToXYZ_sRGB;\n```",
+      "revId": "78e0a34527fe2f339e2f184281f81a84f9cc0f91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
