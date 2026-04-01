@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e4cb84e_5ce4c3a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-01T16:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4269f6_fdae97e3",
+      "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a048c1f7_8d4c825a",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-03-31T21:17:17Z",
       "side": 1,
       "message": "Despite the `uint64_t`, this math is actually happening in `uint32_t` because that\u0027s the type returned by `ComputeExtraArraySizeForIntelGen12`. I\u0027d suggest something like:\n\n```suggestion\n            static_cast\u003cuint64_t\u003e(revisedDescriptor.DepthOrArraySize) +\n```",
+      "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c30e7da_827c64d6",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-01T16:00:52Z",
+      "side": 1,
+      "message": "Ah yes, I changed `ComputeExtraArraySizeForIntelGen12` to return `uint64_t` instead, which is really what it should already have been doing (all its computations use `uint64_t`s).",
+      "parentUuid": "a048c1f7_8d4c825a",
       "revId": "1c73e166b96fb6cafc171ad75423597646d1b5cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
