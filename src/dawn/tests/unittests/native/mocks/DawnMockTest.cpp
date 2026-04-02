@@ -62,9 +62,10 @@ void DawnMockTest::SetUp() {
 
     mDeviceToggles.SetForTesting(Toggle::AllowUnsafeAPIs, true, true);
     auto deviceMock = AcquireRef(new ::testing::NiceMock<DeviceMock>(
-        adapters[0].Get(), unpackedDesc, mDeviceToggles, std::move(lostEvent)));
+        adapters[0].Get(), unpackedDesc, mDeviceToggles, lostEvent.Get()));
     mDeviceMock = deviceMock.Get();
     device = wgpu::Device::Acquire(ToAPI(ReturnToAPI<DeviceBase>(std::move(deviceMock))));
+    instance->GetEventManager()->TrackEvent(std::move(lostEvent));
 }
 
 void DawnMockTest::DropDevice() {

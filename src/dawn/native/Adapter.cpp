@@ -364,14 +364,10 @@ AdapterBase::CreateDevice(const DeviceDescriptor* descriptor) {
         lostEvent->SetLost(mInstance->GetEventManager(), wgpu::DeviceLostReason::FailedCreation,
                            "Failed to create device:\n" + error->GetFormattedMessage());
 
-        // When the device fails to initialize, we need to both promote the device ref to an
-        // external ref to clean up resources, and drop it, so we acquire it in this scope.
-        APIRef<DeviceBase> device;
-        device.Acquire(ReturnToAPI(std::move(lostEvent->mDevice)));
-        // Reset the device's lost event to avoid double SetLost during destruction.
-        if (device) {
-            device->ResetLostEvent();
-        }
+        // When the device fails to initialize, we need to ensure that an external ref exists to
+        // properly clean up resources, so we create one in this scope. We don't overwrite the
+        // existing ref in the event though because we need it for cleanup in the event as well.
+        APIRef<DeviceBase> device = lostEvent->mDevice;
         return {lostEvent, std::move(error)};
     }
 
