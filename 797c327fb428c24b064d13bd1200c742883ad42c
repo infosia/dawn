@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8fd0105_be8355ab",
+        "filename": "src/dawn/tests/end2end/ShaderValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-02T17:47:48Z",
+      "side": 1,
+      "message": "```suggestion\n// Test workgroup storage size validation when the array size is overridden such that it causes the\n```",
+      "revId": "797c327fb428c24b064d13bd1200c742883ad42c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
