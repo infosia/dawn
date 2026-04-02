@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cd9f078_0a806d9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-02T21:56:18Z",
+      "side": 1,
+      "message": "Not a complete review yet, sorry.\n\nI\u0027m still trying to digest the big picture here. I didn\u0027t realize `arrayLength` was going to cause a bunch of extra complexity. I left a couple of thoughts and I\u0027ll keep thinking about this.",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccb96fff_45f5ce18",
@@ -32,6 +49,41 @@
       "side": 1,
       "message": "Then it hits me that specialization will need to happen at some point still even then.",
       "parentUuid": "ccb96fff_45f5ce18",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4b5ad8b_dbbc1b63",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-02T21:56:18Z",
+      "side": 1,
+      "message": "I don\u0027t think I fully understand all of the issues here yet, but after thinking about `arrayLength()` for a bit it does feel like changing the buffer type to be an `array\u003cu8\u003e` may be the best option (also commented on one of the tests with thoughts about it).\n\nThe specialization requirement is annoying. I did wonder if we could just run the DirectVariableAccess transform before this one. But I suppose it would need to be taught how to handle `bufferView` calls to propagate the offset/size, which is a big chunk of the work done here anyway so might not actually be easier in the end. Hmm.",
+      "parentUuid": "9fc7fa26_7f04e3ba",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eda5dcc_f0c4d49b",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-02T21:56:18Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about what this `arrayLength()` call means now. It\u0027s being called on the result of the pointer offset (after the offset is applied and after the type is changed to `array\u003cu32\u003e`), but you\u0027re treating the result as if it will return the byte length of the original buffer?\n\nMaybe this is an argument for changing the buffer type to be `array\u003cu8\u003e` as you suggested in a different comment, and then this could become an `arrayLength()` called on the original variable instead? Otherwise I think you\u0027d have to also change the `ArrayLengthFromUniform` polyfill to skip over the pointer offset call (which is hard because that\u0027s a core transform not an MSL one).",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

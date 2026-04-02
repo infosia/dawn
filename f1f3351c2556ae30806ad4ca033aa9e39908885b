@@ -34,6 +34,24 @@
       "parentUuid": "bceb991b_65bcfd14",
       "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e853f60_e03bb418",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-02T21:56:18Z",
+      "side": 1,
+      "message": "If you\u0027re in an MSL-specific transform it\u0027s fine to just assume f16/u16 support since we know MSL always has it.",
+      "parentUuid": "04c5185d_27ec46c2",
+      "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
