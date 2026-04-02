@@ -16,6 +16,24 @@
       "message": "Thoughts on this? Would it be better to make this u16 and multiply the result by 2?",
       "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c5185d_27ec46c2",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-02T01:49:53Z",
+      "side": 1,
+      "message": "Actually that would suck too. Maybe f16, but I\u0027m not sure how to check the enable in the IR. Generally the question is should the extra capability be avoided. Can\u0027t always use u32 since if the type is a 2-byte multiple, it will get the wrong result.",
+      "parentUuid": "bceb991b_65bcfd14",
+      "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
