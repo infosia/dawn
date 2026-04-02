@@ -33,6 +33,24 @@
       "message": "```suggestion\n    // Events may be one of two types:\n```",
       "revId": "7a9539cd8160f4ce1ae33231e64c078c7507ce72",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b852b07b_80b7f6c5",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-02T21:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b877825_c59d3a1c",
+      "revId": "7a9539cd8160f4ce1ae33231e64c078c7507ce72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
