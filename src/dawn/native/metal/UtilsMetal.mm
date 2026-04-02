@@ -260,11 +260,13 @@ void MakeResourcesResident(Encoder encoder, const SyncScopeResourceUsage& resour
             continue;
         }
 
+        // The texture is either a normal one, or a planar texture with up to 3 planes.
         // There are at most three planes. Call useResource for each plane that is used.
-        const Aspect kAspectsCorrespondingToPlane0{~(Aspect::Plane1 | Aspect::Plane2)};
-        for (Aspect plane : {kAspectsCorrespondingToPlane0, Aspect::Plane1, Aspect::Plane2}) {
-            if (aspects & plane) {
-                MakeResourceResident(encoder, texture->GetMTLTexture(plane),
+        const Aspect kNonPlanarAspects{~(Aspect::Plane0 | Aspect::Plane1 | Aspect::Plane2)};
+        for (Aspect plane : {kNonPlanarAspects, Aspect::Plane0, Aspect::Plane1, Aspect::Plane2}) {
+            auto aspect = aspects & plane;
+            if (aspect) {
+                MakeResourceResident(encoder, texture->GetMTLTexture(aspect),
                                      ToMTLResourceUsage(usages), stages);
             }
         }
