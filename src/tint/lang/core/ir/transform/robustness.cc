@@ -588,6 +588,9 @@ struct State {
                 TINT_IR_ASSERT(ir, offset_val == (offset_val & ~(store_ty->Align() - 1)));
                 required_size += offset_val;
                 const_offset = true;
+                if (!offset->Type()->Is<core::type::U32>()) {
+                    offset = b.Constant(u32(offset_val));
+                }
             }
             if (size) {
                 if (auto* size_cnst = size->As<Constant>()) {
@@ -596,6 +599,11 @@ struct State {
                     TINT_IR_ASSERT(ir, ty_stride == 0 || (size_val - ty_offset) % ty_stride == 0);
                     required_size += size_val;
                     const_size = true;
+                    if (!size->Type()->Is<core::type::U32>()) {
+                        size = b.Constant(u32(size_val));
+                    }
+                } else {
+                    required_size += ty_required_size;
                 }
             } else {
                 required_size += ty_required_size;
@@ -689,6 +697,14 @@ struct State {
                         [&](Var* var) {
                             result = var;
                             return nullptr;  // Done
+                        },
+                        [&](CoreBuiltinCall* call) {
+                            Value* value = nullptr;
+                            if (call->Func() == BuiltinFn::kBufferView ||
+                                call->Func() == BuiltinFn::kBufferArrayView) {
+                                value = call->Args()[0];
+                            }
+                            return value;
                         },
                         TINT_ICE_ON_NO_MATCH);
                 },
