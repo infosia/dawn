@@ -1553,6 +1553,12 @@
                 "args": [
                     {"name": "descriptor", "type": "texture descriptor", "annotation": "const*"}
                 ]
+            },
+            {
+                "name": "supports importable transfer buffer from wire",
+                "tags": ["dawn"],
+                "no autolock": true,
+                "returns": "bool"
             }
         ]
     },

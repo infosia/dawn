@@ -209,6 +209,7 @@ enum class Toggle {
     ShadowCopyMapWrite,
     DisableTransientAttachment,
     AutoMapBackendBuffer,
+    EnableImportableTransferBufferInWire,
 
     EnumCount,
     InvalidEnum = EnumCount,

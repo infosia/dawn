@@ -33,6 +33,7 @@
 #include <limits>
 #include <memory>
 #include <span>
+#include <utility>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
@@ -75,7 +76,14 @@ WireResult Server::PreHandleBufferDestroy(const BufferDestroyCmd& cmd) {
     WIRE_TRY(Get(cmd.selfId, &buffer));
 
     // The buffer was destroyed. Clear the Read/WriteHandle.
-    buffer->mapState.Use([](auto mapState) {
+    buffer->mapState.Use([&](auto mapState) {
+        if (buffer->sharedBufferMemoryForImportableTransferBuffer != nullptr) {
+            mProcs->sharedBufferMemoryRelease(
+                buffer->sharedBufferMemoryForImportableTransferBuffer);
+            buffer->sharedBufferMemoryForImportableTransferBuffer = nullptr;
+            buffer->importableTransferBuffer = nullptr;
+        }
+
         mapState->readHandle = nullptr;
         mapState->writeHandle = nullptr;
     });
@@ -131,6 +139,7 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
 WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                                         const WGPUBufferDescriptor* descriptor,
                                         ObjectHandle bufferHandle,
+                                        WGPUBool useImportableTransferBuffer,
                                         uint64_t readHandleCreateInfoLength,
                                         const uint8_t* readHandleCreateInfo,
                                         uint64_t writeHandleCreateInfoLength,
@@ -138,7 +147,6 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
     // Create and register the buffer object.
     Reserved<WGPUBuffer> buffer;
     WIRE_TRY(Allocate(&buffer, bufferHandle));
-    buffer->handle = mProcs->deviceCreateBuffer(device->handle, descriptor);
     buffer->usage = descriptor->usage;
     buffer->mappedAtCreation = (descriptor->mappedAtCreation != 0u);
 
@@ -157,41 +165,83 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
         return WireResult::FatalError;
     }
 
-    return buffer->mapState.Use([&](auto mapState) {
-        if (isWriteMode) {
-            if (buffer->handle == nullptr) {
-                DAWN_ASSERT(descriptor->mappedAtCreation);
-                // A null buffer indicates that mapping-at-creation failed inside createBuffer.
-                // Unmark the buffer as allocated so we will skip freeing it.
-                buffer->state = AllocationState::Reserved;
-                return WireResult::Success;
+    if (useImportableTransferBuffer) {
+        return buffer->mapState.Use([&](auto mapState) {
+            std::unique_ptr<MemoryTransferService::ImportableTransferBuffer> transferBuffer;
+            if (writeHandleCreateInfoLength > 0) {
+                transferBuffer = mMemoryTransferService->DeserializeImportableTransferBuffer(
+                    std::span<const uint8_t>(writeHandleCreateInfo,
+                                             static_cast<size_t>(writeHandleCreateInfoLength)),
+                    descriptor->size);
+            } else if (readHandleCreateInfoLength > 0) {
+                transferBuffer = mMemoryTransferService->DeserializeImportableTransferBuffer(
+                    std::span<const uint8_t>(readHandleCreateInfo,
+                                             static_cast<size_t>(readHandleCreateInfoLength)),
+                    descriptor->size);
             }
 
-            MemoryTransferService::WriteHandle* writeHandle = nullptr;
-            // Deserialize metadata produced from the client to create a companion server handle.
-            if (!mMemoryTransferService->DeserializeWriteHandle(
-                    writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
-                    &writeHandle)) {
+            if (transferBuffer == nullptr || transferBuffer->IsEmpty()) {
                 return WireResult::FatalError;
             }
-            DAWN_ASSERT(writeHandle != nullptr);
-            mapState->writeHandle.reset(writeHandle);
-        }
-
-        if (isReadMode) {
-            MemoryTransferService::ReadHandle* readHandle = nullptr;
-            // Deserialize metadata produced from the client to create a companion server handle.
-            if (!mMemoryTransferService->DeserializeReadHandle(
-                    readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
-                    &readHandle)) {
+            WGPUSharedBufferMemory sharedBufferMemory =
+                transferBuffer->CreateSharedBufferMemory(mProcs.get(), device.data->handle);
+            if (sharedBufferMemory == nullptr) {
                 return WireResult::FatalError;
             }
-            DAWN_ASSERT(readHandle != nullptr);
-            mapState->readHandle.reset(readHandle);
-        }
+            buffer->importableTransferBuffer = std::move(transferBuffer);
+            buffer->sharedBufferMemoryForImportableTransferBuffer = sharedBufferMemory;
+            buffer->handle = mProcs->sharedBufferMemoryCreateBuffer(sharedBufferMemory, descriptor);
 
-        return WireResult::Success;
-    });
+            DAWN_ASSERT(!descriptor->mappedAtCreation);
+            WGPUSharedBufferMemoryBeginAccessDescriptor beginAccessDesc = {};
+            beginAccessDesc.initialized = true;
+            beginAccessDesc.fenceCount = 0;
+            mProcs->sharedBufferMemoryBeginAccess(
+                buffer->sharedBufferMemoryForImportableTransferBuffer, buffer->handle,
+                &beginAccessDesc);
+
+            return WireResult::Success;
+        });
+    } else {
+        buffer->handle = mProcs->deviceCreateBuffer(device->handle, descriptor);
+        return buffer->mapState.Use([&](auto mapState) {
+            if (isWriteMode) {
+                if (buffer->handle == nullptr) {
+                    DAWN_ASSERT(descriptor->mappedAtCreation);
+                    // A null buffer indicates that mapping-at-creation failed inside createBuffer.
+                    // Unmark the buffer as allocated so we will skip freeing it.
+                    buffer->state = AllocationState::Reserved;
+                    return WireResult::Success;
+                }
+
+                MemoryTransferService::WriteHandle* writeHandle = nullptr;
+                // Deserialize metadata produced from the client to create a companion server
+                // handle.
+                if (!mMemoryTransferService->DeserializeWriteHandle(
+                        writeHandleCreateInfo, static_cast<size_t>(writeHandleCreateInfoLength),
+                        &writeHandle)) {
+                    return WireResult::FatalError;
+                }
+                DAWN_ASSERT(writeHandle != nullptr);
+                mapState->writeHandle.reset(writeHandle);
+            }
+
+            if (isReadMode) {
+                MemoryTransferService::ReadHandle* readHandle = nullptr;
+                // Deserialize metadata produced from the client to create a companion server
+                // handle.
+                if (!mMemoryTransferService->DeserializeReadHandle(
+                        readHandleCreateInfo, static_cast<size_t>(readHandleCreateInfoLength),
+                        &readHandle)) {
+                    return WireResult::FatalError;
+                }
+                DAWN_ASSERT(readHandle != nullptr);
+                mapState->readHandle.reset(readHandle);
+            }
+
+            return WireResult::Success;
+        });
+    }
 }
 
 WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
@@ -202,6 +252,10 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
     if (writeDataUpdateInfoLength > std::numeric_limits<size_t>::max() ||
         offset > std::numeric_limits<size_t>::max() || size > std::numeric_limits<size_t>::max()) {
         return WireResult::FatalError;
+    }
+
+    if (buffer->sharedBufferMemoryForImportableTransferBuffer != nullptr) {
+        return WireResult::Success;
     }
 
     return buffer->mapState.Use([&](auto mapState) {
@@ -269,6 +323,13 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
             buffer->mapState.Use([&](auto mapState) {
                 const void* readData =
                     mProcs->bufferGetConstMappedRange(data->bufferObj, data->offset, data->size);
+
+                if (buffer->sharedBufferMemoryForImportableTransferBuffer != nullptr) {
+                    cmd.readDataUpdateInfoLength = 0;
+                    SerializeCommand(cmd);
+                    return;
+                }
+
                 size_t readDataUpdateInfoLength =
                     mapState->readHandle->SizeOfSerializeDataUpdate(data->offset, data->size);
                 cmd.readDataUpdateInfoLength = readDataUpdateInfoLength;

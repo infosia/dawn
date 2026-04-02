@@ -215,6 +215,35 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         size_t mDataLength = 0;
     };
 
+    // Represents a platform-specific shared memory resource (e.g., a file mapping handle)
+    // that has been deserialized on the server side from a client-created transfer buffer.
+    // This allows the server to import the shared memory as a WGPUSharedBufferMemory,
+    // enabling zero-copy data transfer between the client and server processes for
+    // buffer read/write operations.
+    class DAWN_WIRE_EXPORT ImportableTransferBuffer {
+      public:
+        virtual ~ImportableTransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual bool IsEmpty() const { return true; }
+
+        // Import the underlying shared memory resource as a WGPUSharedBufferMemory on
+        // the given device. This is used by the server to create a GPU buffer backed by
+        // the same shared memory that the client writes to / reads from, avoiding
+        // serialization of buffer contents over the wire.
+        virtual WGPUSharedBufferMemory CreateSharedBufferMemory(const DawnProcTable* procs,
+                                                                WGPUDevice device) {
+            return nullptr;
+        }
+    };
+
+    // Deserialize a client-serialized importable transfer buffer from the given payload.
+    virtual std::unique_ptr<ImportableTransferBuffer> DeserializeImportableTransferBuffer(
+        std::span<const uint8_t> deserializeData,
+        size_t bufferSize) {
+        return {};
+    }
+
   private:
     MemoryTransferService(const MemoryTransferService&) = delete;
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;

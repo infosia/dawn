@@ -118,6 +118,8 @@ class Buffer final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
 
     // Only one mapped pointer can be active at a time
     // TODO(enga): Use a tagged pointer to save space.
+    std::unique_ptr<MemoryTransferService::ImportableTransferBuffer> mImportableTransferBuffer =
+        nullptr;
     std::unique_ptr<MemoryTransferService::ReadHandle> mReadHandle = nullptr;
     std::unique_ptr<MemoryTransferService::WriteHandle> mWriteHandle = nullptr;
 };

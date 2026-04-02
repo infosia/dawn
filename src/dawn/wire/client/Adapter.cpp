@@ -64,13 +64,16 @@ class RequestDeviceEvent : public TrackedEvent {
                          WGPUStringView message,
                          const WGPULimits* limits,
                          uint32_t featuresCount,
-                         const WGPUFeatureName* features) {
+                         const WGPUFeatureName* features,
+                         bool supportsImportableTransferBufferFromWire) {
         DAWN_ASSERT(mDevice != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestDeviceStatus_Success) {
             mDevice->SetLimits(limits);
             mDevice->SetFeatures(features, featuresCount);
+            mDevice->SetSupportsImportableTransferBufferFromWire(
+                supportsImportableTransferBufferFromWire);
         }
         return WireResult::Success;
     }
@@ -348,15 +351,18 @@ WGPUFuture Adapter::APIRequestDevice(const WGPUDeviceDescriptor* descriptor,
     return {futureIDInternal};
 }
 
-WireResult Client::DoAdapterRequestDeviceCallback(ObjectHandle eventManager,
-                                                  WGPUFuture future,
-                                                  WGPURequestDeviceStatus status,
-                                                  WGPUStringView message,
-                                                  const WGPULimits* limits,
-                                                  uint32_t featuresCount,
-                                                  const WGPUFeatureName* features) {
+WireResult Client::DoAdapterRequestDeviceCallback(
+    ObjectHandle eventManager,
+    WGPUFuture future,
+    WGPURequestDeviceStatus status,
+    WGPUStringView message,
+    const WGPULimits* limits,
+    uint32_t featuresCount,
+    const WGPUFeatureName* features,
+    WGPUBool supportsImportableTransferBufferFromWire) {
     return SetFutureReady<RequestDeviceEvent>(eventManager, future.id, status, message, limits,
-                                              featuresCount, features);
+                                              featuresCount, features,
+                                              supportsImportableTransferBufferFromWire);
 }
 
 WGPUInstance Adapter::APIGetInstance() const {

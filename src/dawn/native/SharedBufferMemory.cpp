@@ -129,6 +129,11 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     UnpackedPtr<BufferDescriptor> descriptor;
     DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(GetDevice(), rawDescriptor));
 
+    bool fakeOOMAtDevice = false;
+    if (auto* ext = descriptor.Get<DawnFakeBufferOOMForTesting>()) {
+        fakeOOMAtDevice = ext->fakeOOMAtDevice;
+    }
+
     // Emit a specific error message if the user attempts to create a buffer with Uniform usage.
     DAWN_INVALID_IF(descriptor->usage & wgpu::BufferUsage::Uniform,
                     "The buffer usage (%s) contains (%s), which is not allowed on buffers created "
@@ -140,8 +145,8 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
                     "The buffer usage (%s) is incompatible with the SharedBufferMemory usage (%s).",
                     descriptor->usage, mProperties.usage);
 
-    // Validate that the buffer size exactly matches the shared buffer memory's size.
-    DAWN_INVALID_IF(descriptor->size != mProperties.size,
+    // Validate that the buffer size is greater than the shared buffer memory's size.
+    DAWN_INVALID_IF(descriptor->size > mProperties.size,
                     "SharedBufferMemory size (%u) doesn't match descriptor size (%u).",
                     mProperties.size, descriptor->size);
 
@@ -149,6 +154,11 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
     // Access is not allowed until BeginAccess has been called.
     buffer->OnEndAccess();
+
+    if (fakeOOMAtDevice) {
+        return DAWN_OUT_OF_MEMORY_ERROR("DawnFakeBufferOOMForTesting fakeOOMAtDevice");
+    }
+
     return buffer;
 }
 

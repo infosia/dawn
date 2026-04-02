@@ -317,6 +317,8 @@ class DeviceBase : public ErrorSink,
     void APIPushErrorScope(wgpu::ErrorFilter filter);
     Future APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackInfo);
 
+    bool APISupportsImportableTransferBufferFromWire() const;
+
     MaybeError ValidateIsAlive() const;
 
     BlobCache* GetBlobCache() const;
@@ -594,6 +596,8 @@ class DeviceBase : public ErrorSink,
     virtual Ref<PipelineCacheBase> GetOrCreatePipelineCacheImpl(const CacheKey& key);
     virtual void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event);
     virtual void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event);
+
+    virtual bool SupportsImportableTransferBufferFromWireImpl() const;
 
     void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
                        wgpu::FeatureLevel level);

@@ -239,11 +239,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::BufferMapExtendedUsages);
     }
 
-    // Temporarily only enable SharedBufferMemoryD3D12SharedMemoryFileMappingHandle on cache
-    // coherent UMA.
-    // TODO(386255678): enable SharedBufferMemoryD3D12SharedMemoryFileMappingHandle on other
-    // architectures.
-    if (GetDeviceInfo().supportsExistingHeap && SupportsBufferMapExtendedUsages()) {
+    if (SupportsSharedBufferMemoryD3D12SharedMemoryFileMappingHandle()) {
         EnableFeature(Feature::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle);
     }
 
@@ -264,6 +260,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (GetDeviceInfo().resourceBindingTier >= D3D12_RESOURCE_BINDING_TIER_2) {
         EnableFeature(Feature::ChromiumExperimentalSamplingResourceTable);
     }
+}
+
+bool PhysicalDevice::SupportsSharedBufferMemoryD3D12SharedMemoryFileMappingHandle() const {
+    // Temporarily only enable SharedBufferMemoryD3D12SharedMemoryFileMappingHandle on cache
+    // coherent UMA on Intel GPUs.
+    // TODO(386255678): enable SharedBufferMemoryD3D12SharedMemoryFileMappingHandle on other
+    // architectures.
+    return GetDeviceInfo().supportsExistingHeap && SupportsBufferMapExtendedUsages() &&
+           gpu_info::IsIntel(GetVendorId());
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
