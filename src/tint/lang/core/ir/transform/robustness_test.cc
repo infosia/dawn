@@ -5414,6 +5414,84 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_P(IR_RobustnessTest, BufferView_RootVar) {
+    auto* b1 = b.Var("b1", ty.ptr(storage, ty.unsized_buffer()));
+    b1->SetBindingPoint(0, 0);
+    mod.root_block->Append(b1);
+    auto* b2 = b.Var("b2", ty.ptr(uniform, ty.buffer(128)));
+    b2->SetBindingPoint(0, 1);
+    mod.root_block->Append(b2);
+
+    auto* foo = b.Function("foo", ty.void_());
+    b.Append(foo->Block(), [&] {
+        auto* v1 = b.CallExplicit(ty.ptr(storage, ty.runtime_array(ty.u32())),
+                                  core::BuiltinFn::kBufferView, Vector{ty.runtime_array(ty.u32())},
+                                  b1, 0_u);
+        b.Access(ty.ptr(storage, ty.u32()), v1, 128_u);
+        auto* v2 = b.CallExplicit(ty.ptr(uniform, ty.runtime_array(ty.u32())),
+                                  core::BuiltinFn::kBufferArrayView,
+                                  Vector{ty.runtime_array(ty.u32())}, b2, 0_u, 128_u);
+        b.Access(ty.ptr(uniform, ty.u32()), v2, 256_u);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %b1:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %b2:ptr<uniform, buffer<128>, read> = var undef @binding_point(0, 1)
+}
+
+%foo = func():void {
+  $B2: {
+    %4:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %b1, 0u
+    %5:ptr<storage, u32, read_write> = access %4, 128u
+    %6:ptr<uniform, array<u32>, read> = bufferArrayView<array<u32>> %b2, 0u, 128u
+    %7:ptr<uniform, u32, read> = access %6, 256u
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %b1:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %b2:ptr<uniform, buffer<128>, read> = var undef @binding_point(0, 1)
+}
+
+%foo = func():void {
+  $B2: {
+    %4:u32 = bufferLength %b1
+    %5:bool = lt %4, 4u
+    %6:u32 = select 0u, 0u, %5
+    %7:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %b1, %6
+    %8:u32 = arrayLength %7
+    %9:u32 = sub %8, 1u
+    %10:u32 = min 128u, %9
+    %11:ptr<storage, u32, read_write> = access %7, %10
+    %12:u32 = bufferLength %b2
+    %13:bool = lt %12, 128u
+    %14:u32 = select 0u, 0u, %13
+    %15:u32 = select 128u, 4u, %13
+    %16:ptr<uniform, array<u32>, read> = bufferArrayView<array<u32>> %b2, %14, %15
+    %17:u32 = arrayLength %16
+    %18:u32 = sub %17, 1u
+    %19:u32 = min 256u, %18
+    %20:ptr<uniform, u32, read> = access %16, %19
+    ret
+  }
+}
+)";
+
+    RobustnessConfig cfg;
+    cfg.clamp_storage = GetParam();
+    cfg.clamp_uniform = GetParam();
+    Run(Robustness, cfg);
+
+    EXPECT_EQ(GetParam() ? expect : src, str());
+}
+
 TEST_P(IR_RobustnessTest, BufferView_u32_ConstOffsetAndLength_InRange) {
     auto* func = b.Function("foo", ty.void_());
     auto* p = b.FunctionParam("p", ty.ptr(storage, ty.unsized_buffer()));
@@ -5967,7 +6045,7 @@ TEST_P(IR_RobustnessTest, BufferArrayView_RuntimeStruct_ConstOffset) {
     auto* s = b.FunctionParam("s", ty.i32());
     func->SetParams({p, s});
     b.Append(func->Block(), [&] {
-        b.CallExplicit(ty.ptr(storage, S), BuiltinFn::kBufferArrayView, Vector{S}, p, 8_u, s);
+        b.CallExplicit(ty.ptr(storage, S), BuiltinFn::kBufferArrayView, Vector{S}, p, 8_i, s);
         b.Return(func);
     });
 
@@ -5979,7 +6057,7 @@ S = struct @align(8) {
 
 %foo = func(%p:ptr<storage, buffer, read_write>, %s:i32):void {
   $B1: {
-    %4:ptr<storage, S, read_write> = bufferArrayView<S> %p, 8u, %s
+    %4:ptr<storage, S, read_write> = bufferArrayView<S> %p, 8i, %s
     ret
   }
 }
@@ -6030,7 +6108,7 @@ TEST_P(IR_RobustnessTest, BufferArrayView_RuntimeStruct_ConstSize) {
     auto* o = b.FunctionParam("o", ty.i32());
     func->SetParams({p, o});
     b.Append(func->Block(), [&] {
-        b.CallExplicit(ty.ptr(storage, S), BuiltinFn::kBufferArrayView, Vector{S}, p, o, 64_u);
+        b.CallExplicit(ty.ptr(storage, S), BuiltinFn::kBufferArrayView, Vector{S}, p, o, 64_i);
         b.Return(func);
     });
 
@@ -6042,7 +6120,7 @@ S = struct @align(8) {
 
 %foo = func(%p:ptr<storage, buffer, read_write>, %o:i32):void {
   $B1: {
-    %4:ptr<storage, S, read_write> = bufferArrayView<S> %p, %o, 64u
+    %4:ptr<storage, S, read_write> = bufferArrayView<S> %p, %o, 64i
     ret
   }
 }

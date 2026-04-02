@@ -260,6 +260,26 @@ TEST_F(ResolverBuiltinArrayTest, ArrayLength_Vector) {
     EXPECT_TRUE(TypeOf(call)->Is<core::type::U32>());
 }
 
+TEST_F(ResolverBuiltinArrayTest, ArrayLength_Buffer_Workgroup) {
+    ExpectSuccess(R"(
+fn bar(p : ptr<workgroup, buffer>) -> u32 {
+  return arrayLength(bufferView<array<u32>>(p, 0));
+}
+fn foo(p : ptr<workgroup, buffer<128>>) -> u32 {
+  return arrayLength(bufferArrayView<array<u32>>(p, 0, 128));
+})");
+}
+
+TEST_F(ResolverBuiltinArrayTest, ArrayLength_Buffer_Uniform) {
+    ExpectSuccess(R"(
+fn bar(p : ptr<uniform, buffer>) -> u32 {
+  return arrayLength(bufferView<array<u32>>(p, 0));
+}
+fn foo(p : ptr<uniform, buffer<128>>) -> u32 {
+  return arrayLength(bufferArrayView<array<u32>>(p, 0, 128));
+})");
+}
+
 TEST_F(ResolverBuiltinArrayTest, ArrayLength_Error_ArraySized) {
     GlobalVar("arr", ty.array<i32, 4>(), core::AddressSpace::kPrivate);
     auto* call = Call("arrayLength", AddressOf("arr"));
@@ -270,11 +290,14 @@ TEST_F(ResolverBuiltinArrayTest, ArrayLength_Error_ArraySized) {
     EXPECT_EQ(r()->error(),
               R"(error: no matching call to 'arrayLength(ptr<private, array<i32, 4>, read_write>)'
 
-2 candidate functions:
- • 'arrayLength(ptr<storage, array<T>, R>  ✗ ) -> u32' where:
-      ✗  'R' is 'read'
+3 candidate functions:
  • 'arrayLength(ptr<storage, array<T>, W>  ✗ ) -> u32' where:
       ✗  'W' is 'write' or 'read_write'
+ • 'arrayLength(ptr<workgroup, array<T>, W>  ✗ ) -> u32' where:
+      ✗  'W' is 'write' or 'read_write'
+ • 'arrayLength(ptr<AS, array<T>, R>  ✗ ) -> u32' where:
+      ✗  'AS' is 'uniform' or 'storage'
+      ✗  'R' is 'read'
 )");
 }
 

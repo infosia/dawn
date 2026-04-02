@@ -1,23 +1,51 @@
-SKIP: FAILED
+#include <metal_stdlib>
+using namespace metal;
 
-$B1: {  # root
-  %v:ptr<workgroup, buffer<64>, read_write> = var undef
+template<typename T, size_t N>
+struct tint_array {
+  const constant T& operator[](size_t i) const constant { return elements[i]; }
+  device T& operator[](size_t i) device { return elements[i]; }
+  const device T& operator[](size_t i) const device { return elements[i]; }
+  thread T& operator[](size_t i) thread { return elements[i]; }
+  const thread T& operator[](size_t i) const thread { return elements[i]; }
+  threadgroup T& operator[](size_t i) threadgroup { return elements[i]; }
+  const threadgroup T& operator[](size_t i) const threadgroup { return elements[i]; }
+  T elements[N];
+};
+
+struct tint_module_vars_struct {
+  threadgroup tint_array<uchar, 64>* v;
+};
+
+struct tint_symbol_1 {
+  tint_array<uchar, 64> tint_symbol;
+};
+
+void foo(threadgroup tint_array<uchar, 64>* const p) {
+  (*reinterpret_cast<threadgroup float2*>(reinterpret_cast<threadgroup char*>(p) + 0u)).x = 1.0f;
 }
 
-%foo = func(%p:ptr<workgroup, buffer<64>, read_write>):void {
-  $B2: {
-    %4:ptr<workgroup, vec2<f32>, read_write> = bufferView<vec2<f32>> %p, 0i
-    %p2:ptr<workgroup, vec2<f32>, read_write> = let %4
-    store_vector_element %p2, 0u, 1.0f
-    ret
+void main_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
+  {
+    uint v_1 = 0u;
+    v_1 = tint_local_index;
+    while(true) {
+      uint const v_2 = v_1;
+      if ((v_2 >= 64u)) {
+        break;
+      }
+      (*tint_module_vars.v)[v_2] = 0u;
+      {
+        v_1 = (v_2 + 1u);
+      }
+    }
   }
+  threadgroup_barrier(mem_flags::mem_threadgroup);
+  foo(tint_module_vars.v);
 }
-%main = @compute @workgroup_size(1i, 1i, 1i) func():void {
-  $B3: {
-    %7:void = call %foo, %v
-    ret
-  }
-}
-Failed to generate: buffers are not supported by the MSL backend
 
-tint executable returned error: exit status 1
+[[max_total_threads_per_threadgroup(1)]]
+kernel void v_3(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_4 [[threadgroup(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.v=(&(*v_4).tint_symbol)};
+  main_inner(tint_local_index, tint_module_vars);
+}
