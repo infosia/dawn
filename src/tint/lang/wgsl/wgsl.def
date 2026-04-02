@@ -367,10 +367,12 @@ match uniform_or_storage
 @must_use @const implicit(N: num)
   fn any(vec<N, bool>) -> bool
 
-@must_use implicit(T, R: read)
-  fn arrayLength(ptr<storage, runtime_array<T>, R>) -> u32
+@must_use implicit(AS: uniform_or_storage, T, R: read)
+  fn arrayLength(ptr<AS, runtime_array<T>, R>) -> u32
 @must_use @stage("fragment", "compute") implicit(T, W: writable)
   fn arrayLength(ptr<storage, runtime_array<T>, W>) -> u32
+@must_use @stage("compute") implicit(T, W: writable)
+  fn arrayLength(ptr<workgroup, runtime_array<T>, W>) -> u32
 
 @must_use @const implicit(T: fa_f32_f16)
   fn asin(@test_value(0.479425538604) T) -> T

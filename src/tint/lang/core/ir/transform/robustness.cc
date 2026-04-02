@@ -588,6 +588,9 @@ struct State {
                 TINT_IR_ASSERT(ir, offset_val == (offset_val & ~(store_ty->Align() - 1)));
                 required_size += offset_val;
                 const_offset = true;
+                if (!offset->Type()->Is<core::type::U32>()) {
+                    offset = b.Constant(u32(offset_val));
+                }
             }
             if (size) {
                 if (auto* size_cnst = size->As<Constant>()) {
@@ -596,6 +599,9 @@ struct State {
                     TINT_IR_ASSERT(ir, ty_stride == 0 || (size_val - ty_offset) % ty_stride == 0);
                     required_size += size_val;
                     const_size = true;
+                    if (!size->Type()->Is<core::type::U32>()) {
+                        size = b.Constant(u32(size_val));
+                    }
                 }
             } else {
                 required_size += ty_required_size;
@@ -610,6 +616,7 @@ struct State {
                 if (total_required_size) {
                     total_required_size = b.Add(total_required_size, offset)->Result();
                 } else {
+                    TINT_IR_ASSERT(ir, size && !const_size);
                     total_required_size = offset;
                 }
             }
@@ -631,7 +638,13 @@ struct State {
                 // Use the larger of the size arg or the type required size.
                 size = b.Call(ty.u32(), BuiltinFn::kMax, size, b.Constant(u32(ty_required_size)))
                            ->Result();
-                total_required_size = b.Add(total_required_size, size)->Result();
+                if (total_required_size) {
+                    total_required_size = b.Add(total_required_size, size)->Result();
+                } else {
+                    // offset must have been 0.
+                    TINT_IR_ASSERT(ir, offset && const_offset);
+                    total_required_size = size;
+                }
             }
 
             // Now check if length < total_required_size
@@ -689,6 +702,14 @@ struct State {
                         [&](Var* var) {
                             result = var;
                             return nullptr;  // Done
+                        },
+                        [&](CoreBuiltinCall* call) {
+                            Value* call_value = nullptr;
+                            if (call->Func() == BuiltinFn::kBufferView ||
+                                call->Func() == BuiltinFn::kBufferArrayView) {
+                                call_value = call->Args()[0];
+                            }
+                            return call_value;
                         },
                         TINT_ICE_ON_NO_MATCH);
                 },

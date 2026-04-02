@@ -45,6 +45,7 @@
 #include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/propagate_buffer_sizes.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
@@ -65,6 +66,7 @@
 #include "src/tint/lang/msl/writer/raise/binary_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/builtin_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/convert_print_to_log.h"
+#include "src/tint/lang/msl/writer/raise/decompose_buffer.h"
 #include "src/tint/lang/msl/writer/raise/fix_type_layout.h"
 #include "src/tint/lang/msl/writer/raise/module_constant.h"
 #include "src/tint/lang/msl/writer/raise/module_scope_vars.h"
@@ -133,6 +135,8 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                                                         module, immediate_data_config));
     TINT_CHECK_RESULT(core::ir::transform::BindingRemapper(module, remapper_data));
 
+    TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
+
     if (!options.disable_robustness) {
         core::ir::transform::RobustnessConfig config{};
         config.use_integer_range_analysis = !options.disable_integer_range_analysis;
@@ -176,6 +180,8 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     }
 
     TINT_CHECK_RESULT(core::ir::transform::MultiplanarExternalTexture(module, multiplanar_map));
+
+    TINT_CHECK_RESULT(raise::DecomposeBuffer(module));
 
     // TODO(crbug.com/366291600): Replace ArrayLengthFromUniform with ArrayLengthFromImmediates
     if (array_length_from_constants.ubo_binding) {
