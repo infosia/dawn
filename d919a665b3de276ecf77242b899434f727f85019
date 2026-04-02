@@ -16,6 +16,46 @@
       "message": "Sorry I\u0027m not able to review this before my OOO, can you find a different reviewer?",
       "revId": "d919a665b3de276ecf77242b899434f727f85019",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce45eb3a_f90b9885",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-02T22:36:13Z",
+      "side": 1,
+      "message": "Could you make the names of the various ExecutionSerial variables longer so it\u0027s easier to understand which one is being used in each place? Like:\n- completedSerial -\u003e proposedCompletedSerial\n- old -\u003e completedSerial\n- serial -\u003e newCompletedSerial",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 256,
+        "endChar": 88
+      },
+      "revId": "d919a665b3de276ecf77242b899434f727f85019",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f8b0d25_a9dd046d",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-02T22:36:13Z",
+      "side": 1,
+      "message": "Hasn\u0027t the completed serial already been updated here?",
+      "revId": "d919a665b3de276ecf77242b899434f727f85019",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
