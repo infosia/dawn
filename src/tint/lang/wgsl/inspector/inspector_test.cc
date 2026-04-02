@@ -4285,7 +4285,11 @@ fn main() {
     Inspector& inspector = Initialize(shader);
     auto info = inspector.GetTextureQueries("main");
 
-    ASSERT_EQ(0u, info.size());
+    ASSERT_EQ(1u, info.size());
+
+    EXPECT_EQ(Inspector::TextureQueryType::kTextureNumSamples, info[0].type);
+    EXPECT_EQ(2u, info[0].group);
+    EXPECT_EQ(3u, info[0].binding);
 }
 
 TEST_F(InspectorTextureTest, TextureLoadMultipleInEP) {
@@ -4306,7 +4310,7 @@ fn main() {
     Inspector& inspector = Initialize(shader);
     auto info = inspector.GetTextureQueries("main");
 
-    ASSERT_EQ(2u, info.size());
+    ASSERT_EQ(3u, info.size());
 
     Inspector::LevelSampleInfo info1 = {
         /*type */ Inspector::TextureQueryType::kTextureNumLevels,
@@ -4318,7 +4322,12 @@ fn main() {
         /*group*/ 2,
         /*binding*/ 3,
     };
-    EXPECT_THAT(info, testing::UnorderedElementsAre(info1, info2));
+    Inspector::LevelSampleInfo info3 = {
+        /*type */ Inspector::TextureQueryType::kTextureNumSamples,
+        /*group*/ 1,
+        /*binding*/ 4,
+    };
+    EXPECT_THAT(info, testing::UnorderedElementsAre(info1, info2, info3));
 }
 
 TEST_F(InspectorTextureTest, TextureInSubfunction) {
