@@ -150,6 +150,7 @@ class EnumType(Type):
         self.hasUndefined = False
         self.contiguous = True
         self.startValue = None
+        self.allowConflict = False
         lastValue = None
         for m in self.json_data['values']:
             if not is_enabled(m):
@@ -193,6 +194,7 @@ class EnumType(Type):
             lastValue = value
             self.values.append(
                 EnumValue(Name(value_name), value, m.get('valid', True), m))
+            self.allowConflict |= m.get('enum_value_conflict', False)
 
         # Assert that all values except those with "enum_value_conflict": true are unique in enums
         all_values = set()
