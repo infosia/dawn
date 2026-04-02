@@ -997,6 +997,9 @@ class Printer : public tint::TextGenerator {
                 case core::AddressSpace::kStorage:
                     out << "device ";
                     break;
+                case core::AddressSpace::kWorkgroup:
+                    out << "threadgroup ";
+                    break;
                 default:
                     TINT_IR_ICE(ir_) << "invalid address space for pointer_offset";
             }
@@ -1808,6 +1811,8 @@ class Printer : public tint::TextGenerator {
         tint::Switch(
             c->Type(),  //
             [&](const core::type::Bool*) { out << (c->ValueAs<bool>() ? "true" : "false"); },
+            // 8-bit types print as chars by default.
+            [&](const core::type::U8*) { out << static_cast<uint32_t>(c->ValueAs<u8>()) << "u"; },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
             [&](const core::type::U32*) { out << c->ValueAs<u32>() << "u"; },
             [&](const core::type::U64*) { out << c->ValueAs<u64>() << "ul"; },

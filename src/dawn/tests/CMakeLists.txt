@@ -56,6 +56,7 @@ set(end2end_sources
     "end2end/BufferHostMappedPointerTests.h"
     "end2end/BufferRobustnessTests.cpp"
     "end2end/BufferTests.cpp"
+    "end2end/BufferViewTests.cpp"
     "end2end/BufferZeroInitTests.cpp"
     "end2end/ClipDistancesTests.cpp"
     "end2end/ClipSpaceTests.cpp"

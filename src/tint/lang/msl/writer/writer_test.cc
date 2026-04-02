@@ -572,5 +572,70 @@ TEST_F(MslWriterTest, CanGenerate_StructMemberPadding_TooLarge) {
     EXPECT_THAT(result.Failure().reason, testing::HasSubstr("is larger than the maximum"));
 }
 
+TEST_F(MslWriterTest, BufferView_Workgroup) {
+    auto* v = b.Var("v", ty.ptr(workgroup, ty.buffer(32)));
+    mod.root_block->Append(v);
+
+    auto* entry = b.ComputeFunction("entry");
+    b.Append(entry->Block(), [&] {
+        auto* call =
+            b.CallExplicit(ty.ptr(workgroup, ty.vec4(ty.f32())), core::BuiltinFn::kBufferView,
+                           Vector{ty.vec4(ty.f32())}, v, 0_u);
+        b.StoreVectorElement(call, 0_u, 0_f);
+        b.Return(entry);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success);
+    EXPECT_EQ(output_.msl, R"(#include <metal_stdlib>
+using namespace metal;
+
+template<typename T, size_t N>
+struct tint_array {
+  const constant T& operator[](size_t i) const constant { return elements[i]; }
+  device T& operator[](size_t i) device { return elements[i]; }
+  const device T& operator[](size_t i) const device { return elements[i]; }
+  thread T& operator[](size_t i) thread { return elements[i]; }
+  const thread T& operator[](size_t i) const thread { return elements[i]; }
+  threadgroup T& operator[](size_t i) threadgroup { return elements[i]; }
+  const threadgroup T& operator[](size_t i) const threadgroup { return elements[i]; }
+  T elements[N];
+};
+
+struct tint_module_vars_struct {
+  threadgroup tint_array<uchar, 32>* v;
+};
+
+struct tint_symbol_1 {
+  tint_array<uchar, 32> tint_symbol;
+};
+
+void entry_inner(uint tint_local_index, tint_module_vars_struct tint_module_vars) {
+  {
+    uint v_1 = 0u;
+    v_1 = tint_local_index;
+    while(true) {
+      uint const v_2 = v_1;
+      if ((v_2 >= 32u)) {
+        break;
+      }
+      (*tint_module_vars.v)[v_2] = 0u;
+      {
+        v_1 = (v_2 + 1u);
+      }
+    }
+  }
+  threadgroup_barrier(mem_flags::mem_threadgroup);
+  (*reinterpret_cast<threadgroup float4*>(reinterpret_cast<threadgroup char*>(tint_module_vars.v) + 0u)).x = 0.0f;
+}
+
+[[max_total_threads_per_threadgroup(1)]]
+kernel void entry(uint tint_local_index [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_3 [[threadgroup(0)]]) {
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.v=(&(*v_3).tint_symbol)};
+  entry_inner(tint_local_index, tint_module_vars);
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::msl::writer
