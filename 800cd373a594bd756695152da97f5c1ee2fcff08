@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "049ec9c6_3edc03dc",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-02T03:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee36b63_426fda66",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1382a081_488f58eb",
@@ -101,6 +119,24 @@
       "writtenOn": "2026-03-31T14:34:34Z",
       "side": 1,
       "message": "nit: Can we do something like this somehow? `\"Skipping test because \" \u003c\u003c theFeature \u003c\u003c \" is not supported by the adapter\"`.",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094126c2_ba6c6a03",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-02T03:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1382a081_488f58eb",
       "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad5f2fc_92463c50",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-02T03:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a199144_5c232de5",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efe417ec_44950d9a",
@@ -135,6 +189,24 @@
       "writtenOn": "2026-03-31T14:34:34Z",
       "side": 1,
       "message": "nit: `.contains`",
+      "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "555d7caa_df46ba96",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-02T03:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe417ec_44950d9a",
       "revId": "800cd373a594bd756695152da97f5c1ee2fcff08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
