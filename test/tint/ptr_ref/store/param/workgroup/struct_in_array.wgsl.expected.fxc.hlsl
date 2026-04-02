@@ -9,29 +9,27 @@ struct main_inputs {
 
 groupshared str S[4];
 void func(uint pointer_indices[1]) {
-  str v = (str)0;
-  S[pointer_indices[0u]] = v;
+  S[pointer_indices[0u]] = (str)0;
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_1 = 0u;
-    v_1 = tint_local_index;
+    uint v = 0u;
+    v = tint_local_index;
     while(true) {
-      uint v_2 = v_1;
-      if ((v_2 >= 4u)) {
+      uint v_1 = v;
+      if ((v_1 >= 4u)) {
         break;
       }
-      str v_3 = (str)0;
-      S[v_2] = v_3;
+      S[v_1] = (str)0;
       {
-        v_1 = (v_2 + 1u);
+        v = (v_1 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  uint v_4[1] = {2u};
-  func(v_4);
+  uint v_2[1] = {2u};
+  func(v_2);
 }
 
 [numthreads(1, 1, 1)]

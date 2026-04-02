@@ -119,9 +119,8 @@ void foo_inner(uint tint_local_index) {
   S u = v_18(0u);
   S s = v_9(0u);
   S w = v_9(0u);
-  S v_25 = (S)0;
-  v_3(0u, v_25);
-  wbuffer = v_25;
+  v_3(0u, (S)0);
+  wbuffer = (S)0;
 }
 
 [numthreads(1, 1, 1)]

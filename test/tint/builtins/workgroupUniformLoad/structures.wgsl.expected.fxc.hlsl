@@ -30,8 +30,7 @@ void main_inner(uint tint_local_index) {
       if ((v_3 >= 4u)) {
         break;
       }
-      Inner v_4 = (Inner)0;
-      v.a[v_3] = v_4;
+      v.a[v_3] = (Inner)0;
       {
         v_2 = (v_3 + 1u);
       }

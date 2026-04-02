@@ -8,13 +8,12 @@ struct main_outputs {
 
 
 Out main_inner() {
-  Out v = (Out)0;
-  return v;
+  return (Out)0;
 }
 
 main_outputs main() {
-  Out v_1 = main_inner();
-  main_outputs v_2 = {v_1.pos};
-  return v_2;
+  Out v = main_inner();
+  main_outputs v_1 = {v.pos};
+  return v_1;
 }
 

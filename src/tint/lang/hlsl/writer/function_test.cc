@@ -665,8 +665,7 @@ void my_func(float a[5]) {
 
 [numthreads(1, 1, 1)]
 void main() {
-  float v[5] = (float[5])0;
-  my_func(v);
+  my_func((float[5])0);
 }
 
 )");
@@ -691,8 +690,7 @@ TEST_F(HlslWriterTest, FunctionWithArrayReturn) {
     EXPECT_EQ(output_.hlsl, R"(
 typedef float ary_ret[5];
 ary_ret my_func() {
-  float v[5] = (float[5])0;
-  return v;
+  return (float[5])0;
 }
 
 [numthreads(1, 1, 1)]
@@ -916,8 +914,7 @@ TEST_F(HlslWriterTest, DuplicateConstant) {
     EXPECT_EQ(output_.hlsl, R"(
 typedef int4 ary_ret[4];
 ary_ret ret_arr() {
-  int4 v[4] = (int4[4])0;
-  return v;
+  return (int4[4])0;
 }
 
 void main() {

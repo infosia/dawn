@@ -4,8 +4,7 @@ struct str {
 
 
 void func(inout str pointer) {
-  str v = (str)0;
-  pointer = v;
+  pointer = (str)0;
 }
 
 [numthreads(1, 1, 1)]

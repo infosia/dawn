@@ -208,13 +208,9 @@ void main() {
   v_5(648u, matrix<float16_t, 4, 2>((float16_t(0.0h)).xx, (float16_t(0.0h)).xx, (float16_t(0.0h)).xx, (float16_t(0.0h)).xx));
   v_13(664u, matrix<float16_t, 4, 3>((float16_t(0.0h)).xxx, (float16_t(0.0h)).xxx, (float16_t(0.0h)).xxx, (float16_t(0.0h)).xxx));
   v_12(696u, matrix<float16_t, 4, 4>((float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx));
-  float3 v_29[2] = (float3[2])0;
-  v_9(736u, v_29);
-  matrix<float16_t, 4, 2> v_30[2] = (matrix<float16_t, 4, 2>[2])0;
-  v_6(768u, v_30);
-  Inner v_31 = (Inner)0;
-  v(800u, v_31);
-  Inner v_32[4] = (Inner[4])0;
-  v_1(812u, v_32);
+  v_9(736u, (float3[2])0);
+  v_6(768u, (matrix<float16_t, 4, 2>[2])0);
+  v(800u, (Inner)0);
+  v_1(812u, (Inner[4])0);
 }
 

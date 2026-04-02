@@ -685,8 +685,7 @@ TEST_F(HlslWriterTest, ConstantTypeArrayEmptyFunctionReturn) {
     EXPECT_EQ(output_.hlsl, R"(
 typedef float3 ary_ret[3];
 ary_ret a() {
-  float3 v[3] = (float3[3])0;
-  return v;
+  return (float3[3])0;
 }
 
 [numthreads(1, 1, 1)]
@@ -731,8 +730,7 @@ TEST_F(HlslWriterTest, ConstantTypeArrayModuleScopeZero) {
     auto result = Generate();
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
-static const float v_1[65536] = (float[65536])0;
-static float v[65536] = v_1;
+static float v[65536] = (float[65536])0;
 [numthreads(1, 1, 1)]
 void main() {
 }
@@ -802,8 +800,7 @@ struct S {
 
 
 S a() {
-  S v = (S)0;
-  return v;
+  return (S)0;
 }
 
 [numthreads(1, 1, 1)]
@@ -997,8 +994,7 @@ TEST_F(HlslWriterTest, ConstantTypeStructEmpty) {
 
 
 S a() {
-  S v = (S)0;
-  return v;
+  return (S)0;
 }
 
 [numthreads(1, 1, 1)]
@@ -1129,8 +1125,7 @@ TEST_F(HlslWriterTest, ConstantTypeStructStaticEmpty) {
 };
 
 
-static const S v = {int(0)};
-static S p = v;
+static S p = (S)0;
 [numthreads(1, 1, 1)]
 void main() {
 }
