@@ -656,12 +656,15 @@ struct State {
             }
 
             auto* len_less_than = b.LessThan(length, total_required_size);
-            auto* offset_select = b.Call(ty.u32(), BuiltinFn::kSelect, offset, 0_u, len_less_than);
+            auto* offset_select =
+                b.Call(ty.u32(), BuiltinFn::kSelect, b.InsertBitcastIfNeeded(ty.u32(), offset), 0_u,
+                       len_less_than);
             call->SetArg(1, offset_select->Result());
             Instruction* size_select = nullptr;
             if (size) {
-                size_select = b.Call(ty.u32(), BuiltinFn::kSelect, size,
-                                     b.Constant(u32(ty_required_size)), len_less_than);
+                size_select =
+                    b.Call(ty.u32(), BuiltinFn::kSelect, b.InsertBitcastIfNeeded(ty.u32(), size),
+                           b.Constant(u32(ty_required_size)), len_less_than);
                 call->SetArg(2, size_select->Result());
             }
         });
@@ -689,6 +692,14 @@ struct State {
                         [&](Var* var) {
                             result = var;
                             return nullptr;  // Done
+                        },
+                        [&](CoreBuiltinCall* call) {
+                            Value* value = nullptr;
+                            if (call->Func() == BuiltinFn::kBufferView ||
+                                call->Func() == BuiltinFn::kBufferArrayView) {
+                                value = call->Args()[0];
+                            }
+                            return value;
                         },
                         TINT_ICE_ON_NO_MATCH);
                 },
