@@ -16,6 +16,24 @@
       "message": "I had planned to codegen buffers as char arrays, but should this be more like other decompose transforms and modify the variable to that type instead? It might require function specialization to do so since the auto-conversions in the validator wouldn\u0027t apply.",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fc7fa26_7f04e3ba",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-02T02:22:05Z",
+      "side": 1,
+      "message": "Then it hits me that specialization will need to happen at some point still even then.",
+      "parentUuid": "ccb96fff_45f5ce18",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
