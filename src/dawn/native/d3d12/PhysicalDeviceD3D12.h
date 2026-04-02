@@ -56,6 +56,7 @@ class PhysicalDevice : public d3d::PhysicalDevice {
     ComPtr<ID3D12Device> GetDevice() const;
 
     bool SupportsBufferMapExtendedUsages() const;
+    bool SupportsSharedBufferMemoryD3D12SharedMemoryFileMappingHandle() const;
 
   private:
     using Base = d3d::PhysicalDevice;
