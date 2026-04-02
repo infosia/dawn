@@ -997,6 +997,9 @@ class Printer : public tint::TextGenerator {
                 case core::AddressSpace::kStorage:
                     out << "device ";
                     break;
+                case core::AddressSpace::kWorkgroup:
+                    out << "threadgroup ";
+                    break;
                 default:
                     TINT_IR_ICE(ir_) << "invalid address space for pointer_offset";
             }
@@ -1425,6 +1428,7 @@ class Printer : public tint::TextGenerator {
                 EmitType(out, sm->Type());
                 out << sm->Columns() << "x" << sm->Rows();
             },
+            [&](const core::type::Buffer* b) { EmitBufferType(out, b); },
 
             TINT_ICE_ON_NO_MATCH);
     }
@@ -1473,6 +1477,25 @@ class Printer : public tint::TextGenerator {
             out << "1";
         } else {
             auto count = arr->ConstantCount();
+            if (!count) {
+                TINT_IR_ICE(ir_) << core::type::Array::kErrExpectedConstantCount;
+            }
+            out << count.value();
+        }
+        out << ">";
+    }
+
+    /// Handles generating a buffer declaration
+    /// @param out the output stream
+    /// @param buf the buffer to emit
+    void EmitBufferType(StringStream& out, const core::type::Buffer* buf) {
+        out << ArrayTemplateName() << "<";
+        out << "uchar";
+        out << ", ";
+        if (buf->Count()->Is<core::type::RuntimeArrayCount>()) {
+            out << "1";
+        } else {
+            auto count = buf->ConstantCount();
             if (!count) {
                 TINT_IR_ICE(ir_) << core::type::Array::kErrExpectedConstantCount;
             }
@@ -1808,6 +1831,8 @@ class Printer : public tint::TextGenerator {
         tint::Switch(
             c->Type(),  //
             [&](const core::type::Bool*) { out << (c->ValueAs<bool>() ? "true" : "false"); },
+            // 8-bit types print as chars by default.
+            [&](const core::type::U8*) { out << static_cast<uint32_t>(c->ValueAs<u8>()) << "u"; },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
             [&](const core::type::U32*) { out << c->ValueAs<u32>() << "u"; },
             [&](const core::type::U64*) { out << c->ValueAs<u64>() << "ul"; },

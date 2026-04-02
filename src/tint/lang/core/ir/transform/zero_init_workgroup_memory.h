@@ -44,6 +44,7 @@ const Capabilities kZeroInitWorkgroupMemoryCapabilities{
     Capability::kAllowNonCoreTypes,
     Capability::kAllow8BitIntegers,
     Capability::kAllow16BitIntegers,
+    Capability::kMslAllowEntryPointInterface,
 };
 
 /// ZeroInitWorkgroupMemory is a transform that injects code at the top of each entry point to
