@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc1064c_943eb61a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-02T10:48:40Z",
+      "side": 1,
+      "message": "Sorry I\u0027m not able to review this before my OOO, can you find a different reviewer?",
+      "revId": "d919a665b3de276ecf77242b899434f727f85019",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
