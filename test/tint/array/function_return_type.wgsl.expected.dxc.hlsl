@@ -2,25 +2,24 @@
 RWByteAddressBuffer s : register(u0);
 typedef float ary_ret[4];
 ary_ret f1() {
-  float v[4] = (float[4])0;
-  return v;
+  return (float[4])0;
 }
 
 typedef float ary_ret_1[3][4];
 ary_ret_1 f2() {
+  float v[4] = f1();
   float v_1[4] = f1();
   float v_2[4] = f1();
-  float v_3[4] = f1();
-  float v_4[3][4] = {v_1, v_2, v_3};
-  return v_4;
+  float v_3[3][4] = {v, v_1, v_2};
+  return v_3;
 }
 
 typedef float ary_ret_2[2][3][4];
 ary_ret_2 f3() {
+  float v_4[3][4] = f2();
   float v_5[3][4] = f2();
-  float v_6[3][4] = f2();
-  float v_7[2][3][4] = {v_5, v_6};
-  return v_7;
+  float v_6[2][3][4] = {v_4, v_5};
+  return v_6;
 }
 
 [numthreads(1, 1, 1)]

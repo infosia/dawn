@@ -19,14 +19,13 @@ struct vert_main_outputs {
 
 
 Interface vert_main_inner() {
-  Interface v = (Interface)0;
-  return v;
+  return (Interface)0;
 }
 
 vert_main_outputs vert_main() {
-  Interface v_1 = vert_main_inner();
-  vert_main_outputs v_2 = {v_1.i, v_1.u, v_1.vi, v_1.vu, v_1.pos};
-  return v_2;
+  Interface v = vert_main_inner();
+  vert_main_outputs v_1 = {v.i, v.u, v.vi, v.vu, v.pos};
+  return v_1;
 }
 
 //

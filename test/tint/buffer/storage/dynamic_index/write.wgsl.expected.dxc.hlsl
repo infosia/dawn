@@ -144,8 +144,7 @@ void main_inner(uint idx) {
   v_3((448u + (min(idx, ((v_35 / 544u) - 1u)) * 544u)), float4x4((0.0f).xxxx, (0.0f).xxxx, (0.0f).xxxx, (0.0f).xxxx));
   uint v_36 = 0u;
   sb.GetDimensions(v_36);
-  float3 v_37[2] = (float3[2])0;
-  v((512u + (min(idx, ((v_36 / 544u) - 1u)) * 544u)), v_37);
+  v((512u + (min(idx, ((v_36 / 544u) - 1u)) * 544u)), (float3[2])0);
 }
 
 [numthreads(1, 1, 1)]

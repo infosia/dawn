@@ -94,6 +94,14 @@ struct State {
                     !operand->Type()->IsAnyOf<core::type::Struct, core::type::Array>()) {
                     continue;
                 }
+
+                // Avoid promoting const-zero structs and arrays, because they may fail to be
+                // const-folded by DXC. This allows them to be zero-initialized with the (Type)0
+                // primitive in HLSL instead.
+                if (auto* c = operand->As<core::ir::Constant>(); c && c->Value()->AllZero()) {
+                    continue;
+                }
+
                 if (operand->IsAnyOf<core::ir::InstructionResult, core::ir::Constant>()) {
                     worklist.Push({inst, i, operand});
                 }

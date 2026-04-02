@@ -122,11 +122,8 @@ void main() {
   v_10(352u, float4x2((0.0f).xx, (0.0f).xx, (0.0f).xx, (0.0f).xx));
   v_9(384u, float4x3((0.0f).xxx, (0.0f).xxx, (0.0f).xxx, (0.0f).xxx));
   v_8(448u, float4x4((0.0f).xxxx, (0.0f).xxxx, (0.0f).xxxx, (0.0f).xxxx));
-  float3 v_17[2] = (float3[2])0;
-  v_5(512u, v_17);
-  Inner v_18 = (Inner)0;
-  v(544u, v_18);
-  Inner v_19[4] = (Inner[4])0;
-  v_1(552u, v_19);
+  v_5(512u, (float3[2])0);
+  v(544u, (Inner)0);
+  v_1(552u, (Inner[4])0);
 }
 

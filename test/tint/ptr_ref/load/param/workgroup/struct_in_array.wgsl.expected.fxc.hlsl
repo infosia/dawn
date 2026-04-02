@@ -22,16 +22,15 @@ void main_inner(uint tint_local_index) {
       if ((v_2 >= 4u)) {
         break;
       }
-      str v_3 = (str)0;
-      S[v_2] = v_3;
+      S[v_2] = (str)0;
       {
         v_1 = (v_2 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  uint v_4[1] = {2u};
-  str r = func(v_4);
+  uint v_3[1] = {2u};
+  str r = func(v_3);
 }
 
 [numthreads(1, 1, 1)]

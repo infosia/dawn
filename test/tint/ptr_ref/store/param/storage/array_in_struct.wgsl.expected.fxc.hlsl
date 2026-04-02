@@ -18,8 +18,7 @@ void v(uint offset, int obj[4]) {
 }
 
 void func() {
-  int v_3[4] = (int[4])0;
-  v(0u, v_3);
+  v(0u, (int[4])0);
 }
 
 [numthreads(1, 1, 1)]

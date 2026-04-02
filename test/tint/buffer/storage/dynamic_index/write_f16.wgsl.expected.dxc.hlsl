@@ -254,12 +254,10 @@ void main_inner(uint idx) {
   v_7((696u + (min(idx, ((v_60 / 800u) - 1u)) * 800u)), matrix<float16_t, 4, 4>((float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx, (float16_t(0.0h)).xxxx));
   uint v_61 = 0u;
   sb.GetDimensions(v_61);
-  float3 v_62[2] = (float3[2])0;
-  v_4((736u + (min(idx, ((v_61 / 800u) - 1u)) * 800u)), v_62);
-  uint v_63 = 0u;
-  sb.GetDimensions(v_63);
-  matrix<float16_t, 4, 2> v_64[2] = (matrix<float16_t, 4, 2>[2])0;
-  v_1((768u + (min(idx, ((v_63 / 800u) - 1u)) * 800u)), v_64);
+  v_4((736u + (min(idx, ((v_61 / 800u) - 1u)) * 800u)), (float3[2])0);
+  uint v_62 = 0u;
+  sb.GetDimensions(v_62);
+  v_1((768u + (min(idx, ((v_62 / 800u) - 1u)) * 800u)), (matrix<float16_t, 4, 2>[2])0);
 }
 
 [numthreads(1, 1, 1)]

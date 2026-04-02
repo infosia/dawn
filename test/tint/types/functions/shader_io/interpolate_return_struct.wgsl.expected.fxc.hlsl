@@ -24,13 +24,12 @@ struct main_outputs {
 
 
 Out main_inner() {
-  Out v = (Out)0;
-  return v;
+  return (Out)0;
 }
 
 main_outputs main() {
-  Out v_1 = main_inner();
-  main_outputs v_2 = {v_1.none, v_1.flat, v_1.perspective_center, v_1.perspective_centroid, v_1.perspective_sample, v_1.linear_center, v_1.linear_centroid, v_1.linear_sample, v_1.pos};
-  return v_2;
+  Out v = main_inner();
+  main_outputs v_1 = {v.none, v.flat, v.perspective_center, v.perspective_centroid, v.perspective_sample, v.linear_center, v.linear_centroid, v.linear_sample, v.pos};
+  return v_1;
 }
 

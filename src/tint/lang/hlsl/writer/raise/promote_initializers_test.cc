@@ -229,6 +229,47 @@ S = struct @align(4) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriterPromoteInitializersTest, StructInCallDontPromoteZero) {
+    auto* str_ty = ty.Struct(mod.symbols.New("S"), {
+                                                       {mod.symbols.New("a"), ty.i32()},
+                                                   });
+
+    auto* p = b.FunctionParam("p", str_ty);
+    auto* dst = b.Function("dst", ty.void_());
+    dst->SetParams({p});
+    dst->Block()->Append(b.Return(dst));
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Call(dst, b.Composite(str_ty, 0_i));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(4) {
+  a:i32 @offset(0)
+}
+
+%dst = func(%p:S):void {
+  $B1: {
+    ret
+  }
+}
+%foo = @fragment func():void {
+  $B2: {
+    %4:void = call %dst, S(0i)
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = src;
+    Run(PromoteInitializers);
+
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(HlslWriterPromoteInitializersTest, ArrayInCall) {
     auto* p = b.FunctionParam("p", ty.array<i32, 2>());
     auto* dst = b.Function("dst", ty.void_());
@@ -270,6 +311,40 @@ TEST_F(HlslWriterPromoteInitializersTest, ArrayInCall) {
   }
 }
 )";
+    Run(PromoteInitializers);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterPromoteInitializersTest, ArrayInCallDontPromoteZero) {
+    auto* p = b.FunctionParam("p", ty.array<i32, 2>());
+    auto* dst = b.Function("dst", ty.void_());
+    dst->SetParams({p});
+    dst->Block()->Append(b.Return(dst));
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Call(dst, b.Composite(ty.array<i32, 2>(), 0_i));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%dst = func(%p:array<i32, 2>):void {
+  $B1: {
+    ret
+  }
+}
+%foo = @fragment func():void {
+  $B2: {
+    %4:void = call %dst, array<i32, 2>(0i)
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto expect = src;
+
     Run(PromoteInitializers);
 
     EXPECT_EQ(expect, str());
@@ -360,11 +435,11 @@ $B1: {  # root
 TEST_F(HlslWriterPromoteInitializersTest, ModuleScopedArray) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
-    b.ir.root_block->Append(b.Var<private_>("a", b.Zero<array<i32, 2>>()));
+    b.ir.root_block->Append(b.Var<private_>("a", b.Composite(ty.array<i32, 2>(), 1_i, 2_i)));
 
     auto* src = R"(
 $B1: {  # root
-  %a:ptr<private, array<i32, 2>, read_write> = var array<i32, 2>(0i)
+  %a:ptr<private, array<i32, 2>, read_write> = var array<i32, 2>(1i, 2i)
 }
 
 )";
@@ -372,7 +447,7 @@ $B1: {  # root
 
     auto* expect = R"(
 $B1: {  # root
-  %1:array<i32, 2> = let array<i32, 2>(0i)
+  %1:array<i32, 2> = let array<i32, 2>(1i, 2i)
   %a:ptr<private, array<i32, 2>, read_write> = var %1
 }
 
@@ -459,7 +534,8 @@ TEST_F(HlslWriterPromoteInitializersTest, ModuleScopedArrayNestedInStruct) {
                                                        {mod.symbols.New("a"), ty.array<i32, 3>()},
                                                    });
 
-    b.ir.root_block->Append(b.Var<private_>("a", b.Composite(str_ty, b.Zero(ty.array<i32, 3>()))));
+    b.ir.root_block->Append(
+        b.Var<private_>("a", b.Composite(str_ty, b.Composite(ty.array<i32, 3>(), 1_i, 2_i, 3_i))));
 
     auto* src = R"(
 S = struct @align(4) {
@@ -467,7 +543,7 @@ S = struct @align(4) {
 }
 
 $B1: {  # root
-  %a:ptr<private, S, read_write> = var S(array<i32, 3>(0i))
+  %a:ptr<private, S, read_write> = var S(array<i32, 3>(1i, 2i, 3i))
 }
 
 )";
@@ -479,7 +555,7 @@ S = struct @align(4) {
 }
 
 $B1: {  # root
-  %1:S = construct array<i32, 3>(0i)
+  %1:S = construct array<i32, 3>(1i, 2i, 3i)
   %2:S = let %1
   %a:ptr<private, S, read_write> = var %2
 }
@@ -587,23 +663,25 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstantInLet) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* ret_arr = b.Function("ret_arr", ty.array<vec4<i32>, 4>());
-    b.Append(ret_arr->Block(), [&] { b.Return(ret_arr, b.Zero<array<vec4<i32>, 4>>()); });
+    b.Append(ret_arr->Block(), [&] {
+        b.Return(ret_arr, b.Composite(ty.array<vec4<i32>, 4>(), b.Splat(ty.vec4<i32>(), 1_i)));
+    });
 
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
-        b.Let("src_let", b.Zero<array<vec4<i32>, 4>>());
+        b.Let("src_let", b.Composite(ty.array<vec4<i32>, 4>(), b.Splat(ty.vec4<i32>(), 1_i)));
         b.Return(func);
     });
 
     auto* src = R"(
 %ret_arr = func():array<vec4<i32>, 4> {
   $B1: {
-    ret array<vec4<i32>, 4>(vec4<i32>(0i))
+    ret array<vec4<i32>, 4>(vec4<i32>(1i))
   }
 }
 %foo = @fragment func():void {
   $B2: {
-    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret
   }
 }
@@ -613,13 +691,13 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstantInLet) {
     auto* expect = R"(
 %ret_arr = func():array<vec4<i32>, 4> {
   $B1: {
-    %2:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %2:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret %2
   }
 }
 %foo = @fragment func():void {
   $B2: {
-    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret
   }
 }
@@ -696,31 +774,35 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstant) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* ret_arr = b.Function("ret_arr", ty.array<vec4<i32>, 4>());
-    b.Append(ret_arr->Block(), [&] { b.Return(ret_arr, b.Zero<array<vec4<i32>, 4>>()); });
+    b.Append(ret_arr->Block(), [&] {
+        b.Return(ret_arr, b.Composite(ty.array<vec4<i32>, 4>(), b.Splat(ty.vec4<i32>(), 1_i)));
+    });
 
     auto* second_arr = b.Function("second_arr", ty.array<vec4<i32>, 4>());
-    b.Append(second_arr->Block(), [&] { b.Return(second_arr, b.Zero<array<vec4<i32>, 4>>()); });
+    b.Append(second_arr->Block(), [&] {
+        b.Return(second_arr, b.Composite(ty.array<vec4<i32>, 4>(), b.Splat(ty.vec4<i32>(), 1_i)));
+    });
 
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
-        b.Let("src_let", b.Zero<array<vec4<i32>, 4>>());
+        b.Let("src_let", b.Composite(ty.array<vec4<i32>, 4>(), b.Splat(ty.vec4<i32>(), 1_i)));
         b.Return(func);
     });
 
     auto* src = R"(
 %ret_arr = func():array<vec4<i32>, 4> {
   $B1: {
-    ret array<vec4<i32>, 4>(vec4<i32>(0i))
+    ret array<vec4<i32>, 4>(vec4<i32>(1i))
   }
 }
 %second_arr = func():array<vec4<i32>, 4> {
   $B2: {
-    ret array<vec4<i32>, 4>(vec4<i32>(0i))
+    ret array<vec4<i32>, 4>(vec4<i32>(1i))
   }
 }
 %foo = @fragment func():void {
   $B3: {
-    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret
   }
 }
@@ -730,19 +812,19 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstant) {
     auto* expect = R"(
 %ret_arr = func():array<vec4<i32>, 4> {
   $B1: {
-    %2:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %2:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret %2
   }
 }
 %second_arr = func():array<vec4<i32>, 4> {
   $B2: {
-    %4:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %4:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret %4
   }
 }
 %foo = @fragment func():void {
   $B3: {
-    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(0i))
+    %src_let:array<vec4<i32>, 4> = let array<vec4<i32>, 4>(vec4<i32>(1i))
     ret
   }
 }

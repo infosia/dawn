@@ -31,10 +31,8 @@ void main_inner(uint tint_local_index) {
   v3u32_var = (0u).xxx;
   v4f32_var = (0.0f).xxxx;
   m2x3_var = float2x3((0.0f).xxx, (0.0f).xxx);
-  float v[4] = (float[4])0;
-  arr_var = v;
-  S v_1 = (S)0;
-  struct_var = v_1;
+  arr_var = (float[4])0;
+  struct_var = (S)0;
   wg_var = 42.0f;
 }
 

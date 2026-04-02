@@ -37,13 +37,11 @@ float2x3 ret_m2x3() {
 
 typedef float ary_ret[4];
 ary_ret ret_arr() {
-  float v[4] = (float[4])0;
-  return v;
+  return (float[4])0;
 }
 
 S ret_struct() {
-  S v_1 = (S)0;
-  return v_1;
+  return (S)0;
 }
 
 [numthreads(1, 1, 1)]

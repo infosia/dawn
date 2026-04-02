@@ -17,166 +17,164 @@ RWByteAddressBuffer v : register(u2);
 RWByteAddressBuffer dst_nested : register(u3);
 typedef int4 ary_ret[4];
 ary_ret ret_arr() {
-  int4 v_1[4] = (int4[4])0;
-  return v_1;
+  return (int4[4])0;
 }
 
 S ret_struct_arr() {
-  S v_2 = (S)0;
-  return v_2;
+  return (S)0;
 }
 
-void v_3(uint offset, int obj[2]) {
+void v_1(uint offset, int obj[2]) {
   {
-    uint v_4 = 0u;
-    v_4 = 0u;
+    uint v_2 = 0u;
+    v_2 = 0u;
     while(true) {
-      uint v_5 = v_4;
-      if ((v_5 >= 2u)) {
+      uint v_3 = v_2;
+      if ((v_3 >= 2u)) {
         break;
       }
-      dst_nested.Store((offset + (v_5 * 4u)), asuint(obj[v_5]));
+      dst_nested.Store((offset + (v_3 * 4u)), asuint(obj[v_3]));
       {
-        v_4 = (v_5 + 1u);
+        v_2 = (v_3 + 1u);
       }
     }
   }
 }
 
-void v_6(uint offset, int obj[3][2]) {
+void v_4(uint offset, int obj[3][2]) {
   {
-    uint v_7 = 0u;
-    v_7 = 0u;
+    uint v_5 = 0u;
+    v_5 = 0u;
     while(true) {
-      uint v_8 = v_7;
-      if ((v_8 >= 3u)) {
+      uint v_6 = v_5;
+      if ((v_6 >= 3u)) {
         break;
       }
-      int v_9[2] = obj[v_8];
-      v_3((offset + (v_8 * 8u)), v_9);
+      int v_7[2] = obj[v_6];
+      v_1((offset + (v_6 * 8u)), v_7);
       {
-        v_7 = (v_8 + 1u);
+        v_5 = (v_6 + 1u);
       }
     }
   }
 }
 
-void v_10(uint offset, int obj[4][3][2]) {
+void v_8(uint offset, int obj[4][3][2]) {
   {
-    uint v_11 = 0u;
-    v_11 = 0u;
+    uint v_9 = 0u;
+    v_9 = 0u;
     while(true) {
-      uint v_12 = v_11;
-      if ((v_12 >= 4u)) {
+      uint v_10 = v_9;
+      if ((v_10 >= 4u)) {
         break;
       }
-      int v_13[3][2] = obj[v_12];
-      v_6((offset + (v_12 * 24u)), v_13);
+      int v_11[3][2] = obj[v_10];
+      v_4((offset + (v_10 * 24u)), v_11);
       {
-        v_11 = (v_12 + 1u);
+        v_9 = (v_10 + 1u);
       }
     }
   }
 }
 
-void v_14(uint offset, int4 obj[4]) {
+void v_12(uint offset, int4 obj[4]) {
   {
-    uint v_15 = 0u;
-    v_15 = 0u;
+    uint v_13 = 0u;
+    v_13 = 0u;
     while(true) {
-      uint v_16 = v_15;
-      if ((v_16 >= 4u)) {
+      uint v_14 = v_13;
+      if ((v_14 >= 4u)) {
         break;
       }
-      v.Store4((offset + (v_16 * 16u)), asuint(obj[v_16]));
+      v.Store4((offset + (v_14 * 16u)), asuint(obj[v_14]));
       {
-        v_15 = (v_16 + 1u);
+        v_13 = (v_14 + 1u);
       }
     }
   }
 }
 
 typedef int4 ary_ret_1[4];
-ary_ret_1 v_17(uint offset) {
+ary_ret_1 v_15(uint offset) {
   int4 a[4] = (int4[4])0;
   {
-    uint v_18 = 0u;
-    v_18 = 0u;
+    uint v_16 = 0u;
+    v_16 = 0u;
     while(true) {
-      uint v_19 = v_18;
-      if ((v_19 >= 4u)) {
+      uint v_17 = v_16;
+      if ((v_17 >= 4u)) {
         break;
       }
-      a[v_19] = asint(src_storage.Load4((offset + (v_19 * 16u))));
+      a[v_17] = asint(src_storage.Load4((offset + (v_17 * 16u))));
       {
-        v_18 = (v_19 + 1u);
+        v_16 = (v_17 + 1u);
       }
     }
   }
-  int4 v_20[4] = a;
-  return v_20;
+  int4 v_18[4] = a;
+  return v_18;
 }
 
 typedef int4 ary_ret_2[4];
-ary_ret_2 v_21(uint start_byte_offset) {
+ary_ret_2 v_19(uint start_byte_offset) {
   int4 a[4] = (int4[4])0;
   {
-    uint v_22 = 0u;
-    v_22 = 0u;
+    uint v_20 = 0u;
+    v_20 = 0u;
     while(true) {
-      uint v_23 = v_22;
-      if ((v_23 >= 4u)) {
+      uint v_21 = v_20;
+      if ((v_21 >= 4u)) {
         break;
       }
-      a[v_23] = asint(src_uniform[((start_byte_offset + (v_23 * 16u)) / 16u)]);
+      a[v_21] = asint(src_uniform[((start_byte_offset + (v_21 * 16u)) / 16u)]);
       {
-        v_22 = (v_23 + 1u);
+        v_20 = (v_21 + 1u);
       }
     }
   }
-  int4 v_24[4] = a;
-  return v_24;
+  int4 v_22[4] = a;
+  return v_22;
 }
 
 void foo(int4 src_param[4]) {
   int4 src_function[4] = (int4[4])0;
-  int4 v_25[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
-  v_14(0u, v_25);
-  v_14(0u, src_param);
-  int4 v_26[4] = ret_arr();
-  v_14(0u, v_26);
+  int4 v_23[4] = {(int(1)).xxxx, (int(2)).xxxx, (int(3)).xxxx, (int(3)).xxxx};
+  v_12(0u, v_23);
+  v_12(0u, src_param);
+  int4 v_24[4] = ret_arr();
+  v_12(0u, v_24);
   int4 src_let[4] = (int4[4])0;
-  v_14(0u, src_let);
-  int4 v_27[4] = src_function;
-  v_14(0u, v_27);
-  int4 v_28[4] = src_private;
-  v_14(0u, v_28);
-  int4 v_29[4] = src_workgroup;
-  v_14(0u, v_29);
-  S v_30 = ret_struct_arr();
-  int4 v_31[4] = v_30.arr;
-  v_14(0u, v_31);
-  int4 v_32[4] = v_21(0u);
-  v_14(0u, v_32);
-  int4 v_33[4] = v_17(0u);
-  v_14(0u, v_33);
+  v_12(0u, src_let);
+  int4 v_25[4] = src_function;
+  v_12(0u, v_25);
+  int4 v_26[4] = src_private;
+  v_12(0u, v_26);
+  int4 v_27[4] = src_workgroup;
+  v_12(0u, v_27);
+  S v_28 = ret_struct_arr();
+  int4 v_29[4] = v_28.arr;
+  v_12(0u, v_29);
+  int4 v_30[4] = v_19(0u);
+  v_12(0u, v_30);
+  int4 v_31[4] = v_15(0u);
+  v_12(0u, v_31);
   int src_nested[4][3][2] = (int[4][3][2])0;
-  int v_34[4][3][2] = src_nested;
-  v_10(0u, v_34);
+  int v_32[4][3][2] = src_nested;
+  v_8(0u, v_32);
 }
 
 void main_inner(uint tint_local_index) {
   {
-    uint v_35 = 0u;
-    v_35 = tint_local_index;
+    uint v_33 = 0u;
+    v_33 = tint_local_index;
     while(true) {
-      uint v_36 = v_35;
-      if ((v_36 >= 4u)) {
+      uint v_34 = v_33;
+      if ((v_34 >= 4u)) {
         break;
       }
-      src_workgroup[v_36] = (int(0)).xxxx;
+      src_workgroup[v_34] = (int(0)).xxxx;
       {
-        v_35 = (v_36 + 1u);
+        v_33 = (v_34 + 1u);
       }
     }
   }

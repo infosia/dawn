@@ -8,13 +8,12 @@ struct A {
 
 
 B f(A a) {
-  B v = (B)0;
-  return v;
+  return (B)0;
 }
 
 [numthreads(1, 1, 1)]
 void main() {
-  A v_1 = {int(1)};
-  f(v_1);
+  A v = {int(1)};
+  f(v);
 }
 

@@ -60,18 +60,17 @@ void f_inner(uint tint_local_index) {
       if ((v_16 >= 4u)) {
         break;
       }
-      S v_17 = (S)0;
-      w[v_16] = v_17;
+      w[v_16] = (S)0;
       {
         v_15 = (v_16 + 1u);
       }
     }
   }
   GroupMemoryBarrierWithGroupSync();
-  S v_18[4] = v_10(0u);
-  w = v_18;
-  S v_19 = v_6(256u);
-  w[1u] = v_19;
+  S v_17[4] = v_10(0u);
+  w = v_17;
+  S v_18 = v_6(256u);
+  w[1u] = v_18;
   w[3u].m = v(264u);
   w[1u].m[0u] = asfloat(u[1u].xy).yx;
 }
