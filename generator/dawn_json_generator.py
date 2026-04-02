@@ -1378,7 +1378,8 @@ def as_frontendType(metadata, typ):
 def as_wireType(metadata, typ):
     if typ.category == 'object':
         return typ.name.CamelCase() + '*'
-    elif typ.category in ['bitmask', 'enum', 'structure']:
+    elif typ.category in ['bitmask', 'enum', 'structure'
+                          ] or typ.name.get() == 'bool':
         return metadata.c_prefix + typ.name.CamelCase()
     else:
         return as_cppType(typ.name)

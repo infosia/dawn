@@ -235,6 +235,8 @@ class Device final : public d3d::Device {
 
     MaybeError CreateZeroBuffer();
 
+    bool SupportsImportableTransferBufferFromWireImpl() const override;
+
     ComPtr<ID3D12Device> mD3d12Device;  // Device is owned by adapter and will not be outlived.
     bool mIsDebugLayerEnabled = false;
 
