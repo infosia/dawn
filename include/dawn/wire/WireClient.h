@@ -191,6 +191,42 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         WriteHandle& operator=(const WriteHandle&) = delete;
     };
 
+    // Represents a shared memory resource that can be transferred to the wire server to enable
+    // zero-copy buffer data exchange between client and server processes. On the client side, it
+    // provides a mapped pointer for direct CPU read/write access, and can serialize the information
+    // of the shared memory resource so the server can import it as a WGPUSharedBufferMemory.
+    class DAWN_WIRE_EXPORT ImportableTransferBuffer {
+      public:
+        virtual ~ImportableTransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual size_t SerializeCreateSize() const { return 0; }
+        virtual void SerializeCreate(void* ptr) const {}
+
+        virtual bool IsEmpty() const { return true; }
+        virtual void* GetMappedPointer() const { return nullptr; }
+    };
+
+    // Create a platform-specific shared memory transfer buffer of the given size.
+    // The returned object owns the shared memory resource and provides both a mapped pointer for
+    // the client and serialization methods so the server can import it. Returns an empty unique_ptr
+    // if the platform does not support importable transfer buffers or allocation fails.
+    virtual std::unique_ptr<ImportableTransferBuffer> CreateImportableTransferBuffer(size_t size) {
+        return {};
+    }
+
+    // Create a handle for reading server data with an importable transfer buffer
+    virtual ReadHandle* CreateReadHandleWithImportableTransferBuffer(
+        ImportableTransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
+    // Create a handle for writing server data with an importable transfer buffer
+    virtual WriteHandle* CreateWriteHandleWithImportableTransferBuffer(
+        ImportableTransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
   private:
     MemoryTransferService(const MemoryTransferService&) = delete;
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;
