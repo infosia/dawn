@@ -30,7 +30,7 @@
     {%- set optional = arg.optional and not strip_optional %}
     {%- set default_value = arg.default_value %}
     {%- if type.category == 'kotlin type' -%}
-        {{ type.name.get() }}  {#- The name *is* the type #}
+        {{ type.name.get() }}{{ '?' if optional }}  {#- The name *is* the type #}
     {%- elif arg.type.name.get() == 'string view' -%}
         String{{ '?' if optional }}
     {%- elif type.name.get() == 'void' %}

@@ -88,6 +88,7 @@ public suspend fun createWebGpu(
     f.add(FeatureName.SharedTextureMemoryAHardwareBuffer) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
     f.add(FeatureName.SharedFenceSyncFD) //WGPUFeatureName_SharedTextureMemoryAHardwareBuffer
     f.add(FeatureName.YCbCrVulkanSamplers) //WGPUFeatureName_YCbCrVulkanSamplers
+    f.add(FeatureName.OpaqueYCbCrAndroidForExternalTexture)
     if(adapter.hasFeature(FeatureName.OpaqueYCbCrAndroidForExternalTexture)){
         //TODO("opaque y cb cr android for external texture" is not supported)
         f.add(FeatureName.OpaqueYCbCrAndroidForExternalTexture)
