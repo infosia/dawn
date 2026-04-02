@@ -13,8 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 
 // WebGPU imports
 import androidx.webgpu.*
-import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedRgbAhbTexture
+import androidx.webgpu.helper.GPUAndroidHardwareBufferUtil
+import androidx.webgpu.helper.GPUHardwareBufferTexture
 import androidx.webgpu.helper.GPUSyncFence
 import androidx.webgpu.helper.asString
 import java.util.concurrent.atomic.AtomicReference
@@ -113,7 +113,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
       GPUShaderModuleDescriptor(shaderSourceWGSL = GPUShaderSourceWGSL(code = assets.open("cameraInput/mosaic.wgsl").asString()))
     )
 
-    var activeAhbWrapper: GPUImportedRgbAhbTexture? = null
+    var activeAhbWrapper: GPUHardwareBufferTexture? = null
     var activeImage: Image? = null
 
     object : Renderer() {
@@ -128,7 +128,7 @@ fun ZeroCopyRGBAImage(modifier: Modifier, options: Options) {
           val ahb = newImage.hardwareBuffer
           if (ahb != null) {
             activeImage = newImage
-            activeAhbWrapper = DawnAhbUtil.importRgbAhb(device, ahb)
+            activeAhbWrapper = GPUAndroidHardwareBufferUtil.createTexture(device, ahb)
 
             val size = GPUExtent3D(width = ahb.width, height = ahb.height)
 

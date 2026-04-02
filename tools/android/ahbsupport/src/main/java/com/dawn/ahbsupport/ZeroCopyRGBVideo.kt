@@ -9,7 +9,6 @@ import android.hardware.SyncFence
 import android.media.Image
 import android.media.ImageReader
 import android.media.MediaPlayer
-import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
@@ -33,8 +32,8 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.webgpu.*
-import androidx.webgpu.helper.DawnAhbUtil
-import androidx.webgpu.helper.GPUImportedRgbAhbTexture
+import androidx.webgpu.helper.GPUAndroidHardwareBufferUtil
+import androidx.webgpu.helper.GPUHardwareBufferTexture
 import androidx.webgpu.helper.asString
 import androidx.webgpu.helper.GPUSyncFence
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -205,7 +204,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
         )
       )
 
-      var activeAhbWrapper: GPUImportedRgbAhbTexture? = null
+      var activeAhbWrapper: GPUHardwareBufferTexture? = null
       var activeYuvImage: Image? = null
 
       var frameCount = 0
@@ -245,7 +244,7 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
               val setupStart = System.nanoTime()
 
               if (activeAhbWrapper == null) {
-                activeAhbWrapper = DawnAhbUtil.importRgbAhb(device, rgbOutputAhb)
+                activeAhbWrapper = GPUAndroidHardwareBufferUtil.createTexture(device, rgbOutputAhb)
                 val size = GPUExtent3D(width = videoWidth, height = videoHeight)
 
                 cameraTextures = Array(2) { index ->
@@ -384,6 +383,32 @@ fun ZeroCopyRGBVideo(modifier: Modifier, options: Options) {
 @Composable
 private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Modifier) {
   if (data.isEmpty()) return
+  val paintBlack30 = remember {
+    android.graphics.Paint().apply {
+      color = android.graphics.Color.BLACK
+      textSize = 30f
+    }
+  }
+  val paintBlack25 = remember {
+    android.graphics.Paint().apply {
+      color = android.graphics.Color.BLACK
+      textSize = 25f
+    }
+  }
+  val paintLabelCenter = remember {
+    android.graphics.Paint().apply {
+      color = android.graphics.Color.BLACK
+      textSize = 25f
+      textAlign = android.graphics.Paint.Align.CENTER
+    }
+  }
+  val paintRed30 = remember {
+    android.graphics.Paint().apply {
+      color = android.graphics.Color.RED
+      textSize = 30f
+    }
+  }
+
   Canvas(modifier = modifier) {
     val maxOrZero = data.maxOrNull() ?: 0f
     val maxTime = if (maxOrZero > 10f) maxOrZero else 10f
@@ -424,20 +449,14 @@ private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Mo
         String.format("%.1f ms", maxTime),
         10f,
         35f,
-        android.graphics.Paint().apply {
-          color = android.graphics.Color.BLACK
-          textSize = 30f
-        }
+        paintBlack30
       )
       // Y axis label
       drawText(
         "Time (ms)",
         10f,
         75f,
-        android.graphics.Paint().apply {
-          color = android.graphics.Color.BLACK
-          textSize = 25f
-        }
+        paintBlack25
       )
 
       // X axis max text
@@ -445,21 +464,14 @@ private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Mo
         "${data.size}",
         size.width - 60f,
         height - 10f,
-        android.graphics.Paint().apply {
-          color = android.graphics.Color.BLACK
-          textSize = 30f
-        }
+        paintBlack30
       )
       // X axis label
       drawText(
         "Frames",
         size.width / 2f,
         height - 10f,
-        android.graphics.Paint().apply {
-          color = android.graphics.Color.BLACK
-          textSize = 25f
-          textAlign = android.graphics.Paint.Align.CENTER
-        }
+        paintLabelCenter
       )
 
       // Peak value
@@ -472,10 +484,7 @@ private fun ZeroCopyRGBRenderTimeGraph(data: FloatArray, modifier: Modifier = Mo
         String.format("Peak: %.1f ms at X:%d", peakValue, peakIndex),
         textX,
         textY,
-        android.graphics.Paint().apply {
-          color = android.graphics.Color.RED
-          textSize = 30f
-        }
+        paintRed30
       )
     }
   }

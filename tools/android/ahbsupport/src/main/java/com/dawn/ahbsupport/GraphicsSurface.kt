@@ -5,12 +5,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
+import androidx.webgpu.DeviceLostCallback
+import androidx.webgpu.DeviceLostException
+import androidx.webgpu.FeatureName
+import androidx.webgpu.GPUDawnTogglesDescriptor
+import androidx.webgpu.GPUDeviceDescriptor
 import androidx.webgpu.GPURequestAdapterOptions
 import androidx.webgpu.GPUSurfaceConfiguration
 import androidx.webgpu.TextureFormat
 import androidx.webgpu.TextureUsage
+import androidx.webgpu.UncapturedErrorCallback
 import androidx.webgpu.helper.WebGpu
 import androidx.webgpu.helper.createWebGpu
+import java.util.concurrent.Executor
 import kotlinx.coroutines.launch
 
 /**
@@ -52,7 +59,31 @@ fun GraphicsSurface(
                 val width = surfaceWidth / scale
                 val height = surfaceHeight / scale
                 val webgpu =
-                    createWebGpu(surface, requestAdapterOptions = options.requestAdapterOptions)
+                    createWebGpu(
+                        surface,
+                        requestAdapterOptions = options.requestAdapterOptions,
+                        deviceDescriptor = GPUDeviceDescriptor(
+                            deviceLostCallback = DeviceLostCallback { device, reason, message ->
+                                throw DeviceLostException(device, reason, message)
+                            },
+                            deviceLostCallbackExecutor = Executor(Runnable::run),
+                            uncapturedErrorCallback = UncapturedErrorCallback { _, type, message ->
+                                throw RuntimeException("Uncaptured error: $type, $message")
+                            },
+
+                            uncapturedErrorCallbackExecutor = Executor(Runnable::run),
+                            dawnTogglesDescriptor =
+                                GPUDawnTogglesDescriptor(enabledToggles = arrayOf("allow_unsafe_apis")),
+                            requiredFeatures = intArrayOf(
+                                FeatureName.SharedTextureMemoryAHardwareBuffer,
+                                FeatureName.SharedFenceSyncFD,
+                                FeatureName.YCbCrVulkanSamplers,
+                                FeatureName.OpaqueYCbCrAndroidForExternalTexture,
+                                FeatureName.OpaqueYCbCrAndroidForExternalTexture
+                            )
+
+                        )
+                    )
                 // Configure the WebGPU surface from the Android surface's dimensions and standard
                 // format.
                 webgpu.webgpuSurface.configure(

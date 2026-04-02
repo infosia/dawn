@@ -2,7 +2,7 @@ package androidx.webgpu.helper
 
 import androidx.webgpu.GPUTexture
 
-public class GPUImportedRgbAhbTexture(
+public class GPUHardwareBufferTexture(
     handle: Long,
     public val texture: GPUTexture,
-) : GPUImportedHardwareBuffer(handle)
+) : GPUHardwareBufferWrapper(handle)

@@ -112,6 +112,30 @@
             },
             "future wait info": {
                 "omitted": true
+            },
+            "external texture descriptor": {
+                "exclude_members": [
+                    "apparent size",
+                    "src transfer function parameters",
+                    "dst transfer function parameters",
+                    "gamut conversion matrix",
+                    "do yuv to rgb conversion only",
+                    "yuv to rgb conversion matrix"
+                ],
+                "additional_members": [
+                    {
+                        "name": "srcColorSpace",
+                        "type": "color space dawn",
+                        "category": "structure",
+                        "optional": false
+                    },
+                    {
+                        "name": "dstColorSpace",
+                        "type": "predefined color space",
+                        "category": "kotlin type",
+                        "optional": false
+                    }
+                ]
             }
         },
         "enums": {
