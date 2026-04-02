@@ -56,6 +56,9 @@ public class {{ enum.name.CamelCase() }} private constructor() {
 
   @Retention(AnnotationRetention.SOURCE)
   @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
+  {% if enum.allowConflict %}
+    @Suppress("UniqueConstants")  //* Required for duplicate constant values for compatibility.
+  {% endif %}
   @IntDef(
       {% if enum.category == 'bitmask' %}
           flag = true,
