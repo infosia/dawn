@@ -307,7 +307,7 @@ class DeviceBase : public ErrorSink,
     void APIGetFeatures(wgpu::SupportedFeatures* features) const;
     void APIGetFeatures(SupportedFeatures* features) const;
     wgpu::Status APIGetAdapterInfo(AdapterInfo* adapterInfo) const;
-    Future APIGetLostFuture() const;
+    Future APIGetLostFuture();
     void APIInjectError(wgpu::ErrorType type, StringView message);
     bool APITick();
     void APIValidateTextureDescriptor(const TextureDescriptor* desc);
@@ -489,15 +489,7 @@ class DeviceBase : public ErrorSink,
 
     tint::InternalCompilerErrorCallbackInfo GetTintInternalCompilerErrorCallback();
 
-    // During adapter's creation of devices, if device initialization fails, adapter will trigger
-    // the device lost event. After that, adapter should reset the lost event to avoid double
-    // triggering it when the device object get destructed.
-    void ResetLostEvent();
-
   protected:
-    // Constructor used only for mocking and testing.
-    DeviceBase();
-
     void ForceEnableFeatureForTesting(Feature feature);
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor,
@@ -510,12 +502,6 @@ class DeviceBase : public ErrorSink,
         AHardwareBufferProperties* properties) const {
         DAWN_UNREACHABLE();
     }
-
-    // Device lost event needs to be protected for now because mock device needs it.
-    // TODO(dawn:1702) Make this private and move the class in the implementation file when we mock
-    // the adapter.
-    Ref<DeviceLostEvent> mLostEvent = nullptr;
-    Future mLostFuture = {kNullFutureID};
 
     // Returns a pair of a filename and a boolean indicating whether to start tracing
     // and if so, what filename to save the trace under.
@@ -631,6 +617,9 @@ class DeviceBase : public ErrorSink,
                                                     const TexelCopyBufferLayout& src,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
+
+    Ref<DeviceLostEvent> mLostEvent = nullptr;
+    Future mLostFuture = {kNullFutureID};
 
     WGPUDeviceCallbackInfos mCallbackInfos;
 
