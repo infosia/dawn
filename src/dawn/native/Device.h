@@ -40,6 +40,7 @@
 #include "dawn/common/ContentLessObjectCache.h"
 #include "dawn/common/Defer.h"
 #include "dawn/common/Mutex.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/common/StackAllocated.h"
@@ -639,7 +640,8 @@ class DeviceBase : public ErrorSink,
     // clean up stacks on threads aside from the thread that dropped the last reference. By using a
     // unique ThreadUniqueId here, and tracking the stacks as a member, we can reclaim all memory
     // when the Device is destroyed.
-    absl::flat_hash_map<ThreadUniqueId, std::unique_ptr<ErrorScopeStack>> mErrorScopeStacks;
+    MutexProtected<absl::flat_hash_map<ThreadUniqueId, std::unique_ptr<ErrorScopeStack>>>
+        mErrorScopeStacks;
 
     Ref<AdapterBase> mAdapter;
 

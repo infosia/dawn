@@ -805,14 +805,16 @@ void DeviceBase::APISetLoggingCallback(const WGPULoggingCallbackInfo& callbackIn
 
 ErrorScopeStack* DeviceBase::GetErrorScopeStack() {
     ThreadUniqueId threadId = GetThreadUniqueId();
-    if (!mErrorScopeStacks.contains(threadId)) {
-        // Each time a new thread creates an error stack on a device, we attempt to clean up
-        // terminated thread stacks before adding the new one.
-        TrimErrorScopeStacks(mErrorScopeStacks);
-        mErrorScopeStacks[threadId] = std::make_unique<ErrorScopeStack>();
-    }
-    DAWN_ASSERT(mErrorScopeStacks[threadId] != nullptr);
-    return mErrorScopeStacks[threadId].get();
+    return mErrorScopeStacks.Use([&](auto errorScopeStacks) -> ErrorScopeStack* {
+        if (!errorScopeStacks->contains(threadId)) {
+            // Each time a new thread creates an error stack on a device, we attempt to clean up
+            // terminated thread stacks before adding the new one.
+            TrimErrorScopeStacks(*errorScopeStacks);
+            (*errorScopeStacks)[threadId] = std::make_unique<ErrorScopeStack>();
+        }
+        DAWN_ASSERT((*errorScopeStacks)[threadId] != nullptr);
+        return (*errorScopeStacks)[threadId].get();
+    });
 }
 
 void DeviceBase::APIPushErrorScope(wgpu::ErrorFilter filter) {
@@ -2703,7 +2705,7 @@ bool DeviceBase::ReduceMemoryUsage() {
         static_cast<BindGroupLayoutInternalBase*>(object)->ReduceMemoryUsage();
     });
 
-    TrimErrorScopeStacks(mErrorScopeStacks);
+    mErrorScopeStacks.Use([](auto errorScopeStacks) { TrimErrorScopeStacks(*errorScopeStacks); });
 
     // TODO(crbug.com/398193014): This could return a future to wait on instead of just a bool
     // saying there is work to wait on.
