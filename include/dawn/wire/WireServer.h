@@ -215,6 +215,25 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         size_t mDataLength = 0;
     };
 
+    class DAWN_WIRE_EXPORT ImportableTransferBuffer {
+      public:
+        virtual ~ImportableTransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual bool IsEmpty() const { return true; }
+
+        virtual WGPUSharedBufferMemory CreateSharedBufferMemory(const DawnProcTable* procs,
+                                                                WGPUDevice device) {
+            return nullptr;
+        }
+    };
+
+    virtual std::unique_ptr<ImportableTransferBuffer> DeserializeImportableTransferBuffer(
+        const void* deserializePointer,
+        size_t deserializeSize) {
+        return {};
+    }
+
   private:
     MemoryTransferService(const MemoryTransferService&) = delete;
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;

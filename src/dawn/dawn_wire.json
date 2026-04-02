@@ -50,6 +50,7 @@
             { "name": "device id", "type": "ObjectId", "id_type": "device" },
             { "name": "descriptor", "type": "buffer descriptor", "annotation": "const*" },
             { "name": "result", "type": "ObjectHandle", "handle_type": "buffer" },
+            { "name": "use importable transfer buffer", "type": "bool", "default": "false" },
             { "name": "read handle create info length", "type": "uint64_t" },
             { "name": "read handle create info", "type": "uint8_t", "annotation": "const*", "length": "read handle create info length", "skip_serialize": true},
             { "name": "write handle create info length", "type": "uint64_t" },
@@ -236,7 +237,8 @@
             { "name": "message", "type": "string view" },
             { "name": "limits", "type": "limits", "annotation": "const*", "optional": "true" },
             { "name": "features count", "type": "uint32_t"},
-            { "name": "features", "type": "feature name", "annotation": "const*", "length": "features count"}
+            { "name": "features", "type": "feature name", "annotation": "const*", "length": "features count"},
+            { "name": "supports importable transfer buffer from wire", "type": "bool", "optional": "true" }
         ]
     },
     "special commands": {
@@ -289,6 +291,7 @@
             "DeviceHasFeature",
             "DevicePopErrorScope",
             "DeviceSetLoggingCallback",
+            "DeviceSupportsImportableTransferBufferFromWire",
             "InstanceGetWGSLLanguageFeatures",
             "InstanceHasWGSLLanguageFeature",
             "InstanceCreateSurface",

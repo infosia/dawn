@@ -191,6 +191,34 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         WriteHandle& operator=(const WriteHandle&) = delete;
     };
 
+    class DAWN_WIRE_EXPORT ImportableTransferBuffer {
+      public:
+        virtual ~ImportableTransferBuffer() = default;
+        virtual void Release() {}
+
+        virtual size_t SerializeCreateSize() const { return 0; }
+        virtual void SerializeCreate(void* ptr) const {}
+
+        virtual bool IsEmpty() const { return true; }
+        virtual void* GetMappedPointer() const { return nullptr; }
+    };
+
+    virtual std::unique_ptr<ImportableTransferBuffer> CreateImportableTransferBuffer(size_t size) {
+        return {};
+    }
+
+    // Create a handle for reading server data with an importable transfer buffer
+    virtual ReadHandle* CreateReadHandleWithImportableTransferBuffer(
+        ImportableTransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
+    // Create a handle for writing server data with an importable transfer buffer
+    virtual WriteHandle* CreateWriteHandleWithImportableTransferBuffer(
+        ImportableTransferBuffer* transferBufferInfo) {
+        return nullptr;
+    }
+
   private:
     MemoryTransferService(const MemoryTransferService&) = delete;
     MemoryTransferService& operator=(const MemoryTransferService&) = delete;
