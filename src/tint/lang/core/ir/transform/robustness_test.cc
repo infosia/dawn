@@ -2339,22 +2339,29 @@ $B1: {  # root
 %load_signed = func(%coords:vec2<i32>, %level:i32):vec4<f32> {
   $B2: {
     %5:texture_multisampled_2d<f32> = load %texture
-    %6:vec2<u32> = textureDimensions %5
-    %7:vec2<u32> = sub %6, vec2<u32>(1u)
-    %8:vec2<u32> = convert %coords
-    %9:vec2<u32> = min %8, %7
-    %10:vec4<f32> = textureLoad %5, %9, %level
-    ret %10
+    %6:u32 = textureNumSamples %5
+    %7:u32 = sub %6, 1u
+    %8:u32 = convert %level
+    %9:u32 = min %8, %7
+    %10:vec2<u32> = textureDimensions %5
+    %11:vec2<u32> = sub %10, vec2<u32>(1u)
+    %12:vec2<u32> = convert %coords
+    %13:vec2<u32> = min %12, %11
+    %14:vec4<f32> = textureLoad %5, %13, %9
+    ret %14
   }
 }
 %load_unsigned = func(%coords_1:vec2<u32>, %level_1:u32):vec4<f32> {  # %coords_1: 'coords', %level_1: 'level'
   $B3: {
-    %14:texture_multisampled_2d<f32> = load %texture
-    %15:vec2<u32> = textureDimensions %14
-    %16:vec2<u32> = sub %15, vec2<u32>(1u)
-    %17:vec2<u32> = min %coords_1, %16
-    %18:vec4<f32> = textureLoad %14, %17, %level_1
-    ret %18
+    %18:texture_multisampled_2d<f32> = load %texture
+    %19:u32 = textureNumSamples %18
+    %20:u32 = sub %19, 1u
+    %21:u32 = min %level_1, %20
+    %22:vec2<u32> = textureDimensions %18
+    %23:vec2<u32> = sub %22, vec2<u32>(1u)
+    %24:vec2<u32> = min %coords_1, %23
+    %25:vec4<f32> = textureLoad %18, %24, %21
+    ret %25
   }
 }
 )";
@@ -2626,22 +2633,29 @@ $B1: {  # root
 %load_signed = func(%coords:vec2<i32>, %index:i32):f32 {
   $B2: {
     %5:texture_depth_multisampled_2d = load %texture
-    %6:vec2<u32> = textureDimensions %5
-    %7:vec2<u32> = sub %6, vec2<u32>(1u)
-    %8:vec2<u32> = convert %coords
-    %9:vec2<u32> = min %8, %7
-    %10:f32 = textureLoad %5, %9, %index
-    ret %10
+    %6:u32 = textureNumSamples %5
+    %7:u32 = sub %6, 1u
+    %8:u32 = convert %index
+    %9:u32 = min %8, %7
+    %10:vec2<u32> = textureDimensions %5
+    %11:vec2<u32> = sub %10, vec2<u32>(1u)
+    %12:vec2<u32> = convert %coords
+    %13:vec2<u32> = min %12, %11
+    %14:f32 = textureLoad %5, %13, %9
+    ret %14
   }
 }
 %load_unsigned = func(%coords_1:vec2<u32>, %index_1:u32):f32 {  # %coords_1: 'coords', %index_1: 'index'
   $B3: {
-    %14:texture_depth_multisampled_2d = load %texture
-    %15:vec2<u32> = textureDimensions %14
-    %16:vec2<u32> = sub %15, vec2<u32>(1u)
-    %17:vec2<u32> = min %coords_1, %16
-    %18:f32 = textureLoad %14, %17, %index_1
-    ret %18
+    %18:texture_depth_multisampled_2d = load %texture
+    %19:u32 = textureNumSamples %18
+    %20:u32 = sub %19, 1u
+    %21:u32 = min %index_1, %20
+    %22:vec2<u32> = textureDimensions %18
+    %23:vec2<u32> = sub %22, vec2<u32>(1u)
+    %24:vec2<u32> = min %coords_1, %23
+    %25:f32 = textureLoad %18, %24, %21
+    ret %25
   }
 }
 )";

@@ -13,7 +13,7 @@ int4 textureLoad_38f8ab(tint_module_vars_struct tint_module_vars) {
   int2 arg_1 = int2(1);
   uint arg_2 = 1u;
   int2 const v = arg_1;
-  uint const v_1 = arg_2;
+  uint const v_1 = min(arg_2, (tint_module_vars.arg_0.get_num_samples() - 1u));
   uint2 const v_2 = (uint2(tint_module_vars.arg_0.get_width(), tint_module_vars.arg_0.get_height()) - uint2(1u));
   int4 res = tint_module_vars.arg_0.read(min(uint2(v), v_2), v_1);
   return res;
@@ -38,7 +38,7 @@ int4 textureLoad_38f8ab(tint_module_vars_struct tint_module_vars) {
   int2 arg_1 = int2(1);
   uint arg_2 = 1u;
   int2 const v = arg_1;
-  uint const v_1 = arg_2;
+  uint const v_1 = min(arg_2, (tint_module_vars.arg_0.get_num_samples() - 1u));
   uint2 const v_2 = (uint2(tint_module_vars.arg_0.get_width(), tint_module_vars.arg_0.get_height()) - uint2(1u));
   int4 res = tint_module_vars.arg_0.read(min(uint2(v), v_2), v_1);
   return res;
@@ -73,7 +73,7 @@ int4 textureLoad_38f8ab(tint_module_vars_struct tint_module_vars) {
   int2 arg_1 = int2(1);
   uint arg_2 = 1u;
   int2 const v = arg_1;
-  uint const v_1 = arg_2;
+  uint const v_1 = min(arg_2, (tint_module_vars.arg_0.get_num_samples() - 1u));
   uint2 const v_2 = (uint2(tint_module_vars.arg_0.get_width(), tint_module_vars.arg_0.get_height()) - uint2(1u));
   int4 res = tint_module_vars.arg_0.read(min(uint2(v), v_2), v_1);
   return res;
