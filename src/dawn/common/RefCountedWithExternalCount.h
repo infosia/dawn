@@ -71,13 +71,6 @@ class RefCountedWithExternalCount : public T {
         return mExternalRefCount.GetValueForTesting();
     }
 
-  protected:
-    bool HasExternalRef() const {
-        // Note that we call the "ForTesting" function here but this is a use case where it is not
-        // for testing, and we are allowing it as a special case for external reference counting.
-        return mExternalRefCount.GetValueForTesting() > 0;
-    }
-
   private:
     virtual void WillAddFirstExternalRef() {}
     virtual void WillDropLastExternalRef() = 0;

@@ -129,6 +129,7 @@ DeviceMock::DeviceMock(AdapterBase* adapter,
     QueueDescriptor desc = {};
     EXPECT_FALSE(
         Initialize(descriptor, AcquireRef(new NiceMock<QueueMock>(this, &desc))).IsError());
+    GetInstance()->GetEventManager()->TrackEvent(mLostEvent);
 }
 
 DeviceMock::~DeviceMock() = default;

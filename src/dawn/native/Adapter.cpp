@@ -360,11 +360,13 @@ AdapterBase::CreateDevice(const DeviceDescriptor* descriptor) {
                            "Failed to create device:\n" + error->GetFormattedMessage());
 
         // When the device fails to initialize, we need to both promote the device ref to an
-        // external ref to clean up resources, and drop it, so we acquire it in this scope. Note
-        // that we move the device ref out of the event to also let the event know that the event
-        // should be resolved.
+        // external ref to clean up resources, and drop it, so we acquire it in this scope.
         APIRef<DeviceBase> device;
         device.Acquire(ReturnToAPI(std::move(lostEvent->mDevice)));
+        // Reset the device's lost event to avoid double SetLost during destruction.
+        if (device) {
+            device->ResetLostEvent();
+        }
         return {lostEvent, std::move(error)};
     }
 
