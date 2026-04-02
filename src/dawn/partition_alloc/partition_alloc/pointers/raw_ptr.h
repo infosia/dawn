@@ -177,7 +177,7 @@ class DAWN_TRIVIAL_ABI DAWN_GSL_POINTER raw_ptr {
         typename U = T,
         typename Unused = std::enable_if_t<!std::is_void_v<typename std::remove_cv<U>::type> &&
                                            partition_alloc::internal::is_offset_type<Z>>>
-    U& operator[](Z delta) const {
+    DAWN_FORCE_INLINE U& operator[](Z delta) const {
         return wrapped_ptr_[delta];
     }
 
@@ -361,11 +361,16 @@ struct less<raw_ptr<T, Traits>> {
     using Impl = typename raw_ptr<T, Traits>::Impl;
     using is_transparent = void;
 
-    bool operator()(const raw_ptr<T, Traits>& lhs, const raw_ptr<T, Traits>& rhs) const {
+    DAWN_FORCE_INLINE bool operator()(const raw_ptr<T, Traits>& lhs,
+                                      const raw_ptr<T, Traits>& rhs) const {
         return lhs < rhs;
     }
-    bool operator()(T* lhs, const raw_ptr<T, Traits>& rhs) const { return lhs < rhs; }
-    bool operator()(const raw_ptr<T, Traits>& lhs, T* rhs) const { return lhs < rhs; }
+    DAWN_FORCE_INLINE bool operator()(T* lhs, const raw_ptr<T, Traits>& rhs) const {
+        return lhs < rhs;
+    }
+    DAWN_FORCE_INLINE bool operator()(const raw_ptr<T, Traits>& lhs, T* rhs) const {
+        return lhs < rhs;
+    }
 };
 
 template <typename T, RawPtrTraits Traits>
