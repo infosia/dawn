@@ -2,7 +2,7 @@ package androidx.webgpu.helper
 
 import androidx.webgpu.GPUExternalTexture
 
-public class GPUImportedYuvAhbTexture(
+public class GPUHardwareBufferExternalTexture(
   handle: Long,
   public val externalTexture: GPUExternalTexture,
-) : GPUImportedHardwareBuffer(handle)
+) : GPUHardwareBufferWrapper(handle)

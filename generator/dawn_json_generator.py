@@ -1032,12 +1032,12 @@ def compute_kotlin_params(loaded_json,
     customize_enums = customize_api["enums"]
     customize_callback = customize_api["function pointer"]
 
-    def kotlin_record_members(members):
+    def kotlin_record_members(members, structure_name=None):
         # Members are sorted in the following order.
         # 1. members with no default value (except callbacks).
         # 2. members with default values.
         # 3. callbacks.
-        for member in sorted(kotlin_record_members_unsorted(members),
+        for member in sorted(kotlin_record_members_unsorted(members, structure_name),
                              key=lambda arg: kotlin_default(arg) is not None):
             yield member
 
@@ -1053,7 +1053,7 @@ def compute_kotlin_params(loaded_json,
                         yield function_member
                     continue
 
-    def kotlin_record_members_unsorted(members):
+    def kotlin_record_members_unsorted(members, structure_name=None):
         for member in members:
             # length parameters are omitted because Kotlin containers have 'length'.
             if member in [m.length for m in members]:
@@ -1077,7 +1077,33 @@ def compute_kotlin_params(loaded_json,
                          {'category': 'kotlin type'}), None, {})
                 continue
 
+            if structure_name:
+                struct_config = customize_structures.get(structure_name, {})
+                exclude_members = struct_config.get('exclude_members', [])
+                if member.name.get() in exclude_members or member.name.camelCase() in exclude_members:
+                    continue
+
             yield member
+
+        if structure_name:
+            struct_config = customize_structures.get(structure_name, {})
+            for added_member in struct_config.get('additional_members', []):
+                name = Name(added_member['name'])
+                # Default to native for simple types if not specified
+                category = added_member.get('category', 'native')
+                type_name = added_member['type']
+                if type_name in params_kotlin['types']:
+                    typ = params_kotlin['types'][type_name]
+                else:
+                    typ = Type(type_name, {'category': category})
+                yield RecordMember(
+                    name,
+                    typ,
+                    added_member.get('annotation', 'value'),
+                    {},
+                    optional=added_member.get('optional', False),
+                    default_value=added_member.get('default_value', None),
+                    skip_serialize=True)
 
     # Calculate if we should, and can, provide a Kotlin default value for a given argument.
     # This will affect its order in the method parameter and structure field lists.
