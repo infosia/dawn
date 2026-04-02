@@ -45,6 +45,8 @@ tint::BindingTypeBuffer ToTint(const BufferBindingInfo& binding) {
             return tint::BindingTypeBuffer::kUniform;
         case wgpu::BufferBindingType::Storage:
         case wgpu::BufferBindingType::ReadOnlyStorage:
+        case kInternalStorageBufferBinding:
+        case kInternalReadOnlyStorageBufferBinding:
             return tint::BindingTypeBuffer::kStorage;
         case wgpu::BufferBindingType::BindingNotUsed:
         case wgpu::BufferBindingType::Undefined:
@@ -59,6 +61,7 @@ tint::BindingTypeSampler ToTint(const SamplerBindingInfo& binding) {
             return tint::BindingTypeSampler::kComparison;
         case wgpu::SamplerBindingType::Filtering:
         case wgpu::SamplerBindingType::NonFiltering:
+        case kUnknownFilteringSamplerBindingType:
             return tint::BindingTypeSampler::kNonComparison;
         case wgpu::SamplerBindingType::BindingNotUsed:
         case wgpu::SamplerBindingType::Undefined:
@@ -82,6 +85,7 @@ tint::TextureViewDimension ToTint(wgpu::TextureViewDimension viewDimension) {
         case wgpu::TextureViewDimension::e3D:
             return tint::TextureViewDimension::k3d;
         case wgpu::TextureViewDimension::Undefined:
+        case kInternalInputAttachmentDim:
             break;
     }
     DAWN_UNREACHABLE();
@@ -91,6 +95,8 @@ tint::BindingTypeTexture::SampleType ToTint(wgpu::TextureSampleType sampleType) 
     switch (sampleType) {
         case wgpu::TextureSampleType::Float:
         case wgpu::TextureSampleType::UnfilterableFloat:
+        case kUnknownFilterableFloatSampleType:
+        case kInternalResolveAttachmentSampleType:
             return tint::BindingTypeTexture::SampleType::kFloat;
         case wgpu::TextureSampleType::Depth:
             return tint::BindingTypeTexture::SampleType::kDepth;
