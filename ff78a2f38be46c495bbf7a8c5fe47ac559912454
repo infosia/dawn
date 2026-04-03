@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ba08df_8b07c31d",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-03T01:32:59Z",
+      "side": 1,
+      "message": "`0` is a request for 0, not a lack of request like UNDEFINED for device limits. So I think remove this `!limits.limitName ||`",
+      "range": {
+        "startLine": 165,
+        "startChar": 12,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "ff78a2f38be46c495bbf7a8c5fe47ac559912454",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be998066_fb2fa285",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-03T01:32:59Z",
+      "side": 1,
+      "message": "Same here, I think remove the `if()`.",
+      "revId": "ff78a2f38be46c495bbf7a8c5fe47ac559912454",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
