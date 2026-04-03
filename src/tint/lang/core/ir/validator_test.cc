@@ -1914,13 +1914,19 @@ TEST_F(IR_ValidatorDeathTest, ValidateIfNeeded_Enabled) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
 
-    // The module is invalid and the assertion should trigger an ICE because the flag is enabled.
     mod.enable_validation_asserts = true;
+
+#if TINT_ENABLE_IR_VALIDATION_ASSERTS
+    // The module is invalid and the assertion should trigger an ICE because the flag is enabled.
     EXPECT_DEATH_IF_SUPPORTED(
         {  //
             AssertValid(mod);
         },
         "internal compiler error");
+#else
+    // If validation assertions are disabled at build time, this should have no effect.
+    AssertValid(mod);
+#endif
 }
 
 }  // namespace tint::core::ir
