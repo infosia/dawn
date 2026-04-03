@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c845d3f6_5513eb30",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "I\u0027ve added two tests that do this with samplers. Will add two more with textures.",
+      "parentUuid": "f6f27cca_ba9918f9",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5ae4d74_ce700eae",
         "filename": "src/dawn/native/ResourceTable.h",
         "patchSetId": 6
@@ -122,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "804e96b2_063200f3",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Excellent idea. I went with using getting the default resource order / IsSampler.",
+      "parentUuid": "13b0cb80_810268fe",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a155a6d3_d764746b",
@@ -135,6 +171,24 @@
       "writtenOn": "2026-03-26T13:16:10Z",
       "side": 1,
       "message": "With the `IsSampler`, this code can maybe be factored a bit.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c62eca25_8927184b",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a155a6d3_d764746b",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7169f28c_174753b8",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "https://g-issues.chromium.org/issues/499115444",
+      "parentUuid": "66768048_97aa56ce",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "196d0691_eee26244",
@@ -169,6 +241,24 @@
       "writtenOn": "2026-03-26T13:16:10Z",
       "side": 1,
       "message": "Can we also have a TODO to deduplicate the samplers that are the same? The current code allows for max 2k samplers in the resource table, when we could allow max 2x *unique* samplers.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae411051_f7bc982b",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "https://g-issues.chromium.org/issues/499091557",
+      "parentUuid": "196d0691_eee26244",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +280,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44351a17_0e21d578",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "They need to be member functions so that `ResourceTable::Heap` can remain a private struct; however, I made both functions static.",
+      "parentUuid": "914b69e1_bffa955f",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6436e5b_7003a991",
@@ -203,6 +311,24 @@
       "writtenOn": "2026-03-26T13:16:10Z",
       "side": 1,
       "message": "nit: assert the data fits in 16 bits",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8ace59f_4086b35c",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "No longer needed as I\u0027m now using a uint16_t TypedInteger for sampler index.",
+      "parentUuid": "e6436e5b_7003a991",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -241,6 +367,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cdd8077_3ab389fc",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8b781c_ea8c6b8a",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efce75bd_9787f42c",
@@ -275,6 +419,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83c00bd1_3d120fd6",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed963946_5baa2bdb",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54b9fe33_88944246",
@@ -288,6 +450,24 @@
       "writtenOn": "2026-03-26T13:16:10Z",
       "side": 1,
       "message": "This could probably be a vector sized for each resource, it\u0027s cheap compared to all the other allocations done for the ResourceTable anyway.\n\nAlso we could introduce a typed integer scoped to this class for `SamplerIndex`.",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fa3a8c4_56cc5c4a",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Done, both using ityp::vector and SamplerIndex.",
+      "parentUuid": "54b9fe33_88944246",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -376,6 +556,24 @@
       "side": 1,
       "message": "Oh yes, that\u0027s right. The confusion is that there\u0027s a part of the Tint code gen that is [HLSL specific](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/hlsl/writer/raise/resource_table_helper.cc;l\u003d40;drc\u003d941c54d01f90b28ee659adbae8a0f7de2464bb1d;bpv\u003d0;bpt\u003d1), and I considered whether to make this bit also call into a helper function - Dan/James might suggest that. Anyway, if it remains general, I\u0027ll update the comment 😊",
       "parentUuid": "3f2f3efa_94068cd6",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37d1ebb3_3826bb78",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-03T03:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dca848a_6a2bf3f3",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
