@@ -235,6 +235,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f8bb48f_49098592",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-03T00:01:29Z",
+      "side": 1,
+      "message": "The goal of this CL isn\u0027t specifically to produce more cache hits, but to establish the dynamic state handling. Any cache benefits are a happy side effect.\n\nDiscussed the cache behavior with Loko today, who did the initial Vulkan blob cache work. Here\u0027s the conclusions we came to:\n\nAs is, this code should get the same PipelineCache object for pipelines that vary only by the listed dynamic states. The Vulkan blob cache can then restore the pipeline from the disk cache if a compatible pipeline has already been compiled.\n\nThat will almost certainly result in a unique VkPipeline object, however, and whether or not the Vulkan driver is able to detect that the pipelines are the same and thus skip any state setting when they are bound in sequence is driver specific. We hope they will but have no guarantees.\n\nWe could use this code to do a bit of awkward pipeline cache hit huristics as long as we\u0027re not using the monolithic cash, and as long as we clear all the disk caches before running. At that point we could infer that anything that queries the same PipelineCache object is compatible. That\u0027s pretty clunky though.\n\nSo the plan is this: We can probably move this forward as-is, though we don\u0027t want to enable it by default yet. The current code _may_ offer some benefits reducing compile times of compatible pipelines, but if we want guarantees about reducing redundant state-setting and limiting the number of VkPipeline objects created then we\u0027ll want an intermediate cache. That will happen in a follow up. If we want to rig something up to see how many pipelines this is potentially saving us we could probably do so once this lands, regardless of performance benefits, it\u0027ll just be a more manual process than is ideal.",
+      "parentUuid": "f77e938f_1f0a3ca9",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7a144cfb_874e5a56",
