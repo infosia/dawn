@@ -365,6 +365,7 @@ struct State {
             }
 
             // Only deal with vars which have binding points.
+            // Note that bp->binding here is a Dawn BindingIndex (not BindingNumber).
             auto bp = var->BindingPoint();
             if (!bp.has_value()) {
                 continue;

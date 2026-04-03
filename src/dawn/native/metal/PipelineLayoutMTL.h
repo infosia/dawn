@@ -30,6 +30,8 @@
 
 #import <Metal/Metal.h>
 
+#include <utility>
+
 #include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/PerStage.h"
@@ -52,8 +54,17 @@ inline constexpr size_t kImmediateBlockBufferSlot = kMetalBufferTableSize - 1;
 // The number of Metal buffers Dawn can use in a generic way (i.e. that aren't reserved)
 inline constexpr size_t kGenericMetalBufferSlots = kMetalBufferTableSize - 1;
 
-// The Last buffer slot to be used by argument buffers
-inline constexpr size_t kArgumentBufferSlotMax = kImmediateBlockBufferSlot - 1;
+// Get the [[buffer()]] number for an argument buffer and its dynamic offset buffer,
+// from the SetBindGroup() slot number.
+inline std::pair<uint32_t, uint32_t> BindGroupSlotToArgumentBufferID(BindGroupIndex slot) {
+    // The last buffer slot to be used by argument buffers
+    constexpr size_t kArgumentBufferSlotMax = kImmediateBlockBufferSlot - 1;
+
+    // Maps slots as follows (AB = Argument Buffer, DOB = Dynamic Offset Buffer):
+    // AB3 DOB3 AB2 DOB2 AB1 DOB1 AB0 DOB0
+    uint32_t index = kArgumentBufferSlotMax - static_cast<uint32_t>(slot) * 2;
+    return {index - 1, index};
+}
 
 inline constexpr BindGroupIndex kPullingBufferBindingSet = BindGroupIndex(kMaxBindGroups);
 
