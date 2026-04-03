@@ -16,6 +16,23 @@
       "message": "lgtm but I\u0027m not a Dawn reviewer.\n\nHowever I am GPU pixel wrangler this week so let me try setting owners-override so you can get this in to the next Dawn-\u003eChromium roll.",
       "revId": "d0fc0ea27faa27e668152dc692fdf2271a2be8f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2518e85d_f87fa69d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2026-04-03T19:33:22Z",
+      "side": 1,
+      "message": "Yeah, the owners-override isn\u0027t sufficient to satisfy the code-review requirement, so I\u0027ll remove that.",
+      "revId": "d0fc0ea27faa27e668152dc692fdf2271a2be8f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
