@@ -52,6 +52,24 @@
       "parentUuid": "04c5185d_27ec46c2",
       "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6797ea9e_1d673cf4",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-03T01:16:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8e853f60_e03bb418",
+      "revId": "f1f3351c2556ae30806ad4ca033aa9e39908885b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec7125b3_e28e65bc",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-03T01:16:26Z",
+      "side": 1,
+      "message": "So I got around specialization by introducing some extra reinterprets (pointer offset calls with no offset). So specialization is not required.\n\nThe array lengths might just appear in WGSL now after a buffer view so there does need to be a solution for them where they are affected by size.\n\nTake a look at patchset 5.",
+      "parentUuid": "e4b5ad8b_dbbc1b63",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eda5dcc_f0c4d49b",
         "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
         "patchSetId": 4
@@ -84,6 +102,24 @@
       "writtenOn": "2026-04-02T21:56:18Z",
       "side": 1,
       "message": "I\u0027m a bit confused about what this `arrayLength()` call means now. It\u0027s being called on the result of the pointer offset (after the offset is applied and after the type is changed to `array\u003cu32\u003e`), but you\u0027re treating the result as if it will return the byte length of the original buffer?\n\nMaybe this is an argument for changing the buffer type to be `array\u003cu8\u003e` as you suggested in a different comment, and then this could become an `arrayLength()` called on the original variable instead? Otherwise I think you\u0027d have to also change the `ArrayLengthFromUniform` polyfill to skip over the pointer offset call (which is hard because that\u0027s a core transform not an MSL one).",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54c7d792_6f82a18f",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-03T01:16:26Z",
+      "side": 1,
+      "message": "It definitely needs handled and it\u0027s just a subset of the length of the buffer. A user gets a runtime array out of a bufferView call and then calls arrayLength on it. So we need to limit the size (if from a bufferArrayView) and adjust for the offset.",
+      "parentUuid": "9eda5dcc_f0c4d49b",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
