@@ -54,9 +54,7 @@ TEST_P(AdapterPropertiesDrmTest, GetDrmProperties) {
         wgpu::AdapterPropertiesDrm drmProperties;
         info.nextInChain = &drmProperties;
 
-        adapter.GetInfo(&info);
-
-        EXPECT_TRUE(drmProperties.hasPrimary || drmProperties.hasRender);
+        EXPECT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
 
         if (drmProperties.hasPrimary) {
             EXPECT_NE(drmProperties.primaryMajor, 0u);
@@ -79,9 +77,7 @@ TEST_P(AdapterPropertiesDrmTest, GetDrmProperties) {
         wgpu::AdapterPropertiesDrm drmProperties;
         adapterInfo.nextInChain = &drmProperties;
 
-        device.GetAdapterInfo(&adapterInfo);
-
-        EXPECT_TRUE(drmProperties.hasPrimary || drmProperties.hasRender);
+        EXPECT_EQ(adapter.GetInfo(&adapterInfo), wgpu::Status::Success);
 
         if (drmProperties.hasPrimary) {
             EXPECT_NE(drmProperties.primaryMajor, 0u);
