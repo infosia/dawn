@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff22130b_853f0646",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-03T00:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce45eb3a_f90b9885",
+      "range": {
+        "startLine": 256,
+        "startChar": 73,
+        "endLine": 256,
+        "endChar": 88
+      },
+      "revId": "d919a665b3de276ecf77242b899434f727f85019",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f8b0d25_a9dd046d",
@@ -54,6 +78,24 @@
       "writtenOn": "2026-04-02T22:36:13Z",
       "side": 1,
       "message": "Hasn\u0027t the completed serial already been updated here?",
+      "revId": "d919a665b3de276ecf77242b899434f727f85019",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5edc7b75_1031b246",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-03T00:44:38Z",
+      "side": 1,
+      "message": "Holy moly... I\u0027ve been switching back and forth between Mac/Linux so I must\u0027ve Ctrl-S instead of ⌘-S thinking it save/commited and uploaded the CL... And crazy enough the last state that I had it at compiled and passed all test... Sorry about that. Should be more clear what I was trying to do now.",
+      "parentUuid": "9f8b0d25_a9dd046d",
       "revId": "d919a665b3de276ecf77242b899434f727f85019",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
