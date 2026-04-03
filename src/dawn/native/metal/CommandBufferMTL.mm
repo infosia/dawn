@@ -675,23 +675,9 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
     void Apply(Encoder encoder) {
         BeforeApply();
 
-        uint32_t curBufferIdx = kArgumentBufferSlotMax;
         for (BindGroupIndex index : mDirtyBindGroupsObjectChangedOrIsDynamic) {
-            BindGroup* group = ToBackend(mBindGroups[index]);
-            auto* layout = ToBackend(mPipelineLayout->GetBindGroupLayout(index));
-
-            // Note, both of these buffer index values need to match up to the value set in the
-            // ShaderModuleMTL #argument-buffer-and-dynamic-offsets-buffer-indices
-            uint32_t argumentBufferIdx = curBufferIdx--;
-            // TODO(crbug.com/363031535): The dynamic offsets should all be in a single grouping
-            // which is in the immediates buffer.
-            std::optional<uint32_t> dynamicOffsetsBufferIdx = std::nullopt;
-            if (uint32_t(layout->GetDynamicBufferCount()) > 0u) {
-                dynamicOffsetsBufferIdx = curBufferIdx--;
-            }
-
-            ApplyBindGroup(encoder, index, group, GetDynamicOffsets(index),
-                           ToBackend(mPipelineLayout), argumentBufferIdx, dynamicOffsetsBufferIdx);
+            ApplyBindGroup(encoder, index, ToBackend(mBindGroups[index]), GetDynamicOffsets(index),
+                           ToBackend(mPipelineLayout));
         }
 
         AfterApply();
@@ -707,9 +693,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
                             BindGroupIndex index,
                             BindGroup* group,
                             const ityp::span<BindingIndex, uint32_t>& dynamicOffsets,
-                            PipelineLayout* pipelineLayout,
-                            uint32_t argumentBufferIdx,
-                            std::optional<uint32_t> dynamicBufferIdx) {
+                            PipelineLayout* pipelineLayout) {
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -861,6 +845,12 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
         if (mUseArgumentBuffers) {
             const uint32_t dynamicOffsetsCount = uint32_t(dynamicOffsets.size());
 
+            // TODO(crbug.com/363031535): The dynamic offsets should all be in a single grouping
+            // which is in the immediates buffer.
+            uint32_t argumentBufferIdx, dynamicOffsetsBufferIdx;
+            std::tie(argumentBufferIdx, dynamicOffsetsBufferIdx) =
+                BindGroupSlotToArgumentBufferID(index);
+
             if (render) {
                 [render setVertexBuffer:*(group->GetArgumentBuffer())
                                  offset:0
@@ -871,14 +861,13 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
                                   atIndex:argumentBufferIdx];
 
                 if (dynamicOffsetsCount > 0) {
-                    DAWN_ASSERT(dynamicBufferIdx.has_value());
                     [render setVertexBytes:dynamicOffsets.data()
                                     length:dynamicOffsetsCount * sizeof(uint32_t)
-                                   atIndex:dynamicBufferIdx.value()];
+                                   atIndex:dynamicOffsetsBufferIdx];
 
                     [render setFragmentBytes:dynamicOffsets.data()
                                       length:dynamicOffsetsCount * sizeof(uint32_t)
-                                     atIndex:dynamicBufferIdx.value()];
+                                     atIndex:dynamicOffsetsBufferIdx];
                 }
             } else {
                 DAWN_ASSERT(compute != nullptr);
@@ -888,10 +877,9 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
                            atIndex:argumentBufferIdx];
 
                 if (dynamicOffsetsCount > 0) {
-                    DAWN_ASSERT(dynamicBufferIdx.has_value());
                     [compute setBytes:dynamicOffsets.data()
                                length:dynamicOffsetsCount * sizeof(uint32_t)
-                              atIndex:dynamicBufferIdx.value()];
+                              atIndex:dynamicOffsetsBufferIdx];
                 }
             }
         }

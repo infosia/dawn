@@ -31,6 +31,7 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/api/common/bindings.h"
@@ -72,7 +73,7 @@ struct ArgumentBufferInfo {
 
     struct Entry {
         tint::BindingType type;
-        // [[id()]] annotation
+        // [[id()]] annotation (Dawn BindingIndex)
         uint32_t id;
         // Index into the dynamic offsets array
         std::optional<uint32_t> offset_index = std::nullopt;
