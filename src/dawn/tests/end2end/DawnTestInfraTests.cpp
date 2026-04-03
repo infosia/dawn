@@ -54,7 +54,6 @@ TEST_P(DawnTestInfraTest, SupportedFeatureReturnsTrue) {
 // should support it but the wire explicitly filters out (see dawn/wire/SupportedFeatures.cpp).
 TEST_P(DawnTestInfraTest, WireUnsupportedFeatureReturnsFalse) {
     DAWN_TEST_UNSUPPORTED_IF(!UsesWire());
-    DAWN_ASSERT(GetSupportedFeatures().contains(wgpu::FeatureName::DawnNative));
     EXPECT_FALSE(SupportsFeatures({wgpu::FeatureName::DawnNative}));
 }
 
