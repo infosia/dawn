@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fff18a84_3b00a237",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-03T01:58:13Z",
+      "side": 1,
+      "message": "Just to make sure I understand (and maybe this needs a comment):\nIt\u0027s still OK that we return a raw pointer here because that raw pointer can\u0027t get invalidated (its unique_ptr freed) as long as the current thread is still running.",
+      "range": {
+        "startLine": 808,
+        "startChar": 63,
+        "endLine": 808,
+        "endChar": 79
+      },
+      "revId": "f35f7656ea8edd2faf9625fb9b7128f47b6c5297",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
