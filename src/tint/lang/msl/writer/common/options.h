@@ -75,7 +75,7 @@ struct ArgumentBufferInfo {
     std::unordered_map<uint32_t, uint32_t> binding_info_to_offset_index{};
 
     struct Entry {
-        // [[id()]] annotation
+        // [[id()]] annotation (matching MTLArgumentDescriptor.index)
         uint32_t id;
         // The type of the resource
         tint::ResourceType type;
