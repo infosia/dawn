@@ -63,6 +63,7 @@ void SyncScopeUsageTracker::BufferUsedAs(BufferBase* buffer,
 void SyncScopeUsageTracker::TextureViewUsedAs(TextureViewBase* view,
                                               wgpu::TextureUsage usage,
                                               wgpu::ShaderStage shaderStages) {
+    mTextureViews.push_back({view, usage, shaderStages});
     TextureRangeUsedAs(view->GetTexture(), view->GetSubresourceRange(), usage, shaderStages);
 }
 
@@ -250,6 +251,8 @@ SyncScopeResourceUsage SyncScopeUsageTracker::AcquireSyncScopeUsage() {
         result.textureSyncInfos.push_back(std::move(syncInfo));
     }
     mTextureSyncInfos.clear();
+
+    result.textureViews = std::move(mTextureViews);
 
     for (auto* const it : mExternalTextureUsages) {
         result.externalTextures.push_back(it);
