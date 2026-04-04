@@ -31,6 +31,8 @@
 #import <Metal/Metal.h>
 #include <tint/tint.h>
 
+#include <vector>
+
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/NSRef.h"
 #include "dawn/common/SlabAllocator.h"

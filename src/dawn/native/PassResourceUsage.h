@@ -33,6 +33,7 @@
 #include "absl/container/flat_hash_set.h"
 #include "dawn/native/SubresourceStorage.h"
 #include "dawn/native/dawn_platform.h"
+#include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native {
 
@@ -71,6 +72,16 @@ struct SyncScopeResourceUsage {
     std::vector<BufferSyncInfo> bufferSyncInfos;
 
     std::vector<TextureBase*> textures;
+    // TextureViews are tracked separately from parent textures specifically for Metal where a
+    // TextureView may have a separate MTLTexture from the parent texture, which needs to be made
+    // resident (and ref'd) for argument buffers (via useResource).
+    struct TextureViewUsage {
+        // FIXME: Don't do this.
+        RAW_PTR_EXCLUSION TextureViewBase* view;
+        wgpu::TextureUsage usage;
+        wgpu::ShaderStage stages;
+    };
+    std::vector<TextureViewUsage> textureViews;
     std::vector<TextureSubresourceSyncInfo> textureSyncInfos;
 
     std::vector<ExternalTextureBase*> externalTextures;
@@ -114,6 +125,8 @@ struct CommandBufferResourceUsage {
     ComputePassUsages computePasses;
 
     // Resources used in commands that aren't in a pass.
+    // FIXME: How is it valid to use raw pointers here?? Why isn't the raw_ptr linter catching this?
+    //   Probably because they're held by the Cmds themselves?
     absl::flat_hash_set<BufferBase*> topLevelBuffers;
     absl::flat_hash_set<TextureBase*> topLevelTextures;
     absl::flat_hash_set<QuerySetBase*> usedQuerySets;
