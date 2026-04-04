@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73723faf_78c97635",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-04T01:31:33Z",
+      "side": 1,
+      "message": "PS7 lowers all buffers to uchar arrays. See if that is preferable. One question it raises is about the alignment we treat these buffers as having. Will a WG variable be guaranteed to have the right alignment? Do we need to do anything to ensure that alignment?\n\nCan always revert this PS, but then the alignment question moves the buffer type. I originally found this running through ModuleScopeVars where buffers don\u0027t have an alignment.\n\nThis might actually raise a spec question.",
+      "parentUuid": "ec7125b3_e28e65bc",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eda5dcc_f0c4d49b",
         "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
         "patchSetId": 4
