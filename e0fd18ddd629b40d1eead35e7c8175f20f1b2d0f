@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b748022c_73e699fa",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-04T01:34:56Z",
+      "side": 1,
+      "message": "We could add `alignas` attribute in MSL (see section 2.5 in the MSL spec). Might have to search for the highest alignment needed. I *think* it would only be needed for workgroup variables.",
+      "parentUuid": "73723faf_78c97635",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eda5dcc_f0c4d49b",
         "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
         "patchSetId": 4
