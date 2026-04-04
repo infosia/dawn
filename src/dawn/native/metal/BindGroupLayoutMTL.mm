@@ -256,10 +256,9 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
 
             MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
             desc.index = ToMTLArgumentBufferIndex(bindingIndex);
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-            desc.access = MTLArgumentAccessReadOnly;
-#pragma clang diagnostic pop
+            // This appears to be the access mode for memory in the argbuf itself.
+            // We never modify the argbuf from the GPU.
+            desc.access = MTLBindingAccessReadOnly;
 
             // TODO(crbug.com/363031535): Handle more then uniform/storage.  (e.g. samplers,
             // textures, etc.)
