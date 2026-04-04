@@ -257,6 +257,10 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
             desc.index = ToMTLArgumentBufferIndex(bindingIndex);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
+            // FIXME: Is this the access mode of the argbuf itself? Why would Metal need to know
+            // that separately for each member? It's much more likely this is the access mode of the
+            // resource in that slot... but then why don't the validation layers complain? And why
+            // would the *encoder* need to know this, anyway?
             desc.access = MTLArgumentAccessReadOnly;
 #pragma clang diagnostic pop
 
