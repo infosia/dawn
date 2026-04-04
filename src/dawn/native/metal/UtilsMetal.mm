@@ -266,6 +266,13 @@ void MakeResourcesResident(Encoder encoder, const SyncScopeResourceUsage& resour
             }
         }
     }
+
+    // Though the actual memory is all made resident above, we also rely on useResource to hold refs
+    // MTLTexture objects. So, if we made a new one for the TextureView, we need to useResource it.
+    for (const auto& tv : resourceUsage.textureViews) {
+        MakeResourceResident(encoder, ToBackend(tv.view)->GetMTLTexture(),
+                             ToMTLResourceUsage(tv.usage), tv.stages);
+    }
 }
 
 }  // anonymous namespace

@@ -140,7 +140,7 @@ class ExecutionQueueBase : public ApiObjectBase {
     // processors are always notified before handling serial tasks.
     void RegisterSerialProcessor(QueuePriority priority, Ref<SerialProcessor>&& serialProcessor);
 
-    // Tracks new tasks to complete when |serial| is reached.
+    // Tracks new tasks to run after |serial| is completed.
     void TrackSerialTask(QueuePriority priority, ExecutionSerial serial, Task&& task);
 
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
