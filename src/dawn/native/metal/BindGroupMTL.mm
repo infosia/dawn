@@ -80,7 +80,7 @@ MaybeError BindGroup::InitializeImpl() {
         uint32_t dstBinding = ToMTLArgumentBufferIndex(bindingIndex - bindingInfo.indexInArray);
 
         auto HandleTextureBinding = [&]() {
-            auto textureView = ToBackend(GetBindingAsTextureView(bindingIndex));
+            const auto* textureView = ToBackend(GetBindingAsTextureView(bindingIndex));
             id<MTLTexture> texture =
                 textureView->GetTexture()->IsDestroyed() ? nil : textureView->GetMTLTexture();
             [*encoder setTexture:texture atIndex:dstBinding];
