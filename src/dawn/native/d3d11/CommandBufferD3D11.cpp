@@ -893,8 +893,6 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
 
-                d3d11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
-
                 if (renderPass->attachmentState->GetSampleCount() > 1) {
                     // Resolve multisampled textures.
                     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
@@ -922,29 +920,31 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                     }
                 }
 
-                if (!GetDevice()->IsToggleEnabled(Toggle::D3D11UseDiscardView)) {
-                    return {};
-                }
+                if (GetDevice()->IsToggleEnabled(Toggle::D3D11UseDiscardView)) {
+                    // Discard render pass' attachments having StoreOp::Discard.
+                    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
+                        if (renderPass->colorAttachments[i].storeOp == wgpu::StoreOp::Discard) {
+                            d3d11DeviceContext->DiscardView(d3d11RenderTargetViews[i]);
+                        }
+                    }
 
-                // Discard render pass' attachments having StoreOp::Discard.
-                for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-                    if (renderPass->colorAttachments[i].storeOp == wgpu::StoreOp::Discard) {
-                        d3d11DeviceContext->DiscardView(d3d11RenderTargetViews[i]);
+                    if (renderPass->attachmentState->HasDepthStencilAttachment()) {
+                        auto* attachmentInfo = &renderPass->depthStencilAttachment;
+                        const Format& attachmentFormat =
+                            attachmentInfo->view->GetTexture()->GetFormat();
+                        bool discardDepth = !attachmentFormat.HasDepth() ||
+                                            attachmentInfo->depthStoreOp == wgpu::StoreOp::Discard;
+                        bool discardStencil =
+                            !attachmentFormat.HasStencil() ||
+                            attachmentInfo->stencilStoreOp == wgpu::StoreOp::Discard;
+                        if (discardDepth && discardStencil) {
+                            d3d11DeviceContext->DiscardView(d3d11DepthStencilView);
+                        }
                     }
                 }
 
-                if (renderPass->attachmentState->HasDepthStencilAttachment()) {
-                    auto* attachmentInfo = &renderPass->depthStencilAttachment;
-                    const Format& attachmentFormat =
-                        attachmentInfo->view->GetTexture()->GetFormat();
-                    bool discardDepth = !attachmentFormat.HasDepth() ||
-                                        attachmentInfo->depthStoreOp == wgpu::StoreOp::Discard;
-                    bool discardStencil = !attachmentFormat.HasStencil() ||
-                                          attachmentInfo->stencilStoreOp == wgpu::StoreOp::Discard;
-                    if (discardDepth && discardStencil) {
-                        d3d11DeviceContext->DiscardView(d3d11DepthStencilView);
-                    }
-                }
+                // Unbind attachments.
+                d3d11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 
                 return {};
             }
