@@ -1600,7 +1600,6 @@ void Resolver::RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn) {
         buffer_size = offset_value + std::max(size_value, buffer_size);
     }
 
-    // Don't need to check global variables since they will be checked directly through validation.
     if (const auto* param = call->RootIdentifier()->As<sem::Parameter>()) {
         auto where = buffer_view_sizes_.GetOrAddEntry(param, [buffer_size, call]() {
             BufferViewInfo info;
@@ -1609,6 +1608,14 @@ void Resolver::RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn) {
             return info;
         });
         where.value = {std::max(buffer_size, where.value.size), where.value.source};
+    }
+    // Only need to add a transitive size reference for global variables.
+    if (const auto* gvar = call->RootIdentifier()->As<sem::GlobalVariable>()) {
+        auto* var_ty = gvar->Type()->UnwrapPtrOrRef();
+        auto* buf_ty = var_ty->As<core::type::Buffer>();
+        if (buf_ty && buf_ty->Count()->Is<core::type::RuntimeArrayCount>() && current_function_) {
+            current_function_->AddTransitivelyReferencedUnsizedBufferSize(gvar, buffer_size);
+        }
     }
 }
 
@@ -1641,6 +1648,11 @@ bool Resolver::CheckBufferViews(const sem::Call* call) {
                                 << " bytes)";
                             AddNote(*where->source) << "due to call here";
                             return false;
+                        }
+                        // Add transitive reference to global.
+                        if (buffer_ty->Count()->Is<core::type::RuntimeArrayCount>()) {
+                            current_function_->AddTransitivelyReferencedUnsizedBufferSize(
+                                global, where->size);
                         }
                     }
                     return true;
@@ -3377,6 +3389,10 @@ sem::Call* Resolver::FunctionCall(const ast::CallExpression* expr,
         // We inherit any referenced variables from the callee.
         for (auto* var : target->TransitivelyReferencedGlobals()) {
             current_function_->AddTransitivelyReferencedGlobal(var);
+            // Also track transitive unsized buffer requirements.
+            if (auto size = target->TransitivelyReferencedUnsizedBufferSize(var)) {
+                current_function_->AddTransitivelyReferencedUnsizedBufferSize(var, size.value());
+            }
         }
 
         if (!AliasAnalysis(call)) {
