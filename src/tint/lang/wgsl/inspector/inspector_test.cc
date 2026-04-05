@@ -2705,6 +2705,190 @@ var<private> foo_depth: f32;
     EXPECT_EQ(0u, result[1].binding);
 }
 
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Direct_Vec4f) {
+    auto* src = R"(
+@group(0) @binding(0) var<storage> buf : buffer;
+@fragment fn ep() {
+  let p = bufferView<vec4f>(&buf, 16u);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kReadOnlyStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(32u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Direct_Struct) {
+    auto* src = R"(
+struct S { // size 144
+  a : u32,
+  b : array<T, 4>,
+}
+struct T { // size 32 (8 bytes padding)
+  x : vec4f,
+  y : vec2f,
+}
+@group(0) @binding(0) var<storage> buf : buffer;
+@fragment fn ep() {
+  let p = bufferView<S>(&buf, 16u);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kReadOnlyStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(160u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Indirect_ArrayU32_Size) {
+    auto* src = R"(
+@group(0) @binding(0) var<storage> buf : buffer;
+var<private> offset = 0u; // hides from constant eval
+fn foo(p : ptr<storage, buffer>) {
+  let q = bufferArrayView<array<u32>>(p, offset, 128u);
+}
+fn bar(p : ptr<storage, buffer>) {
+  foo(p);
+}
+@fragment
+fn ep() {
+  bar(&buf);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kReadOnlyStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(128u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Indirect_ArrayU32_Offset) {
+    auto* src = R"(
+@group(0) @binding(0) var<storage> buf : buffer;
+var<private> size = 0u; // hides from constant eval
+fn foo(p : ptr<storage, buffer>) {
+  let q = bufferArrayView<array<u32>>(p, 32u, size);
+}
+fn bar() {
+  foo(&buf);
+}
+@fragment
+fn ep() {
+  bar();
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kReadOnlyStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(36u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Indirect_RuntimeStruct) {
+    auto* src = R"(
+struct S {
+  t : T,
+  arr : array<vec3f>,
+}
+struct T {
+  a : vec4f,
+  b : vec4f,
+}
+@group(0) @binding(0) var<storage, read_write> buf : buffer;
+var<private> offset = 0u; // hides from constant eval
+var<private> size = 0u; // hides from constant eval
+fn foo(p : ptr<storage, buffer, read_write>) {
+  // Req size = SizeOf(T) + StrideOf(array<vec3f>) = 48
+  let q = bufferArrayView<S>(p, offset, size);
+}
+@compute @workgroup_size(1)
+fn ep() {
+  foo(&buf);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(48u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_Indirect_RuntimeStruct_MaxOperation) {
+    auto* src = R"(
+struct S {
+  t : T,
+  arr : array<vec3f>,
+}
+struct T {
+  a : vec4f,
+  b : vec4f,
+}
+@group(0) @binding(0) var<storage, read_write> buf : buffer;
+var<private> offset = 0u; // hides from constant eval
+var<private> size = 0u; // hides from constant eval
+fn foo(p : ptr<storage, buffer, read_write>) {
+  // Req size = SizeOf(T) + StrideOf(array<vec3f>) = 48
+  let q = bufferArrayView<S>(p, offset, size);
+}
+fn bar(p : ptr<storage, buffer, read_write>) {
+  // Req size = SizeOf(T) + StrideOf(array<vec3f>) + offset = 64
+  let q = bufferView<S>(p, 16u);
+}
+@compute @workgroup_size(1)
+fn ep() {
+  foo(&buf);
+  bar(&buf);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(64u, result[0].size);
+}
+
+TEST_F(InspectorGetResourceBindingsTest, UnsizedBuffer_OnlyThroughEntryPoint) {
+    auto* src = R"(
+@group(0) @binding(0) var<storage, read_write> buf : buffer;
+fn foo(p : ptr<storage, buffer, read_write>) {
+  let q = bufferView<vec4f>(p, 16u);
+}
+@fragment fn unused() {
+  foo(&buf);
+}
+@compute @workgroup_size(1) fn ep() {
+  let p = bufferView<vec4f>(&buf, 0);
+}
+)";
+
+    Inspector& inspector = Initialize(src);
+    auto result = inspector.GetResourceBindings("ep");
+    ASSERT_FALSE(inspector.has_error()) << inspector.error();
+
+    ASSERT_EQ(1u, result.size());
+    EXPECT_EQ(ResourceBinding::ResourceType::kStorageBuffer, result[0].resource_type);
+    EXPECT_EQ(16u, result[0].size);
+}
+
 std::string CoordsType(core::type::TextureDimension dim, std::string_view name) {
     switch (dim) {
         case core::type::TextureDimension::k1d:
