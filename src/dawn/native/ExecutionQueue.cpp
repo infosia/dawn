@@ -249,6 +249,8 @@ void ExecutionQueueBase::TrackSerialTask(QueuePriority priority,
 
 void ExecutionQueueBase::UpdateCompletedSerialTo(QueuePriority priority,
                                                  ExecutionSerial completedSerial) {
+    // TODO(b/497969820): Remove this if refactored keeping the queue alive.
+    Ref<ExecutionQueueBase> keepAlive(this);
     UpdateCompletedSerialToInternal(priority, completedSerial);
 }
 

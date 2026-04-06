@@ -90,7 +90,14 @@ TEST_F(DeviceAsyncTaskTests, ErrorScopeBlockedOnAsyncTask) {
     // Complete the async task and expect that the future resolves and callback is triggered
     lock.unlock();
     task->Wait();
-    ProcessEvents();
+
+    // The callback is triggered when the async task's completion callbacks are run. Note that the
+    // task itself could have finished before the completion callbacks have run, so we wait for
+    // the callback to be triggered.
+    while (!callbackTriggered.load()) {
+        ProcessEvents();
+        std::this_thread::yield();
+    }
     EXPECT_TRUE(callbackTriggered);
 }
 
