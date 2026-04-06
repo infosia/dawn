@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67c8a940_06e0e635",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-06T20:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ba08df_8b07c31d",
+      "range": {
+        "startLine": 165,
+        "startChar": 12,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "ff78a2f38be46c495bbf7a8c5fe47ac559912454",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be998066_fb2fa285",
@@ -37,6 +61,24 @@
       "writtenOn": "2026-04-03T01:32:59Z",
       "side": 1,
       "message": "Same here, I think remove the `if()`.",
+      "revId": "ff78a2f38be46c495bbf7a8c5fe47ac559912454",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d09cda2_2560e3be",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-06T20:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be998066_fb2fa285",
       "revId": "ff78a2f38be46c495bbf7a8c5fe47ac559912454",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
