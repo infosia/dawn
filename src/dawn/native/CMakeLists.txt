@@ -589,7 +589,7 @@ endif()
 if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
     list(APPEND headers
         "${DAWN_INCLUDE_DIR}/dawn/native/WebGPUBackend.h"
-        "${DAWN_INCLUDE_DIR}/dawn/serialization/Schema.h"
+        "${DAWN_SRC_DIR}/dawn/serialization/Schema.h"
     )
     list(APPEND private_headers
         "webgpu/BackendWGPU.h"
