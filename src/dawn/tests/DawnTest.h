@@ -127,6 +127,9 @@
 #define EXPECT_PIXEL_FLOAT_EQ(expected, texture, x, y) \
     AddTextureExpectation(__FILE__, __LINE__, expected, texture, {x, y})
 
+#define EXPECT_PIXEL_FLOAT_TOLERANCE_EQ(expected, texture, x, y, tolerance) \
+    AddTextureExpectationTolerance(__FILE__, __LINE__, expected, texture, {x, y}, tolerance)
+
 #define EXPECT_PIXEL_FLOAT16_EQ(expected, texture, x, y) \
     AddTextureExpectation<float, uint16_t>(__FILE__, __LINE__, expected, texture, {x, y})
 
@@ -516,6 +519,21 @@ class DawnTestBase {
         // No device passed explicitly. Default it, and forward the rest of the args.
         return AddTextureExpectation<T, U>(file, line, this->device, expectedData, texture, origin,
                                            level, aspect, bytesPerRow);
+    }
+
+    template <typename T, typename U = T>
+    std::ostringstream& AddTextureExpectationTolerance(const char* file,
+                                                       int line,
+                                                       const T& expectedData,
+                                                       const wgpu::Texture& texture,
+                                                       wgpu::Origin3D origin,
+                                                       const T tolerance) {
+        constexpr uint32_t level = 0;
+        constexpr wgpu::TextureAspect aspect = wgpu::TextureAspect::All;
+        constexpr uint32_t bytesPerRow = 0;
+        return AddTextureExpectationImpl(
+            file, line, this->device, new detail::ExpectEq<T, U>(expectedData, tolerance), texture,
+            origin, {1, 1}, level, aspect, sizeof(U), bytesPerRow);
     }
 
     template <typename T, typename U = T>

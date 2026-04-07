@@ -95,6 +95,10 @@ struct Options {
         /// of cube depth.
         bool texture_sample_compare_depth_cube_array = false;
 
+        /// Set to 'true' to force a polyfill for 'textureSampleCompare(Level)' for all 2D
+        /// textures (and arrays) using bilinear interpolation.
+        bool texture_sample_compare_2d_polyfill = false;
+
         /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
         bool polyfill_subgroup_broadcast_f16 = false;
 
@@ -127,6 +131,7 @@ struct Options {
                      polyfill_pack_unpack_4x8_norm,
                      subgroup_shuffle_clamped,
                      texture_sample_compare_depth_cube_array,
+                     texture_sample_compare_2d_polyfill,
                      polyfill_subgroup_broadcast_f16,
                      pass_matrix_by_pointer,
                      polyfill_unary_f32_negation,
