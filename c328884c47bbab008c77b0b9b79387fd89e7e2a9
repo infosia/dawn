@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d2c21493_2baf2425",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-04-07T20:20:34Z",
+      "side": 1,
+      "message": "It does address https://crbug.com/461466512. Should I change the bug# to 461466512?",
+      "parentUuid": "1408290b_b6f703d5",
+      "revId": "c328884c47bbab008c77b0b9b79387fd89e7e2a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2cc122c4_61a5f476",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-07T18:49:17Z",
       "side": 1,
       "message": "```\n[ RUN      ] SpirvWriterOptionHelpersTest.TexelBufferOverlap\n../../src/tint/lang/spirv/writer/common/option_helpers_test.cc:87: Failure\nExpected equality of these values:\n  res.Failure().reason\n    Which is: \"error: found duplicate SPIR-V binding point: [group: 1, binding: 1]\\nnote: when processing texel_buffer\"\n  R\"(error: found duplicate SPIR-V binding point: [group: 1, binding: 1]\nnote: when processing texture)\"\n    Which is: \"error: found duplicate SPIR-V binding point: [group: 1, binding: 1]\\nnote: when processing texture\"\nWith diff:\n@@ -1,2 +1,2 @@\n error: found duplicate SPIR-V binding point: [group: 1, binding: 1]\n-note: when processing texel_buffer\n+note: when processing texture\n```",
+      "revId": "c328884c47bbab008c77b0b9b79387fd89e7e2a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b020d0_f25940c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2026-04-07T20:20:34Z",
+      "side": 1,
+      "message": "Done. Expected the wrong string in tests.",
+      "parentUuid": "2cc122c4_61a5f476",
       "revId": "c328884c47bbab008c77b0b9b79387fd89e7e2a9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
