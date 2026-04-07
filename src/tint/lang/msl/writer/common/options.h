@@ -75,12 +75,17 @@ struct ArgumentBufferInfo {
     std::unordered_map<uint32_t, uint32_t> binding_info_to_offset_index{};
 
     struct Entry {
-        // [[id()]] annotation (matching MTLArgumentDescriptor.index)
+        // [[id()]] annotation (matching MTLArgumentDescriptor.index). If this is an array, this is
+        // the start of the array, and multiple ids might be used by the array.
         uint32_t id;
+        // Size of the binding_array (1 if not an array)
+        uint32_t array_size = 1;
         // The type of the resource
         tint::ResourceType type;
+        // First element's index in the dynamic offsets array
+        std::optional<uint32_t> first_offset_index = std::nullopt;
 
-        TINT_REFLECT(Entry, id, type);
+        TINT_REFLECT(Entry, id, array_size, type, first_offset_index);
         TINT_REFLECT_HASH_CODE(Entry);
     };
     /// Struct members in order. These come from the BindGroupLayout - they must match it exactly.
