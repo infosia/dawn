@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1408290b_b6f703d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-07T19:13:20Z",
+      "side": 1,
+      "message": "Is this CL addressing https://crbug.com/461466512 ?\n\nFWIW we created sub-issues for all of the remaining tasks required to get texel buffers finished here:\nhttps://issues.chromium.org/issues/382544164/dependencies",
+      "revId": "c328884c47bbab008c77b0b9b79387fd89e7e2a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2cc122c4_61a5f476",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
