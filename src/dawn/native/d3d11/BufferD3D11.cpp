@@ -1097,12 +1097,21 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
             bufferDescriptor.MiscFlags = 0;
         } break;
         case StorageType::MappableAndGPUWritable: {
+            bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
+
+            // Always use CPU write access flag since we will need it for zeroizations.
+            bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+            if (GetInternalUsage() & (wgpu::BufferUsage::MapRead | wgpu::BufferUsage::Uniform)) {
+                // Add CPU read access flag if buffer has MapRead OR Uniform flag.
+                // The reason CPU read is needed for Uniform flag is because we might need to
+                // use D3D11_MAP_READ to sync between GPUWritableNonConstantBuffer and
+                // CPUWritableNonConstantBuffer.
+                bufferDescriptor.CPUAccessFlags |= D3D11_CPU_ACCESS_READ;
+            }
+
             const auto nonUniformUsage =
                 GetInternalUsage() & ~(kMappableBufferUsages | wgpu::BufferUsage::Uniform);
-            bufferDescriptor.Usage = D3D11_USAGE_DEFAULT;
-            // TODO(crbug.com/479047477): Investigate the performance of including both read &
-            // write accesses.
-            bufferDescriptor.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
+
             bufferDescriptor.BindFlags = D3D11BufferBindFlags(nonUniformUsage);
             bufferDescriptor.MiscFlags = D3D11BufferMiscFlags(nonUniformUsage);
         } break;
@@ -1162,6 +1171,7 @@ MaybeError GPUUsableBuffer::SyncStorage(const ScopedCommandRecordingContext* com
     DAWN_ASSERT(dstStorage->IsCPUWritable());
     Storage* stagingStorage;
     DAWN_TRY_ASSIGN(stagingStorage, GetOrCreateStorage(StorageType::Staging));
+    DAWN_ASSERT(stagingStorage->IsCPUReadable());
     DAWN_TRY(SyncStorage(commandContext, stagingStorage));
     D3D11_MAPPED_SUBRESOURCE mappedSrcResource;
     DAWN_TRY(CheckHRESULT(commandContext->Map(stagingStorage->GetD3D11Buffer(),
@@ -1238,9 +1248,11 @@ MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* com
         // Dynamic buffer can only use D3D11_MAP_WRITE_NO_OVERWRITE
         mD3DMapTypeUsed = D3D11_MAP_WRITE_NO_OVERWRITE;
     } else {
-        if (NeedsInitialization() || mode == (wgpu::MapMode::Read | wgpu::MapMode::Write)) {
-            // Map buffer with D3D11_MAP_READ_WRITE because we need write permission to initialize
-            // the buffer.
+        // Map buffer with D3D11_MAP_READ_WRITE when either:
+        // - Client wants to map with Read mode but the buffer needs to be initialized.
+        // - Or client wants to map with both Read | Write modes.
+        const bool readNeedsInit = mode == wgpu::MapMode::Read && NeedsInitialization();
+        if (readNeedsInit || mode == (wgpu::MapMode::Read | wgpu::MapMode::Write)) {
             // TODO(dawn:1705): investigate the performance impact of mapping with
             // D3D11_MAP_READ_WRITE.
             mD3DMapTypeUsed = D3D11_MAP_READ_WRITE;

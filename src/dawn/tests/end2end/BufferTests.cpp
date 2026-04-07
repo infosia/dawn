@@ -1647,7 +1647,7 @@ class BufferMapExtendedUsagesTests : public DawnTest {
         queue.Submit(1, &commands);
     }
 
-    void MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc colorSrc);
+    void MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc colorSrc, bool useMapRead);
 
     static constexpr wgpu::BufferUsage kMapExtendedUsages[] = {
         wgpu::BufferUsage::CopySrc,  wgpu::BufferUsage::CopyDst,      wgpu::BufferUsage::Index,
@@ -1998,7 +1998,8 @@ TEST_P(BufferMapExtendedUsagesTests, MapWriteThenGPUWriteStorageBufferThenMapRea
 // - modifying it on GPU.
 // - map write it again.
 // - draw using the buffer.
-void BufferMapExtendedUsagesTests::MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc colorSrc) {
+void BufferMapExtendedUsagesTests::MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc colorSrc,
+                                                                        bool useMapRead) {
     const float kRed[] = {1.0f, 0.0f, 0.0f, 1.0f};
     const float kFinalColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
     constexpr size_t kSize = sizeof(kFinalColor);
@@ -2006,8 +2007,12 @@ void BufferMapExtendedUsagesTests::MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc
     // Create buffer with initial red color data.
     wgpu::Buffer ssbo;
     {
-        wgpu::BufferUsage usage =
-            wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite;
+        wgpu::BufferUsage usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapWrite;
+        if (useMapRead) {
+            usage |= wgpu::BufferUsage::MapRead;
+        } else {
+            usage |= wgpu::BufferUsage::CopySrc;
+        }
 
         switch (colorSrc) {
             case ColorSrc::UniformBuffer:
@@ -2094,22 +2099,30 @@ void BufferMapExtendedUsagesTests::MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc
     }
 
     // Read the final value.
-    MapAsyncAndWait(ssbo, wgpu::MapMode::Read, 0, kSize);
-    CheckMapping(ssbo.GetConstMappedRange(0, kSize), &kFinalColor, kSize);
-    ssbo.Unmap();
+    if (useMapRead) {
+        MapAsyncAndWait(ssbo, wgpu::MapMode::Read, 0, kSize);
+        CheckMapping(ssbo.GetConstMappedRange(0, kSize), &kFinalColor, kSize);
+        ssbo.Unmap();
+    } else {
+        EXPECT_BUFFER_U32_RANGE_EQ(reinterpret_cast<const uint32_t*>(kFinalColor), ssbo, 0,
+                                   kSize / sizeof(uint32_t));
+    }
 }
 
 TEST_P(BufferMapExtendedUsagesTests, MixMapWriteAndGPUWriteVertexBufferThenDraw) {
-    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::VertexBuffer);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::VertexBuffer, /*useMapRead=*/false);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::VertexBuffer, /*useMapRead=*/true);
 }
 
 TEST_P(BufferMapExtendedUsagesTests, MixMapWriteAndGPUWriteUniformBufferThenDraw) {
-    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::UniformBuffer);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::UniformBuffer, /*useMapRead=*/false);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::UniformBuffer, /*useMapRead=*/true);
 }
 
 TEST_P(BufferMapExtendedUsagesTests, MixMapWriteAndGPUWriteStorageBufferThenDraw) {
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 1);
-    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::StorageBuffer);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::StorageBuffer, /*useMapRead=*/false);
+    MixMapWriteAndGPUWriteBufferThenDraw(ColorSrc::StorageBuffer, /*useMapRead=*/true);
 }
 
 // Test the follow scenario:
