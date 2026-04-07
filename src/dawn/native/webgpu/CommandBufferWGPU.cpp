@@ -1028,7 +1028,7 @@ WGPUCommandBuffer CommandBuffer::Encode() {
                 PrepareResourcesForSyncScope(
                     GetResourceUsages().renderPasses[nextRenderPassNumber]);
 
-                LazyClearRenderPassAttachments(GetDevice(), cmd);
+                LazyClearRenderPassAttachments(GetDevice(), cmd, {});
                 EncodeRenderPass(ToBackend(GetDevice()), innerEncoder, mCommands, cmd);
                 ++nextRenderPassNumber;
                 break;
