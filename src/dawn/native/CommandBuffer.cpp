@@ -161,7 +161,9 @@ SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy,
     DAWN_UNREACHABLE();
 }
 
-void LazyClearRenderPassAttachments(DeviceBase* device, BeginRenderPassCmd* renderPass) {
+void LazyClearRenderPassAttachments(DeviceBase* device,
+                                    BeginRenderPassCmd* renderPass,
+                                    LazyClearTextureHelper clearTexture) {
     if (!device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse)) {
         return;
     }
@@ -174,12 +176,29 @@ void LazyClearRenderPassAttachments(DeviceBase* device, BeginRenderPassCmd* rend
         DAWN_ASSERT(view->GetLayerCount() == 1);
         DAWN_ASSERT(view->GetLevelCount() == 1);
         SubresourceRange range = view->GetSubresourceRange();
+        TextureBase* texture = view->GetTexture();
 
         // If the loadOp is Load, but the subresource is not initialized, use Clear instead.
         if (attachmentInfo.loadOp == wgpu::LoadOp::Load &&
-            !view->GetTexture()->IsSubresourceContentInitialized(range)) {
+            !texture->IsSubresourceContentInitialized(range)) {
             attachmentInfo.loadOp = wgpu::LoadOp::Clear;
             attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
+        }
+
+        // For 3D textures, rendering to a single depthSlice marks the entire mip level as
+        // initialized. If it wasn't already initialized, we must clear the other slices
+        // before the render pass starts.
+        if (texture->GetDimension() == wgpu::TextureDimension::e3D &&
+            !texture->IsSubresourceContentInitialized(range)) {
+            if (clearTexture) {
+                // Ignore any error and hope for the best, similar to other lazy clears.
+                [[maybe_unused]] auto result = clearTexture(texture, range);
+            }
+            // Mark the entire mip as initialized, because we just cleared it (if clearTexture was
+            // successful) or because the backend will clear it (via LoadOp::Clear which we might
+            // have set above). Actually, if we use LoadOp::Clear below, it'll only clear one
+            // slice. So we must clear the whole texture here.
+            texture->SetIsSubresourceContentInitialized(true, range);
         }
 
         if (hasResolveTarget) {
