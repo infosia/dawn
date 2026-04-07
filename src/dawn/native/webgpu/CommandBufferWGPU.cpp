@@ -1028,8 +1028,15 @@ WGPUCommandBuffer CommandBuffer::Encode() {
                 PrepareResourcesForSyncScope(
                     GetResourceUsages().renderPasses[nextRenderPassNumber]);
 
-                LazyClearRenderPassAttachments(GetDevice(), cmd);
+                DAWN_ASSERT(LazyClearRenderPassAttachments(
+                                GetDevice(), cmd,
+                                [](TextureBase*, const SubresourceRange&) -> MaybeError {
+                                    return {};  // The WGPU backend doesn't clear directly, it
+                                                // relies on the the inner device.
+                                })
+                                .IsSuccess());
                 EncodeRenderPass(ToBackend(GetDevice()), innerEncoder, mCommands, cmd);
+
                 ++nextRenderPassNumber;
                 break;
             }
