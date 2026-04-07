@@ -1,6 +1,6 @@
 <div align="center">
   <img
-      title="Dawn's logo"
+      title="Dawn's logo test"
       alt="Dawn's logo: a sun rising behind a stylized mountain inspired by the WebGPU logo."
       src="docs/imgs/dawn_logo_notext.png"
       width="50%">
