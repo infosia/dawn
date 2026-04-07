@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a38fcdb1_04cb7743",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-07T21:02:56Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the types always mismatch at this point, since we haven\u0027t modified the buffer in the caller function yet?",
+      "revId": "ff65896d0db9ed6a1c43037b52c5ff3cb7f97a94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

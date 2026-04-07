@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7ef7205_e85f1723",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-07T21:02:56Z",
+      "side": 1,
+      "message": "At the moment we do all of our workgroup allocations for MSL via `setThreadgroupMemoryLength`, which AFAICT guarantees a 16-byte base alignment. I think that avoids the need for us to add explicit `[[align()]]` attributes for now, though if we ever switch to static allocations we would need to.",
+      "parentUuid": "b748022c_73e699fa",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eda5dcc_f0c4d49b",
         "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
         "patchSetId": 4
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "It definitely needs handled and it\u0027s just a subset of the length of the buffer. A user gets a runtime array out of a bufferView call and then calls arrayLength on it. So we need to limit the size (if from a bufferArrayView) and adjust for the offset.",
       "parentUuid": "9eda5dcc_f0c4d49b",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e18e4cc_62c1fbb1",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-07T21:02:56Z",
+      "side": 1,
+      "message": "But shouldn\u0027t the operand to the new `arrayLength` instruction be the original pointer (i.e. `arrayLength %gv` instead of `arrayLength %3`)? Because IIUC you should be getting the total length of the original buffer and then subtracting the offset right?",
+      "parentUuid": "54c7d792_6f82a18f",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
