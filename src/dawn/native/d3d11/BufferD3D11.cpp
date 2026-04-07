@@ -1054,7 +1054,12 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
         case StorageType::CPUWritableNonConstantBuffer: {
             auto nonUniformUsage = GetInternalUsage() & ~wgpu::BufferUsage::Uniform;
             // Try to unify CPU and GPU writable storages if possible.
-            if (CanMappableUseDefaultStorage(device, nonUniformUsage)) {
+            // TODO(crbug.com/479047477): Only alias if the buffer has GPU write usage. Currently,
+            // MappableAndGPUWritable storage uses both CPU read and write access flags, which
+            // prevents the OS from using write-combining. This can be removed if we later support
+            // selecting between read or write flags for MappableAndGPUWritable storage.
+            if (CanMappableUseDefaultStorage(device, nonUniformUsage) &&
+                (nonUniformUsage & kD3D11GPUWriteUsages)) {
                 return AliasToMappableAndGPUWritableStorage();
             }
             // Need to exclude GPU writable usages because CPU writable buffer is not GPU writable
