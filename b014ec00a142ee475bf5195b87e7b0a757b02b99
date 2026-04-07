@@ -16,6 +16,24 @@
       "message": "LGTM. Out of curiosity, how did you test this?",
       "revId": "b014ec00a142ee475bf5195b87e7b0a757b02b99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e414cb6e_22a2e7a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-07T18:17:19Z",
+      "side": 1,
+      "message": "Thanks.\n\nThere is a Skia perf bot that experienced a [regression](https://skia-perf.luci.app/e?begin\u003d1774975356\u0026enable_chart_tooltip\u003dtrue\u0026end\u003d1775456261\u0026plotSummary\u003dtrue\u0026queries\u003dcpu_or_gpu_value%3DRadeonVega8%26extra_config%3DGraphite_Dawn_D3D11%26name%3Dmobi_slashdot.skp\u0026selected\u003dcommit%3D78787%26name%3D%252Carch%253Dx86_64%252Cbench_type%253Dplayback%252Cclip%253D0_0_1000_1000%252Ccompiler%253DClang%252Cconfig%253Dgrdawn_d3d11%252Ccpu_or_gpu%253DGPU%252Ccpu_or_gpu_value%253DRadeonVega8%252Cextra_config%253DGraphite_Dawn_D3D11%252Cmodel%253DThinkCenter%252Cname%253Dmobi_slashdot.skp%252Cos%253DWin11%252Cscale%253D1%252Csource_type%253Dskp%252Csub_result%253Dmin_ms%252Ctest%253Dmobi_slashdot.skp_1_1000_1000%252C%26tableCol%3D2%26tableRow%3D1109\u0026use_titles\u003dtrue) after a recent default storage change.\n\nIt seems to be only noticeable on a specific AMD integrated GPU though.",
+      "parentUuid": "bbe5e788_c05c20bd",
+      "revId": "b014ec00a142ee475bf5195b87e7b0a757b02b99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
