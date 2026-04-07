@@ -117,16 +117,9 @@ struct State {
 
             auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
 
-            const auto& struct_members = iter->second.struct_members;
             // Only uniform and storage buffers support dynamic offsets.
-            if (!(ptr->AddressSpace() == core::AddressSpace::kStorage ||
-                  ptr->AddressSpace() == core::AddressSpace::kUniform)) {
-                auto binding = var->BindingPoint()->binding;
-                if (binding >= struct_members.size() ||
-                    struct_members[binding].offset_index.has_value()) {
-                    return Failure("dynamic offset supplied for non-buffer type");
-                }
-            }
+            // FIXME: How to correctly validate if we get too many dynamic offsets?
+            // Also handling binding arrays (are those valid for buffer bindings?)
 
             Vector<core::ir::Instruction*, 16> to_destroy;
             var->Result()->ForEachUseUnsorted([&](core::ir::Usage use) {  //
@@ -298,7 +291,13 @@ struct State {
 
     const core::type::Type* CreatePlaceholderMemberType(
         const tint::msl::writer::ArgumentBufferInfo::Entry& member) {
-        if (const auto* tb = std::get_if<BindingTypeBuffer>(&member.type)) {
+        TINT_IR_ASSERT(ir, member.array_size > 0);
+        const auto* element = CreatePlaceholderMemberElementType(member.type);
+        return member.array_size > 1 ? ty.binding_array(element, member.array_size) : element;
+    }
+
+    const core::type::Type* CreatePlaceholderMemberElementType(const tint::BindingType& type) {
+        if (const auto* tb = std::get_if<BindingTypeBuffer>(&type)) {
             // Create a placeholder buffer pointing to i32. We assume all buffer pointers should be
             // the same size, regardless of what they point to, and their access mode.
             switch (*tb) {
@@ -308,7 +307,7 @@ struct State {
                     return ty.ptr(storage, ty.i32(), read);
             }
             TINT_ICE();
-        } else if (const auto* ts = std::get_if<BindingTypeSampler>(&member.type)) {
+        } else if (const auto* ts = std::get_if<BindingTypeSampler>(&type)) {
             switch (*ts) {
                 case BindingTypeSampler::kComparison:
                     return ty.comparison_sampler();
@@ -317,7 +316,7 @@ struct State {
                     return ty.sampler();
             }
             TINT_ICE();
-        } else if (const auto* tt = std::get_if<BindingTypeTexture>(&member.type)) {
+        } else if (const auto* tt = std::get_if<BindingTypeTexture>(&type)) {
             auto dim = ToInternal(tt->viewDimension);
 
             if (tt->sampleType == BindingTypeTexture::SampleType::kDepth) {
@@ -348,7 +347,7 @@ struct State {
                 return ty.sampled_texture(dim, sampleType, core::TextureFilterable::kUndefined);
             }
             TINT_ICE();
-        } else if (const auto* t = std::get_if<BindingTypeStorageTexture>(&member.type)) {
+        } else if (const auto* t = std::get_if<BindingTypeStorageTexture>(&type)) {
             return ty.storage_texture(ToInternal(t->viewDimension), ToInternal(t->format),
                                       ToInternal(t->access));
         }
@@ -388,12 +387,27 @@ struct State {
 
                 // If there's a var for this bindpoint, get the type info from it.
                 // Otherwise, take it from the config.
-                if (auto var = bindpoint_to_var.GetOr(BindingPoint{group, member.id}, nullptr)) {
+                if (auto var =
+                        bindpoint_to_var.GetOr(BindingPoint{group, member.first_id}, nullptr)) {
                     type = var->Result()->Type();
                     // Handle types drop the pointer and are passed around by value.
                     auto* ptr = type->As<core::type::Pointer>();
                     if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
                         type = ptr->StoreType();
+                    }
+                    // If this is a binding_array, always take the count from the API, so the layout
+                    // matches the BindGroupLayout.
+                    // FIXME: This doesn't work. How to fix it?
+                    // > error: access: result of access chain is type
+                    //   'binding_array<texture_2d<f32>, 3>' but instruction type is
+                    //   'binding_array<texture_2d<f32>, 2>'
+                    if (member.array_size > 1) {
+                        const auto* array = type->As<core::type::BindingArray>();
+                        TINT_IR_ASSERT(ir, array != nullptr);
+                        TINT_IR_ASSERT(
+                            ir, array->Count()->As<core::type::ConstantArrayCount>() != nullptr);
+                        // FIXME: Make sure some test hits this code
+                        type = ty.binding_array(array->ElemType(), member.array_size);
                     }
 
                     name = ir.NameOf(var);
@@ -411,7 +425,7 @@ struct State {
                 struct_members.Push(core::type::Manager::StructMemberDesc{
                     name, type,
                     core::IOAttributes{
-                        .binding_point = BindingPoint{group, member.id},
+                        .binding_point = BindingPoint{group, member.first_id},
                     }});
             }
 
@@ -534,8 +548,15 @@ struct State {
                 return access->Result();
             }
 
-            auto member = grp_iter->second.struct_members[binding];
-            if (member.offset_index == std::nullopt) {
+            const ArgumentBufferInfo::Entry* member = nullptr;
+            for (const ArgumentBufferInfo::Entry& m : grp_iter->second.struct_members) {
+                if (m.first_id <= binding && binding < m.first_id + m.array_size) {
+                    member = &m;
+                    break;
+                }
+            }
+            TINT_IR_ASSERT(ir, member != nullptr);
+            if (member->first_offset_index == std::nullopt) {
                 return access->Result();
             }
 
@@ -546,8 +567,10 @@ struct State {
 
             core::ir::Value* result = nullptr;
             b.InsertAfter(access, [&] {
+                auto offset_index =
+                    member->first_offset_index.value() + (binding - member->first_id);
                 auto* offset = b.Access(ty.ptr<storage, u32, read>(), offset_buffer,
-                                        b.Constant(u32(member.offset_index.value())));
+                                        b.Constant(u32(offset_index)));
 
                 result = b.Call<msl::ir::BuiltinCall>(type, msl::BuiltinFn::kPointerOffset, access,
                                                       b.Load(offset))

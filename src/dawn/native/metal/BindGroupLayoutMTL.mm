@@ -250,11 +250,16 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
 
     @autoreleasepool {
         std::vector<MTLArgumentDescriptor*> descriptors;
-        for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        for (BindingIndex bindingIndex : Range(GetBindingCount())) {
             auto& bindingInfo = GetBindingInfo(bindingIndex);
+            if (bindingInfo.indexInArray != BindingIndex{0}) {
+                // Skip binding_array elements after the first one.
+                continue;
+            }
 
             MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
             desc.index = ToMTLArgumentBufferIndex(bindingIndex);
+            desc.arrayLength = static_cast<uint32_t>(bindingInfo.arraySize);
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
             // FIXME: Is this the access mode of the argbuf itself? Why would Metal need to know
@@ -327,43 +332,32 @@ BindGroupLayout::MakeTintArgumentBufferMembers() const {
 
     uint32_t curDynamicOffset = 0;
 
-    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
+    for (const BindingIndex bindingIndex : Range(GetBindingCount())) {
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+        if (bindingInfo.indexInArray > BindingIndex{0}) {
+            // Skip binding_array elements after the first one.
+            continue;
+        }
 
+        auto& member = structMembers.emplace_back(tint::msl::writer::ArgumentBufferInfo::Entry{
+            .type = {},  // Initialized later
+            .array_size = uint32_t{bindingInfo.arraySize},
+            .first_id = uint32_t{bindingIndex},
+        });
         MatchVariant(
             bindingInfo.bindingLayout,  //
             [&](const BufferBindingInfo& binding) {
-                std::optional<uint32_t> offsetIndex;
+                member.type = ToTint(binding);
                 if (binding.hasDynamicOffset) {
-                    offsetIndex = curDynamicOffset++;
+                    member.first_offset_index = curDynamicOffset;
+                    curDynamicOffset += uint32_t{bindingInfo.arraySize};
                 }
-
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                    .offset_index = offsetIndex,
-                });
             },
-            [&](const SamplerBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const SamplerBindingInfo& binding) { member.type = ToTint(binding); },
             [&](const StaticSamplerBindingInfo&) { DAWN_CHECK(false); },
-            [&](const TextureBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const TextureBindingInfo& binding) { member.type = ToTint(binding); },
             [&](const TexelBufferBindingInfo&) {},
-            [&](const StorageTextureBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const StorageTextureBindingInfo& binding) { member.type = ToTint(binding); },
             [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
             [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
     }

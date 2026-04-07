@@ -73,12 +73,16 @@ struct ArgumentBufferInfo {
 
     struct Entry {
         tint::BindingType type;
-        // [[id()]] annotation (Dawn BindingIndex)
-        uint32_t id;
-        // Index into the dynamic offsets array
-        std::optional<uint32_t> offset_index = std::nullopt;
+        // Size of the binding_array (1 if not an array)
+        uint32_t array_size = 1;
+        // First element's [[id()]] annotation (Dawn BindingIndex)
+        // FIXME: This is redundant because struct_members should always be tightly packed. CHECK or
+        // remove it.
+        uint32_t first_id;
+        // First element's index in the dynamic offsets array
+        std::optional<uint32_t> first_offset_index = std::nullopt;
 
-        TINT_REFLECT(Entry, type, id, offset_index);
+        TINT_REFLECT(Entry, type, array_size, first_id, first_offset_index);
         TINT_REFLECT_HASH_CODE(Entry);
     };
     /// Struct members in order. These come from the BindGroupLayout - they must match it exactly.
