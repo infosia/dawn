@@ -56,11 +56,16 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
     // Pool to free MTLArgumentDescriptor and NSArray.
     @autoreleasepool {
         std::vector<MTLArgumentDescriptor*> descriptors;
-        for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        for (BindingIndex bindingIndex : Range(GetBindingCount())) {
             auto& bindingInfo = GetBindingInfo(bindingIndex);
+            if (bindingInfo.indexInArray != BindingIndex{0}) {
+                // Skip binding_array elements after the first one.
+                continue;
+            }
 
             MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
             desc.index = ToMTLArgumentBufferIndex(bindingIndex);
+            desc.arrayLength = uint32_t{bindingInfo.arraySize};
             // This appears to be the access mode for memory in the argbuf itself.
             // We never modify the argbuf from the GPU.
             desc.access = MTLBindingAccessReadOnly;
@@ -125,8 +130,12 @@ void BindGroupLayout::FillTintArgumentBufferInfo(
     tint::msl::writer::ArgumentBufferInfo& info) const {
     uint32_t curDynamicOffset = 0;
 
-    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
+    for (const BindingIndex bindingIndex : Range(GetBindingCount())) {
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+        if (bindingInfo.indexInArray > BindingIndex{0}) {
+            // Skip binding_array elements after the first one.
+            continue;
+        }
 
         if (const auto* binding = std::get_if<BufferBindingInfo>(&bindingInfo.bindingLayout)) {
             if (binding->hasDynamicOffset) {
@@ -135,7 +144,8 @@ void BindGroupLayout::FillTintArgumentBufferInfo(
             }
         }
         info.struct_members.push_back({
-            .id = uint32_t(bindingIndex),
+            .id = uint32_t{bindingIndex},
+            .array_size = uint32_t{bindingInfo.arraySize},
             .type = dawn::native::ToResourceType(bindingInfo),
         });
     }
