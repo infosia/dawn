@@ -119,14 +119,8 @@ struct State {
             auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
 
             // Only uniform and storage buffers support dynamic offsets.
-            if (!(ptr->AddressSpace() == core::AddressSpace::kStorage ||
-                  ptr->AddressSpace() == core::AddressSpace::kUniform)) {
-                auto binding_iter =
-                    iter->second.binding_info_to_offset_index.find(var->BindingPoint()->binding);
-                if (binding_iter != iter->second.binding_info_to_offset_index.end()) {
-                    return Failure("dynamic offset supplied for non-buffer type");
-                }
-            }
+            // FIXME: How to correctly validate if we get too many dynamic offsets?
+            // Also handling binding arrays (are those valid for buffer bindings?)
 
             Vector<core::ir::Instruction*, 16> to_destroy;
             var->Result()->ForEachUseUnsorted([&](core::ir::Usage use) {  //
@@ -179,7 +173,13 @@ struct State {
 
     const core::type::Type* CreatePlaceholderMemberType(
         const tint::msl::writer::ArgumentBufferInfo::Entry& member) {
-        switch (member.type) {
+        TINT_IR_ASSERT(ir, member.array_size > 0);
+        const auto* element = CreatePlaceholderMemberElementType(member.type);
+        return member.array_size > 1 ? ty.binding_array(element, member.array_size) : element;
+    }
+
+    const core::type::Type* CreatePlaceholderMemberElementType(const tint::ResourceType& type) {
+        switch (type) {
             // We assume the layout of a buffer pointer is independent of the pointed-to type.
             case tint::ResourceType::kUniformBuffer:
                 return ty.ptr(uniform, ty.i32(), read);
@@ -227,7 +227,7 @@ struct State {
                 // clang-format on
 
             default:
-                return core::type::ResourceTypeToType(ty, member.type);
+                return core::type::ResourceTypeToType(ty, type);
 
             case tint::ResourceType::kEmpty:
                 break;
@@ -263,37 +263,62 @@ struct State {
             // Translate argbuf members from Tint API into IR.
             Vector<core::type::Manager::StructMemberDesc, 8> struct_members;
             for (const auto member : argument_buffer_info.struct_members) {
-                Symbol name;
-                const core::type::Type* type = nullptr;
+                uint32_t slots_covered_by_wgsl = 0;
 
-                // If there's a var for this bindpoint, get the type info from it.
-                // Otherwise, take it from the config.
+                // For all slots (members or elements of a member binding_array) that exist in the
+                // WGSL, use the WGSL type (a handle or a binding_array)...
                 if (auto var = bindpoint_to_var.GetOr(BindingPoint{group, member.id}, nullptr)) {
+                    auto name = ir.NameOf(var);
+                    TINT_IR_ASSERT(ir, name.IsValid());
+                    module_vars.Push(var);
+
                     // Note we assume the types from the config match the WGSL, it's not validated.
-                    type = var->Result()->Type();
+                    const auto* type = var->Result()->Type();
                     // Handle types drop the pointer and are passed around by value.
                     auto* ptr = type->As<core::type::Pointer>();
                     if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
                         type = ptr->StoreType();
                     }
 
-                    name = ir.NameOf(var);
-                    if (!name) {
-                        name = ir.symbols.New("unnamed");
+                    const auto* binding_array = type->As<core::type::BindingArray>();
+                    if (binding_array) {
+                        // FIXME: Handle error when API and WGSL disagree
+                        auto count = binding_array->Count()->As<core::type::ConstantArrayCount>();
+                        TINT_IR_ASSERT(ir, count != nullptr);
+                        slots_covered_by_wgsl = count->value;
+                    } else {
+                        slots_covered_by_wgsl = 1;
                     }
-                    module_vars.Push(var);
 
                     var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
-                } else {
-                    type = CreatePlaceholderMemberType(member);
-                    name = ir.symbols.New("placeholder");
+                    struct_members.Push({
+                        .name = name,
+                        .type = type,
+                        .attributes =
+                            core::IOAttributes{
+                                .binding_point = BindingPoint{group, member.id},
+                            },
+                    });
                 }
 
-                struct_members.Push(core::type::Manager::StructMemberDesc{
-                    name, type,
-                    core::IOAttributes{
-                        .binding_point = BindingPoint{group, member.id},
-                    }});
+                // ... then, for slots that don't exist in the WGSL, generate placeholder members.
+                TINT_IR_ASSERT(ir, member.array_size >= slots_covered_by_wgsl);
+                uint32_t placeholder_slots_needed = member.array_size - slots_covered_by_wgsl;
+                if (placeholder_slots_needed > 0) {
+                    // Assuming that arrays are laid out flat so the layout for
+                    // {[a, b, c]} = {a, b, c} = {a, [b, c]} = etc.
+                    ArgumentBufferInfo::Entry placeholder_member = member;
+                    placeholder_member.id += slots_covered_by_wgsl;
+                    placeholder_member.array_size = placeholder_slots_needed;
+                    struct_members.Push({
+                        .name = ir.symbols.New("placeholder"),
+                        .type = CreatePlaceholderMemberType(placeholder_member),
+                        .attributes =
+                            core::IOAttributes{
+                                .binding_point = BindingPoint{group, placeholder_member.id},
+                            },
+                    });
+                }
             }
 
             // Create the structure.
