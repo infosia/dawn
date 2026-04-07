@@ -273,6 +273,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e3f74ecd_d19260d0",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-07T20:29:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fe4fc5f5_eb93a0ec",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7a144cfb_874e5a56",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 1
