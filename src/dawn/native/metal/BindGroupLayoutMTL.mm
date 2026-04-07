@@ -251,11 +251,16 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
     // Pool to free MTLArgumentDescriptor and NSArray.
     @autoreleasepool {
         std::vector<MTLArgumentDescriptor*> descriptors;
-        for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        for (BindingIndex bindingIndex : Range(GetBindingCount())) {
             auto& bindingInfo = GetBindingInfo(bindingIndex);
+            if (bindingInfo.indexInArray != BindingIndex{0}) {
+                // Skip binding_array elements after the first one.
+                continue;
+            }
 
             MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
             desc.index = ToMTLArgumentBufferIndex(bindingIndex);
+            desc.arrayLength = uint32_t{bindingInfo.arraySize};
             // This appears to be the access mode for memory in the argbuf itself.
             // We never modify the argbuf from the GPU.
             desc.access = MTLBindingAccessReadOnly;
@@ -323,43 +328,32 @@ BindGroupLayout::MakeTintArgumentBufferMembers() const {
 
     uint32_t curDynamicOffset = 0;
 
-    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
+    for (const BindingIndex bindingIndex : Range(GetBindingCount())) {
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+        if (bindingInfo.indexInArray > BindingIndex{0}) {
+            // Skip binding_array elements after the first one.
+            continue;
+        }
 
+        auto& member = structMembers.emplace_back(tint::msl::writer::ArgumentBufferInfo::Entry{
+            .type = {},  // Initialized later
+            .array_size = uint32_t{bindingInfo.arraySize},
+            .first_id = uint32_t{bindingIndex},
+        });
         MatchVariant(
             bindingInfo.bindingLayout,  //
             [&](const BufferBindingInfo& binding) {
-                std::optional<uint32_t> offsetIndex;
+                member.type = ToTint(binding);
                 if (binding.hasDynamicOffset) {
-                    offsetIndex = curDynamicOffset++;
+                    member.first_offset_index = curDynamicOffset;
+                    curDynamicOffset += uint32_t{bindingInfo.arraySize};
                 }
-
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                    .offset_index = offsetIndex,
-                });
             },
-            [&](const SamplerBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const SamplerBindingInfo& binding) { member.type = ToTint(binding); },
             [&](const StaticSamplerBindingInfo&) { DAWN_UNREACHABLE(); },
-            [&](const TextureBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const TextureBindingInfo& binding) { member.type = ToTint(binding); },
             [&](const TexelBufferBindingInfo&) {},
-            [&](const StorageTextureBindingInfo& binding) {
-                structMembers.push_back({
-                    .type = ToTint(binding),
-                    .id = uint32_t(bindingIndex),
-                });
-            },
+            [&](const StorageTextureBindingInfo& binding) { member.type = ToTint(binding); },
             [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
             [](const ExternalTextureBindingInfo&) { DAWN_UNREACHABLE(); });
     }
