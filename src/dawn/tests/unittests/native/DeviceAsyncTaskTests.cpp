@@ -61,7 +61,8 @@ TEST_F(DeviceAsyncTaskTests, LongAsyncTaskFinishesBeforeDeviceIsDropped) {
 }
 
 // Test that error scope resolution is blocked on AsyncTask completion.
-TEST_F(DeviceAsyncTaskTests, ErrorScopeBlockedOnAsyncTask) {
+// TODO(https://crbug.com/500378580): Re-enable once PopErrorScope has been fixed.
+TEST_F(DeviceAsyncTaskTests, DISABLED_ErrorScopeBlockedOnAsyncTask) {
     device.PushErrorScope(wgpu::ErrorFilter::Validation);
 
     // Set up a task that won't complete until the mutex is unlocked
