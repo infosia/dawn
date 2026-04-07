@@ -668,7 +668,10 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
         }
     }
     if (usage & wgpu::TextureUsage::StorageBinding) {
-        flags |= VK_IMAGE_USAGE_STORAGE_BIT;
+        // Only add the storage bit if the format actually supports a storage uage.
+        if (format.SupportsReadOnlyStorageUsage() || format.SupportsWriteOnlyStorageUsage()) {
+            flags |= VK_IMAGE_USAGE_STORAGE_BIT;
+        }
     }
     if (usage & wgpu::TextureUsage::RenderAttachment) {
         if (format.HasDepthOrStencil()) {
