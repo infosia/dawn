@@ -230,12 +230,12 @@ class Printer : public tint::TextGenerator {
             if (!func->IsEntryPoint()) {
                 continue;
             }
-            for (auto* param : func->Params()) {
-                auto* ptr = param->Type()->As<core::type::Pointer>();
-                if (ptr && core::IsHostShareable(ptr->AddressSpace())) {
+            for (auto* functionParam : func->Params()) {
+                auto* param = functionParam->Type()->As<core::type::Pointer>();
+                if (param && core::IsHostShareable(param->AddressSpace())) {
                     // Look for structures at any nesting depth of this parameter's type.
                     Vector<const core::type::Type*, 8> type_queue;
-                    type_queue.Push(ptr->StoreType());
+                    type_queue.Push(param->StoreType());
                     while (!type_queue.IsEmpty()) {
                         auto* next = type_queue.Pop();
                         if (auto* str = next->As<core::type::Struct>()) {
@@ -246,6 +246,12 @@ class Printer : public tint::TextGenerator {
                             }
                         } else if (auto* arr = next->As<core::type::Array>()) {
                             type_queue.Push(arr->ElemType());
+                        } else if (auto* ptr = next->As<core::type::Pointer>()) {
+                            // Normally host-shareable structs don't contain pointers, but argument
+                            // buffers do. In that case we need to recurse into the pointer.
+                            if (core::IsHostShareable(ptr->AddressSpace())) {
+                                type_queue.Push(ptr->StoreType());
+                            }
                         }
                     }
                 }
@@ -1625,14 +1631,14 @@ class Printer : public tint::TextGenerator {
 
         str_buf.IncrementIndent();
 
-        bool explicit_layout = str->StructFlags().Contains(core::type::kExplicitLayout);
+        bool is_argument_buffer = str->StructFlags().Contains(core::type::kExplicitLayout);
         uint32_t msl_offset = 0;
         for (auto* mem : str->Members()) {
             auto out = Line(&str_buf);
             auto mem_name = NameOf(mem);
             auto ir_offset = mem->Offset();
 
-            if (!explicit_layout && is_host_shareable) {
+            if (!is_argument_buffer && is_host_shareable) {
                 if (DAWN_UNLIKELY(ir_offset < msl_offset)) {
                     // Unimplementable layout
                     TINT_IR_ICE(ir_) << "Structure member offset (" << ir_offset
@@ -1737,7 +1743,7 @@ class Printer : public tint::TextGenerator {
 
             out << ";";
 
-            if (!explicit_layout && is_host_shareable) {
+            if (!is_argument_buffer && is_host_shareable) {
                 // Calculate new MSL offset
                 auto size_align = MslPackedTypeSizeAndAlign(ty);
                 if (DAWN_UNLIKELY(msl_offset % size_align.align)) {
@@ -1749,7 +1755,7 @@ class Printer : public tint::TextGenerator {
             }
         }
 
-        if (!explicit_layout && is_host_shareable && str->Size() != msl_offset) {
+        if (!is_argument_buffer && is_host_shareable && str->Size() != msl_offset) {
             add_padding(str->Size() - msl_offset, msl_offset);
         }
 
