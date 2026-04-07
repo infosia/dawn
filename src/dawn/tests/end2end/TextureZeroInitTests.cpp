@@ -1162,6 +1162,51 @@ TEST_P(TextureZeroInitTest, RenderPassRenderable3DTextureClear) {
         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
 }
 
+// This is a regression test for a bug where rendering to a single slice of a 3D texture
+// would mark the entire mip level as initialized, skipping lazy clears for other slices.
+TEST_P(TextureZeroInitTest, RenderPass3DTextureDepthSliceClear) {
+    constexpr uint32_t kNumSlices = 3;
+    for (uint32_t slice = 0; slice < kNumSlices; ++slice) {
+        wgpu::TextureDescriptor desc;
+        desc.dimension = wgpu::TextureDimension::e3D;
+        desc.size = {kSize, kSize, kNumSlices};
+        desc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+        desc.format = kColorFormat;
+
+        wgpu::Texture texture = device.CreateTexture(&desc);
+
+        // Create a view of the 3D texture.
+        wgpu::TextureViewDescriptor viewDesc;
+        viewDesc.dimension = wgpu::TextureViewDimension::e3D;
+        wgpu::TextureView view = texture.CreateView(&viewDesc);
+
+        // Render to slice 0.
+        {
+            utils::ComboRenderPassDescriptor renderPassDesc({view});
+            renderPassDesc.cColorAttachments[0].depthSlice = slice;
+            renderPassDesc.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+            renderPassDesc.cColorAttachments[0].clearValue = {0.502, 0.502, 0.502, 0.502};
+
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+            wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPassDesc);
+            pass.End();
+            wgpu::CommandBuffer commands = encoder.Finish();
+            queue.Submit(1, &commands);
+        }
+
+        std::vector<utils::RGBA8> expectedZeros(kSize * kSize, utils::RGBA8::kZero);
+        std::vector<utils::RGBA8> expectedCleared(kSize * kSize, {128, 128, 128, 128});
+
+        std::vector<const std::vector<utils::RGBA8>*> expectedSlices(kNumSlices, &expectedZeros);
+        expectedSlices[slice] = &expectedCleared;
+
+        for (uint32_t i = 0; i < kNumSlices; ++i) {
+            EXPECT_TEXTURE_EQ(expectedSlices[i]->data(), texture, {0, 0, i}, {kSize, kSize})
+                << "Slice " << i << " did not match expected values.";
+        }
+    }
+}
+
 // This is a regression test for a bug where a texture wouldn't get clear for a pass if at least
 // one of its subresources was used as an attachment. It tests that if a texture is used as both
 // sampled and attachment (with LoadOp::Clear so the lazy clear can be skipped) then the sampled
