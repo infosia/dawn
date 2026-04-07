@@ -1162,6 +1162,48 @@ TEST_P(TextureZeroInitTest, RenderPassRenderable3DTextureClear) {
         wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
 }
 
+// This is a regression test for a bug where rendering to a single slice of a 3D texture
+// would mark the entire mip level as initialized, skipping lazy clears for other slices.
+TEST_P(TextureZeroInitTest, RenderPass3DTextureDepthSliceClear) {
+    // TODO(448982392): Failing in compat mode.
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
+
+    wgpu::TextureDescriptor desc;
+    desc.dimension = wgpu::TextureDimension::e3D;
+    desc.size = {kSize, kSize, 2};
+    desc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    desc.format = kColorFormat;
+
+    wgpu::Texture texture = device.CreateTexture(&desc);
+
+    // Create a view of the 3D texture.
+    wgpu::TextureViewDescriptor viewDesc;
+    viewDesc.dimension = wgpu::TextureViewDimension::e3D;
+    wgpu::TextureView view = texture.CreateView(&viewDesc);
+
+    // Render to slice 0.
+    {
+        utils::ComboRenderPassDescriptor renderPassDesc({view});
+        renderPassDesc.cColorAttachments[0].depthSlice = 0;
+        renderPassDesc.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+        renderPassDesc.cColorAttachments[0].clearValue = {0.0, 0.0, 0.0, 0.0};
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPassDesc);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    }
+
+    std::vector<utils::RGBA8> expectedZeros(kSize * kSize, utils::RGBA8::kZero);
+
+    // Slice 0 should be zero.
+    EXPECT_TEXTURE_EQ(expectedZeros.data(), texture, {0, 0, 0}, {kSize, kSize});
+
+    // Slice 1 should also be zero. If the bug exists, it will be non-zero.
+    EXPECT_TEXTURE_EQ(expectedZeros.data(), texture, {0, 0, 1}, {kSize, kSize});
+}
+
 // This is a regression test for a bug where a texture wouldn't get clear for a pass if at least
 // one of its subresources was used as an attachment. It tests that if a texture is used as both
 // sampled and attachment (with LoadOp::Clear so the lazy clear can be skipped) then the sampled
