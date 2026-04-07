@@ -253,6 +253,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe4fc5f5_eb93a0ec",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-07T17:44:08Z",
+      "side": 1,
+      "message": "\u003e As is, this code should get the same PipelineCache object for pipelines that vary only by the listed dynamic states. The Vulkan blob cache can then restore the pipeline from the disk cache if a compatible pipeline has already been compiled.\n\nAh I should have been clear it was ContentLessObjectCache and not the BlobCache I was worried about. I agree this change is good for the BlobCache / VkPipelineCache where we\u0027d be sharing a VkPipelineCache for similar pipelines that only vary in dynamic state.\n\nI forgot we don\u0027t use `mCacheKey` for ContentLessObjectCache though. I guess that uses content hash set [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderPipeline.cpp;l\u003d1082;drc\u003dca8ffd320c5ff5c9abf7e351d9aa4e37dd600f8c) to do lookups? For example, the content hash is based on `mDepthStencil` which isn\u0027t modified here instead of `depthStencilState` so it should work fine. I\u0027m assuming it\u0027s similar for other state data that isn\u0027t depth/stencil and is stored in a different struct.",
+      "parentUuid": "7f8bb48f_49098592",
+      "revId": "b9709a0ef01574ab7a517d9c9d389de80d8fbfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7a144cfb_874e5a56",
