@@ -329,5 +329,34 @@ TEST_F(TextureInternalUsageValidationTest, CommandValidation) {
     }
 }
 
+// Test that an view cannot be created with an internal usage that is incompatible with it's format.
+TEST_F(TextureInternalUsageValidationTest, IncompatibleFormatUsageValidation) {
+    wgpu::TextureDescriptor textureDesc = {};
+    textureDesc.size = {1, 1};
+    textureDesc.usage = wgpu::TextureUsage::CopySrc;
+    textureDesc.format = wgpu::TextureFormat::RGBA8Unorm;
+
+    wgpu::TextureFormat viewFormat = wgpu::TextureFormat::RGBA8UnormSrgb;
+    textureDesc.viewFormats = &viewFormat;
+    textureDesc.viewFormatCount = 1;
+
+    wgpu::DawnTextureInternalUsageDescriptor internalDesc = {};
+    textureDesc.nextInChain = &internalDesc;
+
+    internalDesc.internalUsage =
+        static_cast<wgpu::TextureUsage>(wgpu::TextureUsage::StorageBinding);
+    wgpu::Texture texture = device.CreateTexture(&textureDesc);
+
+    wgpu::TextureViewDescriptor viewDesc = {};
+    viewDesc.format = viewFormat;
+
+    // Invalid. Internal Storage usage is inherited, which conflicts with view format.
+    ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+
+    // OK: Setting explicit view usage prevents internal storage usage from being inherited.
+    viewDesc.usage = wgpu::TextureUsage::CopySrc;
+    texture.CreateView(&viewDesc);
+}
+
 }  // anonymous namespace
 }  // namespace dawn

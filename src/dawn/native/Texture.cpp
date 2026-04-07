@@ -398,14 +398,12 @@ MaybeError ValidateTextureSize(const DeviceBase* device,
     return {};
 }
 
-MaybeError ValidateTextureUsageConstraints(
+MaybeError ValidateTextureInternalUsageConstraints(
     const DeviceBase* device,
     wgpu::TextureDimension textureDimension,
     wgpu::TextureUsage usage,
     const Format* format,
     std::optional<wgpu::TextureUsage> allowedSharedTextureMemoryUsage) {
-    DAWN_TRY(ValidateTextureUsage(usage));
-
     constexpr wgpu::TextureUsage kValidCompressedUsages = wgpu::TextureUsage::TextureBinding |
                                                           wgpu::TextureUsage::CopySrc |
                                                           wgpu::TextureUsage::CopyDst;
@@ -483,6 +481,17 @@ MaybeError ValidateTextureUsageConstraints(
     return {};
 }
 
+MaybeError ValidateTextureUsageConstraints(
+    const DeviceBase* device,
+    wgpu::TextureDimension textureDimension,
+    wgpu::TextureUsage usage,
+    const Format* format,
+    std::optional<wgpu::TextureUsage> allowedSharedTextureMemoryUsage) {
+    DAWN_TRY(ValidateTextureUsage(usage));
+    return ValidateTextureInternalUsageConstraints(device, textureDimension, usage, format,
+                                                   allowedSharedTextureMemoryUsage);
+}
+
 wgpu::TextureUsage GetTextureViewUsage(wgpu::TextureUsage sourceTextureUsage,
                                        wgpu::TextureUsage requestedViewUsage) {
     // If a view's requested usage is None, inherit usage from the source texture.
@@ -518,8 +527,12 @@ MaybeError ValidateTextureViewUsage(const DeviceBase* device,
                     "The texture view usage (%s) is not a subset of the texture usage (%s).",
                     inheritedUsage, texture->GetUsage());
 
-    return ValidateTextureUsageConstraints(device, texture->GetDimension(), inheritedUsage, format,
-                                           {});
+    // Validate the usage constraints against the full internal usage to catch things like sRGB
+    // views with Storage usage.
+    wgpu::TextureUsage internalInheritedUsage =
+        GetTextureViewUsage(texture->GetInternalUsage(), usage);
+    return ValidateTextureInternalUsageConstraints(device, texture->GetDimension(),
+                                                   internalInheritedUsage, format, {});
 }
 
 // We need to add an internal RenderAttachment usage to some textures that has CopyDst usage as we
