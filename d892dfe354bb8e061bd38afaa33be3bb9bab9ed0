@@ -33,6 +33,41 @@
       "message": "Huh.. how was this passing before???",
       "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bc342a0_8e78ece1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-07T22:20:43Z",
+      "side": 1,
+      "message": "This must not be running (in this config) on CQ. Since it passes both before and after the change that\u0027s basically equivalent to ASSERT(false).\n\nBut I would like to understand why. Is it just that these tests don\u0027t run with the wire on CQ?",
+      "parentUuid": "adfb8bb1_7d28b34f",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9a1d48_f46b613c",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-07T22:20:43Z",
+      "side": 1,
+      "message": "These two lines seem to do the same thing. Why do we have both? Is it just to test both GetSupportedFeatures and SupportsFeatures separately?\n\nWould like to have a comment explaining this - CCing @shaoboyan@microsoft.com",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
