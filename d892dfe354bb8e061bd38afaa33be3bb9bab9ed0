@@ -194,6 +194,24 @@
       "parentUuid": "3ee087b7_b1e1c1d0",
       "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a29c1956_f92f4922",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-08T01:36:57Z",
+      "side": 1,
+      "message": "Ah, now I see. Corentin FYI me about his change https://dawn-review.googlesource.com/c/dawn/+/300495 and I updated the CL to remove some extra check logic. But forget we already works on wire adapter(and don\u0027t update this test case). So the last comment logic is incorrect. I think we\u0027re safe to remove this DAWN_ASSERT.",
+      "parentUuid": "7c161c66_de12f5fd",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
