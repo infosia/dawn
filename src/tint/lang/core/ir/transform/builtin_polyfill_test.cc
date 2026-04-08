@@ -1245,6 +1245,101 @@ TEST_F(IR_BuiltinPolyfillTest, Degrees_Vec4F16) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinPolyfillTest, Distance_Scalar_F32) {
+    Build(core::BuiltinFn::kDistance, ty.f32(), Vector{ty.f32(), ty.f32()});
+    auto* src = R"(
+%foo = func(%arg:f32, %arg_1:f32):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f32 = distance %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:f32, %arg_1:f32):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %4:f32 = sub %arg, %arg_1
+    %result:f32 = abs %4
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.distance_scalar_f32 = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Distance_Vec2F32_NoPolyfill) {
+    Build(core::BuiltinFn::kDistance, ty.f32(), Vector{ty.vec2f(), ty.vec2f()});
+    auto* src = R"(
+%foo = func(%arg:vec2<f32>, %arg_1:vec2<f32>):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f32 = distance %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.distance_scalar_f32 = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Length_Scalar_F32) {
+    Build(core::BuiltinFn::kLength, ty.f32(), Vector{ty.f32()});
+    auto* src = R"(
+%foo = func(%arg:f32):f32 {
+  $B1: {
+    %result:f32 = length %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:f32):f32 {
+  $B1: {
+    %result:f32 = abs %arg
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.length_scalar_f32 = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, Length_Vec2F32_NoPolyfill) {
+    Build(core::BuiltinFn::kLength, ty.f32(), Vector{ty.vec2f()});
+    auto* src = R"(
+%foo = func(%arg:vec2<f32>):f32 {
+  $B1: {
+    %result:f32 = length %arg
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.length_scalar_f32 = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(IR_BuiltinPolyfillTest, ExtractBits_NoPolyfill) {
     Build(core::BuiltinFn::kExtractBits, ty.u32(), Vector{ty.u32(), ty.u32(), ty.u32()});
     auto* src = R"(
