@@ -16,6 +16,24 @@
       "message": "Weirdly, running tint_benchmarks locally, this seems like a slight perf decrease, although I can\u0027t see why that would be the case. The perf numbers were like 1-2% or something, so small, could have been noise.",
       "revId": "36482d96219060bea09ee45dbebb35a2df34cfe3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31a810e9_566fbd74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T13:27:37Z",
+      "side": 1,
+      "message": "I\u0027m seeing variances of 20% when running tint_benchmark multiple times, so hard to tell if this is actually causing perf loss or just in the noise.",
+      "parentUuid": "4ca59997_933c726f",
+      "revId": "36482d96219060bea09ee45dbebb35a2df34cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
