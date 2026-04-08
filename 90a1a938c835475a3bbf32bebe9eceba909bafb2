@@ -33,6 +33,125 @@
       "message": "Friendly ping.",
       "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e2a1459_cbb59ceb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "to be honest I don\u0027t know. I guess we can try it. It feels like alot of context that the LLM is could be using to understand the thing it\u0027s working on. That said, I haven\u0027t used any agent files like this yet so if it helps that\u0027s great.",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cce1fd5_757f2292",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "Is this required? I don\u0027t read the full file as a human usually. I only read what I think is relevant. Is this command just going to full the context with lots of unrelated info?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1437477_365478d7",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "should you spell out what the tests are? `dawn_unittests`, `dawn_end2end_test`, `tint_unittests` etc here? Maybe it should point to the relevant .md files? Or is this generic language good enough?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "559bbaca_84be33bc",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "What is this instruction\u0027s purpose?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "889e5517_02602c29",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "This sounds like it would eat context. Have you run into situations where these instructions helped?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3afe814_d0dd390d",
+        "filename": "agents/prompts/knowledge_base.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "Is this a context eater? Maybe the prompt for a specific issue should reference relevant docs?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "013322fd_3ffc8f78",
+        "filename": "agents/prompts/knowledge_base.tint.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-08T17:21:11Z",
+      "side": 1,
+      "message": "Do you have ideas for what might go here? So far I feel like LLMs learn from the code base, though they might need a style guide.",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
