@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b3679b_dc0136de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-08T20:09:44Z",
+      "side": 1,
+      "message": "Approval not yet granted for cherrypick. -1",
+      "revId": "82de5b06e1849f3c04c7888f21c2e1d555dcfae5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
