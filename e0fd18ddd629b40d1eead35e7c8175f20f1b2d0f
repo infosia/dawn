@@ -161,6 +161,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20971000_4e162cfe",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-08T01:17:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b7ef7205_e85f1723",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9eda5dcc_f0c4d49b",
@@ -210,6 +228,24 @@
       "side": 1,
       "message": "But shouldn\u0027t the operand to the new `arrayLength` instruction be the original pointer (i.e. `arrayLength %gv` instead of `arrayLength %3`)? Because IIUC you should be getting the total length of the original buffer and then subtracting the offset right?",
       "parentUuid": "54c7d792_6f82a18f",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37dbb9d9_b131d472",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-08T01:17:56Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right.\n\nThis will need a more complicated fix.",
+      "parentUuid": "7e18e4cc_62c1fbb1",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

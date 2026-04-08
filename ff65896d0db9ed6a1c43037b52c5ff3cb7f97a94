@@ -16,6 +16,24 @@
       "message": "Wouldn\u0027t the types always mismatch at this point, since we haven\u0027t modified the buffer in the caller function yet?",
       "revId": "ff65896d0db9ed6a1c43037b52c5ff3cb7f97a94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69af4391_e9534ac4",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-08T01:17:56Z",
+      "side": 1,
+      "message": "Hmmm, only if the param goes through a let I think. Before traversing the function, I update the parameters, so direct uses of the param are already modified. That\u0027s why the UnifyParameters test doesn\u0027t have unnecessary calls. I\u0027ll add a test with some lets and cover this case.",
+      "parentUuid": "a38fcdb1_04cb7743",
+      "revId": "ff65896d0db9ed6a1c43037b52c5ff3cb7f97a94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
