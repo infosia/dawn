@@ -33,6 +33,24 @@
       "message": "Hmm, from the bug and the failing tests, I think maybe the correct way to address this is instead of producing a validation error when we try to create a default view of of a texture, we construct the view with only the public usages.\n\nSo w.r.t to the bug, this means that we probably don\u0027t need to change the validation logic, just the construction logic for the view?\n\nThis also begs the question as to whether the `DawnTextureInternalUsageDescriptor` should be a valid chain on `TextureViewDescriptor` on top of just `TextureDescriptor`. That way in situations where a Dawn power user is doing something with textures/views that require the internal usages, they can do it by explicitly chaining the additional descriptor when constructing the view.",
       "revId": "b36519b9e8128c83781966cdecd04d20543fe266",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1f1bc03_c1468bd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-08T18:23:38Z",
+      "side": 1,
+      "message": "I went back and forth on which direction to go for the first patch, but yeah. The failures on D3D12 definitely make it feel like we should change how the view is constructed.\n\nUpdated to have some incompatible internal usages stripped out prior to the view being constructed. I guess it\u0027s possible that this could cause confusion for a Dawn user when they expect an internal storage usage to be there and it\u0027s silently stripped out because of the format, but that seems like a fairly unlikely scenario.",
+      "parentUuid": "3a011464_c5df5b20",
+      "revId": "b36519b9e8128c83781966cdecd04d20543fe266",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
