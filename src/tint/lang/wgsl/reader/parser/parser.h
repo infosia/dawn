@@ -649,6 +649,9 @@ class Parser {
     /// Parses a `compound_assignment_operator` grammar element
     /// @returns the parsed compound assignment operator
     Maybe<core::BinaryOp> compound_assignment_operator();
+    /// Parses a `call_expression` grammar element
+    /// @returns the parsed expression or a non-kMatched failure
+    Maybe<const ast::Expression*> call_expression();
     /// Parses a `core_lhs_expression` grammar element
     /// @returns the parsed expression or a non-kMatched failure
     Maybe<const ast::Expression*> core_lhs_expression();
