@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "96dad8dd_a0ffe534",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-08T21:53:18Z",
+      "side": 1,
+      "message": "Please update `tests/CMakeLists.txt` too",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e248b68d_6b516c1c",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
