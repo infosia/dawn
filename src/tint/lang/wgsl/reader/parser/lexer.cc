@@ -119,25 +119,24 @@ Lexer::Lexer(const Source::File* file) : file_(file), location_{1, 1} {}
 Lexer::~Lexer() = default;
 
 std::vector<Token> Lexer::Lex() {
-    std::vector<Token> tokens;
-    tokens.reserve(kDefaultListSize);
+    tokens_.reserve(kDefaultListSize);
 
     while (true) {
-        tokens.emplace_back(next());
-        if (tokens.back().IsEof() || tokens.back().IsError()) {
+        tokens_.emplace_back(next());
+        if (tokens_.back().IsEof() || tokens_.back().IsError()) {
             break;
         }
 
         // If the token can be split, we insert a placeholder element(s) into the stream to hold the
         // split character.
-        size_t num_placeholders = tokens.back().NumPlaceholders();
+        size_t num_placeholders = tokens_.back().NumPlaceholders();
         for (size_t i = 0; i < num_placeholders; i++) {
-            auto src = tokens.back().source();
+            auto src = tokens_.back().source();
             src.range.begin.column++;
-            tokens.emplace_back(Token::Type::kPlaceholder, src);
+            tokens_.emplace_back(Token::Type::kPlaceholder, src);
         }
     }
-    return tokens;
+    return std::move(tokens_);
 }
 
 std::string_view Lexer::line() const {
@@ -1069,6 +1068,17 @@ std::optional<Token> Lexer::try_ident() {
     return Token{Token::Type::kIdentifier, source, str};
 }
 
+void Lexer::clear_templates_to_nest_depth() {
+    while (!possible_templates_.empty() && possible_templates_.back().depth == nesting_depth_) {
+        possible_templates_.pop_back();
+    }
+}
+
+void Lexer::reset_nest_depth() {
+    nesting_depth_ = 0;
+    possible_templates_.clear();
+}
+
 std::optional<Token> Lexer::try_punctuation() {
     auto source = begin_source();
     auto type = Token::Type::kUninitialized;
@@ -1077,18 +1087,42 @@ std::optional<Token> Lexer::try_punctuation() {
         type = Token::Type::kAttr;
         advance(1);
     } else if (matches(pos(), '(')) {
+        // Entering a nested expression
+        nesting_depth_ += 1;
+
         type = Token::Type::kParenLeft;
         advance(1);
     } else if (matches(pos(), ')')) {
+        // Exiting a nested expression
+        // Pop the stack until we return to the current expression expr_depth
+        clear_templates_to_nest_depth();
+        if (nesting_depth_ > 0) {
+            nesting_depth_ -= 1;
+        }
+
         type = Token::Type::kParenRight;
         advance(1);
     } else if (matches(pos(), '[')) {
+        // Entering a nested expression
+        nesting_depth_ += 1;
+
         type = Token::Type::kBracketLeft;
         advance(1);
     } else if (matches(pos(), ']')) {
+        // Exiting a nested expression
+        // Pop the stack until we return to the current expression expr_depth
+        clear_templates_to_nest_depth();
+        if (nesting_depth_ > 0) {
+            nesting_depth_ -= 1;
+        }
+
         type = Token::Type::kBracketRight;
         advance(1);
     } else if (matches(pos(), '{')) {
+        // Expression terminating token. No opening template list can hold this tokens, so clear the
+        // stack and expression depth.
+        reset_nest_depth();
+
         type = Token::Type::kBraceLeft;
         advance(1);
     } else if (matches(pos(), '}')) {
@@ -1096,6 +1130,11 @@ std::optional<Token> Lexer::try_punctuation() {
         advance(1);
     } else if (matches(pos(), '&')) {
         if (matches(pos() + 1, '&')) {
+            // Treat 'a < b || c > d' as a logical binary operator of two comparison operators
+            // instead of a single template argument 'b||c'.
+            // Use parentheses around 'b||c' to parse as a template argument list.
+            clear_templates_to_nest_depth();
+
             type = Token::Type::kAndAnd;
             advance(2);
         } else if (matches(pos() + 1, '=')) {
@@ -1122,6 +1161,10 @@ std::optional<Token> Lexer::try_punctuation() {
             advance(1);
         }
     } else if (matches(pos(), ':')) {
+        // Expression terminating token. No opening template list can hold this tokens, so clear the
+        // stack and expression depth.
+        reset_nest_depth();
+
         type = Token::Type::kColon;
         advance(1);
     } else if (matches(pos(), ',')) {
@@ -1132,11 +1175,21 @@ std::optional<Token> Lexer::try_punctuation() {
             type = Token::Type::kEqualEqual;
             advance(2);
         } else {
+            // Expression terminating token. No opening template list can hold this tokens, so clear
+            // the stack and expression depth.
+            reset_nest_depth();
+
             type = Token::Type::kEqual;
             advance(1);
         }
     } else if (matches(pos(), '>')) {
-        if (matches(pos() + 1, '=')) {
+        if (!possible_templates_.empty() && possible_templates_.back().depth == nesting_depth_) {
+            advance(1);
+
+            type = Token::Type::kTemplateArgsRight;
+            tokens_[possible_templates_.back().token_idx].SetType(Token::Type::kTemplateArgsLeft);
+            possible_templates_.pop_back();
+        } else if (matches(pos() + 1, '=')) {
             type = Token::Type::kGreaterThanEqual;
             advance(2);
         } else if (matches(pos() + 1, '>')) {
@@ -1164,6 +1217,11 @@ std::optional<Token> Lexer::try_punctuation() {
                 advance(2);
             }
         } else {
+            if (!tokens_.empty() && (tokens_.back().Is(Token::Type::kIdentifier) ||
+                                     tokens_.back().Is(Token::Type::kVar))) {
+                possible_templates_.emplace_back(tokens_.size(), nesting_depth_);
+            }
+
             type = Token::Type::kLessThan;
             advance(1);
         }
@@ -1205,6 +1263,11 @@ std::optional<Token> Lexer::try_punctuation() {
         }
     } else if (matches(pos(), '|')) {
         if (matches(pos() + 1, '|')) {
+            // Treat 'a < b || c > d' as a logical binary operator of two comparison operators
+            // instead of a single template argument 'b||c'.
+            // Use parentheses around 'b||c' to parse as a template argument list.
+            clear_templates_to_nest_depth();
+
             type = Token::Type::kOrOr;
             advance(2);
         } else if (matches(pos() + 1, '=')) {
@@ -1215,6 +1278,10 @@ std::optional<Token> Lexer::try_punctuation() {
             advance(1);
         }
     } else if (matches(pos(), ';')) {
+        // Expression terminating token. No opening template list can hold this tokens, so clear the
+        // stack and expression depth.
+        reset_nest_depth();
+
         type = Token::Type::kSemicolon;
         advance(1);
     } else if (matches(pos(), '*')) {

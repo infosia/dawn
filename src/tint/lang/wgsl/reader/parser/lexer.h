@@ -123,10 +123,24 @@ class Lexer {
     bool matches(uint32_t pos, std::string_view substr);
     /// @returns true if char at `pos` matches `ch`
     bool matches(uint32_t pos, char ch);
+
+    void clear_templates_to_nest_depth();
+    void reset_nest_depth();
+
     /// The source file content
     Source::File const* const file_;
     /// The current location within the input
     Source::Location location_;
+
+    /// The tokens tokens
+    std::vector<Token> tokens_;
+
+    uint32_t nesting_depth_ = 0;
+    struct PossibleTemplate {
+        uint32_t token_idx;
+        uint32_t depth;
+    };
+    std::vector<PossibleTemplate> possible_templates_;
 };
 
 }  // namespace tint::wgsl::reader

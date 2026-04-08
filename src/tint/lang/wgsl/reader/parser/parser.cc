@@ -57,7 +57,6 @@
 #include "src/tint/lang/wgsl/ast/var.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
-#include "src/tint/lang/wgsl/reader/parser/classify_template_args.h"
 #include "src/tint/lang/wgsl/reader/parser/lexer.h"
 #include "src/tint/lang/wgsl/reserved_words.h"
 #include "src/tint/utils/containers/reverse.h"
@@ -289,7 +288,6 @@ Source Parser::last_source() const {
 void Parser::InitializeLex() {
     Lexer l{file_};
     tokens_ = l.Lex();
-    ClassifyTemplateArguments(tokens_);
 }
 
 bool Parser::Parse() {
