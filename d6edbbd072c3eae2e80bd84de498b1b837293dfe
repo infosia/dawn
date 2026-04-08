@@ -33,6 +33,24 @@
       "message": "This feels like a step in the wrong direction. We\u0027ve been doing a lot of work to make our interfaces safe by spanifying them. Removing spans and going back to pointer + count seems wrong.\n\nThe chromium ban is for general chromium use, but if you\u0027re interfacing with third_party code, is span still banned? Is there no way to go from std::span to base::span? I think this is a question that should be brought up to the cxx list before removing span and making our interfaces less safe.",
       "revId": "d6edbbd072c3eae2e80bd84de498b1b837293dfe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88aa6f7d_65614d54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-08T17:19:58Z",
+      "side": 1,
+      "message": "Agreed.\n\n`base::span` converts implicitly to `std::span` but if you want to go the other way I think you have to do it explicitly. That doesn\u0027t make a difference though, we would have to write std::span in chromium anyway this is a method overload (so it has to have the same type as the interface it\u0027s overloading).\n\nThere must be a way to get an exception / silence the warning about using std::span in this one spot. Maybe it\u0027s just a presubmit warning and can be ignored? Maybe there\u0027s a NOLINT directive for it? I don\u0027t remember.",
+      "parentUuid": "0551336c_65fe8c95",
+      "revId": "d6edbbd072c3eae2e80bd84de498b1b837293dfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
