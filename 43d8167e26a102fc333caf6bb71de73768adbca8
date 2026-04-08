@@ -22,6 +22,30 @@
       },
       "revId": "43d8167e26a102fc333caf6bb71de73768adbca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb709800_7e6b62dc",
+        "filename": "src/tint/lang/wgsl/sem/function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-08T00:22:39Z",
+      "side": 1,
+      "message": "That doesn\u0027t compile because std::nullopt isn\u0027t the value type of the hashmap.",
+      "parentUuid": "bdb9a667_58fbf7c4",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 28
+      },
+      "revId": "43d8167e26a102fc333caf6bb71de73768adbca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
