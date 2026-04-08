@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e248b68d_6b516c1c",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "Can we pull the contents of this block out to a helper that just returns fract_bilinear?",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33afb52d_c977e2d4",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "```suggestion\n                coords \u003d b.Divide(b.Add(i_j, b.Splat(ty.vec2f(), b.Constant(0.5_f))), fdim)-\u003eResult();\n```",
+      "range": {
+        "startLine": 858,
+        "startChar": 15,
+        "endLine": 861,
+        "endChar": 44
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23efac27_fe1b06c9",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "```suggestion\n        // Determine which SPIR-V function to use and which optional image operands are needed.\n        enum spirv::BuiltinFn function \u003d BuiltinFn::kNone;\n        core::ir::Value* depth \u003d nullptr;\n        ImageOperands operands;\n        switch (builtin-\u003eFunc()) {\n            case core::BuiltinFn::kTextureSample:\n                function \u003d spirv::BuiltinFn::kImageSampleImplicitLod;\n                operands.offset \u003d next_arg();\n                break;\n            case core::BuiltinFn::kTextureSampleBias:\n                function \u003d spirv::BuiltinFn::kImageSampleImplicitLod;\n                operands.bias \u003d next_arg();\n                operands.offset \u003d next_arg();\n                break;\n            case core::BuiltinFn::kTextureSampleCompare:\n                function \u003d (polyfill_depth_cube_array || polyfill_depth_2d)\n                               ? spirv::BuiltinFn::kImageDrefGather\n                               : spirv::BuiltinFn::kImageSampleDrefImplicitLod;\n                depth \u003d next_arg();\n                operands.offset \u003d next_arg();\n                break;\n            case core::BuiltinFn::kTextureSampleCompareLevel:\n                function \u003d (polyfill_depth_cube_array || polyfill_depth_2d)\n                               ? spirv::BuiltinFn::kImageDrefGather\n                               : spirv::BuiltinFn::kImageSampleDrefExplicitLod;\n                depth \u003d next_arg();\n                if (!polyfill_depth_cube_array \u0026\u0026 !polyfill_depth_2d) {\n                    operands.lod \u003d b.Constant(0_f);\n                }\n                operands.offset \u003d next_arg();\n                break;\n            case core::BuiltinFn::kTextureSampleGrad:\n                function \u003d spirv::BuiltinFn::kImageSampleExplicitLod;\n                operands.ddx \u003d next_arg();\n                operands.ddy \u003d next_arg();\n                operands.offset \u003d next_arg();\n                break;\n            case core::BuiltinFn::kTextureSampleLevel:\n                function \u003d spirv::BuiltinFn::kImageSampleExplicitLod;\n                operands.lod \u003d next_arg();\n                operands.offset \u003d next_arg();\n                break;\n            default:\n                TINT_IR_UNREACHABLE(ir) \u003c\u003c \"unhandled texture sample builtin\";\n        }\n\n        auto* array_idx \u003d\n            texture_ty-\u003eGetArrayed() \u003d\u003d type::Arrayed::kArrayed ? next_arg() : nullptr;\n\n        core::ir::Value* fract_bilinear \u003d nullptr;\n        if (polyfill_depth_2d) {\n            core::ir::CoreBinary* gatherUV \u003d nullptr;\n            b.InsertBefore(builtin, [\u0026] {\n                // Get texture dimensions. The return type depends on if it was an array texture.\n                auto* dim \u003d b.CallExplicit\u003cspirv::ir::BuiltinCall\u003e(\n                    array_idx ? ty.vec3u() : ty.vec2u(), spirv::BuiltinFn::kImageQuerySizeLod,\n                    Vector{ty.u32()}, texture, b.Constant(0_i));\n\n                auto* dim2u \u003d b.Swizzle(ty.vec2u(), dim, {0, 1});\n                auto* fdim \u003d b.Convert(ty.vec2f(), dim2u);\n\n                // Calculate texel position: coords * dim - 0.5\n                auto* texelPos \u003d\n                    b.Subtract(b.Multiply(coords, fdim), b.Splat(ty.vec2f(), b.Constant(0.5_f)));\n\n                if (operands.offset) {\n                    texelPos \u003d b.Add(texelPos, b.Convert(ty.vec2f(), operands.offset));\n                    // We\u0027ve baked the offset into the coordinates, so clear it from the image\n                    // operands.\n                    operands.offset \u003d nullptr;\n                }\n\n                // Snap to texel as we will be doing the bilinear filtering manually.\n                auto* i_j \u003d b.Call(ty.vec2f(), core::BuiltinFn::kFloor, texelPos);\n\n                // f \u003d texelPos - i_j\n                fract_bilinear \u003d b.Subtract(texelPos, i_j)-\u003eResult();\n\n                // gatherUV \u003d (i_j + 0.5) / dim\n                gatherUV \u003d b.Divide(b.Add(i_j, b.Splat(ty.vec2f(), b.Constant(0.5_f))), fdim);\n\n                // Update coords for the gather call.\n                coords \u003d gatherUV-\u003eResult();\n            });\n        }\n\n        // Append the array index to the coordinates if provided.\n        if (array_idx) {\n            coords \u003d AppendArrayIndex(coords, array_idx, builtin);\n        }\n\n```",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 0
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361b3017_582efd7c",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "Can we split this into 2 separate if statements, the polyfills are completely different so it\u0027s confusing they\u0027re combined here.",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b647ed10_22369dfe",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "```suggestion\n                    // result from OpImageDrefGather (textureGatherCompare) is vec4f:\n                    // [0]: (i,   j+1)\n                    // [1]: (i+1, j+1)\n                    // [2]: (i+1, j)\n                    // [3]: (i,   j)\n```",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 920,
+        "endChar": 81
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa95f6ac_87e03a26",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T14:09:50Z",
+      "side": 1,
+      "message": "Maybe something like: (and for others)\n\n\n```suggestion\n                    // top \u003d mix(result.w, result.z, fract_bilinear.x)\n                    // where result.w \u003d\u003d (i,   j)\n                    //       result.z \u003d\u003d (i+1, j)\n```",
+      "range": {
+        "startLine": 929,
+        "startChar": 0,
+        "endLine": 930,
+        "endChar": 40
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
