@@ -80,6 +80,7 @@ struct FuzzedOptions {
     SpvVersion spirv_version;
     SubstituteOverridesConfig substitute_overrides_config;
     bool texture_sample_compare_depth_cube_array;
+    bool texture_sample_compare_2d_polyfill;
     bool polyfill_saturate_as_min_max_f16;
     bool multisampled_framebuffer_fetch;
     bool cooperative_matrix_stride_is_matrix_elements;
@@ -115,6 +116,7 @@ struct FuzzedOptions {
                  spirv_version,
                  substitute_overrides_config,
                  texture_sample_compare_depth_cube_array,
+                 texture_sample_compare_2d_polyfill,
                  polyfill_saturate_as_min_max_f16,
                  multisampled_framebuffer_fetch,
                  cooperative_matrix_stride_is_matrix_elements,
@@ -329,6 +331,8 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.substitute_overrides_config = fuzzed_options.substitute_overrides_config;
     options.workarounds.texture_sample_compare_depth_cube_array =
         fuzzed_options.texture_sample_compare_depth_cube_array;
+    options.workarounds.texture_sample_compare_2d_polyfill =
+        fuzzed_options.texture_sample_compare_2d_polyfill;
     options.workarounds.polyfill_saturate_as_min_max_f16 =
         fuzzed_options.polyfill_saturate_as_min_max_f16;
     options.workarounds.polyfill_length_scalar_f32 = fuzzed_options.polyfill_length_scalar_f32;

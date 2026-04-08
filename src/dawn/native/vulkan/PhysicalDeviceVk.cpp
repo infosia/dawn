@@ -1019,6 +1019,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 #if DAWN_PLATFORM_IS(32_BIT)
         deviceToggles->Default(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround, true);
 #endif
+        // crbug.com/469328925
+        deviceToggles->Default(Toggle::VulkanSampleCompare2DWorkaround, true);
     }
 
     if (IsIntelMesa()) {

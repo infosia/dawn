@@ -303,6 +303,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::SubgroupShuffleClamped);
     req.tintOptions.workarounds.texture_sample_compare_depth_cube_array =
         GetDevice()->IsToggleEnabled(Toggle::VulkanSampleCompareDepthCubeArrayWorkaround);
+    req.tintOptions.workarounds.texture_sample_compare_2d_polyfill =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanSampleCompare2DWorkaround);
     req.tintOptions.workarounds.polyfill_pack_unpack_4x8_norm =
         GetDevice()->IsToggleEnabled(Toggle::PolyfillPackUnpack4x8Norm);
     req.tintOptions.workarounds.polyfill_case_switch =
