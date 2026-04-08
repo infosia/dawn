@@ -139,16 +139,22 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // Set the target for writes from the client. DeserializeFlush should copy data
         // into the target.
         // TODO(https://issues.chromium.org/492456046): Remove the setters / getters for data and
-        // instead pass them directly as a span in DeserializeDataUpdate.
+        // instead pass them directly in DeserializeDataUpdate.
         void SetTarget(void* data);
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);
 
-        // TODO(492456046): Remove this overload once it has been removed in Chromium.
+        // TODO(492456046): Remove this overload once it has been removed in Chromium. Currently we
+        // need to declare it as a non-pure virtual function so that we can safely remove the old
+        // 4-parameter `DeserializeDataUpdate` from Chromium instead of having to provide an
+        // implementation for it.
         virtual bool DeserializeDataUpdate(const void* deserializePointer,
                                            size_t deserializeSize,
                                            size_t offset,
-                                           size_t size) = 0;
+                                           size_t size) {
+            return false;
+        }
+
         std::span<uint8_t> GetTarget() const;
 
         std::span<uint8_t> GetSource() const {
@@ -160,10 +166,10 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // the mapped buffer memory.
         //
         // Parameters:
-        //  - `deserializeData`: The serialized payload from the client specifying the updated
-        //    buffer contents.
-        //  - `target`: The range of data that is written by the update.
-        //  - `offset`: The byte offset for target.data() in the GPU buffer, used by Chromium's
+        //  - `deserializePointer` + `deserializeSize`: The serialized payload from the client
+        //    specifying the updated buffer contents.
+        //  - `target` + `targetSize`: The range of data that is written by the update.
+        //  - `offset`: The byte offset for target in the GPU buffer, used by Chromium's
         //    implementation to offset into the shmem.
         //
         // Returns true on success, or false if the deserialization is invalid (e.g. OOB access).
@@ -173,30 +179,31 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // the current Dawn implementation.
         // TODO(492456046): Make this pure-virtual once the old overload is removed from
         // Chromium.
-        virtual bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
-                                           std::span<uint8_t> target,
+        virtual bool DeserializeDataUpdate(const uint8_t* deserializePointer,
+                                           size_t deserializeSize,
+                                           uint8_t* target,
+                                           size_t targetSize,
                                            size_t offset) {
-            if (offset > std::numeric_limits<size_t>::max() - target.size()) {
+            if (offset > std::numeric_limits<size_t>::max() - targetSize) {
                 return false;
             }
 
-            if (target.data() != nullptr && reinterpret_cast<uintptr_t>(target.data()) < offset) {
+            if (target != nullptr && reinterpret_cast<uintptr_t>(target) < offset) {
                 return false;
             }
 
-            // In the new `DeserializeDataUpdate` (with 3 parameters) `target` should already be the
+            // In the new `DeserializeDataUpdate` (with 5 parameters) `target` should already be the
             // correct subspan of the buffer to write into, so we just need to check for OOB and
             // then write into it.
             // However, in the old `DeserializeDataUpdate` (with 4 parameters) implementation in
             // Chromium, `target` is always the full buffer and `offset` is used to offset into both
             // the target data and the shmem pointer, so we need to do the same offsetting here to
             // be compatible with both implementations.
-            uint8_t* bufferStart = target.data() - offset;
-            size_t lengthFromStart = target.size() + offset;
+            uint8_t* bufferStart = target - offset;
+            size_t lengthFromStart = targetSize + offset;
             SetTarget(bufferStart);
             SetDataLength(lengthFromStart);
-            return DeserializeDataUpdate(deserializeData.data(), deserializeData.size(), offset,
-                                         target.size());
+            return DeserializeDataUpdate(deserializePointer, deserializeSize, offset, targetSize);
         }
 
       private:

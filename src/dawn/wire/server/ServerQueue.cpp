@@ -117,10 +117,8 @@ WireResult Server::DoQueueWriteBufferXl(Known<WGPUQueue> queue,
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
-    std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
-                                                     writeDataUpdateInfoLength);
-    std::span<uint8_t> target(backingData.get(), size);
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo, writeDataUpdateInfoLength,
+                                            backingData.get(), size, 0u)) {
         return WireResult::FatalError;
     }
 
@@ -189,10 +187,8 @@ WireResult Server::DoQueueWriteTextureXl(Known<WGPUQueue> queue,
 
     // Deserialize the flush info and flush updated data from the handle into the target
     // of the handle that's just a temporary allocation from above right now.
-    std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
-                                                     writeDataUpdateInfoLength);
-    std::span<uint8_t> target(backingData.get(), dataSize);
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfo, writeDataUpdateInfoLength,
+                                            backingData.get(), dataSize, 0u)) {
         return WireResult::FatalError;
     }
 

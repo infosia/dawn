@@ -295,23 +295,15 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             return;
         }
 
-        std::span<uint8_t> target(reinterpret_cast<uint8_t*>(&mServerBufferContent),
-                                  sizeof(mServerBufferContent));
-        EXPECT_CALL(
-            *serverHandle,
-            DeserializeDataUpdate(
-                testing::Matcher<std::span<const uint8_t>>(testing::Truly(
-                    [](std::span<const uint8_t> arg) { return arg.size() == kBufferSize; })),
-                testing::Matcher<std::span<uint8_t>>(
-                    testing::Truly([target](std::span<uint8_t> arg) {
-                        return arg.data() == target.data() && arg.size() == target.size();
-                    })),
-                static_cast<size_t>(0u)))
-            .WillOnce(WithArg<0>([&, success](std::span<const uint8_t> deserializePointer) {
+        uint8_t* target = reinterpret_cast<uint8_t*>(&mServerBufferContent);
+        size_t targetSize = sizeof(mServerBufferContent);
+        EXPECT_CALL(*serverHandle, DeserializeDataUpdate(
+                                       testing::Matcher<const uint8_t*>(testing::NotNull()),
+                                       kBufferSize, testing::Matcher<uint8_t*>(testing::Eq(target)),
+                                       targetSize, static_cast<size_t>(0u)))
+            .WillOnce(WithArg<0>([&, success](const uint8_t* deserializePointer) {
                 if (success) {
-                    // Copy the data manually here.
-                    memcpy(&mServerBufferContent, deserializePointer.data(),
-                           deserializePointer.size());
+                    memcpy(&mServerBufferContent, deserializePointer, kBufferSize);
                 }
                 return success;
             }));

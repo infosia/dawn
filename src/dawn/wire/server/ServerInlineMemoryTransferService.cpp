@@ -82,13 +82,15 @@ class InlineMemoryTransferService : public MemoryTransferService {
             return true;
         }
 
-        bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
-                                   std::span<uint8_t> target,
+        bool DeserializeDataUpdate(const uint8_t* deserializePointer,
+                                   size_t deserializeSize,
+                                   uint8_t* target,
+                                   size_t targetSize,
                                    size_t offset) override {
-            if (deserializeData.size() != target.size()) {
+            if (deserializeSize != targetSize) {
                 return false;
             }
-            memcpy(target.data(), deserializeData.data(), deserializeData.size());
+            memcpy(target, deserializePointer, deserializeSize);
             return true;
         }
     };
