@@ -32,7 +32,6 @@
 
 #include <limits>
 #include <memory>
-#include <span>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
@@ -218,19 +217,16 @@ WireResult Server::DoBufferUpdateMappedData(Known<WGPUBuffer> buffer,
             return WireResult::Success;
         }
 
-        std::span<uint8_t> mappedRange = {mappedData, static_cast<size_t>(size)};
-
         // However it is easy to check for misuses of the wire protocol to UpdateMappedData without
         // a WriteHandle.
         if (!mapState->writeHandle) {
             return WireResult::FatalError;
         }
 
-        // Deserialize the flush info and flush updated data from the handle into mappedRange.
-        std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
-                                                         writeDataUpdateInfoLength);
-        if (!mapState->writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, mappedRange,
-                                                          static_cast<size_t>(offset))) {
+        // Deserialize the flush info and flush updated data from the handle into mappedData.
+        if (!mapState->writeHandle->DeserializeDataUpdate(
+                writeDataUpdateInfo, writeDataUpdateInfoLength, mappedData,
+                static_cast<size_t>(size), static_cast<size_t>(offset))) {
             return WireResult::FatalError;
         }
         return WireResult::Success;
