@@ -52,6 +52,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df32127_e58a26f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "sdf",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cce1fd5_757f2292",
@@ -65,6 +82,24 @@
       "writtenOn": "2026-04-08T17:21:11Z",
       "side": 1,
       "message": "Is this required? I don\u0027t read the full file as a human usually. I only read what I think is relevant. Is this command just going to full the context with lots of unrelated info?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc97a369_4ef4b556",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "As discussed offline: because Chromium does it this way. That doesn\u0027t mean it\u0027s necessarily right, but I think we\u0027ll go with what they\u0027re doing for now, and we can certainly update this as we go.",
+      "parentUuid": "0cce1fd5_757f2292",
       "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +121,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c2ca575_3e9c2bc7",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "It seems to be good enough for Chromium, but if we see that it\u0027s not working, we can be more explicit here. I did add a specific prompt in common.tint.md about how to run e2e tests (seach for \"e2e\"). We could add something similar to common.dawn.md.",
+      "parentUuid": "d1437477_365478d7",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "559bbaca_84be33bc",
@@ -99,6 +152,24 @@
       "writtenOn": "2026-04-08T17:21:11Z",
       "side": 1,
       "message": "What is this instruction\u0027s purpose?",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d955efef_65052e1c",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "Because Chromium again.",
+      "parentUuid": "559bbaca_84be33bc",
       "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +191,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c32ef19_d4cdc334",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "Because Chromium again.",
+      "parentUuid": "889e5517_02602c29",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3afe814_d0dd390d",
@@ -137,6 +226,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1df437c_a737397c",
+        "filename": "agents/prompts/knowledge_base.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "Because Chromium again.",
+      "parentUuid": "f3afe814_d0dd390d",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "013322fd_3ffc8f78",
@@ -150,6 +257,24 @@
       "writtenOn": "2026-04-08T17:21:11Z",
       "side": 1,
       "message": "Do you have ideas for what might go here? So far I feel like LLMs learn from the code base, though they might need a style guide.",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bd27f52_6da5595a",
+        "filename": "agents/prompts/knowledge_base.tint.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-08T17:48:26Z",
+      "side": 1,
+      "message": "This is just a header for the sections below, like `Core Tint Concepts`. You can also see what Chromium does in this section: https://source.chromium.org/chromium/chromium/src/+/main:agents/prompts/knowledge_base.md;l\u003d20?q\u003dknowledge_base.md",
+      "parentUuid": "013322fd_3ffc8f78",
       "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
