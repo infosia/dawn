@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6e9fff_7de701b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-08T01:25:43Z",
+      "side": 1,
+      "message": "Acknowledged\n\nNow we are not running dawn_end2end_tests with wire on CQ bots.",
+      "parentUuid": "93d87c7c_3761beb7",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a9a1d48_f46b613c",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "\u003e Is it just to test both GetSupportedFeatures and SupportsFeatures separately?\n\nYes, that\u0027s the reason.\n.",
       "parentUuid": "ea833b4f_9ae8028c",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfbd4904_c0b28177",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-08T01:25:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3ee087b7_b1e1c1d0",
       "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
