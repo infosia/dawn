@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3cf4d7f_ce6cabd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-08T02:44:41Z",
+      "side": 1,
+      "message": "LGTM, thank you! Amended the commit to attach the bug metadata correctly because the GitHub importer can\u0027t do it.",
+      "revId": "457035df9bdcf765afd294c3c9742324ee23b8d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
