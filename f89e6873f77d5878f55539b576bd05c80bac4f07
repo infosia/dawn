@@ -34,6 +34,24 @@
       ],
       "revId": "f89e6873f77d5878f55539b576bd05c80bac4f07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27b95497_fcfc91e4",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-08T21:13:50Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "56156c69_20033d9d",
+      "revId": "f89e6873f77d5878f55539b576bd05c80bac4f07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
