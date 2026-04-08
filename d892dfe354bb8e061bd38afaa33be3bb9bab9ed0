@@ -176,6 +176,24 @@
       "parentUuid": "3ee087b7_b1e1c1d0",
       "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c161c66_de12f5fd",
+        "filename": "src/dawn/tests/end2end/DawnTestInfraTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2026-04-08T01:29:35Z",
+      "side": 1,
+      "message": "Wait, I think the logic is that:\nGetSupportedFeatures() - returns dawn native features contains dawn native\nbut SupportsFeatures() - returns wire features not contains dawn native.\n\nSo that\u0027s why it has dawn assert and expect false.",
+      "parentUuid": "3ee087b7_b1e1c1d0",
+      "revId": "d892dfe354bb8e061bd38afaa33be3bb9bab9ed0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
