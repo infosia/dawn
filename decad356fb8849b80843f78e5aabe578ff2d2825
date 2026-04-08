@@ -16,6 +16,23 @@
       "message": "Thanks for fixing this!",
       "revId": "decad356fb8849b80843f78e5aabe578ff2d2825",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44dd706b_7f7f37d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-08T02:37:15Z",
+      "side": 1,
+      "message": "LGTM but removing Loko\u0027s +2 because it\u0027s outdated.",
+      "revId": "decad356fb8849b80843f78e5aabe578ff2d2825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
