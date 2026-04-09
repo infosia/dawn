@@ -67,8 +67,7 @@ dawn_node_gen_dir = target_gen_dir
 interop_gen_dir = "$dawn_node_gen_dir/src/dawn/node/interop"
 
 # TODO(amaiorano): Move run_built_binary.py to a common dir
-run_built_binary_script =
-    "$dawn_root/third_party/gn/dxc/build/run_built_binary.py"
+run_built_binary_script = "${dawn_dxc_gn_dir}/build/run_built_binary.py"
 
 config("common_config") {
   # Add include paths for Node API headers.
