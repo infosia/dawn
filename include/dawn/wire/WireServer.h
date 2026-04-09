@@ -144,11 +144,16 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // Set Staging data length for OOB check
         void SetDataLength(size_t dataLength);
 
-        // TODO(492456046): Remove this overload once it has been removed in Chromium.
+        // TODO(492456046): Remove this overload once it has been removed in Chromium. Currently we
+        // need to declare it as a non-pure virtual function so that we can safely remove the old
+        // 4-parameter `DeserializeDataUpdate` from Chromium instead of having to provide an
+        // implementation for it.
         virtual bool DeserializeDataUpdate(const void* deserializePointer,
                                            size_t deserializeSize,
                                            size_t offset,
-                                           size_t size) = 0;
+                                           size_t size) {
+            return false;
+        }
         std::span<uint8_t> GetTarget() const;
 
         std::span<uint8_t> GetSource() const {
