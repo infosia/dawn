@@ -69,6 +69,69 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "362ef4e1_06afb8a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-09T15:25:08Z",
+      "side": 1,
+      "message": "Similar to Gregg, I\u0027m a little apprehensive about whether some of these prompts would create context bloat, but given that these are opt-in it seems fine to land and let people try them out.",
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "596d3d5f_cf952fc7",
+        "filename": "agents/prompts/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-09T15:25:08Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t have these templates files, unlike Chromium. Do we expect to add them?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4b24dcc_9ce15c68",
+        "filename": "agents/prompts/common.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-09T15:25:08Z",
+      "side": 1,
+      "message": "Missing word?",
+      "range": {
+        "startLine": 32,
+        "startChar": 50,
+        "endLine": 32,
+        "endChar": 76
+      },
+      "revId": "90a1a938c835475a3bbf32bebe9eceba909bafb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cce1fd5_757f2292",
