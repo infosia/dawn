@@ -16,6 +16,23 @@
       "message": "Removing my -1, leaving for Loko and Kai to review.",
       "revId": "39343ce386b65f51a49148f182565cf4273b8504",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d7fdc73_0e282cfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-09T18:32:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "39343ce386b65f51a49148f182565cf4273b8504",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
