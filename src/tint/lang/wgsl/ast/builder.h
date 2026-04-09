@@ -1157,19 +1157,10 @@ class Builder {
         /// @returns the sampler
         ast::Type sampler(core::type::SamplerKind kind) const;
 
-        /// @param filtering the filtering setting
-        /// @returns the sampler
-        ast::Type sampler(core::SamplerFiltering filtering) const;
-
         /// @param source the Source of the node
         /// @param kind the kind of sampler
         /// @returns the sampler
         ast::Type sampler(const Source& source, core::type::SamplerKind kind) const;
-
-        /// @param source the Source of the node
-        /// @param filtering the sampler filtering
-        /// @returns the sampler
-        ast::Type sampler(const Source& source, core::SamplerFiltering filtering) const;
 
         /// @param dims the dimensionality of the texture
         /// @returns the depth texture
@@ -1195,14 +1186,6 @@ class Builder {
         /// @returns the sampled texture
         ast::Type sampled_texture(core::type::TextureDimension dims, ast::Type subtype) const;
 
-        /// @param dims the dimensionality of the texture
-        /// @param subtype the texture subtype.
-        /// @param filterable the filterability
-        /// @returns the sampled texture
-        ast::Type sampled_texture(core::type::TextureDimension dims,
-                                  ast::Type subtype,
-                                  core::TextureFilterable filterable) const;
-
         /// @param source the Source of the node
         /// @param dims the dimensionality of the texture
         /// @param subtype the texture subtype.
@@ -1210,16 +1193,6 @@ class Builder {
         ast::Type sampled_texture(const Source& source,
                                   core::type::TextureDimension dims,
                                   ast::Type subtype) const;
-
-        /// @param source the Source of the node
-        /// @param dims the dimensionality of the texture
-        /// @param subtype the texture subtype.
-        /// @param filterable the filterability
-        /// @returns the sampled texture
-        ast::Type sampled_texture(const Source& source,
-                                  core::type::TextureDimension dims,
-                                  ast::Type subtype,
-                                  core::TextureFilterable filterable) const;
 
         /// @param dims the dimensionality of the texture
         /// @param subtype the texture subtype.

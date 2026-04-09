@@ -224,10 +224,7 @@ wgpu::TextureSampleType TintSampledKindToSampleType(
         case tint::inspector::ResourceBinding::SampledKind::kUInt:
             return wgpu::TextureSampleType::Uint;
         case tint::inspector::ResourceBinding::SampledKind::kFloat:
-        case tint::inspector::ResourceBinding::SampledKind::kFilterable:
             return wgpu::TextureSampleType::Float;
-        case tint::inspector::ResourceBinding::SampledKind::kUnfilterable:
-            return wgpu::TextureSampleType::UnfilterableFloat;
         case tint::inspector::ResourceBinding::SampledKind::kUnknownFilterable:
             return kUnknownFilterableFloatSampleType;
     }
@@ -239,10 +236,6 @@ wgpu::SamplerBindingType TintSamplerTypeToSamplerBindingType(
     switch (type) {
         case tint::inspector::ResourceBinding::SamplerType::kComparison:
             return wgpu::SamplerBindingType::Comparison;
-        case tint::inspector::ResourceBinding::SamplerType::kFiltering:
-            return wgpu::SamplerBindingType::Filtering;
-        case tint::inspector::ResourceBinding::SamplerType::kNonFiltering:
-            return wgpu::SamplerBindingType::NonFiltering;
         case tint::inspector::ResourceBinding::SamplerType::kUnknownFiltering:
             return kUnknownFilteringSamplerBindingType;
     }

@@ -390,10 +390,6 @@ std::string SampledKindToString(tint::inspector::ResourceBinding::SampledKind ki
             return "UInt";
         case tint::inspector::ResourceBinding::SampledKind::kSInt:
             return "SInt";
-        case tint::inspector::ResourceBinding::SampledKind::kFilterable:
-            return "Filterable";
-        case tint::inspector::ResourceBinding::SampledKind::kUnfilterable:
-            return "Unfilterable";
         case tint::inspector::ResourceBinding::SampledKind::kUnknownFilterable:
             return "unknown-filterable";
     }
@@ -405,10 +401,6 @@ std::string SamplerTypeToString(tint::inspector::ResourceBinding::SamplerType ty
     switch (type) {
         case inspector::ResourceBinding::SamplerType::kComparison:
             return "comparison";
-        case inspector::ResourceBinding::SamplerType::kFiltering:
-            return "filtering";
-        case inspector::ResourceBinding::SamplerType::kNonFiltering:
-            return "non-filtering";
         case inspector::ResourceBinding::SamplerType::kUnknownFiltering:
             return "unknown-filtering";
     }

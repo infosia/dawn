@@ -63,21 +63,14 @@ struct ResourceBinding {
     /// Component type of the texture's data. Same as the Sampled Type parameter
     /// in SPIR-V OpTypeImage.
     enum class SampledKind : uint8_t {
-        // Note, the `Float` type is here for things like the `input_attachment` resources.
-        // Multisampled textures will also use it, but they could also use `Unfilterable` and be
-        // correct per the spec.
         kFloat,
         kUInt,
         kSInt,
-        kFilterable,
-        kUnfilterable,
         kUnknownFilterable,
     };
 
     enum class SamplerType : uint8_t {
         kComparison,
-        kFiltering,
-        kNonFiltering,
         kUnknownFiltering,
     };
 
@@ -177,11 +170,6 @@ struct ResourceBinding {
 /// @returns the publicly visible equivalent
 ResourceBinding::TextureDimension TypeTextureDimensionToResourceBindingTextureDimension(
     const core::type::TextureDimension& type_dim);
-
-/// Infer ResourceBinding::SampledKind for a given core::type::SampledTexture
-/// @param tex the texture
-/// @returns the publicly visible equivalent
-ResourceBinding::SampledKind ToFilterableSampledKind(const core::type::SampledTexture* tex);
 
 /// Infer ResourceBinding::SampledKind for a given core::type::Type
 /// @param base_type internal type to infer from

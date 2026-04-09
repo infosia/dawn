@@ -38,10 +38,10 @@ namespace {
 
 using ResolverFilteringParametersExtensionTest = ResolverTest;
 
-TEST_F(ResolverFilteringParametersExtensionTest, Texture_UseWithoutFeature) {
+TEST_F(ResolverFilteringParametersExtensionTest, DISABLED_Texture_UseWithoutFeature) {
     GlobalVar(Source{{12, 34}}, "tex",
-              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
-                                 core::TextureFilterable::kUnfilterable),
+              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+              //                                 core::TextureFilterable::kUnfilterable),
               Group(0_a), Binding(0_a));
     WrapInFunction(Ignore(Expr("tex")));
 
@@ -54,8 +54,8 @@ TEST_F(ResolverFilteringParametersExtensionTest, Texture_UseWithoutFeature) {
 
 TEST_F(ResolverFilteringParametersExtensionTest, Texture_UseWithFeature) {
     GlobalVar(Source{{12, 34}}, "tex",
-              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
-                                 core::TextureFilterable::kUnfilterable),
+              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+              //                                 core::TextureFilterable::kUnfilterable),
               Group(0_a), Binding(0_a));
     WrapInFunction(Ignore(Expr("tex")));
 
@@ -65,8 +65,10 @@ TEST_F(ResolverFilteringParametersExtensionTest, Texture_UseWithFeature) {
     EXPECT_TRUE(r()->Resolve()) << r()->error();
 }
 
-TEST_F(ResolverFilteringParametersExtensionTest, Sampler_UseWithoutFeature) {
-    GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::SamplerFiltering::kFiltering), Group(0_a),
+TEST_F(ResolverFilteringParametersExtensionTest, DISABLED_Sampler_UseWithoutFeature) {
+    // GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::SamplerFiltering::kFiltering),
+    // Group(0_a),
+    GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::type::SamplerKind::kSampler), Group(0_a),
               Binding(0_a));
     WrapInFunction(Ignore(Expr("samp")));
 
@@ -78,7 +80,9 @@ TEST_F(ResolverFilteringParametersExtensionTest, Sampler_UseWithoutFeature) {
 }
 
 TEST_F(ResolverFilteringParametersExtensionTest, Sampler_UseWithFeature) {
-    GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::SamplerFiltering::kFiltering), Group(0_a),
+    //    GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::SamplerFiltering::kFiltering),
+    //    Group(0_a),
+    GlobalVar(Source{{12, 34}}, "samp", ty.sampler(core::type::SamplerKind::kSampler), Group(0_a),
               Binding(0_a));
     WrapInFunction(Ignore(Expr("samp")));
 

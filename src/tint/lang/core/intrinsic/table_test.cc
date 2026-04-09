@@ -531,7 +531,7 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByNumberOfParameters) {
     ASSERT_EQ(result.Failure().Plain(),
               R"(no matching call to 'textureDimensions(bool, bool)'
 
-45 candidate functions:
+33 candidate functions:
  • 'textureDimensions(texture: texture_depth_2d  ✗ , level: L  ✗ ) -> vec2<u32>' where:
       ✗  'L' is 'i32' or 'u32'
  • 'textureDimensions(texture: texture_depth_2d_array  ✗ , level: L  ✗ ) -> vec2<u32>' where:
@@ -558,24 +558,6 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByNumberOfParameters) {
  • 'textureDimensions(texture: texture_cube_array<T>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
       ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_1d<f32, K>  ✗ , level: L  ✗ ) -> u32' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_2d<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_2d_array<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_3d<f32, K>  ✗ , level: L  ✗ ) -> vec3<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_cube<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_cube_array<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
  • 'textureDimensions(texture: texture_depth_2d  ✗ ) -> vec2<u32>'
  • 'textureDimensions(texture: texture_depth_2d_array  ✗ ) -> vec2<u32>'
  • 'textureDimensions(texture: texture_depth_cube  ✗ ) -> vec2<u32>'
@@ -594,18 +576,6 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByNumberOfParameters) {
       ✗  'T' is 'f32', 'i32' or 'u32'
  • 'textureDimensions(texture: texture_cube_array<T>  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
- • 'textureDimensions(texture: texture_1d<f32, K>  ✗ ) -> u32' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_2d<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_2d_array<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_3d<f32, K>  ✗ ) -> vec3<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_cube<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_cube_array<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
  • 'textureDimensions(texture: texture_multisampled_2d<T>  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
  • 'textureDimensions(texture: texture_storage_1d<F, R>  ✗ ) -> u32' where:
@@ -640,7 +610,7 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByMatchingParameter) {
     ASSERT_EQ(result.Failure().Plain(),
               R"(no matching call to 'textureDimensions(texture_depth_2d, bool)'
 
-45 candidate functions:
+33 candidate functions:
  • 'textureDimensions(texture: texture_depth_2d  ✓ , level: L  ✗ ) -> vec2<u32>' where:
       ✗  'L' is 'i32' or 'u32'
  • 'textureDimensions(texture: texture_depth_2d  ✓ ) -> vec2<u32>' where:
@@ -669,24 +639,6 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByMatchingParameter) {
  • 'textureDimensions(texture: texture_cube_array<T>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
       ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_1d<f32, K>  ✗ , level: L  ✗ ) -> u32' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_2d<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_2d_array<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_3d<f32, K>  ✗ , level: L  ✗ ) -> vec3<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_cube<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
- • 'textureDimensions(texture: texture_cube_array<f32, K>  ✗ , level: L  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
-      ✗  'L' is 'i32' or 'u32'
  • 'textureDimensions(texture: texture_depth_2d_array  ✗ ) -> vec2<u32>'
  • 'textureDimensions(texture: texture_depth_cube  ✗ ) -> vec2<u32>'
  • 'textureDimensions(texture: texture_depth_cube_array  ✗ ) -> vec2<u32>'
@@ -704,18 +656,6 @@ TEST_F(CoreIntrinsicTableTest, OverloadOrderByMatchingParameter) {
       ✗  'T' is 'f32', 'i32' or 'u32'
  • 'textureDimensions(texture: texture_cube_array<T>  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
- • 'textureDimensions(texture: texture_1d<f32, K>  ✗ ) -> u32' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_2d<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_2d_array<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_3d<f32, K>  ✗ ) -> vec3<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_cube<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
- • 'textureDimensions(texture: texture_cube_array<f32, K>  ✗ ) -> vec2<u32>' where:
-      ✗  'K' is 'filterable' or 'unfilterable'
  • 'textureDimensions(texture: texture_multisampled_2d<T>  ✗ ) -> vec2<u32>' where:
       ✗  'T' is 'f32', 'i32' or 'u32'
  • 'textureDimensions(texture: texture_storage_1d<F, R>  ✗ ) -> u32' where:
