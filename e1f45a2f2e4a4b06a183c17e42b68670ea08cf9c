@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16a6888e_dd6ecc2b",
+        "filename": "src/dawn/native/CommandBuffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T17:30:34Z",
+      "side": 1,
+      "message": "Yea, I didn\u0027t like it either but I didn\u0027t see how to pass in the backend specific stuff since each backend\u0027s ClearTexture requires different arguments that are only valid for that backend.",
+      "parentUuid": "daac21db_581a079d",
+      "revId": "e1f45a2f2e4a4b06a183c17e42b68670ea08cf9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c0ca03d_1b981449",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-04-09T16:52:44Z",
       "side": 1,
       "message": "Could you add a `TODO` here about the optimization you identified in the CL message?",
+      "revId": "e1f45a2f2e4a4b06a183c17e42b68670ea08cf9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "129a5fd8_4d76e39f",
+        "filename": "src/dawn/native/CommandBuffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T17:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0ca03d_1b981449",
       "revId": "e1f45a2f2e4a4b06a183c17e42b68670ea08cf9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
