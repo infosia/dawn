@@ -16,6 +16,52 @@
       "message": "Loko I added you to the linked bug so you can take a look.",
       "revId": "151d2c1ddfefc38d1c6ef42049feaecb25bfb681",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b398e72_ef5b0cec",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T18:23:29Z",
+      "side": 1,
+      "message": "nit. For this and the other test names, the `None` part doesn\u0027t feel like it\u0027s always true for the test anymore, so maybe we could just remove the `None`?",
+      "range": {
+        "startLine": 2080,
+        "startChar": 56,
+        "endLine": 2080,
+        "endChar": 60
+      },
+      "revId": "151d2c1ddfefc38d1c6ef42049feaecb25bfb681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "626c259d_6d0aee62",
+        "filename": "src/dawn/tests/end2end/BindGroupTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T18:23:29Z",
+      "side": 1,
+      "message": "nit. Does it matter that we are only doing a ComputePipeline in the test but using Fragment state here? Would it make sense to have this test but with a render pipeline instead? I think for the purpose of this change it probably doesn\u0027t matter, but for testing, maybe it\u0027s valuable to have both?",
+      "range": {
+        "startLine": 2153,
+        "startChar": 4,
+        "endLine": 2153,
+        "endChar": 61
+      },
+      "revId": "151d2c1ddfefc38d1c6ef42049feaecb25bfb681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
