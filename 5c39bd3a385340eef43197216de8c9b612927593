@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92abcefb_12d48a31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-09T20:36:51Z",
+      "side": 1,
+      "message": "I asked gemini to put some directions to add back buffer and multiframe support to capture. Looks reasonable to me. Like to ask you to take a look. (You can see the rendered md at https://chromium.googlesource.com/h/dawn/dawn/+/5c39bd3a385340eef43197216de8c9b612927593:docs/dawn/WEBGPU_BACKEND_CAPTURE_REPLAY_DESIGN.md)\nThanks!",
+      "revId": "5c39bd3a385340eef43197216de8c9b612927593",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
