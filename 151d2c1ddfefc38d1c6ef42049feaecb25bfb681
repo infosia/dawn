@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38f883e0_b1112ee8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-09T03:22:41Z",
+      "side": 1,
+      "message": "Loko I added you to the linked bug so you can take a look.",
+      "revId": "151d2c1ddfefc38d1c6ef42049feaecb25bfb681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
