@@ -148,7 +148,7 @@ ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::Initialize
     // with SPIR-V 1.6.
     if (computeStage.metadata->usesSubgroupMatrix ||
         moduleAndSpirv.explicitSubgroupSize.has_value()) {
-        createInfo.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT;
+        createInfo.stage.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT;
     }
 
     VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT subgroupSizeInfo = {};
@@ -175,7 +175,7 @@ ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::Initialize
         // `VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT flag` set if a
         // `VkPipelineShaderStageRequiredSubgroupSizeCreateInfo` structure is included in the pNext
         // chain,
-        createInfo.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT;
+        createInfo.stage.flags |= VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT;
     }
 
     // Record cache key information now since createInfo is not stored. Only store for the noop
