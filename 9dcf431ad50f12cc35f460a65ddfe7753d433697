@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72cb11b6_6099b256",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T04:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ab6b21_cfefd4fc",
+      "range": {
+        "startLine": 646,
+        "startChar": 56,
+        "endLine": 646,
+        "endChar": 63
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b882e200_ef9d280a",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6defcf7_a45cca45",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T04:54:44Z",
+      "side": 1,
+      "message": "The test failed before the fix. I added a 2nd test that sets the slice, then reads the 3d by sampling it which is another path.",
+      "parentUuid": "b882e200_ef9d280a",
+      "range": {
+        "startLine": 1167,
+        "startChar": 28,
+        "endLine": 1167,
+        "endChar": 62
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5ca5737_96b83bdd",
@@ -77,6 +125,30 @@
       "writtenOn": "2026-04-09T00:10:03Z",
       "side": 1,
       "message": "nit. Render to the slice at index |slice|.",
+      "range": {
+        "startLine": 1183,
+        "startChar": 8,
+        "endLine": 1183,
+        "endChar": 28
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64f1a305_a8bb37db",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T04:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ca5737_96b83bdd",
       "range": {
         "startLine": 1183,
         "startChar": 8,

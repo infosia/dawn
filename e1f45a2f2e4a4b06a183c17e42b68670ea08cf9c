@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a45ff31_fbf383dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-09T04:54:44Z",
+      "side": 1,
+      "message": "On your speed question:\n\nIt\u0027s slower to clear a texture vs not clear it. It was not cleared before so yes, it\u0027s slower. Is it too slow? Don\u0027t know. It\u0027s important to fix the security bug. Speed is secondary. Rendering to a 3d texture I think is pretty rare. At least on the web. It\u0027s not clear how to make it faster though. At the moment it calls ClearTexture it\u0027s up to each backend to optimize that however is appropriate. IIUC, D3D12 has a clear function. I\u0027m not sure about others. Clearing a slice as a render target is probably fast. Clearing 256 slices, 8 render slices at a time, might be faster but we\u0027d have to experiment because it would be 32 render passes. I guess I assume it\u0027s up to each backend to decide what\u0027s best.",
+      "revId": "e1f45a2f2e4a4b06a183c17e42b68670ea08cf9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
