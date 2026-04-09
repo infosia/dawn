@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c918690_13f44b70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T00:10:03Z",
+      "side": 1,
+      "message": "LGTM! Was wondering though if this would have a significant impact on perf for 3d textures? If the lazily clear option is implemented then I doubt it\u0027s a problem anymore, but for now, since we are blindly clearing it all, I hope that won\u0027t cause too big of a perf regression?",
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ab6b21_cfefd4fc",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T00:10:03Z",
+      "side": 1,
+      "message": "nit. handle",
+      "range": {
+        "startLine": 646,
+        "startChar": 56,
+        "endLine": 646,
+        "endChar": 63
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b882e200_ef9d280a",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T00:10:03Z",
+      "side": 1,
+      "message": "I\u0027m curious as to whether this test passes before the change. Basically, I am wondering whether the fact that we are reading the values back to verify them also results in us clearing the slices. If it does, then the test wouldn\u0027t be testing the change the way we probably would expect it to? That said... I am also wondering if this comment applies to other tests in this file... Since presumably, we have to read textures back to test if we are zero-ing, but at the same time, the zeroing could be happening as a part of the read here and appear different if we used the texture differently.\n\nBriefly looking at the impl for `EXPECT_TEXTURE_EQ` it looks like its doing a `CopyTextureToBuffer` which probably validates the texture data is initialized also? Not sure...",
+      "range": {
+        "startLine": 1167,
+        "startChar": 28,
+        "endLine": 1167,
+        "endChar": 62
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ca5737_96b83bdd",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-09T00:10:03Z",
+      "side": 1,
+      "message": "nit. Render to the slice at index |slice|.",
+      "range": {
+        "startLine": 1183,
+        "startChar": 8,
+        "endLine": 1183,
+        "endChar": 28
+      },
+      "revId": "9dcf431ad50f12cc35f460a65ddfe7753d433697",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
