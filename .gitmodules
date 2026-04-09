@@ -152,6 +152,9 @@
 [submodule "third_party/dxc"]
 	path = third_party/dxc
 	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectXShaderCompiler
+[submodule "third_party/directx-shader-compiler/src"]
+	path = third_party/directx-shader-compiler/src
+	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectXShaderCompiler
 [submodule "third_party/dxheaders"]
 	path = third_party/dxheaders
 	url = https://chromium.googlesource.com/external/github.com/microsoft/DirectX-Headers
