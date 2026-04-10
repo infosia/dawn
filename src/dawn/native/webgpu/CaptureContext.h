@@ -164,16 +164,7 @@ class CaptureContext {
     // Special case for Device as it's not a RecordableObject
     // so we don't want to call AddResourceAndGetId on it.
     template <>
-    void CaptureSetLabel(Device* object, const std::string& label) {
-        schema::RootCommandSetLabelCmd data{{
-            .data{{
-                .id = schema::kDeviceId,
-                .type = schema::ObjectType::Device,
-                .label = label,
-            }},
-        }};
-        Serialize(*this, data);
-    }
+    void CaptureSetLabel(Device* object, const std::string& label);
 
     void WriteCommandBytes(const void* data, size_t size);
 
@@ -188,7 +179,6 @@ class CaptureContext {
                                         const TexelExtent3D& writeSizePixel);
 
     WGPUBuffer GetCopyBuffer();
-    WGPUBuffer GetBlitTextureToBufferBuffer();
 
   protected:
     void WriteContentBytes(const void* data, size_t size);
@@ -197,6 +187,7 @@ class CaptureContext {
     MaybeError CaptureCreation(schema::ObjectId id,
                                const std::string& label,
                                RecordableObject* object);
+
     MaybeError CaptureContentIfNeeded(schema::ObjectId id,
                                       bool newResource,
                                       RecordableObject* object);
