@@ -34,9 +34,11 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Features_autogen.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/Surface.h"
 #include "dawn/native/Toggles.h"
 #include "dawn/native/webgpu/BackendWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/SwapChainWGPU.h"
 
 namespace dawn::native::webgpu {
 
@@ -119,12 +121,36 @@ bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
 ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapabilities(
     InstanceBase* instance,
     const Surface* surface) const {
-    // TODO(crbug.com/413053623): revisit when implementing Surface.
+    // Create a inner surface to query the surface capabilities.
+    WGPUSurface innerSurface;
+    DAWN_TRY_ASSIGN(innerSurface, CreateWGPUSurface(mBackend->GetFunctions(),
+                                                    mBackend->GetInnerInstance(), surface));
+    DAWN_ASSERT(innerSurface);
+
+    WGPUSurfaceCapabilities innerCapabilities = WGPU_SURFACE_CAPABILITIES_INIT;
+    WGPUStatus status = mBackend->GetFunctions().surfaceGetCapabilities(innerSurface, mInnerAdapter,
+                                                                        &innerCapabilities);
+
+    if (status != WGPUStatus_Success) {
+        mBackend->GetFunctions().surfaceRelease(innerSurface);
+        return DAWN_VALIDATION_ERROR("Failed to get inner surface capabilities");
+    }
+
     PhysicalDeviceSurfaceCapabilities capabilities;
-    capabilities.usages = wgpu::TextureUsage::RenderAttachment;
-    capabilities.formats = {wgpu::TextureFormat::BGRA8Unorm};
-    capabilities.presentModes = {wgpu::PresentMode::Fifo};
-    capabilities.alphaModes = {wgpu::CompositeAlphaMode::Opaque};
+    capabilities.usages = static_cast<wgpu::TextureUsage>(innerCapabilities.usages);
+    for (size_t i = 0; i < innerCapabilities.formatCount; ++i) {
+        capabilities.formats.push_back(FromAPI(innerCapabilities.formats[i]));
+    }
+    for (size_t i = 0; i < innerCapabilities.presentModeCount; ++i) {
+        capabilities.presentModes.push_back(FromAPI(innerCapabilities.presentModes[i]));
+    }
+    for (size_t i = 0; i < innerCapabilities.alphaModeCount; ++i) {
+        capabilities.alphaModes.push_back(FromAPI(innerCapabilities.alphaModes[i]));
+    }
+
+    mBackend->GetFunctions().surfaceCapabilitiesFreeMembers(innerCapabilities);
+    mBackend->GetFunctions().surfaceRelease(innerSurface);
+
     return capabilities;
 }
 

@@ -41,9 +41,12 @@ class Texture final : public TextureBase, public RecordableObject, public Object
   public:
     static ResultOrError<Ref<Texture>> Create(Device* device,
                                               const UnpackedPtr<TextureDescriptor>& descriptor);
-    static ResultOrError<Ref<Texture>> CreateFromSharedTextureMemory(
+    static Ref<Texture> CreateFromSharedTextureMemory(
         const SharedTextureMemory* memory,
         const UnpackedPtr<TextureDescriptor>& descriptor);
+    static Ref<Texture> CreateFromSurfaceTexture(Device* device,
+                                                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                                                 const WGPUSurfaceTexture& surfaceTexture);
 
     void SynchronizeTextureBeforeUse();
 
@@ -60,12 +63,16 @@ class Texture final : public TextureBase, public RecordableObject, public Object
     Texture(Device* device,
             const UnpackedPtr<TextureDescriptor>& descriptor,
             const SharedTextureMemory* memory);
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            const WGPUSurfaceTexture& surfaceTexture);
 
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
 
     ExecutionSerial OnEndAccess() override;
 
+    bool mIsSurfaceTexture = false;
     bool mPendingBeginAccess = false;
     bool mPendingConcurrentRead = false;
     bool mPendingInitialized = false;
