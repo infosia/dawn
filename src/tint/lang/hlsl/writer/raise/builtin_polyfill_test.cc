@@ -48,7 +48,10 @@ using Capability = tint::core::ir::Capability;
 namespace tint::hlsl::writer::raise {
 namespace {
 
-using HlslWriter_BuiltinPolyfillTest = core::ir::transform::TransformTest;
+class HlslWriter_BuiltinPolyfillTest : public core::ir::transform::TransformTest {
+  public:
+    void SetUp() override { capabilities.Add(core::ir::Capability::kAllow16BitIntegers); }
+};
 
 TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastIdentity) {
     auto* a = b.FunctionParam<i32>("a");
@@ -219,17 +222,16 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastFromF16) {
 }
 %tint_bitcast_from_f16 = func(%src:vec2<f16>):f32 {
   $B2: {
-    %6:vec2<f32> = convert %src
-    %7:vec2<u32> = hlsl.f32tof16 %6
-    %r:vec2<u32> = let %7
-    %9:u32 = swizzle %r, x
-    %10:u32 = and %9, 65535u
-    %11:u32 = swizzle %r, y
-    %12:u32 = and %11, 65535u
-    %13:u32 = shl %12, 16u
-    %14:u32 = or %10, %13
-    %15:f32 = hlsl.asfloat %14
-    ret %15
+    %6:vec2<u16> = hlsl.asuint16 %src
+    %7:vec2<u32> = convert %6
+    %8:vec2<u32> = and %7, vec2<u32>(65535u)
+    %9:vec2<u32> = construct 0u, 16u
+    %10:vec2<u32> = shl %8, %9
+    %11:u32 = access %10, 0u
+    %12:u32 = access %10, 1u
+    %13:u32 = or %11, %12
+    %14:f32 = hlsl.asfloat %13
+    ret %14
   }
 }
 )";
@@ -265,17 +267,14 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastToF16) {
   $B2: {
     %6:u32 = hlsl.asuint %src
     %v:u32 = let %6
-    %8:u32 = and %v, 65535u
-    %9:f32 = hlsl.f16tof32 %8
-    %t_low:f32 = let %9
-    %11:u32 = shr %v, 16u
-    %12:u32 = and %11, 65535u
-    %13:f32 = hlsl.f16tof32 %12
-    %t_high:f32 = let %13
-    %15:f16 = convert %t_low
-    %16:f16 = convert %t_high
-    %17:vec2<f16> = construct %15, %16
-    ret %17
+    %8:vec2<u32> = construct %v, %v
+    %9:vec2<u32> = construct 0u, 16u
+    %10:vec2<u32> = shr %8, %9
+    %11:vec2<u32> = and %10, vec2<u32>(65535u)
+    %12:vec2<u16> = convert %11
+    %v16:vec2<u16> = let %12
+    %14:vec2<f16> = hlsl.asfloat16 %v16
+    ret %14
   }
 }
 )";
@@ -320,17 +319,16 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastFromVec2F16) {
 }
 %tint_bitcast_from_f16 = func(%src:vec2<f16>):i32 {
   $B2: {
-    %9:vec2<f32> = convert %src
-    %10:vec2<u32> = hlsl.f32tof16 %9
-    %r:vec2<u32> = let %10
-    %12:u32 = swizzle %r, x
-    %13:u32 = and %12, 65535u
-    %14:u32 = swizzle %r, y
-    %15:u32 = and %14, 65535u
-    %16:u32 = shl %15, 16u
-    %17:u32 = or %13, %16
-    %18:i32 = hlsl.asint %17
-    ret %18
+    %9:vec2<u16> = hlsl.asuint16 %src
+    %10:vec2<u32> = convert %9
+    %11:vec2<u32> = and %10, vec2<u32>(65535u)
+    %12:vec2<u32> = construct 0u, 16u
+    %13:vec2<u32> = shl %11, %12
+    %14:u32 = access %13, 0u
+    %15:u32 = access %13, 1u
+    %16:u32 = or %14, %15
+    %17:i32 = hlsl.asint %16
+    ret %17
   }
 }
 )";
@@ -376,25 +374,14 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastToVec4F16) {
   $B2: {
     %9:vec2<u32> = hlsl.asuint %src
     %v:vec2<u32> = let %9
-    %mask:vec2<u32> = let vec2<u32>(65535u)
-    %shift:vec2<u32> = let vec2<u32>(16u)
-    %13:vec2<u32> = and %v, %mask
-    %14:vec2<f32> = hlsl.f16tof32 %13
-    %t_low:vec2<f32> = let %14
-    %16:vec2<u32> = shr %v, %shift
-    %17:vec2<u32> = and %16, %mask
-    %18:vec2<f32> = hlsl.f16tof32 %17
-    %t_high:vec2<f32> = let %18
-    %20:f32 = swizzle %t_low, x
-    %21:f32 = swizzle %t_high, x
-    %22:f16 = convert %20
-    %23:f16 = convert %21
-    %24:f32 = swizzle %t_low, y
-    %25:f16 = convert %24
-    %26:f32 = swizzle %t_high, y
-    %27:f16 = convert %26
-    %28:vec4<f16> = construct %22, %23, %25, %27
-    ret %28
+    %11:vec4<u32> = swizzle %v, xxyy
+    %12:vec4<u32> = construct 0u, 16u, 0u, 16u
+    %13:vec4<u32> = shr %11, %12
+    %14:vec4<u32> = and %13, vec4<u32>(65535u)
+    %15:vec4<u16> = convert %14
+    %v16:vec4<u16> = let %15
+    %17:vec4<f16> = hlsl.asfloat16 %v16
+    ret %17
   }
 }
 )";
@@ -521,17 +508,14 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastVec2U16ToU32) {
 }
 %tint_bitcast_from_u16 = func(%src:vec2<u16>):u32 {
   $B2: {
-    %6:vec2<f16> = hlsl.asfloat16 %src
-    %7:vec2<f32> = convert %6
-    %8:vec2<u32> = hlsl.f32tof16 %7
-    %r:vec2<u32> = let %8
-    %10:u32 = swizzle %r, x
-    %11:u32 = and %10, 65535u
-    %12:u32 = swizzle %r, y
-    %13:u32 = and %12, 65535u
-    %14:u32 = shl %13, 16u
-    %15:u32 = or %11, %14
-    ret %15
+    %6:vec2<u32> = convert %src
+    %7:vec2<u32> = and %6, vec2<u32>(65535u)
+    %8:vec2<u32> = construct 0u, 16u
+    %9:vec2<u32> = shl %7, %8
+    %10:u32 = access %9, 0u
+    %11:u32 = access %9, 1u
+    %12:u32 = or %10, %11
+    ret %12
   }
 }
 )";
@@ -567,18 +551,13 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastU32ToVec2U16) {
 %tint_bitcast_to_u16 = func(%src:u32):vec2<u16> {
   $B2: {
     %v:u32 = let %src
-    %7:u32 = and %v, 65535u
-    %8:f32 = hlsl.f16tof32 %7
-    %t_low:f32 = let %8
-    %10:u32 = shr %v, 16u
-    %11:u32 = and %10, 65535u
-    %12:f32 = hlsl.f16tof32 %11
-    %t_high:f32 = let %12
-    %14:f16 = convert %t_low
-    %15:f16 = convert %t_high
-    %16:vec2<f16> = construct %14, %15
-    %17:vec2<u16> = hlsl.asuint16 %16
-    ret %17
+    %7:vec2<u32> = construct %v, %v
+    %8:vec2<u32> = construct 0u, 16u
+    %9:vec2<u32> = shr %7, %8
+    %10:vec2<u32> = and %9, vec2<u32>(65535u)
+    %11:vec2<u16> = convert %10
+    %v16:vec2<u16> = let %11
+    ret %v16
   }
 }
 )";
