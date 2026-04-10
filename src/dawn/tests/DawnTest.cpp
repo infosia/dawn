@@ -193,8 +193,6 @@ class Recorder {
 
     Capture Finish() {
         native::webgpu::EndCapture(mDevice.Get());
-        // Make sure at TearDown the device is released as the DawnTest will check device count.
-        mDevice = nullptr;
         return Capture(mCommandStream.str(), mContentStream.str());
     }
 

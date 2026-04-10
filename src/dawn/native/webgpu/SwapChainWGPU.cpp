@@ -1,0 +1,196 @@
+// Copyright 2026 The Dawn & Tint Authors
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice, this
+//    list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// 3. Neither the name of the copyright holder nor the names of its
+//    contributors may be used to endorse or promote products derived from
+//    this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#include "dawn/native/webgpu/SwapChainWGPU.h"
+
+#include <utility>
+#include <vector>
+
+#include "dawn/common/StringViewUtils.h"
+#include "dawn/native/ChainUtils.h"
+#include "dawn/native/Surface.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/QueueWGPU.h"
+#include "dawn/native/webgpu/TextureWGPU.h"
+#include "dawn/native/webgpu/ToWGPU.h"
+
+namespace dawn::native::webgpu {
+
+namespace {
+WGPUSurface CreateInnerSurface(Device* device, Surface* surface) {
+    WGPUSurfaceDescriptor descriptor = {};
+    descriptor.label = ToOutputStringView(surface->GetLabel());
+
+    // Reconstruct the chained descriptor based on the surface type.
+    WGPUSurfaceSourceAndroidNativeWindow androidDesc = {};
+    WGPUSurfaceSourceMetalLayer metalDesc = {};
+    WGPUSurfaceSourceWindowsHWND hwndDesc = {};
+    WGPUSurfaceSourceWaylandSurface waylandDesc = {};
+    WGPUSurfaceSourceXlibWindow xlibDesc = {};
+
+    switch (surface->GetType()) {
+        case Surface::Type::AndroidWindow:
+            androidDesc.chain.sType = WGPUSType_SurfaceSourceAndroidNativeWindow;
+            androidDesc.window = surface->GetAndroidNativeWindow();
+            descriptor.nextInChain = &androidDesc.chain;
+            break;
+        case Surface::Type::MetalLayer:
+            metalDesc.chain.sType = WGPUSType_SurfaceSourceMetalLayer;
+            metalDesc.layer = surface->GetMetalLayer();
+            descriptor.nextInChain = &metalDesc.chain;
+            break;
+        case Surface::Type::WindowsHWND:
+            hwndDesc.chain.sType = WGPUSType_SurfaceSourceWindowsHWND;
+            hwndDesc.hinstance = surface->GetHInstance();
+            hwndDesc.hwnd = surface->GetHWND();
+            descriptor.nextInChain = &hwndDesc.chain;
+            break;
+        case Surface::Type::WaylandSurface:
+            waylandDesc.chain.sType = WGPUSType_SurfaceSourceWaylandSurface;
+            waylandDesc.display = surface->GetWaylandDisplay();
+            waylandDesc.surface = surface->GetWaylandSurface();
+            descriptor.nextInChain = &waylandDesc.chain;
+            break;
+        case Surface::Type::XlibWindow:
+            xlibDesc.chain.sType = WGPUSType_SurfaceSourceXlibWindow;
+            xlibDesc.display = surface->GetXDisplay();
+            xlibDesc.window = surface->GetXWindow();
+            descriptor.nextInChain = &xlibDesc.chain;
+            break;
+        default:
+            DAWN_UNREACHABLE();
+            return nullptr;
+    }
+
+    return device->wgpu->instanceCreateSurface(device->GetInnerInstance(), &descriptor);
+}
+}  // namespace
+
+// static
+ResultOrError<Ref<SwapChain>> SwapChain::Create(Device* device,
+                                                Surface* surface,
+                                                SwapChainBase* previousSwapChain,
+                                                const SurfaceConfiguration* config) {
+    WGPUSurface innerSurface = CreateInnerSurface(device, surface);
+    DAWN_ASSERT(innerSurface);
+
+    WGPUSurfaceConfiguration innerConfig = {};
+    innerConfig.device = device->GetInnerHandle();
+    innerConfig.format = ToAPI(config->format);
+    innerConfig.usage = ToAPI(config->usage);
+    innerConfig.viewFormatCount = config->viewFormatCount;
+    std::vector<WGPUTextureFormat> viewFormats;
+    for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
+        viewFormats.push_back(ToAPI(config->viewFormats[i]));
+    }
+    innerConfig.viewFormats = viewFormats.data();
+    innerConfig.alphaMode = ToAPI(config->alphaMode);
+    innerConfig.width = config->width;
+    innerConfig.height = config->height;
+    innerConfig.presentMode = ToAPI(config->presentMode);
+
+    device->wgpu->surfaceConfigure(innerSurface, &innerConfig);
+
+    return AcquireRef(new SwapChain(device, surface, config, innerSurface));
+}
+
+SwapChain::SwapChain(Device* device,
+                     Surface* surface,
+                     const SurfaceConfiguration* config,
+                     WGPUSurface innerSurface)
+    : SwapChainBase(device, surface, config), mInnerSurface(innerSurface) {}
+
+SwapChain::~SwapChain() {
+    if (mCurrentTexture != nullptr) {
+        mCurrentTexture->Destroy();
+        mCurrentTexture = nullptr;
+    }
+    if (mInnerSurface) {
+        ToBackend(GetDevice())->wgpu->surfaceRelease(mInnerSurface);
+    }
+}
+
+ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
+    Device* device = ToBackend(GetDevice());
+    WGPUSurfaceTexture innerSurfaceTexture = {};
+    device->wgpu->surfaceGetCurrentTexture(mInnerSurface, &innerSurfaceTexture);
+
+    SwapChainTextureInfo info;
+    info.status = FromAPI(innerSurfaceTexture.status);
+
+    if (info.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal ||
+        info.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
+        wgpu::TextureDescriptor desc = {};
+        desc.usage = GetUsage();
+        desc.dimension = wgpu::TextureDimension::e2D;
+        desc.size = {GetWidth(), GetHeight(), 1};
+        desc.format = GetFormat();
+        desc.mipLevelCount = 1;
+        desc.sampleCount = 1;
+
+        // Note: We're creating a Texture wrapper around the inner handle.
+        // We need to make sure this texture is identified as a backbuffer.
+        Ref<Texture> texture;
+        UnpackedPtr<TextureDescriptor> unpacked;
+        DAWN_TRY_ASSIGN(unpacked,
+                        ValidateAndUnpack(reinterpret_cast<const TextureDescriptor*>(&desc)));
+        DAWN_TRY_ASSIGN(texture, Texture::Create(device, unpacked));
+        // Replace the inner handle with the one from GetCurrentTexture
+        device->wgpu->textureRelease(texture->GetInnerHandle());
+        texture->SetInnerHandleForSwapChain(innerSurfaceTexture.texture);
+        texture->SetIsBackBuffer(true);
+
+        mCurrentTexture = texture;
+        info.texture = std::move(texture);
+    }
+
+    return info;
+}
+
+MaybeError SwapChain::PresentImpl() {
+    Device* device = ToBackend(GetDevice());
+
+    if (mCurrentTexture != nullptr) {
+        mCurrentTexture->Destroy();
+        mCurrentTexture = nullptr;
+    }
+
+    device->wgpu->surfacePresent(mInnerSurface);
+    return {};
+}
+
+void SwapChain::DetachFromSurfaceImpl() {
+    if (mCurrentTexture != nullptr) {
+        mCurrentTexture->Destroy();
+        mCurrentTexture = nullptr;
+    }
+    if (mInnerSurface) {
+        ToBackend(GetDevice())->wgpu->surfaceUnconfigure(mInnerSurface);
+    }
+}
+
+}  // namespace dawn::native::webgpu

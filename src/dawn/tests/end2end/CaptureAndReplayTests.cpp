@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "GLFW/glfw3.h"
 #include "dawn/native/WebGPUBackend.h"
 #include "dawn/replay/Replay.h"
 #include "dawn/tests/DawnTest.h"
@@ -40,6 +41,7 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "webgpu/webgpu_glfw.h"
 
 namespace dawn {
 namespace {
