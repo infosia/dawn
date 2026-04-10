@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "505ca109_d9667479",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-10T20:46:29Z",
+      "side": 1,
+      "message": "Sending this out for a first round of review mainly to see what people think about the approach. It\u0027s not fully polished yet and I would add more/update documenting comments if we feel like this is a decent approach.\n\nFrom the pinpoint job, it doesn\u0027t appear to improve performance by a significant margin, but it does seem to improve it a bit.",
+      "revId": "0eb6b1d25c659b76536d2057fd38c747054e31a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
