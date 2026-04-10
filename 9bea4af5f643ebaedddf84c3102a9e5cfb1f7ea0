@@ -120,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a80d585_b4491bca",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:46Z",
+      "side": 1,
+      "message": "I have made a minor improvement",
+      "parentUuid": "ff759a91_dd76ba53",
+      "range": {
+        "startLine": 858,
+        "startChar": 15,
+        "endLine": 861,
+        "endChar": 44
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "23efac27_fe1b06c9",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
