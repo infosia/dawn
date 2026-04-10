@@ -141,6 +141,14 @@ void Texture::SetLabelImpl() {
     ToBackend(GetDevice())->CaptureSetLabel(this, GetLabel());
 }
 
+void Texture::SetInnerHandleForSwapChain(WGPUTexture innerHandle) {
+    mInnerHandle = innerHandle;
+}
+
+void Texture::SetIsBackBuffer(bool isBackBuffer) {
+    mIsBackBuffer = isBackBuffer;
+}
+
 ExecutionSerial Texture::OnEndAccess() {
     mPendingBeginAccess = false;
     return TextureBase::OnEndAccess();
@@ -237,6 +245,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         .mipLevelCount = GetNumMipLevels(),
         .sampleCount = GetSampleCount(),
         .viewFormats = viewFormats,
+        .isBackBuffer = mIsBackBuffer,
     }};
     Serialize(captureContext, tex);
     return {};

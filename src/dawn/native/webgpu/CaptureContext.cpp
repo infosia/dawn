@@ -36,6 +36,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/Surface.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
@@ -76,6 +77,161 @@ MaybeError CaptureContext::CaptureCreation(schema::ObjectId id,
     }};
     Serialize(*this, cmd);
     return object->CaptureCreationParameters(*this);
+}
+
+template <>
+void CaptureContext::CaptureSetLabel(Device* object, const std::string& label) {
+    schema::RootCommandSetLabelCmd data{{
+        .data{{
+            .id = schema::kDeviceId,
+            .type = schema::ObjectType::Device,
+            .label = label,
+        }},
+    }};
+    Serialize(*this, data);
+}
+
+template <>
+void CaptureContext::CaptureSetLabel(Surface* object, const std::string& label) {
+    auto result = AddResourceAndGetId(object);
+    if (result.IsSuccess()) {
+        schema::RootCommandSetLabelCmd data{{
+            .data{{
+                .id = result.AcquireSuccess(),
+                .type = schema::ObjectType::Surface,
+                .label = label,
+            }},
+        }};
+        Serialize(*this, data);
+    }
+}
+
+MaybeError CaptureContext::CaptureSurfaceCreation(schema::ObjectId id, Surface* surface) {
+    schema::SurfaceType type;
+    uint64_t handle0 = 0;
+    uint64_t handle1 = 0;
+
+    switch (surface->GetType()) {
+        case Surface::Type::AndroidWindow:
+            type = schema::SurfaceType::AndroidWindow;
+            handle0 = reinterpret_cast<uintptr_t>(surface->GetAndroidNativeWindow());
+            break;
+        case Surface::Type::MetalLayer:
+            type = schema::SurfaceType::MetalLayer;
+            handle0 = reinterpret_cast<uintptr_t>(surface->GetMetalLayer());
+            break;
+        case Surface::Type::WaylandSurface:
+            type = schema::SurfaceType::WaylandSurface;
+            handle0 = reinterpret_cast<uintptr_t>(surface->GetWaylandDisplay());
+            handle1 = reinterpret_cast<uintptr_t>(surface->GetWaylandSurface());
+            break;
+        case Surface::Type::WindowsHWND:
+            type = schema::SurfaceType::WindowsHWND;
+            handle0 = reinterpret_cast<uintptr_t>(surface->GetHInstance());
+            handle1 = reinterpret_cast<uintptr_t>(surface->GetHWND());
+            break;
+        case Surface::Type::XlibWindow:
+            type = schema::SurfaceType::XlibWindow;
+            handle0 = reinterpret_cast<uintptr_t>(surface->GetXDisplay());
+            handle1 = surface->GetXWindow();
+            break;
+        default:
+            DAWN_UNREACHABLE();
+            return DAWN_INTERNAL_ERROR("Unknown surface type");
+    }
+
+    schema::RootCommandSurfaceCreateCmd cmd{{
+        .data = {{
+            .id = id,
+            .label = surface->GetLabel(),
+            .type = type,
+            .handle0 = handle0,
+            .handle1 = handle1,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfaceConfigure(Surface* surface,
+                                                   const SurfaceConfiguration* config) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+
+    std::vector<wgpu::TextureFormat> viewFormats;
+    for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
+        viewFormats.push_back(config->viewFormats[i]);
+    }
+
+    schema::RootCommandSurfaceConfigureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .config = {{
+                .deviceId = schema::kDeviceId,
+                .format = config->format,
+                .usage = config->usage,
+                .viewFormats = viewFormats,
+                .alphaMode = config->alphaMode,
+                .width = config->width,
+                .height = config->height,
+                .presentMode = config->presentMode,
+            }},
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfacePresent(Surface* surface) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+
+    schema::RootCommandSurfacePresentCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+    schema::ObjectId textureId;
+    DAWN_TRY_ASSIGN(textureId, AddResourceAndGetId(texture));
+
+    schema::RootCommandSurfaceGetCurrentTextureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .textureId = textureId,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+ResultOrError<schema::ObjectId> CaptureContext::AddResourceAndGetId(Surface* surface) {
+    assert(surface != nullptr);
+    Ref<Surface> ref(surface);
+    auto it = mSurfaceIds.find(ref);
+    if (it == mSurfaceIds.end()) {
+        schema::ObjectId id = mNextObjectId++;
+        mSurfaceIds[std::move(ref)] = id;
+        DAWN_TRY(CaptureSurfaceCreation(id, surface));
+        return {id};
+    }
+    return {it->second};
+}
+
+schema::ObjectId CaptureContext::GetId(Surface* surface) {
+    if (surface == nullptr) {
+        return 0;
+    }
+
+    auto it = mSurfaceIds.find(Ref<Surface>(surface));
+    DAWN_ASSERT(it != mSurfaceIds.end());
+    return it->second;
 }
 
 CaptureContext::CaptureContext(Device* device,
