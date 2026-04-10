@@ -58,6 +58,14 @@ ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     return AcquireRef(new Texture(device, descriptor, memory));
 }
 
+// static
+ResultOrError<Ref<Texture>> Texture::CreateFromSurfaceTexture(
+    Device* device,
+    const UnpackedPtr<TextureDescriptor>& descriptor,
+    const WGPUSurfaceTexture& surfaceTexture) {
+    return AcquireRef(new Texture(device, descriptor, surfaceTexture));
+}
+
 struct ComboTextureDescriptor {
     WGPUTextureDescriptor desc = {};
     std::vector<WGPUTextureFormat> viewFormats;
@@ -127,6 +135,19 @@ Texture::Texture(Device* device,
     mInnerHandle =
         device->wgpu->sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &comboDesc.desc);
     mSharedResourceMemoryContents = memory->GetContents();
+    mIsSurfaceTexture = true;
+
+    DAWN_ASSERT(mInnerHandle);
+}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 const WGPUSurfaceTexture& surfaceTexture)
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu->textureRelease) {
+    mInnerHandle = surfaceTexture.texture;
+    mIsSurfaceTexture = true;
 
     DAWN_ASSERT(mInnerHandle);
 }
