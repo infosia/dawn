@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec81d9c9_9bed6cf9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-10T21:54:03Z",
+      "side": 1,
+      "message": "I\u0027m reasonably confident that if there are regressions they won\u0027t be so bad that we need to handle them before landing this. It\u0027s definitely easier to rely on automated infra to detect perf regressions. But it also wouldn\u0027t hurt to try, you can ask the Graphite/Skia team for advice on how to run benchmarks locally.",
+      "parentUuid": "751e255b_e87c4096",
+      "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7178a2bd_9b83db2d",
