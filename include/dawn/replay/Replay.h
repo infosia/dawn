@@ -60,7 +60,9 @@ class DAWN_REPLAY_EXPORT Capture {
 // certain point)
 class DAWN_REPLAY_EXPORT Replay {
   public:
-    static std::unique_ptr<Replay> Create(wgpu::Device device, std::unique_ptr<Capture> capture);
+    static std::unique_ptr<Replay> Create(wgpu::Instance instance,
+                                          wgpu::Device device,
+                                          std::unique_ptr<Capture> capture);
     virtual ~Replay() = 0;
 
     template <typename T>

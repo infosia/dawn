@@ -77,8 +77,10 @@ DAWN_REPLAY_ROOT_COMMANDS_ENUM(DAWN_REPLAY_ENUM_TO_STRING)
 
 Replay::~Replay() = default;
 
-std::unique_ptr<Replay> Replay::Create(wgpu::Device device, std::unique_ptr<Capture> capture) {
-    return ReplayImpl::Create(device, std::move(capture));
+std::unique_ptr<Replay> Replay::Create(wgpu::Instance instance,
+                                       wgpu::Device device,
+                                       std::unique_ptr<Capture> capture) {
+    return ReplayImpl::Create(instance, device, std::move(capture));
 }
 
 template <typename T>
@@ -132,8 +134,8 @@ class DawnResourceVisitor : public ResourceVisitor {
 class DawnRootCommandVisitor : public RootCommandVisitor {
   public:
     using RootCommandVisitor::operator();
-    explicit DawnRootCommandVisitor(wgpu::Device device)
-        : mDevice(device), mResourceVisitor(this) {}
+    explicit DawnRootCommandVisitor(wgpu::Instance instance, wgpu::Device device)
+        : mInstance(instance), mDevice(device), mResourceVisitor(this) {}
 
     MaybeError operator()(const CreateResourceData& data) override {
         mCurrentResourceId = data.resource.id;
@@ -146,11 +148,16 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) override;
     MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) override;
     MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceCreateCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceConfigureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfacePresentCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) override;
     MaybeError operator()(const schema::RootCommandEndCmdData& data) override { return {}; }
 
     ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
 
     wgpu::Device GetDevice() const { return mDevice; }
+    wgpu::Instance GetInstance() const { return mInstance; }
     schema::ObjectId GetCurrentResourceId() const { return mCurrentResourceId; }
     const std::string& GetCurrentResourceLabel() const { return mCurrentResourceLabel; }
 
@@ -227,6 +234,7 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     void SetContentReadHead(ReadHead* readHead) override { mContentReadHead = readHead; }
 
   private:
+    wgpu::Instance mInstance;
     wgpu::Device mDevice;
     DawnResourceVisitor mResourceVisitor;
 
@@ -1335,6 +1343,15 @@ ResultOrError<wgpu::CommandBuffer> CreateResource(const DawnRootCommandVisitor& 
     return DAWN_INTERNAL_ERROR("Device creation not supported");
 }
 
+ResultOrError<wgpu::Surface> CreateResource(const DawnRootCommandVisitor& replay,
+                                            wgpu::Device device,
+                                            const InvalidData& data,
+                                            const std::string& label) {
+    // This is here to make resource handling generic. We don't create
+    // surfaces from this CreateResource but from SurfaceCreate root command.
+    return DAWN_INTERNAL_ERROR("Surface creation not supported through CreateResource");
+}
+
 }  // anonymous namespace
 
 #define DAWN_REPLAY_VISIT_RESOURCE_CREATE(ENUM, TYPE)              \
@@ -1383,6 +1400,90 @@ MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandInitTextu
     return InitializeTexture(*this, mBlitBufferToDepthTexture, *mContentReadHead, mDevice, data);
 }
 
+MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandSurfaceCreateCmdData& data) {
+    wgpu::SurfaceDescriptor descriptor = {};
+    descriptor.label = wgpu::StringView(data.label);
+
+    wgpu::SurfaceSourceAndroidNativeWindow androidDesc = {};
+    wgpu::SurfaceSourceMetalLayer metalDesc = {};
+    wgpu::SurfaceSourceWaylandSurface waylandDesc = {};
+    wgpu::SurfaceSourceWindowsHWND hwndDesc = {};
+    wgpu::SurfaceSourceXlibWindow xlibDesc = {};
+
+    switch (data.type) {
+        case schema::SurfaceType::AndroidWindow:
+            androidDesc.window = reinterpret_cast<void*>(data.handle0);
+            descriptor.nextInChain = &androidDesc;
+            break;
+        case schema::SurfaceType::MetalLayer:
+            metalDesc.layer = reinterpret_cast<void*>(data.handle0);
+            descriptor.nextInChain = &metalDesc;
+            break;
+        case schema::SurfaceType::WaylandSurface:
+            waylandDesc.display = reinterpret_cast<void*>(data.handle0);
+            waylandDesc.surface = reinterpret_cast<void*>(data.handle1);
+            descriptor.nextInChain = &waylandDesc;
+            break;
+        case schema::SurfaceType::WindowsHWND:
+            hwndDesc.hinstance = reinterpret_cast<void*>(data.handle0);
+            hwndDesc.hwnd = reinterpret_cast<void*>(data.handle1);
+            descriptor.nextInChain = &hwndDesc;
+            break;
+        case schema::SurfaceType::XlibWindow:
+            xlibDesc.display = reinterpret_cast<void*>(data.handle0);
+            xlibDesc.window = data.handle1;
+            descriptor.nextInChain = &xlibDesc;
+            break;
+        default:
+            DAWN_UNREACHABLE();
+            return DAWN_INTERNAL_ERROR("Unknown surface type");
+    }
+
+    wgpu::Surface surface = mInstance.CreateSurface(&descriptor);
+    AddResource(data.id, data.label, surface);
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfaceConfigureCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    wgpu::Device device = GetObjectById<wgpu::Device>(data.config.deviceId);
+
+    wgpu::SurfaceConfiguration config = {};
+    config.device = device;
+    config.format = data.config.format;
+    config.usage = data.config.usage;
+    config.viewFormatCount = data.config.viewFormats.size();
+    config.viewFormats = data.config.viewFormats.data();
+    config.alphaMode = data.config.alphaMode;
+    config.width = data.config.width;
+    config.height = data.config.height;
+    config.presentMode = data.config.presentMode;
+
+    surface.Configure(&config);
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfacePresentCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    surface.Present();
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    wgpu::SurfaceTexture surfaceTexture = {};
+    surface.GetCurrentTexture(&surfaceTexture);
+
+    if (surfaceTexture.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal ||
+        surfaceTexture.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
+        AddResource(data.textureId, "", surfaceTexture.texture);
+    }
+    return {};
+}
+
 MaybeError DawnRootCommandVisitor::SetLabel(schema::ObjectId id,
                                             schema::ObjectType type,
                                             const std::string& label) {
@@ -1411,14 +1512,17 @@ MaybeError DawnRootCommandVisitor::SetLabel(schema::ObjectId id,
     return {};
 }
 
-std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
+std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Instance instance,
+                                               wgpu::Device device,
                                                std::unique_ptr<Capture> capture) {
     auto captureImpl = std::unique_ptr<CaptureImpl>(static_cast<CaptureImpl*>(capture.release()));
-    return std::unique_ptr<ReplayImpl>(new ReplayImpl(device, std::move(captureImpl)));
+    return std::unique_ptr<ReplayImpl>(new ReplayImpl(instance, device, std::move(captureImpl)));
 }
 
-ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
-    : mVisitor(new DawnRootCommandVisitor(device)), mCapture(std::move(capture)) {
+ReplayImpl::ReplayImpl(wgpu::Instance instance,
+                       wgpu::Device device,
+                       std::unique_ptr<CaptureImpl> capture)
+    : mVisitor(new DawnRootCommandVisitor(instance, device)), mCapture(std::move(capture)) {
     mVisitor->AddResource(schema::kDeviceId, "", device);
 }
 
