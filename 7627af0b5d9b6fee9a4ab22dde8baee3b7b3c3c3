@@ -16,6 +16,23 @@
       "message": "Finally have a green trybot run.\n\n+kainino to review instead of having an infra owner stamp since this does add quite a few new suppressions, so a once-over from someone more familiar with Dawn\u0027s code would be good to make sure nothing seems particularly concerning.",
       "revId": "7627af0b5d9b6fee9a4ab22dde8baee3b7b3c3c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c03f8c_5e7c70e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-10T20:46:32Z",
+      "side": 1,
+      "message": "All looks good. Broadly:\n- Tests that are already failing on NVIDIA\n- Vulkan only (no plans to ship this)\n- D3D11 only (current plan only to ship Graphite on D3D11, not WebGPU)\n- just a few other things",
+      "revId": "7627af0b5d9b6fee9a4ab22dde8baee3b7b3c3c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
