@@ -111,6 +111,13 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
         DAWN_ASSERT(mCurrentDrawable == nullptr);
         mCurrentDrawable = [*mLayer nextDrawable];
 
+        if (mCurrentDrawable == nullptr) {
+            SwapChainTextureInfo info;
+            info.texture = nullptr;
+            info.status = wgpu::SurfaceGetCurrentTextureStatus::Timeout;
+            return info;
+        }
+
         TextureDescriptor textureDesc = GetSwapChainBaseTextureDescriptor(this);
 
         mTexture = Texture::CreateWrapping(ToBackend(GetDevice()), Unpack(&textureDesc),
