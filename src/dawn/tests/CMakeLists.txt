@@ -157,6 +157,7 @@ set(end2end_sources
     "end2end/TextureCorruptionTests.cpp"
     "end2end/TextureFormatTests.cpp"
     "end2end/TextureFormatsTier1Tests.cpp"
+    "end2end/TextureSampleCompare2DTests.cpp"
     "end2end/TextureShaderBuiltinTests.cpp"
     "end2end/TextureSubresourceTests.cpp"
     "end2end/TextureViewTests.cpp"

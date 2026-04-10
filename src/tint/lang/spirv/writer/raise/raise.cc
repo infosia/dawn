@@ -206,6 +206,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         .subgroup_shuffle_clamped = options.workarounds.subgroup_shuffle_clamped,
         .texture_sample_compare_depth_cube_array =
             options.workarounds.texture_sample_compare_depth_cube_array,
+        .texture_sample_compare_2d_polyfill =
+            options.workarounds.texture_sample_compare_2d_polyfill,
         .cooperative_matrix_stride_is_matrix_elements =
             options.workarounds.cooperative_matrix_stride_is_matrix_elements,
     };

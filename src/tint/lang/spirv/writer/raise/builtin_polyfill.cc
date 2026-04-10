@@ -760,6 +760,15 @@ struct State {
             (builtin->Func() == core::BuiltinFn::kTextureSampleCompare ||
              builtin->Func() == core::BuiltinFn::kTextureSampleCompareLevel);
 
+        // This includes both 2d and 2d array.
+        const bool is_depth_2d = (texture_ty->GetDim() == type::Dim::kD2) &&
+                                 (texture_ty->GetDepth() == type::Depth::kDepth);
+
+        const bool polyfill_depth_2d =
+            config.texture_sample_compare_2d_polyfill && is_depth_2d &&
+            (builtin->Func() == core::BuiltinFn::kTextureSampleCompare ||
+             builtin->Func() == core::BuiltinFn::kTextureSampleCompareLevel);
+
         // Use OpSampledImage to create an OpTypeSampledImage object.
         auto* sampled_image = b.CallExplicit<spirv::ir::BuiltinCall>(
             ty.Get<type::SampledImage>(texture_ty), spirv::BuiltinFn::kOpSampledImage,
@@ -769,9 +778,6 @@ struct State {
         // Append the array index to the coordinates if provided.
         auto* array_idx =
             texture_ty->GetArrayed() == type::Arrayed::kArrayed ? next_arg() : nullptr;
-        if (array_idx) {
-            coords = AppendArrayIndex(coords, array_idx, builtin);
-        }
 
         // Determine which SPIR-V function to use and which optional image operands are needed.
         enum spirv::BuiltinFn function = BuiltinFn::kNone;
@@ -788,18 +794,18 @@ struct State {
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompare:
-                function = polyfill_depth_cube_array
+                function = (polyfill_depth_cube_array || polyfill_depth_2d)
                                ? spirv::BuiltinFn::kImageDrefGather
                                : spirv::BuiltinFn::kImageSampleDrefImplicitLod;
                 depth = next_arg();
                 operands.offset = next_arg();
                 break;
             case core::BuiltinFn::kTextureSampleCompareLevel:
-                function = polyfill_depth_cube_array
+                function = (polyfill_depth_cube_array || polyfill_depth_2d)
                                ? spirv::BuiltinFn::kImageDrefGather
                                : spirv::BuiltinFn::kImageSampleDrefExplicitLod;
                 depth = next_arg();
-                if (!polyfill_depth_cube_array) {
+                if (!polyfill_depth_cube_array && !polyfill_depth_2d) {
                     operands.lod = b.Constant(0_f);
                 }
                 operands.offset = next_arg();
@@ -819,6 +825,46 @@ struct State {
                 TINT_IR_UNREACHABLE(ir) << "unhandled texture sample builtin";
         }
 
+        core::ir::Value* fract_bilinear = nullptr;
+        if (polyfill_depth_2d) {
+            b.InsertBefore(builtin, [&] {
+                // Get texture dimensions. The return type depends on if it was an array texture.
+                auto* dim = b.CallExplicit<spirv::ir::BuiltinCall>(
+                    array_idx ? ty.vec3u() : ty.vec2u(), spirv::BuiltinFn::kImageQuerySizeLod,
+                    Vector{ty.u32()}, texture, b.Constant(0_i));
+
+                auto* dim2u = b.Swizzle(ty.vec2u(), dim, {0, 1});
+                auto* fdim = b.Convert(ty.vec2f(), dim2u);
+
+                // Calculate texel position: coords * dim - 0.5
+                auto* texelPos =
+                    b.Subtract(b.Multiply(coords, fdim), b.Splat(ty.vec2f(), b.Constant(0.5_f)));
+
+                if (operands.offset) {
+                    texelPos = b.Add(texelPos, b.Convert(ty.vec2f(), operands.offset));
+                    // We've baked the offset into the coordinates, so clear it from the image
+                    // operands.
+                    operands.offset = nullptr;
+                }
+
+                // Snap to texel as we will be doing the bilinear filtering manually.
+                auto* i_j = b.Call(ty.vec2f(), core::BuiltinFn::kFloor, texelPos);
+
+                // fraction = texelPos - i_j
+                fract_bilinear = b.Subtract(texelPos, i_j)->Result();
+
+                // gatherUV = (i_j + 0.5) / dim
+                auto* gatherUV = b.Divide(b.Add(i_j, b.Splat(ty.vec2f(), b.Constant(0.5_f))), fdim);
+
+                // Update coords for the gather call.
+                coords = gatherUV->Result();
+            });
+        }
+
+        if (array_idx) {
+            coords = AppendArrayIndex(coords, array_idx, builtin);
+        }
+
         // Start building the argument list for the function.
         // The first two operands are always the sampled image and then the coordinates, followed by
         // the depth reference if used.
@@ -834,7 +880,7 @@ struct State {
 
         // Call the function.
         // If this is a depth comparison, the result is always f32, otherwise vec4f.
-        auto* result_ty = (depth && !polyfill_depth_cube_array)
+        auto* result_ty = (depth && !polyfill_depth_cube_array && !polyfill_depth_2d)
                               ? static_cast<const core::type::Type*>(ty.f32())
                               : ty.vec4f();
 
@@ -850,26 +896,50 @@ struct State {
         }
 
         if (polyfill_depth_cube_array) {
-            core::ir::Instruction* close_to_pcf_result = nullptr;
             b.InsertAfter(result, [&] {
                 // This is an imperfect polyfill for builtin intrinsic to do PCF style shadows.
                 // See: crbug.com/467015399
-                // To do a complete polyfill we would have to properly do bilinear interpolation of
-                // the TextureGatherCompare result which we do not do as there is no trivial way to
-                // do it for a cubemap.
+                // To do a complete polyfill we would have to properly do bilinear interpolation
+                // of the TextureGatherCompare result which we do not do as there is no trivial
+                // way to do it for a cubemap.
 
-                // We do a textureGatherCompare and then dot with a vec4f(0.25) to get the average
-                // result. This will give PCF-like shadows but they will not be as smooth as the
-                // result from the original TextureSampleCompare. We also only sample mip0 which is
-                // identical to TextureSampleCompareLevel but not TextureSampleCompare.
-                close_to_pcf_result =
-                    b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kDot, result,
-                                                   b.Splat(ty.vec4f(), b.Constant(0.25_f)));
+                // We do a textureGatherCompare and then dot with a vec4f(0.25) to get the
+                // average result. This will give PCF-like shadows but they will not be as
+                // smooth as the result from the original TextureSampleCompare. We also only
+                // sample mip0 which is identical to TextureSampleCompareLevel but not
+                // TextureSampleCompare.
+                result = b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kDot, result,
+                                                        b.Splat(ty.vec4f(), b.Constant(0.25_f)));
             });
+        }
 
-            close_to_pcf_result->SetResult(builtin->DetachResult());
-            builtin->Destroy();
-            return;
+        if (polyfill_depth_2d) {
+            b.InsertAfter(result, [&] {
+                // Bilinear interpolation for 2D sampleCompare (2D polyfill).
+                // result from OpImageDrefGather (textureGatherCompare) is vec4f:
+                // [0]: (i,   j+1)
+                // [1]: (i+1, j+1)
+                // [2]: (i+1, j)
+                // [3]: (i,   j)
+                auto* x = b.Access(ty.f32(), result, 0_u);
+                auto* y = b.Access(ty.f32(), result, 1_u);
+                auto* z = b.Access(ty.f32(), result, 2_u);
+                auto* w = b.Access(ty.f32(), result, 3_u);
+
+                auto* fx = b.Access(ty.f32(), fract_bilinear, 0_u);
+                auto* fy = b.Access(ty.f32(), fract_bilinear, 1_u);
+
+                // top = mix(result.w, result.z, fract_bilinear.x)
+                // where result.w == (i,   j)
+                //       result.z == (i+1, j)
+                // fract_bilinear.x)
+                auto* top = b.Call(ty.f32(), core::BuiltinFn::kMix, w, z, fx);
+                // bottom = mix(result.x, result.y, fract_bilinear.x) -> mix((i, j+1), (i+1,
+                // j+1), fract_bilinear.x)
+                auto* bottom = b.Call(ty.f32(), core::BuiltinFn::kMix, x, y, fx);
+                // Percentage-closer filtering = mix(top, bottom, fract_bilinear.y)
+                result = b.Call(ty.f32(), core::BuiltinFn::kMix, top, bottom, fy);
+            });
         }
 
         result->SetResult(builtin->DetachResult());
