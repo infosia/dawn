@@ -758,6 +758,8 @@ source_set("sources") {
       "webgpu/SharedFenceWGPU.h",
       "webgpu/SharedTextureMemoryWGPU.cpp",
       "webgpu/SharedTextureMemoryWGPU.h",
+      "webgpu/SwapChainWGPU.cpp",
+      "webgpu/SwapChainWGPU.h",
       "webgpu/TextureWGPU.cpp",
       "webgpu/TextureWGPU.h",
       "webgpu/ToWGPU.cpp",

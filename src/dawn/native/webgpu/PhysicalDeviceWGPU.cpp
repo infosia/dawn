@@ -34,6 +34,7 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Features_autogen.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/Surface.h"
 #include "dawn/native/Toggles.h"
 #include "dawn/native/webgpu/BackendWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
@@ -119,12 +120,100 @@ bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
 ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapabilities(
     InstanceBase* instance,
     const Surface* surface) const {
-    // TODO(crbug.com/413053623): revisit when implementing Surface.
+    WGPUSurfaceDescriptor descriptor = {};
+    descriptor.label = ToOutputStringView(surface->GetLabel());
+
+    // Reconstruct the chained descriptor based on the surface type.
+    WGPUSurfaceSourceAndroidNativeWindow androidDesc =
+        WGPU_SURFACE_SOURCE_ANDROID_NATIVE_WINDOW_INIT;
+    WGPUSurfaceSourceMetalLayer metalDesc = WGPU_SURFACE_SOURCE_METAL_LAYER_INIT;
+    WGPUSurfaceSourceWindowsHWND hwndDesc = WGPU_SURFACE_SOURCE_WINDOWS_HWND_INIT;
+    WGPUSurfaceSourceWaylandSurface waylandDesc = WGPU_SURFACE_SOURCE_WAYLAND_SURFACE_INIT;
+    WGPUSurfaceSourceXlibWindow xlibDesc = WGPU_SURFACE_SOURCE_XLIB_WINDOW_INIT;
+    WGPUSurfaceDescriptorFromWindowsCoreWindow coreWindowDesc =
+        WGPU_SURFACE_DESCRIPTOR_FROM_WINDOWS_CORE_WINDOW_INIT;
+    WGPUSurfaceDescriptorFromWindowsUWPSwapChainPanel uwpDesc =
+        WGPU_SURFACE_DESCRIPTOR_FROM_WINDOWS_UWP_SWAP_CHAIN_PANEL_INIT;
+    WGPUSurfaceDescriptorFromWindowsWinUISwapChainPanel winuiDesc =
+        WGPU_SURFACE_DESCRIPTOR_FROM_WINDOWS_WINUI_SWAP_CHAIN_PANEL_INIT;
+
+    switch (surface->GetType()) {
+        case Surface::Type::AndroidWindow:
+            androidDesc.chain.sType = WGPUSType_SurfaceSourceAndroidNativeWindow;
+            androidDesc.window = surface->GetAndroidNativeWindow();
+            descriptor.nextInChain = &androidDesc.chain;
+            break;
+        case Surface::Type::MetalLayer:
+            metalDesc.chain.sType = WGPUSType_SurfaceSourceMetalLayer;
+            metalDesc.layer = surface->GetMetalLayer();
+            descriptor.nextInChain = &metalDesc.chain;
+            break;
+        case Surface::Type::WindowsHWND:
+            hwndDesc.chain.sType = WGPUSType_SurfaceSourceWindowsHWND;
+            hwndDesc.hinstance = surface->GetHInstance();
+            hwndDesc.hwnd = surface->GetHWND();
+            descriptor.nextInChain = &hwndDesc.chain;
+            break;
+        case Surface::Type::WindowsCoreWindow:
+            coreWindowDesc.chain.sType = WGPUSType_SurfaceDescriptorFromWindowsCoreWindow;
+            coreWindowDesc.coreWindow = surface->GetCoreWindow();
+            descriptor.nextInChain = &coreWindowDesc.chain;
+            break;
+        case Surface::Type::WindowsUWPSwapChainPanel:
+            uwpDesc.chain.sType = WGPUSType_SurfaceDescriptorFromWindowsUWPSwapChainPanel;
+            uwpDesc.swapChainPanel = surface->GetUWPSwapChainPanel();
+            descriptor.nextInChain = &uwpDesc.chain;
+            break;
+        case Surface::Type::WindowsWinUISwapChainPanel:
+            winuiDesc.chain.sType = WGPUSType_SurfaceDescriptorFromWindowsWinUISwapChainPanel;
+            winuiDesc.swapChainPanel = surface->GetWinUISwapChainPanel();
+            descriptor.nextInChain = &winuiDesc.chain;
+            break;
+        case Surface::Type::WaylandSurface:
+            waylandDesc.chain.sType = WGPUSType_SurfaceSourceWaylandSurface;
+            waylandDesc.display = surface->GetWaylandDisplay();
+            waylandDesc.surface = surface->GetWaylandSurface();
+            descriptor.nextInChain = &waylandDesc.chain;
+            break;
+        case Surface::Type::XlibWindow:
+            xlibDesc.chain.sType = WGPUSType_SurfaceSourceXlibWindow;
+            xlibDesc.display = surface->GetXDisplay();
+            xlibDesc.window = surface->GetXWindow();
+            descriptor.nextInChain = &xlibDesc.chain;
+            break;
+        default:
+            DAWN_UNREACHABLE();
+            return DAWN_INTERNAL_ERROR("Unknown surface type");
+    }
+
+    WGPUSurface innerSurface =
+        mBackend->GetFunctions().instanceCreateSurface(mBackend->GetInnerInstance(), &descriptor);
+    DAWN_ASSERT(innerSurface);
+
+    WGPUSurfaceCapabilities innerCapabilities = WGPU_SURFACE_CAPABILITIES_INIT;
+    WGPUStatus status = mBackend->GetFunctions().surfaceGetCapabilities(innerSurface, mInnerAdapter,
+                                                                        &innerCapabilities);
+
+    if (status != WGPUStatus_Success) {
+        mBackend->GetFunctions().surfaceRelease(innerSurface);
+        return DAWN_INTERNAL_ERROR("Failed to get inner adapter capabilities");
+    }
+
     PhysicalDeviceSurfaceCapabilities capabilities;
-    capabilities.usages = wgpu::TextureUsage::RenderAttachment;
-    capabilities.formats = {wgpu::TextureFormat::BGRA8Unorm};
-    capabilities.presentModes = {wgpu::PresentMode::Fifo};
-    capabilities.alphaModes = {wgpu::CompositeAlphaMode::Opaque};
+    capabilities.usages = static_cast<wgpu::TextureUsage>(innerCapabilities.usages);
+    for (size_t i = 0; i < innerCapabilities.formatCount; ++i) {
+        capabilities.formats.push_back(FromAPI(innerCapabilities.formats[i]));
+    }
+    for (size_t i = 0; i < innerCapabilities.presentModeCount; ++i) {
+        capabilities.presentModes.push_back(FromAPI(innerCapabilities.presentModes[i]));
+    }
+    for (size_t i = 0; i < innerCapabilities.alphaModeCount; ++i) {
+        capabilities.alphaModes.push_back(FromAPI(innerCapabilities.alphaModes[i]));
+    }
+
+    mBackend->GetFunctions().surfaceCapabilitiesFreeMembers(innerCapabilities);
+    mBackend->GetFunctions().surfaceRelease(innerSurface);
+
     return capabilities;
 }
 
