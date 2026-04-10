@@ -164,16 +164,11 @@ class CaptureContext {
     // Special case for Device as it's not a RecordableObject
     // so we don't want to call AddResourceAndGetId on it.
     template <>
-    void CaptureSetLabel(Device* object, const std::string& label) {
-        schema::RootCommandSetLabelCmd data{{
-            .data{{
-                .id = schema::kDeviceId,
-                .type = schema::ObjectType::Device,
-                .label = label,
-            }},
-        }};
-        Serialize(*this, data);
-    }
+    void CaptureSetLabel(Device* object, const std::string& label);
+
+    // Special case for Surface as it's not a RecordableObject
+    template <>
+    void CaptureSetLabel(Surface* object, const std::string& label);
 
     void WriteCommandBytes(const void* data, size_t size);
 
@@ -187,6 +182,13 @@ class CaptureContext {
                                         const TexelCopyBufferLayout& dataLayout,
                                         const TexelExtent3D& writeSizePixel);
 
+    MaybeError CaptureSurfaceConfigure(Surface* surface, const SurfaceConfiguration* config);
+    MaybeError CaptureSurfacePresent(Surface* surface);
+    MaybeError CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture);
+
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(Surface* surface);
+    schema::ObjectId GetId(Surface* surface);
+
     WGPUBuffer GetCopyBuffer();
     WGPUBuffer GetBlitTextureToBufferBuffer();
 
@@ -197,6 +199,8 @@ class CaptureContext {
     MaybeError CaptureCreation(schema::ObjectId id,
                                const std::string& label,
                                RecordableObject* object);
+    MaybeError CaptureSurfaceCreation(schema::ObjectId id, Surface* surface);
+
     MaybeError CaptureContentIfNeeded(schema::ObjectId id,
                                       bool newResource,
                                       RecordableObject* object);
@@ -207,10 +211,11 @@ class CaptureContext {
 
     // TODO(crbug.com/485825675): Investigate why one of the 3 raw_ptr/raw_ref
     // is/are dangling and if we can make them all non-dangling.
-    raw_ptr<Device, DanglingUntriaged> mDevice;
+    Ref<Device> mDevice;
     const raw_ref<std::ostream, DanglingUntriaged> mCommandStream;
     const raw_ref<std::ostream, DanglingUntriaged> mContentStream;
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
+    absl::flat_hash_map<Ref<Surface>, schema::ObjectId> mSurfaceIds;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;

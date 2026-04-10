@@ -55,6 +55,9 @@ class Texture final : public TextureBase, public RecordableObject, public Object
                                       schema::ObjectId id,
                                       bool newResource) override;
 
+    void SetInnerHandleForSwapChain(WGPUTexture innerHandle);
+    void SetIsBackBuffer(bool isBackBuffer);
+
   private:
     Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
     Texture(Device* device,
@@ -66,6 +69,7 @@ class Texture final : public TextureBase, public RecordableObject, public Object
 
     ExecutionSerial OnEndAccess() override;
 
+    bool mIsBackBuffer = false;
     bool mPendingBeginAccess = false;
     bool mPendingConcurrentRead = false;
     bool mPendingInitialized = false;

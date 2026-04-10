@@ -44,7 +44,8 @@ class DawnRootCommandVisitor;
 // In the future we'd like to be able to replay up to a certain point.
 class ReplayImpl : public Replay {
   public:
-    static std::unique_ptr<ReplayImpl> Create(wgpu::Device device,
+    static std::unique_ptr<ReplayImpl> Create(wgpu::Instance instance,
+                                              wgpu::Device device,
                                               std::unique_ptr<Capture> capture);
 
     MaybeError Play();
@@ -64,7 +65,7 @@ class ReplayImpl : public Replay {
     const std::string& GetLabel(schema::ObjectId id) const;
 
   private:
-    ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture);
+    ReplayImpl(wgpu::Instance instance, wgpu::Device device, std::unique_ptr<CaptureImpl> capture);
 
     std::unique_ptr<DawnRootCommandVisitor> mVisitor;
     std::unique_ptr<CaptureImpl> mCapture;
