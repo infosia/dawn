@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec060b3c_741e1b10",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96dad8dd_a0ffe534",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e248b68d_6b516c1c",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33ac8338_6d494edb",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Where else would this code be used?",
+      "parentUuid": "e248b68d_6b516c1c",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33afb52d_c977e2d4",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
@@ -48,6 +84,30 @@
       "writtenOn": "2026-04-08T14:09:50Z",
       "side": 1,
       "message": "```suggestion\n                coords \u003d b.Divide(b.Add(i_j, b.Splat(ty.vec2f(), b.Constant(0.5_f))), fdim)-\u003eResult();\n```",
+      "range": {
+        "startLine": 858,
+        "startChar": 15,
+        "endLine": 861,
+        "endChar": 44
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff759a91_dd76ba53",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Is this really clearer? I think the naming helps with understanding.\nHowever I will check on where gatherUV is used.",
+      "parentUuid": "33afb52d_c977e2d4",
       "range": {
         "startLine": 858,
         "startChar": 15,
@@ -83,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b01b376_483322b6",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "I dont think this can be moved because of side effect next arg",
+      "parentUuid": "23efac27_fe1b06c9",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 0
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "361b3017_582efd7c",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
@@ -94,6 +178,24 @@
       "writtenOn": "2026-04-08T14:09:50Z",
       "side": 1,
       "message": "Can we split this into 2 separate if statements, the polyfills are completely different so it\u0027s confusing they\u0027re combined here.",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edc24cfb_be4d2762",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 899,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361b3017_582efd7c",
       "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +223,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd163932_b4cdee57",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b647ed10_22369dfe",
+      "range": {
+        "startLine": 919,
+        "startChar": 0,
+        "endLine": 920,
+        "endChar": 81
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa95f6ac_87e03a26",
@@ -134,6 +260,30 @@
       "writtenOn": "2026-04-08T14:09:50Z",
       "side": 1,
       "message": "Maybe something like: (and for others)\n\n\n```suggestion\n                    // top \u003d mix(result.w, result.z, fract_bilinear.x)\n                    // where result.w \u003d\u003d (i,   j)\n                    //       result.z \u003d\u003d (i+1, j)\n```",
+      "range": {
+        "startLine": 929,
+        "startChar": 0,
+        "endLine": 930,
+        "endChar": 40
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95c8658d_8eec6a93",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-10T17:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa95f6ac_87e03a26",
       "range": {
         "startLine": 929,
         "startChar": 0,
