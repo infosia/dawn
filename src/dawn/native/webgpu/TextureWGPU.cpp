@@ -51,11 +51,18 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
 }
 
 // static
-ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
+Ref<Texture> Texture::CreateFromSharedTextureMemory(
     const SharedTextureMemory* memory,
     const UnpackedPtr<TextureDescriptor>& descriptor) {
     Device* device = ToBackend(memory->GetDevice());
     return AcquireRef(new Texture(device, descriptor, memory));
+}
+
+// static
+Ref<Texture> Texture::CreateFromSurfaceTexture(Device* device,
+                                               const UnpackedPtr<TextureDescriptor>& descriptor,
+                                               const WGPUSurfaceTexture& surfaceTexture) {
+    return AcquireRef(new Texture(device, descriptor, surfaceTexture));
 }
 
 struct ComboTextureDescriptor {
@@ -127,6 +134,22 @@ Texture::Texture(Device* device,
     mInnerHandle =
         device->wgpu->sharedTextureMemoryCreateTexture(memory->GetInnerHandle(), &comboDesc.desc);
     mSharedResourceMemoryContents = memory->GetContents();
+
+    // TODO(crbug.com/500368961): Generalize wgpu::SharedTextureMemoryD3DSwapchainBeginState
+    // to all platform and use that to indicate if it's a SwapChain texture (assigning
+    // mIsSurfaceTexture) and mark frame boundary.
+
+    DAWN_ASSERT(mInnerHandle);
+}
+
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 const WGPUSurfaceTexture& surfaceTexture)
+    : TextureBase(device, descriptor),
+      RecordableObject(schema::ObjectType::Texture),
+      ObjectWGPU(device->wgpu->textureRelease) {
+    mInnerHandle = surfaceTexture.texture;
+    mIsSurfaceTexture = true;
 
     DAWN_ASSERT(mInnerHandle);
 }

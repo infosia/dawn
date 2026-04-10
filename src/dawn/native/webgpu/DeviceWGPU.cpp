@@ -65,6 +65,7 @@
 #include "dawn/native/webgpu/ShaderModuleWGPU.h"
 #include "dawn/native/webgpu/SharedFenceWGPU.h"
 #include "dawn/native/webgpu/SharedTextureMemoryWGPU.h"
+#include "dawn/native/webgpu/SwapChainWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "tint/tint.h"
@@ -278,7 +279,7 @@ ResultOrError<Ref<ShaderModuleBase>> Device::CreateShaderModuleImpl(
 ResultOrError<Ref<SwapChainBase>> Device::CreateSwapChainImpl(Surface* surface,
                                                               SwapChainBase* previousSwapChain,
                                                               const SurfaceConfiguration* config) {
-    return Ref<SwapChainBase>{nullptr};
+    return SwapChain::Create(this, surface, previousSwapChain, config);
 }
 ResultOrError<Ref<TextureBase>> Device::CreateTextureImpl(
     const UnpackedPtr<TextureDescriptor>& descriptor) {
