@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "751e255b_e87c4096",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:43:35Z",
+      "side": 1,
+      "message": "There was a suggestion to run `nanobench` as the best indicator of regressions here. Is that something that can easily be done? Dawn folks can best comment on how important it is to do that though.",
+      "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7178a2bd_9b83db2d",
@@ -14,6 +31,23 @@
       "writtenOn": "2026-04-10T21:42:58Z",
       "side": 1,
       "message": "I skimmed through every usage of DAWN_UNREACHABLE and I think this will be OK.\nI was looking for cases where it looked like we meant \"crash in debug but ignore in release\". (I *did* find some cases where there\u0027s code after a DAWN_UNREACHABLE, at least some of these were incorrectly treating it as a \"crash in debug, noop in release\".) I also tried to use Gemini to slightly more smartly look for weird cases but didn\u0027t find anything else.\n\nIf this sticks, we should change all DAWN_CHECK(false) to DAWN_UNREACHABLE.",
+      "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0e63c24_898b3d20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:43:35Z",
+      "side": 1,
+      "message": "Seems fine to me but final sign-off should come from core Dawn folks.",
       "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
