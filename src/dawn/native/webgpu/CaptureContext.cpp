@@ -78,14 +78,28 @@ MaybeError CaptureContext::CaptureCreation(schema::ObjectId id,
     return object->CaptureCreationParameters(*this);
 }
 
+template <>
+void CaptureContext::CaptureSetLabel(Device* object, const std::string& label) {
+    schema::RootCommandSetLabelCmd data{{
+        .data{{
+            .id = schema::kDeviceId,
+            .type = schema::ObjectType::Device,
+            .label = label,
+        }},
+    }};
+    Serialize(*this, data);
+}
+
 CaptureContext::CaptureContext(Device* device,
                                std::ostream& commandStream,
                                std::ostream& contentStream)
     : mDevice(device), mCommandStream(commandStream), mContentStream(contentStream) {}
 
 CaptureContext::~CaptureContext() {
+    auto& wgpu = mDevice->wgpu;
     if (mCopyBuffer) {
-        mDevice->wgpu->bufferDestroy(mCopyBuffer);
+        wgpu->bufferDestroy(mCopyBuffer);
+        wgpu->bufferRelease(mCopyBuffer);
     }
 }
 
