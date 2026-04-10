@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c08980e1_226206b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-10T17:02:12Z",
+      "side": 1,
+      "message": "Seems like a good idea to me, given that Chromium uses a CHECK for NOTREACHED.",
+      "revId": "f52822a52e342e60a66a8335c8a639e18b5abf5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
