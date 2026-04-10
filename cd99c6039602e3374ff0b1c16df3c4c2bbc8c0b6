@@ -3,6 +3,104 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4d4c451_b85620b3",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Still a little confused by this. Won\u0027t they still always mismatch here, because you haven\u0027t updated any of the parameters yet? So the converted buffer arg type would never match the non-converted param type?",
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5032b24_43ecb740",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Nit: `CallWithResult` should be slightly more efficient here\n```suggestion\n                b.CallWithResult(call-\u003eDetachResult(), core::BuiltinFn::kArrayLength,\n                                 call-\u003eArgs()[0]);\n```",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 67
+      },
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f112c15_998ade77",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Nit: again `WithResult` more efficient when possible.\n```suggestion\n            new_call \u003d b.CallExplicitWithResult\u003cmsl::ir::BuiltinCall\u003e(\n                call-\u003eDetachResult(), msl::BuiltinFn::kPointerOffset,\n                Vector{call-\u003eExplicitTemplateParams()[0]}, call-\u003eArgs()[0], offset_arg);\n            call-\u003eDestroy();\n        });\n\n        TraverseUses(new_call-\u003eResult(), new_call-\u003eResult()-\u003eType()-\u003eUnwrapPtr(), data);\n```",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 84
+      },
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59082187_d9b3140c",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Nit: are you referring to `LowerParameters()` here?",
+      "fixSuggestions": [
+        {
+          "fixId": "c5b1035f_c9475fb7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+              "range": {
+                "startLine": 351,
+                "startChar": 0,
+                "endLine": 352,
+                "endChar": 0
+              },
+              "replacement": "    // These should only be encountered as a result of `LowerParameters()`.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "febc5fd8_22c1e8c9",
         "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
         "patchSetId": 9
@@ -14,6 +112,98 @@
       "writtenOn": "2026-04-10T21:16:39Z",
       "side": 1,
       "message": "This might have a bug actually. If we approach a previously handled target function. We might not traverse the construct we made.",
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04113741_22c0d5a4",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Related to below - I think we\u0027re missing test coverage of this and I\u0027m not sure I follow the logic.\n(I put an `abort()` here and no tests hit it)",
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a19b105_feb99c09",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this `updated_func_args_` map. The HashSet is initialized here with `param_index`, but I don\u0027t see anywhere else that adds to that set so it will only every have one entry?",
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04ca39ed_406eb1e9",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "I think this matches our typical `auto* struct_ty \u003d buffer_bundles_.GetOrCreate(arg-\u003eType(), ...);` pattern.",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 16
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f58036c4_b6c10eeb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+              "range": {
+                "startLine": 523,
+                "startChar": 0,
+                "endLine": 536,
+                "endChar": 0
+              },
+              "replacement": "        const core::type::Struct* struct_ty \u003d buffer_bundles_.GetOrCreate(\n            arg-\u003eType(), [\u0026] {\n              return ty.WgslInternalStruct(\n                  ir.symbols.Register(\"buffer_bundle_\" + std::to_string(bundle_name_suffix_++)),\n                  {\n                      {ir.symbols.Register(\"buffer\"), arg-\u003eType()},\n                      {ir.symbols.Register(\"offset\"), ty.u32()},\n                      {ir.symbols.Register(\"size\"), ty.u32()},\n                  });\n            });\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a30210a_43cba227",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "`WgslInternalStruct` is meant to just be for the builtin structs like `modf` result that are just implicitly declared. You should just be able to use a regular struct here.",
       "revId": "cd99c6039602e3374ff0b1c16df3c4c2bbc8c0b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

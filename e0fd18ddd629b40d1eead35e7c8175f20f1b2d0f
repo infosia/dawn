@@ -248,6 +248,24 @@
       "parentUuid": "7e18e4cc_62c1fbb1",
       "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4f05eb_c08322e7",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-10T21:32:13Z",
+      "side": 1,
+      "message": "Discussed offline, this seems reasonable due to the need to handle cases where the original source could be both a buffer and a regular runtime-sized array declaration.",
+      "parentUuid": "37dbb9d9_b131d472",
+      "revId": "e0fd18ddd629b40d1eead35e7c8175f20f1b2d0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
