@@ -623,10 +623,7 @@ struct State {
         bitcast->Destroy();
     }
 
-    // Bitcast 16-bit vector types (f16 or u16) to 32-bit types by converting to
-    // f32 and calling f32tof16 to get the bits. For u16 sources, an asfloat16 is
-    // applied first. This should be safe, because the conversion is precise for
-    // finite and infinite f16 values as they are exactly representable by f32.
+    // Bitcast 16-bit vector types (f16 or u16) to 32-bit types by bitcasting via u16.
     core::ir::Function* CreateBitcastFrom16Bit(const core::type::Type* src_type,
                                                const core::type::Type* dst_type) {
         return bitcast_funcs_.GetOrAdd(
@@ -635,21 +632,22 @@ struct State {
 
                 auto* src_vec = src_type->As<core::type::Vector>();
                 bool src_is_u16 = src_vec->Type()->Is<core::type::U16>();
-                auto* f16_vec_ty = src_is_u16 ? ty.MatchWidth(ty.f16(), src_vec) : src_type;
+                auto* u16_vec_ty = src_is_u16 ? src_type : ty.MatchWidth(ty.u16(), src_vec);
 
                 // Generates a helper that packs a 16-bit vector into a 32-bit scalar.
-                // For a vec2<f16> source, the emitted HLSL looks like:
-                //
-                //   uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
-                //     uint2 r = f32tof16(float2(src));
-                //     return uint((r.x & 65535u) | ((r.y & 65535u) << 16u));
-                //   }
-                //
-                // For a vec2<u16> source, asfloat16 is applied first:
+                // For a vec2<u16> source, the emitted HLSL looks like:
                 //
                 //   uint tint_bitcast_from_u16(vector<uint16_t, 2> src) {
-                //     uint2 r = f32tof16(float2(asfloat16(src)));
-                //     return uint((r.x & 65535u) | ((r.y & 65535u) << 16u));
+                //     uint2 r_uint = (uint2(src) & 65535u.xx) << uint2(0u, 16u);
+                //     return r_uint.x | r_uint.y;
+                //   }
+                //
+                // For a vec2<f16> source, asuint16 is applied first:
+                //
+                //   uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
+                //     vector<uint16_t, 2> r = asuint16(src);
+                //     uint2 r_uint = (uint2(r) & 65535u.xx) << uint2(0u, 16u);
+                //     return r_uint.x | r_uint.y;
                 //   }
 
                 auto fn_name =
@@ -661,56 +659,37 @@ struct State {
                 f->SetParams({src});
 
                 b.Append(f->Block(), [&] {
-                    // If source is u16, first reinterpret as f16 via asfloat16
-                    core::ir::Value* f16_src = src;
-                    if (src_is_u16) {
-                        f16_src =
-                            b.Call<hlsl::ir::BuiltinCall>(f16_vec_ty, BuiltinFn::kAsfloat16, src)
+                    // If source is f16, first reinterpret as u16 via asuint16
+                    core::ir::Value* u16_src = src;
+                    if (!src_is_u16) {
+                        u16_src =
+                            b.Call<hlsl::ir::BuiltinCall>(u16_vec_ty, BuiltinFn::kAsuint16, src)
                                 ->Result();
                     }
 
-                    auto* cast = b.Convert(ty.MatchWidth(ty.f32(), src_vec), f16_src);
-                    auto* r =
-                        b.Let("r", b.Call<hlsl::ir::BuiltinCall>(ty.MatchWidth(ty.u32(), src_vec),
-                                                                 hlsl::BuiltinFn::kF32Tof16, cast));
+                    auto* uint_src_ty = ty.MatchWidth(ty.u32(), src_type);
+                    core::ir::Instruction* v = b.Convert(uint_src_ty, u16_src);
 
-                    auto* x = b.And(b.Swizzle(ty.u32(), r, {0_u}), 0xffff_u);
-                    auto* y = b.ShiftLeft(b.And(b.Swizzle(ty.u32(), r, {1_u}), 0xffff_u), 16_u);
-
-                    auto* s = b.Or(x, y);
-                    core::ir::InstructionResult* result = nullptr;
-
-                    switch (src_vec->Width()) {
-                        case 2: {
-                            result = s->Result();
-                            break;
-                        }
-                        case 4: {
-                            auto* z = b.And(b.Swizzle(ty.u32(), r, {2_u}), 0xffff_u);
-                            auto* w =
-                                b.ShiftLeft(b.And(b.Swizzle(ty.u32(), r, {3_u}), 0xffff_u), 16_u);
-
-                            auto* t = b.Or(z, w);
-                            auto* cons = b.Construct(ty.vec2u(), s, t);
-                            result = cons->Result();
-                            break;
-                        }
-                        default:
-                            TINT_IR_UNREACHABLE(ir);
+                    auto width = src_vec->Width();
+                    v = b.And(v, b.Splat(uint_src_ty, 0xffff_u));
+                    if (width == 2) {
+                        v = b.ShiftLeft(v, b.Construct(uint_src_ty, 0_u, 16_u));
+                        auto* a1 = b.Access(ty.u32(), v, 0_u);
+                        v = b.Or(a1, b.Access(ty.u32(), v, 1_u));
+                    } else {
+                        v = b.ShiftLeft(v, b.Construct(uint_src_ty, 0_u, 16_u, 0_u, 16_u));
+                        auto* a1 = b.Access(ty.u32(), v, 0_u);
+                        auto* v1 = b.Or(a1, b.Access(ty.u32(), v, 1_u));
+                        auto* a2 = b.Access(ty.u32(), v, 2_u);
+                        auto* v2 = b.Or(a2, b.Access(ty.u32(), v, 3_u));
+                        v = b.Construct(ty.vec2(ty.u32()), v1, v2);
                     }
-
-                    tint::Switch(
-                        dst_type->DeepestElement(),  //
-                        [&](const core::type::F32*) {
-                            b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsfloat,
-                                                                      result));
-                        },
-                        [&](const core::type::I32*) {
-                            b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsint,
-                                                                      result));
-                        },
-                        [&](const core::type::U32*) { b.Return(f, result); },  //
-                        TINT_ICE_ON_NO_MATCH);
+                    if (dst_type->DeepestElement()->Is<core::type::F32>()) {
+                        v = b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsfloat, v);
+                    } else if (dst_type->DeepestElement()->Is<core::type::I32>()) {
+                        v = b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsint, v);
+                    }
+                    b.Return(f, v);
                 });
                 return f;
             });
@@ -728,9 +707,7 @@ struct State {
     }
 
     // Bitcast 32-bit types to 16-bit vector types (f16 or u16) by reinterpreting
-    // their bits as f16 using f16tof32. For u16 destinations, an additional asuint16
-    // is applied. This should be safe, because the conversion is precise for finite
-    // and infinite f16 values as they are exactly representable by f32.
+    // their bits as u16.
     core::ir::Function* CreateBitcastTo16Bit(const core::type::Type* src_type,
                                              const core::type::Type* dst_type) {
         return bitcast_funcs_.GetOrAdd(
@@ -739,25 +716,27 @@ struct State {
 
                 auto* dst_vec = dst_type->As<core::type::Vector>();
                 bool dst_is_u16 = dst_vec->Type()->Is<core::type::U16>();
-                auto* f16_vec_ty = dst_is_u16 ? ty.MatchWidth(ty.f16(), dst_vec) : dst_type;
+                auto* u16_vec_ty = dst_is_u16 ? dst_type : ty.MatchWidth(ty.u16(), dst_vec);
 
-                // Generates a helper that unpacks a 32-bit scalar into a 16-bit vector.
-                // For a vec2<f16> destination, the emitted HLSL looks like:
-                //
-                //   vector<float16_t, 2> tint_bitcast_to_f16(float src) {
-                //     uint v = asuint(src);
-                //     float t_low = f16tof32(v & 65535u);
-                //     float t_high = f16tof32((v >> 16u) & 65535u);
-                //     return vector<float16_t, 2>(t_low.x, t_high.x);
-                //   }
-                //
-                // For a vec2<u16> destination, asuint16 is applied to the final f16 result:
+                // Generates a helper that converts via 16-bit integers.
+                // For a vec2<u16> destination, the emitted HLSL looks like:
                 //
                 //   vector<uint16_t, 2> tint_bitcast_to_u16(float src) {
                 //     uint v = asuint(src);
-                //     float t_low = f16tof32(v & 65535u);
-                //     float t_high = f16tof32((v >> 16u) & 65535u);
-                //     return asuint16(vector<float16_t, 2>(t_low.x, t_high.x));
+                //     uint2 v2 = v.xx;
+                //     vector<uint16_t, 2> r =
+                //       vector<uint16_t, 2>((v2 >> uint2(0u, 16u)) & (65535u).xx);
+                //     return r;
+                //   }
+                //
+                // For a vec2<f16> destination, asfloat16 is applied to the final u16 result:
+                //
+                //   vector<float16_t, 2> tint_bitcast_to_f16(float src) {
+                //     uint v = asuint(src);
+                //     uint2 v2 = v.xx;
+                //     vector<uint16_t, 2> r =
+                //       vector<uint16_t, 2>((v2 >> uint2(0u, 16u)) & (65535u).xx);
+                //     return asfloat16(r);
                 //   }
 
                 auto fn_name =
@@ -769,7 +748,6 @@ struct State {
                 f->SetParams({src});
                 b.Append(f->Block(), [&] {
                     const core::type::Type* uint_ty = ty.MatchWidth(ty.u32(), src_type);
-                    const core::type::Type* float_ty = ty.MatchWidth(ty.f32(), src_type);
 
                     core::ir::Instruction* v = nullptr;
                     tint::Switch(
@@ -786,55 +764,29 @@ struct State {
                         TINT_ICE_ON_NO_MATCH);
 
                     bool src_vec = src_type->Is<core::type::Vector>();
+                    const core::type::Type* uint_dst_ty = ty.MatchWidth(ty.u32(), dst_type);
 
-                    core::ir::Value* mask = nullptr;
-                    core::ir::Value* shift = nullptr;
+                    // v is now the uint bitcast of src
+                    core::ir::Instruction* shifted = nullptr;
+                    core::ir::Instruction* masked = nullptr;
+                    // Make a double wide src and then shift and mask the result to produce u16
+                    // values.
                     if (src_vec) {
-                        mask = b.Let("mask", b.Splat(uint_ty, 0xffff_u))->Result();
-                        shift = b.Let("shift", b.Splat(uint_ty, 16_u))->Result();
+                        // Since the src was vec2, we swizzle so the value is
+                        // equivalent to: src.xxyy
+                        auto* swizzle = b.Swizzle(uint_dst_ty, v, {0_u, 0_u, 1_u, 1_u});
+                        shifted = b.ShiftRight(
+                            swizzle, b.Construct(uint_dst_ty, 0_u, 16_u, 0_u, 16_u)->Result());
                     } else {
-                        mask = b.Value(b.Constant(0xffff_u));
-                        shift = b.Value(b.Constant(16_u));
+                        v = b.Construct(uint_dst_ty, v, v);
+                        shifted = b.ShiftRight(v, b.Construct(uint_dst_ty, 0_u, 16_u)->Result());
                     }
-
-                    auto* l = b.And(v, mask);
-                    auto* t_low = b.Let(
-                        "t_low", b.Call<hlsl::ir::BuiltinCall>(float_ty, BuiltinFn::kF16Tof32, l));
-
-                    auto* h = b.And(b.ShiftRight(v, shift), mask);
-                    auto* t_high = b.Let(
-                        "t_high", b.Call<hlsl::ir::BuiltinCall>(float_ty, BuiltinFn::kF16Tof32, h));
-
-                    core::ir::Instruction* x = nullptr;
-                    core::ir::Instruction* y = nullptr;
-                    if (src_vec) {
-                        x = b.Swizzle(ty.f32(), t_low, {0_u});
-                        y = b.Swizzle(ty.f32(), t_high, {0_u});
-                    } else {
-                        x = t_low;
-                        y = t_high;
+                    masked = b.And(shifted, b.Splat(uint_dst_ty, 0xffff_u));
+                    core::ir::Instruction* v16 = b.Let("v16", b.Convert(u16_vec_ty, masked));
+                    if (!dst_is_u16) {
+                        v16 = b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsfloat16, v16);
                     }
-                    x = b.Convert(ty.f16(), x);
-                    y = b.Convert(ty.f16(), y);
-
-                    auto dst_width = dst_vec->Width();
-                    TINT_IR_ASSERT(ir, dst_width == 2 || dst_width == 4);
-
-                    core::ir::Value* f16_result = nullptr;
-                    if (dst_width == 2) {
-                        f16_result = b.Construct(f16_vec_ty, x, y)->Result();
-                    } else {
-                        auto* z = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_low, {1_u}));
-                        auto* w = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_high, {1_u}));
-                        f16_result = b.Construct(f16_vec_ty, x, y, z, w)->Result();
-                    }
-
-                    if (dst_is_u16) {
-                        b.Return(f, b.Call<hlsl::ir::BuiltinCall>(dst_type, BuiltinFn::kAsuint16,
-                                                                  f16_result));
-                    } else {
-                        b.Return(f, f16_result);
-                    }
+                    b.Return(f, v16);
                 });
                 return f;
             });

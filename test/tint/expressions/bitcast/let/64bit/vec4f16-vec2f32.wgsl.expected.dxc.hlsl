@@ -1,7 +1,8 @@
 
 float2 tint_bitcast_from_f16(vector<float16_t, 4> src) {
-  uint4 r = f32tof16(float4(src));
-  return asfloat(uint2(((r.x & 65535u) | ((r.y & 65535u) << 16u)), ((r.z & 65535u) | ((r.w & 65535u) << 16u))));
+  uint4 v = (uint4(asuint16(src)) & (65535u).xxxx);
+  uint4 v_1 = (v << uint4(0u, 16u, 0u, 16u));
+  return asfloat(uint2((v_1.x | v_1.y), (v_1.z | v_1.w)));
 }
 
 [numthreads(1, 1, 1)]

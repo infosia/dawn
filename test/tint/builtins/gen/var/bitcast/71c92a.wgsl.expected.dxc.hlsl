@@ -5,14 +5,8 @@
 RWByteAddressBuffer prevent_dce : register(u0);
 vector<float16_t, 4> tint_bitcast_to_f16(int2 src) {
   uint2 v = asuint(src);
-  uint2 mask = (65535u).xx;
-  uint2 shift = (16u).xx;
-  float2 t_low = f16tof32((v & mask));
-  float2 t_high = f16tof32(((v >> shift) & mask));
-  float16_t v_1 = float16_t(t_low.x);
-  float16_t v_2 = float16_t(t_high.x);
-  float16_t v_3 = float16_t(t_low.y);
-  return vector<float16_t, 4>(v_1, v_2, v_3, float16_t(t_high.y));
+  vector<uint16_t, 4> v16 = vector<uint16_t, 4>(((v.xxyy >> uint4(0u, 16u, 0u, 16u)) & (65535u).xxxx));
+  return asfloat16(v16);
 }
 
 vector<float16_t, 4> bitcast_71c92a() {
@@ -32,14 +26,8 @@ void fragment_main() {
 RWByteAddressBuffer prevent_dce : register(u0);
 vector<float16_t, 4> tint_bitcast_to_f16(int2 src) {
   uint2 v = asuint(src);
-  uint2 mask = (65535u).xx;
-  uint2 shift = (16u).xx;
-  float2 t_low = f16tof32((v & mask));
-  float2 t_high = f16tof32(((v >> shift) & mask));
-  float16_t v_1 = float16_t(t_low.x);
-  float16_t v_2 = float16_t(t_high.x);
-  float16_t v_3 = float16_t(t_low.y);
-  return vector<float16_t, 4>(v_1, v_2, v_3, float16_t(t_high.y));
+  vector<uint16_t, 4> v16 = vector<uint16_t, 4>(((v.xxyy >> uint4(0u, 16u, 0u, 16u)) & (65535u).xxxx));
+  return asfloat16(v16);
 }
 
 vector<float16_t, 4> bitcast_71c92a() {
@@ -69,14 +57,8 @@ struct vertex_main_outputs {
 
 vector<float16_t, 4> tint_bitcast_to_f16(int2 src) {
   uint2 v = asuint(src);
-  uint2 mask = (65535u).xx;
-  uint2 shift = (16u).xx;
-  float2 t_low = f16tof32((v & mask));
-  float2 t_high = f16tof32(((v >> shift) & mask));
-  float16_t v_1 = float16_t(t_low.x);
-  float16_t v_2 = float16_t(t_high.x);
-  float16_t v_3 = float16_t(t_low.y);
-  return vector<float16_t, 4>(v_1, v_2, v_3, float16_t(t_high.y));
+  vector<uint16_t, 4> v16 = vector<uint16_t, 4>(((v.xxyy >> uint4(0u, 16u, 0u, 16u)) & (65535u).xxxx));
+  return asfloat16(v16);
 }
 
 vector<float16_t, 4> bitcast_71c92a() {
@@ -86,16 +68,16 @@ vector<float16_t, 4> bitcast_71c92a() {
 }
 
 VertexOutput vertex_main_inner() {
-  VertexOutput v_4 = (VertexOutput)0;
-  v_4.pos = (0.0f).xxxx;
-  v_4.prevent_dce = bitcast_71c92a();
-  VertexOutput v_5 = v_4;
-  return v_5;
+  VertexOutput v_1 = (VertexOutput)0;
+  v_1.pos = (0.0f).xxxx;
+  v_1.prevent_dce = bitcast_71c92a();
+  VertexOutput v_2 = v_1;
+  return v_2;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_6 = vertex_main_inner();
-  vertex_main_outputs v_7 = {v_6.prevent_dce, v_6.pos};
-  return v_7;
+  VertexOutput v_3 = vertex_main_inner();
+  vertex_main_outputs v_4 = {v_3.prevent_dce, v_3.pos};
+  return v_4;
 }
 

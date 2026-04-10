@@ -11,10 +11,9 @@ cbuffer cbuffer_u : register(b0) {
 RWByteAddressBuffer s : register(u1);
 vector<float16_t, 2> tint_bitcast_to_f16(uint src) {
   uint v = src;
-  float t_low = f16tof32((v & 65535u));
-  float t_high = f16tof32(((v >> 16u) & 65535u));
-  float16_t v_1 = float16_t(t_low);
-  return vector<float16_t, 2>(v_1, float16_t(t_high));
+  uint2 v_1 = uint2(v, v);
+  vector<uint16_t, 2> v16 = vector<uint16_t, 2>(((v_1 >> uint2(0u, 16u)) & (65535u).xx));
+  return asfloat16(v16);
 }
 
 void v_2(uint offset, matrix<float16_t, 3, 2> obj) {

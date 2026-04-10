@@ -1,7 +1,8 @@
 
 uint tint_bitcast_from_f16(vector<float16_t, 2> src) {
-  uint2 r = f32tof16(float2(src));
-  return ((r.x & 65535u) | ((r.y & 65535u) << 16u));
+  uint2 v = (uint2(asuint16(src)) & (65535u).xx);
+  uint2 v_1 = (v << uint2(0u, 16u));
+  return (v_1.x | v_1.y);
 }
 
 [numthreads(1, 1, 1)]
