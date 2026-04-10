@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e05b173_4039b6b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-10T21:48:55Z",
+      "side": 1,
+      "message": "I don\u0027t think this change is using the perf test infrastructure correctly. IIUC, the number of iterations should be determined by the infra already and you shouldn\u0027t need to loop in the `Step()` function. I would suggest taking a look at the other examples in the directory.\n\nAlso, some more documentation about what each perf test is trying to measure would help a lot for posterity and reviewing.",
+      "revId": "3248b015948ef35a2111951e70c01925099099ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
