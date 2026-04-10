@@ -161,8 +161,12 @@ void WGPUDeviceCallbackInfos::CallLoggingCallback(WGPULoggingType type, WGPUStri
 }
 
 void WGPUDeviceCallbackInfos::SetLoggingCallbackInfo(const WGPULoggingCallbackInfo& callbackInfo) {
-    mCallbackInfos.Use<NotifyType::None>(
-        [&](auto callbackInfos) { callbackInfos->logging = callbackInfo; });
+    mCallbackInfos.Use<NotifyType::None>([&](auto callbackInfos) {
+        // Wait until the callbacks are not in flight before setting the logging callback. This also
+        // ensures that it is safe to deallocate the original callback after this call.
+        callbackInfos.Wait([](auto& x) { return x.semaphore == 0; });
+        callbackInfos->logging = callbackInfo;
+    });
 }
 
 void WGPUDeviceCallbackInfos::Clear() {
