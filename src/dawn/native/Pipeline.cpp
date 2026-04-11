@@ -260,7 +260,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
                            StringView label,
                            std::vector<StageAndDescriptor> stages)
     : ApiObjectBase(device, label), mLayout(layout) {
-    DAWN_ASSERT(!stages.empty());
+    DAWN_CHECK(!stages.empty());
 
     for (const StageAndDescriptor& stage : stages) {
         // Extract argument for this stage.
@@ -269,7 +269,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
         const char* entryPointName = stage.entryPoint.c_str();
 
         const EntryPointMetadata& metadata = module->GetEntryPoint(entryPointName);
-        DAWN_ASSERT(metadata.stage == shaderStage);
+        DAWN_CHECK(metadata.stage == shaderStage);
 
         // Record them internally.
         bool isFirstStage = mStageMask == wgpu::ShaderStage::None;
@@ -289,7 +289,7 @@ PipelineBase::PipelineBase(DeviceBase* device,
             mMinBufferSizes = std::move(stageMinBufferSizes);
         } else {
             for (auto [group, minBufferSize] : Enumerate(mMinBufferSizes)) {
-                DAWN_ASSERT(stageMinBufferSizes[group].size() == minBufferSize.size());
+                DAWN_CHECK(stageMinBufferSizes[group].size() == minBufferSize.size());
 
                 for (size_t i = 0; i < stageMinBufferSizes[group].size(); ++i) {
                     minBufferSize[i] = std::max(minBufferSize[i], stageMinBufferSizes[group][i]);
@@ -307,22 +307,22 @@ PipelineBase::PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringV
 PipelineBase::~PipelineBase() = default;
 
 PipelineLayoutBase* PipelineBase::GetLayout() {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mLayout.Get();
 }
 
 const PipelineLayoutBase* PipelineBase::GetLayout() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mLayout.Get();
 }
 
 const RequiredBufferSizes& PipelineBase::GetMinBufferSizes() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mMinBufferSizes;
 }
 
 const ProgrammableStage& PipelineBase::GetStage(SingleShaderStage stage) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mStages[stage];
 }
 
@@ -489,7 +489,7 @@ PipelineBase::SamplerForExternalTextureMap PipelineBase::ComputeSamplerForExtern
             // where the external texture is used by two different samplers, emit a warning (as
             // that's just a minor correctness issue).
             auto it = map.find({pair.texture.group, textureBinding});
-            DAWN_ASSERT(it != map.end());
+            DAWN_CHECK(it != map.end());
             auto& mapValue = it->second;
 
             const auto* samplerBGL = GetLayout()->GetBindGroupLayout(pair.sampler.group);

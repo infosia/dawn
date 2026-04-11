@@ -166,7 +166,7 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(device, descriptor->label),
       mImmediateDataRangeByteSize(descriptor->immediateSize) {
-    DAWN_ASSERT(descriptor->bindGroupLayoutCount <= kMaxBindGroups);
+    DAWN_CHECK(descriptor->bindGroupLayoutCount <= kMaxBindGroups);
 
     // According to WebGPU SPEC of CreatePipelineLayout(), if bindGroupLayouts[i] is null or
     // bindGroupLayouts[i].[[descriptor]].entries is empty, treat bindGroupLayouts[i] as an
@@ -275,7 +275,7 @@ ResultOrError<wgpu::SamplerBindingType> MostSpecificSamplerTypeIfCompatible(
 // Merges two entries at the same location, if they are allowed to be merged.
 MaybeError MergeEntries(BindGroupLayoutEntry* modifiedEntry,
                         const BindGroupLayoutEntry& mergedEntry) {
-    DAWN_ASSERT(modifiedEntry->binding == mergedEntry.binding);
+    DAWN_CHECK(modifiedEntry->binding == mergedEntry.binding);
 
     BindingInfoType modifiedType = GetBindingInfoType(modifiedEntry);
     BindingInfoType mergedType = GetBindingInfoType(&mergedEntry);
@@ -450,8 +450,8 @@ void ResolveUnknownTypes(
 
             // Pairs can reference external textures, they are always filterable.
             if (t->texture.sampleType == wgpu::TextureSampleType::BindingNotUsed) {
-                DAWN_ASSERT(t->nextInChain != nullptr &&
-                            t->nextInChain->sType == wgpu::SType::ExternalTextureBindingLayout);
+                DAWN_CHECK(t->nextInChain != nullptr &&
+                           t->nextInChain->sType == wgpu::SType::ExternalTextureBindingLayout);
                 continue;
             }
 
@@ -490,12 +490,12 @@ void ResolveUnknownTypes(
 
             // Pairs can reference external textures, skip handling them.
             if (t->texture.sampleType == wgpu::TextureSampleType::BindingNotUsed) {
-                DAWN_ASSERT(t->nextInChain != nullptr &&
-                            t->nextInChain->sType == wgpu::SType::ExternalTextureBindingLayout);
+                DAWN_CHECK(t->nextInChain != nullptr &&
+                           t->nextInChain->sType == wgpu::SType::ExternalTextureBindingLayout);
                 continue;
             }
 
-            DAWN_ASSERT(s->sampler.type != kUnknownFilteringSamplerBindingType);
+            DAWN_CHECK(s->sampler.type != kUnknownFilteringSamplerBindingType);
             if (t->texture.sampleType == kUnknownFilterableFloatSampleType &&
                 s->sampler.type == wgpu::SamplerBindingType::Filtering) {
                 t->texture.sampleType = wgpu::TextureSampleType::Float;
@@ -526,7 +526,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     DeviceBase* device,
     std::vector<StageAndDescriptor> stages,
     bool allowInternalBinding) {
-    DAWN_ASSERT(!stages.empty());
+    DAWN_CHECK(!stages.empty());
 
     // Does the trivial conversions from a ShaderBindingInfo to a BindGroupLayoutEntry
     std::vector<std::unique_ptr<wgpu::TexelBufferBindingLayout>> texelBufferLayouts;
@@ -631,7 +631,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
 
     Ref<PipelineLayoutBase> result;
     DAWN_TRY_ASSIGN(result, device->CreatePipelineLayout(&desc, pipelineCompatibilityToken));
-    DAWN_ASSERT(!result->IsError());
+    DAWN_CHECK(!result->IsError());
 
     // Validate that the auto pipeline layout is compatible with the current pipeline.
     // Note: the currently specified rules can generate invalid default layouts.
@@ -651,47 +651,47 @@ ObjectType PipelineLayoutBase::GetType() const {
 
 const BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(
     BindGroupIndex group) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     const BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
-    DAWN_ASSERT(bgl != nullptr);
+    DAWN_CHECK(bgl != nullptr);
     return bgl;
 }
 
 BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(BindGroupIndex group) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
-    DAWN_ASSERT(bgl != nullptr);
+    DAWN_CHECK(bgl != nullptr);
     return bgl;
 }
 
 const BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(
     BindGroupIndex group) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
 }
 
 BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(BindGroupIndex group) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
 }
 
 const BindGroupMask& PipelineLayoutBase::GetBindGroupLayoutsMask() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mMask;
 }
 
 bool PipelineLayoutBase::HasPixelLocalStorage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mHasPLS;
 }
 
 const std::vector<wgpu::TextureFormat>& PipelineLayoutBase::GetStorageAttachmentSlots() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mStorageAttachmentSlots;
 }
 
 bool PipelineLayoutBase::HasAnyStorageAttachments() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     for (auto format : mStorageAttachmentSlots) {
         if (format != wgpu::TextureFormat::Undefined) {
@@ -702,7 +702,7 @@ bool PipelineLayoutBase::HasAnyStorageAttachments() const {
 }
 
 bool PipelineLayoutBase::HasExternalTextures() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     for (BindGroupIndex g : mMask) {
         if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetExternalTextureCount() != 0) {
@@ -713,7 +713,7 @@ bool PipelineLayoutBase::HasExternalTextures() const {
 }
 
 bool PipelineLayoutBase::HasAPIStaticSamplers() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     for (BindGroupIndex g : mMask) {
         if (mBindGroupLayouts[g]->GetInternalBindGroupLayout()->GetAPIStaticSamplerCount() != 0) {
@@ -724,12 +724,12 @@ bool PipelineLayoutBase::HasAPIStaticSamplers() const {
 }
 
 BindGroupMask PipelineLayoutBase::InheritedGroupsMask(const PipelineLayoutBase* other) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return {(1 << static_cast<uint32_t>(GroupsInheritUpTo(other))) - 1u};
 }
 
 BindGroupIndex PipelineLayoutBase::GroupsInheritUpTo(const PipelineLayoutBase* other) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     for (BindGroupIndex i(0); i < kMaxBindGroupsTyped; ++i) {
         if (!mMask[i] || mBindGroupLayouts[i].Get() != other->mBindGroupLayouts[i].Get()) {
@@ -801,12 +801,12 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
 }
 
 uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mImmediateDataRangeByteSize;
 }
 
 bool PipelineLayoutBase::UsesResourceTable() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mUsesResourceTable;
 }
 
