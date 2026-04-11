@@ -34,6 +34,24 @@
       "parentUuid": "3e05b173_4039b6b6",
       "revId": "3248b015948ef35a2111951e70c01925099099ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8da99dc_e82ea456",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-11T03:00:54Z",
+      "side": 1,
+      "message": "There is another nested loop in `Step` [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/perf_tests/UniformBufferUpdatePerf.cpp;drc\u003d0a39e93d5a632021d620eca8115ba583b8fc6b49;l\u003d316) and [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/perf_tests/VulkanZeroInitializeWorkgroupMemoryPerf.cpp;drc\u003d0a39e93d5a632021d620eca8115ba583b8fc6b49;l\u003d119)\n\nI presume the reason is that one iteration is too fast or take too short time to complete. Because the work we do in each iteration is too simple. Hence we need to do it in loops to have measureable results.",
+      "parentUuid": "045d33dc_3965f25f",
+      "revId": "3248b015948ef35a2111951e70c01925099099ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
