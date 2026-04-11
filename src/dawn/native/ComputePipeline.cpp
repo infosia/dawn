@@ -89,17 +89,17 @@ void ComputePipelineBase::DestroyImpl(DestroyReason reason) {
 }
 
 Extent3D ComputePipelineBase::GetWorkgroupSize() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mWorkgroupSize;
 }
 
 bool ComputePipelineBase::UsesLinearIndexing() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mUsesLinearIndex;
 }
 
 bool ComputePipelineBase::UsesGlobalInvocationIndex() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mUsesGlobalInvocationIndex;
 }
 
