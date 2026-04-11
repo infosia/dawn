@@ -88,9 +88,9 @@ bool CanUseCopyResource(const TextureCopy& src,
                         const TextureCopy& dst,
                         const TexelExtent3D& copySize) {
     // Checked by validation
-    DAWN_ASSERT(src.texture->GetSampleCount() == dst.texture->GetSampleCount());
-    DAWN_ASSERT(src.texture->GetFormat().CopyCompatibleWith(dst.texture->GetFormat()));
-    DAWN_ASSERT(src.aspect == dst.aspect);
+    DAWN_CHECK(src.texture->GetSampleCount() == dst.texture->GetSampleCount());
+    DAWN_CHECK(src.texture->GetFormat().CopyCompatibleWith(dst.texture->GetFormat()));
+    DAWN_CHECK(src.aspect == dst.aspect);
 
     const TexelExtent3D& srcSize = src.texture->GetSize(src.aspect);
     const TexelExtent3D& dstSize = dst.texture->GetSize(dst.aspect);
@@ -121,7 +121,7 @@ bool CanUseCopyResource(CopyBufferToBufferCmd* copy) {
 void RecordWriteTimestampCmd(ID3D12GraphicsCommandList* commandList,
                              QuerySetBase* querySet,
                              uint32_t queryIndex) {
-    DAWN_ASSERT(D3D12QueryType(ToBackend(querySet)->GetQueryType()) == D3D12_QUERY_TYPE_TIMESTAMP);
+    DAWN_CHECK(D3D12QueryType(ToBackend(querySet)->GetQueryType()) == D3D12_QUERY_TYPE_TIMESTAMP);
     commandList->EndQuery(ToBackend(querySet)->GetQueryHeap(), D3D12_QUERY_TYPE_TIMESTAMP,
                           queryIndex);
 }
@@ -193,7 +193,7 @@ bool ShouldCopyUsingTemporaryBuffer(DeviceBase* device,
     if (device->IsToggleEnabled(
             Toggle::UseTempBufferInSmallFormatTextureToTextureCopyFromGreaterToLessMipLevel)) {
         bool copyToLesserLevel = srcCopy.mipLevel > dstCopy.mipLevel;
-        DAWN_ASSERT(srcCopy.texture->GetFormat().CopyCompatibleWith(dstCopy.texture->GetFormat()));
+        DAWN_CHECK(srcCopy.texture->GetFormat().CopyCompatibleWith(dstCopy.texture->GetFormat()));
 
         // GetAspectInfo(aspect) requires HasOneBit(aspect) == true, plus the texel block
         // sizes of depth stencil formats are always no less than 4 bytes.
@@ -212,8 +212,8 @@ MaybeError RecordCopyTextureWithTemporaryBuffer(CommandRecordingContext* recordi
                                                 const TextureCopy& srcCopy,
                                                 const TextureCopy& dstCopy,
                                                 const BlockExtent3D& copySize) {
-    DAWN_ASSERT(srcCopy.texture->GetFormat().format == dstCopy.texture->GetFormat().format);
-    DAWN_ASSERT(srcCopy.aspect == dstCopy.aspect);
+    DAWN_CHECK(srcCopy.texture->GetFormat().format == dstCopy.texture->GetFormat().format);
+    DAWN_CHECK(srcCopy.aspect == dstCopy.aspect);
     const TypedTexelBlockInfo& blockInfo = GetBlockInfo(srcCopy);
 
     // Create tempBuffer
@@ -294,7 +294,7 @@ MaybeError RecordBufferTextureCopyWithTemporaryBuffer(CommandRecordingContext* r
     // D3D12 aligns the entire buffer to at least 64KB, so the virtual address of tempBuffer will
     // always be aligned to D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT (512).
     Ref<Buffer> tempBuffer = ToBackend(std::move(tempBufferBase));
-    DAWN_ASSERT(tempBuffer->GetVA() % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
+    DAWN_CHECK(tempBuffer->GetVA() % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
     auto scopedUseStaging = tempBuffer->UseInternal();
 
     BufferCopy tempBufferCopy;
@@ -423,7 +423,7 @@ class ImmediateConstantTracker : public T {
 
     // Calling this after BindGroupTrackerBase::Apply() to update root signature.
     void Apply(CommandRecordingContext* commandContext) {
-        DAWN_ASSERT(this->mLastPipeline != nullptr);
+        DAWN_CHECK(this->mLastPipeline != nullptr);
 
         auto* lastPipeline = this->mLastPipeline;
         ImmediateConstantMask pipelineMask = lastPipeline->GetImmediateMask();
@@ -506,7 +506,7 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
             populatedSamplers = populatedSamplers && group->PopulateSamplers(samplerAllocator);
         }
         if (usesResourceTable) {
-            DAWN_ASSERT(mResourceTable);
+            DAWN_CHECK(mResourceTable);
             // We don't track resource table dirtiness like we do for BindGroups, so always call
             // PopulateViews. We also do this after bind groups because resource tables are more
             // likely to make the largest GPU sub-allocation, so if it returns false, we don't waste
@@ -549,12 +549,12 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
                 BindGroup* group = ToBackend(mBindGroups[index]);
                 populatedViews = group->PopulateViews(viewAllocator);
                 populatedSamplers = group->PopulateSamplers(samplerAllocator);
-                DAWN_ASSERT(populatedViews);
-                DAWN_ASSERT(populatedSamplers);
+                DAWN_CHECK(populatedViews);
+                DAWN_CHECK(populatedSamplers);
             }
             if (usesResourceTable) {
                 populatedViews = mResourceTable->PopulateViews(viewAllocator);
-                DAWN_ASSERT(populatedViews);
+                DAWN_CHECK(populatedViews);
             }
         }
 
@@ -674,7 +674,7 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
 
     void ApplyResourceTable(ID3D12GraphicsCommandList* commandList,
                             const PipelineLayout* pipelineLayout) {
-        DAWN_ASSERT(mPipelineLayout->UsesResourceTable() && mResourceTable);
+        DAWN_CHECK(mPipelineLayout->UsesResourceTable() && mResourceTable);
 
         // Set the one root descriptor table that contains both the metadata buffer and resource
         // descriptors
@@ -688,7 +688,7 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false> {
                         BindGroupIndex index,
                         BindGroup* group,
                         const ityp::span<BindingIndex, uint32_t>& dynamicOffsets) {
-        DAWN_ASSERT(dynamicOffsets.size() == group->GetLayout()->GetDynamicBufferCount());
+        DAWN_CHECK(dynamicOffsets.size() == group->GetLayout()->GetDynamicBufferCount());
 
         // Usually, the application won't set the same offsets many times,
         // so always try to apply dynamic offsets even if the offsets stay the same.
@@ -801,12 +801,12 @@ class DescriptorHeapState {
           mGraphicsBindingTracker(device, this) {}
 
     void SetID3D12DescriptorHeaps(ID3D12GraphicsCommandList* commandList) {
-        DAWN_ASSERT(commandList != nullptr);
+        DAWN_CHECK(commandList != nullptr);
         std::array<ID3D12DescriptorHeap*, 2> descriptorHeaps = {
             mDevice->GetViewShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap(),
             mDevice->GetSamplerShaderVisibleDescriptorAllocator()->GetShaderVisibleHeap()};
-        DAWN_ASSERT(descriptorHeaps[0] != nullptr);
-        DAWN_ASSERT(descriptorHeaps[1] != nullptr);
+        DAWN_CHECK(descriptorHeaps[0] != nullptr);
+        DAWN_CHECK(descriptorHeaps[1] != nullptr);
         commandList->SetDescriptorHeaps(static_cast<uint32_t>(descriptorHeaps.size()),
                                         descriptorHeaps.data());
 
@@ -851,7 +851,7 @@ class VertexBufferTracker {
     }
 
     void Apply(ID3D12GraphicsCommandList* commandList, const RenderPipeline* renderPipeline) {
-        DAWN_ASSERT(renderPipeline != nullptr);
+        DAWN_CHECK(renderPipeline != nullptr);
 
         VertexBufferSlot startSlot = mStartSlot;
         VertexBufferSlot endSlot = mEndSlot;
@@ -899,7 +899,7 @@ class VertexBufferTracker {
 
 MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContext,
                                           BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
+    DAWN_CHECK(renderPass != nullptr);
 
     for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         TextureViewBase* resolveTarget = renderPass->colorAttachments[i].resolveTarget.Get();
@@ -924,7 +924,7 @@ MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContex
 
 void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
                                    BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
+    DAWN_CHECK(renderPass != nullptr);
 
     for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         TextureViewBase* resolveTarget = renderPass->colorAttachments[i].resolveTarget.Get();
@@ -1162,17 +1162,16 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                     // When there are overlapped subresources, the layout of the overlapped
                     // subresources should all be COMMON instead of what we set now. Currently
                     // it is not allowed to copy with overlapped subresources, but we still
-                    // add the DAWN_ASSERT here as a reminder for this possible misuse.
-                    DAWN_ASSERT(!IsRangeOverlapped(copy->source.origin.z,
-                                                   copy->destination.origin.z,
-                                                   copy->copySize.depthOrArrayLayers));
+                    // add the DAWN_CHECK here as a reminder for this possible misuse.
+                    DAWN_CHECK(!IsRangeOverlapped(copy->source.origin.z, copy->destination.origin.z,
+                                                  copy->copySize.depthOrArrayLayers));
                 }
                 source->TrackUsageAndTransitionNow(commandContext, wgpu::TextureUsage::CopySrc,
                                                    srcRange);
                 destination->TrackUsageAndTransitionNow(commandContext, wgpu::TextureUsage::CopyDst,
                                                         dstRange);
 
-                DAWN_ASSERT(srcRange.aspects == dstRange.aspects);
+                DAWN_CHECK(srcRange.aspects == dstRange.aspects);
                 if (ShouldCopyUsingTemporaryBuffer(GetDevice(), copy->source, copy->destination)) {
                     const TypedTexelBlockInfo& blockInfo = GetBlockInfo(copy->destination);
                     DAWN_TRY(RecordCopyTextureWithTemporaryBuffer(
@@ -1215,7 +1214,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                                 case wgpu::TextureDimension::Undefined:
                                     DAWN_UNREACHABLE();
                                 case wgpu::TextureDimension::e1D:
-                                    DAWN_ASSERT(copy->source.origin.z == TexelCount{0});
+                                    DAWN_CHECK(copy->source.origin.z == TexelCount{0});
                                     break;
                                 case wgpu::TextureDimension::e2D:
                                     sourceLayer = static_cast<uint32_t>(copy->source.origin.z + z);
@@ -1231,7 +1230,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                                 case wgpu::TextureDimension::Undefined:
                                     DAWN_UNREACHABLE();
                                 case wgpu::TextureDimension::e1D:
-                                    DAWN_ASSERT(copy->destination.origin.z == TexelCount{0});
+                                    DAWN_CHECK(copy->destination.origin.z == TexelCount{0});
                                     break;
                                 case wgpu::TextureDimension::e2D:
                                     destinationLayer =
@@ -1502,9 +1501,9 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
             }
 
             case Command::SetImmediates: {
-                SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
-                uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
+                SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
+                DAWN_CHECK(cmd->size > 0);
+                uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
             }
@@ -1832,7 +1831,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                DAWN_CHECK(buffer != nullptr);
 
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndexedIndirectCommandSignature();
@@ -1849,7 +1848,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_CHECK(indirectBuffer != nullptr);
 
                 Buffer* countBuffer = ToBackend(draw->drawCountBuffer.Get());
 
@@ -1876,7 +1875,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_CHECK(indirectBuffer != nullptr);
 
                 Buffer* countBuffer = ToBackend(draw->drawCountBuffer.Get());
 
@@ -1960,7 +1959,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_CHECK(cmd->size > 0);
                 uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
@@ -2089,8 +2088,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
             case Command::BeginOcclusionQuery: {
                 BeginOcclusionQueryCmd* cmd = mCommands.NextCommand<BeginOcclusionQueryCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
-                DAWN_ASSERT(D3D12QueryType(querySet->GetQueryType()) ==
-                            D3D12_QUERY_TYPE_BINARY_OCCLUSION);
+                DAWN_CHECK(D3D12QueryType(querySet->GetQueryType()) ==
+                           D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->BeginQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
                                         cmd->queryIndex);
                 break;
@@ -2099,8 +2098,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
             case Command::EndOcclusionQuery: {
                 EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
-                DAWN_ASSERT(D3D12QueryType(querySet->GetQueryType()) ==
-                            D3D12_QUERY_TYPE_BINARY_OCCLUSION);
+                DAWN_CHECK(D3D12QueryType(querySet->GetQueryType()) ==
+                           D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->EndQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
                                       cmd->queryIndex);
                 break;

@@ -57,7 +57,7 @@ MaybeError Backend::Initialize() {
     if (instance->GetBackendValidationLevel() != BackendValidationLevel::Disabled) {
         ComPtr<ID3D12Debug3> debugController;
         if (SUCCEEDED(GetFunctions()->d3d12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
-            DAWN_ASSERT(debugController != nullptr);
+            DAWN_CHECK(debugController != nullptr);
             debugController->EnableDebugLayer();
             if (instance->GetBackendValidationLevel() == BackendValidationLevel::Full) {
                 debugController->SetEnableGPUBasedValidation(true);
@@ -119,17 +119,17 @@ MaybeError Backend::EnsureDXC() {
 }
 
 ComPtr<IDxcLibrary> Backend::GetDxcLibrary() const {
-    DAWN_ASSERT(mDxcLibrary != nullptr);
+    DAWN_CHECK(mDxcLibrary != nullptr);
     return mDxcLibrary;
 }
 
 ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
-    DAWN_ASSERT(mDxcCompiler != nullptr);
+    DAWN_CHECK(mDxcCompiler != nullptr);
     return mDxcCompiler;
 }
 
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
-    DAWN_ASSERT(mDxcValidator != nullptr);
+    DAWN_CHECK(mDxcValidator != nullptr);
     return mDxcValidator;
 }
 

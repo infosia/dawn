@@ -199,7 +199,7 @@ StaticSamplerSpecialization StaticSamplerSpecialization::From(const TextureView*
     if (isYCbCr) {
         auto stm = static_cast<SharedTextureMemoryContentsVk*>(
             view->GetTexture()->GetSharedResourceMemoryContents());
-        DAWN_ASSERT(stm != nullptr);
+        DAWN_CHECK(stm != nullptr);
 
         spec.vkFormat = static_cast<VkFormat>(stm->GetYCbCrVkDesc().vkFormat);
         spec.androidExternalFormat = stm->GetYCbCrVkDesc().externalFormat;
