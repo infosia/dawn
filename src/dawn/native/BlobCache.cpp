@@ -119,9 +119,9 @@ Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void*
 }
 
 void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void* value) {
-    DAWN_ASSERT(ValidateCacheKey(key));
-    DAWN_ASSERT(value != nullptr);
-    DAWN_ASSERT(valueSize > 0);
+    DAWN_CHECK(ValidateCacheKey(key));
+    DAWN_CHECK(value != nullptr);
+    DAWN_CHECK(valueSize > 0);
     if (mStoreFunction == nullptr) {
         return;
     }

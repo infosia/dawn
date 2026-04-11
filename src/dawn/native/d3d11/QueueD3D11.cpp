@@ -170,7 +170,7 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
         return queue;
     }
 
-    DAWN_ASSERT(deviceInfo.supportsMonitoredFence);
+    DAWN_CHECK(deviceInfo.supportsMonitoredFence);
     auto queue = AcquireRef(new MonitoredFenceQueue(device, descriptor));
     DAWN_TRY(queue->Initialize());
     return queue;
@@ -204,7 +204,7 @@ MaybeError Queue::InitializeD3DFence(bool useNonMonitoredFence) {
                 << "D3D11: non-monitored fence is not supported, fallback to monitored fence";
         }
     } else {
-        DAWN_ASSERT(deviceInfo.supportsMonitoredFence);
+        DAWN_CHECK(deviceInfo.supportsMonitoredFence);
     }
     DAWN_TRY(CheckHRESULT(
         ToBackend(GetDevice())->GetD3D11Device5()->CreateFence(0, flags, IID_PPV_ARGS(&mFence)),
@@ -256,10 +256,10 @@ void Queue::DestroyImpl(DestroyReason reason) {
 ResultOrError<Ref<d3d::SharedFence>> Queue::GetOrCreateSharedFence() {
     if (mSharedFence == nullptr) {
         if (!mFence) {
-            DAWN_ASSERT(GetDevice()->IsToggleEnabled(Toggle::D3D11DisableFence));
+            DAWN_CHECK(GetDevice()->IsToggleEnabled(Toggle::D3D11DisableFence));
             return Ref<d3d::SharedFence>{};
         }
-        DAWN_ASSERT(!IsAlive());
+        DAWN_CHECK(!IsAlive());
         return SharedFence::Create(ToBackend(GetDevice()), "Internal shared DXGI fence", mFence);
     }
     return mSharedFence;
@@ -368,7 +368,7 @@ MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) 
                 BufferMapRequest* request = node->value();
                 Buffer* buffer = request->buffer;
 
-                DAWN_ASSERT(buffer);
+                DAWN_CHECK(buffer);
                 DAWN_TRY(buffer->TryMapNow(&commandContext, completedSerial, request->mode));
 
                 request->RemoveFromList();
@@ -384,7 +384,7 @@ MaybeError Queue::CheckScheduledBufferMappings(ExecutionSerial completedSerial) 
 }
 
 void Queue::ScheduleBufferMapping(BufferMapRequest* request, ExecutionSerial readySerial) {
-    DAWN_ASSERT(request->buffer != nullptr);
+    DAWN_CHECK(request->buffer != nullptr);
     mPendingMapBuffers.Use([&](auto pendingMapBuffers) {
         auto& serialQueue = pendingMapBuffers->serialQueue;
         auto& requestMap = pendingMapBuffers->requestMap;
@@ -397,7 +397,7 @@ void Queue::ScheduleBufferMapping(BufferMapRequest* request, ExecutionSerial rea
         }
         storedRequest = request;
 
-        DAWN_ASSERT(!request->IsInList());
+        DAWN_CHECK(!request->IsInList());
         serialQueue[readySerial].Append(request);
     });
 }
@@ -532,7 +532,7 @@ MaybeError SystemEventQueue::NextSerial() {
 
     const ExecutionSerial submitSerial = GetPendingCommandSerial();
     if (commandContext->AcquireNeedsFence()) {
-        DAWN_ASSERT(mFence);
+        DAWN_CHECK(mFence);
 
         TRACE_EVENT1(GetDevice()->GetPlatform(), General, "D3D11Device::SignalFence", "serial",
                      uint64_t(submitSerial));
@@ -631,14 +631,14 @@ ResultOrError<ExecutionSerial> SystemEventQueue::WaitForQueueSerialImpl(Executio
 
     return mPendingEvents.Use([=, &completedEventsList = mCompletedEvents](
                                   auto pendingEvents) -> ResultOrError<ExecutionSerial> {
-        DAWN_ASSERT(!pendingEvents->empty());
-        DAWN_ASSERT(serial >= pendingEvents->front().serial);
-        DAWN_ASSERT(serial <= pendingEvents->back().serial);
+        DAWN_CHECK(!pendingEvents->empty());
+        DAWN_CHECK(serial >= pendingEvents->front().serial);
+        DAWN_CHECK(serial <= pendingEvents->back().serial);
         auto it = std::lower_bound(
             pendingEvents->begin(), pendingEvents->end(), serial,
             [](const SerialEventReceiverPair& a, ExecutionSerial b) { return a.serial < b; });
-        DAWN_ASSERT(it != pendingEvents->end());
-        DAWN_ASSERT(it->serial == serial);
+        DAWN_CHECK(it != pendingEvents->end());
+        DAWN_CHECK(it->serial == serial);
 
         // TODO(crbug.com/335553337): call WaitForSingleObject() without holding the mutex.
         DWORD result =
@@ -694,7 +694,7 @@ MaybeError DelayFlushQueue::NextSerial() {
     commandContext.End(query.Get());
 
     if (commandContext->AcquireNeedsFence()) {
-        DAWN_ASSERT(mFence);
+        DAWN_CHECK(mFence);
 
         TRACE_EVENT1(GetDevice()->GetPlatform(), General, "D3D11Device::SignalFence", "serial",
                      uint64_t(submitSerial));
@@ -791,13 +791,13 @@ ResultOrError<ExecutionSerial> DelayFlushQueue::WaitForQueueSerialImpl(Execution
         DAWN_TRY(BlockWaitForLastSubmittedSerial(&commandContext));
     }
 
-    DAWN_ASSERT(waitSerial >= mPendingQueries.front().Serial());
-    DAWN_ASSERT(waitSerial <= mPendingQueries.back().Serial());
+    DAWN_CHECK(waitSerial >= mPendingQueries.front().Serial());
+    DAWN_CHECK(waitSerial <= mPendingQueries.back().Serial());
     auto it =
         std::lower_bound(mPendingQueries.begin(), mPendingQueries.end(), waitSerial,
                          [](const EventQuery& a, ExecutionSerial b) { return a.Serial() < b; });
-    DAWN_ASSERT(it != mPendingQueries.end());
-    DAWN_ASSERT(it->Serial() == waitSerial);
+    DAWN_CHECK(it != mPendingQueries.end());
+    DAWN_CHECK(it->Serial() == waitSerial);
 
     bool done;
     DAWN_TRY_ASSIGN(done, IsQueryCompleted(&commandContext, /*requireFlush=*/false, &(*it)));
@@ -889,7 +889,7 @@ ResultOrError<bool> DelayFlushQueue::IsQueryCompleted(
     eventQuery->checkCount++;
 
     // A return value of S_FALSE means the query is not completed.
-    DAWN_ASSERT(hr == S_FALSE || done == TRUE);
+    DAWN_CHECK(hr == S_FALSE || done == TRUE);
     return hr == S_OK;
 }
 

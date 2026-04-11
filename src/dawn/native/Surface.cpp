@@ -118,7 +118,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if DAWN_PLATFORM_IS(ANDROID)
         case wgpu::SType::SurfaceSourceAndroidNativeWindow: {
             auto* subDesc = descriptor.Get<SurfaceSourceAndroidNativeWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             DAWN_INVALID_IF(subDesc->window == nullptr, "Android window is not set.");
             return descriptor;
         }
@@ -126,7 +126,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_ENABLE_BACKEND_METAL)
         case wgpu::SType::SurfaceSourceMetalLayer: {
             auto* subDesc = descriptor.Get<SurfaceSourceMetalLayer>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Check that the layer is a CAMetalLayer (or a derived class).
             DAWN_INVALID_IF(!InheritsFromCAMetalLayer(subDesc->layer),
                             "Layer must be a CAMetalLayer");
@@ -136,7 +136,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if DAWN_PLATFORM_IS(WIN32)
         case wgpu::SType::SurfaceSourceWindowsHWND: {
             auto* subDesc = descriptor.Get<SurfaceSourceWindowsHWND>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             DAWN_INVALID_IF(IsWindow(static_cast<HWND>(subDesc->hwnd)) == 0, "Invalid HWND");
             return descriptor;
         }
@@ -144,7 +144,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_WINDOWS_UI)
         case wgpu::SType::SurfaceDescriptorFromWindowsCoreWindow: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsCoreWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Validate the coreWindow by query for ICoreWindow interface
             ComPtr<ABI::Windows::UI::Core::ICoreWindow> coreWindow;
             DAWN_INVALID_IF(subDesc->coreWindow == nullptr ||
@@ -155,7 +155,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         }
         case wgpu::SType::SurfaceDescriptorFromWindowsUWPSwapChainPanel: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsUWPSwapChainPanel>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Validate the swapChainPanel by querying for ISwapChainPanel interface
             ComPtr<ABI::Windows::UI::Xaml::Controls::ISwapChainPanel> swapChainPanel;
             DAWN_INVALID_IF(subDesc->swapChainPanel == nullptr ||
@@ -166,7 +166,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         }
         case wgpu::SType::SurfaceDescriptorFromWindowsWinUISwapChainPanel: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsWinUISwapChainPanel>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Unfortunately, checking whether this is a valid
             // Microsoft.UI.Xaml.Controls.SwapChainPanel would require the WindowsAppSDK as a
             // dependency, which is not trivial. So we'll only check for nullptr here.
@@ -177,7 +177,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_WAYLAND)
         case wgpu::SType::SurfaceSourceWaylandSurface: {
             auto* subDesc = descriptor.Get<SurfaceSourceWaylandSurface>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Unfortunately we can't check the validity of wayland objects. Only that they
             // aren't nullptr.
             DAWN_INVALID_IF(subDesc->display == nullptr, "Wayland display is nullptr.");
@@ -188,7 +188,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_X11)
         case wgpu::SType::SurfaceSourceXlibWindow: {
             auto* subDesc = descriptor.Get<SurfaceSourceXlibWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_CHECK(subDesc != nullptr);
             // Check the validity of the window by calling a getter function on the window that
             // returns a status code. If the window is bad the call return a status of zero. We
             // need to set a temporary X11 error handler while doing this because the default
@@ -383,46 +383,46 @@ DeviceBase* Surface::GetCurrentDevice() const {
 }
 
 Surface::Type Surface::GetType() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mType;
 }
 
 void* Surface::GetAndroidNativeWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::AndroidWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::AndroidWindow);
     return mAndroidNativeWindow;
 }
 
 void* Surface::GetMetalLayer() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::MetalLayer);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::MetalLayer);
     return mMetalLayer;
 }
 
 void* Surface::GetWaylandDisplay() const {
-    DAWN_ASSERT(mType == Type::WaylandSurface);
+    DAWN_CHECK(mType == Type::WaylandSurface);
     return mWaylandDisplay;
 }
 
 void* Surface::GetWaylandSurface() const {
-    DAWN_ASSERT(mType == Type::WaylandSurface);
+    DAWN_CHECK(mType == Type::WaylandSurface);
     return mWaylandSurface;
 }
 
 void* Surface::GetHInstance() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsHWND);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsHWND);
     return mHInstance;
 }
 void* Surface::GetHWND() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsHWND);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsHWND);
     return mHWND;
 }
 
 IUnknown* Surface::GetCoreWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsCoreWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsCoreWindow);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mCoreWindow.Get();
 #else
@@ -431,8 +431,8 @@ IUnknown* Surface::GetCoreWindow() const {
 }
 
 IUnknown* Surface::GetUWPSwapChainPanel() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsUWPSwapChainPanel);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsUWPSwapChainPanel);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mUWPSwapChainPanel.Get();
 #else
@@ -441,8 +441,8 @@ IUnknown* Surface::GetUWPSwapChainPanel() const {
 }
 
 IUnknown* Surface::GetWinUISwapChainPanel() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsWinUISwapChainPanel);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsWinUISwapChainPanel);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mWinUISwapChainPanel.Get();
 #else
@@ -451,13 +451,13 @@ IUnknown* Surface::GetWinUISwapChainPanel() const {
 }
 
 void* Surface::GetXDisplay() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::XlibWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::XlibWindow);
     return mXDisplay;
 }
 uint64_t Surface::GetXWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::XlibWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::XlibWindow);
     return mXWindow;
 }
 
@@ -513,8 +513,8 @@ MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
 
 MaybeError Surface::Unconfigure() {
     if (IsError()) {
-        DAWN_ASSERT(mSwapChain == nullptr);
-        DAWN_ASSERT(mCurrentDevice == nullptr);
+        DAWN_CHECK(mSwapChain == nullptr);
+        DAWN_CHECK(mCurrentDevice == nullptr);
         return DAWN_VALIDATION_ERROR("%s is invalid.", this);
     }
     mCurrentDevice = nullptr;

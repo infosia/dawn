@@ -77,11 +77,11 @@ Aspect D3D11Aspect(Aspect aspect) {
     // Planar formats existed in Direct3D 11, but individual planes could not be addressed
     // individually, so squash stencil into depth.
     if (aspect & Aspect::Stencil) {
-        DAWN_ASSERT(IsSubset(aspect, Aspect::Depth | Aspect::Stencil));
+        DAWN_CHECK(IsSubset(aspect, Aspect::Depth | Aspect::Stencil));
         return Aspect::Depth;
     }
 
-    DAWN_ASSERT(HasOneBit(aspect));
+    DAWN_CHECK(HasOneBit(aspect));
     return aspect;
 }
 
@@ -122,7 +122,7 @@ struct DepthStencilAspectLayout {
 };
 
 DepthStencilAspectLayout DepthStencilAspectLayout(DXGI_FORMAT format, Aspect aspect) {
-    DAWN_ASSERT(aspect == Aspect::Depth || aspect == Aspect::Stencil);
+    DAWN_CHECK(aspect == Aspect::Depth || aspect == Aspect::Stencil);
     uint32_t texelSize = 0u;
     uint32_t componentOffset = 0u;
     uint32_t componentSize = 0u;
@@ -343,12 +343,12 @@ ResultOrError<ComPtr<ID3D11RenderTargetView1>> Texture::CreateD3D11RenderTargetV
     D3D11_RENDER_TARGET_VIEW_DESC1 rtvDesc;
     rtvDesc.Format = d3d::DXGITextureFormat(GetDevice(), viewFormat);
     if (IsMultisampledTexture()) {
-        DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
-        DAWN_ASSERT(GetNumMipLevels() == 1);
-        DAWN_ASSERT(mipLevel == 0);
-        DAWN_ASSERT(baseSlice == 0);
-        DAWN_ASSERT(sliceCount == 1);
-        DAWN_ASSERT(planeSlice == 0);
+        DAWN_CHECK(GetDimension() == wgpu::TextureDimension::e2D);
+        DAWN_CHECK(GetNumMipLevels() == 1);
+        DAWN_CHECK(mipLevel == 0);
+        DAWN_CHECK(baseSlice == 0);
+        DAWN_CHECK(sliceCount == 1);
+        DAWN_CHECK(planeSlice == 0);
         rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DMS;
     } else {
         switch (GetDimension()) {
@@ -394,7 +394,7 @@ ResultOrError<ComPtr<ID3D11DepthStencilView>> Texture::CreateD3D11DepthStencilVi
     bool depthReadOnly,
     bool stencilReadOnly) const {
     D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
-    DAWN_ASSERT(singleLevelRange.levelCount == 1);
+    DAWN_CHECK(singleLevelRange.levelCount == 1);
     dsvDesc.Format = d3d::DXGITextureFormat(GetDevice(), GetFormat().format);
     dsvDesc.Flags = 0;
     if (depthReadOnly && singleLevelRange.aspects & Aspect::Depth) {
@@ -405,10 +405,10 @@ ResultOrError<ComPtr<ID3D11DepthStencilView>> Texture::CreateD3D11DepthStencilVi
     }
 
     if (IsMultisampledTexture()) {
-        DAWN_ASSERT(GetNumMipLevels() == 1);
-        DAWN_ASSERT(singleLevelRange.baseMipLevel == 0);
-        DAWN_ASSERT(singleLevelRange.baseArrayLayer == 0);
-        DAWN_ASSERT(singleLevelRange.layerCount == 1);
+        DAWN_CHECK(GetNumMipLevels() == 1);
+        DAWN_CHECK(singleLevelRange.baseMipLevel == 0);
+        DAWN_CHECK(singleLevelRange.baseArrayLayer == 0);
+        DAWN_CHECK(singleLevelRange.layerCount == 1);
         dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
     } else {
         dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
@@ -438,8 +438,8 @@ MaybeError Texture::SynchronizeTextureBeforeUse(
             auto d3dFence = ToBackend(fence.object);
             if (d3dFence.Get() == queueFence.Get()) {
                 // We don't need to wait on the fence that we signaled (self-wait).
-                DAWN_ASSERT(ExecutionSerial(fence.signaledValue) <=
-                            GetDevice()->GetQueue()->GetLastSubmittedCommandSerial());
+                DAWN_CHECK(ExecutionSerial(fence.signaledValue) <=
+                           GetDevice()->GetQueue()->GetLastSubmittedCommandSerial());
                 continue;
             }
             DAWN_TRY(
@@ -592,13 +592,13 @@ MaybeError Texture::ClearNonRenderable(const ScopedCommandRecordingContext* comm
 MaybeError Texture::ClearCompressed(const ScopedCommandRecordingContext* commandContext,
                                     const SubresourceRange& range,
                                     TextureBase::ClearValue clearValue) {
-    DAWN_ASSERT(range.aspects == Aspect::Color);
+    DAWN_CHECK(range.aspects == Aspect::Color);
     const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(range.aspects).block;
     // Create an interim texture of renderable format for reinterpretation conversion.
     TextureDescriptor desc = {};
     desc.label = "CopyUncompressedTextureToCompressedTexureInterim";
     desc.dimension = GetDimension();
-    DAWN_ASSERT(desc.dimension == wgpu::TextureDimension::e2D);
+    DAWN_CHECK(desc.dimension == wgpu::TextureDimension::e2D);
     desc.size = {GetWidth(Aspect::Color), GetHeight(Aspect::Color), 1};
     desc.format = UncompressedTextureFormat(GetFormat().format);
     desc.mipLevelCount = 1;
@@ -706,7 +706,7 @@ MaybeError Texture::Write(const ScopedCommandRecordingContext* commandContext,
     } else {
         // Dawn validation should have ensured that full subresources write for depth/stencil
         // textures.
-        DAWN_ASSERT(!GetFormat().HasDepthOrStencil());
+        DAWN_CHECK(!GetFormat().HasDepthOrStencil());
         DAWN_TRY(EnsureSubresourceContentInitialized(commandContext, subresources));
     }
     DAWN_TRY(
@@ -722,8 +722,8 @@ MaybeError Texture::WriteInternal(const ScopedCommandRecordingContext* commandCo
                                   const uint8_t* data,
                                   uint32_t bytesPerRow,
                                   uint32_t rowsPerImage) {
-    DAWN_ASSERT(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
-    DAWN_ASSERT(subresources.levelCount == 1);
+    DAWN_CHECK(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
+    DAWN_CHECK(subresources.levelCount == 1);
 
     if (d3d::IsDepthStencil(d3d::DXGITextureFormat(GetDevice(), GetFormat().format))) {
         DAWN_TRY(WriteDepthStencilInternal(commandContext, subresources, origin, size, data,
@@ -739,7 +739,7 @@ MaybeError Texture::WriteInternal(const ScopedCommandRecordingContext* commandCo
 
     bool isCompleteSubresourceCopiedTo =
         IsCompleteSubresourceCopiedTo(this, size, subresources.baseMipLevel, subresources.aspects);
-    DAWN_ASSERT(subresources.levelCount == 1);
+    DAWN_CHECK(subresources.levelCount == 1);
     bool writeCompleteTexture = isCompleteSubresourceCopiedTo && GetNumMipLevels() == 1 &&
                                 GetArrayLayers() == subresources.layerCount;
 
@@ -789,12 +789,12 @@ MaybeError Texture::WriteDepthStencilInternal(const ScopedCommandRecordingContex
                     CreateInternal(ToBackend(GetDevice()), Unpack(&desc), Kind::Staging));
 
     // Depth-stencil subresources can only be written to completely and not partially.
-    DAWN_ASSERT(
+    DAWN_CHECK(
         IsCompleteSubresourceCopiedTo(this, size, subresources.baseMipLevel, subresources.aspects));
 
     SubresourceRange otherRange = subresources;
     Aspect otherAspects = GetFormat().aspects & ~subresources.aspects;
-    DAWN_ASSERT(HasZeroOrOneBits(otherAspects));
+    DAWN_CHECK(HasZeroOrOneBits(otherAspects));
     otherRange.aspects = otherAspects;
     // We need to copy the texture over if the other aspect is present and initialized so that it is
     // preserved during the write.
@@ -840,7 +840,7 @@ MaybeError Texture::WriteDepthStencilInternal(const ScopedCommandRecordingContex
             pSrcData += bytesPerRow;
         }
         commandContext->Unmap(stagingTexture->GetD3D11Resource(), layer);
-        DAWN_ASSERT(size.height <= rowsPerImage);
+        DAWN_CHECK(size.height <= rowsPerImage);
         // Skip the padding rows.
         pSrcData += (rowsPerImage - size.height) * bytesPerRow;
     }
@@ -868,15 +868,15 @@ MaybeError Texture::ReadStaging(const ScopedCommandRecordingContext* commandCont
                                 uint32_t dstBytesPerRow,
                                 uint32_t dstRowsPerImage,
                                 Texture::ReadCallback callback) {
-    DAWN_ASSERT(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
-    DAWN_ASSERT(mKind == Kind::Staging);
-    DAWN_ASSERT(subresources.baseArrayLayer == 0);
-    DAWN_ASSERT(origin.z == 0);
+    DAWN_CHECK(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
+    DAWN_CHECK(mKind == Kind::Staging);
+    DAWN_CHECK(subresources.baseArrayLayer == 0);
+    DAWN_CHECK(origin.z == 0);
 
     const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(subresources.aspects).block;
     const bool hasStencil = GetFormat().HasStencil();
-    DAWN_ASSERT(size.width % blockInfo.width == 0);
-    DAWN_ASSERT(size.height % blockInfo.height == 0);
+    DAWN_CHECK(size.width % blockInfo.width == 0);
+    DAWN_CHECK(size.height % blockInfo.height == 0);
     const uint32_t bytesPerRow = blockInfo.byteSize * (size.width / blockInfo.width);
     const uint32_t rowsPerImage = size.height / blockInfo.height;
 
@@ -901,7 +901,7 @@ MaybeError Texture::ReadStaging(const ScopedCommandRecordingContext* commandCont
                 std::vector<uint8_t> depthOrStencilData(size.width * blockInfo.byteSize);
                 const auto aspectLayout = DepthStencilAspectLayout(
                     d3d::DXGITextureFormat(GetDevice(), GetFormat().format), subresources.aspects);
-                DAWN_ASSERT(blockInfo.byteSize == aspectLayout.componentSize);
+                DAWN_CHECK(blockInfo.byteSize == aspectLayout.componentSize);
                 for (uint32_t y = 0; y < rowsPerImage; ++y) {
                     // Filter the depth/stencil data out.
                     uint8_t* src = pSrcData;
@@ -967,8 +967,8 @@ MaybeError Texture::Read(const ScopedCommandRecordingContext* commandContext,
                          uint32_t dstBytesPerRow,
                          uint32_t dstRowsPerImage,
                          Texture::ReadCallback callback) {
-    DAWN_ASSERT(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
-    DAWN_ASSERT(mKind != Kind::Staging);
+    DAWN_CHECK(size.width != 0 && size.height != 0 && size.depthOrArrayLayers != 0);
+    DAWN_CHECK(mKind != Kind::Staging);
 
     DAWN_TRY(EnsureSubresourceContentInitialized(commandContext, subresources));
     TextureDescriptor desc = {};
