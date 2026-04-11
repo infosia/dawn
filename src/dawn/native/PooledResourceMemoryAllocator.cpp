@@ -37,12 +37,12 @@ PooledResourceMemoryAllocator::PooledResourceMemoryAllocator(ResourceHeapAllocat
     : mHeapAllocator(heapAllocator) {}
 
 PooledResourceMemoryAllocator::~PooledResourceMemoryAllocator() {
-    DAWN_ASSERT(mPool.empty());
+    DAWN_CHECK(mPool.empty());
 }
 
 void PooledResourceMemoryAllocator::FreeRecycledAllocations() {
     for (auto& resourceHeap : mPool) {
-        DAWN_ASSERT(resourceHeap != nullptr);
+        DAWN_CHECK(resourceHeap != nullptr);
         mHeapAllocator->DeallocateResourceHeap(std::move(resourceHeap));
     }
 

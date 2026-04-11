@@ -71,7 +71,7 @@ bool SharedResourceMemoryContents::HasAccess() const {
 }
 
 void SharedResourceMemory::Initialize() {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     mContents = CreateContents();
 }
 
@@ -141,7 +141,7 @@ MaybeError SharedResourceMemory::BeginAccess(Resource* resource,
 
         if (static_cast<TextureBase*>(resource)->IsReadOnly()) {
             if (descriptor->concurrentRead) {
-                DAWN_ASSERT(!mExclusiveAccess);
+                DAWN_CHECK(!mExclusiveAccess);
                 DAWN_INVALID_IF(!descriptor->initialized, "Concurrent reading an uninitialized %s.",
                                 resource);
                 ++mContents->mReadAccessCount;
@@ -186,7 +186,7 @@ MaybeError SharedResourceMemory::BeginAccess(Resource* resource,
         mContents->mPendingFences.push_back({descriptor->fences[i], descriptor->signaledValues[i]});
     }
 
-    DAWN_ASSERT(!resource->IsError());
+    DAWN_CHECK(!resource->IsError());
     resource->OnBeginAccess();
     resource->SetInitialized(descriptor->initialized);
     return {};
@@ -246,23 +246,23 @@ MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* s
     DAWN_INVALID_IF(!resource->HasAccess(), "%s is not currently being accessed.", resource);
     if constexpr (std::is_same_v<Resource, TextureBase>) {
         if (static_cast<TextureBase*>(resource)->IsReadOnly()) {
-            DAWN_ASSERT(!mContents->HasWriteAccess());
+            DAWN_CHECK(!mContents->HasWriteAccess());
             if (mContents->HasExclusiveReadAccess()) {
-                DAWN_ASSERT(mContents->mReadAccessCount == 0);
+                DAWN_CHECK(mContents->mReadAccessCount == 0);
                 mContents->mSharedResourceAccessState = SharedResourceAccessState::NotAccessed;
                 mExclusiveAccess = nullptr;
             } else {
-                DAWN_ASSERT(mContents->mSharedResourceAccessState ==
-                            SharedResourceAccessState::SimultaneousRead);
-                DAWN_ASSERT(mExclusiveAccess == nullptr);
+                DAWN_CHECK(mContents->mSharedResourceAccessState ==
+                           SharedResourceAccessState::SimultaneousRead);
+                DAWN_CHECK(mExclusiveAccess == nullptr);
                 --mContents->mReadAccessCount;
                 if (mContents->mReadAccessCount == 0) {
                     mContents->mSharedResourceAccessState = SharedResourceAccessState::NotAccessed;
                 }
             }
         } else {
-            DAWN_ASSERT(mContents->mSharedResourceAccessState == SharedResourceAccessState::Write);
-            DAWN_ASSERT(mContents->mReadAccessCount == 0);
+            DAWN_CHECK(mContents->mSharedResourceAccessState == SharedResourceAccessState::Write);
+            DAWN_CHECK(mContents->mReadAccessCount == 0);
             mContents->mSharedResourceAccessState = SharedResourceAccessState::NotAccessed;
             mExclusiveAccess = nullptr;
         }
@@ -285,7 +285,7 @@ MaybeError SharedResourceMemory::EndAccess(Resource* resource, EndAccessState* s
         mContents->AcquirePendingFences(&fenceList);
     }
 
-    DAWN_ASSERT(!resource->IsError());
+    DAWN_CHECK(!resource->IsError());
     ExecutionSerial lastUsageSerial = resource->OnEndAccess();
 
     // If the last usage serial is non-zero, the texture was used.

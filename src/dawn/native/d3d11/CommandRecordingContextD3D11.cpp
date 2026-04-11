@@ -47,12 +47,12 @@ ScopedCommandRecordingContext::ScopedCommandRecordingContext(CommandRecordingCon
     : mGuard(std::move(guard)),
       mLockD3D11Scope(lockD3D11Scope && this->Get() && this->Get()->mD3D11Multithread) {
     if (mLockD3D11Scope) {
-        DAWN_ASSERT(this->Get());
-        DAWN_ASSERT(this->Get()->mD3D11Multithread);
+        DAWN_CHECK(this->Get());
+        DAWN_CHECK(this->Get()->mD3D11Multithread);
         this->Get()->mD3D11Multithread->Enter();
     }
 
-    DAWN_ASSERT(Get()->mIsOpen);
+    DAWN_CHECK(Get()->mIsOpen);
 }
 
 ScopedCommandRecordingContext::ScopedCommandRecordingContext(ScopedCommandRecordingContext&& other)
@@ -65,8 +65,8 @@ ScopedCommandRecordingContext& ScopedCommandRecordingContext::operator=(
     if (this != &other) {
         // Release the current lock if we hold one
         if (mLockD3D11Scope) {
-            DAWN_ASSERT(this->Get());
-            DAWN_ASSERT(this->Get()->mD3D11Multithread);
+            DAWN_CHECK(this->Get());
+            DAWN_CHECK(this->Get()->mD3D11Multithread);
             this->Get()->mD3D11Multithread->Leave();
         }
 
@@ -80,8 +80,8 @@ ScopedCommandRecordingContext& ScopedCommandRecordingContext::operator=(
 
 ScopedCommandRecordingContext::~ScopedCommandRecordingContext() {
     if (mLockD3D11Scope) {
-        DAWN_ASSERT(this->Get());
-        DAWN_ASSERT(this->Get()->mD3D11Multithread);
+        DAWN_CHECK(this->Get());
+        DAWN_CHECK(this->Get()->mD3D11Multithread);
         this->Get()->mD3D11Multithread->Leave();
     }
 }
@@ -145,12 +145,12 @@ void ScopedCommandRecordingContext::Unmap(ID3D11Resource* pResource, UINT Subres
 }
 
 HRESULT ScopedCommandRecordingContext::Signal(ID3D11Fence* pFence, UINT64 Value) const {
-    DAWN_ASSERT(Get()->mD3D11DeviceContext4);
+    DAWN_CHECK(Get()->mD3D11DeviceContext4);
     return Get()->mD3D11DeviceContext4->Signal(pFence, Value);
 }
 
 HRESULT ScopedCommandRecordingContext::Wait(ID3D11Fence* pFence, UINT64 Value) const {
-    DAWN_ASSERT(Get()->mD3D11DeviceContext4);
+    DAWN_CHECK(Get()->mD3D11DeviceContext4);
     return Get()->mD3D11DeviceContext4->Wait(pFence, Value);
 }
 
@@ -176,8 +176,8 @@ void ScopedCommandRecordingContext::Flush1(D3D11_CONTEXT_TYPE ContextType, HANDL
 void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
                                                             const void* data,
                                                             size_t size) const {
-    DAWN_ASSERT(offset < kMaxImmediateConstantsPerPipeline);
-    DAWN_ASSERT(size <= sizeof(uint32_t) * (kMaxImmediateConstantsPerPipeline - offset));
+    DAWN_CHECK(offset < kMaxImmediateConstantsPerPipeline);
+    DAWN_CHECK(size <= sizeof(uint32_t) * (kMaxImmediateConstantsPerPipeline - offset));
     std::memcpy(&Get()->mUniformBufferData[offset], data, size);
     Get()->mUniformBufferDirty = true;
 }
@@ -289,8 +289,8 @@ MaybeError ScopedSwapStateCommandRecordingContext::SetInternalUniformBuffer(
 }
 
 MaybeError CommandRecordingContext::Initialize(Device* device) {
-    DAWN_ASSERT(!mIsOpen);
-    DAWN_ASSERT(device);
+    DAWN_CHECK(!mIsOpen);
+    DAWN_CHECK(device);
     mDevice = device;
 
     ID3D11Device3* d3d11Device = device->GetD3D11Device3();
@@ -353,7 +353,7 @@ void CommandRecordingContext::Destroy() {
         return;
     }
 
-    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+    DAWN_CHECK(mDevice->IsLockedByCurrentThreadIfNeeded());
     mIsOpen = false;
     mUniformBuffer = nullptr;
     mDevice = nullptr;
