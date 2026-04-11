@@ -16,6 +16,24 @@
       "message": "I don\u0027t think this change is using the perf test infrastructure correctly. IIUC, the number of iterations should be determined by the infra already and you shouldn\u0027t need to loop in the `Step()` function. I would suggest taking a look at the other examples in the directory.\n\nAlso, some more documentation about what each perf test is trying to measure would help a lot for posterity and reviewing.",
       "revId": "3248b015948ef35a2111951e70c01925099099ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "045d33dc_3965f25f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-11T02:54:29Z",
+      "side": 1,
+      "message": "There is at least one of other perfs test that uses custom iterations in the `Step` though [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/perf_tests/BufferUploadPerf.cpp;drc\u003df8178d47e2351a11830639a549b9ca476c426bf6;l\u003d150).",
+      "parentUuid": "3e05b173_4039b6b6",
+      "revId": "3248b015948ef35a2111951e70c01925099099ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
