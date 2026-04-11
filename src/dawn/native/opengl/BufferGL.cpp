@@ -38,6 +38,20 @@
 
 namespace dawn::native::opengl {
 
+namespace {
+
+ResultOrError<std::span<uint8_t>> GLMapBufferRange(const OpenGLFunctions& gl,
+                                                   GLenum target,
+                                                   GLintptr offset,
+                                                   GLsizeiptr length,
+                                                   GLbitfield access) {
+    void* ptr = DAWN_GL_TRY_ALWAYS_CHECK(gl, MapBufferRange(target, offset, length, access));
+    DAWN_CHECK(ptr != nullptr);
+    return std::span{static_cast<uint8_t*>(ptr), static_cast<size_t>(length)};
+}
+
+}  // namespace
+
 // Buffer
 
 // static
@@ -206,14 +220,14 @@ MaybeError Buffer::MapAtCreationImpl() {
     auto device = ToBackend(GetDevice());
     if (device->IsToggleEnabled(Toggle::GLDefer)) {
         mCPUStaging.resize(GetAllocatedSize());
-        mMappedData = mCPUStaging.data();
+        mMappedData = mCPUStaging;
         return {};
     }
     return device->ExecuteGL(
         ExecutionQueueBase::SubmitMode::Normal, [this](const OpenGLFunctions& gl) -> MaybeError {
             DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
-            mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-                gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetAllocatedSize(), GL_MAP_WRITE_BIT));
+            DAWN_TRY_ASSIGN(mMappedData, GLMapBufferRange(gl, GL_ARRAY_BUFFER, 0,
+                                                          GetAllocatedSize(), GL_MAP_WRITE_BIT));
             return {};
         });
 }
@@ -223,8 +237,8 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     // at the cost of a host-side copy. This should be removed in favour of eager buffer mapping,
     // once that's implemented.
     if ((mode & wgpu::MapMode::Write) && GetDevice()->IsToggleEnabled(Toggle::ShadowCopyMapWrite)) {
-        mCPUStaging.resize(GetSize());
-        mMappedData = mCPUStaging.data();
+        mCPUStaging.resize(GetAllocatedSize());
+        mMappedData = mCPUStaging;
         return {};
     }
 
@@ -250,20 +264,20 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
             // This does GPU->CPU synchronization, we could require a high
             // version of OpenGL that would let us map the buffer unsynchronized.
             DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, self->mBuffer));
-            void* mappedData = nullptr;
+            GLbitfield access;
             if (mode & wgpu::MapMode::Read) {
-                mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-                    gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size, GL_MAP_READ_BIT));
+                access = GL_MAP_READ_BIT;
             } else {
                 DAWN_ASSERT(mode & wgpu::MapMode::Write);
-                mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-                    gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size,
-                                       GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT));
+                access = GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT;
             }
+            std::span<uint8_t> mappedData;
+            DAWN_TRY_ASSIGN(mappedData,
+                            GLMapBufferRange(gl, GL_ARRAY_BUFFER, offset, size, access));
 
             // The frontend asks that the pointer returned by GetMappedPointer is from the start of
             // the resource but OpenGL gives us the pointer at offset. Remove the offset.
-            self->mMappedData = static_cast<uint8_t*>(mappedData) - offset;
+            self->mMappedData = std::span{mappedData.data() - offset, offset + mappedData.size()};
             return {};
         });
 }
@@ -272,9 +286,9 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     // The mapping offset has already been removed.
-    return mMappedData;
+    return mMappedData.data();
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
@@ -289,9 +303,10 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
         device->EnqueueGL([self = Ref<Buffer>(this)](const OpenGLFunctions& gl) -> MaybeError {
             DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, self->mBuffer));
             if (self->mCPUStaging.size() > 0) {
-                auto mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
-                    gl, MapBufferRange(GL_ARRAY_BUFFER, 0, self->GetSize(), GL_MAP_WRITE_BIT));
-                memcpy(mappedData, self->mCPUStaging.data(), self->GetSize());
+                std::span<uint8_t> mappedData;
+                DAWN_TRY_ASSIGN(mappedData, GLMapBufferRange(gl, GL_ARRAY_BUFFER, 0,
+                                                             self->GetSize(), GL_MAP_WRITE_BIT));
+                std::copy(self->mCPUStaging.begin(), self->mCPUStaging.end(), mappedData.begin());
                 self->mCPUStaging.resize(0);
             }
             DAWN_GL_TRY(gl, UnmapBuffer(GL_ARRAY_BUFFER));
@@ -301,7 +316,8 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
 
 void Buffer::DestroyImpl(DestroyReason reason) {
     BufferBase::DestroyImpl(reason);
-    mMappedData = nullptr;
+    mMappedData = {};
+    mCPUStaging = {};
 
     IgnoreErrors(ToBackend(GetDevice())
                      ->EnqueueDestroyGL(this, &Buffer::GetHandle, reason,

@@ -191,7 +191,7 @@ class Buffer : public BufferBase {
     void UnmapImpl(BufferState oldState, BufferState newState) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
     std::optional<DeviceGuard> UseDeviceGuardForDestroy() override;
 
     MaybeError InitializeToZero(const ScopedCommandRecordingContext* commandContext);

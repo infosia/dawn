@@ -276,9 +276,9 @@ class Buffer final : public BufferBase {
     void DestroyImpl(DestroyReason reason) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
 
-    std::unique_ptr<uint8_t[]> mBackingData;
+    std::vector<uint8_t> mBackingData{};
 };
 
 class CommandBuffer final : public CommandBufferBase {

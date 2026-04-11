@@ -355,7 +355,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation,
     size_t alignment = D3D11BufferSizeAlignment(GetInternalUsage());
     // Check for overflow, bufferDescriptor.ByteWidth is a UINT.
     if (size > std::numeric_limits<UINT>::max() - alignment) {
-        // Alignment would overlow.
+        // Alignment would overflow.
         return DAWN_OUT_OF_MEMORY_ERROR("Buffer allocation is too large");
     }
     mAllocatedSize = Align(size, alignment);
@@ -576,10 +576,11 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     // acquired.
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     // The frontend asks that the pointer returned is from the start of the resource
     // irrespective of the offset passed in MapAsyncImpl, which is what mMappedData is.
-    return mMappedData;
+    const uint8_t* ptr = mMappedData;
+    return ptr ? std::span{mMappedData, GetAllocatedSize()} : {};
 }
 
 void Buffer::DestroyImpl(DestroyReason reason) {

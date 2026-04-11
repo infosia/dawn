@@ -216,8 +216,8 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
-void* Buffer::GetMappedPointerImpl() {
-    return [*mMtlBuffer contents];
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
+    return std::span{static_cast<uint8_t*>([*mMtlBuffer contents]), [*mMtlBuffer length]};
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {

@@ -476,7 +476,7 @@ MaybeError Buffer::MapInternal(bool isWrite, size_t offset, size_t size, const c
     // https://docs.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12resource-map
     void* mappedData = nullptr;
     DAWN_TRY(CheckHRESULT(GetD3D12Resource()->Map(0, &range, &mappedData), contextInfo));
-    mMappedData = mappedData;
+    mMappedData = std::span{static_cast<uint8_t*>(mappedData), GetAllocatedSize()};
 
     if (isWrite) {
         mWrittenMappedRange = range;
@@ -519,7 +519,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     GetD3D12Resource()->Unmap(0, &mWrittenMappedRange);
-    mMappedData = nullptr;
+    mMappedData = {};
     mWrittenMappedRange = {0, 0};
 
     // When buffers are mapped, they are locked to keep them in resident memory. We must unlock
@@ -531,7 +531,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     }
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     // The frontend asks that the pointer returned is from the start of the resource
     // irrespective of the offset passed in MapAsyncImpl, which is what mMappedData is.
     return mMappedData;
@@ -545,7 +545,7 @@ void Buffer::DestroyImpl(DestroyReason reason) {
     // - It may be called when the last ref to the buffer is dropped and the buffer
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the buffer since there are no other live refs.
-    if (mMappedData != nullptr) {
+    if (mMappedData) {
         // If the buffer is currently mapped, unmap without flushing the writes to the GPU
         // since the buffer cannot be used anymore. UnmapImpl checks mWrittenRange to know
         // which parts to flush, so we set it to an empty range to prevent flushes.
@@ -718,7 +718,7 @@ MaybeError Buffer::ClearBuffer(CommandRecordingContext* commandContext,
     if (GetInternalUsage() & wgpu::BufferUsage::MapWrite) {
         DAWN_TRY(MapInternal(true, static_cast<size_t>(offset), static_cast<size_t>(size),
                              "D3D12 map at clear buffer"));
-        memset(mMappedData, clearValue, size);
+        std::fill_n(mMappedData.begin(), size, clearValue);
         UnmapImpl(GetState(), BufferState::Unmapped);
     } else if (clearValue == 0u) {
         DAWN_TRY(device->ClearBufferToZero(commandContext, this, offset, size));

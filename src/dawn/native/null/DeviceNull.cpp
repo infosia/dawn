@@ -399,13 +399,13 @@ void Buffer::CopyFromStaging(BufferBase* staging,
                              uint64_t sourceOffset,
                              uint64_t destinationOffset,
                              uint64_t size) {
-    uint8_t* ptr = reinterpret_cast<uint8_t*>(staging->GetMappedPointer());
+    uint8_t* ptr = staging->GetMappedPointer().data();
     memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size);
 }
 
 void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
     DAWN_ASSERT(bufferOffset + size <= GetSize());
-    DAWN_ASSERT(mBackingData);
+    DAWN_ASSERT(mBackingData.size() > 0);
     memcpy(mBackingData.get() + bufferOffset, data, size);
 }
 
@@ -418,8 +418,8 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
-void* Buffer::GetMappedPointerImpl() {
-    return mBackingData.get();
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
+    return mBackingData;
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {}

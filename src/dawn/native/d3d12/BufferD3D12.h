@@ -90,7 +90,7 @@ class Buffer final : public BufferBase {
     void DestroyImpl(DestroyReason reason) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
 
     MaybeError MapInternal(bool isWrite, size_t start, size_t end, const char* contextInfo);
 
@@ -106,7 +106,7 @@ class Buffer final : public BufferBase {
     ExecutionSerial mLastUsedSerial = std::numeric_limits<ExecutionSerial>::max();
 
     D3D12_RANGE mWrittenMappedRange = {0, 0};
-    raw_ptr<void> mMappedData = nullptr;
+    std::span<uint8_t> mMappedData{};
 
     std::unique_ptr<Heap> mHostMappedHeap;
     wgpu::Callback mHostMappedDisposeCallback = nullptr;

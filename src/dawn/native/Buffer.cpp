@@ -27,6 +27,7 @@
 
 #include "dawn/native/Buffer.h"
 
+#include <algorithm>
 #include <atomic>
 #include <cstdio>
 #include <cstring>
@@ -106,15 +107,12 @@ class ErrorBuffer final : public BufferBase {
         DAWN_UNREACHABLE();
     }
 
-    void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
+    std::span<uint8_t> GetMappedPointerImpl() override { return mFakeMappedData; }
 
-    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData.clear(); }
 
-    std::unique_ptr<uint8_t[]> mFakeMappedData;
+    std::vector<uint8_t> mFakeMappedData;
 };
-
-// GetMappedRange on a zero-sized buffer returns a pointer to this value.
-static uint32_t sZeroSizedMappingData = 0xCAFED00D;
 
 }  // anonymous namespace
 
@@ -576,7 +574,9 @@ MaybeError BufferBase::FinalizeMap(BufferState newState) {
     if (mStagingBuffer) {
         mMappedPointer = mStagingBuffer->GetMappedPointerImpl();
     } else if (GetSize() == 0) {
-        mMappedPointer = static_cast<void*>(&sZeroSizedMappingData);
+        // GetMappedRange on a zero-sized buffer returns a pointer to this value.
+        static std::array<uint8_t, 4> sZeroSizedMappingData{};
+        mMappedPointer = sZeroSizedMappingData;
     } else {
         mMappedPointer = GetMappedPointerImpl();
     }
@@ -592,8 +592,8 @@ MaybeError BufferBase::MapAtCreation() {
     if (GetSize() == 0) {
         return {};
     }
-    size_t size = GetAllocatedSize();
-    void* ptr = GetMappedPointer();
+    std::span<uint8_t> mapping = GetMappedPointer();
+    DAWN_CHECK(mapping.size() == GetAllocatedSize());
 
     DeviceBase* device = GetDevice();
     if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
@@ -602,11 +602,11 @@ MaybeError BufferBase::MapAtCreation() {
         // actually get initialized when the staging data is copied in. (But we mark the main buffer
         // as initialized now.)
         if (!usingStagingBuffer) {
-            memset(ptr, uint8_t(0u), size);
+            std::fill(mapping.begin(), mapping.end(), uint8_t{0});
             device->IncrementLazyClearCountForTesting();
         }
     } else if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-        memset(ptr, uint8_t(1u), size);
+        std::fill(mapping.begin(), mapping.end(), uint8_t{1});
     }
     // Mark the buffer as initialized since we don't want to later clear it using the GPU since that
     // would overwrite what the client wrote using the CPU.
@@ -803,18 +803,18 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
     return wgpu::Status::Success;
 }
 
-void* BufferBase::GetMappedPointer() {
+std::span<uint8_t> BufferBase::GetMappedPointer() {
     if (!IsMappedState(mState.load(std::memory_order::acquire))) {
-        return nullptr;
+        return {};
     }
-    return mMappedPointer.get();
+    return std::span{static_cast<uint8_t*>(mMappedPointer.get()), mMapSize};
 }
 
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
     if (!CanGetMappedRange(writable, offset, size)) {
         return nullptr;
     }
-    uint8_t* start = static_cast<uint8_t*>(GetMappedPointer());
+    uint8_t* start = GetMappedPointer().data();
     return start == nullptr ? nullptr : start + offset;
 }
 
