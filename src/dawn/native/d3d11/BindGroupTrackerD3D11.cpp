@@ -64,47 +64,47 @@ bool CheckAllSlotsAreEmpty(const ScopedSwapStateCommandRecordingContext* command
          slot < D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - kReservedCBVSlots; ++slot) {
         ID3D11Buffer* buffer = nullptr;
         deviceContext->VSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
+        DAWN_CHECK(buffer == nullptr);
         deviceContext->PSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
+        DAWN_CHECK(buffer == nullptr);
         deviceContext->CSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
+        DAWN_CHECK(buffer == nullptr);
     }
 
     // Check resource slots
     for (UINT slot = 0; slot < D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT; ++slot) {
         ID3D11ShaderResourceView* srv = nullptr;
         deviceContext->VSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
+        DAWN_CHECK(srv == nullptr);
         deviceContext->PSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
+        DAWN_CHECK(srv == nullptr);
         deviceContext->CSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
+        DAWN_CHECK(srv == nullptr);
     }
 
     // Check sampler slots
     for (UINT slot = 0; slot < D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT; ++slot) {
         ID3D11SamplerState* sampler = nullptr;
         deviceContext->VSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
+        DAWN_CHECK(sampler == nullptr);
         deviceContext->PSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
+        DAWN_CHECK(sampler == nullptr);
         deviceContext->CSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
+        DAWN_CHECK(sampler == nullptr);
     }
 
     // Check UAV slots for compute
     for (UINT slot = 0; slot < D3D11_1_UAV_SLOT_COUNT; ++slot) {
         ID3D11UnorderedAccessView* uav = nullptr;
         deviceContext->CSGetUnorderedAccessViews(slot, 1, &uav);
-        DAWN_ASSERT(uav == nullptr);
+        DAWN_CHECK(uav == nullptr);
     }
     // Check UAV slots for render
     for (UINT slot = 0; slot < commandContext->GetDevice()->GetUAVSlotCount(); ++slot) {
         ID3D11UnorderedAccessView* uav = nullptr;
         deviceContext->OMGetRenderTargetsAndUnorderedAccessViews(0, nullptr, nullptr, slot, 1,
                                                                  &uav);
-        DAWN_ASSERT(uav == nullptr);
+        DAWN_CHECK(uav == nullptr);
     }
 
     return true;
@@ -212,7 +212,7 @@ BindGroupTracker::~BindGroupTracker() {
     UnbindUnorderedAccessViews<kFragment>();
     UnbindUnorderedAccessViews<kCompute>();
 
-    DAWN_ASSERT(CheckAllSlotsAreEmpty(mCommandContext));
+    DAWN_CHECK(CheckAllSlotsAreEmpty(mCommandContext));
 }
 
 template <SingleShaderStage Stage>
@@ -350,11 +350,11 @@ ResultOrError<BindGroupTracker::ConstantBufferBinding> BindGroupTracker::GetCons
     // (4*32-bit components). And the offsets and counts must be multiples
     // of 16.
     // WebGPU's minUniformBufferOffsetAlignment is 256.
-    DAWN_ASSERT(IsAligned(binding.offset, 256));
+    DAWN_CHECK(IsAligned(binding.offset, 256));
     UINT firstConstant = static_cast<UINT>(binding.offset / 16);
     UINT size = static_cast<UINT>(Align(binding.size, 16) / 16);
     UINT numConstants = Align(size, 16);
-    DAWN_ASSERT(binding.offset + numConstants * 16 <= binding.buffer->GetAllocatedSize());
+    DAWN_CHECK(binding.offset + numConstants * 16 <= binding.buffer->GetAllocatedSize());
 
     return ConstantBufferBinding{d3d11Buffer, firstConstant, numConstants};
 }
@@ -755,7 +755,7 @@ MaybeError RenderPassBindGroupTracker::Apply() {
     const uint32_t uavStartSlot = ToBackend(mPipelineLayout)->GetUAVStartIndex(kFragment);
     const uint32_t uavCount = ToBackend(mPipelineLayout)->GetUAVCount(kFragment);
 
-    DAWN_ASSERT(uavCount >= plsSlotCount);
+    DAWN_CHECK(uavCount >= plsSlotCount);
     const uint32_t usedUavCount = uavCount - plsSlotCount;
 
     absl::InlinedVector<ComPtr<ID3D11UnorderedAccessView>, 1> uavsInBindGroup(usedUavCount);
