@@ -2394,7 +2394,9 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,const_assert,const_
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:feature="texture_formats_tier1" [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,value_init:vec:addressSpace="private";type="i32";count=4 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:shader,execution,value_init:scalars:addressSpace="function";type="f32" [ Skip ]
-
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,decl,context_dependent_resolution:swizzle_names:case="xyxy" [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:shader,validation,decl,const:type:case="f16" [ Skip ]
+crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,error_scope:current_scope:errorFilter="validation";stackDepth=100000 [ Skip ]
 
 # Known bug in immediates implementation
 crbug.com/479563279 webgpu:api,validation,encoding,programmable,pipeline_immediate:required_slots_set:encoderType="*";scenario="struct_padding";* [ Failure ]
