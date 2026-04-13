@@ -2651,10 +2651,10 @@ void Validator::CheckFunction(const Function* func) {
         return;
     }
 
-    if (!func->Block()) {
-        AddError(func) << "root block for function is undefined";
-        return;
-    }
+    // Note: This is not a validator error because Function::SetBlock() asserts that the block is
+    // not null, and the disassembler will crash if this is not null. This should only be hit due
+    // to some sort of corruption, not a bad shader/programmer error.
+    TINT_ASSERT(func->Block()) << "root block for function is undefined";
 
     if (func->Block()->Is<ir::MultiInBlock>()) {
         AddError(func) << "root block for function cannot be a multi-in block";
