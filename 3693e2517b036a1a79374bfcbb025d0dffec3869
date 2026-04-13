@@ -104,6 +104,23 @@
       "message": "Seems fine to me but final sign-off should come from core Dawn folks.",
       "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3980ef2_699f6ddf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-13T16:31:40Z",
+      "side": 1,
+      "message": "Still LGTM",
+      "revId": "3693e2517b036a1a79374bfcbb025d0dffec3869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
