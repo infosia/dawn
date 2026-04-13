@@ -1332,6 +1332,23 @@ TEST_F(IR_ValidatorTest, Builtin_NoStage) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, InputAttachmentIndex_NonEntryPoint_InvalidIOKind) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.input_attachment(ty.f32()));
+    p->SetAttributes(IOAttributes{.input_attachment_index = 0u});
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(input attachment index IO attributes cannot be declared on a input param. They can only be used on a module scope variable.)"))
+        << res.Failure();
+}
+
 namespace {
 template <typename T>
 static const core::type::Type* TypeBuilder(core::type::Manager& m) {
