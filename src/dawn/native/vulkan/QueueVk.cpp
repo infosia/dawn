@@ -341,6 +341,8 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     ExecutionSerial lastSubmittedSerial = GetLastSubmittedCommandSerial();
     mFencesInFlight->emplace_back(fence, lastSubmittedSerial);
 
+    // Schedule a task to cleanup the submitted command pools/buffers that were just submitted.
+    // The SerialTask takes ownership of the command pools/buffers.
     for (size_t i = 0; i < mRecordingContext.commandBufferList.size(); ++i) {
         CommandPoolAndBuffer commands = {mRecordingContext.commandPoolList[i],
                                          mRecordingContext.commandBufferList[i]};
@@ -360,12 +362,14 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
         });
     }
 
+    // Immediately create and prepare a new recording context so that we don't accidentally attempt
+    // to re-use or double-free the command pools/buffers scheduled for cleanup above.
+    mRecordingContext = CommandRecordingContext();
+    DAWN_TRY(PrepareRecordingContext());
+
     for (auto texture : mRecordingContext.specialSyncTextures) {
         DAWN_TRY(texture->OnAfterSubmit());
     }
-
-    mRecordingContext = CommandRecordingContext();
-    DAWN_TRY(PrepareRecordingContext());
 
     return {};
 }
