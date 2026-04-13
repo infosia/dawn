@@ -112,6 +112,9 @@ def _NonInclusiveFileFilter(file):
         "src/tint/transform/canonicalize_entry_point_io.cc",  # External URL
         "test/tint/samples/compute_boids.wgsl",  # External URL
         "third_party/gn/dxc/BUILD.gn",  # Third party file
+        "third_party/directx-shader-compiler/BUILD.gn",  # Third party file
+        "third_party/directx-shader-compiler/LICENSE",  # Third party file
+        "third_party/directx-shader-compiler/build/message_compiler.py",  # Third party file
         "third_party/EGL-Registry/src/api/KHR/khrplatform.h",  # Third party file
         "tools/roll-all",  # Branch name
         "tools/src/container/key.go",  # External URL
