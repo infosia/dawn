@@ -92,10 +92,9 @@ MaybeError QuerySet::Resolve(const ScopedSwapStateCommandRecordingContext* comma
                              Buffer* destination,
                              uint64_t offset) {
     DAWN_TRY(destination->Clear(commandContext, 0, offset, queryCount * sizeof(uint64_t)));
-    const auto& queryAvailability = GetQueryAvailability();
     for (uint32_t i = 0; i < queryCount; ++i) {
         uint32_t queryIndex = i + firstQuery;
-        if (queryAvailability[queryIndex]) {
+        if (IsQueryAvailable(queryIndex)) {
             auto& predicate = mPredicates[queryIndex];
             DAWN_TRY(destination->PredicatedClear(commandContext, predicate.Get(), 1,
                                                   offset + i * sizeof(uint64_t), sizeof(uint64_t)));

@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_QUERYSET_H_
 #define SRC_DAWN_NATIVE_QUERYSET_H_
 
+#include <atomic>
+#include <memory>
 #include <vector>
 
 #include "dawn/native/Error.h"
@@ -48,8 +50,8 @@ class QuerySetBase : public ApiObjectBase {
     wgpu::QueryType GetQueryType() const;
     uint32_t GetQueryCount() const;
 
-    const std::vector<bool>& GetQueryAvailability() const;
-    void SetQueryAvailability(uint32_t index, bool available);
+    bool IsQueryAvailable(uint32_t index) const;
+    void SetQueryAvailable(uint32_t index, bool available = true);
 
     MaybeError ValidateCanUseInSubmitNow() const;
 
@@ -74,8 +76,9 @@ class QuerySetBase : public ApiObjectBase {
     enum class QuerySetState { Unavailable, Available, Destroyed };
     QuerySetState mState = QuerySetState::Unavailable;
 
-    // Indicates the available queries on the query set for resolving
-    std::vector<bool> mQueryAvailability;
+    // Indicates the available queries on the query set for resolving.
+    // Use atomic<bool> for thread-safety during concurrent submission updates.
+    std::unique_ptr<std::atomic<bool>[]> mQueryAvailability;
 };
 
 }  // namespace dawn::native

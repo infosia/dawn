@@ -81,7 +81,10 @@ QuerySetBase::QuerySetBase(DeviceBase* device, const QuerySetDescriptor* descrip
       mQueryType(descriptor->type),
       mQueryCount(descriptor->count),
       mState(QuerySetState::Available) {
-    mQueryAvailability.resize(descriptor->count);
+    mQueryAvailability = std::make_unique<std::atomic<bool>[]>(descriptor->count);
+    for (uint32_t i = 0; i < descriptor->count; ++i) {
+        mQueryAvailability[i].store(false, std::memory_order_relaxed);
+    }
     GetObjectTrackingList()->Track(this);
 }
 
@@ -126,12 +129,13 @@ uint32_t QuerySetBase::GetQueryCount() const {
     return mQueryCount;
 }
 
-const std::vector<bool>& QuerySetBase::GetQueryAvailability() const {
-    return mQueryAvailability;
+bool QuerySetBase::IsQueryAvailable(uint32_t index) const {
+    return mQueryAvailability[index].load(std::memory_order_relaxed);
 }
 
-void QuerySetBase::SetQueryAvailability(uint32_t index, bool available) {
-    mQueryAvailability[index] = available;
+void QuerySetBase::SetQueryAvailable(uint32_t index, bool available) {
+    DAWN_ASSERT(index < mQueryCount);
+    mQueryAvailability[index].store(available, std::memory_order_relaxed);
 }
 
 MaybeError QuerySetBase::ValidateCanUseInSubmitNow() const {

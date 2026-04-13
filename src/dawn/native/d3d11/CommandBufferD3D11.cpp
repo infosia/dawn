@@ -42,6 +42,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -1024,6 +1025,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
                 querySet->EndQuery(commandContext->GetD3D11DeviceContext3(), cmd->queryIndex);
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 
