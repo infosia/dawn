@@ -64,7 +64,30 @@ class CommandEncoder final : public ApiObjectBase {
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
+
+    Ref<ComputePassEncoder> BeginComputePass(const ComputePassDescriptor* descriptor = nullptr);
+    Ref<RenderPassEncoder> BeginRenderPass(const RenderPassDescriptor* rawDescriptor);
+    ResultOrError<Ref<CommandBufferBase>> Finish(
+        const CommandBufferDescriptor* descriptor = nullptr);
+
+    // `InternalUsageScope` is a scoped class that temporarily changes validation such that the
+    // command encoder includes internal resource usages.
+    friend class InternalUsageScope;
+    class [[nodiscard]] InternalUsageScope : public NonMovable, public StackAllocated {
+      public:
+        ~InternalUsageScope();
+
+      private:
+        // Only CommandEncoder can make this class.
+        friend class CommandEncoder;
+        InternalUsageScope(CommandEncoder* encoder);
+
+        raw_ptr<CommandEncoder> mEncoder;
+        UsageValidationMode mUsageValidationMode;
+    };
+
+    [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
 
     // Dawn API
     ComputePassEncoder* APIBeginComputePass(const ComputePassDescriptor* descriptor);
@@ -109,30 +132,6 @@ class CommandEncoder final : public ApiObjectBase {
 
     CommandBufferBase* APIFinish(const CommandBufferDescriptor* descriptor = nullptr);
 
-    Ref<ComputePassEncoder> BeginComputePass(const ComputePassDescriptor* descriptor = nullptr);
-    Ref<RenderPassEncoder> BeginRenderPass(const RenderPassDescriptor* rawDescriptor);
-    ResultOrError<Ref<CommandBufferBase>> Finish(
-        const CommandBufferDescriptor* descriptor = nullptr);
-
-    // `InternalUsageScope` is a scoped class that temporarily changes validation such that the
-    // command encoder includes internal resource usages.
-    friend class InternalUsageScope;
-    class [[nodiscard]] InternalUsageScope : public NonMovable, public StackAllocated {
-      public:
-        ~InternalUsageScope();
-
-      private:
-        // Only CommandEncoder can make this class.
-        friend class CommandEncoder;
-        InternalUsageScope(CommandEncoder* encoder);
-
-        raw_ptr<CommandEncoder> mEncoder;
-        UsageValidationMode mUsageValidationMode;
-    };
-
-    [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
-
-
   private:
     CommandEncoder(DeviceBase* device, const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
     CommandEncoder(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -145,6 +144,8 @@ class CommandEncoder final : public ApiObjectBase {
     absl::flat_hash_set<BufferBase*> mTopLevelBuffers;
     absl::flat_hash_set<TextureBase*> mTopLevelTextures;
     absl::flat_hash_set<QuerySetBase*> mUsedQuerySets;
+    QuerySetToSlotUsageMap mQueryAvailability;
+    std::vector<ResolveQuerySetCmd*> mResolveQuerySetCmds;
 
     uint64_t mDebugGroupStackSize = 0;
 

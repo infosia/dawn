@@ -169,16 +169,35 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
 
     mIndirectDrawMetadata.emplace_back(std::move(indirectDrawMetadata));
 
-    mRenderPassUsages.push_back(usageTracker.AcquireResourceUsage());
+    RenderPassResourceUsage usages = usageTracker.AcquireResourceUsage();
+    for (auto& [querySet, usage] : usages.querySetToSlotUsageMap) {
+        for (size_t i = 0; i < usage.size(); ++i) {
+            if (usage[i]) {
+                commandEncoder->TrackQuerySetSlotUsage(querySet, i);
+            }
+        }
+    }
+
+    mRenderPassUsages.push_back(std::move(usages));
     return {};
 }
 
 void EncodingContext::ExitComputePass(const ApiObjectBase* passEncoder,
-                                      ComputePassResourceUsage usages) {
+                                      ComputePassResourceUsage usages,
+                                      CommandEncoder* commandEncoder) {
     DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
     DAWN_ASSERT(mCurrentEncoder == passEncoder);
 
     mCurrentEncoder = mTopLevelEncoder;
+
+    for (auto& [querySet, usage] : usages.querySetToSlotUsageMap) {
+        for (size_t i = 0; i < usage.size(); ++i) {
+            if (usage[i]) {
+                commandEncoder->TrackQuerySetSlotUsage(querySet, i);
+            }
+        }
+    }
+
     mComputePassUsages.push_back(std::move(usages));
 }
 
