@@ -31,6 +31,7 @@
 #include <optional>
 #include <utility>
 
+#include "absl/cleanup/cleanup.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandValidation.h"
@@ -292,6 +293,14 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
 
     Device* device = ToBackend(GetDevice());
 
+    // Ensure that after calling this method we have a fresh recording context even if one of the
+    // DAWN_TRY calls below fail.
+    absl::Cleanup recycleContext = [&]() {
+        [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(
+            RecycleRecordingContext(), "Recycling recording context after submit failed for %s",
+            this);
+    };
+
     if (!mRecordingContext.mappableBuffersForEagerTransition.empty()) {
         // Transition mappable buffers back to map usages with the submit.
         Buffer::TransitionMappableBuffersEagerly(
@@ -338,8 +347,17 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
         device->GetFencedDeleter()->DeleteWhenUnused(semaphore);
     }
     IncrementLastSubmittedCommandSerial();
+    mFencesInFlight->emplace_back(fence, GetLastSubmittedCommandSerial());
+
+    for (auto texture : mRecordingContext.specialSyncTextures) {
+        DAWN_TRY(texture->OnAfterSubmit());
+    }
+
+    return {};
+}
+
+MaybeError Queue::RecycleRecordingContext() {
     ExecutionSerial lastSubmittedSerial = GetLastSubmittedCommandSerial();
-    mFencesInFlight->emplace_back(fence, lastSubmittedSerial);
 
     for (size_t i = 0; i < mRecordingContext.commandBufferList.size(); ++i) {
         CommandPoolAndBuffer commands = {mRecordingContext.commandPoolList[i],
@@ -358,10 +376,6 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
 
             mUnusedCommands->push_back(commands);
         });
-    }
-
-    for (auto texture : mRecordingContext.specialSyncTextures) {
-        DAWN_TRY(texture->OnAfterSubmit());
     }
 
     mRecordingContext = CommandRecordingContext();
