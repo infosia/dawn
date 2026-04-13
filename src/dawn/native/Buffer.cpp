@@ -80,7 +80,7 @@ class ErrorBuffer final : public BufferBase {
     bool IsCPUWritableAtCreation() const override { return true; }
 
     MaybeError MapAtCreationImpl() override {
-        DAWN_ASSERT(mFakeMappedData == nullptr);
+        DAWN_ASSERT(!mFakeMappedData);
 
         // Check that the size can be used to allocate mFakeMappedData. A malloc(0)
         // is invalid, and on 32bit systems we should avoid a narrowing conversion that
@@ -89,10 +89,10 @@ class ErrorBuffer final : public BufferBase {
         bool isValidSize = size != 0 && size < uint64_t(std::numeric_limits<size_t>::max());
 
         if (isValidSize) {
-            mFakeMappedData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+            mFakeMappedData = HeapArray<uint8_t>::Uninit(size, std::nothrow);
         }
 
-        if (mFakeMappedData == nullptr) {
+        if (!mFakeMappedData) {
             return DAWN_OUT_OF_MEMORY_ERROR(
                 "Failed to allocate memory to map ErrorBuffer at creation.");
         }
@@ -106,11 +106,11 @@ class ErrorBuffer final : public BufferBase {
         DAWN_UNREACHABLE();
     }
 
-    void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
+    void* GetMappedPointerImpl() override { return mFakeMappedData.data(); }
 
-    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData = {}; }
 
-    std::unique_ptr<uint8_t[]> mFakeMappedData;
+    HeapArray<uint8_t> mFakeMappedData;
 };
 
 // GetMappedRange on a zero-sized buffer returns a pointer to this value.

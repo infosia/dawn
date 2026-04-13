@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/wire/Wire.h"
 #include "dawn/wire/WireCmd_autogen.h"
@@ -57,7 +58,7 @@ class ChunkedCommandHandler : public CommandHandler {
     struct ChunkedCommand {
         size_t remainingSize = 0;
         size_t putOffset = 0;
-        std::unique_ptr<char[]> data = nullptr;
+        HeapArray<char> data;
     };
     absl::flat_hash_map<uint64_t, ChunkedCommand> mChunkedCommands;
 };
