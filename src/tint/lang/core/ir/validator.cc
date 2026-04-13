@@ -2652,6 +2652,9 @@ void Validator::CheckFunction(const Function* func) {
     }
 
     if (!func->Block()) {
+        // Note: This is not tested in unittests because Function::SetBlock() asserts that the
+        // block is not null, and the disassembler will crash if the block is null. This check
+        // exists to catch unexpected corruption, not bad input/programmer error.
         AddError(func) << "root block for function is undefined";
         return;
     }

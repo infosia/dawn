@@ -41,6 +41,7 @@ class Module;
 namespace tint::core::ir {
 
 /// Enumerator of optional IR capabilities.
+
 enum class Capability : uint8_t {
     /// Allows 8-bit integer types.
     kAllow8BitIntegers,
