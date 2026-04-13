@@ -268,7 +268,7 @@ class Buffer final : public BufferBase {
                          uint64_t destinationOffset,
                          uint64_t size);
 
-    void DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size);
+    void DoWriteBuffer(uint64_t bufferOffset, std::span<const uint8_t> data);
 
   private:
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
