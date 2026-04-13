@@ -54,8 +54,8 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
     } else {
         ChunkedCommand newChunkedCommand = {};
         newChunkedCommand.remainingSize = cmd.size;
-        newChunkedCommand.data.reset(AllocNoThrow<char>(cmd.size));
-        if (newChunkedCommand.data.get() == nullptr) {
+        newChunkedCommand.data = HeapArray<char>::Uninit(cmd.size, std::nothrow);
+        if (!newChunkedCommand.data) {
             return WireResult::FatalError;
         }
 
@@ -71,15 +71,16 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
         // longer handle it, so just return a FatalError.
         return WireResult::FatalError;
     }
-    memcpy(chunkedCommand->data.get() + chunkedCommand->putOffset,
-           const_cast<const char*>(cmd.chunkData), cmd.chunkSize);
+    auto src = std::span{cmd.chunkData, cmd.chunkSize};
+    auto dst = chunkedCommand->data.subspan(chunkedCommand->putOffset, cmd.chunkSize);
+    std::copy(src.begin(), src.end(), dst.begin());
     chunkedCommand->putOffset += cmd.chunkSize;
     chunkedCommand->remainingSize -= cmd.chunkSize;
 
     if (chunkedCommand->remainingSize == 0) {
         ChunkedCommand fullCommand = std::move(*chunkedCommand);
         mChunkedCommands.erase(cmd.id);
-        if (HandleCommands(fullCommand.data.get(), fullCommand.putOffset) == nullptr) {
+        if (HandleCommands(fullCommand.data.data(), fullCommand.putOffset) == nullptr) {
             return WireResult::FatalError;
         }
     }

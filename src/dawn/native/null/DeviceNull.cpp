@@ -419,7 +419,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
 }
 
 std::span<uint8_t> Buffer::GetMappedPointerImpl() {
-    return std::span{mBackingData.get(), GetAllocatedSize()};
+    return mBackingData.as_span();
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {}

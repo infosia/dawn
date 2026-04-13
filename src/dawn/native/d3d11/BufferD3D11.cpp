@@ -224,8 +224,8 @@ class UploadBuffer final : public Buffer {
 
     // d3d11::Buffer implementations
     MaybeError InitializeInternal() override {
-        mUploadData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(GetAllocatedSize()));
-        if (mUploadData == nullptr) {
+        mUploadData = HeapArray<uint8_t>::Uninit(GetAllocatedSize(), std::nothrow);
+        if (!mUploadData) {
             return DAWN_OUT_OF_MEMORY_ERROR("Failed to allocate memory for buffer uploading.");
         }
         return {};
@@ -418,7 +418,7 @@ MaybeError Buffer::MapAtCreationImpl() {
     }
 
     // Lock could not be acquired, use temporary storage instead
-    mMapAtCreationData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(GetAllocatedSize()));
+    mMapAtCreationData = HeapArray<uint8_t>::Uninit(GetAllocatedSize(), std::nothrow_t);
     mMappedData = mMapAtCreationData.get();
     return {};
 }
