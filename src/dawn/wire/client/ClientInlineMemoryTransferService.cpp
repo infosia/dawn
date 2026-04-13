@@ -44,7 +44,7 @@ namespace dawn::wire::client {
 class InlineMemoryTransferService : public MemoryTransferService {
     class ReadHandleImpl : public ReadHandle {
       public:
-        explicit ReadHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
+        explicit ReadHandleImpl(HeapArray<uint8_t>&& stagingData, size_t size)
             : mStagingData(std::move(stagingData)), mSize(size) {}
 
         ~ReadHandleImpl() override = default;
@@ -53,7 +53,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         void SerializeCreate(void*) override {}
 
-        const void* GetData() override { return mStagingData.get(); }
+        const void* GetData() override { return mStagingData.data(); }
 
         bool DeserializeDataUpdate(const void* deserializePointer,
                                    size_t deserializeSize,
@@ -67,19 +67,19 @@ class InlineMemoryTransferService : public MemoryTransferService {
                 return false;
             }
 
-            void* start = static_cast<uint8_t*>(mStagingData.get()) + offset;
-            memcpy(start, deserializePointer, size);
+            std::ranges::copy(std::span{static_cast<const uint8_t*>(deserializePointer), size},
+                              mStagingData.subspan(offset, size).begin());
             return true;
         }
 
       private:
-        std::unique_ptr<uint8_t[]> mStagingData;
+        HeapArray<uint8_t> mStagingData;
         size_t mSize;
     };
 
     class WriteHandleImpl : public WriteHandle {
       public:
-        explicit WriteHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
+        explicit WriteHandleImpl(HeapArray<uint8_t>&& stagingData, size_t size)
             : mStagingData(std::move(stagingData)), mSize(size) {}
 
         ~WriteHandleImpl() override = default;
@@ -88,7 +88,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         void SerializeCreate(void*) override {}
 
-        void* GetData() override { return mStagingData.get(); }
+        void* GetData() override { return mStagingData.data(); }
 
         size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) override {
             DAWN_ASSERT(offset <= mSize);
@@ -97,15 +97,16 @@ class InlineMemoryTransferService : public MemoryTransferService {
         }
 
         void SerializeDataUpdate(void* serializePointer, size_t offset, size_t size) override {
-            DAWN_ASSERT(mStagingData != nullptr);
+            DAWN_ASSERT(mStagingData);
             DAWN_ASSERT(serializePointer != nullptr);
             DAWN_ASSERT(offset <= mSize);
             DAWN_ASSERT(size <= mSize - offset);
-            memcpy(serializePointer, static_cast<uint8_t*>(mStagingData.get()) + offset, size);
+            auto src = mStagingData.subspan(offset, size);
+            std::ranges::copy(src, static_cast<uint8_t*>(serializePointer));
         }
 
       private:
-        std::unique_ptr<uint8_t[]> mStagingData;
+        HeapArray<uint8_t> mStagingData;
         size_t mSize;
     };
 
@@ -114,7 +115,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
     ~InlineMemoryTransferService() override = default;
 
     ReadHandle* CreateReadHandle(size_t size) override {
-        auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+        auto stagingData = HeapArray<uint8_t>::Uninit(size, std::nothrow);
         if (stagingData) {
             return new ReadHandleImpl(std::move(stagingData), size);
         }
@@ -122,9 +123,8 @@ class InlineMemoryTransferService : public MemoryTransferService {
     }
 
     WriteHandle* CreateWriteHandle(size_t size) override {
-        auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+        auto stagingData = HeapArray<uint8_t>(size, std::nothrow);
         if (stagingData) {
-            memset(stagingData.get(), 0, size);
             return new WriteHandleImpl(std::move(stagingData), size);
         }
         return nullptr;

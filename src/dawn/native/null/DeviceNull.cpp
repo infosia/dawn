@@ -381,7 +381,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
 
 Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
     : BufferBase(device, descriptor) {
-    mBackingData = std::unique_ptr<uint8_t[]>(new uint8_t[GetSize()]);
+    mBackingData = HeapArray<uint8_t>::Uninit(GetSize());
     mAllocatedSize = GetSize();
 }
 
@@ -400,13 +400,14 @@ void Buffer::CopyFromStaging(BufferBase* staging,
                              uint64_t destinationOffset,
                              uint64_t size) {
     uint8_t* ptr = reinterpret_cast<uint8_t*>(staging->GetMappedPointer());
-    memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size);
+    memcpy(mBackingData.data() + destinationOffset, ptr + sourceOffset, size);
 }
 
 void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
     DAWN_ASSERT(bufferOffset + size <= GetSize());
     DAWN_ASSERT(mBackingData);
-    memcpy(mBackingData.get() + bufferOffset, data, size);
+    auto src = std::span{static_cast<const uint8_t*>(data), size};
+    std::ranges::copy(src, mBackingData.subspan(bufferOffset).begin());
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
@@ -419,7 +420,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
 }
 
 void* Buffer::GetMappedPointerImpl() {
-    return mBackingData.get();
+    return mBackingData.data();
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {}
