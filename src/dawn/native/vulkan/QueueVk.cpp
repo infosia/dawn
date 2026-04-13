@@ -31,6 +31,7 @@
 #include <optional>
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandValidation.h"
@@ -341,6 +342,16 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     ExecutionSerial lastSubmittedSerial = GetLastSubmittedCommandSerial();
     mFencesInFlight->emplace_back(fence, lastSubmittedSerial);
 
+    // Capture any errors raised by OnAfterSubmit, but don't return yet. Otherwise the
+    // Recording Context won't be reset properly.
+    MaybeError onAfterSubmitError;
+    for (auto texture : mRecordingContext.specialSyncTextures) {
+        MaybeError result = texture->OnAfterSubmit();
+        if (result.IsError()) {
+            onAfterSubmitError = std::move(result);
+        }
+    }
+
     for (size_t i = 0; i < mRecordingContext.commandBufferList.size(); ++i) {
         CommandPoolAndBuffer commands = {mRecordingContext.commandPoolList[i],
                                          mRecordingContext.commandBufferList[i]};
@@ -360,14 +371,10 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
         });
     }
 
-    for (auto texture : mRecordingContext.specialSyncTextures) {
-        DAWN_TRY(texture->OnAfterSubmit());
-    }
-
     mRecordingContext = CommandRecordingContext();
     DAWN_TRY(PrepareRecordingContext());
 
-    return {};
+    return onAfterSubmitError;
 }
 
 ResultOrError<VkFence> Queue::GetUnusedFence() {
