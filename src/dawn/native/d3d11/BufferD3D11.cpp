@@ -576,10 +576,10 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     // acquired.
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     // The frontend asks that the pointer returned is from the start of the resource
     // irrespective of the offset passed in MapAsyncImpl, which is what mMappedData is.
-    return mMappedData;
+    return std::span{mMappedData, GetAllocatedSize()};
 }
 
 void Buffer::DestroyImpl(DestroyReason reason) {

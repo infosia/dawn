@@ -90,7 +90,7 @@ class Buffer final : public BufferBase {
     void DestroyImpl(DestroyReason reason) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
 
     MaybeError MapInternal(bool isWrite, size_t start, size_t end, const char* contextInfo);
 

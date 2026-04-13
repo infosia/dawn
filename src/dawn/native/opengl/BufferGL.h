@@ -66,13 +66,14 @@ class Buffer final : public BufferBase {
     void DestroyImpl(DestroyReason reason) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
 
     MaybeError InitializeToZero();
 
     GLuint mBuffer = 0;
-    raw_ptr<void> mMappedData = nullptr;
-    std::vector<char> mCPUStaging;  // used for GLDefer
+    std::span<uint8_t> mMappedData;
+    // Staging area used for mMappedData, anytime we don't want to use a real GL mapping.
+    std::vector<uint8_t> mCPUStaging;
 };
 
 }  // namespace dawn::native::opengl

@@ -70,7 +70,7 @@ class Buffer final : public BufferBase {
     void UnmapImpl(BufferState oldState, BufferState newState) override;
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
 

@@ -54,7 +54,7 @@ class BufferMock : public BufferBase {
                 (wgpu::MapMode mode, size_t offset, size_t size),
                 (override));
     MOCK_METHOD(MaybeError, FinalizeMapImpl, (BufferState newState), (override));
-    MOCK_METHOD(void*, GetMappedPointerImpl, (), (override));
+    MOCK_METHOD(std::span<uint8_t>, GetMappedPointerImpl, (), (override));
     MOCK_METHOD(void, UnmapImpl, (BufferState fromState, BufferState newState), (override));
 
     MOCK_METHOD(bool, IsCPUWritableAtCreation, (), (const, override));

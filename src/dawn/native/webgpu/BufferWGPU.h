@@ -55,7 +55,7 @@ class Buffer final : public BufferBase, public RecordableObject, public ObjectWG
     MaybeError FinalizeMapImpl(BufferState newState) override;
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
-    void* GetMappedPointerImpl() override;
+    std::span<uint8_t> GetMappedPointerImpl() override;
     void DestroyImpl(DestroyReason reason) override;
     void SetLabelImpl() override;
 

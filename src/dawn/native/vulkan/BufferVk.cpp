@@ -576,7 +576,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     // The real mapped pointer is never returned for zero sized buffers. MappedAtCreation buffers
     // are initialized in BufferBase already.
     if (NeedsInitialization() && GetSize() > 0 && newState == BufferState::Mapped) {
-        std::memset(GetMappedPointerImpl(), 0, GetAllocatedSize());
+        std::fill(GetMappedPointerImpl().begin(), GetMappedPointerImpl().end(), 0);
         GetDevice()->IncrementLazyClearCountForTesting();
         SetInitialized(true);
 
@@ -627,10 +627,10 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
     }
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     uint8_t* memory = mMemoryAllocation.GetMappedPointer();
     DAWN_ASSERT(memory != nullptr);
-    return memory;
+    return std::span(memory, GetAllocatedSize());
 }
 
 MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t size) {

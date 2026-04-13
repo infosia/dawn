@@ -153,9 +153,9 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
     return {};
 }
 
-void* Buffer::GetMappedPointerImpl() {
+std::span<uint8_t> Buffer::GetMappedPointerImpl() {
     // The mapping offset has already been removed.
-    return mMappedData;
+    return std::span{static_cast<uint8_t*>(mMappedData), GetAllocatedSize()};
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {

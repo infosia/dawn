@@ -163,7 +163,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     void SetInitialized(bool initialized) override;
     bool IsInitialized() const override;
 
-    void* GetMappedPointer();
+    std::span<uint8_t> GetMappedPointer();
     void* GetMappedRange(size_t offset, size_t size, bool writable = true);
 
     // Internal non-reentrant version of Unmap. This is used in workarounds or additional copies.
@@ -228,7 +228,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // Performs backend specific work to finalize mapping. `newState` is the state the buffer will
     // be in after this returns.
     virtual MaybeError FinalizeMapImpl(BufferState newState) = 0;
-    virtual void* GetMappedPointerImpl() = 0;
+    virtual std::span<uint8_t> GetMappedPointerImpl() = 0;
     // Performs backend specific work to unmap. `oldState` is the state of the buffer before unmap
     // operation started. The device mutex is not locked when this is called so the implementation
     // should lock if required.
