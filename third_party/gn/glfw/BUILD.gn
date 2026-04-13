@@ -104,8 +104,8 @@ static_library("glfw") {
 
   if (is_mac) {
     sources += [
-      "${glfw_dir}/src/cocoa_time.c",
-      "${glfw_dir}/src/cocoa_time.h",
+      "${glfw_dir}/src/macos_time.c",
+      "${glfw_dir}/src/macos_time.h",
       "${glfw_dir}/src/posix_module.c",
       "${glfw_dir}/src/posix_thread.c",
       "${glfw_dir}/src/posix_thread.h",
