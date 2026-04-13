@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e75edd_8434b00d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-13T19:14:42Z",
+      "side": 1,
+      "message": "PTAL, this CL depends on https://chromium-review.googlesource.com/c/chromium/src/+/7758119 so isn\u0027t ready to land yet, but is reviewable.\n\n(If that upstream patch is reject I will have to update the instructions for CMake support)",
+      "revId": "cfbc31a6103e795d7a9968dbbc9b6ddf473d440b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
