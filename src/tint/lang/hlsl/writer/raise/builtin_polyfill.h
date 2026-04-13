@@ -37,11 +37,19 @@ class Module;
 
 namespace tint::hlsl::writer::raise {
 
+/// BuiltinPolyfillConfig describes the set of configuration options for the hlsl BuiltinPolyfill
+/// transform.
+struct BuiltinPolyfillConfig {
+    /// Set to `true` to polyfill `trunc()`.
+    bool polyfill_trunc = false;
+};
+
 /// BuiltinPolyfill is a transform that replaces calls to builtins with polyfills and calls to
 /// HLSL polyfilled or backend intrinsic functions.
 /// @param module the module to transform
+/// @param config the configuration for the transform
 /// @returns success or failure
-Result<SuccessType> BuiltinPolyfill(core::ir::Module& module);
+Result<SuccessType> BuiltinPolyfill(core::ir::Module& module, const BuiltinPolyfillConfig& config);
 
 }  // namespace tint::hlsl::writer::raise
 

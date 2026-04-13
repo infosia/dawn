@@ -242,7 +242,7 @@ void main() {
   float v = left;
   float v_1 = right;
   float v_2 = (v / v_1);
-  float val = (v - ((((v_2 < 0.0f)) ? (ceil(v_2)) : (floor(v_2))) * v_1));
+  float val = (v - (trunc(v_2) * v_1));
 }
 
 )");
@@ -272,7 +272,7 @@ void main() {
   float16_t v = left;
   float16_t v_1 = right;
   float16_t v_2 = (v / v_1);
-  float16_t val = (v - ((((v_2 < float16_t(0.0h))) ? (ceil(v_2)) : (floor(v_2))) * v_1));
+  float16_t val = (v - (trunc(v_2) * v_1));
 }
 
 )");
@@ -302,7 +302,7 @@ void main() {
   float3 v = left;
   float3 v_1 = right;
   float3 v_2 = (v / v_1);
-  float3 val = (v - ((((v_2 < (0.0f).xxx)) ? (ceil(v_2)) : (floor(v_2))) * v_1));
+  float3 val = (v - (trunc(v_2) * v_1));
 }
 
 )");
@@ -332,7 +332,7 @@ void main() {
   vector<float16_t, 3> v = left;
   vector<float16_t, 3> v_1 = right;
   vector<float16_t, 3> v_2 = (v / v_1);
-  vector<float16_t, 3> val = (v - ((((v_2 < (float16_t(0.0h)).xxx)) ? (ceil(v_2)) : (floor(v_2))) * v_1));
+  vector<float16_t, 3> val = (v - (trunc(v_2) * v_1));
 }
 
 )");

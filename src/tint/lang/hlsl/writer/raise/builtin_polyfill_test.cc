@@ -74,7 +74,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastIdentity) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -103,7 +103,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Asuint) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -132,7 +132,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Asint) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -161,7 +161,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Asfloat) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -190,7 +190,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, AsfloatVec) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -234,7 +234,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastFromF16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -280,7 +280,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastToF16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -335,7 +335,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastFromVec2F16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -399,7 +399,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastToVec4F16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -430,7 +430,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastF16ToU16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -461,7 +461,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastU16ToF16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -491,7 +491,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastVec2U16ToVec2F16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -536,7 +536,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastVec2U16ToU32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -583,7 +583,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastU32ToVec2U16) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -616,7 +616,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Sign) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -649,7 +649,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SignVec) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -687,7 +687,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureNumLevels) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -727,7 +727,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureNumLayers) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -768,7 +768,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureNumSamples) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -804,7 +804,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_1d_WithoutLod) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -844,7 +844,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_1d_WithI32Lod) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -883,7 +883,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_1d_WithU32Lod) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -921,7 +921,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithoutLod) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -962,7 +962,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithI32Lod) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1001,7 +1001,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureDimensions_3d) {
 )";
 
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowVectorElementPointer};
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1038,7 +1038,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_1DF32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1074,7 +1074,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_2DLevelI32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1111,7 +1111,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_3DLevelU32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1148,7 +1148,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_Multisampled2DI32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1186,7 +1186,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_Depth2DLevelF32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1226,7 +1226,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_Depth2DArrayLevelF32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1264,7 +1264,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, TextureLoad_DepthMultisampledF32) {
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1313,7 +1313,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1362,7 +1362,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1413,7 +1413,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1478,7 +1478,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1544,7 +1544,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1612,7 +1612,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1681,7 +1681,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1745,7 +1745,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1809,7 +1809,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1876,7 +1876,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1945,7 +1945,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -2008,7 +2008,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -2071,7 +2071,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -2136,7 +2136,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -2203,7 +2203,7 @@ $B1: {  # root
 }
 )";
 
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -2264,7 +2264,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2326,7 +2326,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2389,7 +2389,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2454,7 +2454,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2521,7 +2521,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2583,7 +2583,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2646,7 +2646,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2708,7 +2708,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2773,7 +2773,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2835,7 +2835,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2898,7 +2898,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -2963,7 +2963,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3029,7 +3029,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3094,7 +3094,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3156,7 +3156,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3220,7 +3220,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3286,7 +3286,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3353,7 +3353,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3415,7 +3415,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3479,7 +3479,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3541,7 +3541,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3607,7 +3607,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3668,7 +3668,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3730,7 +3730,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3795,7 +3795,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3861,7 +3861,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3922,7 +3922,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -3987,7 +3987,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4048,7 +4048,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4111,7 +4111,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4176,7 +4176,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4242,7 +4242,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4303,7 +4303,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4368,7 +4368,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4436,7 +4436,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4506,7 +4506,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4578,7 +4578,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4651,7 +4651,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4719,7 +4719,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4789,7 +4789,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4857,7 +4857,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4929,7 +4929,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -4989,7 +4989,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5051,7 +5051,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5115,7 +5115,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5181,7 +5181,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5248,7 +5248,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5310,7 +5310,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5374,7 +5374,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5436,7 +5436,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5502,7 +5502,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5565,7 +5565,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5629,7 +5629,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5695,7 +5695,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5763,7 +5763,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5829,7 +5829,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5866,7 +5866,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, QuantizeToF16) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5923,7 +5923,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -5997,7 +5997,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6062,7 +6062,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6139,7 +6139,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6218,7 +6218,7 @@ $B1: {  # root
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6259,7 +6259,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack2x16Float) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6298,7 +6298,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack2x16Float) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6344,7 +6344,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack2x16Snorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6387,7 +6387,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack2x16snorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6431,7 +6431,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack2x16unorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6472,7 +6472,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack2x16unorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6524,7 +6524,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack4x8Snorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6569,7 +6569,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack4x8Snorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6619,7 +6619,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack4x8Unorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6664,7 +6664,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack4x8Unorm) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6706,7 +6706,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack4xI8) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6748,7 +6748,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack4xI8) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6790,7 +6790,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack4xU8) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6832,7 +6832,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Unpack4xU8) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6869,7 +6869,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Dot4U8Packed) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6907,7 +6907,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Dot4I8Packed) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -6949,7 +6949,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Pack4xI8Clamp) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -6989,7 +6989,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Asinh) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7029,7 +7029,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Acosh) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7069,7 +7069,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, Atanh) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7107,7 +7107,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, CountOneBits) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7145,7 +7145,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, ReverseBits) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7180,7 +7180,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupAndLiteralVec) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7213,7 +7213,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupShuffleXor) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7249,7 +7249,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupInclusiveAdd) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7285,7 +7285,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupInclusiveMul) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7318,7 +7318,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupShuffleUp) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7351,7 +7351,7 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SubgroupShuffleDown) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7403,7 +7403,7 @@ __modf_result_f32 = struct @align(4) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7455,7 +7455,7 @@ __modf_result_vec3_f32 = struct @align(16) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7511,7 +7511,7 @@ __frexp_result_f32 = struct @align(4) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
     EXPECT_EQ(expect, str());
 }
 
@@ -7567,7 +7567,68 @@ __frexp_result_vec3_f32 = struct @align(16) {
   }
 }
 )";
-    Run(BuiltinPolyfill);
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, Trunc) {
+    auto* a = b.FunctionParam<f32>("a");
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Call(ty.f32(), core::BuiltinFn::kTrunc, a)); });
+
+    auto* src = R"(
+%foo = func(%a:f32):f32 {
+  $B1: {
+    %3:f32 = trunc %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:f32):f32 {
+  $B1: {
+    %3:f32 = floor %a
+    %4:f32 = ceil %a
+    %5:bool = lt %a, 0.0f
+    %6:f32 = hlsl.ternary %3, %4, %5
+    ret %6
+  }
+}
+)";
+
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{.polyfill_trunc = true});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, Trunc_NoPolyfill) {
+    auto* a = b.FunctionParam<f32>("a");
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Call(ty.f32(), core::BuiltinFn::kTrunc, a)); });
+
+    auto* src = R"(
+%foo = func(%a:f32):f32 {
+  $B1: {
+    %3:f32 = trunc %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:f32):f32 {
+  $B1: {
+    %3:f32 = trunc %a
+    ret %3
+  }
+}
+)";
+
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{.polyfill_trunc = false});
     EXPECT_EQ(expect, str());
 }
 

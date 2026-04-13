@@ -1070,6 +1070,7 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinFn::kTan:
             case core::BuiltinFn::kTanh:
             case core::BuiltinFn::kTranspose:
+            case core::BuiltinFn::kTrunc:
                 out << func;
                 break;
             case core::BuiltinFn::kCountOneBits:  // uint

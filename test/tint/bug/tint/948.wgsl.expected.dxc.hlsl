@@ -128,7 +128,7 @@ void main_1() {
         float x_181 = asfloat(x_20[0u].x);
         float x_184 = animationData.z;
         float v_2 = ((x_181 * x_184) / 1.0f);
-        mt = ((x_181 * x_184) - ((((v_2 < 0.0f)) ? (ceil(v_2)) : (floor(v_2))) * 1.0f));
+        mt = ((x_181 * x_184) - (trunc(v_2) * 1.0f));
         f = 0.0f;
         {
           uint2 tint_loop_idx_1 = (4294967295u).xx;

@@ -359,7 +359,11 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     // BuiltinPolyfill must come after BinaryPolyfill and DecomposeStorageAccess as they add
     // builtins
-    TINT_CHECK_RESULT(raise::BuiltinPolyfill(module));
+    {
+        raise::BuiltinPolyfillConfig config;
+        config.polyfill_trunc = (options.compiler == Options::Compiler::kFXC);
+        TINT_CHECK_RESULT(raise::BuiltinPolyfill(module, config));
+    }
     TINT_CHECK_RESULT(core::ir::transform::VectorizeScalarMatrixConstructors(module));
     TINT_CHECK_RESULT(core::ir::transform::RemoveContinueInSwitch(module));
 

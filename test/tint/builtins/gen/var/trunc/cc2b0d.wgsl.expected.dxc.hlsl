@@ -5,8 +5,7 @@
 RWByteAddressBuffer prevent_dce : register(u0);
 float16_t trunc_cc2b0d() {
   float16_t arg_0 = float16_t(1.5h);
-  float16_t v = arg_0;
-  float16_t res = (((v < float16_t(0.0h))) ? (ceil(v)) : (floor(v)));
+  float16_t res = trunc(arg_0);
   return res;
 }
 
@@ -21,8 +20,7 @@ void fragment_main() {
 RWByteAddressBuffer prevent_dce : register(u0);
 float16_t trunc_cc2b0d() {
   float16_t arg_0 = float16_t(1.5h);
-  float16_t v = arg_0;
-  float16_t res = (((v < float16_t(0.0h))) ? (ceil(v)) : (floor(v)));
+  float16_t res = trunc(arg_0);
   return res;
 }
 
@@ -47,22 +45,21 @@ struct vertex_main_outputs {
 
 float16_t trunc_cc2b0d() {
   float16_t arg_0 = float16_t(1.5h);
-  float16_t v = arg_0;
-  float16_t res = (((v < float16_t(0.0h))) ? (ceil(v)) : (floor(v)));
+  float16_t res = trunc(arg_0);
   return res;
 }
 
 VertexOutput vertex_main_inner() {
-  VertexOutput v_1 = (VertexOutput)0;
-  v_1.pos = (0.0f).xxxx;
-  v_1.prevent_dce = trunc_cc2b0d();
-  VertexOutput v_2 = v_1;
-  return v_2;
+  VertexOutput v = (VertexOutput)0;
+  v.pos = (0.0f).xxxx;
+  v.prevent_dce = trunc_cc2b0d();
+  VertexOutput v_1 = v;
+  return v_1;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_3 = vertex_main_inner();
-  vertex_main_outputs v_4 = {v_3.prevent_dce, v_3.pos};
-  return v_4;
+  VertexOutput v_2 = vertex_main_inner();
+  vertex_main_outputs v_3 = {v_2.prevent_dce, v_2.pos};
+  return v_3;
 }
 

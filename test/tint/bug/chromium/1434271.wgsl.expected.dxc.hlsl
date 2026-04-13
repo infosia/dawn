@@ -191,9 +191,8 @@ void export_level_inner(uint3 coord) {
     float sum = dot(float4(a, b, c, d), (1.0f).xxxx);
     uint v_5 = 0u;
     buf_out.GetDimensions(v_5);
-    uint v_6 = (min(dst_offset, ((v_5 / 4u) - 1u)) * 4u);
-    float v_7 = (sum / 4.0f);
-    buf_out.Store((0u + v_6), asuint((sum - ((((v_7 < 0.0f)) ? (ceil(v_7)) : (floor(v_7))) * 4.0f))));
+    float v_6 = (sum / 4.0f);
+    buf_out.Store((0u + (min(dst_offset, ((v_5 / 4u) - 1u)) * 4u)), asuint((sum - (trunc(v_6) * 4.0f))));
     float4 probabilities = (float4(a, (a * b), ((a / b) + c), sum) + max(sum, 0.0f));
     tex_out[int2(coord.xy)] = probabilities;
   }

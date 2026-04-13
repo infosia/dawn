@@ -93,7 +93,7 @@ void main() {
 )");
 }
 
-TEST_F(HlslWriterTest, BuiltinTrunc) {
+TEST_F(HlslWriterTest, BuiltinTruncFxc) {
     auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
         auto* val = b.Var("v", b.Zero(ty.f32()));
@@ -105,7 +105,9 @@ TEST_F(HlslWriterTest, BuiltinTrunc) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    Options opts;
+    opts.compiler = Options::Compiler::kFXC;
+    auto result = Generate(opts);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 void main() {
@@ -117,7 +119,32 @@ void main() {
 )");
 }
 
-TEST_F(HlslWriterTest, BuiltinTruncVec) {
+TEST_F(HlslWriterTest, BuiltinTruncDxc) {
+    auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* val = b.Var("v", b.Zero(ty.f32()));
+
+        auto* v = b.Load(val);
+        auto* t = b.Call(ty.f32(), core::BuiltinFn::kTrunc, v);
+
+        b.Let("val", t);
+        b.Return(func);
+    });
+
+    Options opts;
+    opts.compiler = Options::Compiler::kDXC;
+    auto result = Generate(opts);
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+void main() {
+  float v = 0.0f;
+  float val = trunc(v);
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, BuiltinTruncVecFxc) {
     auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
         auto* val = b.Var("v", b.Splat(ty.vec3f(), 2_f));
@@ -129,7 +156,9 @@ TEST_F(HlslWriterTest, BuiltinTruncVec) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    Options opts;
+    opts.compiler = Options::Compiler::kFXC;
+    auto result = Generate(opts);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 void main() {
@@ -141,7 +170,7 @@ void main() {
 )");
 }
 
-TEST_F(HlslWriterTest, BuiltinTruncF16) {
+TEST_F(HlslWriterTest, BuiltinTruncF16Fxc) {
     auto* func = b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
         auto* val = b.Var("v", b.Zero(ty.f16()));
@@ -153,7 +182,9 @@ TEST_F(HlslWriterTest, BuiltinTruncF16) {
         b.Return(func);
     });
 
-    auto result = Generate();
+    Options opts;
+    opts.compiler = Options::Compiler::kFXC;
+    auto result = Generate(opts);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 void main() {

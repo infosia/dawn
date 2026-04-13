@@ -65,6 +65,9 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    /// The configuration for the transform.
+    const BuiltinPolyfillConfig& config;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -142,7 +145,6 @@ struct State {
                     case core::BuiltinFn::kTextureSampleGrad:
                     case core::BuiltinFn::kTextureSampleLevel:
                     case core::BuiltinFn::kTextureStore:
-                    case core::BuiltinFn::kTrunc:
                     case core::BuiltinFn::kUnpack2X16Float:
                     case core::BuiltinFn::kUnpack2X16Snorm:
                     case core::BuiltinFn::kUnpack2X16Unorm:
@@ -151,6 +153,11 @@ struct State {
                     case core::BuiltinFn::kUnpack4XI8:
                     case core::BuiltinFn::kUnpack4XU8:
                         call_worklist.Push(call);
+                        break;
+                    case core::BuiltinFn::kTrunc:
+                        if (config.polyfill_trunc) {
+                            call_worklist.Push(call);
+                        }
                         break;
                     default:
                         break;
@@ -534,7 +541,7 @@ struct State {
         call->Destroy();
     }
 
-    // HLSL's trunc is broken for very large/small float values.
+    // FXC's trunc is broken for very large/small float values.
     // See crbug.com/tint/1883
     //
     // Replace with:
@@ -1990,7 +1997,7 @@ struct State {
 
 }  // namespace
 
-Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
+Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir, const BuiltinPolyfillConfig& config) {
     AssertValid(ir,
                 core::ir::Capabilities{
                     core::ir::Capability::kAllow16BitIntegers,
@@ -2000,7 +2007,7 @@ Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
                 },
                 "before hlsl.BuiltinPolyfill");
 
-    State{ir}.Process();
+    State{ir, config}.Process();
     return Success;
 }
 
