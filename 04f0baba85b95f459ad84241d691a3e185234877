@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfe9834b_f6a9eb78",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-13T19:19:38Z",
+      "side": 1,
+      "message": "Can this be dropped in the build dir? Or can we gitignore lcov.info if it isn\u0027t already?",
+      "revId": "04f0baba85b95f459ad84241d691a3e185234877",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
