@@ -134,6 +134,30 @@
       },
       "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b75e1eac_bde00bd3",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-13T19:46:20Z",
+      "side": 1,
+      "message": "I would again highlight something about how the performance works for these checks which might be obvious but I will restate.\n\nThe only time runtime checks should be avoided is in hot areas of the code. If we add tiny fractions of a % to add a bit of safety it is well worth it.",
+      "parentUuid": "c5b7127e_bd86a2be",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
