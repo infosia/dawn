@@ -4589,6 +4589,7 @@
             {"value": 7, "name": "texture and sampler let", "jsrepr": "'texture_and_sampler_let'"},
             {"value": 8, "name": "subgroup uniformity", "jsrepr": "'subgroup_uniformity'"},
             {"value": 9, "name": "texture formats tier1", "jsrepr": "'texture_formats_tier1'"},
+            {"value": 10, "name": "linear indexing", "jsrepr": "'linear_indexing'"},
 
             {"value": 0, "name": "chromium testing unimplemented", "jsrepr": "'chromium_testing_unimplemented'", "tags": ["dawn"]},
             {"value": 1, "name": "chromium testing unsafe experimental", "jsrepr": "'chromium_testing_unsafe_experimental'", "tags": ["dawn"]},
@@ -4602,8 +4603,7 @@
             {"value": 9, "name": "immediate address space", "jsrepr": "'immediate_address_space'", "tags": ["dawn"]},
             {"value": 11, "name": "buffer view", "jsrepr": "'buffer_view'", "tags": ["dawn"]},
             {"value": 12, "name": "filtering parameters", "jsrepr": "'filtering_parameters'", "tags": ["dawn"]},
-            {"value": 13, "name": "swizzle assignment", "jsrepr": "'swizzle_assignment'", "tags": ["dawn"]},
-            {"value": 14, "name": "linear indexing", "jsrepr": "'linear_indexing'", "tags": ["dawn"]}
+            {"value": 13, "name": "swizzle assignment", "jsrepr": "'swizzle_assignment'", "tags": ["dawn"]}
         ]
     },
     "whole size" : {
