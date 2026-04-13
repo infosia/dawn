@@ -399,6 +399,44 @@ TEST_P(OcclusionQueryTests, ResolveWithoutWritten) {
     EXPECT_BUFFER_U64_RANGE_EQ(&kZero, destination, 0, 1);
 }
 
+// Test that if an encoder records a query but is discarded (not submitted),
+// the query remains unavailable and is zero-initialized during resolution.
+TEST_P(OcclusionQueryTests, DiscardedEncoderMarksQueryAvailable) {
+    constexpr uint32_t kQueryCount = 1;
+
+    wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
+    wgpu::Buffer destination = CreateResolveBuffer(kQueryCount * sizeof(uint64_t));
+    // Initialize destination buffer with a sentinel value.
+    queue.WriteBuffer(destination, 0, &kSentinelValue, sizeof(kSentinelValue));
+
+    // 1. Create a "Phantom" encoder, record an occlusion query, but discard it.
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::Texture renderTarget = CreateRenderTexture(kColorFormat);
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.occlusionQuerySet = querySet;
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.BeginOcclusionQuery(0);
+        pass.EndOcclusionQuery();
+        pass.End();
+        // Encoder is discarded here as it goes out of scope without Finish() being called.
+    }
+
+    // 2. Create a "Resolving" encoder and resolve the query set.
+    // Even though query 0 was "recorded" in the phantom encoder, it was never submitted.
+    // Dawn should see it as unavailable and zero-initialize it during resolution.
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.ResolveQuerySet(querySet, 0, kQueryCount, destination, 0);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // 3. Verify that the destination buffer contains 0.
+    // Note: If the bug is present, this might still pass if the GPU happens to write 0
+    // for the unwritten query, but it is still a valid regression test for the
+    // intended behavior that Dawn must ensure zero-initialization.
+    EXPECT_BUFFER_U64_RANGE_EQ(&kZero, destination, 0, 1);
+}
+
 // Test setting an occlusion query to non-zero, then rewriting it without drawing, resolves to 0.
 TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
