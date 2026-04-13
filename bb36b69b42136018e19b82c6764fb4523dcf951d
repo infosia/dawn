@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "136cccd9_326c0d88",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-13T23:00:06Z",
+      "side": 1,
+      "message": "nit. Is it strictly necessary to report the errors if we fail to recycle? I assume it would just fail the next time? Or, whatever happens if the silent failure above happens. I guess the downside would be that the device might be in a bad state? But the silent error above would cause the same issue?\n\nBasically, I am wondering if this would work with an `absl::Cleanup` if it were something like:\n```\nabsl::Cleanup cleanup \u003d [\u0026]() {\n    [[maybe_unused]] bool hadError \u003d GetDevice()-\u003eConsumedError(\n        RecycleRecordingContext(), \"recycling recording context %s\", this);\n};\n```\n\nThis would have the added benefit of putting the device in a bad state so that future calls wouldn\u0027t be problematic if we do end up suppressing a failure in recycling.",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "bb36b69b42136018e19b82c6764fb4523dcf951d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
