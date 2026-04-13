@@ -16,6 +16,29 @@
       "message": "Results \nhttps://pinpoint-dot-chromeperf.appspot.com/job/14bcfe32890000",
       "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f7e021e_539eef7e",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-13T18:59:51Z",
+      "side": 1,
+      "message": "I\u0027m curious, what is the motivation for this kind of changes? A lot of these assertions should be programmer errors. i.e. there shouldn\u0027t be a way for the external users to abuse them.\n\nLike this commandContext. An external user cannot allocate it. It can only be allocated by the internal code itself. If it\u0027s null, it is the bug in the internal code. Why do we have to change to runtime checks?\n\nI\u0027m not comfortable changing too many assertions to runtime checks. Graphite/Dawn already has higher CPU overheads compared to Ganesh in many cases and we want to reduce it as much as possible. I think a tests on motionmark on Mac doesn\u0027t represent all the real-world use cases and different kinds of hardwares.",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
