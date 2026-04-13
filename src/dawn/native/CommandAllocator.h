@@ -35,6 +35,7 @@
 #include <string_view>
 #include <vector>
 
+#include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/NonCopyable.h"
@@ -73,10 +74,7 @@ namespace dawn::native {
 
 // These are the lists of blocks, should not be used directly, only through CommandAllocator
 // and CommandIterator
-struct BlockDef {
-    size_t size;
-    std::unique_ptr<char[]> block;
-};
+using BlockDef = HeapArray<char>;
 using CommandBlocks = std::vector<BlockDef>;
 
 namespace detail {
@@ -126,8 +124,7 @@ class CommandIterator : public NonCopyable {
     DAWN_FORCE_INLINE bool NextCommandId(uint32_t* commandId) {
         char* idPtr = AlignPtr(mCurrentPtr, alignof(uint32_t));
         DAWN_ASSERT(idPtr == reinterpret_cast<char*>(&mEndOfBlock) ||
-                    idPtr + sizeof(uint32_t) <=
-                        mBlocks[mCurrentBlock].block.get() + mBlocks[mCurrentBlock].size);
+                    idPtr + sizeof(uint32_t) <= mBlocks[mCurrentBlock].end());
 
         uint32_t id = *reinterpret_cast<uint32_t*>(idPtr);
 
@@ -143,8 +140,7 @@ class CommandIterator : public NonCopyable {
 
     DAWN_FORCE_INLINE void* NextCommand(size_t commandSize, size_t commandAlignment) {
         char* commandPtr = AlignPtr(mCurrentPtr, commandAlignment);
-        DAWN_ASSERT(commandPtr + sizeof(commandSize) <=
-                    mBlocks[mCurrentBlock].block.get() + mBlocks[mCurrentBlock].size);
+        DAWN_ASSERT(commandPtr + sizeof(commandSize) <= mBlocks[mCurrentBlock].end());
 
         mCurrentPtr = commandPtr + commandSize;
         return commandPtr;

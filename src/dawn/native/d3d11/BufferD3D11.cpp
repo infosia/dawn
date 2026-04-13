@@ -272,11 +272,11 @@ class UploadBuffer final : public Buffer {
                              size_t size,
                              bool isInitialWrite) override {
         const auto* src = static_cast<const uint8_t*>(data);
-        std::copy(src, src + size, mUploadData.get() + offset);
+        std::copy(src, src + size, mUploadData.subspan(offset).begin());
         return {};
     }
 
-    std::unique_ptr<uint8_t[]> mUploadData;
+    HeapArray<uint8_t> mUploadData;
 };
 
 bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
@@ -1491,11 +1491,13 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
         // |..........................| leftExtraBytes |     data   | ............... |
         // |<----------------- offset ---------------->|<-- size -->|
         // |<----- alignedOffset ---->|<--------- alignedSize --------->|
-        std::unique_ptr<uint8_t[]> alignedBuffer;
+        HeapArray<uint8_t> alignedBuffer;
         if (size != alignedSize) {
-            alignedBuffer.reset(new uint8_t[alignedSize]);
-            std::memcpy(alignedBuffer.get() + leftExtraBytes, data, size);
-            data = alignedBuffer.get();
+            alignedBuffer = HeapArray<uint8_t>::Uninit(alignedSize);
+            auto src = std::span{data, size};
+            auto dst = alignedBuffer.subspan(leftExtraBytes, size);
+            std::ranges::copy(src, dst);
+            data = alignedBuffer.data();
         }
 
         D3D11_BOX dstBox;

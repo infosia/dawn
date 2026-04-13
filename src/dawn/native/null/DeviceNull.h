@@ -31,6 +31,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/common/Alloc.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/Buffer.h"
@@ -278,7 +279,7 @@ class Buffer final : public BufferBase {
     MaybeError MapAtCreationImpl() override;
     std::span<uint8_t> GetMappedPointerImpl() override;
 
-    std::unique_ptr<uint8_t[]> mBackingData;
+    HeapArray<uint8_t> mBackingData;
 };
 
 class CommandBuffer final : public CommandBufferBase {
