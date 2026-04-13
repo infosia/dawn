@@ -150,8 +150,8 @@ uint64_t AppendDebugLayerMessagesToError(ID3D11InfoQueue* infoQueue,
             continue;
         }
 
-        std::unique_ptr<uint8_t[]> messageData(new uint8_t[messageLength]);
-        D3D11_MESSAGE* message = reinterpret_cast<D3D11_MESSAGE*>(messageData.get());
+        auto messageData = HeapArray<uint8_t>::Uninit(messageLength);
+        D3D11_MESSAGE* message = reinterpret_cast<D3D11_MESSAGE*>(messageData.data());
         hr = infoQueue->GetMessage(i, message, &messageLength);
         if (FAILED(hr)) {
             messageStream << " ID3D11InfoQueue::GetMessage failed with " << hr;
