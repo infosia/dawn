@@ -104,7 +104,7 @@ class RenderPassEncoder final : public RenderEncoderBase {
   private:
     void DestroyImpl(DestroyReason reason) override;
 
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
 
     // For render and compute passes, the encoding context is borrowed from the command encoder.
     // Keep a reference to the encoder to make sure the context isn't freed.

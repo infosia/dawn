@@ -362,6 +362,16 @@ struct ResolveQuerySetCmd {
     uint32_t queryCount;
     Ref<BufferBase> destination;
     uint64_t destinationOffset;
+
+    // These fields are only used when it's a timestamp queryset.
+    Ref<ComputePipelineBase> quantizationPipeline;
+    Ref<BufferBase> quantizationAvailabilityBuffer;
+    Ref<BufferBase> quantizationParamsBuffer;
+    // When a ResolveQuerySetCmd is used for timestamp queries, a WriteBufferCmd
+    // will be added immediately after to update the quantizationAvailabilityBuffer.
+    // This span points to the data of that command so it can be updated just before
+    // the WriteBufferCmd is executed.
+    std::span<uint32_t> quantizationAvailabilityData;
 };
 
 struct SetComputePipelineCmd {

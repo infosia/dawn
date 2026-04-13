@@ -1102,7 +1102,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     destination->EnsureDataInitializedAsDestination(cmd->destinationOffset, size));
 
                 std::vector<uint64_t> values(cmd->queryCount);
-                auto availability = querySet->GetQueryAvailability();
+                const auto& availability = querySet->GetQueryAvailability();
 
                 for (uint32_t i = 0; i < cmd->queryCount; ++i) {
                     if (!availability[cmd->firstQuery + i]) {
@@ -1627,8 +1627,9 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             }
 
             case Command::EndOcclusionQuery: {
-                mCommands.NextCommand<EndOcclusionQueryCmd>();
+                EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 DAWN_GL_TRY(gl, EndQuery(GL_ANY_SAMPLES_PASSED));
+                cmd->querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

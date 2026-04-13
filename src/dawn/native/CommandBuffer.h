@@ -71,6 +71,8 @@ class CommandBufferBase : public ApiObjectBase {
   protected:
     void DestroyImpl(DestroyReason reason) override;
 
+    MaybeError PrepForResolveQuerySet(const ResolveQuerySetCmd& cmd);
+
     CommandIterator mCommands;
 
   private:

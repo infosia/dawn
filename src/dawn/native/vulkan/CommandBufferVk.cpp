@@ -446,35 +446,38 @@ MaybeError PrepareResourcesForSyncScope(Device* device,
 
 // Reset the query sets used on render pass because the reset command must be called outside
 // render pass.
-void ResetUsedQuerySetsOnRenderPass(Device* device,
-                                    VkCommandBuffer commands,
-                                    QuerySetBase* querySet,
-                                    const std::vector<bool>& availability) {
-    DAWN_ASSERT(availability.size() == querySet->GetQueryAvailability().size());
-
-    auto currentIt = availability.begin();
-    auto lastIt = availability.end();
+void ResetUsedQuerySets(Device* device,
+                        VkCommandBuffer commands,
+                        QuerySetBase* querySet,
+                        const std::vector<bool>& slotUsage) {
+    uint32_t current = 0;
+    uint32_t count = querySet->GetQueryCount();
     // Traverse the used queries which availability are true.
-    while (currentIt != lastIt) {
-        auto firstTrueIt = std::find(currentIt, lastIt, true);
-        // No used queries need to be reset
-        if (firstTrueIt == lastIt) {
-            break;
+    while (current < count) {
+        if (!slotUsage[current]) {
+            current++;
+            continue;
         }
 
-        auto nextFalseIt = std::find(firstTrueIt, lastIt, false);
+        uint32_t firstTrue = current;
+        while (current < count && slotUsage[current]) {
+            current++;
+        }
 
-        uint32_t queryIndex = std::distance(availability.begin(), firstTrueIt);
-        uint32_t queryCount = std::distance(firstTrueIt, nextFalseIt);
-
-        // Reset the queries between firstTrueIt and nextFalseIt (which is at most
-        // lastIt)
-        device->fn.CmdResetQueryPool(commands, ToBackend(querySet)->GetHandle(), queryIndex,
-                                     queryCount);
-
-        // Set current iterator to next false
-        currentIt = nextFalseIt;
+        // Reset the queries between firstTrue and current
+        device->fn.CmdResetQueryPool(commands, ToBackend(querySet)->GetHandle(), firstTrue,
+                                     current - firstTrue);
     }
+}
+
+MaybeError RecordResetQueries(Device* device,
+                              CommandRecordingContext* recordingContext,
+                              const QuerySetToSlotUsageMap& resets) {
+    for (auto& [querySet, slotUsage] : resets) {
+        ResetUsedQuerySets(device, recordingContext->commandBuffer, querySet, slotUsage);
+    }
+
+    return {};
 }
 
 void RecordWriteTimestampCmd(CommandRecordingContext* recordingContext,
@@ -493,6 +496,7 @@ void RecordWriteTimestampCmd(CommandRecordingContext* recordingContext,
 
     device->fn.CmdWriteTimestamp(commands, pipelineStage, ToBackend(querySet)->GetHandle(),
                                  queryIndex);
+    querySet->SetQueryAvailable(queryIndex);
 }
 
 void RecordResolveQuerySetCmd(VkCommandBuffer commands,
@@ -502,37 +506,32 @@ void RecordResolveQuerySetCmd(VkCommandBuffer commands,
                               uint32_t queryCount,
                               Buffer* destination,
                               uint64_t destinationOffset) {
-    const std::vector<bool>& availability = querySet->GetQueryAvailability();
+    VkDeviceSize stride = sizeof(uint64_t);
+    VkQueryResultFlags flags = VK_QUERY_RESULT_64_BIT;
 
-    auto currentIt = availability.begin() + firstQuery;
-    auto lastIt = availability.begin() + firstQuery + queryCount;
+    const auto& availability = querySet->GetQueryAvailability();
+    uint32_t current = firstQuery;
+    uint32_t last = firstQuery + queryCount;
 
-    // Traverse available queries in the range of [firstQuery, firstQuery +  queryCount - 1]
-    while (currentIt != lastIt) {
-        auto firstTrueIt = std::find(currentIt, lastIt, true);
-        // No available query found for resolving
-        if (firstTrueIt == lastIt) {
-            break;
+    while (current < last) {
+        bool available = availability[current];
+        uint32_t start = current;
+        while (current < last && availability[current] == available) {
+            current++;
         }
-        auto nextFalseIt = std::find(firstTrueIt, lastIt, false);
 
-        // The query index of firstTrueIt where the resolving starts
-        uint32_t resolveQueryIndex = std::distance(availability.begin(), firstTrueIt);
-        // The queries count between firstTrueIt and nextFalseIt need to be resolved
-        uint32_t resolveQueryCount = std::distance(firstTrueIt, nextFalseIt);
+        uint32_t batchCount = current - start;
+        uint64_t batchOffset = destinationOffset + (start - firstQuery) * stride;
 
-        // Calculate destinationOffset based on the current resolveQueryIndex and firstQuery
-        uint32_t resolveDestinationOffset =
-            destinationOffset + (resolveQueryIndex - firstQuery) * sizeof(uint64_t);
-
-        // Resolve the queries between firstTrueIt and nextFalseIt (which is at most lastIt)
-        device->fn.CmdCopyQueryPoolResults(commands, querySet->GetHandle(), resolveQueryIndex,
-                                           resolveQueryCount, destination->GetHandle(),
-                                           resolveDestinationOffset, sizeof(uint64_t),
-                                           VK_QUERY_RESULT_64_BIT | VK_QUERY_RESULT_WAIT_BIT);
-
-        // Set current iterator to next false
-        currentIt = nextFalseIt;
+        if (available) {
+            VkQueryResultFlags batchFlags = flags | VK_QUERY_RESULT_WAIT_BIT;
+            device->fn.CmdCopyQueryPoolResults(commands, querySet->GetHandle(), start, batchCount,
+                                               destination->GetHandle(), batchOffset, stride,
+                                               batchFlags);
+        } else {
+            device->fn.CmdFillBuffer(commands, destination->GetHandle(), batchOffset,
+                                     batchCount * stride, 0u);
+        }
     }
 }
 
@@ -1080,21 +1079,12 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
     // Records the necessary barriers for the resource usage pre-computed by the frontend.
     // And resets the used query sets which are rewritten on the render pass.
-    auto PrepareResourcesForRenderPass = [](Device* device,
-                                            CommandRecordingContext* recordingContext,
-                                            const RenderPassResourceUsage& usages) -> MaybeError {
+    auto PrepareResourcesForRenderPass = [&](Device* device,
+                                             CommandRecordingContext* recordingContext,
+                                             const RenderPassResourceUsage& usages,
+                                             BeginRenderPassCmd* renderPassCmd) -> MaybeError {
         DAWN_TRY(PrepareResourcesForSyncScope(device, recordingContext, usages));
-
-        // Reset all query set used on current render pass together before beginning render pass
-        // because the reset command must be called outside render pass
-        for (size_t i = 0; i < usages.querySets.size(); ++i) {
-            ResetUsedQuerySetsOnRenderPass(device, recordingContext->commandBuffer,
-                                           usages.querySets[i], usages.queryAvailabilities[i]);
-        }
-
-        if (device->IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass)) {
-            DAWN_TRY(device->PrepareEmptyPassQuerySet(recordingContext));
-        }
+        DAWN_TRY(RecordResetQueries(device, recordingContext, usages.querySetToSlotUsageMap));
         return {};
     };
 
@@ -1314,7 +1304,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
                 DAWN_TRY(PrepareResourcesForRenderPass(
                     device, recordingContext,
-                    GetResourceUsages().renderPasses[nextRenderPassNumber]));
+                    GetResourceUsages().renderPasses[nextRenderPassNumber], cmd));
 
                 DAWN_TRY(LazyClearRenderPassAttachments(
                     device, cmd,
@@ -1361,34 +1351,37 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
             case Command::ResolveQuerySet: {
                 ResolveQuerySetCmd* cmd = mCommands.NextCommand<ResolveQuerySetCmd>();
+
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
                 Buffer* destination = ToBackend(cmd->destination.Get());
+                uint32_t firstQuery = cmd->firstQuery;
+                uint32_t queryCount = cmd->queryCount;
+                uint64_t destinationOffset = cmd->destinationOffset;
 
-                destination->EnsureDataInitializedAsDestination(
-                    recordingContext, cmd->destinationOffset, cmd->queryCount * sizeof(uint64_t));
-
-                // vkCmdCopyQueryPoolResults only can retrieve available queries because
-                // VK_QUERY_RESULT_WAIT_BIT is set. In order to resolve the unavailable queries
-                // as 0s, we need to clear the resolving region of the destination buffer to 0s.
-                auto startIt = querySet->GetQueryAvailability().begin() + cmd->firstQuery;
-                auto endIt =
-                    querySet->GetQueryAvailability().begin() + cmd->firstQuery + cmd->queryCount;
-                bool hasUnavailableQueries = std::find(startIt, endIt, false) != endIt;
-                // Workaround for resolving overlapping queries to a same buffer on Intel Gen12 GPUs
-                // due to Mesa driver issue.
-                // See http://crbug.com/dawn/1823 for more information.
-                bool clearNeeded = device->IsToggleEnabled(Toggle::ClearBufferBeforeResolveQueries);
-                if (hasUnavailableQueries || clearNeeded) {
-                    destination->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
-                    device->fn.CmdFillBuffer(commands, destination->GetHandle(),
-                                             cmd->destinationOffset,
-                                             cmd->queryCount * sizeof(uint64_t), 0u);
-                }
+                destination->EnsureDataInitializedAsDestination(recordingContext, destinationOffset,
+                                                                queryCount * sizeof(uint64_t));
 
                 destination->TransitionUsageNow(recordingContext, wgpu::BufferUsage::QueryResolve);
 
-                RecordResolveQuerySetCmd(commands, device, querySet, cmd->firstQuery,
-                                         cmd->queryCount, destination, cmd->destinationOffset);
+                RecordResolveQuerySetCmd(commands, device, querySet, firstQuery, queryCount,
+                                         destination, destinationOffset);
+
+                if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
+                    !device->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
+                    device->GetTimestampPeriodInNS() != 1.0f) {
+                    // Add execution barrier between query resolve and shader conversion
+                    // to ensure results are ready for the conversion shader.
+                    VkMemoryBarrier barrier;
+                    barrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+                    barrier.pNext = nullptr;
+                    barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+                    barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_SHADER_WRITE_BIT;
+
+                    device->fn.CmdPipelineBarrier(commands, VK_PIPELINE_STAGE_TRANSFER_BIT,
+                                                  VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT, 0, 1,
+                                                  &barrier, 0, nullptr, 0, nullptr);
+                }
+                DAWN_TRY(PrepForResolveQuerySet(*cmd));
 
                 break;
             }
@@ -1496,6 +1489,10 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                                             BeginComputePassCmd* computePassCmd,
                                             const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
+
+    // Reset all query set used on current compute pass together before beginning compute pass
+    // because the reset command must be called outside compute pass
+    DAWN_TRY(RecordResetQueries(device, recordingContext, resourceUsages.querySetToSlotUsageMap));
 
     // Write timestamp at the beginning of compute pass if it's set
     if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
@@ -2047,6 +2044,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
                 device->fn.CmdEndQuery(commands, ToBackend(cmd->querySet.Get())->GetHandle(),
                                        cmd->queryIndex);
+                cmd->querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

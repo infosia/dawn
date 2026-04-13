@@ -1440,18 +1440,32 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                 ResolveQuerySetCmd* cmd = mCommands.NextCommand<ResolveQuerySetCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
                 Buffer* destination = ToBackend(cmd->destination.Get());
+                uint32_t firstQuery = cmd->firstQuery;
+                uint32_t queryCount = cmd->queryCount;
+                uint64_t destinationOffset = cmd->destinationOffset;
 
-                destination->EnsureDataInitializedAsDestination(
-                    commandContext, cmd->destinationOffset, cmd->queryCount * sizeof(uint64_t));
+                destination->EnsureDataInitializedAsDestination(commandContext, destinationOffset,
+                                                                queryCount * sizeof(uint64_t));
+                DAWN_TRY(PrepForResolveQuerySet(*cmd));
+
+                // Fill slots for unavailable queries with zeroes as required by the WebGPU spec.
+                if (querySet->HasUnavailableQueries()) {
+                    destination->TrackUsage();
+                    [commandContext->EnsureBlit()
+                        fillBuffer:destination->GetMTLBuffer()
+                             range:NSMakeRange(NSUInteger(destinationOffset),
+                                               NSUInteger(queryCount * sizeof(uint64_t)))
+                             value:0u];
+                }
 
                 if (querySet->GetQueryType() == wgpu::QueryType::Occlusion) {
                     destination->TrackUsage();
                     [commandContext->EnsureBlit()
                            copyFromBuffer:querySet->GetVisibilityBuffer()
-                             sourceOffset:NSUInteger(cmd->firstQuery * sizeof(uint64_t))
+                             sourceOffset:NSUInteger(firstQuery * sizeof(uint64_t))
                                  toBuffer:destination->GetMTLBuffer()
-                        destinationOffset:NSUInteger(cmd->destinationOffset)
-                                     size:NSUInteger(cmd->queryCount * sizeof(uint64_t))];
+                        destinationOffset:NSUInteger(destinationOffset)
+                                     size:NSUInteger(queryCount * sizeof(uint64_t))];
                 } else {
                     destination->TrackUsage();
                     if (GetDevice()->IsToggleEnabled(
@@ -1460,9 +1474,9 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                     }
                     [commandContext->EnsureBlit()
                           resolveCounters:querySet->GetCounterSampleBuffer()
-                                  inRange:NSMakeRange(cmd->firstQuery, cmd->queryCount)
+                                  inRange:NSMakeRange(firstQuery, queryCount)
                         destinationBuffer:destination->GetMTLBuffer()
-                        destinationOffset:NSUInteger(cmd->destinationOffset)];
+                        destinationOffset:NSUInteger(destinationOffset)];
                 }
                 break;
             }
@@ -1484,7 +1498,7 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                  atSampleIndex:NSUInteger(cmd->queryIndex)
                                    withBarrier:YES];
                 }
-
+                cmd->querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 
@@ -1586,6 +1600,16 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                                       .beginningOfPassWriteIndex)
                            withBarrier:YES];
         }
+    }
+
+    if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
+        wgpu::kQuerySetIndexUndefined) {
+        computePassCmd->timestampWrites.querySet->SetQueryAvailable(
+            computePassCmd->timestampWrites.beginningOfPassWriteIndex);
+    }
+    if (computePassCmd->timestampWrites.endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+        computePassCmd->timestampWrites.querySet->SetQueryAvailable(
+            computePassCmd->timestampWrites.endOfPassWriteIndex);
     }
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
@@ -1721,7 +1745,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                 [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                   atSampleIndex:NSUInteger(cmd->queryIndex)
                                     withBarrier:YES];
-
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 
@@ -1758,16 +1782,19 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
     // Simulate timestamp write at the beginning of render pass by
     // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
-    if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
-        renderPassCmd->timestampWrites.beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
-        DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
+    if (renderPassCmd->timestampWrites.beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+        if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary()) {
+            DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
 
-        [encoder
-            sampleCountersInBuffer:ToBackend(renderPassCmd->timestampWrites.querySet.Get())
-                                       ->GetCounterSampleBuffer()
-                     atSampleIndex:NSUInteger(
-                                       renderPassCmd->timestampWrites.beginningOfPassWriteIndex)
-                       withBarrier:YES];
+            [encoder
+                sampleCountersInBuffer:ToBackend(renderPassCmd->timestampWrites.querySet.Get())
+                                           ->GetCounterSampleBuffer()
+                         atSampleIndex:NSUInteger(
+                                           renderPassCmd->timestampWrites.beginningOfPassWriteIndex)
+                           withBarrier:YES];
+        }
+        renderPassCmd->timestampWrites.querySet->SetQueryAvailable(
+            renderPassCmd->timestampWrites.beginningOfPassWriteIndex);
     }
 
     SetDebugName(GetDevice(), encoder, "Dawn_RenderPassEncoder", renderPassCmd->label);
@@ -2026,7 +2053,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
                     renderPassCmd->timestampWrites.endOfPassWriteIndex !=
                         wgpu::kQuerySetIndexUndefined) {
                     DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
-
                     [encoder
                         sampleCountersInBuffer:ToBackend(
                                                    renderPassCmd->timestampWrites.querySet.Get())
@@ -2034,6 +2060,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
                                  atSampleIndex:NSUInteger(renderPassCmd->timestampWrites
                                                               .endOfPassWriteIndex)
                                    withBarrier:YES];
+                    renderPassCmd->timestampWrites.querySet->SetQueryAvailable(
+                        renderPassCmd->timestampWrites.endOfPassWriteIndex);
                 }
 
                 return {};
@@ -2112,6 +2140,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
                 [encoder setVisibilityResultMode:MTLVisibilityResultModeDisabled
                                           offset:cmd->queryIndex * sizeof(uint64_t)];
+                cmd->querySet->SetQueryAvailable(cmd->queryIndex);
                 if (emptyOcclusionQueries) {
                     // Empty occlusion queries aren't filled to zero on Apple GPUs.
                     // Keep track of them so we can clear them if necessary.
@@ -2136,7 +2165,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                   atSampleIndex:NSUInteger(cmd->queryIndex)
                                     withBarrier:YES];
-
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

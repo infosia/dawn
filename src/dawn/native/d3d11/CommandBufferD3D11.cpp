@@ -490,6 +490,7 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 Buffer* destination = ToBackend(cmd->destination.Get());
                 uint64_t destinationOffset = cmd->destinationOffset;
 
+                DAWN_TRY(PrepForResolveQuerySet(*cmd));
                 DAWN_TRY(destination->TrackUsage(commandContext, pendingSerial));
                 DAWN_TRY(querySet->Resolve(commandContext, firstQuery, queryCount, destination,
                                            destinationOffset));
@@ -1024,6 +1025,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
                 querySet->EndQuery(commandContext->GetD3D11DeviceContext3(), cmd->queryIndex);
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

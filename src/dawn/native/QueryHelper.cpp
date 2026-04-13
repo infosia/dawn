@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 #include "dawn/common/Strings.h"
 #include "dawn/native/BindGroup.h"
@@ -46,12 +47,11 @@ namespace dawn::native {
 namespace {
 
 // Assert the offsets in dawn::native::TimestampParams are same with the ones in the shader
-static_assert(offsetof(dawn::native::TimestampParams, first) == 0);
-static_assert(offsetof(dawn::native::TimestampParams, count) == 4);
-static_assert(offsetof(dawn::native::TimestampParams, offset) == 8);
-static_assert(offsetof(dawn::native::TimestampParams, quantizationMask) == 12);
-static_assert(offsetof(dawn::native::TimestampParams, multiplier) == 16);
-static_assert(offsetof(dawn::native::TimestampParams, rightShift) == 20);
+static_assert(offsetof(dawn::native::TimestampParams, count) == 0);
+static_assert(offsetof(dawn::native::TimestampParams, offset) == 4);
+static_assert(offsetof(dawn::native::TimestampParams, quantizationMask) == 8);
+static_assert(offsetof(dawn::native::TimestampParams, multiplier) == 12);
+static_assert(offsetof(dawn::native::TimestampParams, rightShift) == 16);
 
 static const char sConvertTimestampsToNanoseconds[] = DAWN_MULTILINE(
     struct Timestamp {
@@ -68,7 +68,6 @@ static const char sConvertTimestampsToNanoseconds[] = DAWN_MULTILINE(
     }
 
     struct TimestampParams {
-        first  : u32,
         count  : u32,
         offset : u32,
         quantization_mask : u32,
@@ -89,7 +88,7 @@ static const char sConvertTimestampsToNanoseconds[] = DAWN_MULTILINE(
         var index = GlobalInvocationID.x + params.offset / sizeofTimestamp;
 
         // Return 0 for the unavailable value.
-        if (availability.v[GlobalInvocationID.x + params.first] == 0u) {
+        if (availability.v[GlobalInvocationID.x] == 0u) {
             timestamps.t[index].low = 0u;
             timestamps.t[index].high = 0u;
             return;
@@ -128,11 +127,14 @@ static const char sConvertTimestampsToNanoseconds[] = DAWN_MULTILINE(
         }
 
         // Apply quantization mask.
-        var low = chunks[0] | (chunks[1] << 16u);
-        timestamps.t[index].low = low & params.quantization_mask;
-        timestamps.t[index].high = chunks[2] | (chunks[3] << 16u);
+        var lowValue = (chunks[0] & 0xFFFFu) | (chunks[1] << 16u);
+        var highValue = (chunks[2] & 0xFFFFu) | (chunks[3] << 16u);
+        timestamps.t[index].low = lowValue & params.quantization_mask;
+        timestamps.t[index].high = highValue;
     }
 );
+
+}  // anonymous namespace
 
 ResultOrError<ComputePipelineBase*> GetOrCreateTimestampComputePipeline(DeviceBase* device) {
     InternalPipelineStore* store = device->GetInternalPipelineStore();
@@ -174,29 +176,28 @@ ResultOrError<ComputePipelineBase*> GetOrCreateTimestampComputePipeline(DeviceBa
     return store->timestampComputePipeline.Get();
 }
 
-}  // anonymous namespace
-
-TimestampParams::TimestampParams(uint32_t first,
-                                 uint32_t count,
+TimestampParams::TimestampParams(uint32_t count,
                                  uint32_t offset,
                                  uint32_t quantizationMask,
                                  float period)
-    : first(first), count(count), offset(offset), quantizationMask(quantizationMask) {
-    // The overall conversion happening, if p is the period, m the multiplier, s the shift, is::
+    : count(count),
+      offset(offset),
+      quantizationMask(quantizationMask),
+      multiplier(0),
+      rightShift(0) {
+    DAWN_ASSERT(period >= 1.0f);
+    // The logic to convert the timestamp query to nanoseconds:
+    // val = timestamp * period
     //
-    //   m = round(p * 2^s)
+    // However, the period is a float, we need to convert it to a multiplier and a right shift
+    // to perform the multiplication and shift in WGSL.
     //
-    // Then in the shader we compute:
+    // period = multiplier / (1 << rightShift)
+    // multiplier = period * (1 << rightShift)
     //
-    //   m / 2^s = round(p * 2^s) / 2*s ~= p
-    //
-    // The goal is to find the best shift to keep the precision of computations. The
-    // conversion shader uses chunks of 16 bits to compute the multiplication with the perios,
-    // so we need to keep the multiplier under 2^16. At the same time, the larger the
-    // multiplier, the better the precision, so we maximize the value of the right shift while
-    // keeping the multiplier under 2 ^ 16
-    uint32_t upperLog2 = uint32_t(ceil(log2(period)));
-
+    // We choose the multiplier to be as large as possible without overflowing 32-bit
+    // integer.
+    uint32_t upperLog2 = static_cast<uint32_t>(std::ceil(std::log2(period)));
     // Clamp the shift to 16 because we're doing computations in 16bit chunks. The
     // multiplication by the period will overflow the chunks, but timestamps are mostly
     // informational so that's ok.
@@ -206,6 +207,7 @@ TimestampParams::TimestampParams(uint32_t first,
 
 MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,
                                                 BufferBase* timestamps,
+                                                uint32_t queryCount,
                                                 BufferBase* availability,
                                                 BufferBase* params) {
     DeviceBase* device = encoder->GetDevice();
@@ -229,8 +231,7 @@ MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,
     Ref<ComputePassEncoder> pass = encoder->BeginComputePass();
     pass->APISetPipeline(pipeline);
     pass->APISetBindGroup(0, bindGroup.Get());
-    pass->APIDispatchWorkgroups(
-        static_cast<uint32_t>((timestamps->GetSize() / sizeof(uint64_t) + 7) / 8));
+    pass->APIDispatchWorkgroups((queryCount + 7) / 8);
     pass->APIEnd();
 
     return {};

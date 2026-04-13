@@ -49,7 +49,8 @@ class QuerySetBase : public ApiObjectBase {
     uint32_t GetQueryCount() const;
 
     const std::vector<bool>& GetQueryAvailability() const;
-    void SetQueryAvailability(uint32_t index, bool available);
+    void SetQueryAvailable(uint32_t index);
+    bool HasUnavailableQueries() const;
 
     MaybeError ValidateCanUseInSubmitNow() const;
 

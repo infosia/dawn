@@ -130,8 +130,13 @@ const std::vector<bool>& QuerySetBase::GetQueryAvailability() const {
     return mQueryAvailability;
 }
 
-void QuerySetBase::SetQueryAvailability(uint32_t index, bool available) {
-    mQueryAvailability[index] = available;
+void QuerySetBase::SetQueryAvailable(uint32_t index) {
+    mQueryAvailability[index] = true;
+}
+
+bool QuerySetBase::HasUnavailableQueries() const {
+    return std::find(mQueryAvailability.begin(), mQueryAvailability.end(), false) !=
+           mQueryAvailability.end();
 }
 
 MaybeError QuerySetBase::ValidateCanUseInSubmitNow() const {

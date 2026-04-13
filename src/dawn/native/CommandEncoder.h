@@ -64,7 +64,7 @@ class CommandEncoder final : public ApiObjectBase {
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
 
     // Dawn API
     ComputePassEncoder* APIBeginComputePass(const ComputePassDescriptor* descriptor);
