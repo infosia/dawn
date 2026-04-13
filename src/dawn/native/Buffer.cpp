@@ -587,8 +587,9 @@ MaybeError BufferBase::MapAtCreation() {
     if (GetSize() == 0) {
         return {};
     }
-    size_t size = GetAllocatedSize();
-    void* ptr = GetMappedPointer();
+    auto mapping = GetMapping();
+    DAWN_ASSERT(mapping.offsetFromBase == 0);
+    DAWN_CHECK(mapping.mappedSpan.size() == GetAllocatedSize());
 
     DeviceBase* device = GetDevice();
     if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
@@ -597,11 +598,11 @@ MaybeError BufferBase::MapAtCreation() {
         // actually get initialized when the staging data is copied in. (But we mark the main buffer
         // as initialized now.)
         if (!usingStagingBuffer) {
-            memset(ptr, uint8_t(0u), size);
+            std::ranges::fill(mapping.mappedSpan, 0);
             device->IncrementLazyClearCountForTesting();
         }
     } else if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
-        memset(ptr, uint8_t(1u), size);
+        std::ranges::fill(mapping.mappedSpan, 1);
     }
     // Mark the buffer as initialized since we don't want to later clear it using the GPU since that
     // would overwrite what the client wrote using the CPU.
@@ -643,6 +644,7 @@ ResultOrError<bool> BufferBase::MapAtCreationInternal() {
     mMapMode = wgpu::MapMode::Write;
     mMapOffset = 0;
     mMapSize = mSize;
+    mAllocatedMapSize = GetAllocatedSize();
     mStagingBuffer = std::move(stagingBuffer);
     DAWN_TRY(FinalizeMap(BufferState::MappedAtCreation));
     return mStagingBuffer != nullptr;
@@ -755,6 +757,7 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
             mMapMode = mode;
             mMapOffset = offset;
             mMapSize = size;
+            mAllocatedMapSize = size;
 
             event =
                 AcquireRef(new MapAsyncEvent(GetDevice(), this, callbackInfo, mLastUsageSerial));
@@ -798,19 +801,26 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
     return wgpu::Status::Success;
 }
 
-void* BufferBase::GetMappedPointer() {
+std::span<uint8_t> BufferBase::Mapping::SubspanFromBase(size_t offset, size_t size) {
+    DAWN_CHECK(offset >= offsetFromBase);
+    return mappedSpan.subspan(offset - offsetFromBase, size);
+}
+
+BufferBase::Mapping BufferBase::GetMapping() {
     if (!IsMappedState(mState.load(std::memory_order::acquire))) {
-        return nullptr;
+        return {};
     }
-    return mMappedPointer.get();
+
+    auto span =
+        std::span{static_cast<uint8_t*>(mMappedPointer.get()) + mMapOffset, mAllocatedMapSize};
+    return {span, mMapOffset};
 }
 
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
     if (!CanGetMappedRange(writable, offset, size)) {
         return nullptr;
     }
-    uint8_t* start = static_cast<uint8_t*>(GetMappedPointer());
-    return start == nullptr ? nullptr : start + offset;
+    return GetMapping().SubspanFromBase(offset, size).data();
 }
 
 void BufferBase::APIDestroy() {
