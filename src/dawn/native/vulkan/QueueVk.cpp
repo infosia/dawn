@@ -103,7 +103,17 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     }
     TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
 
-    DAWN_TRY(SubmitPendingCommandsImpl());
+    DAWN_TRY_WITH_CLEANUP(SubmitPendingCommandsImpl(), {
+        // If SubmitPendingCommandsImpl fails still attempt to recycle the Recording Context but
+        // suppress any errors so that they don't override the one reported by the submit.
+        MaybeError result = RecycleRecordingContext();
+        if (result.IsError()) {
+            result.AcquireError();
+        }
+    });
+
+    // If SubmitPendingCommandsImpl succeeds allow RecycleRecordingContext to report errors.
+    DAWN_TRY(RecycleRecordingContext());
 
     return {};
 }
@@ -338,8 +348,17 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
         device->GetFencedDeleter()->DeleteWhenUnused(semaphore);
     }
     IncrementLastSubmittedCommandSerial();
+    mFencesInFlight->emplace_back(fence, GetLastSubmittedCommandSerial());
+
+    for (auto texture : mRecordingContext.specialSyncTextures) {
+        DAWN_TRY(texture->OnAfterSubmit());
+    }
+
+    return {};
+}
+
+MaybeError Queue::RecycleRecordingContext() {
     ExecutionSerial lastSubmittedSerial = GetLastSubmittedCommandSerial();
-    mFencesInFlight->emplace_back(fence, lastSubmittedSerial);
 
     for (size_t i = 0; i < mRecordingContext.commandBufferList.size(); ++i) {
         CommandPoolAndBuffer commands = {mRecordingContext.commandPoolList[i],
@@ -358,10 +377,6 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
 
             mUnusedCommands->push_back(commands);
         });
-    }
-
-    for (auto texture : mRecordingContext.specialSyncTextures) {
-        DAWN_TRY(texture->OnAfterSubmit());
     }
 
     mRecordingContext = CommandRecordingContext();
