@@ -181,20 +181,10 @@ void Client::Disconnect() {
         eventManager->TransitionTo(EventManager::State::ClientDropped);
     }
 
-    {
-        auto& deviceList = mObjects[ObjectType::Device];
-        for (auto object : deviceList.GetAllObjects()) {
-            if (object != nullptr) {
-                static_cast<Device*>(object)->HandleDeviceLost(
-                    WGPUDeviceLostReason_Unknown, ToOutputStringView("GPU connection lost"));
-            }
-        }
-    }
-    for (auto& objectList : mObjects) {
-        for (auto object : objectList.GetAllObjects()) {
-            if (object != nullptr) {
-                object->CancelCallbacksForDisconnect();
-            }
+    for (auto object : mObjects[ObjectType::Device].GetAllObjects()) {
+        if (object != nullptr) {
+            static_cast<Device*>(object)->HandleDeviceLost(
+                WGPUDeviceLostReason_Unknown, ToOutputStringView("GPU connection lost"));
         }
     }
 }
