@@ -28,9 +28,11 @@
 #ifndef SRC_DAWN_WIRE_CLIENT_OBJECTSTORE_H_
 #define SRC_DAWN_WIRE_CLIENT_OBJECTSTORE_H_
 
+#include <concepts>
 #include <memory>
 #include <vector>
 
+#include "dawn/common/MutexProtected.h"
 #include "dawn/wire/client/ObjectBase.h"
 
 namespace dawn::wire::client {
@@ -46,8 +48,6 @@ class ClientBase;
 // type-generic, so ObjectStore is type-erased to only work on ObjectBase.
 class ObjectStore {
   public:
-    ObjectStore();
-
     ObjectHandle ReserveHandle();
     void Insert(ObjectBase* obj, const ClientBase* forClient);
     void Remove(ObjectBase* obj, const ClientBase* forClient);
@@ -55,10 +55,26 @@ class ObjectStore {
     ObjectBase* Get(ObjectId id) const;
     const std::vector<raw_ptr<ObjectBase>>& GetAllObjects() const;
 
+    template <typename Fn>
+        requires std::invocable<Fn, raw_ptr<ObjectBase>&>
+    void ForEach(Fn&& fn) const {
+        // Make a copy of the list of objects so that we can iterate the objects without holding the
+        // lock. This is important because objects can call |Unregister| which will try to remove
+        // itself from the list.
+        std::vector<raw_ptr<ObjectBase>> objects;
+        mState.ConstUse([&](auto state) { objects = state->objects; });
+        for (auto& obj : objects) {
+            fn(obj);
+        }
+    }
+
   private:
-    uint32_t mCurrentId;
-    std::vector<ObjectHandle> mFreeHandles;
-    std::vector<raw_ptr<ObjectBase>> mObjects;
+    struct State {
+        uint32_t currentId = 1;
+        std::vector<ObjectHandle> freeHandles;
+        std::vector<raw_ptr<ObjectBase>> objects = {nullptr};
+    };
+    MutexRWProtected<State> mState;
 };
 
 }  // namespace dawn::wire::client

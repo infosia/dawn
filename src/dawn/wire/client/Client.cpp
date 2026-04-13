@@ -76,11 +76,11 @@ Client::~Client() {
 
 void Client::UnregisterAllObjects() {
     for (auto& objectList : mObjects) {
-        for (auto object : objectList.GetAllObjects()) {
-            if (object != nullptr) {
-                object->Unregister();
+        objectList.ForEach([](auto obj) {
+            if (obj != nullptr) {
+                obj->Unregister();
             }
-        }
+        });
     }
 }
 
@@ -181,22 +181,12 @@ void Client::Disconnect() {
         eventManager->TransitionTo(EventManager::State::ClientDropped);
     }
 
-    {
-        auto& deviceList = mObjects[ObjectType::Device];
-        for (auto object : deviceList.GetAllObjects()) {
-            if (object != nullptr) {
-                static_cast<Device*>(object)->HandleDeviceLost(
-                    WGPUDeviceLostReason_Unknown, ToOutputStringView("GPU connection lost"));
-            }
+    mObjects[ObjectType::Device].ForEach([](auto obj) {
+        if (obj != nullptr) {
+            static_cast<Device*>(obj)->HandleDeviceLost(WGPUDeviceLostReason_Unknown,
+                                                        ToOutputStringView("GPU connection lost"));
         }
-    }
-    for (auto& objectList : mObjects) {
-        for (auto object : objectList.GetAllObjects()) {
-            if (object != nullptr) {
-                object->CancelCallbacksForDisconnect();
-            }
-        }
-    }
+    });
 }
 
 bool Client::IsDisconnected() const {

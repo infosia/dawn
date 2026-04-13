@@ -55,7 +55,6 @@ class ObjectBase : public RefCounted {
   public:
     explicit ObjectBase(const ObjectBaseParams& params);
 
-    virtual void CancelCallbacksForDisconnect() {}
     virtual ObjectType GetObjectType() const = 0;
 
     // Objects are assumed to be registered with the wire on creation but can be unregistered
