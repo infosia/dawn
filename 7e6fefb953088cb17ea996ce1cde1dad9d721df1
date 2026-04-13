@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9c10046_657acfda",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-13T21:09:53Z",
+      "side": 1,
+      "message": "It also makes it so we call OnAfterSubmit on all textures instead of skipping them after failure which is probably good.",
+      "revId": "7e6fefb953088cb17ea996ce1cde1dad9d721df1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
