@@ -59,6 +59,7 @@ namespace detail {
 
 struct DeviceMutexTraits {
     using MutexType = Ref<DeviceMutex>;
+    template <typename U>
     using LockType = DeviceMutex::AutoLockBase<DeviceMutex*>;
 
     static DeviceMutex* GetMutex(MutexType& m) { return m.Get(); }

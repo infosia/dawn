@@ -303,6 +303,42 @@ TEST(MutexCondVarProtectedTest, NotifyTypes) {
     EXPECT_EQ(woken, kNumThreads);
 }
 
+TEST(MutexRWProtectedTest, Nominal) {
+    static constexpr int kDefaultValue = 100;
+    auto counter = MutexRWProtected<CounterT>(kDefaultValue);
+
+    // We need to use another condvar protected value to ensure that multiple threads are capable of
+    // reading the value at the same time.
+    auto condvar = MutexCondVarProtected<CounterT>();
+
+    // Have multiple threads hold the read lock and then increment the condvar while holding the
+    // lock. We should be able to wait for the condvar to reach the expected value while still
+    // holding the read lock.
+    static constexpr int kNumThreads = 5;
+    std::vector<std::thread> threads;
+    threads.reserve(kNumThreads);
+    for (auto i = 0; i < kNumThreads; i++) {
+        threads.emplace_back([&] {
+            counter.ConstUse([&](auto c) {
+                // We should be holding the read scope lock now.
+                EXPECT_EQ(c->Get(), kDefaultValue);
+
+                // While holding the read lock, wait until all threads have read the value. This
+                // would deadlock if other threads were not able to acquire the read lock at the
+                // same time.
+                condvar.Use([&](auto cv) {
+                    cv->Increment();
+                    cv.Wait([](const auto& x) { return x.Get() == kNumThreads; });
+                });
+            });
+        });
+    }
+
+    for (auto& t : threads) {
+        t.join();
+    }
+}
+
 }  // anonymous namespace
 }  // namespace dawn
 
