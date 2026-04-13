@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8c727e_3bbe7dee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-13T17:19:12Z",
+      "side": 1,
+      "message": "PTAL! Pretty simple code reorder that makes sure that we always have a valid recording context, even if OnAfterSubmit() fails.",
+      "revId": "2e5801271a3e4df573063d872bb40eee828aac8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
