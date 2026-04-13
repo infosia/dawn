@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94c186d1_9930623a",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-13T19:10:08Z",
+      "side": 1,
+      "message": "This is one example of unnecessary runtime checks: This is not supposed to be checked in release mode. It\u0027s very expensive.",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f7e021e_539eef7e",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 6
