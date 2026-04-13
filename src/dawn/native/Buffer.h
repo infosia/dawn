@@ -163,7 +163,16 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     void SetInitialized(bool initialized) override;
     bool IsInitialized() const override;
 
-    void* GetMappedPointer();
+    struct Mapping {
+        // The region of valid memory that is mapped. Empty if not mapped.
+        std::span<uint8_t> mappedSpan;
+        // Offset from the base pointer of the whole buffer to the beginning of mValidSpan.
+        size_t offsetFromBase = 0;
+
+        std::span<uint8_t> SubspanFromBase(size_t offset, size_t size);
+    };
+    Mapping GetMapping();
+
     void* GetMappedRange(size_t offset, size_t size, bool writable = true);
 
     // Internal non-reentrant version of Unmap. This is used in workarounds or additional copies.
@@ -309,7 +318,10 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     // Mapping specific states.
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
+    // Map size we expose to the API.
     size_t mMapSize = 0;
+    // Size of the actually accessible region of memory.
+    size_t mAllocatedMapSize = 0;
     // TODO(crbug.com/485825675): Investigate this dangling pointers.
     raw_ptr<void, DanglingUntriaged> mMappedPointer = nullptr;
 };
