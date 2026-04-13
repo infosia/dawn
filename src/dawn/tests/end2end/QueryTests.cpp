@@ -674,6 +674,9 @@ class TimestampQueryTests : public TimestampQueryTestsBase {
         // Skip all tests if timestamp feature is not supported
         DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TimestampQuery}));
 
+        // TODO(crbug.com/502083482): Flakes on Windows 11/AMD RX 5500 XT.
+        DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
+
         // Create basic compute pipeline
         wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
             @compute @workgroup_size(1)
