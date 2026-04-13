@@ -1046,8 +1046,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         const gpu_info::DriverVersion kGoodMesaDriver = {25, 3, 0, 0};
         const bool badDriver = GetDriverVersion() < kGoodMesaDriver;
         if (badDriver) {
-            deviceToggles->Default(Toggle::VulkanPolyfillF32Abs, true);
-            deviceToggles->Default(Toggle::VulkanPolyfillF32Negation, true);
+            deviceToggles->Default(Toggle::VulkanPolyfillFloatAbs, true);
+            deviceToggles->Default(Toggle::VulkanPolyfillFloatNegation, true);
         }
     }
 
