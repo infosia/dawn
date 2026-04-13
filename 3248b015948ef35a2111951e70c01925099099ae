@@ -70,6 +70,24 @@
       "parentUuid": "c8da99dc_e82ea456",
       "revId": "3248b015948ef35a2111951e70c01925099099ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb630331_77ed0654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-13T20:14:38Z",
+      "side": 1,
+      "message": "Hmm, ok, if the work is too small to get measurable results, that makes sense to run the same benchmark multiple times in each `Step`. Is there any reason that we need multiple textures though? Couldn\u0027t we just run the same pass on the same texture multiple times? Or are you concerned that we may de-duplicate work (do we?)?\n\nSorry for being picky, I think the perf tests are already a bit confusing to understand sometimes, so just want to make them as concise and simple as possible.",
+      "parentUuid": "a7f0edd2_496bfe88",
+      "revId": "3248b015948ef35a2111951e70c01925099099ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
