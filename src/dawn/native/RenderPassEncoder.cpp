@@ -53,7 +53,7 @@ namespace {
 // Check the query at queryIndex is unavailable, otherwise it cannot be written.
 MaybeError ValidateQueryIndexOverwrite(QuerySetBase* querySet,
                                        uint32_t queryIndex,
-                                       const QueryAvailabilityMap& queryAvailabilityMap) {
+                                       const QuerySetToSlotUsageMap& queryAvailabilityMap) {
     auto it = queryAvailabilityMap.find(querySet);
     DAWN_INVALID_IF(it != queryAvailabilityMap.end() && it->second[queryIndex],
                     "Query index %u of %s is written to twice in a render pass.", queryIndex,
@@ -147,15 +147,10 @@ ObjectType RenderPassEncoder::GetType() const {
     return ObjectType::RenderPassEncoder;
 }
 
-void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex) {
+void RenderPassEncoder::TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex) {
     DAWN_ASSERT(querySet != nullptr);
-
-    // Track the query availability with true on render pass for rewrite validation and query
-    // reset on render pass on Vulkan
-    mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
-
-    // Track it again on command encoder for zero-initializing when resolving unused queries.
-    mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
+    mUsageTracker.TrackQuerySetSlotUsage(querySet, queryIndex);
+    mCommandEncoder->TrackUsedQuerySet(querySet);
 }
 
 void RenderPassEncoder::APIEnd() {
@@ -411,7 +406,7 @@ void RenderPassEncoder::APIBeginOcclusionQuery(uint32_t queryIndex) {
 
                 DAWN_TRY_CONTEXT(
                     ValidateQueryIndexOverwrite(mOcclusionQuerySet.Get(), queryIndex,
-                                                mUsageTracker.GetQueryAvailabilityMap()),
+                                                mUsageTracker.GetQuerySetToSlotUsageMap()),
                     "validating the occlusion query index (%u) in %s", queryIndex,
                     mOcclusionQuerySet.Get());
             }
@@ -438,7 +433,7 @@ void RenderPassEncoder::APIEndOcclusionQuery() {
                 DAWN_INVALID_IF(!mOcclusionQueryActive, "No occlusion queries are active.");
             }
 
-            TrackQueryAvailability(mOcclusionQuerySet.Get(), mCurrentOcclusionQueryIndex);
+            TrackQuerySetSlotUsage(mOcclusionQuerySet.Get(), mCurrentOcclusionQueryIndex);
 
             mOcclusionQueryActive = false;
 
@@ -460,13 +455,13 @@ void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t query
                 DAWN_TRY(ValidateTimestampQuery(
                     GetDevice(), querySet, queryIndex,
                     Feature::ChromiumExperimentalTimestampQueryInsidePasses));
-                DAWN_TRY_CONTEXT(ValidateQueryIndexOverwrite(
-                                     querySet, queryIndex, mUsageTracker.GetQueryAvailabilityMap()),
-                                 "validating the timestamp query index (%u) of %s", queryIndex,
-                                 querySet);
+                DAWN_TRY_CONTEXT(
+                    ValidateQueryIndexOverwrite(querySet, queryIndex,
+                                                mUsageTracker.GetQuerySetToSlotUsageMap()),
+                    "validating the timestamp query index (%u) of %s", queryIndex, querySet);
             }
 
-            TrackQueryAvailability(querySet, queryIndex);
+            TrackQuerySetSlotUsage(querySet, queryIndex);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);

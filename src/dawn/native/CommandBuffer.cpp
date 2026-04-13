@@ -27,6 +27,7 @@
 
 #include "dawn/native/CommandBuffer.h"
 
+#include <cstddef>
 #include <utility>
 
 #include "dawn/native/Buffer.h"
@@ -36,6 +37,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/QuerySet.h"
 #include "dawn/native/Texture.h"
 
 namespace dawn::native {
@@ -98,6 +100,25 @@ void CommandBufferBase::DestroyImpl(DestroyReason reason) {
     mResourceUsages = {};
 }
 
+MaybeError CommandBufferBase::PrepForResolveQuerySet(const ResolveQuerySetCmd& cmd) {
+    QuerySetBase* querySet = cmd.querySet.Get();
+
+    if (querySet->GetQueryType() != wgpu::QueryType::Timestamp) {
+        return {};
+    }
+
+    // Put the current availability of the queries into the data for the WriteBufferCmd
+    // that will execute just after this ResolveQuerySetCmd, and before the quantization
+    // compute shader.
+    DAWN_ASSERT(cmd.quantizationAvailabilityData.size() == cmd.queryCount);
+    const auto& availability = querySet->GetQueryAvailability();
+    for (uint32_t i = 0; i < cmd.queryCount; ++i) {
+        cmd.quantizationAvailabilityData[i] = availability[cmd.firstQuery + i] ? 1u : 0u;
+    }
+
+    return {};
+}
+
 const CommandBufferResourceUsage& CommandBufferBase::GetResourceUsages() const {
     return mResourceUsages;
 }
@@ -108,6 +129,17 @@ const std::vector<IndirectDrawMetadata>& CommandBufferBase::GetIndirectDrawMetad
 
 CommandIterator* CommandBufferBase::GetCommandIteratorForTesting() {
     return &mCommands;
+}
+
+void CommandBufferBase::MarkQueriesUsedByPassAsAvailable(
+    const QuerySetToSlotUsageMap& querySetToSlotUsageMap) {
+    for (const auto& [querySet, slotUsage] : querySetToSlotUsageMap) {
+        for (size_t i = 0; i < slotUsage.size(); ++i) {
+            if (slotUsage[i]) {
+                querySet->SetQueryAvailable(i);
+            }
+        }
+    }
 }
 
 bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,

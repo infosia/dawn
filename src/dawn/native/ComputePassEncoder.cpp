@@ -146,9 +146,25 @@ ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDispatchValidationPipelin
 ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
                                        const ComputePassDescriptor* descriptor,
                                        CommandEncoder* commandEncoder,
-                                       EncodingContext* encodingContext)
+                                       EncodingContext* encodingContext,
+                                       ComputePassResourceUsageTracker usageTracker)
     : ProgrammableEncoder(device, descriptor->label, encodingContext),
       mCommandEncoder(commandEncoder) {
+    mUsageTracker = std::move(usageTracker);
+    if (descriptor->timestampWrites != nullptr) {
+        if (descriptor->timestampWrites->beginningOfPassWriteIndex !=
+            wgpu::kQuerySetIndexUndefined) {
+            mUsageTracker.TrackQuerySetSlotUsage(
+                descriptor->timestampWrites->querySet,
+                descriptor->timestampWrites->beginningOfPassWriteIndex);
+            mCommandEncoder->TrackUsedQuerySet(descriptor->timestampWrites->querySet);
+        }
+        if (descriptor->timestampWrites->endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+            mUsageTracker.TrackQuerySetSlotUsage(descriptor->timestampWrites->querySet,
+                                                 descriptor->timestampWrites->endOfPassWriteIndex);
+            mCommandEncoder->TrackUsedQuerySet(descriptor->timestampWrites->querySet);
+        }
+    }
     GetObjectTrackingList()->Track(this);
 }
 
@@ -160,8 +176,10 @@ ComputePassEncoder::~ComputePassEncoder() {
 Ref<ComputePassEncoder> ComputePassEncoder::Create(DeviceBase* device,
                                                    const ComputePassDescriptor* descriptor,
                                                    CommandEncoder* commandEncoder,
-                                                   EncodingContext* encodingContext) {
-    return AcquireRef(new ComputePassEncoder(device, descriptor, commandEncoder, encodingContext));
+                                                   EncodingContext* encodingContext,
+                                                   ComputePassResourceUsageTracker usageTracker) {
+    return AcquireRef(new ComputePassEncoder(device, descriptor, commandEncoder, encodingContext,
+                                             std::move(usageTracker)));
 }
 
 ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
@@ -191,6 +209,12 @@ void ComputePassEncoder::DestroyImpl(DestroyReason reason) {
 
 ObjectType ComputePassEncoder::GetType() const {
     return ObjectType::ComputePassEncoder;
+}
+
+void ComputePassEncoder::TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex) {
+    DAWN_ASSERT(querySet != nullptr);
+    mUsageTracker.TrackQuerySetSlotUsage(querySet, queryIndex);
+    mCommandEncoder->TrackUsedQuerySet(querySet);
 }
 
 void ComputePassEncoder::APIEnd() {
@@ -590,7 +614,8 @@ void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t quer
                     Feature::ChromiumExperimentalTimestampQueryInsidePasses));
             }
 
-            mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
+            mUsageTracker.TrackQuerySetSlotUsage(querySet, queryIndex);
+            mCommandEncoder->TrackUsedQuerySet(querySet);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);

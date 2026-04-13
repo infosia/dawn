@@ -43,8 +43,6 @@ class ExternalTextureBase;
 class QuerySetBase;
 class TextureBase;
 
-using QueryAvailabilityMap = absl::flat_hash_map<QuerySetBase*, std::vector<bool>>;
-
 // Helper class to build SyncScopeResourceUsages
 class SyncScopeUsageTracker {
   public:
@@ -89,12 +87,17 @@ class SyncScopeUsageTracker {
 class ComputePassResourceUsageTracker {
   public:
     ComputePassResourceUsageTracker();
+    ComputePassResourceUsageTracker(ComputePassResourceUsageTracker&&);
     ~ComputePassResourceUsageTracker();
+
+    ComputePassResourceUsageTracker& operator=(ComputePassResourceUsageTracker&&);
 
     void AddDispatch(SyncScopeResourceUsage scope);
     void AddReferencedBuffer(BufferBase* buffer);
     void AddResourcesReferencedByBindGroup(BindGroupBase* group);
     void AddReferencedResourceTable(ResourceTableBase* table);
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
+    const QuerySetToSlotUsageMap& GetQuerySetToSlotUsageMap() const;
 
     ComputePassResourceUsage AcquireResourceUsage();
 
@@ -111,8 +114,8 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
 
     RenderPassResourceUsageTracker& operator=(RenderPassResourceUsageTracker&&);
 
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
-    const QueryAvailabilityMap& GetQueryAvailabilityMap() const;
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
+    const QuerySetToSlotUsageMap& GetQuerySetToSlotUsageMap() const;
 
     RenderPassResourceUsage AcquireResourceUsage();
 
@@ -122,7 +125,8 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
     using SyncScopeUsageTracker::AcquireSyncScopeUsage;
 
     // Tracks queries used in the render pass to validate that they aren't written twice.
-    QueryAvailabilityMap mQueryAvailabilities;
+    // and available in the backend to reset queries before usage.
+    QuerySetToSlotUsageMap mQuerySetToSlotUsageMap;
 };
 
 }  // namespace dawn::native

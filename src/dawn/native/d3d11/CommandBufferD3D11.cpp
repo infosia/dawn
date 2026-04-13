@@ -302,8 +302,11 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
         switch (type) {
             case Command::BeginComputePass: {
                 mCommands.NextCommand<BeginComputePassCmd>();
+                const auto& computePassResourceUsages =
+                    GetResourceUsages().computePasses[nextComputePassNumber];
+                MarkQueriesUsedByPassAsAvailable(computePassResourceUsages.querySetToSlotUsageMap);
                 for (const SyncScopeResourceUsage& scope :
-                     GetResourceUsages().computePasses[nextComputePassNumber].dispatchUsages) {
+                     computePassResourceUsages.dispatchUsages) {
                     for (TextureBase* texture : scope.textures) {
                         DAWN_TRY(ToBackend(texture)->SynchronizeTextureBeforeUse(commandContext));
                     }
@@ -317,12 +320,15 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
 
             case Command::BeginRenderPass: {
                 auto* cmd = mCommands.NextCommand<BeginRenderPassCmd>();
-                for (TextureBase* texture :
-                     GetResourceUsages().renderPasses[nextRenderPassNumber].textures) {
+                const auto& renderPassResourceUsages =
+                    GetResourceUsages().renderPasses[nextRenderPassNumber];
+                MarkQueriesUsedByPassAsAvailable(renderPassResourceUsages.querySetToSlotUsageMap);
+
+                for (TextureBase* texture : renderPassResourceUsages.textures) {
                     DAWN_TRY(ToBackend(texture)->SynchronizeTextureBeforeUse(commandContext));
                 }
                 for (ExternalTextureBase* externalTexture :
-                     GetResourceUsages().renderPasses[nextRenderPassNumber].externalTextures) {
+                     renderPassResourceUsages.externalTextures) {
                     for (auto& view : externalTexture->GetTextureViews()) {
                         if (view.Get()) {
                             DAWN_TRY(ToBackend(view->GetTexture())
@@ -330,8 +336,7 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                         }
                     }
                 }
-                DAWN_TRY(
-                    LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
+                DAWN_TRY(LazyClearSyncScope(renderPassResourceUsages));
                 DAWN_TRY(ExecuteRenderPass(cmd, commandContext));
 
                 nextRenderPassNumber++;
@@ -490,6 +495,7 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 Buffer* destination = ToBackend(cmd->destination.Get());
                 uint64_t destinationOffset = cmd->destinationOffset;
 
+                DAWN_TRY(PrepForResolveQuerySet(*cmd));
                 DAWN_TRY(destination->TrackUsage(commandContext, pendingSerial));
                 DAWN_TRY(querySet->Resolve(commandContext, firstQuery, queryCount, destination,
                                            destinationOffset));

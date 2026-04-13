@@ -133,37 +133,34 @@ void RecordResolveQuerySetCmd(ID3D12GraphicsCommandList* commandList,
                               uint32_t queryCount,
                               Buffer* destination,
                               uint64_t destinationOffset) {
-    const std::vector<bool>& availability = querySet->GetQueryAvailability();
-
-    auto currentIt = availability.begin() + firstQuery;
-    auto lastIt = availability.begin() + firstQuery + queryCount;
+    uint32_t current = firstQuery;
+    uint32_t last = firstQuery + queryCount;
 
     // Traverse available queries in the range of [firstQuery, firstQuery +  queryCount - 1]
-    while (currentIt != lastIt) {
-        auto firstTrueIt = std::find(currentIt, lastIt, true);
-        // No available query found for resolving
-        if (firstTrueIt == lastIt) {
-            break;
+    const auto& availability = querySet->GetQueryAvailability();
+    while (current < last) {
+        if (!availability[current]) {
+            current++;
+            continue;
         }
-        auto nextFalseIt = std::find(firstTrueIt, lastIt, false);
 
-        // The query index of firstTrueIt where the resolving starts
-        uint32_t resolveQueryIndex =
-            static_cast<uint32_t>(std::distance(availability.begin(), firstTrueIt));
-        // The queries count between firstTrueIt and nextFalseIt need to be resolved
-        uint32_t resolveQueryCount = static_cast<uint32_t>(std::distance(firstTrueIt, nextFalseIt));
+        uint32_t firstTrue = current;
+        while (current < last && availability[current]) {
+            current++;
+        }
 
-        // Calculate destinationOffset based on the current resolveQueryIndex and firstQuery
+        // The query index of firstTrue where the resolving starts
+        uint32_t resolveQueryIndex = firstTrue;
+        // The number of queries to be resolved
+        uint32_t resolveQueryCount = current - firstTrue;
+
         uint64_t resolveDestinationOffset =
-            destinationOffset + (resolveQueryIndex - firstQuery) * sizeof(uint64_t);
+            destinationOffset + (firstTrue - firstQuery) * sizeof(uint64_t);
 
-        // Resolve the queries between firstTrueIt and nextFalseIt (which is at most lastIt)
+        // Resolve the available queries
         commandList->ResolveQueryData(
             querySet->GetQueryHeap(), D3D12QueryType(querySet->GetQueryType()), resolveQueryIndex,
             resolveQueryCount, destination->GetD3D12Resource(), resolveDestinationOffset);
-
-        // Set current iterator to next false
-        currentIt = nextFalseIt;
     }
 }
 
@@ -1013,9 +1010,12 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
             case Command::BeginComputePass: {
                 BeginComputePassCmd* cmd = mCommands.NextCommand<BeginComputePassCmd>();
 
-                DAWN_TRY(RecordComputePass(
-                    commandContext, descriptorHeapState.GetComputeBindingTracker(), cmd,
-                    GetResourceUsages().computePasses[nextComputePassNumber]));
+                const auto& computePassResourceUsages =
+                    GetResourceUsages().computePasses[nextComputePassNumber];
+                MarkQueriesUsedByPassAsAvailable(computePassResourceUsages.querySetToSlotUsageMap);
+
+                DAWN_TRY(RecordComputePass(commandContext,
+                                           descriptorHeapState.GetComputeBindingTracker(), cmd, ));
 
                 nextComputePassNumber++;
                 break;
@@ -1027,10 +1027,13 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
 
                 DAWN_TRY(EnsureResolveTargetInitialized(commandContext, beginRenderPassCmd));
 
+                const auto& renderPassResourceUsages =
+                    GetResourceUsages().renderPasses[nextRenderPassNumber];
+                MarkQueriesUsedByPassAsAvailable(renderPassResourceUsages.querySetToSlotUsageMap);
+
                 bool passHasUAV;
-                DAWN_TRY(TransitionAndClearForSyncScope(
-                    commandContext, GetResourceUsages().renderPasses[nextRenderPassNumber],
-                    &passHasUAV));
+                DAWN_TRY(TransitionAndClearForSyncScope(commandContext, renderPassResourceUsages,
+                                                        &passHasUAV));
 
                 DAWN_TRY(LazyClearRenderPassAttachments(
                     device, beginRenderPassCmd,
@@ -1315,18 +1318,15 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                     cleared, destination->EnsureDataInitializedAsDestination(
                                  commandContext, destinationOffset, queryCount * sizeof(uint64_t)));
 
-                // Resolving unavailable queries is undefined behaviour on D3D12, we only can
-                // resolve the available part of sparse queries. In order to resolve the
-                // unavailables as 0s, we need to clear the resolving region of the destination
-                // buffer to 0s.
-                auto startIt = querySet->GetQueryAvailability().begin() + firstQuery;
-                auto endIt = querySet->GetQueryAvailability().begin() + firstQuery + queryCount;
-                bool hasUnavailableQueries = std::find(startIt, endIt, false) != endIt;
                 // Workaround for resolving overlapping queries to a same buffer on Intel Gen12 GPUs
                 // due to D3D12 driver issue.
                 // See http://crbug.com/dawn/1546 for more information.
                 bool clearNeeded = device->IsToggleEnabled(Toggle::ClearBufferBeforeResolveQueries);
-                if (hasUnavailableQueries || clearNeeded) {
+                if (querySet->HasUnavailableQueries() || clearNeeded) {
+                    // Resolving unavailable queries is undefined behaviour on D3D12, we only can
+                    // resolve the available part of sparse queries. In order to resolve the
+                    // unavailables as 0s, we need to clear the resolving region of the destination
+                    // buffer to 0s.
                     DAWN_TRY(device->ClearBufferToZero(commandContext, destination,
                                                        destinationOffset,
                                                        queryCount * sizeof(uint64_t)));
@@ -1335,6 +1335,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 destination->TrackUsageAndTransitionNow(commandContext,
                                                         wgpu::BufferUsage::QueryResolve);
 
+                DAWN_TRY(PrepForResolveQuerySet(*cmd));
                 RecordResolveQuerySetCmd(commandList, device, querySet, firstQuery, queryCount,
                                          destination, destinationOffset);
 

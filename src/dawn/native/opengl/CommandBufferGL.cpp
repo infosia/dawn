@@ -791,12 +791,16 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
         switch (type) {
             case Command::BeginComputePass: {
                 mCommands.NextCommand<BeginComputePassCmd>();
-                for (TextureBase* texture :
-                     GetResourceUsages().computePasses[nextComputePassNumber].referencedTextures) {
+
+                const auto& computePassResourceUsages =
+                    GetResourceUsages().computePasses[nextComputePassNumber];
+                MarkQueriesUsedByPassAsAvailable(computePassResourceUsages.querySetToSlotUsageMap);
+
+                for (TextureBase* texture : computePassResourceUsages.referencedTextures) {
                     DAWN_TRY(ToBackend(texture)->SynchronizeTextureBeforeUse());
                 }
                 for (const SyncScopeResourceUsage& scope :
-                     GetResourceUsages().computePasses[nextComputePassNumber].dispatchUsages) {
+                     computePassResourceUsages.dispatchUsages) {
                     DAWN_TRY(LazyClearSyncScope(scope));
                 }
                 DAWN_TRY(ExecuteComputePass(gl));
@@ -807,12 +811,15 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
             case Command::BeginRenderPass: {
                 auto* cmd = mCommands.NextCommand<BeginRenderPassCmd>();
-                for (TextureBase* texture :
-                     this->GetResourceUsages().renderPasses[nextRenderPassNumber].textures) {
+
+                const auto& renderPassResourceUsages =
+                    GetResourceUsages().renderPasses[nextRenderPassNumber];
+                MarkQueriesUsedByPassAsAvailable(renderPassResourceUsages.querySetToSlotUsageMap);
+
+                for (TextureBase* texture : renderPassResourceUsages.textures) {
                     DAWN_TRY(ToBackend(texture)->SynchronizeTextureBeforeUse());
                 }
-                DAWN_TRY(
-                    LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
+                DAWN_TRY(LazyClearSyncScope(renderPassResourceUsages));
                 DAWN_TRY(LazyClearRenderPassAttachments(
                     GetDevice(), cmd, [&](TextureBase* texture, const SubresourceRange& range) {
                         return ToBackend(texture)->EnsureSubresourceContentInitialized(gl, range);
@@ -1102,7 +1109,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     destination->EnsureDataInitializedAsDestination(cmd->destinationOffset, size));
 
                 std::vector<uint64_t> values(cmd->queryCount);
-                auto availability = querySet->GetQueryAvailability();
+                const auto& availability = querySet->GetQueryAvailability();
 
                 for (uint32_t i = 0; i < cmd->queryCount; ++i) {
                     if (!availability[cmd->firstQuery + i]) {

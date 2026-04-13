@@ -30,6 +30,7 @@
 
 #include <vector>
 
+#include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
 #include "dawn/native/SubresourceStorage.h"
 #include "dawn/native/dawn_platform.h"
@@ -45,6 +46,14 @@ class BufferBase;
 class QuerySetBase;
 class TextureBase;
 class ResourceTableBase;
+struct ResolveQuerySetCmd;
+
+// During encoding we need to track all query usages in a pass because some backends require
+// resetting a query before usage encoding the pass on the backend. This is different than
+// "available" in the QuerySet itself which tracks if the query slot ever been written to. We could
+// optimize this as there is only ever 1 query set in a compute pass and 2 query sets in a render
+// pass.
+using QuerySetToSlotUsageMap = absl::flat_hash_map<QuerySetBase*, std::vector<bool>>;
 
 // Info about how a buffer is used and in which shader stages
 struct BufferSyncInfo {
@@ -91,6 +100,10 @@ struct ComputePassResourceUsage {
     absl::flat_hash_set<TextureBase*> referencedTextures;
     absl::flat_hash_set<ExternalTextureBase*> referencedExternalTextures;
     absl::flat_hash_set<ResourceTableBase*> referencedResourceTables;
+
+    // We could optimize this as there is only ever 1 query set in
+    // a compute pass. But, using a generic container allows us to reuse code.
+    QuerySetToSlotUsageMap querySetToSlotUsageMap;
 };
 
 // Contains all the resource usage data for a render pass.
@@ -99,9 +112,9 @@ struct ComputePassResourceUsage {
 // track additional data. It is stored for render passes used by a CommandBuffer, but also in
 // RenderBundle so they can be merged into the render passes' usage on ExecuteBundles().
 struct RenderPassResourceUsage : public SyncScopeResourceUsage {
-    // Storage to track the occlusion queries used during the pass.
-    std::vector<QuerySetBase*> querySets;
-    std::vector<std::vector<bool>> queryAvailabilities;
+    // We could optimize this as there is only ever 2 query sets in
+    // a render pass. A single occlusion query and a single timestamp query.
+    QuerySetToSlotUsageMap querySetToSlotUsageMap;
 };
 
 using RenderPassUsages = std::vector<RenderPassResourceUsage>;
