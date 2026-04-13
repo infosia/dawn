@@ -16,6 +16,24 @@
       "message": "Found via E2E testing, this is a bug. For bufferArrayView, it is incorrect to subtract the offset from the length. So there should be a select based on `cmp` that selects between `value` and `0`.\n```suggestion\n\t\tauto* sub_val \u003d b.Call(ty.u32(), core::BuiltinFn::kSelect, 0_u, value, cmp);\n                len \u003d b.Subtract(len, sub_val-\u003eResult())-\u003eResult();\n```",
       "revId": "3106a702db09b1641b9dcee0e50176db17012590",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "245adea5_4ad103e6",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-13T00:33:33Z",
+      "side": 1,
+      "message": "Actually, it\u0027s more complicated. The offset needs split into buffer[Array]View offset and struct offset. The struct offset always needs applied, but the bufferView offset is only used for bufferView (e.g. not bufferArrayView).\n\nI have a tested a fix for this E2E, but I need to fix up a bunch of unit tests.",
+      "parentUuid": "35e74d7d_fa156c5a",
+      "revId": "3106a702db09b1641b9dcee0e50176db17012590",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
