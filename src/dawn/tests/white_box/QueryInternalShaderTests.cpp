@@ -29,7 +29,9 @@
 
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandEncoder.h"
+#include "dawn/native/Device.h"
 #include "dawn/native/QueryHelper.h"
+#include "dawn/native/Queue.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 
@@ -185,7 +187,7 @@ class QueryInternalShaderTests : public DawnTest {
         wgpu::BufferDescriptor timestampsDesc;
         timestampsDesc.size = size;
         timestampsDesc.usage = wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::CopySrc |
-                               wgpu::BufferUsage::CopyDst;
+                               wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Storage;
         wgpu::Buffer timestampsBuffer = device.CreateBuffer(&timestampsDesc);
 
         // Set sentinel values to check the slots before the destination offset should not be
@@ -195,7 +197,7 @@ class QueryInternalShaderTests : public DawnTest {
         for (uint32_t i = 0; i < queryCount; i++) {
             timestampValues[start + i] = querySetValues[firstQuery + i];
         }
-        // Write sentinel values and orignal timestamps to timestamps buffer
+        // Write sentinel values and original timestamps to timestamps buffer
         queue.WriteBuffer(timestampsBuffer, 0, timestampValues.data(), size);
 
         // The buffer indicating which values are available timestamps

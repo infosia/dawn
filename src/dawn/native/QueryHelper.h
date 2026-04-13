@@ -51,6 +51,14 @@ struct TimestampParams {
     uint32_t rightShift;
 };
 
+ResultOrError<Ref<CommandBufferBase>> EncodeTimestampsToNanosecondsConversion(
+    DeviceBase* device,
+    QuerySetBase* querySet,
+    uint32_t firstQuery,
+    uint32_t queryCount,
+    BufferBase* destination,
+    uint64_t destinationOffset);
+
 MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,
                                                 BufferBase* timestamps,
                                                 BufferBase* availability,

@@ -29,7 +29,9 @@
 
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
+#include "dawn/common/Constants.h"
 #include "dawn/common/Strings.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/BindGroupLayout.h"
@@ -39,6 +41,10 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/InternalPipelineStore.h"
+#include "dawn/native/PassResourceUsage.h"
+#include "dawn/native/QuerySet.h"
+#include "dawn/native/Queue.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -128,9 +134,10 @@ static const char sConvertTimestampsToNanoseconds[] = DAWN_MULTILINE(
         }
 
         // Apply quantization mask.
-        var low = chunks[0] | (chunks[1] << 16u);
-        timestamps.t[index].low = low & params.quantization_mask;
-        timestamps.t[index].high = chunks[2] | (chunks[3] << 16u);
+        var lowValue = (chunks[0] & 0xFFFFu) | (chunks[1] << 16u);
+        var highValue = (chunks[2] & 0xFFFFu) | (chunks[3] << 16u);
+        timestamps.t[index].low = lowValue & params.quantization_mask;
+        timestamps.t[index].high = highValue;
     }
 );
 
@@ -181,27 +188,91 @@ TimestampParams::TimestampParams(uint32_t first,
                                  uint32_t offset,
                                  uint32_t quantizationMask,
                                  float period)
-    : first(first), count(count), offset(offset), quantizationMask(quantizationMask) {
-    // The overall conversion happening, if p is the period, m the multiplier, s the shift, is::
-    //
-    //   m = round(p * 2^s)
-    //
-    // Then in the shader we compute:
-    //
-    //   m / 2^s = round(p * 2^s) / 2*s ~= p
-    //
-    // The goal is to find the best shift to keep the precision of computations. The
-    // conversion shader uses chunks of 16 bits to compute the multiplication with the perios,
-    // so we need to keep the multiplier under 2^16. At the same time, the larger the
-    // multiplier, the better the precision, so we maximize the value of the right shift while
-    // keeping the multiplier under 2 ^ 16
-    uint32_t upperLog2 = uint32_t(ceil(log2(period)));
+    : first(first),
+      count(count),
+      offset(offset),
+      quantizationMask(quantizationMask),
+      multiplier(0),
+      rightShift(0) {
+    DAWN_ASSERT(period >= 1.0f);
+    // Optimization for period is 1.0.
+    if (period == 1.0f) {
+        multiplier = 1u;
+        return;
+    }
 
+    // The logic to convert the timestamp query to nanoseconds:
+    // val = timestamp * period
+    //
+    // However, the period is a float, we need to convert it to a multiplier and a right shift
+    // to perform the multiplication and shift in WGSL.
+    //
+    // period = multiplier / (1 << rightShift)
+    // multiplier = period * (1 << rightShift)
+    //
+    // We choose the multiplier to be as large as possible without overflowing 32-bit
+    // integer.
+    uint32_t upperLog2 = static_cast<uint32_t>(std::ceil(std::log2(period)));
     // Clamp the shift to 16 because we're doing computations in 16bit chunks. The
     // multiplication by the period will overflow the chunks, but timestamps are mostly
     // informational so that's ok.
     rightShift = 16u - std::min(upperLog2, 16u);
     multiplier = uint32_t(period * (1 << rightShift));
+}
+
+ResultOrError<Ref<CommandBufferBase>> EncodeTimestampsToNanosecondsConversion(
+    DeviceBase* device,
+    QuerySetBase* querySet,
+    uint32_t firstQuery,
+    uint32_t queryCount,
+    BufferBase* destination,
+    uint64_t destinationOffset) {
+    const uint32_t quantization_mask = (device->IsToggleEnabled(Toggle::TimestampQuantization))
+                                           ? kTimestampQuantizationMask
+                                           : 0xFFFFFFFF;
+
+    // Timestamp params uniform buffer
+    TimestampParams params(firstQuery, queryCount, static_cast<uint32_t>(destinationOffset),
+                           quantization_mask, device->GetTimestampPeriodInNS());
+
+    Ref<CommandEncoder> encoder = CommandEncoder::Create(device, "InternalTimestampConversion");
+    CommandEncoder::InternalUsageScope scope = encoder->MakeInternalUsageScope();
+
+    BufferDescriptor parmsDesc = {};
+    parmsDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+    parmsDesc.size = sizeof(params);
+    Ref<BufferBase> paramsBuffer;
+    DAWN_TRY_ASSIGN(paramsBuffer, device->CreateBuffer(&parmsDesc));
+
+    encoder->APIWriteBuffer(paramsBuffer.Get(), 0, reinterpret_cast<const uint8_t*>(&params),
+                            sizeof(params));
+
+    // Availability buffer
+    std::vector<uint32_t> availabilities(querySet->GetQueryCount());
+    for (uint32_t i = 0; i < querySet->GetQueryCount(); i++) {
+        availabilities[i] = querySet->IsQueryAvailable(i) ? 1u : 0u;
+    }
+    BufferDescriptor availabilityDesc = {};
+    availabilityDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
+    availabilityDesc.size = availabilities.size() * sizeof(uint32_t);
+    Ref<BufferBase> availabilityBuffer;
+    DAWN_TRY_ASSIGN(availabilityBuffer, device->CreateBuffer(&availabilityDesc));
+
+    encoder->APIWriteBuffer(availabilityBuffer.Get(), 0,
+                            reinterpret_cast<const uint8_t*>(availabilities.data()),
+                            availabilityDesc.size);
+
+    // In the internal shader to convert timestamps to nanoseconds, we can ensure no uninitialized
+    // data will be read and the full buffer range will be filled with valid data.
+    if (!destination->IsInitialized() &&
+        destination->IsFullBufferRange(destinationOffset, sizeof(uint64_t) * queryCount)) {
+        destination->SetInitialized(true);
+    }
+
+    DAWN_TRY(EncodeConvertTimestampsToNanoseconds(encoder.Get(), destination,
+                                                  availabilityBuffer.Get(), paramsBuffer.Get()));
+
+    return encoder->Finish();
 }
 
 MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,

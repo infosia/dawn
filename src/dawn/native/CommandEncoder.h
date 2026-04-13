@@ -55,6 +55,7 @@ class CommandEncoder final : public ApiObjectBase {
   public:
     static Ref<CommandEncoder> Create(DeviceBase* device,
                                       const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
+    static Ref<CommandEncoder> Create(DeviceBase* device, StringView label = nullptr);
     static Ref<CommandEncoder> MakeError(DeviceBase* device, StringView label);
 
     ObjectType GetType() const override;
@@ -64,7 +65,29 @@ class CommandEncoder final : public ApiObjectBase {
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+
+    Ref<ComputePassEncoder> BeginComputePass(const ComputePassDescriptor* descriptor = nullptr);
+    Ref<RenderPassEncoder> BeginRenderPass(const RenderPassDescriptor* rawDescriptor);
+    ResultOrError<Ref<CommandBufferBase>> Finish(
+        const CommandBufferDescriptor* descriptor = nullptr);
+
+    // `InternalUsageScope` is a scoped class that temporarily changes validation such that the
+    // command encoder includes internal resource usages.
+    friend class InternalUsageScope;
+    class [[nodiscard]] InternalUsageScope : public NonMovable, public StackAllocated {
+      public:
+        ~InternalUsageScope();
+
+      private:
+        // Only CommandEncoder can make this class.
+        friend class CommandEncoder;
+        InternalUsageScope(CommandEncoder* encoder);
+
+        raw_ptr<CommandEncoder> mEncoder;
+        UsageValidationMode mUsageValidationMode;
+    };
+
+    [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
 
     // Dawn API
     ComputePassEncoder* APIBeginComputePass(const ComputePassDescriptor* descriptor);
@@ -108,30 +131,6 @@ class CommandEncoder final : public ApiObjectBase {
     void APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex);
 
     CommandBufferBase* APIFinish(const CommandBufferDescriptor* descriptor = nullptr);
-
-    Ref<ComputePassEncoder> BeginComputePass(const ComputePassDescriptor* descriptor = nullptr);
-    Ref<RenderPassEncoder> BeginRenderPass(const RenderPassDescriptor* rawDescriptor);
-    ResultOrError<Ref<CommandBufferBase>> Finish(
-        const CommandBufferDescriptor* descriptor = nullptr);
-
-    // `InternalUsageScope` is a scoped class that temporarily changes validation such that the
-    // command encoder includes internal resource usages.
-    friend class InternalUsageScope;
-    class [[nodiscard]] InternalUsageScope : public NonMovable, public StackAllocated {
-      public:
-        ~InternalUsageScope();
-
-      private:
-        // Only CommandEncoder can make this class.
-        friend class CommandEncoder;
-        InternalUsageScope(CommandEncoder* encoder);
-
-        raw_ptr<CommandEncoder> mEncoder;
-        UsageValidationMode mUsageValidationMode;
-    };
-
-    [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
-
 
   private:
     CommandEncoder(DeviceBase* device, const UnpackedPtr<CommandEncoderDescriptor>& descriptor);

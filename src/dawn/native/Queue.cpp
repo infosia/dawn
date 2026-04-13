@@ -56,6 +56,7 @@
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/QuerySet.h"
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"

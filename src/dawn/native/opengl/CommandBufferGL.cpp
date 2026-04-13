@@ -40,6 +40,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/opengl/BufferGL.h"
 #include "dawn/native/opengl/ComputePipelineGL.h"
@@ -1102,10 +1103,9 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     destination->EnsureDataInitializedAsDestination(cmd->destinationOffset, size));
 
                 std::vector<uint64_t> values(cmd->queryCount);
-                auto availability = querySet->GetQueryAvailability();
 
                 for (uint32_t i = 0; i < cmd->queryCount; ++i) {
-                    if (!availability[cmd->firstQuery + i]) {
+                    if (!querySet->IsQueryAvailable(cmd->firstQuery + i)) {
                         values[i] = 0;
                         continue;
                     }
@@ -1113,6 +1113,13 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     GLuint value;
                     DAWN_GL_TRY(gl, GetQueryObjectuiv(query, GL_QUERY_RESULT, &value));
                     values[i] = value;
+
+                    if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
+                        !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
+                        GetDevice()->GetTimestampPeriodInNS() != 1.0f) {
+                        values[i] = static_cast<uint64_t>(values[i] *
+                                                          GetDevice()->GetTimestampPeriodInNS());
+                    }
                 }
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, destination->GetHandle()));
@@ -1627,8 +1634,9 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             }
 
             case Command::EndOcclusionQuery: {
-                mCommands.NextCommand<EndOcclusionQueryCmd>();
+                EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 DAWN_GL_TRY(gl, EndQuery(GL_ANY_SAMPLES_PASSED));
+                cmd->querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

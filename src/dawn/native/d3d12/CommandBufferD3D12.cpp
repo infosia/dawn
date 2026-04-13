@@ -34,10 +34,12 @@
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
+#include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/d3d12/BindGroupD3D12.h"
@@ -124,6 +126,7 @@ void RecordWriteTimestampCmd(ID3D12GraphicsCommandList* commandList,
     DAWN_ASSERT(D3D12QueryType(ToBackend(querySet)->GetQueryType()) == D3D12_QUERY_TYPE_TIMESTAMP);
     commandList->EndQuery(ToBackend(querySet)->GetQueryHeap(), D3D12_QUERY_TYPE_TIMESTAMP,
                           queryIndex);
+    querySet->SetQueryAvailable(queryIndex);
 }
 
 void RecordResolveQuerySetCmd(ID3D12GraphicsCommandList* commandList,
@@ -133,37 +136,33 @@ void RecordResolveQuerySetCmd(ID3D12GraphicsCommandList* commandList,
                               uint32_t queryCount,
                               Buffer* destination,
                               uint64_t destinationOffset) {
-    const std::vector<bool>& availability = querySet->GetQueryAvailability();
-
-    auto currentIt = availability.begin() + firstQuery;
-    auto lastIt = availability.begin() + firstQuery + queryCount;
+    uint32_t current = firstQuery;
+    uint32_t last = firstQuery + queryCount;
 
     // Traverse available queries in the range of [firstQuery, firstQuery +  queryCount - 1]
-    while (currentIt != lastIt) {
-        auto firstTrueIt = std::find(currentIt, lastIt, true);
-        // No available query found for resolving
-        if (firstTrueIt == lastIt) {
-            break;
+    while (current < last) {
+        if (!querySet->IsQueryAvailable(current)) {
+            current++;
+            continue;
         }
-        auto nextFalseIt = std::find(firstTrueIt, lastIt, false);
 
-        // The query index of firstTrueIt where the resolving starts
-        uint32_t resolveQueryIndex =
-            static_cast<uint32_t>(std::distance(availability.begin(), firstTrueIt));
-        // The queries count between firstTrueIt and nextFalseIt need to be resolved
-        uint32_t resolveQueryCount = static_cast<uint32_t>(std::distance(firstTrueIt, nextFalseIt));
+        uint32_t firstTrue = current;
+        while (current < last && querySet->IsQueryAvailable(current)) {
+            current++;
+        }
 
-        // Calculate destinationOffset based on the current resolveQueryIndex and firstQuery
+        // The query index of firstTrue where the resolving starts
+        uint32_t resolveQueryIndex = firstTrue;
+        // The number of queries to be resolved
+        uint32_t resolveQueryCount = current - firstTrue;
+
         uint64_t resolveDestinationOffset =
-            destinationOffset + (resolveQueryIndex - firstQuery) * sizeof(uint64_t);
+            destinationOffset + (firstTrue - firstQuery) * sizeof(uint64_t);
 
-        // Resolve the queries between firstTrueIt and nextFalseIt (which is at most lastIt)
+        // Resolve the available queries
         commandList->ResolveQueryData(
             querySet->GetQueryHeap(), D3D12QueryType(querySet->GetQueryType()), resolveQueryIndex,
             resolveQueryCount, destination->GetD3D12Resource(), resolveDestinationOffset);
-
-        // Set current iterator to next false
-        currentIt = nextFalseIt;
     }
 }
 
@@ -1304,9 +1303,13 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 // resolve the available part of sparse queries. In order to resolve the
                 // unavailables as 0s, we need to clear the resolving region of the destination
                 // buffer to 0s.
-                auto startIt = querySet->GetQueryAvailability().begin() + firstQuery;
-                auto endIt = querySet->GetQueryAvailability().begin() + firstQuery + queryCount;
-                bool hasUnavailableQueries = std::find(startIt, endIt, false) != endIt;
+                bool hasUnavailableQueries = false;
+                for (uint32_t i = 0; i < queryCount; ++i) {
+                    if (!querySet->IsQueryAvailable(firstQuery + i)) {
+                        hasUnavailableQueries = true;
+                        break;
+                    }
+                }
                 // Workaround for resolving overlapping queries to a same buffer on Intel Gen12 GPUs
                 // due to D3D12 driver issue.
                 // See http://crbug.com/dawn/1546 for more information.
@@ -1322,6 +1325,16 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
 
                 RecordResolveQuerySetCmd(commandList, device, querySet, firstQuery, queryCount,
                                          destination, destinationOffset);
+
+                if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
+                    !device->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
+                    device->GetTimestampPeriodInNS() != 1.0f) {
+                    Ref<CommandBufferBase> conversionCmd;
+                    DAWN_TRY_ASSIGN(conversionCmd, EncodeTimestampsToNanosecondsConversion(
+                                                       device, querySet, firstQuery, queryCount,
+                                                       destination, destinationOffset));
+                    DAWN_TRY(ToBackend(conversionCmd.Get())->RecordCommands(commandContext));
+                }
 
                 break;
             }
@@ -2105,6 +2118,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                             D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->EndQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
                                       cmd->queryIndex);
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 
