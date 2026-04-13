@@ -311,6 +311,28 @@ TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, StructMember_TypeAlignZero) {
+    core::IOAttributes attrs = {};
+    tint::Vector<const core::type::StructMember*, 4> members;
+    members.Push(ty.Get<core::type::StructMember>(mod.symbols.New("v"),
+                                                  ty.Get<tint::mock::NonCoreType>(), 0u, 0u,
+                                                  /* align */ 4u, 4u, std::move(attrs)));
+    auto* str_ty = ty.Get<core::type::Struct>(mod.symbols.New("MyStruct"), std::move(members),
+                                              tint::RoundUp(0u, 16u));
+
+    auto* v = b.Var(ty.ptr(private_, str_ty));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(R"(:6:3 error: var: struct member type must not have an alignment of 0
+  %1:ptr<private, MyStruct, read_write> = var undef
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Structure_LargePaddingSizeAtEnd) {
     auto* str_ty =
         ty.Struct(mod.symbols.New("S"),
@@ -749,6 +771,20 @@ TEST_F(IR_ValidatorTest, LargeArrays) {
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Array_ZeroSize) {
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Var("v", function, ty.array(ty.u32(), 0u));
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("3:5 error: var: array requires a constant array size > 0"))
+        << res.Failure();
+}
+
 using Type_VectorElements = TypeTest;
 
 TEST_P(Type_VectorElements, Test) {
@@ -901,6 +937,33 @@ INSTANTIATE_TEST_SUITE_P(IR_ValidatorTest,
                                          std::make_tuple(false, TypeBuilder<core::type::Bool>),
                                          std::make_tuple(false, TypeBuilder<core::type::Void>)));
 
+using Type_SubgroupMatrixInvalidAddressSpace = IRTestParamHelper<AddressSpace>;
+
+TEST_P(Type_SubgroupMatrixInvalidAddressSpace, Test) {
+    auto aspace = GetParam();
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Var("m", aspace, ty.subgroup_matrix_result(ty.f32(), 8u, 8u));
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("3:5 error: var: invalid address space for subgroup matrix : " +
+                                   std::string(ToString(aspace))))
+        << res.Failure();
+}
+
+INSTANTIATE_TEST_SUITE_P(IR_ValidatorTest,
+                         Type_SubgroupMatrixInvalidAddressSpace,
+                         testing::Values(AddressSpace::kPrivate,
+                                         AddressSpace::kWorkgroup,
+                                         AddressSpace::kUniform,
+                                         AddressSpace::kStorage,
+                                         AddressSpace::kHandle,
+                                         AddressSpace::kImmediate));
+
 using Type_SampledTextureSampledType = TypeTest;
 
 TEST_P(Type_SampledTextureSampledType, Test) {
@@ -978,21 +1041,69 @@ TEST_F(IR_ValidatorTest, BindingArrayNonSampledTexture) {
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)"));
 }
 
-TEST_F(IR_ValidatorTest, BindingArrayInvalidAddressSpace) {
+TEST_F(IR_ValidatorTest, BindingArray_AllowedNonSampledTextureWithCapability) {
     b.Append(mod.root_block, [&] {
-        b.Var("m", AddressSpace::kWorkgroup,
-              ty.binding_array(ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()), 4));
+        auto* var = b.Var("m", AddressSpace::kHandle, ty.binding_array(ty.external_texture(), 5));
+        var->SetBindingPoint(0, 0);
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, BindingArray_ZeroSize) {
+    b.Append(mod.root_block, [&] {
+        auto* var = b.Var("m", AddressSpace::kHandle,
+                          ty.Get<core::type::BindingArray>(
+                              ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()),
+                              ty.Get<core::type::ConstantArrayCount>(0u)));
+        var->SetBindingPoint(0, 0);
     });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
-        testing::HasSubstr(
-            R"(:2:3 error: var: handle types can only be declared in the 'handle' address space
-  %m:ptr<workgroup, binding_array<texture_2d<f32>, 4>, read_write> = var undef
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)"));
+        testing::HasSubstr("2:3 error: var: binding array requires a constant array size > 0"))
+        << res.Failure();
 }
+
+using Type_BindingArrayInvalidAddressSpace = IRTestParamHelper<AddressSpace>;
+
+TEST_P(Type_BindingArrayInvalidAddressSpace, Test) {
+    auto aspace = GetParam();
+    b.Append(mod.root_block, [&] {
+        b.Var("m", aspace,
+              ty.binding_array(ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()), 4));
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("2:3 error: var: invalid address space for binding_array : " +
+                                   std::string(ToString(aspace))))
+        << res.Failure();
+}
+
+TEST_P(Type_BindingArrayInvalidAddressSpace, AllowedWithCapability) {
+    auto aspace = GetParam();
+    b.Append(mod.root_block, [&] {
+        b.Var("m", aspace,
+              ty.binding_array(ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32()), 4));
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+INSTANTIATE_TEST_SUITE_P(IR_ValidatorTest,
+                         Type_BindingArrayInvalidAddressSpace,
+                         testing::Values(AddressSpace::kFunction,
+                                         AddressSpace::kPrivate,
+                                         AddressSpace::kWorkgroup,
+                                         AddressSpace::kUniform,
+                                         AddressSpace::kStorage,
+                                         AddressSpace::kImmediate));
 
 using Type_MultisampledTextureTypeAndDimension =
     IRTestParamHelper<std::tuple<std::tuple<
@@ -1454,7 +1565,7 @@ TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_NotAllowed) {
 )")) << res.Failure();
 }
 
-TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_Allowed) {
+TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_AllowedWithCapability) {
     auto* fn = b.Function("my_func", ty.void_());
     b.Append(fn->Block(), [&] {
         b.Let("l", u8(1));
@@ -1462,6 +1573,31 @@ TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_Allowed) {
     });
 
     auto res = ir::Validate(mod, Capabilities{Capability::kAllow8BitIntegers});
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Int16Type_NotAllowed) {
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Var("v", function, ty.Get<core::type::U16>());
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("3:5 error: var: 16-bit integer types are not permitted"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Int16Type_AllowedWithCapability) {
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Var("v", function, ty.Get<core::type::U16>());
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllow16BitIntegers});
     ASSERT_EQ(res, Success) << res.Failure();
 }
 
@@ -1596,7 +1732,7 @@ TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_NotAllowed) {
 )")) << res.Failure();
 }
 
-TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_Allowed) {
+TEST_F(IR_ValidatorTest, Int64Type_InstructionOperand_AllowedWithCapability) {
     auto* fn = b.Function("my_func", ty.void_());
     b.Append(fn->Block(), [&] {
         b.Let("l", u64(1));
