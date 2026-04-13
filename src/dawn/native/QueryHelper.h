@@ -37,13 +37,8 @@ class BufferBase;
 class CommandEncoder;
 
 struct TimestampParams {
-    TimestampParams(uint32_t first,
-                    uint32_t count,
-                    uint32_t offset,
-                    uint32_t quantizationMask,
-                    float period);
+    TimestampParams(uint32_t count, uint32_t offset, uint32_t quantizationMask, float period);
 
-    uint32_t first;
     uint32_t count;
     uint32_t offset;
     uint32_t quantizationMask;
@@ -51,8 +46,17 @@ struct TimestampParams {
     uint32_t rightShift;
 };
 
+ResultOrError<ComputePipelineBase*> GetOrCreateTimestampComputePipeline(DeviceBase* device);
+
+ResultOrError<Ref<BufferBase>> CreateBufferWithData(DeviceBase* device,
+                                                    const void* data,
+                                                    uint64_t size,
+                                                    wgpu::BufferUsage usage,
+                                                    const char* label);
+
 MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,
                                                 BufferBase* timestamps,
+                                                uint32_t queryCount,
                                                 BufferBase* availability,
                                                 BufferBase* params);
 

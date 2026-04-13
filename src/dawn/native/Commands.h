@@ -362,6 +362,11 @@ struct ResolveQuerySetCmd {
     uint32_t queryCount;
     Ref<BufferBase> destination;
     uint64_t destinationOffset;
+
+    Ref<ComputePipelineBase> quantizationPipeline;
+    Ref<BufferBase> quantizationAvailabilityBuffer;
+    Ref<BufferBase> quantizationParamsBuffer;
+    std::vector<bool> querySlotsUsedSoFar;
 };
 
 struct SetComputePipelineCmd {

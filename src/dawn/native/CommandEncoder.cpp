@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "absl/container/inlined_vector.h"
+#include "dawn/common/Constants.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/NonMovable.h"
@@ -1057,57 +1058,6 @@ MaybeError ValidateQuerySetResolve(const QuerySetBase* querySet,
     return {};
 }
 
-MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
-                                                   QuerySetBase* querySet,
-                                                   uint32_t firstQuery,
-                                                   uint32_t queryCount,
-                                                   BufferBase* destination,
-                                                   uint64_t destinationOffset) {
-    DeviceBase* device = encoder->GetDevice();
-
-    // The availability got from query set is a reference to vector<bool>, need to covert
-    // bool to uint32_t due to a user input in pipeline must not contain a bool type in
-    // WGSL.
-    std::vector<uint32_t> availability{querySet->GetQueryAvailability().begin(),
-                                       querySet->GetQueryAvailability().end()};
-
-    // Timestamp availability storage buffer
-    BufferDescriptor availabilityDesc = {};
-    availabilityDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
-    availabilityDesc.size = querySet->GetQueryCount() * sizeof(uint32_t);
-    Ref<BufferBase> availabilityBuffer;
-    DAWN_TRY_ASSIGN(availabilityBuffer, device->CreateBuffer(&availabilityDesc));
-
-    DAWN_TRY(device->GetQueue()->WriteBuffer(availabilityBuffer.Get(), 0, availability.data(),
-                                             availability.size() * sizeof(uint32_t)));
-
-    const uint32_t quantization_mask = (device->IsToggleEnabled(Toggle::TimestampQuantization))
-                                           ? kTimestampQuantizationMask
-                                           : 0xFFFFFFFF;
-
-    // Timestamp params uniform buffer
-    TimestampParams params(firstQuery, queryCount, static_cast<uint32_t>(destinationOffset),
-                           quantization_mask, device->GetTimestampPeriodInNS());
-
-    BufferDescriptor parmsDesc = {};
-    parmsDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
-    parmsDesc.size = sizeof(params);
-    Ref<BufferBase> paramsBuffer;
-    DAWN_TRY_ASSIGN(paramsBuffer, device->CreateBuffer(&parmsDesc));
-
-    DAWN_TRY(device->GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, &params, sizeof(params)));
-
-    // In the internal shader to convert timestamps to nanoseconds, we can ensure no uninitialized
-    // data will be read and the full buffer range will be filled with valid data.
-    if (!destination->IsInitialized() &&
-        destination->IsFullBufferRange(firstQuery, sizeof(uint64_t) * queryCount)) {
-        destination->SetInitialized(true);
-    }
-
-    return EncodeConvertTimestampsToNanoseconds(encoder, destination, availabilityBuffer.Get(),
-                                                paramsBuffer.Get());
-}
-
 bool ShouldUseTextureToBufferBlit(const DeviceBase* device,
                                   const Format& format,
                                   const Aspect& aspect,
@@ -1287,6 +1237,8 @@ CommandBufferResourceUsage CommandEncoder::AcquireResourceUsages() {
         std::move(mTopLevelBuffers),
         std::move(mTopLevelTextures),
         std::move(mUsedQuerySets),
+        std::move(mResolveQuerySetCmds),
+        std::move(mQueryAvailability),
     };
 }
 
@@ -1298,13 +1250,15 @@ void CommandEncoder::TrackUsedQuerySet(QuerySetBase* querySet) {
     mUsedQuerySets.insert(querySet);
 }
 
-void CommandEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex) {
-    DAWN_ASSERT(querySet != nullptr);
-
+void CommandEncoder::TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex) {
     TrackUsedQuerySet(querySet);
 
-    // Set the query at queryIndex to available for resolving in query set.
-    querySet->SetQueryAvailability(queryIndex, true);
+    auto& usage = mQueryAvailability[querySet];
+    if (usage.empty()) {
+        usage.resize(querySet->GetQueryCount(), false);
+    }
+    DAWN_ASSERT(queryIndex < usage.size());
+    usage[queryIndex] = true;
 }
 
 std::vector<IndirectDrawMetadata> CommandEncoder::AcquireIndirectDrawMetadata() {
@@ -1352,10 +1306,10 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
                 cmd->timestampWrites.beginningOfPassWriteIndex = beginningOfPassWriteIndex;
                 cmd->timestampWrites.endOfPassWriteIndex = endOfPassWriteIndex;
                 if (beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
-                    TrackQueryAvailability(querySet, beginningOfPassWriteIndex);
+                    TrackQuerySetSlotUsage(querySet, beginningOfPassWriteIndex);
                 }
                 if (endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
-                    TrackQueryAvailability(querySet, endOfPassWriteIndex);
+                    TrackQuerySetSlotUsage(querySet, endOfPassWriteIndex);
                 }
             }
             return {};
@@ -1595,16 +1549,16 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 cmd->timestampWrites.beginningOfPassWriteIndex = beginningOfPassWriteIndex;
                 cmd->timestampWrites.endOfPassWriteIndex = endOfPassWriteIndex;
                 if (beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
-                    TrackQueryAvailability(querySet, beginningOfPassWriteIndex);
+                    TrackQuerySetSlotUsage(querySet, beginningOfPassWriteIndex);
                     // Track the query availability with true on render pass again for rewrite
                     // validation and query reset on Vulkan
-                    usageTracker.TrackQueryAvailability(querySet, beginningOfPassWriteIndex);
+                    usageTracker.TrackQuerySetSlotUsage(querySet, beginningOfPassWriteIndex);
                 }
                 if (endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
-                    TrackQueryAvailability(querySet, endOfPassWriteIndex);
+                    TrackQuerySetSlotUsage(querySet, endOfPassWriteIndex);
                     // Track the query availability with true on render pass again for rewrite
                     // validation and query reset on Vulkan
-                    usageTracker.TrackQueryAvailability(querySet, endOfPassWriteIndex);
+                    usageTracker.TrackQuerySetSlotUsage(querySet, endOfPassWriteIndex);
                 }
             }
 
@@ -2206,10 +2160,9 @@ void CommandEncoder::APIResolveQuerySet(QuerySetBase* querySet,
                                                  destinationOffset));
 
                 DAWN_TRY(ValidateCanUseAs(destination, wgpu::BufferUsage::QueryResolve));
-
-                TrackUsedQuerySet(querySet);
             }
 
+            TrackUsedQuerySet(querySet);
             mTopLevelBuffers.insert(destination);
 
             ResolveQuerySetCmd* cmd =
@@ -2220,18 +2173,59 @@ void CommandEncoder::APIResolveQuerySet(QuerySetBase* querySet,
             cmd->destination = destination;
             cmd->destinationOffset = destinationOffset;
 
+            // Track query slots used so far in this command buffer.
+            cmd->querySlotsUsedSoFar = mQueryAvailability[querySet];
+
             // Encode internal compute pipeline for timestamp query
             if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
                 !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
                 GetDevice()->GetTimestampPeriodInNS() != 1.0f) {
                 // The below function might create new resources. Need to lock the Device.
-                // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
-                // Command Submit time, so the locking would be removed from here at that point.
                 auto deviceGuard = GetDevice()->GetGuard();
 
-                DAWN_TRY(EncodeTimestampsToNanosecondsConversion(
-                    this, querySet, firstQuery, queryCount, destination, destinationOffset));
+                const uint32_t quantization_mask =
+                    (GetDevice()->IsToggleEnabled(Toggle::TimestampQuantization))
+                        ? kTimestampQuantizationMask
+                        : 0xFFFFFFFF;
+
+                // Timestamp params uniform buffer
+                TimestampParams params(queryCount, static_cast<uint32_t>(destinationOffset),
+                                       quantization_mask, GetDevice()->GetTimestampPeriodInNS());
+
+                Ref<BufferBase> paramsBuffer;
+                DAWN_TRY_ASSIGN(
+                    paramsBuffer,
+                    CreateBufferWithData(GetDevice(), &params, sizeof(params),
+                                         wgpu::BufferUsage::Uniform, "TimestampConversionParams"));
+
+                // Availability buffer (to be filled during submission)
+                BufferDescriptor availabilityDesc = {};
+                availabilityDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
+                availabilityDesc.size = queryCount * sizeof(uint32_t);
+                Ref<BufferBase> availabilityBuffer;
+                DAWN_TRY_ASSIGN(availabilityBuffer, GetDevice()->CreateBuffer(&availabilityDesc));
+
+                ComputePipelineBase* pipeline;
+                DAWN_TRY_ASSIGN(pipeline, GetOrCreateTimestampComputePipeline(GetDevice()));
+
+                cmd->quantizationPipeline = pipeline;
+                cmd->quantizationAvailabilityBuffer = availabilityBuffer;
+                cmd->quantizationParamsBuffer = paramsBuffer;
+
+                // In the internal shader to convert timestamps to nanoseconds, we can ensure no
+                // uninitialized data will be read and the full buffer range will be filled with
+                // valid data.
+                if (!destination->IsInitialized() &&
+                    destination->IsFullBufferRange(destinationOffset,
+                                                   sizeof(uint64_t) * queryCount)) {
+                    destination->SetInitialized(true);
+                }
+
+                DAWN_TRY(EncodeConvertTimestampsToNanoseconds(
+                    this, destination, queryCount, availabilityBuffer.Get(), paramsBuffer.Get()));
             }
+
+            mResolveQuerySetCmds.push_back(cmd);
 
             return {};
         },
@@ -2277,7 +2271,7 @@ void CommandEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryInd
                 DAWN_TRY(ValidateTimestampQuery(GetDevice(), querySet, queryIndex));
             }
 
-            TrackQueryAvailability(querySet, queryIndex);
+            TrackQuerySetSlotUsage(querySet, queryIndex);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);

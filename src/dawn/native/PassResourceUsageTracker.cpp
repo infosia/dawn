@@ -303,7 +303,19 @@ void ComputePassResourceUsageTracker::AddResourcesReferencedByBindGroup(BindGrou
     }
 }
 
+void ComputePassResourceUsageTracker::TrackQuerySetSlotUsage(QuerySetBase* querySet,
+                                                             uint32_t queryIndex) {
+    DAWN_ASSERT(querySet != nullptr);
+    auto it = mQuerySetToSlotUsageMap.try_emplace(querySet, querySet->GetQueryCount()).first;
+    it->second[queryIndex] = true;
+}
+
+const QuerySetToSlotUsageMap& ComputePassResourceUsageTracker::GetQuerySetToSlotUsageMap() const {
+    return mQuerySetToSlotUsageMap;
+}
+
 ComputePassResourceUsage ComputePassResourceUsageTracker::AcquireResourceUsage() {
+    mUsage.querySetToSlotUsageMap = std::move(mQuerySetToSlotUsageMap);
     return std::move(mUsage);
 }
 
@@ -320,34 +332,20 @@ RenderPassResourceUsageTracker& RenderPassResourceUsageTracker::operator=(
 RenderPassResourceUsage RenderPassResourceUsageTracker::AcquireResourceUsage() {
     RenderPassResourceUsage result;
     *static_cast<SyncScopeResourceUsage*>(&result) = AcquireSyncScopeUsage();
-
-    result.querySets.reserve(mQueryAvailabilities.size());
-    result.queryAvailabilities.reserve(mQueryAvailabilities.size());
-
-    for (auto& it : mQueryAvailabilities) {
-        result.querySets.push_back(it.first);
-        result.queryAvailabilities.push_back(std::move(it.second));
-    }
-
-    mQueryAvailabilities.clear();
+    result.querySetToSlotUsageMap = std::move(mQuerySetToSlowUsageMap);
 
     return result;
 }
 
-void RenderPassResourceUsageTracker::TrackQueryAvailability(QuerySetBase* querySet,
+void RenderPassResourceUsageTracker::TrackQuerySetSlotUsage(QuerySetBase* querySet,
                                                             uint32_t queryIndex) {
-    // The query availability only needs to be tracked again on render passes for checking
-    // query overwrite on render pass and resetting query sets on the Vulkan backend.
     DAWN_ASSERT(querySet != nullptr);
-
-    // Gets the iterator for that querySet or create a new vector of bool set to false
-    // if the querySet wasn't registered.
-    auto it = mQueryAvailabilities.try_emplace(querySet, querySet->GetQueryCount()).first;
+    auto it = mQuerySetToSlowUsageMap.try_emplace(querySet, querySet->GetQueryCount()).first;
     it->second[queryIndex] = true;
 }
 
-const QueryAvailabilityMap& RenderPassResourceUsageTracker::GetQueryAvailabilityMap() const {
-    return mQueryAvailabilities;
+const QuerySetToSlotUsageMap& RenderPassResourceUsageTracker::GetQuerySetToSlotUsageMap() const {
+    return mQuerySetToSlowUsageMap;
 }
 
 }  // namespace dawn::native

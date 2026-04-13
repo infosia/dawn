@@ -94,7 +94,9 @@ class EncodingContext {
                               RenderPassResourceUsageTracker usageTracker,
                               CommandEncoder* commandEncoder,
                               IndirectDrawMetadata indirectDrawMetadata);
-    void ExitComputePass(const ApiObjectBase* passEncoder, ComputePassResourceUsage usages);
+    void ExitComputePass(const ApiObjectBase* passEncoder,
+                         ComputePassResourceUsage usages,
+                         CommandEncoder* commandEncoder);
     MaybeError Finish();
 
     // Called when a pass encoder is deleted. Provides an opportunity to clean up if it's the
