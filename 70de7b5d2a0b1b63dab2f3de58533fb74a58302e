@@ -86,6 +86,30 @@
       },
       "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5b7127e_bd86a2be",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-13T19:22:10Z",
+      "side": 1,
+      "message": "We do have other tests (graphite skia) that will check if we make major regressions.\n\nThe motivation here is of course security.  There are examples of security bugs that would have been caught if only we had hit asserts at runtime.\n\nAs for cost. Checks that are null or bounding are basically free unless they are in extreme tight loops. They only cost a cmp and a predicted branch. In cases where they would be hot we should not add them. This is why i have not converted all asserts but a subset of them.",
+      "parentUuid": "4f7e021e_539eef7e",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
