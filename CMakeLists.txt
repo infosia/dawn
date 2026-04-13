@@ -522,7 +522,8 @@ if (DAWN_EMIT_COVERAGE)
   get_filename_component(CLANG_BIN_DIR ${CMAKE_C_COMPILER} DIRECTORY)
   set(PATH_WITH_CLANG "${CLANG_BIN_DIR}:$ENV{PATH}")
   add_custom_target(tint-generate-coverage
-    COMMAND ${CMAKE_COMMAND} -E env PATH=${PATH_WITH_CLANG} ./tools/tint-generate-coverage $<TARGET_FILE:tint_unittests>
+    COMMAND ${CMAKE_COMMAND} -E env PATH=${PATH_WITH_CLANG} vpython3 ./tools/code_coverage/coverage.py tint_unittests -b ${CMAKE_BINARY_DIR} -o ${TINT_ROOT_SOURCE_DIR}/coverage_report --format lcov --no-compile -c "$<TARGET_FILE:tint_unittests>"
+    COMMAND ${CMAKE_COMMAND} -E copy ${TINT_ROOT_SOURCE_DIR}/coverage_report/linux/coverage.lcov ${TINT_ROOT_SOURCE_DIR}/lcov.info
     DEPENDS tint_unittests
     WORKING_DIRECTORY ${TINT_ROOT_SOURCE_DIR}
     COMMENT "Generating tint coverage data"
