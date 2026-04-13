@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a58ac45_8ed3ad31",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-13T19:18:51Z",
+      "side": 1,
+      "message": "I will take a look. I used AI to help me create this.\nYes the AI makes so many mistakes that I wonder if i should have just done it by hand.",
+      "parentUuid": "94c186d1_9930623a",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f7e021e_539eef7e",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 6
