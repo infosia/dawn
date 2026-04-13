@@ -70,6 +70,24 @@
       "parentUuid": "5910c1f1_bde7a203",
       "revId": "2e5801271a3e4df573063d872bb40eee828aac8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36ebaf69_a364b7ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-13T22:53:02Z",
+      "side": 1,
+      "message": "Actually, I wonder if it would be beneficial to capture this pattern in something like a `DAWN_TRY_WITH_FINALLY` macro?",
+      "parentUuid": "ad6b8212_9de34df4",
+      "revId": "2e5801271a3e4df573063d872bb40eee828aac8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
