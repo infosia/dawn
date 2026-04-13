@@ -56,6 +56,7 @@
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/QuerySet.h"
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
@@ -667,6 +668,46 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
         // sufficiently large set for max of last N submits.
         DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
     }
+
+    QuerySetToSlotUsageMap submissionAvailability;
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        const CommandBufferResourceUsage& usages = commands[i]->GetResourceUsages();
+        for (ResolveQuerySetCmd* cmd : usages.resolveQuerySetCmds) {
+            if (cmd->quantizationAvailabilityBuffer != nullptr) {
+                std::vector<uint32_t> availabilities(cmd->queryCount);
+                for (uint32_t j = 0; j < cmd->queryCount; ++j) {
+                    uint32_t queryIndex = cmd->firstQuery + j;
+                    bool available = cmd->querySet->IsQueryAvailable(queryIndex);
+                    if (queryIndex < cmd->querySlotsUsedSoFar.size()) {
+                        available = available || cmd->querySlotsUsedSoFar[queryIndex];
+                    }
+                    auto it = submissionAvailability.find(cmd->querySet.Get());
+                    if (it != submissionAvailability.end() && queryIndex < it->second.size()) {
+                        available = available || it->second[queryIndex];
+                    }
+                    availabilities[j] = available ? 1u : 0u;
+                }
+                DAWN_TRY(WriteBufferImpl(cmd->quantizationAvailabilityBuffer.Get(), 0,
+                                         availabilities.data(),
+                                         availabilities.size() * sizeof(uint32_t)));
+            }
+        }
+
+        // Track queries written in this submission to correctly fill subsequent quantization
+        // buffers.
+        for (auto& [querySet, usage] : usages.querySetToSlotUsageMap) {
+            auto& subUsage = submissionAvailability[querySet];
+            if (subUsage.empty()) {
+                subUsage.resize(querySet->GetQueryCount(), false);
+            }
+            for (size_t j = 0; j < usage.size(); ++j) {
+                if (usage[j]) {
+                    subUsage[j] = true;
+                }
+            }
+        }
+    }
+
     DAWN_ASSERT(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));

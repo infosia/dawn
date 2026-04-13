@@ -64,7 +64,7 @@ class CommandEncoder final : public ApiObjectBase {
     std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
-    void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
 
     // Dawn API
     ComputePassEncoder* APIBeginComputePass(const ComputePassDescriptor* descriptor);
@@ -132,7 +132,6 @@ class CommandEncoder final : public ApiObjectBase {
 
     [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
 
-
   private:
     CommandEncoder(DeviceBase* device, const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
     CommandEncoder(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -145,6 +144,8 @@ class CommandEncoder final : public ApiObjectBase {
     absl::flat_hash_set<BufferBase*> mTopLevelBuffers;
     absl::flat_hash_set<TextureBase*> mTopLevelTextures;
     absl::flat_hash_set<QuerySetBase*> mUsedQuerySets;
+    QuerySetToSlotUsageMap mQueryAvailability;
+    std::vector<ResolveQuerySetCmd*> mResolveQuerySetCmds;
 
     uint64_t mDebugGroupStackSize = 0;
 

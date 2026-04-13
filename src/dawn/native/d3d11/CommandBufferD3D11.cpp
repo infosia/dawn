@@ -1024,6 +1024,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
                 querySet->EndQuery(commandContext->GetD3D11DeviceContext3(), cmd->queryIndex);
+                querySet->SetQueryAvailable(cmd->queryIndex);
                 break;
             }
 

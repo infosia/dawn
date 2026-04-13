@@ -149,6 +149,20 @@ ComputePassEncoder::ComputePassEncoder(DeviceBase* device,
                                        EncodingContext* encodingContext)
     : ProgrammableEncoder(device, descriptor->label, encodingContext),
       mCommandEncoder(commandEncoder) {
+    if (descriptor->timestampWrites != nullptr) {
+        if (descriptor->timestampWrites->beginningOfPassWriteIndex !=
+            wgpu::kQuerySetIndexUndefined) {
+            mUsageTracker.TrackQuerySetSlotUsage(
+                descriptor->timestampWrites->querySet,
+                descriptor->timestampWrites->beginningOfPassWriteIndex);
+            mCommandEncoder->TrackUsedQuerySet(descriptor->timestampWrites->querySet);
+        }
+        if (descriptor->timestampWrites->endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+            mUsageTracker.TrackQuerySetSlotUsage(descriptor->timestampWrites->querySet,
+                                                 descriptor->timestampWrites->endOfPassWriteIndex);
+            mCommandEncoder->TrackUsedQuerySet(descriptor->timestampWrites->querySet);
+        }
+    }
     GetObjectTrackingList()->Track(this);
 }
 
@@ -214,7 +228,8 @@ void ComputePassEncoder::APIEnd() {
                 return {};
             },
             "encoding %s.End().", this)) {
-        mEncodingContext->ExitComputePass(this, mUsageTracker.AcquireResourceUsage());
+        mEncodingContext->ExitComputePass(this, mUsageTracker.AcquireResourceUsage(),
+                                          mCommandEncoder.Get());
     }
 }
 
@@ -590,7 +605,8 @@ void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t quer
                     Feature::ChromiumExperimentalTimestampQueryInsidePasses));
             }
 
-            mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
+            mUsageTracker.TrackQuerySetSlotUsage(querySet, queryIndex);
+            mCommandEncoder->TrackUsedQuerySet(querySet);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);
