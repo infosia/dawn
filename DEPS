@@ -167,7 +167,7 @@ deps = {
     'condition': 'checkout_win and not build_with_chromium',
   },
   'tools/code_coverage': {
-    'url': '{chromium_git}/chromium/src/tools/code_coverage@1395378f5864568e3afdf37a51583b7160061464',
+    'url': '{chromium_git}/chromium/src/tools/code_coverage@f9e72c2a3ad1da4aeb22e754241269901d5be0e5',
     'condition': 'dawn_standalone and checkout_clang_coverage_tools',
   },
 
