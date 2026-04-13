@@ -394,15 +394,13 @@ void Buffer::CopyFromStaging(BufferBase* staging,
                              uint64_t sourceOffset,
                              uint64_t destinationOffset,
                              uint64_t size) {
-    uint8_t* ptr = reinterpret_cast<uint8_t*>(staging->GetMappedPointer());
-    memcpy(mBackingData.data() + destinationOffset, ptr + sourceOffset, size);
+    std::ranges::copy(staging->GetMapping().SubspanFromBase(sourceOffset, size),
+                      mBackingData.begin() + destinationOffset);
 }
 
-void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
-    DAWN_ASSERT(bufferOffset + size <= GetSize());
+void Buffer::DoWriteBuffer(uint64_t bufferOffset, std::span<const uint8_t> data) {
     DAWN_ASSERT(mBackingData);
-    auto src = std::span{static_cast<const uint8_t*>(data), size};
-    std::ranges::copy(src, mBackingData.subspan(bufferOffset).begin());
+    std::ranges::copy(data, mBackingData.subspan(bufferOffset).begin());
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
@@ -461,7 +459,8 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
-    ToBackend(buffer)->DoWriteBuffer(bufferOffset, data, size);
+    ToBackend(buffer)->DoWriteBuffer(bufferOffset,
+                                     std::span{static_cast<const uint8_t*>(data), size});
     return {};
 }
 
