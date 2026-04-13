@@ -158,6 +158,30 @@
       },
       "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3826b24_e55f2d75",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-13T19:47:32Z",
+      "side": 1,
+      "message": "Also some basic null checks are not needed because they will immediately trigger null page exceptions in the next lines.",
+      "parentUuid": "b75e1eac_bde00bd3",
+      "range": {
+        "startLine": 1147,
+        "startChar": 4,
+        "endLine": 1147,
+        "endChar": 14
+      },
+      "revId": "70de7b5d2a0b1b63dab2f3de58533fb74a58302e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
