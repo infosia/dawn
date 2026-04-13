@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6af0bb07_58d00c1a",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-13T19:57:40Z",
+      "side": 1,
+      "message": "It\u0027s not that it\u0027s re-used, it\u0027s that this overall function is getting really long and confusing. Pulling this out would simplify the overall function and make it clearer i think.",
+      "parentUuid": "33ac8338_6d494edb",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33afb52d_c977e2d4",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
@@ -142,6 +160,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df4422ff_be4055a1",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-13T19:57:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9a80d585_b4491bca",
+      "range": {
+        "startLine": 858,
+        "startChar": 15,
+        "endLine": 861,
+        "endChar": 44
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23efac27_fe1b06c9",
@@ -179,6 +221,30 @@
       "side": 1,
       "message": "I dont think this can be moved because of side effect next arg",
       "parentUuid": "23efac27_fe1b06c9",
+      "range": {
+        "startLine": 778,
+        "startChar": 0,
+        "endLine": 868,
+        "endChar": 0
+      },
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4237d816_ed4518a4",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-13T19:57:40Z",
+      "side": 1,
+      "message": "Ah, missed that, good catch.",
+      "parentUuid": "7b01b376_483322b6",
       "range": {
         "startLine": 778,
         "startChar": 0,
