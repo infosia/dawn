@@ -52,6 +52,24 @@
       "parentUuid": "d78ef058_4b2e0308",
       "revId": "2e5801271a3e4df573063d872bb40eee828aac8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad6b8212_9de34df4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-13T22:41:06Z",
+      "side": 1,
+      "message": "absl::Cleanup doesn\u0027t allow for returned values, and part of the cleanup needs to be wrapped in a DAWN_TRY, so that\u0027s not quite the right tool for this issue.\n\nTried restructuring the calls a bit instead an relying on DAWN_TRY_WITH_CLEANUP. Still feels a bit awkward, but I didn\u0027t find any other patterns in Dawn that seemed like a better fit. Let me know what you think!",
+      "parentUuid": "5910c1f1_bde7a203",
+      "revId": "2e5801271a3e4df573063d872bb40eee828aac8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

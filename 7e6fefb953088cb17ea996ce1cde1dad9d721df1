@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7cf5d1e6_3eac3ed7",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-13T22:41:06Z",
+      "side": 1,
+      "message": "Oops, yeah. Removed.",
+      "parentUuid": "4a7e1bb2_d73535ab",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "7e6fefb953088cb17ea996ce1cde1dad9d721df1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f9c10046_657acfda",
         "filename": "src/dawn/native/vulkan/QueueVk.cpp",
         "patchSetId": 2
