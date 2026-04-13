@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a83d571_66a2dc37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-13T20:56:39Z",
+      "side": 1,
+      "message": "Edited to add bug ID. @jrprice@google.com for second review - brief discussion on https://github.com/google/dawn/pull/63 if you want to read it.",
+      "revId": "9e1a586b82a7c5032e37b2dbaf9379290c807b2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
