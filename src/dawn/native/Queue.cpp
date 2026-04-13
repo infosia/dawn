@@ -56,6 +56,7 @@
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/QueryHelper.h"
 #include "dawn/native/QuerySet.h"
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
@@ -667,6 +668,7 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
         // sufficiently large set for max of last N submits.
         DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
     }
+
     DAWN_ASSERT(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));

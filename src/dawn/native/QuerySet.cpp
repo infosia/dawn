@@ -80,7 +80,8 @@ QuerySetBase::QuerySetBase(DeviceBase* device, const QuerySetDescriptor* descrip
     : ApiObjectBase(device, descriptor->label),
       mQueryType(descriptor->type),
       mQueryCount(descriptor->count),
-      mState(QuerySetState::Available) {
+      mState(QuerySetState::Available),
+      mUnavailableQueryCount(descriptor->count) {
     mQueryAvailability.resize(descriptor->count);
     GetObjectTrackingList()->Track(this);
 }
@@ -130,8 +131,19 @@ const std::vector<bool>& QuerySetBase::GetQueryAvailability() const {
     return mQueryAvailability;
 }
 
-void QuerySetBase::SetQueryAvailability(uint32_t index, bool available) {
-    mQueryAvailability[index] = available;
+void QuerySetBase::SetQueryAvailable(uint32_t index) {
+    if (!mQueryAvailability[index]) {
+        mUnavailableQueryCount--;
+        mQueryAvailability[index] = true;
+    }
+}
+
+bool QuerySetBase::HasUnavailableQueries() const {
+    if (mUnavailableQueryCount == 0) {
+        return false;
+    }
+    return std::find(mQueryAvailability.begin(), mQueryAvailability.end(), false) !=
+           mQueryAvailability.end();
 }
 
 MaybeError QuerySetBase::ValidateCanUseInSubmitNow() const {

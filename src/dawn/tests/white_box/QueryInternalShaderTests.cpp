@@ -30,6 +30,7 @@
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/QueryHelper.h"
+#include "dawn/native/Queue.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 
@@ -38,10 +39,11 @@ namespace {
 
 void EncodeConvertTimestampsToNanoseconds(wgpu::CommandEncoder encoder,
                                           wgpu::Buffer timestamps,
+                                          uint32_t queryCount,
                                           wgpu::Buffer availability,
                                           wgpu::Buffer params) {
     ASSERT_TRUE(native::EncodeConvertTimestampsToNanoseconds(
-                    native::FromAPI(encoder.Get()), native::FromAPI(timestamps.Get()),
+                    native::FromAPI(encoder.Get()), native::FromAPI(timestamps.Get()), queryCount,
                     native::FromAPI(availability.Get()), native::FromAPI(params.Get()))
                     .IsSuccess());
 }
@@ -195,23 +197,22 @@ class QueryInternalShaderTests : public DawnTest {
         for (uint32_t i = 0; i < queryCount; i++) {
             timestampValues[start + i] = querySetValues[firstQuery + i];
         }
-        // Write sentinel values and orignal timestamps to timestamps buffer
+        // Write sentinel values and original timestamps to timestamps buffer
         queue.WriteBuffer(timestampsBuffer, 0, timestampValues.data(), size);
 
         // The buffer indicating which values are available timestamps
         wgpu::Buffer availabilityBuffer =
-            utils::CreateBufferFromData(device, availabilities.data(),
-                                        kQueryCount * sizeof(uint32_t), wgpu::BufferUsage::Storage);
+            utils::CreateBufferFromData(device, &availabilities[firstQuery],
+                                        queryCount * sizeof(uint32_t), wgpu::BufferUsage::Storage);
 
         // The params uniform buffer
-        native::TimestampParams params(firstQuery, queryCount, destinationOffset, quantizationMask,
-                                       period);
+        native::TimestampParams params(queryCount, destinationOffset, quantizationMask, period);
         wgpu::Buffer paramsBuffer = utils::CreateBufferFromData(device, &params, sizeof(params),
                                                                 wgpu::BufferUsage::Uniform);
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        EncodeConvertTimestampsToNanoseconds(encoder, timestampsBuffer, availabilityBuffer,
-                                             paramsBuffer);
+        EncodeConvertTimestampsToNanoseconds(encoder, timestampsBuffer, queryCount,
+                                             availabilityBuffer, paramsBuffer);
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
 

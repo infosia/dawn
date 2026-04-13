@@ -46,7 +46,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
     static Ref<ComputePassEncoder> Create(DeviceBase* device,
                                           const ComputePassDescriptor* descriptor,
                                           CommandEncoder* commandEncoder,
-                                          EncodingContext* encodingContext);
+                                          EncodingContext* encodingContext,
+                                          ComputePassResourceUsageTracker usageTracker);
     static Ref<ComputePassEncoder> MakeError(DeviceBase* device,
                                              CommandEncoder* commandEncoder,
                                              EncodingContext* encodingContext,
@@ -84,7 +85,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
     ComputePassEncoder(DeviceBase* device,
                        const ComputePassDescriptor* descriptor,
                        CommandEncoder* commandEncoder,
-                       EncodingContext* encodingContext);
+                       EncodingContext* encodingContext,
+                       ComputePassResourceUsageTracker usageTracker);
     ComputePassEncoder(DeviceBase* device,
                        CommandEncoder* commandEncoder,
                        EncodingContext* encodingContext,
@@ -93,6 +95,8 @@ class ComputePassEncoder final : public ProgrammableEncoder {
 
   private:
     void DestroyImpl(DestroyReason reason) override;
+
+    void TrackQuerySetSlotUsage(QuerySetBase* querySet, uint32_t queryIndex);
 
     ResultOrError<std::pair<Ref<BufferBase>, uint64_t>> TransformIndirectDispatchBuffer(
         Ref<BufferBase> indirectBuffer,
