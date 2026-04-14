@@ -1996,6 +1996,77 @@ TEST_F(IR_ValidatorTest, Return_UnexpectedResult) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, BreakIf_NullLoop) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        b.Append(loop->Body(), [&] { b.Continue(loop); });
+        b.Append(loop->Continuing(), [&] {
+            auto* bi = b.BreakIf(loop, true);
+            bi->SetLoop(nullptr);
+        });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: break_if: has no associated loop"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, BreakIf_NotInContinuing) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        b.Append(loop->Body(), [&] { b.BreakIf(loop, true); });
+        b.Append(loop->Continuing(), [&] { b.NextIteration(loop); });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr("error: break_if: must only be called directly from loop continuing"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Continue_NullLoop) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        b.Append(loop->Body(), [&] {
+            auto* c = b.Continue(loop);
+            c->SetLoop(nullptr);
+        });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("error: continue: has no associated loop"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, NextIteration_NullLoop) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* loop = b.Loop();
+        b.Append(loop->Body(), [&] { b.ExitLoop(loop); });
+        b.Append(loop->Continuing(), [&] {
+            auto* ni = b.NextIteration(loop);
+            ni->SetLoop(nullptr);
+        });
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: next_iteration: has no associated loop"))
+        << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Return_NotFunction) {
     auto* f = b.Function("my_func", ty.void_());
     b.Append(f->Block(), [&] {  //

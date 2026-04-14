@@ -1499,6 +1499,21 @@ TEST_F(IR_ValidatorTest, Binary_TooManyOperands) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Binary_MismatchedResultType) {
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Binary(BinaryOp::kAdd, ty.f32(), 1_i, 2_i);
+        b.Return(fn);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    "error: binary: result value type 'f32' does not match add result type 'i32'"))
+        << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Binary_OperandWrongType_Func) {
     auto* func = b.Function("foo", ty.void_());
     auto* other_func = b.Function("other", ty.void_());
