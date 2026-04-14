@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20bd5311_b4d30baa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-14T17:21:28Z",
+      "side": 1,
+      "message": "PTAAL, since I added the DEPS rolls previous approvals have been dropped. This is ready to merge",
+      "revId": "f28360b9f3e7f08c8935cde76a33cdc7dbba2f26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
