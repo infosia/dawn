@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b64e4e_e451dc64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-14T21:13:19Z",
+      "side": 1,
+      "message": "Verified that before this change `webgpu:shader,execution,expression,binary,f16_remainder:*` failed on the Intel Windows 11 test device and after this change they now pass.",
+      "revId": "789d065f7c88964fee5b35147238ac33914aac9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
