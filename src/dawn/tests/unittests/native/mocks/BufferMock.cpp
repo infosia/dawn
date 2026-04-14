@@ -41,7 +41,7 @@ BufferMock::BufferMock(DeviceMock* device,
     : BufferBase(device, descriptor) {
     mAllocatedSize = allocatedSize.value_or(GetSize());
     DAWN_ASSERT(mAllocatedSize >= GetSize());
-    mBackingData = ityp::heap_array<size_t, uint8_t>::Uninit(mAllocatedSize);
+    mBackingData = ityp::heap_array<size_t, uint8_t>::Uninit(mAllocatedSize.value());
 
     ON_CALL(*this, DestroyImpl).WillByDefault([this](DestroyReason reason) {
         this->BufferBase::DestroyImpl(reason);
