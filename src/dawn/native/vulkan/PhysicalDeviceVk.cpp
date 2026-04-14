@@ -1046,10 +1046,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         const gpu_info::DriverVersion kGoodMesaDriver = {25, 3, 0, 0};
         const bool badDriver = GetDriverVersion() < kGoodMesaDriver;
         if (badDriver) {
-            deviceToggles->Default(Toggle::VulkanPolyfillF32Abs, true);
-            deviceToggles->Default(Toggle::VulkanPolyfillF32Negation, true);
+            deviceToggles->Default(Toggle::VulkanPolyfillFloatAbs, true);
+            deviceToggles->Default(Toggle::VulkanPolyfillFloatNegation, true);
         }
     }
+
+    // Testing on farm only. Please remember to remove.
+    deviceToggles->Default(Toggle::VulkanPolyfillFloatAbs, true);
+    deviceToggles->Default(Toggle::VulkanPolyfillFloatNegation, true);
 
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To

@@ -50,12 +50,12 @@ struct State {
         Vector<core::ir::CoreBuiltinCall*, 4> builtin_worklist;
         for (auto* inst : ir.Instructions()) {
             if (auto* unary = inst->As<core::ir::Unary>()) {
-                if (config.polyfill_f32_negation && unary->Op() == core::UnaryOp::kNegation &&
+                if (config.polyfill_float_negation && unary->Op() == core::UnaryOp::kNegation &&
                     unary->Result()->Type()->DeepestElement()->Is<core::type::F32>()) {
                     unary_worklist.Push(unary);
                 }
             } else if (auto* builtin = inst->As<core::ir::CoreBuiltinCall>()) {
-                if (config.polyfill_f32_abs && builtin->Func() == core::BuiltinFn::kAbs &&
+                if (config.polyfill_float_abs && builtin->Func() == core::BuiltinFn::kAbs &&
                     builtin->Result()->Type()->DeepestElement()->Is<core::type::F32>()) {
                     builtin_worklist.Push(builtin);
                 }
@@ -63,18 +63,18 @@ struct State {
         }
 
         for (auto* unary : unary_worklist) {
-            PolyfillF32Negation(unary);
+            PolyfillFloatNegation(unary);
         }
         for (auto* builtin : builtin_worklist) {
-            PolyfillF32Abs(builtin);
+            PolyfillFloatAbs(builtin);
         }
     }
 
-    void PolyfillF32Negation(core::ir::Unary* unary) {
+    void PolyfillFloatNegation(core::ir::Unary* unary) {
         auto* val = unary->Val();
         auto* type = val->Type();
 
-        // AMD mesa front end optimizer bug for unary negation and abs.
+        // AMD mesa front end optimizer bug for unary f32 and f16 negation and abs.
         // Fixed in 25.3 - See crbug.com/448294721
         // Note we use bitcast as a hammer to avoid the optimizer seeing through other possible
         // workarounds.
@@ -88,11 +88,11 @@ struct State {
         unary->Destroy();
     }
 
-    void PolyfillF32Abs(core::ir::CoreBuiltinCall* builtin) {
+    void PolyfillFloatAbs(core::ir::CoreBuiltinCall* builtin) {
         auto* val = builtin->Args()[0];
         auto* type = val->Type();
 
-        // AMD mesa front end optimizer bug for unary negation and abs.
+        // AMD mesa front end optimizer bug for unary f32 and f16 negation and abs.
         // Fixed in 25.3 - See crbug.com/448294721
         // Note we use bitcast as a hammer to avoid the optimizer seeing through other possible
         // workarounds.
