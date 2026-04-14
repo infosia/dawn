@@ -22,6 +22,30 @@
       },
       "revId": "bb36b69b42136018e19b82c6764fb4523dcf951d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d82ec75_1cf94783",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-14T17:52:49Z",
+      "side": 1,
+      "message": "Yeah, that sounds reasonable. Implemented this in the latest patch, seeing how the CQ dry run likes it.",
+      "parentUuid": "136cccd9_326c0d88",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "bb36b69b42136018e19b82c6764fb4523dcf951d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
