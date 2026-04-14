@@ -86,6 +86,9 @@ ResultOrError<ExecutionSerial> ExecutionQueueBase::WaitForQueueSerialImpl(
 }
 
 MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout) {
+    // We should never need to wait for queue serials after the device has been Disconnected.
+    DAWN_ASSERT(GetDevice()->GetState() != DeviceBase::State::Disconnected);
+
     // Serial is already complete.
     if (waitSerial <= GetCompletedCommandSerial()) {
         // Ensure that all tasks related to the serial have been triggered.
