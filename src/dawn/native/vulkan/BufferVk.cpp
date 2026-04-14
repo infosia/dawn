@@ -272,7 +272,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     // VkmemoryRequirements. See https://gitlab.khronos.org/vulkan/vulkan/issues/1904
     // Any size with one of two top bits of VkDeviceSize set is a HUGE allocation and we can
     // safely return an OOM error.
-    if (mAllocatedSize & (uint64_t(3) << uint64_t(62))) {
+    if (mAllocatedSize.value() & (uint64_t(3) << uint64_t(62))) {
         return DAWN_OUT_OF_MEMORY_ERROR("Buffer size is HUGE and could cause overflows");
     }
 
@@ -280,7 +280,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.size = mAllocatedSize;
+    createInfo.size = mAllocatedSize.value();
     // Add CopyDst for non-mappable buffer initialization with mappedAtCreation
     // and robust resource initialization.
     createInfo.usage = VulkanBufferUsage(GetInternalUsage() | wgpu::BufferUsage::CopyDst);
@@ -326,7 +326,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
             // interferes with using the UploadData() fast path.
             if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
                 DAWN_TRY(MapMemoryAndPerformOperation(
-                    0, mAllocatedSize,
+                    0, mAllocatedSize.value(),
                     [](std::span<uint8_t> mapped) { std::ranges::fill(mapped, 0x01); }));
             }
             if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
@@ -373,7 +373,7 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
     createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     createInfo.pNext = &externalMemoryCreateInfo;
     createInfo.flags = 0;
-    createInfo.size = mAllocatedSize;
+    createInfo.size = mAllocatedSize.value();
     createInfo.usage = VulkanBufferUsage(GetInternalUsage());
     createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
     createInfo.queueFamilyIndexCount = 0;
@@ -419,7 +419,7 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
     VkMemoryAllocateInfo allocateInfo;
     allocateInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
     allocateInfo.pNext = nullptr;
-    allocateInfo.allocationSize = mAllocatedSize;
+    allocateInfo.allocationSize = mAllocatedSize.value();
     allocateInfo.memoryTypeIndex = memoryTypeIndex;
 
     VkImportMemoryHostPointerInfoEXT importMemoryHostPointerInfo;
@@ -659,7 +659,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
 
     // If the buffer needs initialization request the full buffer is mapped.
     bool needsZeroInitialization = NeedsInitialization() && size < GetSize();
-    uint64_t mapSize = needsZeroInitialization ? mAllocatedSize : size;
+    uint64_t mapSize = needsZeroInitialization ? mAllocatedSize.value() : size;
     uint64_t mapOffset = needsZeroInitialization ? 0 : bufferOffset;
 
     return MapMemoryAndPerformOperation(mapOffset, mapSize, [&](std::span<uint8_t> mapped) {
@@ -700,7 +700,7 @@ MaybeError Buffer::MapMemoryAndPerformOperation(uint64_t requestedOffset,
         // TODO(crbug.com/dawn/774): Persistently map frequently updated buffers instead of
         // mapping/unmapping each time.
         VkDeviceSize offset = mMemoryAllocation.GetOffset();
-        VkDeviceSize mapSize = mAllocatedSize;
+        VkDeviceSize mapSize = mAllocatedSize.value();
         if (mHostCoherent) {
             // We can map only the part of the buffer we need to upload the data.
             // We avoid this for non-coherent memory as the mapping needs to be aligned to
@@ -721,7 +721,7 @@ MaybeError Buffer::MapMemoryAndPerformOperation(uint64_t requestedOffset,
     mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
     mappedMemoryRange.memory = deviceMemory;
     mappedMemoryRange.offset = mMemoryAllocation.GetOffset();
-    mappedMemoryRange.size = mAllocatedSize;
+    mappedMemoryRange.size = mAllocatedSize.value();
     if (!mHostCoherent) {
         // For non-coherent memory we need to explicitly invalidate the memory range to make
         // available GPU writes visible.
