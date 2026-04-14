@@ -476,19 +476,8 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
                 completedSerial = waitSerial;
                 return VkResult::WrapUnsafe(VK_SUCCESS);
             }
-            // Wait for the fence.
-            if (device->GetState() == Device::State::Disconnected) [[unlikely]] {
-                // If WaitForQueueSerialImpl is called while we are Disconnected, it means that
-                // the device lost came from the ErrorInjector and we need to wait without allowing
-                // any more error to be injected. This is because the device lost was "fake" and
-                // commands might still be running.
-                return VkResult::WrapUnsafe(device->fn.WaitForFences(
-                    vkDevice, 1, &*waitFence, true, static_cast<uint64_t>(timeout)));
-            }
-            return VkResult::WrapUnsafe(
-                INJECT_ERROR_OR_RUN(device->fn.WaitForFences(vkDevice, 1, &*waitFence, true,
-                                                             static_cast<uint64_t>(timeout)),
-                                    VK_ERROR_DEVICE_LOST));
+            return VkResult::WrapUnsafe(device->fn.WaitForFences(vkDevice, 1, &*waitFence, true,
+                                                                 static_cast<uint64_t>(timeout)));
         });
         if (waitResult == VK_TIMEOUT) {
             // There is evidence that `VK_TIMEOUT` can get returned even when the
