@@ -5228,12 +5228,17 @@ void Validator::CheckOperandsMatchTarget(const Instruction* source_inst,
 const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* inst, size_t idx) {
     auto* operand = inst->Operands()[idx];
     if (DAWN_UNLIKELY(!operand)) {
+        // Note: Not directly covered in unittests because callers
+        // call CheckResultsAndOperands() beforehand, which prevents
+        // reaching this code. This check exists to catch unexpected
+        // corruption, not bad input/programmer error.
         AddError(inst, idx) << "missing element operand";
         return nullptr;
     }
 
     auto* type = operand->Type();
     if (DAWN_UNLIKELY(!type)) {
+        // See above
         AddError(inst, idx) << "missing operand type";
         return nullptr;
     }
