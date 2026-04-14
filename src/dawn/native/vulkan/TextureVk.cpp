@@ -697,6 +697,25 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
     return flags;
 }
 
+VkImageCreateFlags VulkanImageCreateFlags(const DeviceBase* device,
+                                          wgpu::TextureUsage usage,
+                                          const Format& format,
+                                          uint32_t sampleCount) {
+    VkImageCreateFlags vkCreateFlags = 0;
+
+    // If the MSAARenderToSingleSampled feature is enabled, textures with RenderAttachment usage
+    // need to have the VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT flag set so
+    // that they can be used as a render target with an implicit sample count. syoussefi@ has
+    // confirmed that this is expected to be cheap or no cost on hardware with the extension.
+    if (device->HasFeature(Feature::MSAARenderToSingleSampled) &&
+        (usage & wgpu::TextureUsage::RenderAttachment) && sampleCount == 1 &&
+        !format.HasDepthOrStencil()) {
+        vkCreateFlags |= VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT;
+    }
+
+    return vkCreateFlags;
+}
+
 // Chooses which Vulkan image layout should be used for the given Dawn usage. Note that this
 // layout must match the layout given to various Vulkan operations as well as the layout given
 // to descriptor set writes.
@@ -1457,6 +1476,8 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
     createInfo.usage = VulkanImageUsage(device, GetInternalUsage(), GetFormat()) | extraUsages;
     createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
     createInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    createInfo.flags =
+        VulkanImageCreateFlags(device, GetInternalUsage(), GetFormat(), GetSampleCount());
 
     std::vector<VkFormat> viewFormats;
     bool requiresViewFormatsList = GetViewFormats().any();
@@ -1477,17 +1498,6 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
         // Note: we cannot include R8 & RG8 in the viewFormats list of
         // G8_B8R8_2PLANE_420_UNORM. The Vulkan validation layer will disallow that.
         createInfo.flags |= VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT;
-    }
-
-    // If the MSAARenderToSingleSampled feature is enabled, textures with RenderAttachment
-    // usage need to have VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT set
-    // so that they can be used as a render target with an implicit sample count. syoussefi@
-    // has confirmed that this is expected to be very cheap or no cost on hardware that
-    // supports the extension.
-    if (device->HasFeature(Feature::MSAARenderToSingleSampled) &&
-        (GetInternalUsage() & wgpu::TextureUsage::RenderAttachment) && GetSampleCount() == 1 &&
-        !GetFormat().HasDepthOrStencil()) {
-        createInfo.flags |= VK_IMAGE_CREATE_MULTISAMPLED_RENDER_TO_SINGLE_SAMPLED_BIT_EXT;
     }
 
     // Add the view format list only when the usage does not have storage. Otherwise, the VVL will

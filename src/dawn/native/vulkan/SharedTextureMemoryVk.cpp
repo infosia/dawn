@@ -251,8 +251,10 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 
     VkFormat vkFormat = VulkanImageFormat(device, properties.format);
 
-    // Usage flags to create the image with.
+    // Usage and create flags to create the image with.
     VkImageUsageFlags vkUsageFlags = VulkanImageUsage(device, properties.usage, *internalFormat);
+    VkImageCreateFlags vkCreateFlags =
+        VulkanImageCreateFlags(device, properties.usage, *internalFormat, /*sampleCount=*/1);
 
     // Number of memory planes in the image which will be queried from the DRM modifier.
     uint32_t memoryPlaneCount;
@@ -310,7 +312,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
         imageFormatInfo.type = VK_IMAGE_TYPE_2D;
         imageFormatInfo.tiling = VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT;
         imageFormatInfo.usage = vkUsageFlags;
-        imageFormatInfo.flags = 0;
+        imageFormatInfo.flags = vkCreateFlags;
 
         VkPhysicalDeviceImageDrmFormatModifierInfoEXT drmModifierInfo = {};
         drmModifierInfo.sType =
@@ -575,8 +577,10 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     // Reflect properties to reify them.
     sharedTextureMemory->APIGetProperties(&properties);
 
-    // Compute the Vulkan usage flags to create the image with.
+    // Compute the Vulkan usage and create flags to create the image with.
     VkImageUsageFlags vkUsageFlags = VulkanImageUsage(device, properties.usage, *internalFormat);
+    VkImageCreateFlags vkCreateFlags =
+        VulkanImageCreateFlags(device, properties.usage, *internalFormat, /*sampleCount=*/1);
 
     const auto& compatibleViewFormats = device->GetCompatibleViewFormats(*internalFormat);
 
@@ -597,7 +601,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
         imageFormatInfo.type = VK_IMAGE_TYPE_2D;
         imageFormatInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
         imageFormatInfo.usage = vkUsageFlags;
-        imageFormatInfo.flags = 0;
+        imageFormatInfo.flags = vkCreateFlags;
 
         if (!usesExternalFormat) {
             constexpr wgpu::TextureUsage kUsageRequiringView =
