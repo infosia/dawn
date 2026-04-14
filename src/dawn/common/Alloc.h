@@ -77,6 +77,15 @@ class HeapArray : public NonCopyable {
         return HeapArray<T>{AllocNoThrow(count), count};
     }
 
+    // Acquire the contents as a raw pointer and size (kind of like what you get from new[] - it's
+    // valid to delete using `delete[]`).
+    // Useful with std::tie when returning a size+ptr array via the webgpu.h API.
+    std::pair<size_t, T*> AcquireRaw() {
+        auto data = mOwnedData;
+        mOwnedData = {};
+        return {data.size(), data.data()};
+    }
+
     // Explicit cast to bool to use with `if (heaparray)` to check if nothrow allocation succeeded.
     explicit operator bool() { return !mOwnedData.empty(); }
 
@@ -116,6 +125,15 @@ class HeapArray : public NonCopyable {
 
     std::span<T> mOwnedData;
 };
+
+// Construct a HeapArray by copying its data from a std::ranges::range type.
+template <typename Src>
+static auto HeapArrayFrom(const Src& src) {
+    using T = std::ranges::range_value_t<Src>;
+    auto result = HeapArray<T>::Uninit(std::ranges::size(src));
+    std::ranges::copy(src, result.begin());
+    return result;
+}
 
 }  // namespace dawn
 
