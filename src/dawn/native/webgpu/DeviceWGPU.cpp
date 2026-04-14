@@ -81,6 +81,7 @@ constexpr Toggle kOuterToggles[] = {
     Toggle::DisableBaseVertex,
     Toggle::DisableBindGroupLayoutEntryArraySize,
     Toggle::EnableImmediateErrorHandling,
+    Toggle::EnableTintIRValidationAsserts,
 
     // Toggles enabled by default for all backend, do not force set them to avoid warnings.
     Toggle::LazyClearResourceOnFirstUse,
