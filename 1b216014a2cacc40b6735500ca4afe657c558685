@@ -16,6 +16,23 @@
       "message": "I have updated again. Please feel free to re-review.",
       "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf56d95_54eb0ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-14T18:09:56Z",
+      "side": 1,
+      "message": "Do we have anything written down that indicates when we should be using a CHECK vs. an ASSERT? Or if not, could you write down something indicating your guiding principles when making changes like this? (Might be appropriate for `docs/dawn/errors.md`? Otherwise a new doc in the same dir.)",
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
