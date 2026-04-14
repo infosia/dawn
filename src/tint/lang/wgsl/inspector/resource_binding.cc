@@ -28,14 +28,11 @@
 #include "src/tint/lang/wgsl/inspector/resource_binding.h"
 
 #include "src/tint/lang/core/enums.h"
-#include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/i32.h"
-#include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u32.h"
-#include "src/tint/lang/core/type/vector.h"
 
 namespace tint::inspector {
 
@@ -60,29 +57,11 @@ ResourceBinding::TextureDimension TypeTextureDimensionToResourceBindingTextureDi
     return ResourceBinding::TextureDimension::kNone;
 }
 
-ResourceBinding::SampledKind ToFilterableSampledKind(const core::type::SampledTexture* tex) {
-    switch (tex->Filterable()) {
-        case core::TextureFilterable::kFilterable:
-            return ResourceBinding::SampledKind::kFilterable;
-        case core::TextureFilterable::kUnfilterable:
-            return ResourceBinding::SampledKind::kUnfilterable;
-        default:
-            break;
-    }
-    // We don't want to say `float` in this case, we want `unknown-filterable` to signify the
-    // unknown filterablity.
-    if (tex->Type()->Is<core::type::F32>()) {
-        return ResourceBinding::SampledKind::kUnknownFilterable;
-    }
-
-    return BaseTypeToSampledKind(tex->Type());
-}
-
 ResourceBinding::SampledKind BaseTypeToSampledKind(const core::type::Type* base_type) {
     TINT_ASSERT(base_type);
 
     if (base_type->Is<core::type::F32>()) {
-        return ResourceBinding::SampledKind::kFloat;
+        return ResourceBinding::SampledKind::kUnknownFilterable;
     }
     if (base_type->Is<core::type::U32>()) {
         return ResourceBinding::SampledKind::kUInt;
@@ -95,14 +74,7 @@ ResourceBinding::SampledKind BaseTypeToSampledKind(const core::type::Type* base_
 
 ResourceBinding::SamplerType SamplerToSamplerType(const core::type::Sampler* sampler) {
     if (sampler->Kind() == core::type::SamplerKind::kSampler) {
-        switch (sampler->Filtering()) {
-            case core::SamplerFiltering::kFiltering:
-                return ResourceBinding::SamplerType::kFiltering;
-            case core::SamplerFiltering::kNonFiltering:
-                return ResourceBinding::SamplerType::kNonFiltering;
-            default:
-                return ResourceBinding::SamplerType::kUnknownFiltering;
-        }
+        return ResourceBinding::SamplerType::kUnknownFiltering;
     }
     if (sampler->Kind() == core::type::SamplerKind::kComparisonSampler) {
         return ResourceBinding::SamplerType::kComparison;

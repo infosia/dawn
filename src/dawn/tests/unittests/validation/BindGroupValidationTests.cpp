@@ -4056,22 +4056,7 @@ class FilterabilityValidationTest : public BindGroupLayoutCompatibilityTest {};
 
 TEST_F(FilterabilityValidationTest, FilterableBGL_UnFilterableShader_Pass) {
     auto shaderSource = R"(
-    @group(0) @binding(0) var tex1 : texture_2d<f32, unfilterable>;
-
-    @compute @workgroup_size(1) fn main() {
-      _ = tex1;
-    })";
-
-    auto bgl = utils::MakeBindGroupLayout(
-        device, {
-                    {0, wgpu::ShaderStage::Compute, wgpu::TextureSampleType::Float},
-                });
-    CreateComputePipeline(shaderSource, {bgl});
-}
-
-TEST_F(FilterabilityValidationTest, FilterableBGL_FilterableShader_Pass) {
-    auto shaderSource = R"(
-    @group(0) @binding(0) var tex1 : texture_2d<f32, filterable>;
+    @group(0) @binding(0) var tex1 : texture_2d<f32>;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4101,7 +4086,7 @@ TEST_F(FilterabilityValidationTest, FilterableBGL_UnknownShader_Pass) {
 
 TEST_F(FilterabilityValidationTest, UnfilterableBGL_UnFilterableShader_Pass) {
     auto shaderSource = R"(
-    @group(0) @binding(0) var tex1 : texture_2d<f32, unfilterable>;
+    @group(0) @binding(0) var tex1 : texture_2d<f32>;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4114,9 +4099,9 @@ TEST_F(FilterabilityValidationTest, UnfilterableBGL_UnFilterableShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, UnfilterableBGL_FilterableShader_Fail) {
+TEST_F(FilterabilityValidationTest, DISABLED_UnfilterableBGL_FilterableShader_Fail) {
     auto shaderSource = R"(
-    @group(0) @binding(0) var tex1 : texture_2d<f32, filterable>;
+    @group(0) @binding(0) var tex1 : texture_2d<f32>;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4183,7 +4168,7 @@ TEST_F(FilterabilityValidationTest, FilterableBGL_i32Shader_Fail) {
 TEST_F(FilterabilityValidationTest, FilteringBGL_FilteringShader_Pass) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4201,7 +4186,7 @@ TEST_F(FilterabilityValidationTest, FilteringBGL_FilteringShader_Pass) {
 TEST_F(FilterabilityValidationTest, FilteringBGL_NonFilteringShader_Pass) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<non_filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4219,7 +4204,7 @@ TEST_F(FilterabilityValidationTest, FilteringBGL_NonFilteringShader_Pass) {
 TEST_F(FilterabilityValidationTest, NonFilteringBGL_NonFilteringShader_Pass) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<non_filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4234,10 +4219,10 @@ TEST_F(FilterabilityValidationTest, NonFilteringBGL_NonFilteringShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, NonFilteringBGL_FilteringShader_Fail) {
+TEST_F(FilterabilityValidationTest, DISABLED_NonFilteringBGL_FilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4272,10 +4257,10 @@ TEST_F(FilterabilityValidationTest, ComparisonBGL_ComparisonShader_Pass) {
     CreateComputePipeline(shaderSource, {bgl});
 }
 
-TEST_F(FilterabilityValidationTest, ComparisonBGL_FilteringShader_Fail) {
+TEST_F(FilterabilityValidationTest, DISABLED_ComparisonBGL_FilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;
@@ -4293,10 +4278,10 @@ TEST_F(FilterabilityValidationTest, ComparisonBGL_FilteringShader_Fail) {
                            "(SamplerBindingType::Comparison"));
 }
 
-TEST_F(FilterabilityValidationTest, ComparisonBGL_NonFilteringShader_Fail) {
+TEST_F(FilterabilityValidationTest, DISABLED_ComparisonBGL_NonFilteringShader_Fail) {
     auto shaderSource = R"(
     @group(0) @binding(0) var tex1 : texture_2d<f32>;
-    @group(0) @binding(1) var samp : sampler<non_filtering>;
+    @group(0) @binding(1) var samp : sampler;
 
     @compute @workgroup_size(1) fn main() {
       _ = tex1;

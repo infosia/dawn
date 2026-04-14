@@ -136,7 +136,8 @@ message TypeDepthTexture {
 message TypeSampledTexture {
     TextureDimension dimension = 1;
     uint32 sub_type = 2;  // Module.types
-    TextureFilterable filterable = 3;
+    reserved 3;
+    reserved "filterable";
 }
 
 message TypeMultisampledTexture {
@@ -160,7 +161,8 @@ message TypeExternalTexture {}
 
 message TypeSampler {
     SamplerKind kind = 1;
-    SamplerFiltering filtering = 2;
+    reserved 2;
+    reserved "filtering";
 }
 
 message TypeInputAttachment {

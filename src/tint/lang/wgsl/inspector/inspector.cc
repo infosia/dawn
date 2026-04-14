@@ -175,19 +175,12 @@ ResourceBinding ConvertHandleToResourceBinding(const tint::sem::GlobalVariable* 
         [&](const core::type::SampledTexture* tex) {
             result.resource_type = ResourceBinding::ResourceType::kSampledTexture;
             result.dim = TypeTextureDimensionToResourceBindingTextureDimension(tex->Dim());
-            result.sampled_kind = ToFilterableSampledKind(tex);
+            result.sampled_kind = BaseTypeToSampledKind(tex->Type());
         },
         [&](const core::type::MultisampledTexture* tex) {
             result.resource_type = ResourceBinding::ResourceType::kMultisampledTexture;
             result.dim = TypeTextureDimensionToResourceBindingTextureDimension(tex->Dim());
-
-            auto kind = BaseTypeToSampledKind(tex->Type());
-            // The base `f32` type will be `Float` but for a multisampled it is always
-            // an unfilterable.
-            if (kind == ResourceBinding::SampledKind::kFloat) {
-                kind = ResourceBinding::SampledKind::kUnfilterable;
-            }
-            result.sampled_kind = kind;
+            result.sampled_kind = BaseTypeToSampledKind(tex->Type());
         },
         [&](const core::type::DepthTexture* tex) {
             result.resource_type = ResourceBinding::ResourceType::kDepthTexture;

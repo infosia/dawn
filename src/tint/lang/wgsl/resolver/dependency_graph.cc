@@ -410,10 +410,6 @@ class DependencyScanner {
         kTexelFormat,
         /// Access
         kAccess,
-        /// Texture filterable
-        kTextureFilterable,
-        /// Sampler filtering
-        kSamplerFiltering,
     };
 
     /// BuiltinInfo stores information about the builtin that a symbol represents.
@@ -430,9 +426,7 @@ class DependencyScanner {
                      core::BuiltinType,
                      core::AddressSpace,
                      core::TexelFormat,
-                     core::Access,
-                     core::TextureFilterable,
-                     core::SamplerFiltering>
+                     core::Access>
             value = {};
     };
 
@@ -460,14 +454,6 @@ class DependencyScanner {
             if (auto access = core::ParseAccess(symbol.NameView());
                 access != core::Access::kUndefined) {
                 return BuiltinInfo{BuiltinType::kAccess, access};
-            }
-            if (auto filterable = core::ParseTextureFilterable(symbol.NameView());
-                filterable != core::TextureFilterable::kUndefined) {
-                return BuiltinInfo{BuiltinType::kTextureFilterable, filterable};
-            }
-            if (auto filterable = core::ParseSamplerFiltering(symbol.NameView());
-                filterable != core::SamplerFiltering::kUndefined) {
-                return BuiltinInfo{BuiltinType::kSamplerFiltering, filterable};
             }
             return BuiltinInfo{};
         });
@@ -502,14 +488,6 @@ class DependencyScanner {
                 case BuiltinType::kAccess:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::Access>()));
-                    break;
-                case BuiltinType::kTextureFilterable:
-                    graph_.resolved_identifiers.Add(
-                        from, ResolvedIdentifier(builtin_info.Value<core::TextureFilterable>()));
-                    break;
-                case BuiltinType::kSamplerFiltering:
-                    graph_.resolved_identifiers.Add(
-                        from, ResolvedIdentifier(builtin_info.Value<core::SamplerFiltering>()));
                     break;
             }
             return;
