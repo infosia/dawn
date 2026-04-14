@@ -211,7 +211,7 @@ class BufferBase : public SharedResource, public WeakRefSupport<BufferBase> {
     size_t MapOffset() const;
     size_t MapSize() const;
 
-    uint64_t mAllocatedSize = 0;
+    std::optional<uint64_t> mAllocatedSize{};
 
   private:
     class MapAsyncEvent;
