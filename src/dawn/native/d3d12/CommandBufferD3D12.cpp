@@ -238,7 +238,7 @@ MaybeError RecordCopyTextureWithTemporaryBuffer(CommandRecordingContext* recordi
     BufferCopy bufferCopy;
     bufferCopy.buffer = tempBuffer;
     bufferCopy.offset = 0;
-    bufferCopy.blocksPerRow = blockInfo.BytesToBlocks(bytesPerRow);
+    bufferCopy.blocksPerRow = blocksPerRow;
     bufferCopy.rowsPerImage = rowsPerImage;
 
     // Copy from source texture into tempBuffer
@@ -296,6 +296,8 @@ MaybeError RecordBufferTextureCopyWithTemporaryBuffer(CommandRecordingContext* r
     Ref<Buffer> tempBuffer = ToBackend(std::move(tempBufferBase));
     DAWN_ASSERT(tempBuffer->GetVA() % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
     auto scopedUseStaging = tempBuffer->UseInternal();
+
+    DAWN_TRY(tempBuffer->EnsureDataInitialized(recordingContext));
 
     BufferCopy tempBufferCopy;
     tempBufferCopy.buffer = tempBuffer;

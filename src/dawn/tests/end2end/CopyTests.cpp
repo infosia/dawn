@@ -4074,5 +4074,115 @@ DAWN_INSTANTIATE_TEST(T2TCopyFromDirtyHeapTests,
                       VulkanBackend(),
                       WebGPUBackend());
 
+class CopyTests_MemoryLeak : public DawnTest {};
+
+// Test that reproduced a memory leak triggered by the D3D12 temporary buffer workaround
+// (D3D12UseTempBufferInDepthStencilTextureAndBufferCopyWithNonZeroBufferOffset) for depth/stencil
+// texture-to-buffer copies with a non-zero buffer offset. See crbug.com/500443031
+TEST_P(CopyTests_MemoryLeak, T2BLeakUninitializedPadding) {
+    // Dirty the GPU heap with a recognizable pattern.
+    // Use a large enough size to likely hit the same heap as the upcoming temporary buffer.
+    {
+        constexpr uint64_t kDirtySize = 64 * 1024;
+        constexpr uint32_t kPattern = 0xDEADBEEF;
+
+        wgpu::BufferDescriptor descriptor;
+        descriptor.size = kDirtySize;
+        descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+        wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+
+        std::vector<uint32_t> data(kDirtySize / sizeof(uint32_t), kPattern);
+        queue.WriteBuffer(buffer, 0, data.data(), data.size() * sizeof(uint32_t));
+
+        // Submit and wait for idle to ensure the data is written and then the buffer can be freed.
+        queue.Submit(0, nullptr);
+        WaitForAllOperations();
+    }
+
+    // Initialize the texture with a known value.
+    constexpr float kClearDepthValue = 0.5f;
+    constexpr auto kTexFormat = wgpu::TextureFormat::Depth16Unorm;
+    constexpr uint32_t kTexWidth = 1;
+    constexpr uint32_t kTexHeight = 2;
+
+    // Create a 1x2 depth texture and clear it to kClearDepthValue. If we copy a 1x2 texture, we get
+    // padding between row 0 and row 1. We set bytesPerRow high when copying to force padding bytes
+    // on row 0.
+    wgpu::Texture texture;
+    {
+        wgpu::TextureDescriptor texDesc = {};
+        texDesc.size = {kTexWidth, kTexHeight, 1};
+        texDesc.format = kTexFormat;
+        texDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+        texture = device.CreateTexture(&texDesc);
+
+        utils::ComboRenderPassDescriptor renderPassDesc({}, texture.CreateView());
+        renderPassDesc.UnsetDepthStencilLoadStoreOpsForFormat(kTexFormat);
+        renderPassDesc.cDepthStencilAttachmentInfo.depthClearValue = kClearDepthValue;
+        renderPassDesc.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPassDesc);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+        WaitForAllOperations();
+    }
+
+    // Create a destination buffer with large bytesPerRow to maximize padding.
+    // 256KB padding per row (we only have 1 row though)
+    constexpr uint32_t kBytesPerRow = 256 * 1024;
+    // The D3D12UseTempBufferInDepthStencilTextureAndBufferCopyWithNonZeroBufferOffset workaround
+    // triggers when offset is not a multiple of 512.
+    constexpr uint32_t kOffset = 4;
+
+    wgpu::Buffer destinationBuffer;
+    const uint32_t destinationBufferSize = kOffset + kBytesPerRow * kTexHeight;
+    {
+        wgpu::BufferDescriptor bufferDesc = {};
+        bufferDesc.size = destinationBufferSize;
+        bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+        destinationBuffer = device.CreateBuffer(&bufferDesc);
+    }
+
+    // Perform the copy texture to buffer
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::TexelCopyTextureInfo srcInfo = utils::CreateTexelCopyTextureInfo(
+            texture, 0, {0, 0, 0}, wgpu::TextureAspect::DepthOnly);
+        wgpu::TexelCopyBufferInfo dstInfo =
+            utils::CreateTexelCopyBufferInfo(destinationBuffer, kOffset, kBytesPerRow, kTexHeight);
+        wgpu::Extent3D copySize = {kTexWidth, kTexHeight, 1};
+        encoder.CopyTextureToBuffer(&srcInfo, &dstInfo, &copySize);
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    }
+
+    // Map and inspect the padding.
+    {
+        MapAsyncAndWait(destinationBuffer, wgpu::MapMode::Read, 0, destinationBufferSize);
+        const uint8_t* readbackData =
+            static_cast<const uint8_t*>(destinationBuffer.GetConstMappedRange());
+
+        // The first texel is at ptr[kOffset]. Depth16Unorm is 2 bytes.
+        // Row 0 texel: ptr[kOffset] ... ptr[kOffset + 1]
+        // Padding after row 0: ptr[kOffset + 2] ... ptr[kOffset + kBytesPerRow - 1]
+        // Row 1 texel: ptr[kOffset + kBytesPerRow] ... ptr[kOffset + kBytesPerRow + 1]
+
+        for (uint32_t i = kOffset + 2; i < kOffset + kBytesPerRow; ++i) {
+            ASSERT_EQ(readbackData[i], 0u);
+        }
+
+        destinationBuffer.Unmap();
+    }
+}
+
+DAWN_INSTANTIATE_TEST(CopyTests_MemoryLeak,
+                      D3D12Backend({
+                          // clang-format off
+        "d3d12_use_temp_buffer_in_depth_stencil_texture_and_buffer_copy_with_non_zero_buffer_offset",
+                          // clang-format on
+                      }));
+
 }  // anonymous namespace
 }  // namespace dawn
