@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74958ea0_246b380f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-14T19:37:31Z",
+      "side": 1,
+      "message": "Alright, looks like the CQ is probably happy with this solution. Thanks for the suggestion Loko! PTA(nother)L.",
+      "revId": "0ad97057c727276c5c6df6da24b8559fafaea272",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
