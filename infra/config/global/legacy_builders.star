@@ -94,27 +94,6 @@ def clang_tidy_dawn_tryjob():
         ],
     )
 
-luci.list_view_entry(
-    list_view = "try",
-    builder = "try/presubmit",
-)
-
-luci.builder(
-    name = "presubmit",
-    bucket = "try",
-    executable = "recipe:run_presubmit",
-    dimensions = {
-        "cpu": "x86-64",
-        "os": get_dimension(os.LINUX),
-        "pool": "luci.flex.try",
-    },
-    properties = {
-        "repo_name": "dawn",
-        "runhooks": True,
-    },
-    service_account = "dawn-try-builder@chops-service-accounts.iam.gserviceaccount.com",
-)
-
 # The following standalone builders have been replaced with functionally
 # equivalent ones using the gn_v2 recipe. See crbug.com/385317083.
 # * cron-linux-clang-rel-x64
@@ -211,12 +190,6 @@ def _create_dawn_cq_group(name, refs, refs_exclude = None):
             acl.entry(
                 acl.CQ_NEW_PATCHSET_RUN_TRIGGERER,
                 groups = "project-dawn-tryjob-access",
-            ),
-        ],
-        verifiers = [
-            luci.cq_tryjob_verifier(
-                builder = "dawn:try/presubmit",
-                disable_reuse = True,
             ),
         ],
         retry_config = cq.retry_config(

@@ -97,14 +97,22 @@ def apply_fuzz_builder_defaults(kwargs):
     ))
     return kwargs
 
-def add_builder_to_main_and_milestone_cq_groups(kwargs):
-    # Dawn standalone builders run fine unbranched on branched CLs.
-    try_.builder(**kwargs)
+def add_builder_to_milestone_cq_groups(name, disable_reuse = False):
     for milestone in ACTIVE_MILESTONES.keys():
         luci.cq_tryjob_verifier(
             cq_group = "Dawn-CQ-" + milestone,
-            builder = "dawn:try/" + kwargs["name"],
+            builder = "dawn:try/" + name,
+            disable_reuse = disable_reuse,
         )
+
+def add_builder_to_main_and_milestone_cq_groups(kwargs):
+    # Dawn standalone builders run fine unbranched on branched CLs.
+    try_.builder(**kwargs)
+    add_builder_to_milestone_cq_groups(kwargs["name"])
+
+def add_presubmit_builder_to_main_and_milestone_cq_groups(kwargs):
+    try_.presubmit_builder(**kwargs)
+    add_builder_to_milestone_cq_groups(kwargs["name"], disable_reuse = True)
 
 def dawn_linux_functional_cq_tester(**kwargs):
     kwargs = apply_linux_cq_builder_defaults(kwargs)
@@ -135,6 +143,10 @@ def dawn_linux_fuzz_cq_tester(**kwargs):
     kwargs = apply_linux_cq_builder_defaults(kwargs)
     kwargs = apply_fuzz_builder_defaults(kwargs)
     add_builder_to_main_and_milestone_cq_groups(kwargs)
+
+def dawn_linux_presubmit_builder(**kwargs):
+    kwargs = apply_linux_cq_builder_defaults(kwargs)
+    add_presubmit_builder_to_main_and_milestone_cq_groups(kwargs)
 
 ## Functional testers
 
@@ -327,6 +339,19 @@ dawn_linux_fuzz_cq_tester(
         "ci/dawn-linux-x86-fuzz-rel",
     ],
     gn_args = "ci/dawn-linux-x86-fuzz-rel",
+)
+
+# Presubmit-only testers
+
+dawn_linux_presubmit_builder(
+    name = "presubmit",
+    description_html = "Runs basic presubmit checks on Linux machines",
+    executable = "recipe:run_presubmit",
+    cq_settings = try_.cq_settings(),
+    properties = {
+        "repo_name": "dawn",
+        "runhooks": True,
+    },
 )
 
 ################################################################################
