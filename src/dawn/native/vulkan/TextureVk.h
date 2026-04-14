@@ -54,6 +54,10 @@ ResultOrError<wgpu::TextureFormat> FormatFromVkFormat(const Device* device, VkFo
 VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
                                    wgpu::TextureUsage usage,
                                    const Format& format);
+VkImageCreateFlags VulkanImageCreateFlags(const DeviceBase* device,
+                                          wgpu::TextureUsage usage,
+                                          const Format& format,
+                                          uint32_t sampleCount);
 VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage);
 VkImageLayout VulkanImageLayoutForDepthStencilAttachment(const Format& format,
                                                          bool depthReadOnly,

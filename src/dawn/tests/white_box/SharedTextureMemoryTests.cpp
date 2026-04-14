@@ -107,6 +107,7 @@ std::vector<wgpu::FeatureName> SharedTextureMemoryTests::GetRequiredFeatures() {
         wgpu::FeatureName::TextureFormatsTier1,
         wgpu::FeatureName::BGRA8UnormStorage,
         wgpu::FeatureName::FlexibleTextureViews,
+        wgpu::FeatureName::MSAARenderToSingleSampled,
     };
     for (auto feature : kOptionalFeatures) {
         if (SupportsFeatures({feature})) {
