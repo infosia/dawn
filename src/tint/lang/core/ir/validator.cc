@@ -4199,6 +4199,9 @@ void Validator::CheckMemberBuiltinCall(const MemberBuiltinCall* call) {
     }
 
     if (result->return_type != call->Result()->Type()) {
+        // Note: This is not currently tested in core unittests as there are no concrete
+        // MemberBuiltinCall implementations in core IR. This is tested by backend-specific
+        // (e.g. HLSL) validation tests.
         AddError(call) << "member call result type " << NameOf(call->Result()->Type())
                        << " does not match builtin return type " << NameOf(result->return_type);
     }

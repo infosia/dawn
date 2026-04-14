@@ -1514,6 +1514,37 @@ TEST_F(IR_ValidatorTest, Binary_MismatchedResultType) {
         << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Return_TooManyOperands) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* r = b.Return(f);
+        r->SetOperands(Vector{b.Value(f), b.Value(1_i), b.Value(2_i)});
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: return: expected between 1 and 2 operands, got 3"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Let_HandlePointer) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* tex_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
+        auto* ptr = ty.ptr(core::AddressSpace::kHandle, tex_ty, core::Access::kRead);
+        auto* v = b.Var(ptr);
+        b.Let("l", v->Result(0));
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: let: handle pointer cannot be captured in a let"))
+        << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Binary_OperandWrongType_Func) {
     auto* func = b.Function("foo", ty.void_());
     auto* other_func = b.Function("other", ty.void_());
