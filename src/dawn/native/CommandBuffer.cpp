@@ -163,10 +163,17 @@ SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy,
 
 MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
                                           BeginRenderPassCmd* renderPass,
-                                          LazyClearTexture3DHelper clearTexture3D) {
+                                          LazyClearTextureHelper clearTexture) {
     if (!device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse)) {
         return {};
     }
+
+    // Detect if a renderArea has been set that only covers part of the render pass attachments.
+    // If so we'll be performing explicit clears for any uninitialized attachments below, since a
+    // render pass clear won't initialize the entire attachment.
+    bool partialRenderArea = (renderPass->renderArea.x != 0 || renderPass->renderArea.y != 0 ||
+                              renderPass->renderArea.width != renderPass->width ||
+                              renderPass->renderArea.height != renderPass->height);
 
     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         auto& attachmentInfo = renderPass->colorAttachments[i];
@@ -178,31 +185,45 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
         SubresourceRange range = view->GetSubresourceRange();
         TextureBase* texture = view->GetTexture();
 
-        // If the loadOp is Load, but the subresource is not initialized, use Clear instead.
-        if (attachmentInfo.loadOp == wgpu::LoadOp::Load &&
-            !texture->IsSubresourceContentInitialized(range)) {
-            attachmentInfo.loadOp = wgpu::LoadOp::Clear;
-            attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
-        }
-
-        // For 3D textures, rendering to a single depthSlice marks the entire mip level as
-        // initialized. If it wasn't already initialized, we must clear the other slices
-        // before the render pass starts.
-        // TODO(500975625): Optimize this.
-        if (texture->GetDimension() == wgpu::TextureDimension::e3D &&
-            !texture->IsSubresourceContentInitialized(range)) {
-            DAWN_TRY(clearTexture3D(texture, range));
+        if (!texture->IsSubresourceContentInitialized(range)) {
+            if (partialRenderArea || texture->GetDimension() == wgpu::TextureDimension::e3D) {
+                // Using a renderArea that only partially covers the attachment still marks the full
+                // subresource as initialized. If it wasn't already initialized we must clear the
+                // full subresource before the render pass starts.
+                //
+                // For 3D textures, rendering to a single depthSlice marks the entire mip level as
+                // initialized. If it wasn't already initialized, we must clear the other slices
+                // before the render pass starts.
+                //
+                // TODO(500975625): Optimize this.
+                DAWN_TRY(clearTexture(texture, range));
+            } else if (attachmentInfo.loadOp == wgpu::LoadOp::Load) {
+                // If the loadOp is Load, but the subresource is not initialized, use Clear instead.
+                attachmentInfo.loadOp = wgpu::LoadOp::Clear;
+                attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
+            }
         }
 
         if (hasResolveTarget) {
-            // We need to set the resolve target to initialized so that it does not get
-            // cleared later in the pipeline. The texture will be resolved from the
-            // source color attachment, which will be correctly initialized.
             TextureViewBase* resolveView = attachmentInfo.resolveTarget.Get();
             DAWN_ASSERT(resolveView->GetLayerCount() == 1);
             DAWN_ASSERT(resolveView->GetLevelCount() == 1);
-            resolveView->GetTexture()->SetIsSubresourceContentInitialized(
-                true, resolveView->GetSubresourceRange());
+            if (!resolveView->GetTexture()->IsSubresourceContentInitialized(
+                    resolveView->GetSubresourceRange())) {
+                if (partialRenderArea) {
+                    // Using a renderArea that only partially covers the attachment means that the
+                    // resolve target won't have the full subresource copied over. If it wasn't
+                    // already initialized we must clear the full subresource before the pass.
+                    DAWN_TRY(clearTexture(resolveView->GetTexture(),
+                                          resolveView->GetSubresourceRange()));
+                } else {
+                    // Otherwise we need to set the resolve target to initialized so that it does
+                    // not get cleared later in the pipeline. The texture will be resolved from the
+                    // source color attachment, which will be correctly initialized.
+                    resolveView->GetTexture()->SetIsSubresourceContentInitialized(
+                        true, resolveView->GetSubresourceRange());
+                }
+            }
         }
 
         switch (attachmentInfo.storeOp) {
@@ -235,16 +256,22 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
 
         // If the depth stencil texture has not been initialized, we want to use loadop
         // clear to init the contents to 0's
-        if (!view->GetTexture()->IsSubresourceContentInitialized(depthRange) &&
-            attachmentInfo.depthLoadOp == wgpu::LoadOp::Load) {
-            attachmentInfo.clearDepth = 0.0f;
-            attachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+        if (!view->GetTexture()->IsSubresourceContentInitialized(depthRange)) {
+            if (partialRenderArea) {
+                DAWN_TRY(clearTexture(view->GetTexture(), depthRange));
+            } else if (attachmentInfo.depthLoadOp == wgpu::LoadOp::Load) {
+                attachmentInfo.clearDepth = 0.0f;
+                attachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+            }
         }
 
-        if (!view->GetTexture()->IsSubresourceContentInitialized(stencilRange) &&
-            attachmentInfo.stencilLoadOp == wgpu::LoadOp::Load) {
-            attachmentInfo.clearStencil = 0u;
-            attachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+        if (!view->GetTexture()->IsSubresourceContentInitialized(stencilRange)) {
+            if (partialRenderArea) {
+                DAWN_TRY(clearTexture(view->GetTexture(), stencilRange));
+            } else if (attachmentInfo.stencilLoadOp == wgpu::LoadOp::Load) {
+                attachmentInfo.clearStencil = 0u;
+                attachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+            }
         }
 
         view->GetTexture()->SetIsSubresourceContentInitialized(
@@ -266,11 +293,15 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
             DAWN_ASSERT(view->GetLevelCount() == 1);
             const SubresourceRange& range = view->GetSubresourceRange();
 
-            // If the loadOp is Load, but the subresource is not initialized, use Clear instead.
-            if (attachmentInfo.loadOp == wgpu::LoadOp::Load &&
-                !view->GetTexture()->IsSubresourceContentInitialized(range)) {
-                attachmentInfo.loadOp = wgpu::LoadOp::Clear;
-                attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
+            if (!view->GetTexture()->IsSubresourceContentInitialized(range)) {
+                if (partialRenderArea) {
+                    DAWN_TRY(clearTexture(view->GetTexture(), range));
+                } else if (attachmentInfo.loadOp == wgpu::LoadOp::Load) {
+                    // If the loadOp is Load, but the subresource is not initialized, use Clear
+                    // instead.
+                    attachmentInfo.loadOp = wgpu::LoadOp::Clear;
+                    attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
+                }
             }
 
             switch (attachmentInfo.storeOp) {

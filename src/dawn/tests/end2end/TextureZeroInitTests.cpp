@@ -2195,6 +2195,222 @@ DAWN_INSTANTIATE_TEST(
                   "use_blit_for_buffer_to_stencil_texture_copy"}),
     VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}));
 
+// =============================================================================
+// LazyClearRenderPassAttachments must take sub-rect RenderPassRenderArea into
+// account. Tests based on a Project Fortify-produced POC.
+// =============================================================================
+class TextureZeroInitRenderAreaTest : public TextureZeroInitTest {
+  protected:
+    void SetUp() override {
+        TextureZeroInitTest::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(!mRenderAreaSupported);
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        mRenderAreaSupported = SupportsFeatures({wgpu::FeatureName::RenderPassRenderArea});
+        if (!mRenderAreaSupported) {
+            return {};
+        }
+        return {wgpu::FeatureName::RenderPassRenderArea};
+    }
+
+    bool mRenderAreaSupported = false;
+};
+
+// A fresh texture rendered with a sub-rect renderArea + LoadOp::Clear must be fully zero on
+// subsequent readback. If pixels outside renderArea are not properly initialized they will read
+// back as the nonzero "garbage" fill value, indicating Dawn improperly marked the whole mip
+// initialized while only clearing the sub-rect.
+TEST_P(TextureZeroInitRenderAreaTest, SubRectClearInitializesFullSubresource) {
+    // Use a large texture so that even a 32x32 render-area granularity (the
+    // common Vulkan max) cannot expand the sub-rect to cover the whole mip.
+    constexpr uint32_t kTexSize = 128;
+    constexpr uint32_t kAreaSize = 32;
+
+    wgpu::TextureDescriptor descriptor;
+    descriptor.dimension = wgpu::TextureDimension::e2D;
+    descriptor.size = {kTexSize, kTexSize, 1};
+    descriptor.format = kColorFormat;
+    descriptor.mipLevelCount = 1;
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture texture = device.CreateTexture(&descriptor);
+
+    // Texture is freshly created -> uninitialized (and pre-filled with 0xFF by
+    // the nonzero_clear_resources_on_creation_for_testing toggle to simulate
+    // recycled GPU heap garbage).
+    EXPECT_FALSE(native::IsTextureSubresourceInitialized(texture.Get(), 0, 1, 0, 1));
+
+    utils::ComboRenderPassDescriptor renderPass({texture.CreateView()});
+    renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+    renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+    renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.origin = {0, 0};
+    renderArea.size = {kAreaSize, kAreaSize};
+    renderPass.nextInChain = &renderArea;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.BeginRenderPass(&renderPass).End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Render target should be marked fully initialized
+    EXPECT_TRUE(native::IsTextureSubresourceInitialized(texture.Get(), 0, 1, 0, 1));
+
+    {
+        // Full subresource must be cleared
+        std::vector<utils::RGBA8> expected(kTexSize * kTexSize, {0, 0, 0, 0});
+        EXPECT_TEXTURE_EQ(expected.data(), texture, {0, 0}, {kTexSize, kTexSize}, 0);
+    }
+}
+
+TEST_P(TextureZeroInitRenderAreaTest, SubRectLoadInitializesFullSubresource) {
+    // Use a large texture so that even a 32x32 render-area granularity (the
+    // common Vulkan max) cannot expand the sub-rect to cover the whole mip.
+    constexpr uint32_t kTexSize = 128;
+    constexpr uint32_t kAreaSize = 32;
+
+    wgpu::TextureDescriptor descriptor;
+    descriptor.dimension = wgpu::TextureDimension::e2D;
+    descriptor.size = {kTexSize, kTexSize, 1};
+    descriptor.format = kColorFormat;
+    descriptor.mipLevelCount = 1;
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture texture = device.CreateTexture(&descriptor);
+
+    // Texture is freshly created -> uninitialized (and pre-filled with 0xFF by
+    // the nonzero_clear_resources_on_creation_for_testing toggle to simulate
+    // recycled GPU heap garbage).
+    EXPECT_FALSE(native::IsTextureSubresourceInitialized(texture.Get(), 0, 1, 0, 1));
+
+    utils::ComboRenderPassDescriptor renderPass({texture.CreateView()});
+    renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Load;
+    renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.origin = {0, 0};
+    renderArea.size = {kAreaSize, kAreaSize};
+    renderPass.nextInChain = &renderArea;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.BeginRenderPass(&renderPass).End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Render target should be marked fully initialized
+    EXPECT_TRUE(native::IsTextureSubresourceInitialized(texture.Get(), 0, 1, 0, 1));
+
+    {
+        // Full subresource must be cleared
+        std::vector<utils::RGBA8> expected(kTexSize * kTexSize, {0, 0, 0, 0});
+        EXPECT_TEXTURE_EQ(expected.data(), texture, {0, 0}, {kTexSize, kTexSize}, 0);
+    }
+}
+
+TEST_P(TextureZeroInitRenderAreaTest, SubRectDepthStencilInitializesFullSubresource) {
+    // Use a large texture so that even a 32x32 render-area granularity (the
+    // common Vulkan max) cannot expand the sub-rect to cover the whole mip.
+    constexpr uint32_t kTexSize = 128;
+    constexpr uint32_t kAreaSize = 32;
+
+    wgpu::TextureDescriptor descriptor;
+    descriptor.dimension = wgpu::TextureDimension::e2D;
+    descriptor.size = {kTexSize, kTexSize, 1};
+    descriptor.format = kDepthStencilFormat;
+    descriptor.mipLevelCount = 1;
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture depthStencilTexture = device.CreateTexture(&descriptor);
+
+    // Texture is freshly created -> uninitialized (and pre-filled with 0xFF by
+    // the nonzero_clear_resources_on_creation_for_testing toggle to simulate
+    // recycled GPU heap garbage).
+    EXPECT_FALSE(native::IsTextureSubresourceInitialized(depthStencilTexture.Get(), 0, 1, 0, 1));
+
+    utils::ComboRenderPassDescriptor renderPass({}, depthStencilTexture.CreateView());
+    renderPass.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::Clear;
+    renderPass.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::Clear;
+    renderPass.cDepthStencilAttachmentInfo.depthClearValue = 0.0f;
+    renderPass.cDepthStencilAttachmentInfo.stencilClearValue = 0u;
+    renderPass.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::Store;
+    renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::Store;
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.origin = {0, 0};
+    renderArea.size = {kAreaSize, kAreaSize};
+    renderPass.nextInChain = &renderArea;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.BeginRenderPass(&renderPass).End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Render target should be marked fully initialized
+    EXPECT_TRUE(native::IsTextureSubresourceInitialized(depthStencilTexture.Get(), 0, 1, 0, 1));
+
+    {
+        // Full subresource must be cleared
+        std::vector<uint8_t> expected(kTexSize * kTexSize, 0);
+        EXPECT_TEXTURE_EQ(expected.data(), depthStencilTexture, {0, 0}, {kSize, kSize}, 0,
+                          wgpu::TextureAspect::StencilOnly);
+    }
+}
+
+TEST_P(TextureZeroInitRenderAreaTest, SubRectResolveInitializesFullSubresource) {
+    constexpr uint32_t kTexSize = 128;
+    constexpr uint32_t kAreaSize = 32;
+
+    wgpu::TextureDescriptor msaaDesc;
+    msaaDesc.dimension = wgpu::TextureDimension::e2D;
+    msaaDesc.size = {kTexSize, kTexSize, 1};
+    msaaDesc.format = kColorFormat;
+    msaaDesc.sampleCount = 4;
+    msaaDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    wgpu::Texture msaaTex = device.CreateTexture(&msaaDesc);
+
+    wgpu::TextureDescriptor resolveDesc;
+    resolveDesc.dimension = wgpu::TextureDimension::e2D;
+    resolveDesc.size = {kTexSize, kTexSize, 1};
+    resolveDesc.format = kColorFormat;
+    resolveDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture resolveTex = device.CreateTexture(&resolveDesc);
+
+    EXPECT_FALSE(native::IsTextureSubresourceInitialized(resolveTex.Get(), 0, 1, 0, 1));
+
+    utils::ComboRenderPassDescriptor renderPass({msaaTex.CreateView()});
+    renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+    renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+    renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
+    renderPass.cColorAttachments[0].resolveTarget = resolveTex.CreateView();
+
+    wgpu::RenderPassRenderAreaRect renderArea;
+    renderArea.origin = {0, 0};
+    renderArea.size = {kAreaSize, kAreaSize};
+    renderPass.nextInChain = &renderArea;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.BeginRenderPass(&renderPass).End();
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // Resolve target should be marked fully initialized.
+    EXPECT_TRUE(native::IsTextureSubresourceInitialized(resolveTex.Get(), 0, 1, 0, 1));
+
+    {
+        // Full subresource must be cleared
+        std::vector<utils::RGBA8> expected(kTexSize * kTexSize, {0, 0, 0, 0});
+        EXPECT_TEXTURE_EQ(expected.data(), resolveTex, {0, 0}, {kTexSize, kTexSize}, 0);
+    }
+}
+
+DAWN_INSTANTIATE_TEST(TextureZeroInitRenderAreaTest,
+                      D3D11Backend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      MetalBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}));
+
 class CompressedTextureZeroInitTest : public TextureZeroInitTest {
   protected:
     void SetUp() override {

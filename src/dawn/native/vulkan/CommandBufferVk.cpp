@@ -1313,9 +1313,18 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     GetResourceUsages().renderPasses[nextRenderPassNumber]));
 
                 DAWN_TRY(LazyClearRenderPassAttachments(
-                    device, cmd, [&](TextureBase* texture, const SubresourceRange& range) {
-                        return ToBackend(texture)->EnsureSubresourceContentInitialized(
-                            recordingContext, range);
+                    device, cmd,
+                    [&](TextureBase* texture, const SubresourceRange& range) -> MaybeError {
+                        Texture* textureVk = ToBackend(texture);
+                        DAWN_TRY(textureVk->EnsureSubresourceContentInitialized(recordingContext,
+                                                                                range));
+                        // EnsureSubresourceContentInitialized may transition some textures to a
+                        // different usage, so ensure they are transitioned back to RenderAttachment
+                        // after clearing.
+                        textureVk->TransitionUsageNow(recordingContext,
+                                                      wgpu::TextureUsage::RenderAttachment,
+                                                      wgpu::ShaderStage::None, range);
+                        return {};
                     }));
                 DAWN_TRY(RecordRenderPass(recordingContext, cmd));
 

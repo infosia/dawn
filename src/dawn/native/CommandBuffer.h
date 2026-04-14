@@ -92,10 +92,10 @@ bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,
 SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy,
                                                const TexelExtent3D& copySize);
 
-using LazyClearTexture3DHelper = std::function<MaybeError(TextureBase*, const SubresourceRange&)>;
+using LazyClearTextureHelper = std::function<MaybeError(TextureBase*, const SubresourceRange&)>;
 MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
                                           BeginRenderPassCmd* renderPass,
-                                          LazyClearTexture3DHelper clearTexture);
+                                          LazyClearTextureHelper clearTexture);
 
 bool IsFullBufferOverwrittenInTextureToBufferCopy(const CopyTextureToBufferCmd* copy);
 bool IsFullBufferOverwrittenInTextureToBufferCopy(const TextureCopy& source,
