@@ -259,6 +259,7 @@ dawn_win_functional_cq_tester(
     description_html = "Tests release Dawn on Win/x64 on multiple hardware configs. Blocks CL submission",
     mirrors = [
         "ci/dawn-win-x64-builder-rel",
+        "ci/dawn-win-x64-amd-rx5500xt-rel",
         "ci/dawn-win-x64-intel-uhd630-rel",
         # TODO(crbug.com/458768121): Add the UHD 770 config when capacity has
         # recovered.
