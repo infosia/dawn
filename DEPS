@@ -383,7 +383,7 @@ deps = {
     'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@5f8d05f9b760ae2be0242cad8ed719d10058b98c',
   },
   'third_party/directx-shader-compiler/src': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@5f8d05f9b760ae2be0242cad8ed719d10058b98c',
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@b48703bff3737c35f057a5e5f657e7999a4ac2fc',
   },
 
   # The third_party/dxheaders entry will be removed after we've rolled and
