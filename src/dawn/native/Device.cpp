@@ -580,14 +580,19 @@ void DeviceBase::Destroy(DestroyReason reason) {
 
     // Disconnect the device, depending on which state we are currently in.
     switch (state) {
+        // The GPU timeline was never started so we don't have to wait.
         case State::BeingCreated:
-            // The GPU timeline was never started so we don't have to wait.
+        // The GPU is no longer functional so we don't wait.
+        case State::Disconnected:
             break;
 
+        // The device is alive so we need to wait for all in-flight work.
         case State::Alive:
-            // Alive is the only state which can have GPU work happening. Wait for all of it to
-            // complete before proceeding with destruction.
-            // Ignore errors so that we can continue with destruction
+        // The device was placed in an error state as a result of unexpected errors which we can no
+        // longer recover from.
+        case State::BeingDisconnected:
+            // Wait for all GPU work to complete before proceeding with destruction.
+            // Ignore errors so that we can continue with destruction.
             IgnoreErrors(mQueue->WaitForIdleForDestruction());
 
             // Call TickImpl once last time to clean up resources
@@ -595,18 +600,8 @@ void DeviceBase::Destroy(DestroyReason reason) {
             IgnoreErrors(TickImpl());
             break;
 
-        case State::BeingDisconnected:
-            // Getting disconnected is a transient state happening in a single API call so there
-            // is always an external reference keeping the Device alive, which means the
-            // destructor cannot run while BeingDisconnected.
-            DAWN_UNREACHABLE();
-            break;
-
-        case State::Disconnected:
-            break;
-
+        // If we are already destroyed we should've skipped this work entirely.
         case State::Destroyed:
-            // If we are already destroyed we should've skipped this work entirely.
             DAWN_UNREACHABLE();
             break;
     }
@@ -679,53 +674,29 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
 
     if (type == InternalErrorType::DeviceLost) {
         mState = State::Disconnected;
-
-        // If the ErrorInjector is enabled, then the device loss might be fake and the device
-        // still be executing commands. Force a wait for idle in this case, with State being
-        // Disconnected so we can detect this case in WaitForIdleForDestruction.
-        if (ErrorInjectorEnabled()) {
-            IgnoreErrors(mQueue->WaitForIdleForDestruction());
-            IgnoreErrors(TickImpl());
-        }
-
-        // A real device lost happened. Set the state to disconnected as the device cannot be
-        // used. Also tags all commands as completed since the device stopped running.
-        mQueue->AssumeCommandsComplete();
     } else if (!(allowedErrors & type)) {
         // If we receive an error which we did not explicitly allow, assume the backend can't
-        // recover and proceed with device destruction. We first wait for all previous commands to
-        // be completed so that backend objects can be freed immediately, before handling the loss.
+        // recover and lose the device now. Cleanup for the device will be deferred until the last
+        // external reference of the device is dropped, or an explicit call to Destroy.
         error->AppendContext("handling unexpected error type %s when allowed errors are %s.", type,
                              allowedErrors);
 
-        // Move away from the Alive state so that the application cannot use this device
-        // anymore.
-        // TODO(crbug.com/dawn/831): Do we need atomics for this to become visible to other
-        // threads in a multithreaded scenario?
-        mState = State::BeingDisconnected;
+        // Transition to a non-alive state if we are currently alive so that the application can no
+        // longer use the device.
+        State prev = State::Alive;
+        mState.compare_exchange_strong(prev, State::BeingDisconnected, std::memory_order::acq_rel);
 
-        // Ignore errors so that we can continue with destruction
-        // Assume all commands are complete after WaitForIdleForDestruction (because they were)
-        IgnoreErrors(mQueue->WaitForIdleForDestruction());
-        IgnoreErrors(TickImpl());
-        mQueue->AssumeCommandsComplete();
-        mState = State::Disconnected;
-
-        // Now everything is as if the device was lost.
+        // Handle the remainder of this error as if it caused a device lost.
         type = InternalErrorType::DeviceLost;
     }
 
     const std::string messageStr = error->GetFormattedMessage();
     if (type == InternalErrorType::DeviceLost) {
-        // The device was lost, schedule the application callback's execution.
-        // Note: we don't invoke the callbacks directly here because it could cause re-entrances ->
-        // possible deadlock.
         HandleDeviceLost(lostReason, messageStr);
-        mQueue->HandleDeviceLoss();
 
-        // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
-        mAsyncTaskManager->WaitAllPendingTasks();
-        mCallbackTaskManager->HandleDeviceLoss();
+        // TODO(crbug.com/42240994): Remove this once we no longer need the CallbackTaskManager.
+        mQueue->HandleDeviceLoss();
+        return;
     }
 
     // Pass the error to the error scope stack and call the uncaptured error callback
@@ -734,13 +705,12 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
     if (forwardToErrorScope == ForwardToErrorScope::Yes) {
         captured = GetErrorScopeStack()->HandleError(ToWGPUErrorType(type), messageStr);
     }
-    if (captured || mState != State::Alive) {
-        return;
-    }
 
-    auto device = ToAPI(this);
-    mCallbackInfos.CallErrorCallback(&device, ToAPI(ToWGPUErrorType(type)),
-                                     ToOutputStringView(messageStr));
+    if (!captured) {
+        auto device = ToAPI(this);
+        mCallbackInfos.CallErrorCallback(&device, ToAPI(ToWGPUErrorType(type)),
+                                         ToOutputStringView(messageStr));
+    }
 }
 
 void DeviceBase::HandleErrorGeneratingAsyncTask(Ref<ErrorGeneratingAsyncTask> task,
