@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62eaf2df_7c371069",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-14T22:18:04Z",
+      "side": 1,
+      "message": "LGTM for the code change, but how hard would it be to add a regression test for the relevant files under `dawn/tests/white_box/SharedTextureMemory*`?",
+      "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
