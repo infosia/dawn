@@ -5224,16 +5224,12 @@ void Validator::CheckOperandsMatchTarget(const Instruction* source_inst,
 
 const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* inst, size_t idx) {
     auto* operand = inst->Operands()[idx];
-    if (DAWN_UNLIKELY(!operand)) {
-        AddError(inst, idx) << "missing element operand";
-        return nullptr;
-    }
+    // All callers call CheckResultsAndOperands() beforehand, so this should never be null
+    TINT_ASSERT(operand) << "missing element operand";
 
+    // See above
     auto* type = operand->Type();
-    if (DAWN_UNLIKELY(!type)) {
-        AddError(inst, idx) << "missing operand type";
-        return nullptr;
-    }
+    TINT_ASSERT(type) << "missing operand type";
 
     auto* memory_view_ty = type->As<core::type::MemoryView>();
     if (DAWN_LIKELY(memory_view_ty)) {
