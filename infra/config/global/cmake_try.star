@@ -54,7 +54,7 @@ def apply_cq_builder_defaults(kwargs):
     # There are fewer optimizations such as the use of `gn analyze` for CMake
     # builders, so allow more concurrent builds than GN equivalents.
     kwargs.setdefault("max_concurrent_builds", 5)
-    kwargs.setdefault("tryjob", try_.job(
+    kwargs.setdefault("cq_settings", try_.cq_settings(
         location_filters = exclusion_filters.cmake_cq_file_exclusions,
     ))
     return kwargs
