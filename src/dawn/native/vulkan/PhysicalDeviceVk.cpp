@@ -538,7 +538,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
     }
 
-    // HostMappedPointer is currently disabled on AMD due to a driver bug: crbug.com/494566064
+    // HostMappedPointer is not supported on AMD (see: crbug.com/494566064)
     if (!gpu_info::IsAMD(GetVendorId()) && mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
         mDeviceInfo.externalMemoryHostProperties.minImportedHostPointerAlignment <=
             kMinimumHostMappedPointerAlignment) {
@@ -1315,7 +1315,7 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
             }
             break;
 
-        // HostMappedPointer is currently disabled on AMD due to a driver bug: crbug.com/494566064
+        // HostMappedPointer is not supported on AMD (see: crbug.com/494566064)
         case wgpu::FeatureName::HostMappedPointer:
             if (gpu_info::IsAMD(GetVendorId())) {
                 return FeatureValidationResult(
