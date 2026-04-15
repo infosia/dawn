@@ -94,6 +94,30 @@
       },
       "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eca988a_dd7fd2fc",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-15T22:24:20Z",
+      "side": 0,
+      "message": "Done. I added the assert at an even higher level on the frontend because that invariant should hold true regardless of the backend. Let\u0027s see if CQ is happy with that though.",
+      "parentUuid": "be0f5dde_88e0ccc6",
+      "range": {
+        "startLine": 488,
+        "startChar": 19,
+        "endLine": 491,
+        "endChar": 59
+      },
+      "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
