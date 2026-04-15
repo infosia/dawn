@@ -170,6 +170,10 @@ config("internal_config") {
     defines += [ "DAWN_USE_WINDOWS_UI" ]
   }
 
+  if (dawn_supports_glfw_for_windowing) {
+    defines += [ "DAWN_SUPPORTS_GLFW_FOR_WINDOWING" ]
+  }
+
   if (dawn_enable_error_injection) {
     defines += [ "DAWN_ENABLE_ERROR_INJECTION" ]
   }
