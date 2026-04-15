@@ -52,13 +52,20 @@ ResultOrError<Ref<PipelineLayout>> PipelineLayout::Create(
 ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> PipelineLayout::CreateVkPipelineLayout(
     const Specialization& specialization) {
     // Compute the array of VkDescriptorSetLayouts that will be chained in the create info.
-    ityp::array<BindGroupIndex, VkDescriptorSetLayout, size_t(kMaxBindGroupsTyped) + 1> setLayouts;
+    ityp::array<BindGroupIndex, VkDescriptorSetLayout, size_t(kMaxBindGroupsTyped) + 2> setLayouts;
 
-    // The first VkDescriptorSetLayout is the one for the resource table if needed.
+    // The first VkDescriptorSetLayouts are the for framebuffer fetch and/or the resource table if
+    // needed.
     BindGroupIndex startOfBindGroups{0};
+    if (GetDevice()->HasFeature(Feature::FramebufferFetch)) {
+        setLayouts[startOfBindGroups] =
+            ToBackend(GetDevice())->GetFramebufferFetchHelper()->GetLayout();
+        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
+    }
+
     if (UsesResourceTable()) {
-        startOfBindGroups = BindGroupIndex(1);
-        setLayouts[BindGroupIndex(0)] = ToBackend(GetDevice())->GetResourceTableLayout();
+        setLayouts[startOfBindGroups] = ToBackend(GetDevice())->GetResourceTableLayout();
+        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
     }
 
     // The all the descriptor sets for BindGroupLayouts, including the empty BGLs.
