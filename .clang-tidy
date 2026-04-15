@@ -220,6 +220,7 @@ Checks: "-*,\
           -readability-static-accessed-through-instance,\
           -readability-static-definition-in-anonymous-namespace,\
           -readability-suspicious-call-argument,\
+          -readability-trailing-comma,\
           -readability-uppercase-literal-suffix,\
           -readability-use-anyofallof,\
           -readability-use-std-min-max,\
