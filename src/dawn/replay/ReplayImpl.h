@@ -31,6 +31,7 @@
 #include <memory>
 #include <string>
 #include <string_view>
+#include <vector>
 
 #include "dawn/replay/Replay.h"
 #include "src/dawn/replay/CaptureWalker.h"
@@ -50,6 +51,10 @@ class ReplayImpl : public Replay {
     MaybeError Play();
 
     ~ReplayImpl() override;
+
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) override;
+
+    Capture* GetCapture() const override;
 
     // Gets the first object of type T with the given label, or nullptr if not
     // found. Note: We don't too much care this is slow as mostly used for

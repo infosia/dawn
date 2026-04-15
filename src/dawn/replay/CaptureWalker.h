@@ -155,6 +155,7 @@ struct RenderBundleData {
     X(RenderPipeline, schema::RenderPipeline)   \
     X(Sampler, schema::Sampler)                 \
     X(ShaderModule, schema::ShaderModule)       \
+    X(Surface, InvalidData)                     \
     X(TexelBufferView, schema::TexelBufferView) \
     X(Texture, schema::Texture)                 \
     X(TextureView, schema::TextureView)
@@ -177,7 +178,6 @@ class ResourceVisitor {
     DAWN_REPLAY_RESOURCE_DATA_MAP(DAWN_REPLAY_RESOURCE_VISITOR)
 #undef DAWN_REPLAY_RESOURCE_VISITOR
 
-    virtual MaybeError operator()(const InvalidData& data);
     virtual MaybeError operator()(const std::monostate&);
 };
 
@@ -193,6 +193,11 @@ class RootCommandVisitor {
     virtual MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) = 0;
+    virtual MaybeError operator()(const schema::RootCommandSurfaceConfigureCmdData& data) = 0;
+    virtual MaybeError operator()(const schema::RootCommandSurfaceUnconfigureCmdData& data) = 0;
+    virtual MaybeError operator()(const schema::RootCommandSurfacePresentCmdData& data) = 0;
+    virtual MaybeError operator()(
+        const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandEndCmdData& data) = 0;
     virtual MaybeError operator()(const std::monostate&);
 };
@@ -201,6 +206,9 @@ MaybeError ProcessEncoderCommands(ReadHead* readHead, EncoderVisitor* visitor);
 MaybeError ProcessComputePassCommands(ReadHead* readHead, ComputePassVisitor* visitor);
 MaybeError ProcessRenderPassCommands(ReadHead* readHead, RenderPassVisitor* visitor);
 MaybeError ProcessRenderBundleCommands(ReadHead* readHead, RenderBundleVisitor* visitor);
+
+MaybeError SkipEncoderCommands(ReadHead* readHead);
+MaybeError SkipRenderBundleCommands(ReadHead* readHead);
 
 class CaptureWalker {
   public:
