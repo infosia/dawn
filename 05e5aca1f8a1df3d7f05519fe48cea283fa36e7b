@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcec0dd2_e5839f45",
+        "filename": "src/dawn/wire/client/ObjectStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T19:11:27Z",
+      "side": 1,
+      "message": "Is this now unused?",
+      "revId": "05e5aca1f8a1df3d7f05519fe48cea283fa36e7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fae7b5c9_0e1e8ca2",
+        "filename": "src/dawn/wire/client/ObjectStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T19:11:27Z",
+      "side": 1,
+      "message": "If GetAllObjects is not used anywhere else maybe it could just return a copy? Simpler than this.",
+      "revId": "05e5aca1f8a1df3d7f05519fe48cea283fa36e7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
