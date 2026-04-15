@@ -44,7 +44,7 @@ namespace dawn::native {
 struct BeginRenderPassCmd;
 struct ProgrammableStage;
 struct EntryPointMetadata;
-enum class SingleShaderStage;
+enum class SingleShaderStage : uint8_t;
 }  // namespace dawn::native
 
 namespace dawn::native::metal {

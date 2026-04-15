@@ -43,6 +43,10 @@ class vector : public std::vector<Value> {
     using I = UnderlyingType<Index>;
     using Base = std::vector<Value>;
 
+    static_assert(std::numeric_limits<I>::min() == 0, "Index type must be unsigned");
+    static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<size_t>::max(),
+                  "Index type must fit within size_t");
+
   private:
     // Disallow access to base constructors and untyped index/size-related operators.
     using Base::Base;
