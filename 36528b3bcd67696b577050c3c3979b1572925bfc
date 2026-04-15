@@ -33,6 +33,23 @@
       "message": "PTAL\n\nThe existing tests were not grouped well, so a number of pre-existing tests got shuffled too. I make an attempt to try to parameterize this a bit, but it was turning into me implementing the logic under test in the tests themselves, so stuck with explicit tests.",
       "revId": "36528b3bcd67696b577050c3c3979b1572925bfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6b0401f_571f6a29",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-15T21:37:06Z",
+      "side": 1,
+      "message": "Feel free to turn these into `TINT_ASSERT`s if they are not actually reachable.",
+      "revId": "36528b3bcd67696b577050c3c3979b1572925bfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
