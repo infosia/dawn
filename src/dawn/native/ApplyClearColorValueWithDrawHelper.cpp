@@ -63,7 +63,7 @@ static const char kVSSource[] = DAWN_MULTILINE(
 );
 
 const char* GetTextureComponentTypeString(DeviceBase* device, wgpu::TextureFormat format) {
-    DAWN_ASSERT(format != wgpu::TextureFormat::Undefined);
+    DAWN_CHECK(format != wgpu::TextureFormat::Undefined);
 
     const Format& formatInfo = device->GetValidInternalFormat(format);
     switch (formatInfo.GetAspectInfo(Aspect::Color).baseType) {
@@ -119,7 +119,7 @@ std::string ConstructFragmentShader(DeviceBase* device,
     // Only generate the assignments we need.
     for (auto i : key.colorTargetsToApplyClearColorValue) {
         wgpu::TextureFormat currentFormat = key.colorTargetFormats[i];
-        DAWN_ASSERT(currentFormat != wgpu::TextureFormat::Undefined);
+        DAWN_CHECK(currentFormat != wgpu::TextureFormat::Undefined);
 
         const char* type = GetTextureComponentTypeString(device, currentFormat);
 
@@ -317,7 +317,7 @@ ResultOrError<Ref<BufferBase>> CreateUniformBufferWithClearValues(
         offset += sizeof(uint32_t) * 4;
     }
 
-    DAWN_ASSERT(offset > 0);
+    DAWN_CHECK(offset > 0);
 
     Ref<BufferBase> buffer;
     DAWN_TRY_ASSIGN(buffer, encoder->GetDevice()->GetOrCreateTemporaryUniformBuffer(offset));

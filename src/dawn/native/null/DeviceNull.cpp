@@ -270,7 +270,7 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_CHECK(GetState() == State::Disconnected);
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -282,7 +282,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // Clear pending operations before checking mMemoryUsage because some operations keep a
     // reference to Buffers.
     mPendingOperations.clear();
-    DAWN_ASSERT(mMemoryUsage == 0);
+    DAWN_CHECK(mMemoryUsage == 0);
 }
 
 void Device::ForgetPendingOperations() {

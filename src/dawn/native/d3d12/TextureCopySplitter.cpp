@@ -37,7 +37,7 @@ namespace {
 BlockOrigin3D ComputeBlockOffsets(const TypedTexelBlockInfo& blockInfo,
                                   uint32_t offset,
                                   BlockCount blocksPerRow) {
-    DAWN_ASSERT(blocksPerRow != BlockCount{0});
+    DAWN_CHECK(blocksPerRow != BlockCount{0});
     BlockCount offsetInBlocks = blockInfo.BytesToBlocks(offset);
     BlockCount blockOffsetX = offsetInBlocks % blocksPerRow;
     BlockCount blockOffsetY = offsetInBlocks / blocksPerRow;
@@ -48,7 +48,7 @@ uint64_t OffsetToFirstCopiedTexel(const TypedTexelBlockInfo& blockInfo,
                                   BlockCount blocksPerRow,
                                   uint64_t alignedOffset,
                                   BlockOrigin3D bufferOffset) {
-    DAWN_ASSERT(bufferOffset.z == BlockCount{0});
+    DAWN_CHECK(bufferOffset.z == BlockCount{0});
     uint64_t offset =
         alignedOffset + blockInfo.ToBytes(bufferOffset.x + blocksPerRow * bufferOffset.y);
     return offset;
@@ -199,7 +199,7 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndEvenCopyHeight(
     copy2->copySize.depthOrArrayLayers = BlockCount{1};
     copy2->bufferOffset = blockOffsetForLastRowOfLastImage;
     copy2->bufferSize.width = copy1->bufferSize.width;
-    DAWN_ASSERT(copy2->copySize.height == BlockCount{1});
+    DAWN_CHECK(copy2->copySize.height == BlockCount{1});
     copy2->bufferSize.height = copy2->bufferOffset.y + copy2->copySize.height;
     copy2->bufferSize.depthOrArrayLayers = BlockCount{1};
 }
@@ -229,10 +229,10 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndOddCopyHeight(
     // Copy 1: copy the rest depth slices in one shot
     TextureCopySubresource::CopyInfo* copy1 = copy.AddCopy();
     *copy1 = copy0;
-    DAWN_ASSERT(copySize.height % BlockCount{2} == BlockCount{1});
+    DAWN_CHECK(copySize.height % BlockCount{2} == BlockCount{1});
     copy1->alignedOffset += blockInfo.ToBytes((copySize.height + BlockCount{1}) * blocksPerRow);
 
-    DAWN_ASSERT(copy1->alignedOffset % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
+    DAWN_CHECK(copy1->alignedOffset % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
     // textureOffset1.z should add one because the first slice has already been copied in copy0.
     copy1->textureOffset.z++;
     // bufferOffset1.y should be 0 because we skipped the first depth slice and there is no empty
@@ -267,8 +267,8 @@ TextureCopySubresource Compute2DTextureCopySubresourceAligned(BlockOrigin3D orig
         return copy;
     }
 
-    DAWN_ASSERT(alignedOffset < offset);
-    DAWN_ASSERT(offset - alignedOffset < D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
+    DAWN_CHECK(alignedOffset < offset);
+    DAWN_CHECK(offset - alignedOffset < D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT);
 
     // We must reinterpret our aligned offset into X and Y offsets with respect to the row
     // pitch.
@@ -293,8 +293,8 @@ TextureCopySubresource Compute2DTextureCopySubresourceAligned(BlockOrigin3D orig
     BlockOrigin3D blockOffset =
         ComputeBlockOffsets(blockInfo, static_cast<uint32_t>(offset - alignedOffset), blocksPerRow);
 
-    DAWN_ASSERT(blockOffset.y <= BlockCount{1});
-    DAWN_ASSERT(blockOffset.z == BlockCount{0});
+    DAWN_CHECK(blockOffset.y <= BlockCount{1});
+    DAWN_CHECK(blockOffset.z == BlockCount{0});
 
     BlockCount copyBlocksPerRowPitch = copySize.width;
     BlockCount blockOffsetInRowPitch = blockOffset.x;
@@ -367,7 +367,7 @@ TextureCopySubresource Compute2DTextureCopySubresourceAligned(BlockOrigin3D orig
     //  |---------|
 
     // Copy 0
-    DAWN_ASSERT(blocksPerRow > blockOffsetInRowPitch);
+    DAWN_CHECK(blocksPerRow > blockOffsetInRowPitch);
     const BlockExtent3D copySize0 = {blocksPerRow - blockOffset.x, copySize.height,
                                      copySize.depthOrArrayLayers};
 
@@ -385,12 +385,12 @@ TextureCopySubresource Compute2DTextureCopySubresourceAligned(BlockOrigin3D orig
     const BlockOrigin3D blockOffsetForCopy1 = ComputeBlockOffsets(
         blockInfo, static_cast<uint32_t>(offsetForCopy1 - alignedOffsetForCopy1), blocksPerRow);
 
-    DAWN_ASSERT(blockOffsetForCopy1.y <= BlockCount{1});
-    DAWN_ASSERT(blockOffsetForCopy1.z == BlockCount{0});
+    DAWN_CHECK(blockOffsetForCopy1.y <= BlockCount{1});
+    DAWN_CHECK(blockOffsetForCopy1.z == BlockCount{0});
 
     const BlockOrigin3D textureOffset1 = {origin.x + copySize0.width, origin.y, origin.z};
 
-    DAWN_ASSERT(copySize.width > copySize0.width);
+    DAWN_CHECK(copySize.width > copySize0.width);
     const BlockExtent3D copySize1 = {copySize.width - copySize0.width, copySize.height,
                                      copySize.depthOrArrayLayers};
 
@@ -459,7 +459,7 @@ TextureCopySubresource Compute3DTextureCopySubresourceAligned(BlockOrigin3D orig
     TextureCopySubresource copySubresource =
         Compute2DTextureCopySubresourceAligned(origin, copySize, blockInfo, offset, blocksPerRow);
 
-    DAWN_ASSERT(copySubresource.count <= 2);
+    DAWN_CHECK(copySubresource.count <= 2);
     // If copySize.depthOrArrayLayers is 1, we can return copySubresource. Because we don't need to
     // extend the copy region(s) to other depth slice(s).
     if (copySize.depthOrArrayLayers == BlockCount{1}) {
@@ -473,7 +473,7 @@ TextureCopySubresource Compute3DTextureCopySubresourceAligned(BlockOrigin3D orig
     for (uint32_t i = 0; i < originalCopyCount; ++i) {
         // There can be one empty row at most in a copy region.
         BlockCount bufferHeight = copySubresource.copies[i].bufferSize.height;
-        DAWN_ASSERT(bufferHeight <= rowsPerImage + BlockCount{1});
+        DAWN_CHECK(bufferHeight <= rowsPerImage + BlockCount{1});
 
         if (bufferHeight == rowsPerImage) {
             // If the copy region's bufferHeight equals to rowsPerImage, we can use this
@@ -493,8 +493,8 @@ TextureCopySubresource Compute3DTextureCopySubresourceAligned(BlockOrigin3D orig
             // Otherwise, bufferHeight won't be greater than rowsPerImage and there won't be
             // an empty row at the beginning of this copy region.
             uint64_t bytesPerRow = blockInfo.ToBytes(blocksPerRow);
-            DAWN_ASSERT(bytesPerRow == D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
-            DAWN_ASSERT(copySize.height == rowsPerImage);
+            DAWN_CHECK(bytesPerRow == D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
+            DAWN_CHECK(copySize.height == rowsPerImage);
 
             const BlockCount copyHeight = copySize.height;
             if (static_cast<uint32_t>(copyHeight) % 2 == 0) {
@@ -581,7 +581,7 @@ TextureCopySubresource Compute3DTextureCopySubresourceRelaxed(BlockOrigin3D orig
         //                                               ^
         //                                     End of all buffer data
         //
-        DAWN_ASSERT(copySize.depthOrArrayLayers >= BlockCount{1});
+        DAWN_CHECK(copySize.depthOrArrayLayers >= BlockCount{1});
         constexpr BlockCount depthInCopy2{1};
         const BlockCount rowsPerImageInTexels2 = copySize.height;
 
@@ -600,7 +600,7 @@ TextureCopySubresource Compute3DTextureCopySubresourceRelaxed(BlockOrigin3D orig
 }  // namespace
 
 TextureCopySubresource::CopyInfo* TextureCopySubresource::AddCopy() {
-    DAWN_ASSERT(this->count < kMaxTextureCopyRegions);
+    DAWN_CHECK(this->count < kMaxTextureCopyRegions);
     return &this->copies[this->count++];
 }
 
