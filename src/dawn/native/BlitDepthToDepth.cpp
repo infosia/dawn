@@ -137,6 +137,9 @@ MaybeError BlitDepthToDepth(DeviceBase* device,
     // also don't textureLoad in the shader at a non-zero array index correctly. Workaround this
     // issue by copying the non-zero array slices to a single-layer texture. That texture will be be
     // sampled as the source instead.
+
+    // Note TexelCount is uint64_t so it can't be used as the index type here.
+    // However we only use this with 1-dimensional sizes which are always uint32_t in webgpu.h.
     ityp::vector<TexelCount, Ref<TextureViewBase>> srcViews;
     srcViews.reserve(copyExtent.depthOrArrayLayers);
     for (TexelCount z = TexelCount{0}; z < copyExtent.depthOrArrayLayers; ++z) {

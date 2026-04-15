@@ -35,8 +35,6 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/BitSetRangeIterator.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
-#include "dawn/common/TypedInteger.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn {
@@ -157,7 +155,12 @@ class bitset : private ::std::bitset<N> {
     using I = UnderlyingType<Index>;
     using Base = ::std::bitset<N>;
 
-    static_assert(sizeof(I) <= sizeof(size_t));
+    static_assert(std::numeric_limits<UnderlyingType<Index>>::min() == 0,
+                  "Index type must be unsigned");
+    // If this needs to be relaxed, look at ityp::vector for code to share.
+    static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<size_t>::max(),
+                  "Index type must fit within size_t");
+    static_assert(N <= std::numeric_limits<I>::max());
 
     explicit constexpr bitset(const Base& rhs) : Base(rhs) {}
 

@@ -199,21 +199,31 @@ TEST_F(ITypVectorTest, BeginEndFrontBackData) {
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
 using ITypVectorDeathTest = ITypVectorTest;
 
-// Out of bounds accesses should crash even in release (the underlying container
-// should have asserts enabled).
+// Out of bounds accesses should crash even in release.
 TEST_F(ITypVectorDeathTest, OutOfBounds) {
-    // MSVC doesn't have asserts (without _MSVC_STL_HARDENING).
-    if constexpr (DAWN_COMPILER_IS(MSVC)) {
-        GTEST_SKIP();
-    }
-
     Vector vec(Key(10), Val(7));
+    vec[Key(9)];
     EXPECT_DEATH(vec[Key(10)], "");
     EXPECT_DEATH(vec.at(Key(10)), "");
 
     const Vector& constVec = vec;
+    constVec[Key(9)];
     EXPECT_DEATH(constVec[Key(10)], "");
     EXPECT_DEATH(constVec.at(Key(10)), "");
+}
+
+// If the index is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
+TEST_F(ITypVectorDeathTest, OversizedIndex) {
+    using Key64 = TypedInteger<struct KeyT, uint64_t>;
+    ityp::vector<Key64, Val> vec{Key64(10), Val(7)};
+
+    // Regular out-of-bounds.
+    vec[Key64(9)];
+    EXPECT_DEATH(vec[Key64(10)], "");
+
+    vec[Key64(0)];
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    EXPECT_DEATH(vec[Key64(0x1'0000'0000LLU)], "");
 }
 
 }  // anonymous namespace

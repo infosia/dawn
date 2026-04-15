@@ -33,6 +33,7 @@
 #include <limits>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/UnderlyingType.h"
 
 namespace dawn {
 namespace detail {
@@ -77,6 +78,24 @@ bool RangesOverlap(T x0, T x1, T y0, T y1) {
     // which is (x1 < y0 || y1 < x0)
     // The inverse of which ends in the following statement.
     return x0 <= y1 && y0 <= x1;
+}
+
+template <typename Index>
+constexpr inline size_t BoundCheckedIndex(Index i, Index typedSize, size_t untypedSize) {
+    using I = UnderlyingType<Index>;
+    static_assert(std::numeric_limits<I>::min() == 0, "Index type must be unsigned");
+
+    DAWN_ASSERT(static_cast<uint64_t>(typedSize) == static_cast<uint64_t>(untypedSize));
+
+    // Check that the index is in bounds. Unlike libc++ hardening checks, this is done before the
+    // cast to size_t, to make sure we don't do an invalid cast when Index is larger than size_t.
+    DAWN_CHECK(i < typedSize);
+
+    size_t ret = static_cast<size_t>(i);
+    // If libc++ hardening is enabled it will try to do the bounds check again. Hint the
+    // compiler to help dedup that bounds check.
+    DAWN_ASSERT(ret < untypedSize);
+    return ret;
 }
 
 }  // namespace dawn
