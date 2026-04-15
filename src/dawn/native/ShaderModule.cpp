@@ -471,12 +471,12 @@ MaybeError ParseWGSL(std::unique_ptr<tint::Source::File> file,
     if (program.IsValid()) {
         outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), std::move(file))));
-        DAWN_ASSERT(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
+        DAWN_CHECK(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
     } else {
         // Otherwise, store the validation error messages to outputParseResult.
         outputParseResult->SetValidationError(
             DAWN_VALIDATION_ERROR("Error while parsing WGSL: %s\n", program.Diagnostics().Str()));
-        DAWN_ASSERT(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
+        DAWN_CHECK(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
     }
 
     return {};
@@ -493,7 +493,7 @@ MaybeError ParseSPIRV(const std::vector<uint32_t>& spirv,
     if (irResult != tint::Success) {
         outputParseResult->SetValidationError(
             DAWN_VALIDATION_ERROR("Error while parsing SPIR-V: %s\n", irResult.Failure().reason));
-        DAWN_ASSERT(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
+        DAWN_CHECK(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
         return {};
     }
 
@@ -512,12 +512,12 @@ MaybeError ParseSPIRV(const std::vector<uint32_t>& spirv,
 
         outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), nullptr)));
-        DAWN_ASSERT(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
+        DAWN_CHECK(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
     } else {
         // Otherwise, store the validation error messages to outputParseResult.
         outputParseResult->SetValidationError(DAWN_VALIDATION_ERROR(
             "Error while generating WGSL: %s\n", wgslResult.Failure().reason));
-        DAWN_ASSERT(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
+        DAWN_CHECK(!outputParseResult->HasTintProgram() && outputParseResult->HasError());
     }
 
     return {};
@@ -538,7 +538,7 @@ std::vector<uint64_t> GetBindGroupMinBufferSizes(const BindingGroupInfoMap& shad
             continue;
         }
 
-        DAWN_ASSERT(packedIdx < requiredBufferSizes.size());
+        DAWN_CHECK(packedIdx < requiredBufferSizes.size());
         const auto& shaderInfo = shaderBindings.find(bindingInfo.binding);
         if (shaderInfo != shaderBindings.end()) {
             auto* shaderBufferInfo =
@@ -667,8 +667,8 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
         [&](const StorageTextureBindingInfo& shaderBindingInfo) -> MaybeError {
             const StorageTextureBindingInfo& bindingLayout =
                 std::get<StorageTextureBindingInfo>(layoutInfo.bindingLayout);
-            DAWN_ASSERT(bindingLayout.format != wgpu::TextureFormat::Undefined);
-            DAWN_ASSERT(shaderBindingInfo.format != wgpu::TextureFormat::Undefined);
+            DAWN_CHECK(bindingLayout.format != wgpu::TextureFormat::Undefined);
+            DAWN_CHECK(shaderBindingInfo.format != wgpu::TextureFormat::Undefined);
 
             DAWN_INVALID_IF(!IsShaderCompatibleWithPipelineLayoutOnStorageTextureAccess(
                                 bindingLayout, shaderBindingInfo),
@@ -690,8 +690,8 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
         [&](const TexelBufferBindingInfo& shaderBindingInfo) -> MaybeError {
             const TexelBufferBindingInfo& bindingLayout =
                 std::get<TexelBufferBindingInfo>(layoutInfo.bindingLayout);
-            DAWN_ASSERT(bindingLayout.format != wgpu::TextureFormat::Undefined);
-            DAWN_ASSERT(shaderBindingInfo.format != wgpu::TextureFormat::Undefined);
+            DAWN_CHECK(bindingLayout.format != wgpu::TextureFormat::Undefined);
+            DAWN_CHECK(shaderBindingInfo.format != wgpu::TextureFormat::Undefined);
 
             DAWN_INVALID_IF(bindingLayout.access != shaderBindingInfo.access,
                             "The layout's binding access (%s) doesn't match the shader's binding "
@@ -770,7 +770,7 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
             const InputAttachmentBindingInfo& bindingLayout =
                 std::get<InputAttachmentBindingInfo>(layoutInfo.bindingLayout);
 
-            DAWN_ASSERT(bindingLayout.sampleType == shaderBindingInfo.sampleType);
+            DAWN_CHECK(bindingLayout.sampleType == shaderBindingInfo.sampleType);
 
             return {};
         });
@@ -824,11 +824,11 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
                 auto [_, inserted] =
                     metadata->uninitializedOverrides.emplace(std::move(identifier));
                 // The insertion should have taken place
-                DAWN_ASSERT(inserted);
+                DAWN_CHECK(inserted);
             } else {
                 auto [_, inserted] = metadata->initializedOverrides.emplace(std::move(identifier));
                 // The insertion should have taken place
-                DAWN_ASSERT(inserted);
+                DAWN_CHECK(inserted);
             }
         }
     }
@@ -869,7 +869,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
     // Immediate data byte size must be 4-byte aligned.
     if (entryPoint.immediate_data_size) {
-        DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
+        DAWN_CHECK(IsAligned(entryPoint.immediate_data_size, 4u));
         metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
 
         // Avoid calling GetImmediateBlockInfo if the size exceeds the limit,
@@ -972,7 +972,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         for (const auto& inputVar : entryPoint.input_variables) {
             // Skip over @color framebuffer fetch, it is handled below.
             if (!inputVar.attributes.location.has_value()) {
-                DAWN_ASSERT(inputVar.attributes.color.has_value());
+                DAWN_CHECK(inputVar.attributes.color.has_value());
                 continue;
             }
 
@@ -1462,11 +1462,11 @@ CachedValidationError::CachedValidationError(std::unique_ptr<ErrorData>&& errorD
     DAWN_ASSERT(errorData->GetType() == InternalErrorType::Validation);
     message = errorData->GetMessage();
     contexts = errorData->GetContexts();
-    DAWN_ASSERT(!message.empty());
+    DAWN_CHECK(!message.empty());
 }
 
 std::unique_ptr<ErrorData> CachedValidationError::ToErrorData() const {
-    DAWN_ASSERT(!message.empty());
+    DAWN_CHECK(!message.empty());
     auto error = std::make_unique<ErrorData>(InternalErrorType::Validation, message);
     std::for_each(contexts.begin(), contexts.end(), [&error](auto c) { error->AppendContext(c); });
     return error;
@@ -1920,7 +1920,7 @@ void ShaderModuleBase::Initialize() {
 
             // Move the compilation messages regardless of compilation success. Compilation messages
             // should be inject only once for each shader module.
-            DAWN_ASSERT(resultState.compilationMessages == nullptr);
+            DAWN_CHECK(resultState.compilationMessages == nullptr);
             // Move the compilationMessages into the shader module and emit the tint errors and
             // warnings
             resultState.compilationMessages = std::make_unique<OwnedCompilationMessages>(

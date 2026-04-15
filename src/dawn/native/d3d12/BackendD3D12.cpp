@@ -119,17 +119,17 @@ MaybeError Backend::EnsureDXC() {
 }
 
 ComPtr<IDxcLibrary> Backend::GetDxcLibrary() const {
-    DAWN_ASSERT(mDxcLibrary != nullptr);
+    DAWN_CHECK(mDxcLibrary != nullptr);
     return mDxcLibrary;
 }
 
 ComPtr<IDxcCompiler3> Backend::GetDxcCompiler() const {
-    DAWN_ASSERT(mDxcCompiler != nullptr);
+    DAWN_CHECK(mDxcCompiler != nullptr);
     return mDxcCompiler;
 }
 
 ComPtr<IDxcValidator> Backend::GetDxcValidator() const {
-    DAWN_ASSERT(mDxcValidator != nullptr);
+    DAWN_CHECK(mDxcValidator != nullptr);
     return mDxcValidator;
 }
 

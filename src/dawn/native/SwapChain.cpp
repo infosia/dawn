@@ -84,10 +84,10 @@ FormatSet SwapChainBase::ComputeViewFormatSet() const {
 
 SwapChainBase::~SwapChainBase() {
     if (mCurrentTextureInfo.texture != nullptr) {
-        DAWN_ASSERT(mCurrentTextureInfo.texture->IsDestroyed());
+        DAWN_CHECK(mCurrentTextureInfo.texture->IsDestroyed());
     }
 
-    DAWN_ASSERT(!mAttached);
+    DAWN_CHECK(!mAttached);
 }
 
 void SwapChainBase::DetachFromSurface() {
@@ -119,14 +119,14 @@ ResultOrError<SurfaceTexture> SwapChainBase::GetCurrentTexture() {
     SetChildLabel(mCurrentTextureInfo.texture.Get());
 
     // Check that the return texture matches exactly what was given for this descriptor.
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetFormat().format == mFormat);
-    DAWN_ASSERT(IsSubset(mUsage, mCurrentTextureInfo.texture->GetUsage()));
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetDimension() == wgpu::TextureDimension::e2D);
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetWidth(Aspect::Color) == mWidth);
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetHeight(Aspect::Color) == mHeight);
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetNumMipLevels() == 1);
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetArrayLayers() == 1);
-    DAWN_ASSERT(mCurrentTextureInfo.texture->GetViewFormats() == ComputeViewFormatSet());
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetFormat().format == mFormat);
+    DAWN_CHECK(IsSubset(mUsage, mCurrentTextureInfo.texture->GetUsage()));
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetDimension() == wgpu::TextureDimension::e2D);
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetWidth(Aspect::Color) == mWidth);
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetHeight(Aspect::Color) == mHeight);
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetNumMipLevels() == 1);
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetArrayLayers() == 1);
+    DAWN_CHECK(mCurrentTextureInfo.texture->GetViewFormats() == ComputeViewFormatSet());
 
     // Calling GetCurrentTexture always returns a new reference.
     auto texture = mCurrentTextureInfo.texture;
@@ -138,7 +138,7 @@ MaybeError SwapChainBase::Present() {
     DAWN_TRY(ValidatePresent());
     DAWN_TRY(PresentImpl());
 
-    DAWN_ASSERT(mCurrentTextureInfo.texture->IsDestroyed());
+    DAWN_CHECK(mCurrentTextureInfo.texture->IsDestroyed());
     mCurrentTextureInfo.texture = nullptr;
     return {};
 }
@@ -188,7 +188,7 @@ wgpu::BackendType SwapChainBase::GetBackendType() const {
 
 MaybeError SwapChainBase::ValidatePresent() const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
-    DAWN_ASSERT(mAttached);
+    DAWN_CHECK(mAttached);
 
     DAWN_INVALID_IF(mCurrentTextureInfo.texture == nullptr,
                     "GetCurrentTexture was not called on %s this frame prior to calling Present.",
@@ -199,7 +199,7 @@ MaybeError SwapChainBase::ValidatePresent() const {
 
 MaybeError SwapChainBase::ValidateGetCurrentTexture() const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
-    DAWN_ASSERT(mAttached);
+    DAWN_CHECK(mAttached);
 
     return {};
 }

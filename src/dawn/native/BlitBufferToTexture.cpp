@@ -406,12 +406,12 @@ MaybeError BlitBufferToTexture(DeviceBase* device,
     // bytesPerRow is aligned to 256. However some backends might enable
     // DawnTexelCopyBufferRowAlignment feature to relax the alignment. Currently only D3D11 backend
     // enables this feature, and the relaxed alignment there is 4.
-    DAWN_ASSERT((src.bytesPerRow % 4) == 0);
+    DAWN_CHECK((src.bytesPerRow % 4) == 0);
 
     DAWN_ASSERT(buffer->GetInternalUsage() &
                 (kReadOnlyStorageBuffer | kInternalStorageBuffer | wgpu::BufferUsage::Storage));
 
-    DAWN_ASSERT(!copyExtent.IsEmpty());
+    DAWN_CHECK(!copyExtent.IsEmpty());
 
     // Allow internal usages since we need to use the destination
     // as a render attachment.
