@@ -156,7 +156,10 @@ class bitset : private ::std::bitset<N> {
     using Base = ::std::bitset<N>;
 
     static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
-    static_assert(sizeof(I) <= sizeof(size_t));
+    // If this needs to be relaxed, look at ityp::vector for code to share.
+    static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<size_t>::max(),
+                  "Index type must fit within size_t");
+    static_assert(N <= std::numeric_limits<I>::max());
 
     explicit constexpr bitset(const Base& rhs) : Base(rhs) {}
 
