@@ -36,6 +36,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/Surface.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
@@ -90,17 +91,143 @@ void CaptureContext::CaptureSetLabel(Device* object, const std::string& label) {
     Serialize(*this, data);
 }
 
+template <>
+void CaptureContext::CaptureSetLabel(Surface* object, const std::string& label) {
+    schema::ObjectId surfaceId = AddResourceAndGetId(object);
+    if (surfaceId == 0) {
+        return;
+    }
+    schema::RootCommandSetLabelCmd data{{
+        .data{{
+            .id = surfaceId,
+            .type = schema::ObjectType::Surface,
+            .label = label,
+        }},
+    }};
+    Serialize(*this, data);
+}
+
+void CaptureContext::CaptureSurfaceConfigure(Surface* surface, const SurfaceConfiguration* config) {
+    schema::ObjectId surfaceId = AddResourceAndGetId(surface);
+    if (surfaceId == 0) {
+        return;
+    }
+
+    std::vector<wgpu::TextureFormat> viewFormats;
+    for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
+        viewFormats.push_back(config->viewFormats[i]);
+    }
+
+    schema::RootCommandSurfaceConfigureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .config = {{
+                .deviceId = schema::kDeviceId,
+                .format = config->format,
+                .usage = config->usage,
+                .viewFormats = viewFormats,
+                .alphaMode = config->alphaMode,
+                .width = config->width,
+                .height = config->height,
+                .presentMode = config->presentMode,
+            }},
+        }},
+    }};
+    Serialize(*this, cmd);
+}
+
+void CaptureContext::CaptureSurfaceUnconfigure(Surface* surface) {
+    schema::ObjectId surfaceId = AddResourceAndGetId(surface);
+    if (surfaceId == 0) {
+        return;
+    }
+    schema::RootCommandSurfaceUnconfigureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+        }},
+    }};
+    Serialize(*this, cmd);
+}
+
+void CaptureContext::CaptureSurfacePresent(Surface* surface) {
+    schema::ObjectId surfaceId = AddResourceAndGetId(surface);
+    if (surfaceId == 0) {
+        return;
+    }
+
+    schema::RootCommandSurfacePresentCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+        }},
+    }};
+    Serialize(*this, cmd);
+}
+
+MaybeError CaptureContext::CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture) {
+    schema::ObjectId surfaceId = AddResourceAndGetId(surface);
+    if (surfaceId == 0) {
+        return {};
+    }
+    schema::ObjectId textureId;
+    DAWN_TRY_ASSIGN(textureId, AddResourceAndGetId(texture));
+    if (textureId == 0) {
+        return {};
+    }
+
+    schema::RootCommandSurfaceGetCurrentTextureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .textureId = textureId,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+schema::ObjectId CaptureContext::AddResourceAndGetId(Surface* surface) {
+    DAWN_ASSERT(surface != nullptr);
+    Ref<Surface> ref(surface);
+    auto it = mSurfaceIds.find(ref);
+    if (it == mSurfaceIds.end()) {
+        schema::ObjectId id = mNextObjectId++;
+        mSurfaceIds[std::move(ref)] = id;
+        return id;
+    }
+    return it->second;
+}
+
+schema::ObjectId CaptureContext::GetId(Surface* surface) {
+    if (surface == nullptr) {
+        return 0;
+    }
+
+    auto it = mSurfaceIds.find(Ref<Surface>(surface));
+    DAWN_ASSERT(it != mSurfaceIds.end());
+    return it->second;
+}
+
 CaptureContext::CaptureContext(Device* device,
                                std::ostream& commandStream,
                                std::ostream& contentStream)
     : mDevice(device), mCommandStream(commandStream), mContentStream(contentStream) {}
 
-CaptureContext::~CaptureContext() {
-    auto& wgpu = mDevice->wgpu;
-    if (mCopyBuffer) {
-        wgpu->bufferDestroy(mCopyBuffer);
-        wgpu->bufferRelease(mCopyBuffer);
+void CaptureContext::ReleaseReferences() {
+    mObjectIds.clear();
+    mSurfaceIds.clear();
+
+    if (mDevice) {
+        auto& wgpu = mDevice->wgpu;
+        if (mCopyBuffer) {
+            wgpu->bufferDestroy(mCopyBuffer);
+            wgpu->bufferRelease(mCopyBuffer);
+        }
+
+        mDevice = nullptr;
     }
+}
+
+CaptureContext::~CaptureContext() {
+    ReleaseReferences();
 }
 
 WGPUBuffer CaptureContext::GetCopyBuffer() {

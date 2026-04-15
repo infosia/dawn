@@ -47,6 +47,8 @@ static_library("replay") {
     "ReadHead.h",
     "Replay.cpp",
     "ReplayImpl.h",
+    "SurfaceDiscovery.cpp",
+    "SurfaceDiscovery.h",
   ]
 
   deps = [

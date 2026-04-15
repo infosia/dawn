@@ -384,6 +384,10 @@ void Device::DestroyImpl(DestroyReason reason) {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the device since there are no other live refs.
 
+    if (ToBackend(GetQueue())->IsCapturing()) {
+        EndCapture();
+    }
+
     if (mInnerHandle) {
         wgpu->deviceDestroy(mInnerHandle);
     }
@@ -470,9 +474,11 @@ void Device::StartCapture(CaptureStream& commandStream, CaptureStream& contentSt
 }
 
 void Device::EndCapture() {
-    MaybeError result = ToBackend(GetQueue())->SetCaptureContext(nullptr);
-    [[maybe_unused]] bool hadError =
-        ConsumedError(std::move(result), "calling %s.EndCapture()", this);
+    if (ToBackend(GetQueue())->IsCapturing()) {
+        MaybeError result = ToBackend(GetQueue())->SetCaptureContext(nullptr);
+        [[maybe_unused]] bool hadError =
+            ConsumedError(std::move(result), "calling %s.EndCapture()", this);
+    }
 }
 
 }  // namespace dawn::native::webgpu
