@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3795f090_7c1fe911",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T21:48:59Z",
+      "side": 1,
+      "message": "Fixed the errors on the CQ complaining that the images weren\u0027t transitioned to the right usage.",
+      "revId": "10412e2364bbb7ede736bac10fc3c7d81079d843",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4e3b06e_5f52b99d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T21:48:59Z",
+      "side": 1,
+      "message": "This casts a wider net than it probably needs to, since it\u0027s only really necessary for DepthStencil textures based on how EnsureSubresourceContentInitialized works. But I don\u0027t want to make assumptions about EnsureSubresourceContentInitialized here and I believe TransitionUsageNow does some level of de-duping, so I don\u0027t think this will be too problematic?",
+      "revId": "10412e2364bbb7ede736bac10fc3c7d81079d843",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
