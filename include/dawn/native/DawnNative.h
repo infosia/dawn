@@ -244,7 +244,7 @@ DAWN_NATIVE_EXPORT uint64_t AcquireErrorInjectorCallCount();
 DAWN_NATIVE_EXPORT void InjectErrorAt(uint64_t index);
 
 // The different types of external images
-enum ExternalImageType {
+enum ExternalImageType : uint16_t {
     OpaqueFD,
     DmaBuf,
     IOSurface,

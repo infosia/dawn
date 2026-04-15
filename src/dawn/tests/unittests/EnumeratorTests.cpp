@@ -30,6 +30,7 @@
 
 #include "dawn/common/Compiler.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/TypedInteger.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/common/ityp_vector.h"
