@@ -45,6 +45,10 @@ class JNIClasses {
         jclass gpuCallbackRunnable;
         jclass gpuCallbackErrorTypeRunnable;
         jclass gpuCallbackVoidRunnable;
+        jclass gpuHardwareBufferExternalTexture;
+        jclass gpuHardwareBufferTexture;
+        jclass javaIllegalStateException;
+        jclass javaUnsupportedOperationException;
     private:
         JNIClasses(JNIEnv *env);
 };

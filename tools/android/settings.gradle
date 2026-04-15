@@ -42,3 +42,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "library"
 include ':webgpu'
+include ':demo'
