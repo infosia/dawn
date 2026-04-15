@@ -33,6 +33,7 @@
 #include <limits>
 #include <utility>
 
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -48,6 +49,7 @@ class array : private ::std::array<Value, Size> {
 
     static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
     static_assert(Size <= std::numeric_limits<I>::max());
+    static_assert(Size <= std::numeric_limits<size_t>::max());
 
   public:
     constexpr array() = default;
@@ -63,13 +65,15 @@ class array : private ::std::array<Value, Size> {
     using Base::empty;
     using Base::fill;
 
-    constexpr Value& operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
+    constexpr Value& operator[](Index i) { return Base::operator[](checked_cast<size_t>(i)); }
+    constexpr const Value& operator[](Index i) const {
+        return Base::operator[](checked_cast<size_t>(i));
+    }
 
-    constexpr Value& at(Index i) { return Base::at(static_cast<I>(i)); }
-    constexpr const Value& at(Index i) const { return Base::at(static_cast<I>(i)); }
+    constexpr Value& at(Index i) { return Base::at(checked_cast<size_t>(i)); }
+    constexpr const Value& at(Index i) const { return Base::at(checked_cast<size_t>(i)); }
 
-    constexpr Index size() const { return Index(I(Size)); }
+    constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 
     constexpr bool operator==(const array<Index, Value, Size>& other) const = default;
 };
