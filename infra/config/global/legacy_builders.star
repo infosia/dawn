@@ -34,39 +34,6 @@ appropriately named files.
 
 load("//project.star", "ACTIVE_MILESTONES")
 
-os_category = struct(
-    LINUX = "Linux",
-    MAC = "Mac",
-    WINDOWS = "Windows",
-)
-
-def os_enum(category, console_name):
-    return struct(category = category, console_name = console_name)
-
-os = struct(
-    LINUX = os_enum(os_category.LINUX, "linux"),
-    MAC = os_enum(os_category.MAC, "mac"),
-    WINDOWS = os_enum(os_category.WINDOWS, "win"),
-)
-
-def get_dimension(os):
-    """Returns the dimension to use for the input os.
-
-    Args:
-        os: An os enum to check against.
-
-    Returns:
-        A string containing the dimensions the given OS should target.
-    """
-    if os.category == os_category.LINUX:
-        return "Ubuntu-24.04"
-    elif os.category == os_category.MAC:
-        return "Mac-12|Mac-13|Mac-14|Mac-15"
-    elif os.category == os_category.WINDOWS:
-        return "Windows-10"
-
-    return "Invalid Dimension"
-
 luci.notifier(
     name = "gardener-notifier",
     notify_rotation_urls = [
