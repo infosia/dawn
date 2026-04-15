@@ -468,7 +468,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
         IndirectDrawMetadata::DrawType drawType;
         uint64_t outputParamsSize = 0;
         uint64_t batchDataSize = 0;
-        std::unique_ptr<void, void (*)(void*)> batchData{nullptr, std::free};
+        ityp::heap_array<size_t, uint8_t> batchData;
         std::vector<Batch> batches;
     };
 
@@ -645,11 +645,9 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     // Now we allocate and populate host-side batch data to be copied to the GPU.
     for (Pass& pass : passes) {
         // We use std::malloc here because it guarantees maximal scalar alignment.
-        pass.batchData = {std::malloc(pass.batchDataSize), std::free};
-        memset(pass.batchData.get(), 0, pass.batchDataSize);
-        uint8_t* batchData = static_cast<uint8_t*>(pass.batchData.get());
+        pass.batchData = ityp::heap_array<size_t, uint8_t>{pass.batchDataSize};
         for (Batch& batch : pass.batches) {
-            batch.batchInfo = new (&batchData[batch.dataBufferOffset]) BatchInfo();
+            batch.batchInfo = new (pass.batchData.data() + batch.dataBufferOffset) BatchInfo();
             batch.batchInfo->numDraws = static_cast<uint32_t>(batch.metadata->draws.size());
             batch.batchInfo->flags = pass.flags;
 
@@ -713,8 +711,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
         // compute pass. The compute pass encodes a separate SetBindGroup and Dispatch command
         // for each batch.
         for (const Pass& pass : passes) {
-            commandEncoder->APIWriteBuffer(batchDataBuffer.GetBuffer(), 0,
-                                           static_cast<const uint8_t*>(pass.batchData.get()),
+            commandEncoder->APIWriteBuffer(batchDataBuffer.GetBuffer(), 0, pass.batchData.data(),
                                            pass.batchDataSize);
 
             Ref<ComputePassEncoder> passEncoder = commandEncoder->BeginComputePass();
