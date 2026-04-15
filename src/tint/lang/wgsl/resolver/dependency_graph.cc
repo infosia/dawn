@@ -715,18 +715,6 @@ struct DependencyAnalysis {
         }
     }
 
-    /// DepInfoFor() looks up the global dependency information for the dependency
-    /// of global `from` depending on `to`.
-    /// @note will raise an ICE if the edge is not found.
-    DependencyInfo DepInfoFor(const Global* from, const Global* to) const {
-        auto info = dependency_edges_.Get(DependencyEdge{from, to});
-        if (DAWN_LIKELY(info)) {
-            return *info;
-        }
-        TINT_ICE() << "failed to find dependency info for edge: '" << NameOf(from->node) << "' -> '"
-                   << NameOf(to->node) << "'";
-    }
-
     /// CyclicDependencyFound() emits an error diagnostic for a cyclic dependency.
     /// @param root is the global that starts the cyclic dependency, which must be
     /// found in `stack`.
@@ -750,8 +738,14 @@ struct DependencyAnalysis {
         for (size_t i = loop_start; i < stack.Length(); i++) {
             auto* from = stack[i];
             auto* to = (i + 1 < stack.Length()) ? stack[i + 1] : stack[loop_start];
-            auto info = DepInfoFor(from, to);
-            AddNote(diagnostics_, info.source)
+
+            auto info = dependency_edges_.Get(DependencyEdge{from, to});
+            if (DAWN_UNLIKELY(!info)) {
+                TINT_ICE() << "failed to find dependency info for edge: '" << NameOf(from->node)
+                           << "' -> '" << NameOf(to->node) << "'";
+            }
+
+            AddNote(diagnostics_, info->source)
                 << KindOf(from->node) + " '" << NameOf(from->node) << "' references "
                 << KindOf(to->node) << " '" << NameOf(to->node) << "' here";
         }
