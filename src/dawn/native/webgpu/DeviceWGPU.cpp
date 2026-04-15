@@ -384,6 +384,10 @@ void Device::DestroyImpl(DestroyReason reason) {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the device since there are no other live refs.
 
+    if (ToBackend(GetQueue())->IsCapturing()) {
+        EndCapture();
+    }
+
     if (mInnerHandle) {
         wgpu->deviceDestroy(mInnerHandle);
     }
