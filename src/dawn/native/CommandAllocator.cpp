@@ -98,7 +98,7 @@ bool CommandIterator::NextCommandIdInNewBlock(uint32_t* commandId) {
         *commandId = detail::kEndOfBlock;
         return false;
     }
-    mCurrentPtr = AlignPtr(mBlocks[mCurrentBlock].block.get(), alignof(uint32_t));
+    mCurrentPtr = AlignPtr(mBlocks[mCurrentBlock].data(), alignof(uint32_t));
     return NextCommandId(commandId);
 }
 
@@ -110,7 +110,7 @@ void CommandIterator::Reset() {
         // the iteration immediately, without special casing the initialization.
         mCurrentPtr = reinterpret_cast<char*>(&mEndOfBlock);
     } else {
-        mCurrentPtr = AlignPtr(mBlocks[0].block.get(), alignof(uint32_t));
+        mCurrentPtr = AlignPtr(mBlocks[0].data(), alignof(uint32_t));
     }
 }
 
@@ -223,14 +223,15 @@ bool CommandAllocator::GetNewBlock(size_t minimumSize) {
     // Allocate blocks doubling sizes each time, to a maximum of 16k (or at least minimumSize).
     mLastAllocationSize = std::max(minimumSize, std::min(mLastAllocationSize * 2, size_t(16384)));
 
-    auto block = std::unique_ptr<char[]>(new (std::nothrow) char[mLastAllocationSize]);
-    if (block == nullptr) [[unlikely]] {
+    // SAFETY: This is a pool allocation that will be initialized when it's suballocated.
+    auto block = ityp::heap_array<size_t, char>::Uninit(mLastAllocationSize, std::nothrow);
+    if (!block) [[unlikely]] {
         return false;
     }
 
-    mCurrentPtr = AlignPtr(block.get(), alignof(uint32_t));
-    mEndPtr = block.get() + mLastAllocationSize;
-    mBlocks.push_back({mLastAllocationSize, std::move(block)});
+    mCurrentPtr = AlignPtr(block.data(), alignof(uint32_t));
+    mEndPtr = std::to_address(block.end());
+    mBlocks.push_back(std::move(block));
     return true;
 }
 

@@ -36,11 +36,11 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "absl/strings/str_format.h"
-#include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Log.h"
 #include "dawn/common/StringViewUtils.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/ChainUtils.h"
@@ -80,19 +80,15 @@ class ErrorBuffer final : public BufferBase {
     bool IsCPUWritableAtCreation() const override { return true; }
 
     MaybeError MapAtCreationImpl() override {
-        DAWN_ASSERT(mFakeMappedData == nullptr);
+        DAWN_ASSERT(!mFakeMappedData);
 
-        // Check that the size can be used to allocate mFakeMappedData. A malloc(0)
-        // is invalid, and on 32bit systems we should avoid a narrowing conversion that
-        // would make size = 1 << 32 + 1 allocate one byte.
         uint64_t size = GetSize();
-        bool isValidSize = size != 0 && size < uint64_t(std::numeric_limits<size_t>::max());
-
-        if (isValidSize) {
-            mFakeMappedData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+        if (size < uint64_t(std::numeric_limits<size_t>::max())) {
+            // SAFETY: Frontend is responsible for initializing MapAtCreation memory.
+            mFakeMappedData = ityp::heap_array<size_t, uint8_t>::Uninit(size, std::nothrow);
         }
 
-        if (mFakeMappedData == nullptr) {
+        if (!mFakeMappedData) {
             return DAWN_OUT_OF_MEMORY_ERROR(
                 "Failed to allocate memory to map ErrorBuffer at creation.");
         }
@@ -106,11 +102,11 @@ class ErrorBuffer final : public BufferBase {
         DAWN_UNREACHABLE();
     }
 
-    void* GetMappedPointerImpl() override { return mFakeMappedData.get(); }
+    void* GetMappedPointerImpl() override { return mFakeMappedData.data(); }
 
-    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData.reset(); }
+    void UnmapImpl(BufferState oldState, BufferState newState) override { mFakeMappedData = {}; }
 
-    std::unique_ptr<uint8_t[]> mFakeMappedData;
+    ityp::heap_array<size_t, uint8_t> mFakeMappedData;
 };
 
 // GetMappedRange on a zero-sized buffer returns a pointer to this value.
