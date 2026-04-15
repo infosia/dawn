@@ -448,7 +448,7 @@ TEST_P(FramebufferFetchTests, MultisamplingIsSampleRasterization) {
                       {0, 0});
 }
 
-DAWN_INSTANTIATE_TEST(FramebufferFetchTests, MetalBackend());
+DAWN_INSTANTIATE_TEST(FramebufferFetchTests, MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

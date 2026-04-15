@@ -323,8 +323,8 @@ VkImageMemoryBarrier BuildMemoryBarrier(const Texture* texture,
     barrier.pNext = nullptr;
     barrier.srcAccessMask = VulkanAccessFlags(lastUsage, format);
     barrier.dstAccessMask = VulkanAccessFlags(usage, format);
-    barrier.oldLayout = VulkanImageLayout(format, lastUsage);
-    barrier.newLayout = VulkanImageLayout(format, usage);
+    barrier.oldLayout = VulkanImageLayout(texture->GetDevice(), format, lastUsage);
+    barrier.newLayout = VulkanImageLayout(texture->GetDevice(), format, usage);
     barrier.image = texture->GetHandle();
     barrier.subresourceRange.aspectMask = VulkanAspectMask(range.aspects);
     barrier.subresourceRange.baseMipLevel = range.baseMipLevel;
@@ -678,8 +678,9 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
             flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
         } else {
             flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
+            if ((!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
+                 device->HasFeature(Feature::DawnLoadResolveTexture)) ||
+                device->HasFeature(Feature::FramebufferFetch)) {
                 // Automatically set "input attachment" usage so that the texture would be
                 // used in ExpandResolveTexture subpass.
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
@@ -700,7 +701,9 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
 // Chooses which Vulkan image layout should be used for the given Dawn usage. Note that this
 // layout must match the layout given to various Vulkan operations as well as the layout given
 // to descriptor set writes.
-VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) {
+VkImageLayout VulkanImageLayout(const DeviceBase* device,
+                                const Format& format,
+                                wgpu::TextureUsage usage) {
     if (usage == wgpu::TextureUsage::None) {
         return VK_IMAGE_LAYOUT_UNDEFINED;
     }
@@ -759,7 +762,9 @@ VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) 
             if (format.HasDepthOrStencil()) {
                 return VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
             } else {
-                return VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+                return device->HasFeature(Feature::FramebufferFetch)
+                           ? VK_IMAGE_LAYOUT_GENERAL
+                           : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
             }
 
         case kReadOnlyRenderAttachment:
@@ -803,7 +808,7 @@ VkImageLayout VulkanImageLayoutForDepthStencilAttachment(const Format& format,
             stencilReadOnly ? kReadOnlyRenderAttachment : wgpu::TextureUsage::RenderAttachment;
     }
 
-    return VulkanImageLayout(format, MergeDepthStencilUsage(depth, stencil));
+    return VulkanImageLayout(nullptr, format, MergeDepthStencilUsage(depth, stencil));
 }
 
 VkSampleCountFlagBits VulkanSampleCount(uint32_t sampleCount) {
@@ -1397,7 +1402,7 @@ VkImageLayout Texture::GetCurrentLayout(Aspect aspect,
                                         uint32_t arrayLayer,
                                         uint32_t mipLevel) const {
     DAWN_ASSERT(GetFormat().aspects == Aspect::Color);
-    return VulkanImageLayout(GetFormat(),
+    return VulkanImageLayout(GetDevice(), GetFormat(),
                              mSubresourceLastSyncInfos.Get(aspect, arrayLayer, mipLevel).usage);
 }
 
