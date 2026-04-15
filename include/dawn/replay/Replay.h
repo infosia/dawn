@@ -31,6 +31,7 @@
 #include <istream>
 #include <memory>
 #include <string_view>
+#include <vector>
 
 #include "dawn/replay/dawn_replay_export.h"
 #include "dawn/webgpu_cpp.h"
@@ -53,6 +54,9 @@ class DAWN_REPLAY_EXPORT Capture {
 
     // Returns true if walk successful.
     virtual bool Walk(RootCommandVisitor& visitor) = 0;
+
+    // TODO(507548342): Reflection API for Surfaces.
+    // TODO(507548342): Reflection API for general RecordableObjects.
 };
 
 // The public API of a replay controller of a capture.
@@ -63,6 +67,9 @@ class DAWN_REPLAY_EXPORT Replay {
     static std::unique_ptr<Replay> Create(wgpu::Device device, std::unique_ptr<Capture> capture);
     virtual ~Replay() = 0;
 
+    virtual void SetSurfaces(std::vector<wgpu::Surface> surfaces) = 0;
+
+    // TODO(507548342): Move this to class Capture.
     template <typename T>
     T GetObjectByLabel(std::string_view label) const;
 
