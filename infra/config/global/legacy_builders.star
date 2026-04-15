@@ -42,25 +42,6 @@ luci.notifier(
     on_occurrence = ["FAILURE", "INFRA_FAILURE"],
 )
 
-# Recipes
-
-def clang_tidy_dawn_tryjob():
-    """Adds a tryjob that runs clang tidy on new patchset upload."""
-    luci.cq_tryjob_verifier(
-        cq_group = "Dawn-CQ",
-        builder = "chromium:try/tricium-clang-tidy",
-        owner_whitelist = ["project-dawn-tryjob-access"],
-        experiment_percentage = 100,
-        disable_reuse = True,
-        mode_allowlist = [cq.MODE_NEW_PATCHSET_RUN],
-        location_filters = [
-            cq.location_filter(path_regexp = r".+\.h"),
-            cq.location_filter(path_regexp = r".+\.c"),
-            cq.location_filter(path_regexp = r".+\.cc"),
-            cq.location_filter(path_regexp = r".+\.cpp"),
-        ],
-    )
-
 # The following standalone builders have been replaced with functionally
 # equivalent ones using the gn_v2 recipe. See crbug.com/385317083.
 # * cron-linux-clang-rel-x64
@@ -125,8 +106,6 @@ def clang_tidy_dawn_tryjob():
 # not providing value in go/dawn-standalone-builders-dd.
 # * cmake-linux-clang-dbg-x64-asan
 # * cmake-linux-clang-dbg-x64-ubsan
-
-clang_tidy_dawn_tryjob()
 
 # CQ
 

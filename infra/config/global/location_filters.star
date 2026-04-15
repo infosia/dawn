@@ -69,6 +69,13 @@ _NON_CMAKE_NON_FUZZ_LOCATIONS_EXCLUDED_FROM_CQ = [
     ),
 ]
 
+_CPP_FILE_INCLUSIONS = [
+    cq.location_filter(path_regexp = r".+\.h"),
+    cq.location_filter(path_regexp = r".+\.c"),
+    cq.location_filter(path_regexp = r".+\.cc"),
+    cq.location_filter(path_regexp = r".+\.cpp"),
+]
+
 _CHROMIUM_CQ_FILE_EXCLUSIONS = _GITHUB_LOCATIONS_EXCLUDED_FROM_CQ + _GO_LOCATIONS_EXCLUDED_FROM_CQ
 
 _CMAKE_CQ_FILE_EXCLUSIONS = (_COMMON_LOCATIONS_EXCLUDED_FROM_CQ + _GO_LOCATIONS_EXCLUDED_FROM_CQ + _GITHUB_LOCATIONS_EXCLUDED_FROM_CQ)
@@ -94,4 +101,8 @@ exclusion_filters = struct(
     gn_clang_cq_fuzz_file_exclusions = _GN_CLANG_CQ_FUZZ_FILE_EXCLUSIONS,
     gn_clang_no_node_cq_file_exclusions = _GN_CLANG_NO_NODE_CQ_FILE_EXCLUSIONS,
     gn_msvc_cq_file_exclusions = _GN_MSVC_CQ_FILE_EXCLUSIONS,
+)
+
+inclusion_filters = struct(
+    cpp_changes_only = _CPP_FILE_INCLUSIONS,
 )
