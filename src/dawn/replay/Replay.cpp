@@ -1422,6 +1422,8 @@ ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture
     mVisitor->AddResource(schema::kDeviceId, "", device);
 }
 
+ReplayImpl::~ReplayImpl() = default;
+
 MaybeError ReplayImpl::Play() {
     if (mCapture->Walk(*mVisitor)) {
         return {};
