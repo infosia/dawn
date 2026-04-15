@@ -33,6 +33,7 @@
 #include <limits>
 #include <utility>
 
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -56,28 +57,27 @@ class array : private ::std::array<Value, Size> {
     // NOLINTNEXTLINE(runtime/explicit)
     constexpr array(Values&&... values) : Base{std::forward<Values>(values)...} {}
 
-    constexpr Value& operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
-
-    Value& at(Index i) { return Base::at(static_cast<I>(i)); }
-    constexpr const Value& at(Index i) const { return Base::at(static_cast<I>(i)); }
-
-    typename Base::iterator begin() noexcept { return Base::begin(); }
-    typename Base::const_iterator begin() const noexcept { return Base::begin(); }
-
-    typename Base::iterator end() noexcept { return Base::end(); }
-    typename Base::const_iterator end() const noexcept { return Base::end(); }
-
-    constexpr Index size() const { return Index(I(Size)); }
+    using Base::begin, Base::end;
+    using Base::front, Base::back;
 
     using Base::data;
     using Base::empty;
     using Base::fill;
 
-    using Base::back;
-    using Base::front;
+    constexpr Value& operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
 
-    bool operator==(const array<Index, Value, Size>& other) const = default;
+    constexpr Value& at(Index i) { return Base::at(CheckedIndex(i)); }
+    constexpr const Value& at(Index i) const { return Base::at(CheckedIndex(i)); }
+
+    constexpr Index size() const { return Index(static_cast<I>(Size)); }
+
+    constexpr bool operator==(const array<Index, Value, Size>& other) const = default;
+
+  private:
+    constexpr inline size_t CheckedIndex(Index i) const {
+        return BoundCheckedIndex(i, size(), Base::size());
+    }
 };
 
 }  // namespace dawn::ityp

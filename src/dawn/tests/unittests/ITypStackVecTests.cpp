@@ -61,6 +61,20 @@ TEST_F(ITypStackVecTest, Creation) {
     }
 }
 
+// Test that the initializer_list constructor isn't triggered in non-assert builds where the types
+// can't disambiguate it from other overloads.
+TEST_F(ITypStackVecTest, ConstructorOverload) {
+    using KeyZ = TypedInteger<struct KeyZT, size_t>;
+    {
+        ityp::stack_vec<KeyZ, size_t, 20> vec{KeyZ(10)};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+    {
+        ityp::stack_vec<KeyZ, size_t, 20> vec{{size_t(10), size_t(20)}};
+        ASSERT_EQ(vec.size(), KeyZ(2));
+    }
+}
+
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
 using ITypStackVecDeathTest = ITypStackVecTest;
 
@@ -77,6 +91,27 @@ TEST_F(ITypStackVecDeathTest, OutOfBounds) {
 
     const StackVec& constVec = vec;
     EXPECT_DEATH(constVec[Key(10)], "");
+}
+
+// If the index/size is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
+TEST_F(ITypStackVecDeathTest, OversizedIndex) {
+    using Key64 = TypedInteger<struct Key64T, uint64_t>;
+    static constexpr Key64 kHugeKey64{0x1'0000'0000LLU};
+
+    EXPECT_DEATH((ityp::stack_vec<Key64, Val, 20>(kHugeKey64)), "");
+
+    ityp::stack_vec<Key64, Val, 20> vec(Key64(10));
+
+    vec[Key64(9)];
+    // Regular out-of-bounds.
+    EXPECT_DEATH(vec[Key64(10)], "");
+
+    vec[Key64(0)];
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    EXPECT_DEATH(vec[kHugeKey64], "");
+
+    EXPECT_DEATH(vec.resize(kHugeKey64), "");
+    EXPECT_DEATH(vec.reserve(kHugeKey64), "");
 }
 
 }  // anonymous namespace
