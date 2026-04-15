@@ -160,6 +160,8 @@ class Capture {
     Capture(const std::string& commandData, const std::string& contentData)
         : mCommandData(commandData), mContentData(contentData) {}
 
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) { mSurfaces = std::move(surfaces); }
+
     std::unique_ptr<replay::Replay> Replay(wgpu::Device device) {
         std::istringstream commandIStream(mCommandData);
         std::istringstream contentIStream(mContentData);
@@ -167,6 +169,10 @@ class Capture {
         auto capture = replay::Capture::Create(commandIStream, mCommandData.size(), contentIStream,
                                                mContentData.size());
         std::unique_ptr<replay::Replay> replay = replay::Replay::Create(device, std::move(capture));
+
+        if (!mSurfaces.empty()) {
+            replay->SetSurfaces(mSurfaces);
+        }
 
         bool result = replay->Play();
         EXPECT_TRUE(result);
@@ -176,6 +182,7 @@ class Capture {
   private:
     std::string mCommandData;
     std::string mContentData;
+    std::vector<wgpu::Surface> mSurfaces;
 };
 
 class Recorder {
@@ -191,17 +198,28 @@ class Recorder {
         return recorder;
     }
 
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) { mSurfaces = std::move(surfaces); }
+
     Capture Finish() {
         native::webgpu::EndCapture(mDevice.Get());
         // Make sure at TearDown the device is released as the DawnTest will check device count.
         mDevice = nullptr;
-        return Capture(mCommandStream.str(), mContentStream.str());
+        Capture capture(mCommandStream.str(), mContentStream.str());
+        capture.SetSurfaces(mSurfaces);
+        return capture;
+    }
+
+    ~Recorder() {
+        if (mDevice != nullptr) {
+            native::webgpu::EndCapture(mDevice.Get());
+        }
     }
 
   private:
     explicit Recorder(wgpu::Device device) : mDevice(device) {}
 
     wgpu::Device mDevice;
+    std::vector<wgpu::Surface> mSurfaces;
     std::ostringstream mCommandStream;
     std::ostringstream mContentStream;
 };
@@ -219,12 +237,14 @@ class Replay {
 
 class Capture {
   public:
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) {}
     std::unique_ptr<replay::Replay> Replay(wgpu::Device device) { DAWN_UNREACHABLE(); }
 };
 
 class Recorder {
   public:
     static std::unique_ptr<Recorder> CreateAndStart(wgpu::Device device) { DAWN_UNREACHABLE(); }
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) {}
     Capture Finish() { DAWN_UNREACHABLE(); }
 };
 #endif
@@ -1320,6 +1340,18 @@ bool DawnTestBase::IsDXC() const {
 
 bool DawnTestBase::IsCaptureReplayCheckingEnabled() const {
     return mCheckCaptureReplay;
+}
+
+void DawnTestBase::SetReplaySurface(wgpu::Surface surface) {
+    if (mRecorder) {
+        mRecorder->SetSurfaces({surface});
+    }
+}
+
+void DawnTestBase::SetReplaySurfaces(std::vector<wgpu::Surface> surfaces) {
+    if (mRecorder) {
+        mRecorder->SetSurfaces(std::move(surfaces));
+    }
 }
 
 // static

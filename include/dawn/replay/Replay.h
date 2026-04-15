@@ -31,6 +31,7 @@
 #include <istream>
 #include <memory>
 #include <string_view>
+#include <vector>
 
 #include "dawn/replay/dawn_replay_export.h"
 #include "dawn/webgpu_cpp.h"
@@ -62,6 +63,8 @@ class DAWN_REPLAY_EXPORT Replay {
   public:
     static std::unique_ptr<Replay> Create(wgpu::Device device, std::unique_ptr<Capture> capture);
     virtual ~Replay() = 0;
+
+    virtual void SetSurfaces(std::vector<wgpu::Surface> surfaces) = 0;
 
     template <typename T>
     T GetObjectByLabel(std::string_view label) const;
