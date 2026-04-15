@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c4c8e76_7827cda0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-15T20:26:05Z",
+      "side": 1,
+      "message": "Nit: Shorten the 1-line summary and include any additional details below that. Also use the imperative mood (e.g. `Rename` instead of `Renaming`).\n\nThis is based on https://source.chromium.org/chromium/chromium/src/+/main:docs/contributing.md#Uploading-a-change-for-review linking to https://chris.beams.io/git-commit, and I believe Dawn follows the same style guide when it comes to commit messages.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "15e81cf1369f3af0d545d4ca2b9531bba8a3332e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25d3c411_919a818c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-15T20:26:05Z",
+      "side": 1,
+      "message": "Nit: `Bug: 442860599` since this is related.",
+      "revId": "15e81cf1369f3af0d545d4ca2b9531bba8a3332e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7bb6f49_d3ba98a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-15T20:26:05Z",
+      "side": 1,
+      "message": "LGTM % nits",
+      "revId": "15e81cf1369f3af0d545d4ca2b9531bba8a3332e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
