@@ -137,8 +137,11 @@ MaybeError BlitDepthToDepth(DeviceBase* device,
     // also don't textureLoad in the shader at a non-zero array index correctly. Workaround this
     // issue by copying the non-zero array slices to a single-layer texture. That texture will be be
     // sampled as the source instead.
-    ityp::vector<TexelCount, Ref<TextureViewBase>> srcViews;
-    srcViews.reserve(copyExtent.depthOrArrayLayers);
+
+    // Note TexelCount is uint64_t so it can't be used as the index type here.
+    // However we only use this with 1-dimensional sizes which are always uint32_t in webgpu.h.
+    ityp::vector<uint32_t, Ref<TextureViewBase>> srcViews;
+    srcViews.reserve(static_cast<uint32_t>(copyExtent.depthOrArrayLayers));
     for (TexelCount z = TexelCount{0}; z < copyExtent.depthOrArrayLayers; ++z) {
         TexelCount layer = src.origin.z + z;
         Ref<TextureViewBase> srcView;
@@ -197,7 +200,7 @@ MaybeError BlitDepthToDepth(DeviceBase* device,
         {
             BindGroupEntry bgEntry = {};
             bgEntry.binding = 0;
-            bgEntry.textureView = srcViews[z].Get();
+            bgEntry.textureView = srcViews[static_cast<uint32_t>(z)].Get();
 
             BindGroupDescriptor bgDesc = {};
             bgDesc.layout = bgl.Get();
