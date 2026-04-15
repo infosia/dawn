@@ -352,20 +352,15 @@ MaybeError Device::SubmitPendingOperations() {
 
 // BindGroupDataHolder
 
-BindGroupDataHolder::BindGroupDataHolder(size_t size)
-    : mBindingDataAllocation(malloc(size))  // malloc is guaranteed to return a
-                                            // pointer aligned enough for the allocation
-{}
+BindGroupDataHolder::BindGroupDataHolder(size_t size) : mBindingDataAllocation{size} {}
 
-BindGroupDataHolder::~BindGroupDataHolder() {
-    free(mBindingDataAllocation.ExtractAsDangling());
-}
+BindGroupDataHolder::~BindGroupDataHolder() = default;
 
 // BindGroup
 
 BindGroup::BindGroup(DeviceBase* device, const UnpackedPtr<BindGroupDescriptor>& descriptor)
     : BindGroupDataHolder(descriptor->layout->GetInternalBindGroupLayout()->GetBindingDataSize()),
-      BindGroupBase(device, descriptor, mBindingDataAllocation) {}
+      BindGroupBase(device, descriptor, mBindingDataAllocation.data()) {}
 
 MaybeError BindGroup::InitializeImpl() {
     return {};
@@ -381,7 +376,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
 
 Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
     : BufferBase(device, descriptor) {
-    mBackingData = std::unique_ptr<uint8_t[]>(new uint8_t[GetSize()]);
+    mBackingData = ityp::heap_array<size_t, uint8_t>::Uninit(GetSize());
     mAllocatedSize = GetSize();
 }
 
@@ -400,13 +395,14 @@ void Buffer::CopyFromStaging(BufferBase* staging,
                              uint64_t destinationOffset,
                              uint64_t size) {
     uint8_t* ptr = reinterpret_cast<uint8_t*>(staging->GetMappedPointer());
-    memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size);
+    memcpy(mBackingData.data() + destinationOffset, ptr + sourceOffset, size);
 }
 
 void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
     DAWN_ASSERT(bufferOffset + size <= GetSize());
     DAWN_ASSERT(mBackingData);
-    memcpy(mBackingData.get() + bufferOffset, data, size);
+    auto src = std::span{static_cast<const uint8_t*>(data), size};
+    std::ranges::copy(src, mBackingData.subspan(bufferOffset).begin());
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
@@ -419,7 +415,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
 }
 
 void* Buffer::GetMappedPointerImpl() {
-    return mBackingData.get();
+    return mBackingData.data();
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {}
