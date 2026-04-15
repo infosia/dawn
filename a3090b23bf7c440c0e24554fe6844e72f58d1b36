@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a1eebc0_ef158c3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-15T20:41:55Z",
+      "side": 1,
+      "message": "I think the `Change-Id` line is supposed to be the last line of the CL description. I can\u0027t remember if it actually breaks anything (like automatically associating the CL with the related bugs) if it\u0027s not the last line, but might as well move the `Bug:` line above.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "a3090b23bf7c440c0e24554fe6844e72f58d1b36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
