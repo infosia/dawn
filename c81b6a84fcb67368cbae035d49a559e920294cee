@@ -33,6 +33,24 @@
       "message": "LGTM for the code change, but how hard would it be to add a regression test for the relevant files under `dawn/tests/white_box/SharedTextureMemory*`?",
       "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86749b70_bd80bc94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T21:14:51Z",
+      "side": 1,
+      "message": "Added SharedTextureMemoryTests.MSRTSSWriteThenCPURead, modeled off of the existing AHardwareBuffer tests.",
+      "parentUuid": "62eaf2df_7c371069",
+      "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
