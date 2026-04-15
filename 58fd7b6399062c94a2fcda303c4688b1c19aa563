@@ -22,6 +22,30 @@
       },
       "revId": "58fd7b6399062c94a2fcda303c4688b1c19aa563",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870fcc55_5d3c85ef",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4177,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-15T15:07:42Z",
+      "side": 1,
+      "message": "Yes, that was my initial idea, but when I use `EXPECT_BUFFER_U8_RANGE_EQ` to access the buffer starting at `kOffset + 2`, it fails because this macro uses `CopyBufferToBuffer` and it expects the offset to be a multiple of 4 bytes (in this case, the value is \u00276\u0027). I\u0027ll leave it like this for now. Also, there are other tests in this file that map and compare bytes this way.",
+      "parentUuid": "82e8415c_bf2c3247",
+      "range": {
+        "startLine": 4161,
+        "startChar": 4,
+        "endLine": 4177,
+        "endChar": 5
+      },
+      "revId": "58fd7b6399062c94a2fcda303c4688b1c19aa563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
