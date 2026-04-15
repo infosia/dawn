@@ -57,6 +57,24 @@
       "message": "when is the egl context and surface destroyed?",
       "revId": "559d65377649683ad1deabbb2eb43beb6901a57e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99645e94_620b7a0e",
+        "filename": "tools/android/webgpu/src/main/java/androidx/webgpu/helper/GPUSyncFenceHelper.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 4269882
+      },
+      "writtenOn": "2026-04-15T09:58:15Z",
+      "side": 1,
+      "message": "The EGLcontext and surface are not explicitly destroyed. Because GPUSyncFenceHelper is a singleton, these resources are cached persistently to avoid overhead of creating them over again. They are tied to the lifecycle of the app itself.",
+      "parentUuid": "4c4f9754_2e6c4741",
+      "revId": "559d65377649683ad1deabbb2eb43beb6901a57e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
