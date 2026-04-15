@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aacbdf2_509e6ecb",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:24:58Z",
+      "side": 1,
+      "message": "```suggestion\nenum class Type : uint8_t {\n```",
+      "revId": "42ec607aa90c149aca3c8b6473eda3071cdce869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d59465_2c368a90",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:24:58Z",
+      "side": 1,
+      "message": "```suggestion\nenum class Direction : uint8_t {\n```",
+      "revId": "42ec607aa90c149aca3c8b6473eda3071cdce869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5805dfc_83fea671",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:24:58Z",
+      "side": 1,
+      "message": "```suggestion\nenum class BoundKind : uint8_t {\n```",
+      "revId": "42ec607aa90c149aca3c8b6473eda3071cdce869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "859e4e6f_c9660e35",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:24:58Z",
+      "side": 1,
+      "message": "```suggestion\n    Direction dir;\n    BoundKind kind;\n```",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "42ec607aa90c149aca3c8b6473eda3071cdce869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "989d637f_e947c288",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:24:58Z",
+      "side": 1,
+      "message": "```suggestion\n    BoundDescriptor desc{\n        .op \u003d op,\n        .is_finite \u003d is_infinite,\n    };\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 33
+      },
+      "revId": "42ec607aa90c149aca3c8b6473eda3071cdce869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
