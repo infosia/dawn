@@ -143,6 +143,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68bd4607_4aae48a3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T17:50:29Z",
+      "side": 1,
+      "message": "Heh, I think I disagree with that principle, but I also won\u0027t block this CL on it. I think we need to refactor TextureSample at somepoint because it\u0027s getting really hard to understand what\u0027s happening in there.",
+      "parentUuid": "ca223c52_34f184b8",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33afb52d_c977e2d4",
