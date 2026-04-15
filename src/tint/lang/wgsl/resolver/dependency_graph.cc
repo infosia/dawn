@@ -84,8 +84,6 @@
 #include "src/tint/utils/text/string.h"
 #include "src/tint/utils/text/string_stream.h"
 
-#define TINT_DUMP_DEPENDENCY_GRAPH 0
-
 namespace tint::resolver {
 namespace {
 
@@ -555,9 +553,6 @@ struct DependencyAnalysis {
         // Sort the globals into dependency order
         SortGlobals();
 
-        // Dump the dependency graph if TINT_DUMP_DEPENDENCY_GRAPH is non-zero
-        DumpDependencyGraph();
-
         graph_.ordered_globals = sorted_.Release();
 
         return !diagnostics_.ContainsErrors();
@@ -760,29 +755,6 @@ struct DependencyAnalysis {
                 << KindOf(from->node) + " '" << NameOf(from->node) << "' references "
                 << KindOf(to->node) << " '" << NameOf(to->node) << "' here";
         }
-    }
-
-    void DumpDependencyGraph() {
-#if TINT_DUMP_DEPENDENCY_GRAPH == 0
-        if ((true)) {
-            return;
-        }
-#endif  // TINT_DUMP_DEPENDENCY_GRAPH
-        printf("=========================\n");
-        printf("------ declaration ------ \n");
-        for (auto* global : declaration_order_) {
-            printf("%s\n", NameOf(global->node).c_str());
-        }
-        printf("------ dependencies ------ \n");
-        for (auto* node : sorted_) {
-            auto symbol = SymbolOf(node);
-            auto* global = *globals_.Get(symbol);
-            printf("%s depends on:\n", symbol.Name().c_str());
-            for (auto* dep : global->deps) {
-                printf("  %s\n", NameOf(dep->node).c_str());
-            }
-        }
-        printf("=========================\n");
     }
 
     /// Program diagnostics
