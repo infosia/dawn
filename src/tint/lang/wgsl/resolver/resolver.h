@@ -575,10 +575,6 @@ class Resolver {
     /// @returns true on success, false on error
     bool AllocateOverridableConstantIds();
 
-    /// Set the shadowing information on variable declarations.
-    /// @note this method must only be called after all semantic nodes are built.
-    void SetShadows();
-
     /// StatementScope() does the following:
     /// * Creates the AST -> SEM mapping.
     /// * Assigns `sem` to #current_statement_

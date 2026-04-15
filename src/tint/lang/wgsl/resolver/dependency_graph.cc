@@ -234,9 +234,6 @@ class DependencyScanner {
         TINT_DEFER(scope_stack_.Pop());
 
         for (auto* param : func->params) {
-            if (auto shadows = scope_stack_.Get(param->name->symbol)) {
-                graph_.shadows.Add(param, shadows);
-            }
             Declare(param->name->symbol, param);
         }
         if (func->body) {
@@ -308,9 +305,6 @@ class DependencyScanner {
                 }
             },
             [&](const ast::VariableDeclStatement* v) {
-                if (auto* shadows = scope_stack_.Get(v->variable->name->symbol)) {
-                    graph_.shadows.Add(v->variable, shadows);
-                }
                 TraverseVariable(v->variable);
                 Declare(v->variable->name->symbol, v->variable);
             },

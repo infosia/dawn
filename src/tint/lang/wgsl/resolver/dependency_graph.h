@@ -198,12 +198,6 @@ struct DependencyGraph {
 
     /// Map of ast::Identifier to a ResolvedIdentifier
     Hashmap<const ast::Identifier*, ResolvedIdentifier, 64> resolved_identifiers;
-
-    /// Map of ast::Variable to a type, function, or variable that is shadowed by
-    /// the variable key. A declaration (X) shadows another (Y) if X and Y use
-    /// the same symbol, and X is declared in a sub-scope of the scope that
-    /// declares Y.
-    Hashmap<const ast::Variable*, const ast::Node*, 16> shadows;
 };
 
 }  // namespace tint::resolver

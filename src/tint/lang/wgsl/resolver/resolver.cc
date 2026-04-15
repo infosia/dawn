@@ -220,8 +220,6 @@ bool Resolver::ResolveInternal() {
         return false;
     }
 
-    SetShadows();
-
     if (!validator_.DiagnosticControls(diagnostic_controls, "directive",
                                        DiagnosticDuplicates::kAllowed)) {
         return false;
@@ -805,22 +803,6 @@ bool Resolver::AllocateOverridableConstantIds() {
         const_cast<sem::GlobalVariable*>(sem)->Attributes().override_id = id;
     }
     return true;
-}
-
-void Resolver::SetShadows() {
-    for (auto& it : dependencies_.shadows) {
-        CastableBase* shadowed = sem_.Get(it.value);
-        if (DAWN_UNLIKELY(!shadowed)) {
-            ICE(it.value->source) << "AST node '" << it.value->TypeInfo().name
-                                  << "' had no semantic info\n"
-                                  << "Pointer: " << it.value;
-        }
-
-        Switch(
-            sem_.Get(it.key.Value()),  //
-            [&](sem::LocalVariable* local) { local->SetShadows(shadowed); },
-            [&](sem::Parameter* param) { param->SetShadows(shadowed); });
-    }
 }
 
 sem::GlobalVariable* Resolver::GlobalVariable(const ast::Variable* v) {
