@@ -79,5 +79,32 @@ TEST_F(ITypStackVecDeathTest, OutOfBounds) {
     EXPECT_DEATH(constVec[Key(10)], "");
 }
 
+// If the index/size is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
+TEST_F(ITypStackVecDeathTest, OversizedIndex) {
+    // These tests are only relevant on 32-bit builds.
+    if constexpr (sizeof(size_t) > sizeof(uint32_t)) {
+        GTEST_SKIP();
+    }
+
+    using Key64 = TypedInteger<struct Key64T, uint64_t>;
+    static constexpr Key64 kHugeKey64{0x1000'0000'0000'0000};
+
+    // Crash either due to OOM (on 64-bit) or due to narrowing (on 32-bit).
+    EXPECT_DEATH((ityp::stack_vec<Key64, Val, 20>(kHugeKey64)), "");
+
+    ityp::stack_vec<Key64, Val, 20> vec(Key64(10));
+
+    vec[Key64(9)];
+    // Regular out-of-bounds.
+    EXPECT_DEATH(vec[Key64(10)], "");
+
+    vec[Key64(0)];
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    EXPECT_DEATH(vec[kHugeKey64], "");
+
+    EXPECT_DEATH(vec.resize(kHugeKey64), "");
+    EXPECT_DEATH(vec.reserve(kHugeKey64), "");
+}
+
 }  // anonymous namespace
 }  // namespace dawn

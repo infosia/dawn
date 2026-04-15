@@ -141,5 +141,27 @@ TEST_F(ITypSpanDeathTest, OutOfBounds) {
     EXPECT_DEATH(constSpan[Key(10)], "");
 }
 
+// If the index/size is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
+TEST_F(ITypSpanDeathTest, OversizedIndex) {
+    // These tests are only relevant on 32-bit builds.
+    if constexpr (sizeof(size_t) > sizeof(uint32_t)) {
+        GTEST_SKIP();
+    }
+
+    using Key64 = TypedInteger<struct Key64T, uint64_t>;
+    static constexpr Key64 kHugeKey64{0x1'0000'0000LLU};
+
+    std::array<Val, 10> arr;
+    ityp::span<Key64, Val> span(arr.data(), Key64(arr.size()));
+
+    span[Key64(9)];
+    // Regular out-of-bounds.
+    EXPECT_DEATH(span[Key64(10)], "");
+
+    span[Key64(0)];
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    EXPECT_DEATH(span[kHugeKey64], "");
+}
+
 }  // anonymous namespace
 }  // namespace dawn
