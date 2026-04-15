@@ -33,6 +33,7 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Surface.h"
+#include "dawn/native/webgpu/CaptureContext.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
@@ -115,6 +116,12 @@ ResultOrError<Ref<SwapChain>> SwapChain::Create(Device* device,
 
     device->wgpu->surfaceConfigure(innerSurface, &innerConfig);
 
+    if (ToBackend(device->GetQueue())->IsCapturing()) {
+        CaptureContext* context = ToBackend(device->GetQueue())->GetCaptureContext();
+        [[maybe_unused]] bool hadError = device->ConsumedError(
+            context->CaptureSurfaceConfigure(surface, config), "calling CaptureSurfaceConfigure");
+    }
+
     return AcquireRef(new SwapChain(device, surface, config, innerSurface));
 }
 
@@ -164,6 +171,13 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
         texture->SetInnerHandleForSwapChain(innerSurfaceTexture.texture);
         texture->SetIsBackBuffer(true);
 
+        if (ToBackend(device->GetQueue())->IsCapturing()) {
+            CaptureContext* context = ToBackend(device->GetQueue())->GetCaptureContext();
+            [[maybe_unused]] bool hadError = device->ConsumedError(
+                context->CaptureSurfaceGetCurrentTexture(GetSurface(), texture.Get()),
+                "calling CaptureSurfaceGetCurrentTexture");
+        }
+
         mCurrentTexture = texture;
         info.texture = std::move(texture);
     }
@@ -173,6 +187,11 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
 
 MaybeError SwapChain::PresentImpl() {
     Device* device = ToBackend(GetDevice());
+
+    if (ToBackend(device->GetQueue())->IsCapturing()) {
+        CaptureContext* context = ToBackend(device->GetQueue())->GetCaptureContext();
+        DAWN_TRY(context->CaptureSurfacePresent(GetSurface()));
+    }
 
     if (mCurrentTexture != nullptr) {
         mCurrentTexture->Destroy();

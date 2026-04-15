@@ -64,8 +64,10 @@ class CaptureAndReplayTests : public DawnTest {
 
     class Capture {
       public:
-        Capture(const std::string& commandData, const std::string& contentData)
-            : mCommandData(commandData), mContentData(contentData) {}
+        Capture(wgpu::Instance instance,
+                const std::string& commandData,
+                const std::string& contentData)
+            : mInstance(instance), mCommandData(commandData), mContentData(contentData) {}
 
         std::unique_ptr<replay::Replay> Replay(wgpu::Device device) {
             std::istringstream commandIStream(mCommandData);
@@ -74,7 +76,7 @@ class CaptureAndReplayTests : public DawnTest {
             auto capture = replay::Capture::Create(commandIStream, mCommandData.size(),
                                                    contentIStream, mContentData.size());
             std::unique_ptr<replay::Replay> replay =
-                replay::Replay::Create(device, std::move(capture));
+                replay::Replay::Create(mInstance, device, std::move(capture));
 
             bool result = replay->Play();
             EXPECT_TRUE(result);
@@ -82,24 +84,29 @@ class CaptureAndReplayTests : public DawnTest {
         }
 
       private:
+        wgpu::Instance mInstance;
         std::string mCommandData;
         std::string mContentData;
     };
 
     class Recorder {
       public:
-        static Recorder CreateAndStart(wgpu::Device device) { return Recorder(device); }
+        static Recorder CreateAndStart(wgpu::Instance instance, wgpu::Device device) {
+            return Recorder(instance, device);
+        }
 
         Capture Finish() {
             native::webgpu::EndCapture(mDevice.Get());
-            return Capture(mCommandStream.str(), mContentStream.str());
+            return Capture(mInstance, mCommandStream.str(), mContentStream.str());
         }
 
       private:
-        explicit Recorder(wgpu::Device device) : mDevice(device) {
+        explicit Recorder(wgpu::Instance instance, wgpu::Device device)
+            : mInstance(instance), mDevice(device) {
             native::webgpu::StartCapture(device.Get(), mCommandStream, mContentStream);
         }
 
+        wgpu::Instance mInstance;
         wgpu::Device mDevice;
         std::ostringstream mCommandStream;
         std::ostringstream mContentStream;
@@ -171,7 +178,7 @@ TEST_P(CaptureAndReplayTests, Basic) {
     const char* label = "MyBuffer";
     const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     wgpu::Buffer buffer = CreateBuffer(label, 4, wgpu::BufferUsage::CopyDst);
     queue.WriteBuffer(buffer, 0, &myData, sizeof(myData));
@@ -190,7 +197,7 @@ TEST_P(CaptureAndReplayTests, NonMultipleOf4LabelLength) {
     const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     wgpu::Buffer buffer = CreateBuffer(label, 4, wgpu::BufferUsage::CopyDst);
     queue.WriteBuffer(buffer, 0, &myData, sizeof(myData));
@@ -214,7 +221,7 @@ TEST_P(CaptureAndReplayTests, StartCaptureAfterBufferCreationWriteBuffer) {
     queue.WriteBuffer(buffer, 0, &myData0, sizeof(myData0));
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.WriteBuffer(buffer, 4, &myData1, sizeof(myData1));
 
@@ -239,7 +246,7 @@ TEST_P(CaptureAndReplayTests, StartCaptureAfterBufferCreationMappedAtCreation) {
     buffer.Unmap();
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.WriteBuffer(buffer, 4, &myData1, sizeof(myData1));
 
@@ -292,7 +299,7 @@ TEST_P(CaptureAndReplayTests, StartCaptureAfterBufferCreationComputeShader) {
     queue.Submit(1, &commands);
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     const uint8_t myData[] = {0x55, 0x66, 0x77, 0x88};
     queue.WriteBuffer(buffer, 4, &myData, sizeof(myData));
@@ -327,7 +334,7 @@ TEST_P(CaptureAndReplayTests, StartCaptureAfterBufferCreationCopyB2B) {
     queue.Submit(1, &commands);
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     const uint8_t myData2[] = {0x55, 0x66, 0x77, 0x88};
     queue.WriteBuffer(dstBuffer, 4, &myData2, sizeof(myData2));
@@ -351,7 +358,7 @@ TEST_P(CaptureAndReplayTests, TwoCaptures) {
     wgpu::Buffer buffer;
 
     {
-        auto recorder = Recorder::CreateAndStart(device);
+        auto recorder = Recorder::CreateAndStart(instance, device);
 
         buffer = CreateBuffer(label, 8, wgpu::BufferUsage::CopyDst);
         queue.WriteBuffer(buffer, 0, &myData1, sizeof(myData1));
@@ -360,7 +367,7 @@ TEST_P(CaptureAndReplayTests, TwoCaptures) {
     }
 
     {
-        auto recorder = Recorder::CreateAndStart(device);
+        auto recorder = Recorder::CreateAndStart(instance, device);
 
         queue.WriteBuffer(buffer, 4, &myData2, sizeof(myData2));
 
@@ -384,7 +391,7 @@ TEST_P(CaptureAndReplayTests, MapWrite) {
         CreateBuffer("srcBuffer", 4, wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc);
     wgpu::Buffer dstBuffer = CreateBuffer("dstBuffer", 4, wgpu::BufferUsage::CopyDst);
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     MapAsyncAndWait(srcBuffer, wgpu::MapMode::Write, 0, 4);
     srcBuffer.WriteMappedRange(0, &myData1, sizeof(myData1));
@@ -431,7 +438,7 @@ TEST_P(CaptureAndReplayTests, CaptureWithMapWriteDuringCapture) {
     wgpu::Buffer srcBuffer =
         CreateBuffer(srcLabel, 4, wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc);
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     MapAsyncAndWait(srcBuffer, wgpu::MapMode::Write, 0, 4);
     srcBuffer.WriteMappedRange(0, &myData2, sizeof(myData2));
@@ -466,7 +473,7 @@ TEST_P(CaptureAndReplayTests, CaptureWithMapRead) {
     wgpu::Buffer dstBuffer =
         CreateBuffer(dstLabel, 4, wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst);
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     wgpu::CommandBuffer commands;
     {
@@ -504,7 +511,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyBufferToBuffer) {
         commands = encoder.Finish();
     }
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -519,7 +526,7 @@ TEST_P(CaptureAndReplayTests, WriteTexture) {
         CreateTexture("myTexture", {4}, wgpu::TextureFormat::R8Unorm,
                       wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::CopySrc);
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     const uint8_t myData[] = {0x11, 0x22, 0x33, 0x44};
     WriteFullTexture(texture, wgpu::TextureFormat::R8Unorm, {4}, myData);
@@ -554,7 +561,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyBufferToTexture) {
         commands = encoder.Finish();
     }
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -590,7 +597,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToBuffer) {
         commands = encoder.Finish();
     }
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -627,7 +634,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTexture) {
         commands = encoder.Finish();
     }
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -692,7 +699,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTextureFromCopyT2TTexture) {
         commands = encoder.Finish();
     }
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -746,7 +753,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTextureFromComputeTexture) {
         "dstTexture", {1, 1, 1}, wgpu::TextureFormat::RGBA8Uint, wgpu::TextureUsage::CopyDst);
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     {
         wgpu::CommandBuffer commands;
@@ -800,7 +807,7 @@ TEST_P(CaptureAndReplayTests, CaptureCopyTextureToTextureFromRenderTexture) {
         "dstTexture", {1, 1, 1}, wgpu::TextureFormat::RGBA8Uint, wgpu::TextureUsage::CopyDst);
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     {
         wgpu::CommandBuffer commands;
@@ -866,7 +873,7 @@ TEST_P(CaptureAndReplayTests, CaptureComputeShaderBasic) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -917,7 +924,7 @@ TEST_P(CaptureAndReplayTests, CaptureComputeShaderBasicSetBindGroupFirst) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -991,7 +998,7 @@ TEST_P(CaptureAndReplayTests, CaptureTwoMatchingAutoLayoutComputePipelines) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1063,7 +1070,7 @@ TEST_P(CaptureAndReplayTests, CaptureTwoAutoLayoutComputePipelinesOneIsBoundButU
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1095,7 +1102,7 @@ TEST_P(CaptureAndReplayTests, CaptureRenderPassBasic) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1159,7 +1166,7 @@ TEST_P(CaptureAndReplayTests, CaptureRenderPassBasicWithBindGroup) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1223,7 +1230,7 @@ TEST_P(CaptureAndReplayTests, CaptureRenderPassBasicWithAttributes) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1288,7 +1295,7 @@ TEST_P(CaptureAndReplayTests, CaptureComputeShaderBasicExplicitBindGroup) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1354,7 +1361,7 @@ TEST_P(CaptureAndReplayTests, CaptureStorageTextureUsageWithExplicitBindGroupLay
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1433,7 +1440,7 @@ TEST_P(CaptureAndReplayTests, CaptureTextureUsageWithExplicitBindGroupLayout) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1522,7 +1529,7 @@ TEST_P(CaptureAndReplayTests, CaptureSamplerUsageWithExplicitBindGroupLayout) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1560,7 +1567,7 @@ TEST_P(CaptureAndReplayTests, CaptureDepthRenderPass) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1682,7 +1689,7 @@ TEST_P(CaptureAndReplayTests, CaptureQuerySetBasic) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1767,7 +1774,7 @@ TEST_P(CaptureAndReplayTests, CaptureRenderBundleBasic) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1805,7 +1812,7 @@ TEST_P(CaptureAndReplayTests, PushPopInsertDebug) {
     wgpu::CommandBuffer commands = encoder.Finish();
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -1889,7 +1896,7 @@ TEST_P(CaptureAndReplayTests, CaptureSetLabel) {
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     wgpu::CommandBuffer commandBuffer = encoder.Finish();
 
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     // Note: the first time capture see's a resource here is
     // on SetLabel. The label is set before the resource is captured
@@ -2019,7 +2026,7 @@ TEST_P(CaptureAndReplayTests, CaptureSetBlendConstant) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2072,7 +2079,7 @@ TEST_P(CaptureAndReplayTests, CaptureDispatchIndirect) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2099,7 +2106,7 @@ TEST_P(CaptureAndReplayTests, CaptureClearBuffer) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2169,7 +2176,7 @@ TEST_P(CaptureAndReplayTests, SetImmediateComputePass) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2236,7 +2243,7 @@ TEST_P(CaptureAndReplayTests, SetImmediateRenderPass) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2251,7 +2258,7 @@ TEST_P(CaptureAndReplayTests, SetImmediateRenderPass) {
 // Make sure it does not capture the unmap of a buffer if that unmap is triggered by the buffer
 // destroy.
 TEST_P(CaptureAndReplayTests, MappedBufferDestroyed) {
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     {
         // Create a buffer mapped at creation and then release it.
@@ -2373,7 +2380,7 @@ TEST_P(CaptureAndReplayTests, CaptureDepth24Plus) {
     }();
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2498,7 +2505,7 @@ TEST_P(CaptureAndReplayTests, BindGroupWithExternalTexture) {
     wgpu::CommandBuffer commands = encoder.Finish();
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2575,7 +2582,7 @@ class CaptureAndReplayDrawTests : public CaptureAndReplayTests {
         }
 
         // --- capture ---
-        auto recorder = Recorder::CreateAndStart(device);
+        auto recorder = Recorder::CreateAndStart(instance, device);
 
         queue.Submit(1, &commands);
 
@@ -2743,7 +2750,7 @@ TEST_P(CaptureAndReplayTimestampTests, WriteTimestamp) {
     }
 
     // --- capture ---
-    auto recorder = Recorder::CreateAndStart(device);
+    auto recorder = Recorder::CreateAndStart(instance, device);
 
     queue.Submit(1, &commands);
 
@@ -2755,6 +2762,75 @@ TEST_P(CaptureAndReplayTimestampTests, WriteTimestamp) {
 }
 
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTimestampTests, WebGPUBackend());
+
+struct GLFWindowDestroyer {
+    void operator()(GLFWwindow* ptr) { glfwDestroyWindow(ptr); }
+};
+
+class WebGPUSurfaceCaptureReplayTest : public CaptureAndReplayTests {
+  protected:
+    void SetUp() override {
+        CaptureAndReplayTests::SetUp();
+
+        // TODO(crbug.com/dawn/2531): Failing on newer Linux/Intel driver version.
+        // However, IsIntel() and IsMesa() don't work with the null backend.
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNull());
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel() && IsMesa("23.2"));
+
+        // Causes flaky X11 resource exhaustion when run with SwiftShader.
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsSwiftshader());
+
+        DAWN_TEST_UNSUPPORTED_IF(!glfwInit());
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        mWindow.reset(glfwCreateWindow(1, 1, "WebGPUSurfaceCaptureReplayTest", nullptr, nullptr));
+    }
+
+    void TearDown() override {
+        mWindow.reset();
+        glfwTerminate();
+        CaptureAndReplayTests::TearDown();
+    }
+
+    std::unique_ptr<GLFWwindow, GLFWindowDestroyer> mWindow;
+};
+
+TEST_P(WebGPUSurfaceCaptureReplayTest, TestSurface) {
+    wgpu::Surface surface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+    surface.SetLabel("mySurface");
+
+    wgpu::SurfaceConfiguration config = {};
+    config.device = device;
+    config.format = wgpu::TextureFormat::BGRA8Unorm;
+    config.usage = wgpu::TextureUsage::RenderAttachment;
+    config.width = 1;
+    config.height = 1;
+    config.presentMode = wgpu::PresentMode::Fifo;
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(instance, device);
+
+    surface.Configure(&config);
+
+    wgpu::SurfaceTexture surfaceTexture;
+    surface.GetCurrentTexture(&surfaceTexture);
+    wgpu::Texture texture = surfaceTexture.texture;
+    texture.SetLabel("backbuffer");
+
+    surface.Present();
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Surface>("mySurface") != nullptr);
+    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer") != nullptr);
+
+    // Explicitly reset the replay object to release all replayed resources (like Surface)
+    // before the test ends and the device count check is performed.
+    replay.reset();
+}
+
+DAWN_INSTANTIATE_TEST(WebGPUSurfaceCaptureReplayTest, WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

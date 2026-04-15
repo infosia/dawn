@@ -160,13 +160,14 @@ class Capture {
     Capture(const std::string& commandData, const std::string& contentData)
         : mCommandData(commandData), mContentData(contentData) {}
 
-    std::unique_ptr<replay::Replay> Replay(wgpu::Device device) {
+    std::unique_ptr<replay::Replay> Replay(wgpu::Instance instance, wgpu::Device device) {
         std::istringstream commandIStream(mCommandData);
         std::istringstream contentIStream(mContentData);
 
         auto capture = replay::Capture::Create(commandIStream, mCommandData.size(), contentIStream,
                                                mContentData.size());
-        std::unique_ptr<replay::Replay> replay = replay::Replay::Create(device, std::move(capture));
+        std::unique_ptr<replay::Replay> replay =
+            replay::Replay::Create(instance, device, std::move(capture));
 
         bool result = replay->Play();
         EXPECT_TRUE(result);
@@ -193,7 +194,15 @@ class Recorder {
 
     Capture Finish() {
         native::webgpu::EndCapture(mDevice.Get());
+        // Make sure at TearDown the device is released as the DawnTest will check device count.
+        mDevice = nullptr;
         return Capture(mCommandStream.str(), mContentStream.str());
+    }
+
+    ~Recorder() {
+        if (mDevice != nullptr) {
+            native::webgpu::EndCapture(mDevice.Get());
+        }
     }
 
   private:
@@ -217,7 +226,9 @@ class Replay {
 
 class Capture {
   public:
-    std::unique_ptr<replay::Replay> Replay(wgpu::Device device) { DAWN_UNREACHABLE(); }
+    std::unique_ptr<replay::Replay> Replay(wgpu::Instance instance, wgpu::Device device) {
+        DAWN_UNREACHABLE();
+    }
 };
 
 class Recorder {
@@ -2292,7 +2303,7 @@ void DawnTestBase::CheckReplayedReadbackBuffers(std::span<ReadbackSlot> existing
     // it).
     wgpu::Device replayDevice = device;
 
-    auto replay = capture.Replay(replayDevice);
+    auto replay = capture.Replay(instance, replayDevice);
 
     for (auto& readback : existingReadbacks) {
         auto replayedBuffer = replay->GetObjectByLabel<wgpu::Buffer>(readback.label);
