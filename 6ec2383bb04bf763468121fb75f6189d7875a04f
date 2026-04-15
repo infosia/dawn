@@ -22,6 +22,30 @@
       },
       "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196d1e57_64c0408a",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T21:19:47Z",
+      "side": 0,
+      "message": "It\u0027s probably fine, but maybe we could keep it and simplify it a bit with something like:\n\n```c++\nbool cannotInjectError \u003d /*...*/;\nif (!cannotInjectError) {\n    // New helper for `INJECT_ERROR_OR_RUN(VK_SUCCESS, __VA_ARGS__)`\n    MAYBE_INJECT_ERROR(VK_ERROR_DEVICE_LOST);\n    \n}\n\nreturn VkResult::WrapUnsafe(device-\u003efn.WaitForFences(vkDevice, 1, \u0026*waitFence, true,\n                            static_cast\u003cuint64_t\u003e(timeout)));\n```",
+      "parentUuid": "5c622078_1a491866",
+      "range": {
+        "startLine": 488,
+        "startChar": 19,
+        "endLine": 491,
+        "endChar": 59
+      },
+      "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
