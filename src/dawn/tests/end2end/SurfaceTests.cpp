@@ -32,6 +32,7 @@
 
 #include "GLFW/glfw3.h"
 #include "dawn/common/Constants.h"
+#include "dawn/replay/Replay.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderBundleEncoderDescriptor.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
@@ -96,6 +97,18 @@ class SurfaceTests : public DawnTest {
     void TearDown() override {
         // Destroy the surface before the window as required by webgpu-native.
         window.reset();
+
+        // Create a surface for the replay.
+        wgpu::Surface surface;
+        if (IsCaptureReplayCheckingEnabled()) {
+            // Set GLFW_NO_API to avoid GLFW bringing up a GL context that we won't use.
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+            window.reset(glfwCreateWindow(400, 500, "SurfaceTests window", nullptr, nullptr));
+
+            surface = CreateTestSurface();
+            SetReplaySurface(surface);
+        }
+
         DawnTest::TearDown();
     }
 
