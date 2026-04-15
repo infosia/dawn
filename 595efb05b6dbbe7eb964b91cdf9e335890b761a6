@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5674ac2b_a06d77fd",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T19:03:28Z",
+      "side": 1,
+      "message": "confusing that these are unused, rename these `U`s to `U_unused` or something like that? Or does the name need to match the parent?",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "595efb05b6dbbe7eb964b91cdf9e335890b761a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
