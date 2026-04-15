@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "654e94b4_7111b1ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T21:52:44Z",
+      "side": 1,
+      "message": "That doc is good and covers the guidance for CHECK vs. ASSERT well. I do think it would be best as a .md in the docs/ folder as part of this CL, though. That way it\u0027s accessible to external contributors as well.",
+      "parentUuid": "470ace4e_b2ab561c",
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5289e2e8_3d34300e",
         "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
         "patchSetId": 7
