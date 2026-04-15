@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d070d266_78a8e530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3599592
+      },
+      "writtenOn": "2026-04-15T00:29:53Z",
+      "side": 1,
+      "message": "ptal, do you guys have other autorollers?\n\nfor context, the roller is capable of updating README files with Revision/Version on a roll. this is preferred over `Revision: DEPS` syntax.",
+      "revId": "03ab0d51f28b801a3930541ae8eea108ece3b521",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
