@@ -28,10 +28,12 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "GLFW/glfw3.h"
 #include "dawn/common/Constants.h"
+#include "dawn/replay/Replay.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderBundleEncoderDescriptor.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
@@ -94,9 +96,33 @@ class SurfaceTests : public DawnTest {
     }
 
     void TearDown() override {
-        // Destroy the surface before the window as required by webgpu-native.
-        window.reset();
+        wgpu::Surface surface;
+        std::unique_ptr<GLFWwindow, GLFWindowDestroyer> replayWindow;
+        if (IsCaptureReplayCheckingEnabled()) {
+            // Set GLFW_NO_API to avoid GLFW bringing up a GL context that we won't use.
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+            replayWindow.reset(glfwCreateWindow(400, 500, "SurfaceTests window", nullptr, nullptr));
+
+            // Create a surface for the replay.
+            surface = wgpu::glfw::CreateSurfaceForWindow(GetInstance(), replayWindow.get());
+            SetReplaySurface(surface);
+        } else {
+            // Destroy the surface before the window as required by webgpu-native.
+            window.reset();
+        }
+
         DawnTest::TearDown();
+
+        // At this point DawnTest::TearDown() has finished, which means the capture context
+        // has been cleared and all surfaces held by it are released.
+        // Now it's safe to destroy the windows.
+        surface = nullptr;
+        if (IsCaptureReplayCheckingEnabled()) {
+            DAWN_ASSERT(replayWindow);
+            replayWindow.reset();
+            DAWN_ASSERT(window);
+            window.reset();
+        }
     }
 
     wgpu::Surface CreateTestSurface() {
