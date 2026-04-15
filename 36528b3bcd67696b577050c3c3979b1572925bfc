@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc738698_f47a764c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-15T20:43:35Z",
+      "side": 1,
+      "message": "I have literally never seen this check suggest anything other busted changes... https://issuetracker.google.com/issues/503011011",
+      "revId": "36528b3bcd67696b577050c3c3979b1572925bfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "811d034d_5369c687",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-15T20:43:35Z",
+      "side": 1,
+      "message": "PTAL\n\nThe existing tests were not grouped well, so a number of pre-existing tests got shuffled too. I make an attempt to try to parameterize this a bit, but it was turning into me implementing the logic under test in the tests themselves, so stuck with explicit tests.",
+      "revId": "36528b3bcd67696b577050c3c3979b1572925bfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
