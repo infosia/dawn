@@ -96,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "540d66e1_7a24c3b2",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-15T14:13:14Z",
+      "side": 1,
+      "message": "The computation might be combined with the below computation.\nI would expect 1 or 2 instructions at most.",
+      "parentUuid": "5289e2e8_3d34300e",
+      "range": {
+        "startLine": 758,
+        "startChar": 4,
+        "endLine": 758,
+        "endChar": 14
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d07991d_244c6fee",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 7
@@ -119,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f497b326_be34ec18",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-15T14:13:14Z",
+      "side": 1,
+      "message": "These kinds of asserts are the ones we want to check as it is checking alignment or offsets of memory.\nAlso these are all cheap.",
+      "parentUuid": "6d07991d_244c6fee",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7
@@ -130,6 +178,30 @@
       "writtenOn": "2026-04-15T13:32:20Z",
       "side": 1,
       "message": "This is just a sanity check. I don\u0027t think it\u0027s enough to prevent a real race here. So I don\u0027t think a `DAWN_CHECK` here is meaningful. Furthermore, `GetLastSubmittedCommandSerial` is an atomic load and might not be cheap on ARM.",
+      "range": {
+        "startLine": 441,
+        "startChar": 16,
+        "endLine": 441,
+        "endChar": 26
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a976f55c_7b44ffd6",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-15T14:13:14Z",
+      "side": 1,
+      "message": "I am fine with removing this one for now.",
+      "parentUuid": "ddfd6ae4_bc4e4b1a",
       "range": {
         "startLine": 441,
         "startChar": 16,
