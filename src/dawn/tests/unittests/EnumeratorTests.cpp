@@ -30,6 +30,7 @@
 
 #include "dawn/common/Compiler.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/TypedInteger.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/common/ityp_vector.h"
@@ -117,7 +118,7 @@ TEST_F(EnumeratorTest, ITypVector) {
     CheckEmpty(emptyThing);
 
     // Non-empty vector
-    ityp::vector<Int, uint32_t> thing = {{37, 45, 67}};
+    ityp::vector<Int, uint32_t> thing{{37, 45, 67}};
     Check<Int>(thing, thing.data());
 }
 

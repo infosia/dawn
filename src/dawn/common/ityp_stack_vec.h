@@ -31,7 +31,7 @@
 #include <limits>
 
 #include "absl/container/inlined_vector.h"
-#include "dawn/common/Assert.h"
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -40,38 +40,33 @@ template <typename Index, typename Value, size_t StaticCapacity>
 class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     using I = UnderlyingType<Index>;
     using Base = absl::InlinedVector<Value, StaticCapacity>;
+
+    static_assert(std::numeric_limits<I>::min() == 0, "Index type must be unsigned");
     static_assert(StaticCapacity <= std::numeric_limits<I>::max());
 
   public:
-    stack_vec() : Base() {}
-    explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
+    constexpr stack_vec() : Base() {}
+    constexpr explicit stack_vec(Index size) : Base() { Base::resize(CheckedSize(size)); }
 
-    Value& operator[](Index i) {
-#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
-        // Insert our own bounds check if not already enabled in absl
-        DAWN_CHECK(i < size());
-#endif
-        return Base::operator[](static_cast<I>(i));
+    using Base::data;
+    using Base::empty;
+
+    constexpr Value& operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
+
+    constexpr void resize(Index size) { Base::resize(CheckedSize(size)); }
+
+    constexpr void reserve(Index size) { Base::reserve(CheckedSize(size)); }
+
+    constexpr Index size() const { return Index(I(Base::size())); }
+
+  private:
+    static constexpr inline size_t CheckedSize(Index size) {
+        return checked_cast<size_t>(static_cast<I>(size));
     }
-
-    constexpr const Value& operator[](Index i) const {
-#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
-        // Insert our own bounds check if not already enabled in absl
-        DAWN_CHECK(i < size());
-#endif
-        return Base::operator[](static_cast<I>(i));
+    constexpr inline size_t CheckedIndex(Index i) const {
+        return BoundCheckedIndex(i, size(), Base::size());
     }
-
-    void resize(Index size) { Base::resize(static_cast<I>(size)); }
-
-    void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
-
-    Value* data() { return Base::data(); }
-    const Value* data() const { return Base::data(); }
-
-    Index size() const { return Index(static_cast<I>(Base::size())); }
-
-    bool empty() const { return Base::empty(); }
 };
 
 }  // namespace dawn::ityp
