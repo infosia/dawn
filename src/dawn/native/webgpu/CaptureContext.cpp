@@ -30,12 +30,14 @@
 #include <concepts>
 #include <vector>
 
+#include "absl/hash/hash.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/BlockInfo.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/Surface.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QuerySetWGPU.h"
@@ -88,6 +90,151 @@ void CaptureContext::CaptureSetLabel(Device* object, const std::string& label) {
         }},
     }};
     Serialize(*this, data);
+}
+
+template <>
+void CaptureContext::CaptureSetLabel(Surface* object, const std::string& label) {
+    auto result = AddResourceAndGetId(object);
+    if (result.IsSuccess()) {
+        schema::RootCommandSetLabelCmd data{{
+            .data{{
+                .id = result.AcquireSuccess(),
+                .type = schema::ObjectType::Surface,
+                .label = label,
+            }},
+        }};
+        Serialize(*this, data);
+    }
+}
+
+MaybeError CaptureContext::CaptureSurfaceConfigure(Surface* surface,
+                                                   const SurfaceConfiguration* config) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+    if (surfaceId == 0) {
+        return {};
+    }
+
+    // If the surface was already configured, emit an Unconfigure first to ensure the capture
+    // stream state matches the frontend expectation.
+    if (mSurfaceConfigCount[surface] > 0) {
+        schema::RootCommandSurfaceUnconfigureCmd unconfigCmd{{
+            .data = {{
+                .surfaceId = surfaceId,
+            }},
+        }};
+        Serialize(*this, unconfigCmd);
+    }
+
+    std::vector<wgpu::TextureFormat> viewFormats;
+    for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
+        viewFormats.push_back(config->viewFormats[i]);
+    }
+
+    schema::RootCommandSurfaceConfigureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .config = {{
+                .deviceId = schema::kDeviceId,
+                .format = config->format,
+                .usage = config->usage,
+                .viewFormats = viewFormats,
+                .alphaMode = config->alphaMode,
+                .width = config->width,
+                .height = config->height,
+                .presentMode = config->presentMode,
+            }},
+        }},
+    }};
+    Serialize(*this, cmd);
+
+    mSurfaceConfigCount[surface]++;
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfaceUnconfigure(Surface* surface) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+    if (surfaceId == 0) {
+        return {};
+    }
+
+    DAWN_ASSERT(mSurfaceConfigCount[surface] > 0);
+    if (--mSurfaceConfigCount[surface] == 0) {
+        schema::RootCommandSurfaceUnconfigureCmd cmd{{
+            .data = {{
+                .surfaceId = surfaceId,
+            }},
+        }};
+        Serialize(*this, cmd);
+    }
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfacePresent(Surface* surface) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+    if (surfaceId == 0) {
+        return {};
+    }
+
+    schema::RootCommandSurfacePresentCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+MaybeError CaptureContext::CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture) {
+    schema::ObjectId surfaceId;
+    DAWN_TRY_ASSIGN(surfaceId, AddResourceAndGetId(surface));
+    if (surfaceId == 0) {
+        return {};
+    }
+    schema::ObjectId textureId;
+    DAWN_TRY_ASSIGN(textureId, AddResourceAndGetId(texture));
+    if (textureId == 0) {
+        return {};
+    }
+
+    schema::RootCommandSurfaceGetCurrentTextureCmd cmd{{
+        .data = {{
+            .surfaceId = surfaceId,
+            .textureId = textureId,
+        }},
+    }};
+    Serialize(*this, cmd);
+    return {};
+}
+
+ResultOrError<schema::ObjectId> CaptureContext::AddResourceAndGetId(Surface* surface) {
+    assert(surface != nullptr);
+    auto it = mSurfaceIds.find(surface);
+    if (it == mSurfaceIds.end()) {
+        if (!surface->TryAddRef()) {
+            return DAWN_INTERNAL_ERROR("Failed to add reference to surface during capture.");
+        }
+        mReferencedSurfaces.push_back(AcquireRef(surface));
+
+        schema::ObjectId id = mNextObjectId++;
+        mSurfaceIds[surface] = id;
+        return {id};
+    }
+    return {it->second};
+}
+
+schema::ObjectId CaptureContext::GetId(Surface* surface) {
+    if (surface == nullptr) {
+        return 0;
+    }
+
+    auto it = mSurfaceIds.find(surface);
+    if (it == mSurfaceIds.end()) {
+        return 0;
+    }
+    return it->second;
 }
 
 CaptureContext::CaptureContext(Device* device,

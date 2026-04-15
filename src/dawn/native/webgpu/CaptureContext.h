@@ -34,6 +34,8 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
+#include "absl/hash/hash.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/webgpu/Forward.h"
@@ -95,14 +97,18 @@ class CaptureContext {
     ResultOrError<schema::ObjectId> AddResourceAndGetId(T* object) {
         assert(object != nullptr);
         schema::ObjectId id;
-        Ref<ApiObjectBase> ref(object);
-        auto it = mObjectIds.find(ref);
+        auto it = mObjectIds.find(static_cast<ApiObjectBase*>(object));
         bool newResource = it == mObjectIds.end();
         if (newResource) {
+            if (!object->TryAddRef()) {
+                return DAWN_INTERNAL_ERROR("Failed to add reference to object during capture.");
+            }
+            mReferencedObjects.push_back(AcquireRef(static_cast<ApiObjectBase*>(object)));
+
             DAWN_TRY(object->AddReferenced(*this));
 
             id = mNextObjectId++;
-            mObjectIds[std::move(ref)] = id;
+            mObjectIds[static_cast<ApiObjectBase*>(object)] = id;
             DAWN_TRY(CaptureCreation(id, object->GetLabel(), object));
         } else {
             id = it->second;
@@ -125,7 +131,7 @@ class CaptureContext {
             return 0;
         }
 
-        auto it = mObjectIds.find(ref);
+        auto it = mObjectIds.find(static_cast<ApiObjectBase*>(ref.Get()));
         DAWN_ASSERT(it != mObjectIds.end());
         return it->second;
     }
@@ -136,14 +142,14 @@ class CaptureContext {
             return 0;
         }
 
-        auto it = mObjectIds.find(Ref<ApiObjectBase>(object));
+        auto it = mObjectIds.find(static_cast<ApiObjectBase*>(object));
         DAWN_ASSERT(it != mObjectIds.end());
         return it->second;
     }
 
     template <typename T>
     bool HasId(T* object) {
-        return mObjectIds.find(Ref<ApiObjectBase>(object)) != mObjectIds.end();
+        return mObjectIds.find(static_cast<ApiObjectBase*>(object)) != mObjectIds.end();
     }
 
     template <typename T>
@@ -166,6 +172,10 @@ class CaptureContext {
     template <>
     void CaptureSetLabel(Device* object, const std::string& label);
 
+    // Special case for Surface as it's not a RecordableObject
+    template <>
+    void CaptureSetLabel(Surface* object, const std::string& label);
+
     void WriteCommandBytes(const void* data, size_t size);
 
     MaybeError CaptureQueueWriteBuffer(Buffer* buffer,
@@ -177,6 +187,14 @@ class CaptureContext {
                                         size_t dataSize,
                                         const TexelCopyBufferLayout& dataLayout,
                                         const TexelExtent3D& writeSizePixel);
+
+    MaybeError CaptureSurfaceConfigure(Surface* surface, const SurfaceConfiguration* config);
+    MaybeError CaptureSurfaceUnconfigure(Surface* surface);
+    MaybeError CaptureSurfacePresent(Surface* surface);
+    MaybeError CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture);
+
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(Surface* surface);
+    schema::ObjectId GetId(Surface* surface);
 
     WGPUBuffer GetCopyBuffer();
 
@@ -201,7 +219,13 @@ class CaptureContext {
     raw_ptr<Device, DanglingUntriaged> mDevice;
     const raw_ref<std::ostream, DanglingUntriaged> mCommandStream;
     const raw_ref<std::ostream, DanglingUntriaged> mContentStream;
-    absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
+
+    std::vector<Ref<ApiObjectBase>> mReferencedObjects;
+    std::vector<Ref<Surface>> mReferencedSurfaces;
+
+    absl::flat_hash_map<ApiObjectBase*, schema::ObjectId> mObjectIds;
+    absl::flat_hash_map<Surface*, schema::ObjectId> mSurfaceIds;
+    absl::flat_hash_map<Surface*, uint32_t> mSurfaceConfigCount;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;
