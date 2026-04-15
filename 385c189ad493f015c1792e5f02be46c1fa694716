@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb23ced_a54e876f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T21:04:54Z",
+      "side": 1,
+      "message": "```suggestion\nThis CL adds missing testing coverage to branches related to access\n```",
+      "revId": "385c189ad493f015c1792e5f02be46c1fa694716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
