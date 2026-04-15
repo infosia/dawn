@@ -68,6 +68,7 @@
 #ifdef DAWN_ENABLE_BACKEND_WEBGPU
 #include "dawn/native/WebGPUBackend.h"
 #include "dawn/replay/Replay.h"
+#include "src/dawn/replay/Capture.h"
 #endif
 
 #if defined(DAWN_ENABLE_BACKEND_OPENGL)
@@ -155,29 +156,6 @@ struct ParamTogglesHelper {
 }  // anonymous namespace
 
 #ifdef DAWN_ENABLE_BACKEND_WEBGPU
-class Capture {
-  public:
-    Capture(const std::string& commandData, const std::string& contentData)
-        : mCommandData(commandData), mContentData(contentData) {}
-
-    std::unique_ptr<replay::Replay> Replay(wgpu::Device device) {
-        std::istringstream commandIStream(mCommandData);
-        std::istringstream contentIStream(mContentData);
-
-        auto capture = replay::Capture::Create(commandIStream, mCommandData.size(), contentIStream,
-                                               mContentData.size());
-        std::unique_ptr<replay::Replay> replay = replay::Replay::Create(device, std::move(capture));
-
-        bool result = replay->Play();
-        EXPECT_TRUE(result);
-        return replay;
-    }
-
-  private:
-    std::string mCommandData;
-    std::string mContentData;
-};
-
 class Recorder {
   public:
     static std::unique_ptr<Recorder> CreateAndStart(wgpu::Device device) {
@@ -191,23 +169,89 @@ class Recorder {
         return recorder;
     }
 
-    Capture Finish() {
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) { mSurfaces = std::move(surfaces); }
+
+    replay::Capture* EndCapture() {
+        if (mCapture) {
+            return mCapture.get();
+        }
+
         native::webgpu::EndCapture(mDevice.Get());
         // Make sure at TearDown the device is released as the DawnTest will check device count.
         mDevice = nullptr;
-        return Capture(mCommandStream.str(), mContentStream.str());
+
+        auto commandData = mCommandStream.str();
+        auto contentData = mContentStream.str();
+        std::istringstream commandIStream(commandData);
+        std::istringstream contentIStream(contentData);
+
+        mCapture = replay::Capture::Create(commandIStream, commandData.size(), contentIStream,
+                                           contentData.size());
+        return mCapture.get();
+    }
+
+    replay::Replay* Replay(wgpu::Device device) {
+        DAWN_ASSERT(mCapture);
+        mReplay = replay::Replay::Create(device, std::move(mCapture));
+
+        if (!mSurfaces.empty()) {
+            mReplay->SetSurfaces(mSurfaces);
+        }
+
+        bool result = mReplay->Play();
+        EXPECT_TRUE(result);
+        return mReplay.get();
+    }
+
+    replay::Capture* GetCapture() {
+        if (mReplay) {
+            return mReplay->GetCapture();
+        }
+
+        if (!mCapture) {
+            // Ensure End Capture
+            EndCapture();
+        }
+        return mCapture.get();
+    }
+
+    replay::Replay* GetReplay() const {
+        DAWN_ASSERT(mReplay);
+        return mReplay.get();
+    }
+
+    ~Recorder() {
+        if (mDevice != nullptr) {
+            native::webgpu::EndCapture(mDevice.Get());
+        }
     }
 
   private:
     explicit Recorder(wgpu::Device device) : mDevice(device) {}
 
     wgpu::Device mDevice;
+    std::vector<wgpu::Surface> mSurfaces;
     std::ostringstream mCommandStream;
     std::ostringstream mContentStream;
+
+    std::unique_ptr<replay::Replay> mReplay;
+    // Store the capture once EndCapture, it is moved to mReplay after a replay is started.
+    std::unique_ptr<replay::Capture> mCapture;
 };
 #else
 // A No-op version implementation of the Capture Replay functionality.
 namespace replay {
+
+struct SurfaceInfo {
+    uint32_t width;
+    uint32_t height;
+};
+
+class Capture {
+  public:
+    std::vector<SurfaceInfo> GetSurfaceInfos() const { DAWN_UNREACHABLE(); }
+};
+
 class Replay {
   public:
     template <typename T>
@@ -217,15 +261,12 @@ class Replay {
 };
 }  // namespace replay
 
-class Capture {
-  public:
-    std::unique_ptr<replay::Replay> Replay(wgpu::Device device) { DAWN_UNREACHABLE(); }
-};
-
 class Recorder {
   public:
     static std::unique_ptr<Recorder> CreateAndStart(wgpu::Device device) { DAWN_UNREACHABLE(); }
-    Capture Finish() { DAWN_UNREACHABLE(); }
+    void SetSurfaces(std::vector<wgpu::Surface> surfaces) {}
+    replay::Capture* EndCapture() { DAWN_UNREACHABLE(); }
+    replay::Replay* Replay(wgpu::Device device) { DAWN_UNREACHABLE(); }
 };
 #endif
 
@@ -1321,6 +1362,29 @@ bool DawnTestBase::IsCaptureReplayCheckingEnabled() const {
     return mCheckCaptureReplay;
 }
 
+void DawnTestBase::SetReplaySurface(wgpu::Surface surface) {
+    if (mRecorder) {
+        mRecorder->SetSurfaces({surface});
+    }
+}
+
+void DawnTestBase::SetReplaySurfaces(std::vector<wgpu::Surface> surfaces) {
+    if (mRecorder) {
+        mRecorder->SetSurfaces(std::move(surfaces));
+    }
+}
+
+replay::Capture* DawnTestBase::GetCapture() const {
+#ifdef DAWN_ENABLE_BACKEND_WEBGPU
+    if (mRecorder) {
+        return mRecorder->GetCapture();
+    }
+    return nullptr;
+#else
+    return nullptr;
+#endif
+}
+
 // static
 bool DawnTestBase::IsAsan() {
 #if defined(ADDRESS_SANITIZER)
@@ -2283,14 +2347,14 @@ void DawnTestBase::CheckReplayedReadbackBuffers(std::span<ReadbackSlot> existing
     }
     // Stop recording.
     DAWN_ASSERT(mRecorder.get());
-    auto capture = mRecorder->Finish();
+    mRecorder->EndCapture();
 
     // TODO(crbug.com/462149555): For now simply use the webgpu "outer" device for replay.
     // Ideally we would replay on a new device or the inner device (need public API to expose
     // it).
     wgpu::Device replayDevice = device;
 
-    auto replay = capture.Replay(replayDevice);
+    auto replay = mRecorder->Replay(replayDevice);
 
     for (auto& readback : existingReadbacks) {
         auto replayedBuffer = replay->GetObjectByLabel<wgpu::Buffer>(readback.label);

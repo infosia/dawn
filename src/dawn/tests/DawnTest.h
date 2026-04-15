@@ -203,6 +203,10 @@ class WireClient;
 class WireServer;
 }  // namespace wire
 
+namespace replay {
+class Capture;
+}  // namespace replay
+
 class Recorder;
 
 class DawnTestEnvironment : public testing::Environment {
@@ -344,6 +348,9 @@ class DawnTestBase {
     bool IsDXC() const;
 
     bool IsCaptureReplayCheckingEnabled() const;
+    void SetReplaySurface(wgpu::Surface surface);
+    void SetReplaySurfaces(std::vector<wgpu::Surface> surfaces);
+    replay::Capture* GetCapture() const;
 
     static bool IsAsan();
     static bool IsTsan();
