@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f3cd6f7_ae947a11",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-04-15T05:47:30Z",
+      "side": 1,
+      "message": "```suggestion\n                    if (dst_type-\u003eDeepestElement()-\u003eIs\u003ccore::type::F32\u003e()) {\n                        v \u003d b.Call\u003chlsl::ir::BuiltinCall\u003e(dst_type, BuiltinFn::kAsfloat, v);\n                    } else if (dst_type-\u003eDeepestElement()-\u003eIs\u003ccore::type::I32\u003e()) {\n                        v \u003d b.Call\u003chlsl::ir::BuiltinCall\u003e(dst_type, BuiltinFn::kAsint, v);\n                    }\n```\nWhen the destination type is i32, the asint conversion is missing.",
+      "range": {
+        "startLine": 680,
+        "startChar": 20,
+        "endLine": 682,
+        "endChar": 21
+      },
+      "revId": "3d8a71e12c05647163b564f667f84be438cb2f0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
