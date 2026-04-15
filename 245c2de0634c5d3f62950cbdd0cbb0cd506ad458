@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb0472a_4e58e31e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T18:46:47Z",
+      "side": 1,
+      "message": "PTAL. Probably the simplest CL you\u0027ll review today!",
+      "revId": "245c2de0634c5d3f62950cbdd0cbb0cd506ad458",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
