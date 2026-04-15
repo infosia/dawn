@@ -72,7 +72,7 @@ TEST_F(ITypVectorTest, Creation) {
 
     // Initializer list constructor
     {
-        Vector vec = {Val(2), Val(8), Val(1)};
+        Vector vec({Val(2), Val(8), Val(1)});
         ASSERT_EQ(vec.size(), Key(3));
         ASSERT_EQ(vec[Key(0)], Val(2));
         ASSERT_EQ(vec[Key(1)], Val(8));
@@ -84,7 +84,7 @@ TEST_F(ITypVectorTest, Creation) {
 TEST_F(ITypVectorTest, CopyConstructAssign) {
     // Test the copy constructor
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec(rhs);
         ASSERT_EQ(vec.size(), Key(3));
@@ -100,7 +100,7 @@ TEST_F(ITypVectorTest, CopyConstructAssign) {
 
     // Test the copy assignment
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec = rhs;
         ASSERT_EQ(vec.size(), Key(3));
@@ -119,7 +119,7 @@ TEST_F(ITypVectorTest, CopyConstructAssign) {
 TEST_F(ITypVectorTest, MoveConstructAssign) {
     // Test the move constructor
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec(std::move(rhs));
         ASSERT_EQ(vec.size(), Key(3));
@@ -130,7 +130,7 @@ TEST_F(ITypVectorTest, MoveConstructAssign) {
 
     // Test the move assignment
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec = std::move(rhs);
         ASSERT_EQ(vec.size(), Key(3));
@@ -196,24 +196,57 @@ TEST_F(ITypVectorTest, BeginEndFrontBackData) {
     ASSERT_EQ(constVec.data(), &constVec[Key(0)]);
 }
 
+// Test that the initializer_list constructor isn't triggered in non-assert builds where the types
+// can't disambiguate it from other overloads.
+TEST_F(ITypVectorTest, ConstructorOverload) {
+    using KeyZ = TypedInteger<struct KeyZT, size_t>;
+    {
+        ityp::vector<KeyZ, size_t> vec{KeyZ(10), 7};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+    {
+        ityp::vector<KeyZ, size_t> vec{KeyZ(10)};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+}
+
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
 using ITypVectorDeathTest = ITypVectorTest;
 
-// Out of bounds accesses should crash even in release (the underlying container
-// should have asserts enabled).
+// Out of bounds accesses should crash even in release.
 TEST_F(ITypVectorDeathTest, OutOfBounds) {
-    // MSVC doesn't have asserts (without _MSVC_STL_HARDENING).
-    if constexpr (DAWN_COMPILER_IS(MSVC)) {
-        GTEST_SKIP();
-    }
-
     Vector vec(Key(10), Val(7));
+    vec[Key(9)];
     EXPECT_DEATH(vec[Key(10)], "");
     EXPECT_DEATH(vec.at(Key(10)), "");
 
     const Vector& constVec = vec;
+    constVec[Key(9)];
     EXPECT_DEATH(constVec[Key(10)], "");
     EXPECT_DEATH(constVec.at(Key(10)), "");
+}
+
+// If the index/size is 64-bit, it needs to be narrowed to size_t. Verify that's checked correctly.
+TEST_F(ITypVectorDeathTest, OversizedIndex) {
+    using Key64 = TypedInteger<struct Key64T, uint64_t>;
+    static constexpr Key64 kHugeKey64{0x1'0000'0000LLU};
+
+    EXPECT_DEATH((ityp::vector<Key64, Val>(kHugeKey64)), "");
+    EXPECT_DEATH((ityp::vector<Key64, Val>(kHugeKey64, Val(7))), "");
+
+    ityp::vector<Key64, Val> vec(Key64(10), Val(7));
+
+    vec[Key64(9)];
+    // Regular out-of-bounds.
+    EXPECT_DEATH(vec[Key64(10)], "");
+
+    vec[Key64(0)];
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    EXPECT_DEATH(vec[kHugeKey64], "");
+
+    EXPECT_DEATH(vec.resize(kHugeKey64), "");
+    EXPECT_DEATH(vec.resize(kHugeKey64, Val(7)), "");
+    EXPECT_DEATH(vec.reserve(kHugeKey64), "");
 }
 
 }  // anonymous namespace
