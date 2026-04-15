@@ -389,7 +389,7 @@ class DependencyScanner {
     }
 
     /// The type of builtin that a symbol could represent.
-    enum class BuiltinType {
+    enum class Kind : uint8_t {
         /// No builtin matched
         kNone = 0,
         /// Builtin function
@@ -416,7 +416,7 @@ class DependencyScanner {
             return std::get<T>(value);
         }
 
-        BuiltinType type = BuiltinType::kNone;
+        Kind type = Kind::kNone;
         std::variant<std::monostate,
                      wgsl::BuiltinFn,
                      core::BuiltinType,
@@ -425,7 +425,7 @@ class DependencyScanner {
                      core::Access,
                      core::TextureFilterable,
                      core::SamplerFiltering>
-            value = {};
+            value{};
     };
 
     /// Get the builtin info for a given symbol.
@@ -435,31 +435,31 @@ class DependencyScanner {
         return builtin_info_map.GetOrAdd(symbol, [&] {
             if (auto builtin_fn = wgsl::ParseBuiltinFn(symbol.NameView());
                 builtin_fn != wgsl::BuiltinFn::kNone) {
-                return BuiltinInfo{BuiltinType::kFunction, builtin_fn};
+                return BuiltinInfo{Kind::kFunction, builtin_fn};
             }
             if (auto builtin_ty = core::ParseBuiltinType(symbol.NameView());
                 builtin_ty != core::BuiltinType::kUndefined) {
-                return BuiltinInfo{BuiltinType::kBuiltin, builtin_ty};
+                return BuiltinInfo{Kind::kBuiltin, builtin_ty};
             }
             if (auto addr = core::ParseAddressSpace(symbol.NameView());
                 addr != core::AddressSpace::kUndefined) {
-                return BuiltinInfo{BuiltinType::kAddressSpace, addr};
+                return BuiltinInfo{Kind::kAddressSpace, addr};
             }
             if (auto fmt = core::ParseTexelFormat(symbol.NameView());
                 fmt != core::TexelFormat::kUndefined) {
-                return BuiltinInfo{BuiltinType::kTexelFormat, fmt};
+                return BuiltinInfo{Kind::kTexelFormat, fmt};
             }
             if (auto access = core::ParseAccess(symbol.NameView());
                 access != core::Access::kUndefined) {
-                return BuiltinInfo{BuiltinType::kAccess, access};
+                return BuiltinInfo{Kind::kAccess, access};
             }
             if (auto filterable = core::ParseTextureFilterable(symbol.NameView());
                 filterable != core::TextureFilterable::kUndefined) {
-                return BuiltinInfo{BuiltinType::kTextureFilterable, filterable};
+                return BuiltinInfo{Kind::kTextureFilterable, filterable};
             }
             if (auto filterable = core::ParseSamplerFiltering(symbol.NameView());
                 filterable != core::SamplerFiltering::kUndefined) {
-                return BuiltinInfo{BuiltinType::kSamplerFiltering, filterable};
+                return BuiltinInfo{Kind::kSamplerFiltering, filterable};
             }
             return BuiltinInfo{};
         });
@@ -471,35 +471,35 @@ class DependencyScanner {
         if (!resolved) {
             auto builtin_info = GetBuiltinInfo(to);
             switch (builtin_info.type) {
-                case BuiltinType::kNone:
+                case Kind::kNone:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier::UnresolvedIdentifier{to.Name()});
                     break;
-                case BuiltinType::kFunction:
+                case Kind::kFunction:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<wgsl::BuiltinFn>()));
                     break;
-                case BuiltinType::kBuiltin:
+                case Kind::kBuiltin:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::BuiltinType>()));
                     break;
-                case BuiltinType::kAddressSpace:
+                case Kind::kAddressSpace:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::AddressSpace>()));
                     break;
-                case BuiltinType::kTexelFormat:
+                case Kind::kTexelFormat:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::TexelFormat>()));
                     break;
-                case BuiltinType::kAccess:
+                case Kind::kAccess:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::Access>()));
                     break;
-                case BuiltinType::kTextureFilterable:
+                case Kind::kTextureFilterable:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::TextureFilterable>()));
                     break;
-                case BuiltinType::kSamplerFiltering:
+                case Kind::kSamplerFiltering:
                     graph_.resolved_identifiers.Add(
                         from, ResolvedIdentifier(builtin_info.Value<core::SamplerFiltering>()));
                     break;
