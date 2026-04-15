@@ -177,6 +177,12 @@ struct GLFWwindow;
 void InitDawnEnd2EndTestEnvironment(int argc, char** argv);
 
 namespace dawn {
+struct GLFWindowDestroyer {
+#ifdef DAWN_SUPPORTS_GLFW_FOR_WINDOWING
+    void operator()(GLFWwindow* ptr);
+#endif
+};
+
 namespace utils {
 class PlatformDebugLogger;
 class TerribleCommandBuffer;
@@ -202,6 +208,10 @@ class CommandHandler;
 class WireClient;
 class WireServer;
 }  // namespace wire
+
+namespace replay {
+class Capture;
+}  // namespace replay
 
 class Recorder;
 
@@ -344,6 +354,7 @@ class DawnTestBase {
     bool IsDXC() const;
 
     bool IsCaptureReplayCheckingEnabled() const;
+    replay::Capture* GetCapture() const;
 
     static bool IsAsan();
     static bool IsTsan();
@@ -417,6 +428,8 @@ class DawnTestBase {
     uint32_t mDeviceLostCallbackFailedCreationCalledCount = 0;
 
     bool mCheckCaptureReplay = false;
+
+    std::vector<std::unique_ptr<GLFWwindow, GLFWindowDestroyer>> mReplayWindows;
 
     // Helper methods to implement the EXPECT_ macros
     std::ostringstream& AddBufferExpectation(const char* file,

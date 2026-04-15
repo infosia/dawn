@@ -34,6 +34,8 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
+#include "absl/hash/hash.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/webgpu/Forward.h"
@@ -166,6 +168,10 @@ class CaptureContext {
     template <>
     void CaptureSetLabel(Device* object, const std::string& label);
 
+    // Special case for Surface as it's not a RecordableObject
+    template <>
+    void CaptureSetLabel(Surface* object, const std::string& label);
+
     void WriteCommandBytes(const void* data, size_t size);
 
     MaybeError CaptureQueueWriteBuffer(Buffer* buffer,
@@ -178,7 +184,19 @@ class CaptureContext {
                                         const TexelCopyBufferLayout& dataLayout,
                                         const TexelExtent3D& writeSizePixel);
 
+    void CaptureSurfaceConfigure(Surface* surface, const SurfaceConfiguration* config);
+    void CaptureSurfaceUnconfigure(Surface* surface);
+    void CaptureSurfacePresent(Surface* surface);
+    MaybeError CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture);
+
+    schema::ObjectId AddResourceAndGetId(Surface* surface);
+    schema::ObjectId GetId(Surface* surface);
+
     WGPUBuffer GetCopyBuffer();
+
+    // Explicitly call this to release references of Device/Surfaces as they may be released earlier
+    // than the CaptureContext to avoid dangling pointer issue.
+    void ReleaseReferences();
 
   protected:
     void WriteContentBytes(const void* data, size_t size);
@@ -196,12 +214,12 @@ class CaptureContext {
     // have been written. and compare that to how many have been read when replaying.
     uint64_t mCommandBytesWritten = 0;
 
-    // TODO(crbug.com/485825675): Investigate why one of the 3 raw_ptr/raw_ref
-    // is/are dangling and if we can make them all non-dangling.
-    raw_ptr<Device, DanglingUntriaged> mDevice;
-    const raw_ref<std::ostream, DanglingUntriaged> mCommandStream;
-    const raw_ref<std::ostream, DanglingUntriaged> mContentStream;
+    raw_ptr<Device> mDevice;
+    const raw_ref<std::ostream> mCommandStream;
+    const raw_ref<std::ostream> mContentStream;
+
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
+    absl::flat_hash_map<Ref<Surface>, schema::ObjectId> mSurfaceIds;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;
