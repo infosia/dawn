@@ -283,8 +283,9 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceUpdat
                 VkDescriptorImageInfo imageWrite = {
                     .sampler = ToBackend(unusedSampler)->GetHandle(),
                     .imageView = handle,
-                    .imageLayout = VulkanImageLayout(textureView->GetFormat(),
-                                                     wgpu::TextureUsage::TextureBinding),
+                    .imageLayout =
+                        VulkanImageLayout(textureView->GetDevice(), textureView->GetFormat(),
+                                          wgpu::TextureUsage::TextureBinding),
                 };
                 imageWrites.push_back(imageWrite);
                 arrayElements.push_back(uint32_t{update.slot});
