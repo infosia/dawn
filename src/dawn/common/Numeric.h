@@ -33,6 +33,7 @@
 #include <limits>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/UnderlyingType.h"
 
 namespace dawn {
 namespace detail {
@@ -60,8 +61,10 @@ inline constexpr uint32_t u32_alignof = detail::u32_alignof<T>();
 // Only defined for unsigned integers because that is all that is
 // needed at the time of writing.
 template <typename Dst, typename Src>
-    requires std::unsigned_integral<Src>
-inline Dst checked_cast(const Src& value) {
+    requires std::unsigned_integral<Src> && std::unsigned_integral<Dst>
+constexpr inline Dst checked_cast(const Src& value) {
+    // The compiler seems to be able to optimize this CHECK out for Src/Dst
+    // pairs that can never fail.
     DAWN_CHECK(value <= std::numeric_limits<Dst>::max());
     return static_cast<Dst>(value);
 }
@@ -77,6 +80,13 @@ bool RangesOverlap(T x0, T x1, T y0, T y1) {
     // which is (x1 < y0 || y1 < x0)
     // The inverse of which ends in the following statement.
     return x0 <= y1 && y0 <= x1;
+}
+
+template <typename Index>
+    requires UnsignedUnderlyingType<Index>
+constexpr inline size_t ToSizeTChecked(Index size) {
+    using I = UnderlyingType<Index>;
+    return checked_cast<size_t>(static_cast<I>(size));
 }
 
 }  // namespace dawn

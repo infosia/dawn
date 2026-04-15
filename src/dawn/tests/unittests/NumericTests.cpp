@@ -32,7 +32,7 @@ namespace dawn {
 namespace {
 
 // Tests for RangesOverlap
-TEST(Numeric, angesOverlap) {
+TEST(NumericTest, RangesOverlap) {
     // Range contains only one number
     ASSERT_EQ(true, RangesOverlap(0, 0, 0, 0));
     ASSERT_EQ(false, RangesOverlap(0, 0, 1, 1));
@@ -72,6 +72,19 @@ TEST(Numeric, angesOverlap) {
     // Negative numbers
     ASSERT_EQ(true, RangesOverlap(-9, 12, 4, 16));
     ASSERT_EQ(false, RangesOverlap(-9, -3, -2, 0));
+}
+
+// Death tests
+// Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
+
+// Checked cast between various types.
+TEST(NumericDeathTest, CheckedCast) {
+    checked_cast<uint32_t>(UINT32_MAX);
+    checked_cast<uint64_t>(UINT32_MAX);
+    checked_cast<uint64_t>(UINT64_MAX);
+
+    EXPECT_DEATH(checked_cast<uint32_t>(uint64_t{UINT32_MAX} + 1), "");
+    EXPECT_DEATH(checked_cast<uint32_t>(UINT64_MAX), "");
 }
 
 }  // anonymous namespace

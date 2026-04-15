@@ -31,7 +31,7 @@
 #include <limits>
 
 #include "absl/container/inlined_vector.h"
-#include "dawn/common/Assert.h"
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -46,30 +46,17 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
 
   public:
     constexpr stack_vec() : Base() {}
-    constexpr explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
+    constexpr explicit stack_vec(Index size) : Base() { Base::resize(ToSizeTChecked(size)); }
 
     using Base::data;
     using Base::empty;
 
-    constexpr Value& operator[](Index i) {
-#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
-        // Insert our own bounds check if not already enabled in absl
-        DAWN_CHECK(i < size());
-#endif
-        return Base::operator[](static_cast<I>(i));
-    }
+    constexpr Value& operator[](Index i) { return Base::operator[](ToSizeTChecked(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](ToSizeTChecked(i)); }
 
-    constexpr const Value& operator[](Index i) const {
-#if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
-        // Insert our own bounds check if not already enabled in absl
-        DAWN_CHECK(i < size());
-#endif
-        return Base::operator[](static_cast<I>(i));
-    }
+    constexpr void resize(Index size) { Base::resize(ToSizeTChecked(size)); }
 
-    constexpr void resize(Index size) { Base::resize(static_cast<I>(size)); }
-
-    constexpr void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
+    constexpr void reserve(Index size) { Base::reserve(ToSizeTChecked(size)); }
 
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 };
