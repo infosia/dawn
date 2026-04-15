@@ -37,7 +37,7 @@
 #include <limits>
 #include <span>
 
-#include "dawn/common/Assert.h"
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -53,18 +53,20 @@ class span : private ::std::span<Value> {
 
   public:
     constexpr span() = default;
-    constexpr span(Value* data, Index size) : Base{data, static_cast<I>(size)} {}
+    constexpr span(Value* data, Index size) : Base{data, CheckedToSizeT(size)} {}
 
     using Base::begin, Base::end;
     using Base::front, Base::back;
 
     using Base::data;
 
-    constexpr Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
+    constexpr Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
 
-    constexpr Index size() const {
-        DAWN_ASSERT(std::numeric_limits<I>::max() >= Base::size());
-        return Index(static_cast<I>(Base::size()));
+    constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
+
+  private:
+    constexpr inline size_t CheckedIndex(Index i) const {
+        return BoundCheckedIndex(i, size(), Base::size());
     }
 };
 
@@ -73,6 +75,7 @@ class span : private ::std::span<Value> {
 // use ityp and code that does.
 template <typename Index, typename Value>
 span<Index, Value> SpanFromUntyped(Value* data, size_t size) {
+    DAWN_CHECK(uint64_t{size} <= uint64_t{std::numeric_limits<Index>::max()});
     return {data, Index{static_cast<UnderlyingType<Index>>(size)}};
 }
 

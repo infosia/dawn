@@ -32,7 +32,7 @@
 #include <limits>
 #include <vector>
 
-#include "dawn/common/Assert.h"
+#include "dawn/common/Numeric.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -48,8 +48,8 @@ class vector : private std::vector<Value> {
 
   public:
     constexpr vector() : Base() {}
-    constexpr explicit vector(Index size) : Base(static_cast<I>(size)) {}
-    constexpr vector(Index size, const Value& init) : Base(static_cast<I>(size), init) {}
+    constexpr explicit vector(Index size) : Base(CheckedToSizeT(size)) {}
+    constexpr vector(Index size, const Value& init) : Base(CheckedToSizeT(size), init) {}
     constexpr vector(const vector& rhs) : Base(static_cast<const Base&>(rhs)) {}
     constexpr vector(vector&& rhs) : Base(static_cast<Base&&>(rhs)) {}
 
@@ -86,23 +86,26 @@ class vector : private std::vector<Value> {
     using Base::insert;
     using Base::push_back, Base::pop_back;
 
-    constexpr Value& operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
+    constexpr Value& operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
 
-    constexpr Value& at(Index i) { return Base::at(static_cast<I>(i)); }
-    constexpr const Value& at(Index i) const { return Base::at(static_cast<I>(i)); }
+    constexpr Value& at(Index i) { return Base::at(CheckedIndex(i)); }
+    constexpr const Value& at(Index i) const { return Base::at(CheckedIndex(i)); }
 
-    constexpr Index size() const {
-        DAWN_ASSERT(std::numeric_limits<I>::max() >= Base::size());
-        return Index(static_cast<I>(Base::size()));
-    }
+    constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 
-    constexpr void resize(Index size) { Base::resize(static_cast<I>(size)); }
+    constexpr void resize(Index size) { Base::resize(CheckedToSizeT(size)); }
+
     constexpr void resize(Index size, const Value& value) {
-        Base::resize(static_cast<I>(size), value);
+        Base::resize(CheckedToSizeT(size), value);
     }
 
-    constexpr void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
+    constexpr void reserve(Index size) { Base::reserve(CheckedToSizeT(size)); }
+
+  private:
+    constexpr inline size_t CheckedIndex(Index i) const {
+        return BoundCheckedIndex(i, size(), Base::size());
+    }
 };
 
 }  // namespace dawn::ityp
