@@ -31,6 +31,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/Buffer.h"
@@ -235,7 +236,7 @@ class BindGroupDataHolder {
     explicit BindGroupDataHolder(size_t size);
     ~BindGroupDataHolder();
 
-    raw_ptr<void> mBindingDataAllocation;
+    ityp::heap_array<size_t, std::byte> mBindingDataAllocation;
 };
 
 // We don't have the complexity of placement-allocation of bind group data in
@@ -278,7 +279,7 @@ class Buffer final : public BufferBase {
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointerImpl() override;
 
-    std::unique_ptr<uint8_t[]> mBackingData;
+    ityp::heap_array<size_t, uint8_t> mBackingData;
 };
 
 class CommandBuffer final : public CommandBufferBase {
