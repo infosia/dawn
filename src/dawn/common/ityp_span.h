@@ -48,6 +48,10 @@ class span : private ::std::span<Value> {
     using I = UnderlyingType<Index>;
     using Base = ::std::span<Value>;
 
+    static_assert(std::numeric_limits<I>::min() == 0, "Index type must be unsigned");
+    static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<size_t>::max(),
+                  "Index type must fit within size_t");
+
   public:
     constexpr span() = default;
     constexpr span(Value* data, Index size) : Base{data, static_cast<I>(size)} {}
@@ -73,6 +77,7 @@ class span : private ::std::span<Value> {
 // use ityp and code that does.
 template <typename Index, typename Value>
 span<Index, Value> SpanFromUntyped(Value* data, size_t size) {
+    DAWN_CHECK(uint64_t{size} <= uint64_t{std::numeric_limits<Index>::max()});
     return {data, Index{static_cast<UnderlyingType<Index>>(size)}};
 }
 

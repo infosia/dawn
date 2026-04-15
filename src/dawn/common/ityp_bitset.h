@@ -46,6 +46,9 @@ namespace detail {
 
 template <typename Index, size_t N>
 class Iterator64 final {
+    static_assert(std::numeric_limits<UnderlyingType<Index>>::min() == 0,
+                  "Index type must be unsigned");
+
   public:
     explicit Iterator64(const std::bitset<N>& bits)
         : mBits(static_cast<uint64_t>(bits.to_ullong())) {}

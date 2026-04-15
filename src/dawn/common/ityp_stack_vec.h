@@ -40,6 +40,10 @@ template <typename Index, typename Value, size_t StaticCapacity>
 class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     using I = UnderlyingType<Index>;
     using Base = absl::InlinedVector<Value, StaticCapacity>;
+
+    static_assert(std::numeric_limits<I>::min() == 0, "Index type must be unsigned");
+    static_assert(std::numeric_limits<I>::max() <= std::numeric_limits<size_t>::max(),
+                  "Index type must fit within size_t");
     static_assert(StaticCapacity <= std::numeric_limits<I>::max());
 
   public:
