@@ -16,6 +16,24 @@
       "message": "```suggestion\nThis CL adds missing testing coverage to branches related to\n```",
       "revId": "439a336713fc684ab6539ad617f5997938840a0e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57cd8d40_11be9a4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-15T21:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c05701c1_fead8c5a",
+      "revId": "439a336713fc684ab6539ad617f5997938840a0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
