@@ -88,6 +88,24 @@
       "parentUuid": "a7f0edd2_496bfe88",
       "revId": "3248b015948ef35a2111951e70c01925099099ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "859ca6e6_a058d497",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-15T17:15:30Z",
+      "side": 1,
+      "message": "I have removed one pass in one iteration of `LoadStoreOpPerfTest` (3 passes down to 2) but still keep 2 passes. The reason I use multiple textures and multiple passes are that:\n- It reduces the risk of driver doing some optimizations that de-duplicate the identical render passes.\n- It prevents the driver from merging multiple render passes to one single render pass with the same load \u0026 store op.\n- It mimics multiple passes use cases in Skia where the resolve texture is used as resolve target in one pass then used as render attachment in another single-sampled render pass.\n\nI have also added the comments to the test.",
+      "parentUuid": "eb630331_77ed0654",
+      "revId": "3248b015948ef35a2111951e70c01925099099ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
