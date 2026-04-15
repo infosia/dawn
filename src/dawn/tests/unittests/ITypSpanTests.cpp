@@ -56,20 +56,18 @@ TEST_F(ITypSpanTest, Indexing) {
     }
 }
 
-// Test that the span can be is iterated in order with a range-based for loop
+// Test that the span can be iterated in order with a range-based for loop
 TEST_F(ITypSpanTest, RangeBasedIteration) {
     std::array<Val, 10> arr;
     Span span(arr.data(), Key(arr.size()));
 
     // Assign in a non-const range-based for loop
-    uint32_t i = 0;
-    for (Val& val : span) {
+    for (uint32_t i = 0; Val& val : span) {
         val = Val(i);
     }
 
     // Check values in a const range-based for loop
-    i = 0;
-    for (Val val : static_cast<const Span&>(span)) {
+    for (uint32_t i = 0; Val val : static_cast<const Span&>(span)) {
         ASSERT_EQ(val, span[Key(i++)]);
     }
 }

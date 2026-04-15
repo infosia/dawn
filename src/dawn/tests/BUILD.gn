@@ -348,6 +348,7 @@ dawn_test("dawn_unittests") {
     "unittests/GetProcAddressTests.cpp",
     "unittests/ITypArrayTests.cpp",
     "unittests/ITypBitsetTests.cpp",
+    "unittests/ITypHeapArrayTests.cpp",
     "unittests/ITypSpanTests.cpp",
     "unittests/ITypStackVecTests.cpp",
     "unittests/ITypVectorTests.cpp",
