@@ -51,6 +51,8 @@ class CaptureImpl : public Capture, public CaptureWalker {
 
     bool Walk(RootCommandVisitor& visitor) override;
 
+    std::vector<SurfaceInfo> GetSurfaceInfos() const override;
+
   protected:
     ReadHead GetCommandReadHead() const override;
     ReadHead GetContentReadHead() const override;

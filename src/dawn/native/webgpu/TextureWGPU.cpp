@@ -260,6 +260,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         .mipLevelCount = GetNumMipLevels(),
         .sampleCount = GetSampleCount(),
         .viewFormats = viewFormats,
+        .isSurfaceTexture = mIsSurfaceTexture,
     }};
     Serialize(captureContext, tex);
     return {};
