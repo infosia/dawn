@@ -70,6 +70,30 @@
       },
       "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be0f5dde_88e0ccc6",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T22:08:03Z",
+      "side": 0,
+      "message": "I don\u0027t know why it was necessary for fuzzing that we WaitForFences at the end. You\u0027re right, it does make logical sense that we wouldn\u0027t even reach here in that case, makes sense to simplify (avoid keeping things the way they ended up by historical accident). Could put a ASSERT/CHECK that we are not Disconnected when this runs? Then INJECT should be OK.",
+      "parentUuid": "11cecb63_348dc902",
+      "range": {
+        "startLine": 488,
+        "startChar": 19,
+        "endLine": 491,
+        "endChar": 59
+      },
+      "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
