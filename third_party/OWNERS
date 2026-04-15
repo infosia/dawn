@@ -1,0 +1,3 @@
+# The autoroller will update `README.chromium` files' revision informatio:.
+per-file ...README.chromium=dawn-autoroll@skia-public.iam.gserviceaccount.com
+
