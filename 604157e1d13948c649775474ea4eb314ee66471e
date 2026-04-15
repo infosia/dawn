@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "868791a8_82b87aff",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5234,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-15T21:40:11Z",
+      "side": 1,
+      "message": "Another candidate for TINT_ASSERT instead.",
+      "revId": "604157e1d13948c649775474ea4eb314ee66471e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
