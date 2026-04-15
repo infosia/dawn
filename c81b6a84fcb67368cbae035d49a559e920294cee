@@ -69,6 +69,24 @@
       "parentUuid": "86749b70_bd80bc94",
       "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d9d4552_dc66e46f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-15T21:43:07Z",
+      "side": 1,
+      "message": "It does indeed repro the bug if the fix isn\u0027t in place.",
+      "parentUuid": "d9140774_7206181a",
+      "revId": "c81b6a84fcb67368cbae035d49a559e920294cee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
