@@ -36,6 +36,10 @@ target_link_libraries(dawn_test_infra PRIVATE
     gmock
 )
 
+if (DAWN_SUPPORTS_GLFW_FOR_WINDOWING)
+    target_link_libraries(dawn_test_infra PRIVATE glfw)
+endif()
+
 ################################################################################
 # dawn_end2end_test_objects - Tests that only use the public Dawn API
 ################################################################################

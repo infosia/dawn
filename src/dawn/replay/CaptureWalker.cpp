@@ -224,6 +224,69 @@ PROCESS_COMMANDS_FUNC(RenderBundle, DAWN_REPLAY_RENDER_BUNDLE_COMMANDS)
 #undef PASS_COMMAND_CASE
 #undef PROCESS_COMMANDS_FUNC
 
+namespace {
+
+struct NoopComputePassVisitor : ComputePassVisitor {
+#define VISITOR_METHOD(NAME)                                                                  \
+    MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) override { \
+        return {};                                                                            \
+    }
+    DAWN_REPLAY_COMPUTE_PASS_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+struct NoopRenderPassVisitor : RenderPassVisitor {
+#define VISITOR_METHOD(NAME)                                                                  \
+    MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) override { \
+        return {};                                                                            \
+    }
+    DAWN_REPLAY_RENDER_PASS_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+struct NoopRenderBundleVisitor : RenderBundleVisitor {
+#define VISITOR_METHOD(NAME)                                                                  \
+    MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) override { \
+        return {};                                                                            \
+    }
+    DAWN_REPLAY_RENDER_BUNDLE_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+};
+
+struct NoopEncoderVisitor : EncoderVisitor {
+    ResultOrError<ComputePassVisitor*> BeginComputePass(
+        const schema::CommandBufferCommandBeginComputePassCmdData& data) override {
+        return &mComputePassVisitor;
+    }
+    ResultOrError<RenderPassVisitor*> BeginRenderPass(
+        const schema::CommandBufferCommandBeginRenderPassCmdData& data) override {
+        return &mRenderPassVisitor;
+    }
+
+#define VISITOR_METHOD(NAME)                                                                  \
+    MaybeError operator()(const schema::CommandBufferCommand##NAME##CmdData& data) override { \
+        return {};                                                                            \
+    }
+    DAWN_REPLAY_ENCODER_NON_CREATION_COMMANDS(VISITOR_METHOD)
+#undef VISITOR_METHOD
+
+  private:
+    NoopComputePassVisitor mComputePassVisitor;
+    NoopRenderPassVisitor mRenderPassVisitor;
+};
+
+}  // anonymous namespace
+
+MaybeError SkipEncoderCommands(ReadHead* readHead) {
+    NoopEncoderVisitor visitor;
+    return ProcessEncoderCommands(readHead, &visitor);
+}
+
+MaybeError SkipRenderBundleCommands(ReadHead* readHead) {
+    NoopRenderBundleVisitor visitor;
+    return ProcessRenderBundleCommands(readHead, &visitor);
+}
+
 MaybeError ProcessEncoderCommands(ReadHead* readHead, EncoderVisitor* visitor) {
     while (!readHead->IsDone()) {
         schema::CommandBufferCommand cmd;
