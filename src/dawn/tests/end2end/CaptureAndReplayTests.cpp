@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "GLFW/glfw3.h"
 #include "dawn/native/WebGPUBackend.h"
 #include "dawn/replay/Replay.h"
 #include "dawn/tests/DawnTest.h"
@@ -40,6 +41,7 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "webgpu/webgpu_glfw.h"
 
 namespace dawn {
 namespace {
@@ -65,6 +67,8 @@ class CaptureAndReplayTests : public DawnTest {
         Capture(const std::string& commandData, const std::string& contentData)
             : mCommandData(commandData), mContentData(contentData) {}
 
+        void SetSurface(wgpu::Surface surface) { mSurface = surface; }
+
         std::unique_ptr<replay::Replay> Replay(wgpu::Device device) {
             std::istringstream commandIStream(mCommandData);
             std::istringstream contentIStream(mContentData);
@@ -74,6 +78,10 @@ class CaptureAndReplayTests : public DawnTest {
             std::unique_ptr<replay::Replay> replay =
                 replay::Replay::Create(device, std::move(capture));
 
+            if (mSurface) {
+                replay->SetSurface(mSurface);
+            }
+
             bool result = replay->Play();
             EXPECT_TRUE(result);
             return replay;
@@ -82,15 +90,20 @@ class CaptureAndReplayTests : public DawnTest {
       private:
         std::string mCommandData;
         std::string mContentData;
+        wgpu::Surface mSurface;
     };
 
     class Recorder {
       public:
         static Recorder CreateAndStart(wgpu::Device device) { return Recorder(device); }
 
+        void SetSurface(wgpu::Surface surface) { mSurface = surface; }
+
         Capture Finish() {
             native::webgpu::EndCapture(mDevice.Get());
-            return Capture(mCommandStream.str(), mContentStream.str());
+            Capture capture(mCommandStream.str(), mContentStream.str());
+            capture.SetSurface(mSurface);
+            return capture;
         }
 
       private:
@@ -99,6 +112,7 @@ class CaptureAndReplayTests : public DawnTest {
         }
 
         wgpu::Device mDevice;
+        wgpu::Surface mSurface;
         std::ostringstream mCommandStream;
         std::ostringstream mContentStream;
     };
@@ -2753,6 +2767,75 @@ TEST_P(CaptureAndReplayTimestampTests, WriteTimestamp) {
 }
 
 DAWN_INSTANTIATE_TEST(CaptureAndReplayTimestampTests, WebGPUBackend());
+
+struct GLFWindowDestroyer {
+    void operator()(GLFWwindow* ptr) { glfwDestroyWindow(ptr); }
+};
+
+class CaptureAndReplaySurfaceTests : public CaptureAndReplayTests {
+  protected:
+    void SetUp() override {
+        CaptureAndReplayTests::SetUp();
+
+        // TODO(crbug.com/dawn/2531): Failing on newer Linux/Intel driver version.
+        // However, IsIntel() and IsMesa() don't work with the null backend.
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNull());
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel() && IsMesa("23.2"));
+
+        // Causes flaky X11 resource exhaustion when run with SwiftShader.
+        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsSwiftshader());
+
+        DAWN_TEST_UNSUPPORTED_IF(!glfwInit());
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        mWindow.reset(glfwCreateWindow(1, 1, "CaptureAndReplaySurfaceTests", nullptr, nullptr));
+    }
+
+    void TearDown() override {
+        mWindow.reset();
+        glfwTerminate();
+        CaptureAndReplayTests::TearDown();
+    }
+
+    std::unique_ptr<GLFWwindow, GLFWindowDestroyer> mWindow;
+};
+
+TEST_P(CaptureAndReplaySurfaceTests, TestSurface) {
+    wgpu::Surface surface = wgpu::glfw::CreateSurfaceForWindow(instance, mWindow.get());
+    surface.SetLabel("mySurface");
+
+    wgpu::SurfaceConfiguration config = {};
+    config.device = device;
+    config.format = wgpu::TextureFormat::BGRA8Unorm;
+    config.usage = wgpu::TextureUsage::RenderAttachment;
+    config.width = 1;
+    config.height = 1;
+    config.presentMode = wgpu::PresentMode::Fifo;
+
+    // --- capture ---
+    auto recorder = Recorder::CreateAndStart(device);
+    recorder.SetSurface(surface);
+
+    surface.Configure(&config);
+
+    wgpu::SurfaceTexture surfaceTexture;
+    surface.GetCurrentTexture(&surfaceTexture);
+    wgpu::Texture texture = surfaceTexture.texture;
+    texture.SetLabel("backbuffer");
+
+    surface.Present();
+
+    // --- replay ---
+    auto capture = recorder.Finish();
+    auto replay = capture.Replay(device);
+
+    EXPECT_TRUE(replay->GetObjectByLabel<wgpu::Texture>("backbuffer") != nullptr);
+
+    // Explicitly reset the replay object to release all replayed resources (like Surface)
+    // before the test ends and the device count check is performed.
+    replay.reset();
+}
+
+DAWN_INSTANTIATE_TEST(CaptureAndReplaySurfaceTests, WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

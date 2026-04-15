@@ -63,6 +63,8 @@ class DAWN_REPLAY_EXPORT Replay {
     static std::unique_ptr<Replay> Create(wgpu::Device device, std::unique_ptr<Capture> capture);
     virtual ~Replay() = 0;
 
+    virtual void SetSurface(wgpu::Surface surface) = 0;
+
     template <typename T>
     T GetObjectByLabel(std::string_view label) const;
 

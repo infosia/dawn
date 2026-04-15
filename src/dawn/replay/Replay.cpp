@@ -41,7 +41,12 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/Platform.h"
 #include "dawn/replay/BlitBufferToDepthTexture.h"
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+#include <windows.h>
+#endif
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
 #include "src/dawn/replay/ReplayImpl.h"
@@ -134,6 +139,9 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     using RootCommandVisitor::operator();
     explicit DawnRootCommandVisitor(wgpu::Device device)
         : mDevice(device), mResourceVisitor(this) {}
+    ~DawnRootCommandVisitor() override = default;
+
+    void SetSurface(wgpu::Surface surface) { mSurface = surface; }
 
     MaybeError operator()(const CreateResourceData& data) override {
         mCurrentResourceId = data.resource.id;
@@ -146,6 +154,10 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) override;
     MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) override;
     MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceConfigureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceUnconfigureCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfacePresentCmdData& data) override;
+    MaybeError operator()(const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) override;
     MaybeError operator()(const schema::RootCommandEndCmdData& data) override { return {}; }
 
     ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
@@ -235,6 +247,8 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
 
     using ResourcePtrToIdMap = absl::flat_hash_map<const void*, schema::ObjectId>;
     ResourcePtrToIdMap mResourceToIdMap;
+
+    wgpu::Surface mSurface;
 
     BlitBufferToDepthTexture mBlitBufferToDepthTexture;
 
@@ -1335,6 +1349,15 @@ ResultOrError<wgpu::CommandBuffer> CreateResource(const DawnRootCommandVisitor& 
     return DAWN_INTERNAL_ERROR("Device creation not supported");
 }
 
+ResultOrError<wgpu::Surface> CreateResource(const DawnRootCommandVisitor& replay,
+                                            wgpu::Device device,
+                                            const InvalidData& data,
+                                            const std::string& label) {
+    // This is here to make resource handling generic. We don't create
+    // surfaces from this CreateResource but from SurfaceCreate root command.
+    return DAWN_INTERNAL_ERROR("Surface creation not supported through CreateResource");
+}
+
 }  // anonymous namespace
 
 #define DAWN_REPLAY_VISIT_RESOURCE_CREATE(ENUM, TYPE)              \
@@ -1383,6 +1406,71 @@ MaybeError DawnRootCommandVisitor::operator()(const schema::RootCommandInitTextu
     return InitializeTexture(*this, mBlitBufferToDepthTexture, *mContentReadHead, mDevice, data);
 }
 
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfaceConfigureCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    if (!surface) {
+        surface = mSurface;
+    }
+    DAWN_ASSERT(surface);
+    wgpu::Device device = GetObjectById<wgpu::Device>(data.config.deviceId);
+
+    wgpu::SurfaceConfiguration config = {};
+    config.device = device;
+    config.format = data.config.format;
+    config.usage = data.config.usage;
+    config.viewFormatCount = data.config.viewFormats.size();
+    config.viewFormats = data.config.viewFormats.data();
+    config.alphaMode = data.config.alphaMode;
+    config.width = data.config.width;
+    config.height = data.config.height;
+    config.presentMode = data.config.presentMode;
+
+    surface.Configure(&config);
+
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfaceUnconfigureCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    if (!surface) {
+        surface = mSurface;
+    }
+    DAWN_ASSERT(surface);
+    surface.Unconfigure();
+
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfacePresentCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    if (!surface) {
+        surface = mSurface;
+    }
+    DAWN_ASSERT(surface);
+    surface.Present();
+    return {};
+}
+
+MaybeError DawnRootCommandVisitor::operator()(
+    const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) {
+    wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
+    if (!surface) {
+        surface = mSurface;
+    }
+    DAWN_ASSERT(surface);
+    wgpu::SurfaceTexture surfaceTexture = {};
+    surface.GetCurrentTexture(&surfaceTexture);
+
+    if (surfaceTexture.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal ||
+        surfaceTexture.status == wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
+        AddResource(data.textureId, "", surfaceTexture.texture);
+    }
+    return {};
+}
+
 MaybeError DawnRootCommandVisitor::SetLabel(schema::ObjectId id,
                                             schema::ObjectType type,
                                             const std::string& label) {
@@ -1423,6 +1511,10 @@ ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture
 }
 
 ReplayImpl::~ReplayImpl() = default;
+
+void ReplayImpl::SetSurface(wgpu::Surface surface) {
+    mVisitor->SetSurface(surface);
+}
 
 MaybeError ReplayImpl::Play() {
     if (mCapture->Walk(*mVisitor)) {
