@@ -16,6 +16,23 @@
       "message": "Bump, this is ready for review now!",
       "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "243ccb1e_9cc6187f",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T20:32:39Z",
+      "side": 1,
+      "message": "There are three different places where we APIRef the device: here, `AdapterBase::APICreateDevice`, and `RequestDeviceEvent::Complete`. Any chance we could hoist them all up to here so we just have one and it\u0027s less weird and special-casey?\n\nProbably not trivial so maybe a followup if you think it\u0027s feasible",
+      "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
