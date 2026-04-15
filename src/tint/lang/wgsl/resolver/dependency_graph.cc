@@ -28,9 +28,7 @@
 #include "src/tint/lang/wgsl/resolver/dependency_graph.h"
 
 #include <string>
-#include <utility>
 #include <variant>
-#include <vector>
 
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
@@ -72,8 +70,6 @@
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/while_statement.h"
 #include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
-#include "src/tint/lang/wgsl/sem/builtin_fn.h"
-#include "src/tint/utils/containers/map.h"
 #include "src/tint/utils/containers/scope_stack.h"
 #include "src/tint/utils/containers/unique_vector.h"
 #include "src/tint/utils/macros/compiler.h"
@@ -82,19 +78,12 @@
 #include "src/tint/utils/memory/block_allocator.h"
 #include "src/tint/utils/rtti/switch.h"
 #include "src/tint/utils/text/string.h"
-#include "src/tint/utils/text/string_stream.h"
 
 namespace tint::resolver {
 namespace {
 
 // Forward declaration
 struct Global;
-
-/// Dependency describes how one global depends on another global
-struct DependencyInfo {
-    /// The source of the symbol that forms the dependency
-    Source source;
-};
 
 /// DependencyEdge describes the two Globals used to define a dependency
 /// relationship.
@@ -111,8 +100,8 @@ struct DependencyEdge {
     bool operator==(const DependencyEdge& rhs) const { return from == rhs.from && to == rhs.to; }
 };
 
-/// A map of DependencyEdge to DependencyInfo
-using DependencyEdges = Hashmap<DependencyEdge, DependencyInfo, 64>;
+/// A map of DependencyEdge to Source
+using DependencyEdges = Hashmap<DependencyEdge, Source, 64>;
 
 /// Global describes a module-scope variable, type or function.
 struct Global {
@@ -508,8 +497,7 @@ class DependencyScanner {
         }
 
         if (auto global = globals_.Get(to); global && (*global)->node == resolved) {
-            if (dependency_edges_.Add(DependencyEdge{current_global_, *global},
-                                      DependencyInfo{from->source})) {
+            if (dependency_edges_.Add(DependencyEdge{current_global_, *global}, from->source)) {
                 current_global_->deps.Push(*global);
             }
         }
@@ -517,7 +505,6 @@ class DependencyScanner {
         graph_.resolved_identifiers.Add(from, ResolvedIdentifier(resolved));
     }
 
-    using VariableMap = Hashmap<Symbol, const ast::Variable*, 32>;
     const GlobalMap& globals_;
     diag::List& diagnostics_;
     DependencyGraph& graph_;
@@ -739,13 +726,13 @@ struct DependencyAnalysis {
             auto* from = stack[i];
             auto* to = (i + 1 < stack.Length()) ? stack[i + 1] : stack[loop_start];
 
-            auto info = dependency_edges_.Get(DependencyEdge{from, to});
-            if (DAWN_UNLIKELY(!info)) {
+            auto source = dependency_edges_.Get(DependencyEdge{from, to});
+            if (DAWN_UNLIKELY(!source)) {
                 TINT_ICE() << "failed to find dependency info for edge: '" << NameOf(from->node)
                            << "' -> '" << NameOf(to->node) << "'";
             }
 
-            AddNote(diagnostics_, info->source)
+            AddNote(diagnostics_, *source)
                 << KindOf(from->node) + " '" << NameOf(from->node) << "' references "
                 << KindOf(to->node) << " '" << NameOf(to->node) << "' here";
         }
@@ -763,7 +750,7 @@ struct DependencyAnalysis {
     /// Global map, keyed by name. Populated by GatherGlobals().
     GlobalMap globals_;
 
-    /// Map of DependencyEdge to DependencyInfo. Populated by DetermineDependencies().
+    /// Map of DependencyEdge to Source. Populated by DetermineDependencies().
     DependencyEdges dependency_edges_;
 
     /// Globals in declaration order. Populated by GatherGlobals().
