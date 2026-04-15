@@ -166,6 +166,10 @@ class CaptureContext {
     template <>
     void CaptureSetLabel(Device* object, const std::string& label);
 
+    // Special case for Surface as it's not a RecordableObject
+    template <>
+    void CaptureSetLabel(Surface* object, const std::string& label);
+
     void WriteCommandBytes(const void* data, size_t size);
 
     MaybeError CaptureQueueWriteBuffer(Buffer* buffer,
@@ -178,6 +182,13 @@ class CaptureContext {
                                         const TexelCopyBufferLayout& dataLayout,
                                         const TexelExtent3D& writeSizePixel);
 
+    MaybeError CaptureSurfaceConfigure(Surface* surface, const SurfaceConfiguration* config);
+    MaybeError CaptureSurfacePresent(Surface* surface);
+    MaybeError CaptureSurfaceGetCurrentTexture(Surface* surface, Texture* texture);
+
+    ResultOrError<schema::ObjectId> AddResourceAndGetId(Surface* surface);
+    schema::ObjectId GetId(Surface* surface);
+
     WGPUBuffer GetCopyBuffer();
 
   protected:
@@ -187,6 +198,7 @@ class CaptureContext {
     MaybeError CaptureCreation(schema::ObjectId id,
                                const std::string& label,
                                RecordableObject* object);
+    MaybeError CaptureSurfaceCreation(schema::ObjectId id, Surface* surface);
 
     MaybeError CaptureContentIfNeeded(schema::ObjectId id,
                                       bool newResource,
@@ -202,6 +214,7 @@ class CaptureContext {
     const raw_ref<std::ostream, DanglingUntriaged> mCommandStream;
     const raw_ref<std::ostream, DanglingUntriaged> mContentStream;
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
+    absl::flat_hash_map<Ref<Surface>, schema::ObjectId> mSurfaceIds;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
     WGPUBuffer mCopyBuffer = nullptr;

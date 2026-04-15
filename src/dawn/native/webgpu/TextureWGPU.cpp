@@ -245,6 +245,7 @@ MaybeError Texture::CaptureCreationParameters(CaptureContext& captureContext) {
         .mipLevelCount = GetNumMipLevels(),
         .sampleCount = GetSampleCount(),
         .viewFormats = viewFormats,
+        .isBackBuffer = mIsBackBuffer,
     }};
     Serialize(captureContext, tex);
     return {};
