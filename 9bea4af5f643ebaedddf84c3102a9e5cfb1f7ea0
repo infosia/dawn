@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca223c52_34f184b8",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-15T17:47:24Z",
+      "side": 1,
+      "message": "The result is gatherUV and fract_binear. You basically the texel location + offset within texel.\n\nhttps://en.wikipedia.org/wiki/Kolmogorov_complexity\n\nThis just means that you refactor down to something that is smallest written. Aka if you have the same code in two places you refactor into a function etc.",
+      "parentUuid": "a2ee9b56_b425c940",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33afb52d_c977e2d4",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
