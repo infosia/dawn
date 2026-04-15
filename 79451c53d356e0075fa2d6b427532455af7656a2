@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63fdd87_1a4a01c9",
+        "filename": "src/dawn/wire/client/ObjectStore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T21:24:03Z",
+      "side": 1,
+      "message": "Should keep the comment to explain why this returns a copy",
+      "revId": "79451c53d356e0075fa2d6b427532455af7656a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecd4090e_f992952f",
+        "filename": "src/dawn/wire/client/ObjectStore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-15T21:24:03Z",
+      "side": 1,
+      "message": "Add some cast or explicit return type here to make sure the copy is happening inside the lambda and not afterward. I suspect right now it\u0027s happening afterward.",
+      "range": {
+        "startLine": 78,
+        "startChar": 46,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "79451c53d356e0075fa2d6b427532455af7656a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
