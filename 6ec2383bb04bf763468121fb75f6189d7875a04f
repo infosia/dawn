@@ -46,6 +46,30 @@
       },
       "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11cecb63_348dc902",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-15T21:47:33Z",
+      "side": 0,
+      "message": "Hmm thinking about this a bit more, the issue isn\u0027t so much about the inject wrapper, but about the states of the device.\n\nThis change makes it so that we never call `mQueue-\u003eWaitForIdleForDestruction` on `Disconnected` devices anymore. For the purpose of fuzzing, this means that if we injected an error that gets translated to a `DeviceLost` error, we won\u0027t do the wait for idle cleanup anymore because we will just assume its a real device loss. I\u0027m trying to think if there\u0027s maybe a better way to handle this, but my theory here was that for the purpose of fuzzing, maybe not cleaning up the device in these cases is fine? On top of that, in theory if the device lost error was real, i.e. the fuzzer wasn\u0027t the one that injected it, trying to wait for idle is also invalid, (I believe this was the behavior before this change). I think to properly handle this testing case, we would somehow need to pass along whether a particular device loss error was injected or not, which would probably be a lot of extra branches of code for testing.\n\nGiven that change above, I now think that this local change might end up being a no-op regardless, since we would never call wait in the `Disconnected` state here anymore, so maybe what I was trying to convey was really the change mentioned in the previous paragraph. And maybe I could just keep the `INJECT` here by default?",
+      "parentUuid": "196d1e57_64c0408a",
+      "range": {
+        "startLine": 488,
+        "startChar": 19,
+        "endLine": 491,
+        "endChar": 59
+      },
+      "revId": "6ec2383bb04bf763468121fb75f6189d7875a04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
