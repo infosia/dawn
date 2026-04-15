@@ -33,6 +33,24 @@
       "message": "Do we have anything written down that indicates when we should be using a CHECK vs. an ASSERT? Or if not, could you write down something indicating your guiding principles when making changes like this? (Might be appropriate for `docs/dawn/errors.md`? Otherwise a new doc in the same dir.)",
       "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a26d36ab_48383fc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-15T02:10:13Z",
+      "side": 1,
+      "message": "I thought of this and maybe thought that the bug was enough.\nBut that was when i was considering the dawn_unreachable.\n\nYes with the asserts we should formalize the reasoning a bit and explain the rational.",
+      "parentUuid": "ccf56d95_54eb0ed2",
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
