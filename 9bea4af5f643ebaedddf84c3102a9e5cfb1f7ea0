@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2ee9b56_b425c940",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T17:44:13Z",
+      "side": 1,
+      "message": "Isn\u0027t it just the `texture` and `operands` that you need to pass in and then return the `gatherUV` Result?\n\nI don\u0027t know what Kolmogorov means.",
+      "parentUuid": "0a3a3e2f_1ea396bb",
+      "revId": "9bea4af5f643ebaedddf84c3102a9e5cfb1f7ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33afb52d_c977e2d4",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 10
