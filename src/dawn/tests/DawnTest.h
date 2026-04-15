@@ -343,6 +343,8 @@ class DawnTestBase {
     bool IsDXC() const;
 
     bool IsCaptureReplayCheckingEnabled() const;
+    void SetReplaySurface(wgpu::Surface surface);
+    void SetReplaySurfaces(std::vector<wgpu::Surface> surfaces);
 
     static bool IsAsan();
     static bool IsTsan();
