@@ -610,13 +610,14 @@ class Resolver {
     void ErrorInvalidAttribute(const ast::Attribute* attr, StyledText use);
 
     /// @returns a new error message added to the program's diagnostics
+    diag::Diagnostic& AddError(const ast::Node* node) const;
     diag::Diagnostic& AddError(const Source& source) const;
 
     /// @returns a new warning message added to the program's diagnostics
-    diag::Diagnostic& AddWarning(const Source& source) const;
+    diag::Diagnostic& AddWarning(const ast::Node* node) const;
 
     /// @returns a new note message added to the program's diagnostics
-    diag::Diagnostic& AddNote(const Source& source) const;
+    diag::Diagnostic& AddNote(const ast::Node* node) const;
 
     /// @returns the core::type::Type for the builtin type @p builtin_ty with the identifier @p
     /// ident
@@ -668,7 +669,7 @@ class Resolver {
     // BufferViewInfo tracks info for invalid buffer sizes.
     struct BufferViewInfo {
         uint64_t size = 0;
-        const Source* source = nullptr;
+        const ast::Node* node = nullptr;
     };
 
     ProgramBuilder& b;

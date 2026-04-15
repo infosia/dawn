@@ -284,7 +284,7 @@ sem::Variable* Resolver::Let(const ast::Let* v) {
     }
 
     if (DAWN_UNLIKELY(!v->initializer)) {
-        AddError(v->source) << style::Keyword("let") << " declaration must have an initializer";
+        AddError(v) << style::Keyword("let") << " declaration must have an initializer";
         return nullptr;
     }
 
@@ -304,8 +304,8 @@ sem::Variable* Resolver::Let(const ast::Let* v) {
 
     if (!ApplyAddressSpaceUsageToType(core::AddressSpace::kUndefined,
                                       const_cast<core::type::Type*>(sem->Type()), v->source)) {
-        AddNote(v->source) << "while instantiating " << style::Keyword("let ")
-                           << style::Variable(v->name->symbol.NameView());
+        AddNote(v) << "while instantiating " << style::Keyword("let ")
+                   << style::Variable(v->name->symbol.NameView());
         return nullptr;
     }
 
@@ -349,7 +349,7 @@ sem::Variable* Resolver::Override(const ast::Override* v) {
             ty = init->Type();
         }
     } else if (!ty) {
-        AddError(v->source) << "override declaration requires a type or initializer";
+        AddError(v) << "override declaration requires a type or initializer";
         return nullptr;
     }
     sem->SetType(ty);
@@ -360,8 +360,8 @@ sem::Variable* Resolver::Override(const ast::Override* v) {
 
     if (!ApplyAddressSpaceUsageToType(core::AddressSpace::kUndefined,
                                       const_cast<core::type::Type*>(ty), v->source)) {
-        AddNote(v->source) << "while instantiating " << style::Keyword("override ")
-                           << style::Variable(v->name->symbol.NameView());
+        AddNote(v) << "while instantiating " << style::Keyword("override ")
+                   << style::Variable(v->name->symbol.NameView());
         return nullptr;
     }
 
@@ -378,7 +378,7 @@ sem::Variable* Resolver::Override(const ast::Override* v) {
                     return false;
                 }
                 if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-                    AddError(attr->source)
+                    AddError(attr)
                         << style::Attribute("@id") << " must be an " << style::Type("i32") << " or "
                         << style::Type("u32") << " value";
                     return false;
@@ -387,14 +387,12 @@ sem::Variable* Resolver::Override(const ast::Override* v) {
                 auto const_value = materialized->ConstantValue();
                 auto value = const_value->ValueAs<AInt>();
                 if (value < 0) {
-                    AddError(attr->source)
-                        << style::Attribute("@id") << " value must be non-negative";
+                    AddError(attr) << style::Attribute("@id") << " value must be non-negative";
                     return false;
                 }
                 if (value > std::numeric_limits<decltype(OverrideId::value)>::max()) {
-                    AddError(attr->source)
-                        << style::Attribute("@id") << " value must be between 0 and "
-                        << std::numeric_limits<decltype(OverrideId::value)>::max();
+                    AddError(attr) << style::Attribute("@id") << " value must be between 0 and "
+                                   << std::numeric_limits<decltype(OverrideId::value)>::max();
                     return false;
                 }
 
@@ -441,7 +439,7 @@ sem::Variable* Resolver::Const(const ast::Const* c, bool is_global) {
     }
 
     if (DAWN_UNLIKELY(!c->initializer)) {
-        AddError(c->source) << "'const' declaration must have an initializer";
+        AddError(c) << "'const' declaration must have an initializer";
         return nullptr;
     }
 
@@ -480,7 +478,7 @@ sem::Variable* Resolver::Const(const ast::Const* c, bool is_global) {
 
     if (!ApplyAddressSpaceUsageToType(core::AddressSpace::kUndefined,
                                       const_cast<core::type::Type*>(ty), c->source)) {
-        AddNote(c->source) << "while instantiating 'const' " << c->name->symbol.NameView();
+        AddNote(c) << "while instantiating 'const' " << c->name->symbol.NameView();
         return nullptr;
     }
 
@@ -539,7 +537,7 @@ sem::Variable* Resolver::Var(const ast::Var* var, bool is_global) {
     }
 
     if (!storage_ty) {
-        AddError(var->source) << "var declaration requires a type or initializer";
+        AddError(var) << "var declaration requires a type or initializer";
         return nullptr;
     }
 
@@ -561,8 +559,7 @@ sem::Variable* Resolver::Var(const ast::Var* var, bool is_global) {
     }
 
     if (!is_global && sem->AddressSpace() != core::AddressSpace::kFunction) {
-        AddError(var->source)
-            << "function-scope 'var' declaration must use 'function' address space";
+        AddError(var) << "function-scope 'var' declaration must use 'function' address space";
         return nullptr;
     }
 
@@ -585,7 +582,7 @@ sem::Variable* Resolver::Var(const ast::Var* var, bool is_global) {
     if (!ApplyAddressSpaceUsageToType(sem->AddressSpace(),
                                       const_cast<core::type::Type*>(sem->Type()),
                                       var->type ? var->type->source : var->source)) {
-        AddNote(var->source) << "while instantiating 'var' " << var->name->symbol.NameView();
+        AddNote(var) << "while instantiating 'var' " << var->name->symbol.NameView();
         return nullptr;
     }
 
@@ -660,8 +657,7 @@ sem::Parameter* Resolver::Parameter(const ast::Parameter* param,
     b.Sem().Add(param, sem);
 
     auto add_note = [&] {
-        AddNote(param->source) << "while instantiating parameter "
-                               << param->name->symbol.NameView();
+        AddNote(param) << "while instantiating parameter " << param->name->symbol.NameView();
     };
 
     if (func->IsEntryPoint()) {
@@ -778,8 +774,7 @@ bool Resolver::AllocateOverridableConstantIds() {
                 increment_next_id();
             }
             if (ids_exhausted) {
-                AddError(decl->source)
-                    << "number of 'override' variables exceeded limit of " << kLimit;
+                AddError(decl) << "number of 'override' variables exceeded limit of " << kLimit;
                 return false;
             }
             id = next_id;
@@ -814,12 +809,12 @@ sem::Statement* Resolver::ConstAssert(const ast::ConstAssert* assertion) {
 
     auto* cond = expr->ConstantValue();
     if (auto* ty = cond->Type(); !ty->Is<core::type::Bool>()) {
-        AddError(assertion->condition->source)
+        AddError(assertion->condition)
             << "const assertion condition must be a bool, got '" << ty->FriendlyName() << "'";
         return nullptr;
     }
     if (!cond->ValueAs<bool>()) {
-        AddError(assertion->source) << "const assertion failed";
+        AddError(assertion) << "const assertion failed";
         return nullptr;
     }
     auto* sem = b.create<sem::Statement>(assertion, current_compound_statement_, current_function_);
@@ -878,14 +873,14 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
 
     // Resolve all the parameters
     uint32_t parameter_index = 0;
-    Hashmap<Symbol, Source, 8> parameter_names;
+    Hashmap<Symbol, const ast::Node*, 8> parameter_names;
     for (auto* param : decl->params) {
         Mark(param);
 
         {  // Check the parameter name is unique for the function
-            if (auto added = parameter_names.Add(param->name->symbol, param->source); !added) {
+            if (auto added = parameter_names.Add(param->name->symbol, param); !added) {
                 auto name = param->name->symbol.NameView();
-                AddError(param->source) << "redefinition of parameter '" << name << "'";
+                AddError(param) << "redefinition of parameter '" << name << "'";
                 AddNote(added.value) << "previous definition is here";
                 return nullptr;
             }
@@ -973,7 +968,7 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
     if (auto* str = const_cast<core::type::Struct*>(return_type->As<core::type::Struct>())) {
         if (!ApplyAddressSpaceUsageToType(core::AddressSpace::kUndefined, str,
                                           decl->return_type->source)) {
-            AddNote(decl->return_type->source)
+            AddNote(decl->return_type)
                 << "while instantiating return type for " << decl->name->symbol.NameView();
             return nullptr;
         }
@@ -1096,12 +1091,11 @@ sem::Statement* Resolver::Statement(const ast::Statement* stmt) {
 
         // Error cases
         [&](const ast::CaseStatement*) {
-            AddError(stmt->source) << "case statement can only be used inside a switch statement";
+            AddError(stmt) << "case statement can only be used inside a switch statement";
             return nullptr;
         },
         [&](Default) {
-            AddError(stmt->source)
-                << "unknown statement type: " << std::string(stmt->TypeInfo().name);
+            AddError(stmt) << "unknown statement type: " << std::string(stmt->TypeInfo().name);
             return nullptr;
         });
 }
@@ -1126,12 +1120,12 @@ sem::CaseStatement* Resolver::CaseStatement(const ast::CaseStatement* stmt,
                     return false;
                 }
                 if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-                    AddError(sel->source) << "case selector must be an i32 or u32 value";
+                    AddError(sel) << "case selector must be an i32 or u32 value";
                     return false;
                 }
                 const_value = materialized->ConstantValue();
                 if (!const_value) {
-                    AddError(sel->source) << "case selector must be a constant expression";
+                    AddError(sel) << "case selector must be a constant expression";
                     return false;
                 }
             }
@@ -1328,8 +1322,7 @@ sem::Expression* Resolver::Expression(const ast::Expression* root) {
     if (!ast::TraverseExpressions<ast::TraverseOrder::RightToLeft>(
             root, [&](const ast::Expression* expr, size_t depth) {
                 if (depth > kMaxExpressionDepth) {
-                    AddError(expr->source)
-                        << "reached max expression depth of " << kMaxExpressionDepth;
+                    AddError(expr) << "reached max expression depth of " << kMaxExpressionDepth;
                     failed = true;
                     return ast::TraverseAction::Stop;
                 }
@@ -1345,7 +1338,7 @@ sem::Expression* Resolver::Expression(const ast::Expression* root) {
                 sorted.Push(expr);
                 return ast::TraverseAction::Descend;
             })) {
-        AddError(root->source) << "TraverseExpressions failed";
+        AddError(root) << "TraverseExpressions failed";
         return nullptr;
     }
 
@@ -1409,7 +1402,7 @@ sem::Expression* Resolver::Expression(const ast::Expression* root) {
                             return ast::TraverseAction::Descend;
                         });
                     if (!r) {
-                        AddError(root->source) << "TraverseExpressions failed";
+                        AddError(root) << "TraverseExpressions failed";
                         return nullptr;
                     }
                 }
@@ -1464,9 +1457,8 @@ sem::BuiltinEnumExpression<core::AddressSpace>* Resolver::AddressSpaceExpression
     if (DAWN_UNLIKELY(
             address_space_expr->Value() == core::AddressSpace::kPixelLocal &&
             !enabled_extensions_.Contains(wgsl::Extension::kChromiumExperimentalPixelLocal))) {
-        AddError(expr->source) << "'pixel_local' address space requires the '"
-                               << wgsl::Extension::kChromiumExperimentalPixelLocal
-                               << "' extension enabled";
+        AddError(expr) << "'pixel_local' address space requires the '"
+                       << wgsl::Extension::kChromiumExperimentalPixelLocal << "' extension enabled";
         return nullptr;
     }
     return address_space_expr;
@@ -1554,10 +1546,10 @@ void Resolver::RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn) {
         auto where = buffer_view_sizes_.GetOrAddEntry(param, [buffer_size, call]() {
             BufferViewInfo info;
             info.size = buffer_size;
-            info.source = &call->Declaration()->source;
+            info.node = call->Declaration();
             return info;
         });
-        where.value = {std::max(buffer_size, where.value.size), where.value.source};
+        where.value = {std::max(buffer_size, where.value.size), where.value.node};
     }
     // Only need to add a transitive size reference for global variables.
     if (const auto* gvar = call->RootIdentifier()->As<sem::GlobalVariable>()) {
@@ -1592,11 +1584,11 @@ bool Resolver::CheckBufferViews(const sem::Call* call) {
                     if (const auto* buffer_ty = ty->As<core::type::Buffer>()) {
                         auto count = buffer_ty->ConstantCount();
                         if (count != std::nullopt && count.value() < where->size) {
-                            AddError(global->Declaration()->source)
+                            AddError(global->Declaration())
                                 << "buffer size (" << count.value()
                                 << " bytes) is smaller than the minimum view size (" << where->size
                                 << " bytes)";
-                            AddNote(*where->source) << "due to call here";
+                            AddNote(where->node) << "due to call here";
                             return false;
                         }
                         // Add transitive reference to global.
@@ -1612,18 +1604,18 @@ bool Resolver::CheckBufferViews(const sem::Call* call) {
                     if (const auto* buffer_ty = ty->As<core::type::Buffer>()) {
                         auto count = buffer_ty->ConstantCount();
                         if (count != std::nullopt && count.value() < where->size) {
-                            AddError(param->Declaration()->source)
+                            AddError(param->Declaration())
                                 << "buffer size (" << count.value()
                                 << " bytes) is smaller than the minimum view size (" << where->size
                                 << " bytes)";
-                            AddNote(*where->source) << "due to call here";
+                            AddNote(where->node) << "due to call here";
                             return false;
                         }
                     }
                     auto param_where =
                         buffer_view_sizes_.GetOrAddEntry(param, [where]() { return *where; });
                     param_where.value = {std::max(param_where.value.size, where->size),
-                                         where->source};
+                                         where->node};
                     return true;
                 });
             if (!ret) {
@@ -1648,18 +1640,16 @@ bool Resolver::AliasAnalysis(const sem::Call* call) {
         std::string access;                   // the access performed for the "other" expression
     };
     auto make_error = [&](const sem::ValueExpression* arg, Alias&& var) {
-        AddError(arg->Declaration()->source) << "invalid aliased pointer argument";
+        AddError(arg->Declaration()) << "invalid aliased pointer argument";
         switch (var.type) {
             case Alias::Argument:
-                AddNote(var.expr->Declaration()->source)
-                    << "aliases with another argument passed here";
+                AddNote(var.expr->Declaration()) << "aliases with another argument passed here";
                 break;
             case Alias::ModuleScope: {
                 auto* func = var.expr->Stmt()->Function();
                 auto func_name = func->Declaration()->name->symbol.NameView();
-                AddNote(var.expr->Declaration()->source)
-                    << "aliases with module-scope variable " << var.access << " in '" << func_name
-                    << "'";
+                AddNote(var.expr->Declaration()) << "aliases with module-scope variable "
+                                                 << var.access << " in '" << func_name << "'";
                 break;
             }
         }
@@ -1933,7 +1923,7 @@ sem::ValueExpression* Resolver::IndexAccessor(const ast::IndexAccessorExpression
     if (memory_view) {
         if (memory_view->Is<core::type::Pointer>() &&
             !allowed_features_.features.contains(wgsl::LanguageFeature::kPointerCompositeAccess)) {
-            AddError(expr->source)
+            AddError(expr)
                 << "pointer composite access requires the pointer_composite_access language "
                    "feature, which is not allowed in the current environment";
             return nullptr;
@@ -1950,14 +1940,14 @@ sem::ValueExpression* Resolver::IndexAccessor(const ast::IndexAccessorExpression
             return b.create<core::type::Vector>(mat->Type(), mat->Rows());
         },
         [&](Default) {
-            AddError(expr->source) << "cannot index type '" << sem_.TypeNameOf(storage_ty) << "'";
+            AddError(expr) << "cannot index type '" << sem_.TypeNameOf(storage_ty) << "'";
             return nullptr;
         });
     TINT_RET_IF_NULL(ty);
 
     auto* idx_ty = idx->Type()->UnwrapRef();
     if (!idx_ty->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(idx->Declaration()->source)
+        AddError(idx->Declaration())
             << "index must be of type 'i32' or 'u32', found: '" << sem_.TypeNameOf(idx_ty) << "'";
         return nullptr;
     }
@@ -2016,7 +2006,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
 
         auto match = intrinsic_table_.Lookup(ty, template_args, arg_tys, args_stage);
         if (match != Success) {
-            AddError(expr->source) << match.Failure();
+            AddError(expr) << match.Failure();
             return nullptr;
         }
 
@@ -2212,7 +2202,7 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
                                            current_statement_, nullptr);
             },
             [&](Default) {
-                AddError(expr->source) << "type is not constructible";
+                AddError(expr) << "type is not constructible";
                 return nullptr;
             });
     };
@@ -2251,12 +2241,12 @@ sem::Call* Resolver::Call(const ast::CallExpression* expr) {
                 auto arg_tys = tint::Transform(args, [](auto* arg) { return arg->Type(); });
                 auto el_ty = core::type::Type::Common(arg_tys);
                 if (DAWN_UNLIKELY(!el_ty)) {
-                    AddError(expr->source)
+                    AddError(expr)
                         << "cannot infer common array element type from constructor arguments";
                     Hashset<const core::type::Type*, 8> types;
                     for (size_t i = 0; i < args.Length(); i++) {
                         if (types.Add(args[i]->Type())) {
-                            AddNote(args[i]->Declaration()->source)
+                            AddNote(args[i]->Declaration())
                                 << "argument " << i << " is of type '"
                                 << sem_.TypeNameOf(args[i]->Type()) << "'";
                         }
@@ -2329,7 +2319,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
 
     auto overload = intrinsic_table_.Lookup(fn, tmpl_args, arg_tys, arg_stage);
     if (overload != Success) {
-        AddError(expr->source) << overload.Failure();
+        AddError(expr) << overload.Failure();
         return nullptr;
     }
 
@@ -2361,14 +2351,14 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
     }
 
     if (target->IsDeprecated()) {
-        AddWarning(expr->source) << "use of deprecated builtin";
+        AddWarning(expr) << "use of deprecated builtin";
     }
 
     // Check evaluation stage of parameters that are required to be const-expressions.
     for (uint32_t i = 0; i < overload->parameters.Length(); i++) {
         const auto& p = overload->parameters[i];
         if (p.is_const && args[i]->Stage() != core::EvaluationStage::kConstant) {
-            AddError(args[i]->Declaration()->source)
+            AddError(args[i]->Declaration())
                 << "the " << style::Variable(p.usage) << " argument of "
                 << style::Function(target->str()) << " must be a const-expression";
             return nullptr;
@@ -2483,7 +2473,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
                 call->Target()->ReturnType()->template As<core::type::Pointer>()->StoreType();
             if (!ApplyAddressSpaceUsageToType(address_space, store_type,
                                               call->Declaration()->source)) {
-                AddNote(call->Declaration()->source) << " while instantiating bufferView";
+                AddNote(call->Declaration()) << " while instantiating bufferView";
                 return nullptr;
             }
             if (!validator_.BufferView(call)) {
@@ -2831,7 +2821,7 @@ const core::type::U8* Resolver::U8(const ast::Identifier* ident) {
 }
 
 const core::type::U16* Resolver::U16(const ast::Identifier* ident) {
-    AddError(ident->source) << "u16 is unsupported in WGSL";
+    AddError(ident) << "u16 is unsupported in WGSL";
     return nullptr;
 }
 
@@ -3000,7 +2990,7 @@ const core::type::Pointer* Resolver::Ptr(const ast::Identifier* ident) {
     }
 
     if (!ApplyAddressSpaceUsageToType(address_space, store_ty, tmpl_ident->arguments[1]->source)) {
-        AddNote(ident->source) << "while instantiating " << out->FriendlyName();
+        AddNote(ident) << "while instantiating " << out->FriendlyName();
         return nullptr;
     }
     return out;
@@ -3120,8 +3110,8 @@ const core::type::SubgroupMatrix* Resolver::SubgroupMatrix(const ast::Identifier
         TINT_RET_IF_NULL(cols_sem);
 
         if (!cols_sem->ConstantValue() || cols_sem->ConstantValue()->ValueAs<AInt>() < 1) {
-            AddError(arg->source) << "subgroup matrix " << dim
-                                  << " count must be a constant positive integer";
+            AddError(arg) << "subgroup matrix " << dim
+                          << " count must be a constant positive integer";
             return nullptr;
         }
         return cols_sem->ConstantValue();
@@ -3205,19 +3195,19 @@ bool Resolver::CheckTemplatedIdentifierArgs(const ast::TemplatedIdentifier* iden
     }
     if (min_args == max_args) {
         if (DAWN_UNLIKELY(ident->arguments.Length() != min_args)) {
-            AddError(ident->source) << style::Code(ident->symbol.NameView()) << " requires "
-                                    << min_args << " template arguments";
+            AddError(ident) << style::Code(ident->symbol.NameView()) << " requires " << min_args
+                            << " template arguments";
             return false;
         }
     } else {
         if (DAWN_UNLIKELY(ident->arguments.Length() < min_args)) {
-            AddError(ident->source) << style::Code(ident->symbol.NameView())
-                                    << " requires at least " << min_args << " template arguments";
+            AddError(ident) << style::Code(ident->symbol.NameView()) << " requires at least "
+                            << min_args << " template arguments";
             return false;
         }
         if (DAWN_UNLIKELY(ident->arguments.Length() > max_args)) {
-            AddError(ident->source) << style::Code(ident->symbol.NameView()) << " requires at most "
-                                    << max_args << " template arguments";
+            AddError(ident) << style::Code(ident->symbol.NameView()) << " requires at most "
+                            << max_args << " template arguments";
             return false;
         }
     }
@@ -3397,14 +3387,13 @@ sem::Expression* Resolver::Identifier(const ast::IdentifierExpression* expr) {
                             auto symbol = ident->symbol;
                             if (auto decl = loop_block->Decls().Get(symbol)) {
                                 if (decl->order >= loop_block->NumDeclsAtFirstContinue()) {
-                                    AddError(loop_block->FirstContinue()->source)
+                                    AddError(loop_block->FirstContinue())
                                         << "continue statement bypasses declaration of '"
                                         << symbol.NameView() << "'";
-                                    AddNote(decl->variable->Declaration()->source)
+                                    AddNote(decl->variable->Declaration())
                                         << "identifier '" << symbol.NameView() << "' declared here";
-                                    AddNote(expr->source)
-                                        << "identifier '" << symbol.NameView()
-                                        << "' referenced in continuing block here";
+                                    AddNote(expr) << "identifier '" << symbol.NameView()
+                                                  << "' referenced in continuing block here";
                                     return nullptr;
                                 }
                             }
@@ -3421,7 +3410,7 @@ sem::Expression* Resolver::Identifier(const ast::IdentifierExpression* expr) {
                     }
                     if (!current_function_ && variable->Declaration()->Is<ast::Var>()) {
                         // Use of a module-scope 'var' outside of a function.
-                        AddError(expr->source)
+                        AddError(expr)
                             << style::Keyword("var ") << style::Variable(ident->symbol.NameView())
                             << " cannot be referenced at module-scope";
                         sem_.NoteDeclarationSource(variable->Declaration());
@@ -3530,7 +3519,7 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
     if (memory_view) {
         if (memory_view->Is<core::type::Pointer>() &&
             !allowed_features_.features.contains(wgsl::LanguageFeature::kPointerCompositeAccess)) {
-            AddError(expr->source)
+            AddError(expr)
                 << "pointer composite access requires the pointer_composite_access language "
                    "feature, which is not allowed in the current environment";
             return nullptr;
@@ -3558,7 +3547,7 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
             }
 
             if (member == nullptr) {
-                AddError(expr->source) << "struct member " << symbol.NameView() << " not found";
+                AddError(expr) << "struct member " << symbol.NameView() << " not found";
                 return nullptr;
             }
 
@@ -3610,13 +3599,13 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
                 }
 
                 if (swizzle.Back() >= vec->Width()) {
-                    AddError(expr->member->source) << "invalid vector swizzle member";
+                    AddError(expr->member) << "invalid vector swizzle member";
                     return nullptr;
                 }
             }
 
             if (size < 1 || size > 4) {
-                AddError(expr->member->source) << "invalid vector swizzle size";
+                AddError(expr->member) << "invalid vector swizzle size";
                 return nullptr;
             }
 
@@ -3625,7 +3614,7 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
             auto is_xyzw = [](char c) { return c == 'x' || c == 'y' || c == 'z' || c == 'w'; };
             if (!std::all_of(s.begin(), s.end(), is_rgba) &&
                 !std::all_of(s.begin(), s.end(), is_xyzw)) {
-                AddError(expr->member->source)
+                AddError(expr->member)
                     << "invalid mixing of vector swizzle characters rgba with xyzw";
                 return nullptr;
             }
@@ -3677,7 +3666,7 @@ sem::ValueExpression* Resolver::MemberAccessor(const ast::MemberAccessorExpressi
         },
 
         [&](Default) {
-            AddError(expr->object->source)
+            AddError(expr->object)
                 << "cannot index into expression of type '" << sem_.TypeNameOf(storage_ty) << "'";
             return nullptr;
         });
@@ -3700,7 +3689,7 @@ sem::ValueExpression* Resolver::Binary(const ast::BinaryExpression* expr) {
     auto stage = core::EarliestStage(lhs->Stage(), rhs->Stage());
     auto overload = intrinsic_table_.Lookup(expr->op, lhs->Type(), rhs->Type(), stage, false);
     if (overload != Success) {
-        AddError(expr->source) << overload.Failure();
+        AddError(expr) << overload.Failure();
         return nullptr;
     }
 
@@ -3774,9 +3763,8 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
         case core::UnaryOp::kAddressOf:
             if (auto* ref = expr_ty->As<core::type::Reference>()) {
                 if (ref->StoreType()->UnwrapRef()->IsHandle()) {
-                    AddError(unary->expr->source)
-                        << "cannot take the address of " << sem_.Describe(expr)
-                        << " in handle address space";
+                    AddError(unary->expr) << "cannot take the address of " << sem_.Describe(expr)
+                                          << " in handle address space";
                     return nullptr;
                 }
 
@@ -3786,8 +3774,7 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
                      sem_.TypeOf(array->object)->UnwrapPtrOrRef()->Is<core::type::Vector>()) ||
                     (member &&
                      sem_.TypeOf(member->object)->UnwrapPtrOrRef()->Is<core::type::Vector>())) {
-                    AddError(unary->expr->source)
-                        << "cannot take the address of a vector component";
+                    AddError(unary->expr) << "cannot take the address of a vector component";
                     return nullptr;
                 }
 
@@ -3796,8 +3783,7 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
 
                 root_ident = expr->RootIdentifier();
             } else {
-                AddError(unary->expr->source)
-                    << "cannot take the address of " << sem_.Describe(expr);
+                AddError(unary->expr) << "cannot take the address of " << sem_.Describe(expr);
                 return nullptr;
             }
             break;
@@ -3808,8 +3794,8 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
                                                      ptr->Access());
                 root_ident = expr->RootIdentifier();
             } else {
-                AddError(unary->expr->source) << "cannot dereference expression of type "
-                                              << style::Type(sem_.TypeNameOf(expr_ty));
+                AddError(unary->expr) << "cannot dereference expression of type "
+                                      << style::Type(sem_.TypeNameOf(expr_ty));
                 return nullptr;
             }
             break;
@@ -3821,7 +3807,7 @@ sem::ValueExpression* Resolver::UnaryOp(const ast::UnaryOpExpression* unary) {
             stage = expr->Stage();
             auto overload = intrinsic_table_.Lookup(unary->op, expr->Type(), stage);
             if (overload != Success) {
-                AddError(unary->source) << overload.Failure();
+                AddError(unary) << overload.Failure();
                 return nullptr;
             }
             ty = overload->return_type;
@@ -3860,15 +3846,15 @@ tint::Result<uint32_t> Resolver::LocationAttribute(const ast::LocationAttribute*
     }
 
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@location") << " must be an "
-                               << style::Type("i32") << " or " << style::Type("u32") << " value";
+        AddError(attr) << style::Attribute("@location") << " must be an " << style::Type("i32")
+                       << " or " << style::Type("u32") << " value";
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value < 0) {
-        AddError(attr->source) << style::Attribute("@location") << " value must be non-negative";
+        AddError(attr) << style::Attribute("@location") << " value must be non-negative";
         return Failure{};
     }
 
@@ -3885,15 +3871,15 @@ tint::Result<uint32_t> Resolver::ColorAttribute(const ast::ColorAttribute* attr)
     }
 
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@color") << " must be an " << style::Type("i32")
-                               << " or " << style::Type("u32") << " value";
+        AddError(attr) << style::Attribute("@color") << " must be an " << style::Type("i32")
+                       << " or " << style::Type("u32") << " value";
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value < 0) {
-        AddError(attr->source) << style::Attribute("@color") << " value must be non-negative";
+        AddError(attr) << style::Attribute("@color") << " value must be non-negative";
         return Failure{};
     }
 
@@ -3909,15 +3895,15 @@ tint::Result<uint32_t> Resolver::BlendSrcAttribute(const ast::BlendSrcAttribute*
     }
 
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@blend_src") << " value must be "
-                               << style::Type("i32") << " or " << style::Type("u32");
+        AddError(attr) << style::Attribute("@blend_src") << " value must be " << style::Type("i32")
+                       << " or " << style::Type("u32");
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value != 0 && value != 1) {
-        AddError(attr->source) << style::Attribute("@blend_src") << " value must be zero or one";
+        AddError(attr) << style::Attribute("@blend_src") << " value must be zero or one";
         return Failure{};
     }
 
@@ -3933,15 +3919,15 @@ tint::Result<uint32_t> Resolver::BindingAttribute(const ast::BindingAttribute* a
         return Failure{};
     }
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@binding") << " must be an "
-                               << style::Type("i32") << " or " << style::Type("u32") << " value";
+        AddError(attr) << style::Attribute("@binding") << " must be an " << style::Type("i32")
+                       << " or " << style::Type("u32") << " value";
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value < 0) {
-        AddError(attr->source) << style::Attribute("@binding") << " value must be non-negative";
+        AddError(attr) << style::Attribute("@binding") << " value must be non-negative";
         return Failure{};
     }
     return static_cast<uint32_t>(value);
@@ -3956,15 +3942,15 @@ tint::Result<uint32_t> Resolver::GroupAttribute(const ast::GroupAttribute* attr)
         return Failure{};
     }
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@group") << " must be an " << style::Type("i32")
-                               << " or " << style::Type("u32") << " value";
+        AddError(attr) << style::Attribute("@group") << " must be an " << style::Type("i32")
+                       << " or " << style::Type("u32") << " value";
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value < 0) {
-        AddError(attr->source) << style::Attribute("@group") << " value must be non-negative";
+        AddError(attr) << style::Attribute("@group") << " value must be non-negative";
         return Failure{};
     }
     return static_cast<uint32_t>(value);
@@ -3980,16 +3966,16 @@ tint::Result<uint32_t> Resolver::InputAttachmentIndexAttribute(
         return Failure{};
     }
     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-        AddError(attr->source) << style::Attribute("@input_attachment_index") << " must be an "
-                               << style::Type("i32") << " or " << style::Type("u32") << " value";
+        AddError(attr) << style::Attribute("@input_attachment_index") << " must be an "
+                       << style::Type("i32") << " or " << style::Type("u32") << " value";
         return Failure{};
     }
 
     auto const_value = materialized->ConstantValue();
     auto value = const_value->ValueAs<AInt>();
     if (value < 0) {
-        AddError(attr->source) << style::Attribute("@input_attachment_index")
-                               << " value must be non-negative";
+        AddError(attr) << style::Attribute("@input_attachment_index")
+                       << " value must be non-negative";
         return Failure{};
     }
     return static_cast<uint32_t>(value);
@@ -4007,10 +3993,10 @@ tint::Result<sem::WorkgroupSize> Resolver::WorkgroupAttribute(const ast::Workgro
     Vector<const core::type::Type*, 3> arg_tys;
 
     auto err_bad_expr = [&](const ast::Expression* value) {
-        AddError(value->source) << style::Attribute("@workgroup_size")
-                                << " argument must be a constant or override-expression of type "
-                                << style::Type("abstract-integer") << ", " << style::Type("i32")
-                                << " or " << style::Type("u32");
+        AddError(value) << style::Attribute("@workgroup_size")
+                        << " argument must be a constant or override-expression of type "
+                        << style::Type("abstract-integer") << ", " << style::Type("i32") << " or "
+                        << style::Type("u32");
     };
 
     for (size_t i = 0; i < 3; i++) {
@@ -4042,9 +4028,9 @@ tint::Result<sem::WorkgroupSize> Resolver::WorkgroupAttribute(const ast::Workgro
 
     auto* common_ty = core::type::Type::Common(arg_tys);
     if (!common_ty) {
-        AddError(attr->source) << style::Attribute("@workgroup_size")
-                               << " arguments must be of the same type, either "
-                               << style::Type("i32") << " or " << style::Type("u32");
+        AddError(attr) << style::Attribute("@workgroup_size")
+                       << " arguments must be of the same type, either " << style::Type("i32")
+                       << " or " << style::Type("u32");
         return Failure{};
     }
 
@@ -4060,7 +4046,7 @@ tint::Result<sem::WorkgroupSize> Resolver::WorkgroupAttribute(const ast::Workgro
         }
         if (auto* value = materialized->ConstantValue()) {
             if (value->ValueAs<AInt>() < 1) {
-                AddError(values[i]->source)
+                AddError(values[i])
                     << style::Attribute("@workgroup_size") << " argument must be at least 1";
                 return Failure{};
             }
@@ -4074,7 +4060,7 @@ tint::Result<sem::WorkgroupSize> Resolver::WorkgroupAttribute(const ast::Workgro
     for (size_t i = 1; i < 3; i++) {
         total_size *= static_cast<uint64_t>(ws[i].value_or(1));
         if (total_size > 0xffffffff) {
-            AddError(values[i]->source) << "total workgroup grid size cannot exceed 0xffffffff";
+            AddError(values[i]) << "total workgroup grid size cannot exceed 0xffffffff";
             return Failure{};
         }
     }
@@ -4086,10 +4072,10 @@ tint::Result<uint32_t> Resolver::SubgroupSizeAttribute(const ast::SubgroupSizeAt
     auto value = attr->subgroup_size;
 
     auto err_bad_expr = [&]() {
-        AddError(attr->source) << style::Attribute("@subgroup_size")
-                               << " argument must be a constant or override-expression of type "
-                               << style::Type("abstract-integer") << ", " << style::Type("i32")
-                               << " or " << style::Type("u32");
+        AddError(attr) << style::Attribute("@subgroup_size")
+                       << " argument must be a constant or override-expression of type "
+                       << style::Type("abstract-integer") << ", " << style::Type("i32") << " or "
+                       << style::Type("u32");
     };
 
     const auto* expr = ValueExpression(value);
@@ -4121,14 +4107,13 @@ tint::Result<uint32_t> Resolver::SubgroupSizeAttribute(const ast::SubgroupSizeAt
     uint32_t subgroup_size = 0u;
     if (auto* constant_value = materialized->ConstantValue()) {
         if (constant_value->ValueAs<AInt>() < 1) {
-            AddError(attr->source)
-                << style::Attribute("@subgroup_size") << " argument must be at least 1";
+            AddError(attr) << style::Attribute("@subgroup_size") << " argument must be at least 1";
             return Failure{};
         }
         subgroup_size = constant_value->ValueAs<u32>();
         if (!IsPowerOfTwo(subgroup_size)) {
-            AddError(attr->source)
-                << style::Attribute("@subgroup_size") << " argument must be a power of 2";
+            AddError(attr) << style::Attribute("@subgroup_size")
+                           << " argument must be a power of 2";
             return Failure{};
         }
     }
@@ -4164,7 +4149,7 @@ bool Resolver::DiagnosticControl(const ast::DiagnosticControl& control) {
             if (rule != wgsl::ChromiumDiagnosticRule::kUndefined) {
                 validator_.DiagnosticFilters().Set(rule, control.severity);
             } else {
-                auto& warning = AddWarning(control.rule_name->source)
+                auto& warning = AddWarning(control.rule_name)
                                 << "unrecognized diagnostic rule " << style::Code("chromium.", name)
                                 << "\n";
                 tint::SuggestAlternativeOptions opts;
@@ -4180,7 +4165,7 @@ bool Resolver::DiagnosticControl(const ast::DiagnosticControl& control) {
     if (rule != wgsl::CoreDiagnosticRule::kUndefined) {
         validator_.DiagnosticFilters().Set(rule, control.severity);
     } else {
-        auto& warning = AddWarning(control.rule_name->source)
+        auto& warning = AddWarning(control.rule_name)
                         << "unrecognized diagnostic rule " << style::Code(name) << "\n";
         tint::SuggestAlternatives(name, wgsl::kCoreDiagnosticRuleStrings, warning.message);
     }
@@ -4192,8 +4177,8 @@ bool Resolver::Enable(const ast::Enable* enable) {
         Mark(ext);
         enabled_extensions_.Add(ext->name);
         if (!allowed_features_.extensions.contains(ext->name)) {
-            AddError(ext->source) << "extension " << style::Code(ext->name)
-                                  << " is not allowed in the current environment";
+            AddError(ext) << "extension " << style::Code(ext->name)
+                          << " is not allowed in the current environment";
             return false;
         }
     }
@@ -4203,8 +4188,8 @@ bool Resolver::Enable(const ast::Enable* enable) {
 bool Resolver::Requires(const ast::Requires* req) {
     for (auto feature : req->features) {
         if (!allowed_features_.features.contains(feature)) {
-            AddError(req->source) << "language feature " << style::Code(wgsl::ToString(feature))
-                                  << " is not allowed in the current environment";
+            AddError(req) << "language feature " << style::Code(wgsl::ToString(feature))
+                          << " is not allowed in the current environment";
             return false;
         }
     }
@@ -4236,9 +4221,9 @@ const core::type::ArrayCount* Resolver::ArrayCount(const ast::Expression* count_
 
     auto* ty = count_sem->Type();
     if (!ty->IsIntegerScalar()) {
-        AddError(count_expr->source)
-            << count_kind << " must evaluate to an integer expression, but is type "
-            << style::Type(ty->FriendlyName());
+        AddError(count_expr) << count_kind
+                             << " must evaluate to an integer expression, but is type "
+                             << style::Type(ty->FriendlyName());
         return nullptr;
     }
 
@@ -4261,8 +4246,7 @@ const core::type::ArrayCount* Resolver::ArrayCount(const ast::Expression* count_
             auto* count_val = count_sem->ConstantValue();
             int64_t count = count_val->ValueAs<AInt>();
             if (count < 1) {
-                AddError(count_expr->source)
-                    << count_kind << " (" << count << ") must be greater than 0";
+                AddError(count_expr) << count_kind << " (" << count << ") must be greater than 0";
                 return nullptr;
             }
 
@@ -4270,9 +4254,9 @@ const core::type::ArrayCount* Resolver::ArrayCount(const ast::Expression* count_
         }
 
         default: {
-            AddError(count_expr->source) << count_kind
-                                         << " must evaluate to a constant integer expression "
-                                            "or override variable";
+            AddError(count_expr) << count_kind
+                                 << " must evaluate to a constant integer expression "
+                                    "or override variable";
             return nullptr;
         }
     }
@@ -4335,9 +4319,8 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
     // https://gpuweb.github.io/gpuweb/wgsl/#limits
     const size_t kMaxNumStructMembers = 16383;
     if (str->members.Length() > kMaxNumStructMembers) {
-        AddError(str->source) << style::Keyword("struct ") << style::Type(struct_name()) << " has "
-                              << str->members.Length() << " members, maximum is "
-                              << kMaxNumStructMembers;
+        AddError(str) << style::Keyword("struct ") << style::Type(struct_name()) << " has "
+                      << str->members.Length() << " members, maximum is " << kMaxNumStructMembers;
         return nullptr;
     }
 
@@ -4369,9 +4352,8 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
         Mark(member);
         Mark(member->name);
         if (auto added = member_map.Add(member->name->symbol, member); !added) {
-            AddError(member->source)
-                << "redefinition of " << style::Code(member->name->symbol.NameView());
-            AddNote(added.value->source) << "previous definition is here";
+            AddError(member) << "redefinition of " << style::Code(member->name->symbol.NameView());
+            AddNote(added.value) << "previous definition is here";
             return nullptr;
         }
 
@@ -4383,8 +4365,8 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
 
         // validator_.Validate member type
         if (!validator_.IsPlain(type)) {
-            AddError(member->source)
-                << sem_.TypeNameOf(type) << " cannot be used as the type of a structure member";
+            AddError(member) << sem_.TypeNameOf(type)
+                             << " cannot be used as the type of a structure member";
             return nullptr;
         }
 
@@ -4412,23 +4394,22 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
                         return false;
                     }
                     if (!materialized->Type()->IsAnyOf<core::type::I32, core::type::U32>()) {
-                        AddError(attr->source)
-                            << style::Attribute("@align") << " value must be an "
-                            << style::Type("i32") << " or " << style::Type("u32");
+                        AddError(attr) << style::Attribute("@align") << " value must be an "
+                                       << style::Type("i32") << " or " << style::Type("u32");
                         return false;
                     }
 
                     auto const_value = materialized->ConstantValue();
                     if (!const_value) {
-                        AddError(attr->source)
+                        AddError(attr)
                             << style::Attribute("@align") << " value must be constant expression";
                         return false;
                     }
                     auto value = const_value->ValueAs<AInt>();
 
                     if (value <= 0 || !tint::IsPowerOfTwo(value)) {
-                        AddError(attr->source) << style::Attribute("@align")
-                                               << " value must be a positive, power-of-two integer";
+                        AddError(attr) << style::Attribute("@align")
+                                       << " value must be a positive, power-of-two integer";
                         return false;
                     }
                     align = u32(value);
@@ -4444,29 +4425,28 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
                         return false;
                     }
                     if (!materialized->Type()->IsAnyOf<core::type::U32, core::type::I32>()) {
-                        AddError(attr->source)
-                            << style::Attribute("@size") << " value must be an "
-                            << style::Type("i32") << " or " << style::Type("u32");
+                        AddError(attr) << style::Attribute("@size") << " value must be an "
+                                       << style::Type("i32") << " or " << style::Type("u32");
                         return false;
                     }
 
                     auto const_value = materialized->ConstantValue();
                     if (!const_value) {
-                        AddError(attr->expr->source)
+                        AddError(attr->expr)
                             << style::Attribute("@size") << " value must be constant expression";
                         return false;
                     }
                     {
                         auto value = const_value->ValueAs<AInt>();
                         if (value <= 0) {
-                            AddError(attr->source)
+                            AddError(attr)
                                 << style::Attribute("@size") << " value must be a positive integer";
                             return false;
                         }
                     }
                     auto value = const_value->ValueAs<uint64_t>();
                     if (value < size) {
-                        AddError(attr->source)
+                        AddError(attr)
                             << style::Attribute("@size")
                             << " must be at least as big as the type's size (" << size << ")";
                         return false;
@@ -4525,9 +4505,9 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
 
         offset = tint::RoundUp(align, offset);
         if (offset > std::numeric_limits<uint32_t>::max()) {
-            AddError(member->source)
-                << "struct member offset (0x" << std::hex << offset << ") must not exceed 0x"
-                << std::hex << std::numeric_limits<uint32_t>::max() << " bytes";
+            AddError(member) << "struct member offset (0x" << std::hex << offset
+                             << ") must not exceed 0x" << std::hex
+                             << std::numeric_limits<uint32_t>::max() << " bytes";
             return nullptr;
         }
 
@@ -4545,8 +4525,8 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
     struct_size = tint::RoundUp(struct_align, struct_size);
 
     if (struct_size > std::numeric_limits<uint32_t>::max()) {
-        AddError(str->source) << "struct size (0x" << std::hex << struct_size
-                              << ") must not exceed 0xffffffff bytes";
+        AddError(str) << "struct size (0x" << std::hex << struct_size
+                      << ") must not exceed 0xffffffff bytes";
         return nullptr;
     }
     if (DAWN_UNLIKELY(struct_align > std::numeric_limits<uint32_t>::max())) {
@@ -4582,9 +4562,9 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
     //  https://gpuweb.github.io/gpuweb/wgsl/#limits
     const size_t nest_depth = 1 + members_nest_depth;
     if (nest_depth > kMaxNestDepthOfCompositeType) {
-        AddError(str->source) << style::Keyword("struct ") << style::Type(struct_name())
-                              << " has nesting depth of " << nest_depth << ", maximum is "
-                              << kMaxNestDepthOfCompositeType;
+        AddError(str) << style::Keyword("struct ") << style::Type(struct_name())
+                      << " has nesting depth of " << nest_depth << ", maximum is "
+                      << kMaxNestDepthOfCompositeType;
         return nullptr;
     }
     nest_depth_.Add(out, nest_depth);
@@ -4826,7 +4806,7 @@ sem::Statement* Resolver::CompoundAssignmentStatement(
 
         auto overload = intrinsic_table_.Lookup(stmt->op, lhs_type, rhs->Type(), stage, true);
         if (overload != Success) {
-            AddError(stmt->source) << overload.Failure();
+            AddError(stmt) << overload.Failure();
             return false;
         }
 
@@ -4895,7 +4875,7 @@ bool Resolver::ApplyAddressSpaceUsageToType(core::AddressSpace address_space,
             if (decl && !ApplyAddressSpaceUsageToType(address_space,
                                                       const_cast<core::type::Type*>(member->Type()),
                                                       decl->type->source)) {
-                AddNote(member->Declaration()->source)
+                AddNote(member->Declaration())
                     << "while analyzing structure member " << sem_.TypeNameOf(str) << "."
                     << member->Name().Name();
                 return false;
@@ -5037,8 +5017,8 @@ SEM* Resolver::StatementScope(const ast::Statement* ast, SEM* sem, F&& callback)
     TINT_SCOPED_ASSIGNMENT(current_scoping_depth_, current_scoping_depth_ + 1);
 
     if (current_scoping_depth_ > kMaxStatementDepth) {
-        AddError(ast->source) << "statement nesting depth / chaining length exceeds limit of "
-                              << kMaxStatementDepth;
+        AddError(ast) << "statement nesting depth / chaining length exceeds limit of "
+                      << kMaxStatementDepth;
         return nullptr;
     }
 
@@ -5071,8 +5051,8 @@ void Resolver::ApplyDiagnosticSeverities(NODE* node) {
 
 bool Resolver::CheckNotTemplated(const char* use, const ast::Identifier* ident) {
     if (DAWN_UNLIKELY(ident->Is<ast::TemplatedIdentifier>())) {
-        AddError(ident->source) << use << " " << style::Code(ident->symbol.NameView())
-                                << " does not take template arguments";
+        AddError(ident) << use << " " << style::Code(ident->symbol.NameView())
+                        << " does not take template arguments";
         if (auto resolved = dependencies_.resolved_identifiers.Get(ident)) {
             if (auto* ast_node = resolved->Node()) {
                 sem_.NoteDeclarationSource(ast_node);
@@ -5084,19 +5064,22 @@ bool Resolver::CheckNotTemplated(const char* use, const ast::Identifier* ident) 
 }
 
 void Resolver::ErrorInvalidAttribute(const ast::Attribute* attr, StyledText use) {
-    AddError(attr->source) << style::Attribute("@", attr->Name()) << " is not valid for " << use;
+    AddError(attr) << style::Attribute("@", attr->Name()) << " is not valid for " << use;
 }
 
+diag::Diagnostic& Resolver::AddError(const ast::Node* node) const {
+    return AddError(node->source);
+}
 diag::Diagnostic& Resolver::AddError(const Source& source) const {
     return diagnostics_.AddError(source);
 }
 
-diag::Diagnostic& Resolver::AddWarning(const Source& source) const {
-    return diagnostics_.AddWarning(source);
+diag::Diagnostic& Resolver::AddWarning(const ast::Node* node) const {
+    return diagnostics_.AddWarning(node->source);
 }
 
-diag::Diagnostic& Resolver::AddNote(const Source& source) const {
-    return diagnostics_.AddNote(source);
+diag::Diagnostic& Resolver::AddNote(const ast::Node* node) const {
+    return diagnostics_.AddNote(node->source);
 }
 
 }  // namespace tint::resolver
