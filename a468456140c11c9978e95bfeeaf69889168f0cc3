@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "917504ed_9e0d5a0f",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:29:56Z",
+      "side": 1,
+      "message": "```suggestion\n                        }\n                        TINT_ASSERT(constant_value-\u003eType()-\u003eIs\u003ctype::U32\u003e());\n                        return constant_value-\u003eValueAs\u003cuint32_t\u003e() \u003e u32::kLowestValue;\n```",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "a468456140c11c9978e95bfeeaf69889168f0cc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55885547_10ad6d07",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:29:56Z",
+      "side": 1,
+      "message": "```suggestion\n                        if (constant_value-\u003eType()-\u003eIs\u003ctype::I32\u003e()) {\n                            return constant_value-\u003eValueAs\u003cint32_t\u003e() \u003c i32::kHighestValue;\n                        }\n                        TINT_ASSERT(constant_value-\u003eType()-\u003eIs\u003ctype::U32\u003e());\n                        return constant_value-\u003eValueAs\u003cuint32_t\u003e() \u003c u32::kHighestValue;\n```",
+      "range": {
+        "startLine": 248,
+        "startChar": 1,
+        "endLine": 253,
+        "endChar": 25
+      },
+      "revId": "a468456140c11c9978e95bfeeaf69889168f0cc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b245376_505c6c16",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:29:56Z",
+      "side": 1,
+      "message": "```suggestion\n                            return constant_value-\u003eValueAs\u003cint32_t\u003e() \u003c i32::kHighestValue;\n                        }\n                        TINT_ASSERT(constant_value-\u003eType()-\u003eIs\u003ctype::U32\u003e());\n                        return constant_value-\u003eValueAs\u003cuint32_t\u003e() \u003c u32::kHighestValue;\n```",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 25
+      },
+      "revId": "a468456140c11c9978e95bfeeaf69889168f0cc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2c1d6e_d2268244",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-15T15:29:56Z",
+      "side": 1,
+      "message": "```suggestion\n                        }\n                        TINT_ASSERT(constant_value-\u003eType()-\u003eIs\u003ctype::U32\u003e());\n                        return constant_value-\u003eValueAs\u003cuint32_t\u003e() \u003e u32::kLowestValue;\n```",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 25
+      },
+      "revId": "a468456140c11c9978e95bfeeaf69889168f0cc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
