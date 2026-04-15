@@ -70,7 +70,13 @@ class span : private ::std::span<Value> {
 
     using Base::back;
     using Base::front;
+
+    using Base::subspan;
 };
+
+// Deduction guide for ityp::span{ptr, size}.
+template <typename Index, typename Value>
+span(Value*, Index) -> span<Index, Value>;
 
 // ityp::SpanFromUntyped<Index>(myValues, myValueCount) creates a span<Index, Value> from a C-style
 // span that's without a TypedInteger index. It is useful at the interface between code that doesn't
