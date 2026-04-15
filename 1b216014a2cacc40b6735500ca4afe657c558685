@@ -69,6 +69,75 @@
       "parentUuid": "00c06510_0a2f4371",
       "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5289e2e8_3d34300e",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-15T13:32:20Z",
+      "side": 1,
+      "message": "Almost all the code in BindGroupTrackerD3D11.cpp should be considered hot code? It is executed before every draw call.",
+      "range": {
+        "startLine": 758,
+        "startChar": 4,
+        "endLine": 758,
+        "endChar": 14
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d07991d_244c6fee",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-15T13:32:20Z",
+      "side": 1,
+      "message": "This function is called before every draw call to update the immediate constants. So this should be considered hot code. I guess % by a power of 2 constant should be fast.\n\nHowever, it doesn\u0027t make sense to do runtime check on this. This is intended for catching logic bugs only. If it doesn\u0027t satisfy the D3D requirement (constant buffers\u0027 updates\u0027 alignment), the rendering will just appear incorrectly. It shouldn\u0027t cause any security leaks. I think it feels weird to do runtime check on this.",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddfd6ae4_bc4e4b1a",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-15T13:32:20Z",
+      "side": 1,
+      "message": "This is just a sanity check. I don\u0027t think it\u0027s enough to prevent a real race here. So I don\u0027t think a `DAWN_CHECK` here is meaningful. Furthermore, `GetLastSubmittedCommandSerial` is an atomic load and might not be cheap on ARM.",
+      "range": {
+        "startLine": 441,
+        "startChar": 16,
+        "endLine": 441,
+        "endChar": 26
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
