@@ -10344,6 +10344,43 @@ test:10:17 note: reading from module-scope private variable 'non_uniform' may re
 )");
 }
 
+TEST_F(UniformityAnalysisTest,
+       ArrayElement_AssignUniformToDifferentElement_ViaPartialPointerParameter) {
+    std::string src = R"(
+var<private> non_uniform : i32;
+
+fn bar(p : ptr<function, i32>) {
+  *p = 0;
+}
+
+fn foo() {
+  var arr : array<i32, 4>;
+  arr[0] = non_uniform;
+
+  let p = &(arr[1]);
+  bar(p);
+  if (arr[0] == 0) {
+    workgroupBarrier();
+  }
+}
+)";
+
+    RunTest(src, false);
+    EXPECT_EQ(error_,
+              R"(test:15:5 error: 'workgroupBarrier' must only be called from uniform control flow
+    workgroupBarrier();
+    ^^^^^^^^^^^^^^^^
+
+test:14:3 note: control flow depends on possibly non-uniform value
+  if (arr[0] == 0) {
+  ^^
+
+test:10:12 note: reading from module-scope private variable 'non_uniform' may result in a non-uniform value
+  arr[0] = non_uniform;
+           ^^^^^^^^^^^
+)");
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Miscellaneous statement and expression tests.
 ////////////////////////////////////////////////////////////////////////////////
