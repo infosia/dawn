@@ -1932,6 +1932,14 @@ class UniformityGraph {
                     // Update the current stored value for this pointer argument.
                     auto* root_ident = sem_arg->RootIdentifier();
                     TINT_ASSERT(root_ident);
+
+                    // Check if the argument is a partial pointer. If the previous contents were
+                    // non-uniform, a partial assignment will not make it uniform.
+                    auto* old_value = current_function_->variables.Get(root_ident);
+                    if (IsPartialPointer(call->args[i]) && old_value) {
+                        ptr_result->AddEdge(old_value);
+                    }
+
                     current_function_->variables.Set(root_ident, ptr_result);
                 }
             } else {
