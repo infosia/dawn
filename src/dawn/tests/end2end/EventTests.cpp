@@ -548,6 +548,7 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
     wgpu::Queue queue2 = device2.GetQueue();
 
     for (uint64_t timeout : {uint64_t(0), uint64_t(1)}) {
+        SCOPED_TRACE(absl::StrFormat("Timeout value: %d", timeout));
         std::vector<wgpu::FutureWaitInfo> infos{{
             {queue1.OnSubmittedWorkDone(wgpu::CallbackMode::WaitAnyOnly,
                                         [](wgpu::QueueWorkDoneStatus, wgpu::StringView) {})},
@@ -567,6 +568,12 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
                    HasToggleEnabled("spontaneous_queue_events", device2)) {
             // Mixed sources across different devices are supported if spontaneous queue events is
             // enabled on both devices.
+            ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
+                        status == wgpu::WaitStatus::TimedOut);
+        } else if (HasToggleEnabled("export_queue_events_to_system_events", device1) &&
+                   HasToggleEnabled("export_queue_events_to_system_events", device2)) {
+            // Mixed sources across different devices are supported if they both support exporting
+            // queue events.
             ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
                         status == wgpu::WaitStatus::TimedOut);
         } else {
