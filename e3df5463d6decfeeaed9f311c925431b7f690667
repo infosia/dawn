@@ -33,6 +33,24 @@
       "message": "LGTM\n\nJust FYI we might end up changing the proposal to use array elements instead of match SPIR-V and HLSL. See crbug.com/490062439 for some discussion.",
       "revId": "e3df5463d6decfeeaed9f311c925431b7f690667",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb75dbb0_f1a73460",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-16T00:47:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a63dc20d_a082012e",
+      "revId": "e3df5463d6decfeeaed9f311c925431b7f690667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
