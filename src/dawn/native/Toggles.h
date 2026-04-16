@@ -192,8 +192,9 @@ enum class Toggle {
     // Once all backends have been updated to be thread safe for waiting, we can remove this toggle.
     WaitIsThreadSafe,
 
-    // If/when all backends support spontaneous queue events, we can then remove this toggle.
+    // If/when all backends support spontaneous queue events, we can then remove these toggle.
     SpontaneousQueueEvents,
+    ExportQueueEventsToSystemEvents,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
