@@ -16,6 +16,223 @@
       "message": "Updated some small stuff, and bumping this since I would like to build on top of this to avoid conflict resolution for some other related work if this seems reasonable for people.",
       "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd5c9f0c_0549ae22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "Overall seems like a good direction",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8980fbfd_46c2a823",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "I think anywhere speed isn\u0027t relevant at all, we\u0027re switching to just using DAWN_CHECK all the time even if it probably doesn\u0027t matter",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a729084_e07d73d6",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "nit: something like:\n```suggestion\n        if (auto node \u003d state-\u003ewaiters.extract(event-\u003emFutureID)) {\n            for (Waiter* waiter : node.mapped()) {\n                waiter-\u003eSignal();\n            }\n        }\n```",
+      "range": {
+        "startLine": 157,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 47
+      },
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd6214a7_96a17a90",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "possible to un-duplicate this logic with ProcessEvents?",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 21
+      },
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b56de451_e1138cf6",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "nit: shouldComplete?",
+      "range": {
+        "startLine": 294,
+        "startChar": 30,
+        "endLine": 294,
+        "endChar": 38
+      },
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0e0086_7da0d5a9",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "nit: I think remove these arguments\u0027 default values and just set them explicitly below (or at least this first one)",
+      "range": {
+        "startLine": 294,
+        "startChar": 39,
+        "endLine": 294,
+        "endChar": 45
+      },
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73035cea_d2398183",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "what happens if we find both queue and non-queue events?",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bb22505_c6523771",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "nit: I think you can make this just `class Waiter;` and move the entire definition to the cpp file",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12e56f61_0cd1ee60",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "should be noncopyable/nonmovable?",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22952223_ec0553b4",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "comment that the Waiter always lives on the stack of some thread and explain how this pointer remains valid",
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9d2b40a_efd5727d",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T17:55:00Z",
+      "side": 1,
+      "message": "raw_ptr\u003cWaiter\u003e?",
+      "range": {
+        "startLine": 108,
+        "startChar": 50,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "7a6fcecf6026e566ebb749c9b9e6265546e9b5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
