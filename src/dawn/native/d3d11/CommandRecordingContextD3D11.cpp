@@ -56,7 +56,9 @@ ScopedCommandRecordingContext::ScopedCommandRecordingContext(CommandRecordingCon
 }
 
 ScopedCommandRecordingContext::ScopedCommandRecordingContext(ScopedCommandRecordingContext&& other)
-    : mGuard(std::move(other.mGuard)), mLockD3D11Scope(other.mLockD3D11Scope) {
+    : mGuard(std::move(other.mGuard)),
+      mLockD3D11Scope(other.mLockD3D11Scope),
+      mUniformBufferInUse(std::move(other.mUniformBufferInUse)) {
     other.mLockD3D11Scope = false;
 }
 
@@ -73,6 +75,7 @@ ScopedCommandRecordingContext& ScopedCommandRecordingContext::operator=(
         // Move the guard and lock state
         mGuard = std::move(other.mGuard);
         mLockD3D11Scope = other.mLockD3D11Scope;
+        mUniformBufferInUse = std::move(other.mUniformBufferInUse);
         other.mLockD3D11Scope = false;
     }
     return *this;
@@ -184,7 +187,9 @@ void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
 
 MaybeError ScopedCommandRecordingContext::FlushUniformBuffer() const {
     if (Get()->mUniformBufferDirty) {
-        auto scopedUseUniformBuffer = Get()->mUniformBuffer->UseInternal();
+        if (!mUniformBufferInUse) {
+            mUniformBufferInUse = Get()->mUniformBuffer->UseInternal();
+        }
         DAWN_TRY(Get()->mUniformBuffer->Write(this, 0, Get()->mUniformBufferData.data(),
                                               Get()->mUniformBufferData.size() * sizeof(uint32_t)));
         Get()->mUniformBufferDirty = false;
