@@ -46,6 +46,7 @@ class SystemHandle : public NonCopyable {
     using Handle = uint32_t;
 #elif DAWN_PLATFORM_IS(POSIX)
     using Handle = int;
+    static constexpr int kInvalidHandle = -1;
 #else
 #error "Platform not supported."
 #endif

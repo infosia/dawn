@@ -1214,6 +1214,13 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // insertion of the placeholder fragment shader.
     deviceToggles->Default(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline, true);
 
+    // By default enable exporting fences to FDs.
+    if (!GetDeviceInfo().HasExt(DeviceExt::ExternalFenceFD)) {
+        deviceToggles->ForceSet(Toggle::ExportQueueEventsToSystemEvents, false);
+    } else {
+        deviceToggles->Default(Toggle::ExportQueueEventsToSystemEvents, true);
+    }
+
     // By default try to skip injecting robustness checks on textures using VK_EXT_robustness2. But
     // disable that optimization when the feature is not available.
     if (!GetDeviceInfo().HasExt(DeviceExt::Robustness2) ||
