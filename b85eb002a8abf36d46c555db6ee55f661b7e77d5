@@ -22,6 +22,30 @@
       },
       "revId": "b85eb002a8abf36d46c555db6ee55f661b7e77d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f6506d_3361fafc",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-16T13:59:24Z",
+      "side": 1,
+      "message": "there doesnt appear to be unary ir core",
+      "parentUuid": "6dab61b6_568897a8",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "b85eb002a8abf36d46c555db6ee55f661b7e77d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
