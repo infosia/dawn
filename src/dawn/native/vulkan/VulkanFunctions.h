@@ -376,6 +376,14 @@ struct VulkanFunctions {
 
     // Not promoted to core in any version
 
+    // VK_KHR_external_fence_fd
+    VkFn<PFN_vkGetFenceFdKHR> GetFenceFdKHR = nullptr;
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+    // VK_KHR_external_fence_win32
+    VkFn<PFN_vkGetFenceWin32HandleKHR> GetFenceWin32HandleKHR = nullptr;
+#endif  // DAWN_PLATFORM_IS(WINDOWS)
+
     // VK_KHR_external_memory_fd
     VkFn<PFN_vkGetMemoryFdKHR> GetMemoryFdKHR = nullptr;
     VkFn<PFN_vkGetMemoryFdPropertiesKHR> GetMemoryFdPropertiesKHR = nullptr;

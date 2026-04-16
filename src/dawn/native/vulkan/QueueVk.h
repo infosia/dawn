@@ -55,6 +55,8 @@ class Queue final : public QueueBase {
 
     ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
                                                           Nanoseconds timeout) override;
+    ResultOrError<SystemEventReceiver> GetSystemEventReceiverForSerial(
+        ExecutionSerial serial) override;
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor, uint32_t family);
@@ -81,6 +83,7 @@ class Queue final : public QueueBase {
     // This works only because we have a single queue. Each submit to a queue is associated
     // to a serial and a fence, such that when the fence is "ready" we know the operations
     // have finished.
+    static constexpr size_t kMaxFencesInFlight = 128;
     MutexProtected<std::deque<std::pair<VkFence, ExecutionSerial>>> mFencesInFlight;
     // Fences in the unused list aren't reset yet.
     MutexProtected<std::vector<VkFence>> mUnusedFences;
