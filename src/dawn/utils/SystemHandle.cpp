@@ -46,8 +46,6 @@ namespace {
 
 #if DAWN_PLATFORM_IS(WINDOWS)
 
-constexpr inline HANDLE kInvalidHandle = nullptr;
-
 inline bool IsHandleValid(HANDLE handle) {
     return handle != nullptr;
 }
@@ -68,8 +66,6 @@ inline void CloseHandle(HANDLE handle) {
 
 #elif DAWN_PLATFORM_IS(FUCHSIA)
 
-constexpr inline zx_handle_t kInvalidHandle = 0;
-
 inline bool IsHandleValid(zx_handle_t handle) {
     return handle > 0;
 }
@@ -87,8 +83,6 @@ inline void CloseHandle(zx_handle_t handle) {
 }
 
 #elif DAWN_PLATFORM_IS(POSIX)
-
-constexpr inline int kInvalidHandle = -1;
 
 inline bool IsHandleValid(int handle) {
     return handle >= 0;

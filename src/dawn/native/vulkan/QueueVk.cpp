@@ -49,6 +49,7 @@
 #include "src/dawn/native/vulkan/VulkanError.h"
 #include "src/dawn/platform/metrics/HistogramMacros.h"
 #include "src/dawn/platform/tracing/TraceEvent.h"
+#include "src/dawn/utils/SystemHandle.h"
 #include "src/utils/compiler.h"
 
 namespace dawn::native::vulkan {
@@ -414,6 +415,18 @@ ResultOrError<VkFence> Queue::GetUnusedFence() {
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
 
+    VkExportFenceCreateInfo exportFenceCreateInfo;
+    exportFenceCreateInfo.sType = VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO;
+    exportFenceCreateInfo.pNext = nullptr;
+#if DAWN_PLATFORM_IS(POSIX)
+    exportFenceCreateInfo.handleTypes = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
+#elif DAWN_PLATFORM_IS(WINDOWS)
+    exportFenceCreateInfo.handleTypes = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT;
+#endif
+    if (GetDevice()->IsToggleEnabled(Toggle::ExportQueueEventsToSystemEvents)) {
+        createInfo.pNext = &exportFenceCreateInfo;
+    }
+
     VkFence fence = VK_NULL_HANDLE;
     DAWN_TRY(CheckVkSuccess(device->fn.CreateFence(vkDevice, &createInfo, nullptr, &*fence),
                             "vkCreateFence"));
@@ -518,6 +531,59 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
         DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
         return completedSerial;
     }
+}
+
+ResultOrError<SystemEventReceiver> Queue::GetSystemEventReceiverForSerial(ExecutionSerial serial) {
+    Device* device = ToBackend(GetDevice());
+    DAWN_CHECK(device->IsToggleEnabled(Toggle::ExportQueueEventsToSystemEvents));
+
+    // Find the relevant fence for the serial.
+    VkFence fence = VK_NULL_HANDLE;
+    mFencesInFlight.Use([&](auto fencesInFlight) {
+        // Search from for the first fence >= serial.
+        for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
+            if (it->second >= serial) {
+                fence = it->first;
+                break;
+            }
+        }
+    });
+
+    // If we didn't find a fence, then we can just return an already signaled receiver.
+    if (fence == VK_NULL_HANDLE) {
+        return SystemEventReceiver::CreateAlreadySignaled();
+    }
+
+    utils::SystemHandle::Handle handle = utils::SystemHandle::kInvalidHandle;
+#if DAWN_PLATFORM_IS(POSIX)
+    VkFenceGetFdInfoKHR info;
+    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR;
+    info.pNext = nullptr;
+    info.fence = fence;
+    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT;
+    DAWN_TRY(CheckVkSuccess(device->fn.GetFenceFdKHR(device->GetVkDevice(), &info, &handle),
+                            "vkGetFenceFdKHR"));
+    // If we raced, and by the time that we got the FD, the fence was already complete, it's
+    // possible for |handle| to still be equal to |kInvalidHandle| even if we succeed, so check it
+    // again and handle it with a signaled receiver if necessary.
+    if (handle == utils::SystemHandle::kInvalidHandle) {
+        return SystemEventReceiver::CreateAlreadySignaled();
+    }
+#elif DAWN_PLATFORM_IS(WINDOWS)
+    VkFenceGetWin32HandleInfoKHR info;
+    info.sType = VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR;
+    info.pNext = nullptr;
+    info.fence = fence;
+    info.handleType = VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT;
+    DAWN_TRY(
+        CheckVkSuccess(device->fn.GetFenceWin32HandleKHR(device->GetVkDevice(), &info, &handle),
+                       "vkGetFenceWin32HandleKHR"));
+#else
+    DAWN_UNREACHABLE();
+#endif
+
+    DAWN_CHECK(handle != utils::SystemHandle::kInvalidHandle);
+    return SystemEventReceiver(utils::SystemHandle::Acquire(handle));
 }
 
 }  // namespace dawn::native::vulkan
