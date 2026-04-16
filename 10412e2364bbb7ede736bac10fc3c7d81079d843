@@ -33,6 +33,24 @@
       "message": "This casts a wider net than it probably needs to, since it\u0027s only really necessary for DepthStencil textures based on how EnsureSubresourceContentInitialized works. But I don\u0027t want to make assumptions about EnsureSubresourceContentInitialized here and I believe TransitionUsageNow does some level of de-duping, so I don\u0027t think this will be too problematic?",
       "revId": "10412e2364bbb7ede736bac10fc3c7d81079d843",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30cc22e2_f73df552",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-16T05:57:12Z",
+      "side": 1,
+      "message": "I don\u0027t remember that much about TransitionUsageNow but this seems fine to me.",
+      "parentUuid": "b4e3b06e_5f52b99d",
+      "revId": "10412e2364bbb7ede736bac10fc3c7d81079d843",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
