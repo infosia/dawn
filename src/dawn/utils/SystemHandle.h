@@ -35,6 +35,14 @@
 #include "src/utils/non_copyable.h"
 #include "src/utils/platform.h"
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+#include "src/utils/windows_with_undefs.h"
+#elif DAWN_PLATFORM_IS(FUCHSIA)
+#include <zircon/syscalls.h>
+#elif DAWN_PLATFORM_IS(POSIX)
+#include <unistd.h>
+#endif
+
 namespace dawn::utils {
 
 class SystemHandle : public NonCopyable {
@@ -42,10 +50,13 @@ class SystemHandle : public NonCopyable {
     // Create an alias for the actual primitive handle type on a platform.
 #if DAWN_PLATFORM_IS(WINDOWS)
     using Handle = void*;
+    static constexpr HANDLE kInvalidHandle = nullptr;
 #elif DAWN_PLATFORM_IS(FUCHSIA)
     using Handle = uint32_t;
+    static constexpr zx_handle_t kInvalidHandle = 0;
 #elif DAWN_PLATFORM_IS(POSIX)
     using Handle = int;
+    static constexpr int kInvalidHandle = -1;
 #else
 #error "Platform not supported."
 #endif
