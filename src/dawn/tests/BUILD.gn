@@ -513,6 +513,9 @@ dawn_test("dawn_unittests") {
 source_set("partition_alloc_support") {
   testonly = true
 
+  # PA includes are guarded by #if defined(DAWN_ENABLE_PARTITION_ALLOC).
+  check_includes = dawn_enable_partition_alloc
+
   deps = [ "${dawn_root}/src/dawn/common" ]
   public = [ "PartitionAllocSupport.h" ]
   sources = [ "PartitionAllocSupport.cpp" ]
