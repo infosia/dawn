@@ -33,6 +33,7 @@
 #include <utility>
 #include <vector>
 
+#include "absl/cleanup/cleanup.h"
 #include "absl/strings/str_format.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Atomic.h"
@@ -44,6 +45,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Queue.h"
+#include "dawn/native/WaitAnySystemEvent.h"
 
 namespace dawn::native {
 namespace {
@@ -60,7 +62,12 @@ struct QueueWaitSerialsMaps {
     absl::flat_hash_map<Ref<QueueBase>, ExecutionSerial> minWaitSerials;
 };
 
-void UpdateQueueWaitSerialsMap(QueueWaitSerialsMaps& queueWaitSerialMaps,
+// Helper that updates the serial maps with the new `queueAndSerial`. Returns true if
+// `queueAndSerial` was handled as a queue event, otherwise returns false. Note, queue events may
+// not be handled as queue events if the last reference of the queue has already been dropped, or if
+// the queue supports spontaneous queue events. In those case, we can handle the queue event as if
+// it were just a normal event.
+bool UpdateQueueWaitSerialsMap(QueueWaitSerialsMaps& queueWaitSerialMaps,
                                const QueueAndSerial* queueAndSerial) {
     DAWN_ASSERT(queueAndSerial);
 
@@ -76,13 +83,13 @@ void UpdateQueueWaitSerialsMap(QueueWaitSerialsMaps& queueWaitSerialMaps,
     // If the queue failed promotion, then it means that the work is all already done, so we don't
     // need to do anything here.
     if (queue == nullptr) {
-        return;
+        return false;
     }
 
     // If the device backing the queue supports spontaneous queue events, we don't need to handle
     // them separately from other events.
     if (queue->GetDevice()->IsToggleEnabled(Toggle::SpontaneousQueueEvents)) {
-        return;
+        return false;
     }
 
     // Otherwise, track the queue and the minimum wait serial to satisfy the wait condition.
@@ -92,6 +99,7 @@ void UpdateQueueWaitSerialsMap(QueueWaitSerialsMaps& queueWaitSerialMaps,
     if (!serialInserted) {
         serialIt->second = std::min(serialIt->second, waitSerial);
     }
+    return true;
 }
 
 void WaitQueueSerials(const QueueWaitSerialsMaps& queueWaitSerialMaps, Nanoseconds timeout) {
@@ -115,16 +123,49 @@ struct AlreadyCompletedEvent final : public EventManager::TrackedEvent {
 class EventManager::Waiter : public NonMovable {
   public:
     void Signal() {
-        return mSignaled.Use([](auto signaled) { *signaled = true; });
+        mState.Use([](auto state) {
+            state->signaled = true;
+
+            // If we are backed by a system event, we need to make sure to signal the event as well.
+            if (!state->pipe) {
+                return;
+            }
+            auto sender = std::move(state->pipe->first);
+            if (sender.IsValid()) {
+                std::move(sender).Signal();
+            }
+        });
     }
-    bool Wait(Nanoseconds timeout) {
-        return mSignaled.Use([&](auto signaled) {
-            return signaled.WaitFor(timeout, [](const bool& x) { return x == true; });
+
+    bool Wait(Nanoseconds timeout) const {
+        return mState.Use([&](auto state) {
+            // If we have a pipe, we should not be calling Wait, and should instead be accessing the
+            // receiver and waiting on it.
+            DAWN_CHECK(!state->pipe);
+            return state.WaitFor(timeout, [](const State& s) { return s.signaled; });
+        });
+    }
+
+    const SystemEventReceiver& GetOrCreateSystemEventReceiver() {
+        return mState.Use([](auto state) {
+            if (!state->pipe) {
+                if (state->signaled) {
+                    state->pipe = {SystemEventPipeSender{},
+                                   SystemEventReceiver::CreateAlreadySignaled()};
+                } else {
+                    state->pipe = CreateSystemEventPipe();
+                }
+            }
+            return std::cref(state->pipe->second);
         });
     }
 
   private:
-    MutexCondVarProtected<bool> mSignaled = false;
+    struct State {
+        bool signaled = false;
+        std::optional<std::pair<SystemEventPipeSender, SystemEventReceiver>> pipe;
+    };
+    MutexCondVarProtected<State> mState;
 };
 
 // EventManager
@@ -317,7 +358,8 @@ wgpu::WaitStatus EventManager::WaitAny(std::span<FutureWaitInfo> infos, Nanoseco
                     waiter->Signal();
                 }
                 if (const auto* queueAndSerial = event->GetIfQueueAndSerial()) {
-                    UpdateQueueWaitSerialsMap(queueWaitSerialMaps, queueAndSerial);
+                    foundNonQueueEvent |=
+                        !UpdateQueueWaitSerialsMap(queueWaitSerialMaps, queueAndSerial);
                 } else {
                     foundNonQueueEvent = true;
                 }
@@ -360,34 +402,71 @@ wgpu::WaitStatus EventManager::WaitAny(std::span<FutureWaitInfo> infos, Nanoseco
         WaitQueueSerials(queueWaitSerialMaps, timeout);
         PollInfos(/*shouldComplete=*/true, /*waiter=*/nullptr);
     } else {
+        // Add the waiter to each of the events and initialize a cleanup routine to ensure that we
+        // always remove the waiter at the end of this scope, optionally completing events if
+        // `shouldComplete` is set to true.
         Waiter waiter;
         ProcessInfos(&waiter);
+        bool shouldComplete = false;
+        absl::Cleanup removeWaiter = [&]() { PollInfos(shouldComplete, &waiter); };
 
-        // Currently we can't have a mix of non-queue events and queue events or queue events
-        // from multiple queues with a non-zero timeout.
-        if (queueWaitSerialMaps.minWaitSerials.size() > 1 ||
-            (!queueWaitSerialMaps.minWaitSerials.empty() && foundNonQueueEvent)) {
-            // Multi-source wait is unsupported.
-            // TODO(crbug.com/42241006): Implement support for this when the device supports it.
-            // It should eventually gather the lowest serial from the queue(s), transform them
-            // into completion events, and wait on all of the events. Then for any queues that
-            // saw a completion, poll all futures related to that queue for completion.
-            mInstance->EmitLog(WGPULoggingType_Error,
-                               "Mixed source waits with timeouts are not currently supported.");
-            PollInfos(/*shouldComplete=*/false, &waiter);
-            return wgpu::WaitStatus::Error;
-        }
+        // There's currently a couple of different cases to handle here depending on the
+        // capabilities of the backends. Each case is documented in their respective clause below,
+        // and each case is mutually exclusive so at most one clause should ever run.
 
+        // When `queueWaitSerialMaps` is empty, that means that all events are waitable via the
+        // waiter, either because they are not queue events, or because they are queue events that
+        // are equivalent to normal events.
         if (queueWaitSerialMaps.minWaitSerials.empty()) {
-            // If `queueWaitSerialMaps` is empty, that means that all events are waitable via the
-            // waiter, either because they are not queue events, or because they are queue events on
-            // a device with spontaneous queue events.
             waiter.Wait(timeout);
-        } else {
-            // This is a no-op if `queueWaitSerialMaps` is empty.
-            WaitQueueSerials(queueWaitSerialMaps, timeout);
+            shouldComplete = true;
         }
-        PollInfos(/*shouldComplete=*/true, &waiter);
+
+        // When there is exactly 1 queue in `queueWaitSerialMaps` and there are no other non-queue
+        // events, we can just rely on `WaitQueueSerials` to handle a timed wait on that queue.
+        if (queueWaitSerialMaps.minWaitSerials.size() == 1 && !foundNonQueueEvent) {
+            WaitQueueSerials(queueWaitSerialMaps, timeout);
+            shouldComplete = true;
+        }
+
+        // Otherwise, we either have multiple queues and/or a mix of queue and non-queue events. In
+        // this case, we want to try to promote each queue's lowest serial event and the Waiter to
+        // SystemEvents, and use system primitives to wait for anything. If we are unable to promote
+        // any of the queue events, that means that we cannot successfully handle this multi-source
+        // wait, so log the error and exit.
+        if (!shouldComplete) {
+            bool ready = false;
+            std::vector<SystemEventReceiver> receivers;
+            receivers.resize(queueWaitSerialMaps.minWaitSerials.size());
+            std::vector<std::pair<const SystemEventReceiver&, bool*>> waitables;
+            waitables.reserve(queueWaitSerialMaps.minWaitSerials.size() + 1);
+
+            auto maybeError = [&]() -> MaybeError {
+                size_t index = 0;
+                for (const auto& [queue, waitSerial] : queueWaitSerialMaps.minWaitSerials) {
+                    DAWN_TRY_ASSIGN(*(receivers.begin() + index),
+                                    queue->GetSystemEventReceiverForSerial(waitSerial));
+                    waitables.push_back({*(receivers.begin() + index), &ready});
+                    index++;
+                }
+                return {};
+            }();
+            if (maybeError.IsError()) {
+                // Create a nicely formatted error in this case to notify the user that multi-source
+                // wait is not available in this case.
+                auto error =
+                    DAWN_INTERNAL_ERROR("Mixed source waits with timeouts is not supported.");
+                error->AppendBackendMessage(maybeError.AcquireError()->GetMessage());
+                mInstance->EmitLog(WGPULoggingType_Error, error->GetFormattedMessage());
+                return wgpu::WaitStatus::Error;
+            }
+
+            if (foundNonQueueEvent) {
+                waitables.push_back({waiter.GetOrCreateSystemEventReceiver(), &ready});
+            }
+
+            shouldComplete = WaitAnySystemEvent(waitables.begin(), waitables.end(), timeout);
+        }
     }
 
     // Complete the events that are completable.

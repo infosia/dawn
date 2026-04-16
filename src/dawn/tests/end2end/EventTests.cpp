@@ -571,6 +571,12 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
             // enabled on both devices.
             ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
                         status == wgpu::WaitStatus::TimedOut);
+        } else if (HasToggleEnabled("vulkan_external_fence_fd", device1) &&
+                   HasToggleEnabled("vulkan_external_fence_fd", device2)) {
+            // Mixed sources across different devices are supported if they are both Vulkan and
+            // support exporting fences to FDs.
+            ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
+                        status == wgpu::WaitStatus::TimedOut);
         } else {
             ASSERT_EQ(status, wgpu::WaitStatus::Error);
         }
