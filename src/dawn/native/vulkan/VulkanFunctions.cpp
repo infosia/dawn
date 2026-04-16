@@ -408,6 +408,16 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
     }
 
     // Not promoted to core in any version
+    if (deviceInfo.HasExt(DeviceExt::ExternalFenceFD)) {
+        GET_DEVICE_PROC(GetFenceFdKHR);
+    }
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+    if (deviceInfo.HasExt(DeviceExt::ExternalFenceWin32)) {
+        GET_DEVICE_PROC(GetFenceWin32HandleKHR);
+    }
+#endif  // DAWN_PLATFORM_IS(WINDOWS)
+
     if (deviceInfo.HasExt(DeviceExt::ExternalMemoryFD)) {
         GET_DEVICE_PROC(GetMemoryFdKHR);
         GET_DEVICE_PROC(GetMemoryFdPropertiesKHR);

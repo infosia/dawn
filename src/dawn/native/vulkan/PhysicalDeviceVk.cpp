@@ -1220,6 +1220,24 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // insertion of the placeholder fragment shader.
     deviceToggles->Default(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline, true);
 
+    // By default enable exporting fences to system events.
+    bool supportsExportingQueueEventsToSystemEvents = false;
+#if DAWN_PLATFORM_IS(POSIX)
+    if (CheckFenceSupport(DeviceExt::ExternalFenceFD, VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT)) {
+        supportsExportingQueueEventsToSystemEvents = true;
+    }
+#elif DAWN_PLATFORM_IS(WINDOWS)
+    if (CheckFenceSupport(DeviceExt::ExternalFenceWin32,
+                          VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT)) {
+        supportsExportingQueueEventsToSystemEvents = true;
+    }
+#endif
+    if (supportsExportingQueueEventsToSystemEvents) {
+        deviceToggles->Default(Toggle::ExportQueueEventsToSystemEvents, true);
+    } else {
+        deviceToggles->ForceSet(Toggle::ExportQueueEventsToSystemEvents, false);
+    }
+
     // By default try to skip injecting robustness checks on textures using VK_EXT_robustness2. But
     // disable that optimization when the feature is not available.
     if (!GetDeviceInfo().HasExt(DeviceExt::Robustness2) ||
@@ -1499,6 +1517,41 @@ bool PhysicalDevice::CheckSemaphoreSupport(DeviceExt deviceExt,
         mVkPhysicalDevice, &semaphoreInfo, &semaphoreProperties);
 
     return IsSubset(kRequiredSemaphoreFlags, semaphoreProperties.externalSemaphoreFeatures);
+}
+
+bool PhysicalDevice::CheckFenceSupport(DeviceExt deviceExt,
+                                       VkExternalFenceHandleTypeFlagBits handleType) const {
+    // TODO(496272707): Currently Android is disabled because in larger tests, we see timeouts or
+    // hangs. One possible cause is that by passing VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT when
+    // calling vkCreateFence, the driver is is eagerly allocating an FD per fence. In long running
+    // tasks or jobs that do many submissions, it's possible that we are running out of FDs since
+    // the default limit on Android is 1024 per process. We may be able to workaround this by
+    // capping the maximum number of fences we create and blocking to wait for the oldest fence when
+    // we hit the cap.
+    if (IsAndroid()) {
+        return false;
+    }
+
+    if (!mDeviceInfo.HasExt(deviceExt)) {
+        return false;
+    }
+
+    constexpr VkFlags kRequiredFenceFlags =
+        VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR | VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR;
+
+    VkExternalFenceProperties externalFenceProperties = {};
+    externalFenceProperties.sType = VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES;
+    externalFenceProperties.pNext = nullptr;
+
+    VkPhysicalDeviceExternalFenceInfo externalFenceInfo = {};
+    externalFenceInfo.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
+    externalFenceInfo.pNext = nullptr;
+    externalFenceInfo.handleType = handleType;
+
+    mVulkanInstance->GetFunctions().GetPhysicalDeviceExternalFenceProperties(
+        mVkPhysicalDevice, &externalFenceInfo, &externalFenceProperties);
+    return IsSubset(handleType, externalFenceProperties.compatibleHandleTypes) &&
+           IsSubset(kRequiredFenceFlags, externalFenceProperties.externalFenceFeatures);
 }
 
 std::optional<uint32_t> PhysicalDevice::GetDefaultComputeSubgroupSize() const {
