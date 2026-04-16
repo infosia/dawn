@@ -230,7 +230,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
-    Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+    Result<Vector<core::ir::FunctionParam*, 4>> FinalizeInputs() override {
         if (config.add_input_position_member) {
             RequireBuiltinInput(core::BuiltinValue::kPosition, ty.vec4f(), "pos");
         }
@@ -359,14 +359,14 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                     TINT_IR_UNREACHABLE(ir);
             }
             input_param = b.FunctionParam("inputs", input_struct);
-            return {input_param};
+            return Vector<core::ir::FunctionParam*, 4>{input_param};
         }
 
-        return tint::Empty;
+        return Vector<core::ir::FunctionParam*, 4>{};
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
-    const core::type::Type* FinalizeOutputs() override {
+    Result<const core::type::Type*> FinalizeOutputs() override {
         if (outputs.IsEmpty()) {
             return ty.void_();
         }
@@ -739,9 +739,10 @@ Result<SuccessType> ShaderIO(core::ir::Module& ir, const ShaderIOConfig& config)
                                                  core::ir::Capability::kAllow16BitIntegers},
                           "before hlsl.ShaderIO");
 
-    core::ir::transform::RunShaderIOBase(ir, [&](core::ir::Module& mod, core::ir::Function* func) {
-        return std::make_unique<StateImpl>(mod, func, config);
-    });
+    TINT_CHECK_RESULT(core::ir::transform::RunShaderIOBase(
+        ir, [&](core::ir::Module& mod, core::ir::Function* func) {
+            return std::make_unique<StateImpl>(mod, func, config);
+        }));
 
     return Success;
 }
