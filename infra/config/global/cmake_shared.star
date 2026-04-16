@@ -31,12 +31,14 @@ load("@chromium-luci//builders.star", "cpu", "os")
 
 def _apply_linux_cmake_builder_defaults(kwargs):
     kwargs.setdefault("cpu", cpu.X86_64)
+
+    # n2-standard-8 is specifically targeted for Linux/CMake instead of the more
+    # common e2-standard-8 because RBE is not currently supported for CMake
+    # builds. The newer CPUs used by n2-standard-8 GCE instances result in
+    # significantly faster local compile times.
+    kwargs.setdefault("machine_type", "n2-standard-8")
     kwargs.setdefault("os", os.LINUX_NOBLE)
     kwargs.setdefault("ssd", None)
-
-    # TODO(crbug.com/459517292): Remove this and rely on file-wide defaults
-    # once we move Linux CMake builders into the luci.chromium.gpu.* pools.
-    kwargs.setdefault("builderless", None)
     return kwargs
 
 def _apply_mac_cmake_builder_defaults(kwargs):
@@ -49,7 +51,7 @@ def _apply_mac_cmake_builder_defaults(kwargs):
     return kwargs
 
 def _apply_win_cmake_builder_defaults(kwargs):
-    kwargs.setdefault("cpu", "x86-64")
+    kwargs.setdefault("cpu", cpu.X86_64)
 
     # n2-standard-8 is specifically targeted for Win/CMake instead of the more
     # common e2-standard-8 because Windows compilation takes the most time and

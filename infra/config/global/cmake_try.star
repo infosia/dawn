@@ -70,10 +70,6 @@ def apply_linux_cq_builder_defaults(kwargs):
     """
     kwargs = cmake_builder_defaults.apply_linux_cmake_builder_defaults(kwargs)
     kwargs = apply_cq_builder_defaults(kwargs)
-
-    # TODO(crbug.com/459517292): Remove this and rely on file-wide defaults
-    # once we move Linux CMake builders into the luci.chromium.gpu.* pools.
-    kwargs.setdefault("pool", "luci.flex.try")
     return kwargs
 
 def apply_mac_cq_builder_defaults(kwargs):
