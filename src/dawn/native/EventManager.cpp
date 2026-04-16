@@ -42,6 +42,7 @@
 #include "src/dawn/native/Instance.h"
 #include "src/dawn/native/IntegerTypes.h"
 #include "src/dawn/native/Queue.h"
+#include "src/dawn/native/WaitAnySystemEvent.h"
 #include "src/utils/assert.h"
 #include "src/utils/compiler.h"
 #include "src/utils/log.h"
@@ -113,16 +114,49 @@ struct AlreadyCompletedEvent final : public EventManager::TrackedEvent {
 class EventManager::Waiter : public NonMovable {
   public:
     void Signal() {
-        return mSignaled.Use([](auto signaled) { *signaled = true; });
+        mState.Use([](auto state) {
+            state->signaled = true;
+
+            // If we are backed by a system event, we need to make sure to signal the event as well.
+            if (!state->pipe) {
+                return;
+            }
+            auto sender = std::move(state->pipe->first);
+            if (sender.IsValid()) {
+                std::move(sender).Signal();
+            }
+        });
     }
-    bool Wait(Nanoseconds timeout) {
-        return mSignaled.Use([&](auto signaled) {
-            return signaled.WaitFor(timeout, [](const bool& isSignaled) { return isSignaled; });
+
+    bool Wait(Nanoseconds timeout) const {
+        return mState.Use([&](auto state) {
+            // If we have a pipe, we should not be calling Wait, and should instead be accessing the
+            // receiver and waiting on it.
+            DAWN_CHECK(!state->pipe);
+            return state.WaitFor(timeout, [](const State& s) { return s.signaled; });
+        });
+    }
+
+    const SystemEventReceiver& GetOrCreateSystemEventReceiver() {
+        return mState.Use([](auto state) {
+            if (!state->pipe) {
+                if (state->signaled) {
+                    state->pipe = {SystemEventPipeSender{},
+                                   SystemEventReceiver::CreateAlreadySignaled()};
+                } else {
+                    state->pipe = CreateSystemEventPipe();
+                }
+            }
+            return std::cref(state->pipe->second);
         });
     }
 
   private:
-    MutexCondVarProtected<bool> mSignaled = false;
+    struct State {
+        bool signaled = false;
+        std::optional<std::pair<SystemEventPipeSender, SystemEventReceiver>> pipe;
+    };
+    MutexCondVarProtected<State> mState;
 };
 
 // EventManager
@@ -378,7 +412,8 @@ wgpu::WaitStatus EventManager::WaitAny(std::span<FutureWaitInfo> infos, Nanoseco
             // We first verify the device capabilities across all the events before trying to
             // process them.
             for (const auto& [queue, waitSerial] : queueWaitSerialMaps.minWaitSerials) {
-                if (!queue->GetDevice()->IsToggleEnabled(Toggle::SpontaneousQueueEvents)) {
+                if (!queue->GetDevice()->IsToggleEnabled(Toggle::SpontaneousQueueEvents) &&
+                    !queue->GetDevice()->IsToggleEnabled(Toggle::ExportQueueEventsToSystemEvents)) {
                     mInstance->EmitLog(
                         WGPULoggingType_Error,
                         "Mixed source waits with timeouts is not supported for the set of events.");
@@ -387,12 +422,44 @@ wgpu::WaitStatus EventManager::WaitAny(std::span<FutureWaitInfo> infos, Nanoseco
                 }
             }
 
-            // For queue events, we still need to ensure that the `waitSerial` has been
-            // submitted via a call to `WaitForQueueSerial` with a timeout=0.
-            WaitQueueSerials(queueWaitSerialMaps, Nanoseconds(0u));
+            // Initialize state for system event promotion if necessary. We reserve space for the
+            // receivers so that we can refer to them via references without needing to worry about
+            // potential reallocations.
+            bool unusedReady = false;
+            std::vector<SystemEventReceiver> receivers;
+            receivers.reserve(queueWaitSerialMaps.minWaitSerials.size());
+            std::vector<std::pair<const SystemEventReceiver&, bool*>> waitables;
 
-            // Now that we've handled the queue events, we can wait on the events via the waiter.
-            shouldComplete = waiter.Wait(timeout);
+            // Loop through the queue events again to determine whether we can rely on the waiter or
+            // if we need to promote to system events.
+            for (const auto& [queue, waitSerial] : queueWaitSerialMaps.minWaitSerials) {
+                // For queue events, we still need to ensure that the `waitSerial` has been
+                // submitted via a call to `WaitForQueueSerial` with a timeout=0.
+                [[maybe_unused]] bool waitForQueueSerialError = queue->GetDevice()->ConsumedError(
+                    queue->WaitForQueueSerial(waitSerial, Nanoseconds(0u)),
+                    "ensuring work submitted in %s.", queue.Get());
+
+                if (!queue->GetDevice()->IsToggleEnabled(Toggle::SpontaneousQueueEvents)) {
+                    // If the queue does not support spontaneous events, we need to rely on
+                    // exporting the event to a system event.
+                    [[maybe_unused]] bool convertSerialToSystemEventError =
+                        queue->GetDevice()->ConsumedError(
+                            queue->GetSystemEventReceiverForSerial(waitSerial),
+                            &receivers.emplace_back(), "getting system event for queue %s.",
+                            queue.Get());
+                    waitables.push_back({receivers.back(), &unusedReady});
+                }
+            }
+
+            if (!waitables.empty()) {
+                // If we promoted any queue events to system events, we must use the system
+                // primitives to wait. We also need to convert the waiter to a system event as well.
+                waitables.push_back({waiter.GetOrCreateSystemEventReceiver(), &unusedReady});
+                shouldComplete = WaitAnySystemEvent(waitables.begin(), waitables.end(), timeout);
+            } else {
+                // Otherwise, all events can be handled by the waiter.
+                shouldComplete = waiter.Wait(timeout);
+            }
         }
     }
 
