@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b90ec06_c3cc7258",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-16T20:48:59Z",
+      "side": 1,
+      "message": "Working with gemini-cli to test this with nanobench\n  \n  Conclusion\n  The promotion of certain DAWN_ASSERT calls to DAWN_CHECK in the local checkout does not have a measurable impact on the performance of the Graphite Dawn Vulkan backend in Skia\u0027s nanobench. The overhead is negligible\n  compared to the natural variance of the benchmarks on this system.",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
