@@ -115,16 +115,49 @@ struct AlreadyCompletedEvent final : public EventManager::TrackedEvent {
 class EventManager::Waiter : public NonMovable {
   public:
     void Signal() {
-        return mSignaled.Use([](auto signaled) { *signaled = true; });
+        mState.Use([](auto state) {
+            state->signaled = true;
+
+            // If we are backed by a system event, we need to make sure to signal the event as well.
+            if (!state->pipe) {
+                return;
+            }
+            auto sender = std::move(state->pipe->first);
+            if (sender.IsValid()) {
+                std::move(sender).Signal();
+            }
+        });
     }
-    bool Wait(Nanoseconds timeout) {
-        return mSignaled.Use([&](auto signaled) {
-            return signaled.WaitFor(timeout, [](const bool& x) { return x == true; });
+
+    bool Wait(Nanoseconds timeout) const {
+        return mState.Use([&](auto state) {
+            // If we have a pipe, we should not be calling Wait, and should instead be accessing the
+            // receiver and waiting on it.
+            DAWN_CHECK(!state->pipe);
+            return state.WaitFor(timeout, [](const State& s) { return s.signaled; });
+        });
+    }
+
+    const SystemEventReceiver& GetOrCreateSystemEventReceiver() {
+        return mState.Use([](auto state) {
+            if (!state->pipe) {
+                if (state->signaled) {
+                    state->pipe = {SystemEventPipeSender{},
+                                   SystemEventReceiver::CreateAlreadySignaled()};
+                } else {
+                    state->pipe = CreateSystemEventPipe();
+                }
+            }
+            return std::cref(state->pipe->second);
         });
     }
 
   private:
-    MutexCondVarProtected<bool> mSignaled = false;
+    struct State {
+        bool signaled = false;
+        std::optional<std::pair<SystemEventPipeSender, SystemEventReceiver>> pipe;
+    };
+    MutexCondVarProtected<State> mState;
 };
 
 // EventManager
