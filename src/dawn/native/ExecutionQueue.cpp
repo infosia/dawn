@@ -203,6 +203,12 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     return {};
 }
 
+ResultOrError<SystemEventReceiver> ExecutionQueueBase::GetSystemEventReceiverForSerial(
+    ExecutionSerial serial) {
+    return DAWN_FORMAT_INTERNAL_ERROR("Unable to convert serial to a system event on %s",
+                                      GetDevice());
+}
+
 MaybeError ExecutionQueueBase::CheckPassedSerials() {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());

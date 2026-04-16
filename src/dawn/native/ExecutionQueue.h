@@ -42,6 +42,7 @@
 #include "dawn/native/Error.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/SystemEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -135,6 +136,10 @@ class ExecutionQueueBase : public ApiObjectBase {
 
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass.
     MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
+
+    // Returns a SystemReceiver that can be waited on for a given serial.
+    virtual ResultOrError<SystemEventReceiver> GetSystemEventReceiverForSerial(
+        ExecutionSerial serial);
 
     // Registers a SerialProcessor that will be notified of serial updates. Note that serial
     // processors are always notified before handling serial tasks.
