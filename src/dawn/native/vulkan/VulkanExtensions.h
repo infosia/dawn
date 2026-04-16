@@ -117,6 +117,7 @@ enum class DeviceExt : uint32_t {
     RasterizationOrderAttachmentAccess,
 
     // External* extensions
+    ExternalFenceFD,
     ExternalMemoryAndroidHardwareBuffer,
     ExternalMemoryFD,
     ExternalMemoryDmaBuf,
