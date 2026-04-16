@@ -565,6 +565,15 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
             // Wire supports mixed source waiting.
             ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
                         status == wgpu::WaitStatus::TimedOut);
+        } else if (HasToggleEnabled("spontaneous_queue_events")) {
+            // Mixed sources across different devices are supported if spontaneous queue events is
+            // enabled. Note that this check technically should check for the toggle on both
+            // devices, however, this isn't practical given the testing infrastructure which does
+            // not really provide a good way to check toggles per device. As such, since we know
+            // that the two devices will be on the same backend, the two devices should end up with
+            // the same toggles, hence the simplification.
+            ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
+                        status == wgpu::WaitStatus::TimedOut);
         } else {
             ASSERT_EQ(status, wgpu::WaitStatus::Error);
         }
