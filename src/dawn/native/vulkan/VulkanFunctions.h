@@ -376,6 +376,9 @@ struct VulkanFunctions {
 
     // Not promoted to core in any version
 
+    // VK_KHR_external_fence_fd
+    VkFn<PFN_vkGetFenceFdKHR> GetFenceFdKHR = nullptr;
+
     // VK_KHR_external_memory_fd
     VkFn<PFN_vkGetMemoryFdKHR> GetMemoryFdKHR = nullptr;
     VkFn<PFN_vkGetMemoryFdPropertiesKHR> GetMemoryFdPropertiesKHR = nullptr;
