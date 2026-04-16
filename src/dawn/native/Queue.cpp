@@ -143,7 +143,7 @@ QueueBase::QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView la
     : ExecutionQueueBase(device, tag, label) {}
 
 QueueBase::~QueueBase() {
-    DAWN_ASSERT(mTasksInFlight->Empty());
+    DAWN_CHECK(mTasksInFlight->Empty());
 }
 
 void QueueBase::DestroyImpl(DestroyReason reason) {}
@@ -227,7 +227,7 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
 
     // TODO(crbug.com/dawn/2052): Once we always return a future, change this to log to the instance
     // (note, not raise a validation error to the device) and return the null future.
-    DAWN_ASSERT(callbackInfo.nextInChain == nullptr);
+    DAWN_CHECK(callbackInfo.nextInChain == nullptr);
 
     Ref<EventManager::TrackedEvent> event;
     {
@@ -257,7 +257,7 @@ void QueueBase::TrackTask(std::unique_ptr<TrackTaskCallback> task, ExecutionSeri
         ForceEventualFlushOfCommands();
     }
 
-    DAWN_ASSERT(serial <= GetScheduledWorkDoneSerial());
+    DAWN_CHECK(serial <= GetScheduledWorkDoneSerial());
 
     // If the serial indicated command has been completed, the task will be moved to callback task
     // manager.
@@ -398,8 +398,8 @@ MaybeError QueueBase::WriteTextureImpl(const TexelCopyTextureInfo& destination,
 
     // We need the offset to be aligned to both the optimal offset for that device and
     // blockByteSize, since both of them are powers of two, we only need to align to the max value.
-    DAWN_ASSERT(IsPowerOfTwo(GetDevice()->GetOptimalBufferToTextureCopyOffsetAlignment()));
-    DAWN_ASSERT(IsPowerOfTwo(blockInfo.byteSize));
+    DAWN_CHECK(IsPowerOfTwo(GetDevice()->GetOptimalBufferToTextureCopyOffsetAlignment()));
+    DAWN_CHECK(IsPowerOfTwo(blockInfo.byteSize));
     uint64_t offsetAlignment = std::max(
         uint64_t(blockInfo.byteSize), GetDevice()->GetOptimalBufferToTextureCopyOffsetAlignment());
 
@@ -667,7 +667,7 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
         // sufficiently large set for max of last N submits.
         DAWN_TRY(ValidateSubmit(commandCount, commands, buffersUsedInSubmit));
     }
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
 

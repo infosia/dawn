@@ -35,7 +35,7 @@ ityp::bitset<SingleShaderStage, kNumStages> IterateStages(wgpu::ShaderStage stag
 }
 
 wgpu::ShaderStage StageBit(SingleShaderStage stage) {
-    DAWN_ASSERT(static_cast<uint32_t>(stage) < kNumStages);
+    DAWN_CHECK(static_cast<uint32_t>(stage) < kNumStages);
     return static_cast<wgpu::ShaderStage>(1 << static_cast<uint32_t>(stage));
 }
 
