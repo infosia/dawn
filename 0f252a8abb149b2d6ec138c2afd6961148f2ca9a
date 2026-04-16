@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0f13bda_a1919655",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-16T19:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "664f7120_0a59aaa1",
+      "revId": "0f252a8abb149b2d6ec138c2afd6961148f2ca9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb0cb79d_47fa8602",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I saw this one was concerned about what the usage was. But i can remove a few.",
       "parentUuid": "fb0cb79d_47fa8602",
+      "revId": "0f252a8abb149b2d6ec138c2afd6961148f2ca9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9798735e_70f349a1",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-16T19:37:30Z",
+      "side": 1,
+      "message": "I didnt remove this one but i removed some others. I think i just was a bit concerned about GetInnerHandle() impl",
+      "parentUuid": "86b2d9af_4c60e695",
       "revId": "0f252a8abb149b2d6ec138c2afd6961148f2ca9a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
