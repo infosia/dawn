@@ -69,7 +69,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Negation_Scalar) {
 )";
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_negation = true;
+    config.polyfill_float_negation = true;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(expect, str());
@@ -107,7 +107,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Negation_Vector) {
 )";
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_negation = true;
+    config.polyfill_float_negation = true;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(expect, str());
@@ -145,7 +145,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Abs_Scalar) {
 )";
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_abs = true;
+    config.polyfill_float_abs = true;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(expect, str());
@@ -183,7 +183,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Abs_Vector) {
 )";
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_abs = true;
+    config.polyfill_float_abs = true;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(expect, str());
@@ -210,7 +210,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Negation_NoPolyfill) {
     EXPECT_EQ(src, str());
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_negation = false;
+    config.polyfill_float_negation = false;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(src, str());
@@ -237,7 +237,7 @@ TEST_F(SpirvWriter_UnaryPolyfillTest, Abs_NoPolyfill) {
     EXPECT_EQ(src, str());
 
     UnaryPolyfillConfig config;
-    config.polyfill_f32_abs = false;
+    config.polyfill_float_abs = false;
     Run(UnaryPolyfill, config);
 
     EXPECT_EQ(src, str());
