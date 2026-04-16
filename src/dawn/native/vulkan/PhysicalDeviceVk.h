@@ -115,6 +115,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
     std::optional<uint32_t> FindDefaultComputeSubgroupSize() const;
     bool CheckSemaphoreSupport(DeviceExt deviceExt,
                                VkExternalSemaphoreHandleTypeFlagBits handleType) const;
+    bool CheckFenceSupport(DeviceExt deviceExt, VkExternalFenceHandleTypeFlagBits handleType) const;
 
     void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
                                    const TogglesState& adapterToggles) const override;
