@@ -185,7 +185,8 @@ void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
 
             writeImageInfo[writeIndex].imageView = handle;
             writeImageInfo[writeIndex].imageLayout =
-                VulkanImageLayout(view->GetFormat(), wgpu::TextureUsage::TextureBinding);
+                VulkanImageLayout(view->GetFormat(), wgpu::TextureUsage::TextureBinding,
+                                  GetDevice()->HasFeature(Feature::FramebufferFetch));
             write->pImageInfo = &writeImageInfo[writeIndex];
         });
     }

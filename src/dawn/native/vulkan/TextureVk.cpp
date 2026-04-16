@@ -678,8 +678,9 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
             flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
         } else {
             flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
+            if ((!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
+                 device->HasFeature(Feature::DawnLoadResolveTexture)) ||
+                device->HasFeature(Feature::FramebufferFetch)) {
                 // Automatically set "input attachment" usage so that the texture would be
                 // used in ExpandResolveTexture subpass.
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
@@ -700,7 +701,9 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
 // Chooses which Vulkan image layout should be used for the given Dawn usage. Note that this
 // layout must match the layout given to various Vulkan operations as well as the layout given
 // to descriptor set writes.
-VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) {
+VkImageLayout VulkanImageLayout(const Format& format,
+                                wgpu::TextureUsage usage,
+                                bool useFramebufferFetch) {
     if (usage == wgpu::TextureUsage::None) {
         return VK_IMAGE_LAYOUT_UNDEFINED;
     }
@@ -759,7 +762,8 @@ VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) 
             if (format.HasDepthOrStencil()) {
                 return VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
             } else {
-                return VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+                return useFramebufferFetch ? VK_IMAGE_LAYOUT_GENERAL
+                                           : VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
             }
 
         case kReadOnlyRenderAttachment:
