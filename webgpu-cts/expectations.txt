@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-03-31 06:59:47AM
+# Last rolled: 2026-04-16 07:19:34AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1893,10 +1893,12 @@ crbug.com/0000 [ nvidia win ] webgpu:api,operation,texture_view,texture_componen
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:createRenderPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:createRenderPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:createRenderPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:createRenderPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="atLimit";encoderType="render" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="atLimit";encoderType="render" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="overLimit";encoderType="render" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="overLimit";encoderType="render" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="overLimit";encoderType="renderBundle" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="atDefault";testValueName="overLimit";encoderType="renderBundle" [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="underDefault";testValueName="atLimit";encoderType="render" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxBindGroupsPlusVertexBuffers:draw,at_over:limitTest="underDefault";testValueName="atLimit";encoderType="renderBundle" [ Failure ]
@@ -1982,9 +1984,13 @@ crbug.com/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxS
 crbug.com/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage:createPipeline,at_over:limitTest="atDefault";testValueName="overLimit";async=true [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersInVertexStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false [ Failure ]
+crbug.com/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="atDefault";testValueName="overLimit";async=true;bindingCombination="vertex" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="compute" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesInFragmentStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=false [ Failure ]
 crbug.com/0000 [ dawn-backend-validation intel-0x9bc5 linux ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesInFragmentStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesInFragmentStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true [ Failure ]
 crbug.com/0000 [ dawn-no-backend-validation intel-0x4680 no-asan release-x64 target-cpu-64 webgpu-dxc-enabled win ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesInVertexStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=false [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=false;bindingCombination="vertex";access="read-only" [ Failure ]
 crbug.com/0000 [ linux no-clang-coverage nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=true;bindingCombination="compute";access="read-only" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=false;bindingCombination="vertex";access="read-only" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;bindingCombination="compute";access="read-write" [ Failure ]
@@ -2000,6 +2006,7 @@ crbug.com/0000 [ linux no-clang-coverage nvidia ] webgpu:api,validation,capabili
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="betweenDefaultAndMaximum";testValueName="overLimit";async=true;bindingCombination="vertexAndFragmentWithPossibleFragmentStageOverflow";access="read-only" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=false;bindingCombination="fragment";access="read-only" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=true;bindingCombination="fragment";access="read-write" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="atLimit";async=true;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow";access="read-only" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=false;bindingCombination="vertexAndFragmentWithPossibleVertexStageOverflow";access="read-only" [ Failure ]
 crbug.com/0000 [ dawn-backend-validation intel-0x4680 linux ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="compute";access="read-write" [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t dawn-backend-validation ] webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:createPipeline,at_over:limitTest="underDefault";testValueName="overLimit";async=true;bindingCombination="compute";access="write-only" [ Failure ]

@@ -223449,6 +223449,14 @@ webgpu:shader,execution,expression,call,builtin,trunc:f16:inputSource="storage_r
 webgpu:shader,execution,expression,call,builtin,trunc:f16:inputSource="storage_rw";vectorize=2
 webgpu:shader,execution,expression,call,builtin,trunc:f16:inputSource="storage_rw";vectorize=3
 webgpu:shader,execution,expression,call,builtin,trunc:f16:inputSource="storage_rw";vectorize=4
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="const";type="f32"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="const";type="f16"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="uniform";type="f32"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="uniform";type="f16"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="storage_r";type="f32"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="storage_r";type="f16"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="storage_rw";type="f32"
+webgpu:shader,execution,expression,call,builtin,trunc:subnormal_division:inputSource="storage_rw";type="f16"
 webgpu:shader,execution,expression,call,builtin,unpack2x16float:unpack:inputSource="const"
 webgpu:shader,execution,expression,call,builtin,unpack2x16float:unpack:inputSource="uniform"
 webgpu:shader,execution,expression,call,builtin,unpack2x16float:unpack:inputSource="storage_r"
