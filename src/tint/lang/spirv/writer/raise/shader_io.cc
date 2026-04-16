@@ -248,7 +248,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeInputs
-    Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
+    Result<Vector<core::ir::FunctionParam*, 4>> FinalizeInputs() override {
         if (config.multisampled_framebuffer_fetch) {
             sample_index_idx =
                 RequireBuiltinInput(core::BuiltinValue::kSampleIndex, ty.u32(), "sample_idx");
@@ -275,11 +275,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         MakeVars(input_vars, inputs, core::AddressSpace::kIn, core::Access::kRead, "_Input");
-        return tint::Empty;
+        return Vector<core::ir::FunctionParam*, 4>{};
     }
 
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
-    const core::type::Type* FinalizeOutputs() override {
+    Result<const core::type::Type*> FinalizeOutputs() override {
         MakeVars(output_vars, outputs, core::AddressSpace::kOut, core::Access::kWrite, "_Output");
         return ty.void_();
     }
@@ -474,9 +474,10 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 Result<SuccessType> ShaderIO(core::ir::Module& ir, const ShaderIOConfig& config) {
     AssertValid(ir, kShaderIOCapabilities, "before spirv.ShaderIO");
 
-    core::ir::transform::RunShaderIOBase(ir, [&](core::ir::Module& mod, core::ir::Function* func) {
-        return std::make_unique<StateImpl>(mod, func, config);
-    });
+    TINT_CHECK_RESULT(core::ir::transform::RunShaderIOBase(
+        ir, [&](core::ir::Module& mod, core::ir::Function* func) {
+            return std::make_unique<StateImpl>(mod, func, config);
+        }));
 
     return Success;
 }
