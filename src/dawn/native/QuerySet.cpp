@@ -94,7 +94,7 @@ QuerySetBase::QuerySetBase(DeviceBase* device,
 
 QuerySetBase::~QuerySetBase() {
     // Uninitialized or already destroyed
-    DAWN_ASSERT(mState == QuerySetState::Unavailable || mState == QuerySetState::Destroyed);
+    DAWN_CHECK(mState == QuerySetState::Unavailable || mState == QuerySetState::Destroyed);
 }
 
 void QuerySetBase::DestroyImpl(DestroyReason reason) {
@@ -135,7 +135,7 @@ void QuerySetBase::SetQueryAvailability(uint32_t index, bool available) {
 }
 
 MaybeError QuerySetBase::ValidateCanUseInSubmitNow() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     DAWN_INVALID_IF(mState == QuerySetState::Destroyed, "%s used while destroyed.", this);
     return {};
 }
