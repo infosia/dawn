@@ -186,6 +186,13 @@ void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
             writeImageInfo[writeIndex].imageView = handle;
             writeImageInfo[writeIndex].imageLayout =
                 VulkanImageLayout(view->GetFormat(), wgpu::TextureUsage::TextureBinding);
+
+            if (writeImageInfo[writeIndex].imageLayout ==
+                    VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL &&
+                GetDevice()->HasFeature(Feature::FramebufferFetch)) {
+                writeImageInfo[writeIndex].imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+            }
+
             write->pImageInfo = &writeImageInfo[writeIndex];
         });
     }
