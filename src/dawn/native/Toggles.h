@@ -188,6 +188,7 @@ enum class Toggle {
     VulkanCooperativeMatrixStrideIsMatrixElements,
     VulkanUseExtendedDynamicState,
     VulkanForceStaticSamplersForExternalTextures,
+    VulkanExternalFenceFD,
 
     // Once all backends have been updated to be thread safe for waiting, we can remove this toggle.
     WaitIsThreadSafe,
