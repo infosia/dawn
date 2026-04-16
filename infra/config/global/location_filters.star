@@ -76,7 +76,7 @@ _NON_CMAKE_NON_FUZZ_LOCATIONS_EXCLUDED_FROM_CQ = [
 # this is used to avoid triggering Chromium trybots on Starlark changes since
 # doing so just wastes capacity and delays the CQ.
 _EXCLUDE_STARLARK_CHANGES = [
-    cq.location_filter(path_regexp = r"infra/config/global", exclude = True),
+    cq.location_filter(path_regexp = r"infra/config/global/.+", exclude = True),
 ]
 
 _CPP_FILE_INCLUSIONS = [
