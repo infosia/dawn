@@ -42,10 +42,13 @@ class SystemHandle : public NonCopyable {
     // Create an alias for the actual primitive handle type on a platform.
 #if DAWN_PLATFORM_IS(WINDOWS)
     using Handle = void*;
+    static constexpr Handle kInvalidHandle = nullptr;
 #elif DAWN_PLATFORM_IS(FUCHSIA)
     using Handle = uint32_t;
+    static constexpr Handle kInvalidHandle = 0;
 #elif DAWN_PLATFORM_IS(POSIX)
     using Handle = int;
+    static constexpr Handle kInvalidHandle = -1;
 #else
 #error "Platform not supported."
 #endif
