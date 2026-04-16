@@ -116,6 +116,7 @@ enum class DeviceExt {
     PhysicalDeviceDrm,
 
     // External* extensions
+    ExternalFenceFD,
     ExternalMemoryAndroidHardwareBuffer,
     ExternalMemoryFD,
     ExternalMemoryDmaBuf,
