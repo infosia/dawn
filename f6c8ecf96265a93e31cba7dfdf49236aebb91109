@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48d185f3_d77aeeb4",
+        "filename": "src/dawn/native/ResourceTable.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-16T15:04:49Z",
+      "side": 1,
+      "message": "Added two more tests that do the same with textures.",
+      "parentUuid": "c845d3f6_5513eb30",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5ae4d74_ce700eae",
