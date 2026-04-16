@@ -571,6 +571,12 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
             // enabled on both devices.
             ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
                         status == wgpu::WaitStatus::TimedOut);
+        } else if (HasToggleEnabled("export_queue_events_to_system_events", device1) &&
+                   HasToggleEnabled("export_queue_events_to_system_events", device2)) {
+            // Mixed sources across different devices are supported if they both support exporting
+            // queue events.
+            ASSERT_TRUE(status == wgpu::WaitStatus::Success ||
+                        status == wgpu::WaitStatus::TimedOut);
         } else {
             ASSERT_EQ(status, wgpu::WaitStatus::Error);
         }
