@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "59c98689_30a85d04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-16T02:07:42Z",
+      "side": 1,
+      "message": "sg. Since it is security I though I would not broadcast it but I guess all this chat is also public anyway",
+      "parentUuid": "654e94b4_7111b1ae",
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5289e2e8_3d34300e",
         "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
         "patchSetId": 7
