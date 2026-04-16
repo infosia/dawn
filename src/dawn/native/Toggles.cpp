@@ -778,6 +778,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "samplers are only require to sample YCbCr AHB on Android, this is useful for testing on "
       "other devices.",
       "https://crbug.com/468988322", ToggleStage::Device}},
+    {Toggle::VulkanExternalFenceFD,
+     {"vulkan_external_fence_fd",
+      "Enables VK_KHR_external_fence_fd so that we can wait on fences from multiple devices at the "
+      "same time.",
+      "https://crbug.com/496272707", ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "

@@ -195,6 +195,11 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     return {};
 }
 
+ResultOrError<SystemEventReceiver> ExecutionQueueBase::GetSystemEventReceiverForSerial(
+    ExecutionSerial serial) {
+    return DAWN_UNIMPLEMENTED_ERROR("Not implemented");
+}
+
 MaybeError ExecutionQueueBase::CheckPassedSerials() {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
