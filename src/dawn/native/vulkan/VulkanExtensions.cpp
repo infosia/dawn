@@ -156,6 +156,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::MultisampledRenderToSingleSampled, "VK_EXT_multisampled_render_to_single_sampled"},
     {DeviceExt::PhysicalDeviceDrm, "VK_EXT_physical_device_drm"},
 
+    {DeviceExt::ExternalFenceFD, "VK_KHR_external_fence_fd"},
     {DeviceExt::ExternalMemoryAndroidHardwareBuffer,
      "VK_ANDROID_external_memory_android_hardware_buffer"},
     {DeviceExt::ExternalMemoryFD, "VK_KHR_external_memory_fd"},
@@ -224,6 +225,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::ShaderFloatControls:
             case DeviceExt::DescriptorIndexing:
             case DeviceExt::CreateRenderPass2:
+            case DeviceExt::ExternalFenceFD:
             case DeviceExt::ExternalMemoryFD:
             case DeviceExt::ExternalMemoryZirconHandle:
             case DeviceExt::ExternalMemoryHost:
