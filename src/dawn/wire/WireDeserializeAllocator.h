@@ -30,6 +30,7 @@
 
 #include <vector>
 
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -50,7 +51,7 @@ class WireDeserializeAllocator : public DeserializeAllocator {
     size_t mRemainingSize = 0;
     raw_ptr<char, AllowPtrArithmetic> mCurrentBuffer = nullptr;
     char mStaticBuffer[2048];
-    std::vector<raw_ptr<char>> mAllocations;
+    std::vector<ityp::heap_array<size_t, char>> mAllocations;
 };
 }  // namespace dawn::wire
 
