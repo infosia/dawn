@@ -329,6 +329,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5130743a_5e27acfb",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T13:43:32Z",
+      "side": 1,
+      "message": "First lets look at the analysis. \nA check is usually a cmp and jmp. The jmps only go through the front end if they are not taken so really the you only have a single extra instruction.\n\nSecond our IPC is very low in general. Independent instructions like these side checks will disappear in the existing instruction bubbles. \n\nBut coming back to the computation. How many instructions do you think a single draw call is; going from javascript all the way down to the hardware? Probably hundreds at a minimum. Also I imagine one changing something other that just issuing the same draw call (aka bindgroups etc). I dont think that you can do 1 million draw calls at even close to 60fps on WebGPU on any hardware. Which means this ballpark figure (5.3ms) should not be put in the context of a 16ms frame. \n\nHowever at a high level, I totally agree that checks , anywhere, should not be necessary and suggest a defensive coding style. They suggest something is wrong!\n\nThe problem is that something is indeed wrong. \n\nI dont mind removing all the \u0027hot\u0027 code checks from this CL. But I think we should find all the asserts that wont induce heavy perf and convert them to checks. We will then get reports when these fail and prevent future security issues that would have triggered asserts.",
+      "parentUuid": "bb87e80c_531b0019",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7
