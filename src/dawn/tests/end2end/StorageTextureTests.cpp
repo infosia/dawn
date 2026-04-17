@@ -1719,9 +1719,6 @@ TEST_P(ReadWriteStorageTextureTests, ReadMipLevel0WriteMipLevel1) {
 // TEXTURE_BASE_LEVEL and TEXTURE_MAX_LEVEL. If we mistakenly apply the workaround
 // to read only textures then this test will fail.
 TEST_P(ReadWriteStorageTextureTests, ReadMipLevel2AsBothTextureBindingAndStorageBinding) {
-    // This asserts in TextureVK.cpp, see https://crbug.com/392121643
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
         @binding(0) @group(0) var<storage, read_write> buf : array<vec4u>;
         @binding(1) @group(0) var t_in: texture_2d<f32>;
