@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7edac534_11a60131",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T19:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12881811_7560c099",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d7220dd_9f57fc5c",
@@ -123,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4343f4_4e114e81",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T19:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7220dd_9f57fc5c",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97ac5159_2e1d14a7",
@@ -136,6 +172,24 @@
       "writtenOn": "2026-04-16T20:54:58Z",
       "side": 1,
       "message": "Do I understand right that this is \"effectively\" polyfilling both f16 and f32 here because we already raised f16 into f32 earlier? I think in that case I\u0027d prefer the SPIRV config to stay the same name since f32 is what this polyfill is operating on.",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89dd7697_752d5e38",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T19:01:40Z",
+      "side": 1,
+      "message": "I think you are correct. This is semantically the right thing. Thx!",
+      "parentUuid": "97ac5159_2e1d14a7",
       "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
