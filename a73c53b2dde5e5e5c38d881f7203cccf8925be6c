@@ -33,6 +33,46 @@
       "message": "LGTM for Tint changes",
       "revId": "a73c53b2dde5e5e5c38d881f7203cccf8925be6c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44c201de_3bda85b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-04-17T23:08:57Z",
+      "side": 1,
+      "message": "LGTM too.",
+      "revId": "a73c53b2dde5e5e5c38d881f7203cccf8925be6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e1ca9df_0af16743",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-04-17T23:08:57Z",
+      "side": 1,
+      "message": "nit: maybe these could methods on `Heap` itself? Id name them `MaybeError Initialize(...)` and `void Destroy()` in that case.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "a73c53b2dde5e5e5c38d881f7203cccf8925be6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
