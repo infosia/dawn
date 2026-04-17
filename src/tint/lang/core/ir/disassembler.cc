@@ -1036,6 +1036,9 @@ StyledText Disassembler::NameOf(const core::type::Type* ty) {
                         const core::ir::type::ValueArrayCount* cnt) -> void {
         out << "array<" << ary->ElemType()->FriendlyName() << ", " << NameOf(cnt->value) << ">";
     };
+    auto buf_emit = [&](StyledText& out, const core::ir::type::ValueArrayCount* cnt) -> void {
+        out << "buffer<" << NameOf(cnt->value) << ">";
+    };
 
     if (auto* ptr = ty->As<core::type::Pointer>()) {
         if (auto* ary = ty->UnwrapPtr()->As<core::type::Array>()) {
@@ -1050,10 +1053,28 @@ StyledText Disassembler::NameOf(const core::type::Type* ty) {
                 return out;
             }
         }
+        if (auto* buf = ty->UnwrapPtr()->As<core::type::Buffer>()) {
+            if (auto* cnt = buf->Count()->As<core::ir::type::ValueArrayCount>()) {
+                auto out = StyledText{} << "ptr<";
+                if (ptr->AddressSpace() != core::AddressSpace::kUndefined) {
+                    out << ptr->AddressSpace() << ", ";
+                }
+                buf_emit(out, cnt);
+                out << ", " << ptr->Access() << ">";
+
+                return out;
+            }
+        }
     } else if (auto* ary = ty->UnwrapPtr()->As<core::type::Array>()) {
         if (auto* cnt = ary->Count()->As<core::ir::type::ValueArrayCount>()) {
             auto out = StyledText{};
             ary_emit(out, ary, cnt);
+            return out;
+        }
+    } else if (auto* buf = ty->UnwrapPtr()->As<core::type::Buffer>()) {
+        if (auto* cnt = buf->Count()->As<core::ir::type::ValueArrayCount>()) {
+            auto out = StyledText{};
+            buf_emit(out, cnt);
             return out;
         }
     }

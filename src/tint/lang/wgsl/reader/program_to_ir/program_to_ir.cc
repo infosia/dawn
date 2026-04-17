@@ -347,7 +347,7 @@ class Impl {
         Vector<core::ir::FunctionParam*, 1> params;
         for (auto* p : ast_func->params) {
             const auto* param_sem = program_.Sem().Get(p)->As<sem::Parameter>();
-            auto* ty = RemapOverrideSizedArrayIfNeeded(param_sem->Type());
+            auto* ty = RemapOverrideSizedTypeIfNeeded(param_sem->Type());
             auto* param = builder_.FunctionParam(p->name->symbol.NameView(), ty);
 
             for (auto* attr : p->attributes) {
@@ -1384,8 +1384,7 @@ class Impl {
             var,
             [&](const ast::Var* v) {
                 auto* ref = sem->Type()->As<core::type::Reference>();
-                const core::type::Type* store_ty =
-                    RemapOverrideSizedArrayIfNeeded(ref->StoreType());
+                const core::type::Type* store_ty = RemapOverrideSizedTypeIfNeeded(ref->StoreType());
                 auto* ty = builder_.ir.Types().Get<core::type::Pointer>(ref->AddressSpace(),
                                                                         store_ty, ref->Access());
 
@@ -1510,18 +1509,24 @@ class Impl {
         TINT_UNREACHABLE();
     }
 
-    const core::type::Type* RemapOverrideSizedArrayIfNeeded(const core::type::Type* ty) {
-        // Check that we have an override-sized array, or a pointer to one.
+    const core::type::Type* RemapOverrideSizedTypeIfNeeded(const core::type::Type* ty) {
+        // Check that we have an override-sized array, buffer, or a pointer to one.
         const auto* ary = ty->UnwrapPtr()->As<core::type::Array>();
-        if (!ary ||
-            !ary->Count()
-                 ->IsAnyOf<sem::NamedOverrideArrayCount, sem::UnnamedOverrideArrayCount>()) {
+        const auto* buf = ty->UnwrapPtr()->As<core::type::Buffer>();
+        const core::type::ArrayCount* orig_count = nullptr;
+        if (ary) {
+            orig_count = ary->Count();
+        } else if (buf) {
+            orig_count = buf->Count();
+        }
+        if (!orig_count ||
+            !orig_count->IsAnyOf<sem::NamedOverrideArrayCount, sem::UnnamedOverrideArrayCount>()) {
             return ty->Clone(clone_ctx_.type_ctx);
         }
 
-        // If the array has an override count, we need to remap it to a value array count.
+        // If the type has an override count, we need to remap it to a value array count.
         core::ir::Value* count = tint::Switch(
-            ary->Count(),  //
+            orig_count,  //
             [&](const sem::UnnamedOverrideArrayCount* u) {
                 return EmitValueExpression(u->expr->Declaration());
             },
@@ -1530,11 +1535,17 @@ class Impl {
             },
             TINT_ICE_ON_NO_MATCH);
 
+        const core::type::Type* remapped_ty = nullptr;
         auto* ary_count = builder_.ir.Types().Get<core::ir::type::ValueArrayCount>(count);
-        const core::type::Type* remapped_ty = builder_.ir.Types().Get<core::type::Array>(
-            ary->ElemType()->Clone(clone_ctx_.type_ctx), ary_count, ary->Size());
+        if (ary) {
+            remapped_ty = builder_.ir.Types().Get<core::type::Array>(
+                ary->ElemType()->Clone(clone_ctx_.type_ctx), ary_count, ary->Size());
+        } else {
+            TINT_ASSERT(buf);
+            remapped_ty = builder_.ir.Types().Get<core::type::Buffer>(ary_count);
+        }
 
-        // If the original type was a pointer, wrap the remapped array in a pointer too.
+        // If the original type was a pointer, wrap the remapped type in a pointer too.
         if (auto* ptr = ty->As<core::type::Pointer>()) {
             remapped_ty = builder_.ir.Types().ptr(ptr->AddressSpace(), remapped_ty, ptr->Access());
         }

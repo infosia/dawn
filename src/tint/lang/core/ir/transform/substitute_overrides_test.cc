@@ -1992,5 +1992,147 @@ $B1: {  # root
     EXPECT_EQ(result.Failure().reason, R"(5:8 error: array size (4294967300) is too large)");
 }
 
+TEST_F(IR_SubstituteOverridesTest, OverrideSizedArrayParam) {
+    core::ir::Var* v = nullptr;
+    core::ir::Value* add = nullptr;
+    const core::ir::type::ValueArrayCount* c1 = nullptr;
+    const core::type::Type* a1 = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* o = b.Override("x", ty.i32());
+        o->SetOverrideId({0});
+        add = b.Add(o, 2_i)->Result();
+        c1 = ty.Get<core::ir::type::ValueArrayCount>(add);
+        a1 = ty.Get<core::type::Array>(ty.u32(), c1, 4u);
+        v = b.Var("v", ty.ptr(workgroup, a1));
+    });
+    auto* param = b.FunctionParam("param", ty.ptr(workgroup, a1));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({param});
+    b.Append(func->Block(), [&] { b.Return(func); });
+    auto* ep = b.ComputeFunction("ep", 1_u, 1_u, 1_u);
+    b.Append(ep->Block(), [&] {
+        b.Call(ty.void_(), func, v);
+        b.Return(ep);
+    });
+    auto* src = R"(
+$B1: {  # root
+  %x:i32 = override undef @id(0)
+  %2:i32 = add %x, 2i
+  %v:ptr<workgroup, array<u32, %2>, read_write> = var undef
+}
+
+%foo = func(%param:ptr<workgroup, array<u32, %2>, read_write>):void {
+  $B2: {
+    ret
+  }
+}
+%ep = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %7:void = call %foo, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<workgroup, array<u32, 64>, read_write> = var undef
+}
+
+%foo = func(%param:ptr<workgroup, array<u32, 64>, read_write>):void {
+  $B2: {
+    ret
+  }
+}
+%ep = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %5:void = call %foo, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{0}] = 62;
+    Run(SubstituteOverrides, cfg);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_SubstituteOverridesTest, OverrideSizedBuffer) {
+    core::ir::Var* v = nullptr;
+    core::ir::Value* add = nullptr;
+    const core::ir::type::ValueArrayCount* c1 = nullptr;
+    const core::type::Type* b1 = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* o = b.Override("x", ty.i32());
+        o->SetOverrideId({0});
+        add = b.Add(o, 2_i)->Result();
+        c1 = ty.Get<core::ir::type::ValueArrayCount>(add);
+        b1 = ty.Get<core::type::Buffer>(c1);
+        v = b.Var("v", ty.ptr(workgroup, b1));
+    });
+    auto* param = b.FunctionParam("param", ty.ptr(workgroup, b1));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({param});
+    b.Append(func->Block(), [&] { b.Return(func); });
+    auto* ep = b.ComputeFunction("ep", 1_u, 1_u, 1_u);
+    b.Append(ep->Block(), [&] {
+        b.Call(ty.void_(), func, v);
+        b.Return(ep);
+    });
+    auto* src = R"(
+$B1: {  # root
+  %x:i32 = override undef @id(0)
+  %2:i32 = add %x, 2i
+  %v:ptr<workgroup, buffer<%2>, read_write> = var undef
+}
+
+%foo = func(%param:ptr<workgroup, buffer<%2>, read_write>):void {
+  $B2: {
+    ret
+  }
+}
+%ep = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %7:void = call %foo, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<workgroup, buffer<64>, read_write> = var undef
+}
+
+%foo = func(%param:ptr<workgroup, buffer<64>, read_write>):void {
+  $B2: {
+    ret
+  }
+}
+%ep = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %5:void = call %foo, %v
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{0}] = 62;
+    Run(SubstituteOverrides, cfg);
+
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::core::ir::transform
