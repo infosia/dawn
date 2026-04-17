@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d968cfa_362571b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-17T20:55:43Z",
+      "side": 1,
+      "message": "PTAL. I\u0027m not thrilled with the nested looping in BindGroupVk, and it seems overly targeted at this one scenario. Feel free to chime in if you have a better idea of how to handle it. It does clean up any VVL errors, though!",
+      "revId": "48781512806f56453fdb1c0f78e9cd75e6b8bee9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
