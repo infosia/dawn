@@ -37,6 +37,7 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "src/dawn/common/Atomic.h"
 #include "src/dawn/common/ityp_array.h"
+#include "src/dawn/common/ityp_heap_array.h"
 #include "src/dawn/native/Buffer.h"
 #include "src/dawn/native/d3d/d3d_platform.h"
 #include "src/dawn/native/d3d11/Forward.h"
@@ -203,7 +204,7 @@ class Buffer : public BufferBase {
     // Track whether padding bytes have been cleared to zero.
     bool mPaddingCleared = false;
     // Temporary storage for MapAtCreation when the lock cannot be acquired.
-    std::unique_ptr<uint8_t[]> mMapAtCreationData;
+    ityp::heap_array<size_t, uint8_t> mMapAtCreationData;
 
     // A buffer can only have one scheduled map request at a time, so we embed the request object
     // here to avoid heap allocations.
