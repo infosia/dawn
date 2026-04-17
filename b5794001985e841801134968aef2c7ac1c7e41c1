@@ -1,0 +1,381 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e5ad9f_2827770e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "Haven\u0027t finished full review yet - sending these out first.",
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79e4e561_59a80fcd",
+        "filename": "src/dawn/native/CreatePipelineAsyncEvent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "nit: I\u0027d just call this `readyAtCreation`",
+      "range": {
+        "startLine": 63,
+        "startChar": 34,
+        "endLine": 63,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bedb6361_79672173",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/CreatePipelineAsyncEvent.h",
+              "range": {
+                "startLine": 59,
+                "startChar": 0,
+                "endLine": 60,
+                "endChar": 0
+              },
+              "replacement": "    // Create an async event pipeline creation. If readyAtCreation is true, this is ready at\n    // creation.\n"
+            },
+            {
+              "path": "src/dawn/native/CreatePipelineAsyncEvent.h",
+              "range": {
+                "startLine": 63,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "                             bool readyAtCreation);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cbc9d33_46264138",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "nit: this is unnecessary and less idiomatic too",
+      "range": {
+        "startLine": 836,
+        "startChar": 40,
+        "endLine": 836,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6214f1a8_a1dd5506",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 836,
+                "startChar": 0,
+                "endLine": 837,
+                "endChar": 0
+              },
+              "replacement": "        std::optional\u003cErrorScope\u003e mScope;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d7b2f66_7dcd5bbb",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "nit: can this be `auto\u0026 task`?",
+      "range": {
+        "startLine": 909,
+        "startChar": 17,
+        "endLine": 909,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8faeb8f5_1b1d80af",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 909,
+                "startChar": 0,
+                "endLine": 910,
+                "endChar": 0
+              },
+              "replacement": "            for (const auto\u0026 task : pendingAsyncTasks) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19e802c7_a3a9fe2c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-parentheses\n\nredundant parentheses around expressio...\n\ncheck: readability-redundant-parentheses\n\nredundant parentheses around expression (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-parentheses.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-parentheses` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 913,
+        "endChar": 0
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d63f017_9c826f9d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "nit: `/*readyAtCompletion\u003dtrue*/` here and below",
+      "range": {
+        "startLine": 1387,
+        "startChar": 66,
+        "endLine": 1387,
+        "endChar": 70
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6b76a2af_7bd655e9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 1387,
+                "startChar": 0,
+                "endLine": 1388,
+                "endChar": 0
+              },
+              "replacement": "            this, callbackInfo, std::move(cachedComputePipeline), /*readyAtCompletion\u003d*/true)));\n"
+            },
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 1392,
+                "startChar": 0,
+                "endLine": 1393,
+                "endChar": 0
+              },
+              "replacement": "        this, callbackInfo, std::move(uninitializedComputePipeline), /*readyAtCompletion\u003d*/false));\n"
+            },
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 1464,
+                "startChar": 0,
+                "endLine": 1465,
+                "endChar": 0
+              },
+              "replacement": "            this, callbackInfo, std::move(cachedRenderPipeline), /*readyAtCompletion\u003d*/true)));\n"
+            },
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 1469,
+                "startChar": 0,
+                "endLine": 1470,
+                "endChar": 0
+              },
+              "replacement": "        this, callbackInfo, std::move(uninitializedRenderPipeline), /*readyAtCompletion\u003d*/false));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "696a95e9_7cdc8184",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "This could be a `static thread_local` since any thread will only have one Waiter instance alive at a time. You might want to reset it in the constructor/destructor though.",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1239cda_53dcc834",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "nit: maybe `mEventState` is a better name since there is other state outside of the `State` struct too - if you\u0027re renaming this might also want to rename `State` to `EventState`.",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c55c12b5_8d759b81",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/EventManager.h",
+              "range": {
+                "startLine": 107,
+                "startChar": 0,
+                "endLine": 108,
+                "endChar": 0
+              },
+              "replacement": "    MutexProtected\u003cState\u003e mEventState;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e1c1e6_b808d12d",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we should expose an atomic bool here since the caller also needs to know the memory_order semantics for the atomic.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a99c2fc_692c0174",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "How about this: instead of a CompletionData variant we have a `std::optional\u003cQueueAndSerial\u003e` and a `std::atomic\u003cbool\u003e` always present.\n\n`IsReadyToComplete` first checks the atomic - if it\u0027s true we just return that. Otherwise, if the `QueueAndSerial` is present, it checks that instead and sets the atomic to true if the queue serial has completed.\n\n`SetReadyToComplete` first sets the atomic. Then if the QueueAndSerial is present, it just sets that to nullopt (not strictly necessary actually).\n\nSo in essence all events have one source of truth for completion state which is the atomic.",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 92
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4aebec59_cca25f42",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2026-04-17T21:34:54Z",
+      "side": 1,
+      "message": "Do we want to allow callers to call this with `value \u003d\u003d true` - isn\u0027t that redundant with the `Completed` tag constructor below?",
+      "range": {
+        "startLine": 171,
+        "startChar": 50,
+        "endLine": 171,
+        "endChar": 60
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
