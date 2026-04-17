@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1801c5e0_d88c9d2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-17T21:37:29Z",
+      "side": 1,
+      "message": "Looks good overall.",
+      "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9bcabbf_098546ed",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-17T21:37:29Z",
+      "side": 1,
+      "message": "My only concern with this change is that `IsValidationEnabled()` is called from some ~90 different points in Dawn. Hopefully the cost of checking the atomic isn\u0027t too much more than calling `IsToggleEnabled()` (which boils down to testing a bitset) repeatedly, but it\u0027s something to keep an eye on.",
+      "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e39a91a6_9c2f1de0",
+        "filename": "src/dawn/tests/unittests/native/SkipValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-17T21:37:29Z",
+      "side": 1,
+      "message": "Could you do a similar test to verify that validation is enabled after a device loss as well?",
+      "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
