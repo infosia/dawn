@@ -34,9 +34,10 @@
 
 #include <algorithm>
 #include <cstring>
+#include <span>
 #include <utility>
 
-#include "dawn/common/Alloc.h"
+#include "dawn/common/ityp_heap_array.h"
 
 namespace dawn::wire {
 
@@ -50,12 +51,14 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
 
     ChunkedCommand* chunkedCommand = nullptr;
     if (auto it = mChunkedCommands.find(cmd.id); it != mChunkedCommands.end()) {
+        // We already started handling this chunked command. Continue writing into that allocation.
         chunkedCommand = &(it->second);
     } else {
+        // This is the first block of this chunked command. Make a new allocation to write into.
         ChunkedCommand newChunkedCommand = {};
-        newChunkedCommand.remainingSize = cmd.size;
-        newChunkedCommand.data.reset(AllocNoThrow<char>(cmd.size));
-        if (newChunkedCommand.data.get() == nullptr) {
+        // SAFETY: This will be incrementally initialized as we handle each chunk of the command.
+        newChunkedCommand.data = ityp::heap_array<size_t, char>::Uninit(cmd.size, std::nothrow);
+        if (!newChunkedCommand.data) {
             return WireResult::FatalError;
         }
 
@@ -66,20 +69,19 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
     }
     DAWN_ASSERT(chunkedCommand);
 
-    if (cmd.chunkSize > chunkedCommand->remainingSize) {
+    if (cmd.chunkSize > chunkedCommand->remainingSize()) {
         // If the chunk size is greater than the remaining size, something is wrong and we can no
         // longer handle it, so just return a FatalError.
         return WireResult::FatalError;
     }
-    memcpy(chunkedCommand->data.get() + chunkedCommand->putOffset,
-           const_cast<const char*>(cmd.chunkData), cmd.chunkSize);
+    std::ranges::copy(std::span{cmd.chunkData, cmd.chunkSize},
+                      chunkedCommand->data.begin() + chunkedCommand->putOffset);
     chunkedCommand->putOffset += cmd.chunkSize;
-    chunkedCommand->remainingSize -= cmd.chunkSize;
 
-    if (chunkedCommand->remainingSize == 0) {
+    if (chunkedCommand->remainingSize() == 0) {
         ChunkedCommand fullCommand = std::move(*chunkedCommand);
         mChunkedCommands.erase(cmd.id);
-        if (HandleCommands(fullCommand.data.get(), fullCommand.putOffset) == nullptr) {
+        if (HandleCommands(fullCommand.data.data(), fullCommand.putOffset) == nullptr) {
             return WireResult::FatalError;
         }
     }
