@@ -73,14 +73,15 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
         DAWN_GL_TRY(gl, GenBuffers(1, &buffer->mBuffer));
         DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, buffer->mBuffer));
 
+        auto allocatedSize = buffer->mAllocatedSize.value();
         if (clear) {
-            std::vector<uint8_t> clearValues(buffer->mAllocatedSize, 1u);
-            DAWN_GL_TRY_ALWAYS_CHECK(gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize,
-                                                    clearValues.data(), GL_STATIC_DRAW));
+            std::vector<uint8_t> clearValues(allocatedSize, 1u);
+            DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, BufferData(GL_ARRAY_BUFFER, allocatedSize, clearValues.data(), GL_STATIC_DRAW));
         } else {
             // Buffers start uninitialized if you pass nullptr to glBufferData.
             DAWN_GL_TRY_ALWAYS_CHECK(
-                gl, BufferData(GL_ARRAY_BUFFER, buffer->mAllocatedSize, nullptr, GL_STATIC_DRAW));
+                gl, BufferData(GL_ARRAY_BUFFER, allocatedSize, nullptr, GL_STATIC_DRAW));
         }
         return {};
     }));

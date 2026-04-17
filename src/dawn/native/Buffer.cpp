@@ -525,8 +525,7 @@ uint64_t BufferBase::GetSize() const {
 
 uint64_t BufferBase::GetAllocatedSize() const {
     // The backend must initialize this value.
-    DAWN_CHECK(mAllocatedSize != 0);
-    return mAllocatedSize;
+    return mAllocatedSize.value();
 }
 
 wgpu::BufferUsage BufferBase::GetInternalUsage() const {
