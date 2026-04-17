@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
@@ -40,6 +41,7 @@
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/RenderPassCache.h"
 #include "dawn/native/vulkan/ShaderModuleVk.h"
+#include "dawn/native/vulkan/ShaderStatisticsVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -689,6 +691,9 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
     createInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
+    if (device->HasFeature(Feature::ShaderStatistics)) {
+        createInfo.flags |= VK_PIPELINE_CREATE_CAPTURE_STATISTICS_BIT_KHR;
+    }
     createInfo.stageCount = stageCount;
     createInfo.pStages = shaderStages.data();
     createInfo.pVertexInputState = &vertexInputCreateInfo;
@@ -903,6 +908,10 @@ void RenderPipeline::ApplyDynamicState(VkCommandBuffer& commands,
 }
 
 #undef SetDynamicState
+
+ShaderStatisticsData RenderPipeline::GetShaderStatisticsImpl() const {
+    return QueryVulkanPipelineStatistics(ToBackend(GetDevice()), GetHandle());
+}
 
 void RenderPipeline::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mHandles.pipeline, "Dawn_RenderPipeline", GetLabel());

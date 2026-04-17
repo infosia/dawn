@@ -1,0 +1,98 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(SKILL_DIR=\"/c/Users/shaoboyan/.claude/skills/code-reviewer-fetch-skill\")",
+      "Bash(DEST=\"/c/work/dawn/.claude/reviews\")",
+      "Bash(mkdir -p \"$DEST/model\" \"$DEST/manual/sync_reports\")",
+      "Bash(cp \"$SKILL_DIR\"/model/*.json \"$DEST/model/\")",
+      "Bash(cp \"$SKILL_DIR\"/manual/*.md \"$DEST/manual/\")",
+      "Bash(where jq:*)",
+      "Bash(mkdir -p \"$USERPROFILE/.claude/skills-backup\")",
+      "Bash(mv \"$USERPROFILE/.claude/skills/gpu-power-measure\" \"$USERPROFILE/.claude/skills-backup/\")",
+      "Bash(mv \"$USERPROFILE/.claude/skills/chromium-gpu-debug\" \"$USERPROFILE/.claude/skills-backup/\")",
+      "Read(//c/work/dawn/$USERPROFILE/.claude/**)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i[''''path''''],i[''''name'''']\\) for i in d.get\\(''''items'''',[]\\)]\")",
+      "Bash(python3 -c \"import sys,json; [print\\(i[''''name'''']\\) for i in json.load\\(sys.stdin\\) if ''''pipeline'''' in i[''''name''''].lower\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i[''''path'''']\\) for i in d.get\\(''''tree'''',[]\\) if ''''pipeline_executable'''' in i[''''path''''].lower\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i.get\\(''''path'''',''''?''''\\), i.get\\(''''startline'''',''''''''\\)\\) for i in d[:5]]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i.get\\(''''path'''',''''?''''\\), i.get\\(''''startline'''',''''''''\\)\\) for i in d[:10]]\")",
+      "Bash(if not:*)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests*\" --gtest_print_time=0)",
+      "Bash(cd:*)",
+      "Bash(third_party/ninja/ninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests.ValidFieldsAreConsistent*\")",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests*\")",
+      "Bash(out/Debug/dawn_unittests.exe --gtest_filter=\"*ShaderStatistics*\")",
+      "Bash(C:workdepot_toolsninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/depot_tools/ninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/cr/depot_tools/ninja -C /c/work/dawn/out/Debug dawn_end2end_tests)",
+      "Bash(PATH=\"/c/work/cr/depot_tools:$PATH\" which python3)",
+      "Bash(PATH=\"/c/work/cr/depot_tools:$PATH\" which python)",
+      "Bash(/c/work/dawn/third_party/ninja/ninja.exe -C /c/work/dawn/out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\" 2>&1)",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\")",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsAutoTuneTests.LogShaderStatisticsComputePipeline/D3D12_NVIDIA*\")",
+      "Bash(where ninja:*)",
+      "Bash(where gn:*)",
+      "Bash(%PATH%)",
+      "Bash(ninja.bat -C out/Debug dawn_end2end_tests dawn_unittests)",
+      "Bash(/c/work/cr/depot_tools/ninja -C out/Debug dawn_end2end_tests dawn_unittests)",
+      "Bash(export DEPOT_TOOLS_WIN_TOOLCHAIN=0)",
+      "Bash(export PATH=\"/c/work/cr/depot_tools:$PATH\")",
+      "Bash(export VPYTHON_BYPASS=\"manually managed\")",
+      "Bash(/c/work/cr/depot_tools/autoninja.bat -C out/Debug dawn_end2end_tests dawn_unittests)",
+      "Bash(export PATH=\"/c/work/cr/depot_tools/bootstrap-2@3_11_8_chromium_35_bin/python3/bin:/c/work/cr/depot_tools:$PATH\")",
+      "Read(//c/Program Files/Microsoft Visual Studio/2022/Community/**)",
+      "Read(//c/Program Files/Microsoft Visual Studio/2022/Professional/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio/**)",
+      "Bash(reg query:*)",
+      "Read(//c/Program Files/Microsoft Visual Studio//**)",
+      "Bash(\"C:/Program Files \\(x86\\)/Microsoft Visual Studio/Installer/vswhere.exe\" -all -property installationPath 2>/dev/null)",
+      "Bash(export GYP_MSVS_OVERRIDE_PATH=\"C:/Program Files/Microsoft Visual Studio/2022/Enterprise\")",
+      "Bash(export GYP_MSVS_VERSION=2022)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\" --gtest_list_tests 2>&1)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsAutoTuneTests*\" --gtest_print_time=0 -w 0 2>&1)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests*\" --gtest_print_time=0 --enable-toggles=allow_unsafe_apis)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=ShaderStatisticsTests* --gtest_print_time=0 --enable-toggles=allow_unsafe_apis)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsAutoTuneTests*\" --gtest_print_time=0 --enable-toggles=allow_unsafe_apis)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\" --gtest_print_time=0 --enable-toggles=allow_unsafe_apis)",
+      "Bash(out/Debug/dawn_unittests.exe --gtest_filter=\"*ShaderStatistics*\" --gtest_print_time=0)",
+      "Bash(jq -e '.hooks.PreToolUse[] | select\\(.matcher == \"\"Bash\"\"\\) | .hooks[] | select\\(.type == \"\"command\"\"\\) | .command' .claude/settings.local.json)",
+      "Bash(out/Debug/dawn_unittests.exe --gtest_filter=\"*ShaderStatistics*\" --gtest_print_time=0 2>&1)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\" --gtest_print_time=0 --enable-toggles=allow_unsafe_apis 2>&1)",
+      "Bash(OPC_HARNESS=\"$HOME/.claude/skills/opc/bin/opc-harness.mjs\")",
+      "Bash(node \"$OPC_HARNESS\" --help)",
+      "Bash(python3 -c \"import sys; print\\(sys.stdin.read\\(\\)[:500]\\)\")",
+      "Bash(node \"$OPC_HARNESS\" init --flow review --entry review --dir .harness)",
+      "Bash(node \"$OPC_HARNESS\" init --flow review --entry review --dir ./.harness)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"\nimport json, sys, re\nd = json.load(sys.stdin)\ncmd = d.get('tool_input', {}).get('command', '')\nif re.search(r'(?<![a-zA-Z])ninja\\\\b', cmd) and 'autoninja' not in cmd:\n    print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PreToolUse', 'permissionDecision': 'ask', 'permissionDecisionReason': 'Use autoninja instead of ninja for building in this project. Replace ninja with autoninja in your command.'}}))\n\"",
+            "timeout": 5,
+            "statusMessage": "Checking build command..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"\nimport json, sys, subprocess, os, tempfile\nlock = os.path.join(tempfile.gettempdir(), '.claude_gcf_lock')\nd = json.load(sys.stdin)\ncmd = d.get('tool_input', {}).get('command', '')\nif 'git commit' in cmd and '--amend' in cmd and not os.path.exists(lock):\n    try:\n        open(lock, 'w').close()\n        subprocess.run(['git', 'cl', 'format'], capture_output=True)\n        status = subprocess.run(['git', 'diff', '--name-only'], capture_output=True, text=True)\n        if status.stdout.strip():\n            subprocess.run(['git', 'add', '-A'])\n            subprocess.run(['git', 'commit', '--amend', '--no-edit'])\n            print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PostToolUse', 'additionalContext': 'Hook: git cl format applied and amended into commit.'}}))\n    finally:\n        if os.path.exists(lock): os.remove(lock)\n\"",
+            "timeout": 60,
+            "statusMessage": "Running git cl format..."
+          }
+        ]
+      }
+    ]
+  }
+}

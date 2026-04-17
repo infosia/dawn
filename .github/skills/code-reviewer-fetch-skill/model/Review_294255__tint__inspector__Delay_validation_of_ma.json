@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "platform": "Gerrit",
+    "repo": "dawn",
+    "url": "https://dawn-review.googlesource.com/c/dawn/+/294255",
+    "id": "294255",
+    "title": "[tint][inspector] Delay validation of max immediate size to pipeline creation time",
+    "author": "Shaobo Yan",
+    "status": "NEW",
+    "rounds": 2
+  },
+  "general_comments": [
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-27 02:09:06",
+      "round": "1",
+      "message": "Hashtags added: inspector, tint"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-27 02:12:52",
+      "round": "2",
+      "message": "Uploaded patch set 2: Commit message was updated."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-10 07:31:34",
+      "round": "2",
+      "message": "Patch Set 2:\n\n(1 comment)\n\nThis change is ready for review."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-10 07:31:34",
+      "round": "2",
+      "message": "<GERRIT_ACCOUNT_1000002>, who was added as reviewer owns the following files:\n* `src/dawn/native/ShaderModule.cpp`\n* `src/dawn/tests/unittests/validation/ImmediateDataTests.cpp`\n* `src/tint/lang/wgsl/inspector/inspector.cc`\n* `src/tint/lang/wgsl/inspector/inspector.h`\n* `src/tint/lang/wgsl/inspector/inspector_test.cc`"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-10 09:18:15",
+      "round": "2",
+      "message": "Patch Set 2:\n\n(1 comment)"
+    }
+  ],
+  "inline_comments": {
+    "/PATCHSET_LEVEL": [
+      {
+        "line": "File-level",
+        "round": "2",
+        "author": "Shaobo Yan",
+        "date": "2026-03-10 07:31:34",
+        "message": "PTAL, this fix a cts validation test failure. The failure is due to we report exceed maxImmediateSize during shaderModule creation time instead of pipeline creation time."
+      }
+    ],
+    "src/dawn/native/ShaderModule.cpp": [
+      {
+        "line": "875",
+        "round": "2",
+        "author": "Corentin Wallez",
+        "date": "2026-03-10 09:18:15",
+        "message": "We can just use `DelayedInvalidIf` which is designed to handle pushing errors to pipeline creation time (when we detect them at shader creation time). So we don't need the complexity of an overflow bit etc."
+      }
+    ]
+  }
+}

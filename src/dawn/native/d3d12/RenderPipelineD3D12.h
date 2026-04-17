@@ -29,6 +29,8 @@
 #define SRC_DAWN_NATIVE_D3D12_RENDERPIPELINED3D12_H_
 
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ShaderStatistics.h"
+#include "dawn/native/d3d/ShaderUtils.h"
 #include "dawn/native/d3d12/ShaderModuleD3D12.h"
 #include "dawn/native/d3d12/d3d12_platform.h"
 
@@ -61,6 +63,7 @@ class RenderPipeline final : public RenderPipelineBase {
     ~RenderPipeline() override;
 
     void DestroyImpl(DestroyReason reason) override;
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
     using RenderPipelineBase::RenderPipelineBase;
     D3D12_INPUT_LAYOUT_DESC ComputeInputLayout(
@@ -70,6 +73,7 @@ class RenderPipeline final : public RenderPipelineBase {
     D3D12_PRIMITIVE_TOPOLOGY mD3d12PrimitiveTopology;
     ComPtr<ID3D12PipelineState> mPipelineState;
     bool mUsesVertexOrInstanceIndex;
+    PerStage<d3d::D3DShaderReflectionData> mReflectionData;
 };
 
 }  // namespace dawn::native::d3d12

@@ -1,0 +1,565 @@
+{
+  "metadata": {
+    "platform": "Gerrit",
+    "repo": "dawn",
+    "url": "https://dawn-review.googlesource.com/c/dawn/+/287075",
+    "id": "287075",
+    "title": "[dawn][tint] Handle trailing padding in immediate data size",
+    "author": "Shaobo Yan",
+    "status": "NEW",
+    "rounds": 13
+  },
+  "general_comments": [
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-27 11:15:58",
+      "round": "1",
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-27 13:54:27",
+      "round": "1",
+      "message": "Patch Set 1: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-01-27 13:54:43",
+      "round": "1",
+      "message": "Patch Set 1:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8853448729854-1-5b3163d583aed3df\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-01-27T13:54:27Z\",\"revision\":\"507a8c08cb1ef4e5951a252f9bd7b53bcf6c224b\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-27 14:01:01",
+      "round": "1",
+      "message": "Patch Set 1: -Commit-Queue\n\n(Posted by dawn-scoped@luci-project-accounts.iam.gserviceaccount.com on behalf of shaoboyan@microsoft.com)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-01-27 14:01:01",
+      "round": "1",
+      "message": "Patch Set 1:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8691515113206585953) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=1&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_skip_validation_tests on (apple:m2) GPU on Mac Retina** failed."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-28 11:08:36",
+      "round": "2",
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-28 11:11:42",
+      "round": "2",
+      "message": "Patch Set 2: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-01-28 11:11:53",
+      "round": "2",
+      "message": "Patch Set 2:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8853372094854-1-edde0882e6df2cf9\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-01-28T11:11:42Z\",\"revision\":\"a364117515c0b3db87641caf54ad09fada106d0f\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-01-28 11:18:48",
+      "round": "2",
+      "message": "Patch Set 2: -Commit-Queue"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-01-28 11:18:49",
+      "round": "2",
+      "message": "Patch Set 2:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8691434697553141681) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=2&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_validation_layers_tests on (apple:m2) GPU on Mac Retina** failed."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 06:08:24",
+      "round": "3",
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 06:33:14",
+      "round": "4",
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 06:37:02",
+      "round": "4",
+      "message": "Patch Set 4: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 06:37:14",
+      "round": "4",
+      "message": "Patch Set 4:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8852351774854-1-6e10ed10c0f60508\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-09T06:37:02Z\",\"revision\":\"4b1c30de3b31ccd9ef1bc6fe1e2a1a7f20c5b96b\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 06:44:08",
+      "round": "4",
+      "message": "Patch Set 4: -Commit-Queue\n\n(Posted by dawn-scoped@luci-project-accounts.iam.gserviceaccount.com on behalf of shaoboyan@microsoft.com)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 06:44:09",
+      "round": "4",
+      "message": "Patch Set 4:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8690364833349087105) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=4&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_validation_layers_tests on (apple:m2) GPU on Mac Retina** failed."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 08:54:08",
+      "round": "5",
+      "message": "Uploaded patch set 5."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 08:55:10",
+      "round": "5",
+      "message": "Patch Set 5: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 08:55:22",
+      "round": "5",
+      "message": "Patch Set 5:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8852343486854-1-dca0fd7e45840d41\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-09T08:55:10Z\",\"revision\":\"eb4e6e0131eb093b10632ac25307d856fa7a36a3\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 09:02:12",
+      "round": "5",
+      "message": "Patch Set 5: -Commit-Queue\n\n(Posted by dawn-scoped@luci-project-accounts.iam.gserviceaccount.com on behalf of shaoboyan@microsoft.com)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 09:02:13",
+      "round": "5",
+      "message": "Patch Set 5:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8690356149850301537) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=5&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_validation_layers_tests on (apple:m2) GPU on Mac Retina** failed."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 10:38:59",
+      "round": "6",
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 10:39:25",
+      "round": "6",
+      "message": "Patch Set 6: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 10:39:43",
+      "round": "6",
+      "message": "Patch Set 6:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8852337231854-1-7ac5c8b3eb6dff89\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-09T10:39:25Z\",\"revision\":\"68996927c1e406d5c21864ef09a1c60a376ad55b\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-09 11:38:07",
+      "round": "6",
+      "message": "Patch Set 6: -Commit-Queue\n\n(Posted by dawn-scoped@luci-project-accounts.iam.gserviceaccount.com on behalf of shaoboyan@microsoft.com)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-09 11:38:08",
+      "round": "6",
+      "message": "Patch Set 6:\n\nThis CL has failed the run. Reason:\n\nTryjob [chromium/try/android-dawn-arm-rel](https://cr-buildbucket.appspot.com/build/8690349835344260593) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=6&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_tests on Android device Pixel 4** failed because of:\n\n- ImmediateDataTests.StructAlignment/Vulkan_Adreno__TM__640"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 02:44:42",
+      "round": "6",
+      "message": "Patch Set 6:\n\n(1 comment)\n\nThis change is ready for review."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 02:44:42",
+      "round": "6",
+      "message": "<GERRIT_ACCOUNT_1000002>, who was added as reviewer owns the following files:\n* `src/dawn/native/Pipeline.cpp`\n* `src/dawn/native/Pipeline.h`\n* `src/dawn/native/ShaderModule.cpp`\n* `src/dawn/native/ShaderModule.h`\n* `src/dawn/native/metal/CommandBufferMTL.mm`\n* `src/dawn/native/metal/ComputePipelineMTL.h`\n* `src/dawn/native/metal/ComputePipelineMTL.mm`\n* `src/dawn/native/metal/RenderPipelineMTL.h`\n* `src/dawn/native/metal/RenderPipelineMTL.mm`\n* `src/dawn/native/metal/ShaderModuleMTL.h`\n* `src/dawn/native/metal/ShaderModuleMTL.mm`\n* `src/dawn/tests/end2end/ImmediateDataTests.cpp`\n* `src/dawn/tests/unittests/validation/ImmediateDataTests.cpp`\n* `src/tint/lang/wgsl/inspector/entry_point.h`\n* `src/tint/lang/wgsl/inspector/inspector.cc`\n* `src/tint/lang/wgsl/inspector/inspector.h`"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 03:06:28",
+      "round": "7",
+      "message": "Uploaded patch set 7."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 10:22:24",
+      "round": "8",
+      "message": "Patch Set 8: Commit message was updated."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 10:22:29",
+      "round": "8",
+      "message": "Patch Set 8: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-10 10:22:54",
+      "round": "8",
+      "message": "Patch Set 8:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8852251847854-1-a119980c036e7f46\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-10T10:22:29Z\",\"revision\":\"d4378dce29a67c2ef2ec6f8b672823c990332eca\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-10 11:21:21",
+      "round": "8",
+      "message": "Patch Set 8: -Commit-Queue\n\n(Posted by dawn-scoped@luci-project-accounts.iam.gserviceaccount.com on behalf of shaoboyan@microsoft.com)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-10 11:21:22",
+      "round": "8",
+      "message": "Patch Set 8:\n\nThis CL has failed the run. Reason:\n\nTryjob [chromium/try/android-dawn-arm-rel](https://cr-buildbucket.appspot.com/build/8690260296395565057) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/287075?checksPatchset=8&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_end2end_tests on Android device Pixel 4** failed because of:\n\n- ImmediateDataTests.StructAlignment/Vulkan_Adreno__TM__640"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-02-12 08:50:40",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(9 comments)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-12 15:45:45",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-24 08:35:44",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-02-25 11:06:32",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-26 08:42:27",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-26 08:42:27",
+      "round": "8",
+      "message": "<GERRIT_ACCOUNT_1000024>, who was added as reviewer owns the following files:\n* `src/dawn/tests/end2end/ImmediateDataTests.cpp`\n* `src/dawn/tests/unittests/validation/ImmediateDataTests.cpp`"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-26 08:48:13",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Stephen White",
+      "date": "2026-02-26 14:21:04",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-27 01:44:57",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 02:16:46",
+      "round": "8",
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 03:28:19",
+      "round": "9",
+      "message": "Uploaded patch set 9."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 05:06:16",
+      "round": "10",
+      "message": "Uploaded patch set 10."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 05:30:52",
+      "round": "11",
+      "message": "Uploaded patch set 11."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 06:17:16",
+      "round": "12",
+      "message": "Uploaded patch set 12."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 06:24:04",
+      "round": "13",
+      "message": "Uploaded patch set 13."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 06:25:20",
+      "round": "13",
+      "message": "Patch Set 13:\n\n(7 comments)"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-02 08:50:39",
+      "round": "13",
+      "message": "Patch Set 13: Code-Review+1\n\n(6 comments)"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-02 08:50:39",
+      "round": "13",
+      "message": "<GERRIT_ACCOUNT_1000257>, who was added as reviewer owns the following files:\n* `src/dawn/native/Pipeline.cpp`\n* `src/dawn/native/Pipeline.h`\n* `src/dawn/native/ShaderModule.cpp`\n* `src/dawn/native/ShaderModule.h`\n* `src/dawn/native/metal/CommandBufferMTL.mm`\n* `src/dawn/tests/end2end/ImmediateDataTests.cpp`\n* `src/dawn/tests/unittests/validation/ImmediateDataTests.cpp`\n* `src/tint/lang/wgsl/inspector/entry_point.h`\n* `src/tint/lang/wgsl/inspector/inspector.cc`\n* `src/tint/lang/wgsl/inspector/inspector.h`\n* `src/tint/lang/wgsl/inspector/inspector_test.cc`"
+    }
+  ],
+  "inline_comments": {
+    "/COMMIT_MSG": [
+      {
+        "line": "10",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "Did the group explicitly agree that this is the expected behavior?"
+      },
+      {
+        "line": "10",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-25 11:06:32",
+        "message": "The group agreed that this is the expected behavior."
+      },
+      {
+        "line": "10",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-12 15:45:45",
+        "message": "No, I think. Let me create an issue for it."
+      }
+    ],
+    "/PATCHSET_LEVEL": [
+      {
+        "line": "File-level",
+        "round": "6",
+        "author": "Shaobo Yan",
+        "date": "2026-02-10 02:44:42",
+        "message": "PTAL, thanks.\nP.S. the bots failure is due to both bug in cts(have case to run with array to test dynamic indexing) and missing validation(not allowed array or struct with array in immediate block) in dawn. I'll handle it seperately."
+      },
+      {
+        "line": "File-level",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "I didn't look in details at the dawn::native changes as I'm hoping we can rely on the decompose transform instead."
+      },
+      {
+        "line": "File-level",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-26 08:42:27",
+        "message": "Invite Stephen as reviewer for discussion."
+      },
+      {
+        "line": "File-level",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "LGTM +R Dan for the Tint part."
+      },
+      {
+        "line": "File-level",
+        "round": "13",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Sry for introduce rebase diff into the patch set (IIRC, previously gerrit doesn't have this issue?). Address comments focused on validation issue."
+      }
+    ],
+    "src/dawn/native/Pipeline.cpp": [
+      {
+        "line": "300",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "```suggestion\n        mUserImmediateSlots |= metadata.immediateDataUsedSlots;\n```"
+      },
+      {
+        "line": "301",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "This is only used in Initialize, IMHO it's not worth keeping around. We could loop over stages again in Initialize, or set `mImmediateMask` here."
+      }
+    ],
+    "src/dawn/native/Pipeline.h": [
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "WDYT of using the tint transform to decompose immediates to U32 in Metal like we do in the GL CL? It would avoid the need to keep two different sizes."
+      },
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 02:16:46",
+        "message": "I realized that the complexity we introduced here is due to we mixed two things in a single patch:\n1. The wrong validation rules, which inspector use immediate block size with trailing padding bytes to validate the immedaite size attribute.\n2. An optimization, which we shrink the immediateMask based on internal-user defined immediates to \"compress\" the uploading size we do in API side.\n\nSo I think I'll keep this CL to resolve the validation error. And use another CL for the \"compress\" things."
+      },
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Stephen White",
+        "date": "2026-02-26 14:21:04",
+        "message": "Hi Shaobo! For the immediate size passed to Tint, I used ImmediateConstantMask::count() to count the number of actually-used immediate slots (including internal uses). It's \"compressed\", skipping any unused slots in the immediate data, matching what Tint will produce in the IR struct. I then round it up by 4 slots to match the widest possible alignment of members (e.g., vec4) in case that, e.g., one stage contains a vec4 and the other does not. Code here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/ShaderModuleGL.cpp;l=438\n\nTint's decompose transform then maxes that length with the WGSL-computed struct size to determine the array length. This may produce an array that is larger than strictly required by one stage or the other, but that shouldn't be a problem. Code here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/decompose_access.cc;l=183\n\nValidation is left as-is, using the pipeline immediate size as computed by the front-end."
+      },
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-24 08:35:44",
+        "message": "I think it is great. Will use decompose transform."
+      },
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-26 08:48:13",
+        "message": "senorblanco@, I'm hitting an situation about this.\nBackground: to remove trailing space in user immediate struct, we need to host two sizes. One is the user immediate block size without trailing space, we use this for validation. The other is the user immediate block size (with trailing padding). We need it because of internal immediates. We calculate internal immediates in API side and uplod the offset. PrepareImmediateData transform accept the offset and try to insert it into immediate blocks. The transform will check whether it has conflicts with other members. So we need the padding size to make the layout correct.\n\nIn metal, there is another problem due to the restriction describe in the comment.\n\nIn sync with cwallez@, it seems GL backend has similar issues (some attributes will be eliminated by driver and layout will be changed dynamically). So do you any suggestions on this case?"
+      },
+      {
+        "line": "130",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-27 01:44:57",
+        "message": "Thanks!"
+      }
+    ],
+    "src/dawn/native/ShaderModule.h": [
+      {
+        "line": "332",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "Maybe rename them to `immediateDataByteSizeNoPadding/WithPadding` to make things clear?"
+      }
+    ],
+    "src/dawn/tests/end2end/ImmediateDataTests.cpp": [
+      {
+        "line": "591",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "ditto small comment"
+      },
+      {
+        "line": "591",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Done"
+      }
+    ],
+    "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp": [
+      {
+        "line": "596",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "Can we have minimal test coverage of the validation not requiring the trailing padding bytes as described in the commit message?"
+      },
+      {
+        "line": "596",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "See ValidatePipelineLayoutImmediateDataBytesWithoutTrailingPadding"
+      },
+      {
+        "line": "599",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "Can we have a small comment explaining what this tries to test?"
+      },
+      {
+        "line": "599",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Done"
+      },
+      {
+        "line": "614",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "Where is the error case?"
+      },
+      {
+        "line": "614",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Done"
+      }
+    ],
+    "src/tint/lang/wgsl/inspector/entry_point.h": [
+      {
+        "line": "172",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "ditto rename"
+      }
+    ],
+    "src/tint/lang/wgsl/inspector/inspector.cc": [
+      {
+        "line": "83",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "Could we have test coverage in inspector_test.cc?"
+      },
+      {
+        "line": "83",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Done"
+      },
+      {
+        "line": "84",
+        "round": "8",
+        "author": "Corentin Wallez",
+        "date": "2026-02-12 08:50:40",
+        "message": "I think we might be reconsidering that and adding array support in https://github.com/gpuweb/gpuweb/issues/5555 so we might as well add it here already."
+      },
+      {
+        "line": "84",
+        "round": "8",
+        "author": "Shaobo Yan",
+        "date": "2026-02-28 06:25:20",
+        "message": "Done"
+      }
+    ],
+    "src/tint/lang/wgsl/inspector/inspector.h": [
+      {
+        "line": "223",
+        "round": "13",
+        "author": "Corentin Wallez",
+        "date": "2026-03-02 08:50:39",
+        "message": "Pairs with the same type twice are super confusing, consider making a simple struct for the return value."
+      }
+    ]
+  }
+}

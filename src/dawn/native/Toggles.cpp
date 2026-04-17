@@ -861,6 +861,18 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Backend will automatically map the buffer when it's not in use by GPU, to allow "
       "front-end's MapAsync and Unmap calls to become cheap without acquiring any lock internally.",
       "https://crbug.com/dawn/481158754", ToggleStage::Device}},
+    {Toggle::WarnOnShaderSpill,
+     {"warn_on_shader_spill",
+      "Log a warning when register spilling is detected in shader statistics. Requires the "
+      "ShaderStatistics feature to be enabled.",
+      "https://crbug.com/dawn/2342", ToggleStage::Device}},
+    {Toggle::WarnOnHighRegisterPressure,
+     {"warn_on_high_register_pressure",
+      "Log a warning when the shader register count exceeds a high-pressure threshold.",
+      "https://crbug.com/dawn/2342", ToggleStage::Device}},
+    {Toggle::LogShaderStatistics,
+     {"log_shader_statistics", "Log all shader statistics after pipeline creation.",
+      "https://crbug.com/dawn/2342", ToggleStage::Device}},
 
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
