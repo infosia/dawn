@@ -639,7 +639,8 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
         const uint8_t* initialTextureData,
         size_t initialTextureDataSize,
         wgpu::TextureFormat format,
-        wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D) {
+        wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D,
+        wgpu::TextureUsage extraUsage = wgpu::TextureUsage::None) {
         uint32_t texelSize = utils::GetTexelBlockSizeInBytes(format);
         DAWN_ASSERT(kWidth * texelSize <= kTextureBytesPerRowAlignment);
 
@@ -669,7 +670,7 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
         wgpu::Texture outputTexture = CreateTexture(
             format,
             wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::CopySrc |
-                wgpu::TextureUsage::CopyDst,
+                wgpu::TextureUsage::CopyDst | extraUsage,
             {kWidth, kHeight, sliceCount}, utils::ViewDimensionToTextureDimension(dimension));
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
@@ -1719,9 +1720,6 @@ TEST_P(ReadWriteStorageTextureTests, ReadMipLevel0WriteMipLevel1) {
 // TEXTURE_BASE_LEVEL and TEXTURE_MAX_LEVEL. If we mistakenly apply the workaround
 // to read only textures then this test will fail.
 TEST_P(ReadWriteStorageTextureTests, ReadMipLevel2AsBothTextureBindingAndStorageBinding) {
-    // This asserts in TextureVK.cpp, see https://crbug.com/392121643
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
         @binding(0) @group(0) var<storage, read_write> buf : array<vec4u>;
         @binding(1) @group(0) var t_in: texture_2d<f32>;
