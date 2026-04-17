@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aefdab63_0d9ff9c4",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-17T11:40:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4eb8058a_7e1c6b7e",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12881811_7560c099",
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I dont want to be dependent on 16 bit types. (I am not sure the state of 16 bit types in vulkan)\n\nThis code will only exist on older driver versions of mesa on AMD.",
       "parentUuid": "e5c6d04b_403ab537",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76e61e44_e7a4a13b",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-17T11:40:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f604d80a_38d1aaa4",
       "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
