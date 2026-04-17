@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f04c1272_8ae01ccd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-17T12:42:35Z",
+      "side": 1,
+      "message": "My other comments are take it or leave it nits, whatever you prefer",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "605068a8_3041fdb0",
