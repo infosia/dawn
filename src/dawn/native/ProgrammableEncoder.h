@@ -86,7 +86,6 @@ class ProgrammableEncoder : public ApiObjectBase {
     bool mEnded = false;
 
   private:
-    const bool mValidationEnabled;
     const bool mNeedsIndirectGPUValidation;
 };
 

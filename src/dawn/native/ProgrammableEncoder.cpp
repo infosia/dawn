@@ -49,7 +49,6 @@ ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
                                          EncodingContext* encodingContext)
     : ApiObjectBase(device, label),
       mEncodingContext(encodingContext),
-      mValidationEnabled(device->IsValidationEnabled()),
       mNeedsIndirectGPUValidation(device->NeedsIndirectGPUValidation()) {}
 
 ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
@@ -58,11 +57,12 @@ ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
                                          StringView label)
     : ApiObjectBase(device, errorTag, label),
       mEncodingContext(encodingContext),
-      mValidationEnabled(device->IsValidationEnabled()),
       mNeedsIndirectGPUValidation(device->NeedsIndirectGPUValidation()) {}
 
 bool ProgrammableEncoder::IsValidationEnabled() const {
-    return mValidationEnabled;
+    // The flag can be changed dynamically inside the device (e.g. re-enabled after device loss
+    // or OOM), so always forward the call to the device rather than caching it.
+    return GetDevice()->IsValidationEnabled();
 }
 
 bool ProgrammableEncoder::NeedsIndirectGPUValidation() const {

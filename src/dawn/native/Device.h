@@ -682,8 +682,9 @@ class DeviceBase : public ErrorSink,
     std::string mIsolatedEntryPointName;
     std::unique_ptr<BlobCache> mBlobCache;
 
-    // We cache this toggle so that we can check it without locking the device.
+    // We cache these toggles so that we can check them without locking the device.
     bool mIsImmediateErrorHandlingEnabled = false;
+    std::atomic<bool> mIsValidationEnabled{true};
 
     // This pointer is non-null if Feature::ImplicitDeviceSynchronization is turned on. Note that
     // this is a currently a recursive lock, but should only really be used recursively for error
