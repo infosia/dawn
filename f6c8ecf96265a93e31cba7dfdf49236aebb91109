@@ -563,6 +563,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "985b3edc_6f5281da",
+        "filename": "src/tint/api/common/resource_table_config.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-17T18:30:10Z",
+      "side": 1,
+      "message": "Checked with James, and he\u0027s fine with reviewing these changes as part of this CL.",
+      "parentUuid": "823c4424_6fe5eb2c",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "503032f1_02e459b1",
         "filename": "src/tint/api/common/resource_table_config.h",
         "patchSetId": 6
