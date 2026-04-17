@@ -199,11 +199,41 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
+<<<<<<< HEAD   (10fb89e3179bb7443e66911eb3c795c7aaf022e5 [M146] [dawn][native] Updates AsyncTasks to remove need of W)
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
     mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
         gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
     return {};
+||||||| BASE   (f8178d47e2351a11830639a549b9ca476c426bf6 Enable Win/AMD RX 5500 XT tests)
+    auto device = ToBackend(GetDevice());
+    if (device->IsToggleEnabled(Toggle::GLDefer)) {
+        mCPUStaging.resize(GetSize());
+        mMappedData = mCPUStaging.data();
+        return {};
+    }
+    return device->ExecuteGL(
+        ExecutionQueueBase::SubmitMode::Normal, [this](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
+            mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetSize(), GL_MAP_WRITE_BIT));
+            return {};
+        });
+=======
+    auto device = ToBackend(GetDevice());
+    if (device->IsToggleEnabled(Toggle::GLDefer)) {
+        mCPUStaging.resize(GetAllocatedSize());
+        mMappedData = mCPUStaging.data();
+        return {};
+    }
+    return device->ExecuteGL(
+        ExecutionQueueBase::SubmitMode::Normal, [this](const OpenGLFunctions& gl) -> MaybeError {
+            DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, mBuffer));
+            mMappedData = DAWN_GL_TRY_ALWAYS_CHECK(
+                gl, MapBufferRange(GL_ARRAY_BUFFER, 0, GetAllocatedSize(), GL_MAP_WRITE_BIT));
+            return {};
+        });
+>>>>>>> CHANGE (493241c40dc94ca283c5e2b42a03911df870f359 [dawn][opengl] Fix size of MappedAtCreation mapping)
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
