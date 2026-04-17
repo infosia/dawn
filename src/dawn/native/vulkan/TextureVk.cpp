@@ -323,8 +323,8 @@ VkImageMemoryBarrier BuildMemoryBarrier(const Texture* texture,
     barrier.pNext = nullptr;
     barrier.srcAccessMask = VulkanAccessFlags(lastUsage, format);
     barrier.dstAccessMask = VulkanAccessFlags(usage, format);
-    barrier.oldLayout = VulkanImageLayout(format, lastUsage);
-    barrier.newLayout = VulkanImageLayout(format, usage);
+    barrier.oldLayout = texture->VulkanImageLayout(lastUsage);
+    barrier.newLayout = texture->VulkanImageLayout(usage);
     barrier.image = texture->GetHandle();
     barrier.subresourceRange.aspectMask = VulkanAspectMask(range.aspects);
     barrier.subresourceRange.baseMipLevel = range.baseMipLevel;
@@ -719,26 +719,46 @@ VkImageCreateFlags VulkanImageCreateFlags(const DeviceBase* device,
 // Chooses which Vulkan image layout should be used for the given Dawn usage. Note that this
 // layout must match the layout given to various Vulkan operations as well as the layout given
 // to descriptor set writes.
-VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) {
+VkImageLayout VulkanImageLayout(const Format& format,
+                                wgpu::TextureUsage usage,
+                                wgpu::TextureUsage allowedUsage = wgpu::TextureUsage::None) {
     if (usage == wgpu::TextureUsage::None) {
         return VK_IMAGE_LAYOUT_UNDEFINED;
     }
 
-    if (!wgpu::HasZeroOrOneBits(usage)) {
-        // sampled | (some sort of readonly depth-stencil aspect) is the only possible multi-bit
-        // usage, if more appear we will need additional special-casing.
-        DAWN_ASSERT(IsSubset(
-            usage, wgpu::TextureUsage::TextureBinding | kDepthReadOnlyStencilWritableAttachment |
-                       kDepthWritableStencilReadOnlyAttachment | kReadOnlyRenderAttachment));
+    if (allowedUsage == wgpu::TextureUsage::None) {
+        allowedUsage = usage;
+    }
 
-        if (IsSubset(kDepthReadOnlyStencilWritableAttachment, usage)) {
-            return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
-        } else if (IsSubset(kDepthWritableStencilReadOnlyAttachment, usage)) {
-            return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
+    if (!wgpu::HasZeroOrOneBits(usage)) {
+        // (sampled | (some sort of readonly depth-stencil aspect)) or
+        // (sampled | readonly storage) are the only possible multi-bit usages,
+        // if more appear we will need additional special-casing.
+
+        if (format.HasDepthOrStencil()) {
+            DAWN_ASSERT(IsSubset(usage, wgpu::TextureUsage::TextureBinding |
+                                            kDepthReadOnlyStencilWritableAttachment |
+                                            kDepthWritableStencilReadOnlyAttachment |
+                                            kReadOnlyRenderAttachment));
+
+            if (IsSubset(kDepthReadOnlyStencilWritableAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
+            } else if (IsSubset(kDepthWritableStencilReadOnlyAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
+            } else if (IsSubset(kReadOnlyRenderAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+            }
+
+            DAWN_UNREACHABLE();
         } else {
             DAWN_ASSERT(
-                IsSubset(usage, kReadOnlyRenderAttachment | wgpu::TextureUsage::TextureBinding));
-            return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+                IsSubset(usage, wgpu::TextureUsage::TextureBinding | kReadOnlyStorageTexture));
+
+            if (usage & kReadOnlyStorageTexture) {
+                return VK_IMAGE_LAYOUT_GENERAL;
+            }
+
+            DAWN_UNREACHABLE();
         }
     }
 
@@ -755,6 +775,12 @@ VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) 
             // VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL.
             if (format.HasDepthOrStencil() && format.IsRenderable()) {
                 return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+            }
+            // Sampled textures can be used simultaneously as read only storage. If storage usage is
+            // allowed fall back to VK_IMAGE_LAYOUT_GENERAL.
+            // TODO(crbug.com/392121643): Investigate potential optimizations.
+            if (allowedUsage & (wgpu::TextureUsage::StorageBinding | kReadOnlyStorageTexture)) {
+                return VK_IMAGE_LAYOUT_GENERAL;
             }
             return VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
@@ -914,6 +940,10 @@ void Texture::NotifySwapChainPresent() {
 
 void Texture::SetIsExternalSwapchainTexture(bool isSwapChainTexture) {
     mIsExternalSwapChainTexture = isSwapChainTexture;
+}
+
+VkImageLayout Texture::VulkanImageLayout(wgpu::TextureUsage usage) const {
+    return dawn::native::vulkan::VulkanImageLayout(GetFormat(), usage, GetUsage());
 }
 
 void Texture::SetLabelImpl() {
@@ -1416,8 +1446,7 @@ VkImageLayout Texture::GetCurrentLayout(Aspect aspect,
                                         uint32_t arrayLayer,
                                         uint32_t mipLevel) const {
     DAWN_ASSERT(GetFormat().aspects == Aspect::Color);
-    return VulkanImageLayout(GetFormat(),
-                             mSubresourceLastSyncInfos.Get(aspect, arrayLayer, mipLevel).usage);
+    return VulkanImageLayout(mSubresourceLastSyncInfos.Get(aspect, arrayLayer, mipLevel).usage);
 }
 
 bool Texture::UseCombinedAspects() const {
@@ -2302,6 +2331,10 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
 bool TextureView::IsYCbCrFilterable() const {
     DAWN_ASSERT(IsYCbCr());
     return mIsYCbCrFilterable;
+}
+
+VkImageLayout TextureView::VulkanImageLayout(wgpu::TextureUsage usage) const {
+    return dawn::native::vulkan::VulkanImageLayout(GetFormat(), usage, GetUsage());
 }
 
 void TextureView::SetLabelImpl() {
