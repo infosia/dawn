@@ -50,7 +50,7 @@ const core::ir::Capabilities kPolyfillUnaryCapabilities{
 struct UnaryPolyfillConfig {
     /// If true, polyfill f32 negation with bit manipulation.
     bool polyfill_f32_negation = false;
-    /// If true, polyfill f32 abs with sign() * x.
+    /// If true, polyfill f32 abs.
     bool polyfill_f32_abs = false;
 };
 

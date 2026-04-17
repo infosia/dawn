@@ -63,19 +63,19 @@ struct State {
         }
 
         for (auto* unary : unary_worklist) {
-            PolyfillF32Negation(unary);
+            PolyfillFloatNegation(unary);
         }
         for (auto* builtin : builtin_worklist) {
-            PolyfillF32Abs(builtin);
+            PolyfillFloatAbs(builtin);
         }
     }
 
-    void PolyfillF32Negation(core::ir::Unary* unary) {
+    void PolyfillFloatNegation(core::ir::Unary* unary) {
         auto* val = unary->Val();
         auto* type = val->Type();
 
-        // AMD mesa front end optimizer bug for unary negation and abs.
-        // Fixed in 25.3 - See crbug.com/448294721
+        // AMD mesa front end optimizer bug for unary f32 (and indirectly f16) negation and abs.
+        // Fixed in 25.3 - See crbug.com/448294721 and crbug.com/500099471
         // Note we use bitcast as a hammer to avoid the optimizer seeing through other possible
         // workarounds.
         b.InsertBefore(unary, [&] {
@@ -88,12 +88,12 @@ struct State {
         unary->Destroy();
     }
 
-    void PolyfillF32Abs(core::ir::CoreBuiltinCall* builtin) {
+    void PolyfillFloatAbs(core::ir::CoreBuiltinCall* builtin) {
         auto* val = builtin->Args()[0];
         auto* type = val->Type();
 
-        // AMD mesa front end optimizer bug for unary negation and abs.
-        // Fixed in 25.3 - See crbug.com/448294721
+        // AMD mesa front end optimizer bug for unary f32 (and indirectly f16) negation and abs.
+        // Fixed in 25.3 - See crbug.com/500099471
         // Note we use bitcast as a hammer to avoid the optimizer seeing through other possible
         // workarounds.
         b.InsertBefore(builtin, [&] {

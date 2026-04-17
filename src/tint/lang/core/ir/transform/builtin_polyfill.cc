@@ -66,8 +66,9 @@ struct State {
 
     /// Process the module.
     void Process() {
-        // Find the builtin call instructions that may need to be polyfilled.
-        Vector<ir::CoreBuiltinCall*, 4> worklist;
+        // Find the instructions that may need to be polyfilled.
+        Vector<ir::CoreBuiltinCall*, 4> builtin_worklist;
+        Vector<ir::CoreUnary*, 4> unary_worklist;
         for (auto* inst : ir.Instructions()) {
             if (auto* builtin = inst->As<ir::CoreBuiltinCall>()) {
                 switch (builtin->Func()) {
@@ -76,73 +77,78 @@ struct State {
                              builtin->Result()->Type()->IsIntegerScalarOrVector()) ||
                             (config.clamp_float &&
                              builtin->Result()->Type()->IsFloatScalarOrVector())) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kAbs:
                         if (config.abs_signed_int &&
                             builtin->Result()->Type()->IsSignedIntegerScalarOrVector()) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
+                        } else if (config.abs_f16 && builtin->Result()
+                                                         ->Type()
+                                                         ->DeepestElement()
+                                                         ->Is<core::type::F16>()) {
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kCountLeadingZeros:
                         if (config.count_leading_zeros) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kCountTrailingZeros:
                         if (config.count_trailing_zeros) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kDegrees:
                         if (config.degrees) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kDistance:
-                        if (config.distance_scalar_f32 &&
-                            builtin->Args()[0]->Type()->Is<core::type::F32>()) {
-                            worklist.Push(builtin);
+                        if (config.distance_scalar_float &&
+                            builtin->Args()[0]->Type()->IsFloatScalar()) {
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kSmoothstep:
-                        worklist.Push(builtin);
+                        builtin_worklist.Push(builtin);
                         break;
                     case core::BuiltinFn::kExtractBits:
                         if (config.extract_bits != BuiltinPolyfillLevel::kNone) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kFirstLeadingBit:
                         if (config.first_leading_bit) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kFirstTrailingBit:
                         if (config.first_trailing_bit) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kFwidthFine:
                         if (config.fwidth_fine) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kInsertBits:
                         if (config.insert_bits != BuiltinPolyfillLevel::kNone) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kLength:
-                        if (config.length_scalar_f32 &&
-                            builtin->Args()[0]->Type()->Is<core::type::F32>()) {
-                            worklist.Push(builtin);
+                        if (config.length_scalar_float &&
+                            builtin->Args()[0]->Type()->IsFloatScalar()) {
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kRadians:
                         if (config.radians) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kReflect:
@@ -150,7 +156,7 @@ struct State {
                             // Polyfill for vec2<f32>. See crbug.com/tint/1798
                             auto* vec_ty = builtin->Result()->Type()->As<core::type::Vector>();
                             if (vec_ty->Width() == 2 && vec_ty->Type()->Is<core::type::F32>()) {
-                                worklist.Push(builtin);
+                                builtin_worklist.Push(builtin);
                             }
                         }
                         break;
@@ -159,11 +165,11 @@ struct State {
                             builtin->Args()[0]->Type()->DeepestElement()->Is<core::type::F16>() &&
                             builtin->Args()[0]->Type()->IsFloatVector();
                         if ((is_vec_f16 && config.saturate_as_min_max) || config.saturate) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                     } break;
                     case core::BuiltinFn::kTextureSampleBias:
-                        worklist.Push(builtin);
+                        builtin_worklist.Push(builtin);
                         break;
                     case core::BuiltinFn::kTextureSampleBaseClampToEdge:
                         if (config.texture_sample_base_clamp_to_edge_2d_f32) {
@@ -171,14 +177,14 @@ struct State {
                                 builtin->Args()[0]->Type()->As<core::type::SampledTexture>();
                             if (tex && tex->Dim() == core::type::TextureDimension::k2d &&
                                 tex->Type()->Is<core::type::F32>()) {
-                                worklist.Push(builtin);
+                                builtin_worklist.Push(builtin);
                             }
                         }
                         break;
                     case core::BuiltinFn::kDot4U8Packed:
                     case core::BuiltinFn::kDot4I8Packed: {
                         if (config.dot_4x8_packed) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     }
@@ -188,13 +194,13 @@ struct State {
                     case core::BuiltinFn::kUnpack4XI8:
                     case core::BuiltinFn::kUnpack4XU8: {
                         if (config.pack_unpack_4x8) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     }
                     case core::BuiltinFn::kPack4XU8Clamp: {
                         if (config.pack_4xu8_clamp) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     }
@@ -203,29 +209,49 @@ struct State {
                     case core::BuiltinFn::kUnpack4X8Snorm:
                     case core::BuiltinFn::kUnpack4X8Unorm:
                         if (config.pack_unpack_4x8_norm) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     case core::BuiltinFn::kSubgroupBroadcast:
                         if (config.subgroup_broadcast_f16 &&
                             builtin->Result()->Type()->DeepestElement()->Is<core::type::F16>()) {
-                            worklist.Push(builtin);
+                            builtin_worklist.Push(builtin);
                         }
                         break;
                     default:
                         break;
                 }
+            } else if (auto* unary = inst->As<ir::CoreUnary>()) {
+                if (config.negate_f16 && unary->Op() == core::UnaryOp::kNegation &&
+                    unary->Result()->Type()->DeepestElement()->Is<core::type::F16>()) {
+                    unary_worklist.Push(unary);
+                }
+            }
+        }
+
+        // Polyfill the unary instructions that we found.
+        for (auto* unary : unary_worklist) {
+            switch (unary->Op()) {
+                case core::UnaryOp::kNegation:
+                    NegateF16(unary);
+                    break;
+                default:
+                    break;
             }
         }
 
         // Polyfill the builtin call instructions that we found.
-        for (auto* builtin : worklist) {
+        for (auto* builtin : builtin_worklist) {
             switch (builtin->Func()) {
                 case core::BuiltinFn::kClamp:
                     Clamp(builtin);
                     break;
                 case core::BuiltinFn::kAbs:
-                    AbsSignedInt(builtin);
+                    if (builtin->Result()->Type()->DeepestElement()->Is<core::type::F16>()) {
+                        AbsF16(builtin);
+                    } else {
+                        AbsSignedInt(builtin);
+                    }
                     break;
                 case core::BuiltinFn::kCountLeadingZeros:
                     CountLeadingZeros(builtin);
@@ -237,7 +263,7 @@ struct State {
                     Degrees(builtin);
                     break;
                 case core::BuiltinFn::kDistance:
-                    DistanceScalarF32(builtin);
+                    DistanceScalarFloat(builtin);
                     break;
                 case core::BuiltinFn::kSmoothstep:
                     SmoothStep(builtin);
@@ -258,7 +284,7 @@ struct State {
                     InsertBits(builtin);
                     break;
                 case core::BuiltinFn::kLength:
-                    LengthScalarF32(builtin);
+                    LengthScalarFloat(builtin);
                     break;
                 case core::BuiltinFn::kRadians:
                     Radians(builtin);
@@ -441,6 +467,32 @@ struct State {
         call->Destroy();
     }
 
+    /// Polyfill a `abs()` builtin call for f16.
+    /// @param call the builtin call instruction
+    void AbsF16(ir::CoreBuiltinCall* call) {
+        auto* arg = call->Args()[0];
+        auto* ty_f32 = ty.MatchWidth(ty.f32(), arg->Type());
+        b.InsertBefore(call, [&] {
+            auto* f32_val = b.Convert(ty_f32, arg);
+            auto* f32_abs = b.Call(ty_f32, core::BuiltinFn::kAbs, f32_val);
+            b.ConvertWithResult(call->DetachResult(), f32_abs->Result(0));
+        });
+        call->Destroy();
+    }
+
+    /// Polyfill a `negation` unary op for f16.
+    /// @param unary the unary instruction
+    void NegateF16(ir::CoreUnary* unary) {
+        auto* arg = unary->Val();
+        auto* ty_f32 = ty.MatchWidth(ty.f32(), arg->Type());
+        b.InsertBefore(unary, [&] {
+            auto* f32_val = b.Convert(ty_f32, arg);
+            auto* f32_neg = b.Negation(f32_val);
+            b.ConvertWithResult(unary->DetachResult(), f32_neg->Result(0));
+        });
+        unary->Destroy();
+    }
+
     /// Polyfill a `abs()` builtin call for signed integers.
     /// @param call the builtin call instruction
     void AbsSignedInt(ir::CoreBuiltinCall* call) {
@@ -577,9 +629,9 @@ struct State {
         call->Destroy();
     }
 
-    /// Polyfill a `distance()` builtin call for scalar f32.
+    /// Polyfill a `distance()` builtin call for scalar f32 and f16.
     /// @param call the builtin call instruction
-    void DistanceScalarF32(ir::CoreBuiltinCall* call) {
+    void DistanceScalarFloat(ir::CoreBuiltinCall* call) {
         // distance(x, y) -> abs(x - y)
         b.InsertBefore(call, [&] {
             auto* sub = b.Subtract(call->Args()[0], call->Args()[1]);
@@ -892,9 +944,9 @@ struct State {
         }
     }
 
-    /// Polyfill a `length()` builtin call for scalar f32.
+    /// Polyfill a `length()` builtin call for scalar f32 and f16.
     /// @param call the builtin call instruction
-    void LengthScalarF32(ir::CoreBuiltinCall* call) {
+    void LengthScalarFloat(ir::CoreBuiltinCall* call) {
         // length(x) -> abs(x)
         b.InsertBefore(call, [&] {
             b.CallWithResult(call->DetachResult(), core::BuiltinFn::kAbs, call->Args()[0]);
@@ -966,7 +1018,7 @@ struct State {
             one = b.MatchWidth(1_h, type);
         }
 
-        // Intel mesa incorrectly performs saturate on vec f16 loads from uniforms.
+        // Intel Mesa incorrectly performs saturate on vec f16 loads from uniforms.
         // Note: to avoid compiler pattern matching, we do the min then the max which is
         // functionally different than doing the max then the min for high/low swapped (this doesnt
         // matter in the case with saturate). See crbug.com/448873316
