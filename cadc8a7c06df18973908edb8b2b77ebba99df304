@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4eb8058a_7e1c6b7e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T03:56:58Z",
+      "side": 1,
+      "message": "correct. The worry is that length and distance for scalars will be just fabs under the hood. Whereas vector will be dot and sqr. Of course there may be optimizations for constant data or partially constant data. However those might not hit the bug so again this is defense in depth.",
+      "parentUuid": "605068a8_3041fdb0",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12881811_7560c099",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 8
@@ -100,6 +118,24 @@
       "writtenOn": "2026-04-16T20:54:58Z",
       "side": 1,
       "message": "Does this mean for f16 we are now doing f16-\u003ef32-\u003eu32-\u003exor and then pop all the way back up? That feels like a lot of conversion. I guess if it\u0027s necessary it\u0027s necessary, but assuming the f16-\u003ef32 conversion is the more expensive op in there it would be nice if we could do the bit manipulation on 16-bit type directly. Maybe that\u0027s not possible due to not having u16 types in our IR.",
+      "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f604d80a_38d1aaa4",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-17T03:56:58Z",
+      "side": 1,
+      "message": "I dont want to be dependent on 16 bit types. (I am not sure the state of 16 bit types in vulkan)\n\nThis code will only exist on older driver versions of mesa on AMD.",
+      "parentUuid": "e5c6d04b_403ab537",
       "revId": "cadc8a7c06df18973908edb8b2b77ebba99df304",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
