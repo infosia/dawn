@@ -34,6 +34,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Assert.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/wire/Wire.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "dawn/wire/WireDeserializeAllocator.h"
@@ -55,9 +56,10 @@ class ChunkedCommandHandler : public CommandHandler {
     // must be called in a thread-safe manner, we do not need to explicitly synchronize access to
     // this map.
     struct ChunkedCommand {
-        size_t remainingSize = 0;
         size_t putOffset = 0;
-        std::unique_ptr<char[]> data = nullptr;
+        ityp::heap_array<size_t, char> data;
+
+        size_t remainingSize() const { return data.size() - putOffset; }
     };
     absl::flat_hash_map<uint64_t, ChunkedCommand> mChunkedCommands;
 };
