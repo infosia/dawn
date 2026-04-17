@@ -58,7 +58,6 @@ VkImageCreateFlags VulkanImageCreateFlags(const DeviceBase* device,
                                           wgpu::TextureUsage usage,
                                           const Format& format,
                                           uint32_t sampleCount);
-VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage);
 VkImageLayout VulkanImageLayoutForDepthStencilAttachment(const Format& format,
                                                          bool depthReadOnly,
                                                          bool stencilReadOnly);
@@ -116,6 +115,8 @@ class Texture : public TextureBase {
     void NotifySwapChainPresent();
 
     void SetIsExternalSwapchainTexture(bool isSwapChainTexture);
+
+    VkImageLayout VulkanImageLayout(wgpu::TextureUsage usage) const;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -333,6 +334,8 @@ class TextureView final : public TextureViewBase, public WeakRefSupport<TextureV
     ResultOrError<VkImageView> GetOrCreate2DViewOn3D(uint32_t depthSlice = 0u);
 
     bool IsYCbCrFilterable() const override;
+
+    VkImageLayout VulkanImageLayout(wgpu::TextureUsage usage) const;
 
     // Unique per-device.
     uint64_t GetTextureViewId() const { return mTextureViewId; }
