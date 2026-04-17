@@ -1464,6 +1464,7 @@ dxcompiler_sourceset("lib_dxilpixpasses") {
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilAddPixelHitInstrumentation.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilAnnotateWithVirtualRegister.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilDbgValueToDbgDeclare.cpp",
+    "$dawn_dxc_dir/lib/DxilPIXPasses/DxilDebugBreakInstrumentation.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilDebugInstrumentation.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilForceEarlyZ.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilNonUniformResourceIndexInstrumentation.cpp",
