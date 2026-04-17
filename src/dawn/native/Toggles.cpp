@@ -788,6 +788,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
       "synchronization is enabled.",
       "https://crbug.com/412761228", ToggleStage::Device}},
+    {Toggle::SpontaneousQueueEvents,
+     {"spontaneous_queue_events",
+      "Queue events spontaneously complete, either via a dedicated Dawn owned thread, or backend "
+      "specific implementations.",
+      "https://crbug.com/412761228", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
