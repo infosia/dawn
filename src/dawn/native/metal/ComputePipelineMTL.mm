@@ -114,4 +114,24 @@ bool ComputePipeline::RequiresStorageBufferLength() const {
     return mRequiresStorageBufferLength;
 }
 
+ShaderStatisticsData ComputePipeline::GetShaderStatisticsImpl() const {
+    ShaderStatisticsData result;
+    id<MTLComputePipelineState> pipelineState = mMtlComputePipelineState.Get();
+    if (pipelineState == nil) {
+        return result;
+    }
+
+    ShaderStageStatisticsData stageData;
+    stageData.stage = wgpu::ShaderStage::Compute;
+    stageData.core.maxThreadsPerGroup = [pipelineState maxTotalThreadsPerThreadgroup];
+    stageData.core.simdWidth = [pipelineState threadExecutionWidth];
+    stageData.core.threadgroupMemoryBytes = [pipelineState staticThreadgroupMemoryLength];
+    stageData.core.validFields = wgpu::ShaderStatisticValidField::MaxThreadsPerGroup |
+                                 wgpu::ShaderStatisticValidField::SimdWidth |
+                                 wgpu::ShaderStatisticValidField::ThreadgroupMemoryBytes;
+
+    result.stages.push_back(std::move(stageData));
+    return result;
+}
+
 }  // namespace dawn::native::metal

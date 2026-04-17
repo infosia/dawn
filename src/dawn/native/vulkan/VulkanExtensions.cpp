@@ -155,6 +155,7 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
     {DeviceExt::CooperativeMatrix, "VK_KHR_cooperative_matrix"},
     {DeviceExt::MultisampledRenderToSingleSampled, "VK_EXT_multisampled_render_to_single_sampled"},
     {DeviceExt::PhysicalDeviceDrm, "VK_EXT_physical_device_drm"},
+    {DeviceExt::PipelineExecutableProperties, "VK_KHR_pipeline_executable_properties"},
 
     {DeviceExt::ExternalMemoryAndroidHardwareBuffer,
      "VK_ANDROID_external_memory_android_hardware_buffer"},
@@ -231,6 +232,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::ExternalSemaphoreZirconHandle:
             case DeviceExt::QueueFamilyForeign:
             case DeviceExt::PhysicalDeviceDrm:
+            case DeviceExt::PipelineExecutableProperties:
             case DeviceExt::ExtendedDynamicState:
                 hasDependencies = true;
                 break;

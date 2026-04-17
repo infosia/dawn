@@ -29,8 +29,11 @@
 
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/ShaderStatistics.h"
+#include "dawn/native/Toggles.h"
 
 namespace dawn::native {
 
@@ -74,6 +77,15 @@ ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
 
 MaybeError ComputePipelineBase::InitializeWithShaders() {
     DAWN_TRY_ASSIGN(mWorkgroupSize, InitializeImpl());
+    if (GetDevice()->HasFeature(Feature::ShaderStatistics) &&
+        (GetDevice()->IsToggleEnabled(Toggle::WarnOnShaderSpill) ||
+         GetDevice()->IsToggleEnabled(Toggle::WarnOnHighRegisterPressure) ||
+         GetDevice()->IsToggleEnabled(Toggle::LogShaderStatistics))) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+        AnalyzeAndWarn(GetDevice(), mShaderStatisticsCache->data);
+    }
     return {};
 }
 
@@ -124,6 +136,23 @@ ObjectType ComputePipelineBase::GetType() const {
 bool ComputePipelineBase::EqualityFunc::operator()(const ComputePipelineBase* a,
                                                    const ComputePipelineBase* b) const {
     return PipelineBase::EqualForCache(a, b);
+}
+
+ShaderStatisticsData ComputePipelineBase::GetShaderStatisticsImpl() const {
+    return {};
+}
+
+wgpu::Status ComputePipelineBase::APIGetShaderStatistics(ShaderStatistics* statistics) {
+    if (!GetDevice()->HasFeature(Feature::ShaderStatistics)) {
+        return wgpu::Status::Error;
+    }
+    if (!mShaderStatisticsCache.has_value()) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+    }
+    *reinterpret_cast<wgpu::ShaderStatistics*>(statistics) = mShaderStatisticsCache->GetCApiView();
+    return wgpu::Status::Success;
 }
 
 }  // namespace dawn::native

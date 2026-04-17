@@ -39,9 +39,12 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/ShaderStatistics.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 
@@ -1087,7 +1090,17 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
 }
 
 MaybeError RenderPipelineBase::InitializeWithShaders() {
-    return InitializeImpl();
+    DAWN_TRY(InitializeImpl());
+    if (GetDevice()->HasFeature(Feature::ShaderStatistics) &&
+        (GetDevice()->IsToggleEnabled(Toggle::WarnOnShaderSpill) ||
+         GetDevice()->IsToggleEnabled(Toggle::WarnOnHighRegisterPressure) ||
+         GetDevice()->IsToggleEnabled(Toggle::LogShaderStatistics))) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+        AnalyzeAndWarn(GetDevice(), mShaderStatisticsCache->data);
+    }
+    return {};
 }
 
 RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
@@ -1499,6 +1512,23 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
     }
 
     return true;
+}
+
+ShaderStatisticsData RenderPipelineBase::GetShaderStatisticsImpl() const {
+    return {};
+}
+
+wgpu::Status RenderPipelineBase::APIGetShaderStatistics(ShaderStatistics* statistics) {
+    if (!GetDevice()->HasFeature(Feature::ShaderStatistics)) {
+        return wgpu::Status::Error;
+    }
+    if (!mShaderStatisticsCache.has_value()) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+    }
+    *reinterpret_cast<wgpu::ShaderStatistics*>(statistics) = mShaderStatisticsCache->GetCApiView();
+    return wgpu::Status::Success;
 }
 
 }  // namespace dawn::native

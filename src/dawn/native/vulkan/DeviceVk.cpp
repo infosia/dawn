@@ -654,6 +654,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.descriptorIndexingFeatures);
     }
 
+    if (HasFeature(Feature::ShaderStatistics)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::PipelineExecutableProperties));
+        usedKnobs.pipelineExecutablePropertiesFeatures.pipelineExecutableInfo = VK_TRUE;
+        featuresChain.Add(
+            &usedKnobs.pipelineExecutablePropertiesFeatures,
+            VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR);
+    }
+
     // Determine what Vulkan render pass method will be used for the device.
     // Dynamic Rendering can be used if the extension is available AND the DawnLoadResolveTexture
     // feature is not being used.

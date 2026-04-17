@@ -30,6 +30,7 @@
 
 #include <array>
 #include <bitset>
+#include <optional>
 #include <vector>
 
 #include "dawn/common/ContentLessObjectCacheable.h"
@@ -38,6 +39,7 @@
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Pipeline.h"
+#include "dawn/native/ShaderStatistics.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
@@ -147,6 +149,8 @@ class RenderPipelineBase : public PipelineBase,
 
     const AttachmentState* GetAttachmentState() const;
 
+    wgpu::Status APIGetShaderStatistics(ShaderStatistics* statistics);
+
     // Functions necessary for the unordered_set<RenderPipelineBase*>-based cache.
     size_t ComputeContentHash() override;
 
@@ -158,6 +162,7 @@ class RenderPipelineBase : public PipelineBase,
 
   protected:
     void DestroyImpl(DestroyReason reason) override;
+    virtual ShaderStatisticsData GetShaderStatisticsImpl() const;
 
   private:
     RenderPipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -193,6 +198,7 @@ class RenderPipelineBase : public PipelineBase,
     bool mUsesVertexIndex = false;
     bool mUsesInstanceIndex = false;
     bool mUsesFramebufferFetch = false;
+    mutable std::optional<ShaderStatisticsCache> mShaderStatisticsCache;
 };
 
 }  // namespace dawn::native

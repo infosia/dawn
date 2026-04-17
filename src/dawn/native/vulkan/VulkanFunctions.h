@@ -387,6 +387,10 @@ struct VulkanFunctions {
     VkFn<PFN_vkImportSemaphoreFdKHR> ImportSemaphoreFdKHR = nullptr;
     VkFn<PFN_vkGetSemaphoreFdKHR> GetSemaphoreFdKHR = nullptr;
 
+    // VK_KHR_pipeline_executable_properties
+    VkFn<PFN_vkGetPipelineExecutablePropertiesKHR> GetPipelineExecutablePropertiesKHR = nullptr;
+    VkFn<PFN_vkGetPipelineExecutableStatisticsKHR> GetPipelineExecutableStatisticsKHR = nullptr;
+
     // VK_KHR_swapchain
     VkFn<PFN_vkCreateSwapchainKHR> CreateSwapchainKHR = nullptr;
     VkFn<PFN_vkDestroySwapchainKHR> DestroySwapchainKHR = nullptr;
