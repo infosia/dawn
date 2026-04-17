@@ -37,7 +37,7 @@ def _apply_linux_cmake_builder_defaults(kwargs):
     # builds. The newer CPUs used by n2-standard-8 GCE instances result in
     # significantly faster local compile times.
     kwargs.setdefault("machine_type", "n2-standard-8")
-    kwargs.setdefault("os", os.LINUX_NOBLE)
+    kwargs.setdefault("os", os.LINUX_DEFAULT)
     kwargs.setdefault("ssd", None)
     return kwargs
 
