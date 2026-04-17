@@ -37,6 +37,7 @@
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
+#include "dawn/common/Atomic.h"
 #include "dawn/common/ContentLessObjectCache.h"
 #include "dawn/common/Defer.h"
 #include "dawn/common/Mutex.h"
@@ -682,8 +683,12 @@ class DeviceBase : public ErrorSink,
     std::string mIsolatedEntryPointName;
     std::unique_ptr<BlobCache> mBlobCache;
 
-    // We cache this toggle so that we can check it without locking the device.
+    // We cache these toggles so that we can check them without locking the device.
     bool mIsImmediateErrorHandlingEnabled = false;
+    // Relaxed ordering is sufficient: whatever objects we want to validate should have their
+    // creations/modifications happen before any encoder records commands that check this flag,
+    // either on the same thread or via external synchronization.
+    Atomic<bool, std::memory_order::relaxed> mIsValidationEnabled{true};
 
     // This pointer is non-null if Feature::ImplicitDeviceSynchronization is turned on. Note that
     // this is a currently a recursive lock, but should only really be used recursively for error

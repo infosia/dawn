@@ -49,7 +49,6 @@ ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
                                          EncodingContext* encodingContext)
     : ApiObjectBase(device, label),
       mEncodingContext(encodingContext),
-      mValidationEnabled(device->IsValidationEnabled()),
       mNeedsIndirectGPUValidation(device->NeedsIndirectGPUValidation()) {}
 
 ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
@@ -58,11 +57,10 @@ ProgrammableEncoder::ProgrammableEncoder(DeviceBase* device,
                                          StringView label)
     : ApiObjectBase(device, errorTag, label),
       mEncodingContext(encodingContext),
-      mValidationEnabled(device->IsValidationEnabled()),
       mNeedsIndirectGPUValidation(device->NeedsIndirectGPUValidation()) {}
 
 bool ProgrammableEncoder::IsValidationEnabled() const {
-    return mValidationEnabled;
+    return GetDevice()->IsValidationEnabled();
 }
 
 bool ProgrammableEncoder::NeedsIndirectGPUValidation() const {
