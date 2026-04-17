@@ -725,20 +725,34 @@ VkImageLayout VulkanImageLayout(const Format& format, wgpu::TextureUsage usage) 
     }
 
     if (!wgpu::HasZeroOrOneBits(usage)) {
-        // sampled | (some sort of readonly depth-stencil aspect) is the only possible multi-bit
-        // usage, if more appear we will need additional special-casing.
-        DAWN_ASSERT(IsSubset(
-            usage, wgpu::TextureUsage::TextureBinding | kDepthReadOnlyStencilWritableAttachment |
-                       kDepthWritableStencilReadOnlyAttachment | kReadOnlyRenderAttachment));
+        // (sampled | (some sort of readonly depth-stencil aspect)) or
+        // (sampled | readonly storage) are the only possible multi-bit usages,
+        // if more appear we will need additional special-casing.
 
-        if (IsSubset(kDepthReadOnlyStencilWritableAttachment, usage)) {
-            return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
-        } else if (IsSubset(kDepthWritableStencilReadOnlyAttachment, usage)) {
-            return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
+        if (format.HasDepthOrStencil()) {
+            DAWN_CHECK(IsSubset(usage, wgpu::TextureUsage::TextureBinding |
+                                           kDepthReadOnlyStencilWritableAttachment |
+                                           kDepthWritableStencilReadOnlyAttachment |
+                                           kReadOnlyRenderAttachment));
+
+            if (IsSubset(kDepthReadOnlyStencilWritableAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
+            } else if (IsSubset(kDepthWritableStencilReadOnlyAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
+            } else if (IsSubset(kReadOnlyRenderAttachment, usage)) {
+                return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+            }
+
+            DAWN_UNREACHABLE();
         } else {
-            DAWN_ASSERT(
-                IsSubset(usage, kReadOnlyRenderAttachment | wgpu::TextureUsage::TextureBinding));
-            return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
+            DAWN_CHECK(
+                IsSubset(usage, wgpu::TextureUsage::TextureBinding | kReadOnlyStorageTexture));
+
+            if (IsSubset(kReadOnlyStorageTexture, usage)) {
+                return VK_IMAGE_LAYOUT_GENERAL;
+            }
+
+            DAWN_UNREACHABLE();
         }
     }
 
