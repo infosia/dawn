@@ -665,6 +665,24 @@
       "message": "This is going to cause a second lookup in the metadata buffer even in the success case because there\u0027s one in getResource and a second one here that may or may not be the same. It\u0027s ok for now, but can we have a TODO to optimize it to remove the double pointer chasing?",
       "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ece69346_6c4a336b",
+        "filename": "src/tint/lang/core/ir/transform/resource_table.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-17T17:44:38Z",
+      "side": 1,
+      "message": "https://g-issues.chromium.org/issues/503755700",
+      "parentUuid": "47f1cdac_46d223ac",
+      "revId": "f6c8ecf96265a93e31cba7dfdf49236aebb91109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
