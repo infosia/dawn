@@ -165,7 +165,7 @@ MaybeError Buffer::InitializeAsExternalBuffer(ComPtr<ID3D12Resource> d3d12Buffer
     mAllocatedSize = descriptor->size;
     AllocationInfo info;
     info.mMethod = AllocationMethod::kExternal;
-    info.mRequestedSize = mAllocatedSize;
+    info.mRequestedSize = mAllocatedSize.value();
     mResourceAllocation = {info, 0, std::move(d3d12Buffer), nullptr, ResourceHeapKind::InvalidEnum};
     return {};
 }
@@ -186,7 +186,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     D3D12_RESOURCE_DESC resourceDescriptor;
     resourceDescriptor.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
     resourceDescriptor.Alignment = 0;
-    resourceDescriptor.Width = mAllocatedSize;
+    resourceDescriptor.Width = mAllocatedSize.value();
     resourceDescriptor.Height = 1;
     resourceDescriptor.DepthOrArraySize = 1;
     resourceDescriptor.MipLevels = 1;
@@ -315,8 +315,8 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
                                                        IID_PPV_ARGS(&placedResource)),
         "ID3D12Device::CreatePlacedResource"));
 
-    mResourceAllocation = {AllocationInfo{0, AllocationMethod::kExternal, mAllocatedSize}, 0,
-                           std::move(placedResource),
+    mResourceAllocation = {AllocationInfo{0, AllocationMethod::kExternal, mAllocatedSize.value()},
+                           0, std::move(placedResource),
                            /* heap is external, and not tracked for residency */ nullptr,
                            ResourceHeapKind::InvalidEnum};
     mHostMappedHeap = std::move(heap);
