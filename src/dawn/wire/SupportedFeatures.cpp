@@ -42,7 +42,6 @@ bool IsFeatureSupported(WGPUFeatureName feature) {
         case WGPUFeatureName_DawnFormatCapabilities:
         case WGPUFeatureName_DawnDrmFormatCapabilities:
         case WGPUFeatureName_RenderPassRenderArea:
-        case WGPUFeatureName_DawnNativeSpontaneousQueueEvents:
         case WGPUFeatureName_AdapterPropertiesDrm:
             return false;
         // NOTE: SharedTextureMemory/SharedFence are not actually intended

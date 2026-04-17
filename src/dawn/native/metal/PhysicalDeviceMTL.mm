@@ -424,6 +424,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::DisableBaseInstance, !haveBaseVertexBaseInstance);
     }
 
+    // Metal queue events are, by default, triggered via the Metal threads, and so are always
+    // spontaneous.
+    deviceToggles->Default(Toggle::SpontaneousQueueEvents, true);
+
     // Vertex buffer robustness is implemented by using programmable vertex pulling. The
     // VertexPulling transform also handles non-4-byte aligned vertex buffer accesses.
     deviceToggles->Default(Toggle::MetalEnableVertexPulling, true);
@@ -666,7 +670,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 #endif
 
     EnableFeature(Feature::DawnMultiPlanarFormats);
-    EnableFeature(Feature::DawnNativeSpontaneousQueueEvents);
     EnableFeature(Feature::MultiPlanarFormatP010);
     EnableFeature(Feature::MultiPlanarRenderTargets);
     EnableFeature(Feature::MultiPlanarFormatExtendedUsages);

@@ -471,12 +471,6 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "render_pass_render_area.md",
       FeatureInfo::FeatureState::Experimental}},
-    {Feature::DawnNativeSpontaneousQueueEvents,
-     {"Support spontaneous queue event completion in native. When this feature is supported and "
-      "enabled, queue events may complete spontaneously on any thread.",
-      "https://github.com/webgpu-native/webgpu-headers/blob/main/doc/articles/"
-      "Asynchronous%20Operations.md",
-      FeatureInfo::FeatureState::Stable}},
 
     // Comment to separate the } so it is clearer what to copy-paste to add a feature.
 };

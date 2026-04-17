@@ -330,8 +330,6 @@ class DawnTestBase {
     bool IsX86() const;
     bool Is32Bit() const;
 
-    bool BackendDeviceHasFeature(wgpu::FeatureName feature) const;
-
     bool IsMesa(const std::string& mesaVersion = "") const;
 
     bool UsesWire() const;
