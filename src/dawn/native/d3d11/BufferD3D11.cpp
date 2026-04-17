@@ -32,10 +32,10 @@
 #include <utility>
 #include <vector>
 
-#include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/DynamicUploader.h"
@@ -211,28 +211,31 @@ class UploadBuffer final : public Buffer {
   private:
     // BufferBase implementations
     MaybeError MapAtCreationImpl() override {
-        mMappedData = mUploadData.get();
+        mMappedData = mUploadData.data();
         // MapAtCreation does the zeroization on the front-end side.
         return {};
     }
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
-        mMappedData = mUploadData.get();
+        mMappedData = mUploadData.data();
         return EnsureDataInitialized(nullptr);
     }
     void UnmapImpl(BufferState oldState, BufferState newState) override { mMappedData = nullptr; }
 
     // d3d11::Buffer implementations
     MaybeError InitializeInternal() override {
-        mUploadData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(GetAllocatedSize()));
-        if (mUploadData == nullptr) {
+        // SAFETY: If mapped at creation, the frontend initializes the mapping. If mapped async,
+        // it's initialized above in MapAsyncImpl. If used with MapInternal, the caller is
+        // responsible for initializing.
+        mUploadData = ityp::heap_array<size_t, uint8_t>::Uninit(GetAllocatedSize(), std::nothrow);
+        if (!mUploadData) {
             return DAWN_OUT_OF_MEMORY_ERROR("Failed to allocate memory for buffer uploading.");
         }
         return {};
     }
 
     MaybeError MapInternal(const ScopedCommandRecordingContext*, wgpu::MapMode) override {
-        mMappedData = mUploadData.get();
+        mMappedData = mUploadData.data();
         return {};
     }
 
@@ -242,7 +245,7 @@ class UploadBuffer final : public Buffer {
                              uint8_t clearValue,
                              uint64_t offset,
                              uint64_t size) override {
-        memset(mUploadData.get() + offset, clearValue, size);
+        std::ranges::fill(mUploadData.subspan(offset, size), clearValue);
         return {};
     }
 
@@ -252,7 +255,7 @@ class UploadBuffer final : public Buffer {
                               Buffer* destination,
                               uint64_t destinationOffset) override {
         return destination->WriteInternal(commandContext, destinationOffset,
-                                          mUploadData.get() + sourceOffset, size,
+                                          mUploadData.data() + sourceOffset, size,
                                           /*isInitialWrite=*/false);
     }
 
@@ -271,12 +274,12 @@ class UploadBuffer final : public Buffer {
                              const void* data,
                              size_t size,
                              bool isInitialWrite) override {
-        const auto* src = static_cast<const uint8_t*>(data);
-        std::copy(src, src + size, mUploadData.get() + offset);
+        std::ranges::copy(std::span{static_cast<const uint8_t*>(data), size},
+                          mUploadData.subspan(offset).begin());
         return {};
     }
 
-    std::unique_ptr<uint8_t[]> mUploadData;
+    ityp::heap_array<size_t, uint8_t> mUploadData;
 };
 
 bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
@@ -414,12 +417,15 @@ MaybeError Buffer::MapAtCreationImpl() {
         ToBackend(GetDevice()->GetQueue())
             ->TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Normal);
     if (maybeCommandContext.has_value()) {
+        // SAFETY: Frontend is responsible for initializing MapAtCreation memory.
         return MapInternal(&maybeCommandContext.value(), mAutoMapMode | wgpu::MapMode::Write);
     }
 
-    // Lock could not be acquired, use temporary storage instead
-    mMapAtCreationData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(GetAllocatedSize()));
-    mMappedData = mMapAtCreationData.get();
+    // Lock could not be acquired, use temporary storage instead.
+    // SAFETY: Frontend is responsible for initializing MapAtCreation memory.
+    mMapAtCreationData =
+        ityp::heap_array<size_t, uint8_t>::Uninit(GetAllocatedSize(), std::nothrow);
+    mMappedData = mMapAtCreationData.data();
     return {};
 }
 
@@ -445,8 +451,8 @@ MaybeError Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandCon
         ScopedMap scopedMap;
         DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
         DAWN_ASSERT(scopedMap.GetMappedData());
-        memcpy(scopedMap.GetMappedData(), mMapAtCreationData.get(), GetAllocatedSize());
-        mMapAtCreationData.reset();
+        std::ranges::copy(mMapAtCreationData, scopedMap.GetMappedData());
+        mMapAtCreationData = {};
         return {};
     }
 
@@ -537,6 +543,7 @@ MaybeError Buffer::TryMapNow(ScopedCommandRecordingContext* commandContext,
     // - If mode is Read, it's only possible to map staging buffer. In that case,
     // D3D11_MAP_READ_WRITE will be used, hence the mapped pointer will also be writable.
     // TODO(dawn:1705): make sure the map call is not blocked by the GPU operations.
+    // FIXME: What initializes this memory?
     DAWN_TRY(MapInternal(commandContext, mode));
 
     return {};
@@ -790,6 +797,7 @@ ResultOrError<Buffer::ScopedMap> Buffer::ScopedMap::Create(
         return ScopedMap(commandContext, buffer, /*needsUnmap=*/false);
     }
 
+    // FIXME: What initializes this memory?
     DAWN_TRY(buffer->MapInternal(commandContext, mode));
     return ScopedMap(commandContext, buffer, /*needsUnmap=*/true);
 }
@@ -1491,11 +1499,13 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
         // |..........................| leftExtraBytes |     data   | ............... |
         // |<----------------- offset ---------------->|<-- size -->|
         // |<----- alignedOffset ---->|<--------- alignedSize --------->|
-        std::unique_ptr<uint8_t[]> alignedBuffer;
+        ityp::heap_array<size_t, uint8_t> alignedBuffer;
         if (size != alignedSize) {
-            alignedBuffer.reset(new uint8_t[alignedSize]);
-            std::memcpy(alignedBuffer.get() + leftExtraBytes, data, size);
-            data = alignedBuffer.get();
+            // SAFETY: The copy() should initialize all memory that actually gets read.
+            alignedBuffer = ityp::heap_array<size_t, uint8_t>::Uninit(alignedSize);
+            std::ranges::copy(std::span{static_cast<const uint8_t*>(data), size},
+                              alignedBuffer.begin() + leftExtraBytes);
+            data = alignedBuffer.data();
         }
 
         D3D11_BOX dstBox;
