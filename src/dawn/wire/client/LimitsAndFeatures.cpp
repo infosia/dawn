@@ -28,6 +28,7 @@
 #include "dawn/wire/client/LimitsAndFeatures.h"
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/wire/SupportedFeatures.h"
 #include "src/utils/compiler.h"
 
@@ -75,22 +76,9 @@ void LimitsAndFeatures::ToSupportedFeatures(WGPUSupportedFeatures* supportedFeat
         return;
     }
 
-    const size_t count = mFeatures.size();
-    supportedFeatures->featureCount = count;
-    supportedFeatures->features = nullptr;
-
-    if (count == 0) {
-        return;
-    }
-
     // This will be freed by wgpuSupportedFeaturesFreeMembers.
-    WGPUFeatureName* features = new WGPUFeatureName[count];
-    uint32_t index = 0;
-    for (WGPUFeatureName f : mFeatures) {
-        DAWN_UNSAFE_TODO(features[index++]) = f;
-    }
-    DAWN_ASSERT(index == count);
-    supportedFeatures->features = features;
+    std::tie(supportedFeatures->featureCount, supportedFeatures->features) =
+        ityp::HeapArrayFrom<size_t>(mFeatures).AcquireRaw();
 }
 
 void LimitsAndFeatures::SetLimits(const WGPULimits* limits) {
