@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 
 #include <algorithm>
+#include <concepts>
 #include <limits>
 #include <memory>
 #include <utility>
@@ -42,6 +43,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
@@ -209,6 +211,8 @@ VkRect2D GetAlignedRenderArea(Device* device,
 
 class DescriptorSetTracker : public BindGroupTrackerBase<true> {
   public:
+    DescriptorSetTracker() = default;
+
     bool AreLayoutsCompatible() override {
         return mPipelineLayout == mLastAppliedPipelineLayout &&
                mLastAppliedImmediateConstantSize == mImmediateConstantSize;
@@ -229,6 +233,31 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         mVkLayout = pipeline->GetVkLayout();
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+        if (auto* renderPipeline = pipeline->AsRenderPipeline()) {
+            mFramebufferFetchEnabled = renderPipeline->UsesFramebufferFetch();
+        } else {
+            mFramebufferFetchEnabled = false;
+        }
+    }
+
+    MaybeError BindFramebufferFetchDescriptorSet(Device* device,
+                                                 CommandRecordingContext* recordingContext,
+                                                 BeginRenderPassCmd* cmd) {
+        DAWN_CHECK(mFramebufferFetchEnabled);
+
+        if (mHasBoundFramebufferFetchDescriptorSet) {
+            return {};
+        }
+
+        VkDescriptorSet set;
+        DAWN_TRY_ASSIGN(set, device->GetFramebufferFetchHelper()->CreateDescriptorSet(cmd));
+
+        device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer,
+                                         VK_PIPELINE_BIND_POINT_GRAPHICS, mVkLayout, 0, 1, &*set, 0,
+                                         nullptr);
+        mHasBoundFramebufferFetchDescriptorSet = true;
+
+        return {};
     }
 
     void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
@@ -247,11 +276,23 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
                F GetDescriptorSet) {
         BeforeApply();
 
+        BindGroupIndex startOfBindGroups{0u};
+
+        if (mFramebufferFetchEnabled) {
+            // When FramebufferFetch is enabled all BindGroups are shifted by 1, even if nothing
+            // has been bound to that descriptor set yet due to no pipelines using the feature.
+            startOfBindGroups += BindGroupIndex(1);
+        }
+
+        // When the usages of the resource table changes between pipelines, all the BindGroups are
+        // shifted by 1 (due to the resource table being in the first VkDescriptorSet) so we dirty
+        // all bind groups.
         BindGroupMask dirtyBindGroups = mDirtyBindGroupsObjectChangedOrIsDynamic;
 
         // Changing push constant range invalidates all descriptor sets.
         // Also clear the last resource table so it gets rebound below.
-        if (mLastAppliedImmediateConstantSize != mImmediateConstantSize) {
+        if (mLastAppliedImmediateConstantSize != mImmediateConstantSize ||
+            mLastFramebufferFetchEnabled != mFramebufferFetchEnabled) {
             dirtyBindGroups = mBindGroupLayoutsMask;
             mLastResourceTable = nullptr;
         }
@@ -266,11 +307,14 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
             if (mUsesResourceTable) {
                 DAWN_ASSERT(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
-                vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout, 0, 1, &*set, 0,
+                vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout,
+                                         static_cast<uint32_t>(startOfBindGroups), 1, &*set, 0,
                                          nullptr);
             }
         }
-        BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
+        if (mUsesResourceTable) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
         for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
             VkDescriptorSet set = GetDescriptorSet(dirtyBGIndex);
@@ -290,13 +334,17 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         mLastAppliedImmediateConstantSize = mImmediateConstantSize;
         mLastUsesResourceTable = mUsesResourceTable;
         mLastResourceTable = mResourceTable;
+        mLastFramebufferFetchEnabled = mFramebufferFetchEnabled;
     }
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
     raw_ptr<ResourceTable> mLastResourceTable = nullptr;
     raw_ptr<ResourceTable> mResourceTable = nullptr;
+    bool mFramebufferFetchEnabled = false;
+    bool mLastFramebufferFetchEnabled = false;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
+    bool mHasBoundFramebufferFetchDescriptorSet = false;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -1700,7 +1748,6 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         state.immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
     uint32_t workCommandCount = 0;
 
@@ -1881,7 +1928,12 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
-                state.OnSetPipeline(ToBackend(cmd->pipeline).Get());
+                auto pipeline = ToBackend(cmd->pipeline);
+                state.OnSetPipeline(pipeline.Get());
+                if (pipeline->UsesFramebufferFetch()) {
+                    DAWN_TRY(state.descriptorSets.BindFramebufferFetchDescriptorSet(
+                        device, recordingContext, renderPassCmd));
+                }
                 break;
             }
 

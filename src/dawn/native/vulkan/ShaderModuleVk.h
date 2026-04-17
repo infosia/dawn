@@ -74,6 +74,7 @@ class ShaderModule final : public ShaderModuleBase {
 
         bool emitPointSize = false;
         bool polyfillPixelCenter = false;
+        bool usesFramebufferFetch = false;
         bool needsMultisampledFramebufferFetch = false;
     };
 
