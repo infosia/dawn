@@ -37,11 +37,11 @@ using ::testing::Return;
 
 BufferMock::BufferMock(DeviceMock* device,
                        const UnpackedPtr<BufferDescriptor>& descriptor,
-                       std::optional<uint64_t> allocatedSize)
+                       std::optional<uint64_t> allocatedSizeOverride)
     : BufferBase(device, descriptor) {
-    mAllocatedSize = allocatedSize.value_or(GetSize());
+    mAllocatedSize = allocatedSizeOverride.value_or(GetSize());
     DAWN_ASSERT(mAllocatedSize >= GetSize());
-    mBackingData = std::unique_ptr<uint8_t[]>(new uint8_t[mAllocatedSize]);
+    mBackingData = std::unique_ptr<uint8_t[]>(new uint8_t[mAllocatedSize.value()]);
 
     ON_CALL(*this, DestroyImpl).WillByDefault([this](DestroyReason reason) {
         this->BufferBase::DestroyImpl(reason);
@@ -55,8 +55,8 @@ BufferMock::BufferMock(DeviceMock* device,
 
 BufferMock::BufferMock(DeviceMock* device,
                        const BufferDescriptor* descriptor,
-                       std::optional<uint64_t> allocatedSize)
-    : BufferMock(device, Unpack(descriptor), allocatedSize) {}
+                       std::optional<uint64_t> allocatedSizeOverride)
+    : BufferMock(device, Unpack(descriptor), allocatedSizeOverride) {}
 
 BufferMock::~BufferMock() = default;
 

@@ -40,10 +40,10 @@ class BufferMock : public BufferBase {
   public:
     BufferMock(DeviceMock* device,
                const UnpackedPtr<BufferDescriptor>& descriptor,
-               std::optional<uint64_t> allocatedSize = std::nullopt);
+               std::optional<uint64_t> allocatedSizeOverride = std::nullopt);
     BufferMock(DeviceMock* device,
                const BufferDescriptor* descriptor,
-               std::optional<uint64_t> allocatedSize = std::nullopt);
+               std::optional<uint64_t> allocatedSizeOverride = std::nullopt);
     ~BufferMock() override;
 
     MOCK_METHOD(void, DestroyImpl, (DestroyReason), (override));
