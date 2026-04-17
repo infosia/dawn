@@ -29,8 +29,8 @@
 #include <memory>
 #include <utility>
 
-#include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/client/Client.h"
 #include "src/utils/compiler.h"
@@ -40,7 +40,7 @@ namespace dawn::wire::client {
 class InlineMemoryTransferService : public MemoryTransferService {
     class ReadHandleImpl : public ReadHandle {
       public:
-        explicit ReadHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
+        explicit ReadHandleImpl(ityp::heap_array<size_t, uint8_t>&& stagingData, size_t size)
             : mStagingData(std::move(stagingData)), mSize(size) {}
 
         ~ReadHandleImpl() override = default;
@@ -49,7 +49,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         void SerializeCreate(void*) override {}
 
-        const void* GetData() override { return mStagingData.get(); }
+        const void* GetData() override { return mStagingData.data(); }
 
         bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
                                    size_t offset) override {
@@ -57,19 +57,18 @@ class InlineMemoryTransferService : public MemoryTransferService {
                 return false;
             }
 
-            void* start = DAWN_UNSAFE_TODO(static_cast<uint8_t*>(mStagingData.get()) + offset);
-            DAWN_UNSAFE_TODO(memcpy(start, deserializeData.data(), deserializeData.size()));
+            std::ranges::copy(deserializeData, mStagingData.begin() + offset);
             return true;
         }
 
       private:
-        std::unique_ptr<uint8_t[]> mStagingData;
+        ityp::heap_array<size_t, uint8_t> mStagingData;
         size_t mSize;
     };
 
     class WriteHandleImpl : public WriteHandle {
       public:
-        explicit WriteHandleImpl(std::unique_ptr<uint8_t[]> stagingData, size_t size)
+        explicit WriteHandleImpl(ityp::heap_array<size_t, uint8_t>&& stagingData, size_t size)
             : mStagingData(std::move(stagingData)), mSize(size) {}
 
         ~WriteHandleImpl() override = default;
@@ -78,7 +77,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         void SerializeCreate(void*) override {}
 
-        void* GetData() override { return mStagingData.get(); }
+        void* GetData() override { return mStagingData.data(); }
 
         size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) override {
             DAWN_ASSERT(offset <= mSize);
@@ -87,17 +86,16 @@ class InlineMemoryTransferService : public MemoryTransferService {
         }
 
         void SerializeDataUpdate(std::span<char> serializeData, size_t offset) override {
-            DAWN_ASSERT(mStagingData != nullptr);
+            DAWN_ASSERT(mStagingData);
             DAWN_ASSERT(serializeData.data() != nullptr);
             DAWN_ASSERT(offset <= mSize);
             DAWN_ASSERT(serializeData.size() <= mSize - offset);
-            DAWN_UNSAFE_TODO(memcpy(serializeData.data(),
-                                    static_cast<uint8_t*>(mStagingData.get()) + offset,
-                                    serializeData.size()));
+            auto src = mStagingData.subspan(offset, serializeData.size());
+            std::ranges::copy(src, serializeData.begin());
         }
 
       private:
-        std::unique_ptr<uint8_t[]> mStagingData;
+        ityp::heap_array<size_t, uint8_t> mStagingData;
         size_t mSize;
     };
 
@@ -106,20 +104,22 @@ class InlineMemoryTransferService : public MemoryTransferService {
     ~InlineMemoryTransferService() override = default;
 
     ReadHandle* CreateReadHandle(size_t size) override {
-        auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
-        if (stagingData) {
-            return new ReadHandleImpl(std::move(stagingData), size);
+        // SAFETY: The wire is responsible for writing this before exposing it to the user,
+        // e.g. MapAsync(read) copying data into it before the map becomes ready.
+        auto stagingData =
+            DAWN_UNSAFE_BUFFERS(ityp::heap_array<size_t, uint8_t>::Uninit(size, std::nothrow));
+        if (!stagingData) {
+            return nullptr;
         }
-        return nullptr;
+        return new ReadHandleImpl(std::move(stagingData), size);
     }
 
     WriteHandle* CreateWriteHandle(size_t size) override {
-        auto stagingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
-        if (stagingData) {
-            DAWN_UNSAFE_TODO(memset(stagingData.get(), 0, size));
-            return new WriteHandleImpl(std::move(stagingData), size);
+        auto stagingData = ityp::heap_array<size_t, uint8_t>(size, std::nothrow);
+        if (!stagingData) {
+            return nullptr;
         }
-        return nullptr;
+        return new WriteHandleImpl(std::move(stagingData), size);
     }
 };
 

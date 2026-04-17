@@ -35,10 +35,10 @@
 #include <memory>
 #include <utility>
 
-#include "dawn/common/Alloc.h"
 #include "dawn/common/Compiler.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
+#include "dawn/common/ityp_heap_array.h"
 #include "dawn/wire/Wire.h"
 #include "dawn/wire/WireCmd_autogen.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -137,16 +137,16 @@ class ChunkedCommandSerializer {
 
         // Allocate as zero-initialized because padding won't get initialized during command
         // serialization (and this whole buffer is sent raw to the other end of the wire).
-        auto cmdSpace = std::unique_ptr<char[]>(new char[requiredSize]{});
+        auto cmdSpace = ityp::heap_array<size_t, char>(requiredSize);
 
-        SerializeBuffer serializeBuffer(cmdSpace.get(), requiredSize);
+        SerializeBuffer serializeBuffer(cmdSpace.data(), requiredSize);
         WireResult rCmd = SerializeCmd(cmd, requiredSize, &serializeBuffer);
         WireResult rExts = detail::SerializeCommandExtension(&serializeBuffer, extensions...);
         if (rCmd != WireResult::Success || rExts != WireResult::Success) [[unlikely]] {
             mSerializer->OnSerializeError();
             return;
         }
-        SerializeChunkedCommand(cmdSpace.get(), requiredSize);
+        SerializeChunkedCommand(cmdSpace.data(), requiredSize);
     }
 
     void SerializeChunkedCommand(const char* allocatedBuffer, size_t totalSize);

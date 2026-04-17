@@ -99,7 +99,9 @@ WireResult Server::DoQueueWriteBufferXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+    // SAFETY: DeserializeDataUpdate is supposed to initialize the whole backingData (or fail).
+    auto backingData =
+        DAWN_UNSAFE_BUFFERS(ityp::heap_array<size_t, uint8_t>::Uninit(size, std::nothrow));
     if (!backingData) {
         return WireResult::FatalError;
     }
@@ -108,12 +110,11 @@ WireResult Server::DoQueueWriteBufferXl(Known<WGPUQueue> queue,
     // of the handle that's just a temporary allocation from above right now.
     std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
                                                      writeDataUpdateInfoLength);
-    std::span<uint8_t> target(backingData.get(), size);
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, backingData, 0u)) {
         return WireResult::FatalError;
     }
 
-    mProcs->queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, backingData.get(), size);
+    mProcs->queueWriteBuffer(queue->handle, buffer->handle, bufferOffset, backingData.data(), size);
     return WireResult::Success;
 }
 
@@ -160,7 +161,9 @@ WireResult Server::DoQueueWriteTextureXl(Known<WGPUQueue> queue,
     }
 
     // Otherwise, fall back to DeserializeDataUpdate.
-    auto backingData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(dataSize));
+    // SAFETY: DeserializeDataUpdate is supposed to initialize the whole backingData (or fail).
+    auto backingData =
+        DAWN_UNSAFE_BUFFERS(ityp::heap_array<size_t, uint8_t>::Uninit(dataSize, std::nothrow));
     if (!backingData) {
         return WireResult::FatalError;
     }
@@ -169,12 +172,11 @@ WireResult Server::DoQueueWriteTextureXl(Known<WGPUQueue> queue,
     // of the handle that's just a temporary allocation from above right now.
     std::span<const uint8_t> writeDataUpdateInfoSpan(writeDataUpdateInfo,
                                                      writeDataUpdateInfoLength);
-    std::span<uint8_t> target(backingData.get(), dataSize);
-    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, target, 0u)) {
+    if (!writeHandle->DeserializeDataUpdate(writeDataUpdateInfoSpan, backingData, 0u)) {
         return WireResult::FatalError;
     }
 
-    mProcs->queueWriteTexture(queue->handle, destination, backingData.get(), dataSize, dataLayout,
+    mProcs->queueWriteTexture(queue->handle, destination, backingData.data(), dataSize, dataLayout,
                               writeSize);
     return WireResult::Success;
 }
