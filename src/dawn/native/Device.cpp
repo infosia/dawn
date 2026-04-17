@@ -360,6 +360,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     }
 
     mIsImmediateErrorHandlingEnabled = IsToggleEnabled(Toggle::EnableImmediateErrorHandling);
+    mIsValidationEnabled = !IsToggleEnabled(Toggle::SkipValidation);
 
     // Generate entry point name from isolation key if provided.
     if (!cacheDesc.isolationKey.IsUndefined()) {
@@ -688,6 +689,11 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
 
         // Handle the remainder of this error as if it caused a device lost.
         type = InternalErrorType::DeviceLost;
+    }
+
+    // Re-enable validation on device loss or OOM to avoid unpredictable behaviors afterwards.
+    if (type == InternalErrorType::DeviceLost || type == InternalErrorType::OutOfMemory) {
+        mIsValidationEnabled = true;
     }
 
     const std::string messageStr = error->GetFormattedMessage();
@@ -1778,7 +1784,7 @@ bool DeviceBase::AreTexelBuffersEnabled() const {
 }
 
 bool DeviceBase::IsValidationEnabled() const {
-    return !IsToggleEnabled(Toggle::SkipValidation);
+    return mIsValidationEnabled;
 }
 
 bool DeviceBase::IsRobustnessEnabled() const {
