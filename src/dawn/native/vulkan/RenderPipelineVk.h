@@ -31,6 +31,7 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ShaderStatistics.h"
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/PipelineVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
@@ -77,6 +78,7 @@ class RenderPipeline final : public RenderPipelineBase {
     void DestroyImpl(DestroyReason reason) override;
     using RenderPipelineBase::RenderPipelineBase;
     MaybeError InitializeImpl() override;
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
     bool NeedsPixelCenterPolyfill() const;
 

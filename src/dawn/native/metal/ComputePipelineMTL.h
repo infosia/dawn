@@ -35,6 +35,7 @@
 #include "dawn/common/NSRef.h"
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ShaderStatistics.h"
 
 namespace dawn::native::metal {
 
@@ -52,6 +53,9 @@ class ComputePipeline final : public ComputePipelineBase {
     void Encode(id<MTLComputeCommandEncoder> encoder);
     MTLSize GetLocalWorkGroupSize() const;
     bool RequiresStorageBufferLength() const;
+
+  protected:
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
   private:
     using ComputePipelineBase::ComputePipelineBase;

@@ -1,0 +1,634 @@
+{
+  "metadata": {
+    "platform": "Gerrit",
+    "repo": "dawn",
+    "url": "https://dawn-review.googlesource.com/c/dawn/+/293955",
+    "id": "293955",
+    "title": "vulkan: Fix descriptor set rebinding on push constant range change",
+    "author": "Shaobo Yan",
+    "status": "NEW",
+    "rounds": 12
+  },
+  "general_comments": [
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-26 05:14:59",
+      "round": "1",
+      "message": "Hashtag added: vulkan"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 07:26:54",
+      "round": "2",
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 10:31:00",
+      "round": "3",
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 10:34:31",
+      "round": "3",
+      "message": "Patch Set 3: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-28 10:34:42",
+      "round": "3",
+      "message": "Patch Set 3:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8850695925854-1-18e40a6a1231fdf6\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-28T10:34:31Z\",\"revision\":\"bbf7ca790b3e413f0db1ad41c6c976712521ad64\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 10:54:25",
+      "round": "4",
+      "message": "Uploaded patch set 4.\n\nOutdated Votes:\n* Commit-Queue+1 (copy condition: \"changekind:NO_CHANGE\")"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 10:54:56",
+      "round": "4",
+      "message": "Patch Set 4: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-28 10:55:02",
+      "round": "4",
+      "message": "Patch Set 4:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8850694700854-1-19e1a60dae5f409f\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-02-28T10:54:56Z\",\"revision\":\"8a6cf325b15a576ee922fc07960f3c5c0c7a8bae\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-02-28 12:16:35",
+      "round": "4",
+      "message": "Patch Set 4: -Commit-Queue\n\n(Performed by <GERRIT_ACCOUNT_1002656> on behalf of <GERRIT_ACCOUNT_3758334>)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-02-28 12:16:36",
+      "round": "4",
+      "message": "Patch Set 4:\n\nThis CL has passed the run"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-02 01:56:12",
+      "round": "5",
+      "message": "Uploaded patch set 5."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-05 01:33:27",
+      "round": "5",
+      "message": "Patch Set 5:\n\n(1 comment)\n\nThis change is ready for review."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-05 01:33:35",
+      "round": "5",
+      "message": "<GERRIT_ACCOUNT_1000002>, who was added as reviewer owns the following files:\n* `src/dawn/native/vulkan/CommandBufferVk.cpp`\n* `src/dawn/tests/end2end/ImmediateDataTests.cpp`"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-05 01:33:44",
+      "round": "5",
+      "message": "Patch Set 5: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-05 01:33:55",
+      "round": "5",
+      "message": "Patch Set 5:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8850296372854-1-b2020c82583016b0\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-03-05T01:33:44Z\",\"revision\":\"5cf09724f569b3cb35135e8d43ea3d6249f198a7\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-05 02:09:18",
+      "round": "5",
+      "message": "Patch Set 5: -Commit-Queue\n\n(Performed by <GERRIT_ACCOUNT_1002656> on behalf of <GERRIT_ACCOUNT_3758334>)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-05 02:09:20",
+      "round": "5",
+      "message": "Patch Set 5:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-x64-rel](https://cr-buildbucket.appspot.com/build/8688208666916648321) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/293955?checksPatchset=5&tab=checks)):\n\n---\n1 Test Suite(s) failed.\n\n**dawn_perf_tests on AMD 0x67ef GPU on Mac Retina** failed with invalid results. Did a shard fail early?"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-05 09:49:32",
+      "round": "5",
+      "message": "Patch Set 5:\n\n(22 comments)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-06 09:06:31",
+      "round": "5",
+      "message": "Patch Set 5:\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 03:30:49",
+      "round": "6",
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 05:06:09",
+      "round": "6",
+      "message": "Patch Set 6: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-09 05:06:25",
+      "round": "6",
+      "message": "Patch Set 6:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8849938027854-1-23918a070b293811\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-03-09T05:06:09Z\",\"revision\":\"1985adeb37bf011a71212ca780ee476ac058ce02\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 05:09:33",
+      "round": "6",
+      "message": "Set Work In Progress"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 05:10:04",
+      "round": "6",
+      "message": "Patch Set 6: -Commit-Queue\n\n(Performed by <GERRIT_ACCOUNT_1002656> on behalf of <GERRIT_ACCOUNT_3758334>)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-09 05:10:04",
+      "round": "6",
+      "message": "Patch Set 6:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8687834090546692001) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/293955?checksPatchset=6&tab=checks)):\n\n---\n5 Test Suite(s) failed.\n\n**dawn_end2end_implicit_sync_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_skip_validation_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_validation_layers_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n#### ...1 more test(s)..."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 05:48:02",
+      "round": "7",
+      "message": "Uploaded patch set 7."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 06:15:59",
+      "round": "8",
+      "message": "Uploaded patch set 8."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 06:16:47",
+      "round": "8",
+      "message": "Patch Set 8: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-09 06:17:03",
+      "round": "8",
+      "message": "Patch Set 8:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8849933789854-1-b06c106ee69c8c1f\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-03-09T06:16:47Z\",\"revision\":\"fb358ca166bec8c17afe3c5430365a817132902a\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 06:20:26",
+      "round": "8",
+      "message": "Patch Set 8: -Commit-Queue\n\n(Performed by <GERRIT_ACCOUNT_1002656> on behalf of <GERRIT_ACCOUNT_3758334>)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-09 06:20:28",
+      "round": "8",
+      "message": "Patch Set 8:\n\nThis CL has failed the run. Reason:\n\nTryjob [dawn/try/dawn-cq-mac-arm64-rel](https://cr-buildbucket.appspot.com/build/8687829645656633745) has failed with summary ([view all results](https://dawn-review.googlesource.com/c/293955?checksPatchset=8&tab=checks)):\n\n---\n5 Test Suite(s) failed.\n\n**dawn_end2end_implicit_sync_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_skip_validation_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n**dawn_end2end_validation_layers_tests on (apple:m2) GPU on Mac Retina** failed because of:\n\n- ImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize/Metal_Apple_M2\n\n#### ...1 more test(s)..."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 08:32:08",
+      "round": "9",
+      "message": "Uploaded patch set 9."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 08:55:34",
+      "round": "9",
+      "message": "Patch Set 9:\n\n(17 comments)\n\nThis change is ready for review."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 08:57:58",
+      "round": "10",
+      "message": "Uploaded patch set 10."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 09:08:43",
+      "round": "11",
+      "message": "Uploaded patch set 11."
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-09 09:49:26",
+      "round": "11",
+      "message": "Patch Set 11: Code-Review+1\n\n(3 comments)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-09 11:07:44",
+      "round": "11",
+      "message": "Patch Set 11:\n\n(3 comments)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-10 07:26:03",
+      "round": "12",
+      "message": "Uploaded patch set 12.\n\nCopied Votes:\n* Code-Review+1 by <GERRIT_ACCOUNT_1000002> (copy condition\\*: \"changekind:NO_CODE_CHANGE OR changekind:TRIVIAL_REBASE OR (**has:unchanged-files** AND **uploaderin:cria/project-dawn-committers**) OR is:MIN\")\n\n\\* The label has `labelCopyEnforcement` or `labelCopyRestriction` configured. Only the most relevant condition that determined the outcome is shown."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-10 07:28:54",
+      "round": "12",
+      "message": "Patch Set 12:\n\n(3 comments)"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-10 09:07:06",
+      "round": "12",
+      "message": "Patch Set 12: Code-Review+2\n\n(1 comment)"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-11 00:55:58",
+      "round": "12",
+      "message": "Patch Set 12:\n\n(1 comment)"
+    }
+  ],
+  "inline_comments": {
+    "/PATCHSET_LEVEL": [
+      {
+        "line": "File-level",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-05 01:33:27",
+        "message": "PTAL this fix, thanks!"
+      }
+    ],
+    "src/dawn/native/vulkan/CommandBufferVk.cpp": [
+      {
+        "line": "184",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "This comment should be associated with the dirtying caused by the resource table at [1]"
+      },
+      {
+        "line": "184",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "191",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "[2]"
+      },
+      {
+        "line": "194",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "[1]"
+      },
+      {
+        "line": "200",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Instead of this, let's keep this block in [1] and instead clear the mLastResourceTable at [2]."
+      },
+      {
+        "line": "200",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      }
+    ],
+    "src/dawn/tests/end2end/ImmediateDataTests.cpp": [
+      {
+        "line": "726",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Why? Can we have a TODO?"
+      },
+      {
+        "line": "726",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "No need. Done."
+      },
+      {
+        "line": "730",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Any reason we need two bindgroups in this test?"
+      },
+      {
+        "line": "730",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-06 09:06:31",
+        "message": "To ensure this is \"dirty all bindgroups\" but not \"dirty highest index \" bind groups. But it seems not necessary."
+      },
+      {
+        "line": "730",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "738",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "We could add a push constant size defaulted to 0 to [`utils::MakePipelineLayout`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/WGPUHelpers.cpp;drc=2546bab52b03777485a99528329c161ad1e751b3;l=236)"
+      },
+      {
+        "line": "738",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "757",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "This VS is the same between both pipelines, we could have one module and just set the entryPoint to something different for the FS of both pipelines."
+      },
+      {
+        "line": "757",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "761",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "This could directly return the values in one of the bindgroups, which would remove the need for the math to compute the expected values below."
+      },
+      {
+        "line": "761",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "764",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "```suggestion\n    auto MakePipeline = [&](wgpu::ShaderModule mod, bool useDepthWrite) {\n```"
+      },
+      {
+        "line": "764",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "790",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "A size of 1 is sufficient?"
+      },
+      {
+        "line": "790",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-10 07:28:54",
+        "message": "Do an experiment and it seems test could catch the issue https://dawn-review.googlesource.com/c/dawn/+/296155?tab=checks"
+      },
+      {
+        "line": "803",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "```suggestion\n    // Draw with Pipeline A (red), then switch to Pipeline B without re-setting bind groups.\n    // The Vulkan backend needs to reapply VkDescriptorSets after setting B because the change in push constant size will invalidate the currently bound VkDescriptorSets.\n```"
+      },
+      {
+        "line": "803",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "816",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "```suggestion\n// bind groups."
+      },
+      {
+        "line": "816",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "827",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "ditto `MakePipelineLayout` for both layouts."
+      },
+      {
+        "line": "827",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "862",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Why do we need the uniform buffer? A single VkDescriptorSet should be sufficient to test the issue. In shaders we can write immediate values to `output` and that's sufficient to test the potential issue?"
+      },
+      {
+        "line": "862",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "886",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "```suggestion\n// bind groups. Also tests that defaulted pipeline layouts work correctly.\n```"
+      },
+      {
+        "line": "886",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 11:07:44",
+        "message": "Done"
+      },
+      {
+        "line": "926",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Defaulted layouts are not compatible between pipelines at all. (I hope we change that one day)"
+      },
+      {
+        "line": "926",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 11:07:44",
+        "message": "Done"
+      },
+      {
+        "line": "954",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "Maybe copy the comment at https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ResourceTableTests.cpp;drc=492a81a423b225a848d5b0aaf8baac729c2c6dba;l=50 ?"
+      },
+      {
+        "line": "954",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "```suggestion\n        DawnTest::SetUp();\n        DAWN_SUPPRESS_TEST_IF(IsSwiftshader() && !DAWN_PLATFORM_IS(ARM64));\n    }\n\n    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {\n        return {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable};\n    }\n\n```"
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 11:07:44",
+        "message": "For example, this one. https://ci.chromium.org/ui/p/dawn/builders/try/dawn-cq-mac-arm64-rel/b8687829645656633745/test-results?q=ExactID%3Aninja%3A%2F%2Fsrc%2Fdawn%2Ftests%3Adawn_end2end_tests%2FImmediateDataWithResourceTableTests.ResourceTableReboundOnDifferentImmediateSize%2FMetal_Apple_M2+VHash%3Ac103dd1a63d99530&clean="
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-11 00:55:58",
+        "message": "Sure. Issue filed https://issues.chromium.org/u/1/issues/491515776 (No techdebt in type in my drop box list. Choose internal cleanup and use [TechDebt] in title)."
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-09 09:49:26",
+        "message": "This is a bit surprising to me, can you link one of the failures?"
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "This fails the bots. So keep the origin logic."
+      },
+      {
+        "line": "963",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-10 09:07:06",
+        "message": "Wow I forgot that GetRequiredFeatures didn't cause DawnTest to actually skip if the feature isn't available. That's a big gotcha. Can you file a issue with type techdebt to fix that?"
+      },
+      {
+        "line": "996",
+        "round": "11",
+        "author": "Corentin Wallez",
+        "date": "2026-03-09 09:49:26",
+        "message": "nit: It also needs to exist in the layout, otherwise as far as the Vulkan backend is concerned, it doesn't exist."
+      },
+      {
+        "line": "996",
+        "round": "11",
+        "author": "Shaobo Yan",
+        "date": "2026-03-10 07:28:54",
+        "message": "Done"
+      },
+      {
+        "line": "1013",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "nit: created on pipeline fully then the other?"
+      },
+      {
+        "line": "1013",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "1021",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "We don't even need to put something in the resource table for this test, since all we need is the resource table to be bound correctly in the Vulkan backend."
+      },
+      {
+        "line": "1021",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "Done"
+      },
+      {
+        "line": "1045",
+        "round": "5",
+        "author": "Corentin Wallez",
+        "date": "2026-03-05 09:49:32",
+        "message": "And the VVL will complain, which should be sufficient for the test, or did the VVLs not complain? (with `--enable-backend-validation` (`=full`?))?"
+      },
+      {
+        "line": "1045",
+        "round": "5",
+        "author": "Shaobo Yan",
+        "date": "2026-03-09 08:55:34",
+        "message": "I cannot see the error in my local machine. But the experiment here https://dawn-review.googlesource.com/c/dawn/+/295916 shows validation layer (at least in bots) should catch this. Done."
+      }
+    ],
+    "src/dawn/utils/WGPUHelpers.cpp": [
+      {
+        "line": "242",
+        "round": "11",
+        "author": "Corentin Wallez",
+        "date": "2026-03-09 09:49:26",
+        "message": "This can be unconditional since the default is 0 in the struct as well."
+      },
+      {
+        "line": "242",
+        "round": "11",
+        "author": "Shaobo Yan",
+        "date": "2026-03-10 07:28:54",
+        "message": "Done"
+      }
+    ]
+  }
+}

@@ -65,6 +65,11 @@ class PlatformFunctions {
     // Functions from D3DCompiler_47.dll
     pD3DCompile d3dCompile = nullptr;
     pD3DDisassemble d3dDisassemble = nullptr;
+    using PFN_D3D_REFLECT = HRESULT(WINAPI*)(LPCVOID pSrcData,
+                                             SIZE_T SrcDataSize,
+                                             REFIID pInterface,
+                                             void** ppReflector);
+    PFN_D3D_REFLECT d3dReflect = nullptr;
 
   private:
     MaybeError LoadDXGI();

@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(SKILL_DIR=\"/c/Users/shaoboyan/.claude/skills/code-reviewer-fetch-skill\")",
+      "Bash(DEST=\"/c/work/dawn/.claude/reviews\")",
+      "Bash(mkdir -p \"$DEST/model\" \"$DEST/manual/sync_reports\")",
+      "Bash(cp \"$SKILL_DIR\"/model/*.json \"$DEST/model/\")",
+      "Bash(cp \"$SKILL_DIR\"/manual/*.md \"$DEST/manual/\")",
+      "Bash(where jq:*)",
+      "Bash(mkdir -p \"$USERPROFILE/.claude/skills-backup\")",
+      "Bash(mv \"$USERPROFILE/.claude/skills/gpu-power-measure\" \"$USERPROFILE/.claude/skills-backup/\")",
+      "Bash(mv \"$USERPROFILE/.claude/skills/chromium-gpu-debug\" \"$USERPROFILE/.claude/skills-backup/\")",
+      "Read(//c/work/dawn/$USERPROFILE/.claude/**)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i[''''path''''],i[''''name'''']\\) for i in d.get\\(''''items'''',[]\\)]\")",
+      "Bash(python3 -c \"import sys,json; [print\\(i[''''name'''']\\) for i in json.load\\(sys.stdin\\) if ''''pipeline'''' in i[''''name''''].lower\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i[''''path'''']\\) for i in d.get\\(''''tree'''',[]\\) if ''''pipeline_executable'''' in i[''''path''''].lower\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i.get\\(''''path'''',''''?''''\\), i.get\\(''''startline'''',''''''''\\)\\) for i in d[:5]]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(i.get\\(''''path'''',''''?''''\\), i.get\\(''''startline'''',''''''''\\)\\) for i in d[:10]]\")",
+      "Bash(if not:*)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests*\" --gtest_print_time=0)",
+      "Bash(cd:*)",
+      "Bash(third_party/ninja/ninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests.ValidFieldsAreConsistent*\")",
+      "Bash(out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsTests*\")",
+      "Bash(out/Debug/dawn_unittests.exe --gtest_filter=\"*ShaderStatistics*\")",
+      "Bash(C:workdepot_toolsninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/depot_tools/ninja.exe -C out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/cr/depot_tools/ninja -C /c/work/dawn/out/Debug dawn_end2end_tests)",
+      "Bash(PATH=\"/c/work/cr/depot_tools:$PATH\" which python3)",
+      "Bash(PATH=\"/c/work/cr/depot_tools:$PATH\" which python)",
+      "Bash(/c/work/dawn/third_party/ninja/ninja.exe -C /c/work/dawn/out/Debug dawn_end2end_tests)",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\" 2>&1)",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatistics*\")",
+      "Bash(/c/work/dawn/out/Debug/dawn_end2end_tests.exe --gtest_filter=\"ShaderStatisticsAutoTuneTests.LogShaderStatisticsComputePipeline/D3D12_NVIDIA*\")"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"\nimport json, sys, subprocess, os, tempfile\nlock = os.path.join(tempfile.gettempdir(), '.claude_gcf_lock')\nd = json.load(sys.stdin)\ncmd = d.get('tool_input', {}).get('command', '')\nif 'git commit' in cmd and '--amend' in cmd and not os.path.exists(lock):\n    try:\n        open(lock, 'w').close()\n        subprocess.run(['git', 'cl', 'format'], capture_output=True)\n        status = subprocess.run(['git', 'diff', '--name-only'], capture_output=True, text=True)\n        if status.stdout.strip():\n            subprocess.run(['git', 'add', '-A'])\n            subprocess.run(['git', 'commit', '--amend', '--no-edit'])\n            print(json.dumps({'hookSpecificOutput': {'hookEventName': 'PostToolUse', 'additionalContext': 'Hook: git cl format applied and amended into commit.'}}))\n    finally:\n        if os.path.exists(lock): os.remove(lock)\n\"",
+            "timeout": 60,
+            "statusMessage": "Running git cl format..."
+          }
+        ]
+      }
+    ]
+  }
+}

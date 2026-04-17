@@ -32,6 +32,7 @@
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/ShaderStatistics.h"
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/PipelineVk.h"
 #include "dawn/native/vulkan/RefCountedVkHandle.h"
@@ -65,6 +66,7 @@ class ComputePipeline final : public ComputePipelineBase {
     void DestroyImpl(DestroyReason reason) override;
     using ComputePipelineBase::ComputePipelineBase;
     ResultOrError<Extent3D> InitializeImpl() override;
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
     // Initializes a pipeline for the specialization and stores it in mSpecializations.
     struct SpecializationResult {

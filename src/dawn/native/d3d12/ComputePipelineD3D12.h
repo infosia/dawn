@@ -30,6 +30,8 @@
 
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ShaderStatistics.h"
+#include "dawn/native/d3d/ShaderUtils.h"
 #include "dawn/native/d3d12/d3d12_platform.h"
 
 namespace dawn::native::d3d12 {
@@ -57,9 +59,11 @@ class ComputePipeline final : public ComputePipelineBase {
 
     ResultOrError<Extent3D> InitializeImpl() override;
     void DestroyImpl(DestroyReason reason) override;
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
     using ComputePipelineBase::ComputePipelineBase;
     ComPtr<ID3D12PipelineState> mPipelineState;
+    d3d::D3DShaderReflectionData mComputeReflectionData;
 };
 
 }  // namespace dawn::native::d3d12

@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "platform": "Gerrit",
+    "repo": "dawn",
+    "url": "https://dawn-review.googlesource.com/c/dawn/+/300455",
+    "id": "300455",
+    "title": "Skip tests when GetRequiredFeatures returns unsupported features",
+    "author": "Shaobo Yan",
+    "status": "NEW",
+    "rounds": 1
+  },
+  "general_comments": [
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-31 09:11:59",
+      "round": "1",
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-31 09:13:57",
+      "round": "1",
+      "message": "Patch Set 1: Commit-Queue+1"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-31 09:14:13",
+      "round": "1",
+      "message": "Patch Set 1:\n\nDry run: CV is trying the patch.\n\nFollow status at: https://luci-change-verifier.appspot.com/ui/run/dawn/8848022359854-1-09d2301e0ed9cbcf\n\nBot data: {\"action\":\"start\",\"triggered_at\":\"2026-03-31T09:13:57Z\",\"revision\":\"800cd373a594bd756695152da97f5c1ee2fcff08\"}"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-31 10:41:42",
+      "round": "1",
+      "message": "Patch Set 1: -Commit-Queue\n\n(Performed by <GERRIT_ACCOUNT_1002656> on behalf of <GERRIT_ACCOUNT_3758334>)"
+    },
+    {
+      "author": "Dawn LUCI CQ",
+      "date": "2026-03-31 10:41:43",
+      "round": "1",
+      "message": "Patch Set 1:\n\nThis CL has passed the run"
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-31 14:24:44",
+      "round": "1",
+      "message": "Patch Set 1:\n\n(1 comment)\n\nThis change is ready for review."
+    },
+    {
+      "author": "Shaobo Yan",
+      "date": "2026-03-31 14:24:44",
+      "round": "1",
+      "message": "<GERRIT_ACCOUNT_1000002>, who was added as reviewer owns the following files:\n* `src/dawn/tests/BUILD.gn`\n* `src/dawn/tests/CMakeLists.txt`\n* `src/dawn/tests/DawnTest.cpp`\n* `src/dawn/tests/end2end/DawnTestInfraTests.cpp`"
+    },
+    {
+      "author": "Corentin Wallez",
+      "date": "2026-03-31 14:34:34",
+      "round": "1",
+      "message": "Patch Set 1: Code-Review+1\n\n(5 comments)"
+    }
+  ],
+  "inline_comments": {
+    "/PATCHSET_LEVEL": [
+      {
+        "line": "File-level",
+        "round": "1",
+        "author": "Corentin Wallez",
+        "date": "2026-03-31 14:34:34",
+        "message": "LGTM, will you also audit the `GetRequiredFeatures` to remove the checks for `SupportsFeature` that are unnecessary? (some tests really do optionally support features, but most don't)"
+      },
+      {
+        "line": "File-level",
+        "round": "1",
+        "author": "Shaobo Yan",
+        "date": "2026-03-31 14:24:44",
+        "message": "PTAL, thanks!"
+      }
+    ],
+    "src/dawn/tests/DawnTest.cpp": [
+      {
+        "line": "1408",
+        "round": "1",
+        "author": "Corentin Wallez",
+        "date": "2026-03-31 14:34:34",
+        "message": "That won't be necessary, by coincidence I'm making https://dawn-review.googlesource.com/c/dawn/+/300495"
+      },
+      {
+        "line": "1613",
+        "round": "1",
+        "author": "Corentin Wallez",
+        "date": "2026-03-31 14:34:34",
+        "message": "nit: Can we do something like this somehow? `\"Skipping test because \" << theFeature << \" is not supported by the adapter\"`."
+      }
+    ],
+    "src/dawn/tests/end2end/DawnTestInfraTests.cpp": [
+      {
+        "line": "41",
+        "round": "1",
+        "author": "Corentin Wallez",
+        "date": "2026-03-31 14:34:34",
+        "message": "nit: not neeeded."
+      },
+      {
+        "line": "60",
+        "round": "1",
+        "author": "Corentin Wallez",
+        "date": "2026-03-31 14:34:34",
+        "message": "nit: `.contains`"
+      }
+    ]
+  }
+}

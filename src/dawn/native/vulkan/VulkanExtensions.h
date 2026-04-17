@@ -114,6 +114,7 @@ enum class DeviceExt {
     CooperativeMatrix,
     MultisampledRenderToSingleSampled,
     PhysicalDeviceDrm,
+    PipelineExecutableProperties,
 
     // External* extensions
     ExternalMemoryAndroidHardwareBuffer,

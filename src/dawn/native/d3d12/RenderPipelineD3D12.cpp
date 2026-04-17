@@ -375,6 +375,14 @@ MaybeError RenderPipeline::InitializeImpl() {
                            compiledShader[stage].shaderBlob.Size()};
     }
 
+    if (device->HasFeature(Feature::ShaderStatistics)) {
+        for (auto stage : IterateStages(GetStageMask())) {
+            mReflectionData[stage] =
+                d3d::ReflectShader(device->GetFunctions(), compiledShader[stage].shaderBlob,
+                                   device->GetFunctions()->dxcCreateInstance);
+        }
+    }
+
     mUsesVertexOrInstanceIndex = compiledShader[SingleShaderStage::Vertex].usesVertexIndex ||
                                  compiledShader[SingleShaderStage::Vertex].usesInstanceIndex;
 
@@ -578,6 +586,19 @@ D3D12_DEPTH_STENCIL_DESC RenderPipeline::ComputeDepthStencilDesc() {
     depthStencilDescriptor.FrontFace = StencilOpDesc(descriptor->stencilFront);
     depthStencilDescriptor.BackFace = StencilOpDesc(descriptor->stencilBack);
     return depthStencilDescriptor;
+}
+
+ShaderStatisticsData RenderPipeline::GetShaderStatisticsImpl() const {
+    ShaderStatisticsData result;
+    if (GetStageMask() & wgpu::ShaderStage::Vertex) {
+        result.stages.push_back(d3d::BuildStageStatistics(
+            mReflectionData[SingleShaderStage::Vertex], wgpu::ShaderStage::Vertex));
+    }
+    if (GetStageMask() & wgpu::ShaderStage::Fragment) {
+        result.stages.push_back(d3d::BuildStageStatistics(
+            mReflectionData[SingleShaderStage::Fragment], wgpu::ShaderStage::Fragment));
+    }
+    return result;
 }
 
 }  // namespace dawn::native::d3d12
