@@ -305,6 +305,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb87e80c_531b0019",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-17T06:22:01Z",
+      "side": 1,
+      "message": "I would prefer not bloating the code with abundant `CHECK`. I think we should be consistent with the principle \"don\u0027t use check in tight loops\" even if it\u0027s cheap. We don\u0027t want future devs to see this and assume it\u0027s required to do CHECK everywhere.\n\nI already see we are adding at least 8 `CHECK` to a hot path (4 here, 1 in IncrStorageRevAndMakeLatest, 3 in BindGroupTracker). That\u0027s roughly 16 instructions. `IsAlign()` and `||` are more than 2 instructions anw.\n\nLet\u0027s say we have 1 millions draw calls per frame. That\u0027s translated to extra 16000000 instructions. Assuming the CPU freq is 3Ghz. And each instruction is 1 cycle:\n- 16000000 / 3000000000 \u003d extra 5.3ms per frame.\n\nWhen analysing real-world data, 99th percentile is very difficult to reproduce and investigate. So I would like to avoid adding extra complexities for now. FWIW, D3D11 is not exposed to WebGPU clients yet.",
+      "parentUuid": "f497b326_be34ec18",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7
