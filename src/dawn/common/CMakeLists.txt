@@ -47,7 +47,6 @@ set(private_headers
     "${DAWN_GPU_INFO_AUTOGEN_HEADERS}"
     "Algebra.h"
     "AlignedAlloc.h"
-    "Alloc.h"
     "Assert.h"
     "Atomic.h"
     "BitSetRangeIterator.h"
