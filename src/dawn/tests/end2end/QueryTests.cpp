@@ -656,6 +656,9 @@ class TimestampQueryTestsBase : public QueryTests {
 
         // TODO(crbug.com/451389800): [Capture] implement query set.
         DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+
+        // TODO(crbug.com/502083482): Flakes on Windows 11/AMD RX 5500 XT.
+        DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
     }
 
     wgpu::QuerySet CreateQuerySetForTimestamp(uint32_t queryCount) {
@@ -673,9 +676,6 @@ class TimestampQueryTests : public TimestampQueryTestsBase {
 
         // Skip all tests if timestamp feature is not supported
         DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TimestampQuery}));
-
-        // TODO(crbug.com/502083482): Flakes on Windows 11/AMD RX 5500 XT.
-        DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
 
         // Create basic compute pipeline
         wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
