@@ -639,7 +639,8 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
         const uint8_t* initialTextureData,
         size_t initialTextureDataSize,
         wgpu::TextureFormat format,
-        wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D) {
+        wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D,
+        wgpu::TextureUsage extraUsage = wgpu::TextureUsage::None) {
         uint32_t texelSize = utils::GetTexelBlockSizeInBytes(format);
         DAWN_ASSERT(kWidth * texelSize <= kTextureBytesPerRowAlignment);
 
@@ -669,7 +670,7 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
         wgpu::Texture outputTexture = CreateTexture(
             format,
             wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::CopySrc |
-                wgpu::TextureUsage::CopyDst,
+                wgpu::TextureUsage::CopyDst | extraUsage,
             {kWidth, kHeight, sliceCount}, utils::ViewDimensionToTextureDimension(dimension));
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
@@ -1458,6 +1459,62 @@ fn main() {
     wgpu::BindGroup bindGroup =
         utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
                              {{0, readonlyStorageTexture.CreateView()}, {1, resultBuffer}});
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder computePassEncoder = encoder.BeginComputePass();
+    computePassEncoder.SetBindGroup(0, bindGroup);
+    computePassEncoder.SetPipeline(pipeline);
+    computePassEncoder.DispatchWorkgroups(1);
+    computePassEncoder.End();
+    wgpu::CommandBuffer commandBuffer = encoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    // Check if the contents in the result buffer are what we expect.
+    constexpr uint32_t kExpectedValue = 1u;
+    EXPECT_BUFFER_U32_RANGE_EQ(&kExpectedValue, resultBuffer, 0, 1u);
+}
+
+// Verify a read-only storage texture can be simultaneously bound as a sampled texture.
+TEST_P(ReadWriteStorageTextureTests, ReadOnlyStorageAndSampledTextureInComputeShader) {
+    constexpr wgpu::TextureFormat kStorageTextureFormat = wgpu::TextureFormat::R32Uint;
+    const std::vector<uint8_t> kInitialTextureData = GetExpectedData(kStorageTextureFormat);
+    wgpu::Texture readonlyStorageTexture = CreateTextureWithTestData(
+        kInitialTextureData.data(), kInitialTextureData.size(), kStorageTextureFormat,
+        wgpu::TextureViewDimension::e2D, wgpu::TextureUsage::TextureBinding);
+
+    std::ostringstream sstream;
+    sstream << R"(
+@group(0) @binding(0) var srcTexture : texture_2d<u32>;
+@group(0) @binding(1) var srcStorage : texture_storage_2d<r32uint, read>;
+@group(0) @binding(2) var<storage, read_write> output : u32;
+
+@compute @workgroup_size(1)
+fn main() {
+    for (var y = 0u; y < )"
+            << kHeight << R"(; y++) {
+        for (var x = 0u; x < )"
+            << kWidth << R"(; x++) {
+            var expected = vec4u(1u + x + y * 4u, 0, 0, 1u);
+            var pixel0 = textureLoad(srcTexture, vec2u(x, y), 0);
+            var pixel1 = textureLoad(srcStorage, vec2u(x, y));
+            if (any(pixel0 != expected) || any(pixel1 != expected)) {
+                output = 0u;
+                return;
+            }
+        }
+    }
+    output = 1u;
+})";
+    uint32_t kInitialValue = 0xFF;
+    wgpu::Buffer resultBuffer =
+        utils::CreateBufferFromData(device, &kInitialValue, sizeof(kInitialValue),
+                                    wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc);
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(sstream.str().c_str());
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, readonlyStorageTexture.CreateView()},
+                                                      {1, readonlyStorageTexture.CreateView()},
+                                                      {2, resultBuffer}});
 
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     wgpu::ComputePassEncoder computePassEncoder = encoder.BeginComputePass();

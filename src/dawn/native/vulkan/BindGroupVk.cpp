@@ -169,6 +169,15 @@ void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
             continue;
         }
 
+        // TODO(crbug.com/500162791): Handle this more efficiently.
+        wgpu::TextureUsage usage = wgpu::TextureUsage::TextureBinding;
+        for (BindingIndex j : layout->GetStorageTextureIndices()) {
+            TextureView* storageView = ToBackend(GetBindingAsTextureView(j));
+            if (storageView == view) {
+                usage |= kReadOnlyStorageTexture;
+            }
+        }
+
         AddWrite(i, [&](size_t writeIndex, VkWriteDescriptorSet* write) {
             // TODO(crbug.com/41488897): Add GetVkDescriptorSet{Index, Type}(BindingIndex) functions
             // to BindGroupLayoutVk that access vectors holding entries for all BGL entries and
@@ -184,8 +193,7 @@ void BindGroup::WriteDescriptorSet(VkDescriptorSet dsSet,
             }
 
             writeImageInfo[writeIndex].imageView = handle;
-            writeImageInfo[writeIndex].imageLayout =
-                VulkanImageLayout(view->GetFormat(), wgpu::TextureUsage::TextureBinding);
+            writeImageInfo[writeIndex].imageLayout = VulkanImageLayout(view->GetFormat(), usage);
             write->pImageInfo = &writeImageInfo[writeIndex];
         });
     }
