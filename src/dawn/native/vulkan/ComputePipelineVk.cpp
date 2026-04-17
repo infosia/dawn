@@ -32,12 +32,14 @@
 #include <vector>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/PipelineCacheVk.h"
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 #include "dawn/native/vulkan/ShaderModuleVk.h"
+#include "dawn/native/vulkan/ShaderStatisticsVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
@@ -116,6 +118,9 @@ ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::Initialize
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
+    if (device->HasFeature(Feature::ShaderStatistics)) {
+        createInfo.flags |= VK_PIPELINE_CREATE_CAPTURE_STATISTICS_BIT_KHR;
+    }
     createInfo.layout = result.layout->Get();
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
@@ -204,6 +209,10 @@ ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::Initialize
     device->fn.DestroyShaderModule(device->GetVkDevice(), moduleAndSpirv.module, nullptr);
 
     return result;
+}
+
+ShaderStatisticsData ComputePipeline::GetShaderStatisticsImpl() const {
+    return QueryVulkanPipelineStatistics(ToBackend(GetDevice()), GetHandle());
 }
 
 void ComputePipeline::SetLabelImpl() {

@@ -27,6 +27,10 @@
 
 #include "dawn/native/d3d/ShaderUtils.h"
 
+#include <d3d11shader.h>
+#include <d3d12shader.h>
+#include <d3dcompiler.h>
+
 #include <sstream>
 #include <string>
 #include <utility>
@@ -408,6 +412,150 @@ void DumpFXCCompiledShader(Device* device,
     if (!logMessage.empty()) {
         device->EmitLog(wgpu::LoggingType::Info, logMessage.c_str());
     }
+}
+
+namespace {
+
+D3DShaderReflectionData ReflectShaderUsingDXC(DxcCreateInstanceProc dxcCreateInstance,
+                                               const Blob& shaderBlob) {
+    D3DShaderReflectionData data;
+
+    ComPtr<IDxcUtils> dxcUtils;
+    if (FAILED(dxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils)))) {
+        return data;
+    }
+
+    DxcBuffer dxcBuffer;
+    dxcBuffer.Ptr = shaderBlob.Data();
+    dxcBuffer.Size = shaderBlob.Size();
+    dxcBuffer.Encoding = 0;
+
+    ComPtr<ID3D12ShaderReflection> reflector;
+    if (FAILED(dxcUtils->CreateReflection(&dxcBuffer, IID_PPV_ARGS(&reflector)))) {
+        return data;
+    }
+
+    D3D12_SHADER_DESC desc;
+    if (FAILED(reflector->GetDesc(&desc))) {
+        return data;
+    }
+
+    data.tempRegisterCount = desc.TempRegisterCount;
+    data.instructionCount = desc.InstructionCount;
+    data.floatInstructionCount = desc.FloatInstructionCount;
+    data.intInstructionCount = desc.IntInstructionCount;
+    data.uintInstructionCount = desc.UintInstructionCount;
+    data.staticFlowControlCount = desc.StaticFlowControlCount;
+    data.dynamicFlowControlCount = desc.DynamicFlowControlCount;
+    data.textureNormalInstructions = desc.TextureNormalInstructions;
+    data.textureLoadInstructions = desc.TextureLoadInstructions;
+    data.textureCompInstructions = desc.TextureCompInstructions;
+    data.barrierInstructions = desc.cBarrierInstructions;
+    data.interlockedInstructions = desc.cInterlockedInstructions;
+    data.valid = true;
+    return data;
+}
+
+D3DShaderReflectionData ReflectShaderUsingFXC(const PlatformFunctions* functions,
+                                               const Blob& shaderBlob) {
+    D3DShaderReflectionData data;
+
+    if (functions->d3dReflect == nullptr) {
+        return data;
+    }
+
+    ComPtr<ID3D11ShaderReflection> reflector;
+    if (FAILED(functions->d3dReflect(shaderBlob.Data(), shaderBlob.Size(),
+                                     IID_PPV_ARGS(&reflector)))) {
+        return data;
+    }
+
+    D3D11_SHADER_DESC desc;
+    if (FAILED(reflector->GetDesc(&desc))) {
+        return data;
+    }
+
+    data.tempRegisterCount = desc.TempRegisterCount;
+    data.instructionCount = desc.InstructionCount;
+    data.floatInstructionCount = desc.FloatInstructionCount;
+    data.intInstructionCount = desc.IntInstructionCount;
+    data.uintInstructionCount = desc.UintInstructionCount;
+    data.staticFlowControlCount = desc.StaticFlowControlCount;
+    data.dynamicFlowControlCount = desc.DynamicFlowControlCount;
+    data.textureNormalInstructions = desc.TextureNormalInstructions;
+    data.textureLoadInstructions = desc.TextureLoadInstructions;
+    data.textureCompInstructions = desc.TextureCompInstructions;
+    data.barrierInstructions = desc.cBarrierInstructions;
+    data.interlockedInstructions = desc.cInterlockedInstructions;
+    data.valid = true;
+    return data;
+}
+
+}  // namespace
+
+D3DShaderReflectionData ReflectShader(const PlatformFunctions* functions,
+                                      const Blob& shaderBlob,
+                                      DxcCreateInstanceProc dxcCreateInstance) {
+    // Try DXC reflection first for DXIL shaders, fall back to FXC reflection for DXBC.
+    if (dxcCreateInstance != nullptr) {
+        D3DShaderReflectionData data = ReflectShaderUsingDXC(dxcCreateInstance, shaderBlob);
+        if (data.valid) {
+            return data;
+        }
+    }
+    return ReflectShaderUsingFXC(functions, shaderBlob);
+}
+
+ShaderStageStatisticsData BuildStageStatistics(const D3DShaderReflectionData& reflection,
+                                               wgpu::ShaderStage stage) {
+    ShaderStageStatisticsData stageData;
+    stageData.stage = stage;
+
+    if (!reflection.valid) {
+        return stageData;
+    }
+
+    stageData.core.validFields = wgpu::ShaderStatisticValidField::None;
+    if (reflection.tempRegisterCount > 0) {
+        stageData.core.validFields |= wgpu::ShaderStatisticValidField::RegisterCount;
+        stageData.core.registerCount = reflection.tempRegisterCount;
+    }
+    if (reflection.instructionCount > 0) {
+        stageData.core.validFields |= wgpu::ShaderStatisticValidField::InstructionCount;
+        stageData.core.instructionCount = reflection.instructionCount;
+    }
+
+    auto addExtension = [&](const char* name, const char* description, uint64_t value) {
+        ShaderStatisticEntryData entry;
+        entry.name = name;
+        entry.description = description;
+        entry.format = wgpu::ShaderStatisticFormat::Uint64;
+        entry.value.valueUint64 = value;
+        stageData.extensionEntries.push_back(std::move(entry));
+    };
+
+    addExtension("floatInstructionCount", "Number of floating point arithmetic instructions",
+                 reflection.floatInstructionCount);
+    addExtension("intInstructionCount", "Number of signed integer arithmetic instructions",
+                 reflection.intInstructionCount);
+    addExtension("uintInstructionCount", "Number of unsigned integer arithmetic instructions",
+                 reflection.uintInstructionCount);
+    addExtension("staticFlowControlCount", "Number of static flow control instructions",
+                 reflection.staticFlowControlCount);
+    addExtension("dynamicFlowControlCount", "Number of dynamic flow control instructions",
+                 reflection.dynamicFlowControlCount);
+    addExtension("textureNormalInstructions", "Number of non-categorized texture instructions",
+                 reflection.textureNormalInstructions);
+    addExtension("textureLoadInstructions", "Number of texture load instructions",
+                 reflection.textureLoadInstructions);
+    addExtension("textureCompInstructions", "Number of texture comparison instructions",
+                 reflection.textureCompInstructions);
+    addExtension("barrierInstructions", "Number of barrier instructions",
+                 reflection.barrierInstructions);
+    addExtension("interlockedInstructions", "Number of interlocked instructions",
+                 reflection.interlockedInstructions);
+
+    return stageData;
 }
 
 InterStageShaderVariablesMask ToInterStageShaderVariablesMask(const std::vector<bool>& inputMask) {

@@ -32,6 +32,7 @@
 
 #include "dawn/common/NSRef.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/ShaderStatistics.h"
 
 namespace dawn::native::metal {
 
@@ -61,6 +62,9 @@ class RenderPipeline final : public RenderPipelineBase {
     wgpu::ShaderStage GetStagesRequiringStorageBufferLength() const;
 
     MaybeError InitializeImpl() override;
+
+  protected:
+    ShaderStatisticsData GetShaderStatisticsImpl() const override;
 
   private:
     using RenderPipelineBase::RenderPipelineBase;

@@ -292,6 +292,12 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES_KHR);
     }
 
+    if (info.extensions[DeviceExt::PipelineExecutableProperties]) {
+        featuresChain.Add(
+            &info.pipelineExecutablePropertiesFeatures,
+            VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR);
+    }
+
     if (info.extensions[DeviceExt::DepthClipEnable]) {
         featuresChain.Add(&info.depthClipEnableFeatures,
                           VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT);

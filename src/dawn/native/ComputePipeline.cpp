@@ -29,6 +29,7 @@
 
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 
@@ -124,6 +125,23 @@ ObjectType ComputePipelineBase::GetType() const {
 bool ComputePipelineBase::EqualityFunc::operator()(const ComputePipelineBase* a,
                                                    const ComputePipelineBase* b) const {
     return PipelineBase::EqualForCache(a, b);
+}
+
+ShaderStatisticsData ComputePipelineBase::GetShaderStatisticsImpl() const {
+    return {};
+}
+
+wgpu::Status ComputePipelineBase::APIGetShaderStatistics(ShaderStatistics* statistics) {
+    if (!GetDevice()->HasFeature(Feature::ShaderStatistics)) {
+        return wgpu::Status::Error;
+    }
+    if (!mShaderStatisticsCache.has_value()) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+    }
+    *reinterpret_cast<wgpu::ShaderStatistics*>(statistics) = mShaderStatisticsCache->GetCApiView();
+    return wgpu::Status::Success;
 }
 
 }  // namespace dawn::native

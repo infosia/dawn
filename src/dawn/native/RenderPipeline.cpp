@@ -39,6 +39,7 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Features.h"
 #include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
@@ -1499,6 +1500,23 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
     }
 
     return true;
+}
+
+ShaderStatisticsData RenderPipelineBase::GetShaderStatisticsImpl() const {
+    return {};
+}
+
+wgpu::Status RenderPipelineBase::APIGetShaderStatistics(ShaderStatistics* statistics) {
+    if (!GetDevice()->HasFeature(Feature::ShaderStatistics)) {
+        return wgpu::Status::Error;
+    }
+    if (!mShaderStatisticsCache.has_value()) {
+        mShaderStatisticsCache.emplace();
+        mShaderStatisticsCache->data = GetShaderStatisticsImpl();
+        mShaderStatisticsCache->BuildCApiView();
+    }
+    *reinterpret_cast<wgpu::ShaderStatistics*>(statistics) = mShaderStatisticsCache->GetCApiView();
+    return wgpu::Status::Success;
 }
 
 }  // namespace dawn::native
