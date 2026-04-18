@@ -361,7 +361,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             auto* plus_p5 = builder.Add(floor_xy, builder.Splat(ty.vec2f(), p5_const));
 
             auto center_idx = input_indices[center_pos_frag_idx.value()];
-            auto* xyzw_from_user_center = builder.Load(input_vars[center_idx]);
+            // Use interpolateAtOffset to get the pixel center. The Vulkan spec does not guarantee
+            // that 'center' interpolation sampling will actually be the pixel center when sample
+            // shading is enabled.
+            auto* xyzw_from_user_center = builder.Call<spirv::ir::BuiltinCall>(
+                ty.vec4f(), spirv::BuiltinFn::kInterpolateAtOffset, input_vars[center_idx],
+                builder.Splat(ty.vec2f(), 0_f));
 
             auto* user_center_z = builder.Swizzle(ty.f32(), xyzw_from_user_center, {2});
             auto* user_center_w = builder.Swizzle(ty.f32(), xyzw_from_user_center, {3});
