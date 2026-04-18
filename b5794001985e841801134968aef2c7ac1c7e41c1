@@ -334,6 +334,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9204da76_913aed92",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-18T00:47:04Z",
+      "side": 1,
+      "message": "Perhaps use dawn::Atomic which carries its memory_order in the type.",
+      "parentUuid": "93e1c1e6_b808d12d",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "b5794001985e841801134968aef2c7ac1c7e41c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a99c2fc_692c0174",
         "filename": "src/dawn/native/EventManager.h",
         "patchSetId": 9
