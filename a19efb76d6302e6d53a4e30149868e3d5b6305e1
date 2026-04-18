@@ -37,6 +37,80 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fa71d64_ed0286b0",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-18T02:41:48Z",
+      "side": 1,
+      "message": "```suggestion\n# Dawn: Checking asserts ([Bug 442860471](https://crbug.com/442860471))\n```",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e1aa434_1baef540",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-18T02:41:48Z",
+      "side": 1,
+      "message": "This is in the chromium bugtracker so use `https://crbug.com/500609033`. It also may become public at some point.\n```suggestion\nExample: \u003chttps://crbug.com/500609033\u003e\n```",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb2fcaea_978fface",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-18T02:41:48Z",
+      "side": 1,
+      "message": "I would possibly like to incrementally review all these promotions because I\u0027m certain a bunch of them will be pointless (null checks, checks that should be the responsibility of later code, etc.) But of course that will take too long to do right now.\n\nWDYT of using some alias for DAWN_CHECK like DAWN_CHECK_UNTRIAGED (or something shorter, whatever) so we know they were changed as part of this bulk operation?",
+      "range": {
+        "startLine": 27,
+        "startChar": 70,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecd65bf9_bc6438ef",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-18T02:41:48Z",
+      "side": 1,
+      "message": "I\u0027ve considered going so far as to suggest removing these ASSERTs entirely to avoid questioning whether they need to be CHECKs, but it\u0027s worth keeping them to document intentional invariants and because they can be handy for debugging.\n\nAn idea (for later) on how to handle this, maybe use DAWN_ASSERT_NONNULL() to annotate the reason for using a debug-only assert. And maybe we can do similar annotations for other common types of debug-only asserts.",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9315e08f_3abe00f3",
         "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
         "patchSetId": 13
