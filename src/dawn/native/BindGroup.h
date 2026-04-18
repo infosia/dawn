@@ -55,7 +55,7 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
     UsageValidationMode mode);
 
 struct BufferBinding {
-    raw_ptr<BufferBase> buffer;
+    RAW_PTR_EXCLUSION BufferBase* buffer;
     uint64_t offset;
     uint64_t size;
 };
