@@ -71,8 +71,8 @@ struct BuiltinPolyfillConfig {
     bool count_trailing_zeros = false;
     /// Should `degrees()` be polyfilled?
     bool degrees = false;
-    /// Should `distance()` be polyfilled for scalar f32?
-    bool distance_scalar_f32 = false;
+    /// Should `distance()` be polyfilled for scalar f32 and f16?
+    bool distance_scalar_float = false;
     /// How should `extractBits()` be polyfilled?
     BuiltinPolyfillLevel extract_bits = BuiltinPolyfillLevel::kNone;
     /// Should `firstLeadingBit()` be polyfilled?
@@ -83,8 +83,8 @@ struct BuiltinPolyfillConfig {
     bool fwidth_fine = false;
     /// How should `insertBits()` be polyfilled?
     BuiltinPolyfillLevel insert_bits = BuiltinPolyfillLevel::kNone;
-    /// Should `length()` be polyfilled for scalar f32?
-    bool length_scalar_f32 = false;
+    /// Should `length()` be polyfilled for scalar f32 and f16?
+    bool length_scalar_float = false;
     /// Should `radians()` be polyfilled?
     bool radians = false;
     /// Should `reflect()` be polyfilled for vec2<f32>?
@@ -111,16 +111,18 @@ struct BuiltinPolyfillConfig {
     /// Reflection for this class
     TINT_REFLECT(BuiltinPolyfillConfig,
                  clamp_int,
+                 clamp_float,
+                 abs_signed_int,
                  count_leading_zeros,
                  count_trailing_zeros,
                  degrees,
-                 distance_scalar_f32,
+                 distance_scalar_float,
                  extract_bits,
                  first_leading_bit,
                  first_trailing_bit,
                  fwidth_fine,
                  insert_bits,
-                 length_scalar_f32,
+                 length_scalar_float,
                  radians,
                  reflect_vec2_f32,
                  saturate,
