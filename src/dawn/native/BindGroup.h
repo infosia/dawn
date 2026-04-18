@@ -44,6 +44,7 @@
 #include "dawn/native/UsageValidationMode.h"
 #include "dawn/native/dawn_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native {
 
@@ -55,7 +56,10 @@ ResultOrError<UnpackedPtr<BindGroupDescriptor>> ValidateBindGroupDescriptor(
     UsageValidationMode mode);
 
 struct BufferBinding {
-    raw_ptr<BufferBase> buffer;
+    // This pointer is used during BindGroupTracker::Apply, which is hot code called before every
+    // draw call. The underlying buffer should be kept alive by the BindGroup, it's impossible to
+    // UAF.
+    RAW_PTR_EXCLUSION BufferBase* buffer;
     uint64_t offset;
     uint64_t size;
 };
