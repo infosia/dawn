@@ -228,7 +228,7 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                 schema::BindGroupEntryTypeBufferBinding data{{
                     .binding = binding,
                     .data{{
-                        .bufferId = captureContext.GetId(entry.buffer.get()),
+                        .bufferId = captureContext.GetId(entry.buffer),
                         .offset = entry.offset,
                         .size = entry.size,
                     }},
