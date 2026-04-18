@@ -173,13 +173,6 @@ class MultisampledInterpolationTest : public DawnTest {
 TEST_P(MultisampledInterpolationTest, SamplePositions) {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
-    // TODO(crbug.com/40238674): Fails on Pixel 10 gles.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
-
-    // Swiftshader does not work. Unknown reason.
-    DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
-    DAWN_TEST_UNSUPPORTED_IF(IsANGLESwiftShader());
-
     CreatePipelines();
 
     static constexpr wgpu::Extent3D kTextureSize = {10, 10, 1};
