@@ -34,6 +34,24 @@
       "parentUuid": "35e74d7d_fa156c5a",
       "revId": "3106a702db09b1641b9dcee0e50176db17012590",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35bec84c_a22f052c",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-19T00:12:45Z",
+      "side": 1,
+      "message": "PS12 fixes this. I needed to pass both the encoded length and the struct offset in the bundle, but I have pretty thoroughly tested this e2e now and am confident in the pass.",
+      "parentUuid": "245adea5_4ad103e6",
+      "revId": "3106a702db09b1641b9dcee0e50176db17012590",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
