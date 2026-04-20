@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe4a8bf_0f838b95",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-20T17:49:27Z",
+      "side": 1,
+      "message": "Generally prefer to just set the default instead of forcing off always. That way developers can still use the toggle to turn it on for testing purposes.\n\n```suggestion\n    // TODO(https://issues.chromium.org/498659375): Re-enable on Android ARM.\n    if (GetDeviceInfo().HasExt(DeviceExt::Spirv14)) {\n        deviceToggles-\u003eDefault(\n            Toggle::UseSpirv14,\n            platform-\u003eIsFeatureEnabled(platform::Features::kWebGPUUseSpirv14) \u0026\u0026 !IsAndroidARM());\n```",
+      "range": {
+        "startLine": 1236,
+        "startChar": 0,
+        "endLine": 1239,
+        "endChar": 98
+      },
+      "revId": "83a0ae9a7faad81c486b594f4879b509bdfe27ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
