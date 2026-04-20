@@ -26,7 +26,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gmock/gmock.h"
+#include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/hlsl/writer/helper_test.h"
+#include "src/tint/utils/internal_limits.h"
 
 namespace tint::hlsl::writer {
 namespace {
@@ -160,6 +162,27 @@ TEST_F(HlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
     EXPECT_THAT(result.Failure().reason,
                 testing::HasSubstr(
                     "64-bit (vec2u) atomic operations are not yet supported by the HLSL backend"));
+}
+
+TEST_F(HlslWriterTest, CanGenerate_StructMemberPadding_TooLarge) {
+    ty.Get<core::type::Struct>(
+        mod.symbols.New("S"),
+        tint::Vector{ty.Get<core::type::StructMember>(mod.symbols.New("a"), ty.i32(), 0u, 0u, 4u,
+                                                      4u, core::IOAttributes{}),
+                     ty.Get<core::type::StructMember>(
+                         mod.symbols.New("b"), ty.i32(), 1u,
+                         static_cast<uint32_t>(tint::internal_limits::kMaxStructMemberPadding + 4),
+                         4u, 4u, core::IOAttributes{})},
+        8u /* size */);
+
+    auto* ep = b.ComputeFunction("main");
+    b.Append(ep->Block(), [&] { b.Return(ep); });
+
+    Options options;
+    options.entry_point_name = "main";
+    auto result = Generate(options);
+    ASSERT_NE(result, Success);
+    EXPECT_THAT(result.Failure().reason, testing::HasSubstr("is larger than the maximum"));
 }
 
 TEST_F(HlslWriterTest, WorkgroupStorageSize_OverflowAfterAlign) {

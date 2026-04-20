@@ -41,6 +41,7 @@
 #include "src/tint/lang/spirv/writer/common/option_helpers.h"
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 #include "src/tint/lang/spirv/writer/raise/raise.h"
+#include "src/tint/utils/internal_limits.h"
 
 // Included by 'ast_printer.h', included again here for './tools/run gen' track the dependency.
 #include "spirv/unified1/spirv.h"  // IWYU pragma: export
@@ -72,6 +73,12 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         }
         if (ty->Is<core::type::U16>()) {
             return Failure("16-bit unsigned integers are not supported by the SPIR-V backend");
+        }
+        if (auto* str = ty->As<core::type::Struct>()) {
+            auto res = str->PaddingWithinLimit();
+            if (res != Success) {
+                return res.Failure();
+            }
         }
     }
 

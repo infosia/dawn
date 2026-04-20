@@ -26,8 +26,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gmock/gmock.h"
+#include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/msl/validate/validate.h"
 #include "src/tint/lang/msl/writer/helper_test.h"
+#include "src/tint/utils/internal_limits.h"
 
 namespace tint::msl::writer {
 namespace {
@@ -496,6 +498,27 @@ kernel void v(device SB* sb [[buffer(0)]]) {
   atomic_min_explicit((&(*tint_module_vars.sb).a), as_type<ulong>(uint2(1u)), memory_order_relaxed);
 }
 )");
+}
+
+TEST_F(MslWriterTest, CanGenerate_StructMemberPadding_TooLarge) {
+    ty.Get<core::type::Struct>(
+        mod.symbols.New("S"),
+        tint::Vector{ty.Get<core::type::StructMember>(mod.symbols.New("a"), ty.i32(), 0u, 0u, 4u,
+                                                      4u, core::IOAttributes{}),
+                     ty.Get<core::type::StructMember>(
+                         mod.symbols.New("b"), ty.i32(), 1u,
+                         static_cast<uint32_t>(tint::internal_limits::kMaxStructMemberPadding + 4),
+                         4u, 4u, core::IOAttributes{})},
+        8u /* size */);
+
+    auto* ep = b.ComputeFunction("main");
+    b.Append(ep->Block(), [&] { b.Return(ep); });
+
+    Options options;
+    options.entry_point_name = "main";
+    auto result = Generate(options);
+    ASSERT_NE(result, Success);
+    EXPECT_THAT(result.Failure().reason, testing::HasSubstr("is larger than the maximum"));
 }
 
 }  // namespace

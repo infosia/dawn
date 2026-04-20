@@ -333,25 +333,6 @@ TEST_F(IR_ValidatorTest, StructMember_TypeAlignZero) {
 )")) << res.Failure();
 }
 
-TEST_F(IR_ValidatorTest, Structure_LargePaddingSizeAtEnd) {
-    auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  Vector{
-                      ty.Get<type::StructMember>(mod.symbols.New("a"), ty.array<u32, 3>(), 0u, 0u,
-                                                 4u, 4'000'000'000u, IOAttributes{}),
-                  });
-    mod.root_block->Append(b.Var("my_struct", private_, str_ty));
-
-    auto* fn = b.Function("F", ty.void_());
-    b.Append(fn->Block(), [&] { b.Return(fn); });
-
-    auto res = ir::Validate(mod);
-    ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason,
-                testing::HasSubstr("struct padding (3999999988) is larger then the max (10485760)"))
-        << res.Failure();
-}
-
 TEST_F(IR_ValidatorTest, Structure_MemberAlignmentCausesSizeOverflow) {
     auto* str_ty =
         ty.Struct(mod.symbols.New("S"),
@@ -369,28 +350,6 @@ TEST_F(IR_ValidatorTest, Structure_MemberAlignmentCausesSizeOverflow) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr("struct size (0) is smaller than the end of the last member (4)"))
-        << res.Failure();
-}
-
-TEST_F(IR_ValidatorTest, StructureMember_LargePaddingSize) {
-    auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  Vector{
-                      ty.Get<type::StructMember>(mod.symbols.New("a"), ty.array<u32, 3>(), 0u, 0u,
-                                                 4u, 40'000'000u, IOAttributes{}),
-                      ty.Get<type::StructMember>(mod.symbols.New("b"), ty.array<u32, 3>(), 0u, 0u,
-                                                 4u, 16u, IOAttributes{}),
-                  });
-    mod.root_block->Append(b.Var("my_struct", private_, str_ty));
-
-    auto* fn = b.Function("F", ty.void_());
-    b.Append(fn->Block(), [&] { b.Return(fn); });
-
-    auto res = ir::Validate(mod);
-    ASSERT_NE(res, Success);
-    EXPECT_THAT(
-        res.Failure().reason,
-        testing::HasSubstr("struct member padding (4294967284) is larger then the max (10485760)"))
         << res.Failure();
 }
 
