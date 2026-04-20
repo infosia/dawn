@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76d955c6_84e6d87f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-20T10:46:26Z",
+      "side": 1,
+      "message": "I think `relaxed` atomic is enough. In this case the atomic load is almost the same as normal load here",
+      "parentUuid": "a9bcabbf_098546ed",
+      "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e39a91a6_9c2f1de0",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-04-17T21:37:29Z",
       "side": 1,
       "message": "Could you do a similar test to verify that validation is enabled after a device loss as well?",
+      "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc23c50c_88a3abe0",
+        "filename": "src/dawn/tests/unittests/native/SkipValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-20T10:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39a91a6_9c2f1de0",
       "revId": "52cd9f229544c43dd7f26735bbb9412b375804a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
