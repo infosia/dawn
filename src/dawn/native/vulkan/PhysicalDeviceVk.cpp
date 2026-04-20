@@ -1233,7 +1233,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
 
-    if (GetDeviceInfo().HasExt(DeviceExt::Spirv14)) {
+    // TODO(https://issues.chromium.org/498659375): Re-enable on Android ARM.
+    if (GetDeviceInfo().HasExt(DeviceExt::Spirv14) && !IsAndroidARM()) {
         deviceToggles->Default(Toggle::UseSpirv14,
                                platform->IsFeatureEnabled(platform::Features::kWebGPUUseSpirv14));
     } else {
