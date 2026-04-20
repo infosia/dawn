@@ -353,6 +353,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6175881f_3158519f",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-20T11:58:27Z",
+      "side": 1,
+      "message": "OK, You got some points. This might be largely cheap in general.\n\nHowever, D3D11 is only used by Graphite in the GPU process and never goes through javascript things. Its timing could be affected more than WebGPU.\n\nAre we planning to review these checks in future and remove unnecessary ones (after getting no report of security failures)?",
+      "parentUuid": "5130743a_5e27acfb",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7
