@@ -196,6 +196,7 @@ MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap(
     DAWN_ASSERT(minDescriptorCount <= maxDescriptorCount);
 
     // Grow the heap to the next power of two size if necessary.
+    uint32_t newDescriptorCount = mDescriptorCount;
     if (minDescriptorCount > mDescriptorCount) {
         if (!IsPowerOfTwo(minDescriptorCount)) {
             // Align to the next power of two heap size (e.g 4096, 8192, 16384, etc.)
@@ -203,7 +204,7 @@ MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap(
             minDescriptorCount = Align(minDescriptorCount, align);
             DAWN_ASSERT(minDescriptorCount <= maxDescriptorCount);
         }
-        mDescriptorCount = minDescriptorCount;
+        newDescriptorCount = minDescriptorCount;
     }
 
     std::unique_ptr<ShaderVisibleDescriptorHeap> descriptorHeap;
@@ -213,13 +214,20 @@ MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap(
     if (mHeap != nullptr) {
         mDevice->GetResidencyManager()->UnlockAllocation(mHeap.get());
         if (mDescriptorCount < maxDescriptorCount) {
+            // Current heap is not max-sized, so create a new one with space for
+            // 'newDescriptorCount' and replace the current one (below).
+            mDescriptorCount = newDescriptorCount;
             mDevice->ReferenceUntilUnused(mHeap->GetD3D12DescriptorHeap());
         } else {
             // Pool-allocate heaps.
-            // Return the switched out heap to the pool and retrieve the oldest heap that is no
-            // longer used by GPU. This maintains a heap buffer to avoid frequently re-creating
-            // heaps for heavy users.
+            // Return the currently max sized heap to the pool and retrieve the oldest heap that is
+            // no longer used by GPU, if any. This maintains a heap buffer to avoid frequently
+            // re-creating heaps for heavy users.
             // TODO(dawn:256): Consider periodically triming to avoid OOM.
+
+            // We should only pool max-sized heaps
+            DAWN_ASSERT((mHeap->GetSize() / mSizeIncrement) == maxDescriptorCount);
+
             mPool.push_back({mDevice->GetQueue()->GetPendingCommandSerial(), std::move(mHeap)});
             if (mPool.front().heapSerial <= mDevice->GetQueue()->GetCompletedCommandSerial()) {
                 descriptorHeap = std::move(mPool.front().heap);
@@ -236,6 +244,8 @@ MaybeError ShaderVisibleDescriptorAllocator::AllocateAndSwitchShaderVisibleHeap(
 
     // Create a FIFO buffer from the recently created heap.
     mHeap = std::move(descriptorHeap);
+    // Ensure that the current heap is large enough
+    DAWN_ASSERT(mDescriptorCount <= (mHeap->GetSize() / mSizeIncrement));
     mAllocator = RingBufferAllocator(mDescriptorCount);
 
     // Invalidate all bindgroup allocations on previously bound heaps by incrementing the heap

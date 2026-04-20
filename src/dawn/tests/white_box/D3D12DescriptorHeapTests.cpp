@@ -729,7 +729,7 @@ TEST_P(D3D12DescriptorHeapTests, GrowHeapsInMultipleSubmits) {
     // Growth: Allocate + Tick() and ensure heaps are always unique.
     while (allocator->GetShaderVisiblePoolSizeForTesting() == 0) {
         EXPECT_TRUE(allocator->AllocateAndSwitchShaderVisibleHeap(heapSize).IsSuccess());
-        heapSize *= 2;
+        heapSize = std::min(heapSize * 2, allocator->GetShaderVisibleHeapMaxSize());
         ComPtr<ID3D12DescriptorHeap> heap = allocator->GetShaderVisibleHeap();
         EXPECT_TRUE(std::find(heaps.begin(), heaps.end(), heap) == heaps.end());
         heaps.insert(heap);
@@ -756,7 +756,7 @@ TEST_P(D3D12DescriptorHeapTests, GrowHeapsInPendingSubmit) {
     // Growth: Allocate new heaps.
     while (allocator->GetShaderVisiblePoolSizeForTesting() == 0) {
         EXPECT_TRUE(allocator->AllocateAndSwitchShaderVisibleHeap(heapSize).IsSuccess());
-        heapSize *= 2;
+        heapSize = std::min(heapSize * 2, allocator->GetShaderVisibleHeapMaxSize());
         ComPtr<ID3D12DescriptorHeap> heap = allocator->GetShaderVisibleHeap();
         EXPECT_TRUE(std::find(heaps.begin(), heaps.end(), heap) == heaps.end());
         heaps.insert(heap);
