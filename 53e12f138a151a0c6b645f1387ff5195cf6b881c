@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c259ecd3_1228d4c8",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-20T08:21:41Z",
+      "side": 1,
+      "message": "WDYT of making either 1) a `MaybeError GetOrCreate` function or 2) making the empty query set on device creation?",
+      "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
