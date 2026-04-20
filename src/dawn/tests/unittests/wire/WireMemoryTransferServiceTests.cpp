@@ -256,8 +256,8 @@ class WireMemoryTransferServiceTestBase : public WireTest,
 
         EXPECT_CALL(*clientHandle, SizeOfSerializeDataUpdate(_, _)).WillOnce(Return(kDataSize));
         EXPECT_CALL(*clientHandle, SerializeDataUpdate)
-            .WillOnce(WithArg<0>([&](void* serializePointer) {
-                memcpy(serializePointer, &mClientBufferContent, kBufferSize);
+            .WillOnce(WithArg<0>([&](std::span<char> serializeSpan) {
+                memcpy(serializeSpan.data(), &mClientBufferContent, kBufferSize);
             }));
     }
     void ExpectServerSerializeData(MockServerHandles& serverHandles) {
@@ -279,11 +279,15 @@ class WireMemoryTransferServiceTestBase : public WireTest,
             return;
         }
 
-        EXPECT_CALL(*clientHandle, DeserializeDataUpdate(_, kBufferSize, 0, kBufferSize))
-            .WillOnce(WithArg<0>([&, success](const void* deserializePointer) {
+        EXPECT_CALL(*clientHandle,
+                    DeserializeDataUpdate(testing::Matcher<std::span<const uint8_t>>(
+                                              testing::Truly([](std::span<const uint8_t> arg) {
+                                                  return arg.size() == kBufferSize;
+                                              })),
+                                          static_cast<size_t>(0u)))
+            .WillOnce(WithArg<0>([&, success](std::span<const uint8_t> deserializeSpan) {
                 if (success) {
-                    // Copy the data manually here.
-                    memcpy(&mClientBufferContent, deserializePointer, kBufferSize);
+                    memcpy(&mClientBufferContent, deserializeSpan.data(), kBufferSize);
                 }
                 return success;
             }));

@@ -29,6 +29,7 @@
 #define INCLUDE_DAWN_WIRE_WIRECLIENT_H_
 
 #include <memory>
+#include <span>
 #include <string_view>
 #include <vector>
 
@@ -139,17 +140,30 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         virtual const void* GetData() = 0;
 
         // Gets called when a MapReadCallback resolves.
-        // deserialize the data update and apply
-        // it to the range (offset, offset + size) of allocation
-        // There could be nothing to be deserialized (if using shared memory)
-        // Needs to check potential offset/size OOB and overflow
-        // TODO(https://issues.chromium.org/492456046): Pass deserializePointer+deserializeSize as a
-        // span, and the region to update as a span as well. It also seems that `size` is redundant
-        // with deserializeSize?
+        // Deserializes the data update and applies it to the range [offset, offset + size) of
+        // the allocation. There could be nothing to be deserialized (if using shared memory).
+        // Needs to check potential offset/size OOB and overflow.
+        // TODO(https://issues.chromium.org/492456046): Remove this overload once it has been
+        // removed in Chromium.
         virtual bool DeserializeDataUpdate(const void* deserializePointer,
                                            size_t deserializeSize,
                                            size_t offset,
-                                           size_t size) = 0;
+                                           size_t size) {
+            return false;
+        }
+
+        // Gets called when a MapReadCallback resolves.
+        // Deserializes |deserializeData| and applies it starting at |offset| in the allocation.
+        // |deserializeData.size()| gives the number of bytes to update.
+        // There could be nothing to be deserialized (if using shared memory).
+        // Needs to check potential offset OOB.
+        // TODO(492456046): Make this pure-virtual once the old overload is removed from
+        // Chromium.
+        virtual bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
+                                           size_t offset) {
+            return DeserializeDataUpdate(deserializeData.data(), deserializeData.size(), offset,
+                                         deserializeData.size());
+        }
 
       private:
         ReadHandle(const ReadHandle&) = delete;
@@ -183,8 +197,18 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // the subrange (offset, offset + size) of the allocation at buffer unmap
         // This subrange is always the whole mapped region for now
         // There could be nothing to be serialized (if using shared memory)
-        // TODO(https://issues.chromium.org/492456046): Pass serializePointer as a span.
-        virtual void SerializeDataUpdate(void* serializePointer, size_t offset, size_t size) = 0;
+        // TODO(https://issues.chromium.org/492456046): Remove this overload once it has been
+        // removed in Chromium.
+        virtual void SerializeDataUpdate(void* serializePointer, size_t offset, size_t size) {}
+
+        // Serializes the modified contents starting at |offset| in the allocation into
+        // |serializeData| at buffer unmap. |serializeData.size()| gives the number of bytes to
+        // serialize. There could be nothing to be serialized (if using shared memory).
+        // TODO(492456046): Make this pure-virtual once the old overload is removed from
+        // Chromium.
+        virtual void SerializeDataUpdate(std::span<char> serializeData, size_t offset) {
+            SerializeDataUpdate(serializeData.data(), offset, serializeData.size());
+        }
 
       private:
         WriteHandle(const WriteHandle&) = delete;

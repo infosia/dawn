@@ -232,8 +232,11 @@ void Queue::WriteBufferXL(WGPUBuffer cBuffer,
         CommandExtension{
             writeHandleCreateInfoLength,
             [&](char* writeHandleBuffer) { writeHandle->SerializeCreate(writeHandleBuffer); }},
+        // TODO(492456046): Spanify this lambda and compute the input span in `SerializeCommand`.
         CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
-                             writeHandle->SerializeDataUpdate(writeHandleBuffer, 0u, cmd.size);
+                             std::span<char> writeHandleBufferSpan(writeHandleBuffer,
+                                                                   writeDataUpdateInfoLength);
+                             writeHandle->SerializeDataUpdate(writeHandleBufferSpan, 0u);
                          }});
 }
 
@@ -301,8 +304,11 @@ void Queue::WriteTextureXL(const WGPUTexelCopyTextureInfo* destination,
         CommandExtension{
             writeHandleCreateInfoLength,
             [&](char* writeHandleBuffer) { writeHandle->SerializeCreate(writeHandleBuffer); }},
+        // TODO(492456046): Spanify this lambda and compute the input span in `SerializeCommand`.
         CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
-                             writeHandle->SerializeDataUpdate(writeHandleBuffer, 0u, cmd.dataSize);
+                             std::span<char> writeHandleBufferSpan(writeHandleBuffer,
+                                                                   writeDataUpdateInfoLength);
+                             writeHandle->SerializeDataUpdate(writeHandleBufferSpan, 0u);
                          }});
 }
 
