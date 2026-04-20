@@ -1409,7 +1409,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc1_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc1_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
@@ -1472,7 +1472,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc0_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc0_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
@@ -1535,7 +1535,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc1_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc1_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
@@ -1621,7 +1621,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc0_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc0_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
@@ -1703,7 +1703,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc0_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc0_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
@@ -1769,7 +1769,7 @@ $B1: {  # root
     %10:vec2<f32> = swizzle %9, xy
     %11:vec2<f32> = floor %10
     %12:vec2<f32> = add %11, vec2<f32>(0.5f)
-    %13:vec4<f32> = load %foo_loc1_Input
+    %13:vec4<f32> = spirv.interpolate_at_offset %foo_loc1_Input, vec2<f32>(0.0f)
     %14:f32 = swizzle %13, z
     %15:f32 = swizzle %13, w
     %16:vec4<f32> = construct %12, %14, %15
