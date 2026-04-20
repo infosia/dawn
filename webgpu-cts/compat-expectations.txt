@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-03-31 06:59:47AM
+# Last rolled: 2026-04-20 07:30:05AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -2508,6 +2508,9 @@ crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,copyTextu
 crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba8unorm-srgb";dstFormat="rgba8unorm-srgb";dimension="2d" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba8unorm-srgb";dstFormat="rgba8unorm-srgb";dimension="2d" [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="depth24plus-stencil8" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,compute,basic:large_dispatch:dispatchSize="maximum" [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="queue-op";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="queue-op";writeOps=["storage","b2b-copy"];contexts=["render-pass-encoder","command-encoder"] [ Failure ]
@@ -3353,6 +3356,7 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,t
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8snorm";aspect="all" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8uint";aspect="all" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureDimensions:storage:format="rgba8unorm";aspect="all" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:arrayed_2d_coords:stage="v";format="depth24plus-stencil8";filt="linear";modeU="m";modeV="c";offset=true [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,extension,readonly_and_readwrite_storage_textures:var_decl: [ Failure ]
