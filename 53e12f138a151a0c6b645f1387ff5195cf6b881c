@@ -16,6 +16,24 @@
       "message": "WDYT of making either 1) a `MaybeError GetOrCreate` function or 2) making the empty query set on device creation?",
       "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09510e2b_7f900ff3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-20T20:34:58Z",
+      "side": 1,
+      "message": "Making the empty query set on device creation (if the workaround is needed) is probably OK, it\u0027s gonna be tiny anyway. But I would also generally say that the chances of hitting this are REALLY low and if you do you are probably about to have a bad time for a myriad of other reasons, even if this particular error was avoided, so this is probably sufficient?",
+      "parentUuid": "c259ecd3_1228d4c8",
+      "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
