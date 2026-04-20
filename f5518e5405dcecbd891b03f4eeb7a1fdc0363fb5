@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1056a4d_2c44745e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-20T19:26:31Z",
+      "side": 1,
+      "message": "```suggestion\nWGSL validation, so the round trip fuzzing pass will fail, due to the IR\n```",
+      "revId": "f5518e5405dcecbd891b03f4eeb7a1fdc0363fb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7d5c6ff2_5f97ad55",
