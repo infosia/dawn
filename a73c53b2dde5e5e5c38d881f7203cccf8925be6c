@@ -90,6 +90,30 @@
       },
       "revId": "a73c53b2dde5e5e5c38d881f7203cccf8925be6c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce75a2b_40c33177",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-20T13:59:43Z",
+      "side": 1,
+      "message": "I\u0027ll leave it as is for now, but will consider this in the future. Thanks!",
+      "parentUuid": "2e1ca9df_0af16743",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 40
+      },
+      "revId": "a73c53b2dde5e5e5c38d881f7203cccf8925be6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
