@@ -34,6 +34,7 @@
 #include "src/tint/lang/wgsl/ast/stage_attribute.h"
 #include "src/tint/lang/wgsl/resolver/resolver.h"
 #include "src/tint/lang/wgsl/resolver/resolver_helper_test.h"
+#include "src/tint/utils/internal_limits.h"
 
 namespace tint::resolver {
 namespace {
@@ -1683,6 +1684,39 @@ note: 'alias A' declared here)");
 }
 
 }  // namespace TypeDoesNotTakeTemplateArgs
+
+TEST_F(ResolverTypeValidationTest, StructMemberPadding_TooLarge) {
+    // struct S {
+    //   @size(10485765) a : i32,
+    //   b : i32,
+    // }
+    Structure(
+        "S",
+        Vector{
+            Member("a", ty.i32(),
+                   Vector{MemberSize(AInt(tint::internal_limits::kMaxStructMemberPadding + 5))}),
+            Member("b", ty.i32()),
+        });
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "error: struct member padding (10485764) is larger than the max (10485760)");
+}
+
+TEST_F(ResolverTypeValidationTest, StructEndPadding_TooLarge) {
+    // struct S {
+    //   @size(10485765) a : i32,
+    // }
+    Structure(
+        "S",
+        Vector{
+            Member(Source{{12, 34}}, "a", ty.i32(),
+                   Vector{MemberSize(AInt(tint::internal_limits::kMaxStructMemberPadding + 5))}),
+        });
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), "error: struct padding (10485764) is larger than the max (10485760)");
+}
 
 }  // namespace
 }  // namespace tint::resolver
