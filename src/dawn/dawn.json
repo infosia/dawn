@@ -1162,6 +1162,14 @@
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
+            },
+            {
+                "name": "get shader statistics",
+                "tags": ["dawn"],
+                "returns": "status",
+                "args": [
+                    {"name": "statistics", "type": "shader statistics", "annotation": "*"}
+                ]
             }
         ]
     },
@@ -2510,7 +2518,8 @@
             {"value": 63, "name": "unorm16 filterable", "tags": ["dawn"]},
             {"value": 64, "name": "render pass render area", "tags": ["dawn"]},
             {"value": 65, "name": "dawn native spontaneous queue events", "tags": ["dawn", "native"]},
-            {"value": 66, "name": "adapter properties drm", "tags": ["dawn", "native"]}
+            {"value": 66, "name": "adapter properties drm", "tags": ["dawn", "native"]},
+            {"value": 67, "name": "shader statistics", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -3526,6 +3535,14 @@
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
+            },
+            {
+                "name": "get shader statistics",
+                "tags": ["dawn"],
+                "returns": "status",
+                "args": [
+                    {"name": "statistics", "type": "shader statistics", "annotation": "*"}
+                ]
             }
         ]
     },
@@ -3810,6 +3827,75 @@
             {"name": "strict math", "type": "bool"}
         ]
     },
+    "shader statistic entry": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "members": [
+            {"name": "name", "type": "string view"},
+            {"name": "description", "type": "string view"},
+            {"name": "format", "type": "shader statistic format"},
+            {"name": "value", "type": "shader statistic value"}
+        ]
+    },
+    "shader statistic format": {
+        "category": "enum",
+        "tags": ["dawn"],
+        "values": [
+            {"value": 0, "name": "undefined", "valid": false},
+            {"value": 1, "name": "bool32"},
+            {"value": 2, "name": "int64"},
+            {"value": 3, "name": "uint64"},
+            {"value": 4, "name": "float64"}
+        ]
+    },
+    "shader statistic valid field": {
+        "category": "bitmask",
+        "tags": ["dawn"],
+        "values": [
+            {"value": 0, "name": "none"},
+            {"value": 1, "name": "register count"},
+            {"value": 2, "name": "scalar register count"},
+            {"value": 4, "name": "instruction count"},
+            {"value": 8, "name": "code size bytes"},
+            {"value": 16, "name": "scratch memory bytes"},
+            {"value": 32, "name": "threadgroup memory bytes"},
+            {"value": 64, "name": "simd width"},
+            {"value": 128, "name": "max threads per group"}
+        ]
+    },
+    "shader statistic value": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "members": [
+            {"name": "value bool", "type": "bool", "default": "false"},
+            {"name": "value int64", "type": "int64_t", "default": 0},
+            {"name": "value uint64", "type": "uint64_t", "default": 0},
+            {"name": "value float64", "type": "double", "default": 0}
+        ]
+    },
+    "shader statistics": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "members": [
+            {"name": "stage count", "type": "size_t", "default": 0},
+            {"name": "stages", "type": "shader stage statistics", "annotation": "const*", "length": "stage count", "default": "nullptr"}
+        ]
+    },
+    "shader statistics core": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "members": [
+            {"name": "valid fields", "type": "shader statistic valid field"},
+            {"name": "register count", "type": "uint64_t", "default": 0},
+            {"name": "scalar register count", "type": "uint64_t", "default": 0},
+            {"name": "instruction count", "type": "uint64_t", "default": 0},
+            {"name": "code size bytes", "type": "uint64_t", "default": 0},
+            {"name": "scratch memory bytes", "type": "uint64_t", "default": 0},
+            {"name": "threadgroup memory bytes", "type": "uint64_t", "default": 0},
+            {"name": "simd width", "type": "uint64_t", "default": 0},
+            {"name": "max threads per group", "type": "uint64_t", "default": 0}
+        ]
+    },
     "shader stage": {
         "category": "bitmask",
         "values": [
@@ -3817,6 +3903,16 @@
             {"value": 1, "name": "vertex"},
             {"value": 2, "name": "fragment"},
             {"value": 4, "name": "compute"}
+        ]
+    },
+    "shader stage statistics": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "members": [
+            {"name": "stage", "type": "shader stage"},
+            {"name": "core", "type": "shader statistics core"},
+            {"name": "extension entry count", "type": "size_t", "default": 0},
+            {"name": "extension entries", "type": "shader statistic entry", "annotation": "const*", "length": "extension entry count", "default": "nullptr"}
         ]
     },
     "stencil operation": {
@@ -4700,6 +4796,10 @@
     "int32_t": {
         "category": "native",
         "wasm type": "i"
+    },
+    "int64_t": {
+        "category": "native",
+        "wasm type": "j"
     },
     "size_t": {
         "category": "native",

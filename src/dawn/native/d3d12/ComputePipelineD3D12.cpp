@@ -93,6 +93,12 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
                                                     /* usedInterstageVariables */ {}));
     d3dDesc.CS = {compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size()};
 
+    if (GetDevice()->HasFeature(Feature::ShaderStatistics)) {
+        mComputeReflectionData =
+            d3d::ReflectShader(device->GetFunctions(), compiledShader.shaderBlob,
+                               device->GetFunctions()->dxcCreateInstance);
+    }
+
     StreamIn(&mCacheKey, d3dDesc, ToBackend(GetLayout())->GetRootSignatureBlob());
 
     // Try to see if we have anything in the blob cache.
@@ -162,6 +168,13 @@ ComPtr<ID3D12CommandSignature> ComputePipeline::GetDispatchIndirectCommandSignat
         return ToBackend(GetLayout())->GetDispatchIndirectCommandSignatureWithNumWorkgroups();
     }
     return ToBackend(GetDevice())->GetDispatchIndirectSignature();
+}
+
+ShaderStatisticsData ComputePipeline::GetShaderStatisticsImpl() const {
+    ShaderStatisticsData result;
+    result.stages.push_back(
+        d3d::BuildStageStatistics(mComputeReflectionData, wgpu::ShaderStage::Compute));
+    return result;
 }
 
 }  // namespace dawn::native::d3d12

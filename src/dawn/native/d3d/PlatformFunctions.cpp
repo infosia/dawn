@@ -99,6 +99,7 @@ MaybeError PlatformFunctions::EnsureFXC(std::span<const std::string> searchPaths
 #if DAWN_PLATFORM_IS(WINUWP)
     d3dCompile = &D3DCompile;
     d3dDisassemble = &D3DDisassemble;
+    d3dReflect = reinterpret_cast<PFN_D3D_REFLECT>(&D3DReflect);
 #else
     std::string error;
 #if defined(DAWN_FORCE_SYSTEM_COMPONENT_LOAD)
@@ -116,6 +117,8 @@ MaybeError PlatformFunctions::EnsureFXC(std::span<const std::string> searchPaths
         !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
+    // D3DReflect is optional — shader statistics feature degrades gracefully without it.
+    mFXCompilerLib.GetProc(&d3dReflect, "D3DReflect", &error);
 #endif
     return {};
 }

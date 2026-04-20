@@ -314,7 +314,9 @@
             "TextureGetDimension",
             "TextureGetFormat",
             "TextureGetUsage",
-            "TextureGetTextureBindingViewDimension"
+            "TextureGetTextureBindingViewDimension",
+            "ComputePipelineGetShaderStatistics",
+            "RenderPipelineGetShaderStatistics"
         ],
         "client_handwritten_commands": [
             "AdapterGetInstance",
@@ -336,15 +338,19 @@
             "ResourceTableUpdate",
             "SurfaceConfigure",
             "SurfacePresent",
-            "SurfaceUnconfigure"
+            "SurfaceUnconfigure",
+            "ComputePipelineGetShaderStatistics",
+            "RenderPipelineGetShaderStatistics"
         ],
         "client_special_objects": [
             "Adapter",
             "Buffer",
+            "ComputePipeline",
             "Device",
             "Instance",
             "QuerySet",
             "Queue",
+            "RenderPipeline",
             "ResourceTable",
             "ShaderModule",
             "Surface",
