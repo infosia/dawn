@@ -285,7 +285,7 @@ function(AddSubdirectoryDXC)
     set(LLVM_ENABLE_TERMINFO OFF CACHE BOOL "" FORCE)
 
     if (NOT WIN32)
-        set(DIRECTX_HEADER_INCLUDE_DIR "${DAWN_THIRD_PARTY_DIR}/dxheaders/include")
+        set(DIRECTX_HEADER_INCLUDE_DIR "${DAWN_THIRD_PARTY_DIR}/directx-headers/src/include")
     endif()
 
     # Disable HCT.cmake looking for and using clang-format. This is used to compare generated files
