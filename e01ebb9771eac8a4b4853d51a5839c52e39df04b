@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf7944bc_cc77a546",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-20T09:37:39Z",
+      "side": 1,
+      "message": "Is there a way to share the logic with the validation? In the current state it seems that it will be easy to update the code in one place and forget to update it in the other.",
+      "revId": "e01ebb9771eac8a4b4853d51a5839c52e39df04b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
