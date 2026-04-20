@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aea9bfa8_91fb3b4c",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-20T13:50:15Z",
+      "side": 1,
+      "message": "My bad",
+      "parentUuid": "4e1aa434_1baef540",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb2fcaea_978fface",
         "filename": "docs/dawn/asserts-vs-check.md",
         "patchSetId": 13
@@ -82,6 +100,30 @@
       "writtenOn": "2026-04-18T02:41:48Z",
       "side": 1,
       "message": "I would possibly like to incrementally review all these promotions because I\u0027m certain a bunch of them will be pointless (null checks, checks that should be the responsibility of later code, etc.) But of course that will take too long to do right now.\n\nWDYT of using some alias for DAWN_CHECK like DAWN_CHECK_UNTRIAGED (or something shorter, whatever) so we know they were changed as part of this bulk operation?",
+      "range": {
+        "startLine": 27,
+        "startChar": 70,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03af1f69_6d02dae7",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-20T13:50:15Z",
+      "side": 1,
+      "message": "I agree with the intention but perhaps then can we do it more incrementally; as in in this change can we focus on only ones that will not be expensive and ones that will provide definite value. Aka make a positive but smaller step but a step we are sure we want to make.\n\n(as for the DAWN_CHECK_UNTRIAGED its just that we have quite a bit to do already. I see many TODOs for memory safety issues so I dont want to add more todos for someone to cleanup later)",
+      "parentUuid": "eb2fcaea_978fface",
       "range": {
         "startLine": 27,
         "startChar": 70,

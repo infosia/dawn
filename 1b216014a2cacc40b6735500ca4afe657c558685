@@ -377,6 +377,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bd04e6d8_16082028",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-20T13:50:15Z",
+      "side": 1,
+      "message": "As mentioned in the doc is it hard to remove them but likely we will use AI to help remove them as AI might have been used in finding them.\n\nIf d3d11 will never be access by javascript (I though it was going to be via compat like gles) then we can remove most of these checks in that backend.\n\nAny other places that are hot these checks should be evaluated and removed.\n\nIf you could just do one more pass then we can be confident.",
+      "parentUuid": "6175881f_3158519f",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7
