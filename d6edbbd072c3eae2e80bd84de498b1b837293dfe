@@ -87,6 +87,24 @@
       "parentUuid": "180718e2_48f26218",
       "revId": "d6edbbd072c3eae2e80bd84de498b1b837293dfe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e63af84_bd756fc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-20T08:15:01Z",
+      "side": 1,
+      "message": "For reference, this is [the allowlist](https://source.chromium.org/chromium/chromium/src/+/main:PRESUBMIT.py;l\u003d955?q\u003dspan_unittest.cc%20%20%20-f:out) in Chromium.",
+      "parentUuid": "6e4a12b3_dbffaa95",
+      "revId": "d6edbbd072c3eae2e80bd84de498b1b837293dfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
