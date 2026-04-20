@@ -3090,6 +3090,27 @@ bool Validator::Structure(const sem::Struct* str, ast::PipelineStage stage) cons
         return false;
     }
 
+    // Validate padding
+    uint32_t cur_offset = 0;
+    for (auto* member : str->Members()) {
+        uint32_t padding = member->Offset() - cur_offset;
+        if (padding >= tint::internal_limits::kMaxStructMemberPadding) {
+            AddError(member->Declaration()->source)
+                << "struct member padding (" << padding << ") is larger than the max ("
+                << tint::internal_limits::kMaxStructMemberPadding << ")";
+            return false;
+        }
+        cur_offset += padding + member->MinimumRequiredSize();
+    }
+
+    uint32_t end_padding = str->Size() - cur_offset;
+    if (end_padding >= tint::internal_limits::kMaxStructMemberPadding) {
+        AddError(str->Declaration()->name->source)
+            << "struct padding (" << end_padding << ") is larger than the max ("
+            << tint::internal_limits::kMaxStructMemberPadding << ")";
+        return false;
+    }
+
     return true;
 }
 
