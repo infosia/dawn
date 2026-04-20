@@ -123,9 +123,10 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
                 }
 
                 // Update user map data with server returned data
-                if (!mBuffer->mReadHandle->DeserializeDataUpdate(
-                        readDataUpdateInfo, static_cast<size_t>(readDataUpdateInfoLength),
-                        pending.offset, pending.size)) {
+                std::span<const uint8_t> readDataUpdateInfoSpan(
+                    readDataUpdateInfo, static_cast<size_t>(readDataUpdateInfoLength));
+                if (!mBuffer->mReadHandle->DeserializeDataUpdate(readDataUpdateInfoSpan,
+                                                                 pending.offset)) {
                     return FailRequest("Failed to deserialize data returned from the server.");
                 }
                 mBuffer->mMappedData = const_cast<void*>(mBuffer->mReadHandle->GetData());
@@ -511,8 +512,10 @@ void Buffer::APIUnmap() {
             CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
                                  // Serialize flush metadata into the space after the command.
                                  // This closes the handle for writing.
-                                 mWriteHandle->SerializeDataUpdate(writeHandleBuffer, cmd.offset,
-                                                                   cmd.size);
+                                 std::span<char> writeHandleBufferSpan(writeHandleBuffer,
+                                                                       writeDataUpdateInfoLength);
+                                 mWriteHandle->SerializeDataUpdate(writeHandleBufferSpan,
+                                                                   cmd.offset);
                              }});
 
         // If mDestructWriteHandleOnUnmap is true, that means the write handle is merely

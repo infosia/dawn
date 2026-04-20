@@ -233,7 +233,8 @@ void Queue::WriteBufferXL(WGPUBuffer cBuffer,
             writeHandleCreateInfoLength,
             [&](char* writeHandleBuffer) { writeHandle->SerializeCreate(writeHandleBuffer); }},
         CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
-                             writeHandle->SerializeDataUpdate(writeHandleBuffer, 0u, cmd.size);
+                             std::span<char> writeHandleBufferSpan(writeHandleBuffer, cmd.size);
+                             writeHandle->SerializeDataUpdate(writeHandleBufferSpan, 0u);
                          }});
 }
 
@@ -302,7 +303,8 @@ void Queue::WriteTextureXL(const WGPUTexelCopyTextureInfo* destination,
             writeHandleCreateInfoLength,
             [&](char* writeHandleBuffer) { writeHandle->SerializeCreate(writeHandleBuffer); }},
         CommandExtension{writeDataUpdateInfoLength, [&](char* writeHandleBuffer) {
-                             writeHandle->SerializeDataUpdate(writeHandleBuffer, 0u, cmd.dataSize);
+                             std::span<char> writeHandleBufferSpan(writeHandleBuffer, cmd.dataSize);
+                             writeHandle->SerializeDataUpdate(writeHandleBufferSpan, 0u);
                          }});
 }
 
