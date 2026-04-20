@@ -620,4 +620,10 @@ NSRef<MTLDepthStencilDescriptor> RenderPipeline::MakeDepthStencilDesc() {
     return mtlDepthStencilDescRef;
 }
 
+ShaderStatisticsData RenderPipeline::GetShaderStatisticsImpl() const {
+    // MTLRenderPipelineState does not expose per-stage statistics like compute does.
+    // Return empty data.
+    return {};
+}
+
 }  // namespace dawn::native::metal

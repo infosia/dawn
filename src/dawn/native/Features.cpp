@@ -477,6 +477,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://github.com/webgpu-native/webgpu-headers/blob/main/doc/articles/"
       "Asynchronous%20Operations.md",
       FeatureInfo::FeatureState::Stable}},
+    {Feature::ShaderStatistics,
+     {"Supports querying compiled shader statistics from pipelines",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "shader_statistics.md",
+      FeatureInfo::FeatureState::Experimental}},
 
     // Comment to separate the } so it is clearer what to copy-paste to add a feature.
 };

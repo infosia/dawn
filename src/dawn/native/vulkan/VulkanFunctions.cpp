@@ -422,6 +422,11 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
         GET_DEVICE_PROC(GetSemaphoreFdKHR);
     }
 
+    if (deviceInfo.HasExt(DeviceExt::PipelineExecutableProperties)) {
+        GET_DEVICE_PROC(GetPipelineExecutablePropertiesKHR);
+        GET_DEVICE_PROC(GetPipelineExecutableStatisticsKHR);
+    }
+
     if (deviceInfo.HasExt(DeviceExt::Swapchain)) {
         GET_DEVICE_PROC(CreateSwapchainKHR);
         GET_DEVICE_PROC(DestroySwapchainKHR);

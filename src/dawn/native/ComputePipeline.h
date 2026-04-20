@@ -28,12 +28,14 @@
 #ifndef SRC_DAWN_NATIVE_COMPUTEPIPELINE_H_
 #define SRC_DAWN_NATIVE_COMPUTEPIPELINE_H_
 
+#include <optional>
 #include <vector>
 
 #include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/Pipeline.h"
+#include "dawn/native/ShaderStatistics.h"
 
 namespace dawn::native {
 
@@ -66,8 +68,11 @@ class ComputePipelineBase : public PipelineBase,
     bool UsesLinearIndexing() const;
     bool UsesGlobalInvocationIndex() const;
 
+    wgpu::Status APIGetShaderStatistics(ShaderStatistics* statistics);
+
   protected:
     void DestroyImpl(DestroyReason reason) override;
+    virtual ShaderStatisticsData GetShaderStatisticsImpl() const;
 
   private:
     ComputePipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -80,6 +85,7 @@ class ComputePipelineBase : public PipelineBase,
     Extent3D mWorkgroupSize = {1, 1, 1};
     bool mUsesLinearIndex = false;
     bool mUsesGlobalInvocationIndex = false;
+    mutable std::optional<ShaderStatisticsCache> mShaderStatisticsCache;
 };
 
 }  // namespace dawn::native

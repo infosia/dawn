@@ -36,12 +36,14 @@
 #include "dawn/common/Sha3.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/Serializable.h"
+#include "dawn/native/ShaderStatistics.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
 #include "dawn/native/d3d/d3d_platform.h"
 
 namespace dawn::native::d3d {
 
 class Device;
+class PlatformFunctions;
 
 #define COMPILED_SHADER_MEMBERS(X) \
     X(Blob, shaderBlob)            \
@@ -78,6 +80,29 @@ InterStageShaderVariablesMask ToInterStageShaderVariablesMask(const std::vector<
 void DumpFXCCompiledShader(Device* device,
                            const CompiledShader& compiledShader,
                            uint32_t compileFlags);
+
+struct D3DShaderReflectionData {
+    bool valid = false;
+    uint32_t tempRegisterCount = 0;
+    uint32_t instructionCount = 0;
+    uint32_t floatInstructionCount = 0;
+    uint32_t intInstructionCount = 0;
+    uint32_t uintInstructionCount = 0;
+    uint32_t staticFlowControlCount = 0;
+    uint32_t dynamicFlowControlCount = 0;
+    uint32_t textureNormalInstructions = 0;
+    uint32_t textureLoadInstructions = 0;
+    uint32_t textureCompInstructions = 0;
+    uint32_t barrierInstructions = 0;
+    uint32_t interlockedInstructions = 0;
+};
+
+D3DShaderReflectionData ReflectShader(const PlatformFunctions* functions,
+                                      const Blob& shaderBlob,
+                                      DxcCreateInstanceProc dxcCreateInstance = nullptr);
+
+ShaderStageStatisticsData BuildStageStatistics(const D3DShaderReflectionData& reflection,
+                                               wgpu::ShaderStage stage);
 
 }  // namespace dawn::native::d3d
 

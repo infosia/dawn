@@ -80,6 +80,7 @@ struct VulkanDeviceKnobs {
     VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT
         multisampledRenderToSingleSampledFeatures;
     VkPhysicalDeviceExtendedDynamicStateFeaturesEXT extendedDynamicStateFeatures;
+    VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR pipelineExecutablePropertiesFeatures;
 
     bool HasExt(DeviceExt ext) const;
     DeviceExtSet extensions;

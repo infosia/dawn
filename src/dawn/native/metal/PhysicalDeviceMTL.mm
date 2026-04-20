@@ -665,6 +665,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
 #endif
 
+    EnableFeature(Feature::ShaderStatistics);
+
     EnableFeature(Feature::DawnMultiPlanarFormats);
     EnableFeature(Feature::DawnNativeSpontaneousQueueEvents);
     EnableFeature(Feature::MultiPlanarFormatP010);

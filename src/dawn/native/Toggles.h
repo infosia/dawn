@@ -210,6 +210,10 @@ enum class Toggle {
     DisableTransientAttachment,
     AutoMapBackendBuffer,
 
+    WarnOnShaderSpill,
+    WarnOnHighRegisterPressure,
+    LogShaderStatistics,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
