@@ -16,6 +16,23 @@
       "message": "PTAL. I\u0027m not thrilled with the nested looping in BindGroupVk, and it seems overly targeted at this one scenario. Feel free to chime in if you have a better idea of how to handle it. It does clean up any VVL errors, though!",
       "revId": "48781512806f56453fdb1c0f78e9cd75e6b8bee9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0d026ba_823b6814",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-20T09:41:47Z",
+      "side": 1,
+      "message": "FYI\n\n\u003e This seems to be a duplicate of issue 392121643, with https://issues.chromium.org/u/2/issues/392121643#comment3 that gives a couple implementation strategies (we can go with 1) for now and IIRC with bindless that might be the only option? I don\u0027t remember for sure).",
+      "revId": "48781512806f56453fdb1c0f78e9cd75e6b8bee9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
