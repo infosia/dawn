@@ -55,20 +55,14 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         const void* GetData() override { return mStagingData.get(); }
 
-        bool DeserializeDataUpdate(const void* deserializePointer,
-                                   size_t deserializeSize,
-                                   size_t offset,
-                                   size_t size) override {
-            if (deserializeSize != size || deserializePointer == nullptr) {
-                return false;
-            }
-
-            if (offset > mSize || size > mSize - offset) {
+        bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
+                                   size_t offset) override {
+            if (offset > mSize || deserializeData.size() > mSize - offset) {
                 return false;
             }
 
             void* start = static_cast<uint8_t*>(mStagingData.get()) + offset;
-            memcpy(start, deserializePointer, size);
+            memcpy(start, deserializeData.data(), deserializeData.size());
             return true;
         }
 
@@ -96,12 +90,13 @@ class InlineMemoryTransferService : public MemoryTransferService {
             return size;
         }
 
-        void SerializeDataUpdate(void* serializePointer, size_t offset, size_t size) override {
+        void SerializeDataUpdate(std::span<char> serializeData, size_t offset) override {
             DAWN_ASSERT(mStagingData != nullptr);
-            DAWN_ASSERT(serializePointer != nullptr);
+            DAWN_ASSERT(serializeData.data() != nullptr);
             DAWN_ASSERT(offset <= mSize);
-            DAWN_ASSERT(size <= mSize - offset);
-            memcpy(serializePointer, static_cast<uint8_t*>(mStagingData.get()) + offset, size);
+            DAWN_ASSERT(serializeData.size() <= mSize - offset);
+            memcpy(serializeData.data(), static_cast<uint8_t*>(mStagingData.get()) + offset,
+                   serializeData.size());
         }
 
       private:
