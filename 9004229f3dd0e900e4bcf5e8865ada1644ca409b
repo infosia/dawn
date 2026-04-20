@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98a58654_8b248d69",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-20T08:26:17Z",
+      "side": 1,
+      "message": "Looking at the bug, it seems that the actual issue is that the workaround writes to the padding bytes, when it should leave them as is. WebGPU IIRC requires that padding bytes are untouched and the workaround after this CL will instead fill them with zeroes.",
+      "revId": "9004229f3dd0e900e4bcf5e8865ada1644ca409b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
