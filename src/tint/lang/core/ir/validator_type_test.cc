@@ -348,7 +348,7 @@ TEST_F(IR_ValidatorTest, Structure_LargePaddingSizeAtEnd) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason,
-                testing::HasSubstr("struct padding (3999999988) is larger then the max (10485760)"))
+                testing::HasSubstr("struct padding (3999999988) is larger than the max (10485760)"))
         << res.Failure();
 }
 
@@ -390,7 +390,7 @@ TEST_F(IR_ValidatorTest, StructureMember_LargePaddingSize) {
     ASSERT_NE(res, Success);
     EXPECT_THAT(
         res.Failure().reason,
-        testing::HasSubstr("struct member padding (4294967284) is larger then the max (10485760)"))
+        testing::HasSubstr("struct member padding (4294967284) is larger than the max (10485760)"))
         << res.Failure();
 }
 

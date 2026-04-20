@@ -2233,7 +2233,7 @@ void Validator::CheckType(const core::type::Type* root,
                     auto padding = member->Offset() - cur_offset;
                     if (padding >= internal_limits::kMaxStructMemberPadding) {
                         diag() << "struct member padding (" << padding
-                               << ") is larger then the max ("
+                               << ") is larger than the max ("
                                << internal_limits::kMaxStructMemberPadding << ")";
                         return false;
                     }
@@ -2247,7 +2247,7 @@ void Validator::CheckType(const core::type::Type* root,
 
                 auto padding = str->Size() - cur_offset;
                 if (padding >= internal_limits::kMaxStructMemberPadding) {
-                    diag() << "struct padding (" << padding << ") is larger then the max ("
+                    diag() << "struct padding (" << padding << ") is larger than the max ("
                            << internal_limits::kMaxStructMemberPadding << ")";
                     return false;
                 }
