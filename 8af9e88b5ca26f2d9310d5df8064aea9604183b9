@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be4e09b2_92190cf3",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-20T14:30:23Z",
+      "side": 1,
+      "message": "nit: Remove the Stage 1, Stage 2 prefixes",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34da07ce_ed2cfe1f",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-20T14:30:23Z",
+      "side": 1,
+      "message": "I like this change! Much easier to parse. But now I think the name should go back to polyfill_float_negation because this transform is now operating on both f16 and f32 types.",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bbdca70_18b29abd",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-20T14:30:23Z",
+      "side": 1,
+      "message": "Probably overkill but since there\u0027s no switch/if to go from a general worklist to the specific op function I would add an ASSERT of the Op() for future maintainability.",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dcea560_b73265ed",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-20T14:30:23Z",
+      "side": 1,
+      "message": "super nit but I assume this is an unintentional change",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651ec944_64e7f103",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-20T14:30:23Z",
+      "side": 1,
+      "message": "And here",
+      "fixSuggestions": [
+        {
+          "fixId": "709d8f18_dc9d68cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "            // And here\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
