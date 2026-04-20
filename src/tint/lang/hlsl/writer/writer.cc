@@ -36,11 +36,13 @@
 #include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/pointer.h"
+#include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/core/type/texel_buffer.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/hlsl/writer/common/option_helpers.h"
 #include "src/tint/lang/hlsl/writer/printer/printer.h"
 #include "src/tint/lang/hlsl/writer/raise/raise.h"
+#include "src/tint/utils/internal_limits.h"
 
 namespace tint::hlsl::writer {
 
@@ -64,6 +66,12 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             }
             if (ty->Is<core::type::U16>()) {
                 return Failure("16-bit integers are not supported by the HLSL FXC backend");
+            }
+        }
+        if (auto* str = ty->As<core::type::Struct>()) {
+            auto res = str->PaddingWithinLimit();
+            if (res != Success) {
+                return res.Failure();
             }
         }
         if (ty->Is<core::type::Buffer>()) {
