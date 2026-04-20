@@ -377,22 +377,10 @@ deps = {
     'condition': 'dawn_standalone',
   },
 
-  # The third_party/dxc entry will be removed after we've rolled and
-  # updated Chromium for the third_party/directx-shader-compiler/src entry
-  'third_party/dxc': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@5f8d05f9b760ae2be0242cad8ed719d10058b98c',
-  },
   'third_party/directx-shader-compiler/src': {
     'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@4ad98341b1719b16989644fa297fed47c61af6a6',
   },
 
-  # The third_party/dxheaders entry will be removed after we've rolled and
-  # updated Chromium for the third_party/directx-headers/src entry
-  'third_party/dxheaders': {
-    # The non-Windows build of DXC depends on DirectX-Headers, and at a specific commit (not ToT)
-    'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@980971e835876dc0cde415e8f9bc646e64667bf7',
-    'condition': 'host_os != "win"',
-  },
   'third_party/directx-headers/src': {
     # The non-Windows build of DXC depends on DirectX-Headers, and at a specific commit (not ToT)
     'url': '{chromium_git}/external/github.com/microsoft/DirectX-Headers@980971e835876dc0cde415e8f9bc646e64667bf7',

@@ -111,7 +111,6 @@ def _NonInclusiveFileFilter(file):
         "src/dawn/tests/end2end/DepthBiasTests.cpp",  # External URL
         "src/tint/transform/canonicalize_entry_point_io.cc",  # External URL
         "test/tint/samples/compute_boids.wgsl",  # External URL
-        "third_party/gn/dxc/BUILD.gn",  # Third party file
         "third_party/directx-shader-compiler/BUILD.gn",  # Third party file
         "third_party/directx-shader-compiler/LICENSE",  # Third party file
         "third_party/directx-shader-compiler/build/message_compiler.py",  # Third party file
