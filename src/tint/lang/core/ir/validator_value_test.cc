@@ -1281,7 +1281,7 @@ TEST_F(IR_ValidatorTest, Var_Atomic_Storage_Read) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:2:40 error: var: atomic variables in 'storage' address space must have 'read_write' access mode
+            R"(:2:40 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
   %1:ptr<storage, atomic<i32>, read> = var undef @binding_point(0, 0)
                                        ^^^
 )"));
@@ -1313,7 +1313,7 @@ TEST_F(IR_ValidatorTest, Var_Atomic_Private) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:2:46 error: var: atomic variables must be in the 'workgroup' or 'storage' address space
+            R"(:2:46 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
   %1:ptr<private, atomic<i32>, read_write> = var undef
                                              ^^^
 )"));
@@ -1331,7 +1331,7 @@ TEST_F(IR_ValidatorTest, Var_Atomic_Function) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:3:49 error: var: atomic variables must be in the 'workgroup' or 'storage' address space
+            R"(:3:49 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
     %2:ptr<function, atomic<i32>, read_write> = var undef
                                                 ^^^
 )"));
@@ -1351,7 +1351,7 @@ TEST_F(IR_ValidatorTest, Var_Struct_Atomic_Storage_Read) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:6:37 error: var: atomic variables in 'storage' address space must have 'read_write' access mode
+            R"(:6:37 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
   %1:ptr<storage, MyStruct, read> = var undef @binding_point(0, 0)
                                     ^^^
 )"));
@@ -1370,9 +1370,39 @@ TEST_F(IR_ValidatorTest, Var_Struct_Atomic_Private) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:6:43 error: var: atomic variables must be in the 'workgroup' or 'storage' address space
+            R"(:6:43 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
   %1:ptr<private, MyStruct, read_write> = var undef
                                           ^^^
+)"));
+}
+
+TEST_F(IR_ValidatorTest, Var_Atomic_Array_Private) {
+    auto* v = b.Var(ty.ptr(private_, ty.array(ty.atomic(ty.i32()), 4u), read_write));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:2:56 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
+  %1:ptr<private, array<atomic<i32>, 4>, read_write> = var undef
+                                                       ^^^
+)"));
+}
+
+TEST_F(IR_ValidatorTest, Var_Atomic_NestedArray_Private) {
+    auto* v = b.Var(ty.ptr(private_, ty.array(ty.array(ty.atomic(ty.i32()), 4u), 10u), read_write));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:2:67 error: var: atomic types may only be used by 'workspace' or read write 'storage' variables
+  %1:ptr<private, array<array<atomic<i32>, 4>, 10>, read_write> = var undef
+                                                                  ^^^
 )"));
 }
 

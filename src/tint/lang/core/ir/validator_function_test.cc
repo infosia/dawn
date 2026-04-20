@@ -1739,6 +1739,26 @@ TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_Fragmen
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Function_Location_IntegralArray_WithoutInterpolation_FragmentInput) {
+    auto* f = FragmentEntryPoint("my_func");
+
+    auto* p = b.FunctionParam("p", ty.array(ty.i32(), 4u));
+    p->SetLocation(0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:1:27 error: integral user-defined inputs and outputs must have an @interpolate(flat) attribute
+%my_func = @fragment func(%p:array<i32, 4> [@location(0)]):void {
+                          ^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Function_Location_Integral_WithoutInterpolation_FragmentOutput) {
     auto* f = FragmentEntryPoint("my_func");
     f->SetReturnType(ty.u32());

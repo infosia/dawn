@@ -229,9 +229,7 @@ void WalkStructMembers(CTX& ctx, const core::type::Struct* str, IMPL&& impl) {
 /// @param impl an impl function to be run, see WalkTypeAndMembers for details
 template <typename CTX, typename IMPL>
 void WalkArrayElements(CTX& ctx, const core::type::Array* arr, IMPL&& impl) {
-    tint::Switch(
-        arr->ElemType(), [&](const core::type::Struct* s) { WalkStructMembers(ctx, s, impl); },
-        [&](const core::type::Array* a) { WalkArrayElements(ctx, a, impl); });
+    WalkTypeAndMembers(ctx, arr->ElemType(), IOAttributes{}, impl);
 }
 
 /// Helper for walking a type that maybe a struct, calling an impl function for the type and each of
@@ -3514,16 +3512,12 @@ void Validator::CheckVar(const Var* var) {
     }
 
     if (ContainsAtomic(mv->StoreType())) {
-        if (mv->AddressSpace() == AddressSpace::kStorage) {
-            if (mv->Access() != core::Access::kReadWrite) {
-                AddError(var)
-                    << "atomic variables in 'storage' address space must have 'read_write' "
-                       "access mode";
-                return;
-            }
-        } else if (mv->AddressSpace() != AddressSpace::kWorkgroup) {
+        bool is_workgroup = mv->AddressSpace() == AddressSpace::kWorkgroup;
+        bool is_read_write_storage = mv->AddressSpace() == AddressSpace::kStorage &&
+                                     mv->Access() == core::Access::kReadWrite;
+        if (!is_workgroup && !is_read_write_storage) {
             AddError(var)
-                << "atomic variables must be in the 'workgroup' or 'storage' address space";
+                << "atomic types may only be used by 'workspace' or read write 'storage' variables";
             return;
         }
     }
