@@ -268,9 +268,8 @@ class WireMemoryTransferServiceTestBase : public WireTest,
 
         EXPECT_CALL(*serverHandle, SizeOfSerializeDataUpdate(_, _)).WillOnce(Return(kDataSize));
         EXPECT_CALL(*serverHandle, SerializeDataUpdate)
-            .WillOnce(WithArg<3>([&](void* serializePointer) {
-                memcpy(serializePointer, &mServerBufferContent, kBufferSize);
-                return kBufferSize;
+            .WillOnce(WithArg<2>([&](std::span<char> serializeSpan) {
+                memcpy(serializeSpan.data(), &mServerBufferContent, kBufferSize);
             }));
     }
 

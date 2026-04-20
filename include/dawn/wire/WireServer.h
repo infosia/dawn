@@ -114,17 +114,33 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // SerializeDataUpdate is called with the same offset/size args
         virtual size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) = 0;
 
-        // Gets called when a MapReadCallback resolves.
-        // Serialize the data update for the range (offset, offset + size) into
-        // |serializePointer| to the client There could be nothing to be serialized (if
-        // using shared memory)
-        // TODO(https://issues.chromium.org/492456046): Replace data+size with a `span<uint8_t>
-        // update` and pass the deserializePointer as a span with the size from
-        // SizeOfSerializeDataUpdate.
+        // TODO(https://issues.chromium.org/492456046): Remove this overload once it has been
+        // removed in Chromium. Currently we  need to declare it as a non-pure virtual function so
+        // that we can safely remove the old 4-parameter `DeserializeDataUpdate` from Chromium
+        // instead of having to provide an implementation for it.
         virtual void SerializeDataUpdate(const void* data,
                                          size_t offset,
                                          size_t size,
-                                         void* serializePointer) = 0;
+                                         void* serializePointer) {}
+
+        // Serializes the GPU buffer data in |data| to send to the client when a MapReadCallback
+        // resolves. There could be nothing to serialize if using shared memory.
+        //
+        // Parameters:
+        //  - `data`: The mapped GPU buffer contents for the range [offset, offset + data.size()).
+        //  - `offset`: The byte offset of data.data() within the GPU buffer.
+        //  - `serializeData`: The output buffer to write the serialized payload into.
+        //    Its size equals SizeOfSerializeDataUpdate(offset, data.size()).
+        //
+        // The default implementation calls the old 4-parameter overload for compatibility with
+        // the current Chromium implementation.
+        // TODO(492456046): Make this pure-virtual once the old overload is removed from
+        // Chromium.
+        virtual void SerializeDataUpdate(std::span<const uint8_t> data,
+                                         size_t offset,
+                                         std::span<char> serializeData) {
+            SerializeDataUpdate(data.data(), offset, data.size(), serializeData.data());
+        }
 
       private:
         ReadHandle(const ReadHandle&) = delete;

@@ -46,7 +46,10 @@ class MockMemoryTransferService : public MemoryTransferService {
         MOCK_METHOD(void, Destroy, ());
 
         MOCK_METHOD(size_t, SizeOfSerializeDataUpdate, (size_t, size_t), (override));
-        MOCK_METHOD(void, SerializeDataUpdate, (const void*, size_t, size_t, void*), (override));
+        MOCK_METHOD(void,
+                    SerializeDataUpdate,
+                    (std::span<const uint8_t>, size_t, std::span<char>),
+                    (override));
     };
 
     class MockWriteHandle : public WriteHandle {

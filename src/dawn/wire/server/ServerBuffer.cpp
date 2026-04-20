@@ -277,8 +277,12 @@ void Server::OnBufferMapAsyncCallback(MapUserdata* data,
                     // Extensions to replace fields skipped by skip_serialize.
                     CommandExtension{readDataUpdateInfoLength, [&](char* readHandleBuffer) {
                                          // The in-flight map request returned successfully.
+                                         std::span<const uint8_t> readDataSpan(
+                                             static_cast<const uint8_t*>(readData), data->size);
+                                         std::span<char> readHandleBufferSpan(
+                                             static_cast<char*>(readHandleBuffer), data->size);
                                          mapState->readHandle->SerializeDataUpdate(
-                                             readData, data->offset, data->size, readHandleBuffer);
+                                             readDataSpan, data->offset, readHandleBufferSpan);
                                      }});
             });
             break;

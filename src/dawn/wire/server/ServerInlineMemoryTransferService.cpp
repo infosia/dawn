@@ -48,14 +48,13 @@ class InlineMemoryTransferService : public MemoryTransferService {
 
         size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) override { return size; }
 
-        void SerializeDataUpdate(const void* data,
+        void SerializeDataUpdate(std::span<const uint8_t> data,
                                  size_t offset,
-                                 size_t size,
-                                 void* serializePointer) override {
-            if (size > 0) {
-                DAWN_ASSERT(data != nullptr);
-                DAWN_ASSERT(serializePointer != nullptr);
-                memcpy(serializePointer, data, size);
+                                 std::span<char> serializeData) override {
+            if (!data.empty()) {
+                DAWN_ASSERT(data.data() != nullptr);
+                DAWN_ASSERT(serializeData.data() != nullptr);
+                memcpy(serializeData.data(), data.data(), data.size());
             }
         }
     };
