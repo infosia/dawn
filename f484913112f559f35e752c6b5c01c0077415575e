@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc1f11b_323876c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-20T20:16:29Z",
+      "side": 1,
+      "message": "This bug was found when attempting to land samplers in ResourceTable CL (child of this one right now).",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
