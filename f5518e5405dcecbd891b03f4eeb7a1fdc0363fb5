@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d5c6ff2_5f97ad55",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-20T19:23:11Z",
+      "side": 1,
+      "message": "Note: Please double check this, since this is mostly Gemini logic.",
+      "revId": "f5518e5405dcecbd891b03f4eeb7a1fdc0363fb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
