@@ -1222,17 +1222,36 @@ bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage stor
     return true;
 }
 
-// Gets or creates an occlusion Query object for use with Toggle::VulkanAddWorkToEmptyResolvePass.
-QuerySetBase* Device::GetEmptyPassQuerySet() {
+// Prepares the Empty Pass QuerySet, creating and resetting it if needed.
+MaybeError Device::PrepareEmptyPassQuerySet(CommandRecordingContext* recordingContext) {
     DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
-
     if (!mEmptyPassQuerySet) {
         QuerySetDescriptor descriptor;
         descriptor.type = wgpu::QueryType::Occlusion;
         descriptor.count = 1;
-        mEmptyPassQuerySet = APICreateQuerySet(&descriptor);
+        DAWN_TRY_ASSIGN(mEmptyPassQuerySet, CreateQuerySet(&descriptor));
+        mEmptyPassQuerySetNeedsReset = true;
     }
-    return mEmptyPassQuerySet.Get();
+
+    if (mEmptyPassQuerySetNeedsReset) {
+        fn.CmdResetQueryPool(recordingContext->commandBuffer,
+                             ToBackend(mEmptyPassQuerySet)->GetHandle(), 0, 1);
+        mEmptyPassQuerySetNeedsReset = false;
+    }
+
+    return {};
+}
+
+// Gets the occlusion Query object for use with Toggle::VulkanAddWorkToEmptyResolvePass.
+// Must call PrepareEmptyPassQuerySet outside of recording a render pass prior to calling this every
+// time.
+Ref<QuerySetBase> Device::UseEmptyPassQuerySet() {
+    DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
+    DAWN_ASSERT(mEmptyPassQuerySet);
+    DAWN_ASSERT(!mEmptyPassQuerySetNeedsReset);
+
+    mEmptyPassQuerySetNeedsReset = true;
+    return mEmptyPassQuerySet;
 }
 
 }  // namespace dawn::native::vulkan

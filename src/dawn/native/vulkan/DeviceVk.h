@@ -151,7 +151,8 @@ class Device final : public DeviceBase {
                                                       size_t bufferSize) const override;
     bool NeedsStaticSamplerForExternalTexture() const override;
 
-    QuerySetBase* GetEmptyPassQuerySet();
+    MaybeError PrepareEmptyPassQuerySet(CommandRecordingContext* recordingContext);
+    Ref<QuerySetBase> UseEmptyPassQuerySet();
 
     VulkanRenderPassType GetRenderPassType() { return mRenderPassType; }
 
@@ -242,6 +243,7 @@ class Device final : public DeviceBase {
     Ref<PipelineCache> mMonolithicPipelineCache;
 
     Ref<QuerySetBase> mEmptyPassQuerySet;
+    bool mEmptyPassQuerySetNeedsReset = true;
     std::atomic<uint64_t> mNextTextureViewId = 1;
 
     VulkanRenderPassType mRenderPassType = VulkanRenderPassType::CreateRenderPass;
