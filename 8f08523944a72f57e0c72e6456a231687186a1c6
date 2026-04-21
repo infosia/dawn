@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7737def9_40862c83",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-21T20:32:45Z",
+      "side": 1,
+      "message": "This isn\u0027t great IMO. Ideally DescriptorSetTracker would have a way to get the input attachment VkDescriptorSet when it\u0027s needed but DescriptorSetTracker is missing Device*/BeginRenderPassCmd*. Would you use a std::function to hold a callback to accomplish this in Dawn?",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
