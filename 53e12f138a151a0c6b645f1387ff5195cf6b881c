@@ -70,6 +70,24 @@
       "parentUuid": "a6e40585_68e68c3c",
       "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5911c8e4_3e56b50c",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-21T20:11:24Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/304177",
+      "parentUuid": "d092819b_b6a0efda",
+      "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
