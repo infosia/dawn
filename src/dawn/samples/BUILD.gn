@@ -109,3 +109,8 @@ if (dawn_supports_glfw_for_windowing) {
     sources = [ "DawnInfo.cpp" ]
   }
 }
+
+sample("SubgroupMatrixMultiply") {
+  sources = [ "SubgroupMatrixMultiply.cpp" ]
+  deps = [ "${dawn_root}/src/dawn/native" ]
+}

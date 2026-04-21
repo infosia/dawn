@@ -1359,5 +1359,45 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_TiledMatrixMultiplyTest,
                             1024u,
                         });
 
+// Test flexible dimension configs from VK_NV_cooperative_matrix2.
+// This test runs the same matrix multiply verification on all available configs,
+// which includes any flexible dimension configs that were expanded from the NV extension.
+class SubgroupMatrix_FlexibleDimensionsTest : public SubgroupMatrix_MatrixMatrixArithmeticTest {};
+
+TEST_P(SubgroupMatrix_FlexibleDimensionsTest, MatrixMultiply) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+    // TODO(crbug.com/492539239): Access violation during test teardown.
+    DAWN_SUPPRESS_TEST_IF(IsWindows11() && IsAMD() && IsVulkan());
+
+    bool columnMajor = GetParam().mColumnMajor;
+
+    // Query the supported subgroup matrix configurations.
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    DAWN_TEST_UNSUPPORTED_IF(subgroupMatrixConfigs.configCount == 0);
+
+    // Test each supported config with MatrixMultiply.
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& config = subgroupMatrixConfigs.configs[i];
+
+        std::stringstream configInfo;
+        configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
+                   << ComponentTypeToWgslType(config.componentType) << " -> "
+                   << ComponentTypeToWgslType(config.resultComponentType);
+        SCOPED_TRACE(configInfo.str());
+
+        TestSubgroupMatrixConfig(config, MatrixMultiply, info.subgroupMaxSize, columnMajor);
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_FlexibleDimensionsTest,
+                        {VulkanBackend()},
+                        {MatrixMultiply},
+                        {false, true});
+
 }  // anonymous namespace
 }  // namespace dawn
