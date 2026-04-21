@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4bda942_cd13ea85",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-21T06:50:29Z",
+      "side": 1,
+      "message": "```suggestion\n                             std::span\u003cchar\u003e writeHandleBufferSpan(writeHandleBuffer, writeDataUpdateInfoLength);\n```",
+      "revId": "56f66acf2fc955f347517f72f85f8fa8ac781d29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b068ef_fc2e2683",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-21T06:50:29Z",
+      "side": 1,
+      "message": "ditto\n\nBut also can we have a TODO to make the lambda take a span directly, meaning that `SerializeCommand` would compute it and pass it in?",
+      "revId": "56f66acf2fc955f347517f72f85f8fa8ac781d29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
