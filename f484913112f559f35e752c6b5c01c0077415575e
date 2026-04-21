@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1cc5a2cc_1573ee36",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T12:54:25Z",
+      "side": 1,
+      "message": "This doesn\u0027t change the behaviour. When `Create` is called, it allocates the min heap, and mDescriptorCount is set to that value. Before my change, there was a coupling with initializing `mDescriptorCount` in the ctor to the min value, and `Create` making sure to allocate the min heap, which was ugly. We don\u0027t need this since we specify the min descriptors we want when allocating.",
+      "parentUuid": "db9e2e66_367813c5",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38ed6ccc_7565f43d",
         "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
         "patchSetId": 2
