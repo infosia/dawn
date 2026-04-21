@@ -33,6 +33,24 @@
       "message": "nit: maybe we could set mHeap to nullptr here for good measure.",
       "revId": "2476933e5068474dde8eaa425572dbca772e16b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "196ac59b_028a5506",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T16:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da66b73_0d88127d",
+      "revId": "2476933e5068474dde8eaa425572dbca772e16b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
