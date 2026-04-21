@@ -33,6 +33,24 @@
       "message": "If I\u0027m reading the gn docs right, this just changes how `gn check` works? It doesn\u0027t effect the build does it?\n\nhttps://gn.googlesource.com/gn/+/HEAD/docs/reference.md#var_check_includes",
       "revId": "6b3f119d5d76f816a28f844756a65e1448cd5a22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752a9fe1_e45b1d7a",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-21T19:49:29Z",
+      "side": 1,
+      "message": "Yea, I suspect the correct fix needs to be done in `src/dawn/partition_alloc/BUILD.gn` where we might need to define a `partition_alloc` rule in the else clause of that file so that we can always include the `deps` on `\"${dawn_root}/src/dawn/partition_alloc\"`, but conditionally set the `define` to flip the `DAWN_ENABLE_PARTITION_ALLOC` flag.",
+      "parentUuid": "ae72a397_05015a06",
+      "revId": "6b3f119d5d76f816a28f844756a65e1448cd5a22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
