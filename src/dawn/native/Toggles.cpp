@@ -783,6 +783,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "samplers are only require to sample YCbCr AHB on Android, this is useful for testing on "
       "other devices.",
       "https://crbug.com/468988322", ToggleStage::Device}},
+    {Toggle::DisableCooperativeMatrix2NV,
+     {"disable_cooperative_matrix2_nv",
+      "Disables VK_NV_cooperative_matrix2 flexible dimensions, preventing the expansion of "
+      "subgroup matrix configs beyond the base VK_KHR_cooperative_matrix set.",
+      "https://crbug.com/dawn/0000", ToggleStage::Adapter}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "

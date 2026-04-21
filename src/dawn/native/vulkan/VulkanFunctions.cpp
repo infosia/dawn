@@ -227,6 +227,9 @@ MaybeError VulkanFunctions::LoadInstanceProcs(VkInstance instance,
     // VK_KHR_cooperative_matrix
     GET_INSTANCE_PROC_NO_ERROR(GetPhysicalDeviceCooperativeMatrixPropertiesKHR);
 
+    // VK_NV_cooperative_matrix2
+    GET_INSTANCE_PROC_NO_ERROR(GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV);
+
     return {};
 }
 

@@ -345,6 +345,13 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
                             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_KHR);
     }
 
+    if (info.extensions[DeviceExt::CooperativeMatrix2NV]) {
+        featuresChain.Add(&info.cooperativeMatrix2Features,
+                          VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_FEATURES_NV);
+        propertiesChain.Add(&info.cooperativeMatrix2Properties,
+                            VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_COOPERATIVE_MATRIX_2_PROPERTIES_NV);
+    }
+
     if (info.extensions[DeviceExt::DescriptorIndexing]) {
         featuresChain.Add(&info.descriptorIndexingFeatures,
                           VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES);
@@ -407,6 +414,30 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
         DAWN_TRY(CheckVkSuccess(vkFunctions.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
                                     vkPhysicalDevice, &count, info.cooperativeMatrixConfigs.data()),
                                 "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR"));
+    }
+
+    // Query VK_NV_cooperative_matrix2 flexible dimension configs.
+    if (vkFunctions.GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV == nullptr) {
+        info.extensions.reset(DeviceExt::CooperativeMatrix2NV);
+    }
+    if (info.extensions[DeviceExt::CooperativeMatrix2NV] &&
+        info.cooperativeMatrix2Features.cooperativeMatrixFlexibleDimensions) {
+        uint32_t count = 0;
+        DAWN_TRY(CheckVkSuccess(
+            vkFunctions.GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(
+                vkPhysicalDevice, &count, nullptr),
+            "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV"));
+
+        info.cooperativeMatrix2FlexDimConfigs.resize(count);
+        for (auto& properties : info.cooperativeMatrix2FlexDimConfigs) {
+            properties.sType =
+                VK_STRUCTURE_TYPE_COOPERATIVE_MATRIX_FLEXIBLE_DIMENSIONS_PROPERTIES_NV;
+            properties.pNext = nullptr;
+        }
+        DAWN_TRY(CheckVkSuccess(
+            vkFunctions.GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV(
+                vkPhysicalDevice, &count, info.cooperativeMatrix2FlexDimConfigs.data()),
+            "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV"));
     }
 
     // TODO(cwallez@chromium.org): gather info about formats

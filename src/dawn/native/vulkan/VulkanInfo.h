@@ -74,6 +74,7 @@ struct VulkanDeviceKnobs {
     VkPhysicalDeviceShaderAtomicInt64Features shaderAtomicInt64Features;
     VkPhysicalDeviceVulkanMemoryModelFeatures vulkanMemoryModelFeatures;
     VkPhysicalDeviceCooperativeMatrixFeaturesKHR cooperativeMatrixFeatures;
+    VkPhysicalDeviceCooperativeMatrix2FeaturesNV cooperativeMatrix2Features;
     VkPhysicalDeviceDescriptorIndexingFeatures descriptorIndexingFeatures;
     VkPhysicalDevicePipelineRobustnessFeatures pipelineRobustnessFeatures;
     VkPhysicalDeviceDynamicRenderingFeaturesKHR dynamicRenderingFeatures;
@@ -95,6 +96,7 @@ struct VulkanDeviceInfo : VulkanDeviceKnobs {
     VkPhysicalDeviceSubgroupProperties subgroupProperties;
     VkPhysicalDeviceExternalMemoryHostPropertiesEXT externalMemoryHostProperties;
     VkPhysicalDeviceCooperativeMatrixPropertiesKHR cooperativeMatrixProperties;
+    VkPhysicalDeviceCooperativeMatrix2PropertiesNV cooperativeMatrix2Properties;
     VkPhysicalDeviceDescriptorIndexingProperties descriptorIndexingProperties;
     VkPhysicalDevicePipelineRobustnessProperties pipelineRobustnessProperties;
     VkPhysicalDeviceMaintenance5Properties propertiesMaintenance5;
@@ -102,6 +104,7 @@ struct VulkanDeviceInfo : VulkanDeviceKnobs {
 
     std::vector<VkQueueFamilyProperties> queueFamilies;
     std::vector<VkCooperativeMatrixPropertiesKHR> cooperativeMatrixConfigs;
+    std::vector<VkCooperativeMatrixFlexibleDimensionsPropertiesNV> cooperativeMatrix2FlexDimConfigs;
 
     std::vector<VkMemoryType> memoryTypes;
     std::vector<VkMemoryHeap> memoryHeaps;

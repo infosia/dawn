@@ -112,6 +112,7 @@ enum class DeviceExt {
     Robustness2,
     DisplayTiming,
     CooperativeMatrix,
+    CooperativeMatrix2NV,
     MultisampledRenderToSingleSampled,
     PhysicalDeviceDrm,
 

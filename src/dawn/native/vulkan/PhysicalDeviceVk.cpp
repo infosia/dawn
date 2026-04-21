@@ -1699,6 +1699,65 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
         subgroupMatrixConfigs.push_back(config);
     }
 
+    // Expand with VK_NV_cooperative_matrix2 flexible dimension configs.
+    if (!toggles.IsEnabled(Toggle::DisableCooperativeMatrix2NV) &&
+        mDeviceInfo.HasExt(DeviceExt::CooperativeMatrix2NV) &&
+        mDeviceInfo.cooperativeMatrix2Features.cooperativeMatrixFlexibleDimensions) {
+        const uint32_t maxDim = std::min(mDeviceInfo.cooperativeMatrix2Properties
+                                             .cooperativeMatrixFlexibleDimensionsMaxDimension,
+                                         128u);
+
+        for (const auto& flex : mDeviceInfo.cooperativeMatrix2FlexDimConfigs) {
+            if (flex.AType != flex.BType || flex.CType != flex.ResultType ||
+                flex.scope != VK_SCOPE_SUBGROUP_KHR || flex.saturatingAccumulation) {
+                continue;
+            }
+
+            wgpu::SubgroupMatrixComponentType componentType;
+            if (!VKComponentTypeToWGPUSubgroupMatrixComponentType(&componentType, flex.AType)) {
+                continue;
+            }
+            if (!SupportComponentType(componentType)) {
+                continue;
+            }
+
+            wgpu::SubgroupMatrixComponentType resultComponentType;
+            if (!VKComponentTypeToWGPUSubgroupMatrixComponentType(&resultComponentType,
+                                                                  flex.ResultType)) {
+                continue;
+            }
+            if (!SupportComponentType(resultComponentType)) {
+                continue;
+            }
+
+            for (uint32_t m = flex.MGranularity; m <= maxDim; m += flex.MGranularity) {
+                for (uint32_t n = flex.NGranularity; n <= maxDim; n += flex.NGranularity) {
+                    for (uint32_t k = flex.KGranularity; k <= maxDim; k += flex.KGranularity) {
+                        // Deduplicate against configs already in the list.
+                        bool duplicate = false;
+                        for (const auto& existing : subgroupMatrixConfigs) {
+                            if (existing.M == m && existing.N == n && existing.K == k &&
+                                existing.componentType == componentType &&
+                                existing.resultComponentType == resultComponentType) {
+                                duplicate = true;
+                                break;
+                            }
+                        }
+                        if (!duplicate) {
+                            SubgroupMatrixConfig config;
+                            config.M = m;
+                            config.N = n;
+                            config.K = k;
+                            config.componentType = componentType;
+                            config.resultComponentType = resultComponentType;
+                            subgroupMatrixConfigs.push_back(config);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     return subgroupMatrixConfigs;
 }
 

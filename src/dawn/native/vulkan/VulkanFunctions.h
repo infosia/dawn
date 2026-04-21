@@ -205,6 +205,10 @@ struct VulkanFunctions {
     VkFn<PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR>
         GetPhysicalDeviceCooperativeMatrixPropertiesKHR = nullptr;
 
+    // VK_NV_cooperative_matrix2
+    VkFn<PFN_vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV>
+        GetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV = nullptr;
+
     // ---------- Device procs
 
     // Core Vulkan 1.0
