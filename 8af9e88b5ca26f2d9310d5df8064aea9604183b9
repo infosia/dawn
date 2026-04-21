@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "431f5953_0d10e639",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-21T14:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4e09b2_92190cf3",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34da07ce_ed2cfe1f",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-04-20T14:30:23Z",
       "side": 1,
       "message": "I like this change! Much easier to parse. But now I think the name should go back to polyfill_float_negation because this transform is now operating on both f16 and f32 types.",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09a2499e_28989c2d",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-21T14:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34da07ce_ed2cfe1f",
       "range": {
         "startLine": 54,
         "startChar": 27,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c0c1b2_606ded94",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-21T14:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bbdca70_18b29abd",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dcea560_b73265ed",
@@ -71,6 +131,24 @@
       "writtenOn": "2026-04-20T14:30:23Z",
       "side": 1,
       "message": "super nit but I assume this is an unintentional change",
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c34b2e60_97b2873f",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-21T14:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dcea560_b73265ed",
       "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +184,24 @@
           ]
         }
       ],
+      "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8525b32a_8907c237",
+        "filename": "src/tint/lang/spirv/writer/raise/unary_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-21T14:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "651ec944_64e7f103",
       "revId": "8af9e88b5ca26f2d9310d5df8064aea9604183b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
