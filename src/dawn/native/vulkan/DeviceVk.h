@@ -151,7 +151,7 @@ class Device final : public DeviceBase {
                                                       size_t bufferSize) const override;
     bool NeedsStaticSamplerForExternalTexture() const override;
 
-    QuerySetBase* GetEmptyPassQuerySet();
+    ResultOrError<Ref<QuerySetBase>> GetOrCreateEmptyPassQuerySet();
 
     VulkanRenderPassType GetRenderPassType() { return mRenderPassType; }
 
