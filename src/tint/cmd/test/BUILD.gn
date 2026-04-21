@@ -100,6 +100,8 @@ if (tint_build_unittests) {
       "${tint_src_dir}/utils/math:unittests",
       "${tint_src_dir}/utils/memory",
       "${tint_src_dir}/utils/memory:unittests",
+      "${tint_src_dir}/utils/reflection",
+      "${tint_src_dir}/utils/reflection:unittests",
       "${tint_src_dir}/utils/rtti",
       "${tint_src_dir}/utils/rtti:unittests",
       "${tint_src_dir}/utils/strconv:unittests",

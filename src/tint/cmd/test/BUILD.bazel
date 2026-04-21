@@ -90,6 +90,8 @@ cc_binary(
     "//src/tint/utils/math:test",
     "//src/tint/utils/memory",
     "//src/tint/utils/memory:test",
+    "//src/tint/utils/reflection",
+    "//src/tint/utils/reflection:test",
     "//src/tint/utils/rtti",
     "//src/tint/utils/rtti:test",
     "//src/tint/utils/strconv:test",

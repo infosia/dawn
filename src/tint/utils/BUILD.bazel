@@ -39,22 +39,16 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "utils",
   srcs = [
-    "reflection.cc",
     "result.cc",
   ],
   hdrs = [
     "internal_limits.h",
-    "reflection.h",
     "result.h",
   ],
   deps = [
-    "//src/tint/utils/containers",
     "//src/tint/utils/ice",
     "//src/tint/utils/macros",
-    "//src/tint/utils/math",
-    "//src/tint/utils/memory",
     "//src/tint/utils/rtti",
-    "//src/tint/utils/text",
     "//src/utils",
   ],
   copts = COPTS,
@@ -64,16 +58,12 @@ cc_library(
   name = "test",
   alwayslink = True,
   srcs = [
-    "reflection_test.cc",
     "result_test.cc",
   ],
   deps = [
     "//src/tint/utils",
-    "//src/tint/utils/containers",
     "//src/tint/utils/ice",
     "//src/tint/utils/macros",
-    "//src/tint/utils/math",
-    "//src/tint/utils/memory",
     "//src/tint/utils/rtti",
     "@gtest",
     "//src/utils",
