@@ -16,6 +16,57 @@
       "message": "This bug was found when attempting to land samplers in ResourceTable CL (child of this one right now).",
       "revId": "f484913112f559f35e752c6b5c01c0077415575e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db9e2e66_367813c5",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-21T07:51:08Z",
+      "side": 1,
+      "message": "I think we could keep the min size, to speed up the ramp up.",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ed6ccc_7565f43d",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-21T07:51:08Z",
+      "side": 1,
+      "message": "I believe that the pooling will never happen because `mDescriptorCount` will always be way less than `maxDescriptorCount`. The issue started in https://dawn-review.git.corp.google.com/c/dawn/+/299595 where `minDescriptorCount` is used to compute `mDescriptorCount`, but `mDescriptorCount` can always be at most `minDescriptorCount * 2`. With resource tables this means that `mDescriptorCount` can be at most 128k (64k * 2 with resource tables), and always smaller than the max of 512k. So pooling just doesn\u0027t seem like it happens anymore?\n\nThe original intent of the pooling code was to reuse heaps if possible to avoid constantly doing expensive allocations. Because all heaps where enough for the implicit `minDescriptorCount` (there were just bindgroups), any form of reuse in the pool was fine. But now we need to filter out allocations that are less than `minDescriptorCount`\n\nMy suggestion would be to:\n\n - rename `mDescriptorCount` to `mCurrentHeapAllocSize`\n - add back the logic that does power of two growing, having it take `minDescriptorCount` into account.\n - add a `mMinHeapAllocSize`.\n - add logic that prunes pool entries that are less than `mMinAllocSize` when trying to reuse.\n\nMaybe the code could look like:\n\n```\nmMinAllocSize starts at 0\nmCurrentHeapAllocSize starts at GetShaderVisibleHeapInitialSize\n\nMaybeError ShaderVisibleDescriptorAllocator::SwitchShaderVisibleHeap(minDescriptorCount) {\n    if (mHeap !\u003d nullptr) {\n        mDevice-\u003eGetResidencyManager()-\u003eUnlockAllocation(mHeap.get());\n    }\n\n    AddForReuse(mHeap, PendingSerial)\n    DAWN_TRY_ASSIGN(descriptorHeap, AllocateOrReuseHeap(minDescriptorCount));\n    \n    // ** This is the end of the current version of the function.\n\n    DAWN_TRY(mDevice-\u003eGetResidencyManager()-\u003eLockAllocation(descriptorHeap.get()));\n\n    // Create a FIFO buffer from the recently created heap.\n    mHeap \u003d std::move(descriptorHeap);\n    // Ensure that the current heap is large enough\n    DAWN_ASSERT(mDescriptorCount \u003d\u003d (mHeap-\u003eGetSize() / mSizeIncrement));\n    mAllocator \u003d RingBufferAllocator(mDescriptorCount);\n\n    // Invalidate all bindgroup allocations on previously bound heaps by incrementing the heap\n    // serial. When a bindgroup attempts to re-populate, it will compare with its recorded\n    // heap serial.\n    mHeapSerial++;\n\n    return {};\n}\n\nResultOrError\u003cstd::unique_ptr\u003cShaderVisibleDescriptorHeap\u003e\u003e AllocateOrReuseHeap(minDescriptorCount) {\n    if (minDescriptorCount \u003e mMinHeapAllocSize) {\n    \tstd max minDescriptorCount in both mMin/CurrenHeapAllocSize.\n    \tPrune mPool entries less than minDescriptorCount\n    } else {\n        exponential growth of mCurrentHeapAllocSize\n    }\n\n    if (!mPool.front().serial \u003c\u003d mDevice-\u003eGetQueue()-\u003eGetCompletedCommandSerial()) {\n    \tpop and return\n    }\n    \n    new alloc\n}\n```",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8f42029_af2c0777",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-21T07:51:08Z",
+      "side": 1,
+      "message": "We should rename `heapSerial` to `lastUseSerial` here, as it\u0027s confusing with `mHeapSerial` which is a different kind of serial.",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
