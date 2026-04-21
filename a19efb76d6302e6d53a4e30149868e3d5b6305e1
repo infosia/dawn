@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c066b98c_f8e3e6ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T02:12:08Z",
+      "side": 1,
+      "message": "I\u0027ve skimmed through the whole CL. There are _definitely_ some changes here that could have performance effects. There are also many that I can imagine preventing vulnerabilities. I think we should go for it.\n\nLGTM, my only suggestion would be to break this up into smaller CLs (probably just by file, e.g. command encoding files all in one CL, buffer files all in one CL) so that if regressions show up on perf tests after this lands, we have the option of reverting smaller chunks.\n\nThough if you do want to split it up more logically then I wouldn\u0027t mind spending some time picking out the ones that I think will have the greatest security impact and/or the least performance impact.\n\nOne thing I think we could split into another CL (or maybe avoid entirely) is all the `DAWN_CHECK(!IsError());` because there are a lot of them and I\u0027m not sure they matter. Same with nullptr checks.",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7fa71d64_ed0286b0",
         "filename": "docs/dawn/asserts-vs-check.md",
         "patchSetId": 13
