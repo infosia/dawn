@@ -91,6 +91,8 @@ tint_target_add_dependencies(tint_cmd_test_test_cmd test_cmd
   tint_utils_math_test
   tint_utils_memory
   tint_utils_memory_test
+  tint_utils_reflection
+  tint_utils_reflection_test
   tint_utils_rtti
   tint_utils_rtti_test
   tint_utils_strconv_test

@@ -31,7 +31,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "src/tint/utils/reflection.h"
+#include "src/tint/utils/reflection/reflection.h"
 
 namespace tint {
 
