@@ -52,6 +52,24 @@
       "parentUuid": "09510e2b_7f900ff3",
       "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d092819b_b6a0efda",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-21T17:44:31Z",
+      "side": 1,
+      "message": "Got it! I\u0027ll put up another CL to do that.",
+      "parentUuid": "a6e40585_68e68c3c",
+      "revId": "53e12f138a151a0c6b645f1387ff5195cf6b881c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
