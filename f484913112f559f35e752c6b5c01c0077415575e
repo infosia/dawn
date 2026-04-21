@@ -94,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a210fa_4c599df6",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a91402_f04761f9",
+      "range": {
+        "startLine": 199,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38ed6ccc_7565f43d",
@@ -146,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6163fa48_5341b457",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f42029_af2c0777",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f9f4f21_ae8b283b",
@@ -159,6 +201,24 @@
       "writtenOn": "2026-04-21T13:18:18Z",
       "side": 1,
       "message": "This would no longer be needed.",
+      "revId": "f484913112f559f35e752c6b5c01c0077415575e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf8c8ee4_f3785d98",
+        "filename": "src/dawn/native/d3d12/ShaderVisibleDescriptorAllocatorD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T15:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9f4f21_ae8b283b",
       "revId": "f484913112f559f35e752c6b5c01c0077415575e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
