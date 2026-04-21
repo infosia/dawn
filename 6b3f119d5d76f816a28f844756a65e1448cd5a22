@@ -16,6 +16,23 @@
       "message": "Please review when you get a chance",
       "revId": "6b3f119d5d76f816a28f844756a65e1448cd5a22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae72a397_05015a06",
+        "filename": "src/dawn/tests/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-21T19:12:14Z",
+      "side": 1,
+      "message": "If I\u0027m reading the gn docs right, this just changes how `gn check` works? It doesn\u0027t effect the build does it?\n\nhttps://gn.googlesource.com/gn/+/HEAD/docs/reference.md#var_check_includes",
+      "revId": "6b3f119d5d76f816a28f844756a65e1448cd5a22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
