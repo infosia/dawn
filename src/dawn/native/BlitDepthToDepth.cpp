@@ -112,11 +112,11 @@ MaybeError BlitDepthToDepth(DeviceBase* device,
                             const TexelExtent3D& copyExtent) {
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
     // DAWN_ASSERT that the texture have depth and are not multisampled.
-    DAWN_ASSERT(src.texture->GetFormat().HasDepth());
-    DAWN_ASSERT(dst.texture->GetFormat().HasDepth());
-    DAWN_ASSERT(src.texture->GetSampleCount() == 1u);
-    DAWN_ASSERT(dst.texture->GetSampleCount() == 1u);
-    DAWN_ASSERT(!copyExtent.IsEmpty());
+    DAWN_CHECK(src.texture->GetFormat().HasDepth());
+    DAWN_CHECK(dst.texture->GetFormat().HasDepth());
+    DAWN_CHECK(src.texture->GetSampleCount() == 1u);
+    DAWN_CHECK(dst.texture->GetSampleCount() == 1u);
+    DAWN_CHECK(!copyExtent.IsEmpty());
 
     // Note: because depth texture subresources must be copied in full, this blit
     // does not need to handle copy subrects.

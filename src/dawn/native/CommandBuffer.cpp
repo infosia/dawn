@@ -85,7 +85,7 @@ void CommandBufferBase::SetEncoderLabel(std::string encoderLabel) {
 }
 
 MaybeError CommandBufferBase::ValidateCanUseInSubmitNow() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
 
     DAWN_INVALID_IF(!IsAlive(), "%s cannot be submitted more than once.", this);
     return {};
@@ -114,7 +114,7 @@ bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,
                                    const TexelExtent3D& copySize,
                                    const uint32_t mipLevel,
                                    Aspect aspect) {
-    DAWN_ASSERT(HasOneBit(aspect) || aspect == (Aspect::Depth | Aspect::Stencil));
+    DAWN_CHECK(HasOneBit(aspect) || aspect == (Aspect::Depth | Aspect::Stencil));
 
     TexelExtent3D extent = texture->GetMipLevelSingleSubresourcePhysicalSize(mipLevel, aspect);
 
@@ -144,9 +144,9 @@ SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy,
                                                const TexelExtent3D& copySize) {
     switch (copy.texture->GetDimension()) {
         case wgpu::TextureDimension::e1D:
-            DAWN_ASSERT(copy.origin.z == TexelCount{0} &&
-                        copySize.depthOrArrayLayers == TexelCount{1});
-            DAWN_ASSERT(copy.mipLevel == 0);
+            DAWN_CHECK(copy.origin.z == TexelCount{0} &&
+                       copySize.depthOrArrayLayers == TexelCount{1});
+            DAWN_CHECK(copy.mipLevel == 0);
             return {copy.aspect, {0, 1}, {0, 1}};
         case wgpu::TextureDimension::e2D:
             return {copy.aspect,
@@ -180,8 +180,8 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
         TextureViewBase* view = attachmentInfo.view.Get();
         bool hasResolveTarget = attachmentInfo.resolveTarget != nullptr;
 
-        DAWN_ASSERT(view->GetLayerCount() == 1);
-        DAWN_ASSERT(view->GetLevelCount() == 1);
+        DAWN_CHECK(view->GetLayerCount() == 1);
+        DAWN_CHECK(view->GetLevelCount() == 1);
         SubresourceRange range = view->GetSubresourceRange();
         TextureBase* texture = view->GetTexture();
 
@@ -206,8 +206,8 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
 
         if (hasResolveTarget) {
             TextureViewBase* resolveView = attachmentInfo.resolveTarget.Get();
-            DAWN_ASSERT(resolveView->GetLayerCount() == 1);
-            DAWN_ASSERT(resolveView->GetLevelCount() == 1);
+            DAWN_CHECK(resolveView->GetLayerCount() == 1);
+            DAWN_CHECK(resolveView->GetLevelCount() == 1);
             if (!resolveView->GetTexture()->IsSubresourceContentInitialized(
                     resolveView->GetSubresourceRange())) {
                 if (partialRenderArea) {
@@ -244,8 +244,8 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
     if (renderPass->attachmentState->HasDepthStencilAttachment()) {
         auto& attachmentInfo = renderPass->depthStencilAttachment;
         TextureViewBase* view = attachmentInfo.view.Get();
-        DAWN_ASSERT(view->GetLayerCount() == 1);
-        DAWN_ASSERT(view->GetLevelCount() == 1);
+        DAWN_CHECK(view->GetLayerCount() == 1);
+        DAWN_CHECK(view->GetLevelCount() == 1);
         SubresourceRange range = view->GetSubresourceRange();
 
         SubresourceRange depthRange = range;
@@ -289,8 +289,8 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
                 continue;
             }
 
-            DAWN_ASSERT(view->GetLayerCount() == 1);
-            DAWN_ASSERT(view->GetLevelCount() == 1);
+            DAWN_CHECK(view->GetLayerCount() == 1);
+            DAWN_CHECK(view->GetLevelCount() == 1);
             const SubresourceRange& range = view->GetSubresourceRange();
 
             if (!view->GetTexture()->IsSubresourceContentInitialized(range)) {
@@ -323,7 +323,7 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
 }
 
 bool IsFullBufferOverwrittenInTextureToBufferCopy(const CopyTextureToBufferCmd* copy) {
-    DAWN_ASSERT(copy != nullptr);
+    DAWN_CHECK(copy != nullptr);
     return IsFullBufferOverwrittenInTextureToBufferCopy(copy->source, copy->destination,
                                                         copy->copySize);
 }

@@ -104,7 +104,7 @@ struct ExtractWaitListEventAndReadyStateTraits {
     using value_type = std::pair<Ref<WaitListEvent>, bool*>;
 
     static value_type Deref(const WrappedIter& wrappedIt) {
-        DAWN_ASSERT(wrappedIt->event->GetIfWaitListEvent());
+        DAWN_CHECK(wrappedIt->event->GetIfWaitListEvent());
         return {wrappedIt->event->GetIfWaitListEvent(), &wrappedIt->ready};
     }
 };
@@ -352,7 +352,7 @@ bool EventManager::ProcessPollEvents() {
     if (waitStatus == wgpu::WaitStatus::TimedOut) {
         return hasProgressingEvents;
     }
-    DAWN_ASSERT(waitStatus == wgpu::WaitStatus::Success);
+    DAWN_CHECK(waitStatus == wgpu::WaitStatus::Success);
 
     // Enforce callback ordering.
     auto readyEnd = PrepareReadyCallbacks(futures);
@@ -396,8 +396,8 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
             FutureID futureID = infos[i].future.id;
 
             // Check for cases that are undefined behavior in the API contract.
-            DAWN_ASSERT(futureID != 0);
-            DAWN_ASSERT(futureID < firstInvalidFutureID);
+            DAWN_CHECK(futureID != 0);
+            DAWN_CHECK(futureID < firstInvalidFutureID);
 
             // Try to find the event, if we don't find it, we can assume that it has already been
             // completed.
@@ -417,7 +417,7 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
         return wgpu::WaitStatus::Success;
     }
     // Otherwise, we should have successfully looked up all of them.
-    DAWN_ASSERT(futures.size() == count);
+    DAWN_CHECK(futures.size() == count);
 
     wgpu::WaitStatus waitStatus = WaitImpl(mInstance, futures, timeout);
     if (waitStatus != wgpu::WaitStatus::Success) {
@@ -491,7 +491,7 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, NonPro
       mIsProgressing(false) {}
 
 EventManager::TrackedEvent::~TrackedEvent() {
-    DAWN_ASSERT(mFutureID != kNullFutureID);
+    DAWN_CHECK(mFutureID != kNullFutureID);
 #if defined(DAWN_ENABLE_ASSERTS)
     std::call_once(mFlag, []() { DAWN_ASSERT(false); });
 #endif

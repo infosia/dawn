@@ -178,7 +178,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         case wgpu::SType::SurfaceSourceWaylandSurface: {
             auto* subDesc = descriptor.Get<SurfaceSourceWaylandSurface>();
             DAWN_ASSERT(subDesc != nullptr);
-            // Unfortunately we can't check the validity of wayland objects. Only that they
+            // Unfortunately we can\'t check the validity of wayland objects. Only that they
             // aren't nullptr.
             DAWN_INVALID_IF(subDesc->display == nullptr, "Wayland display is nullptr.");
             DAWN_INVALID_IF(subDesc->surface == nullptr, "Wayland surface is nullptr.");
@@ -383,46 +383,46 @@ DeviceBase* Surface::GetCurrentDevice() const {
 }
 
 Surface::Type Surface::GetType() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mType;
 }
 
 void* Surface::GetAndroidNativeWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::AndroidWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::AndroidWindow);
     return mAndroidNativeWindow;
 }
 
 void* Surface::GetMetalLayer() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::MetalLayer);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::MetalLayer);
     return mMetalLayer;
 }
 
 void* Surface::GetWaylandDisplay() const {
-    DAWN_ASSERT(mType == Type::WaylandSurface);
+    DAWN_CHECK(mType == Type::WaylandSurface);
     return mWaylandDisplay;
 }
 
 void* Surface::GetWaylandSurface() const {
-    DAWN_ASSERT(mType == Type::WaylandSurface);
+    DAWN_CHECK(mType == Type::WaylandSurface);
     return mWaylandSurface;
 }
 
 void* Surface::GetHInstance() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsHWND);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsHWND);
     return mHInstance;
 }
 void* Surface::GetHWND() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsHWND);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsHWND);
     return mHWND;
 }
 
 IUnknown* Surface::GetCoreWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsCoreWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsCoreWindow);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mCoreWindow.Get();
 #else
@@ -431,8 +431,8 @@ IUnknown* Surface::GetCoreWindow() const {
 }
 
 IUnknown* Surface::GetUWPSwapChainPanel() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsUWPSwapChainPanel);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsUWPSwapChainPanel);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mUWPSwapChainPanel.Get();
 #else
@@ -441,8 +441,8 @@ IUnknown* Surface::GetUWPSwapChainPanel() const {
 }
 
 IUnknown* Surface::GetWinUISwapChainPanel() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::WindowsWinUISwapChainPanel);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::WindowsWinUISwapChainPanel);
 #if defined(DAWN_USE_WINDOWS_UI)
     return mWinUISwapChainPanel.Get();
 #else
@@ -451,13 +451,13 @@ IUnknown* Surface::GetWinUISwapChainPanel() const {
 }
 
 void* Surface::GetXDisplay() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::XlibWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::XlibWindow);
     return mXDisplay;
 }
 uint64_t Surface::GetXWindow() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mType == Type::XlibWindow);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mType == Type::XlibWindow);
     return mXWindow;
 }
 
@@ -513,8 +513,8 @@ MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
 
 MaybeError Surface::Unconfigure() {
     if (IsError()) {
-        DAWN_ASSERT(mSwapChain == nullptr);
-        DAWN_ASSERT(mCurrentDevice == nullptr);
+        DAWN_CHECK(mSwapChain == nullptr);
+        DAWN_CHECK(mCurrentDevice == nullptr);
         return DAWN_VALIDATION_ERROR("%s is invalid.", this);
     }
     mCurrentDevice = nullptr;

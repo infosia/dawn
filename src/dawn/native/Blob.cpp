@@ -54,7 +54,7 @@ Blob::Blob() : mData(nullptr), mSize(0), mDeleter({}) {}
 Blob::Blob(uint8_t* data, size_t size, std::function<void()> deleter)
     : mData(data), mSize(size), mDeleter(std::move(deleter)) {
     // It is invalid to make a blob that has null data unless its size is also zero.
-    DAWN_ASSERT(data != nullptr || size == 0);
+    DAWN_CHECK(data != nullptr || size == 0);
 }
 
 Blob::Blob(Blob&& rhs) : mData(rhs.mData), mSize(rhs.mSize) {
