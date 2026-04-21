@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a80f4df2_1087c160",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T21:23:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "663b67a4_c838f275",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fa71d64_ed0286b0",
@@ -264,6 +282,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b1d3be3_f1e37b3c",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T21:23:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ecd65bf9_bc6438ef",
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9315e08f_3abe00f3",
@@ -301,6 +337,30 @@
       "side": 1,
       "message": "Split off to another CL . Lets review this there.",
       "parentUuid": "9315e08f_3abe00f3",
+      "range": {
+        "startLine": 1202,
+        "startChar": 4,
+        "endLine": 1202,
+        "endChar": 14
+      },
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0279ca37_4547a4c8",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T21:23:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c4668cf1_e89b5fe0",
       "range": {
         "startLine": 1202,
         "startChar": 4,
