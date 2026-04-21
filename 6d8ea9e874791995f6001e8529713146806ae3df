@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "6d8ea9e874791995f6001e8529713146806ae3df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "253d286f_88649a64",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-21T21:13:12Z",
+      "side": 1,
+      "message": "It strikes me that `TINT_RET_IF(!sem)` is shorter for all of these others ones now too (and makes it less weird for the `bool` cases).",
+      "revId": "6d8ea9e874791995f6001e8529713146806ae3df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
