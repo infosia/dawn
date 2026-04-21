@@ -42,6 +42,7 @@
 #include "src/tint/utils/command/cli.h"
 #include "src/tint/utils/containers/transform.h"
 #include "src/tint/utils/macros/defer.h"
+#include "src/tint/utils/text/base64.h"
 #include "src/tint/utils/text/color_mode.h"
 #include "src/tint/utils/text/string.h"
 #include "src/tint/utils/text/styled_text.h"
@@ -265,8 +266,11 @@ void EmitIR(const Options& options, tint::core::ir::Module& module) {
 /// Prints WGSL shader to STDOUT or to a file as determined by options
 /// @param options options passed into the binary
 /// @param module IR module parsed from input protobuf
+/// @param data the sidecar data to be included as a comment
 /// @returns true if all operations succeeded, otherwise false. Prints error messages to STDERR
-bool EmitWGSL(const Options& options, tint::core::ir::Module& module) {
+bool EmitWGSL(const Options& options,
+              tint::core::ir::Module& module,
+              std::span<const std::byte> data) {
     if (!options.dump_wgsl && options.format != Format::kWgsl) {
         return true;
     }
@@ -279,13 +283,23 @@ bool EmitWGSL(const Options& options, tint::core::ir::Module& module) {
         return false;
     }
 
+    std::string wgsl = output->wgsl;
+    if (!data.empty()) {
+        auto base64 = tint::EncodeBase64(data);
+        if (base64 != tint::Success) {
+            std::cerr << "Failed to encode sidecar data to base64: " << base64.Failure() << "\n";
+            return false;
+        }
+        wgsl = "// " + base64.Get() + "\n" + wgsl;
+    }
+
     if (options.dump_wgsl) {
-        options.printer->Print(tint::StyledText{} << output->wgsl);
+        options.printer->Print(tint::StyledText{} << wgsl);
         options.printer->Print(tint::StyledText{} << "\n");
     }
 
     if (options.format == Format::kWgsl) {
-        if (!tint::cmd::WriteFile(options.output_filename, "w", output->wgsl)) {
+        if (!tint::cmd::WriteFile(options.output_filename, "w", wgsl)) {
             std::cerr << "Unable to print WGSL to file, " << options.output_filename << "\n";
             return false;
         }
@@ -394,7 +408,8 @@ bool Run(const Options& options) {
 
     {
         auto module = tint::core::ir::binary::Decode(fuzz_pb.Get().module());
-        if (!EmitWGSL(options, module.Get())) {
+        auto data = std::as_bytes(std::span(fuzz_pb.Get().data()));
+        if (!EmitWGSL(options, module.Get(), data)) {
             return false;
         }
     }
