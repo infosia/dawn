@@ -75,23 +75,23 @@ void RenderEncoderBase::DestroyImpl(DestroyReason reason) {
 }
 
 const AttachmentState* RenderEncoderBase::GetAttachmentState() const {
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(mAttachmentState != nullptr);
+    DAWN_CHECK(!IsError());
+    DAWN_CHECK(mAttachmentState != nullptr);
     return mAttachmentState.Get();
 }
 
 bool RenderEncoderBase::IsDepthReadOnly() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mDepthReadOnly;
 }
 
 bool RenderEncoderBase::IsStencilReadOnly() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mStencilReadOnly;
 }
 
 uint64_t RenderEncoderBase::GetDrawCount() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mDrawCount;
 }
 
@@ -624,7 +624,7 @@ void RenderEncoderBase::APISetIndexBuffer(BufferBase* buffer,
                 }
             } else {
                 if (size == wgpu::kWholeSize) {
-                    DAWN_ASSERT(buffer->GetSize() >= offset);
+                    DAWN_CHECK(buffer->GetSize() >= offset);
                     size = buffer->GetSize() - offset;
                 }
             }
@@ -687,7 +687,7 @@ void RenderEncoderBase::APISetVertexBuffer(uint32_t slot,
                 }
             } else {
                 if (size == wgpu::kWholeSize && buffer != nullptr) {
-                    DAWN_ASSERT(buffer->GetSize() >= offset);
+                    DAWN_CHECK(buffer->GetSize() >= offset);
                     size = buffer->GetSize() - offset;
                 }
             }

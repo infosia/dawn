@@ -59,8 +59,8 @@ AdapterBase::AdapterBase(InstanceBase* instance,
       mFeatureLevel(featureLevel),
       mTogglesState(requiredAdapterToggles),
       mPowerPreference(powerPreference) {
-    DAWN_ASSERT(mPhysicalDevice->SupportsFeatureLevel(featureLevel, mInstance.Get()));
-    DAWN_ASSERT(mTogglesState.GetStage() == ToggleStage::Adapter);
+    DAWN_CHECK(mPhysicalDevice->SupportsFeatureLevel(featureLevel, mInstance.Get()));
+    DAWN_CHECK(mTogglesState.GetStage() == ToggleStage::Adapter);
     // Cache the supported features of this adapter. Note that with device toggles overriding, a
     // device created by this adapter may support features not in this set and vice versa.
     mSupportedFeatures = mPhysicalDevice->GetSupportedFeatures(mTogglesState);
@@ -122,7 +122,7 @@ wgpu::Status AdapterBase::APIGetLimits(Limits* limits) const {
 }
 
 wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
-    DAWN_ASSERT(info != nullptr);
+    DAWN_CHECK(info != nullptr);
 
     UnpackedPtr<AdapterInfo> unpacked;
     if (mInstance->ConsumedError(ValidateAndUnpack(info), &unpacked)) {
@@ -171,8 +171,8 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     mPhysicalDevice->PopulateBackendProperties(unpacked, mTogglesState);
     if (auto* explicitSubgroupSizeConfigs =
             unpacked.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        DAWN_ASSERT(IsPowerOfTwo(explicitSubgroupSizeConfigs->minExplicitComputeSubgroupSize));
-        DAWN_ASSERT(IsPowerOfTwo(explicitSubgroupSizeConfigs->maxExplicitComputeSubgroupSize));
+        DAWN_CHECK(IsPowerOfTwo(explicitSubgroupSizeConfigs->minExplicitComputeSubgroupSize));
+        DAWN_CHECK(IsPowerOfTwo(explicitSubgroupSizeConfigs->maxExplicitComputeSubgroupSize));
     }
 
     // Allocate space for all strings.
@@ -183,7 +183,7 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     absl::Span<char> outBuffer{new char[allocSize], allocSize};
 
     auto AddString = [&](const std::string& in, StringView* out) {
-        DAWN_ASSERT(in.length() <= outBuffer.length());
+        DAWN_CHECK(in.length() <= outBuffer.length());
         memcpy(outBuffer.data(), in.data(), in.length());
         *out = {outBuffer.data(), in.length()};
         outBuffer = outBuffer.subspan(in.length());
@@ -193,7 +193,7 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     AddString(mPhysicalDevice->GetArchitectureName(), &info->architecture);
     AddString(mPhysicalDevice->GetName(), &info->device);
     AddString(mPhysicalDevice->GetDriverDescription(), &info->description);
-    DAWN_ASSERT(outBuffer.empty());
+    DAWN_CHECK(outBuffer.empty());
 
     info->backendType = mPhysicalDevice->GetBackendType();
     info->adapterType = mPhysicalDevice->GetAdapterType();
@@ -207,8 +207,8 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
         info->subgroupMinSize = std::min(info->subgroupMinSize, 8u);
     }
 
-    DAWN_ASSERT(info->subgroupMaxSize == 0 || IsPowerOfTwo(info->subgroupMaxSize));
-    DAWN_ASSERT(info->subgroupMinSize == 0 || IsPowerOfTwo(info->subgroupMinSize));
+    DAWN_CHECK(info->subgroupMaxSize == 0 || IsPowerOfTwo(info->subgroupMaxSize));
+    DAWN_CHECK(info->subgroupMinSize == 0 || IsPowerOfTwo(info->subgroupMinSize));
 
     return wgpu::Status::Success;
 }
@@ -266,7 +266,7 @@ DeviceBase* AdapterBase::APICreateDevice(const DeviceDescriptor* descriptor) {
 ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     const DeviceDescriptor* rawDescriptor,
     Ref<DeviceBase::DeviceLostEvent> lostEvent) {
-    DAWN_ASSERT(rawDescriptor != nullptr);
+    DAWN_CHECK(rawDescriptor != nullptr);
 
     // Create device toggles state from required toggles descriptor and inherited adapter toggles
     // state.
@@ -353,7 +353,7 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
 
 std::pair<Ref<DeviceBase::DeviceLostEvent>, ResultOrError<Ref<DeviceBase>>>
 AdapterBase::CreateDevice(const DeviceDescriptor* descriptor) {
-    DAWN_ASSERT(descriptor != nullptr);
+    DAWN_CHECK(descriptor != nullptr);
 
     Ref<DeviceBase::DeviceLostEvent> lostEvent = DeviceBase::DeviceLostEvent::Create(descriptor);
     auto result = CreateDeviceInternal(descriptor, lostEvent);
@@ -442,7 +442,7 @@ wgpu::Status AdapterBase::APIGetFormatCapabilities(wgpu::TextureFormat format,
             DAWN_VALIDATION_ERROR("Feature DawnFormatCapabilities is not available."));
         return wgpu::Status::Error;
     }
-    DAWN_ASSERT(capabilities != nullptr);
+    DAWN_CHECK(capabilities != nullptr);
 
     UnpackedPtr<DawnFormatCapabilities> unpacked;
     if (mInstance->ConsumedError(ValidateAndUnpack(capabilities), &unpacked)) {
