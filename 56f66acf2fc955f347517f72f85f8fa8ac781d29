@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6dea9e6_aa6c1f39",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-21T07:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4bda942_cd13ea85",
+      "revId": "56f66acf2fc955f347517f72f85f8fa8ac781d29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77b068ef_fc2e2683",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-21T06:50:29Z",
       "side": 1,
       "message": "ditto\n\nBut also can we have a TODO to make the lambda take a span directly, meaning that `SerializeCommand` would compute it and pass it in?",
+      "revId": "56f66acf2fc955f347517f72f85f8fa8ac781d29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef0ba9f4_01451632",
+        "filename": "src/dawn/wire/client/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-21T07:16:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b068ef_fc2e2683",
       "revId": "56f66acf2fc955f347517f72f85f8fa8ac781d29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
