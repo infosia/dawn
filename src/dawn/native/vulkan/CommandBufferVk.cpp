@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 
 #include <algorithm>
+#include <concepts>
 #include <limits>
 #include <memory>
 #include <utility>
@@ -42,6 +43,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/ImmediateConstantsTracker.h"
 #include "dawn/native/RenderBundle.h"
@@ -229,6 +231,18 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         mVkLayout = pipeline->GetVkLayout();
         mImmediateConstantSize = pipeline->GetImmediateConstantSize();
         mUsesResourceTable = pipeline->GetLayout()->UsesResourceTable();
+        if constexpr (std::derived_from<VkPipelineType, RenderPipelineBase>) {
+            mFramebufferFetchEnabled = pipeline->UsesFramebufferFetch();
+        }
+    }
+
+    bool NeedsFramebufferFetchDescriptorSet() const {
+        return mFramebufferFetchDescriptorSet == VK_NULL_HANDLE;
+    }
+
+    void SetFramebufferFetchDescriptorSet(VkDescriptorSet set) {
+        DAWN_CHECK(mFramebufferFetchEnabled);
+        mFramebufferFetchDescriptorSet = set;
     }
 
     void SetResourceTable(ResourceTable* resourceTable) { mResourceTable = resourceTable; }
@@ -256,9 +270,24 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
             mLastResourceTable = nullptr;
         }
 
+        BindGroupIndex startOfBindGroups{0u};
+        if (mLastFramebufferFetchEnabled != mFramebufferFetchEnabled) {
+            // When the use of framebuffer fetch changes between pipelines, dirty all bind groups
+            // because they shift by 1.
+            dirtyBindGroups = mBindGroupLayoutsMask;
+            if (mFramebufferFetchEnabled) {
+                DAWN_ASSERT(mFramebufferFetchDescriptorSet != VK_NULL_HANDLE);
+                vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout, 0, 1,
+                                         &*mFramebufferFetchDescriptorSet, 0, nullptr);
+            }
+        }
+        if (mFramebufferFetchEnabled) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
+
         // When the usage of the resource table changes between pipelines, or the resource table
         // itself is changed, dirty all bind groups because they shift by 1 (the resource table
-        // occupies VkDescriptorSet 0).
+        // occupies VkDescriptorSet 0 or 1).
         if (mLastUsesResourceTable != mUsesResourceTable || mLastResourceTable != mResourceTable) {
             dirtyBindGroups = mBindGroupLayoutsMask;
 
@@ -266,11 +295,14 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
             if (mUsesResourceTable) {
                 DAWN_ASSERT(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
-                vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout, 0, 1, &*set, 0,
+                vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout,
+                                         static_cast<uint32_t>(startOfBindGroups), 1, &*set, 0,
                                          nullptr);
             }
         }
-        BindGroupIndex startOfBindGroups{mUsesResourceTable ? 1u : 0u};
+        if (mUsesResourceTable) {
+            startOfBindGroups += BindGroupIndex(1);
+        }
 
         for (BindGroupIndex dirtyBGIndex : dirtyBindGroups) {
             VkDescriptorSet set = GetDescriptorSet(dirtyBGIndex);
@@ -290,6 +322,7 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
         mLastAppliedImmediateConstantSize = mImmediateConstantSize;
         mLastUsesResourceTable = mUsesResourceTable;
         mLastResourceTable = mResourceTable;
+        mLastFramebufferFetchEnabled = mFramebufferFetchEnabled;
     }
 
     RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
@@ -297,6 +330,9 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
     raw_ptr<ResourceTable> mResourceTable = nullptr;
     bool mLastUsesResourceTable = false;
     bool mUsesResourceTable = false;
+    bool mFramebufferFetchEnabled = false;
+    bool mLastFramebufferFetchEnabled = false;
+    VkDescriptorSet mFramebufferFetchDescriptorSet = VK_NULL_HANDLE;
     uint32_t mLastAppliedImmediateConstantSize = 0;
     uint32_t mImmediateConstantSize = 0;
 };
@@ -1700,7 +1736,6 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         state.immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.
     uint32_t workCommandCount = 0;
 
@@ -1881,7 +1916,16 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
-                state.OnSetPipeline(ToBackend(cmd->pipeline).Get());
+                auto pipeline = ToBackend(cmd->pipeline);
+                state.OnSetPipeline(pipeline.Get());
+                if (pipeline->UsesFramebufferFetch() &&
+                    state.descriptorSets.NeedsFramebufferFetchDescriptorSet()) {
+                    VkDescriptorSet set;
+                    DAWN_TRY_ASSIGN(set, device->GetFramebufferFetchHelper()->CreateDescriptorSet(
+                                             renderPassCmd));
+
+                    state.descriptorSets.SetFramebufferFetchDescriptorSet(set);
+                }
                 break;
             }
 
