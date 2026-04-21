@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "bc8f5e54e7241af0388a44537ee83831d6b5f568",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "300bc3a5_086439bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-21T21:13:19Z",
+      "side": 1,
+      "message": "The functional changes are in:\nsrc/tint/cmd/fuzz/ir/as/main.cc\nsrc/tint/cmd/fuzz/ir/dis/main.cc\nsrc/tint/utils/text/base64_test.cc\nsrc/tint/utils/text/base64.cc\nsrc/tint/utils/text/base64.h",
+      "revId": "bc8f5e54e7241af0388a44537ee83831d6b5f568",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
