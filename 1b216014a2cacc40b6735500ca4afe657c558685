@@ -401,6 +401,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ddc2490_5a72af4d",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T01:15:49Z",
+      "side": 1,
+      "message": "We might release a D3D11 backend eventually, but I don\u0027t think we actively have plans to do it. It\u0027s going to depend on what the Windows ecosystem looks like by the time we have time to consider it again.\n\nI don\u0027t think we should worry about the total performance that much on D3D11 any more than other backends. Sure they\u0027re older devices, but they\u0027re still desktop, and even older underpowered laptops have pretty fast CPUs (in my experience usually more bottlenecked on RAM, iGPU, disk).\n\nIn any case, security is more important than speed and I think that even though very few bugs will be prevented by this change, it most likely *will* prevent *some* bugs and that will be worth the speed cost.\n\nAlso, there are better ways to approach this than to try to guess the performance of every DAWN_CHECK. I have filed https://crbug.com/504697276 to do systematic benchmarking. However it\u0027s inevitably going to have to wait a bit until security hardening work has settled down.",
+      "parentUuid": "bd04e6d8_16082028",
+      "range": {
+        "startLine": 1481,
+        "startChar": 8,
+        "endLine": 1481,
+        "endChar": 18
+      },
+      "revId": "1b216014a2cacc40b6735500ca4afe657c558685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd6ae4_bc4e4b1a",
         "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
         "patchSetId": 7

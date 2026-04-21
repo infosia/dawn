@@ -134,6 +134,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfe5a4d7_1c13b1b4",
+        "filename": "docs/dawn/asserts-vs-check.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-21T01:15:49Z",
+      "side": 1,
+      "message": "That seems quite difficult just because of the size of this CL, but each reviewer can do their best to evaluate them and that\u0027s probably good enough.\n\nI\u0027ve come to the conclusion (see other comment) that we need to approach this systematically with benchmarks, rather than trying to audit everything, so this SGTM.",
+      "parentUuid": "03af1f69_6d02dae7",
+      "range": {
+        "startLine": 27,
+        "startChar": 70,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "a19efb76d6302e6d53a4e30149868e3d5b6305e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecd65bf9_bc6438ef",
