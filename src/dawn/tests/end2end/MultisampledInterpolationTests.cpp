@@ -62,15 +62,19 @@ class MultisampledInterpolationTest : public DawnTest {
 
                     @vertex fn main(@builtin(vertex_index) vNdx: u32) -> VertexOut {
                         let pos = array(
-                                  vec4f(0.333, 0.333, 0.333, 0.333), vec4f(1, -3, 0.25, 1), vec4f(-1.5, 0.5, 0.25, 0.5)
+                            vec4f(0.333, 0.333, 0.333, 0.333),
+                            vec4f(1.0, -3.0, 0.25, 1.0),
+                            vec4f(-1.5, 0.5, 0.25, 0.5)
                         );
                         let interStage = array(
-                         vec4f(1.0, 0.0, 0.0, 0.0), vec4f(0.0, 1.0 , 0.0, 0.0), vec4f(0.0, 0.0, 1.0, 0.0)
+                            vec4f(1.0, 0.0, 0.0, 0.0),
+                            vec4f(0.0, 1.0, 0.0, 0.0),
+                            vec4f(0.0, 0.0, 1.0, 0.0)
                         );
                         var v: VertexOut;
                         v.position = pos[vNdx];
-                        v.depthw.x = v.position.z/v.position.w;
-                        v.depthw.y = 1/ v.position.w;
+                        v.depthw.x = v.position.z / v.position.w;
+                        v.depthw.y = 1.0 / v.position.w;
                         v.interpolatedValue = interStage[vNdx];
                         return v;
                     }
@@ -93,19 +97,19 @@ class MultisampledInterpolationTest : public DawnTest {
 
                     fn u32ToRGBAUnorm(u: u32) -> vec4f {
                         return vec4f(
-                        f32((u >> 24) & 0xFF) / 255.0,
-                        f32((u >> 16) & 0xFF) / 255.0,
-                        f32((u >>  8) & 0xFF) / 255.0,
-                        f32((u >>  0) & 0xFF) / 255.0,
+                            f32((u >> 24) & 0xFF) / 255.0,
+                            f32((u >> 16) & 0xFF) / 255.0,
+                            f32((u >>  8) & 0xFF) / 255.0,
+                            f32((u >>  0) & 0xFF) / 255.0,
                         );
                     }
 
                     @fragment fn fs(fin: FragmentIn) -> FragOut {
                         var f: FragOut;
                         var v = fin.position;
-                       // Use of sample_index forces sample behavior
-                        if(fin.sample_index == 3u){
-                          v = vec4f(1,1,1,1);
+                        // Use of sample_index forces sample behavior
+                        if (fin.sample_index == 3u) {
+                            v = vec4f(1.0, 1.0, 1.0, 1.0);
                         }
                         let u = bitcast<vec4u>(v);
                         f.out0 = u32ToRGBAUnorm(u[0]);
@@ -172,13 +176,6 @@ class MultisampledInterpolationTest : public DawnTest {
 
 TEST_P(MultisampledInterpolationTest, SamplePositions) {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
-
-    // TODO(crbug.com/40238674): Fails on Pixel 10 gles.
-    DAWN_SUPPRESS_TEST_IF(IsImgTec() && IsVulkan());
-
-    // Swiftshader does not work. Unknown reason.
-    DAWN_TEST_UNSUPPORTED_IF(IsSwiftshader());
-    DAWN_TEST_UNSUPPORTED_IF(IsANGLESwiftShader());
 
     CreatePipelines();
 

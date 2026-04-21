@@ -123,7 +123,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         auto io_attrib = core::IOAttributes{
             .location = free_location,
-            .interpolation = core::Interpolation{.type = core::InterpolationType::kLinear,
+            .interpolation = core::Interpolation{.type = core::InterpolationType::kPerspective,
                                                  .sampling = core::InterpolationSampling::kCenter}};
 
         if (addrspace == core::AddressSpace::kOut) {
@@ -361,10 +361,18 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             auto* plus_p5 = builder.Add(floor_xy, builder.Splat(ty.vec2f(), p5_const));
 
             auto center_idx = input_indices[center_pos_frag_idx.value()];
-            auto* xyzw_from_user_center = builder.Load(input_vars[center_idx]);
+            // Use interpolateAtOffset to get the pixel center. The Vulkan spec does not guarantee
+            // that 'center' interpolation sampling will actually be the pixel center when sample
+            // shading is enabled.
+            auto* xyzw_from_user_center = builder.Call<spirv::ir::BuiltinCall>(
+                ty.vec4f(), spirv::BuiltinFn::kInterpolateAtOffset, input_vars[center_idx],
+                builder.Splat(ty.vec2f(), 0_f));
 
-            auto* user_center_z = builder.Swizzle(ty.f32(), xyzw_from_user_center, {2});
-            auto* user_center_w = builder.Swizzle(ty.f32(), xyzw_from_user_center, {3});
+            auto* interpolated_z = builder.Swizzle(ty.f32(), xyzw_from_user_center, {2});
+            auto* interpolated_w = builder.Swizzle(ty.f32(), xyzw_from_user_center, {3});
+
+            auto* user_center_z = builder.Divide(interpolated_z, interpolated_w);
+            auto* user_center_w = builder.Divide(1_f, interpolated_w);
 
             auto* viewport_user_center_z =
                 ViewportMappedFragDepth(builder, user_center_z->Result());
@@ -403,15 +411,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         if (center_pos_vert_idx.has_value() && center_pos_vert_idx == idx) {
             // Special center position polyfilled from within vertex shader.
             TINT_IR_ASSERT(ir, vert_out_position);
-            auto one_div_w =
-                builder.Divide(1_f, builder.Swizzle(ty.f32(), vert_out_position, {3u}));
-            auto z_div_w =
-                builder.Multiply(one_div_w, builder.Swizzle(ty.f32(), vert_out_position, {2u}));
-            value =
-                builder
-                    .Construct(ty.vec4f(), builder.Swizzle(ty.vec2f(), vert_out_position, {0, 1}),
-                               z_div_w, one_div_w)
-                    ->Result();
+            value = vert_out_position;
         }
 
         // Clamp frag_depth values if necessary.
