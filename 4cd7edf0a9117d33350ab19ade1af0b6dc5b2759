@@ -16,6 +16,23 @@
       "message": "PTAL in case you missed this!",
       "revId": "4cd7edf0a9117d33350ab19ade1af0b6dc5b2759",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bdf091d_e2fe1ed7",
+        "filename": "src/dawn/native/BlitDepthToDepth.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-21T14:05:38Z",
+      "side": 1,
+      "message": "Hmm, this makes me sad. It would be nice to use TypedInteger of uint64_t as ityp index types. What do you think of removing this constraint, and modifying the ityp containers to perform a checked cast to the underlying integer type? We\u0027d only need to do this if the TypedInteger\u0027s underlying type is \u003e size_t.",
+      "revId": "4cd7edf0a9117d33350ab19ade1af0b6dc5b2759",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
