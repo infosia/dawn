@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53fefedd_f08246bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-21T19:51:00Z",
+      "side": 1,
+      "message": "Swapping Corentin as the reviewer since he\u0027s already looking at this.",
+      "revId": "02fad95ac3afe1149d2e0e1dec954ee6b115e61c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8c75f69_013ce1b6",
