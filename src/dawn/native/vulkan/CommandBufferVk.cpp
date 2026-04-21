@@ -1091,6 +1091,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
             ResetUsedQuerySetsOnRenderPass(device, recordingContext->commandBuffer,
                                            usages.querySets[i], usages.queryAvailabilities[i]);
         }
+
+        if (device->IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass)) {
+            DAWN_TRY(device->PrepareEmptyPassQuerySet(recordingContext));
+        }
         return {};
     };
 
@@ -1939,16 +1943,9 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 // a driver bug that fails to resolve render targets in empty passes.
                 if (workCommandCount == 0 &&
                     device->IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass)) {
-                    QuerySetBase* querySet = device->GetEmptyPassQuerySet();
-
-                    // Ensure that the query was allocated. In the unlikely event that it wasn't
-                    // (probably due to an OOM) empty render passes can't be safely completed using
-                    // this workaround.
-                    DAWN_INTERNAL_ERROR_IF(querySet->IsError(),
-                                           "Unable to allocate internal empty pass query set.");
-
-                    device->fn.CmdBeginQuery(commands, ToBackend(querySet)->GetHandle(), 0, 0);
-                    device->fn.CmdEndQuery(commands, ToBackend(querySet)->GetHandle(), 0);
+                    Ref<QuerySetBase> emptyQuerySet = device->UseEmptyPassQuerySet();
+                    device->fn.CmdBeginQuery(commands, ToBackend(emptyQuerySet)->GetHandle(), 0, 0);
+                    device->fn.CmdEndQuery(commands, ToBackend(emptyQuerySet)->GetHandle(), 0);
                 }
 
                 RecordEndRenderPass(recordingContext, device);
