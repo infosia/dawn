@@ -16,6 +16,23 @@
       "message": "PTAAL, completely rewritten based on our discussion",
       "revId": "b0395a55441789b91374033400efbcf7a7ddc492",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50f16877_fa1461e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T20:57:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure where I sit on this one yet, need to think on it. Pulling the check into the struct seems right, but having the same validation in all backends seems ... odd? I\u0027m not sure of a better place to do it where it would trigger for WGSL and IR though at this point",
+      "revId": "b0395a55441789b91374033400efbcf7a7ddc492",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
