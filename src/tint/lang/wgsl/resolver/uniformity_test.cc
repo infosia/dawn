@@ -7915,6 +7915,87 @@ test:5:13 note: reading from read_write storage buffer 'v' may result in a non-u
 )");
 }
 
+TEST_F(UniformityAnalysisTest, VectorSwizzleAssignment_FullSwizzle_UniformPromotion) {
+    std::string src = R"(
+@group(0) @binding(0) var<storage, read_write> v_rw : vec3<i32>;
+@group(0) @binding(1) var<storage> v_u : vec3<i32>;
+
+fn foo() {
+  var x = v_rw;
+  x.xyz = v_u;
+  if (x.x == 0) {
+    workgroupBarrier();
+  }
+}
+)";
+
+    RunTest(src, true);
+}
+
+TEST_F(UniformityAnalysisTest, VectorSwizzleAssignment_FullPermutation_UniformPromotion) {
+    std::string src = R"(
+@group(0) @binding(0) var<storage, read_write> v_rw : vec3<i32>;
+@group(0) @binding(1) var<storage> v_u : vec3<i32>;
+
+fn foo() {
+  var x = v_rw;
+  x.zyx = v_u;
+  if (x.x == 0) {
+    workgroupBarrier();
+  }
+}
+)";
+
+    RunTest(src, true);
+}
+
+TEST_F(UniformityAnalysisTest, VectorSwizzleAssignment_Chained_FullSwizzle_UniformPromotion) {
+    std::string src = R"(
+@group(0) @binding(0) var<storage, read_write> v_rw : vec3<i32>;
+@group(0) @binding(1) var<storage> v_u : vec3<i32>;
+
+fn foo() {
+  var x = v_rw;
+  x.xyz.yxz = v_u;
+  if (x.x == 0) {
+    workgroupBarrier();
+  }
+}
+)";
+
+    RunTest(src, true);
+}
+
+TEST_F(UniformityAnalysisTest, VectorSwizzleAssignment_PartialSwizzle_NoUniformPromotion) {
+    std::string src = R"(
+@group(0) @binding(0) var<storage, read_write> v_rw : vec3<i32>;
+@group(0) @binding(1) var<storage> v_u : vec2<i32>;
+
+fn foo() {
+  var x = v_rw;
+  x.xy = v_u;
+  if (x.x == 0) {
+    workgroupBarrier();
+  }
+}
+)";
+
+    RunTest(src, false);
+    EXPECT_EQ(error_,
+              R"(test:9:5 error: 'workgroupBarrier' must only be called from uniform control flow
+    workgroupBarrier();
+    ^^^^^^^^^^^^^^^^
+
+test:8:3 note: control flow depends on possibly non-uniform value
+  if (x.x == 0) {
+  ^^
+
+test:6:11 note: reading from read_write storage buffer 'v_rw' may result in a non-uniform value
+  var x = v_rw;
+          ^^^^
+)");
+}
+
 TEST_F(UniformityAnalysisTest, VectorElement_BecomesNonUniform_BeforeCondition) {
     std::string src = R"(
 @group(0) @binding(0) var<storage, read_write> rw : i32;

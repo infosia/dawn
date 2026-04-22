@@ -98,6 +98,25 @@ class Swizzle final : public Castable<Swizzle, AccessorExpression> {
     /// @return the swizzle indices, if this is a vector swizzle
     const auto& Indices() const { return indices_; }
 
+    /// Struct that holds the base vector and the collapsed indices of a (potentially nested)
+    /// swizzle.
+    struct Collapsed {
+        /// The base vector expression node
+        const sem::ValueExpression* vector = nullptr;
+        /// The collapsed swizzle indices
+        tint::Vector<uint32_t, 4> indices;
+    };
+
+    /// Collapse a possibly nested chain of swizzles into a single set of swizzle indices on the
+    /// base vector.
+    ///
+    /// Note that target components cannot be repeated in lhs swizzles used for assignment,
+    /// so each consecutive swizzle on a vector will produce a smaller or equal sized vector (i.e.
+    /// v.xyzw.xy.yx.x).
+    ///
+    /// @returns the collapsed swizzle
+    Collapsed Collapse() const;
+
   private:
     tint::Vector<uint32_t, 4> const indices_;
 };
