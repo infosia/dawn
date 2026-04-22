@@ -34,6 +34,24 @@
       "parentUuid": "0318062d_6a414544",
       "revId": "300986100946a941a88a2308245b5ecbcf77c6a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb6787a_e360acab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T18:53:18Z",
+      "side": 1,
+      "message": "If the value comes from Dawn the preference is to have dawn put in the right value. We have a few cases where we remap internally when required, but prefer for Dawn to set the correct values.",
+      "parentUuid": "bf368f86_0edeadb3",
+      "revId": "300986100946a941a88a2308245b5ecbcf77c6a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
