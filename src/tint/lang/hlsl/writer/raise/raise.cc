@@ -89,9 +89,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RemapperData remapper_data{};
     ArrayLengthFromUniformOptions array_length_from_uniform_options{};
     ArrayOffsetFromUniformOptions array_offset_from_uniform_options{};
-    PopulateBindingRelatedOptions(options, remapper_data, multiplanar_map,
-                                  array_length_from_uniform_options,
-                                  array_offset_from_uniform_options);
+    std::vector<BindingPoint> ignored_by_robustness_transform;
+    PopulateBindingRelatedOptions(
+        options, remapper_data, multiplanar_map, array_length_from_uniform_options,
+        array_offset_from_uniform_options, ignored_by_robustness_transform);
 
     // The number of vec4s used to store buffer sizes that will be set into the immediate block.
     uint32_t buffer_sizes_array_elements_num = 0;
@@ -170,9 +171,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     if (!options.disable_robustness) {
         core::ir::transform::RobustnessConfig config{};
-        config.bindings_ignored =
-            std::unordered_set<BindingPoint>(options.ignored_by_robustness_transform.cbegin(),
-                                             options.ignored_by_robustness_transform.cend());
+        config.bindings_ignored = std::unordered_set<BindingPoint>(
+            ignored_by_robustness_transform.cbegin(), ignored_by_robustness_transform.cend());
 
         // Direct3D guarantees to return zero for any resource that is accessed out of bounds, and
         // according to the description of the assembly store_uav_typed, out of bounds addressing
