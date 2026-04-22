@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "ce9578a35ac8f284ac0c79e7ca27eff1b21aacff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "730d6865_3b7c949f",
+        "filename": "src/tint/lang/msl/writer/raise/fix_type_layout.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T20:52:24Z",
+      "side": 1,
+      "message": "This code looks really similar (yes i understand yours is array of vec and this is just vec)",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "ce9578a35ac8f284ac0c79e7ca27eff1b21aacff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
