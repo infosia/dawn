@@ -252,12 +252,12 @@ Result<SuccessType> ValidateBindingOptions(const core::ir::Module& ir, const Opt
 //
 // When the data comes in we have a list of all WGSL origin (group,binding) pairs to HLSL
 // (group,binding) in the `uniform`, `storage`, `texture`, and `sampler` arrays.
-void PopulateBindingRelatedOptions(
-    const Options& options,
-    RemapperData& remapper_data,
-    tint::transform::multiplanar::BindingsMap& multiplanar_map,
-    ArrayLengthFromUniformOptions& array_length_from_uniform_options,
-    ArrayOffsetFromUniformOptions& array_offset_from_uniform_options) {
+void PopulateBindingRelatedOptions(const Options& options,
+                                   RemapperData& remapper_data,
+                                   tint::transform::multiplanar::BindingsMap& multiplanar_map,
+                                   ArrayLengthFromUniformOptions& array_length_from_uniform_options,
+                                   ArrayOffsetFromUniformOptions& array_offset_from_uniform_options,
+                                   std::vector<BindingPoint>& ignored_by_robustness_transform) {
     auto create_remappings = [&remapper_data](const auto& hsh) {
         for (const auto& it : hsh) {
             const BindingPoint& src_binding_point = it.first;
@@ -319,32 +319,48 @@ void PopulateBindingRelatedOptions(
         remapper_data.emplace(src_binding_point, dest_bp);
     }
 
-    // ArrayLengthFromUniformOptions and ArrayOffsetFromUniformOptions bindpoints may need to be
-    // remapped
-    auto remap = [&remapper_data](const std::unordered_map<BindingPoint, uint32_t>& bp_to_index) {
-        std::unordered_map<BindingPoint, uint32_t> remapped;
-        for (auto& [bindpoint, index] : bp_to_index) {
-            auto it = remapper_data.find(bindpoint);
-            if (it != remapper_data.end()) {
-                remapped.emplace(it->second, index);
-            } else {
-                remapped.emplace(bindpoint, index);
-            }
+    auto remap_bp = [&remapper_data](const BindingPoint& bp) {
+        auto it = remapper_data.find(bp);
+        if (it != remapper_data.end()) {
+            return it->second;
+        }
+        return bp;
+    };
+
+    auto remap_vector = [&](const std::vector<BindingPoint>& bps) {
+        std::vector<BindingPoint> remapped;
+        remapped.reserve(bps.size());
+        for (auto bp : bps) {
+            remapped.push_back(remap_bp(bp));
         }
         return remapped;
     };
 
+    auto remap_map = [&](const std::unordered_map<BindingPoint, uint32_t>& bp_to_index) {
+        std::unordered_map<BindingPoint, uint32_t> remapped;
+        remapped.reserve(bp_to_index.size());
+        for (auto& [bindpoint, index] : bp_to_index) {
+            remapped.emplace(remap_bp(bindpoint), index);
+        }
+        return remapped;
+    };
+
+    // ArrayLengthFromUniformOptions and ArrayOffsetFromUniformOptions bindpoints may need to be
+    // remapped
     array_length_from_uniform_options.ubo_binding = options.array_length_from_uniform.ubo_binding;
     array_length_from_uniform_options.buffer_sizes_offset =
         options.array_length_from_uniform.buffer_sizes_offset;
     array_length_from_uniform_options.bindpoint_to_size_index =
-        remap(options.array_length_from_uniform.bindpoint_to_size_index);
+        remap_map(options.array_length_from_uniform.bindpoint_to_size_index);
 
     array_offset_from_uniform_options.ubo_binding = options.array_offset_from_uniform.ubo_binding;
     array_offset_from_uniform_options.buffer_offsets_offset =
         options.array_offset_from_uniform.buffer_offsets_offset;
     array_offset_from_uniform_options.bindpoint_to_offset_index =
-        remap(options.array_offset_from_uniform.bindpoint_to_offset_index);
+        remap_map(options.array_offset_from_uniform.bindpoint_to_offset_index);
+
+    // ignored_by_robustness_transform bindings may need remapping
+    ignored_by_robustness_transform = remap_vector(options.ignored_by_robustness_transform);
 }
 
 }  // namespace tint::hlsl::writer
