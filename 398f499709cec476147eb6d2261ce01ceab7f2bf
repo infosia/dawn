@@ -37,6 +37,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d9546beb_9b244a08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:44:12Z",
+      "side": 1,
+      "message": "Data point: it took 113 minutes of focus time to review this.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "6f9df732_f542d3c9",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 7
@@ -241,6 +258,23 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "The code happening during submission should never happen in parallel so we should be safe to keep this as a regular vector. Or is there another place where this might be called concurrently?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7cd31af_859a19c6",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:44:12Z",
+      "side": 1,
+      "message": "This approach seems pretty complex because it tries determine the exact parameters to write to the availability buffer at the start of queue.Submit so it needs to track the partial availability of querySets at each `ResolveCmd` and merge them with the pre-queue submit state. This in addition to the other tracking done in the middle of the submission recording with `SetQueryAvailable`. Instead let\u0027s try to only rely on the `SetQueryAvailable` tracking. I believe it can be done like this:\n\n1) In APIResolveQuerySet, record the `ResolveQuerySetCmd`, then use a `WriteBufferCmd` to fill the availability buffer. At that point we don\u0027t know the availability so we just use a bunch of zeroes or whatever. Then store the pointer to the data of the WriteBufferCmd in the `ResolveQuerySetCmd` (as a span?) so we can write to it later, before the command is processed.\n \n2) In each backend\u0027s handling or ResolveQuerySet call a frontend function that takes the ResolveQuerySetCmd and fills the span\u003c\u003e with the actual availability data and SetQueryAvailability(false) for the resolved queries.",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
