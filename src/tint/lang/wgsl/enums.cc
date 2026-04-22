@@ -813,6 +813,9 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "subgroupMatrixMultiplyAccumulate") {
         return BuiltinFn::kSubgroupMatrixMultiplyAccumulate;
     }
+    if (name == "subgroupMatrixMultiplyAccumulateSaturating") {
+        return BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating;
+    }
     if (name == "subgroupMatrixScalarAdd") {
         return BuiltinFn::kSubgroupMatrixScalarAdd;
     }
@@ -821,6 +824,15 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     }
     if (name == "subgroupMatrixScalarMultiply") {
         return BuiltinFn::kSubgroupMatrixScalarMultiply;
+    }
+    if (name == "subgroupMatrixConvert") {
+        return BuiltinFn::kSubgroupMatrixConvert;
+    }
+    if (name == "subgroupMatrixReduceRowSum") {
+        return BuiltinFn::kSubgroupMatrixReduceRowSum;
+    }
+    if (name == "subgroupMatrixReduceColumnSum") {
+        return BuiltinFn::kSubgroupMatrixReduceColumnSum;
     }
     if (name == "bufferView") {
         return BuiltinFn::kBufferView;
@@ -1153,12 +1165,20 @@ const char* str(BuiltinFn i) {
             return "subgroupMatrixMultiply";
         case BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
             return "subgroupMatrixMultiplyAccumulate";
+        case BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
+            return "subgroupMatrixMultiplyAccumulateSaturating";
         case BuiltinFn::kSubgroupMatrixScalarAdd:
             return "subgroupMatrixScalarAdd";
         case BuiltinFn::kSubgroupMatrixScalarSubtract:
             return "subgroupMatrixScalarSubtract";
         case BuiltinFn::kSubgroupMatrixScalarMultiply:
             return "subgroupMatrixScalarMultiply";
+        case BuiltinFn::kSubgroupMatrixConvert:
+            return "subgroupMatrixConvert";
+        case BuiltinFn::kSubgroupMatrixReduceRowSum:
+            return "subgroupMatrixReduceRowSum";
+        case BuiltinFn::kSubgroupMatrixReduceColumnSum:
+            return "subgroupMatrixReduceColumnSum";
         case BuiltinFn::kBufferView:
             return "bufferView";
         case BuiltinFn::kBufferArrayView:
@@ -1261,9 +1281,13 @@ bool IsSubgroupMatrix(BuiltinFn f) {
         case BuiltinFn::kSubgroupMatrixStore:
         case BuiltinFn::kSubgroupMatrixMultiply:
         case BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+        case BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
         case BuiltinFn::kSubgroupMatrixScalarAdd:
         case BuiltinFn::kSubgroupMatrixScalarSubtract:
         case BuiltinFn::kSubgroupMatrixScalarMultiply:
+        case BuiltinFn::kSubgroupMatrixConvert:
+        case BuiltinFn::kSubgroupMatrixReduceRowSum:
+        case BuiltinFn::kSubgroupMatrixReduceColumnSum:
             return true;
         default:
             return false;

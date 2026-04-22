@@ -81,7 +81,8 @@ struct State {
 
     void GatherCall(const core::ir::CoreBuiltinCall* call) {
         if (call->Func() != BuiltinFn::kSubgroupMatrixMultiply &&
-            call->Func() != BuiltinFn::kSubgroupMatrixMultiplyAccumulate) {
+            call->Func() != BuiltinFn::kSubgroupMatrixMultiplyAccumulate &&
+            call->Func() != BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating) {
             return;
         }
 

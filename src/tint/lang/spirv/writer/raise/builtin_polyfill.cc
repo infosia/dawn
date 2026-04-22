@@ -251,9 +251,13 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixStore:
                     case core::BuiltinFn::kSubgroupMatrixMultiply:
                     case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                    case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
                     case core::BuiltinFn::kSubgroupMatrixScalarAdd:
                     case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
                     case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
+                    case core::BuiltinFn::kSubgroupMatrixConvert:
+                    case core::BuiltinFn::kSubgroupMatrixReduceRowSum:
+                    case core::BuiltinFn::kSubgroupMatrixReduceColumnSum:
                         worklist.Push(builtin);
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
@@ -364,7 +368,10 @@ struct State {
                     SubgroupMatrixMultiply(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
-                    SubgroupMatrixMultiplyAccumulate(builtin);
+                    SubgroupMatrixMultiplyAccumulate(builtin, false);
+                    break;
+                case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
+                    SubgroupMatrixMultiplyAccumulate(builtin, true);
                     break;
                 case core::BuiltinFn::kSubgroupMatrixScalarAdd:
                     SubgroupMatrixScalar(builtin, core::BinaryOp::kAdd);
@@ -374,6 +381,15 @@ struct State {
                     break;
                 case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
                     SubgroupMatrixScalar(builtin, core::BinaryOp::kMultiply);
+                    break;
+                case core::BuiltinFn::kSubgroupMatrixConvert:
+                    SubgroupMatrixConvert(builtin);
+                    break;
+                case core::BuiltinFn::kSubgroupMatrixReduceRowSum:
+                    SubgroupMatrixReduce(builtin, SpvCooperativeMatrixReduceRowMask);
+                    break;
+                case core::BuiltinFn::kSubgroupMatrixReduceColumnSum:
+                    SubgroupMatrixReduce(builtin, SpvCooperativeMatrixReduceColumnMask);
                     break;
                 default:
                     break;
@@ -1435,7 +1451,8 @@ struct State {
     /// @param result_ty the type of the result matrix
     /// @returns the literal operands
     core::ir::Value* SubgroupMatrixMultiplyOperands(const core::type::SubgroupMatrix* input_ty,
-                                                    const core::type::SubgroupMatrix* result_ty) {
+                                                    const core::type::SubgroupMatrix* result_ty,
+                                                    bool saturating = false) {
         uint32_t operands = SpvCooperativeMatrixOperandsMaskNone;
         if (input_ty->Type()->IsSignedIntegerScalar()) {
             operands |= SpvCooperativeMatrixOperandsMatrixASignedComponentsKHRMask;
@@ -1444,6 +1461,9 @@ struct State {
         if (result_ty->Type()->IsSignedIntegerScalar()) {
             operands |= SpvCooperativeMatrixOperandsMatrixCSignedComponentsKHRMask;
             operands |= SpvCooperativeMatrixOperandsMatrixResultSignedComponentsKHRMask;
+        }
+        if (saturating) {
+            operands |= SpvCooperativeMatrixOperandsSaturatingAccumulationKHRMask;
         }
         return Literal(u32(operands));
     }
@@ -1469,14 +1489,16 @@ struct State {
 
     /// Replace a subgroupMatrixMultiplyAccumulate builtin.
     /// @param builtin the builtin call instruction
-    void SubgroupMatrixMultiplyAccumulate(core::ir::CoreBuiltinCall* builtin) {
+    /// @param saturating whether to use saturating accumulation
+    void SubgroupMatrixMultiplyAccumulate(core::ir::CoreBuiltinCall* builtin, bool saturating) {
         b.InsertBefore(builtin, [&] {
             auto* left = builtin->Args()[0];
             auto* right = builtin->Args()[1];
             auto* acc = builtin->Args()[2];
             auto* operands =
                 SubgroupMatrixMultiplyOperands(left->Type()->As<core::type::SubgroupMatrix>(),
-                                               acc->Type()->As<core::type::SubgroupMatrix>());
+                                               acc->Type()->As<core::type::SubgroupMatrix>(),
+                                               saturating);
             b.CallWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
                                                      spirv::BuiltinFn::kCooperativeMatrixMulAdd,
                                                      left, right, acc, operands);
@@ -1507,6 +1529,36 @@ struct State {
 
             auto* scalar_mat = b.Construct(sm_ty, scalar);
             b.BinaryWithResult<spirv::ir::Binary>(builtin->DetachResult(), op, mat, scalar_mat);
+        });
+        builtin->Destroy();
+    }
+
+    /// Replace a subgroupMatrixConvert builtin.
+    /// @param builtin the builtin call instruction
+    void SubgroupMatrixConvert(core::ir::CoreBuiltinCall* builtin) {
+        b.InsertBefore(builtin, [&] {
+            auto* src = builtin->Args()[0];
+            auto* result_ty = builtin->Result()->Type();
+            b.CallWithResult<spirv::ir::BuiltinCall>(
+                builtin->DetachResult(), spirv::BuiltinFn::kCooperativeMatrixConvert, src)
+                ->SetExplicitTemplateParams(Vector{result_ty});
+        });
+        builtin->Destroy();
+    }
+
+    /// Replace a subgroupMatrixReduce builtin.
+    /// @param builtin the builtin call instruction
+    /// @param reduce_mode the reduce mode mask (row or column)
+    void SubgroupMatrixReduce(core::ir::CoreBuiltinCall* builtin, uint32_t reduce_mode) {
+        b.InsertBefore(builtin, [&] {
+            auto* src = builtin->Args()[0];
+            auto* result_ty = builtin->Result()->Type();
+            auto* mode = Literal(u32(reduce_mode));
+
+            b.CallWithResult<spirv::ir::BuiltinCall>(
+                builtin->DetachResult(), spirv::BuiltinFn::kCooperativeMatrixReduce,
+                src, mode)
+                ->SetExplicitTemplateParams(Vector{result_ty});
         });
         builtin->Destroy();
     }

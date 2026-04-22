@@ -1671,8 +1671,7 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
         const VkCooperativeMatrixPropertiesKHR& p = mDeviceInfo.cooperativeMatrixConfigs[i];
 
         // Filter out configurations that WebGPU does not support.
-        if (p.AType != p.BType || p.CType != p.ResultType || p.scope != VK_SCOPE_SUBGROUP_KHR ||
-            p.saturatingAccumulation) {
+        if (p.AType != p.BType || p.CType != p.ResultType || p.scope != VK_SCOPE_SUBGROUP_KHR) {
             continue;
         }
 
@@ -1680,6 +1679,7 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
         config.M = p.MSize;
         config.N = p.NSize;
         config.K = p.KSize;
+        config.saturatingAccumulation = p.saturatingAccumulation;
 
         // Filter out the component types that WebGPU does not support.
         if (!VKComponentTypeToWGPUSubgroupMatrixComponentType(&config.componentType, p.AType)) {
@@ -1709,7 +1709,7 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
 
         for (const auto& flex : mDeviceInfo.cooperativeMatrix2FlexDimConfigs) {
             if (flex.AType != flex.BType || flex.CType != flex.ResultType ||
-                flex.scope != VK_SCOPE_SUBGROUP_KHR || flex.saturatingAccumulation) {
+                flex.scope != VK_SCOPE_SUBGROUP_KHR) {
                 continue;
             }
 
@@ -1730,6 +1730,8 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
                 continue;
             }
 
+            VkBool32 saturating = flex.saturatingAccumulation;
+
             for (uint32_t m = flex.MGranularity; m <= maxDim; m += flex.MGranularity) {
                 for (uint32_t n = flex.NGranularity; n <= maxDim; n += flex.NGranularity) {
                     for (uint32_t k = flex.KGranularity; k <= maxDim; k += flex.KGranularity) {
@@ -1738,7 +1740,8 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
                         for (const auto& existing : subgroupMatrixConfigs) {
                             if (existing.M == m && existing.N == n && existing.K == k &&
                                 existing.componentType == componentType &&
-                                existing.resultComponentType == resultComponentType) {
+                                existing.resultComponentType == resultComponentType &&
+                                existing.saturatingAccumulation == static_cast<bool>(saturating)) {
                                 duplicate = true;
                                 break;
                             }
@@ -1750,6 +1753,7 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
                             config.K = k;
                             config.componentType = componentType;
                             config.resultComponentType = resultComponentType;
+                            config.saturatingAccumulation = saturating;
                             subgroupMatrixConfigs.push_back(config);
                         }
                     }
