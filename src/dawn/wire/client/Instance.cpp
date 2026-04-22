@@ -368,6 +368,6 @@ DAWN_WIRE_EXPORT void wgpuDawnWireClientGetInstanceFeatures(
 DAWN_WIRE_EXPORT WGPUInstance
 wgpuDawnWireClientCreateInstance(WGPUInstanceDescriptor const* descriptor) {
     // Not implemented. Wire currently must be created from an existing server side instance.
-    DAWN_CHECK(false);
+    DAWN_UNREACHABLE();
     return nullptr;
 }

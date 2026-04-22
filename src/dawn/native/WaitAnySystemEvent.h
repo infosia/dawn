@@ -133,7 +133,7 @@ template <typename It>
 
     return true;
 #else
-    DAWN_CHECK(false);  // Not implemented.
+    DAWN_UNREACHABLE();  // Not implemented.
 #endif
 }
 

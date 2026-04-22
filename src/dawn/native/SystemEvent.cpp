@@ -91,7 +91,7 @@ void SystemEventPipeSender::Signal() && {
     DAWN_CHECK(status >= 0);
 #else
     // Not implemented for this platform.
-    DAWN_CHECK(false);
+    DAWN_UNREACHABLE();
 #endif
 
     mPrimitive.Close();
@@ -126,7 +126,7 @@ std::pair<SystemEventPipeSender, SystemEventReceiver> CreateSystemEventPipe() {
     return std::make_pair(std::move(sender), std::move(receiver));
 #else
     // Not implemented for this platform.
-    DAWN_CHECK(false);
+    DAWN_UNREACHABLE();
 #endif
 }
 

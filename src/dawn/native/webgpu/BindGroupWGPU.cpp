@@ -284,7 +284,7 @@ MaybeError BindGroup::CaptureCreationParameters(CaptureContext& captureContext) 
                 }};
                 Serialize(captureContext, data);
             },
-            [&](const auto& info) { DAWN_CHECK(false); });
+            [&](const auto& info) { DAWN_UNREACHABLE(); });
     }
 
     return {};

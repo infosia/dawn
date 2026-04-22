@@ -64,7 +64,7 @@ void InitializeDanglingPointerDetectorForTesting() {
         ErrorLog() << "                         Documentation: "
                       "https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/"
                       "docs/dangling-pointer-detector.md";
-        DAWN_CHECK(false);
+        DAWN_UNREACHABLE();
     });
 #endif
 }
