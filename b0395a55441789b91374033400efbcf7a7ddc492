@@ -33,6 +33,24 @@
       "message": "I\u0027m not sure where I sit on this one yet, need to think on it. Pulling the check into the struct seems right, but having the same validation in all backends seems ... odd? I\u0027m not sure of a better place to do it where it would trigger for WGSL and IR though at this point",
       "revId": "b0395a55441789b91374033400efbcf7a7ddc492",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "668cb0ee_3c1820fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-22T21:01:35Z",
+      "side": 1,
+      "message": "Are you thinking that not all backends need to check this, or that the limits might be different between them?\n\nOr is it more of if all of the backends run this, then they shouldn\u0027t all need to explicitly run it, instead there should be some common piece of code this check could hang off of?",
+      "parentUuid": "50f16877_fa1461e1",
+      "revId": "b0395a55441789b91374033400efbcf7a7ddc492",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
