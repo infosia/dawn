@@ -27,11 +27,6 @@
 
 // GEN_BUILD:CONDITION(tint_build_is_win)
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/tint/utils/command/command.h"
 
 #define WIN32_LEAN_AND_MEAN 1
@@ -282,8 +277,7 @@ Command::Output Command::Exec(std::initializer_list<std::string> arguments) cons
         DWORD n = 0;
         char buf[256];
         while (ReadFile(thread_args->stream, buf, sizeof(buf), &n, NULL)) {
-            auto s = std::string(buf, buf + n);
-            thread_args->output += std::string(buf, buf + n);
+            thread_args->output.append(buf, static_cast<size_t>(n));
         }
         return 0;
     };
