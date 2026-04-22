@@ -85,6 +85,11 @@ class Disassembler {
     /// Destructor
     ~Disassembler();
 
+    /// @param mod the module
+    /// @param inst the instruction to disassemble
+    /// @returns the disassembled instruction
+    static std::string Disassemble(const Module& mod, const Instruction* inst);
+
     /// @returns the string representation of the module
     const StyledText& Text() const { return out_; }
 
