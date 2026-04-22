@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "295fb081_b172ee1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T19:47:44Z",
+      "side": 1,
+      "message": "LGTM, sending to cwallez@ for a quick dawn review",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f4a906c_319d7de8",
+        "filename": "src/tint/lang/hlsl/writer/writer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T19:47:44Z",
+      "side": 1,
+      "message": "Should this be (0,1)?\n```suggestion\n    // would erroneously ignore the uniform buffer because it got remapped to hlsl (0,1).\n```",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
