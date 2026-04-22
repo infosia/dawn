@@ -1022,9 +1022,9 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
 
             mach_msg_type_number_t hostBasicInfoMsg = HOST_BASIC_INFO_COUNT;
             host_basic_info_data_t hostInfo{};
-            DAWN_CHECK(host_info(mach_host_self(), HOST_BASIC_INFO,
-                                 reinterpret_cast<host_info_t>(&hostInfo),
-                                 &hostBasicInfoMsg) == KERN_SUCCESS);
+            auto status = host_info(mach_host_self(), HOST_BASIC_INFO,
+                                    reinterpret_cast<host_info_t>(&hostInfo), &hostBasicInfoMsg);
+            DAWN_CHECK(status == KERN_SUCCESS);
 
             heapInfo[1].properties = wgpu::HeapProperty::HostVisible |
                                      wgpu::HeapProperty::HostCoherent |

@@ -73,13 +73,13 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
                 // Static samplers are handled in the frontend.
                 // TODO(crbug.com/dawn/2482): Implement static samplers in the
                 // Metal backend.
-                DAWN_CHECK(false);
+                DAWN_UNREACHABLE();
             },
             [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
             [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
-            [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
-            [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
-            [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
+            [&](const TexelBufferBindingInfo&) { DAWN_UNREACHABLE(); },
+            [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
+            [](const ExternalTextureBindingInfo&) { DAWN_UNREACHABLE(); });
 
         descriptors.push_back(desc);
     }

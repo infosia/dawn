@@ -97,7 +97,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
         return mOwner.load(std::memory_order_acquire) == std::this_thread::get_id();
 #else
         // This is not supported.
-        DAWN_CHECK(false);
+        DAWN_UNREACHABLE();
 #endif
     }
 

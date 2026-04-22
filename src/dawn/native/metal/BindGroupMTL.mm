@@ -105,17 +105,17 @@ MaybeError BindGroup::InitializeImpl() {
                 // Static samplers are handled in the frontend.
                 // TODO(crbug.com/dawn/2482): Implement static samplers in the
                 // Metal backend.
-                DAWN_CHECK(false);
+                DAWN_UNREACHABLE();
             },
             [&](const TextureBindingInfo&) { HandleTextureBinding(); },
             [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
             [&](const TexelBufferBindingInfo&) {
                 // Metal does not support texel buffers.
                 // TODO(crbug/382544164): Prototype texel buffer feature
-                DAWN_CHECK(false);
+                DAWN_UNREACHABLE();
             },
-            [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); },
-            [](const ExternalTextureBindingInfo&) { DAWN_CHECK(false); });
+            [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
+            [](const ExternalTextureBindingInfo&) { DAWN_UNREACHABLE(); });
     }
 
     return {};
