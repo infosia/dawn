@@ -39,6 +39,7 @@ struct DispatchCmd;
 namespace dawn::native::d3d11 {
 
 class ComputePipeline;
+class PipelineStateTracker;
 class RenderPipeline;
 class ScopedSwapStateCommandRecordingContext;
 
@@ -51,9 +52,11 @@ class CommandBuffer final : public CommandBufferBase {
   private:
     using CommandBufferBase::CommandBufferBase;
 
-    MaybeError ExecuteComputePass(const ScopedSwapStateCommandRecordingContext* commandContext);
+    MaybeError ExecuteComputePass(const ScopedSwapStateCommandRecordingContext* commandContext,
+                                  PipelineStateTracker* pipelineStateTracker);
     MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass,
-                                 const ScopedSwapStateCommandRecordingContext* commandContext);
+                                 const ScopedSwapStateCommandRecordingContext* commandContext,
+                                 PipelineStateTracker* pipelineStateTracker);
     void HandleDebugCommands(const ScopedSwapStateCommandRecordingContext* commandContext,
                              CommandIterator* iter,
                              Command command);
