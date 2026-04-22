@@ -101,6 +101,13 @@ template <>
 void stream::Stream<{{BoolCppType}}>::Write(stream::Sink* sink, const {{BoolCppType}}& t) {
     StreamIn(sink, static_cast<bool>(t));
 }
+template <>
+MaybeError stream::Stream<{{BoolCppType}}>::Read(stream::Source* source, {{BoolCppType}}* t) {
+    bool v;
+    DAWN_TRY(StreamOut(source, &v));
+    *t = v;
+    return {};
+}
 
 // Custom stream operator for StringView.
 {% set StringViewType = as_cppType(types["string view"].name) %}

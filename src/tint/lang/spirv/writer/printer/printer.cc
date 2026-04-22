@@ -290,6 +290,9 @@ class Printer {
     /// The map of extended instruction set names to their result IDs.
     Hashmap<std::string_view, uint32_t, 2> imports_;
 
+    /// Cache of combine-add function IDs keyed by element type.
+    Hashmap<const core::type::Type*, uint32_t, 4> combine_add_fns_;
+
     /// The current function that is being emitted.
     Function current_function_;
 
@@ -298,7 +301,6 @@ class Printer {
     /// Builds the SPIR-V from the IR
     Result<SuccessType> Generate() {
         AssertValid(ir_, kPrinterCapabilities, "before spirv.Printer");
-
         module_.PushCapability(SpvCapabilityShader);
 
         if (options_.extensions.use_vulkan_memory_model) {
@@ -1651,6 +1653,16 @@ class Printer {
             case spirv::BuiltinFn::kCooperativeMatrixStore:
                 op = spv::Op::OpCooperativeMatrixStoreKHR;
                 break;
+            case spirv::BuiltinFn::kCooperativeMatrixConvert:
+                module_.PushExtension("SPV_NV_cooperative_matrix2");
+                module_.PushCapability(SpvCapabilityCooperativeMatrixConversionsNV);
+                op = static_cast<spv::Op>(SpvOpCooperativeMatrixConvertNV);
+                break;
+            case spirv::BuiltinFn::kCooperativeMatrixReduce:
+                module_.PushExtension("SPV_NV_cooperative_matrix2");
+                module_.PushCapability(SpvCapabilityCooperativeMatrixReductionsNV);
+                op = static_cast<spv::Op>(SpvOpCooperativeMatrixReduceNV);
+                break;
             case spirv::BuiltinFn::kBitCount:
                 op = spv::Op::OpBitCount;
                 break;
@@ -1790,7 +1802,51 @@ class Printer {
         for (auto* arg : builtin->Args()) {
             operands.push_back(Value(arg));
         }
+        if (builtin->Func() == spirv::BuiltinFn::kCooperativeMatrixReduce) {
+            auto* src = builtin->Args()[0];
+            auto* sm_ty = src->Type()->As<core::type::SubgroupMatrix>();
+            operands.push_back(GetOrCreateCombineAddFn(sm_ty->Type()));
+        }
         current_function_.PushInst(op, operands);
+    }
+
+    /// Get or create a SPIR-V combine-add function for cooperative matrix reduce.
+    /// @param elem_ty the scalar element type
+    /// @returns the SPIR-V result ID of the combine function
+    uint32_t GetOrCreateCombineAddFn(const core::type::Type* elem_ty) {
+        return combine_add_fns_.GetOrAdd(elem_ty, [&] {
+            auto fn_id = module_.NextId();
+            auto ret_type_id = Type(elem_ty);
+            auto param_a_id = module_.NextId();
+            auto param_b_id = module_.NextId();
+            auto result_id = module_.NextId();
+            auto label_id = module_.NextId();
+
+            // Create function type: (elem_ty, elem_ty) -> elem_ty
+            auto fn_type_id = module_.NextId();
+            module_.PushType(
+                spv::Op::OpTypeFunction,
+                {fn_type_id, ret_type_id, ret_type_id, ret_type_id});
+
+            // Build the function using the proper Function constructor
+            Instruction declaration{
+                spv::Op::OpFunction,
+                {ret_type_id, fn_id, U32Operand(SpvFunctionControlMaskNone), fn_type_id}};
+            InstructionList params;
+            params.push_back(Instruction{spv::Op::OpFunctionParameter, {ret_type_id, param_a_id}});
+            params.push_back(Instruction{spv::Op::OpFunctionParameter, {ret_type_id, param_b_id}});
+
+            Function func_section(declaration, label_id, params);
+            auto block_idx = func_section.AppendBlock(label_id);
+            func_section.SetCurrentBlockIndex(block_idx);
+
+            auto add_op = elem_ty->IsFloatScalar() ? spv::Op::OpFAdd : spv::Op::OpIAdd;
+            func_section.PushInst(add_op, {ret_type_id, result_id, param_a_id, param_b_id});
+            func_section.PushInst(spv::Op::OpReturnValue, {result_id});
+
+            module_.PushFunction(func_section);
+            return fn_id;
+        });
     }
 
     /// Emit an OpCopyLogical instruction.
