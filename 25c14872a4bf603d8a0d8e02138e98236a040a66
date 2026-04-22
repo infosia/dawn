@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6dd8880_f7b6d2ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T08:42:13Z",
+      "side": 1,
+      "message": "LGTM! Thanks for the fix and the test! One small suggestion for simplification.",
+      "revId": "25c14872a4bf603d8a0d8e02138e98236a040a66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c809284_bc8ef347",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T08:42:13Z",
+      "side": 1,
+      "message": "It seems that these could be ASSERTs since the are check for code invariants. It would make PrepareEmptyPassQuerySet not need to return a `ResultOrError`. Alternatively because this is a workaround toggle, we could create a new empty query set every time, which would remove the need to \"prepare\" since (IIRC) the querysets start already reset.",
+      "revId": "25c14872a4bf603d8a0d8e02138e98236a040a66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
