@@ -25,16 +25,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/tint/lang/spirv/writer/common/binary_writer.h"
 
 #include <cstring>
 #include <string>
 
+#include "src/tint/utils/macros/compiler.h"
 #include "src/tint/utils/memory/bitcast.h"
 
 namespace tint::spirv::writer {
@@ -85,7 +81,7 @@ void BinaryWriter::ProcessOp(const Operand& op) {
     if (auto* str = std::get_if<std::string>(&op)) {
         auto idx = out_.size();
         out_.resize(out_.size() + OperandLength(op), 0);
-        memcpy(&out_[idx], str->c_str(), str->size() + 1);
+        TINT_UNSAFE_TODO(memcpy(&out_[idx], str->c_str(), str->size() + 1));
         return;
     }
 }

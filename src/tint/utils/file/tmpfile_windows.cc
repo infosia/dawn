@@ -27,11 +27,6 @@
 
 // GEN_BUILD:CONDITION(tint_build_is_win)
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <fcntl.h>
 #include <io.h>
 #include <stdio.h>

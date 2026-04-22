@@ -25,14 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <cstring>
 
 #include "gmock/gmock.h"
+#include "src/tint/utils/macros/compiler.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/wgsl/writer/ast_printer/helper_test.h"
 #include "src/tint/utils/text/string_stream.h"
@@ -58,7 +54,7 @@ f32 MakeF32(uint32_t sign, uint32_t biased_exponent, uint32_t mantissa) {
     float result = 0.0f;
     static_assert(sizeof(result) == sizeof(bits),
                   "expected float and uint32_t to be the same size");
-    std::memcpy(&result, &bits, sizeof(bits));
+    TINT_UNSAFE_TODO(std::memcpy(&result, &bits, sizeof(bits)));
     return f32(result);
 }
 
@@ -104,7 +100,7 @@ f16 MakeF16(uint32_t sign, uint32_t f16_biased_exponent, uint16_t f16_mantissa) 
     float result = 0.0f;
     static_assert(sizeof(result) == sizeof(bits),
                   "expected float and uint32_t to be the same size");
-    std::memcpy(&result, &bits, sizeof(bits));
+    TINT_UNSAFE_TODO(std::memcpy(&result, &bits, sizeof(bits)));
     return f16(result);
 }
 

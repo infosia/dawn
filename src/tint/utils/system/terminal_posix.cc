@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 // GEN_BUILD:CONDITION(tint_build_is_linux || tint_build_is_mac)
 
 #include <sys/select.h>
@@ -44,6 +39,7 @@
 #include <string_view>
 #include <utility>
 
+#include "src/tint/utils/macros/compiler.h"
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/macros/compiler.h"
 #include "src/tint/utils/macros/defer.h"
@@ -81,7 +77,7 @@ std::optional<bool> TerminalIsDarkImpl(FILE* out) {
 
     // Emit the device control escape sequence to query the terminal colors.
     static constexpr std::string_view kQuery = "\033]11;?\033\\";
-    fwrite(kQuery.data(), 1, kQuery.length(), out);
+    TINT_UNSAFE_TODO(fwrite(kQuery.data(), 1, kQuery.length(), out));
     fflush(out);
 
     // Timeout for attempting to read the response.
@@ -122,7 +118,7 @@ std::optional<bool> TerminalIsDarkImpl(FILE* out) {
             }
 
             char c;
-            if (fread(&c, 1, 1, stdin) == 1) {
+            if (TINT_UNSAFE_TODO(fread(&c, 1, 1, stdin)) == 1) {
                 return c;
             }
         }
