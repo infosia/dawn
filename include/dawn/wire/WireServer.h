@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #ifndef INCLUDE_DAWN_WIRE_WIRESERVER_H_
 #define INCLUDE_DAWN_WIRE_WIRESERVER_H_
 
@@ -180,29 +175,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
         // Chromium.
         virtual bool DeserializeDataUpdate(std::span<const uint8_t> deserializeData,
                                            std::span<uint8_t> target,
-                                           size_t offset) {
-            if (offset > std::numeric_limits<size_t>::max() - target.size()) {
-                return false;
-            }
-
-            if (target.data() != nullptr && reinterpret_cast<uintptr_t>(target.data()) < offset) {
-                return false;
-            }
-
-            // In the new `DeserializeDataUpdate` (with 3 parameters) `target` should already be the
-            // correct subspan of the buffer to write into, so we just need to check for OOB and
-            // then write into it.
-            // However, in the old `DeserializeDataUpdate` (with 4 parameters) implementation in
-            // Chromium, `target` is always the full buffer and `offset` is used to offset into both
-            // the target data and the shmem pointer, so we need to do the same offsetting here to
-            // be compatible with both implementations.
-            uint8_t* bufferStart = target.data() - offset;
-            size_t lengthFromStart = target.size() + offset;
-            SetTarget(bufferStart);
-            SetDataLength(lengthFromStart);
-            return DeserializeDataUpdate(deserializeData.data(), deserializeData.size(), offset,
-                                         target.size());
-        }
+                                           size_t offset);
 
       private:
         WriteHandle(const WriteHandle&) = delete;
