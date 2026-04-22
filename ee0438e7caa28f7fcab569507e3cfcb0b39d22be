@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd7e417_f3d4ff52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T18:54:12Z",
+      "side": 1,
+      "message": "General approval for this type of change was given by Corentin (and team)\nWe need to watch skia benchmarks for regressions.",
+      "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
