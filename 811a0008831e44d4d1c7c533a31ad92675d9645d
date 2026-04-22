@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "435d1300_02b21e2a",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "nit: `DAWN_UNREACHABLE()` will cause a crash but `DAWN_INTERNAL_ERROR` wants to return an error. Looking at `PhysicalDeviceVk` it seems that we should return a validation error for an unsupported surface type.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e06ea1c_ea6140d7",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "I believe that this should be a validation error so that a surface creation failure (that makes an error object that causes GetCapabilities to fail) will be handled gracefully by the backend.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00291311_dbbefb57",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "Can this code be moved to a helper function exposed in `SwapChainWGPU.h` so that it can be used by `PhysicalDeviceWGPU.cpp` instead of duplicated?",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "805775c3_966a7740",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "ditto this should return a `DAWN_VALIDATION_ERROR` (or return `nullptr` without the `UNREACHABLE` and have the caller return a validation error if `nullptr`).",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b54cf25_cbdab311",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure that why this exact logic was chosen, do you have any more details?",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "028c9dd0_ef7642e3",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "Instead of adding a reference, which needs complex code to handle the release below, we can instead move the reference over to this SwapChain.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eeef194_7cc5690d",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "`DetachFromSurfaceImpl` should already have been called in this case so we can use the default destructor.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11b2d493_ab761422",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "nit: could we have an early return instead and ASSERT that `innerSurfaceTexture-\u003etexture` is null?",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed86921e_53590780",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "This can be replaced with `TextureDescriptor textureDesc \u003d GetSwapChainBaseTextureDescriptor(this);`",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f608afe_4c80970f",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "```suggestion\n                        Unpack(reinterpret_cast\u003cconst TextureDescriptor*\u003e(\u0026desc)));\n```\nsince we trust the descriptor",
+      "range": {
+        "startLine": 199,
+        "startChar": 24,
+        "endLine": 199,
+        "endChar": 41
+      },
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d5e5708_e918099e",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "mCurrentTexture should always be a valid pointer at this point, this is enforced by the validation that `Present` must only happen after a successfull `GetCurrentTexture`.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64521f10_6fec6150",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "This code shouldn\u0027t be needed? When detaching we should always destroy the surface unless it was transferred to another `SwapChain` (in which case it is already nullptr and we can just check for that).",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc9bcaf2_d8c0d7c1",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "This can be unfaillable since there is no error checks done in the function. Ditto for the STM constructor actually.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1da5fbb_8497e084",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T09:12:20Z",
+      "side": 1,
+      "message": "This seems incorrect in general for SharedTextureMemory. Is this part of the prototyping in Chromium to try to mark the SharedImages for the GPUCanvasContext? Can we at least have a TODO on a new issue that explains that we want to generalize `SharedTextureMemoryD3DSwapchainBeginState`?",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
