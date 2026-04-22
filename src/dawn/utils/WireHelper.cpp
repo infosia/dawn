@@ -110,6 +110,8 @@ class WireHelperDirect : public WireHelper {
         return wgpu::Instance(backendInstance);
     }
 
+    WGPUDevice GetBackendDevice(const wgpu::Device& device) override { return device.Get(); }
+
     void BeginWireTrace(const char* name) override {}
 
     bool FlushClient() override { return true; }
@@ -159,6 +161,11 @@ class WireHelperProxy : public WireHelper {
         mWireServer->InjectInstance(backendInstance, reserved.handle);
 
         return wgpu::Instance::Acquire(reserved.instance);
+    }
+
+    WGPUDevice GetBackendDevice(const wgpu::Device& device) override {
+        auto handle = mWireClient->GetWireHandle(device.Get());
+        return mWireServer->GetDevice(handle.id, handle.generation);
     }
 
     void BeginWireTrace(const char* name) override {

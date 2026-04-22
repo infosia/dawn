@@ -348,6 +348,7 @@ class DawnTestBase {
     static bool IsAsan();
     static bool IsTsan();
 
+    bool HasToggleEnabled(const char* workaround, const wgpu::Device& device) const;
     bool HasToggleEnabled(const char* workaround) const;
 
     void DestroyDevice(wgpu::Device device = nullptr);
@@ -400,7 +401,6 @@ class DawnTestBase {
     wgpu::Queue queue;
 
     DawnProcTable backendProcs = {};
-    WGPUDevice backendDevice = nullptr;
 
     uint64_t mLastWarningCount = 0;
     std::unique_ptr<utils::Timer> mTimer;
@@ -847,7 +847,6 @@ class DawnTestBase {
 
     bool mRequireUseTieredLimits = false;
     native::Adapter mBackendAdapter;
-    WGPUDevice mLastCreatedBackendDevice;
 
     std::unique_ptr<platform::Platform> mTestPlatform;
 

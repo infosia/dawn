@@ -1017,7 +1017,6 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
             callbackInfo.callback(WGPURequestDeviceStatus_Error, nullptr, kEmptyOutputStringView,
                                   callbackInfo.userdata1, callbackInfo.userdata2);
         } else {
-            gCurrentTest->mLastCreatedBackendDevice = cDevice;
             callbackInfo.callback(WGPURequestDeviceStatus_Success, cDevice, kEmptyOutputStringView,
                                   callbackInfo.userdata1, callbackInfo.userdata2);
         }
@@ -1340,11 +1339,15 @@ bool DawnTestBase::IsTsan() {
 #endif
 }
 
-bool DawnTestBase::HasToggleEnabled(const char* toggle) const {
-    auto toggles = native::GetTogglesUsed(backendDevice);
+bool DawnTestBase::HasToggleEnabled(const char* toggle, const wgpu::Device& d) const {
+    auto toggles = native::GetTogglesUsed(GetWireHelper()->GetBackendDevice(d));
     return std::find_if(toggles.begin(), toggles.end(), [toggle](const char* name) {
                return strcmp(toggle, name) == 0;
            }) != toggles.end();
+}
+
+bool DawnTestBase::HasToggleEnabled(const char* toggle) const {
+    return HasToggleEnabled(toggle, device);
 }
 
 bool DawnTestBase::HasVendorIdFilter() const {
@@ -1671,8 +1674,6 @@ void DawnTestBase::SetUp() {
         return HandleDeviceCreationFailure();
     }
 
-    backendDevice = mLastCreatedBackendDevice;
-    DAWN_ASSERT(backendDevice);
     device.GetLimits(deviceLimits.GetLinked());
     queue = device.GetQueue();
 
