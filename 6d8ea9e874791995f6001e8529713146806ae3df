@@ -33,6 +33,24 @@
       "message": "It strikes me that `TINT_RET_IF(!sem)` is shorter for all of these others ones now too (and makes it less weird for the `bool` cases).",
       "revId": "6d8ea9e874791995f6001e8529713146806ae3df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fae5da3_63488297",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T13:25:58Z",
+      "side": 1,
+      "message": "Yea, had the same thought, wanted to get this in and then will look at converting them over.",
+      "parentUuid": "253d286f_88649a64",
+      "revId": "6d8ea9e874791995f6001e8529713146806ae3df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
