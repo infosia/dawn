@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d987033b_8dcc3970",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T20:48:17Z",
+      "side": 1,
+      "message": "LGTM, just nits",
+      "revId": "1337df7460b001cfa24276f508a3f8cbd9aac403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa242988_da8262a4",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T20:48:17Z",
+      "side": 1,
+      "message": "nit: statics at the top with a // static comment\n\n```suggestion\n}  // namespace\n\n// static\nstd::string Disassembler::Disassemble(const Module\u0026 mod, const Instruction* inst) {\n    if (!inst) {\n        return \"undef\";\n    }\n    Disassembler d(mod);\n    d.out_.Clear();\n    d.current_output_line_ \u003d 1;\n    d.current_output_start_pos_ \u003d 0;\n    d.EmitInstruction(inst);\n    return std::string(TrimSuffix(d.Plain(), \"\\n\"));\n}\n\nDisassembler::Disassembler(Disassembler\u0026\u0026) \u003d default;\n\nDisassembler::Disassembler(const Module\u0026 mod) : mod_(mod) {\n    Disassemble();\n    file_ \u003d std::make_shared\u003cSource::File\u003e(\"\", Plain());\n\n    auto set_source_file \u003d [\u0026](auto\u0026 map) {\n        for (auto\u0026 it : map) {\n            it.value.file \u003d file_.get();\n        }\n    };\n    set_source_file(block_to_src_);\n    set_source_file(block_param_to_src_);\n    set_source_file(instruction_to_src_);\n    set_source_file(operand_to_src_);\n    set_source_file(result_to_src_);\n    set_source_file(function_to_src_);\n    set_source_file(function_param_to_src_);\n}\n\nDisassembler::~Disassembler() \u003d default;\n\n```",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 1
+      },
+      "revId": "1337df7460b001cfa24276f508a3f8cbd9aac403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "336c759d_bbb9da6b",
+        "filename": "src/tint/lang/core/ir/disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T20:48:17Z",
+      "side": 1,
+      "message": "```suggestion\n    };\n\n    /// @param mod the module\n    /// @param inst the instruction to disassemble\n    /// @returns the disassembled instruction\n    static std::string Disassemble(const Module\u0026 mod, const Instruction* inst);\n\n    /// Constructor.\n    /// Performs the disassembly of the module @p mod, constructing a Source::File with the name @p\n    /// file_name.\n    /// @param mod the module to disassemble\n    explicit Disassembler(const Module\u0026 mod);\n\n    /// Move constructor\n    Disassembler(Disassembler\u0026\u0026);\n\n    /// Destructor\n    ~Disassembler();\n\n```\n\nnit: statics come first",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 79
+      },
+      "revId": "1337df7460b001cfa24276f508a3f8cbd9aac403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
