@@ -67,6 +67,7 @@ tint_target_add_dependencies(tint_lang_hlsl_writer lib
   tint_utils_macros
   tint_utils_math
   tint_utils_memory
+  tint_utils_reflection
   tint_utils_rtti
   tint_utils_symbol
   tint_utils_text
@@ -119,6 +120,7 @@ tint_target_add_dependencies(tint_lang_hlsl_writer_test test
   tint_utils_macros
   tint_utils_math
   tint_utils_memory
+  tint_utils_reflection
   tint_utils_rtti
   tint_utils_symbol
   tint_utils_text
@@ -166,6 +168,7 @@ tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
   tint_utils_macros
   tint_utils_math
   tint_utils_memory
+  tint_utils_reflection
   tint_utils_rtti
   tint_utils_symbol
   tint_utils_text

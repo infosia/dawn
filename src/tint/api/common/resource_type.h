@@ -28,7 +28,7 @@
 #ifndef SRC_TINT_API_COMMON_RESOURCE_TYPE_H_
 #define SRC_TINT_API_COMMON_RESOURCE_TYPE_H_
 
-#include "src/tint/utils/reflection.h"
+#include "src/tint/utils/reflection/reflection.h"
 
 namespace tint {
 

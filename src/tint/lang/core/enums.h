@@ -41,7 +41,7 @@
 
 #include <cstdint>
 
-#include "src/tint/utils/reflection.h"
+#include "src/tint/utils/reflection/reflection.h"
 #include "src/tint/utils/rtti/traits.h"
 
 namespace tint::core {
