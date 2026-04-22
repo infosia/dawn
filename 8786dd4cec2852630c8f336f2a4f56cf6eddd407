@@ -16,6 +16,23 @@
       "message": "PTAAL",
       "revId": "8786dd4cec2852630c8f336f2a4f56cf6eddd407",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "857a69e6_b13e5423",
+        "filename": "src/tint/utils/text/base64.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-22T17:29:06Z",
+      "side": 1,
+      "message": "Nit, maybe use the map size directly for the comparison?\n\n```suggestion\n        if (val \u003e\u003d kMap.size()) {\n```",
+      "revId": "8786dd4cec2852630c8f336f2a4f56cf6eddd407",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
