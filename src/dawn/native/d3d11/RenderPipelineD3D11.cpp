@@ -42,6 +42,7 @@
 #include "dawn/native/d3d11/DeviceD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
+#include "dawn/native/d3d11/PipelineStateTrackerD3D11.h"
 #include "dawn/native/d3d11/ShaderModuleD3D11.h"
 #include "dawn/native/d3d11/UtilsD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
@@ -271,33 +272,27 @@ MaybeError RenderPipeline::InitializeImpl() {
 
 RenderPipeline::~RenderPipeline() = default;
 
-void RenderPipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext,
+void RenderPipeline::ApplyNow(PipelineStateTracker* tracker,
                               const std::array<float, 4>& blendColor,
                               uint32_t stencilReference) {
-    auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext3();
-    d3d11DeviceContext->IASetPrimitiveTopology(mD3DPrimitiveTopology);
-    // TODO(dawn:1753): deduplicate these objects in the backend eventually, and to avoid redundant
-    // state setting.
-    d3d11DeviceContext->IASetInputLayout(mInputLayout.Get());
-    d3d11DeviceContext->RSSetState(mRasterizerState.Get());
-    d3d11DeviceContext->VSSetShader(mVertexShader.Get(), nullptr, 0);
-    d3d11DeviceContext->PSSetShader(mPixelShader.Get(), nullptr, 0);
+    tracker->IASetPrimitiveTopology(mD3DPrimitiveTopology);
+    tracker->IASetInputLayout(mInputLayout.Get());
+    tracker->RSSetState(mRasterizerState.Get());
+    tracker->VSSetShader(mVertexShader.Get());
+    tracker->PSSetShader(mPixelShader.Get());
 
-    ApplyBlendState(commandContext, blendColor);
-    ApplyDepthStencilState(commandContext, stencilReference);
+    ApplyBlendState(tracker, blendColor);
+    ApplyDepthStencilState(tracker, stencilReference);
 }
 
-void RenderPipeline::ApplyBlendState(const ScopedSwapStateCommandRecordingContext* commandContext,
+void RenderPipeline::ApplyBlendState(PipelineStateTracker* tracker,
                                      const std::array<float, 4>& blendColor) {
-    auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext3();
-    d3d11DeviceContext->OMSetBlendState(mBlendState.Get(), blendColor.data(), GetSampleMask());
+    tracker->OMSetBlendState(mBlendState.Get(), blendColor.data(), GetSampleMask());
 }
 
-void RenderPipeline::ApplyDepthStencilState(
-    const ScopedSwapStateCommandRecordingContext* commandContext,
-    uint32_t stencilReference) {
-    auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext3();
-    d3d11DeviceContext->OMSetDepthStencilState(mDepthStencilState.Get(), stencilReference);
+void RenderPipeline::ApplyDepthStencilState(PipelineStateTracker* tracker,
+                                            uint32_t stencilReference) {
+    tracker->OMSetDepthStencilState(mDepthStencilState.Get(), stencilReference);
 }
 
 void RenderPipeline::SetLabelImpl() {

@@ -35,6 +35,7 @@
 namespace dawn::native::d3d11 {
 
 class Device;
+class PipelineStateTracker;
 class ScopedSwapStateCommandRecordingContext;
 
 class ComputePipeline final : public ComputePipelineBase {
@@ -43,7 +44,7 @@ class ComputePipeline final : public ComputePipelineBase {
         Device* device,
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
 
-    void ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext);
+    void ApplyNow(PipelineStateTracker* tracker);
 
     ID3D11ComputeShader* GetD3D11ComputeShaderForTesting();
 

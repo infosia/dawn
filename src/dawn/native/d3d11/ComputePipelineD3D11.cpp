@@ -34,6 +34,7 @@
 #include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/PipelineStateTrackerD3D11.h"
 #include "dawn/native/d3d11/ShaderModuleD3D11.h"
 #include "dawn/native/d3d11/UtilsD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
@@ -100,9 +101,8 @@ void ComputePipeline::SetLabelImpl() {
     SetDebugName(ToBackend(GetDevice()), mComputeShader.Get(), "Dawn_ComputePipeline", GetLabel());
 }
 
-void ComputePipeline::ApplyNow(const ScopedSwapStateCommandRecordingContext* commandContext) {
-    auto* d3dDeviceContext = commandContext->GetD3D11DeviceContext3();
-    d3dDeviceContext->CSSetShader(mComputeShader.Get(), nullptr, 0);
+void ComputePipeline::ApplyNow(PipelineStateTracker* tracker) {
+    tracker->CSSetShader(mComputeShader.Get());
 }
 
 bool ComputePipeline::UsesNumWorkgroups() const {
