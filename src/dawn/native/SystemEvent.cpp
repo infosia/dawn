@@ -83,12 +83,17 @@ bool SystemEventPipeSender::IsValid() const {
 void SystemEventPipeSender::Signal() && {
     DAWN_ASSERT(mPrimitive.IsValid());
 #if DAWN_PLATFORM_IS(WINDOWS)
-    DAWN_CHECK(SetEvent(mPrimitive.Get()));
+    {
+        bool success = SetEvent(mPrimitive.Get());
+        DAWN_CHECK(success);
+    }
 #elif DAWN_PLATFORM_IS(POSIX)
-    // Send one byte to signal the receiver
-    char zero[1] = {0};
-    int status = write(mPrimitive.Get(), zero, 1);
-    DAWN_CHECK(status >= 0);
+    {
+        // Send one byte to signal the receiver
+        char zero[1] = {0};
+        int status = write(mPrimitive.Get(), zero, 1);
+        DAWN_CHECK(status >= 0);
+    }
 #else
     // Not implemented for this platform.
     DAWN_UNREACHABLE();
