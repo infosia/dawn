@@ -33,6 +33,24 @@
       "message": "Should this be (0,1)?\n```suggestion\n    // would erroneously ignore the uniform buffer because it got remapped to hlsl (0,1).\n```",
       "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1098f5d3_1ae8f6a1",
+        "filename": "src/tint/lang/hlsl/writer/writer_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-22T20:05:40Z",
+      "side": 1,
+      "message": "No, what I wrote should be right. When we were adding WGSL space values to `ignored_by_robustness_transform`, we would have put \u0027(0,0)\u0027 for the storage buffer, but the Robustness transform would interpret this as hlsl (0,0), which would now be the uniform buffer (after remapping).\n\nSo confusing!",
+      "parentUuid": "2f4a906c_319d7de8",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
