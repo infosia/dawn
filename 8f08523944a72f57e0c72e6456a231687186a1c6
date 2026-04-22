@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42ea9f3d_d0452e24",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-22T20:46:39Z",
+      "side": 1,
+      "message": "Why not use `startOfBindGroups` here instead of hard coding 0, just for robustness against future changes?",
+      "range": {
+        "startLine": 280,
+        "startChar": 78,
+        "endLine": 280,
+        "endChar": 80
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7737def9_40862c83",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 20
@@ -20,6 +43,81 @@
         "endLine": 1928,
         "endChar": 17
       },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "197ff354_6078c64d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-22T20:46:39Z",
+      "side": 1,
+      "message": "There\u0027s a few caching functions that use callbacks like that, yeah. It would probably be less error prone to do it that way.\n\nSee the FramebufferCache as an example: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/CommandBufferVk.cpp;l\u003d957;drc\u003db7aa90cd3e2def886c543c9ff7e86c880f802e8d;bpv\u003d0;bpt\u003d1",
+      "parentUuid": "7737def9_40862c83",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41659c72_d521171a",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-22T20:46:39Z",
+      "side": 1,
+      "message": "It feels a little strange here to be implicitly depending on someone to have called `GetLayout()` with a matching attachment count prior to this. I\u0027m sure that it always works out that way at this point, but it would be nice to make it more explicit by either:\n 1) Adding comments to the function signature, probably in the .h explaining the relationship between the two methods.\n 2) Refactoring `GetLayout()` so that you can call it (or an internal variant) here and get the holder that you need regardless of whether it\u0027s been created previously or not.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0589a7fb_b7d57538",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-22T20:46:39Z",
+      "side": 1,
+      "message": "This is another potentially surprising aspect of calling this method. Could the fact that the results of this function \"expire\" after the current command serial is complete be made more explicit in a comment?",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d869d5b2_28d18e85",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-22T20:46:39Z",
+      "side": 1,
+      "message": "```suggestion\n            .rasterizationOrderColorAttachmentAccess \u003d\u003d VK_TRUE) {\n```\n\nJust for consistency with the rest of the file.",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
