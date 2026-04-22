@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b05b3fe_fd0bfc4f",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-22T20:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa242988_da8262a4",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 1
+      },
+      "revId": "1337df7460b001cfa24276f508a3f8cbd9aac403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "336c759d_bbb9da6b",
@@ -54,6 +78,30 @@
       "writtenOn": "2026-04-22T20:48:17Z",
       "side": 1,
       "message": "```suggestion\n    };\n\n    /// @param mod the module\n    /// @param inst the instruction to disassemble\n    /// @returns the disassembled instruction\n    static std::string Disassemble(const Module\u0026 mod, const Instruction* inst);\n\n    /// Constructor.\n    /// Performs the disassembly of the module @p mod, constructing a Source::File with the name @p\n    /// file_name.\n    /// @param mod the module to disassemble\n    explicit Disassembler(const Module\u0026 mod);\n\n    /// Move constructor\n    Disassembler(Disassembler\u0026\u0026);\n\n    /// Destructor\n    ~Disassembler();\n\n```\n\nnit: statics come first",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 79
+      },
+      "revId": "1337df7460b001cfa24276f508a3f8cbd9aac403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3078eadb_c5d22dd6",
+        "filename": "src/tint/lang/core/ir/disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-22T20:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "336c759d_bbb9da6b",
       "range": {
         "startLine": 74,
         "startChar": 0,
