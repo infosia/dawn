@@ -165,11 +165,6 @@ class Impl {
         core::ir::Value* index = nullptr;
     };
 
-    struct CollapsedSwizzle {
-        const sem::ValueExpression* vector = nullptr;
-        tint::Vector<uint32_t, 4> indices;
-    };
-
     using ValueOrVecElAccess = std::variant<core::ir::Value*, VectorRefElementAccess>;
 
     /// The current block for expressions.
@@ -452,7 +447,7 @@ class Impl {
         auto b = builder_.Append(current_block_);
         const auto* sem_swizzle = program_.Sem().Get<sem::Swizzle>(stmt->lhs);
         if (sem_swizzle) {
-            CollapsedSwizzle swizzle = CollapseSwizzle(sem_swizzle);
+            sem::CollapsedSwizzle swizzle = sem::CollapseLhsSwizzle(sem_swizzle);
             // Evaluate pointer to swizzled vector.
             auto lhs_vec_ptr = EmitValueExpression(swizzle.vector->Declaration());
             auto* rhs_val = EmitValueExpression(stmt->rhs);
@@ -497,7 +492,7 @@ class Impl {
         if (sem_swizzle && sem_swizzle->Type()->Is<core::type::SwizzleView>()) {
             auto b = builder_.Append(current_block_);
 
-            CollapsedSwizzle swizzle = CollapseSwizzle(sem_swizzle);
+            sem::CollapsedSwizzle swizzle = sem::CollapseLhsSwizzle(sem_swizzle);
             auto* lhs_vec_ptr = EmitValueExpression(swizzle.vector->Declaration());
             auto* lhs_ty = sem_swizzle->Type()->As<core::type::SwizzleView>()->StoreType();
 
@@ -561,30 +556,6 @@ class Impl {
         } else if (auto ref = std::get_if<VectorRefElementAccess>(&lhs)) {
             b.StoreVectorElement(ref->vector, ref->index, rhs);
         }
-    }
-
-    // Collapse a possibly nested chain of swizzles into a single set of swizzle indices on the base
-    // vector. Note that target components cannot be repeated in lhs swizzles used for assignment,
-    // so each consecutive swizzle on a vector will produce a smaller or equal sized vector (i.e.
-    // v.xyzw.xy.yx.x).
-    CollapsedSwizzle CollapseSwizzle(const sem::Swizzle* swizzle) {
-        // Initialize with the outermost swizzle object and indices.
-        CollapsedSwizzle res{
-            .vector = swizzle->Object(),
-            .indices = swizzle->Indices(),
-        };
-        // If the inner object is also a swizzle, collapse it down.
-        while (auto* inner_swizzle = res.vector->As<sem::Swizzle>()) {
-            tint::Vector<uint32_t, 4> combined;
-            // For each index in the outer swizzle, get the corresponding index into the inner
-            // swizzle.
-            for (uint32_t i : res.indices) {
-                combined.Push(inner_swizzle->Indices()[i]);
-            }
-            res.indices = std::move(combined);
-            res.vector = inner_swizzle->Object();
-        }
-        return res;
     }
 
     core::ir::Value* ConstructSwizzleAssignmentRhs(core::ir::Value* lhs,

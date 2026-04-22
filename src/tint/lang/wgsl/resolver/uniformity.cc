@@ -32,7 +32,7 @@
 
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/type/reference.h"
-#include "src/tint/lang/core/type/swizzle_view.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/wgsl/program/program_builder.h"
 #include "src/tint/lang/wgsl/resolver/dependency_graph.h"
 #include "src/tint/lang/wgsl/sem/block_statement.h"
@@ -1674,8 +1674,28 @@ class UniformityGraph {
                 is_dereferencing =
                     is_dereferencing || sem_.GetVal(m->object)->Type()->Is<core::type::Pointer>();
 
+                // An assignment to a full swizzle view (which updates all components of the object
+                // vector) is a full assignment.
+                bool is_full_swizzle = false;
+                if (auto* swizzle = sem_.Get<sem::Swizzle>(m)) {
+                    // Collapse chained swizzles if necessary.
+                    sem::CollapsedSwizzle collapsed = sem::CollapseLhsSwizzle(swizzle);
+                    auto* vec_type =
+                        collapsed.vector->Type()->UnwrapPtrOrRef()->As<core::type::Vector>();
+                    TINT_ASSERT(vec_type);
+
+                    // Duplicated elements are not permitted on the LHS of a swizzle assignment, so
+                    // comparing lengths is sufficient to determine whether it is a full/partial
+                    // swizzle.
+                    if (collapsed.indices.Length() == vec_type->Width()) {
+                        is_full_swizzle = true;
+                    }
+                }
+
+                is_partial_reference = is_partial_reference || !is_full_swizzle;
+
                 return ProcessLValueExpression(cf, m->object, is_dereferencing,
-                                               /*is_partial_reference*/ true);
+                                               is_partial_reference);
             },
 
             [&](const ast::UnaryOpExpression* u) {
