@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd7f4532_29548a20",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435d1300_02b21e2a",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e06ea1c_ea6140d7",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "I believe that this should be a validation error so that a surface creation failure (that makes an error object that causes GetCapabilities to fail) will be handled gracefully by the backend.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "374e090e_5902abde",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e06ea1c_ea6140d7",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a58050_6dca20a0",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00291311_dbbefb57",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "805775c3_966a7740",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "ditto this should return a `DAWN_VALIDATION_ERROR` (or return `nullptr` without the `UNREACHABLE` and have the caller return a validation error if `nullptr`).",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "636bdf36_a05ba767",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "805775c3_966a7740",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +164,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3176e617_5d621db5",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Removed.\nIt was to fix a SurfaceTests failure. where a second for loop called surface.configure again on already configured. I guess it is related to the sharing of inner WGPUSurface between SwapChains. Introducing the Transfer of inner WGPUSurface makes the logic much clearer and we don\u0027t have the problem anymore.\nThe same for [1]",
+      "parentUuid": "3b54cf25_cbdab311",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "028c9dd0_ef7642e3",
@@ -105,6 +201,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "Instead of adding a reference, which needs complex code to handle the release below, we can instead move the reference over to this SwapChain.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c75ee054_2cded2fb",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "028c9dd0_ef7642e3",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +240,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32431577_27c59d08",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eeef194_7cc5690d",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11b2d493_ab761422",
@@ -143,6 +275,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93e38fc2_e64e1f34",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11b2d493_ab761422",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed86921e_53590780",
@@ -156,6 +306,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "This can be replaced with `TextureDescriptor textureDesc \u003d GetSwapChainBaseTextureDescriptor(this);`",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccb2dac3_ce311579",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed86921e_53590780",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -183,6 +351,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cc8d0fc_b9c2dc16",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f608afe_4c80970f",
+      "range": {
+        "startLine": 199,
+        "startChar": 24,
+        "endLine": 199,
+        "endChar": 41
+      },
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d5e5708_e918099e",
@@ -196,6 +388,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "mCurrentTexture should always be a valid pointer at this point, this is enforced by the validation that `Present` must only happen after a successfull `GetCurrentTexture`.",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e5dbaa_f6a25f37",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d5e5708_e918099e",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -217,6 +427,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c47fad4_1634a557",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "[1] Done",
+      "parentUuid": "64521f10_6fec6150",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc9bcaf2_d8c0d7c1",
@@ -234,6 +462,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd62281a_3dd6283a",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc9bcaf2_d8c0d7c1",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b1da5fbb_8497e084",
@@ -247,6 +493,24 @@
       "writtenOn": "2026-04-22T09:12:20Z",
       "side": 1,
       "message": "This seems incorrect in general for SharedTextureMemory. Is this part of the prototyping in Chromium to try to mark the SharedImages for the GPUCanvasContext? Can we at least have a TODO on a new issue that explains that we want to generalize `SharedTextureMemoryD3DSwapchainBeginState`?",
+      "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4b89779_9418abab",
+        "filename": "src/dawn/native/webgpu/TextureWGPU.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-22T23:06:46Z",
+      "side": 1,
+      "message": "\u003e Is this part of the prototyping in Chromium to try to mark the SharedImages for the GPUCanvasContext?\nNo and yes. Current prototyping is for a standalone replayer on dawn native (Issue 500368755). But the capture file schema should be also used when it comes to SharedImage and Chromium. So I have this flag assigned here without having a SharedImage path test actually hitting this for now.\n\nYes I should leave a comment to revisit and likely generalize `SharedTextureMemoryD3DSwapchainBeginState` when doing SharedImage capture.",
+      "parentUuid": "b1da5fbb_8497e084",
       "revId": "811a0008831e44d4d1c7c533a31ad92675d9645d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
