@@ -184,14 +184,15 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         };
     }
 
-    tint::Bindings bindings =
-        GenerateBindingRemapping(layout, stage, [&](BindGroupIndex group, BindingIndex index) {
-            const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
-            return tint::BindingPoint{
-                .group = uint32_t(group),
-                .binding = bgl->GetShaderRegister(index),
-            };
-        });
+    auto remapBinding = [&](BindGroupIndex group, BindingIndex index) {
+        const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+        return tint::BindingPoint{
+            .group = uint32_t(group),
+            .binding = bgl->GetShaderRegister(index),
+        };
+    };
+
+    tint::Bindings bindings = GenerateBindingRemapping(layout, stage, remapBinding);
 
     std::vector<tint::BindingPoint> ignored_by_robustness;
     for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
@@ -233,8 +234,9 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
             if ((bufferInfo.type == wgpu::BufferBindingType::Storage ||
                  bufferInfo.type == wgpu::BufferBindingType::ReadOnlyStorage) &&
                 !bufferInfo.hasDynamicOffset) {
-                ignored_by_robustness.emplace_back(tint::BindingPoint{
-                    .group = uint32_t(group), .binding = uint32_t(bindingInfo.binding)});
+                BindingIndex bindingIndex =
+                    bgl->AsBindingIndex(bgl->GetAPIBindingIndex(bindingInfo.binding));
+                ignored_by_robustness.emplace_back(remapBinding(group, bindingIndex));
             }
         }
 
