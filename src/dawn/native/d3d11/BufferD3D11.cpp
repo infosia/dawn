@@ -1391,7 +1391,7 @@ GPUUsableBuffer::CreateD3D11UnorderedAccessViewFromD3DBuffer(ID3D11Buffer* d3d11
     return std::move(uav);
 }
 
-ResultOrError<ComPtr<ID3D11ShaderResourceView>> GPUUsableBuffer::UseAsSRV(
+ResultOrError<ID3D11ShaderResourceView*> GPUUsableBuffer::UseAsSRV(
     const ScopedCommandRecordingContext* commandContext,
     uint64_t offset,
     uint64_t size) {
@@ -1402,18 +1402,19 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> GPUUsableBuffer::UseAsSRV(
     auto key = std::make_tuple(d3dBuffer, offset, size);
     auto ite = mSRVCache.find(key);
     if (ite != mSRVCache.end()) {
-        return ite->second;
+        return ite->second.Get();
     }
 
     ComPtr<ID3D11ShaderResourceView> srv;
     DAWN_TRY_ASSIGN(srv, CreateD3D11ShaderResourceViewFromD3DBuffer(d3dBuffer, offset, size));
 
-    mSRVCache[key] = srv;
+    auto* srvPtr = srv.Get();
+    mSRVCache[key] = std::move(srv);
 
-    return std::move(srv);
+    return srvPtr;
 }
 
-ResultOrError<ComPtr<ID3D11UnorderedAccessView>> GPUUsableBuffer::UseAsUAV(
+ResultOrError<ID3D11UnorderedAccessView*> GPUUsableBuffer::UseAsUAV(
     const ScopedCommandRecordingContext* commandContext,
     uint64_t offset,
     uint64_t size) {
@@ -1421,23 +1422,25 @@ ResultOrError<ComPtr<ID3D11UnorderedAccessView>> GPUUsableBuffer::UseAsUAV(
     DAWN_TRY_ASSIGN(storage, GetOrCreateStorage(StorageType::GPUWritableNonConstantBuffer));
     DAWN_TRY(SyncStorage(commandContext, storage));
 
-    ComPtr<ID3D11UnorderedAccessView1> uav;
+    ID3D11UnorderedAccessView* uavPtr;
     {
         auto key = std::make_tuple(storage->GetD3D11Buffer(), offset, size);
         auto ite = mUAVCache.find(key);
         if (ite != mUAVCache.end()) {
-            uav = ite->second;
+            uavPtr = ite->second.Get();
         } else {
+            ComPtr<ID3D11UnorderedAccessView1> uav;
             DAWN_TRY_ASSIGN(uav, CreateD3D11UnorderedAccessViewFromD3DBuffer(
                                      storage->GetD3D11Buffer(), offset, size));
-            mUAVCache[key] = uav;
+            uavPtr = uav.Get();
+            mUAVCache[key] = std::move(uav);
         }
     }
 
     // Since UAV will modify the storage's content, increment its revision.
     IncrStorageRevAndMakeLatest(commandContext, storage);
 
-    return ComPtr<ID3D11UnorderedAccessView>(std::move(uav));
+    return uavPtr;
 }
 
 MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(

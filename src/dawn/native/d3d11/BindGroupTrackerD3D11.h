@@ -34,6 +34,7 @@
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/d3d/d3d_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native::d3d11 {
 
@@ -82,20 +83,23 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     void UnbindUnorderedAccessViews();
 
     template <typename T>
-    ResultOrError<ComPtr<T>> GetBufferD3DView(
-        BindGroupBase* group,
-        BindingIndex bindingIndex,
-        const BufferBindingInfo& layout,
-        const ityp::span<BindingIndex, uint32_t>& dynamicOffsets);
+    ResultOrError<T*> GetBufferD3DView(BindGroupBase* group,
+                                       BindingIndex bindingIndex,
+                                       const BufferBindingInfo& layout,
+                                       const ityp::span<BindingIndex, uint32_t>& dynamicOffsets);
 
     template <typename T>
-    ResultOrError<ComPtr<T>> GetTextureD3DView(BindGroupBase* group, BindingIndex bindingIndex);
+    ResultOrError<T*> GetTextureD3DView(BindGroupBase* group, BindingIndex bindingIndex);
 
   private:
     struct ConstantBufferBinding {
         bool operator==(const ConstantBufferBinding& rhs) const = default;
 
-        ComPtr<ID3D11Buffer> buffer;
+        // This is a hot path executed before every draw call. The underlying resources should be
+        // kept alive by the BindGroup, so it's impossible to UAF. The BindGroupTracker only keeps
+        // these pointers during render pass or compute pass execution inside
+        // CommandBuffer::Execute.
+        RAW_PTR_EXCLUSION ID3D11Buffer* buffer = nullptr;
         UINT firstConstant = 0;
         UINT numConstants = 0;
     };
@@ -106,10 +110,10 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
         const BufferBindingInfo& layout,
         const ityp::span<BindingIndex, uint32_t>& dynamicOffsets);
 
-    ResultOrError<ComPtr<ID3D11ShaderResourceView>> GetTextureShaderResourceView(
+    ResultOrError<ID3D11ShaderResourceView*> GetTextureShaderResourceView(
         BindGroupBase* group,
         BindingIndex bindingIndex);
-    ResultOrError<ComPtr<ID3D11UnorderedAccessView>> GetTextureUnorderedAccessView(
+    ResultOrError<ID3D11UnorderedAccessView*> GetTextureUnorderedAccessView(
         BindGroupBase* group,
         BindingIndex bindingIndex);
 
@@ -132,12 +136,12 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
 
     PerStage<BindingSlot<ConstantBufferBinding, 4>> mConstantBufferSlots;
 
-    PerStage<BindingSlot<ComPtr<ID3D11ShaderResourceView>, 4>> mSRVSlots;
+    PerStage<BindingSlot<ID3D11ShaderResourceView*, 4>> mSRVSlots;
 
-    PerStage<BindingSlot<ComPtr<ID3D11SamplerState>, 4>> mSamplerSlots;
+    PerStage<BindingSlot<ID3D11SamplerState*, 4>> mSamplerSlots;
 
     // We only track individual UAV slot in CS because UAV slots in PS must be bound all as one.
-    BindingSlot<ComPtr<ID3D11UnorderedAccessView>, 4> mCSUAVSlots;
+    BindingSlot<ID3D11UnorderedAccessView*, 4> mCSUAVSlots;
 
     PerStage<uint32_t> mMinUAVSlots = PerStage<uint32_t>(D3D11_1_UAV_SLOT_COUNT);
     uint32_t mPSMaxUAVSlot = 0;

@@ -232,9 +232,9 @@ class GPUUsableBuffer final : public Buffer {
     ID3D11Buffer* GetD3D11ConstantBufferForTesting();
     ID3D11Buffer* GetD3D11NonConstantBufferForTesting();
 
-    ResultOrError<ComPtr<ID3D11ShaderResourceView>>
+    ResultOrError<ID3D11ShaderResourceView*>
     UseAsSRV(const ScopedCommandRecordingContext* commandContext, uint64_t offset, uint64_t size);
-    ResultOrError<ComPtr<ID3D11UnorderedAccessView>>
+    ResultOrError<ID3D11UnorderedAccessView*>
     UseAsUAV(const ScopedCommandRecordingContext* commandContext, uint64_t offset, uint64_t size);
 
     MaybeError PredicatedClear(const ScopedSwapStateCommandRecordingContext* commandContext,
