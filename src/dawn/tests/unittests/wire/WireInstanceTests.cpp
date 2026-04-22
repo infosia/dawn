@@ -235,9 +235,9 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
     fakeVkProperties.driverVersion = 0x801F6000;
 
     WGPUSubgroupMatrixConfig fakeMatrixConfigs[3] = {
-        {WGPUSubgroupMatrixComponentType_F32, WGPUSubgroupMatrixComponentType_F32, 8, 4, 2},
-        {WGPUSubgroupMatrixComponentType_U32, WGPUSubgroupMatrixComponentType_I32, 4, 8, 16},
-        {WGPUSubgroupMatrixComponentType_F16, WGPUSubgroupMatrixComponentType_F32, 2, 16, 4},
+        {WGPUSubgroupMatrixComponentType_F32, WGPUSubgroupMatrixComponentType_F32, 8, 4, 2, false},
+        {WGPUSubgroupMatrixComponentType_U32, WGPUSubgroupMatrixComponentType_I32, 4, 8, 16, false},
+        {WGPUSubgroupMatrixComponentType_F16, WGPUSubgroupMatrixComponentType_F32, 2, 16, 4, false},
     };
 
     WGPUAdapterPropertiesSubgroupMatrixConfigs fakeSubgroupMatrixConfigs = {};

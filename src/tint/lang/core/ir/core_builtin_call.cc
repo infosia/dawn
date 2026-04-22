@@ -219,9 +219,13 @@ tint::core::ir::Instruction::Accesses CoreBuiltinCall::GetSideEffects() const {
         case BuiltinFn::kUnpack4XU8:
         case BuiltinFn::kSubgroupMatrixMultiply:
         case BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+        case BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
         case BuiltinFn::kSubgroupMatrixScalarAdd:
         case BuiltinFn::kSubgroupMatrixScalarSubtract:
         case BuiltinFn::kSubgroupMatrixScalarMultiply:
+        case BuiltinFn::kSubgroupMatrixConvert:
+        case BuiltinFn::kSubgroupMatrixReduceRowSum:
+        case BuiltinFn::kSubgroupMatrixReduceColumnSum:
         case BuiltinFn::kHasResource:
         case BuiltinFn::kBufferView:
         case BuiltinFn::kBufferLength:

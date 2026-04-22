@@ -183,9 +183,13 @@ class BasicTest : public UniformityAnalysisTestBase,
         kSubgroupMatrixStore,
         kSubgroupMatrixMultiply,
         kSubgroupMatrixMultiplyAccumulate,
+        kSubgroupMatrixMultiplyAccumulateSaturating,
         kSubgroupMatrixScalarAdd,
         kSubgroupMatrixScalarSubtract,
         kSubgroupMatrixScalarMultiply,
+        kSubgroupMatrixConvert,
+        kSubgroupMatrixReduceRowSum,
+        kSubgroupMatrixReduceColumnSum,
         // End of range marker:
         kEndOfFunctionRange,
     };
@@ -336,12 +340,24 @@ class BasicTest : public UniformityAnalysisTestBase,
             case kSubgroupMatrixMultiplyAccumulate:
                 return "_ = subgroupMatrixMultiplyAccumulate(subgroup_matrix_left_zero, "
                        "subgroup_matrix_right_zero, subgroup_matrix_result_zero)";
+            case kSubgroupMatrixMultiplyAccumulateSaturating:
+                return "_ = subgroupMatrixMultiplyAccumulateSaturating(subgroup_matrix_left_zero, "
+                       "subgroup_matrix_right_zero, subgroup_matrix_result_zero)";
             case kSubgroupMatrixScalarAdd:
                 return "_ = subgroupMatrixScalarAdd(subgroup_matrix_left_zero, 4.2f)";
             case kSubgroupMatrixScalarSubtract:
                 return "_ = subgroupMatrixScalarSubtract(subgroup_matrix_left_zero, 4.2f)";
             case kSubgroupMatrixScalarMultiply:
                 return "_ = subgroupMatrixScalarMultiply(subgroup_matrix_left_zero, 4.2f)";
+            case kSubgroupMatrixConvert:
+                return "_ = subgroupMatrixConvert<subgroup_matrix_result<f32, 8, 8>>("
+                       "subgroup_matrix_result_zero)";
+            case kSubgroupMatrixReduceRowSum:
+                return "_ = subgroupMatrixReduceRowSum<subgroup_matrix_result<f32, 1, 8>>("
+                       "subgroup_matrix_result_zero)";
+            case kSubgroupMatrixReduceColumnSum:
+                return "_ = subgroupMatrixReduceColumnSum<subgroup_matrix_result<f32, 8, 1>>("
+                       "subgroup_matrix_result_zero)";
             case kEndOfFunctionRange:
                 return "<invalid>";
         }
@@ -446,9 +462,13 @@ class BasicTest : public UniformityAnalysisTestBase,
             CASE(kSubgroupMatrixStore);
             CASE(kSubgroupMatrixMultiply);
             CASE(kSubgroupMatrixMultiplyAccumulate);
+            CASE(kSubgroupMatrixMultiplyAccumulateSaturating);
             CASE(kSubgroupMatrixScalarAdd);
             CASE(kSubgroupMatrixScalarSubtract);
             CASE(kSubgroupMatrixScalarMultiply);
+            CASE(kSubgroupMatrixConvert);
+            CASE(kSubgroupMatrixReduceRowSum);
+            CASE(kSubgroupMatrixReduceColumnSum);
             case kEndOfFunctionRange:
                 break;
         }

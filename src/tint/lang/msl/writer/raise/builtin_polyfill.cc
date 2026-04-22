@@ -121,9 +121,13 @@ struct State {
                     case core::BuiltinFn::kSubgroupMatrixStore:
                     case core::BuiltinFn::kSubgroupMatrixMultiply:
                     case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                    case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
                     case core::BuiltinFn::kSubgroupMatrixScalarAdd:
                     case core::BuiltinFn::kSubgroupMatrixScalarSubtract:
                     case core::BuiltinFn::kSubgroupMatrixScalarMultiply:
+                    case core::BuiltinFn::kSubgroupMatrixConvert:
+                    case core::BuiltinFn::kSubgroupMatrixReduceRowSum:
+                    case core::BuiltinFn::kSubgroupMatrixReduceColumnSum:
                     case core::BuiltinFn::kTextureDimensions:
                     case core::BuiltinFn::kTextureGather:
                     case core::BuiltinFn::kTextureGatherCompare:
@@ -330,6 +334,7 @@ struct State {
                     SubgroupMatrixMultiply(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate:
+                case core::BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating:
                     SubgroupMatrixMultiplyAccumulate(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupMatrixScalarAdd:

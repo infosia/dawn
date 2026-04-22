@@ -355,6 +355,7 @@ DAWN_INSTANTIATE_TEST(SubgroupMatrixTest, D3D12Backend(), MetalBackend(), Vulkan
 enum MatrixOp {
     MatrixMultiply,
     MatrixMultiplyAccumulate,
+    MatrixMultiplyAccumulateSaturating,
     MatrixScalarAdd,
     MatrixScalarSubtract,
     MatrixScalarMultiply,
@@ -450,6 +451,10 @@ fn main() {
         } else if (op == MatrixMultiplyAccumulate) {
             shader << loadAcc << "\n"
                    << "result = subgroupMatrixMultiplyAccumulate(lhs, rhs, result);" << "\n";
+        } else if (op == MatrixMultiplyAccumulateSaturating) {
+            shader << loadAcc << "\n"
+                   << "result = subgroupMatrixMultiplyAccumulateSaturating(lhs, rhs, result);"
+                   << "\n";
         }
 
         shader << storeResult << "\n}";
@@ -477,7 +482,7 @@ fn main() {
         // Offset the values for each matrix so that they are all different.
         inputLHS.Fill(0);
         inputRHS.Fill(1);
-        if (op == MatrixMultiplyAccumulate) {
+        if (op == MatrixMultiplyAccumulate || op == MatrixMultiplyAccumulateSaturating) {
             acc.Fill(3);
         } else {
             // If we are not accumulating then treat it as if the accumulator is zero.
@@ -544,6 +549,11 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
     for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
         auto& config = subgroupMatrixConfigs.configs[i];
 
+        // Saturating accumulation requires a config that supports it.
+        if (op == MatrixMultiplyAccumulateSaturating && !config.saturatingAccumulation) {
+            continue;
+        }
+
         std::stringstream configInfo;
         configInfo << "Testing " << config.M << "x" << config.N << "x" << config.K << " "
                    << ComponentTypeToWgslType(config.componentType) << " -> "
@@ -564,6 +574,7 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest,
                             // MatrixOp
                             MatrixOp::MatrixMultiply,
                             MatrixOp::MatrixMultiplyAccumulate,
+                            MatrixOp::MatrixMultiplyAccumulateSaturating,
                         },
                         {
                             // In column-major or not
@@ -1398,6 +1409,227 @@ DAWN_INSTANTIATE_TEST_P(SubgroupMatrix_FlexibleDimensionsTest,
                         {VulkanBackend()},
                         {MatrixMultiply},
                         {false, true});
+
+// Test subgroupMatrixConvert between result matrices of different element types.
+class SubgroupMatrix_ConvertTest : public DawnTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> features;
+        if (SupportsFeatures({wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix})) {
+            features.push_back(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::ShaderF16})) {
+            features.push_back(wgpu::FeatureName::ShaderF16);
+        }
+        return features;
+    }
+};
+
+TEST_P(SubgroupMatrix_ConvertTest, ConvertResultMatrix) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    // Find a pair of configs with the same dimensions but different result types.
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& srcConfig = subgroupMatrixConfigs.configs[i];
+        if (srcConfig.resultComponentType != wgpu::SubgroupMatrixComponentType::F32) {
+            continue;
+        }
+        for (size_t j = 0; j < subgroupMatrixConfigs.configCount; j++) {
+            auto& dstConfig = subgroupMatrixConfigs.configs[j];
+            if (dstConfig.resultComponentType != wgpu::SubgroupMatrixComponentType::I32) {
+                continue;
+            }
+            if (srcConfig.M != dstConfig.M || srcConfig.N != dstConfig.N) {
+                continue;
+            }
+
+            uint32_t M = srcConfig.M;
+            uint32_t N = srcConfig.N;
+
+            std::ostringstream shader;
+            shader << "enable chromium_experimental_subgroup_matrix;\n";
+            shader << "alias SrcType = subgroup_matrix_result<f32, " << N << ", " << M << ">;\n";
+            shader << "alias DstType = subgroup_matrix_result<i32, " << N << ", " << M << ">;\n";
+            shader << "const SubgroupMaxSize = " << info.subgroupMaxSize << ";\n";
+            shader << R"(
+@group(0) @binding(0) var<storage, read>       inputs  : array<f32>;
+@group(0) @binding(1) var<storage, read_write> output  : array<i32>;
+
+@compute @workgroup_size(SubgroupMaxSize)
+fn main() {
+    let src = subgroupMatrixLoad<SrcType>(&inputs, 0, false, )"
+                   << N << R"();
+    let dst = subgroupMatrixConvert<DstType>(src);
+    subgroupMatrixStore(&output, 0, dst, false, )"
+                   << N << R"();
+}
+)";
+
+            wgpu::ComputePipelineDescriptor csDesc;
+            csDesc.compute.module = utils::CreateShaderModule(device, shader.str());
+            wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+            // Create input: f32 values that are exactly representable as i32.
+            Matrix input(N, M, wgpu::SubgroupMatrixComponentType::F32, false);
+            for (uint32_t r = 0; r < M; r++) {
+                for (uint32_t c = 0; c < N; c++) {
+                    input.SetFloat(static_cast<float>(static_cast<int32_t>((r * N + c) % 100) - 50),
+                                   c, r);
+                }
+            }
+
+            wgpu::BufferDescriptor inputDesc{
+                .usage = wgpu::BufferUsage::Storage,
+                .size = input.TotalByteSize(),
+                .mappedAtCreation = true,
+            };
+            wgpu::Buffer inputBuf = device.CreateBuffer(&inputDesc);
+            memcpy(inputBuf.GetMappedRange(), input.data, input.TotalByteSize());
+            inputBuf.Unmap();
+
+            uint32_t outputSize = M * N * sizeof(int32_t);
+            wgpu::BufferDescriptor outputDesc{
+                .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
+                .size = outputSize,
+            };
+            wgpu::Buffer outputBuf = device.CreateBuffer(&outputDesc);
+
+            wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                             {{0, inputBuf}, {1, outputBuf}});
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+            wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+            pass.SetPipeline(pipeline);
+            pass.SetBindGroup(0, bindGroup);
+            pass.DispatchWorkgroups(1);
+            pass.End();
+            wgpu::CommandBuffer commands = encoder.Finish();
+            queue.Submit(1, &commands);
+
+            // Expected: truncation of f32 to i32.
+            Matrix expected(N, M, wgpu::SubgroupMatrixComponentType::I32, false);
+            for (uint32_t r = 0; r < M; r++) {
+                for (uint32_t c = 0; c < N; c++) {
+                    expected.SetInt(static_cast<int32_t>(input.GetFloat(c, r)), c, r);
+                }
+            }
+            EXPECT_BUFFER_U8_RANGE_EQ(expected.data, outputBuf, 0, expected.TotalByteSize());
+            return;
+        }
+    }
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupMatrix_ConvertTest, D3D12Backend(), MetalBackend(), VulkanBackend());
+
+// Reduction tests.
+class SubgroupMatrix_ReduceTest : public SubgroupMatrix_ConvertTest {};
+
+TEST_P(SubgroupMatrix_ReduceTest, ReduceRowSum) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !adapter.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix));
+
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs;
+    info.nextInChain = &subgroupMatrixConfigs;
+    ASSERT_EQ(adapter.GetInfo(&info), wgpu::Status::Success);
+
+    // Find a result config with f32 and matching reduced config (1 column).
+    for (size_t i = 0; i < subgroupMatrixConfigs.configCount; i++) {
+        auto& srcConfig = subgroupMatrixConfigs.configs[i];
+        if (srcConfig.resultComponentType != wgpu::SubgroupMatrixComponentType::F32) {
+            continue;
+        }
+        // Look for a config with 1 column and same rows for the reduced result.
+        bool foundReduced = false;
+        for (size_t j = 0; j < subgroupMatrixConfigs.configCount; j++) {
+            auto& dstConfig = subgroupMatrixConfigs.configs[j];
+            if (dstConfig.resultComponentType == wgpu::SubgroupMatrixComponentType::F32 &&
+                dstConfig.N == 1 && dstConfig.M == srcConfig.M) {
+                foundReduced = true;
+                break;
+            }
+        }
+        if (!foundReduced) {
+            continue;
+        }
+
+        uint32_t M = srcConfig.M;
+        uint32_t N = srcConfig.N;
+
+        std::ostringstream shader;
+        shader << "enable chromium_experimental_subgroup_matrix;\n";
+        shader << "alias SrcType = subgroup_matrix_result<f32, " << N << ", " << M << ">;\n";
+        shader << "alias DstType = subgroup_matrix_result<f32, 1, " << M << ">;\n";
+        shader << "const SubgroupMaxSize = " << info.subgroupMaxSize << ";\n";
+        shader << R"(
+@group(0) @binding(0) var<storage, read>       inputs  : array<f32>;
+@group(0) @binding(1) var<storage, read_write> output  : array<f32>;
+
+@compute @workgroup_size(SubgroupMaxSize)
+fn main() {
+    let src = subgroupMatrixLoad<SrcType>(&inputs, 0, false, )"
+               << N << R"();
+    let reduced = subgroupMatrixReduceRowSum<DstType>(src);
+    subgroupMatrixStore(&output, 0, reduced, false, 1);
+}
+)";
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = utils::CreateShaderModule(device, shader.str());
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+        // Create input: simple f32 values.
+        Matrix input(N, M, wgpu::SubgroupMatrixComponentType::F32, false);
+        for (uint32_t r = 0; r < M; r++) {
+            for (uint32_t c = 0; c < N; c++) {
+                input.SetFloat(static_cast<float>(c + 1), c, r);
+            }
+        }
+
+        wgpu::BufferDescriptor inputDesc{
+            .usage = wgpu::BufferUsage::Storage,
+            .size = input.TotalByteSize(),
+            .mappedAtCreation = true,
+        };
+        wgpu::Buffer inputBuf = device.CreateBuffer(&inputDesc);
+        memcpy(inputBuf.GetMappedRange(), input.data, input.TotalByteSize());
+        inputBuf.Unmap();
+
+        uint32_t outputSize = M * 1 * sizeof(float);
+        wgpu::BufferDescriptor outputDesc{
+            .usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage,
+            .size = outputSize,
+        };
+        wgpu::Buffer outputBuf = device.CreateBuffer(&outputDesc);
+
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {{0, inputBuf}, {1, outputBuf}});
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        // Expected: each row is the sum of columns 1..N = N*(N+1)/2.
+        float expectedRowSum = static_cast<float>(N * (N + 1)) / 2.0f;
+        Matrix expected(1, M, wgpu::SubgroupMatrixComponentType::F32, false);
+        for (uint32_t r = 0; r < M; r++) {
+            expected.SetFloat(expectedRowSum, 0, r);
+        }
+        EXPECT_BUFFER_U8_RANGE_EQ(expected.data, outputBuf, 0, expected.TotalByteSize());
+        return;
+    }
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupMatrix_ReduceTest, D3D12Backend(), MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

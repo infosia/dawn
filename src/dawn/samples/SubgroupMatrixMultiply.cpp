@@ -104,7 +104,14 @@ void CpuMatMul(const std::vector<float>& a,
 
 }  // namespace
 
-int main(int /*argc*/, const char** /*argv*/) {
+int main(int argc, const char** argv) {
+    bool useSaturating = false;
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--saturating") == 0) {
+            useSaturating = true;
+        }
+    }
+
     // Create instance.
     wgpu::InstanceDescriptor instanceDesc{};
     instanceDesc.capabilities.timedWaitAnyEnable = true;
@@ -153,11 +160,13 @@ int main(int /*argc*/, const char** /*argv*/) {
     printf("Found %zu subgroup matrix config(s)\n\n", matrixConfigs.configCount);
 
     // Pick the first f32 config, or fall back to the first config.
+    // If --saturating, prefer configs with saturating accumulation.
     const wgpu::SubgroupMatrixConfig* chosen = &matrixConfigs.configs[0];
     for (size_t i = 0; i < matrixConfigs.configCount; i++) {
         if (matrixConfigs.configs[i].componentType == wgpu::SubgroupMatrixComponentType::F32 &&
             matrixConfigs.configs[i].resultComponentType ==
-                wgpu::SubgroupMatrixComponentType::F32) {
+                wgpu::SubgroupMatrixComponentType::F32 &&
+            (!useSaturating || matrixConfigs.configs[i].saturatingAccumulation)) {
             chosen = &matrixConfigs.configs[i];
             break;
         }
@@ -166,9 +175,10 @@ int main(int /*argc*/, const char** /*argv*/) {
     uint32_t M = chosen->M;
     uint32_t N = chosen->N;
     uint32_t K = chosen->K;
-    printf("Using config: M=%u N=%u K=%u component=%s result=%s\n", M, N, K,
+    printf("Using config: M=%u N=%u K=%u component=%s result=%s saturating=%s\n", M, N, K,
            ComponentTypeToWgslType(chosen->componentType),
-           ComponentTypeToWgslType(chosen->resultComponentType));
+           ComponentTypeToWgslType(chosen->resultComponentType),
+           (useSaturating && chosen->saturatingAccumulation) ? "yes" : "no");
 
     // Only f32 configs are supported in this sample for simplicity.
     if (chosen->componentType != wgpu::SubgroupMatrixComponentType::F32 ||
@@ -235,6 +245,10 @@ int main(int /*argc*/, const char** /*argv*/) {
     queue.WriteBuffer(inputBuf, M * K * sizeof(float), hostB.data(), K * N * sizeof(float));
 
     // Build shader.
+    const char* multiplyFn = (useSaturating && chosen->saturatingAccumulation)
+                                 ? "subgroupMatrixMultiplyAccumulateSaturating"
+                                 : "subgroupMatrixMultiply";
+
     char shader[2048];
     snprintf(shader, sizeof(shader),
              R"(enable chromium_experimental_subgroup_matrix;
@@ -255,11 +269,12 @@ alias ResultType = subgroup_matrix_result<f32, N, M>;
 fn main() {
     let lhs = subgroupMatrixLoad<LeftType>(&inputs, 0, false, K);
     let rhs = subgroupMatrixLoad<RightType>(&inputs, kLoadOffset, false, N);
-    let result = subgroupMatrixMultiply<f32>(lhs, rhs);
+    let acc = ResultType();
+    let result = %s(lhs, rhs, acc);
     subgroupMatrixStore(&output, 0, result, false, N);
 }
 )",
-             M, N, K, adapterInfo.subgroupMaxSize);
+             M, N, K, adapterInfo.subgroupMaxSize, multiplyFn);
 
     wgpu::ShaderModuleWGSLDescriptor wgslDesc{};
     wgslDesc.code = shader;

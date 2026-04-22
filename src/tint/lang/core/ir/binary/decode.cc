@@ -2108,12 +2108,20 @@ struct Decoder {
                 return core::BuiltinFn::kSubgroupMatrixMultiply;
             case pb::BuiltinFn::subgroup_matrix_multiply_accumulate:
                 return core::BuiltinFn::kSubgroupMatrixMultiplyAccumulate;
+            case pb::BuiltinFn::subgroup_matrix_multiply_accumulate_saturating:
+                return core::BuiltinFn::kSubgroupMatrixMultiplyAccumulateSaturating;
             case pb::BuiltinFn::subgroup_matrix_scalar_add:
                 return core::BuiltinFn::kSubgroupMatrixScalarAdd;
             case pb::BuiltinFn::subgroup_matrix_scalar_multiply:
                 return core::BuiltinFn::kSubgroupMatrixScalarMultiply;
             case pb::BuiltinFn::subgroup_matrix_scalar_subtract:
                 return core::BuiltinFn::kSubgroupMatrixScalarSubtract;
+            case pb::BuiltinFn::subgroup_matrix_convert:
+                return core::BuiltinFn::kSubgroupMatrixConvert;
+            case pb::BuiltinFn::subgroup_matrix_reduce_row_sum:
+                return core::BuiltinFn::kSubgroupMatrixReduceRowSum;
+            case pb::BuiltinFn::subgroup_matrix_reduce_column_sum:
+                return core::BuiltinFn::kSubgroupMatrixReduceColumnSum;
             case pb::BuiltinFn::print:
                 return core::BuiltinFn::kPrint;
             case pb::BuiltinFn::has_resource:

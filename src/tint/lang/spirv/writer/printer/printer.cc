@@ -1651,6 +1651,16 @@ class Printer {
             case spirv::BuiltinFn::kCooperativeMatrixStore:
                 op = spv::Op::OpCooperativeMatrixStoreKHR;
                 break;
+            case spirv::BuiltinFn::kCooperativeMatrixConvert:
+                module_.PushExtension("SPV_NV_cooperative_matrix2");
+                module_.PushCapability(SpvCapabilityCooperativeMatrixConversionsNV);
+                op = static_cast<spv::Op>(SpvOpCooperativeMatrixConvertNV);
+                break;
+            case spirv::BuiltinFn::kCooperativeMatrixReduce:
+                module_.PushExtension("SPV_NV_cooperative_matrix2");
+                module_.PushCapability(SpvCapabilityCooperativeMatrixReductionsNV);
+                op = static_cast<spv::Op>(SpvOpCooperativeMatrixReduceNV);
+                break;
             case spirv::BuiltinFn::kBitCount:
                 op = spv::Op::OpBitCount;
                 break;

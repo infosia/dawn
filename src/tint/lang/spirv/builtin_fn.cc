@@ -244,6 +244,10 @@ const char* str(BuiltinFn i) {
             return "cooperative_matrix_store";
         case BuiltinFn::kCooperativeMatrixMulAdd:
             return "cooperative_matrix_mul_add";
+        case BuiltinFn::kCooperativeMatrixConvert:
+            return "cooperative_matrix_convert";
+        case BuiltinFn::kCooperativeMatrixReduce:
+            return "cooperative_matrix_reduce";
         case BuiltinFn::kGroupNonUniformBroadcast:
             return "group_non_uniform_broadcast";
         case BuiltinFn::kGroupNonUniformBroadcastFirst:
@@ -343,6 +347,8 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kFaceForward:
         case BuiltinFn::kLdexp:
         case BuiltinFn::kCooperativeMatrixMulAdd:
+        case BuiltinFn::kCooperativeMatrixConvert:
+        case BuiltinFn::kCooperativeMatrixReduce:
         case BuiltinFn::kBitCount:
         case BuiltinFn::kBitFieldInsert:
         case BuiltinFn::kBitFieldSExtract:

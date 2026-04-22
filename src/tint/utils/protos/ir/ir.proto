@@ -778,4 +778,8 @@ enum BuiltinFn {
     atomic_store_min = 160;
     bitcast = 161;
     buffer_array_view = 162;
+    subgroup_matrix_multiply_accumulate_saturating = 163;
+    subgroup_matrix_convert = 164;
+    subgroup_matrix_reduce_row_sum = 165;
+    subgroup_matrix_reduce_column_sum = 166;
 }
