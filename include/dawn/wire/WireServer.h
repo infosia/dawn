@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #ifndef INCLUDE_DAWN_WIRE_WIRESERVER_H_
 #define INCLUDE_DAWN_WIRE_WIRESERVER_H_
 
@@ -39,6 +34,7 @@
 #include <span>
 
 #include "dawn/wire/Wire.h"
+#include "src/dawn/common/Compiler.h"
 
 struct DawnProcTable;
 
@@ -196,7 +192,7 @@ class DAWN_WIRE_EXPORT MemoryTransferService {
             // Chromium, `target` is always the full buffer and `offset` is used to offset into both
             // the target data and the shmem pointer, so we need to do the same offsetting here to
             // be compatible with both implementations.
-            uint8_t* bufferStart = target.data() - offset;
+            uint8_t* bufferStart = DAWN_UNSAFE_TODO(target.data() - offset);
             size_t lengthFromStart = target.size() + offset;
             SetTarget(bufferStart);
             SetDataLength(lengthFromStart);
