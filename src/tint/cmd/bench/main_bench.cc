@@ -25,13 +25,9 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <iostream>
 
+#include "src/tint/utils/macros/compiler.h"
 #include "src/tint/cmd/bench/bench.h"
 #include "src/tint/utils/text/string.h"
 
@@ -92,16 +88,17 @@ class ChromePerfReporter final : public benchmark::BenchmarkReporter {
 
 bool ParseExtraCommandLineArgs(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--use-chrome-perf-format") == 0) {
+        if (TINT_UNSAFE_TODO(strcmp(argv[i], "--use-chrome-perf-format")) == 0) {
             use_chrome_perf_format = true;
         } else {
             // Accept the flags that are passed by the Chromium perf waterfall, which treats this
             // executable as a GoogleTest binary.
-            if (strcmp(argv[i], "--verbose") != 0 &&
-                strcmp(argv[i], "--test-launcher-print-test-stdio=always") != 0 &&
-                strcmp(argv[i], "--test-launcher-total-shards=1") != 0 &&
-                strcmp(argv[i], "--test-launcher-shard-index=0") != 0) {
-                std::cerr << "Unrecognized command-line argument: " << argv[i] << "\n";
+            if (TINT_UNSAFE_TODO(strcmp(argv[i], "--verbose")) != 0 &&
+                TINT_UNSAFE_TODO(strcmp(argv[i], "--test-launcher-print-test-stdio=always")) != 0 &&
+                TINT_UNSAFE_TODO(strcmp(argv[i], "--test-launcher-total-shards=1")) != 0 &&
+                TINT_UNSAFE_TODO(strcmp(argv[i], "--test-launcher-shard-index=0")) != 0) {
+                std::cerr << "Unrecognized command-line argument: " << TINT_UNSAFE_TODO(argv[i])
+                          << "\n";
                 return false;
             }
         }

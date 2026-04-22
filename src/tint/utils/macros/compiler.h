@@ -308,4 +308,18 @@
 #define TINT_GCC_ONLY(x)
 #endif
 
+#if defined(__clang__)
+// Disabling `clang-format` allows each `_Pragma` to be on its own line.
+// clang-format off
+#define TINT_UNSAFE_BUFFERS(...)                  \
+  _Pragma("clang unsafe_buffer_usage begin") \
+  __VA_ARGS__                                \
+  _Pragma("clang unsafe_buffer_usage end")
+// clang-format on
+#else
+#define TINT_UNSAFE_BUFFERS(...) __VA_ARGS__
+#endif
+
+#define TINT_UNSAFE_TODO(...) TINT_UNSAFE_BUFFERS(__VA_ARGS__)
+
 #endif  // SRC_TINT_UTILS_MACROS_COMPILER_H_

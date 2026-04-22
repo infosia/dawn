@@ -25,14 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include <array>
 #include <cstring>
 
+#include "src/tint/utils/macros/compiler.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -102,7 +98,7 @@ class Printer24Bit : public StyledTextPrinter {
                     fprintf(file_, ESCAPE "[22m");
                 }
             }
-            fwrite(text.data(), 1, text.size(), file_);
+            TINT_UNSAFE_TODO(fwrite(text.data(), 1, text.size(), file_));
         });
         fprintf(file_, ESCAPE "[m");
         fflush(file_);
@@ -188,7 +184,7 @@ class Printer8Bit : public StyledTextPrinter {
                     fprintf(file_, ESCAPE "[22m");
                 }
             }
-            fwrite(text.data(), 1, text.size(), file_);
+            TINT_UNSAFE_TODO(fwrite(text.data(), 1, text.size(), file_));
         });
         fprintf(file_, ESCAPE "[m");
         fflush(file_);
