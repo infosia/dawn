@@ -161,8 +161,8 @@ WGPUFuture ShaderModule::APIGetCompilationInfo(
 
     // If we already have a cached compilation info object, we can set it ready now.
     if (mCompilationInfo) {
-        DAWN_CHECK(GetEventManager().SetFutureReady<CompilationInfoEvent>(futureIDInternal) ==
-                   WireResult::Success);
+        auto wireStatus = GetEventManager().SetFutureReady<CompilationInfoEvent>(futureIDInternal);
+        DAWN_CHECK(wireStatus == WireResult::Success);
         return {futureIDInternal};
     }
 

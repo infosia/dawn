@@ -296,8 +296,8 @@ void Device::HandleLogging(WGPULoggingType loggingType, WGPUStringView message) 
 
 void Device::HandleDeviceLost(WGPUDeviceLostReason reason, WGPUStringView message) {
     FutureID futureID = APIGetLostFuture().id;
-    DAWN_CHECK(GetEventManager().SetFutureReady<DeviceLostEvent>(futureID, reason, message) ==
-               WireResult::Success);
+    auto wireStatus = GetEventManager().SetFutureReady<DeviceLostEvent>(futureID, reason, message);
+    DAWN_CHECK(wireStatus == WireResult::Success);
     mIsAlive = false;
 }
 

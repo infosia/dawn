@@ -373,8 +373,9 @@ void Buffer::SetFutureStatus(WGPUMapAsyncStatus status, std::string_view message
     FutureID futureID = mPendingMapRequest->futureID;
     mPendingMapRequest = std::nullopt;
 
-    DAWN_CHECK(GetEventManager().SetFutureReady<MapAsyncEvent>(
-                   futureID, status, ToOutputStringView(message)) == WireResult::Success);
+    auto wireStatus = GetEventManager().SetFutureReady<MapAsyncEvent>(futureID, status,
+                                                                      ToOutputStringView(message));
+    DAWN_CHECK(wireStatus == WireResult::Success);
 }
 
 WGPUFuture Buffer::APIMapAsync(WGPUMapMode mode,
