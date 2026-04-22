@@ -16,6 +16,24 @@
       "message": "Actually I\u0027m rethinking pulling this function in here to share and caching the result. Feels too easy to accidentally misuse in future since it\u0027s reliant on the assumption that this sem node is the LHS of an assignment (true for the places it\u0027s used now, but could be incorrect/fail for RHS value swizzle). Will try some other options or at least rename.",
       "revId": "1fdb57a5ab1b7193c0a330050656d5218df6956d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b88df28_646f86dc",
+        "filename": "src/tint/lang/wgsl/sem/member_accessor_expression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-22T15:58:15Z",
+      "side": 1,
+      "message": "Renamed and switch to a utility function. Not super worried about re-computing this twice since (hopefully) no one is nesting these super deep.",
+      "parentUuid": "4f289f74_e8903277",
+      "revId": "1fdb57a5ab1b7193c0a330050656d5218df6956d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
