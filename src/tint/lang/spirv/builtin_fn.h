@@ -160,6 +160,7 @@ enum class BuiltinFn : uint8_t {
     kGroupNonUniformShuffleUp,
     kGroupNonUniformSMin,
     kGroupNonUniformSMax,
+    kInterpolateAtOffset,
     kNone,
 };
 
