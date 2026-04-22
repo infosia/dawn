@@ -110,6 +110,19 @@ class ScopedIndent {
 
 }  // namespace
 
+// Static
+std::string Disassembler::Disassemble(const Module& mod, const Instruction* inst) {
+    if (!inst) {
+        return "undef";
+    }
+    Disassembler d(mod);
+    d.out_.Clear();
+    d.current_output_line_ = 1;
+    d.current_output_start_pos_ = 0;
+    d.EmitInstruction(inst);
+    return std::string(TrimSuffix(d.Plain(), "\n"));
+}
+
 Disassembler::Disassembler(Disassembler&&) = default;
 
 Disassembler::Disassembler(const Module& mod) : mod_(mod) {
