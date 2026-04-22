@@ -16,6 +16,24 @@
       "message": "Are these values coming from Dawn and could Dawn provide the remapped values instead?",
       "revId": "300986100946a941a88a2308245b5ecbcf77c6a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf368f86_0edeadb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-22T18:52:19Z",
+      "side": 1,
+      "message": "I thought this was how we do it now? As we do, for example, for `options.array_length_from_uniform.bindpoint_to_size_index`, we remap these inside Tint.",
+      "parentUuid": "0318062d_6a414544",
+      "revId": "300986100946a941a88a2308245b5ecbcf77c6a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
