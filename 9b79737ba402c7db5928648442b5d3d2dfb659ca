@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bba96d6f_0bb15922",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2026-04-22T17:58:29Z",
+      "side": 1,
+      "message": "The bug here?\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;l\u003d2217\n\nIt checks if it need quantization. But it\u0027s the quantization code that handles availability so it always needs quantization, even if the device is NS \u003d 1.0",
+      "revId": "9b79737ba402c7db5928648442b5d3d2dfb659ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
