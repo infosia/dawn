@@ -65,9 +65,11 @@ cc_library(
     "float_to_string_test.cc",
   ],
   deps = [
+    "//src/tint/utils/macros",
     "//src/tint/utils/memory",
     "//src/tint/utils/strconv",
     "@gtest",
+    "//src/utils",
   ],
   copts = COPTS,
   visibility = ["//visibility:public"],
