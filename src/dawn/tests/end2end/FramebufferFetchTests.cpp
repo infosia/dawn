@@ -34,6 +34,85 @@
 
 namespace dawn {
 namespace {
+class NoFramebufferFetchTests : public DawnTest {
+  protected:
+    void SetUp() override {
+        DawnTest::SetUp();
+        DAWN_CHECK(!device.HasFeature(wgpu::FeatureName::FramebufferFetch));
+    }
+
+    void InitForSinglePoint(utils::ComboRenderPipelineDescriptor* desc) {
+        desc->vertex.module = utils::CreateShaderModule(device, R"(
+            @vertex fn vs() -> @builtin(position) vec4f {
+                return vec4f(0, 0, 0, 1);
+            }
+        )");
+        desc->primitive.topology = wgpu::PrimitiveTopology::PointList;
+    }
+
+    wgpu::Texture MakeAttachment(wgpu::TextureFormat format,
+                                 wgpu::Extent3D size = {1, 1, 1},
+                                 uint32_t sampleCount = 1) {
+        wgpu::TextureDescriptor tDesc;
+        tDesc.size = size;
+        tDesc.sampleCount = sampleCount;
+        tDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc |
+                      wgpu::TextureUsage::CopyDst;
+        tDesc.format = format;
+        return device.CreateTexture(&tDesc);
+    }
+};
+
+// Checks that with the framebuffer fetch feature enabled and a multisampled color attachment, a
+// fragment shader that doesn't use @color doesn't increase the sample shading rate.
+TEST_P(NoFramebufferFetchTests, MultisampledAttachmentNoSampleShading) {
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Storage}});
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    InitForSinglePoint(&pDesc);
+    pDesc.layout = utils::MakePipelineLayout(device, {bgl});
+    pDesc.multisample.count = 4;
+    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    pDesc.cFragment.module = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var<storage, read_write> invocationCount : atomic<u32>;
+
+        @fragment fn addOne() -> @location(0) vec4f {
+            atomicAdd(&invocationCount, 1);
+            return vec4(1 / 255.0);
+        }
+    )");
+
+    pDesc.cFragment.entryPoint = "addOne";
+    wgpu::RenderPipeline addOnePipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Create the buffer that will contain the number of invocations.
+    wgpu::BufferDescriptor bufDesc;
+    bufDesc.size = 4;
+    bufDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer invocationBuffer = device.CreateBuffer(&bufDesc);
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, invocationBuffer}});
+
+    wgpu::Texture attachment = MakeAttachment(wgpu::TextureFormat::RGBA8Unorm, {1, 1}, 4);
+    wgpu::Texture resolve = MakeAttachment(wgpu::TextureFormat::RGBA8Unorm);
+
+    utils::ComboRenderPassDescriptor passDesc({attachment.CreateView()});
+    passDesc.cColorAttachments[0].resolveTarget = resolve.CreateView();
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDesc);
+    pass.SetBindGroup(0, bg);
+    // This FS shouldn't use sample shading and should run once.
+    pass.SetPipeline(addOnePipeline);
+    pass.Draw(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_EQ(1, invocationBuffer, 0);
+    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve, {0, 0});
+}
+DAWN_INSTANTIATE_TEST(NoFramebufferFetchTests, MetalBackend());
 
 class FramebufferFetchTests : public DawnTest {
   protected:
@@ -320,6 +399,56 @@ TEST_P(FramebufferFetchTests, LoadAndStoreOpsReallyItsLoadAndDiscard) {
     // second attachment.
     EXPECT_TEXTURE_EQ(uint32_t(0), texture0, {0, 0});
     EXPECT_TEXTURE_EQ(uint32_t(10 + 1789), texture1, {0, 0});
+}
+
+// Checks that with the framebuffer fetch feature enabled and a multisampled color attachment, a
+// fragment shader that doesn't use @color doesn't increase the sample shading rate.
+TEST_P(FramebufferFetchTests, MultisampledAttachmentNoSampleShading) {
+    wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Storage}});
+
+    utils::ComboRenderPipelineDescriptor pDesc;
+    InitForSinglePoint(&pDesc);
+    pDesc.layout = utils::MakePipelineLayout(device, {bgl});
+    pDesc.multisample.count = 4;
+    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    pDesc.cFragment.module = utils::CreateShaderModule(device, kExt + R"(
+        @group(0) @binding(0) var<storage, read_write> invocationCount : atomic<u32>;
+
+        @fragment fn addOne() -> @location(0) vec4f {
+            atomicAdd(&invocationCount, 1);
+            return vec4(1 / 255.0);
+        }
+    )");
+
+    pDesc.cFragment.entryPoint = "addOne";
+    wgpu::RenderPipeline addOnePipeline = device.CreateRenderPipeline(&pDesc);
+
+    // Create the buffer that will contain the number of invocations.
+    wgpu::BufferDescriptor bufDesc;
+    bufDesc.size = 4;
+    bufDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+    wgpu::Buffer invocationBuffer = device.CreateBuffer(&bufDesc);
+    wgpu::BindGroup bg = utils::MakeBindGroup(device, bgl, {{0, invocationBuffer}});
+
+    wgpu::Texture attachment = MakeAttachment(wgpu::TextureFormat::RGBA8Unorm, {1, 1}, 4);
+    wgpu::Texture resolve = MakeAttachment(wgpu::TextureFormat::RGBA8Unorm);
+
+    utils::ComboRenderPassDescriptor passDesc({attachment.CreateView()});
+    passDesc.cColorAttachments[0].resolveTarget = resolve.CreateView();
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDesc);
+    pass.SetBindGroup(0, bg);
+    // This FS shouldn't use sample shading and should run once.
+    pass.SetPipeline(addOnePipeline);
+    pass.Draw(1);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_EQ(1, invocationBuffer, 0);
+    EXPECT_TEXTURE_EQ(utils::RGBA8(1, 1, 1, 1), resolve, {0, 0});
 }
 
 // Test the behavior with multisampling.
