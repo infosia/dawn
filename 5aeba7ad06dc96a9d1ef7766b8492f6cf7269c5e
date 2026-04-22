@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc22d788_09278489",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 0,
+      "message": "[2] This knows a transfer is needed and transitions to it.",
+      "revId": "5aeba7ad06dc96a9d1ef7766b8492f6cf7269c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64d2f1ed_7db01210",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 0,
+      "message": "[3] This knows a resolve command will be done and transitions to it.",
+      "revId": "5aeba7ad06dc96a9d1ef7766b8492f6cf7269c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

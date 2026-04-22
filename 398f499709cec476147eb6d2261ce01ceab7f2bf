@@ -16,6 +16,551 @@
       "message": "A few things:\n\nThis was discussed elsewhere but, currently the spec requires that QuerySet slots default zero. If we changed the spec so that timestamp queryset slots can be anything then, we could init timestamp queries by doing one per slot at QuerySet creation time. Similarly, for occlusion queries could do a query per slot (unlike timestamp queries these would could be zero). Once we did that then all of this availability tracking disappears. Everything is always available. That would take a spec change though, so, this CL works with the current spec\n\nAlso, just for history here\u0027s some Q\u0026A with Gemini (for the record, Gemini made lots of wrong implementation. This is the 4th or 5th iteration, spelling out what solution to use. Once it was done I looked at the code and had some questions. \n\n\u003e Q: In `EncodingContext::ExitComputePass`, why do we need to go through `querySetToSlotUsageMap`. I thought all of these querySets and which slots were used were already set by that point.\n\nWe need to iterate through `querySetToSlotUsageMap` in `EncodingContext::ExitComputePass` (and `ExitRenderPass`) for two main reasons:\n\n1. Decoupled Usage Tracking\n\n   `ComputePassEncoder` uses a local `ComputePassResourceUsageTracker`. When\n   `APIWriteTimestamp` is called inside a pass, it only updates this local\n   tracker and marks the `QuerySet` as used in the `CommandEncoder`. \n   It does not update the CommandEncoder\u0027s `mQueryAvailability` map immediately.\n\n   By waiting until `End()` is called on the pass, we consolidate all resources\n   and queries used within that \"synchronization scope\" (the pass) and then merge\n   them back into the `CommandEncoder`\u0027s global state for that command buffer.\n\n2. Handling Indirect Usages (Render Bundles)\n\n   In a render pass, queries can be recorded inside a RenderBundle and then\n   executed via `ExecuteBundles`. The `CommandEncoder` has no visibility into\n   what\u0027s inside a bundle during the encoding of the pass. \n\n   - When `ExecuteBundles` is called, the pass\u0027s `usageTracker` merges the\n     resource usages from the bundle.\n   - Only when the pass ends and we call `ExitRenderPass` does the\n     `CommandEncoder` get the full list of all query slots used,\n     including those from within bundles.\n\nSummary\n\nWithout this loop in `ExitComputePass`, the `CommandEncoder` would missing any\nqueries written inside the pass. This would result in `ResolveQuerySet` (if\ncalled later in the same command buffer) capturing an incomplete snapshot of\n`querySlotsUsedSoFar`, leading to  the quantization shader incorrectly treating\nthose queries as unavailable.\n\n\u003e Q: I think I\u0027m a little confused. I\u0027d expect `querySlotsUsedSoFar` to only exist on the `CommandEncoder`\u0027s `CommandBufferResourceUsage`. Passes don\u0027t need this info. They need the info of the entire command buffer to up the point at which they are encoded.\n\nYou\u0027ve hit on the core of Dawn\u0027s pass-based architecture. Your logic for how the state should evolve is exactly correct, but the \"merging\" step in `ExitPass` is necessary because of how Dawn decouples pass encoding from the main encoder.\n\nHere is why the merging is required:\n\n1. The \"Local Delta\" vs. \"Global State\"\n\n   Inside a pass (Render or Compute), Dawn uses a local `UsageTracker`. This\n   tracker\u0027s job is to collect every resource and query used within that specific\n   pass\u0027s synchronization scope.\n\n   - While A`PIWriteTimestamp` is called on the pass, it updates the pass\u0027s local\n     tracker.\n   - The `CommandEncoder` doesn\u0027t see these updates immediately. It only gets the\n    \"summary\" of what happened inside the pass once the pass is finished\n     (`End()`).\n\n2. The Render Bundle Problem\n  \n   The biggest reason we can\u0027t just update the `CommandEncoder `directly during \n   every API call is Render Bundles.\n  \n   - A `RenderBundle` is a pre-recorded set of commands that can include\n     occlusion queries.\n\n   - When you call `ExecuteBundles(bundle)` inside a render pass, the\n     `CommandEncoder` has no idea which query slots that bundle uses.\n     \n   - The `RenderPassEncoder` merges the bundle\u0027s pre-calculated usages into its\n     local tracker.\n\n   - Only when `End()` is called can the `CommandEncoder` look at the pass\u0027s\n     final tracker and say: \"Ah, I see this pass (via its bundles) used slots 5\n     and 6. I will add those to my global \u0027used so far\u0027 map.\"\n\n3. Backend Requirements (Vulkan Resets)\n  \n   Passes actually do need this info. On backends like Vulkan, if a query is\n   written to during a render pass, it must be reset via `vkCmdResetQueryPool`\n   before the pass begins.\n   \n   The `querySetToSlotUsageMap` inside the `RenderPassResourceUsage` is what\n   tellsthe backend at the start of the pass: \"I\u0027m going to use these 10 slots\n   in this pass; please reset them now.\"\n\nSummary of the Flow:\n\n1. Pass Start: `CommandEncoder` is at state [1, 2].\n2. Inside Pass: You write to slot 3. The `PassEncoder` tracks [3].\n3. Execute Bundle: The bundle uses [5]. The `PassEncoder` now tracks [3, 5].\n4. Pass End: `ExitPass` runs. It sees the `PassEncoder`\u0027s delta [3, 5] and merges it into the `CommandEncoder`.\n5. Encoder Global State: Now correctly reflects [1, 2, 3, 5].\n6. Resolve: If you call `ResolveQuerySet` now, it snapshots that [1, 2, 3, 5] into the command\u0027s `querySlotsUsedSoFar`.\n\nSo the code in `ExitComputePass` isn\u0027t redundant—it\u0027s the implementation detail that moves the \"local\" knowledge of the pass into  the \"global\" knowledge of the command buffer\n\n\u003e Q In `Queue::SubmitInternal`, what is the part about subUsage doing?\n\nIn WebGPU, you can submit multiple command buffers at once: `device.queue.submit([cb0, cb1, cb2])`. This creates a tricky situation for `ResolveQuerySet` if it spans across these buffers.\n\nThe Problem:  Imagine this scenario:\n\n1. `cb0` writes to Query Slot 5.\n2. `cb1` calls ResolveQuerySet for that same QuerySet.\n\nWhen the GPU executes `cb1`, it needs to know that Slot 5 is available. However:\n\n* Global State: `QuerySet::IsQueryAvailable(5)` is still false because `cb0`\n  hasn\u0027t finished (or even started) on the GPU yet.\n\n* Local State: `cb1`’s `querySlotsUsedSoFar` is empty because Slot 5 was written\n  in `cb0`, not `cb1`.\n\nThe Solution: `submissionAvailability`\n\nThis map acts as a \"running total\" of all queries written across the entire array of command buffers currently being submitted.\n\nHere is the flow in `Queue::SubmitInternal`:\n\n1. Iterate through Command Buffers (i loop):\n\n   * Fill Quantization Buffers: For every `ResolveQuerySet` in the current command buffer, we check availability from three sources:\n\n   1. Global: Was it written in a previous submission?\n   2. Local: Was it written earlier in this command buffer? \n      (`querySlotsUsedSoFar`)\n   3. Cross-Buffer: Was it written in a previous command buffer in this same \n      submission? (This is what `submissionAvailability` tracks).\n\n   * Update `submissionAvailability`: After processing all resolves in `cb[i]`,\n     we look at all queries written in `cb[i]` and add them to\n     `submissionAvailability` so that `cb[i+1]` will see them.\n\nSummary\n\nThe `subUsage` code ensures that if you write a query in the first command buffer of a list and resolve it in the second, the conversion shader correctly sees that query as \"available\" and doesn\u0027t zero it out.\n\n\u003e Q: is there any point in converting the `availabilityBuffer` to bits. As it is it\u0027s a `uint32_t `per query slot.\n\nThere is no significant performance point to converting it to bits at the scale of typical WebGPU workloads, though there is a minor memory point.\n\nHere is a comparison of the two approaches:\n\n1. `uint32_t` per slot (Current)\n\n   * Pros:\n       * Simpler Shader: The shader performs a direct array access (`availability.v[id]`). This is extremely fast for GPUs.\n       * Simpler CPU logic: No bit-masking or bit-packing logic is required on the CPU before the upload.\n       * Easier Debugging: If you capture the frame in a tool like RenderDoc or PIX, you can clearly see 0 or 1 for each query.\n   * Cons:\n       * Memory Usage: Uses 32x more memory than a bit-packed buffer.\n       * Scale: At the maximum query count (e.g., 4096), the buffer is 16KB. While 16KB is tiny for a GPU, it\u0027s technically\n         \"wasteful.\"\n\n2. Bit-packed (1 bit per slot)\n   * Pros:\n       * Minimal Memory: 4096 queries would fit in just 512 bytes.\n       * Bandwidth: Slightly less data sent over PCIe (though 16KB is already negligible).\n   * Cons:\n       * Shader Complexity: The shader would need bitwise math:\n\n            let word \u003d availability.v[GlobalInvocationID.x / 32u];\n            let is_available \u003d (word \u003e\u003e (GlobalInvocationID.x % 32u)) \u0026 1u;\n\n       * CPU Overhead: The CPU would need to pack the bits into words before calling `WriteBuffer`.\n\nConclusion: I chose uint32_t because:\n\n1. Simplicity: It made the shader and CPU code cleaner and less prone to \"off-by-one\" bit-shifting bugs.\n2. Performance: GPUs actually prefer 32-bit aligned loads. Extracting a bit from a word is an extra instruction that likely costs more than the memory bandwidth saved on a 16KB buffer.\n3. The \"Plan\": While the plan mentioned bits as \"ideal,\" the primary goal was ensuring correctness and avoiding recursive execution. The `uint32_t` approach achieves all functional goals while being more robust.\n\nUnless you are creating thousands of Resolve commands per frame and are extremely constrained by memory, `uint32_t` is the better engineering trade-off.",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28f2a520_994aa3d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "This is a first batch of comments, I\u0027m still thinking about the overall implementation strategy, I think something simpler could be done.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9df732_f542d3c9",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad123576_c9728ceb",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "This is state updates that should be moved to the submission as well instead of done during encoding. But it will be done in the various backends already, like at [5]",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63a2ac36_b82e844b",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed, which would make `TrackQuerySetSlotUsage` possible to replace with `TrackUsedQuerySet`.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91099890_8eb1e407",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Instead of having the logic split between here and [1], can we instead pre-create the usageTracker in APIBeginComputePass and pass it in the constructor similar to how we do it for render passes?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7058af70_baf3babf",
+        "filename": "src/dawn/native/PassResourceUsage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "nit: What is `Note:` supposed to be compared to a regular comment? Can we have comments about 1/2 slots being optimal here instead of duplicated between the two resource usages (also abseil has a small map optimization anyway)? Also this can be flowed with the 100 char limit, it seems it was done with 90char.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9af57004_d7808e37",
+        "filename": "src/dawn/native/PassResourceUsageTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why not use `mUsage.querySetToSlotUsageMap` directly?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e4e6961_fca33fd1",
+        "filename": "src/dawn/native/PassResourceUsageTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "```suggestion\n    QuerySetToSlotUsageMap mQuerySetToSlotUsageMap;\n```",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b95d4a3_cc6f2e22",
+        "filename": "src/dawn/native/QueryHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "nit: bunch of leftovers?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f73b90f_aa947761",
+        "filename": "src/dawn/native/QueryHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Is that an optimization to avoid the computations below? It seems unnecessary as they are very cheap.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bfa6f94_1a50065e",
+        "filename": "src/dawn/native/QueryHelper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "This is a copy of https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/utils/WGPUHelpers.h;drc\u003dc5d549e250b9225744929ae860b369cb4304a767;l\u003d53 we should use that one instead.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "294cfb82_fb0b42c8",
+        "filename": "src/dawn/native/QuerySet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "nit: can we have a TODO to make the `QueryIndex` a typed integer?",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5556598c_a3d91675",
+        "filename": "src/dawn/native/QuerySet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "The code happening during submission should never happen in parallel so we should be safe to keep this as a regular vector. Or is there another place where this might be called concurrently?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2da164fb_7c69cd00",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Are the pass start/end timestamp queries implemented in D3D11? They would need a `SetQueryAvailable` as well.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8660101_c27144f0",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "nit: leftover?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f045e81_062094ad",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Is there a way we could ASSERT that we don\u0027t forget to call a `SetQueryAvailable` somewhere in the backends? Or is the idea to rely on end2end tests to check that?\n\nBut also the information of which querysets are to be made available is already in the PassResourceUsage in the `QuerySetToSlotUsageMap`. So instead, we could have a frontend function that takes that map and marks all the queries in it available. Then the backends would call it at the start of each pass. It avoids manually adding code to all the backend code paths that make queries available, which should be less error prone.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4771ecc3_0d4bd0f1",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "nit: this is present in at least two backends, can we have a getter on the QuerySetBase to factor it?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "086a4ab0_364819e1",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "[5]",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc3d13e_a3ce7832",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "```suggestion\n                // Fill slots for unavailable queries with zeroes as required by the WebGPU spec.\n                bool hasUnavailableQueries \u003d false;\n```",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7334f6fa_20305cc6",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why was this added? Was it an existing bug?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c500061d_557af04a",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Are the pass start/end timestamp queries implemented in OpenGL? They would need a `SetQueryAvailable` as well.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6414bf75_93ca9886",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "[4] The name of the function should be updated because it now handles both the calls to `vkCmdCopyQueryPoolResults` and `vkCmdFillBuffer` but also it was previously split to make the barrier management work without manual calls to `PipelineBarrier`. [2] [3] Basically I think we want to revert to making this function only deal with the resolves and nothing else.",
+      "range": {
+        "startLine": 506,
+        "startChar": 5,
+        "endLine": 506,
+        "endChar": 29
+      },
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b70a6b_993f3189",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why the new boolean? It seems always called with `true`",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cd5eb6f_cf1bace4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "With the comment at [4], I think this shouldn\u0027t be needed.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d8c5609_83ad97d5",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why was this changed?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9b13542_1bb1cd28",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why was this changed?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b513e8e7_732ccdf6",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "u-nit: can we keep a newline between the two commands?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91cdf3e8_e1516ba1",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "Why was this changed?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "093390c3_3d9f9300",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "I don\u0027t see new symbols that need these headers, was it just existing missing includes?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50e0feb1_ca4ca833",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "why is this needed? It should be already added as an internal usage in `BufferBase`.",
+      "range": {
+        "startLine": 191,
+        "startChar": 57,
+        "endLine": 191,
+        "endChar": 86
+      },
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fd1d64d_175751c3",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-22T10:34:16Z",
+      "side": 1,
+      "message": "```suggestion\n        // The shader expects availability to start at the first query being converted.\n```\n\nNo need to encode the history of the code in the comments 😊",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
