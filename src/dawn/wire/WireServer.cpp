@@ -28,6 +28,7 @@
 #include "dawn/wire/WireServer.h"
 
 #include "dawn/wire/server/Server.h"
+#include "src/dawn/common/Compiler.h"
 
 namespace dawn::wire {
 
@@ -85,6 +86,33 @@ MemoryTransferService::ReadHandle::~ReadHandle() = default;
 MemoryTransferService::WriteHandle::WriteHandle() = default;
 
 MemoryTransferService::WriteHandle::~WriteHandle() = default;
+
+bool MemoryTransferService::WriteHandle::DeserializeDataUpdate(
+    std::span<const uint8_t> deserializeData,
+    std::span<uint8_t> target,
+    size_t offset) {
+    if (offset > std::numeric_limits<size_t>::max() - target.size()) {
+        return false;
+    }
+
+    if (target.data() != nullptr && reinterpret_cast<uintptr_t>(target.data()) < offset) {
+        return false;
+    }
+
+    // In the new `DeserializeDataUpdate` (with 3 parameters) `target` should already be the
+    // correct subspan of the buffer to write into, so we just need to check for OOB and
+    // then write into it.
+    // However, in the old `DeserializeDataUpdate` (with 4 parameters) implementation in
+    // Chromium, `target` is always the full buffer and `offset` is used to offset into both
+    // the target data and the shmem pointer, so we need to do the same offsetting here to
+    // be compatible with both implementations.
+    uint8_t* bufferStart = DAWN_UNSAFE_TODO(target.data() - offset);
+    size_t lengthFromStart = target.size() + offset;
+    SetTarget(bufferStart);
+    SetDataLength(lengthFromStart);
+    return DeserializeDataUpdate(deserializeData.data(), deserializeData.size(), offset,
+                                 target.size());
+}
 
 void MemoryTransferService::WriteHandle::SetTarget(void* data) {
     mTargetData = static_cast<uint8_t*>(data);
