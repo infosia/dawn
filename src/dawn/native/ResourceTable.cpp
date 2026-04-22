@@ -95,7 +95,7 @@ MaybeError ValidateBindingResource(const DeviceBase* device, const BindingResour
 
 MaybeError ValidateResourceTableDescriptor(const DeviceBase* device,
                                            const ResourceTableDescriptor* descriptor) {
-    DAWN_ASSERT(descriptor);
+    DAWN_CHECK(descriptor);
 
     DAWN_INVALID_IF(!device->HasFeature(Feature::ChromiumExperimentalSamplingResourceTable),
                     "Resource table used without the %s feature enabled.",
@@ -150,7 +150,7 @@ ResourceTableSlot ResourceTableBase::GetSizeWithDefaultResources() const {
 }
 
 BufferBase* ResourceTableBase::GetMetadataBuffer() const {
-    DAWN_ASSERT(!mDestroyed);
+    DAWN_CHECK(!mDestroyed);
     return mMetadataBuffer.Get();
 }
 
@@ -159,7 +159,7 @@ bool ResourceTableBase::IsDestroyed() const {
 }
 
 MaybeError ResourceTableBase::ValidateCanUseInSubmitNow() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     DAWN_INVALID_IF(IsDestroyed(), "%s used while destroyed.", this);
     return {};
 }
@@ -179,7 +179,7 @@ MaybeError ResourceTableBase::InitializeBase() {
 
     // Initialize the metadata buffer with the arrayLength and a bunch of zeroes that correspond to
     // empty entries.
-    DAWN_ASSERT(uint32_t(tint::ResourceType::kEmpty) == 0);
+    DAWN_CHECK(uint32_t(tint::ResourceType::kEmpty) == 0);
     // TODO(https://crbug.com/435317394): We could rely on zero initialization if it is enabled, and
     // also apply the initial dirty slots in this mapping instead of on the first use of the
     // resource table.
@@ -208,7 +208,7 @@ MaybeError ResourceTableBase::InitializeBase() {
 }
 
 void ResourceTableBase::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(!mDestroyed);
+    DAWN_CHECK(!mDestroyed);
 
     for (auto [i, slot] : Enumerate(mSlots)) {
         if (auto view = GetRef<TextureViewBase>(slot.resource)) {
@@ -310,7 +310,7 @@ tint::ResourceType ResourceTableBase::ComputeTypeId(
         [&](const Ref<TextureViewBase>& view) {
             const TextureBase* texture = view->GetTexture();
             if (texture->IsMultisampledTexture()) {
-                DAWN_ASSERT(view->GetDimension() == wgpu::TextureViewDimension::e2D);
+                DAWN_CHECK(view->GetDimension() == wgpu::TextureViewDimension::e2D);
 
                 switch (view->GetAspects()) {
                     case Aspect::Color:
@@ -333,7 +333,7 @@ tint::ResourceType ResourceTableBase::ComputeTypeId(
             }
 
             if (view->GetAspects() == Aspect::Depth) {
-                DAWN_ASSERT(!texture->IsMultisampledTexture());
+                DAWN_CHECK(!texture->IsMultisampledTexture());
 
                 switch (view->GetDimension()) {
                     case wgpu::TextureViewDimension::e2D:
@@ -443,18 +443,18 @@ bool ResourceTableBase::IsValidSlot(ResourceTableSlot slot) const {
 }
 
 void ResourceTableBase::OnPinned(ResourceTableSlot slot, TextureBase* texture) {
-    DAWN_ASSERT(!mDestroyed);
-    DAWN_ASSERT(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
-    DAWN_ASSERT(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
+    DAWN_CHECK(!mDestroyed);
+    DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
+    DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
     DAWN_ASSERT(!mSlots[slot].pinned);
     mSlots[slot].pinned = true;
     MarkStateDirty(slot);
 }
 
 void ResourceTableBase::OnUnpinned(ResourceTableSlot slot, TextureBase* texture) {
-    DAWN_ASSERT(!mDestroyed);
-    DAWN_ASSERT(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
-    DAWN_ASSERT(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
+    DAWN_CHECK(!mDestroyed);
+    DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
+    DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
     DAWN_ASSERT(mSlots[slot].pinned);
     mSlots[slot].pinned = false;
     MarkStateDirty(slot);
@@ -463,7 +463,7 @@ void ResourceTableBase::OnUnpinned(ResourceTableSlot slot, TextureBase* texture)
 void ResourceTableBase::Update(ResourceTableSlot slot, const BindingResource* contents) {
     DAWN_ASSERT(mSlots[slot].availableAfter <=
                 GetDevice()->GetQueue()->GetCompletedCommandSerial());
-    DAWN_ASSERT(mSlots[slot].typeId == tint::ResourceType::kEmpty);
+    DAWN_CHECK(mSlots[slot].typeId == tint::ResourceType::kEmpty);
     mSlots[slot].availableAfter = kMaxExecutionSerial;
     SetEntry(slot, contents);
 }
@@ -497,7 +497,7 @@ void ResourceTableBase::UpdateWithDeviceValidation(ResourceTableSlot slot,
 }
 
 void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* contents) {
-    DAWN_ASSERT(contents->buffer == nullptr);
+    DAWN_CHECK(contents->buffer == nullptr);
     SlotState& state = mSlots[slot];
 
     // Check the current state. If it's already set to the input value, early out.
@@ -537,12 +537,12 @@ void ResourceTableBase::SetEntry(ResourceTableSlot slot, const BindingResource* 
 }
 
 ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
-    DAWN_ASSERT(!mDestroyed);
+    DAWN_CHECK(!mDestroyed);
 
     Updates updates;
     for (ResourceTableSlot dirtySlot : mDirtySlots) {
         SlotState& state = mSlots[dirtySlot];
-        DAWN_ASSERT(state.dirty);
+        DAWN_CHECK(state.dirty);
         state.dirty = false;
 
         // Set the value in the table to the type id. If the resource requires pinning, we only set

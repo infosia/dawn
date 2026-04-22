@@ -434,7 +434,7 @@ std::vector<Ref<AdapterBase>> InstanceBase::EnumerateAdapters(
 
     std::vector<Ref<AdapterBase>> adapters;
     for (const auto& physicalDevice : EnumeratePhysicalDevices(unpacked)) {
-        DAWN_ASSERT(physicalDevice->SupportsFeatureLevel(unpacked->featureLevel, this));
+        DAWN_CHECK(physicalDevice->SupportsFeatureLevel(unpacked->featureLevel, this));
         adapters.push_back(CreateAdapter(physicalDevice, unpacked->featureLevel, togglesDesc,
                                          unpacked->powerPreference));
     }
@@ -456,8 +456,8 @@ BackendConnection* InstanceBase::GetBackendConnection(wgpu::BackendType backendT
 
     auto Register = [this](BackendConnection* connection, wgpu::BackendType expectedType) {
         if (connection != nullptr) {
-            DAWN_ASSERT(connection->GetType() == expectedType);
-            DAWN_ASSERT(connection->GetInstance() == this);
+            DAWN_CHECK(connection->GetType() == expectedType);
+            DAWN_CHECK(connection->GetInstance() == this);
             mBackends[connection->GetType()] = std::unique_ptr<BackendConnection>(connection);
         }
     };
@@ -522,7 +522,7 @@ BackendConnection* InstanceBase::GetBackendConnection(wgpu::BackendType backendT
 
 std::vector<Ref<PhysicalDeviceBase>> InstanceBase::EnumeratePhysicalDevices(
     const UnpackedPtr<RequestAdapterOptions>& options) {
-    DAWN_ASSERT(options);
+    DAWN_CHECK(options);
 
     BackendsBitset backendsToFind;
     if (options.Has<RequestAdapterWebGPUBackendOptions>()) {
@@ -800,7 +800,7 @@ void InstanceBase::APIGetWGSLLanguageFeatures(SupportedWGSLLanguageFeatures* fea
     for (wgpu::WGSLLanguageFeatureName feature : mWGSLFeatures) {
         wgslFeatures[index++] = feature;
     }
-    DAWN_ASSERT(index == featureCount);
+    DAWN_CHECK(index == featureCount);
 
     features->featureCount = featureCount;
     features->features = wgslFeatures;

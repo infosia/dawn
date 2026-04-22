@@ -134,7 +134,7 @@ auto GetOrCreate(ContentLessObjectCache<RefCountedT>& cache,
         }
         result = resultOrError.AcquireSuccess();
     }
-    DAWN_ASSERT(result.Get() != nullptr);
+    DAWN_CHECK(result.Get() != nullptr);
 
     bool inserted = false;
     std::tie(result, inserted) = cache.Insert(result.Get());
@@ -170,7 +170,7 @@ DeviceBase::DeviceLostEvent::~DeviceLostEvent() {
 // static
 Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
     const DeviceDescriptor* descriptor) {
-    DAWN_ASSERT(descriptor != nullptr);
+    DAWN_CHECK(descriptor != nullptr);
     return AcquireRef(
         new DeviceBase::DeviceLostEvent(GetDeviceLostCallbackInfoOrDefault(ToAPI(descriptor))));
 }
@@ -279,9 +279,9 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
       mAdapter(adapter),
       mToggles(deviceToggles),
       mNextPipelineCompatibilityToken(1) {
-    DAWN_ASSERT(descriptor);
+    DAWN_CHECK(descriptor);
 
-    DAWN_ASSERT(mLostEvent);
+    DAWN_CHECK(mLostEvent);
     mLostEvent->mDevice = this;
 
     AdapterInfo adapterInfo;
@@ -410,7 +410,7 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
         mResourceTableDefaultResources = std::make_unique<ResourceTableDefaultResources>();
     }
 
-    DAWN_ASSERT(GetPlatform() != nullptr);
+    DAWN_CHECK(GetPlatform() != nullptr);
     mWorkerTaskPool = GetPlatform()->CreateWorkerTaskPool();
     mAsyncTaskManager = std::make_unique<AsyncTaskManager>(mWorkerTaskPool.get());
 
@@ -610,7 +610,7 @@ void DeviceBase::Destroy(DestroyReason reason) {
     if (state != State::BeingCreated) {
         // The GPU timeline is finished.
         mQueue->AssumeCommandsComplete();
-        DAWN_ASSERT(mQueue->GetCompletedCommandSerial() >= mQueue->GetLastSubmittedCommandSerial());
+        DAWN_CHECK(mQueue->GetCompletedCommandSerial() >= mQueue->GetLastSubmittedCommandSerial());
         mQueue->Tick(mQueue->GetCompletedCommandSerial());
     }
 
@@ -750,7 +750,7 @@ void DeviceBase::HandleErrorGeneratingAsyncTask(Ref<ErrorGeneratingAsyncTask> ta
 
 void DeviceBase::ConsumeError(std::unique_ptr<ErrorData> error,
                               InternalErrorType additionalAllowedErrors) {
-    DAWN_ASSERT(error != nullptr);
+    DAWN_CHECK(error != nullptr);
     HandleError(std::move(error), additionalAllowedErrors);
 }
 
@@ -770,7 +770,7 @@ ErrorScopeStack* DeviceBase::GetErrorScopeStack() {
             TrimErrorScopeStacks(*errorScopeStacks);
             (*errorScopeStacks)[threadId] = std::make_unique<ErrorScopeStack>();
         }
-        DAWN_ASSERT((*errorScopeStacks)[threadId] != nullptr);
+        DAWN_CHECK((*errorScopeStacks)[threadId] != nullptr);
         // Returning the raw pointer to the stack is fine here because the pointer is only freed
         // when the thread asking for it is no longer alive. Therefore, the pointer is always valid
         // even though we no longer hold the lock.
@@ -832,8 +832,7 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
                 for (auto& pendingTask : mPendingAsyncTasks) {
                     ErrorGeneratingAsyncTask* task = pendingTask.task.Get();
                     // All the tasks should have completed unless this event was canceled.
-                    DAWN_ASSERT(task->IsCompleted() ||
-                                completionType != EventCompletionType::Ready);
+                    DAWN_CHECK(task->IsCompleted() || completionType != EventCompletionType::Ready);
                     if (task->IsCompleted() && task->IsError() &&
                         pendingTask.captureErrorType == ToWGPUErrorType(task->GetErrorType())) {
                         std::unique_ptr<ErrorData> error = task->AcquireError();
@@ -905,7 +904,7 @@ MaybeError DeviceBase::ValidateObject(const ApiObjectBase* object) const {
 }
 
 MaybeError DeviceBase::IsNotErrorObject(const ApiObjectBase* object) const {
-    DAWN_ASSERT(!IsValidationEnabled());
+    DAWN_CHECK(!IsValidationEnabled());
     DAWN_ASSERT(object != nullptr);
     DAWN_INVALID_IF(object->IsError(), "%s is invalid due to a previous error.", object);
 
@@ -933,7 +932,7 @@ DeviceBase::State DeviceBase::GetState() const {
 }
 
 bool DeviceBase::IsLost() const {
-    DAWN_ASSERT(mState != State::BeingCreated);
+    DAWN_CHECK(mState != State::BeingCreated);
     return mState != State::Alive;
 }
 
@@ -966,8 +965,8 @@ InternalPipelineStore* DeviceBase::GetInternalPipelineStore() {
 }
 
 ResourceTableDefaultResources* DeviceBase::GetResourceTableDefaultResources() {
-    DAWN_ASSERT(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
-    DAWN_ASSERT(mResourceTableDefaultResources != nullptr);
+    DAWN_CHECK(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
+    DAWN_CHECK(mResourceTableDefaultResources != nullptr);
     return mResourceTableDefaultResources.get();
 }
 
@@ -995,12 +994,12 @@ ResultOrError<const Format*> DeviceBase::GetInternalFormat(wgpu::TextureFormat f
 
 const Format& DeviceBase::GetValidInternalFormat(wgpu::TextureFormat format) const {
     FormatIndex index = ComputeFormatIndex(format);
-    DAWN_ASSERT(index < mFormatTable.size());
+    DAWN_CHECK(index < mFormatTable.size());
     return mFormatTable[index];
 }
 
 const Format& DeviceBase::GetValidInternalFormat(FormatIndex index) const {
-    DAWN_ASSERT(index < mFormatTable.size());
+    DAWN_CHECK(index < mFormatTable.size());
     return mFormatTable[index];
 }
 
@@ -1056,17 +1055,17 @@ ResultOrError<Ref<PipelineLayoutBase>> DeviceBase::CreateEmptyPipelineLayout() {
 }
 
 BindGroupLayoutBase* DeviceBase::GetEmptyBindGroupLayout() const {
-    DAWN_ASSERT(mEmptyBindGroupLayout != nullptr);
+    DAWN_CHECK(mEmptyBindGroupLayout != nullptr);
     return mEmptyBindGroupLayout.Get();
 }
 
 PipelineLayoutBase* DeviceBase::GetEmptyPipelineLayout() const {
-    DAWN_ASSERT(mEmptyPipelineLayout != nullptr);
+    DAWN_CHECK(mEmptyPipelineLayout != nullptr);
     return mEmptyPipelineLayout.Get();
 }
 
 SamplerBase* DeviceBase::GetPlaceholderSampler() const {
-    DAWN_ASSERT(mPlaceholderSampler != nullptr);
+    DAWN_CHECK(mPlaceholderSampler != nullptr);
     return mPlaceholderSampler.Get();
 }
 
@@ -1469,11 +1468,11 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
         // compilation errors.
         shaderModule = ShaderModuleBase::MakeError(this, descriptor ? descriptor->label : nullptr,
                                                    ParsedCompilationMessages());
-        DAWN_ASSERT(shaderModule->IsError());
+        DAWN_CHECK(shaderModule->IsError());
         errorData = creationResult.AcquireError();
     }
 
-    DAWN_ASSERT(shaderModule != nullptr);
+    DAWN_CHECK(shaderModule != nullptr);
 
     if (errorData != nullptr) {
         // Acquire the device lock for error handling.
@@ -1481,10 +1480,10 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
         // Emit error, including Tint errors and warnings.
         auto consumedError = ConsumedError(std::move(errorData), InternalErrorType::Internal,
                                            "calling %s.CreateShaderModule(%s).", this, descriptor);
-        DAWN_ASSERT(consumedError);
+        DAWN_CHECK(consumedError);
     }
 
-    DAWN_ASSERT(errorData == nullptr);
+    DAWN_CHECK(errorData == nullptr);
 
     return ReturnToAPI(std::move(shaderModule));
 }
@@ -1614,7 +1613,7 @@ AdapterBase* DeviceBase::APIGetAdapter() {
 
 QueueBase* DeviceBase::APIGetQueue() {
     // Backends gave the primary queue during initialization.
-    DAWN_ASSERT(mQueue != nullptr);
+    DAWN_CHECK(mQueue != nullptr);
     auto queue = mQueue;
     return ReturnToAPI(std::move(queue));
 }
@@ -1688,7 +1687,7 @@ ResultOrError<Ref<SharedFenceBase>> DeviceBase::ImportSharedFenceImpl(
 
 void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
                                wgpu::FeatureLevel level) {
-    DAWN_ASSERT(deviceDescriptor);
+    DAWN_CHECK(deviceDescriptor);
     // Validate all required features with device toggles.
     DAWN_ASSERT(GetPhysicalDevice()->SupportsAllRequiredFeatures(
         {deviceDescriptor->requiredFeatures, deviceDescriptor->requiredFeatureCount}, mToggles));
@@ -1903,7 +1902,7 @@ Future DeviceBase::APIGetLostFuture() {
     if (mLostEvent) {
         mLostFuture = mLostEvent->GetFuture();
     }
-    DAWN_ASSERT(mLostFuture.id != kNullFutureID);
+    DAWN_CHECK(mLostFuture.id != kNullFutureID);
     return mLostFuture;
 }
 
@@ -1943,7 +1942,7 @@ void DeviceBase::APIValidateTextureDescriptor(const TextureDescriptor* descripto
 }
 
 QueueBase* DeviceBase::GetQueue() const {
-    DAWN_ASSERT(mQueue != nullptr);
+    DAWN_CHECK(mQueue != nullptr);
     return mQueue.Get();
 }
 

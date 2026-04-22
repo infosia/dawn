@@ -221,7 +221,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     }
 
     // Multisample state.
-    DAWN_ASSERT(pipelineKey.sampleCount > 1);
+    DAWN_CHECK(pipelineKey.sampleCount > 1);
     renderPipelineDesc.multisample.count = pipelineKey.sampleCount;
 
     // Bind group layout.
@@ -316,8 +316,8 @@ uint32_t PackOffsets(const RenderPassDescriptorResolveRect& expandResolveRect) {
                          static_cast<int32_t>(expandResolveRect.colorOffsetX);
     const auto offsetY = static_cast<int32_t>(expandResolveRect.resolveOffsetY) -
                          static_cast<int32_t>(expandResolveRect.colorOffsetY);
-    DAWN_ASSERT(std::abs(offsetX) < std::numeric_limits<int16_t>::max());
-    DAWN_ASSERT(std::abs(offsetY) < std::numeric_limits<int16_t>::max());
+    DAWN_CHECK(std::abs(offsetX) < std::numeric_limits<int16_t>::max());
+    DAWN_CHECK(std::abs(offsetY) < std::numeric_limits<int16_t>::max());
     return static_cast<uint32_t>(offsetX & 0xffff) | static_cast<uint32_t>(offsetY << 16);
 }
 
@@ -326,7 +326,7 @@ MaybeError ExpandResolveTextureWithDraw(
     RenderPassEncoder* renderEncoder,
     const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor) {
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
-    DAWN_ASSERT(device->CanTextureLoadResolveTargetInTheSameRenderpass());
+    DAWN_CHECK(device->CanTextureLoadResolveTargetInTheSameRenderpass());
 
     BlitColorToColorWithDrawPipelineKey pipelineKey;
     uint32_t colorAttachmentWidth = 0;
@@ -346,12 +346,12 @@ MaybeError ExpandResolveTextureWithDraw(
         const Format& format = view->GetFormat();
         TextureComponentType baseType = format.GetAspectInfo(Aspect::Color).baseType;
         // TODO(dawn:1710): blitting integer textures are not currently supported.
-        DAWN_ASSERT(baseType == TextureComponentType::Float);
+        DAWN_CHECK(baseType == TextureComponentType::Float);
 
         if (colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
-            DAWN_ASSERT(colorAttachment.resolveTarget->GetLayerCount() == 1u);
-            DAWN_ASSERT(colorAttachment.resolveTarget->GetDimension() ==
-                        wgpu::TextureViewDimension::e2D);
+            DAWN_CHECK(colorAttachment.resolveTarget->GetLayerCount() == 1u);
+            DAWN_CHECK(colorAttachment.resolveTarget->GetDimension() ==
+                       wgpu::TextureViewDimension::e2D);
             pipelineKey.attachmentsToExpandResolve.set(colorIdx);
         }
         pipelineKey.resolveTargetsMask.set(colorIdx, colorAttachment.resolveTarget != nullptr);

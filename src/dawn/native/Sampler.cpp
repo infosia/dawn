@@ -153,7 +153,7 @@ bool SamplerBase::IsYCbCr() const {
 }
 
 YCbCrVkDescriptor SamplerBase::GetYCbCrVkDescriptor() const {
-    DAWN_ASSERT(IsYCbCr());
+    DAWN_CHECK(IsYCbCr());
     return mYCbCrVkDescriptor;
 }
 
@@ -183,10 +183,10 @@ bool SamplerBase::EqualityFunc::operator()(const SamplerBase* a, const SamplerBa
         return true;
     }
 
-    DAWN_ASSERT(!std::isnan(a->mLodMinClamp));
-    DAWN_ASSERT(!std::isnan(b->mLodMinClamp));
-    DAWN_ASSERT(!std::isnan(a->mLodMaxClamp));
-    DAWN_ASSERT(!std::isnan(b->mLodMaxClamp));
+    DAWN_CHECK(!std::isnan(a->mLodMinClamp));
+    DAWN_CHECK(!std::isnan(b->mLodMinClamp));
+    DAWN_CHECK(!std::isnan(a->mLodMaxClamp));
+    DAWN_CHECK(!std::isnan(b->mLodMaxClamp));
 
     // NOTE: For simplicity, we always check the state of the YCbCr descriptor.
     // If the client did not pass in a YCbCr descriptor, `mIsYCbCr` will be
