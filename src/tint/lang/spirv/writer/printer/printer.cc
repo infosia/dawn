@@ -1552,6 +1552,13 @@ class Printer {
             case spirv::BuiltinFn::kImageWrite:
                 op = spv::Op::OpImageWrite;
                 break;
+            case spirv::BuiltinFn::kInterpolateAtOffset:
+                // InterpolateAtOffset requires the InterpolationFunction capability.
+                // In Dawn this is only used for the pixel center polyfill which is only
+                // enabled if SampleRateShading is available.
+                module_.PushCapability(SpvCapabilityInterpolationFunction);
+                ext_inst(GLSLstd450InterpolateAtOffset);
+                break;
             case spirv::BuiltinFn::kMatrixTimesMatrix:
                 op = spv::Op::OpMatrixTimesMatrix;
                 break;
