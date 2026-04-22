@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cee6b8a6_0fd9f8a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-22T18:44:01Z",
+      "side": 1,
+      "message": "PTAAL, completely rewritten based on our discussion",
+      "revId": "b0395a55441789b91374033400efbcf7a7ddc492",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
