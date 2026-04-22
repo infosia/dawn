@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67f80429_754ce336",
+        "filename": "src/dawn/tests/end2end/MultisampledInterpolationTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T18:13:15Z",
+      "side": 0,
+      "message": "These all pass now that we use interpolateAtOffset!",
+      "range": {
+        "startLine": 177,
+        "startChar": 3,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "e6fd7d447073f2b68d3648dd782f05268078b114",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9762a3da_642d1eb2",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T18:13:15Z",
+      "side": 0,
+      "message": "In case you are wondering there is a multiply and division by w that cancels on this side.",
+      "range": {
+        "startLine": 366,
+        "startChar": 18,
+        "endLine": 366,
+        "endChar": 31
+      },
+      "revId": "e6fd7d447073f2b68d3648dd782f05268078b114",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

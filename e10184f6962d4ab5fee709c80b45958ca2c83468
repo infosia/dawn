@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8d47714_1c881122",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T18:13:15Z",
+      "side": 0,
+      "message": "Fixed! the p10 runs prove this.",
+      "range": {
+        "startLine": 1425,
+        "startChar": 19,
+        "endLine": 1426,
+        "endChar": 205
+      },
+      "revId": "e10184f6962d4ab5fee709c80b45958ca2c83468",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

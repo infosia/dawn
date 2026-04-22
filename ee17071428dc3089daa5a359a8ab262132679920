@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71ef4d4a_e932dd2d",
+        "filename": "src/tint/lang/spirv/writer/raise/shader_io_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-22T18:13:15Z",
+      "side": 1,
+      "message": "Yes this will be more expensive.",
+      "range": {
+        "startLine": 1412,
+        "startChar": 26,
+        "endLine": 1412,
+        "endChar": 47
+      },
+      "revId": "ee17071428dc3089daa5a359a8ab262132679920",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
