@@ -414,7 +414,7 @@ wgpu::BindGroup MakeBindGroup(
 
     wgpu::BindGroupDescriptor descriptor;
     descriptor.layout = layout;
-    descriptor.entryCount = checked_cast<uint32_t>(entries.size());
+    descriptor.entryCount = dchecked_cast<uint32_t>(entries.size());
     descriptor.entries = entries.data();
 
     return device.CreateBindGroup(&descriptor);
