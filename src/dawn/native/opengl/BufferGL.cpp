@@ -178,7 +178,7 @@ MaybeError Buffer::EnsureDataInitializedAsDestination(const CopyTextureToBufferC
 }
 
 MaybeError Buffer::InitializeToZero() {
-    DAWN_ASSERT(NeedsInitialization());
+    DAWN_CHECK(NeedsInitialization());
 
     Device* device = ToBackend(GetDevice());
 
@@ -255,7 +255,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
                 mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
                     gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size, GL_MAP_READ_BIT));
             } else {
-                DAWN_ASSERT(mode & wgpu::MapMode::Write);
+                DAWN_CHECK(mode & wgpu::MapMode::Write);
                 mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
                     gl, MapBufferRange(GL_ARRAY_BUFFER, offset, size,
                                        GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT));

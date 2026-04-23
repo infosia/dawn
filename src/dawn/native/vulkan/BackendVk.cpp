@@ -310,7 +310,7 @@ OnInstanceCreationDebugUtilsCallback(VkDebugUtilsMessageSeverityFlagBitsEXT mess
 VulkanInstance::VulkanInstance() = default;
 
 VulkanInstance::~VulkanInstance() {
-    DAWN_ASSERT(mMessageListenerDevices.empty());
+    DAWN_CHECK(mMessageListenerDevices.empty());
 
     if (mDebugUtilsMessenger != VK_NULL_HANDLE) {
         mFunctions.DestroyDebugUtilsMessengerEXT(mInstance, mDebugUtilsMessenger, nullptr);

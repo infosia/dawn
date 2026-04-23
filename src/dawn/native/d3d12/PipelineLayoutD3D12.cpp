@@ -306,7 +306,7 @@ MaybeError PipelineLayout::Initialize() {
 
     // Make sure that we added exactly the number of elements we expected. If we added more,
     // |ranges| will have resized and the pointers in the |rootParameter|s will be invalid.
-    DAWN_ASSERT(rangeIndex == rangesCount);
+    DAWN_CHECK(rangeIndex == rangesCount);
 
     D3D12_ROOT_PARAMETER1 renderOrComputeInternalConstants{};
     renderOrComputeInternalConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
@@ -352,7 +352,7 @@ MaybeError PipelineLayout::Initialize() {
                      dynamicStorageBufferInfoShaderRegisterOffset++});
             }
         }
-        DAWN_ASSERT(info.bindingAndRegisterOffsets.size() == dynamicStorageBufferCount);
+        DAWN_CHECK(info.bindingAndRegisterOffsets.size() == dynamicStorageBufferCount);
         mDynamicStorageBufferInfo[group] = std::move(info);
     }
 
@@ -469,13 +469,13 @@ void PipelineLayout::DestroyImpl(DestroyReason reason) {
 }
 
 uint32_t PipelineLayout::GetResourceTableCbvUavSrvRootParameterIndex() const {
-    DAWN_ASSERT(mResourceTableCbvUavSrvRootParameterIndex !=
-                kInvalidResourceTableRootParameterIndex);
+    DAWN_CHECK(mResourceTableCbvUavSrvRootParameterIndex !=
+               kInvalidResourceTableRootParameterIndex);
     return mResourceTableCbvUavSrvRootParameterIndex;
 }
 
 uint32_t PipelineLayout::GetResourceTableSamplerRootParameterIndex() const {
-    DAWN_ASSERT(mResourceTableSamplerRootParameterIndex != kInvalidResourceTableRootParameterIndex);
+    DAWN_CHECK(mResourceTableSamplerRootParameterIndex != kInvalidResourceTableRootParameterIndex);
     return mResourceTableSamplerRootParameterIndex;
 }
 
@@ -484,12 +484,12 @@ uint32_t PipelineLayout::GetBaseResourceTableRegisterSpace() const {
 }
 
 uint32_t PipelineLayout::GetCbvUavSrvRootParameterIndex(BindGroupIndex group) const {
-    DAWN_ASSERT(group < kMaxBindGroupsTyped);
+    DAWN_CHECK(group < kMaxBindGroupsTyped);
     return mCbvUavSrvRootParameterIndices[group];
 }
 
 uint32_t PipelineLayout::GetSamplerRootParameterIndex(BindGroupIndex group) const {
-    DAWN_ASSERT(group < kMaxBindGroupsTyped);
+    DAWN_CHECK(group < kMaxBindGroupsTyped);
     return mSamplerRootParameterIndices[group];
 }
 
@@ -508,15 +508,15 @@ const PipelineLayout::DynamicStorageBufferInfo& PipelineLayout::GetDynamicStorag
 
 uint32_t PipelineLayout::GetDynamicUniformRootParameterIndex(BindGroupIndex group,
                                                              BindingIndex bindingIndex) const {
-    DAWN_ASSERT(group < kMaxBindGroupsTyped);
-    DAWN_ASSERT(std::get<BufferBindingInfo>(
-                    GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).bindingLayout)
-                    .hasDynamicOffset);
-    DAWN_ASSERT(GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).visibility !=
-                wgpu::ShaderStage::None);
-    DAWN_ASSERT(std::get<BufferBindingInfo>(
-                    GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).bindingLayout)
-                    .type == wgpu::BufferBindingType::Uniform);
+    DAWN_CHECK(group < kMaxBindGroupsTyped);
+    DAWN_CHECK(std::get<BufferBindingInfo>(
+                   GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).bindingLayout)
+                   .hasDynamicOffset);
+    DAWN_CHECK(GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).visibility !=
+               wgpu::ShaderStage::None);
+    DAWN_CHECK(std::get<BufferBindingInfo>(
+                   GetBindGroupLayout(group)->GetBindingInfo(bindingIndex).bindingLayout)
+                   .type == wgpu::BufferBindingType::Uniform);
 
     return mDynamicUniformRootParameterIndices[group][bindingIndex];
 }
@@ -554,8 +554,8 @@ uint32_t PipelineLayout::GetDynamicStorageBufferLengthsShaderRegister() const {
 }
 
 uint32_t PipelineLayout::GetDynamicStorageBufferLengthsParameterIndex() const {
-    DAWN_ASSERT(mDynamicStorageBufferLengthsParameterIndex !=
-                kInvalidDynamicStorageBufferLengthsParameterIndex);
+    DAWN_CHECK(mDynamicStorageBufferLengthsParameterIndex !=
+               kInvalidDynamicStorageBufferLengthsParameterIndex);
     return mDynamicStorageBufferLengthsParameterIndex;
 }
 
@@ -568,8 +568,8 @@ uint32_t PipelineLayout::GetDynamicStorageBufferOffsetsShaderRegister() const {
 }
 
 uint32_t PipelineLayout::GetDynamicStorageBufferOffsetsParameterIndex() const {
-    DAWN_ASSERT(mDynamicStorageBufferOffsetsParameterIndex !=
-                kInvalidDynamicStorageBufferOffsetsParameterIndex);
+    DAWN_CHECK(mDynamicStorageBufferOffsetsParameterIndex !=
+               kInvalidDynamicStorageBufferOffsetsParameterIndex);
     return mDynamicStorageBufferOffsetsParameterIndex;
 }
 
@@ -582,7 +582,7 @@ uint32_t PipelineLayout::GetImmediatesShaderRegister() const {
 }
 
 uint32_t PipelineLayout::GetImmediatesParameterIndex() const {
-    DAWN_ASSERT(mImmediatesParameterIndex != kInvalidImmediatesParameterIndex);
+    DAWN_CHECK(mImmediatesParameterIndex != kInvalidImmediatesParameterIndex);
     return mImmediatesParameterIndex;
 }
 

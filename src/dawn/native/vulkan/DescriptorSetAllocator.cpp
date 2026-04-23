@@ -68,7 +68,7 @@ DescriptorSetAllocator::DescriptorSetAllocator(
     // that at least one descriptor set can be made (bindings with visibility none can force giant
     // sets to be made).
     mMaxSets = std::max(kMaxDescriptorsPerPool / totalDescriptorCount, 1u);
-    DAWN_ASSERT(mMaxSets > 0);
+    DAWN_CHECK(mMaxSets > 0);
 
     // Grow the number of descriptors in the pool to fit the computed |mMaxSets|.
     for (auto& poolSize : mPoolSizes) {
@@ -93,12 +93,12 @@ ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::Allocate(
         DAWN_TRY(AllocateDescriptorPool(dsLayout));
     }
 
-    DAWN_ASSERT(!mAvailableDescriptorPoolIndices.empty());
+    DAWN_CHECK(!mAvailableDescriptorPoolIndices.empty());
 
     const PoolIndex poolIndex = mAvailableDescriptorPoolIndices.back();
     DescriptorPool* pool = &mDescriptorPools[poolIndex];
 
-    DAWN_ASSERT(!pool->freeSetIndices.empty());
+    DAWN_CHECK(!pool->freeSetIndices.empty());
 
     SetIndex setIndex = pool->freeSetIndices.back();
     pool->freeSetIndices.pop_back();
@@ -117,7 +117,7 @@ void DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo)
         Mutex::AutoLock lock(&mMutex);
 
         DAWN_ASSERT(allocationInfo != nullptr);
-        DAWN_ASSERT(allocationInfo->set != VK_NULL_HANDLE);
+        DAWN_CHECK(allocationInfo->set != VK_NULL_HANDLE);
 
         // We can't reuse the descriptor set right away because the Vulkan spec says in the
         // documentation for vkCmdBindDescriptorSets that the set may be consumed any time between
@@ -148,7 +148,7 @@ void DescriptorSetAllocator::FinishDeallocation(ExecutionSerial completedSerial)
     Mutex::AutoLock lock(&mMutex);
 
     for (const Deallocation& dealloc : mPendingDeallocations.IterateUpTo(completedSerial)) {
-        DAWN_ASSERT(dealloc.poolIndex < mDescriptorPools.size());
+        DAWN_CHECK(dealloc.poolIndex < mDescriptorPools.size());
 
         auto& freeSetIndices = mDescriptorPools[dealloc.poolIndex].freeSetIndices;
         if (freeSetIndices.empty()) {
