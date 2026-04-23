@@ -39,6 +39,30 @@
       },
       "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5b3f9a2_e31adf20",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:35:02Z",
+      "side": 1,
+      "message": "It is a concern for sure that some of the `DAWN_CHECKs` will end up expensive. We\u0027ll do like for the `raw_ptrs`: if small parts of this hardening cause regression, we\u0027ll revert them.",
+      "parentUuid": "11c1b93c_845d8516",
+      "range": {
+        "startLine": 999,
+        "startChar": 19,
+        "endLine": 999,
+        "endChar": 28
+      },
+      "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
