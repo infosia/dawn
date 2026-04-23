@@ -722,48 +722,19 @@ VkImageCreateFlags VulkanImageCreateFlags(const DeviceBase* device,
 VkImageLayout VulkanImageLayout(const Format& format,
                                 wgpu::TextureUsage usage,
                                 wgpu::TextureUsage allowedUsage = wgpu::TextureUsage::None) {
-    if (usage == wgpu::TextureUsage::None) {
-        return VK_IMAGE_LAYOUT_UNDEFINED;
-    }
-
     if (allowedUsage == wgpu::TextureUsage::None) {
         allowedUsage = usage;
     }
 
-    if (!wgpu::HasZeroOrOneBits(usage)) {
-        // (sampled | (some sort of readonly depth-stencil aspect)) or
-        // (sampled | readonly storage) are the only possible multi-bit usages,
-        // if more appear we will need additional special-casing.
-
-        if (format.HasDepthOrStencil()) {
-            DAWN_ASSERT(IsSubset(usage, wgpu::TextureUsage::TextureBinding |
-                                            kDepthReadOnlyStencilWritableAttachment |
-                                            kDepthWritableStencilReadOnlyAttachment |
-                                            kReadOnlyRenderAttachment));
-
-            if (IsSubset(kDepthReadOnlyStencilWritableAttachment, usage)) {
-                return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
-            } else if (IsSubset(kDepthWritableStencilReadOnlyAttachment, usage)) {
-                return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
-            } else if (IsSubset(kReadOnlyRenderAttachment, usage)) {
-                return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
-            }
-
-            DAWN_UNREACHABLE();
-        } else {
-            DAWN_ASSERT(
-                IsSubset(usage, wgpu::TextureUsage::TextureBinding | kReadOnlyStorageTexture));
-
-            if (usage & kReadOnlyStorageTexture) {
-                return VK_IMAGE_LAYOUT_GENERAL;
-            }
-
-            DAWN_UNREACHABLE();
-        }
-    }
-
-    // Usage has a single bit so we can switch on its value directly.
+    // Note some of these cases have one bit, others have multiple bits.
+#if DAWN_COMPILER_IS(CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wswitch"
+#endif
     switch (usage) {
+        case wgpu::TextureUsage::None:
+            return VK_IMAGE_LAYOUT_UNDEFINED;
+
         case wgpu::TextureUsage::CopyDst:
             return VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
 
@@ -797,6 +768,7 @@ VkImageLayout VulkanImageLayout(const Format& format,
             // VK_IMAGE_LAYOUT_GENERAL layout.
         case wgpu::TextureUsage::StorageBinding:
         case kReadOnlyStorageTexture:
+        case kReadOnlyStorageTexture | wgpu::TextureUsage::TextureBinding:
         case kWriteOnlyStorageTexture:
             return VK_IMAGE_LAYOUT_GENERAL;
 
@@ -807,7 +779,14 @@ VkImageLayout VulkanImageLayout(const Format& format,
                 return VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
             }
 
+        case kDepthReadOnlyStencilWritableAttachment:
+        case kDepthReadOnlyStencilWritableAttachment | wgpu::TextureUsage::TextureBinding:
+            return VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
+        case kDepthWritableStencilReadOnlyAttachment:
+        case kDepthWritableStencilReadOnlyAttachment | wgpu::TextureUsage::TextureBinding:
+            return VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
         case kReadOnlyRenderAttachment:
+        case kReadOnlyRenderAttachment | wgpu::TextureUsage::TextureBinding:
             return VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL;
 
         case kPresentReleaseTextureUsage:
@@ -827,10 +806,10 @@ VkImageLayout VulkanImageLayout(const Format& format,
         case wgpu::TextureUsage::StorageAttachment:
             // TODO(dawn:1704): Support PLS on Vulkan.
             DAWN_UNREACHABLE();
-
-        case wgpu::TextureUsage::None:
-            break;
     }
+#if DAWN_COMPILER_IS(CLANG)
+#pragma clang diagnostic pop
+#endif
     DAWN_UNREACHABLE();
 }
 
