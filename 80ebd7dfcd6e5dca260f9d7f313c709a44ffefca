@@ -16,6 +16,42 @@
       "message": "I guess this is implictly runtime array since it\u0027s not fixed size?",
       "revId": "80ebd7dfcd6e5dca260f9d7f313c709a44ffefca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81607255_aa3e4d18",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-23T23:35:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "662abbc9_242dbda5",
+      "revId": "80ebd7dfcd6e5dca260f9d7f313c709a44ffefca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90dcf2d6_c60b4053",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-23T23:35:45Z",
+      "side": 1,
+      "message": "Yes, exactly.",
+      "parentUuid": "662abbc9_242dbda5",
+      "revId": "80ebd7dfcd6e5dca260f9d7f313c709a44ffefca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
