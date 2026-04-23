@@ -16,6 +16,75 @@
       "message": "this is as far as I got. Sorry it\u0027s not finished. See comments.",
       "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e70e00d_7064fa60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "No worries, someone will take over. Thanks for the iteration!",
+      "parentUuid": "db7be31f_d283bce9",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c61f4c92_3262d3aa",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "This method is no longer needed.",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2be3358d_c9f1d457",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "TODO: check if this is needed.",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b86d2045_4359b2d0",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "I think these are no longer needed.",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

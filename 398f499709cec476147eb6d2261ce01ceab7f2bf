@@ -176,6 +176,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "194c1611_e3a6bdc1",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "fc842c9c_a3983aca",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7058af70_baf3babf",
         "filename": "src/dawn/native/PassResourceUsage.h",
         "patchSetId": 7
@@ -497,6 +515,24 @@
       "side": 1,
       "message": "So I implemented this. except, I\u0027m not quite sure about \u0027...and SetQueryAvailability(false) for the resolved queries.\"  My understanding it queries stay available forever. In fact I believe we have tests that resolving them more than once works and keeps the same result:\n\nhttps://github.com/gpuweb/cts/blob/5234d6547f05ba0d968f9690e2424e0ac933dc67/src/webgpu/api/operation/command_buffer/queries/occlusionQuery.spec.ts#L1068\n\nI just added the timestamp ones here: https://github.com/gpuweb/cts/pull/4631",
       "parentUuid": "a7cd31af_859a19c6",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6107de45_c3aaf8f8",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T09:08:23Z",
+      "side": 1,
+      "message": "Yeah I was incorrect about `SetQueryAvailability(false)`, which is good because it keeps things simpler ^^",
+      "parentUuid": "17d1284b_5e7aae13",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
