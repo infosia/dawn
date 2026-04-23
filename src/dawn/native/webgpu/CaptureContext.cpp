@@ -101,6 +101,7 @@ CaptureContext::~CaptureContext() {
         wgpu->bufferDestroy(mCopyBuffer);
         wgpu->bufferRelease(mCopyBuffer);
     }
+    mDevice = nullptr;
 }
 
 WGPUBuffer CaptureContext::GetCopyBuffer() {

@@ -196,11 +196,9 @@ class CaptureContext {
     // have been written. and compare that to how many have been read when replaying.
     uint64_t mCommandBytesWritten = 0;
 
-    // TODO(crbug.com/485825675): Investigate why one of the 3 raw_ptr/raw_ref
-    // is/are dangling and if we can make them all non-dangling.
-    raw_ptr<Device, DanglingUntriaged> mDevice;
-    const raw_ref<std::ostream, DanglingUntriaged> mCommandStream;
-    const raw_ref<std::ostream, DanglingUntriaged> mContentStream;
+    raw_ptr<Device> mDevice;
+    const raw_ref<std::ostream> mCommandStream;
+    const raw_ref<std::ostream> mContentStream;
     absl::flat_hash_map<Ref<ApiObjectBase>, schema::ObjectId> mObjectIds;
     schema::ObjectId mNextObjectId = 2;  // 1 = the device itself.
 
