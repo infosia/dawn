@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "811b8fe6_7c19efee",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-23T17:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "354206a9_6d200d22",
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2905cb21_3db87a8b",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d91a62_71acb428",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-23T17:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2905cb21_3db87a8b",
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38269979_afdd0a2a",
@@ -65,6 +101,30 @@
       "writtenOn": "2026-04-23T08:16:04Z",
       "side": 1,
       "message": "nit: we\u0027ve been using this convention in a bunch of places in Dawn. (but also we could directly inline this method at [1] because the class is allowed to access the private members of other instances of the same class)\n```suggestion\nWGPUSurface SwapChain::AcquireInnerSurface() {\n```",
+      "range": {
+        "startLine": 170,
+        "startChar": 23,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6738a01_3f8ef7d2",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-23T17:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38269979_afdd0a2a",
       "range": {
         "startLine": 170,
         "startChar": 23,
