@@ -61,6 +61,20 @@ TEST_F(ITypStackVecTest, Creation) {
     }
 }
 
+// Test that the initializer_list constructor isn't triggered in non-assert builds where the types
+// can't disambiguate it from other overloads.
+TEST_F(ITypStackVecTest, ConstructorOverload) {
+    using KeyZ = TypedInteger<struct KeyZT, size_t>;
+    {
+        ityp::stack_vec<KeyZ, size_t, 20> vec{KeyZ(10)};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+    {
+        ityp::stack_vec<KeyZ, size_t, 20> vec{{size_t(10), size_t(20)}};
+        ASSERT_EQ(vec.size(), KeyZ(2));
+    }
+}
+
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
 using ITypStackVecDeathTest = ITypStackVecTest;
 

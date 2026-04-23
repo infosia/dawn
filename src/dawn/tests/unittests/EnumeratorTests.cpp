@@ -118,7 +118,7 @@ TEST_F(EnumeratorTest, ITypVector) {
     CheckEmpty(emptyThing);
 
     // Non-empty vector
-    ityp::vector<Int, uint32_t> thing = {{37, 45, 67}};
+    ityp::vector<Int, uint32_t> thing{{37, 45, 67}};
     Check<Int>(thing, thing.data());
 }
 
