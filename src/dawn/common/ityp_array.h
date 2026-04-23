@@ -33,7 +33,6 @@
 #include <limits>
 #include <utility>
 
-#include "dawn/common/TypedInteger.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -47,6 +46,7 @@ class array : private ::std::array<Value, Size> {
     using I = UnderlyingType<Index>;
     using Base = ::std::array<Value, Size>;
 
+    static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
     static_assert(Size <= std::numeric_limits<I>::max());
 
   public:

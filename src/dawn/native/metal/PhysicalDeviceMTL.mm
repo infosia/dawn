@@ -230,7 +230,7 @@ bool IsGPUCounterSupported(id<MTLDevice> device,
 }
 
 // https://developer.apple.com/documentation/metal/mtlgpufamily/apple9?language=objc
-enum class MTLGPUFamily {
+enum class MTLGPUFamily : uint8_t {
     Apple1,
     Apple2,
     Apple3,

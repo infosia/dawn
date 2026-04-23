@@ -66,6 +66,9 @@ struct UnderlyingTypeImpl<TypedIntegerImpl<Tag, I>> {
 template <typename T>
 using UnderlyingType = typename detail::UnderlyingTypeImpl<T>::type;
 
+template <typename T>
+concept UnsignedUnderlyingType = std::unsigned_integral<UnderlyingType<T>>;
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_UNDERLYINGTYPE_H_

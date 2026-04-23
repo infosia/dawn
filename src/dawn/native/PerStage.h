@@ -38,7 +38,7 @@
 
 namespace dawn::native {
 
-enum class SingleShaderStage { Vertex, Fragment, Compute };
+enum class SingleShaderStage : uint8_t { Vertex, Fragment, Compute };
 
 static_assert(static_cast<uint32_t>(SingleShaderStage::Vertex) < kNumStages);
 static_assert(static_cast<uint32_t>(SingleShaderStage::Fragment) < kNumStages);

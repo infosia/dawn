@@ -28,10 +28,11 @@
 #ifndef SRC_DAWN_COMMON_ITYP_VECTOR_H_
 #define SRC_DAWN_COMMON_ITYP_VECTOR_H_
 
+#include <cstddef>
 #include <limits>
 #include <vector>
 
-#include "dawn/common/TypedInteger.h"
+#include "dawn/common/Assert.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -42,6 +43,8 @@ template <typename Index, typename Value>
 class vector : public std::vector<Value> {
     using I = UnderlyingType<Index>;
     using Base = std::vector<Value>;
+
+    static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
 
   private:
     // Disallow access to base constructors and untyped index/size-related operators.

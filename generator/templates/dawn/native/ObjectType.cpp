@@ -31,6 +31,8 @@
 {% set native_dir = impl_dir + namespace_name.Dirs() %}
 #include "{{native_dir}}/ObjectType_autogen.h"
 
+#include "dawn/common/Assert.h"
+
 namespace {{native_namespace}} {
 
     const char* ObjectTypeAsString(ObjectType type) {

@@ -37,7 +37,7 @@ namespace dawn::native::vulkan {
 
 // The list of known instance extensions. They must be in dependency order (this is checked
 // inside EnsureDependencies)
-enum class InstanceExt {
+enum class InstanceExt : uint32_t {
     // Surface extensions
     Surface,
     FuchsiaImagePipeSurface,
@@ -76,7 +76,7 @@ InstanceExtSet EnsureDependencies(const InstanceExtSet& advertisedExts);
 // The list of known device extensions. They must be in dependency order (this is checked
 // inside EnsureDependencies). Remove extensions from this list once kRequiredVulkanVersion
 // is updated to the version they were promoted in.
-enum class DeviceExt {
+enum class DeviceExt : uint32_t {
     // Promoted to 1.2
     DriverProperties,
     ImageFormatList,
@@ -149,7 +149,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
                                 uint32_t version);
 
 // The list of all known Vulkan layers.
-enum class VulkanLayer {
+enum class VulkanLayer : uint8_t {
     Validation,
     LunargVkTrace,
     RenderDocCapture,

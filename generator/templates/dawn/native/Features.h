@@ -35,7 +35,7 @@
 
 namespace dawn::native {
 
-enum class Feature {
+enum class Feature : uint32_t {
   {% for enum in types["feature name"].values if (enum.valid and not is_enum_value_proxy(enum)) %}
     {{as_cppEnum(enum.name)}},
   {% endfor %}

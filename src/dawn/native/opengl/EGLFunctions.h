@@ -34,7 +34,7 @@
 
 namespace dawn::native::opengl {
 
-enum class EGLExt {
+enum class EGLExt : uint32_t {
     // Promoted to EGL 1.5
     ClientExtensions,
     PlatformBase,

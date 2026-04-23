@@ -232,7 +232,7 @@ enum class SampleTypeBit : uint8_t;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString>
 AbslFormatConvert(SampleTypeBit value, const absl::FormatConversionSpec& spec, absl::FormatSink* s);
 
-enum class SingleShaderStage;
+enum class SingleShaderStage : uint8_t;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
     SingleShaderStage value,
     const absl::FormatConversionSpec& spec,

@@ -51,7 +51,7 @@ namespace dawn::native::vulkan {
 // See crbug.com/850881, crbug.com/863086, crbug.com/1465064, crbug.com/346990068
 inline constexpr uint32_t kRequiredVulkanVersion = VK_API_VERSION_1_1;
 
-enum class ICD {
+enum class ICD : uint8_t {
     None,
     SwiftShader,
 };

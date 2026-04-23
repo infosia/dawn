@@ -33,10 +33,11 @@
 #ifndef SRC_DAWN_COMMON_ITYP_SPAN_H_
 #define SRC_DAWN_COMMON_ITYP_SPAN_H_
 
+#include <cstddef>
 #include <limits>
 #include <span>
 
-#include "dawn/common/TypedInteger.h"
+#include "dawn/common/Assert.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn::ityp {
@@ -47,6 +48,8 @@ template <typename Index, typename Value>
 class span : private ::std::span<Value> {
     using I = UnderlyingType<Index>;
     using Base = ::std::span<Value>;
+
+    static_assert(UnsignedUnderlyingType<Index>, "Index type must be unsigned");
 
   public:
     constexpr span() = default;

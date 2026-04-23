@@ -380,7 +380,7 @@ TEST_F(ITypBitsetIteratorTest, NonLValueBitset_Large) {
 
 class EnumBitSetIteratorTest : public testing::Test {
   protected:
-    enum class TestEnum { A, B, C, D, E, F, G, H, I, J, EnumCount };
+    enum class TestEnum : uint8_t { A, B, C, D, E, F, G, H, I, J, EnumCount };
 
     static constexpr size_t kEnumCount = static_cast<size_t>(TestEnum::EnumCount);
     ityp::bitset<TestEnum, kEnumCount> mStateBits;
