@@ -250,13 +250,14 @@ void WalkTypeAndMembers(CTX& ctx,
         [&](const core::type::Array* a) { WalkArrayElements(ctx, a, impl); });
 }
 
-/// @returns true if the type or any contained types are atomic
-/// @param ty root of the types to walks
-bool ContainsAtomic(const core::type::Type* ty) {
+/// @returns true if the type or any contained types are of type T
+/// @param ty root of the types to walk
+template <typename T>
+bool ContainsType(const core::type::Type* ty) {
     bool found = false;
     WalkTypeAndMembers(found, ty, IOAttributes{},
                        [&](bool& ctx, const core::type::Type* t, const IOAttributes&) {
-                           if (t != nullptr && t->Is<core::type::Atomic>()) {
+                           if (t != nullptr && t->DeepestElement()->Is<T>()) {
                                ctx = true;
                            }
                        });
@@ -3511,7 +3512,7 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
-    if (ContainsAtomic(mv->StoreType())) {
+    if (ContainsType<core::type::Atomic>(mv->StoreType())) {
         bool is_workgroup = mv->AddressSpace() == AddressSpace::kWorkgroup;
         bool is_read_write_storage = mv->AddressSpace() == AddressSpace::kStorage &&
                                      mv->Access() == core::Access::kReadWrite;
@@ -3585,6 +3586,11 @@ void Validator::CheckVar(const Var* var) {
     if (mv->AddressSpace() == AddressSpace::kImmediate) {
         if (mv->StoreType() && !mv->StoreType()->IsHostShareable()) {
             AddError(var) << "vars in the 'immediate' address space must be host-shareable";
+            return;
+        }
+
+        if (ContainsType<core::type::F16>(mv->StoreType())) {
+            AddError(var) << "vars in the 'immediate' address space cannot contain f16 types";
             return;
         }
     }
