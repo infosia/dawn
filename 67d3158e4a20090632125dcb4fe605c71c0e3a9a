@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "545f9f6f_a476e706",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-23T20:36:37Z",
+      "side": 1,
+      "message": "PTAL! Just a dawn_end2end_test that repros the problem in crbug.com/495489174. Largely based off the POC code that was produced in that issue. Confirmed that it does indeed repro the issue on all platforms.\n\nWanted to write this up first to help my understanding of the issue and give me an easy test environment before I move on to trying to solve it.",
+      "revId": "67d3158e4a20090632125dcb4fe605c71c0e3a9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
