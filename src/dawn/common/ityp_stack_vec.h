@@ -45,10 +45,13 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     static_assert(StaticCapacity <= std::numeric_limits<I>::max());
 
   public:
-    stack_vec() : Base() {}
-    explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
+    constexpr stack_vec() : Base() {}
+    constexpr explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
 
-    Value& operator[](Index i) {
+    using Base::data;
+    using Base::empty;
+
+    constexpr Value& operator[](Index i) {
 #if !defined(ABSL_OPTION_HARDENED) || ABSL_OPTION_HARDENED == 0
         // Insert our own bounds check if not already enabled in absl
         DAWN_CHECK(i < size());
@@ -64,16 +67,11 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
         return Base::operator[](static_cast<I>(i));
     }
 
-    void resize(Index size) { Base::resize(static_cast<I>(size)); }
+    constexpr void resize(Index size) { Base::resize(static_cast<I>(size)); }
 
-    void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
+    constexpr void reserve(Index size) { Base::reserve(static_cast<I>(size)); }
 
-    Value* data() { return Base::data(); }
-    const Value* data() const { return Base::data(); }
-
-    Index size() const { return Index(static_cast<I>(Base::size())); }
-
-    bool empty() const { return Base::empty(); }
+    constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 };
 
 }  // namespace dawn::ityp
