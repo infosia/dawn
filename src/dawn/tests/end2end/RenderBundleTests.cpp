@@ -323,5 +323,159 @@ DAWN_INSTANTIATE_TEST(RenderBundleTest,
                       VulkanBackend(),
                       WebGPUBackend());
 
+// RenderBundleIndirectValidationTest tests validation of drawIndirect and drawIndexedIndirect in a
+// render bundle.
+class RenderBundleIndirectValidationTest : public DawnTest {
+  protected:
+    wgpu::Buffer CreateIndirectBuffer(std::initializer_list<uint32_t> indirectParamList) {
+        return utils::CreateBufferFromData<uint32_t>(
+            device, wgpu::BufferUsage::Indirect | wgpu::BufferUsage::Storage, indirectParamList);
+    }
+
+    wgpu::Buffer CreateIndexBuffer(std::initializer_list<uint32_t> indexList) {
+        return utils::CreateBufferFromData<uint32_t>(device, wgpu::BufferUsage::Index, indexList);
+    }
+};
+
+// Tests a bug outlined in crbug.com/495489174 where indirect draw validation could be bypassed in
+// a specific scenario where the a render bundle with the indirect draw was executed multiple times
+// in a single encoder. Test based on a POC produced for that issue.
+TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
+    // Test currently fails on all backends
+    DAWN_TEST_UNSUPPORTED_IF(true);
+
+    const uint32_t OOB_COUNT = 100000;
+
+    // Render Pass
+    utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
+
+    // Index Buffers
+    wgpu::Buffer smallIdx = CreateIndexBuffer({0, 1, 2});
+
+    wgpu::BufferDescriptor bufferDesc;
+    bufferDesc.size = OOB_COUNT * sizeof(uint32_t);
+    bufferDesc.usage = wgpu::BufferUsage::Index;
+    wgpu::Buffer bigIdx = device.CreateBuffer(&bufferDesc);
+
+    // Indirect buffers
+    wgpu::Buffer indirect[2];
+    indirect[0] = CreateIndirectBuffer({3, 1, 100, 0, 0});
+    indirect[1] = CreateIndirectBuffer({3, 1, 0, 0, 0, OOB_COUNT, 1, 0, 0, 0});
+
+    // Buffers to use for simple fragment counter
+    uint32_t data[] = {0};
+    wgpu::Buffer counterBuffer = utils::CreateBufferFromData(
+        device, data, sizeof(uint32_t),
+        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+    wgpu::Buffer counterRead = utils::CreateBufferFromData(
+        device, data, sizeof(uint32_t), wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc);
+
+    // Pipeline
+    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        struct Ctr { n: atomic<u32>, };
+        @group(0) @binding(0) var<storage, read_write> ctr: Ctr;
+
+        @vertex fn vs() -> @builtin(position) vec4f {
+            return vec4f(0.0, 0.0, 0.0, 1.0);
+        }
+        // Simply adds one to the simple fragment counter with each draw
+        @fragment fn fs() -> @location(0) vec4f {
+            atomicAdd(&ctr.n, 1u);
+            return vec4f(1.0, 0.0, 0.0, 1.0);
+        })");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = module;
+    descriptor.cFragment.module = module;
+    descriptor.primitive.topology = wgpu::PrimitiveTopology::PointList;
+    descriptor.cTargets[0].format = renderPass.colorFormat;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
+
+    // Bind group
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, counterBuffer, 0, sizeof(float)}});
+
+    // Render bundle
+    utils::ComboRenderBundleEncoderDescriptor desc = {};
+    desc.colorFormatCount = 1;
+    desc.cColorFormats[0] = renderPass.colorFormat;
+
+    wgpu::RenderBundleEncoder renderBundleEncoder = device.CreateRenderBundleEncoder(&desc);
+    renderBundleEncoder.SetPipeline(pipeline);
+    renderBundleEncoder.SetBindGroup(0, bindGroup);
+    renderBundleEncoder.SetIndexBuffer(smallIdx, wgpu::IndexFormat::Uint32);
+    renderBundleEncoder.DrawIndexedIndirect(indirect[0], 0);
+    wgpu::RenderBundle renderBundle = renderBundleEncoder.Finish();
+
+    //
+    // Warm up
+    // Primes device-global scratchIndirectStorage so that
+    // scratch[20..40] = validated({OOB_COUNT,1,0,0,0}) = {OOB_COUNT,1,0,0,0}
+    //
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.SetIndexBuffer(bigIdx, wgpu::IndexFormat::Uint32);
+        pass.DrawIndexedIndirect(indirect[1], 0);
+        pass.DrawIndexedIndirect(indirect[1], 20);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+        queue.WriteBuffer(counterBuffer, 0, data, sizeof(uint32_t));
+    }
+
+    //
+    // Bug - Same bundle executed in two render passes of one encoder.
+    // Pass 1: Bundle only. Validation rewrites the bundle's persistent
+    //         DrawIndexedIndirectCmd -> {scratch, offset 0} and encodes a
+    //         compute pass that will write zeros to scratch[0..20].
+    // Pass 2: One direct drawIndexedIndirect via the SAME indirect buffer,
+    //         then the bundle. The two draws merge into one validation batch
+    //         [direct, bundle], so the bundle's persistent cmd is rewritten
+    //         again -> {scratch, offset 20}.
+    // At submit time the backend reads the bundle's cmd while replaying
+    // Pass 1's ExecuteBundles. It now points at scratch[20..40], which still
+    // holds the warm up's validated {OOB_COUNT,1,0,0,0}. Pass 2's compute pass
+    // hasn't run yet, so Pass 1 issues an indexed indirect draw with
+    // indexCount=OOB_COUNT against a 3-element index buffer.
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+        {
+            wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+            pass.ExecuteBundles(1, &renderBundle);
+            pass.End();
+        }
+        // Copy the fragment counter results of only the first pass to the readback buffer.
+        encoder.CopyBufferToBuffer(counterBuffer, 0, counterRead, 0, 4);
+        {
+            wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+            pass.SetPipeline(pipeline);
+            pass.SetBindGroup(0, bindGroup);
+            pass.SetIndexBuffer(smallIdx, wgpu::IndexFormat::Uint32);
+            pass.DrawIndexedIndirect(indirect[0], 0);
+            pass.ExecuteBundles(1, &renderBundle);
+            pass.End();
+        }
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    }
+
+    // The first pass (the one we're measuring) should only produce 3 fragments. If the validation
+    // bug is present, however, it will produce OOB_COUNT fragments.
+    EXPECT_BUFFER_U32_EQ(3, counterRead, 0);
+}
+
+DAWN_INSTANTIATE_TEST(RenderBundleIndirectValidationTest,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      OpenGLBackend(),
+                      OpenGLESBackend(),
+                      VulkanBackend(),
+                      WebGPUBackend());
+
 }  // anonymous namespace
 }  // namespace dawn
