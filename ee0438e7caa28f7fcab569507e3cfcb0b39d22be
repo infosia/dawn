@@ -63,6 +63,30 @@
       },
       "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbb4a44_6ce5da32",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-23T15:24:49Z",
+      "side": 1,
+      "message": "Actually if we have global link this check will diappear completely as the compiler will inline and then prove that from that site there can be only a valid enum (because it is a constant at the callee).\n\nAnyway as we discussed in the milestone meeting we will try to land this change and check skia benchmarks for regressions. \nI think this specific call will not produce any detectable regression.",
+      "parentUuid": "e5b3f9a2_e31adf20",
+      "range": {
+        "startLine": 999,
+        "startChar": 19,
+        "endLine": 999,
+        "endChar": 28
+      },
+      "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
