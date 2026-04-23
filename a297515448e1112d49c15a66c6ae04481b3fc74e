@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "16385e6e_5d6b4118",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-23T17:34:29Z",
+      "side": 1,
+      "message": "I wanted to write one, but I\u0027m not sure how to test that robustness does or does not get applied, especially since GPUs may handle OOB writes differently (for example, on my AMD, the WebGPU POC would not reproduce the error, despite OOB writes).\n\nWill submit as-is to close the security bug, and can add a test later.",
+      "parentUuid": "dc262a1e_63525dc0",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "295fb081_b172ee1d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -65,6 +83,30 @@
       "writtenOn": "2026-04-23T08:18:36Z",
       "side": 1,
       "message": "nit: `ToHLSLBindPoint` maybe to say more clearly what it gives?\n\nSee how it looks in the Vulkan backend lookhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ShaderModuleVk.cpp;drc\u003d29c28f75e0f35fd7e88f899e2be5807370c36fe9;l\u003d157",
+      "range": {
+        "startLine": 187,
+        "startChar": 9,
+        "endLine": 187,
+        "endChar": 21
+      },
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b883bc_812974fa",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-23T17:34:29Z",
+      "side": 1,
+      "message": "Done. Funny how I ended up doing something similar to the VK backend.",
+      "parentUuid": "e9c80c47_7b3af464",
       "range": {
         "startLine": 187,
         "startChar": 9,
