@@ -3,6 +3,40 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "71815387_3c207c88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:09:39Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "c5dda1fecb5f7ec338ec9e1778c4f6d1c3076eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20b215c9_42fb7971",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:09:39Z",
+      "side": 1,
+      "message": "When checking a single bit we can use `usage \u0026 kReadOnlyStorageTexture` instead of `IsSubset`.",
+      "revId": "c5dda1fecb5f7ec338ec9e1778c4f6d1c3076eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e49dd28c_04fb5b02",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 6
@@ -14,6 +48,23 @@
       "writtenOn": "2026-04-23T00:16:23Z",
       "side": 1,
       "message": "I have a suggestion to simplify this logic, but I\u0027m not positive it will work so I\u0027ll make it a followup.",
+      "revId": "c5dda1fecb5f7ec338ec9e1778c4f6d1c3076eaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1e72470_3c511628",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:09:39Z",
+      "side": 1,
+      "message": "ditto, this can be `if (allowedUsage \u0026 (A | B))`",
       "revId": "c5dda1fecb5f7ec338ec9e1778c4f6d1c3076eaf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
