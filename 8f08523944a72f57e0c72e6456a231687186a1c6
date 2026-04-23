@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a462074_4ee9e3c3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c488479d_50784a3c",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1502c531_f143873a",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a616ed7_8b8495c6",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "That makes sense. I also made this set FBF descriptor set in that case.",
+      "parentUuid": "1502c531_f143873a",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42ea9f3d_d0452e24",
@@ -65,6 +101,30 @@
       "writtenOn": "2026-04-22T20:46:39Z",
       "side": 1,
       "message": "Why not use `startOfBindGroups` here instead of hard coding 0, just for robustness against future changes?",
+      "range": {
+        "startLine": 280,
+        "startChar": 78,
+        "endLine": 280,
+        "endChar": 80
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52fd9a1b_8f47254e",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42ea9f3d_d0452e24",
       "range": {
         "startLine": 280,
         "startChar": 78,
@@ -148,6 +208,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fb1eb21_848e0895",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "\u003e We could potentially add metadata gathered during frontend encoding that says if a renderpass has any framebuffer fetch pipeline used\n\nAre you thinking something like have RenderPassEncoder have a bool tracking if any pipelines use FBF? I guess when RenderPassEncoder::APISetPipeline() is called it can check and set bool true.",
+      "parentUuid": "f2a2cd8f_b453e4c4",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b118036f_0831557e",
         "filename": "src/dawn/native/vulkan/DeviceVk.h",
         "patchSetId": 20
@@ -159,6 +243,24 @@
       "writtenOn": "2026-04-23T08:59:51Z",
       "side": 1,
       "message": "nit: having an indirection like the other helper / services would be nice as it means the class can be forward-declared here and the declaration only visible to whatever uses it.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d468a335_b2c2dbaa",
+        "filename": "src/dawn/native/vulkan/DeviceVk.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b118036f_0831557e",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -180,6 +282,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dae1dad6_025b5bd5",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "GetLayout() has to be called when creating VkPipelineLayout in order to create the VkPipeline that uses framebuffer fetch. It shouldn\u0027t be possible (minus a bug somewhere) to have this called without GetLayout() first. I modified comments/names and made the assert into a check.",
+      "parentUuid": "41659c72_d521171a",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0589a7fb_b7d57538",
@@ -193,6 +313,24 @@
       "writtenOn": "2026-04-22T20:46:39Z",
       "side": 1,
       "message": "This is another potentially surprising aspect of calling this method. Could the fact that the results of this function \"expire\" after the current command serial is complete be made more explicit in a comment?",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "116ae9a9_ad0b8850",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0589a7fb_b7d57538",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -231,6 +369,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8496bf47_dd55c190",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d869d5b2_28d18e85",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f098a2a0_67f4ff49",
@@ -244,6 +400,30 @@
       "writtenOn": "2026-04-23T08:59:51Z",
       "side": 1,
       "message": "doesn\u0027t ++ work with TypedIntegers? We could add it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f6c7c6e_ba8e7241",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "It does apparently. Changed.",
+      "parentUuid": "f098a2a0_67f4ff49",
       "range": {
         "startLine": 65,
         "startChar": 28,
@@ -307,6 +487,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01fe7c90_632225f0",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "It should be fine to support sparse attachment with FBF. I added a helper function to compute attachment count too.",
+      "parentUuid": "81e8dce8_09b9bd26",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9012b08f_dca09a10",
@@ -320,6 +518,24 @@
       "writtenOn": "2026-04-23T08:59:51Z",
       "side": 1,
       "message": "Can we have a TODO somewhere in a test file to check FBF + ResourceTable works? (we don\u0027t need to implement it anytime soon).",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "addaa466_d20823b5",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9012b08f_dca09a10",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -341,6 +557,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dccdf90a_2a0b1b32",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fe1a965_6edf7330",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69177dab_4aef074b",
@@ -354,6 +588,24 @@
       "writtenOn": "2026-04-23T08:59:51Z",
       "side": 1,
       "message": "Can we break this into a few names booleans? It\u0027s starting to be hard to parse what the condition means.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e021386_5c3ff10a",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69177dab_4aef074b",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
