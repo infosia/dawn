@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b564e43_1355c3f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-23T15:27:24Z",
+      "side": 1,
+      "message": "I couldn\u0027t figure out how to preview markdown in Gerrit so I also pushed this branch to Github if that makes review easier: https://github.com/sudonatalie/dawn/blob/uniformity-doc/docs/tint/uniformity_analysis.md",
+      "revId": "69c1829e5f27235e7f389688b8242c8669bd4321",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
