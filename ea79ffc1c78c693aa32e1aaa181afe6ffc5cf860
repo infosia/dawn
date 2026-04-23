@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "682d2251_69f1d45e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:16:04Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "354206a9_6d200d22",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:16:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this can ever happen because if there\u0027s a failure, an error surface will be returned instead of nullptr.",
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2905cb21_3db87a8b",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:16:04Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38269979_afdd0a2a",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:16:04Z",
+      "side": 1,
+      "message": "nit: we\u0027ve been using this convention in a bunch of places in Dawn. (but also we could directly inline this method at [1] because the class is allowed to access the private members of other instances of the same class)\n```suggestion\nWGPUSurface SwapChain::AcquireInnerSurface() {\n```",
+      "range": {
+        "startLine": 170,
+        "startChar": 23,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "ea79ffc1c78c693aa32e1aaa181afe6ffc5cf860",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
