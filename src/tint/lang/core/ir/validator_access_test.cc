@@ -1195,6 +1195,61 @@ TEST_F(IR_ValidatorTest, StoreVectorElement_ConstantIndexOutOfRange) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, LoadVectorElement_MismatchedResultType) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr<function, vec3f>());
+        auto* res = b.InstructionResult(ty.i32());
+        auto* lve =
+            mod.CreateInstruction<ir::LoadVectorElement>(res, var->Result(), b.Constant(1_i));
+        b.Append(lve);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: load_vector_element: result type 'i32' does not match "
+                                   "vector pointer element type 'f32'"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, StoreVectorElement_MismatchedValueType) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr<function, vec3f>());
+        auto* sve = mod.CreateInstruction<ir::StoreVectorElement>(var->Result(), b.Constant(1_i),
+                                                                  b.Constant(2_i));
+        b.Append(sve);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: store_vector_element: value type 'i32' does not match "
+                                   "vector pointer element type 'f32'"))
+        << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, StoreVectorElement_NonWriteableTarget) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr<function, vec3f, core::Access::kRead>());
+        auto* sve = mod.CreateInstruction<ir::StoreVectorElement>(var->Result(), b.Constant(1_i),
+                                                                  b.Constant(2_f));
+        b.Append(sve);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr("error: store_vector_element: store_vector_element target "
+                                   "operand has a non-writeable access type, 'read'"))
+        << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Swizzle_MissingValue) {
     auto* f = b.Function("my_func", ty.void_());
     b.Append(f->Block(), [&] {

@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_COMMANDRECORDINGCONTEXT_D3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_COMMANDRECORDINGCONTEXT_D3D11_H_
 
+#include <optional>
 #include <utility>
 
 #include "absl/container/flat_hash_set.h"
@@ -37,6 +38,7 @@
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/StackAllocated.h"
+#include "dawn/native/Buffer.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/d3d/KeyedMutex.h"
 #include "dawn/native/d3d/d3d_platform.h"
@@ -201,6 +203,9 @@ class ScopedCommandRecordingContext : NonCopyable {
     STACK_ALLOCATED_IGNORE("TODO: avoid heap allocated class containing StackAllocated members")
     CommandRecordingContext::Guard mGuard;
     bool mLockD3D11Scope = false;
+    // The scoped use of the uniform buffer to keep it in the InUse state for the lifetime of the
+    // scoped command context. This is lazily initialized.
+    mutable std::optional<BufferBase::ScopedUseBuffer> mUniformBufferInUse;
 };
 
 // For using ID3D11DeviceContext directly. It swaps and resets ID3DDeviceContextState of

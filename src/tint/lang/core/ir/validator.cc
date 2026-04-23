@@ -4199,6 +4199,9 @@ void Validator::CheckMemberBuiltinCall(const MemberBuiltinCall* call) {
     }
 
     if (result->return_type != call->Result()->Type()) {
+        // Note: This is not currently tested in core unittests as there are no concrete
+        // MemberBuiltinCall implementations in core IR. This is tested by backend-specific
+        // (e.g. HLSL) validation tests.
         AddError(call) << "member call result type " << NameOf(call->Result()->Type())
                        << " does not match builtin return type " << NameOf(result->return_type);
     }
@@ -5224,16 +5227,12 @@ void Validator::CheckOperandsMatchTarget(const Instruction* source_inst,
 
 const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* inst, size_t idx) {
     auto* operand = inst->Operands()[idx];
-    if (DAWN_UNLIKELY(!operand)) {
-        AddError(inst, idx) << "missing element operand";
-        return nullptr;
-    }
+    // All callers call CheckResultsAndOperands() beforehand, so this should never be null
+    TINT_ASSERT(operand) << "missing element operand";
 
+    // See above
     auto* type = operand->Type();
-    if (DAWN_UNLIKELY(!type)) {
-        AddError(inst, idx) << "missing operand type";
-        return nullptr;
-    }
+    TINT_ASSERT(type) << "missing operand type";
 
     auto* memory_view_ty = type->As<core::type::MemoryView>();
     if (DAWN_LIKELY(memory_view_ty)) {
