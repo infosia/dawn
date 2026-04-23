@@ -232,7 +232,7 @@ struct State {
             type,  //
             [&](const type::Scalar* scalar) { return scalar->Size(); },
             [&](const type::Vector* vector) {
-                if (vector->Width() == 3) {
+                if (vector->Width() == 3 || vector->Type()->Is<type::F16>()) {
                     return vector->Type()->Size();
                 }
                 return type->Size();
