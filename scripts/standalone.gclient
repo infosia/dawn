@@ -8,3 +8,4 @@ solutions = [
     "managed"     : False,
   },
 ]
+target_os = ["android", "chromeos", "fuchsia", "win", "linux"]
