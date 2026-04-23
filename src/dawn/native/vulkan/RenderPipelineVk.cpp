@@ -343,10 +343,10 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
 uint16_t PackStencilOpState(VkStencilOpState state, VkBool32 enabled) {
     // Both VkStencilOp and VkCompareOp have values ranging from 0-7, so they fit in 3 bits.
     // So we can encode the full dynamic stencil state in 12 bits.
-    DAWN_ASSERT(static_cast<uint32_t>(state.failOp) < 8);
-    DAWN_ASSERT(static_cast<uint32_t>(state.passOp) < 8);
-    DAWN_ASSERT(static_cast<uint32_t>(state.depthFailOp) < 8);
-    DAWN_ASSERT(static_cast<uint32_t>(state.compareOp) < 8);
+    DAWN_CHECK(static_cast<uint32_t>(state.failOp) < 8);
+    DAWN_CHECK(static_cast<uint32_t>(state.passOp) < 8);
+    DAWN_CHECK(static_cast<uint32_t>(state.depthFailOp) < 8);
+    DAWN_CHECK(static_cast<uint32_t>(state.compareOp) < 8);
     uint16_t packed = state.failOp | state.passOp << 3 | state.depthFailOp << 6 |
                       state.compareOp << 9 |
                       (enabled ? 0x8000 : 0);  // Set high bit if stencil is enabled.
@@ -399,7 +399,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     if (GetDevice()->NeedsStaticSamplerForExternalTexture() && GetLayout()->HasExternalTextures()) {
-        DAWN_ASSERT(!GetLayout()->HasAPIStaticSamplers());
+        DAWN_CHECK(!GetLayout()->HasAPIStaticSamplers());
         mRequiresSpecialization = true;
     }
 
@@ -567,7 +567,7 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
     // VkPipelineMultisampleStateCreateInfo.pSampleMask is an array of length
     // ceil(rasterizationSamples / 32) and since we're passing a single uint32_t
     // we have to assert that this length is indeed 1.
-    DAWN_ASSERT(multisample.rasterizationSamples <= 32);
+    DAWN_CHECK(multisample.rasterizationSamples <= 32);
     VkSampleMask sampleMask = GetSampleMask();
     multisample.pSampleMask = &sampleMask;
     multisample.alphaToCoverageEnable = IsAlphaToCoverageEnabled() ? VK_TRUE : VK_FALSE;
@@ -1016,12 +1016,12 @@ bool RenderPipeline::RequiresSpecialization() const {
 }
 
 VkPipeline RenderPipeline::GetHandle() const {
-    DAWN_ASSERT(mHandles.pipeline != VK_NULL_HANDLE);
+    DAWN_CHECK(mHandles.pipeline != VK_NULL_HANDLE);
     return mHandles.pipeline;
 }
 
 VkPipelineLayout RenderPipeline::GetVkLayout() const {
-    DAWN_ASSERT(mHandles.layout != nullptr);
+    DAWN_CHECK(mHandles.layout != nullptr);
     return mHandles.layout;
 }
 
