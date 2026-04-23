@@ -34,6 +34,24 @@
       "parentUuid": "1b564e43_1355c3f3",
       "revId": "69c1829e5f27235e7f389688b8242c8669bd4321",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bda09aa6_2667ff35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-04-23T19:12:41Z",
+      "side": 1,
+      "message": "Maybe not... I tried switching them to HTML img tags and setting both `style\u003d\"width: 100%;\"` and `style\u003d\"max-width: 100%;\"` and both end up stripped when the markdown is rendered in codesearch. If I manually add them back in with developer tools on the codesearch page they resize nicely. I see an unanswered internal question about this so I assume it\u0027s a shortcoming of the markdown renderer. On both github and my local markdown previewer the images resize to the viewport by default.",
+      "parentUuid": "a68462f1_9c367dfe",
+      "revId": "69c1829e5f27235e7f389688b8242c8669bd4321",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
