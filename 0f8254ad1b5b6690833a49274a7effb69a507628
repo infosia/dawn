@@ -16,6 +16,29 @@
       "message": "Bumping this for re-review",
       "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc83ab0_b89be93e",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-23T22:51:31Z",
+      "side": 1,
+      "message": "This case should explain how the atomic bool is used.",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "0f8254ad1b5b6690833a49274a7effb69a507628",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
