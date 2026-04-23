@@ -16,6 +16,29 @@
       "message": "General approval for this type of change was given by Corentin (and team)\nWe need to watch skia benchmarks for regressions.",
       "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11c1b93c_845d8516",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-04-23T04:49:03Z",
+      "side": 1,
+      "message": "This is used in a lot of places. One example: before a buffer is used in a command buffer, whenever it\u0027s used in a copy command, etc, `buffer-\u003eNeedsInitialized` is called. `NeedsInitialized` in turn checks for a toggle.\n\nThis change basically turns a simple bit test into multiple ifs and jumps. Are we OK with this? It might prevent inline and other compiler optimizations.",
+      "range": {
+        "startLine": 999,
+        "startChar": 19,
+        "endLine": 999,
+        "endChar": 28
+      },
+      "revId": "ee0438e7caa28f7fcab569507e3cfcb0b39d22be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
