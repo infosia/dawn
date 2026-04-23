@@ -16,6 +16,24 @@
       "message": "I couldn\u0027t figure out how to preview markdown in Gerrit so I also pushed this branch to Github if that makes review easier: https://github.com/sudonatalie/dawn/blob/uniformity-doc/docs/tint/uniformity_analysis.md",
       "revId": "69c1829e5f27235e7f389688b8242c8669bd4321",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a68462f1_9c367dfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-23T18:06:06Z",
+      "side": 1,
+      "message": "So, you click on the filename in the overview page, taking you to the review page for that specific file. Then if you click on the blue magnifying glass right beside the patchset it will take you to gitles, then use the preview link.\n\nKinda convoluted.\n\nThis gives youL:\n\nhttps://source.corp.google.com/h/dawn/dawn/+/refs/changes/15/304715/4:docs/tint/uniformity_analysis.md\n\n(The svgs show up as gigantic, can we set sizes on them?)",
+      "parentUuid": "1b564e43_1355c3f3",
+      "revId": "69c1829e5f27235e7f389688b8242c8669bd4321",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
