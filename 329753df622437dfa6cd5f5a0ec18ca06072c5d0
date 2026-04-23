@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da551ec7_d01b96da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-23T23:29:20Z",
+      "side": 1,
+      "message": "LGTM % nit",
+      "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae838792_80fd1d92",
@@ -14,6 +31,47 @@
       "writtenOn": "2026-04-23T23:20:09Z",
       "side": 1,
       "message": "This is the best idea I have for making this work, let me know if you have any other ideas though.",
+      "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6edec110_0def0346",
+        "filename": "OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-23T23:29:20Z",
+      "side": 1,
+      "message": "Seems like a reasonable way to keep the owners in sync and I think it should work.\n\nI believe it is possible for OWNERS files to reference OWNERS files in other repos, but I\u0027m not aware of a way to reference gardener rotations. So, I think manually keeping the list of owners in this repo is about as good as we can hope for.",
+      "parentUuid": "ae838792_80fd1d92",
+      "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef16b2f0_78b16754",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-23T23:29:20Z",
+      "side": 1,
+      "message": "Uber nit: I think `clRevision :\u003d 0` might be more idiomatic for Go.",
+      "range": {
+        "startLine": 474,
+        "startChar": 1,
+        "endLine": 474,
+        "endChar": 19
+      },
       "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
