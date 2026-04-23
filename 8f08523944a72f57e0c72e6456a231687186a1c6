@@ -273,6 +273,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a80433c_1f50a2a0",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-23T13:24:27Z",
+      "side": 1,
+      "message": "Oh so I actually meant to ask about this. Can you have holes in the attachments? Based on using highest attachment index plus one as [attachment count here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/RenderPassCache.cpp;l\u003d277-278;drc\u003d06a1e4498633419ad4f0198393f3db754ce62ce2) for the attachments added [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/RenderPassCache.cpp;l\u003d147-166;drc\u003d06a1e4498633419ad4f0198393f3db754ce62ce2) instead of the actual attachment count makes it seem like there can\u0027t be holes. OTOH the fact that we iterate through the color mask makes it seem like there can be holes.\n\nI did try to modify one of the FramebufferFetchTests to have use color attachment index 1 and leave 0 empty but it always failed validation so I wasn\u0027t sure.",
+      "parentUuid": "8d253514_bd97d117",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9012b08f_dca09a10",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 20
