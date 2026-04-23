@@ -502,6 +502,8 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
 
             case Command::WriteBuffer: {
                 WriteBufferCmd* cmd = mCommands.NextCommand<WriteBufferCmd>();
+                uint8_t* data = mCommands.NextData<uint8_t>(cmd->size);
+
                 if (cmd->size == 0) {
                     // Skip no-op writes.
                     continue;
@@ -509,7 +511,6 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
 
                 Buffer* dstBuffer = ToBackend(cmd->buffer.Get());
                 DAWN_TRY(dstBuffer->TrackUsage(commandContext, pendingSerial));
-                uint8_t* data = mCommands.NextData<uint8_t>(cmd->size);
                 DAWN_TRY(dstBuffer->Write(commandContext, cmd->offset, data, cmd->size));
 
                 break;

@@ -1389,12 +1389,13 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 WriteBufferCmd* write = mCommands.NextCommand<WriteBufferCmd>();
                 const uint64_t offset = write->offset;
                 const uint64_t size = write->size;
+                uint8_t* data = mCommands.NextData<uint8_t>(size);
+
                 if (size == 0) {
                     continue;
                 }
 
                 Buffer* dstBuffer = ToBackend(write->buffer.Get());
-                uint8_t* data = mCommands.NextData<uint8_t>(size);
 
                 DAWN_TRY(device->GetDynamicUploader()->WithUploadReservation(
                     size, kCopyBufferToBufferOffsetAlignment,

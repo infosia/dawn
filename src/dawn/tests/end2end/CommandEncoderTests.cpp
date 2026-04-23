@@ -61,6 +61,21 @@ TEST_P(CommandEncoderTests, WriteBuffer) {
     EXPECT_BUFFER_U32_EQ(0, bufferC, 3 * sizeof(uint32_t));
 }
 
+// Tests an empty WriteBuffer commands.
+TEST_P(CommandEncoderTests, EmptyWriteBuffer) {
+    wgpu::Buffer buffer =
+        utils::CreateBufferFromData(device, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::CopySrc,
+                                    {
+                                        42,
+                                    });
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.WriteBuffer(buffer, 0, nullptr, 0);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_EQ(42, buffer, 0);
+}
 DAWN_INSTANTIATE_TEST(CommandEncoderTests,
                       D3D11Backend(),
                       D3D12Backend(),
