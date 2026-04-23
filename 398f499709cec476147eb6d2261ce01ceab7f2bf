@@ -86,6 +86,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cf8b249_47cd8ed1",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "good catch! - removed",
+      "parentUuid": "ad123576_c9728ceb",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63a2ac36_b82e844b",
@@ -99,6 +117,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "This shouldn\u0027t be needed, which would make `TrackQuerySetSlotUsage` possible to replace with `TrackUsedQuerySet`.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c49ef7a_56931056",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "63a2ac36_b82e844b",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +156,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc842c9c_a3983aca",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91099890_8eb1e407",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7058af70_baf3babf",
@@ -133,6 +187,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "nit: What is `Note:` supposed to be compared to a regular comment? Can we have comments about 1/2 slots being optimal here instead of duplicated between the two resource usages (also abseil has a small map optimization anyway)? Also this can be flowed with the 100 char limit, it seems it was done with 90char.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "310321d6_d586c122",
+        "filename": "src/dawn/native/PassResourceUsage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7058af70_baf3babf",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -154,6 +226,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cca94278_3a3082c4",
+        "filename": "src/dawn/native/PassResourceUsageTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af57004_d7808e37",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e4e6961_fca33fd1",
@@ -167,6 +257,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "```suggestion\n    QuerySetToSlotUsageMap mQuerySetToSlotUsageMap;\n```",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9284b18_f9a465c0",
+        "filename": "src/dawn/native/PassResourceUsageTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e4e6961_fca33fd1",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -188,6 +296,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62d4f566_6636f29a",
+        "filename": "src/dawn/native/QueryHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b95d4a3_cc6f2e22",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f73b90f_aa947761",
@@ -205,6 +331,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55c811e9_a124888e",
+        "filename": "src/dawn/native/QueryHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f73b90f_aa947761",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bfa6f94_1a50065e",
@@ -218,6 +362,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "This is a copy of https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/utils/WGPUHelpers.h;drc\u003dc5d549e250b9225744929ae860b369cb4304a767;l\u003d53 we should use that one instead.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7796ecc0_59e88371",
+        "filename": "src/dawn/native/QueryHelper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bfa6f94_1a50065e",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -245,6 +407,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaff5b13_b714851a",
+        "filename": "src/dawn/native/QuerySet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "reverted to previous",
+      "parentUuid": "294cfb82_fb0b42c8",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5556598c_a3d91675",
@@ -258,6 +444,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "The code happening during submission should never happen in parallel so we should be safe to keep this as a regular vector. Or is there another place where this might be called concurrently?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c68afee_5ce794df",
+        "filename": "src/dawn/native/QuerySet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "I don\u0027t know what the future holds. I thought Vulkan allowed encoding multiple command buffers concurrently and Dawn eventually wanted to support that. It\u0027s also in the bug report that this is an issue. I\u0027ll remove it for now.",
+      "parentUuid": "5556598c_a3d91675",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -279,6 +483,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17d1284b_5e7aae13",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "So I implemented this. except, I\u0027m not quite sure about \u0027...and SetQueryAvailability(false) for the resolved queries.\"  My understanding it queries stay available forever. In fact I believe we have tests that resolving them more than once works and keeps the same result:\n\nhttps://github.com/gpuweb/cts/blob/5234d6547f05ba0d968f9690e2424e0ac933dc67/src/webgpu/api/operation/command_buffer/queries/occlusionQuery.spec.ts#L1068\n\nI just added the timestamp ones here: https://github.com/gpuweb/cts/pull/4631",
+      "parentUuid": "a7cd31af_859a19c6",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2da164fb_7c69cd00",
@@ -296,6 +518,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52fed767_0e977cb3",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "No, see below 👇 (if you search you\u0027ll see they begin/end timestamp aren\u0027t looked at)",
+      "parentUuid": "2da164fb_7c69cd00",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8660101_c27144f0",
@@ -309,6 +549,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "nit: leftover?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4fac01d_156851a6",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "yea, sorry, left over from the version where it recursively called the encoder. Removed",
+      "parentUuid": "d8660101_c27144f0",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -332,6 +590,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11f8ce1f_0889ea7c",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "So I made that version here: https://dawn-review.googlesource.com/c/dawn/+/304596, but I ran into the issue that you need to track slot usage between passes.\n\nIn other words\n   \n```\nencoder \u003d createEncoder()\npass1 \u003d encoder.createComputePass(slots(1,2))\npass1.end()\nencoder.WriteTimestamp(slot(3))\nencoder.WriteTimestamp(slot(4))\nencoder.ResolveQuerySet(slots(7,8))   \u003c---------- (A) error\npass2 \u003d encoder.createComputePass(slots(5,6))\npass2.end();\nencoder.WriteTimestamp(slot(7))       \u003c---------- (B) because\nencoder.WriteTimestamp(slot(8))\nqueue.submit(encoder.finish());\n```\n\nCurrently each pass keeps it\u0027s own slot usage which it can apply before the pass starts and you can\u0027t call ResolveQuerySet within a pass. But, the command encoder (commands outside of passes) can also issue WriteTimestamp And ResolveQuerySet. At each ResolveQuerySet, you\u0027d need to save off the current querySetToUsedSlotMap and start a fresh one so that a (A) above, only slots 1,2,3,4 are marked as available.\nWithout that, slots 7,8 also get marked as available when the entire command buffer starts.",
+      "parentUuid": "0f045e81_062094ad",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4771ecc3_0d4bd0f1",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 7
@@ -343,6 +619,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "nit: this is present in at least two backends, can we have a getter on the QuerySetBase to factor it?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf01823d_cb0c00e5",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4771ecc3_0d4bd0f1",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -364,6 +658,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6139576_4a75f144",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "086a4ab0_364819e1",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdc3d13e_a3ce7832",
@@ -377,6 +689,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "```suggestion\n                // Fill slots for unavailable queries with zeroes as required by the WebGPU spec.\n                bool hasUnavailableQueries \u003d false;\n```",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "291ffa5b_74f1c426",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc3d13e_a3ce7832",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -398,6 +728,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29456d12_3c0058c1",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "it\u0027s AI slop - sorry. I let it iterate a bunch when it would run the tests and they\u0027d fail. I missed this wasn\u0027t needed. Removed",
+      "parentUuid": "7334f6fa_20305cc6",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c500061d_557af04a",
@@ -411,6 +759,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "Are the pass start/end timestamp queries implemented in OpenGL? They would need a `SetQueryAvailable` as well.",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13c69637_1a249b39",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Timestamps aren\u0027t implemented in GL (see below) 👇 and a search shows no code for timestamps.",
+      "parentUuid": "c500061d_557af04a",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -455,6 +821,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ca0947_e45caab7",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b70a6b_993f3189",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cd5eb6f_cf1bace4",
@@ -489,6 +873,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa621547_ca098b35",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d8c5609_83ad97d5",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9b13542_1bb1cd28",
@@ -502,6 +904,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "Why was this changed?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd0a858_4ad27397",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b13542_1bb1cd28",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -523,6 +943,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0a72ac8_87020296",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b513e8e7_732ccdf6",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91cdf3e8_e1516ba1",
@@ -540,6 +978,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aab4099f_7ed1accd",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91cdf3e8_e1516ba1",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "093390c3_3d9f9300",
@@ -553,6 +1009,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "I don\u0027t see new symbols that need these headers, was it just existing missing includes?",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d97c1f0_0e5e9d60",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "093390c3_3d9f9300",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -580,6 +1054,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec3bd6bc_ed8f6c0f",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e0feb1_ca4ca833",
+      "range": {
+        "startLine": 191,
+        "startChar": 57,
+        "endLine": 191,
+        "endChar": 86
+      },
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fd1d64d_175751c3",
@@ -593,6 +1091,24 @@
       "writtenOn": "2026-04-22T10:34:16Z",
       "side": 1,
       "message": "```suggestion\n        // The shader expects availability to start at the first query being converted.\n```\n\nNo need to encode the history of the code in the comments 😊",
+      "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4b9d9cc_b9c8e122",
+        "filename": "src/dawn/tests/white_box/QueryInternalShaderTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2026-04-23T05:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd1d64d_175751c3",
       "revId": "398f499709cec476147eb6d2261ce01ceab7f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
