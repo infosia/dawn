@@ -210,8 +210,24 @@ MaybeError LazyClearRenderPassAttachments(DeviceBase* device,
             DAWN_ASSERT(resolveView->GetLevelCount() == 1);
             if (!resolveView->GetTexture()->IsSubresourceContentInitialized(
                     resolveView->GetSubresourceRange())) {
-                if (partialRenderArea) {
-                    // Using a renderArea that only partially covers the attachment means that the
+                // A resolveRect makes the resolve write only a sub-rect of the resolve target.
+                // Compare against the resolve target view's dimensions (not the renderPass
+                // dimensions, which describe the MSAA color attachment and may differ from the
+                // resolve target's size) to detect whether the rect actually covers the full
+                // subresource. If it does, the resolve will fully overwrite it and we can skip
+                // the clear.
+                bool partialResolveRect = false;
+                if (renderPass->resolveRect.HasValue()) {
+                    const Extent3D resolveSize = resolveView->GetSingleSubresourceVirtualSize();
+                    partialResolveRect =
+                        renderPass->resolveRect.resolveOffsetX != 0 ||
+                        renderPass->resolveRect.resolveOffsetY != 0 ||
+                        renderPass->resolveRect.updateWidth != resolveSize.width ||
+                        renderPass->resolveRect.updateHeight != resolveSize.height;
+                }
+                if (partialRenderArea || partialResolveRect) {
+                    // Using a renderArea that only partially covers the attachment, or a
+                    // resolveRect that only partially covers the resolve target, means the
                     // resolve target won't have the full subresource copied over. If it wasn't
                     // already initialized we must clear the full subresource before the pass.
                     DAWN_TRY(clearTexture(resolveView->GetTexture(),

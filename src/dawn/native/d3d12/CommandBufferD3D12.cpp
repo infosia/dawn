@@ -914,31 +914,6 @@ class VertexBufferTracker {
     PerVertexBuffer<D3D12_VERTEX_BUFFER_VIEW> mD3D12BufferViews = {};
 };
 
-MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContext,
-                                          BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
-
-    for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-        TextureViewBase* resolveTarget = renderPass->colorAttachments[i].resolveTarget.Get();
-        if (resolveTarget == nullptr) {
-            continue;
-        }
-
-        if (renderPass->resolveRect.HasValue() &&
-            renderPass->resolveRect.updateWidth != renderPass->width &&
-            renderPass->resolveRect.updateHeight != renderPass->height) {
-            // The resolve texture also has `RenderAttachment` usage but if there is a
-            // resolve rect, the texture would only be partially filled. In this case we
-            // need to initialize the texture otherwise the regions outside the resolve
-            // rect would contain undefined pixels.
-            Texture* resolveTexture = ToBackend(resolveTarget->GetTexture());
-            DAWN_TRY(resolveTexture->EnsureSubresourceContentInitialized(
-                commandContext, resolveTexture->GetAllSubresources()));
-        }
-    }
-    return {};
-}
-
 void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
                                    BeginRenderPassCmd* renderPass) {
     DAWN_ASSERT(renderPass != nullptr);
@@ -1024,8 +999,6 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
             case Command::BeginRenderPass: {
                 BeginRenderPassCmd* beginRenderPassCmd =
                     mCommands.NextCommand<BeginRenderPassCmd>();
-
-                DAWN_TRY(EnsureResolveTargetInitialized(commandContext, beginRenderPassCmd));
 
                 bool passHasUAV;
                 DAWN_TRY(TransitionAndClearForSyncScope(
