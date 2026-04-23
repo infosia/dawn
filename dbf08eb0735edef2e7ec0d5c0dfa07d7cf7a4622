@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d844e70_20cf423f",
+        "filename": "src/dawn/native/d3d11/PipelineStateTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2026-04-23T17:03:31Z",
+      "side": 1,
+      "message": "This state resetting wasn\u0027t done previously as far as I can tell. Could these states be put into an \"undefined\" state by default (maybe with std::optional?) to avoid this?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 70
+      },
+      "revId": "dbf08eb0735edef2e7ec0d5c0dfa07d7cf7a4622",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
