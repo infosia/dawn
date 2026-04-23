@@ -48,6 +48,15 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     constexpr stack_vec() : Base() {}
     constexpr explicit stack_vec(Index size) : Base() { Base::resize(static_cast<I>(size)); }
 
+    struct Initializer {
+        std::initializer_list<Value> data;
+        constexpr Initializer(std::initializer_list<Value> d) : data(d) {}
+    };
+    // Force initializer_list constructors to be nested to avoid ambiguity with other constructors
+    // in non-assert builds where TypedIntegers aren't strongly typed and can't be used to
+    // disambiguate. Use as `vector({...})` or `vector{{...}}`.
+    explicit constexpr stack_vec(Initializer init) : Base(init.data) {}
+
     using Base::data;
     using Base::empty;
 

@@ -52,7 +52,15 @@ class vector : private std::vector<Value> {
     constexpr vector(Index size, const Value& init) : Base(static_cast<I>(size), init) {}
     constexpr vector(const vector& rhs) : Base(static_cast<const Base&>(rhs)) {}
     constexpr vector(vector&& rhs) : Base(static_cast<Base&&>(rhs)) {}
-    constexpr vector(std::initializer_list<Value> init) : Base(init) {}
+
+    struct Initializer {
+        std::initializer_list<Value> data;
+        constexpr Initializer(std::initializer_list<Value> d) : data(d) {}
+    };
+    // Force initializer_list constructors to be nested to avoid ambiguity with other constructors
+    // in non-assert builds where TypedIntegers aren't strongly typed and can't be used to
+    // disambiguate. Use as `vector({...})` or `vector{{...}}`.
+    constexpr explicit vector(Initializer init) : Base(init.data) {}
 
     constexpr vector& operator=(const vector& rhs) {
         Base::operator=(static_cast<const Base&>(rhs));

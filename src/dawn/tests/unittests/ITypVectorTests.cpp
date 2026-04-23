@@ -72,7 +72,7 @@ TEST_F(ITypVectorTest, Creation) {
 
     // Initializer list constructor
     {
-        Vector vec = {Val(2), Val(8), Val(1)};
+        Vector vec({Val(2), Val(8), Val(1)});
         ASSERT_EQ(vec.size(), Key(3));
         ASSERT_EQ(vec[Key(0)], Val(2));
         ASSERT_EQ(vec[Key(1)], Val(8));
@@ -84,7 +84,7 @@ TEST_F(ITypVectorTest, Creation) {
 TEST_F(ITypVectorTest, CopyConstructAssign) {
     // Test the copy constructor
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec(rhs);
         ASSERT_EQ(vec.size(), Key(3));
@@ -100,7 +100,7 @@ TEST_F(ITypVectorTest, CopyConstructAssign) {
 
     // Test the copy assignment
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec = rhs;
         ASSERT_EQ(vec.size(), Key(3));
@@ -119,7 +119,7 @@ TEST_F(ITypVectorTest, CopyConstructAssign) {
 TEST_F(ITypVectorTest, MoveConstructAssign) {
     // Test the move constructor
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec(std::move(rhs));
         ASSERT_EQ(vec.size(), Key(3));
@@ -130,7 +130,7 @@ TEST_F(ITypVectorTest, MoveConstructAssign) {
 
     // Test the move assignment
     {
-        Vector rhs = {Val(2), Val(8), Val(1)};
+        Vector rhs({Val(2), Val(8), Val(1)});
 
         Vector vec = std::move(rhs);
         ASSERT_EQ(vec.size(), Key(3));
@@ -194,6 +194,24 @@ TEST_F(ITypVectorTest, BeginEndFrontBackData) {
     ASSERT_EQ(&constVec.front(), &constVec[Key(0)]);
     ASSERT_EQ(&constVec.back(), &constVec[Key(9)]);
     ASSERT_EQ(constVec.data(), &constVec[Key(0)]);
+}
+
+// Test that the initializer_list constructor isn't triggered in non-assert builds where the types
+// can't disambiguate it from other overloads.
+TEST_F(ITypVectorTest, ConstructorOverload) {
+    using KeyZ = TypedInteger<struct KeyZT, size_t>;
+    {
+        ityp::vector<KeyZ, size_t> vec{KeyZ(10), 7};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+    {
+        ityp::vector<KeyZ, size_t> vec{KeyZ(10)};
+        ASSERT_EQ(vec.size(), KeyZ(10));
+    }
+    {
+        ityp::vector<KeyZ, size_t> vec{{size_t(10), size_t(20)}};
+        ASSERT_EQ(vec.size(), KeyZ(2));
+    }
 }
 
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
