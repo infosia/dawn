@@ -909,13 +909,15 @@ MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContex
             continue;
         }
 
-        if (renderPass->resolveRect.HasValue() &&
-            renderPass->resolveRect.updateWidth != renderPass->width &&
-            renderPass->resolveRect.updateHeight != renderPass->height) {
+        if (renderPass->resolveRect.HasValue()) {
             // The resolve texture also has `RenderAttachment` usage but if there is a
             // resolve rect, the texture would only be partially filled. In this case we
             // need to initialize the texture otherwise the regions outside the resolve
             // rect would contain undefined pixels.
+            //
+            // Note: D3D12's debug layer treats ResolveSubresourceRegion as a partial write
+            // regardless of the rect dimensions, so a "fully covering" rect still requires
+            // a pre-clear here. Always clear when a resolveRect is set.
             Texture* resolveTexture = ToBackend(resolveTarget->GetTexture());
             DAWN_TRY(resolveTexture->EnsureSubresourceContentInitialized(
                 commandContext, resolveTexture->GetAllSubresources()));
