@@ -291,6 +291,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "81e8dce8_09b9bd26",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T13:55:42Z",
+      "side": 1,
+      "message": "[It is allowed](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp;drc\u003d8988977b2d0e15b6d0ded9fa1b43a066a63c8e2a;l\u003d176) to have sparse color attachments, but it\u0027s ok to not support it for FBF. What was the validation error?",
+      "parentUuid": "3a80433c_1f50a2a0",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9012b08f_dca09a10",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 20
