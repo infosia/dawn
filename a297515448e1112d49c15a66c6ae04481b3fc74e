@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc262a1e_63525dc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:18:36Z",
+      "side": 1,
+      "message": "LGTM, any hope for a small Dawn-side test though?",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "295fb081_b172ee1d",
@@ -14,6 +31,46 @@
       "writtenOn": "2026-04-22T19:47:44Z",
       "side": 1,
       "message": "LGTM, sending to cwallez@ for a quick dawn review",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88dc78ea_4c3203b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:18:36Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9c80c47_7b3af464",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:18:36Z",
+      "side": 1,
+      "message": "nit: `ToHLSLBindPoint` maybe to say more clearly what it gives?\n\nSee how it looks in the Vulkan backend lookhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ShaderModuleVk.cpp;drc\u003d29c28f75e0f35fd7e88f899e2be5807370c36fe9;l\u003d157",
+      "range": {
+        "startLine": 187,
+        "startChar": 9,
+        "endLine": 187,
+        "endChar": 21
+      },
       "revId": "a297515448e1112d49c15a66c6ae04481b3fc74e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
