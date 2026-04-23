@@ -118,7 +118,7 @@ class RenderPassValidationState final : public NonMovable {
             return {};
         }
 
-        DAWN_ASSERT(attachment->GetLevelCount() == 1);
+        DAWN_CHECK(attachment->GetLevelCount() == 1);
 
         const std::string_view attachmentTypeStr = GetAttachmentTypeStr(attachmentType);
 
@@ -257,7 +257,7 @@ class RenderPassValidationState final : public NonMovable {
                 }
             }
         } else {
-            DAWN_ASSERT(attachmentType != AttachmentType::ResolveTarget);
+            DAWN_CHECK(attachmentType != AttachmentType::ResolveTarget);
             mRenderWidth = renderSize.width;
             mRenderHeight = renderSize.height;
             mAttachmentValidationWidth = attachmentValidationSize.width;
@@ -265,21 +265,21 @@ class RenderPassValidationState final : public NonMovable {
             if (!mMsrtssAllowed) {
                 mSampleCount = attachment->GetTexture()->GetSampleCount();
             }
-            DAWN_ASSERT(mRenderWidth != 0);
-            DAWN_ASSERT(mRenderHeight != 0);
-            DAWN_ASSERT(mAttachmentValidationWidth != 0);
-            DAWN_ASSERT(mAttachmentValidationHeight != 0);
-            DAWN_ASSERT(mSampleCount != 0);
+            DAWN_CHECK(mRenderWidth != 0);
+            DAWN_CHECK(mRenderHeight != 0);
+            DAWN_CHECK(mAttachmentValidationWidth != 0);
+            DAWN_CHECK(mAttachmentValidationHeight != 0);
+            DAWN_CHECK(mSampleCount != 0);
         }
 
         RecordedAttachment record;
         record.texture = attachment->GetTexture();
         record.mipLevel = attachment->GetBaseMipLevel();
         if (attachment->GetDimension() == wgpu::TextureViewDimension::e3D) {
-            DAWN_ASSERT(attachment->GetBaseArrayLayer() == 0);
+            DAWN_CHECK(attachment->GetBaseArrayLayer() == 0);
             record.depthOrArrayLayer = depthSlice;
         } else {
-            DAWN_ASSERT(depthSlice == wgpu::kDepthSliceUndefined);
+            DAWN_CHECK(depthSlice == wgpu::kDepthSliceUndefined);
             record.depthOrArrayLayer = attachment->GetBaseArrayLayer();
         }
 
@@ -298,10 +298,10 @@ class RenderPassValidationState final : public NonMovable {
     // Only sets the values needed for executing the render pass, used when validation is disabled.
     void SetUnvalidatedAttachment(const TextureViewBase* attachment) {
         // Should only be called once.
-        DAWN_ASSERT(!HasAttachment());
+        DAWN_CHECK(!HasAttachment());
 
-        DAWN_ASSERT(attachment);
-        DAWN_ASSERT(attachment->GetLevelCount() == 1);
+        DAWN_CHECK(attachment);
+        DAWN_CHECK(attachment->GetLevelCount() == 1);
 
         Extent3D renderSize = attachment->GetSingleSubresourceVirtualSize();
         mRenderWidth = renderSize.width;
@@ -312,9 +312,9 @@ class RenderPassValidationState final : public NonMovable {
             mSampleCount = attachment->GetTexture()->GetSampleCount();
         }
 
-        DAWN_ASSERT(mRenderWidth != 0);
-        DAWN_ASSERT(mRenderHeight != 0);
-        DAWN_ASSERT(mSampleCount != 0);
+        DAWN_CHECK(mRenderWidth != 0);
+        DAWN_CHECK(mRenderHeight != 0);
+        DAWN_CHECK(mSampleCount != 0);
 
         RecordedAttachment record;
         record.texture = attachment->GetTexture();
@@ -561,10 +561,10 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
     const RenderPassColorAttachment& colorAttachment,
     const DawnRenderPassSampleCount* renderPassSampleCount) {
     TextureViewBase* attachment = colorAttachment.view;
-    DAWN_ASSERT(attachment);
+    DAWN_CHECK(attachment);
 
     DAWN_ASSERT(renderPassSampleCount != nullptr);
-    DAWN_ASSERT(device->HasFeature(Feature::MSAARenderToSingleSampled));
+    DAWN_CHECK(device->HasFeature(Feature::MSAARenderToSingleSampled));
 
     uint32_t passSampleCount = renderPassSampleCount->sampleCount;
     uint32_t attachmentSampleCount = attachment->GetTexture()->GetSampleCount();
@@ -607,9 +607,9 @@ MaybeError ValidateExpandResolveTextureLoadOp(const DeviceBase* device,
                     colorAttachment.view, textureSampleCount, wgpu::LoadOp::ExpandResolveTexture);
 
     // These should already be validated before entering this function.
-    DAWN_ASSERT(colorAttachment.resolveTarget != nullptr &&
-                !colorAttachment.resolveTarget->IsError());
-    DAWN_ASSERT(colorAttachment.view->GetFormat().SupportsResolveTarget());
+    DAWN_CHECK(colorAttachment.resolveTarget != nullptr &&
+               !colorAttachment.resolveTarget->IsError());
+    DAWN_CHECK(colorAttachment.view->GetFormat().SupportsResolveTarget());
 
     DAWN_INVALID_IF(
         (colorAttachment.resolveTarget->GetUsage() & wgpu::TextureUsage::TextureBinding) == 0,
@@ -620,7 +620,7 @@ MaybeError ValidateExpandResolveTextureLoadOp(const DeviceBase* device,
 
     // TODO(42240662): multiplanar textures are not supported as resolve target.
     // The RenderPassValidationState currently rejects such usage.
-    DAWN_ASSERT(!colorAttachment.resolveTarget->GetTexture()->GetFormat().IsMultiPlanar());
+    DAWN_CHECK(!colorAttachment.resolveTarget->GetTexture()->GetFormat().IsMultiPlanar());
 
     validationState->SetWillExpandResolveTexture(true);
 
@@ -705,7 +705,7 @@ MaybeError ValidateRenderPassDepthStencilAttachment(
     const RenderPassDepthStencilAttachment* depthStencilAttachment,
     UsageValidationMode usageValidationMode,
     RenderPassValidationState* validationState) {
-    DAWN_ASSERT(depthStencilAttachment != nullptr);
+    DAWN_CHECK(depthStencilAttachment != nullptr);
     UnpackedPtr<RenderPassDepthStencilAttachment> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(depthStencilAttachment));
 
@@ -722,7 +722,7 @@ MaybeError ValidateRenderPassDepthStencilAttachment(
         attachment->GetAspects() != format.aspects,
         "The depth stencil attachment %s must encompass all aspects of it's texture's format (%s).",
         attachment, format.format);
-    DAWN_ASSERT(attachment->GetFormat().format == format.format);
+    DAWN_CHECK(attachment->GetFormat().format == format.format);
 
     DAWN_INVALID_IF(!format.HasDepthOrStencil(),
                     "The depth stencil attachment %s format (%s) is not a depth stencil format.",
@@ -974,7 +974,7 @@ MaybeError InitializeValidationStateAttachment(DeviceBase* device,
 
     // Check every attachment to guard against invalid objects caused by OOM errors.
     auto CheckAttachment = [&](TextureViewBase* view) -> MaybeError {
-        DAWN_ASSERT(view);
+        DAWN_CHECK(view);
         DAWN_TRY(device->IsNotErrorObject(view));
         representativeView = view;
         return {};
@@ -1003,7 +1003,7 @@ MaybeError InitializeValidationStateAttachment(DeviceBase* device,
     }
 
     // Only one attachment needs to be added to the validation state.
-    DAWN_ASSERT(representativeView);
+    DAWN_CHECK(representativeView);
     validationState->SetUnvalidatedAttachment(representativeView);
 
     return {};
@@ -1292,7 +1292,7 @@ void CommandEncoder::TrackUsedQuerySet(QuerySetBase* querySet) {
 }
 
 void CommandEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex) {
-    DAWN_ASSERT(querySet != nullptr);
+    DAWN_CHECK(querySet != nullptr);
 
     TrackUsedQuerySet(querySet);
 
@@ -1419,7 +1419,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 DAWN_TRY(InitializeValidationStateAttachment(device, descriptor, &validationState));
             }
 
-            DAWN_ASSERT(validationState.IsValidState());
+            DAWN_CHECK(validationState.IsValidState());
 
             DAWN_TRY(clearWithDrawHelper.Initialize(this, descriptor));
             DAWN_TRY(renderpassWorkaroundsHelper.Initialize(this, descriptor));
@@ -1500,8 +1500,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 // GPURenderPassDepthStencilAttachment.stencilClearValue will be converted to
                 // the type of the stencil aspect of view by taking the same number of LSBs as
                 // the number of bits in the stencil aspect of one texel block of view.
-                DAWN_ASSERT(!(view->GetFormat().aspects & Aspect::Stencil) ||
-                            view->GetFormat().GetAspectInfo(Aspect::Stencil).block.byteSize == 1u);
+                DAWN_CHECK(!(view->GetFormat().aspects & Aspect::Stencil) ||
+                           view->GetFormat().GetAspectInfo(Aspect::Stencil).block.byteSize == 1u);
                 cmd->depthStencilAttachment.clearStencil =
                     descriptor->depthStencilAttachment->stencilClearValue & 0xFF;
 
@@ -1991,8 +1991,8 @@ void CommandEncoder::APICopyTextureToTexture(const TexelCopyTextureInfo* sourceO
             mTopLevelTextures.insert(destination.texture);
 
             Aspect aspect = ConvertAspect(source.texture->GetFormat(), source.aspect);
-            DAWN_ASSERT(aspect ==
-                        ConvertAspect(destination.texture->GetFormat(), destination.aspect));
+            DAWN_CHECK(aspect ==
+                       ConvertAspect(destination.texture->GetFormat(), destination.aspect));
 
             TextureCopy src;
             src.texture = source.texture;
@@ -2109,7 +2109,7 @@ void CommandEncoder::APIClearBuffer(BufferBase* buffer, uint64_t offset, uint64_
 
             } else {
                 if (size == wgpu::kWholeSize) {
-                    DAWN_ASSERT(buffer->GetSize() >= offset);
+                    DAWN_CHECK(buffer->GetSize() >= offset);
                     size = buffer->GetSize() - offset;
                 }
             }
@@ -2295,7 +2295,7 @@ CommandBufferBase* CommandEncoder::APIFinish(const CommandBufferDescriptor* desc
         return ReturnToAPI(std::move(errorCommandBuffer));
     }
 
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return ReturnToAPI(std::move(commandBuffer));
 }
 

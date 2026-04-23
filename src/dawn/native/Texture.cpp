@@ -218,7 +218,7 @@ MaybeError ValidateSampleCount(const TextureDescriptor* descriptor,
                         "The texture format (%s) does not support multisampling.", format->format);
 
         // Compressed formats are not renderable. They cannot support multisample.
-        DAWN_ASSERT(!format->isCompressed);
+        DAWN_CHECK(!format->isCompressed);
 
         DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageBinding,
                         "The sample count (%u) of a storage texture is not 1.",
@@ -288,8 +288,8 @@ MaybeError ValidateTextureViewDimensionCompatibility(
 MaybeError ValidateTextureSize(const DeviceBase* device,
                                const TextureDescriptor* descriptor,
                                const Format* format) {
-    DAWN_ASSERT(descriptor->size.width != 0 && descriptor->size.height != 0 &&
-                descriptor->size.depthOrArrayLayers != 0);
+    DAWN_CHECK(descriptor->size.width != 0 && descriptor->size.height != 0 &&
+               descriptor->size.depthOrArrayLayers != 0);
     const CombinedLimits& limits = device->GetLimits();
     Extent3D maxExtent;
     switch (descriptor->dimension) {
@@ -312,7 +312,7 @@ MaybeError ValidateTextureSize(const DeviceBase* device,
         descriptor->size.depthOrArrayLayers > maxExtent.depthOrArrayLayers) [[unlikely]] {
         Limits adapterLimits;
         wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
-        DAWN_ASSERT(status == wgpu::Status::Success);
+        DAWN_CHECK(status == wgpu::Status::Success);
 
         Extent3D maxExtentAdapter;
         StringView limitName;
@@ -862,8 +862,8 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
                                          const TextureBase* texture,
                                          const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     // Parent texture should have been already validated.
-    DAWN_ASSERT(texture);
-    DAWN_ASSERT(!texture->IsError());
+    DAWN_CHECK(texture);
+    DAWN_CHECK(!texture->IsError());
 
     DAWN_TRY(ValidateTextureViewDimension(descriptor->dimension));
     DAWN_TRY(ValidateTextureFormat(descriptor->format));
@@ -938,7 +938,7 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
 ResultOrError<TextureViewDescriptor> GetTextureViewDescriptorWithDefaults(
     const TextureBase* texture,
     const TextureViewDescriptor* descriptor) {
-    DAWN_ASSERT(texture);
+    DAWN_CHECK(texture);
 
     TextureViewDescriptor desc = {};
     if (descriptor) {
@@ -1184,31 +1184,31 @@ std::string TextureBase::GetSizeLabel() const {
 }
 
 wgpu::TextureDimension TextureBase::GetDimension() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mDimension;
 }
 
 wgpu::TextureViewDimension TextureBase::GetCompatibilityTextureBindingViewDimension() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mCompatibilityTextureBindingViewDimension;
 }
 
 const Format& TextureBase::GetFormat() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return *mFormat;
 }
 const FormatSet& TextureBase::GetViewFormats() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mViewFormats;
 }
 
 const Extent3D& TextureBase::GetBaseSize() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mBaseSize;
 }
 
 Extent3D TextureBase::GetSize(Aspect aspect) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     switch (aspect) {
         case Aspect::Color:
         case Aspect::Depth:
@@ -1253,68 +1253,68 @@ Extent3D TextureBase::GetSize(wgpu::TextureAspect textureAspect) const {
     return GetSize(aspect);
 }
 uint32_t TextureBase::GetWidth(Aspect aspect) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return GetSize(aspect).width;
 }
 uint32_t TextureBase::GetHeight(Aspect aspect) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return GetSize(aspect).height;
 }
 uint32_t TextureBase::GetDepth(Aspect aspect) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     DAWN_ASSERT(mDimension == wgpu::TextureDimension::e3D);
     return GetSize(aspect).depthOrArrayLayers;
 }
 uint32_t TextureBase::GetArrayLayers() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     if (mDimension == wgpu::TextureDimension::e3D) {
         return 1;
     }
     return mBaseSize.depthOrArrayLayers;
 }
 uint32_t TextureBase::GetNumMipLevels() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mMipLevelCount;
 }
 SubresourceRange TextureBase::GetAllSubresources() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return {mFormat->aspects, {0, GetArrayLayers()}, {0, mMipLevelCount}};
 }
 uint32_t TextureBase::GetSampleCount() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mSampleCount;
 }
 uint32_t TextureBase::GetSubresourceCount() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return static_cast<uint32_t>(mIsSubresourceContentInitializedAtIndex.size());
 }
 wgpu::TextureUsage TextureBase::GetUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mUsage;
 }
 wgpu::TextureUsage TextureBase::GetInternalUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mInternalUsage;
 }
 
 bool TextureBase::HasPinnedUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mPinnedUsage != wgpu::TextureUsage::None;
 }
 
 wgpu::TextureUsage TextureBase::GetPinnedUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     DAWN_ASSERT(HasPinnedUsage());
     return mPinnedUsage;
 }
 
 void TextureBase::AddInternalUsage(wgpu::TextureUsage usage) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     mInternalUsage |= usage;
 }
 
 bool TextureBase::IsDestroyed() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mState.destroyed;
 }
 
@@ -1343,7 +1343,7 @@ void TextureBase::OnBeginAccess() {
 }
 
 bool TextureBase::HasAccess() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mState.hasAccess;
 }
 
@@ -1355,7 +1355,7 @@ uint32_t TextureBase::GetSubresourceIndex(uint32_t mipLevel,
 }
 
 bool TextureBase::IsSubresourceContentInitialized(const SubresourceRange& range) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     for (Aspect aspect : IterateEnumMask(range.aspects)) {
         for (uint32_t arrayLayer = range.baseArrayLayer;
              arrayLayer < range.baseArrayLayer + range.layerCount; ++arrayLayer) {
@@ -1374,7 +1374,7 @@ bool TextureBase::IsSubresourceContentInitialized(const SubresourceRange& range)
 
 void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
                                                      const SubresourceRange& range) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     for (Aspect aspect : IterateEnumMask(range.aspects)) {
         for (uint32_t arrayLayer = range.baseArrayLayer;
              arrayLayer < range.baseArrayLayer + range.layerCount; ++arrayLayer) {
@@ -1389,7 +1389,7 @@ void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
 }
 
 MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     if (mState.destroyed || !mState.hasAccess) [[unlikely]] {
         DAWN_INVALID_IF(mState.destroyed, "Destroyed texture %s used in a submit.", this);
         if (!mState.hasAccess) [[unlikely]] {
@@ -1415,7 +1415,7 @@ MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
 }
 
 bool TextureBase::IsMultisampledTexture() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mSampleCount > 1;
 }
 
@@ -1570,7 +1570,7 @@ void TextureBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump, const cha
 }
 
 uint64_t TextureBase::ComputeEstimatedByteSize() const {
-    DAWN_ASSERT(IsAlive() && !IsError());
+    DAWN_CHECK(IsAlive() && !IsError());
     // Do not emit a non-zero size for textures that wrap external shared texture memory, or
     // textures used as transient (memoryless) attachments.
     if (GetSharedResourceMemoryContents() != nullptr ||
@@ -1602,7 +1602,7 @@ ResultOrError<Ref<TextureViewBase>> TextureBase::GetOrCreateDefaultView() {
     if (!mDefaultView) {
         DAWN_TRY_ASSIGN(mDefaultView, GetDevice()->CreateTextureView(this, nullptr));
     }
-    DAWN_ASSERT(mDefaultView);
+    DAWN_CHECK(mDefaultView);
     return mDefaultView;
 }
 
@@ -1673,7 +1673,7 @@ MaybeError TextureBase::Pin(wgpu::TextureUsage usage) {
     if (HasPinnedUsage()) {
         Unpin();
     }
-    DAWN_ASSERT(!HasPinnedUsage());
+    DAWN_CHECK(!HasPinnedUsage());
 
     DAWN_TRY(PinImpl(usage));
 
@@ -1739,15 +1739,15 @@ void TextureBase::Unpin() {
 }
 
 void TextureBase::AddResourceTableSlotUse(ResourceTableBase* table, ResourceTableSlot slot) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     auto [_, inserted] = mResourceTableSlotUses.insert({table, slot});
-    DAWN_ASSERT(inserted);
+    DAWN_CHECK(inserted);
 }
 
 void TextureBase::RemoveResourceTableSlotUse(ResourceTableBase* table, ResourceTableSlot slot) {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     bool removed = mResourceTableSlotUses.erase({table, slot});
-    DAWN_ASSERT(removed);
+    DAWN_CHECK(removed);
 }
 
 size_t TextureBase::ResourceTableSlotUse::HashFuncs::operator()(
@@ -1909,67 +1909,67 @@ void TextureViewBase::FormatLabel(absl::FormatSink* s) const {
 }
 
 const TextureBase* TextureViewBase::GetTexture() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mTexture.Get();
 }
 
 TextureBase* TextureViewBase::GetTexture() {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mTexture.Get();
 }
 
 Aspect TextureViewBase::GetAspects() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange.aspects;
 }
 
 const Format& TextureViewBase::GetFormat() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return *mFormat;
 }
 
 wgpu::TextureViewDimension TextureViewBase::GetDimension() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mDimension;
 }
 
 uint32_t TextureViewBase::GetBaseMipLevel() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange.baseMipLevel;
 }
 
 uint32_t TextureViewBase::GetLevelCount() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange.levelCount;
 }
 
 uint32_t TextureViewBase::GetBaseArrayLayer() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange.baseArrayLayer;
 }
 
 uint32_t TextureViewBase::GetLayerCount() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange.layerCount;
 }
 
 const SubresourceRange& TextureViewBase::GetSubresourceRange() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mRange;
 }
 
 Extent3D TextureViewBase::GetSingleSubresourceVirtualSize() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return GetTexture()->GetMipLevelSingleSubresourceVirtualSize(GetBaseMipLevel(), GetAspects());
 }
 
 wgpu::TextureUsage TextureViewBase::GetUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mUsage;
 }
 
 wgpu::TextureUsage TextureViewBase::GetInternalUsage() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_CHECK(!IsError());
     return mInternalUsage;
 }
 
@@ -1991,12 +1991,12 @@ bool TextureViewBase::IsYCbCr() const {
 }
 
 bool TextureViewBase::HasYCbCrDescriptor() const {
-    DAWN_ASSERT(IsYCbCr());
+    DAWN_CHECK(IsYCbCr());
     return mHasYCbCrDescriptor;
 }
 
 bool TextureViewBase::IsYCbCrFilterable() const {
-    DAWN_ASSERT(IsYCbCr());
+    DAWN_CHECK(IsYCbCr());
     return false;
 }
 
@@ -2007,7 +2007,7 @@ ApiObjectList* TextureViewBase::GetObjectTrackingList() {
     // Return the base device list for error objects so that
     // the list is never null. Error texture views are never tracked,
     // so liveness checks will always return false.
-    DAWN_ASSERT(IsError());
+    DAWN_CHECK(IsError());
     return ApiObjectBase::GetObjectTrackingList();
 }
 
