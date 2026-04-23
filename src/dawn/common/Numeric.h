@@ -62,7 +62,7 @@ inline constexpr uint32_t u32_alignof = detail::u32_alignof<T>();
 template <typename Dst, typename Src>
     requires std::unsigned_integral<Src>
 inline Dst checked_cast(const Src& value) {
-    DAWN_ASSERT(value <= std::numeric_limits<Dst>::max());
+    DAWN_CHECK(value <= std::numeric_limits<Dst>::max());
     return static_cast<Dst>(value);
 }
 
