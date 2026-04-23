@@ -324,7 +324,7 @@ TEST_F(ResolverBufferViewTest, Offset_Unsigned_TooSmall) {
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(
         r()->error(),
-        R"(error: the offset argument of bufferView plus the size of the return type must be smaller than the buffer size)");
+        R"(error: the offset argument of bufferView plus the minimum size of the return type must be smaller than the buffer size)");
 }
 
 TEST_F(ResolverBufferViewTest, Offset_Unsigned_Unaligned) {
@@ -346,7 +346,7 @@ TEST_F(ResolverBufferViewTest, Offset_Signed_TooSmall) {
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(
         r()->error(),
-        R"(error: the offset argument of bufferView plus the size of the return type must be smaller than the buffer size)");
+        R"(error: the offset argument of bufferView plus the minimum size of the return type must be smaller than the buffer size)");
 }
 
 TEST_F(ResolverBufferViewTest, Offset_Signed_Unaligned) {
@@ -409,7 +409,7 @@ fn foo() {
 }
 )",
         R"(
-input.wgsl:4:29 error: the offset argument of bufferView plus the size of the return type must not overflow a 32-bit unsigned integer
+input.wgsl:4:29 error: the offset argument of bufferView plus the minimum size of the return type must not overflow a 32-bit unsigned integer
   _ = bufferView<vec4u>(&v, 4294967280u);
                             ^^^^^^^^^^^
 )");
@@ -455,6 +455,42 @@ fn bar(p : ptr<storage, buffer<64>, read_write>) {
 input.wgsl:3:7 note: due to call here
   _ = bufferView<u32>(p, 64);
       ^^^^^^^^^^^^^^^^^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferViewTest, MinSizeViolation) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec4u,
+  b : array<vec2u>,
+}
+fn foo(p : ptr<storage, buffer<20>>, offset : u32) {
+  _ = bufferView<S>(p, offset);
+}
+)",
+        R"(
+input.wgsl:7:24 error: the offset argument of bufferView plus the minimum size of the return type must be smaller than the buffer size
+  _ = bufferView<S>(p, offset);
+                       ^^^^^^
+)");
+}
+
+TEST_F(ResolverBufferViewTest, MinSizeViolation_ConstOffset) {
+    ExpectError(
+        R"(
+struct S {
+  a : vec4u,
+  b : array<vec2u>,
+}
+fn foo(p : ptr<storage, buffer<32>>) {
+  _ = bufferView<S>(p, 16);
+}
+)",
+        R"(
+input.wgsl:7:24 error: the offset argument of bufferView plus the minimum size of the return type must be smaller than the buffer size
+  _ = bufferView<S>(p, 16);
+                       ^^
 )");
 }
 
@@ -671,10 +707,7 @@ TEST_F(ResolverBufferArrayViewTest, InvalidType) {
                             AddressOf(gv), 8_u, 12_a))});
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(error: type 'sampler' cannot be used in address space 'storage' as it is non-host-shareable
-note:  while instantiating bufferView)");
+    EXPECT_EQ(r()->error(), R"(error: return type of bufferArrayView must be host-shareable)");
 }
 
 TEST_F(ResolverBufferArrayViewTest, OffsetAndSize_TooSmall_Vec3) {

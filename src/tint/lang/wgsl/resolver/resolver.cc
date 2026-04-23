@@ -1437,15 +1437,17 @@ void Resolver::RegisterBufferView(const sem::Call* call, wgsl::BuiltinFn fn) {
         buffer_size = ret_store_type->Size();
     } else {
         if (const auto* str_ty = ret_store_type->As<core::type::Struct>()) {
-            auto members = str_ty->Members();
-            const auto* last = members[members.Length() - 1];
+            const auto* last = str_ty->Members().Back();
             const auto* last_type = last->Type();
             TINT_ASSERT(last_type->Is<core::type::Array>());
             buffer_size = last->Offset() + last_type->As<core::type::Array>()->ImplicitStride();
         } else if (const auto* arr_ty = ret_store_type->As<core::type::Array>()) {
             buffer_size = arr_ty->ImplicitStride();
+        } else {
+            // Any other type should be caught be validation as an error.
+            TINT_UNREACHABLE() << "unexpected return type for "
+                               << call->Target()->As<sem::BuiltinFn>()->str();
         }
-        // Any other type should be caught be validation as an error.
     }
 
     auto* offset = call->Arguments()[1];
@@ -2357,6 +2359,7 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
 
         case wgsl::BuiltinFn::kBufferView:
         case wgsl::BuiltinFn::kBufferArrayView: {
+            TINT_RET_IF(!validator_.BufferView(call));
             RegisterBufferView(call, fn);
             auto address_space =
                 call->Target()->ReturnType()->template As<core::type::Pointer>()->AddressSpace();
@@ -2367,7 +2370,6 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
                 AddNote(call->Declaration()) << " while instantiating bufferView";
                 return nullptr;
             }
-            TINT_RET_IF(!validator_.BufferView(call));
             break;
         }
         default:

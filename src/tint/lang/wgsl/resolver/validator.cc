@@ -2183,6 +2183,25 @@ bool Validator::BufferView(const sem::Call* call) const {
     TINT_ASSERT(builtin->Fn() == wgsl::BuiltinFn::kBufferView ? call->Arguments().Length() == 2
                                                               : call->Arguments().Length() == 3);
 
+    uint64_t ret_min_size = 0;
+    uint64_t ret_offset = 0;
+    uint64_t ret_stride = 0;
+    if (ret_store_type->HasFixedFootprint()) {
+        ret_min_size = ret_store_type->Size();
+    } else {
+        if (const auto* str_ty = ret_store_type->As<core::type::Struct>()) {
+            const auto* last = str_ty->Members().Back();
+            const auto* last_ty = last->Type();
+            TINT_ASSERT(last_ty->Is<core::type::Array>());
+            ret_offset = last->Offset();
+            ret_stride = last_ty->As<core::type::Array>()->ImplicitStride();
+        } else {
+            TINT_ASSERT(ret_store_type->Is<core::type::Array>());
+            ret_stride = ret_store_type->As<core::type::Array>()->ImplicitStride();
+        }
+        ret_min_size = ret_offset + ret_stride;
+    }
+
     auto* buffer_ptr = call->Arguments()[0];
     auto* buffer_type =
         buffer_ptr->Type()->As<core::type::Pointer>()->StoreType()->As<core::type::Buffer>();
@@ -2213,16 +2232,17 @@ bool Validator::BufferView(const sem::Call* call) const {
 
     auto count = buffer_type->ConstantCount();
     if (builtin->Fn() == wgsl::BuiltinFn::kBufferView) {
-        if (offset_value + ret_store_type->Size() > std::numeric_limits<uint32_t>::max()) {
+        if (offset_value + ret_min_size > std::numeric_limits<uint32_t>::max()) {
             AddError(offset->Declaration()->source)
                 << "the offset argument of " << builtin->str()
-                << " plus the size of the return type must not overflow a 32-bit unsigned integer";
+                << " plus the minimum size of the return type must not overflow a 32-bit unsigned "
+                   "integer";
             return false;
         }
-        if (count != std::nullopt && offset_value + ret_store_type->Size() >= count.value()) {
+        if (count != std::nullopt && offset_value + ret_min_size >= count.value()) {
             AddError(offset->Declaration()->source)
                 << "the offset argument of " << builtin->str()
-                << " plus the size of the return type must be smaller than the buffer size";
+                << " plus the minimum size of the return type must be smaller than the buffer size";
             return false;
         }
 
@@ -2231,21 +2251,6 @@ bool Validator::BufferView(const sem::Call* call) const {
 
     // bufferArrayView specific checks
     // Return type must not have a fixed footprint.
-    uint64_t ret_offset = 0;
-    uint64_t ret_stride = 0;
-    if (const auto* str_ty = ret_store_type->As<core::type::Struct>()) {
-        auto members = str_ty->Members();
-        const auto* last = members[members.Length() - 1];
-        const auto* last_type = last->Type();
-        TINT_ASSERT(last_type->Is<core::type::Array>());
-        ret_offset = last->Offset();
-        ret_stride = last_type->As<core::type::Array>()->ImplicitStride();
-    } else {
-        TINT_ASSERT(ret_store_type->Is<core::type::Array>());
-        ret_stride = ret_store_type->As<core::type::Array>()->ImplicitStride();
-    }
-    uint64_t ret_min_size = ret_offset + ret_stride;
-
     uint64_t size_value = 0;
     auto* size = call->Arguments()[2];
     auto* size_constant_value = size->ConstantValue();
