@@ -1,6 +1,57 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a9ef37b_bf222424",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "Direction looks good! Couple of comments to maybe simplify the approach.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c488479d_50784a3c",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1502c531_f143873a",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "It should probably dirty the resource table as well, like done at [1].",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42ea9f3d_d0452e24",
@@ -73,6 +124,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f2a2cd8f_b453e4c4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "We could potentially add metadata gathered during frontend encoding that says if a renderpass has any framebuffer fetch pipeline used, and use that to set the descriptor set if needed on `BeginRenderPass`.",
+      "parentUuid": "197ff354_6078c64d",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b118036f_0831557e",
+        "filename": "src/dawn/native/vulkan/DeviceVk.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "nit: having an indirection like the other helper / services would be nice as it means the class can be forward-declared here and the declaration only visible to whatever uses it.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "41659c72_d521171a",
         "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
         "patchSetId": 20
@@ -107,6 +199,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "604bb562_3806459f",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "I wonder if we could use a `BindGroupLayout` created reentrantly: we have support for texture bindings with [`kInputAttachmentDim`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d01f3fea318f80b5541e1d5eb8dfeb174820926be;l\u003d394) such that we could in the CommandBuffer do something like:\n\n```\nPerColorAttachment\u003cBindGroupLayoutEntry\u003e bglEntries;\nPerColorAttachment\u003cBindGroupEntry\u003e bgEntries;\nfor each attachment {\n    bglEntries[i].texture.dimension \u003d kInputAttachmentDim;\n    // ...\n}\nDAWN_TRY_ASSIGN(bgl, device-\u003eCreateBGL(...));\nDAWN_TRY_ASSIGN(bg, device-\u003eCreateBG(...));\n\nVkDescriptorSet inputAttachmentSet \u003d ToBackend(bg)-\u003eGetHandle();\n```\n\nThe BindGroupLayout would be cached between submissions like all contentless objects.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d869d5b2_28d18e85",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 20
@@ -118,6 +227,97 @@
       "writtenOn": "2026-04-22T20:46:39Z",
       "side": 1,
       "message": "```suggestion\n            .rasterizationOrderColorAttachmentAccess \u003d\u003d VK_TRUE) {\n```\n\nJust for consistency with the rest of the file.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f098a2a0_67f4ff49",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "doesn\u0027t ++ work with TypedIntegers? We could add it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 66
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d253514_bd97d117",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "nit: we could have a getter in this class to hide this slight ugliness. Also does FBF require that there are no holes in the attachments (for example attachments 0 and 2 present but not 1)?",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9012b08f_dca09a10",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "Can we have a TODO somewhere in a test file to check FBF + ResourceTable works? (we don\u0027t need to implement it anytime soon).",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fe1a965_6edf7330",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "ditto ++",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69177dab_4aef074b",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-23T08:59:51Z",
+      "side": 1,
+      "message": "Can we break this into a few names booleans? It\u0027s starting to be hard to parse what the condition means.",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
