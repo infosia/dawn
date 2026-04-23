@@ -55,20 +55,17 @@ class span : private ::std::span<Value> {
     constexpr span() = default;
     constexpr span(Value* data, Index size) : Base{data, static_cast<I>(size)} {}
 
+    using Base::begin, Base::end;
+    using Base::front, Base::back;
+
+    using Base::data;
+
     constexpr Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
 
     constexpr Index size() const {
         DAWN_ASSERT(std::numeric_limits<I>::max() >= Base::size());
         return Index(static_cast<I>(Base::size()));
     }
-
-    using Base::data;
-
-    using Base::begin;
-    using Base::end;
-
-    using Base::back;
-    using Base::front;
 };
 
 // ityp::SpanFromUntyped<Index>(myValues, myValueCount) creates a span<Index, Value> from a C-style
