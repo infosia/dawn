@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1766bf0b_3f5383f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T15:57:35Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"availablility\" is a possible misspelling of \"availability\".\n\nTo bypass Spellche...\n\n\"availablility\" is a possible misspelling of \"availability\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "a318d7fdee41cd341c7c0ee01622c299d57352dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
