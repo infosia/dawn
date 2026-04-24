@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6a01a44_905d5618",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-24T18:58:56Z",
+      "side": 1,
+      "message": "You\u0027re not accounting for allowedUsage in here, which is unfortunately necessary.\n\nIt was added because there are cases where the immediate usage is only TextureBinding (like when creating a bind group) but the texture\u0027s allowed usage also includes Storage, and as a result we have to use VK_IMAGE_LAYOUT_GENERAL just in case some other bind group uses the same texture as read only storage.\n\nYeah, it sucks. Sorry.",
+      "revId": "3af899949c93343d7f34e6c6d3624c193e2ac1e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee1e0ffd_e0484028",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 3
