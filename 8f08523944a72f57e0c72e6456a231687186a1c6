@@ -232,6 +232,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6ada6a45_fda1e008",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T08:42:44Z",
+      "side": 1,
+      "message": "Exactly!",
+      "parentUuid": "0fb1eb21_848e0895",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b118036f_0831557e",
         "filename": "src/dawn/native/vulkan/DeviceVk.h",
         "patchSetId": 20
