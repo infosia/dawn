@@ -31,6 +31,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
 	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"go.chromium.org/luci/auth"
+	"go.chromium.org/luci/auth/scopes"
 	"go.chromium.org/luci/hardcoded/chromeinfra"
 )
 
@@ -42,8 +43,8 @@ func DefaultAuthOptions(
 	def := chromeinfra.DefaultAuthOptions()
 	def.SecretsDir = fileutils.ExpandHome("~/.config/dawn-cts", environProvider)
 	def.Scopes = append(def.Scopes,
-		"https://www.googleapis.com/auth/gerritcodereview",
-		auth.OAuthScopeEmail)
+		scopes.Gerrit,
+		scopes.Email)
 	def.Scopes = append(def.Scopes, additionalScopes...)
 	return def
 }

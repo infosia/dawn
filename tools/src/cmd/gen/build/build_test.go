@@ -356,7 +356,7 @@ func TestPopulateSourceFiles(t *testing.T) {
 			name:             "Non-existent root",
 			skipFileCreation: true,
 			wantErr:          true,
-			wantErrMsg:       "open root: file does not exist",
+			wantErrMsg:       "root: file does not exist",
 		},
 		{ /////////////////////////////////////////////////////////////////////////
 			name: "Success",
