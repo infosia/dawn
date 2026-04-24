@@ -1388,6 +1388,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
                 RecordWriteTimestampCmd(recordingContext, device, cmd->querySet.Get(),
                                         cmd->queryIndex, false, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -1515,6 +1517,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                                             computePassCmd->timestampWrites.endOfPassWriteIndex,
                                             false, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT);
                 }
+
+                UpdateQueryAvailability(computePassCmd->timestampWrites);
                 return {};
             }
 
@@ -1621,6 +1625,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
                 RecordWriteTimestampCmd(recordingContext, device, cmd->querySet.Get(),
                                         cmd->queryIndex, false, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -1951,6 +1957,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                                             true, VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT);
                 }
 
+                UpdateQueryAvailability(renderPassCmd->timestampWrites);
                 return {};
             }
 
@@ -2037,6 +2044,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
                 device->fn.CmdEndQuery(commands, ToBackend(cmd->querySet.Get())->GetHandle(),
                                        uint32_t{cmd->queryIndex});
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -2046,6 +2055,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
                 RecordWriteTimestampCmd(recordingContext, device, cmd->querySet.Get(),
                                         cmd->queryIndex, true, VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
