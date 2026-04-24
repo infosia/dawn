@@ -270,8 +270,8 @@ schema::TimestampWrites ToSchema(CaptureContext& captureContext,
                                  const TimestampWrites& timestampWrites) {
     return {{
         .querySetId = captureContext.GetId(timestampWrites.querySet),
-        .beginningOfPassWriteIndex = timestampWrites.beginningOfPassWriteIndex,
-        .endOfPassWriteIndex = timestampWrites.endOfPassWriteIndex,
+        .beginningOfPassWriteIndex = uint32_t{timestampWrites.beginningOfPassWriteIndex},
+        .endOfPassWriteIndex = uint32_t{timestampWrites.endOfPassWriteIndex},
     }};
 }
 
