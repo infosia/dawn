@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "100d0dd4_c329c2f3",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-24T22:03:04Z",
+      "side": 1,
+      "message": "I didn\u0027t change any of the code that uses `allowedUsage`, it\u0027s still used for defaulting and on line 753.",
+      "parentUuid": "b6a01a44_905d5618",
+      "revId": "3af899949c93343d7f34e6c6d3624c193e2ac1e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee1e0ffd_e0484028",
         "filename": "src/dawn/native/vulkan/TextureVk.cpp",
         "patchSetId": 3
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "I think the reason it was complex was to try to make the switch a jump table when multibit will likely be a search tree. But w/e.\n\nI don\u0027t know how to make the switch not complain though :(",
       "parentUuid": "ee1e0ffd_e0484028",
+      "revId": "3af899949c93343d7f34e6c6d3624c193e2ac1e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e301bef_d599f3bf",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-24T22:03:04Z",
+      "side": 1,
+      "message": "I think we can fix this long-term by adding the appropriate clang annotations to our enums, which I have on a list and will file next week.",
+      "parentUuid": "47decace_72943e4d",
       "revId": "3af899949c93343d7f34e6c6d3624c193e2ac1e0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
