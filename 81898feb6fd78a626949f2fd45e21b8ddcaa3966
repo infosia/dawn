@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34e39cf5_5b7c26b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-24T18:02:13Z",
+      "side": 1,
+      "message": "OK, I guess it\u0027s happening on CQ too. This seems to have something to do with standard libraries, so maybe it\u0027s installing the Go version in go.mod whereas my local machine always runs 1.26.2?\n\nMaybe the key issue that I ran into just regressed yesterday and will be broken on the roller bot too. I skipped last night\u0027s run, but I just started one now so let\u0027s see.",
+      "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
