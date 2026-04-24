@@ -124,7 +124,7 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
     // display should only list one kind of color buffer as potentially supported.
     EGLConfig contextConfig = kNoConfig;
     if (!egl.HasExt(EGLExt::NoConfigContext)) {
-        DAWN_ASSERT(mDisplay->GetPotentialSurfaceFormats().size() == 1);
+        DAWN_OPT_ASSUME(mDisplay->GetPotentialSurfaceFormats().size() == 1);
         wgpu::TextureFormat format = mDisplay->GetPotentialSurfaceFormats()[0];
 
         contextConfig = mDisplay->ChooseConfig(EGL_WINDOW_BIT, format);
@@ -162,7 +162,7 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
     }
 
     if (useRobustness) {
-        DAWN_ASSERT(egl.HasExt(EGLExt::CreateContextRobustness));
+        DAWN_OPT_ASSUME(egl.HasExt(EGLExt::CreateContextRobustness));
         // EGL_EXT_create_context_robustness is promoted to 1.5 but with a different enum value.
         // PowerVR advertises EGL 1.5, but only supports the old enum value.
         if (egl.GetMinorVersion() >= 5 && !disableEGL15Robustness) {
@@ -173,7 +173,7 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
     }
 
     if (useANGLETextureSharing) {
-        DAWN_ASSERT(egl.HasExt(EGLExt::DisplayTextureShareGroup));
+        DAWN_OPT_ASSUME(egl.HasExt(EGLExt::DisplayTextureShareGroup));
         AddAttrib(EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE, EGL_TRUE);
     }
 
@@ -267,7 +267,7 @@ bool ContextEGL::IsNotCurrentOnAnotherThread() const {
     return mCurrentThread == std::thread::id() || mCurrentThread == std::this_thread::get_id();
 #else
     // For non-assert builds, assuming not current on another thread.
-    // This function is intended to be used by DAWN_ASSERT.
+    // This function is intended to be used by DAWN_OPT_ASSUME.
     return true;
 #endif
 }
@@ -330,7 +330,7 @@ ContextEGL::ScopedMakeCurrent& ContextEGL::ScopedMakeCurrent::operator=(ScopedMa
 
 ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
     auto result = End();
-    DAWN_ASSERT(result.IsSuccess());
+    DAWN_OPT_ASSUME(result.IsSuccess());
     IgnoreErrors(std::move(result));
 }
 
@@ -345,7 +345,7 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
     mPrevState.readSurface = mContext->mDisplay->egl->GetCurrentSurface(EGL_READ);
 
     // Assert that the context is not current on another thread.
-    DAWN_ASSERT(mContext->IsNotCurrentOnAnotherThread());
+    DAWN_OPT_ASSUME(mContext->IsNotCurrentOnAnotherThread());
 
     if (mPrevState != mContext->mState) {
         auto result = MakeContextCurrent(mContext->mDisplay.Get(), mContext->mState);

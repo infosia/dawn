@@ -232,7 +232,7 @@ MaybeError MultiDrawConverterPipeline::Initialize(DeviceBase* device) {
         return DAWN_INTERNAL_ERROR("Error creating multi draw MTLLibrary:" +
                                    std::string([error.localizedDescription UTF8String]));
     }
-    DAWN_ASSERT(lib != nil);
+    DAWN_OPT_ASSUME(lib != nil);
 
     // Function constant for validation
     MTLFunctionConstantValues* funcConstants = [MTLFunctionConstantValues new];
@@ -246,7 +246,7 @@ MaybeError MultiDrawConverterPipeline::Initialize(DeviceBase* device) {
         return DAWN_INTERNAL_ERROR("Error creating multi draw converter compute function:" +
                                    std::string([error.localizedDescription UTF8String]));
     }
-    DAWN_ASSERT(convertFunc != nil);
+    DAWN_OPT_ASSUME(convertFunc != nil);
 
     mArgumentEncoder = [convertFunc newArgumentEncoderWithBufferIndex:0];
     mPipeline = [mtlDevice newComputePipelineStateWithFunction:convertFunc error:&error];
@@ -255,18 +255,18 @@ MaybeError MultiDrawConverterPipeline::Initialize(DeviceBase* device) {
         return DAWN_INTERNAL_ERROR("Error creating multi draw converter compute pipeline:" +
                                    std::string([error.localizedDescription UTF8String]));
     }
-    DAWN_ASSERT(mPipeline != nil);
+    DAWN_OPT_ASSUME(mPipeline != nil);
 
     return {};
 }
 
 id<MTLArgumentEncoder> MultiDrawConverterPipeline::GetMTLArgumentEncoder() const {
-    DAWN_ASSERT(mArgumentEncoder != nullptr);
+    DAWN_OPT_ASSUME(mArgumentEncoder != nullptr);
     return mArgumentEncoder.Get();
 }
 
 id<MTLComputePipelineState> MultiDrawConverterPipeline::GetMTLPipeline() const {
-    DAWN_ASSERT(mPipeline != nullptr);
+    DAWN_OPT_ASSUME(mPipeline != nullptr);
     return mPipeline.Get();
 }
 
@@ -325,7 +325,7 @@ ResultOrError<std::vector<MultiDrawExecutionData>> PrepareMultiDraws(
         id<MTLArgumentEncoder> argEnc = pipelineStore->GetMTLArgumentEncoder();
         id<MTLBuffer> argBuffer = [mtlDevice newBufferWithLength:argEnc.encodedLength
                                                          options:MTLStorageModeShared];
-        DAWN_ASSERT(argBuffer != nil);
+        DAWN_OPT_ASSUME(argBuffer != nil);
 
         [argEnc setArgumentBuffer:argBuffer offset:0];
         [argEnc setIndirectCommandBuffer:drawData.mIndirectCommandBuffer.Get() atIndex:0];

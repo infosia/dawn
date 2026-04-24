@@ -163,7 +163,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateColorBlitPipeline(
     }
 
     // Multisample state.
-    DAWN_ASSERT(pipelineKey.sampleCount > 1);
+    DAWN_OPT_ASSUME(pipelineKey.sampleCount > 1);
     renderPipelineDesc.multisample.count = pipelineKey.sampleCount;
 
     renderPipelineDesc.layout = nullptr;
@@ -182,7 +182,7 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
                                                           CommandRecordingContext* commandContext,
                                                           const BeginRenderPassCmd* renderPass,
                                                           const VkRenderPassBeginInfo& beginInfo) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     // Construct pipeline key
     BlitColorToColorWithDrawPipelineKey pipelineKey;
@@ -191,11 +191,11 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
     for (ColorAttachmentIndex colorIdx : renderPass->attachmentState->GetColorAttachmentsMask()) {
         const auto& colorAttachment = renderPass->colorAttachments[colorIdx];
         const auto& view = colorAttachment.view;
-        DAWN_ASSERT(view != nullptr);
+        DAWN_OPT_ASSUME(view != nullptr);
         const Format& format = view->GetFormat();
         TextureComponentType baseType = format.GetAspectInfo(Aspect::Color).baseType;
         // Blitting integer textures are not currently supported.
-        DAWN_ASSERT(baseType == TextureComponentType::Float);
+        DAWN_OPT_ASSUME(baseType == TextureComponentType::Float);
 
         if (colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
             // TODO(42240662): Handle the cases where resolveTarget is altered by workarounds such
@@ -206,9 +206,9 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
                             "resolveTarget at %d has been removed by some workarounds. %s doesn't "
                             "support this yet.",
                             colorIdx, colorAttachment.loadOp);
-            DAWN_ASSERT(colorAttachment.resolveTarget->GetLayerCount() == 1u);
-            DAWN_ASSERT(colorAttachment.resolveTarget->GetDimension() ==
-                        wgpu::TextureViewDimension::e2D);
+            DAWN_OPT_ASSUME(colorAttachment.resolveTarget->GetLayerCount() == 1u);
+            DAWN_OPT_ASSUME(colorAttachment.resolveTarget->GetDimension() ==
+                            wgpu::TextureViewDimension::e2D);
             pipelineKey.attachmentsToExpandResolve.set(colorIdx);
         }
         pipelineKey.resolveTargetsMask.set(colorIdx, colorAttachment.resolveTarget != nullptr);
@@ -217,7 +217,7 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
         pipelineKey.sampleCount = view->GetTexture()->GetSampleCount();
     }
 
-    DAWN_ASSERT(pipelineKey.attachmentsToExpandResolve.any());
+    DAWN_OPT_ASSUME(pipelineKey.attachmentsToExpandResolve.any());
 
     pipelineKey.depthStencilFormat = wgpu::TextureFormat::Undefined;
     if (renderPass->depthStencilAttachment.view != nullptr) {

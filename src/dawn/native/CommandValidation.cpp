@@ -615,7 +615,7 @@ MaybeError ValidateTextureToTextureCopyCommonRestrictions(DeviceBase const* devi
                 DAWN_UNREACHABLE();
 
             case wgpu::TextureDimension::e1D:
-                DAWN_ASSERT(src.mipLevel == 0);
+                DAWN_OPT_ASSUME(src.mipLevel == 0);
                 return DAWN_VALIDATION_ERROR("Copy is from %s to itself.", src.texture);
 
             case wgpu::TextureDimension::e2D:

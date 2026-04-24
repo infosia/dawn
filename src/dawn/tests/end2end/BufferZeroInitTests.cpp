@@ -118,9 +118,9 @@ class BufferZeroInitTest : public DawnTest {
 
     void TestBufferZeroInitInCopyTextureToBuffer(const BufferZeroInitInCopyT2BSpec& spec) {
         constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R32Float;
-        DAWN_ASSERT(utils::GetTexelBlockSizeInBytes(kTextureFormat) * spec.textureSize.width %
-                        kTextureBytesPerRowAlignment ==
-                    0);
+        DAWN_OPT_ASSUME(utils::GetTexelBlockSizeInBytes(kTextureFormat) * spec.textureSize.width %
+                            kTextureBytesPerRowAlignment ==
+                        0);
 
         constexpr wgpu::Color kClearColor = {0.5f, 0.5f, 0.5f, 0.5f};
         wgpu::Texture texture =
@@ -213,7 +213,7 @@ class BufferZeroInitTest : public DawnTest {
                 return i_color;
             })");
 
-        DAWN_ASSERT(vertexBufferCount <= 1u);
+        DAWN_OPT_ASSUME(vertexBufferCount <= 1u);
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;

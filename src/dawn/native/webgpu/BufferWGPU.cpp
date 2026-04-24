@@ -287,7 +287,7 @@ MaybeError Buffer::AddContentToCapture(CaptureContext& captureContext) {
             wgpu.bufferMapAsync(copyBuffer, WGPUMapMode_Read, 0, copySize, innerCallbackInfo);
         wgpu.instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo, UINT64_MAX);
 
-        DAWN_ASSERT(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
+        DAWN_OPT_ASSUME(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
 
         if (mapAsyncResult.status != WGPUMapAsyncStatus_Success) {
             return DAWN_INTERNAL_ERROR(mapAsyncResult.message);

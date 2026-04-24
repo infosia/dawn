@@ -35,7 +35,7 @@ PipelineCacheBase::PipelineCacheBase(BlobCache* cache, const CacheKey& key, bool
     : mCache(cache), mKey(key), mStoreOnIdle(storeOnIdle) {}
 
 Blob PipelineCacheBase::Initialize() {
-    DAWN_ASSERT(!mInitialized);
+    DAWN_OPT_ASSUME(!mInitialized);
 
     auto loadResult = mCache->Load(mKey);
     Blob blob;
@@ -51,7 +51,7 @@ Blob PipelineCacheBase::Initialize() {
 }
 
 bool PipelineCacheBase::CacheHit() const {
-    DAWN_ASSERT(mInitialized);
+    DAWN_OPT_ASSUME(mInitialized);
     return mCacheHit;
 }
 
@@ -68,7 +68,7 @@ MaybeError PipelineCacheBase::Flush() {
 }
 
 MaybeError PipelineCacheBase::DidCompilePipeline() {
-    DAWN_ASSERT(mInitialized);
+    DAWN_OPT_ASSUME(mInitialized);
     if (mStoreOnIdle) {
         // Assume pipeline cache was modified by compiling a pipeline. It will be stored in
         // BlobCache at some later point in StoreOnIdle() if necessary.
@@ -84,7 +84,7 @@ MaybeError PipelineCacheBase::DidCompilePipeline() {
 }
 
 MaybeError PipelineCacheBase::StoreOnIdle() {
-    DAWN_ASSERT(mStoreOnIdle);
+    DAWN_OPT_ASSUME(mStoreOnIdle);
     if (mNeedsStore.exchange(false, std::memory_order_relaxed)) {
         DAWN_TRY(Flush());
     }

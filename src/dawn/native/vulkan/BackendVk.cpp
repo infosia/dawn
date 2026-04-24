@@ -288,12 +288,12 @@ OnDebugUtilsCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
     // driver can also produce errors even with backend validation disabled so those errors are
     // just logged.
     LogCallbackData(LogSeverity::Error, pCallbackData);
-    DAWN_ASSERT(!(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT));
+    DAWN_OPT_ASSUME(!(messageTypes & VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT));
 
     return VK_FALSE;
 }
 
-// A debug callback specifically for instance creation so that we don't fire an DAWN_ASSERT when
+// A debug callback specifically for instance creation so that we don't fire an DAWN_OPT_ASSUME when
 // the instance fails creation in an expected manner (for example the system not having
 // Vulkan drivers).
 VKAPI_ATTR VkBool32 VKAPI_CALL

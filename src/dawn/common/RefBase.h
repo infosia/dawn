@@ -153,7 +153,7 @@ class RefBase {
     void Reset() { Set(Traits::kNullValue); }
 
     [[nodiscard]] T* InitializeInto() {
-        DAWN_ASSERT(mValue == Traits::kNullValue);
+        DAWN_OPT_ASSUME(mValue == Traits::kNullValue);
         return &mValue;
     }
 

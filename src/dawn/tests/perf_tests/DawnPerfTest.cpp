@@ -134,7 +134,7 @@ DawnPerfTestEnvironment::~DawnPerfTestEnvironment() = default;
 void DawnPerfTestEnvironment::SetUp() {
     mPlatform = std::make_unique<DawnPerfTestPlatform>();
     mInstance = CreateInstance(mPlatform.get());
-    DAWN_ASSERT(mInstance);
+    DAWN_OPT_ASSUME(mInstance);
 
     // Begin writing the trace event array.
     if (mTraceFile != nullptr) {
@@ -338,7 +338,7 @@ void DawnPerfTestBase::OutputResults() {
 
         if (traceEvent.phase == TRACE_EVENT_PHASE_END) {
             tracker->end = std::max(tracker->end, traceEvent.timestamp);
-            DAWN_ASSERT(tracker->count > 0);
+            DAWN_OPT_ASSUME(tracker->count > 0);
             tracker->count--;
 
             if (tracker->count == 0) {

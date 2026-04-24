@@ -75,7 +75,7 @@ bool ShouldInjectError() {
 
 void InjectErrorAt(uint64_t index) {
     // Only one error can be injected at a time.
-    DAWN_ASSERT(!sHasPendingInjectedError);
+    DAWN_OPT_ASSUME(!sHasPendingInjectedError);
     sInjectedFailureIndex = index;
     sHasPendingInjectedError = true;
 }

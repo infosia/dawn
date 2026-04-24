@@ -126,7 +126,7 @@ class CaptureContext {
         }
 
         auto it = mObjectIds.find(ref);
-        DAWN_ASSERT(it != mObjectIds.end());
+        DAWN_OPT_ASSUME(it != mObjectIds.end());
         return it->second;
     }
 
@@ -137,7 +137,7 @@ class CaptureContext {
         }
 
         auto it = mObjectIds.find(Ref<ApiObjectBase>(object));
-        DAWN_ASSERT(it != mObjectIds.end());
+        DAWN_OPT_ASSUME(it != mObjectIds.end());
         return it->second;
     }
 

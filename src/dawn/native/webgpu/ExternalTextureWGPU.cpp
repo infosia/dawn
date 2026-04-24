@@ -87,7 +87,7 @@ ExternalTexture::ExternalTexture(Device* device, const ExternalTextureDescriptor
     };
 
     mInnerHandle = device->wgpu->deviceCreateExternalTexture(device->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 }
 
 ExternalTexture::~ExternalTexture() = default;

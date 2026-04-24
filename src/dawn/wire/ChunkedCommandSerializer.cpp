@@ -38,13 +38,13 @@ namespace dawn::wire {
 
 ChunkedCommandSerializer::ChunkedCommandSerializer(CommandSerializer* serializer)
     : mSerializer(serializer), mMaxAllocationSize(serializer->GetMaximumAllocationSize()) {
-    DAWN_ASSERT(mMaxAllocationSize > 0);
+    DAWN_OPT_ASSUME(mMaxAllocationSize > 0);
 }
 
 void ChunkedCommandSerializer::SetCommandSerializerForDisconnect(CommandSerializer* serializer) {
     mSerializer = serializer;
     mMaxAllocationSize = serializer->GetMaximumAllocationSize();
-    DAWN_ASSERT(mMaxAllocationSize > 0);
+    DAWN_OPT_ASSUME(mMaxAllocationSize > 0);
 }
 
 void ChunkedCommandSerializer::Flush() {
@@ -64,7 +64,7 @@ void ChunkedCommandSerializer::SerializeChunkedCommand(const char* allocatedBuff
     while (remainingSize > 0) {
         cmd.chunkData = allocatedBuffer;
         cmd.chunkSize = std::min(remainingSize, mMaxAllocationSize - kWireChunkedCmdPrefixSize);
-        DAWN_ASSERT(cmd.GetRequiredSize() <= mMaxAllocationSize);
+        DAWN_OPT_ASSUME(cmd.GetRequiredSize() <= mMaxAllocationSize);
 
         SerializeCommand(cmd);
 

@@ -73,7 +73,7 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
           mUserdata1(callbackInfo.userdata1),
           mUserdata2(callbackInfo.userdata2),
           mBuffer(buffer) {
-        DAWN_ASSERT(mBuffer != nullptr);
+        DAWN_OPT_ASSUME(mBuffer != nullptr);
     }
 
     EventType GetType() override { return kType; }
@@ -164,7 +164,7 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 
         // The request has been cancelled before completion, return that result.
         if (!IsPendingRequest(futureID)) {
-            DAWN_ASSERT(response.status != WGPUMapAsyncStatus_Success);
+            DAWN_OPT_ASSUME(response.status != WGPUMapAsyncStatus_Success);
             return Callback();
         }
 
@@ -175,7 +175,7 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
         }
 
         if (response.status == WGPUMapAsyncStatus_Success) {
-            DAWN_ASSERT(mBuffer->mPendingMapRequest && mBuffer->mPendingMapRequest->type);
+            DAWN_OPT_ASSUME(mBuffer->mPendingMapRequest && mBuffer->mPendingMapRequest->type);
             switch (*mBuffer->mPendingMapRequest->type) {
                 case MapRequestType::Read:
                     mBuffer->mMappedState = MapState::MappedForRead;
@@ -285,7 +285,7 @@ WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor
         buffer->mMappedState = MapState::MappedAtCreation;
         buffer->mMappedOffset = 0;
         buffer->mMappedSize = buffer->mSize;
-        DAWN_ASSERT(buffer->mWriteHandle != nullptr);
+        DAWN_OPT_ASSUME(buffer->mWriteHandle != nullptr);
         buffer->mMappedData = buffer->mWriteHandle->GetData();
     }
 
@@ -492,7 +492,7 @@ void Buffer::APIUnmap() {
     if (IsMappedForWriting()) {
         // Writes need to be flushed before Unmap is sent. Unmap calls all associated
         // in-flight callbacks which may read the updated data.
-        DAWN_ASSERT(mWriteHandle != nullptr);
+        DAWN_OPT_ASSUME(mWriteHandle != nullptr);
 
         // Get the serialization size of data update writes.
         size_t writeDataUpdateInfoLength =

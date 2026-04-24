@@ -346,7 +346,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                         properties.format == wgpu::TextureFormat::BGRA8Unorm &&
                         (properties.usage & wgpu::TextureUsage::StorageBinding);
                     if (compatibleViewFormats.empty()) {
-                        DAWN_ASSERT(!needsBGRA8UnormStoragePolyfill);
+                        DAWN_OPT_ASSUME(!needsBGRA8UnormStoragePolyfill);
                         viewFormats = {vkFormat};
                         imageFormatListInfo.viewFormatCount = 1;
                     } else {
@@ -390,7 +390,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     // will fail with VVL. This view format is only needed for sRGB reinterpretation.
     // TODO(crbug.com/dawn/2304): Investigate if this is a bug in VVL.
     if (addViewFormats && !device->GetAdapter()->GetInstance()->IsBackendValidationEnabled()) {
-        DAWN_ASSERT(compatibleViewFormats.size() == 1u);
+        DAWN_OPT_ASSUME(compatibleViewFormats.size() == 1u);
         viewFormats[imageFormatListInfo.viewFormatCount++] =
             VulkanImageFormat(device, compatibleViewFormats[0]->format);
     }
@@ -627,7 +627,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                     // apply the same fix here.
                 } else if (device->GetDeviceInfo().HasExt(DeviceExt::ImageFormatList)) {
                     // Set the list of view formats the image can be compatible with.
-                    DAWN_ASSERT(compatibleViewFormats.size() == 1u);
+                    DAWN_OPT_ASSUME(compatibleViewFormats.size() == 1u);
                     viewFormats[0] = vkFormat;
                     viewFormats[1] = VulkanImageFormat(device, compatibleViewFormats[0]->format);
                     imageFormatListInfo.viewFormatCount = 2;
@@ -1003,10 +1003,10 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
     wgpu::SType type;
     DAWN_TRY_ASSIGN(
         type, (descriptor.ValidateBranches<Branch<SharedTextureMemoryVkImageLayoutBeginState>>()));
-    DAWN_ASSERT(type == wgpu::SType::SharedTextureMemoryVkImageLayoutBeginState);
+    DAWN_OPT_ASSUME(type == wgpu::SType::SharedTextureMemoryVkImageLayoutBeginState);
 
     auto vkLayoutBeginState = descriptor.Get<SharedTextureMemoryVkImageLayoutBeginState>();
-    DAWN_ASSERT(vkLayoutBeginState != nullptr);
+    DAWN_OPT_ASSUME(vkLayoutBeginState != nullptr);
 
     for (size_t i = 0; i < descriptor->fenceCount; ++i) {
         // All fences are backed by binary semaphores.
@@ -1031,10 +1031,10 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     wgpu::SType type;
     DAWN_TRY_ASSIGN(type,
                     (state.ValidateBranches<Branch<SharedTextureMemoryVkImageLayoutEndState>>()));
-    DAWN_ASSERT(type == wgpu::SType::SharedTextureMemoryVkImageLayoutEndState);
+    DAWN_OPT_ASSUME(type == wgpu::SType::SharedTextureMemoryVkImageLayoutEndState);
 
     auto vkLayoutEndState = state.Get<SharedTextureMemoryVkImageLayoutEndState>();
-    DAWN_ASSERT(vkLayoutEndState != nullptr);
+    DAWN_OPT_ASSUME(vkLayoutEndState != nullptr);
 
 #if DAWN_PLATFORM_IS(FUCHSIA)
     DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle),

@@ -159,7 +159,7 @@ class Backend : public SharedTextureMemoryTestBackend {
                 HRESULT hr = ::D3D11CreateDevice(
                     dxgiAdapter.Get(), D3D_DRIVER_TYPE_UNKNOWN, nullptr, 0, nullptr, 0,
                     D3D11_SDK_VERSION, &d3d11Device, &d3dFeatureLevel, &d3d11DeviceContext);
-                DAWN_ASSERT(hr == S_OK);
+                DAWN_OPT_ASSUME(hr == S_OK);
 
                 return d3d11Device;
             }
@@ -216,13 +216,13 @@ class Backend : public SharedTextureMemoryTestBackend {
             case Mode::DXGISharedHandle: {
                 ComPtr<IDXGIResource1> dxgiResource;
                 hr = d3d11Texture.As(&dxgiResource);
-                DAWN_ASSERT(hr == S_OK);
+                DAWN_OPT_ASSUME(hr == S_OK);
 
                 SystemHandle sharedHandle;
                 hr = dxgiResource->CreateSharedHandle(
                     nullptr, DXGI_SHARED_RESOURCE_READ | DXGI_SHARED_RESOURCE_WRITE, nullptr,
                     sharedHandle.GetMut());
-                DAWN_ASSERT(hr == S_OK);
+                DAWN_OPT_ASSUME(hr == S_OK);
 
                 wgpu::SharedTextureMemoryDXGISharedHandleDescriptor sharedHandleDesc;
                 sharedHandleDesc.handle = sharedHandle.Get();
@@ -324,13 +324,13 @@ class Backend : public SharedTextureMemoryTestBackend {
                     case Mode::DXGISharedHandle: {
                         ComPtr<IDXGIResource1> dxgiResource;
                         hr = d3d11Texture.As(&dxgiResource);
-                        DAWN_ASSERT(hr == S_OK);
+                        DAWN_OPT_ASSUME(hr == S_OK);
 
                         SystemHandle sharedHandle;
                         hr = dxgiResource->CreateSharedHandle(
                             nullptr, DXGI_SHARED_RESOURCE_READ | DXGI_SHARED_RESOURCE_WRITE,
                             nullptr, sharedHandle.GetMut());
-                        DAWN_ASSERT(hr == S_OK);
+                        DAWN_OPT_ASSUME(hr == S_OK);
 
                         wgpu::SharedTextureMemoryDXGISharedHandleDescriptor sharedHandleDesc;
                         sharedHandleDesc.handle = sharedHandle.Get();

@@ -780,12 +780,12 @@ const BindGroupLayoutBase* BindGroupBase::GetFrontendLayout() const {
 }
 
 BindGroupLayoutInternalBase* BindGroupBase::GetLayout() {
-    DAWN_ASSERT(mLayout != nullptr);
+    DAWN_OPT_ASSUME(mLayout != nullptr);
     return mLayout->GetInternalBindGroupLayout();
 }
 
 const BindGroupLayoutInternalBase* BindGroupBase::GetLayout() const {
-    DAWN_ASSERT(mLayout != nullptr);
+    DAWN_OPT_ASSUME(mLayout != nullptr);
     return mLayout->GetInternalBindGroupLayout();
 }
 

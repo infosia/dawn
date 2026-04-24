@@ -42,7 +42,7 @@ LimitsAndFeatures::LimitsAndFeatures() = default;
 LimitsAndFeatures::~LimitsAndFeatures() = default;
 
 WGPUStatus LimitsAndFeatures::GetLimits(WGPULimits* limits) const {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
     auto* originalNextInChain = limits->nextInChain;
     *limits = mLimits;
     limits->nextInChain = originalNextInChain;
@@ -93,12 +93,12 @@ void LimitsAndFeatures::ToSupportedFeatures(WGPUSupportedFeatures* supportedFeat
     for (WGPUFeatureName f : mFeatures) {
         features[index++] = f;
     }
-    DAWN_ASSERT(index == count);
+    DAWN_OPT_ASSUME(index == count);
     supportedFeatures->features = features;
 }
 
 void LimitsAndFeatures::SetLimits(const WGPULimits* limits) {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
     mLimits = *limits;
     mLimits.nextInChain = nullptr;
     // Handle other limits that chained after WGPUSupportedLimits
@@ -106,15 +106,15 @@ void LimitsAndFeatures::SetLimits(const WGPULimits* limits) {
         switch (chain->sType) {
             case WGPUSType_CompatibilityModeLimits: {
                 mCompatLimits = *reinterpret_cast<WGPUCompatibilityModeLimits*>(chain);
-                DAWN_ASSERT(mCompatLimits.chain.sType == WGPUSType_CompatibilityModeLimits);
+                DAWN_OPT_ASSUME(mCompatLimits.chain.sType == WGPUSType_CompatibilityModeLimits);
                 mCompatLimits.chain.next = nullptr;
                 break;
             }
             case WGPUSType_DawnTexelCopyBufferRowAlignmentLimits: {
                 mTexelCopyBufferRowAlignmentLimits =
                     *reinterpret_cast<WGPUDawnTexelCopyBufferRowAlignmentLimits*>(chain);
-                DAWN_ASSERT(mTexelCopyBufferRowAlignmentLimits.chain.sType ==
-                            WGPUSType_DawnTexelCopyBufferRowAlignmentLimits);
+                DAWN_OPT_ASSUME(mTexelCopyBufferRowAlignmentLimits.chain.sType ==
+                                WGPUSType_DawnTexelCopyBufferRowAlignmentLimits);
                 mTexelCopyBufferRowAlignmentLimits.chain.next = nullptr;
                 break;
             }
@@ -125,7 +125,7 @@ void LimitsAndFeatures::SetLimits(const WGPULimits* limits) {
 }
 
 void LimitsAndFeatures::SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount) {
-    DAWN_ASSERT(features != nullptr || featuresCount == 0);
+    DAWN_OPT_ASSUME(features != nullptr || featuresCount == 0);
     for (uint32_t i = 0; i < featuresCount; ++i) {
         // Filter out features that the server supports, but the client does not.
         // (Could be different versions)

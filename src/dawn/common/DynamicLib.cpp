@@ -66,7 +66,7 @@ bool DynamicLib::Valid() const {
 
 #if DAWN_PLATFORM_IS(WINDOWS) && !DAWN_PLATFORM_IS(WINUWP)
 bool DynamicLib::OpenSystemLibrary(std::wstring_view filename, std::string* error) {
-    DAWN_ASSERT(mHandle == nullptr);
+    DAWN_OPT_ASSUME(mHandle == nullptr);
 
     // Force LOAD_LIBRARY_SEARCH_SYSTEM32 for system libraries to avoid DLL search path
     // attacks.
@@ -81,7 +81,7 @@ bool DynamicLib::OpenSystemLibrary(std::wstring_view filename, std::string* erro
 #endif
 
 bool DynamicLib::Open(const std::string& filename, std::string* error) {
-    DAWN_ASSERT(mHandle == nullptr);
+    DAWN_OPT_ASSUME(mHandle == nullptr);
 
 #if DAWN_PLATFORM_IS(WINDOWS)
 #if DAWN_PLATFORM_IS(WINUWP)
@@ -116,7 +116,7 @@ bool DynamicLib::Open(const std::string& filename, std::string* error) {
 
 // Opens a dynamic library that has already been loaded into the process.
 bool DynamicLib::OpenLoaded(const std::string& filename, std::string* error) {
-    DAWN_ASSERT(mHandle == nullptr);
+    DAWN_OPT_ASSUME(mHandle == nullptr);
 
 #if DAWN_PLATFORM_IS(WINDOWS)
     mHandle = GetModuleHandleA(filename.c_str());

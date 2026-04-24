@@ -63,7 +63,7 @@ class ExpectNonZero : public detail::CustomTextureExpectation {
     uint32_t DataSize() override { return sizeof(T); }
 
     testing::AssertionResult Check(const void* data, size_t size) override {
-        DAWN_ASSERT(size % DataSize() == 0 && size > 0);
+        DAWN_OPT_ASSUME(size % DataSize() == 0 && size > 0);
         const T* actual = static_cast<const T*>(data);
         T value = *actual;
         if (value == T(0)) {

@@ -209,7 +209,7 @@ MaybeError EncodeConvertTimestampsToNanoseconds(CommandEncoder* encoder,
                                                 BufferBase* availability,
                                                 BufferBase* params) {
     DeviceBase* device = encoder->GetDevice();
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     ComputePipelineBase* pipeline;
     DAWN_TRY_ASSIGN(pipeline, GetOrCreateTimestampComputePipeline(device));

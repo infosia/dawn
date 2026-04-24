@@ -157,10 +157,10 @@ TEST_P(WorkgroupSizeValidationTest, WithFixedValues) {
 
     // No individual dimension exceeds its limit, but the combined size should definitely exceed the
     // total invocation limit.
-    DAWN_ASSERT(supportedLimits.maxComputeWorkgroupSizeX *
-                    supportedLimits.maxComputeWorkgroupSizeY *
-                    supportedLimits.maxComputeWorkgroupSizeZ >
-                supportedLimits.maxComputeInvocationsPerWorkgroup);
+    DAWN_OPT_ASSUME(supportedLimits.maxComputeWorkgroupSizeX *
+                        supportedLimits.maxComputeWorkgroupSizeY *
+                        supportedLimits.maxComputeWorkgroupSizeZ >
+                    supportedLimits.maxComputeInvocationsPerWorkgroup);
     CheckShaderWithWorkgroupSize(false, supportedLimits.maxComputeWorkgroupSizeX,
                                  supportedLimits.maxComputeWorkgroupSizeY,
                                  supportedLimits.maxComputeWorkgroupSizeZ);
@@ -325,10 +325,10 @@ TEST_P(WorkgroupSizeValidationTest, ValidationAfterOverride) {
     }
     {
         // Error: exceed maxComputeInvocationsPerWorkgroup
-        DAWN_ASSERT(supportedLimits.maxComputeWorkgroupSizeX *
-                        supportedLimits.maxComputeWorkgroupSizeY *
-                        supportedLimits.maxComputeWorkgroupSizeZ >
-                    supportedLimits.maxComputeInvocationsPerWorkgroup);
+        DAWN_OPT_ASSUME(supportedLimits.maxComputeWorkgroupSizeX *
+                            supportedLimits.maxComputeWorkgroupSizeY *
+                            supportedLimits.maxComputeWorkgroupSizeZ >
+                        supportedLimits.maxComputeInvocationsPerWorkgroup);
         std::vector<wgpu::ConstantEntry> constants{
             {nullptr, "x", static_cast<double>(supportedLimits.maxComputeWorkgroupSizeX)},
             {nullptr, "y", static_cast<double>(supportedLimits.maxComputeWorkgroupSizeY)},

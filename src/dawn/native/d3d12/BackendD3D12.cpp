@@ -57,7 +57,7 @@ MaybeError Backend::Initialize() {
     if (instance->GetBackendValidationLevel() != BackendValidationLevel::Disabled) {
         ComPtr<ID3D12Debug3> debugController;
         if (SUCCEEDED(GetFunctions()->d3d12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
-            DAWN_ASSERT(debugController != nullptr);
+            DAWN_OPT_ASSUME(debugController != nullptr);
             debugController->EnableDebugLayer();
             if (instance->GetBackendValidationLevel() == BackendValidationLevel::Full) {
                 debugController->SetEnableGPUBasedValidation(true);

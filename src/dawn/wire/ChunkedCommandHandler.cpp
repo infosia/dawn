@@ -61,10 +61,10 @@ WireResult ChunkedCommandHandler::HandleChunkedCommand(DeserializeBuffer* deseri
 
         const auto& [newIt, inserted] =
             mChunkedCommands.insert({cmd.id, std::move(newChunkedCommand)});
-        DAWN_ASSERT(inserted);
+        DAWN_OPT_ASSUME(inserted);
         chunkedCommand = &(newIt->second);
     }
-    DAWN_ASSERT(chunkedCommand);
+    DAWN_OPT_ASSUME(chunkedCommand);
 
     if (cmd.chunkSize > chunkedCommand->remainingSize) {
         // If the chunk size is greater than the remaining size, something is wrong and we can no
