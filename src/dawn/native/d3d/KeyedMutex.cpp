@@ -37,8 +37,8 @@ namespace dawn::native::d3d {
 
 KeyedMutex::KeyedMutex(Device* device, ComPtr<IDXGIKeyedMutex> dxgiKeyedMutex)
     : mDevice(device), mDXGIKeyedMutex(std::move(dxgiKeyedMutex)) {
-    DAWN_ASSERT(mDevice != nullptr);
-    DAWN_ASSERT(mDXGIKeyedMutex);
+    DAWN_OPT_ASSUME(mDevice != nullptr);
+    DAWN_OPT_ASSUME(mDXGIKeyedMutex);
 }
 
 KeyedMutex::~KeyedMutex() {
@@ -67,7 +67,7 @@ void KeyedMutex::ReleaseKeyedMutex() {
     // ReleaseSync only returns an error if the keyed mutex is invalid or if it wasn't acquired by
     // the device - both should be considered programming errors so an assert is appropriate.
     const HRESULT hr = mDXGIKeyedMutex->ReleaseSync(d3d::kDXGIKeyedMutexAcquireKey);
-    DAWN_ASSERT(hr == S_OK);
+    DAWN_OPT_ASSUME(hr == S_OK);
 }
 
 }  // namespace dawn::native::d3d

@@ -142,7 +142,7 @@ Device::Device(AdapterBase* adapter,
     : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
       ObjectWGPU(ToBackend(adapter->GetPhysicalDevice())->GetFunctions().deviceRelease),
       wgpu(ToBackend(adapter->GetPhysicalDevice())->GetFunctions()) {
-    DAWN_ASSERT(adapter->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::WebGPU);
+    DAWN_OPT_ASSUME(adapter->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::WebGPU);
 
     WGPUDeviceDescriptor apiDesc = *(ToAPI(*descriptor));
     std::string label = "Inner Device on " + adapter->GetPhysicalDevice()->GetName();
@@ -375,7 +375,7 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other

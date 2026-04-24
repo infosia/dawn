@@ -77,7 +77,7 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
               // Take the min in the very unlikely case the memory heap is tiny.
               std::min(uint64_t(1) << Log2(mMaxHeapSize), heapBlockSize),
               &mPooledMemoryAllocator) {
-        DAWN_ASSERT(IsPowerOfTwo(heapBlockSize));
+        DAWN_OPT_ASSUME(IsPowerOfTwo(heapBlockSize));
     }
     ~SingleTypeAllocator() override = default;
 
@@ -114,7 +114,7 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
                                                              nullptr, &*allocatedMemory),
                                   "vkAllocateMemory"));
 
-        DAWN_ASSERT(allocatedMemory != VK_NULL_HANDLE);
+        DAWN_OPT_ASSUME(allocatedMemory != VK_NULL_HANDLE);
         mResourceMemoryAllocator->RecordHeapAllocation(size, mIsLazyMemoryType);
         return {std::make_unique<ResourceHeap>(allocatedMemory, mMemoryTypeIndex, size)};
     }
@@ -140,7 +140,7 @@ void ResourceMemoryAllocator::AllocationSizeTracker::Increment(VkDeviceSize incr
 
 void ResourceMemoryAllocator::AllocationSizeTracker::Decrement(ExecutionSerial currentSerial,
                                                                VkDeviceSize decrementSize) {
-    DAWN_ASSERT(mTotalSize >= decrementSize);
+    DAWN_OPT_ASSUME(mTotalSize >= decrementSize);
     mMemoryToDecrement[currentSerial] += decrementSize;
 }
 
@@ -148,7 +148,7 @@ void ResourceMemoryAllocator::AllocationSizeTracker::Tick(ExecutionSerial comple
     auto it = mMemoryToDecrement.begin();
     while (it != mMemoryToDecrement.end() && it->first <= completedSerial) {
         // Update tracking for allocation/used memory that will be deallocated.
-        DAWN_ASSERT(mTotalSize >= it->second);
+        DAWN_OPT_ASSUME(mTotalSize >= it->second);
         mTotalSize -= it->second;
         it++;
     }
@@ -162,7 +162,7 @@ VkDeviceSize ResourceMemoryAllocator::GetHeapBlockSize(const DawnDeviceAllocator
     if (control && control->allocatorHeapBlockSize > 0) {
         heapBlockSize = control->allocatorHeapBlockSize;
     }
-    DAWN_ASSERT(IsPowerOfTwo(heapBlockSize));
+    DAWN_OPT_ASSUME(IsPowerOfTwo(heapBlockSize));
     return heapBlockSize;
 }
 
@@ -193,7 +193,7 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
     // The Vulkan spec guarantees at least one memory type is valid.
     int memoryType = FindBestTypeIndex(requirements, kind);
     bool isLazyMemoryType = mAllocatorsPerType[memoryType]->IsLazyMemoryType();
-    DAWN_ASSERT(memoryType >= 0);
+    DAWN_OPT_ASSUME(memoryType >= 0);
 
     VkDeviceSize size = requirements.size;
 
@@ -343,7 +343,7 @@ void ResourceMemoryAllocator::DeallocateResourceHeap(ResourceHeap* heap, bool is
 void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
     for (const ResourceMemoryAllocation& allocation :
          mSubAllocationsToDelete.IterateUpTo(completedSerial)) {
-        DAWN_ASSERT(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
+        DAWN_OPT_ASSUME(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
         size_t memoryType = ToBackend(allocation.GetResourceHeap())->GetMemoryType();
         mAllocatorsPerType[memoryType]->DeallocateMemory(allocation);
     }

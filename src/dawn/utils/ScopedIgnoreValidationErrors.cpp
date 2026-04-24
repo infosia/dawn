@@ -45,7 +45,7 @@ ScopedIgnoreValidationErrors::~ScopedIgnoreValidationErrors() {
         mDevice.PopErrorScope(
             wgpu::CallbackMode::AllowProcessEvents,
             [](wgpu::PopErrorScopeStatus status, wgpu::ErrorType, wgpu::StringView) {
-                DAWN_ASSERT(status != wgpu::PopErrorScopeStatus::Error);
+                DAWN_OPT_ASSUME(status != wgpu::PopErrorScopeStatus::Error);
             });
     }
 }

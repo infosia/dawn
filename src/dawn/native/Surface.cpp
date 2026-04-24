@@ -118,7 +118,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if DAWN_PLATFORM_IS(ANDROID)
         case wgpu::SType::SurfaceSourceAndroidNativeWindow: {
             auto* subDesc = descriptor.Get<SurfaceSourceAndroidNativeWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             DAWN_INVALID_IF(subDesc->window == nullptr, "Android window is not set.");
             return descriptor;
         }
@@ -126,7 +126,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_ENABLE_BACKEND_METAL)
         case wgpu::SType::SurfaceSourceMetalLayer: {
             auto* subDesc = descriptor.Get<SurfaceSourceMetalLayer>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Check that the layer is a CAMetalLayer (or a derived class).
             DAWN_INVALID_IF(!InheritsFromCAMetalLayer(subDesc->layer),
                             "Layer must be a CAMetalLayer");
@@ -136,7 +136,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if DAWN_PLATFORM_IS(WIN32)
         case wgpu::SType::SurfaceSourceWindowsHWND: {
             auto* subDesc = descriptor.Get<SurfaceSourceWindowsHWND>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             DAWN_INVALID_IF(IsWindow(static_cast<HWND>(subDesc->hwnd)) == 0, "Invalid HWND");
             return descriptor;
         }
@@ -144,7 +144,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_WINDOWS_UI)
         case wgpu::SType::SurfaceDescriptorFromWindowsCoreWindow: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsCoreWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Validate the coreWindow by query for ICoreWindow interface
             ComPtr<ABI::Windows::UI::Core::ICoreWindow> coreWindow;
             DAWN_INVALID_IF(subDesc->coreWindow == nullptr ||
@@ -155,7 +155,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         }
         case wgpu::SType::SurfaceDescriptorFromWindowsUWPSwapChainPanel: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsUWPSwapChainPanel>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Validate the swapChainPanel by querying for ISwapChainPanel interface
             ComPtr<ABI::Windows::UI::Xaml::Controls::ISwapChainPanel> swapChainPanel;
             DAWN_INVALID_IF(subDesc->swapChainPanel == nullptr ||
@@ -166,7 +166,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         }
         case wgpu::SType::SurfaceDescriptorFromWindowsWinUISwapChainPanel: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsWinUISwapChainPanel>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Unfortunately, checking whether this is a valid
             // Microsoft.UI.Xaml.Controls.SwapChainPanel would require the WindowsAppSDK as a
             // dependency, which is not trivial. So we'll only check for nullptr here.
@@ -177,7 +177,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_WAYLAND)
         case wgpu::SType::SurfaceSourceWaylandSurface: {
             auto* subDesc = descriptor.Get<SurfaceSourceWaylandSurface>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Unfortunately we can\'t check the validity of wayland objects. Only that they
             // aren't nullptr.
             DAWN_INVALID_IF(subDesc->display == nullptr, "Wayland display is nullptr.");
@@ -188,7 +188,7 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
 #if defined(DAWN_USE_X11)
         case wgpu::SType::SurfaceSourceXlibWindow: {
             auto* subDesc = descriptor.Get<SurfaceSourceXlibWindow>();
-            DAWN_ASSERT(subDesc != nullptr);
+            DAWN_OPT_ASSUME(subDesc != nullptr);
             // Check the validity of the window by calling a getter function on the window that
             // returns a status code. If the window is bad the call return a status of zero. We
             // need to set a temporary X11 error handler while doing this because the default

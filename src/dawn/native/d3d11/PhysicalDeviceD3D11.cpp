@@ -79,7 +79,7 @@ const DeviceInfo& PhysicalDevice::GetDeviceInfo() const {
 
 ResultOrError<ComPtr<ID3D11Device>> PhysicalDevice::CreateD3D11Device(bool enableDebugLayer) {
     if (mIsSharedD3D11Device) {
-        DAWN_ASSERT(mD3D11Device);
+        DAWN_OPT_ASSUME(mD3D11Device);
         return ComPtr<ID3D11Device>(mD3D11Device);
     }
 
@@ -106,7 +106,7 @@ ResultOrError<ComPtr<ID3D11Device>> PhysicalDevice::CreateD3D11Device(bool enabl
             /*pFeatureLevel=*/nullptr, /*[out] ppImmediateContext=*/nullptr);
 
         if (SUCCEEDED(hr)) {
-            DAWN_ASSERT(IsDebugLayerEnabled(d3d11Device));
+            DAWN_OPT_ASSUME(IsDebugLayerEnabled(d3d11Device));
             return d3d11Device;
         }
     }
@@ -188,7 +188,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     UINT formatSupport = 0;
     HRESULT hr = mD3D11Device->CheckFormatSupport(DXGI_FORMAT_B8G8R8A8_UNORM, &formatSupport);
-    DAWN_ASSERT(SUCCEEDED(hr));
+    DAWN_OPT_ASSUME(SUCCEEDED(hr));
     if (formatSupport & D3D11_FORMAT_SUPPORT_TYPED_UNORDERED_ACCESS_VIEW) {
         EnableFeature(Feature::BGRA8UnormStorage);
     }
@@ -389,7 +389,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 // creating a new one.
 MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     [[maybe_unused]] auto refCount = mD3D11Device.Reset();
-    DAWN_ASSERT(refCount == 0);
+    DAWN_OPT_ASSUME(refCount == 0);
     DAWN_TRY(Initialize());
 
     return {};

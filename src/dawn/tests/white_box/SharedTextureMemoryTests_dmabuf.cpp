@@ -92,7 +92,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
         wgpu::SharedTextureMemoryDmaBufPlane planes[GBM_MAX_PLANES];
         dmaBufDesc.planeCount = gbm_bo_get_plane_count(bo);
         dmaBufDesc.planes = planes;
-        DAWN_ASSERT(dmaBufDesc.planeCount <= GBM_MAX_PLANES);
+        DAWN_OPT_ASSUME(dmaBufDesc.planeCount <= GBM_MAX_PLANES);
 
         for (uint32_t plane = 0; plane < dmaBufDesc.planeCount; ++plane) {
             planes[plane].fd = gbm_bo_get_fd(bo);
@@ -121,7 +121,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
         auto format = GBM_FORMAT_ABGR8888;
         auto usage = GBM_BO_USE_LINEAR;
 
-        DAWN_ASSERT(gbm_device_is_format_supported(mGbmDevice, format, usage));
+        DAWN_OPT_ASSUME(gbm_device_is_format_supported(mGbmDevice, format, usage));
 
         return CreateSharedTextureMemoryHelper(
             16, format, usage, [&](const wgpu::SharedTextureMemoryDescriptor& desc) {

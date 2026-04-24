@@ -243,7 +243,7 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
     TRACE_EVENT_ASYNC_BEGIN0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
                              uint64_t(pendingSerial));
 
-    DAWN_ASSERT(mSharedFence);
+    DAWN_OPT_ASSUME(mSharedFence);
     [*pendingCommands encodeSignalEvent:mSharedFence->GetMTLSharedEvent()
                                   value:static_cast<uint64_t>(pendingSerial)];
 

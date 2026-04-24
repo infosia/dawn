@@ -357,10 +357,10 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* commandCon
 
     // Resources in upload and readback heaps must be kept in the COPY_SOURCE/DEST state
     if (mFixedResourceState) {
-        DAWN_ASSERT((mLastState == D3D12_RESOURCE_STATE_COPY_DEST &&
-                     newUsage == wgpu::BufferUsage::CopyDst) ||
-                    (mLastState == D3D12_RESOURCE_STATE_GENERIC_READ &&
-                     newUsage == wgpu::BufferUsage::CopySrc));
+        DAWN_OPT_ASSUME((mLastState == D3D12_RESOURCE_STATE_COPY_DEST &&
+                         newUsage == wgpu::BufferUsage::CopyDst) ||
+                        (mLastState == D3D12_RESOURCE_STATE_GENERIC_READ &&
+                         newUsage == wgpu::BufferUsage::CopySrc));
         return false;
     }
 
@@ -489,7 +489,7 @@ MaybeError Buffer::MapAtCreationImpl() {
     // We will use a staging buffer for MapRead buffers instead so we just clear the staging
     // buffer and initialize the original buffer by copying the staging buffer to the original
     // buffer one the first time Unmap() is called.
-    DAWN_ASSERT((GetInternalUsage() & wgpu::BufferUsage::MapWrite) != 0);
+    DAWN_OPT_ASSUME((GetInternalUsage() & wgpu::BufferUsage::MapWrite) != 0);
 
     // The buffers with mappedAtCreation == true will be initialized in
     // BufferBase::MapAtCreation().
@@ -697,7 +697,7 @@ void Buffer::SetLabelImpl() {
 }
 
 MaybeError Buffer::InitializeToZero(CommandRecordingContext* commandContext) {
-    DAWN_ASSERT(NeedsInitialization());
+    DAWN_OPT_ASSUME(NeedsInitialization());
 
     // TODO(crbug.com/dawn/484): skip initializing the buffer when it is created on a heap
     // that has already been zero initialized.

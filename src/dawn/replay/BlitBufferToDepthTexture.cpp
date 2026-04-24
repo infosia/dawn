@@ -81,7 +81,7 @@ MaybeError BlitBufferToDepthTexture::Blit(wgpu::Device device,
     // bytesPerRow is aligned to 256. However some backends might enable
     // DawnTexelCopyBufferRowAlignment feature to relax the alignment. Currently only D3D11 backend
     // enables this feature, and the relaxed alignment there is 4.
-    DAWN_ASSERT((src.bytesPerRow % 4) == 0);
+    DAWN_OPT_ASSUME((src.bytesPerRow % 4) == 0);
 
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.label = "Init Texture Data Buffer";

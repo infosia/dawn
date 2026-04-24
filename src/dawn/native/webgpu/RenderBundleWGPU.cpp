@@ -147,7 +147,7 @@ void EncodeRenderBundleCommand(const DawnProcTable& wgpu,
 
         case Command::SetImmediates: {
             auto cmd = commands.NextCommand<SetImmediatesCmd>();
-            DAWN_ASSERT(cmd->size > 0);
+            DAWN_OPT_ASSUME(cmd->size > 0);
             uint8_t* value = nullptr;
             value = commands.NextData<uint8_t>(cmd->size);
             wgpu.renderBundleEncoderSetImmediates(encoder, cmd->offset, value, cmd->size);
@@ -219,7 +219,7 @@ RenderBundle::RenderBundle(RenderBundleEncoderBase* encoder,
     }
 
     mInnerHandle = device->wgpu->renderBundleEncoderFinish(innerRenderBundleEncoder, nullptr);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 
     device->wgpu->renderBundleEncoderRelease(innerRenderBundleEncoder);
 }

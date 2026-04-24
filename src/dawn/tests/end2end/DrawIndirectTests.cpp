@@ -234,7 +234,7 @@ class DrawIndirectUsingFirstVertexTest : public DawnTest {
               utils::RGBA8 bottomLeftExpected,
               utils::RGBA8 topRightExpected) {
         // Indirect buffer contains 2 draw params
-        DAWN_ASSERT(bufferList.size() == 8);
+        DAWN_OPT_ASSUME(bufferList.size() == 8);
         wgpu::Buffer indirectBuffer =
             utils::CreateBufferFromData<uint32_t>(device, wgpu::BufferUsage::Indirect, bufferList);
 

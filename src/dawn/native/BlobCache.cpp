@@ -119,7 +119,7 @@ Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void*
 }
 
 void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void* value) {
-    DAWN_ASSERT(ValidateCacheKey(key));
+    DAWN_OPT_ASSUME(ValidateCacheKey(key));
     DAWN_CHECK(value != nullptr);
     DAWN_CHECK(valueSize > 0);
     if (mStoreFunction == nullptr) {
@@ -137,7 +137,7 @@ void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void*
 }
 
 ResultOrError<Blob> BlobCache::LoadInternal(const CacheKey& key) {
-    DAWN_ASSERT(ValidateCacheKey(key));
+    DAWN_OPT_ASSUME(ValidateCacheKey(key));
     if (mLoadFunction == nullptr) {
         return Blob();
     }

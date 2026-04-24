@@ -1167,10 +1167,10 @@ TEST_P(VertexFormatTest, Sint32x4) {
 
 TEST_P(VertexFormatTest, Unorm10_10_10_2) {
     auto MakeRGB10A2 = [](uint32_t r, uint32_t g, uint32_t b, uint32_t a) -> uint32_t {
-        DAWN_ASSERT((r & 0x3FF) == r);
-        DAWN_ASSERT((g & 0x3FF) == g);
-        DAWN_ASSERT((b & 0x3FF) == b);
-        DAWN_ASSERT((a & 0x3) == a);
+        DAWN_OPT_ASSUME((r & 0x3FF) == r);
+        DAWN_OPT_ASSUME((g & 0x3FF) == g);
+        DAWN_OPT_ASSUME((b & 0x3FF) == b);
+        DAWN_OPT_ASSUME((a & 0x3) == a);
         return r | g << 10 | b << 20 | a << 30;
     };
 

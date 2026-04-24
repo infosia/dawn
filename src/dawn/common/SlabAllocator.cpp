@@ -65,7 +65,7 @@ SlabAllocatorImpl::SentinelSlab::~SentinelSlab() {
     while (next) {
         Slab* slab = next;
         slab->Splice();
-        DAWN_ASSERT(slab->blocksInUse == 0);
+        DAWN_OPT_ASSUME(slab->blocksInUse == 0);
         char* allocation = slab->allocation;
         slab->~Slab();  // Placement delete.
         AlignedFree(allocation);
@@ -83,8 +83,8 @@ SlabAllocatorImpl::SlabAllocatorImpl(Index blocksPerSlab,
       mBlockStride(Align(mIndexLinkNodeOffset + u32_sizeof<IndexLinkNode>, objectAlignment)),
       mBlocksPerSlab(blocksPerSlab),
       mTotalAllocationSize(static_cast<size_t>(mSlabBlocksOffset) + mBlocksPerSlab * mBlockStride) {
-    DAWN_ASSERT(blocksPerSlab > 0);
-    DAWN_ASSERT(IsPowerOfTwo(mAllocationAlignment));
+    DAWN_OPT_ASSUME(blocksPerSlab > 0);
+    DAWN_OPT_ASSUME(IsPowerOfTwo(mAllocationAlignment));
 }
 
 SlabAllocatorImpl::SlabAllocatorImpl(SlabAllocatorImpl&& rhs)
@@ -124,34 +124,34 @@ bool SlabAllocatorImpl::IsNodeInSlab(Slab* slab, IndexLinkNode* node) const {
 }
 
 void SlabAllocatorImpl::PushFront(Slab* slab, IndexLinkNode* node) const {
-    DAWN_ASSERT(IsNodeInSlab(slab, node));
+    DAWN_OPT_ASSUME(IsNodeInSlab(slab, node));
 
     IndexLinkNode* head = slab->freeList;
     if (head == nullptr) {
         node->nextIndex = kInvalidIndex;
     } else {
-        DAWN_ASSERT(IsNodeInSlab(slab, head));
+        DAWN_OPT_ASSUME(IsNodeInSlab(slab, head));
         node->nextIndex = head->index;
     }
     slab->freeList = node;
 
-    DAWN_ASSERT(slab->blocksInUse != 0);
+    DAWN_OPT_ASSUME(slab->blocksInUse != 0);
     slab->blocksInUse--;
 }
 
 SlabAllocatorImpl::IndexLinkNode* SlabAllocatorImpl::PopFront(Slab* slab) const {
-    DAWN_ASSERT(slab->freeList != nullptr);
+    DAWN_OPT_ASSUME(slab->freeList != nullptr);
 
     IndexLinkNode* head = slab->freeList;
     if (head->nextIndex == kInvalidIndex) {
         slab->freeList = nullptr;
     } else {
-        DAWN_ASSERT(IsNodeInSlab(slab, head));
+        DAWN_OPT_ASSUME(IsNodeInSlab(slab, head));
         slab->freeList = OffsetFrom(head, head->nextIndex - head->index);
-        DAWN_ASSERT(IsNodeInSlab(slab, slab->freeList));
+        DAWN_OPT_ASSUME(IsNodeInSlab(slab, slab->freeList));
     }
 
-    DAWN_ASSERT(slab->blocksInUse < mBlocksPerSlab);
+    DAWN_OPT_ASSUME(slab->blocksInUse < mBlocksPerSlab);
     slab->blocksInUse++;
     return head;
 }
@@ -166,7 +166,7 @@ void SlabAllocatorImpl::SentinelSlab::Prepend(SlabAllocatorImpl::Slab* slab) {
 }
 
 void SlabAllocatorImpl::Slab::Splice() {
-    DAWN_ASSERT(prev != nullptr);
+    DAWN_OPT_ASSUME(prev != nullptr);
     prev->next = next;
     if (next != nullptr) {
         next->prev = prev;
@@ -217,7 +217,7 @@ void* SlabAllocatorImpl::Allocate() {
 
     Slab* slab = mAvailableSlabs.next;
     IndexLinkNode* node = PopFront(slab);
-    DAWN_ASSERT(node != nullptr);
+    DAWN_OPT_ASSUME(node != nullptr);
 
     // Move full slabs to a separate list, so allocate can always return quickly.
     if (slab->blocksInUse == mBlocksPerSlab) {
@@ -231,18 +231,18 @@ void* SlabAllocatorImpl::Allocate() {
 void SlabAllocatorImpl::Deallocate(void* ptr) {
     IndexLinkNode* node = NodeFromObject(ptr);
 
-    DAWN_ASSERT(node->index < mBlocksPerSlab);
+    DAWN_OPT_ASSUME(node->index < mBlocksPerSlab);
     void* firstAllocation = ObjectFromNode(OffsetFrom(node, -node->index));
     Slab* slab = reinterpret_cast<Slab*>(static_cast<char*>(firstAllocation) - mSlabBlocksOffset);
-    DAWN_ASSERT(slab != nullptr);
+    DAWN_OPT_ASSUME(slab != nullptr);
 
     bool slabWasFull = slab->blocksInUse == mBlocksPerSlab;
-    DAWN_ASSERT(slab->blocksInUse != 0);
+    DAWN_OPT_ASSUME(slab->blocksInUse != 0);
     PushFront(slab, node);
 
     if (slabWasFull) {
         // Slab is in the full list. Move it to the recycled list.
-        DAWN_ASSERT(slab->freeList != nullptr);
+        DAWN_OPT_ASSUME(slab->freeList != nullptr);
         slab->Splice();
         mRecycledSlabs.Prepend(slab);
     }
@@ -250,7 +250,7 @@ void SlabAllocatorImpl::Deallocate(void* ptr) {
 
 void SlabAllocatorImpl::GetNewSlab() {
     // Should only be called when there are no available slabs.
-    DAWN_ASSERT(mAvailableSlabs.next == nullptr);
+    DAWN_OPT_ASSUME(mAvailableSlabs.next == nullptr);
 
     if (mRecycledSlabs.next != nullptr) {
         // If the recycled list is non-empty, swap their contents.
@@ -259,7 +259,7 @@ void SlabAllocatorImpl::GetNewSlab() {
         // We swapped the next pointers, so the prev pointer is wrong.
         // Update it here.
         mAvailableSlabs.next->prev = &mAvailableSlabs;
-        DAWN_ASSERT(mRecycledSlabs.next == nullptr);
+        DAWN_OPT_ASSUME(mRecycledSlabs.next == nullptr);
         return;
     }
 

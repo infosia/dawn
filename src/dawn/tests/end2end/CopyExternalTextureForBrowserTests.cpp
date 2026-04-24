@@ -161,7 +161,7 @@ class CopyExternalTextureForBrowserTests : public Parent {
                 .yCbCrMatrix = wgpu::ColorSpaceYCbCrMatrixDawn::Rec709,
             },
             wgpu::PredefinedColorSpace::SRGB, &params);
-        DAWN_ASSERT(status == wgpu::Status::Success);
+        DAWN_OPT_ASSUME(status == wgpu::Status::Success);
 
         wgpu::ExternalTextureDescriptor externalDesc;
         externalDesc.yuvToRgbConversionMatrix = params.yuvToRgbConversionMatrix.data();

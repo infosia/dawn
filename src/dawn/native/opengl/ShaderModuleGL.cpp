@@ -197,7 +197,7 @@ void GenerateCombinedSamplerInfo(
         const auto& bindingLayout = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
 
         auto& tint_data = bindings.external_texture.at(ToTint(use.texture));
-        DAWN_ASSERT(std::holds_alternative<tint::ExternalMultiplanarTexture>(tint_data));
+        DAWN_OPT_ASSUME(std::holds_alternative<tint::ExternalMultiplanarTexture>(tint_data));
 
         tint::ExternalMultiplanarTexture mp_data =
             std::get<tint::ExternalMultiplanarTexture>(tint_data);

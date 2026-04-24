@@ -103,7 +103,7 @@ BindGroupLayout::BindGroupLayout(Device* device,
     desc.entries = entries.data();
 
     mInnerHandle = device->wgpu->deviceCreateBindGroupLayout(device->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 }
 
 Ref<BindGroup> BindGroupLayout::AllocateBindGroup(

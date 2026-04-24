@@ -101,7 +101,7 @@ class CreatePipelineEventBase : public TrackedEvent {
           mUserdata1(callbackInfo.userdata1),
           mUserdata2(callbackInfo.userdata2),
           mPipeline(std::move(pipeline)) {
-        DAWN_ASSERT(mPipeline != nullptr);
+        DAWN_OPT_ASSUME(mPipeline != nullptr);
     }
 
     EventType GetType() override { return kType; }
@@ -109,7 +109,7 @@ class CreatePipelineEventBase : public TrackedEvent {
     WireResult ReadyHook(FutureID futureID,
                          WGPUCreatePipelineAsyncStatus status,
                          WGPUStringView message) {
-        DAWN_ASSERT(mPipeline != nullptr);
+        DAWN_OPT_ASSUME(mPipeline != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         return WireResult::Success;
@@ -168,7 +168,7 @@ class Device::DeviceLostEvent : public TrackedEvent {
           mUserdata1(callbackInfo.userdata1),
           mUserdata2(callbackInfo.userdata2),
           mDevice(std::move(device)) {
-        DAWN_ASSERT(mDevice != nullptr);
+        DAWN_OPT_ASSUME(mDevice != nullptr);
     }
 
     EventType GetType() override { return kType; }

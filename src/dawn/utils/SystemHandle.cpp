@@ -114,7 +114,7 @@ SystemHandle::SystemHandle(Handle handle) : mHandle(handle) {}
 
 SystemHandle::SystemHandle(ErrorTag tag) : SystemHandle() {
     dawn::ErrorLog() << "SystemHandle constructed from incorrect handle type.";
-    DAWN_ASSERT(false);
+    DAWN_OPT_ASSUME(false);
 }
 
 bool SystemHandle::IsValid() const {
@@ -162,7 +162,7 @@ SystemHandle SystemHandle::Duplicate() const {
 }
 
 void SystemHandle::Close() {
-    DAWN_ASSERT(IsValid());
+    DAWN_OPT_ASSUME(IsValid());
     CloseHandle(mHandle);
     // Invalidate the handle after closing.
     mHandle = kInvalidHandle;

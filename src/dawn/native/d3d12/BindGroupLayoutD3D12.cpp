@@ -248,7 +248,7 @@ ResultOrError<Ref<BindGroup>> BindGroupLayout::AllocateBindGroup(
     if (GetCbvUavSrvDescriptorCount() > 0) {
         auto* viewAllocator =
             device->GetViewStagingDescriptorAllocator(GetCbvUavSrvDescriptorCount());
-        DAWN_ASSERT(viewAllocator != nullptr);
+        DAWN_OPT_ASSUME(viewAllocator != nullptr);
         DAWN_TRY((*viewAllocator).Use([&](auto viewAllocator) -> MaybeError {
             DAWN_TRY_ASSIGN(viewAllocation, viewAllocator->AllocateCPUDescriptors());
             return {};

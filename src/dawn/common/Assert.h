@@ -33,8 +33,8 @@
 #include "dawn/common/Compiler.h"
 
 // Dawn asserts to be used instead of the regular C stdlib assert function (if you don't use assert
-// yet, you should start now!). In debug DAWN_ASSERT(condition) will trigger an error, otherwise in
-// release it does nothing at runtime.
+// yet, you should start now!). In debug DAWN_OPT_ASSUME(condition) will trigger an error, otherwise
+// in release it provides a powerful optimization hint (assume) to the compiler.
 //
 // In case of name clashes (with for example a testing library), you can define the
 // DAWN_SKIP_ASSERT_SHORTHANDS to only define the DAWN_ prefixed macros.
@@ -47,12 +47,12 @@
 // MSVC triggers a warning in /W4 for do {} while(0). SDL worked around this by using (0,0) and
 // points out that it looks like an owl face.
 #if DAWN_COMPILER_IS(MSVC)
-#define DAWN_ASSERT_LOOP_CONDITION (0, 0)
+#define DAWN_OPT_ASSUME_LOOP_CONDITION (0, 0)
 #else
-#define DAWN_ASSERT_LOOP_CONDITION (0)
+#define DAWN_OPT_ASSUME_LOOP_CONDITION (0)
 #endif
 
-// DAWN_ASSERT_CALLSITE_HELPER generates the actual assert code. In Debug it does what you would
+// DAWN_OPT_ASSUME_CALLSITE_HELPER generates the actual assert code. In Debug it does what you would
 // expect of an assert and in release it tries to give hints to make the compiler generate better
 // code.
 #if defined(DAWN_ENABLE_ASSERTS)
@@ -63,14 +63,14 @@
             ::dawn::HandleAssertionFailure(file, func, line, #condition); \
             abort();                                                      \
         }                                                                 \
-    } while (DAWN_ASSERT_LOOP_CONDITION)
+    } while (DAWN_OPT_ASSUME_LOOP_CONDITION)
 
-#define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition)          \
+#define DAWN_OPT_ASSUME_CALLSITE_HELPER(file, func, line, condition)      \
     do {                                                                  \
         if (!(condition)) [[unlikely]] {                                  \
             ::dawn::HandleAssertionFailure(file, func, line, #condition); \
         }                                                                 \
-    } while (DAWN_ASSERT_LOOP_CONDITION)
+    } while (DAWN_OPT_ASSUME_LOOP_CONDITION)
 
 #else  // defined(DAWN_ENABLE_ASSERTS)
 
@@ -79,17 +79,17 @@
         if (!(condition)) [[unlikely]] {                        \
             abort();                                            \
         }                                                       \
-    } while (DAWN_ASSERT_LOOP_CONDITION)
+    } while (DAWN_OPT_ASSUME_LOOP_CONDITION)
 
 #if DAWN_COMPILER_IS(MSVC)
-#define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) __assume(condition)
+#define DAWN_OPT_ASSUME_CALLSITE_HELPER(file, func, line, condition) __assume(condition)
 #elif DAWN_COMPILER_IS(CLANG) && __has_builtin(__builtin_assume)
-#define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) __builtin_assume(!!(condition))
+#define DAWN_OPT_ASSUME_CALLSITE_HELPER(file, func, line, condition) __builtin_assume(!!(condition))
 #else  // DAWN_COMPILER_IS(*)
-#define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) \
-    do {                                                         \
-        [[maybe_unused]] auto unused = sizeof(!!(condition));    \
-    } while (DAWN_ASSERT_LOOP_CONDITION)
+#define DAWN_OPT_ASSUME_CALLSITE_HELPER(file, func, line, condition) \
+    do {                                                             \
+        [[maybe_unused]] auto unused = sizeof(!!(condition));        \
+    } while (DAWN_OPT_ASSUME_LOOP_CONDITION)
 #endif  // DAWN_COMPILER_IS(*)
 
 #endif  // defined(DAWN_ENABLE_ASSERTS)
@@ -99,13 +99,14 @@
 #define DAWN_CHECK(condition) DAWN_CHECK_CALLSITE_HELPER(__FILE__, __func__, __LINE__, condition)
 // Debug-only assert (similar to Chromium DCHECK).
 // In release, this provides optimization hints to the compiler.
-#define DAWN_ASSERT(condition) DAWN_ASSERT_CALLSITE_HELPER(__FILE__, __func__, __LINE__, condition)
+#define DAWN_OPT_ASSUME(condition) \
+    DAWN_OPT_ASSUME_CALLSITE_HELPER(__FILE__, __func__, __LINE__, condition)
 // Check-false (similar to Chromium NOTREACHED).
 // This will hard-abort in both debug and release.
-#define DAWN_UNREACHABLE()                                                \
-    do {                                                                  \
-        DAWN_CHECK(DAWN_ASSERT_LOOP_CONDITION && "Unreachable code hit"); \
-    } while (DAWN_ASSERT_LOOP_CONDITION)
+#define DAWN_UNREACHABLE()                                                    \
+    do {                                                                      \
+        DAWN_CHECK(DAWN_OPT_ASSUME_LOOP_CONDITION && "Unreachable code hit"); \
+    } while (DAWN_OPT_ASSUME_LOOP_CONDITION)
 
 namespace dawn {
 

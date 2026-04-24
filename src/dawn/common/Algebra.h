@@ -136,7 +136,7 @@ class alignas(WGSLVectorAlignment<Scalar>(Size)) Vector {
     constexpr Self operator/(const Self& other) const {
         Self result;
         for (size_t i = 0; i < Size; i++) {
-            DAWN_ASSERT(other[i] != Scalar(0));
+            DAWN_OPT_ASSUME(other[i] != Scalar(0));
             result[i] = data[i] / other[i];
         }
         return result;

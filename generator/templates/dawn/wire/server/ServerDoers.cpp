@@ -72,7 +72,7 @@ namespace dawn::wire::server {
                     {% if ret|length == 1 %}
                         //* WebGPU error handling guarantees that no null object can be returned by
                         //* object creation functions.
-                        DAWN_ASSERT(*{{as_varName(ret[0].name)}} != nullptr);
+                        DAWN_OPT_ASSUME(*{{as_varName(ret[0].name)}} != nullptr);
                     {% endif %}
 
                     //* The client is responsible for making sure what it does isn't an invalid API
@@ -99,7 +99,7 @@ namespace dawn::wire::server {
 
                     //* Handle actually releasing the object after untracking it.
                     if (data.state == AllocationState::Allocated) {
-                        DAWN_ASSERT(data.handle != nullptr);
+                        DAWN_OPT_ASSUME(data.handle != nullptr);
                         {% if type.name.get() == "device" %}
                             //* Destroy the device to ensure that the spontaneous callbacks, i.e.
                             //* the uncaptured error and logging callbacks, are cleared, and the

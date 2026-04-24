@@ -97,7 +97,7 @@ class VertexBufferTracker {
     }
 
     void Apply(const RenderPipeline* renderPipeline) {
-        DAWN_ASSERT(renderPipeline != nullptr);
+        DAWN_OPT_ASSUME(renderPipeline != nullptr);
 
         // If the vertex state has changed, we need to update the strides.
         if (mLastAppliedRenderPipeline != renderPipeline) {
@@ -225,7 +225,7 @@ class ImmediateConstantTracker : public T {
     ImmediateConstantTracker() = default;
 
     MaybeError Apply(const ScopedSwapStateCommandRecordingContext* commandContext) {
-        DAWN_ASSERT(this->mLastPipeline != nullptr);
+        DAWN_OPT_ASSUME(this->mLastPipeline != nullptr);
 
         ImmediateConstantMask pipelineMask = this->mLastPipeline->GetImmediateMask();
         ImmediateConstantMask uploadBits = this->mDirty & pipelineMask;
@@ -403,7 +403,7 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 DAWN_TRY(texture->SynchronizeTextureBeforeUse(commandContext));
                 SubresourceRange subresources = GetSubresourcesAffectedByCopy(dst, copy->copySize);
 
-                DAWN_ASSERT(scopedMap.GetMappedData());
+                DAWN_OPT_ASSUME(scopedMap.GetMappedData());
                 const uint8_t* data = scopedMap.GetMappedData() + bufferOffset;
                 uint64_t bytesPerRow = blockInfo.ToBytes(src.blocksPerRow);
                 DAWN_TRY(texture->Write(commandContext, subresources, dst.origin.ToOrigin3D(),
@@ -616,7 +616,7 @@ MaybeError CommandBuffer::ExecuteComputePass(
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
@@ -638,7 +638,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
     // the clear for them.
     for (auto i : ClearWithDrawHelper::GetAppliedColorAttachments(GetDevice(), renderPass)) {
         auto& colorAttachment = renderPass->colorAttachments[i];
-        DAWN_ASSERT(colorAttachment.loadOp == wgpu::LoadOp::Clear);
+        DAWN_OPT_ASSUME(colorAttachment.loadOp == wgpu::LoadOp::Clear);
         // Skip the clear as it will be handled by the workaround.
         colorAttachment.loadOp = wgpu::LoadOp::Load;
         // Mark the resource as initialized to avoid the lazy clear.
@@ -768,7 +768,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
 
                 auto* indirectBuffer = ToGPUUsableBuffer(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 DAWN_TRY(bindGroupTracker.Apply());
                 vertexBufferTracker.Apply(lastPipeline);
@@ -799,7 +799,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
                 auto* indirectBuffer = ToGPUUsableBuffer(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 DAWN_TRY(bindGroupTracker.Apply());
                 vertexBufferTracker.Apply(lastPipeline);
@@ -883,7 +883,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
@@ -911,8 +911,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                             continue;
                         }
 
-                        DAWN_ASSERT(attachment.view->GetAspects() == Aspect::Color);
-                        DAWN_ASSERT(attachment.resolveTarget->GetAspects() == Aspect::Color);
+                        DAWN_OPT_ASSUME(attachment.view->GetAspects() == Aspect::Color);
+                        DAWN_OPT_ASSUME(attachment.resolveTarget->GetAspects() == Aspect::Color);
 
                         Texture* resolveTexture = ToBackend(attachment.resolveTarget->GetTexture());
                         Texture* colorTexture = ToBackend(attachment.view->GetTexture());

@@ -325,7 +325,7 @@ MaybeError ExpandResolveTextureWithDraw(
     DeviceBase* device,
     RenderPassEncoder* renderEncoder,
     const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
     DAWN_CHECK(device->CanTextureLoadResolveTargetInTheSameRenderpass());
 
     BlitColorToColorWithDrawPipelineKey pipelineKey;
@@ -469,7 +469,7 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
                                       const RenderPassDescriptorResolveRect& rect,
                                       TextureViewBase* src,
                                       TextureViewBase* dst) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     ResolveMultisampleWithDrawPipelineKey pipelineKey{dst->GetFormat().format,
                                                       src->GetTexture()->GetSampleCount()};

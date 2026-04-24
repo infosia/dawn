@@ -139,7 +139,7 @@ void BuddyAllocator::RemoveFreeBlock(BuddyBlock* block, size_t level) {
         BuddyBlock* pPrev = block->free.pPrev;
         BuddyBlock* pNext = block->free.pNext;
 
-        DAWN_ASSERT(pPrev != nullptr);
+        DAWN_OPT_ASSUME(pPrev != nullptr);
         DAWN_CHECK(pPrev->mState == BlockState::Free);
 
         pPrev->free.pNext = pNext;
@@ -266,7 +266,7 @@ void BuddyAllocator::Deallocate(uint64_t offset) {
 
 // Helper which deletes a block in the tree recursively (post-order).
 void BuddyAllocator::DeleteBlock(BuddyBlock* block) {
-    DAWN_ASSERT(block != nullptr);
+    DAWN_OPT_ASSUME(block != nullptr);
 
     if (block->mState == BlockState::Split) {
         // Delete the pair in same order we inserted.

@@ -97,16 +97,16 @@ struct Reserved {
     raw_ptr<ObjectData<T>> data;
 
     const ObjectData<T>* operator->() const {
-        DAWN_ASSERT(data != nullptr);
+        DAWN_OPT_ASSUME(data != nullptr);
         return data;
     }
     ObjectData<T>* operator->() {
-        DAWN_ASSERT(data != nullptr);
+        DAWN_OPT_ASSUME(data != nullptr);
         return data;
     }
 
     ObjectHandle AsHandle() const {
-        DAWN_ASSERT(data != nullptr);
+        DAWN_OPT_ASSUME(data != nullptr);
         return {id, data->generation};
     }
 };
@@ -119,19 +119,19 @@ struct Known {
     raw_ptr<ObjectData<T>> data;
 
     const ObjectData<T>* operator->() const {
-        DAWN_ASSERT(data != nullptr);
-        DAWN_ASSERT(data->state == AllocationState::Allocated);
+        DAWN_OPT_ASSUME(data != nullptr);
+        DAWN_OPT_ASSUME(data->state == AllocationState::Allocated);
         return data;
     }
     ObjectData<T>* operator->() {
-        DAWN_ASSERT(data != nullptr);
-        DAWN_ASSERT(data->state == AllocationState::Allocated);
+        DAWN_OPT_ASSUME(data != nullptr);
+        DAWN_OPT_ASSUME(data->state == AllocationState::Allocated);
         return data;
     }
 
     ObjectHandle AsHandle() const {
-        DAWN_ASSERT(data != nullptr);
-        DAWN_ASSERT(data->state == AllocationState::Allocated);
+        DAWN_OPT_ASSUME(data != nullptr);
+        DAWN_OPT_ASSUME(data->state == AllocationState::Allocated);
         return {id, data->generation};
     }
 };
@@ -197,8 +197,8 @@ class KnownObjectsBase {
     }
 
     WireResult FillReservation(ObjectId id, T handle, Known<T>* known = nullptr) {
-        DAWN_ASSERT(id < mKnown.size());
-        DAWN_ASSERT(handle != nullptr);
+        DAWN_OPT_ASSUME(id < mKnown.size());
+        DAWN_OPT_ASSUME(handle != nullptr);
         Data* data = &mKnown[id];
 
         if (data->state != AllocationState::Reserved) {
@@ -251,7 +251,7 @@ class KnownObjectsBase {
 
     // Marks an ID as deallocated
     void Free(ObjectId id) {
-        DAWN_ASSERT(id < mKnown.size());
+        DAWN_OPT_ASSUME(id < mKnown.size());
         Data data;
         data.generation = mKnown[id].generation;
         data.state = AllocationState::Free;

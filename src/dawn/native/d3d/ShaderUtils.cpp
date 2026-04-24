@@ -113,7 +113,7 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
         arguments.push_back(L"/res_may_alias");
     }
 
-#define ASSERT_UNHANDLED(f) DAWN_ASSERT((compileFlags & f) == 0)
+#define ASSERT_UNHANDLED(f) DAWN_OPT_ASSUME((compileFlags & f) == 0)
     ASSERT_UNHANDLED(D3DCOMPILE_SKIP_VALIDATION);
     ASSERT_UNHANDLED(D3DCOMPILE_PARTIAL_PRECISION);
     ASSERT_UNHANDLED(D3DCOMPILE_FORCE_VS_SOFTWARE_NO_OPT);
@@ -384,11 +384,11 @@ void DumpFXCCompiledShader(Device* device,
                            const CompiledShader& compiledShader,
                            uint32_t compileFlags) {
     std::ostringstream dumpedMsg;
-    DAWN_ASSERT(!compiledShader.hlslSource.empty());
+    DAWN_OPT_ASSUME(!compiledShader.hlslSource.empty());
     dumpedMsg << "/* Dumped generated HLSL */\n" << compiledShader.hlslSource << "\n";
 
     const Blob& shaderBlob = compiledShader.shaderBlob;
-    DAWN_ASSERT(!shaderBlob.Empty());
+    DAWN_OPT_ASSUME(!shaderBlob.Empty());
     dumpedMsg << "/* FXC compile flags */\n" << CompileFlagsToString(compileFlags) << "\n";
     dumpedMsg << "/* Dumped disassembled DXBC */\n";
     ComPtr<ID3DBlob> disassembly;
@@ -412,7 +412,7 @@ void DumpFXCCompiledShader(Device* device,
 
 InterStageShaderVariablesMask ToInterStageShaderVariablesMask(const std::vector<bool>& inputMask) {
     InterStageShaderVariablesMask outputMask;
-    DAWN_ASSERT(inputMask.size() <= outputMask.size());
+    DAWN_OPT_ASSUME(inputMask.size() <= outputMask.size());
     for (size_t i = 0; i < inputMask.size(); ++i) {
         outputMask[i] = inputMask[i];
     }
