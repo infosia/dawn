@@ -243,7 +243,7 @@ func TestScan(t *testing.T) {
 			condition:  func(path string, cond bool) bool { return true },
 			want:       nil,
 			wantErr:    true,
-			wantErrMsg: "open asdf: file does not exist",
+			wantErrMsg: "asdf: file does not exist",
 		},
 	}
 
