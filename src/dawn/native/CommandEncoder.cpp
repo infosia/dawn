@@ -1065,29 +1065,13 @@ MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
                                                    uint64_t destinationOffset) {
     DeviceBase* device = encoder->GetDevice();
 
-    // The availability got from query set is a reference to vector<bool>, need to covert
-    // bool to uint32_t due to a user input in pipeline must not contain a bool type in
-    // WGSL.
-    std::vector<uint32_t> availability{querySet->GetQueryAvailability().begin(),
-                                       querySet->GetQueryAvailability().end()};
-
-    // Timestamp availability storage buffer
-    BufferDescriptor availabilityDesc = {};
-    availabilityDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopyDst;
-    availabilityDesc.size = querySet->GetQueryCount() * sizeof(uint32_t);
-    Ref<BufferBase> availabilityBuffer;
-    DAWN_TRY_ASSIGN(availabilityBuffer, device->CreateBuffer(&availabilityDesc));
-
-    DAWN_TRY(device->GetQueue()->WriteBuffer(availabilityBuffer.Get(), 0, availability.data(),
-                                             availability.size() * sizeof(uint32_t)));
-
     const uint32_t quantization_mask = (device->IsToggleEnabled(Toggle::TimestampQuantization))
                                            ? kTimestampQuantizationMask
                                            : 0xFFFFFFFF;
 
     // Timestamp params uniform buffer
-    TimestampParams params(firstQuery, queryCount, static_cast<uint32_t>(destinationOffset),
-                           quantization_mask, device->GetTimestampPeriodInNS());
+    TimestampParams params(queryCount, static_cast<uint32_t>(destinationOffset), quantization_mask,
+                           device->GetTimestampPeriodInNS());
 
     BufferDescriptor parmsDesc = {};
     parmsDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
@@ -1097,7 +1081,7 @@ MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
 
     DAWN_TRY(device->GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, &params, sizeof(params)));
 
-    return EncodeConvertTimestampsToNanoseconds(encoder, destination, availabilityBuffer.Get(),
+    return EncodeConvertTimestampsToNanoseconds(encoder, queryCount, destination,
                                                 paramsBuffer.Get());
 }
 

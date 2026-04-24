@@ -27,8 +27,6 @@
 
 #include <vector>
 
-#include "dawn/native/Buffer.h"
-#include "dawn/native/CommandEncoder.h"
 #include "dawn/native/QueryHelper.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -37,12 +35,12 @@ namespace dawn {
 namespace {
 
 void EncodeConvertTimestampsToNanoseconds(wgpu::CommandEncoder encoder,
+                                          uint32_t queryCount,
                                           wgpu::Buffer timestamps,
-                                          wgpu::Buffer availability,
                                           wgpu::Buffer params) {
     ASSERT_TRUE(native::EncodeConvertTimestampsToNanoseconds(
-                    native::FromAPI(encoder.Get()), native::FromAPI(timestamps.Get()),
-                    native::FromAPI(availability.Get()), native::FromAPI(params.Get()))
+                    native::FromAPI(encoder.Get()), queryCount, native::FromAPI(timestamps.Get()),
+                    native::FromAPI(params.Get()))
                     .IsSuccess());
 }
 
@@ -113,8 +111,6 @@ class InternalShaderExpectation : public ::dawn::detail::Expectation {
     uint32_t mQuantizationMask;
 };
 
-constexpr static uint64_t kSentinelValue = ~uint64_t(0u);
-
 class QueryInternalShaderTests : public DawnTest {
   protected:
     void SetUp() override {
@@ -135,22 +131,19 @@ class QueryInternalShaderTests : public DawnTest {
 
     // Original timestamp values in query set for testing
     const std::vector<uint64_t> querySetValues = {
-        kSentinelValue,  // garbage data which is not written at beginning
-        10079569507,     // t0
-        10394415012,     // t1
-        kSentinelValue,  // garbage data which is not written between timestamps
-        11713454943,     // t2
-        38912556941,     // t3 (big value)
-        10080295766,     // t4 (reset)
-        12159966783,     // t5 (after reset)
-        12651224612,     // t6
-        39872473956,     // t7
+        0,            // A zero (written prior for an unavailable query) stays zero.
+        10079569507,  // t0
+        10394415012,  // t1
+        0,            // Same for a zero in the middle.
+        11713454943,  // t2
+        38912556941,  // t3 (big value)
+        10080295766,  // t4 (reset)
+        12159966783,  // t5 (after reset)
+        12651224612,  // t6
+        39872473956,  // t7
     };
 
     const uint32_t kQueryCount = querySetValues.size();
-
-    // Timestamps available state
-    const std::vector<uint32_t> availabilities = {0, 1, 1, 0, 1, 1, 1, 1, 1, 1};
 
     const std::vector<uint64_t> GetExpectedResults(const std::vector<uint64_t>& origin,
                                                    uint32_t start,
@@ -159,15 +152,10 @@ class QueryInternalShaderTests : public DawnTest {
                                                    float period) {
         std::vector<uint64_t> expected(origin.begin(), origin.end());
         for (size_t i = 0; i < queryCount; i++) {
-            if (availabilities[firstQuery + i] == 0) {
-                // Not a available timestamp, write 0
-                expected[start + i] = 0u;
-            } else {
-                // Maybe the timestamp * period is larger than the maximum of uint64, so cast the
-                // delta value to double (higher precision than float)
-                expected[start + i] =
-                    static_cast<uint64_t>(static_cast<double>(origin[start + i]) * period);
-            }
+            // Maybe the timestamp * period is larger than the maximum of uint64, so cast the
+            // delta value to double (higher precision than float)
+            expected[start + i] =
+                static_cast<uint64_t>(static_cast<double>(origin[start + i]) * period);
         }
         return expected;
     }
@@ -195,23 +183,16 @@ class QueryInternalShaderTests : public DawnTest {
         for (uint32_t i = 0; i < queryCount; i++) {
             timestampValues[start + i] = querySetValues[firstQuery + i];
         }
-        // Write sentinel values and orignal timestamps to timestamps buffer
+        // Write sentinel values and original timestamps to timestamps buffer
         queue.WriteBuffer(timestampsBuffer, 0, timestampValues.data(), size);
 
-        // The buffer indicating which values are available timestamps
-        wgpu::Buffer availabilityBuffer =
-            utils::CreateBufferFromData(device, availabilities.data(),
-                                        kQueryCount * sizeof(uint32_t), wgpu::BufferUsage::Storage);
-
         // The params uniform buffer
-        native::TimestampParams params(firstQuery, queryCount, destinationOffset, quantizationMask,
-                                       period);
+        native::TimestampParams params(queryCount, destinationOffset, quantizationMask, period);
         wgpu::Buffer paramsBuffer = utils::CreateBufferFromData(device, &params, sizeof(params),
                                                                 wgpu::BufferUsage::Uniform);
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        EncodeConvertTimestampsToNanoseconds(encoder, timestampsBuffer, availabilityBuffer,
-                                             paramsBuffer);
+        EncodeConvertTimestampsToNanoseconds(encoder, queryCount, timestampsBuffer, paramsBuffer);
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
 
