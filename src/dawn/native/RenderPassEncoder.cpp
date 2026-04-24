@@ -147,17 +147,6 @@ ObjectType RenderPassEncoder::GetType() const {
     return ObjectType::RenderPassEncoder;
 }
 
-void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, QueryIndex queryIndex) {
-    DAWN_ASSERT(querySet != nullptr);
-
-    // Track the query availability with true on render pass for rewrite validation and query
-    // reset on render pass on Vulkan
-    mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
-
-    // Track it again on command encoder for zero-initializing when resolving unused queries.
-    mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
-}
-
 void RenderPassEncoder::APIEnd() {
     // The encoding context might create additional resources, so we need to lock the device.
     auto deviceGuard = GetDevice()->GetGuard();
@@ -440,7 +429,11 @@ void RenderPassEncoder::APIEndOcclusionQuery() {
                 DAWN_INVALID_IF(!mOcclusionQueryActive, "No occlusion queries are active.");
             }
 
-            TrackQueryAvailability(mOcclusionQuerySet.Get(), mCurrentOcclusionQueryIndex);
+            // XXX
+            // Track the query availability with true on render pass for rewrite validation and
+            // query reset on render pass on Vulkan
+            mUsageTracker.TrackQueryAvailability(mOcclusionQuerySet.Get(),
+                                                 mCurrentOcclusionQueryIndex);
 
             mOcclusionQueryActive = false;
 
@@ -470,7 +463,12 @@ void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t query
                                  querySet);
             }
 
-            TrackQueryAvailability(querySet, queryIndex);
+            mCommandEncoder->TrackUsedQuerySet(querySet);
+
+            // XXX
+            // Track the query availability with true on render pass for rewrite validation and
+            // query reset on render pass on Vulkan
+            mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);
