@@ -168,7 +168,7 @@ void Client::ReclaimInstanceReservation(const ReservedInstance& reservation) {
 
 EventManager& Client::GetEventManager(const ObjectHandle& instance) {
     auto it = mEventManagers.find(instance);
-    DAWN_ASSERT(it != mEventManagers.end());
+    DAWN_OPT_ASSUME(it != mEventManagers.end());
     return *it->second;
 }
 

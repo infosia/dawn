@@ -183,7 +183,7 @@ constexpr uint32_t ReduceSameValue(std::integer_sequence<uint32_t, I, Is...>) {
 }  // namespace
 
 void GetDefaultLimits(CombinedLimits* limits, wgpu::FeatureLevel featureLevel) {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
 #define X(Scope, Better, limitName, compat, base, ...) \
     limits->Scope.limitName = featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base;
     LIMITS(X)
@@ -213,8 +213,8 @@ CombinedLimits ReifyDefaultLimits(const CombinedLimits& limits, wgpu::FeatureLev
 MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
                                      const std::unordered_set<wgpu::FeatureName>& supportedFeatures,
                                      CombinedLimits* out) {
-    DAWN_ASSERT(chainedLimits != nullptr);
-    DAWN_ASSERT(out != nullptr);
+    DAWN_OPT_ASSUME(chainedLimits != nullptr);
+    DAWN_OPT_ASSUME(out != nullptr);
 
     Limits* chainedLimitsPtr = const_cast<Limits*>(chainedLimits);
     UnpackedPtr<Limits> unpacked;
@@ -245,8 +245,8 @@ MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
 }
 
 void UnpackLimitsIn(const Limits* chainedLimits, CombinedLimits* out) {
-    DAWN_ASSERT(chainedLimits != nullptr);
-    DAWN_ASSERT(out != nullptr);
+    DAWN_OPT_ASSUME(chainedLimits != nullptr);
+    DAWN_OPT_ASSUME(out != nullptr);
 
     Limits* chainedLimitsPtr = const_cast<Limits*>(chainedLimits);
     UnpackedPtr<Limits> unpacked = Unpack(chainedLimitsPtr);
@@ -461,7 +461,7 @@ void EnforceLimitSpecInvariants(CombinedLimits* limits, wgpu::FeatureLevel featu
 MaybeError FillLimits(Limits* outputLimits,
                       const FeaturesSet& supportedFeatures,
                       const CombinedLimits& combinedLimits) {
-    DAWN_ASSERT(outputLimits != nullptr);
+    DAWN_OPT_ASSUME(outputLimits != nullptr);
     UnpackedPtr<Limits> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(outputLimits));
     {

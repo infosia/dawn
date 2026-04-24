@@ -66,7 +66,7 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     cmd.message = message;
 
     if (status != WGPURequestAdapterStatus_Success) {
-        DAWN_ASSERT(adapter == nullptr);
+        DAWN_OPT_ASSUME(adapter == nullptr);
         SerializeCommand(cmd);
         return;
     }

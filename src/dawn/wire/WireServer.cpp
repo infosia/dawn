@@ -93,7 +93,7 @@ void MemoryTransferService::WriteHandle::SetDataLength(size_t dataLength) {
     mDataLength = dataLength;
 }
 std::span<uint8_t> MemoryTransferService::WriteHandle::GetTarget() const {
-    DAWN_ASSERT(mTargetData != nullptr);
+    DAWN_OPT_ASSUME(mTargetData != nullptr);
     return std::span<uint8_t>(mTargetData, mDataLength);
 }
 

@@ -344,8 +344,8 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
             break;
     }
 
-    DAWN_ASSERT(maxUAVsAllStages / 4 > limits->v1.maxStorageTexturesPerShaderStage);
-    DAWN_ASSERT(maxUAVsAllStages / 4 > limits->v1.maxStorageBuffersPerShaderStage);
+    DAWN_OPT_ASSUME(maxUAVsAllStages / 4 > limits->v1.maxStorageTexturesPerShaderStage);
+    DAWN_OPT_ASSUME(maxUAVsAllStages / 4 > limits->v1.maxStorageBuffersPerShaderStage);
     uint32_t maxUAVsPerStage = maxUAVsAllStages / 2;
 
     limits->v1.maxUniformBuffersPerShaderStage = maxCBVsPerStage;
@@ -428,7 +428,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         // Slots not used at all. (This is just for the assert. We could use these slots later.)
         static constexpr uint32_t kUnusedSlots = 1;
 
-        DAWN_ASSERT(
+        DAWN_OPT_ASSUME(
             // bind groups: 1 for CBV+UAV+SRV table + 1 for sampler table
             2 * limits->v1.maxBindGroups +
                 // dynamic uniform buffers: 2 for root descriptor
@@ -932,7 +932,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 // creating a new one.
 MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     [[maybe_unused]] auto refCount = mD3d12Device.Reset();
-    DAWN_ASSERT(refCount == 0);
+    DAWN_OPT_ASSUME(refCount == 0);
     DAWN_TRY(Initialize());
 
     return {};

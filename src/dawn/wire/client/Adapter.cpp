@@ -65,7 +65,7 @@ class RequestDeviceEvent : public TrackedEvent {
                          const WGPULimits* limits,
                          uint32_t featuresCount,
                          const WGPUFeatureName* features) {
-        DAWN_ASSERT(mDevice != nullptr);
+        DAWN_OPT_ASSUME(mDevice != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestDeviceStatus_Success) {
@@ -302,7 +302,7 @@ WGPUStatus Adapter::APIGetInfo(WGPUAdapterInfo* info) const {
     absl::Span<char> outBuffer{new char[allocSize], allocSize};
 
     auto AddString = [&](const std::string& in, WGPUStringView* out) {
-        DAWN_ASSERT(in.length() <= outBuffer.length());
+        DAWN_OPT_ASSUME(in.length() <= outBuffer.length());
         memcpy(outBuffer.data(), in.data(), in.length());
         *out = {outBuffer.data(), in.length()};
         outBuffer = outBuffer.subspan(in.length());
@@ -312,7 +312,7 @@ WGPUStatus Adapter::APIGetInfo(WGPUAdapterInfo* info) const {
     AddString(mArchitecture, &info->architecture);
     AddString(mDeviceName, &info->device);
     AddString(mDescription, &info->description);
-    DAWN_ASSERT(outBuffer.empty());
+    DAWN_OPT_ASSUME(outBuffer.empty());
 
     return WGPUStatus_Success;
 }

@@ -331,12 +331,12 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
             }
             if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
                 paddingClearSize > 0) {
-                DAWN_TRY(
-                    MapMemoryAndPerformOperation(paddingClearOffset, paddingClearSize,
-                                                 [&paddingClearSize](std::span<uint8_t> mapped) {
-                                                     DAWN_ASSERT(mapped.size() == paddingClearSize);
-                                                     std::ranges::fill(mapped, 0x0);
-                                                 }));
+                DAWN_TRY(MapMemoryAndPerformOperation(
+                    paddingClearOffset, paddingClearSize,
+                    [&paddingClearSize](std::span<uint8_t> mapped) {
+                        DAWN_OPT_ASSUME(mapped.size() == paddingClearSize);
+                        std::ranges::fill(mapped, 0x0);
+                    }));
             }
         } else {
             if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
@@ -472,8 +472,8 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
 
     const bool isMapUsage = usage & kMappableBufferUsages;
     if (isMapUsage) {
-        DAWN_ASSERT(shaderStage == wgpu::ShaderStage::None);
-        DAWN_ASSERT(IsSubset(usage, kMappableBufferUsages));
+        DAWN_OPT_ASSUME(shaderStage == wgpu::ShaderStage::None);
+        DAWN_OPT_ASSUME(IsSubset(usage, kMappableBufferUsages));
         // HOST->GPU barriers aren't required. For MapRead, vkQueueSubmit() happens-after all CPU
         // reads are complete. For MapWrite, the writes are made available to the "Host domain" with
         // vkFlushMappedMemory() (or buffers are coherent) and there is an implicit "Host domain" ->

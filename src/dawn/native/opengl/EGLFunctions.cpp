@@ -157,7 +157,7 @@ MaybeError EGLFunctions::LoadClientProcs(EGLGetProcProc getProc) {
 }
 
 MaybeError EGLFunctions::LoadDisplayProcs(EGLDisplay display) {
-    DAWN_ASSERT(GetProcAddress != nullptr);
+    DAWN_OPT_ASSUME(GetProcAddress != nullptr);
 
     // Get the EGL version and extensions.
     {

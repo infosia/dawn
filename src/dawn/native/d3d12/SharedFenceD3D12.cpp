@@ -68,7 +68,7 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(Device* device,
         CheckHRESULT(device->GetD3D12Device()->CreateSharedHandle(
                          d3d12Fence.Get(), nullptr, GENERIC_ALL, nullptr, ownedHandle.GetMut()),
                      "D3D12 create fence handle"));
-    DAWN_ASSERT(ownedHandle.IsValid());
+    DAWN_OPT_ASSUME(ownedHandle.IsValid());
     Ref<SharedFence> fence = AcquireRef(new SharedFence(device, label, std::move(ownedHandle)));
     fence->mFence = std::move(d3d12Fence);
     return fence;

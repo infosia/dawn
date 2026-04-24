@@ -48,13 +48,13 @@ void ObjectStore::Insert(ObjectBase* obj, const ClientBase* forClient) {
 
     mState.Use([&](auto state) {
         if (handle.id >= state->objects.size()) {
-            DAWN_ASSERT(handle.id == state->objects.size());
+            DAWN_OPT_ASSUME(handle.id == state->objects.size());
             state->objects.emplace_back(obj);
         } else {
             // The generation should never overflow. We don't recycle ObjectIds that would
             // overflow their next generation.
-            DAWN_ASSERT(handle.generation != 0);
-            DAWN_ASSERT(state->objects[handle.id] == nullptr);
+            DAWN_OPT_ASSUME(handle.generation != 0);
+            DAWN_OPT_ASSUME(state->objects[handle.id] == nullptr);
             state->objects[handle.id] = obj;
         }
     });

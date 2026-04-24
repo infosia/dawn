@@ -37,13 +37,13 @@ namespace dawn::native {
 
 Aspect ConvertSingleAspect(const Format& format, wgpu::TextureAspect aspect) {
     Aspect aspectMask = ConvertAspect(format, aspect);
-    DAWN_ASSERT(HasOneBit(aspectMask));
+    DAWN_OPT_ASSUME(HasOneBit(aspectMask));
     return aspectMask;
 }
 
 Aspect ConvertAspect(const Format& format, wgpu::TextureAspect aspect) {
     Aspect aspectMask = SelectFormatAspects(format, aspect);
-    DAWN_ASSERT(aspectMask != Aspect::None);
+    DAWN_OPT_ASSUME(aspectMask != Aspect::None);
     return aspectMask;
 }
 
@@ -104,7 +104,7 @@ Aspect SelectFormatAspects(const Format& format, wgpu::TextureAspect aspect) {
 }
 
 uint8_t GetAspectIndex(Aspect aspect) {
-    DAWN_ASSERT(HasOneBit(aspect));
+    DAWN_OPT_ASSUME(HasOneBit(aspect));
     switch (aspect) {
         case Aspect::Color:
         case Aspect::Depth:
@@ -124,7 +124,7 @@ uint8_t GetAspectIndex(Aspect aspect) {
 uint8_t GetAspectCount(Aspect aspects) {
     if (aspects == Aspect::Stencil) {
         // Fake a the existence of a depth aspect so that the stencil data stays at index 1.
-        DAWN_ASSERT(GetAspectIndex(Aspect::Stencil) == 1);
+        DAWN_OPT_ASSUME(GetAspectIndex(Aspect::Stencil) == 1);
         return 2;
     }
     return static_cast<uint8_t>(std::popcount(static_cast<uint8_t>(aspects)));
@@ -153,7 +153,7 @@ SubresourceRange SubresourceRange::SingleMipAndLayer(uint32_t baseMipLevel,
 SubresourceRange SubresourceRange::MakeSingle(Aspect aspect,
                                               uint32_t baseArrayLayer,
                                               uint32_t baseMipLevel) {
-    DAWN_ASSERT(HasOneBit(aspect));
+    DAWN_OPT_ASSUME(HasOneBit(aspect));
     return {aspect, {baseArrayLayer, 1}, {baseMipLevel, 1}};
 }
 

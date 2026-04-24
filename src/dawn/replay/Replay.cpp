@@ -511,7 +511,7 @@ struct BindGroupEntryVisitor {
             entry.nextInChain = externalBindingEntryPtr.get();
         } else {
             // External texture binding can bind a regular texture view
-            DAWN_ASSERT(data.textureViewId != 0);
+            DAWN_OPT_ASSUME(data.textureViewId != 0);
             entry.textureView = replay.GetObjectById<wgpu::TextureView>(data.textureViewId);
         }
         return {};
@@ -1391,7 +1391,7 @@ MaybeError DawnRootCommandVisitor::SetLabel(schema::ObjectId id,
 #define DAWN_SET_LABEL_CASE(NAME)                                                           \
     case schema::ObjectType::NAME: {                                                        \
         auto iter = mResources.find(id);                                                    \
-        DAWN_ASSERT(iter != mResources.end());                                              \
+        DAWN_OPT_ASSUME(iter != mResources.end());                                          \
         std::get_if<wgpu::NAME>(&iter->second.resource)->SetLabel(wgpu::StringView(label)); \
         iter->second.label = label;                                                         \
         break;                                                                              \

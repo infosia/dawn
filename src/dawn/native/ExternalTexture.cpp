@@ -64,8 +64,8 @@ MaybeError ValidateExternalTexturePlane(const TextureViewBase* textureView) {
 
 MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
                                              const ExternalTextureDescriptor* descriptor) {
-    DAWN_ASSERT(descriptor);
-    DAWN_ASSERT(descriptor->plane0);
+    DAWN_OPT_ASSUME(descriptor);
+    DAWN_OPT_ASSUME(descriptor->plane0);
 
     DAWN_TRY(device->ValidateObject(descriptor->plane0));
 
@@ -427,7 +427,7 @@ const std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat>& ExternalTextureBase
 }
 
 MaybeError ExternalTextureBase::ValidateCanUseInSubmitNow() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     DAWN_INVALID_IF(mState != ExternalTextureState::Active,
                     "External texture %s used in a submit is not active.", this);
 
@@ -487,12 +487,12 @@ Ref<ExternalTextureBase> ExternalTextureBase::MakeError(DeviceBase* device, Stri
 }
 
 BufferBase* ExternalTextureBase::GetParamsBuffer() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mParamsBuffer.Get();
 }
 
 bool ExternalTextureBase::HasSingleView() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mViewCount == 1;
 }
 

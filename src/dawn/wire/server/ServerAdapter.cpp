@@ -90,7 +90,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
     cmd.message = message;
 
     if (status != WGPURequestDeviceStatus_Success) {
-        DAWN_ASSERT(device == nullptr);
+        DAWN_OPT_ASSUME(device == nullptr);
         SerializeCommand(cmd);
         return;
     }
@@ -140,7 +140,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
         SerializeCommand(cmd);
         return;
     }
-    DAWN_ASSERT(reservation.data != nullptr);
+    DAWN_OPT_ASSUME(reservation.data != nullptr);
     reservation->info->server = this;
     reservation->info->self = reservation.AsHandle();
     SetForwardingDeviceCallbacks(reservation);

@@ -88,7 +88,7 @@ gpu_info::DriverVersion DecodeVulkanDriverVersion(uint32_t vendorID, uint32_t ve
 bool VKComponentTypeToWGPUSubgroupMatrixComponentType(
     wgpu::SubgroupMatrixComponentType* wgpuComponentType,
     VkComponentTypeKHR vkComponentType) {
-    DAWN_ASSERT(wgpuComponentType != nullptr);
+    DAWN_OPT_ASSUME(wgpuComponentType != nullptr);
 
     switch (vkComponentType) {
         case VK_COMPONENT_TYPE_FLOAT32_KHR:
@@ -136,8 +136,9 @@ VulkanInstance* PhysicalDevice::GetVulkanInstance() const {
 }
 
 bool PhysicalDevice::IsDepthStencilFormatSupported(VkFormat format) const {
-    DAWN_ASSERT(format == VK_FORMAT_D16_UNORM_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT ||
-                format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_S8_UINT);
+    DAWN_OPT_ASSUME(format == VK_FORMAT_D16_UNORM_S8_UINT ||
+                    format == VK_FORMAT_D24_UNORM_S8_UINT ||
+                    format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_S8_UINT);
 
     VkFormatProperties properties;
     mVulkanInstance->GetFunctions().GetPhysicalDeviceFormatProperties(mVkPhysicalDevice, format,
@@ -217,7 +218,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
     // Check for essential Vulkan extensions and features
 
     // Dawn requires at least Vulkan 1.1
-    DAWN_ASSERT(mDeviceInfo.properties.apiVersion >= VK_API_VERSION_1_1);
+    DAWN_OPT_ASSUME(mDeviceInfo.properties.apiVersion >= VK_API_VERSION_1_1);
 
     // Needed for security
     if (!mDeviceInfo.features.robustBufferAccess) {
@@ -909,7 +910,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
                  sizeof(ComputeImmediateConstants) - sizeof(UserImmediateConstants));
     static_assert(kVkGuaranteedMaxPushConstantsSize >=
                   kMaxImmediateDataBytes + kMaxInternalConstants);
-    DAWN_ASSERT(vkLimits.maxPushConstantsSize >= kVkGuaranteedMaxPushConstantsSize);
+    DAWN_OPT_ASSUME(vkLimits.maxPushConstantsSize >= kVkGuaranteedMaxPushConstantsSize);
     limits->v1.maxImmediateSize = kMaxImmediateDataBytes;
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
@@ -1136,7 +1137,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     bool supportsD24s8 = IsDepthStencilFormatSupported(VK_FORMAT_D24_UNORM_S8_UINT);
     bool supportsS8 = IsDepthStencilFormatSupported(VK_FORMAT_S8_UINT);
 
-    DAWN_ASSERT(supportsD32s8 || supportsD24s8);
+    DAWN_OPT_ASSUME(supportsD32s8 || supportsD24s8);
 
     if (!supportsD24s8) {
         deviceToggles->ForceSet(Toggle::VulkanUseD32S8, true);
@@ -1705,9 +1706,9 @@ std::vector<SubgroupMatrixConfig> PhysicalDevice::EnumerateSubgroupMatrixConfigs
 }
 
 void PhysicalDevice::SetCoreNotSupported(std::unique_ptr<ErrorData> error) {
-    DAWN_ASSERT(mSupportsCoreFeatureLevel);
+    DAWN_OPT_ASSUME(mSupportsCoreFeatureLevel);
     mSupportsCoreFeatureLevel = false;
-    DAWN_ASSERT(error);
+    DAWN_OPT_ASSUME(error);
     mCoreError = std::move(error);
 }
 

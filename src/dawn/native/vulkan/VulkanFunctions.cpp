@@ -120,7 +120,7 @@ MaybeError VulkanFunctions::LoadGlobalProcs(const DynamicLib& vulkanLib) {
 MaybeError VulkanFunctions::LoadInstanceProcs(VkInstance instance,
                                               const VulkanGlobalInfo& globalInfo) {
     // Dawn requires at least Vulkan 1.1
-    DAWN_ASSERT(globalInfo.apiVersion >= VK_API_VERSION_1_1);
+    DAWN_OPT_ASSUME(globalInfo.apiVersion >= VK_API_VERSION_1_1);
 
     // Load this proc first so that we can destroy the instance even if some other
     // GET_INSTANCE_PROC fails

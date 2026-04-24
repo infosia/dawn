@@ -99,7 +99,7 @@ class WireBufferMappingTests : public WireBufferMappingTestBase {
     }
 
     wgpu::MapMode GetMapMode() {
-        DAWN_ASSERT(GetParam().mMapMode);
+        DAWN_OPT_ASSUME(GetParam().mMapMode);
         return *GetParam().mMapMode;
     }
 

@@ -72,7 +72,7 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(
     WGPUSharedFence innerHandle =
         wgpu.deviceImportSharedFence(device->GetInnerHandle(), &innerDesc);
     // APIImportSharedFence always returns a shared fence. Either a valid object or an error one.
-    DAWN_ASSERT(innerHandle);
+    DAWN_OPT_ASSUME(innerHandle);
 
     Ref<SharedFence> fence = AcquireRef(new SharedFence(device, descriptor->label, innerHandle));
     if (auto* mtlEventChain = descriptor.Get<SharedFenceMTLSharedEventDescriptor>()) {

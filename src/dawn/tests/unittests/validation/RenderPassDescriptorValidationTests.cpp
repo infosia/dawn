@@ -1575,7 +1575,7 @@ TEST_F(RenderPassDescriptorValidationTest, ValidateDepthStencilReadOnly) {
                 renderPass.cDepthStencilAttachmentInfo.depthStoreOp = storeOp;
                 renderPass.cDepthStencilAttachmentInfo.depthReadOnly = readonly;
             } else {
-                DAWN_ASSERT(aspect == Aspect::StencilOnly);
+                DAWN_OPT_ASSUME(aspect == Aspect::StencilOnly);
                 renderPass.cDepthStencilAttachmentInfo.stencilLoadOp = loadOp;
                 renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = storeOp;
                 renderPass.cDepthStencilAttachmentInfo.stencilReadOnly = readonly;

@@ -119,7 +119,7 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
             // samplers with the correct YCbCr sampler when JITing pipelines.
             if (auto it = staticSamplerSpecializations.find(bindingIndex);
                 it != staticSamplerSpecializations.end()) {
-                DAWN_ASSERT(samplerLayout.use == StaticSamplerUse::InternalForExternalTexture);
+                DAWN_OPT_ASSUME(samplerLayout.use == StaticSamplerUse::InternalForExternalTexture);
                 DAWN_TRY_ASSIGN(sampler, Sampler::Create(device, it->second));
             }
 
@@ -138,7 +138,7 @@ ResultOrError<VulkanStaticBindings> ComputeVulkanStaticBindings(
                 // the maximum number of planes that an external format can have here. The number
                 // of overall YCbCr descriptors will be relatively small and these pools are not an
                 // overall bottleneck on memory usage.
-                DAWN_ASSERT(bindingInfo.arraySize == BindingIndex(1));
+                DAWN_OPT_ASSUME(bindingInfo.arraySize == BindingIndex(1));
                 descriptorCount = 3;
             }
         }
@@ -347,7 +347,7 @@ void BindGroupLayout::ReduceMemoryUsage() {
 ResultOrError<std::unique_ptr<OwnedDescriptorSet>> BindGroupLayout::GetSpecializedSetFor(
     const BindGroup* bg,
     const Specialization& specialization) {
-    DAWN_ASSERT(bg->GetLayout() == this);
+    DAWN_OPT_ASSUME(bg->GetLayout() == this);
 
     VkDescriptorSetLayout dsLayout;
     DAWN_TRY_ASSIGN(dsLayout, GetOrCreateSpecializedHandle(specialization));

@@ -111,7 +111,7 @@ ResourceTableBase::ResourceTableBase(DeviceBase* device, const ResourceTableDesc
     mSlots.resize(mAPISize + ResourceTableDefaultResources::GetCount());
     // This checks that the default SlotState constructor used in the resize operation will
     // initialize with the typeId of an empty slot.
-    DAWN_ASSERT(ComputeTypeId({}) == SlotState{}.typeId);
+    DAWN_OPT_ASSUME(ComputeTypeId({}) == SlotState{}.typeId);
 
     GetObjectTrackingList()->Track(this);
 }
@@ -446,7 +446,7 @@ void ResourceTableBase::OnPinned(ResourceTableSlot slot, TextureBase* texture) {
     DAWN_CHECK(!mDestroyed);
     DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
     DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
-    DAWN_ASSERT(!mSlots[slot].pinned);
+    DAWN_OPT_ASSUME(!mSlots[slot].pinned);
     mSlots[slot].pinned = true;
     MarkStateDirty(slot);
 }
@@ -455,14 +455,14 @@ void ResourceTableBase::OnUnpinned(ResourceTableSlot slot, TextureBase* texture)
     DAWN_CHECK(!mDestroyed);
     DAWN_CHECK(std::holds_alternative<Ref<TextureViewBase>>(mSlots[slot].resource));
     DAWN_CHECK(std::get<Ref<TextureViewBase>>(mSlots[slot].resource)->GetTexture() == texture);
-    DAWN_ASSERT(mSlots[slot].pinned);
+    DAWN_OPT_ASSUME(mSlots[slot].pinned);
     mSlots[slot].pinned = false;
     MarkStateDirty(slot);
 }
 
 void ResourceTableBase::Update(ResourceTableSlot slot, const BindingResource* contents) {
-    DAWN_ASSERT(mSlots[slot].availableAfter <=
-                GetDevice()->GetQueue()->GetCompletedCommandSerial());
+    DAWN_OPT_ASSUME(mSlots[slot].availableAfter <=
+                    GetDevice()->GetQueue()->GetCompletedCommandSerial());
     DAWN_CHECK(mSlots[slot].typeId == tint::ResourceType::kEmpty);
     mSlots[slot].availableAfter = kMaxExecutionSerial;
     SetEntry(slot, contents);
@@ -583,8 +583,8 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
                             .added = ToResourceDiffResource(state.resource)};
 
         // At least one of removed and added must be set
-        DAWN_ASSERT(!(std::holds_alternative<std::monostate>(update.removed) &&
-                      std::holds_alternative<std::monostate>(update.added)));
+        DAWN_OPT_ASSUME(!(std::holds_alternative<std::monostate>(update.removed) &&
+                          std::holds_alternative<std::monostate>(update.added)));
 
         updates.resourceDiffs.push_back(update);
 

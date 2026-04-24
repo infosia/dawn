@@ -208,7 +208,7 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
 
   private:
     void InitializeGPUTimer() {
-        DAWN_ASSERT(mSupportsTimestampQuery);
+        DAWN_OPT_ASSUME(mSupportsTimestampQuery);
 
         wgpu::Device device = this->device;
 

@@ -53,7 +53,7 @@ SwapChain::SwapChain(DeviceBase* dev, Surface* sur, const SurfaceConfiguration* 
 SwapChain::~SwapChain() = default;
 
 MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
-    DAWN_ASSERT(GetSurface()->GetType() == Surface::Type::MetalLayer);
+    DAWN_OPT_ASSUME(GetSurface()->GetType() == Surface::Type::MetalLayer);
 
     if (previousSwapChain != nullptr) {
         // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
@@ -67,7 +67,7 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     }
 
     mLayer = static_cast<CAMetalLayer*>(GetSurface()->GetMetalLayer());
-    DAWN_ASSERT(mLayer != nullptr);
+    DAWN_OPT_ASSUME(mLayer != nullptr);
 
     CGSize size = {};
     size.width = GetWidth();
@@ -91,7 +91,7 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
 }
 
 MaybeError SwapChain::PresentImpl() {
-    DAWN_ASSERT(mCurrentDrawable != nullptr);
+    DAWN_OPT_ASSUME(mCurrentDrawable != nullptr);
 
     Queue* queue = ToBackend(GetDevice()->GetQueue());
     CommandRecordingContext* commandContext = queue->GetPendingCommandContext();
@@ -108,7 +108,7 @@ MaybeError SwapChain::PresentImpl() {
 
 ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
     @autoreleasepool {
-        DAWN_ASSERT(mCurrentDrawable == nullptr);
+        DAWN_OPT_ASSUME(mCurrentDrawable == nullptr);
         mCurrentDrawable = [*mLayer nextDrawable];
 
         if (mCurrentDrawable == nullptr) {
@@ -132,7 +132,7 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
 }
 
 void SwapChain::DetachFromSurfaceImpl() {
-    DAWN_ASSERT((mTexture == nullptr) == (mCurrentDrawable == nullptr));
+    DAWN_OPT_ASSUME((mTexture == nullptr) == (mCurrentDrawable == nullptr));
 
     if (mTexture != nullptr) {
         mTexture->APIDestroy();

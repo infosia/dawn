@@ -47,7 +47,8 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemoryEGL::Create(
     const SharedTextureMemoryAHardwareBufferDescriptor* descriptor) {
 #if DAWN_PLATFORM_IS(ANDROID)
     const EGLFunctions& egl = device->GetEGL(false);
-    DAWN_ASSERT(egl.HasExt(EGLExt::ImageNativeBuffer) && egl.HasExt(EGLExt::GetNativeClientBuffer));
+    DAWN_OPT_ASSUME(egl.HasExt(EGLExt::ImageNativeBuffer) &&
+                    egl.HasExt(EGLExt::GetNativeClientBuffer));
 
     ::AHardwareBuffer* aHardwareBuffer = static_cast<struct AHardwareBuffer*>(descriptor->handle);
     DAWN_INVALID_IF(aHardwareBuffer == nullptr, "AHardwareBuffer is missing.");

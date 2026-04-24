@@ -41,12 +41,12 @@ ResourceMemoryAllocation::ResourceMemoryAllocation(const AllocationInfo& info,
     : mInfo(info), mOffset(offset), mResourceHeap(resourceHeap), mMappedPointer(mappedPointer) {}
 
 ResourceHeapBase* ResourceMemoryAllocation::GetResourceHeap() const {
-    DAWN_ASSERT(mInfo.mMethod != AllocationMethod::kInvalid);
+    DAWN_OPT_ASSUME(mInfo.mMethod != AllocationMethod::kInvalid);
     return mResourceHeap;
 }
 
 uint64_t ResourceMemoryAllocation::GetOffset() const {
-    DAWN_ASSERT(mInfo.mMethod != AllocationMethod::kInvalid);
+    DAWN_OPT_ASSUME(mInfo.mMethod != AllocationMethod::kInvalid);
     return mOffset;
 }
 

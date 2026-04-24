@@ -121,14 +121,14 @@ uint32_t ResourceTable::APIInsertBinding(const WGPUBindingResource* resource) {
     // TODO(https://crbug.com/435317394): This is O(n) in the number of slots. We could make it
     // O(logN) with a heap of the free slots that's maintained over time.
     uint64_t completedSubmit = mDevice->GetQueue()->GetCompletedSubmitIndex();
-    DAWN_ASSERT(mSlotAvailableAfterSubmit.size() == mSize);
+    DAWN_OPT_ASSUME(mSlotAvailableAfterSubmit.size() == mSize);
     for (uint32_t slot = 0; slot < mSize; slot++) {
         if (mSlotAvailableAfterSubmit[slot] > completedSubmit) {
             continue;
         }
 
         WGPUStatus updateStatus = APIUpdate(slot, resource);
-        DAWN_ASSERT(updateStatus == WGPUStatus_Success);
+        DAWN_OPT_ASSUME(updateStatus == WGPUStatus_Success);
         return slot;
     }
 

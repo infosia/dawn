@@ -421,7 +421,7 @@ bool GetKeyOfApplyClearColorValueWithDrawPipelines(
         if (key->sampleCount == 0) {
             key->sampleCount = attachment.view->GetTexture()->GetSampleCount();
         } else {
-            DAWN_ASSERT(key->sampleCount == attachment.view->GetTexture()->GetSampleCount());
+            DAWN_OPT_ASSUME(key->sampleCount == attachment.view->GetTexture()->GetSampleCount());
         }
 
         Color clearValue = attachment.clearValue;

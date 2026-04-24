@@ -74,9 +74,9 @@ std::unique_ptr<SharedTextureMemoryTestBackend::BackendBeginState>
 SharedTextureMemoryTestVulkanBackend::ChainBeginState(
     wgpu::SharedTextureMemoryBeginAccessDescriptor* beginDesc,
     const wgpu::SharedTextureMemoryEndAccessState& endState) {
-    DAWN_ASSERT(endState.nextInChain != nullptr);
-    DAWN_ASSERT(endState.nextInChain->sType ==
-                wgpu::SType::SharedTextureMemoryVkImageLayoutEndState);
+    DAWN_OPT_ASSUME(endState.nextInChain != nullptr);
+    DAWN_OPT_ASSUME(endState.nextInChain->sType ==
+                    wgpu::SType::SharedTextureMemoryVkImageLayoutEndState);
     auto* vkEndState =
         static_cast<wgpu::SharedTextureMemoryVkImageLayoutEndState*>(endState.nextInChain);
 
@@ -237,11 +237,11 @@ std::vector<wgpu::SharedTextureMemory> SharedTextureMemoryTestBackend::CreateSha
     int layerCount) {
     std::vector<wgpu::SharedTextureMemory> memories;
     for (auto& memory : CreatePerDeviceSharedTextureMemories({device}, layerCount)) {
-        DAWN_ASSERT(memory.size() == 1u);
+        DAWN_OPT_ASSUME(memory.size() == 1u);
         memories.push_back(std::move(memory[0]));
     }
     // There should be at least one memory to test.
-    DAWN_ASSERT(!memories.empty());
+    DAWN_OPT_ASSUME(!memories.empty());
     return memories;
 }
 
@@ -494,7 +494,7 @@ wgpu::CommandBuffer SharedTextureMemoryTests::MakeFourColorsComputeCommandBuffer
 // Use queue.writeTexture to write four different colors in each quadrant to the texture.
 void SharedTextureMemoryTests::WriteFourColorsToRGBA8Texture(wgpu::Device& deviceObj,
                                                              wgpu::Texture& texture) {
-    DAWN_ASSERT(texture.GetFormat() == wgpu::TextureFormat::RGBA8Unorm);
+    DAWN_OPT_ASSUME(texture.GetFormat() == wgpu::TextureFormat::RGBA8Unorm);
 
     uint32_t width = texture.GetWidth();
     uint32_t height = texture.GetHeight();
@@ -1612,7 +1612,7 @@ TEST_P(SharedTextureMemoryTests, TextureAccessOutlivesMemory) {
         if (properties.usage & wgpu::TextureUsage::RenderAttachment) {
             UseInRenderPass(device, texture);
         } else {
-            DAWN_ASSERT(properties.usage & wgpu::TextureUsage::CopySrc);
+            DAWN_OPT_ASSUME(properties.usage & wgpu::TextureUsage::CopySrc);
             UseInCopy(device, texture);
         }
     }

@@ -47,7 +47,7 @@ namespace dawn {
 // It is meant to be used as the return type of functions that might fail. The reason for the Empty
 // case is that a Result should never be discarded, only destructured (its error or success moved
 // out) or moved into a different Result. The Empty case tags Results that have been moved out and
-// Result's destructor should DAWN_ASSERT on it being Empty.
+// Result's destructor should DAWN_OPT_ASSUME on it being Empty.
 //
 // Since C++ doesn't have efficient sum types for the special cases we care about, we provide
 // template specializations for them.
@@ -262,14 +262,14 @@ Result<void, E>::Result(Result<void, E>&& other) : mError(std::move(other.mError
 
 template <typename E>
 Result<void, E>& Result<void, E>::operator=(Result<void, E>&& other) {
-    DAWN_ASSERT(mError == nullptr);
+    DAWN_OPT_ASSUME(mError == nullptr);
     mError = std::move(other.mError);
     return *this;
 }
 
 template <typename E>
 Result<void, E>::~Result() {
-    DAWN_ASSERT(mError == nullptr);
+    DAWN_OPT_ASSUME(mError == nullptr);
 }
 
 template <typename E>
@@ -295,13 +295,13 @@ namespace detail {
 
 template <typename T>
 T* GetSuccessFromPayload(intptr_t payload) {
-    DAWN_ASSERT(GetPayloadType(payload) == Success);
+    DAWN_OPT_ASSUME(GetPayloadType(payload) == Success);
     return reinterpret_cast<T*>(payload);
 }
 
 template <typename E>
 E* GetErrorFromPayload(intptr_t payload) {
-    DAWN_ASSERT(GetPayloadType(payload) == Error);
+    DAWN_OPT_ASSUME(GetPayloadType(payload) == Error);
     return reinterpret_cast<E*>(payload ^ 1);
 }
 
@@ -326,7 +326,7 @@ template <typename T, typename E>
 template <typename TChild>
     requires std::same_as<TChild, T> || std::derived_from<TChild, T>
 Result<T*, E>& Result<T*, E>::operator=(Result<TChild*, E>&& other) {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
     mPayload = other.mPayload;
     other.mPayload = detail::kEmptyPayload;
     return *this;
@@ -334,7 +334,7 @@ Result<T*, E>& Result<T*, E>::operator=(Result<TChild*, E>&& other) {
 
 template <typename T, typename E>
 Result<T*, E>::~Result() {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
 }
 
 template <typename T, typename E>
@@ -377,7 +377,7 @@ Result<const T*, E>::Result(Result<const T*, E>&& other) : mPayload(other.mPaylo
 
 template <typename T, typename E>
 Result<const T*, E>& Result<const T*, E>::operator=(Result<const T*, E>&& other) {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
     mPayload = other.mPayload;
     other.mPayload = detail::kEmptyPayload;
     return *this;
@@ -385,7 +385,7 @@ Result<const T*, E>& Result<const T*, E>::operator=(Result<const T*, E>&& other)
 
 template <typename T, typename E>
 Result<const T*, E>::~Result() {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
 }
 
 template <typename T, typename E>
@@ -442,7 +442,7 @@ template <typename T, typename E>
 template <typename U>
     requires std::convertible_to<U*, T*>
 Result<Ref<U>, E>& Result<Ref<T>, E>::operator=(Result<Ref<U>, E>&& other) {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
     mPayload = other.mPayload;
     other.mPayload = detail::kEmptyPayload;
     return *this;
@@ -450,7 +450,7 @@ Result<Ref<U>, E>& Result<Ref<T>, E>::operator=(Result<Ref<U>, E>&& other) {
 
 template <typename T, typename E>
 Result<Ref<T>, E>::~Result() {
-    DAWN_ASSERT(mPayload == detail::kEmptyPayload);
+    DAWN_OPT_ASSUME(mPayload == detail::kEmptyPayload);
 }
 
 template <typename T, typename E>
@@ -465,7 +465,7 @@ bool Result<Ref<T>, E>::IsSuccess() const {
 
 template <typename T, typename E>
 Ref<T> Result<Ref<T>, E>::AcquireSuccess() {
-    DAWN_ASSERT(IsSuccess());
+    DAWN_OPT_ASSUME(IsSuccess());
     Ref<T> success = AcquireRef(detail::GetSuccessFromPayload<T>(mPayload));
     mPayload = detail::kEmptyPayload;
     return success;
@@ -473,7 +473,7 @@ Ref<T> Result<Ref<T>, E>::AcquireSuccess() {
 
 template <typename T, typename E>
 std::unique_ptr<E> Result<Ref<T>, E>::AcquireError() {
-    DAWN_ASSERT(IsError());
+    DAWN_OPT_ASSUME(IsError());
     std::unique_ptr<E> error(detail::GetErrorFromPayload<E>(mPayload));
     mPayload = detail::kEmptyPayload;
     return std::move(error);
@@ -489,7 +489,7 @@ Result<T, E>::Result(std::unique_ptr<E> error) : mPayload(std::move(error)) {}
 template <typename T, typename E>
 Result<T, E>::~Result() {
     // Happens if you ignore a result.
-    DAWN_ASSERT(std::holds_alternative<std::monostate>(mPayload));
+    DAWN_OPT_ASSUME(std::holds_alternative<std::monostate>(mPayload));
 }
 
 template <typename T, typename E>
@@ -499,7 +499,7 @@ Result<T, E>::Result(Result<T, E>&& other) {
 
 template <typename T, typename E>
 Result<T, E>& Result<T, E>::operator=(Result<T, E>&& other) {
-    DAWN_ASSERT(std::holds_alternative<std::monostate>(mPayload));
+    DAWN_OPT_ASSUME(std::holds_alternative<std::monostate>(mPayload));
     std::swap(mPayload, other.mPayload);
     return *this;
 }
@@ -516,7 +516,7 @@ bool Result<T, E>::IsSuccess() const {
 
 template <typename T, typename E>
 T Result<T, E>::AcquireSuccess() {
-    DAWN_ASSERT(IsSuccess());
+    DAWN_OPT_ASSUME(IsSuccess());
     auto payload = std::move(mPayload);
     mPayload = {};
     return std::move(std::get<T>(payload));
@@ -524,7 +524,7 @@ T Result<T, E>::AcquireSuccess() {
 
 template <typename T, typename E>
 std::unique_ptr<E> Result<T, E>::AcquireError() {
-    DAWN_ASSERT(IsError());
+    DAWN_OPT_ASSUME(IsError());
     auto payload = std::move(mPayload);
     mPayload = {};
     return std::move(std::get<std::unique_ptr<E>>(payload));

@@ -113,8 +113,8 @@ ValidationTest::ValidationTest() {
     // gCurrentTest->mBackendAdapter.
     procs.instanceRequestAdapter = [](WGPUInstance self, const WGPURequestAdapterOptions* options,
                                       WGPURequestAdapterCallbackInfo callbackInfo) -> WGPUFuture {
-        DAWN_ASSERT(gCurrentTest);
-        DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
+        DAWN_OPT_ASSUME(gCurrentTest);
+        DAWN_OPT_ASSUME(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
         return dawn::native::GetProcs().instanceRequestAdapter(
             self, options,
@@ -134,8 +134,8 @@ ValidationTest::ValidationTest() {
     // gCurrentTest->mLastCreatedBackendDevice.
     procs.adapterRequestDevice = [](WGPUAdapter self, const WGPUDeviceDescriptor* descriptor,
                                     WGPURequestDeviceCallbackInfo callbackInfo) -> WGPUFuture {
-        DAWN_ASSERT(gCurrentTest);
-        DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
+        DAWN_OPT_ASSUME(gCurrentTest);
+        DAWN_OPT_ASSUME(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
         wgpu::DeviceDescriptor deviceDesc = {};
         if (descriptor != nullptr) {
@@ -340,7 +340,7 @@ uint64_t ValidationTest::GetInstanceDeprecationCountForTesting() {
 }
 
 wgpu::Device ValidationTest::RequestDeviceSync(const wgpu::DeviceDescriptor& deviceDesc) {
-    DAWN_ASSERT(adapter);
+    DAWN_OPT_ASSUME(adapter);
 
     wgpu::Device apiDevice;
     adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous,
@@ -348,12 +348,12 @@ wgpu::Device ValidationTest::RequestDeviceSync(const wgpu::DeviceDescriptor& dev
                                        wgpu::StringView message) {
                               if (status != wgpu::RequestDeviceStatus::Success) {
                                   ADD_FAILURE() << "Unable to create device: " << message;
-                                  DAWN_ASSERT(false);
+                                  DAWN_OPT_ASSUME(false);
                               }
                               apiDevice = std::move(result);
                           });
     FlushWire();
-    DAWN_ASSERT(apiDevice);
+    DAWN_OPT_ASSUME(apiDevice);
     return apiDevice;
 }
 
@@ -381,7 +381,7 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
                                    wgpu::StringView) -> void { adapter = std::move(result); });
 
     FlushWire();
-    DAWN_ASSERT(adapter);
+    DAWN_OPT_ASSUME(adapter);
 
     // Initialize the device.
     wgpu::DeviceDescriptor deviceDescriptor = {};
@@ -393,12 +393,12 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
                 return;
             }
             ADD_FAILURE() << "Device lost during test: " << message;
-            DAWN_ASSERT(false);
+            DAWN_OPT_ASSUME(false);
         });
     deviceDescriptor.SetUncapturedErrorCallback(
         [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message,
            ValidationTest* self) {
-            DAWN_ASSERT(type != wgpu::ErrorType::NoError);
+            DAWN_OPT_ASSUME(type != wgpu::ErrorType::NoError);
 
             ASSERT_TRUE(self->mExpectError) << "Got unexpected device error: " << message;
             ASSERT_FALSE(self->mError) << "Got two errors in expect block, first one is:\n"  //
@@ -427,7 +427,7 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
     deviceDescriptor.requiredLimits = requiredLimits.GetLinked();
 
     device = RequestDeviceSync(deviceDescriptor);
-    DAWN_ASSERT(device);
+    DAWN_OPT_ASSUME(device);
     device.SetLoggingCallback(
         [](wgpu::LoggingType type, wgpu::StringView message, ValidationTest* self) {
             // Note we ignore all logs that happen outside of ASSERT_(NO_)DEVICE_LOG.

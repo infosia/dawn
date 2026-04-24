@@ -1217,10 +1217,10 @@ Extent3D TextureBase::GetSize(Aspect aspect) const {
             return mBaseSize;
         case Aspect::Plane0:
         case Aspect::Plane2:
-            DAWN_ASSERT(GetFormat().IsMultiPlanar());
+            DAWN_OPT_ASSUME(GetFormat().IsMultiPlanar());
             return mBaseSize;
         case Aspect::Plane1: {
-            DAWN_ASSERT(GetFormat().IsMultiPlanar());
+            DAWN_OPT_ASSUME(GetFormat().IsMultiPlanar());
             auto planeSize = mBaseSize;
             switch (GetFormat().subSampling) {
                 case TextureSubsampling::e420:
@@ -1262,7 +1262,7 @@ uint32_t TextureBase::GetHeight(Aspect aspect) const {
 }
 uint32_t TextureBase::GetDepth(Aspect aspect) const {
     DAWN_CHECK(!IsError());
-    DAWN_ASSERT(mDimension == wgpu::TextureDimension::e3D);
+    DAWN_OPT_ASSUME(mDimension == wgpu::TextureDimension::e3D);
     return GetSize(aspect).depthOrArrayLayers;
 }
 uint32_t TextureBase::GetArrayLayers() const {
@@ -1304,7 +1304,7 @@ bool TextureBase::HasPinnedUsage() const {
 
 wgpu::TextureUsage TextureBase::GetPinnedUsage() const {
     DAWN_CHECK(!IsError());
-    DAWN_ASSERT(HasPinnedUsage());
+    DAWN_OPT_ASSUME(HasPinnedUsage());
     return mPinnedUsage;
 }
 
@@ -1350,7 +1350,7 @@ bool TextureBase::HasAccess() const {
 uint32_t TextureBase::GetSubresourceIndex(uint32_t mipLevel,
                                           uint32_t arraySlice,
                                           Aspect aspect) const {
-    DAWN_ASSERT(HasOneBit(aspect));
+    DAWN_OPT_ASSUME(HasOneBit(aspect));
     return mipLevel + GetNumMipLevels() * (arraySlice + GetArrayLayers() * GetAspectIndex(aspect));
 }
 
@@ -1362,7 +1362,7 @@ bool TextureBase::IsSubresourceContentInitialized(const SubresourceRange& range)
             for (uint32_t mipLevel = range.baseMipLevel;
                  mipLevel < range.baseMipLevel + range.levelCount; ++mipLevel) {
                 uint32_t subresourceIndex = GetSubresourceIndex(mipLevel, arrayLayer, aspect);
-                DAWN_ASSERT(subresourceIndex < mIsSubresourceContentInitializedAtIndex.size());
+                DAWN_OPT_ASSUME(subresourceIndex < mIsSubresourceContentInitializedAtIndex.size());
                 if (!mIsSubresourceContentInitializedAtIndex[subresourceIndex]) {
                     return false;
                 }
@@ -1381,7 +1381,7 @@ void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
             for (uint32_t mipLevel = range.baseMipLevel;
                  mipLevel < range.baseMipLevel + range.levelCount; ++mipLevel) {
                 uint32_t subresourceIndex = GetSubresourceIndex(mipLevel, arrayLayer, aspect);
-                DAWN_ASSERT(subresourceIndex < mIsSubresourceContentInitializedAtIndex.size());
+                DAWN_OPT_ASSUME(subresourceIndex < mIsSubresourceContentInitializedAtIndex.size());
                 mIsSubresourceContentInitializedAtIndex[subresourceIndex] = isInitialized;
             }
         }
@@ -1480,8 +1480,8 @@ Extent3D TextureBase::ClampToMipLevelVirtualSize(uint32_t level,
                                                  const Origin3D& origin,
                                                  const Extent3D& extent) const {
     const Extent3D virtualSizeAtLevel = GetMipLevelSingleSubresourceVirtualSize(level, aspect);
-    DAWN_ASSERT(origin.x <= virtualSizeAtLevel.width);
-    DAWN_ASSERT(origin.y <= virtualSizeAtLevel.height);
+    DAWN_OPT_ASSUME(origin.x <= virtualSizeAtLevel.width);
+    DAWN_OPT_ASSUME(origin.y <= virtualSizeAtLevel.height);
     uint32_t clampedCopyExtentWidth = (extent.width > virtualSizeAtLevel.width - origin.x)
                                           ? (virtualSizeAtLevel.width - origin.x)
                                           : extent.width;

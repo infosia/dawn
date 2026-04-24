@@ -526,7 +526,7 @@ MaybeError Device::CopyFromStagingToTextureImpl(BufferBase* source,
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
 
     mTextureBuiltinsBuffer = nullptr;
     mArrayLengthBuffer = nullptr;

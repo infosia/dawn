@@ -57,11 +57,11 @@ constexpr uint32_t kRoundCount = 24;  // aka "nr"
 
 // The rotation of a lane by `offset` bits.
 Sha3Lane Rotl(Sha3Lane l, size_t offset) {
-    DAWN_ASSERT(offset < kLaneBitWidth);
+    DAWN_OPT_ASSUME(offset < kLaneBitWidth);
     // Offset should not be 0, as the expected result should be just identical and
     // right-shifting (kLaneBitWidth - offset) == kLaneBitWidth bits on Sha3Lane (having
     // kLaneBitWidth bits) results in undefined behavior.
-    DAWN_ASSERT(offset > 0);
+    DAWN_OPT_ASSUME(offset > 0);
     return (l << offset) | (l >> (kLaneBitWidth - offset));
 }
 
@@ -286,7 +286,7 @@ void Sha3<OutputLength>::Update(const void* data, size_t size) {
     const uint8_t* dataAsBytes = static_cast<const uint8_t*>(data);
 
     while (size > 0) {
-        DAWN_ASSERT(mOffsetInState < kByteRate);
+        DAWN_OPT_ASSUME(mOffsetInState < kByteRate);
         size_t toProcess = std::min(size, kByteRate - mOffsetInState);
 
         memxorpy(stateAsString + mOffsetInState, dataAsBytes, toProcess);
@@ -304,7 +304,7 @@ void Sha3<OutputLength>::Update(const void* data, size_t size) {
 template <size_t OutputLength>
 typename Sha3<OutputLength>::Output Sha3<OutputLength>::Finalize() {
     uint8_t* stateAsString = reinterpret_cast<uint8_t*>(&mState);
-    DAWN_ASSERT(mOffsetInState < kByteRate);
+    DAWN_OPT_ASSUME(mOffsetInState < kByteRate);
 
     // Add in the 01 suffix for SHA3, as well as the first 1 for the padding.
     uint8_t* suffixByte = stateAsString + mOffsetInState;

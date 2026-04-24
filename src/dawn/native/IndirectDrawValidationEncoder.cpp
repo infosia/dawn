@@ -358,8 +358,8 @@ ResultOrError<dawn::Ref<ComputePipelineBase>> CreateRenderValidationPipelines(
     //
     // Adding 0x7fff_ffff + 0x7fff_ffff does not overflow so as long as we keep
     // maxBufferSize < 4gig we're safe.
-    DAWN_ASSERT(!device->ShouldApplyIndexBufferOffsetToFirstIndex() ||
-                device->GetLimits().v1.maxBufferSize < 0x1'0000'0000u);
+    DAWN_OPT_ASSUME(!device->ShouldApplyIndexBufferOffsetToFirstIndex() ||
+                    device->GetLimits().v1.maxBufferSize < 0x1'0000'0000u);
 
     // Create compute shader module if not cached before.
     if (store->indirectDrawValidationShader == nullptr) {
@@ -440,7 +440,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
                                                 CommandEncoder* commandEncoder,
                                                 RenderPassResourceUsageTracker* usageTracker,
                                                 IndirectDrawMetadata* indirectDrawMetadata) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
     // Since encoding validation commands may create new objects, verify that the device is alive.
     // TODO(dawn:1199): This check is obsolete if device loss causes device.destroy().
     //   - This function only happens within the context of a TryEncode which would catch the

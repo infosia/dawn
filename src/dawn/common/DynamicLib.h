@@ -73,7 +73,7 @@ class DynamicLib {
     template <typename T>
         requires std::is_function_v<T>
     bool GetProc(T** proc, const std::string& procName, std::string* error = nullptr) const {
-        DAWN_ASSERT(proc != nullptr);
+        DAWN_OPT_ASSUME(proc != nullptr);
 
         *proc = reinterpret_cast<T*>(GetProc(procName, error));
         return *proc != nullptr;

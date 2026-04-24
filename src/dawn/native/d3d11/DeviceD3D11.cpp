@@ -136,8 +136,8 @@ bool SkipDebugMessage(const D3D11_MESSAGE& message) {
 uint64_t AppendDebugLayerMessagesToError(ID3D11InfoQueue* infoQueue,
                                          uint64_t totalErrors,
                                          ErrorData* error) {
-    DAWN_ASSERT(totalErrors > 0);
-    DAWN_ASSERT(error != nullptr);
+    DAWN_OPT_ASSUME(totalErrors > 0);
+    DAWN_OPT_ASSUME(error != nullptr);
 
     uint64_t errorsEmitted = 0;
     for (uint64_t i = 0; i < totalErrors; ++i) {
@@ -211,7 +211,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         mD3d11Device,
         ToBackend(GetPhysicalDevice())
             ->CreateD3D11Device(GetAdapter()->GetInstance()->IsBackendValidationEnabled()));
-    DAWN_ASSERT(mD3d11Device != nullptr);
+    DAWN_OPT_ASSUME(mD3d11Device != nullptr);
 
     mIsDebugLayerEnabled = IsDebugLayerEnabled(mD3d11Device);
 
@@ -247,7 +247,7 @@ ID3D11Device3* Device::GetD3D11Device3() const {
 ID3D11Device5* Device::GetD3D11Device5() const {
     // Some older devices don't support ID3D11Device5. Make sure we avoid calling this method in
     // those cases. An assert here is to verify that.
-    DAWN_ASSERT(mD3d11Device5);
+    DAWN_OPT_ASSUME(mD3d11Device5);
     return mD3d11Device5.Get();
 }
 
@@ -481,7 +481,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // - It may be called when the last ref to the device is dropped and the device
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the device since there are no other live refs.
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
 
     mImplicitPixelLocalStorageAttachmentTextureViews = {};
     mStagingBuffers.clear();
@@ -597,7 +597,7 @@ ResultOrError<TextureViewBase*> Device::GetOrCreateCachedImplicitPixelLocalStora
     uint32_t width,
     uint32_t height,
     uint32_t implicitAttachmentIndex) {
-    DAWN_ASSERT(implicitAttachmentIndex <= kMaxPLSSlots);
+    DAWN_OPT_ASSUME(implicitAttachmentIndex <= kMaxPLSSlots);
 
     TextureViewBase* currentAttachmentView =
         mImplicitPixelLocalStorageAttachmentTextureViews[implicitAttachmentIndex].Get();
@@ -675,8 +675,8 @@ ResultOrError<Ref<BufferBase>> Device::GetStagingBuffer(
 }
 
 void Device::ReturnStagingBuffer(Ref<BufferBase>&& buffer) {
-    DAWN_ASSERT(mStagingBuffers.empty() ||
-                mStagingBuffers.back()->GetLastUsageSerial() <= buffer->GetLastUsageSerial());
+    DAWN_OPT_ASSUME(mStagingBuffers.empty() ||
+                    mStagingBuffers.back()->GetLastUsageSerial() <= buffer->GetLastUsageSerial());
     // Only the cached buffers can be re-used.
     if (buffer->GetSize() <= kMaxStagingBufferSize) {
         mStagingBuffers.push_back(std::move(buffer));

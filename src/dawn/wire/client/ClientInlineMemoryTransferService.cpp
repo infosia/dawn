@@ -85,16 +85,16 @@ class InlineMemoryTransferService : public MemoryTransferService {
         void* GetData() override { return mStagingData.get(); }
 
         size_t SizeOfSerializeDataUpdate(size_t offset, size_t size) override {
-            DAWN_ASSERT(offset <= mSize);
-            DAWN_ASSERT(size <= mSize - offset);
+            DAWN_OPT_ASSUME(offset <= mSize);
+            DAWN_OPT_ASSUME(size <= mSize - offset);
             return size;
         }
 
         void SerializeDataUpdate(std::span<char> serializeData, size_t offset) override {
-            DAWN_ASSERT(mStagingData != nullptr);
-            DAWN_ASSERT(serializeData.data() != nullptr);
-            DAWN_ASSERT(offset <= mSize);
-            DAWN_ASSERT(serializeData.size() <= mSize - offset);
+            DAWN_OPT_ASSUME(mStagingData != nullptr);
+            DAWN_OPT_ASSUME(serializeData.data() != nullptr);
+            DAWN_OPT_ASSUME(offset <= mSize);
+            DAWN_OPT_ASSUME(serializeData.size() <= mSize - offset);
             memcpy(serializeData.data(), static_cast<uint8_t*>(mStagingData.get()) + offset,
                    serializeData.size());
         }
