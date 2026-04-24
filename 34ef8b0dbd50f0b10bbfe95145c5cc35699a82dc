@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5bbbf06_1a3596de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-24T18:52:01Z",
+      "side": 1,
+      "message": "Yay for simplification! LGTM.",
+      "revId": "34ef8b0dbd50f0b10bbfe95145c5cc35699a82dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b78f33c_553e2de5",
+        "filename": "src/dawn/native/QueryHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-24T18:52:01Z",
+      "side": 1,
+      "message": "The optimization nut in me was cringing to see that we were creating new buffers/bind group for each timestamp encode, but converting to immediates as suggested here would solve that. 👍",
+      "revId": "34ef8b0dbd50f0b10bbfe95145c5cc35699a82dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
