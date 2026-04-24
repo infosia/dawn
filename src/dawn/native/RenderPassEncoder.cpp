@@ -52,7 +52,7 @@ namespace {
 
 // Check the query at queryIndex is unavailable, otherwise it cannot be written.
 MaybeError ValidateQueryIndexOverwrite(QuerySetBase* querySet,
-                                       uint32_t queryIndex,
+                                       QueryIndex queryIndex,
                                        const QueryAvailabilityMap& queryAvailabilityMap) {
     auto it = queryAvailabilityMap.find(querySet);
     DAWN_INVALID_IF(it != queryAvailabilityMap.end() && it->second[queryIndex],
@@ -147,7 +147,7 @@ ObjectType RenderPassEncoder::GetType() const {
     return ObjectType::RenderPassEncoder;
 }
 
-void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex) {
+void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, QueryIndex queryIndex) {
     DAWN_ASSERT(querySet != nullptr);
 
     // Track the query availability with true on render pass for rewrite validation and query
@@ -390,7 +390,9 @@ void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* cons
         "encoding %s.ExecuteBundles(%u, ...).", this, count);
 }
 
-void RenderPassEncoder::APIBeginOcclusionQuery(uint32_t queryIndex) {
+void RenderPassEncoder::APIBeginOcclusionQuery(uint32_t queryIndexUntyped) {
+    QueryIndex queryIndex{queryIndexUntyped};
+
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
@@ -452,7 +454,9 @@ void RenderPassEncoder::APIEndOcclusionQuery() {
         "encoding %s.EndOcclusionQuery().", this);
 }
 
-void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex) {
+void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndexUntyped) {
+    QueryIndex queryIndex{queryIndexUntyped};
+
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
