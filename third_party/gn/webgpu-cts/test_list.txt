@@ -4033,6 +4033,10 @@ webgpu:api,operation,command_buffer,queries,timestampQuery:many_slots:stage="com
 webgpu:api,operation,command_buffer,queries,timestampQuery:many_slots:stage="render"
 webgpu:api,operation,command_buffer,queries,timestampQuery:resolve_unused_slots:stage="compute"
 webgpu:api,operation,command_buffer,queries,timestampQuery:resolve_unused_slots:stage="render"
+webgpu:api,operation,command_buffer,queries,timestampQuery:multi_resolve:stage="compute"
+webgpu:api,operation,command_buffer,queries,timestampQuery:multi_resolve:stage="render"
+webgpu:api,operation,command_buffer,queries,timestampQuery:unused_slots_are_zero:stage="compute"
+webgpu:api,operation,command_buffer,queries,timestampQuery:unused_slots_are_zero:stage="render"
 webgpu:api,operation,command_buffer,render,render_bundle:basic:
 webgpu:api,operation,command_buffer,render,render_bundle:two_bundles:
 webgpu:api,operation,command_buffer,render,render_bundle:one_bundle_used_multiple_times:
