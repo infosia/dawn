@@ -214,11 +214,6 @@ MaybeError PhysicalDevice::InitializeImpl() {
     mSubgroupMinSize = mDeviceInfo.subgroupSizeControlProperties.minSubgroupSize;
     mSubgroupMaxSize = mDeviceInfo.subgroupSizeControlProperties.maxSubgroupSize;
 
-    mMinExplicitComputeSubgroupSize = mDeviceInfo.subgroupSizeControlProperties.minSubgroupSize;
-    mMaxExplicitComputeSubgroupSize = mDeviceInfo.subgroupSizeControlProperties.maxSubgroupSize;
-    mMaxComputeWorkgroupSubgroups =
-        mDeviceInfo.subgroupSizeControlProperties.maxComputeWorkgroupSubgroups;
-
     // Check for essential Vulkan extensions and features
 
     // Dawn requires at least Vulkan 1.1
@@ -1639,15 +1634,6 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
         subgroupMatrixConfigs->configs = configs;
         subgroupMatrixConfigs->configCount = supportedConfigs.size();
         memcpy(configs, supportedConfigs.data(), count * sizeof(SubgroupMatrixConfig));
-    }
-    if (auto* explicitComputeSubgroupSizeConfigs =
-            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
-            GetMinExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
-            GetMaxExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxComputeWorkgroupSubgroups =
-            GetMaxComputeWorkgroupSubgroups();
     }
 }
 

@@ -1029,64 +1029,58 @@ fn main(@builtin(subgroup_size) sg_size : u32) {
     bool mSupportsSubgroupSizeControl = false;
 };
 
-// Test all the values that are between `minExplicitComputeSubgroupSize` and
-// `maxExplicitComputeSubgroupSize` and are a power of 2 can be used as WGSL attribute
-// `@subgroup_size` and the value of the WGSL builtin `subgroup_size` exactly matches the value of
-// the WGSL attribute `@subgroup_size`.
-TEST_P(SubgroupSizeControlTests, TestAllSubgroupSizes) {
+// Test the use of WGSL attribute `@subgroup_size`. The value of the WGSL builtin `subgroup_size`
+// should exactly match the value of the WGSL attribute `@subgroup_size`.
+TEST_P(SubgroupSizeControlTests, TestSubgroupSizeAttribute) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportSubgroupSizeControl());
 
     wgpu::AdapterInfo info;
-    wgpu::AdapterPropertiesExplicitComputeSubgroupSizeConfigs subgroupSizeConfigs;
-    info.nextInChain = &subgroupSizeConfigs;
     adapter.GetInfo(&info);
 
-    ASSERT_TRUE(IsPowerOfTwo(subgroupSizeConfigs.minExplicitComputeSubgroupSize));
-    for (uint32_t subgroupSize = subgroupSizeConfigs.minExplicitComputeSubgroupSize;
-         subgroupSize <= subgroupSizeConfigs.maxExplicitComputeSubgroupSize; subgroupSize *= 2) {
-        DoTest(subgroupSize);
+    uint32_t validSubgroupSize = 0;
+    // On Intel Gen12 GPU using D3D12 driver `info.subgroupMinSize` is less than `WaveLaneCountMin`,
+    // so we choose `info.subgroupMaxSize` as it is equal to `WaveLaneCountMax` on Intel GPUs.
+    if (IsD3D12() && IsIntelGen12()) {
+        validSubgroupSize = info.subgroupMaxSize;
+    } else {
+        // On the D3D12 drivers from other vendors `info.subgroupMinSize` is exactly
+        // `WaveLaneCountMin`, and on all Vulkan drivers it is always `minSubgroupSize`, which
+        // should be safe as a value of `@subgroup_size`.
+        validSubgroupSize = info.subgroupMinSize;
+    }
+
+    DoTest(validSubgroupSize);
+}
+
+// Test an error occurs when a value that is less than `subgroupMinSize` is used as the attribute
+// `@subgroup_size`.
+TEST_P(SubgroupSizeControlTests, LessThanSubgroupMinSize) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportSubgroupSizeControl());
+
+    wgpu::AdapterInfo info;
+    adapter.GetInfo(&info);
+
+    DAWN_TEST_UNSUPPORTED_IF(info.subgroupMinSize <= 1u);
+
+    uint32_t tooSmallSubgroupSize = info.subgroupMinSize / 2;
+    for (bool setSubgroupSizeAsOverride : {true, false}) {
+        ASSERT_DEVICE_ERROR(CreateComputePipelineWithSubgroupSizeAttribute(
+            tooSmallSubgroupSize, setSubgroupSizeAsOverride));
     }
 }
 
-// Test an error occurs when a value that is less than `minExplicitComputeSubgroupSize` is used as
-// the attribute `@subgroup_size`.
-TEST_P(SubgroupSizeControlTests, LessThanMinExplicitComputeSubgroupSize) {
+// Test an error occurs when a value that is more than `subgroupMaxSize` is used as the attribute
+// `@subgroup_size`.
+TEST_P(SubgroupSizeControlTests, MoreThanSubgroupMaxSize) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportSubgroupSizeControl());
 
     wgpu::AdapterInfo info;
-    wgpu::AdapterPropertiesExplicitComputeSubgroupSizeConfigs subgroupSizeConfigs;
-    info.nextInChain = &subgroupSizeConfigs;
     adapter.GetInfo(&info);
 
-    ASSERT_TRUE(IsPowerOfTwo(subgroupSizeConfigs.minExplicitComputeSubgroupSize));
-
-    uint32_t invalidSubgroupSize = subgroupSizeConfigs.minExplicitComputeSubgroupSize / 2;
-    ASSERT_TRUE(invalidSubgroupSize > 0);
-
+    uint32_t tooLargeSubgroupSize = info.subgroupMaxSize * 2;
     for (bool setSubgroupSizeAsOverride : {true, false}) {
         ASSERT_DEVICE_ERROR(CreateComputePipelineWithSubgroupSizeAttribute(
-            invalidSubgroupSize, setSubgroupSizeAsOverride));
-    }
-}
-
-// Test an error occurs when a value that is more than `maxExplicitComputeSubgroupSize` is used as
-// the attribute `@subgroup_size`.
-TEST_P(SubgroupSizeControlTests, MoreThanMaxExplicitComputeSubgroupSize) {
-    DAWN_TEST_UNSUPPORTED_IF(!SupportSubgroupSizeControl());
-
-    wgpu::AdapterInfo info;
-    wgpu::AdapterPropertiesExplicitComputeSubgroupSizeConfigs subgroupSizeConfigs;
-    info.nextInChain = &subgroupSizeConfigs;
-    adapter.GetInfo(&info);
-
-    ASSERT_TRUE(IsPowerOfTwo(subgroupSizeConfigs.maxExplicitComputeSubgroupSize));
-
-    uint32_t invalidSubgroupSize = subgroupSizeConfigs.maxExplicitComputeSubgroupSize * 2;
-    ASSERT_TRUE(invalidSubgroupSize > 0);
-
-    for (bool setSubgroupSizeAsOverride : {true, false}) {
-        ASSERT_DEVICE_ERROR(CreateComputePipelineWithSubgroupSizeAttribute(
-            invalidSubgroupSize, setSubgroupSizeAsOverride));
+            tooLargeSubgroupSize, setSubgroupSizeAsOverride));
     }
 }
 
