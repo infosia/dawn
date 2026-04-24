@@ -33,6 +33,24 @@
       "message": "Shouldn\u0027t this be merged in Xe 3 LPG? It sounds like the same architecture just small GPU, or are there architectural differences between them?",
       "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9418737d_2bdcdcea",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-24T08:38:15Z",
+      "side": 1,
+      "message": "Yes there are many differences in the architecture.\n\nWildcat Lake has simplified Xe cores that drops many GPU features (such as Ray Tracing and Cooperative Matrix), has much fewer Xe cores (only 2Xe compared with Panther Lake), less cache and slower memory frequency. Given these differences it is treated as completely different architecture compared with \"xe-3lpg\" and we strongly suggest we treat it as an individual GPU architecture.",
+      "parentUuid": "37bac94e_7e9842ff",
+      "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
