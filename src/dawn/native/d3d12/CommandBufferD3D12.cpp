@@ -1337,6 +1337,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
 
                 RecordWriteTimestampCmd(commandList, cmd->querySet.Get(), cmd->queryIndex);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -1482,6 +1484,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                                             computePass->timestampWrites.querySet.Get(),
                                             computePass->timestampWrites.endOfPassWriteIndex);
                 }
+
+                UpdateQueryAvailability(computePass->timestampWrites);
                 return {};
             }
 
@@ -1560,6 +1564,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
 
                 RecordWriteTimestampCmd(commandList, cmd->querySet.Get(), cmd->queryIndex);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -2021,6 +2027,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                     RecordWriteTimestampCmd(commandList, renderPass->timestampWrites.querySet.Get(),
                                             renderPass->timestampWrites.endOfPassWriteIndex);
                 }
+                UpdateQueryAvailability(renderPass->timestampWrites);
 
                 for (ColorAttachmentIndex i :
                      renderPass->attachmentState->GetColorAttachmentsMask()) {
@@ -2113,6 +2120,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                             D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->EndQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
                                       uint32_t{cmd->queryIndex});
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
@@ -2120,6 +2129,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
 
                 RecordWriteTimestampCmd(commandList, cmd->querySet.Get(), cmd->queryIndex);
+
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
