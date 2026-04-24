@@ -16,6 +16,24 @@
       "message": "Extra paren",
       "revId": "2bb6ac132c33a6bce7f5cead300154f33f69381f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "503aaee2_047cdcc1",
+        "filename": "src/dawn/native/metal/QuerySetMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de2372ae_3c5a994c",
+      "revId": "2bb6ac132c33a6bce7f5cead300154f33f69381f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
