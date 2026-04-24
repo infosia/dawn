@@ -104,7 +104,7 @@ SharedFenceEGL::SharedFenceEGL(Device* device,
 
 MaybeError SharedFenceEGL::ServerWait(uint64_t signaledValue) {
     // All GL sync objects are binary, this should be validated at SharedTextureMemory::BeginAccess.
-    DAWN_ASSERT(signaledValue == 1);
+    DAWN_OPT_ASSUME(signaledValue == 1);
 
     Device* device = ToBackend(GetDevice());
     Ref<WrappedEGLSync> sync = mSync;
@@ -124,7 +124,7 @@ MaybeError SharedFenceEGL::ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo>& in
             {
                 SharedFenceSyncFDExportInfo* exportInfo = info.Get<SharedFenceSyncFDExportInfo>();
                 if (exportInfo != nullptr) {
-                    DAWN_ASSERT(mHandle.IsValid());
+                    DAWN_OPT_ASSUME(mHandle.IsValid());
                     exportInfo->handle = mHandle.Get();
                 }
             }

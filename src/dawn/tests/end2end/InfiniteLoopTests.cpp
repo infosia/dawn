@@ -236,10 +236,10 @@ void InfiniteLoopTests::RunTest(const char* file,
 template <typename T>
 class ExpectOneNonZero : public detail::Expectation {
   public:
-    explicit ExpectOneNonZero(T value) : mValue(value) { DAWN_ASSERT(mValue != T(0)); }
+    explicit ExpectOneNonZero(T value) : mValue(value) { DAWN_OPT_ASSUME(mValue != T(0)); }
 
     testing::AssertionResult Check(const void* data, size_t size) override {
-        DAWN_ASSERT(size % sizeof(T) == 0 && size > 0);
+        DAWN_OPT_ASSUME(size % sizeof(T) == 0 && size > 0);
         const T* actual = static_cast<const T*>(data);
 
         std::optional<size_t> whereFound;

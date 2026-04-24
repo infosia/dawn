@@ -34,12 +34,12 @@
 namespace dawn::native {
 
 AsyncTask::State::State(AsyncTaskFunction task) : task(task) {
-    DAWN_ASSERT(task);
+    DAWN_OPT_ASSUME(task);
 }
 
 AsyncTask::AsyncTask(AsyncTaskManager* taskManager, AsyncTaskFunction task)
     : mTaskManager(taskManager), mState(task) {
-    DAWN_ASSERT(mTaskManager);
+    DAWN_OPT_ASSUME(mTaskManager);
 }
 
 bool AsyncTask::IsCompleted() const {
@@ -76,7 +76,7 @@ void AsyncTask::Run() {
         task = std::move(state->task);
         state->task = nullptr;
     });
-    DAWN_ASSERT(task);
+    DAWN_OPT_ASSUME(task);
 
     // Complete the task and update the state of the task manager. Note we need to make sure we
     // update the state of the task manager before setting the task to Complete to ensure that at
@@ -115,12 +115,12 @@ ErrorGeneratingAsyncTask::ErrorGeneratingAsyncTask(AsyncTaskManager* taskManager
       }) {}
 
 bool ErrorGeneratingAsyncTask::IsSuccess() const {
-    DAWN_ASSERT(IsCompleted());
+    DAWN_OPT_ASSUME(IsCompleted());
     return mErrorData == nullptr;
 }
 
 bool ErrorGeneratingAsyncTask::IsError() const {
-    DAWN_ASSERT(IsCompleted());
+    DAWN_OPT_ASSUME(IsCompleted());
     return mErrorData != nullptr;
 }
 
@@ -129,7 +129,7 @@ InternalErrorType ErrorGeneratingAsyncTask::GetErrorType() const {
 }
 
 std::unique_ptr<ErrorData> ErrorGeneratingAsyncTask::AcquireError() {
-    DAWN_ASSERT(IsCompleted());
+    DAWN_OPT_ASSUME(IsCompleted());
     return std::move(mErrorData);
 }
 

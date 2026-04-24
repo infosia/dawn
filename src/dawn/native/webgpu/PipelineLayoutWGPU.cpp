@@ -71,7 +71,7 @@ PipelineLayout::PipelineLayout(Device* device,
     desc.immediateSize = GetImmediateDataRangeByteSize();
 
     mInnerHandle = device->wgpu->deviceCreatePipelineLayout(device->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 }
 
 void PipelineLayout::SetLabelImpl() {

@@ -667,7 +667,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false> {
 
 MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
                                             const BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
+    DAWN_OPT_ASSUME(renderPass != nullptr);
 
     // Reset state that may affect glBlitFramebuffer().
     DAWN_GL_TRY(gl, Disable(GL_SCISSOR_TEST));
@@ -1310,7 +1310,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
         }
     }
 
-    DAWN_ASSERT(gl.CheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+    DAWN_OPT_ASSUME(gl.CheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 
     // Set defaults for dynamic state before executing clears and commands.
     PersistentPipelineState persistentPipelineState;
@@ -1471,7 +1471,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_TRY(bindGroupTracker.Apply(gl));
 
                 Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 const auto topology = lastPipeline->GetGLPrimitiveTopology();
                 if (topology == GL_LINE_STRIP || topology == GL_TRIANGLE_STRIP) {

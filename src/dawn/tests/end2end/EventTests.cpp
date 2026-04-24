@@ -66,8 +66,8 @@ wgpu::Device CreateExtraDevice(utils::WireHelper* wireHelper, wgpu::Instance ins
                     },
                     nullptr, &adapter2});
     flushSuccess = wireHelper->FlushClient();
-    DAWN_ASSERT(flushSuccess);
-    DAWN_ASSERT(adapter2);
+    DAWN_OPT_ASSUME(flushSuccess);
+    DAWN_OPT_ASSUME(adapter2);
 
     wgpu::Device device2;
     requestDevice(adapter2.Get(), nullptr,
@@ -79,8 +79,8 @@ wgpu::Device CreateExtraDevice(utils::WireHelper* wireHelper, wgpu::Instance ins
                    },
                    nullptr, &device2});
     flushSuccess = wireHelper->FlushClient();
-    DAWN_ASSERT(flushSuccess);
-    DAWN_ASSERT(device2);
+    DAWN_OPT_ASSUME(flushSuccess);
+    DAWN_OPT_ASSUME(device2);
 
     return device2;
 }
@@ -90,7 +90,7 @@ std::pair<wgpu::Instance, wgpu::Device> CreateExtraInstance(utils::WireHelper* w
     auto [instance2, nativeInstance] = wireHelper->CreateInstances(desc, desc);
 
     wgpu::Device device2 = CreateExtraDevice(wireHelper, instance2);
-    DAWN_ASSERT(device2);
+    DAWN_OPT_ASSUME(device2);
 
     return std::pair(std::move(instance2), std::move(device2));
 }

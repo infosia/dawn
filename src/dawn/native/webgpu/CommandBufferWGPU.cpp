@@ -183,7 +183,7 @@ void EncodeComputePass(const DawnProcTable& wgpu,
 
             case Command::SetImmediates: {
                 auto cmd = commands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = commands.NextData<uint8_t>(cmd->size);
                 wgpu.computePassEncoderSetImmediates(passEncoder, cmd->offset, value, cmd->size);
@@ -420,7 +420,7 @@ void EncodeRenderPass(const Device* device,
 
             case Command::SetImmediates: {
                 auto cmd = commands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = commands.NextData<uint8_t>(cmd->size);
                 wgpu.renderPassEncoderSetImmediates(passEncoder, cmd->offset, value, cmd->size);

@@ -94,22 +94,22 @@ ObjectType TexelBufferViewBase::GetType() const {
 }
 
 BufferBase* TexelBufferViewBase::GetBuffer() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mBuffer.Get();
 }
 
 wgpu::TextureFormat TexelBufferViewBase::GetFormat() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mFormat;
 }
 
 uint64_t TexelBufferViewBase::GetOffset() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mOffset;
 }
 
 uint64_t TexelBufferViewBase::GetSize() const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mSize;
 }
 

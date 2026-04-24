@@ -124,7 +124,7 @@ MaybeError RenderPassWorkaroundsHelper::Initialize(
 
             if (resolveTarget != nullptr && (resolveTarget->GetBaseMipLevel() != 0 ||
                                              resolveTarget->GetBaseArrayLayer() != 0)) {
-                DAWN_ASSERT(colorAttachment.view);
+                DAWN_OPT_ASSUME(colorAttachment.view);
                 // Create a temporary texture to resolve into
                 // TODO(dawn:1618): Defer allocation of temporary textures till submit time.
                 TextureDescriptor descriptor = {};
@@ -143,7 +143,7 @@ MaybeError RenderPassWorkaroundsHelper::Initialize(
                 Ref<TextureBase> temporaryResolveTexture;
                 Ref<TextureViewBase> temporaryResolveView;
                 {
-                    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+                    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
                     DAWN_TRY_ASSIGN(temporaryResolveTexture, device->CreateTexture(&descriptor));
 
@@ -190,7 +190,7 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
             TextureViewBase* resolveTarget = cmd->colorAttachments[index].resolveTarget.Get();
             TextureViewBase* temporaryResolveView = mTempResolveTargets[index].view.Get();
 
-            DAWN_ASSERT(resolveTarget);
+            DAWN_OPT_ASSUME(resolveTarget);
 
             // Save the temporary and given render targets together for copying after
             // the render pass ends.

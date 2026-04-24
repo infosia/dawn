@@ -527,7 +527,7 @@ DXGI_FORMAT D3DShaderResourceViewFormat(const DeviceBase* device,
                                         const Format& textureFormat,
                                         const Format& viewFormat,
                                         Aspect aspects) {
-    DAWN_ASSERT(aspects != Aspect::None);
+    DAWN_OPT_ASSUME(aspects != Aspect::None);
     if (!HasZeroOrOneBits(aspects)) {
         // A single aspect is not selected. The texture view must not be sampled.
         return DXGI_FORMAT_UNKNOWN;

@@ -261,7 +261,7 @@ MaybeError BindGroup::InitializeImpl() {
 void BindGroup::DestroyImpl(DestroyReason reason) {
     BindGroupBase::DestroyImpl(reason);
     ToBackend(GetLayout())->DeallocateDescriptor(&mCPUViewAllocation);
-    DAWN_ASSERT(!mCPUViewAllocation.IsValid());
+    DAWN_OPT_ASSUME(!mCPUViewAllocation.IsValid());
 }
 
 void BindGroup::DeleteThis() {
@@ -308,7 +308,7 @@ D3D12_GPU_DESCRIPTOR_HANDLE BindGroup::GetBaseViewDescriptor() const {
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE BindGroup::GetBaseSamplerDescriptor() const {
-    DAWN_ASSERT(mSamplerAllocationEntry != nullptr);
+    DAWN_OPT_ASSUME(mSamplerAllocationEntry != nullptr);
     return mSamplerAllocationEntry->GetBaseDescriptor();
 }
 

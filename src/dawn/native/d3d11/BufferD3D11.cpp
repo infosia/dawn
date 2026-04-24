@@ -103,7 +103,7 @@ UINT D3D11BufferBindFlags(wgpu::BufferUsage usage) {
         bindFlags |= D3D11_BIND_CONSTANT_BUFFER;
     }
     if (usage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer)) {
-        DAWN_ASSERT(!IsMappable(usage));
+        DAWN_OPT_ASSUME(!IsMappable(usage));
         bindFlags |= D3D11_BIND_UNORDERED_ACCESS;
     }
     if (usage & kReadOnlyStorageBuffer) {
@@ -158,7 +158,7 @@ bool CanUseCPUUploadBuffer(const Device* device, wgpu::BufferUsage usage, size_t
 }
 
 bool CanMappableUseDefaultStorage(const Device* device, wgpu::BufferUsage usage) {
-    DAWN_ASSERT(IsMappable(usage));
+    DAWN_OPT_ASSUME(IsMappable(usage));
     if (!device->GetDeviceInfo().supportsMapOnDefaultBuffer ||
         device->IsToggleEnabled(Toggle::D3D11DisableMapOnDefaultBuffers)) {
         return false;
@@ -310,7 +310,7 @@ bool CanAddStorageUsageToBufferWithoutSideEffects(const Device* device,
 
     // Read-only storage buffer cannot be mapped for read unless MapOnDefaultBuffers is
     // supported. So avoid that.
-    DAWN_ASSERT(storageUsage == kReadOnlyStorageBuffer);
+    DAWN_OPT_ASSUME(storageUsage == kReadOnlyStorageBuffer);
     return !(originalUsage & wgpu::BufferUsage::MapRead);
 }
 
@@ -402,7 +402,7 @@ bool Buffer::IsCPUReadable() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    DAWN_ASSERT(IsCPUWritableAtCreation());
+    DAWN_OPT_ASSUME(IsCPUWritableAtCreation());
     // Use Try variant to avoid blocking if the CommandContext lock is already held (e.g., by
     // another thread or during Queue::Submit). MapAtCreation must return immediately with a
     // mappable pointer, so if the lock isn't available, we fall back to temporary storage and
@@ -444,7 +444,7 @@ MaybeError Buffer::UnmapIfNeeded(const ScopedCommandRecordingContext* commandCon
         mMappedData = nullptr;
         ScopedMap scopedMap;
         DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
-        DAWN_ASSERT(scopedMap.GetMappedData());
+        DAWN_OPT_ASSUME(scopedMap.GetMappedData());
         memcpy(scopedMap.GetMappedData(), mMapAtCreationData.get(), GetAllocatedSize());
         mMapAtCreationData.reset();
         return {};
@@ -473,8 +473,8 @@ MaybeError Buffer::TrackUsage(const ScopedCommandRecordingContext* commandContex
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    DAWN_ASSERT((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
-                (mode == wgpu::MapMode::Read && IsCPUReadable()));
+    DAWN_OPT_ASSUME((mode == wgpu::MapMode::Write && IsCPUWritable()) ||
+                    (mode == wgpu::MapMode::Read && IsCPUReadable()));
 
     // With automatic mapping, the buffer will be actually mapped/unmapped at queue
     // boundaries, so MapAsync is a no-op.
@@ -520,11 +520,11 @@ MaybeError Buffer::TryMapNow(ScopedCommandRecordingContext* commandContext,
     // This should only happen with automatic mapping where the buffer is scheduled to be
     // re-mapped, but then used again in a subsequent submit before the original serial completed.
     if (completedSerial < GetLastUsageSerial()) {
-        DAWN_ASSERT(mAutoMapMode != wgpu::MapMode::None);
+        DAWN_OPT_ASSUME(mAutoMapMode != wgpu::MapMode::None);
         return {};
     }
 
-    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
     // Trigger any deferred unmaps.
     // TODO(crbug.com/345471009): Consider reuse the mapped pointer and skip mapping again if
@@ -547,7 +547,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
         return {};
     }
 
-    DAWN_ASSERT(mMappedData);
+    DAWN_OPT_ASSUME(mMappedData);
 
     // Ensure data is initialized after a MapAsync event completes.
     DAWN_TRY(EnsureDataInitialized(nullptr));
@@ -556,7 +556,7 @@ MaybeError Buffer::FinalizeMapImpl(BufferState newState) {
 }
 
 void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
-    DAWN_ASSERT(IsMappable(GetInternalUsage()));
+    DAWN_OPT_ASSUME(IsMappable(GetInternalUsage()));
 
     // With automatic mapping, the buffer stays mapped, so Unmap is a no-op.
     if (mAutoMapMode != wgpu::MapMode::None) {
@@ -670,7 +670,7 @@ MaybeError Buffer::EnsureDataInitializedAsDestination(
 }
 
 MaybeError Buffer::InitializeToZero(const ScopedCommandRecordingContext* commandContext) {
-    DAWN_ASSERT(NeedsInitialization());
+    DAWN_OPT_ASSUME(NeedsInitialization());
 
     DAWN_TRY(ClearWholeBuffer(commandContext, uint8_t(0u)));
     SetInitialized(true);
@@ -692,7 +692,7 @@ MaybeError Buffer::Clear(const ScopedCommandRecordingContext* commandContext,
                          uint8_t clearValue,
                          uint64_t offset,
                          uint64_t size) {
-    DAWN_ASSERT(!mMappedData);
+    DAWN_OPT_ASSUME(!mMappedData);
 
     if (size == 0) {
         return {};
@@ -713,7 +713,7 @@ MaybeError Buffer::ClearInternal(const ScopedCommandRecordingContext* commandCon
                                  uint8_t clearValue,
                                  uint64_t offset,
                                  uint64_t size) {
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     // TODO(dawn:1705): use a reusable zero staging buffer to clear the buffer to avoid this CPU to
     // GPU copy.
@@ -751,7 +751,7 @@ MaybeError Buffer::Write(const ScopedCommandRecordingContext* commandContext,
                          uint64_t offset,
                          const void* data,
                          size_t size) {
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     // For non-staging buffers, we can use UpdateSubresource to write the data.
     DAWN_TRY(EnsureDataInitializedAsDestination(commandContext, offset, size));
@@ -766,7 +766,7 @@ MaybeError Buffer::Copy(const ScopedCommandRecordingContext* commandContext,
                         size_t size,
                         Buffer* destination,
                         uint64_t destinationOffset) {
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     DAWN_TRY(source->EnsureDataInitialized(commandContext));
     DAWN_TRY(
@@ -1002,7 +1002,7 @@ MaybeError GPUUsableBuffer::InitializeInternal() {
         // Note: we only need one CPU writable storage. If there are both const buffer and
         // non-const buffer usages, we favor CPU writable const buffer first. Since that's most
         // likely the common use case where users want to update const buffer on CPU.
-        DAWN_ASSERT(mMappableStorage == nullptr);
+        DAWN_OPT_ASSUME(mMappableStorage == nullptr);
         usagesToHandle &= ~wgpu::BufferUsage::MapWrite;
         // If a buffer is created with both Storage and MapWrite usages, then
         // we will lazily create a GPU writable storage later. Note: we favor CPU writable
@@ -1067,7 +1067,7 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateStorage(
                 // Dynamic buffer requires at least one binding flag. If no binding flag is needed
                 // (one example is MapWrite | QueryResolve), then use D3D11_BIND_INDEX_BUFFER.
                 bufferDescriptor.BindFlags = D3D11_BIND_INDEX_BUFFER;
-                DAWN_ASSERT(bufferDescriptor.MiscFlags == 0);
+                DAWN_OPT_ASSUME(bufferDescriptor.MiscFlags == 0);
             }
         } break;
         case StorageType::GPUWritableNonConstantBuffer: {
@@ -1138,13 +1138,13 @@ ResultOrError<GPUUsableBuffer::Storage*> GPUUsableBuffer::GetOrCreateDstCopyable
 
 MaybeError GPUUsableBuffer::SyncStorage(const ScopedCommandRecordingContext* commandContext,
                                         Storage* dstStorage) {
-    DAWN_ASSERT(mLastUpdatedStorage);
-    DAWN_ASSERT(dstStorage);
+    DAWN_OPT_ASSUME(mLastUpdatedStorage);
+    DAWN_OPT_ASSUME(dstStorage);
     if (mLastUpdatedStorage->GetRevision() == dstStorage->GetRevision()) {
         return {};
     }
 
-    DAWN_ASSERT(commandContext);
+    DAWN_OPT_ASSUME(commandContext);
 
     // Must not have pending unmap.
     DAWN_CHECK(!mMappedData);
@@ -1158,7 +1158,7 @@ MaybeError GPUUsableBuffer::SyncStorage(const ScopedCommandRecordingContext* com
 
     // TODO(42241146): This is a slow path. It's usually used by uncommon use cases:
     // - GPU writes a CPU writable buffer.
-    DAWN_ASSERT(dstStorage->IsCPUWritable());
+    DAWN_OPT_ASSUME(dstStorage->IsCPUWritable());
     Storage* stagingStorage;
     DAWN_TRY_ASSIGN(stagingStorage, GetOrCreateStorage(StorageType::Staging));
     DAWN_TRY(SyncStorage(commandContext, stagingStorage));
@@ -1199,7 +1199,7 @@ MaybeError GPUUsableBuffer::SyncStorage(const ScopedCommandRecordingContext* com
 void GPUUsableBuffer::IncrStorageRevAndMakeLatest(
     const ScopedCommandRecordingContext* commandContext,
     Storage* dstStorage) {
-    DAWN_ASSERT(dstStorage->GetRevision() == mLastUpdatedStorage->GetRevision());
+    DAWN_OPT_ASSUME(dstStorage->GetRevision() == mLastUpdatedStorage->GetRevision());
     dstStorage->SetRevision(dstStorage->GetRevision() + 1);
     mLastUpdatedStorage = dstStorage;
 
@@ -1215,7 +1215,7 @@ void GPUUsableBuffer::IncrStorageRevAndMakeLatest(
 
 MaybeError GPUUsableBuffer::SyncGPUWritesToStaging(
     const ScopedCommandRecordingContext* commandContext) {
-    DAWN_ASSERT(IsMappable(GetInternalUsage()));
+    DAWN_OPT_ASSUME(IsMappable(GetInternalUsage()));
 
     // Only sync staging storage. Later other CPU writable storages can be updated by
     // copying from staging storage with Map(MAP_WRITE_DISCARD) which won't stall the CPU.
@@ -1229,11 +1229,11 @@ MaybeError GPUUsableBuffer::SyncGPUWritesToStaging(
 
 MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* commandContext,
                                         wgpu::MapMode mode) {
-    DAWN_ASSERT(!mMappedData);
-    DAWN_ASSERT(mMappableStorage);
+    DAWN_OPT_ASSUME(!mMappedData);
+    DAWN_OPT_ASSUME(mMappableStorage);
 
     if (mMappableStorage->IsDynamic()) {
-        DAWN_ASSERT(mode == wgpu::MapMode::Write);
+        DAWN_OPT_ASSUME(mode == wgpu::MapMode::Write);
         // Dynamic buffer can only use D3D11_MAP_WRITE_NO_OVERWRITE
         mD3DMapTypeUsed = D3D11_MAP_WRITE_NO_OVERWRITE;
     } else {
@@ -1266,8 +1266,8 @@ MaybeError GPUUsableBuffer::MapInternal(const ScopedCommandRecordingContext* com
 }
 
 void GPUUsableBuffer::UnmapInternal(const ScopedCommandRecordingContext* commandContext) {
-    DAWN_ASSERT(mMappedData);
-    DAWN_ASSERT(mMappableStorage);
+    DAWN_OPT_ASSUME(mMappedData);
+    DAWN_OPT_ASSUME(mMappableStorage);
     commandContext->Unmap(mMappableStorage->GetD3D11Buffer(),
                           /*Subresource=*/0);
     mMappedData = nullptr;
@@ -1344,8 +1344,8 @@ GPUUsableBuffer::CreateD3D11ShaderResourceViewFromD3DBuffer(ID3D11Buffer* d3d11B
                                                             uint64_t offset,
                                                             uint64_t originalSize) {
     uint64_t size = Align(originalSize, 4);
-    DAWN_ASSERT(IsAligned(offset, 4u));
-    DAWN_ASSERT(size <= GetAllocatedSize());
+    DAWN_OPT_ASSUME(IsAligned(offset, 4u));
+    DAWN_OPT_ASSUME(size <= GetAllocatedSize());
     UINT firstElement = static_cast<UINT>(offset / 4);
     UINT numElements = static_cast<UINT>(size / 4);
 
@@ -1369,8 +1369,8 @@ GPUUsableBuffer::CreateD3D11UnorderedAccessViewFromD3DBuffer(ID3D11Buffer* d3d11
                                                              uint64_t offset,
                                                              uint64_t originalSize) {
     uint64_t size = Align(originalSize, 4);
-    DAWN_ASSERT(IsAligned(offset, 4u));
-    DAWN_ASSERT(size <= GetAllocatedSize());
+    DAWN_OPT_ASSUME(IsAligned(offset, 4u));
+    DAWN_OPT_ASSUME(size <= GetAllocatedSize());
 
     UINT firstElement = static_cast<UINT>(offset / 4);
     UINT numElements = static_cast<UINT>(size / 4);
@@ -1447,7 +1447,7 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
     uint64_t offset,
     const void* data,
     size_t size) {
-    DAWN_ASSERT(size > 0);
+    DAWN_OPT_ASSUME(size > 0);
 
     // For a full size write, UpdateSubresource1(D3D11_COPY_DISCARD) can be used to update
     // constant buffer.
@@ -1465,7 +1465,7 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
         if (offset < kConstantBufferUpdateAlignment - 1) {
             alignedOffset = 0;
         } else {
-            DAWN_ASSERT(firstTimeUpdate);
+            DAWN_OPT_ASSUME(firstTimeUpdate);
             // For offset we align to lower value (<= offset).
             alignedOffset = Align(offset - (kConstantBufferUpdateAlignment - 1),
                                   kConstantBufferUpdateAlignment);
@@ -1478,14 +1478,14 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
         }
         size_t alignedSize = alignedEnd - alignedOffset;
 
-        DAWN_ASSERT((alignedSize % kConstantBufferUpdateAlignment) == 0);
-        DAWN_ASSERT(alignedSize <= GetAllocatedSize());
-        DAWN_ASSERT(offset >= alignedOffset);
+        DAWN_OPT_ASSUME((alignedSize % kConstantBufferUpdateAlignment) == 0);
+        DAWN_OPT_ASSUME(alignedSize <= GetAllocatedSize());
+        DAWN_OPT_ASSUME(offset >= alignedOffset);
 
         // Extra bytes on the left of offset we could write to. This is only valid if
         // firstTimeUpdate = true.
         size_t leftExtraBytes = offset - alignedOffset;
-        DAWN_ASSERT(leftExtraBytes == 0 || firstTimeUpdate);
+        DAWN_OPT_ASSUME(leftExtraBytes == 0 || firstTimeUpdate);
 
         // The layout of the buffer is like this:
         // |..........................| leftExtraBytes |     data   | ............... |
@@ -1556,7 +1556,7 @@ MaybeError GPUUsableBuffer::WriteInternal(const ScopedCommandRecordingContext* c
         ScopedMap scopedMap;
         DAWN_TRY_ASSIGN(scopedMap, ScopedMap::Create(commandContext, this, wgpu::MapMode::Write));
 
-        DAWN_ASSERT(scopedMap.GetMappedData());
+        DAWN_OPT_ASSUME(scopedMap.GetMappedData());
         memcpy(scopedMap.GetMappedData() + offset, data, size);
 
         return {};
@@ -1582,7 +1582,7 @@ MaybeError GPUUsableBuffer::WriteInternal(const ScopedCommandRecordingContext* c
     if (fullSizeWrite) {
         // If this is a full overwrite, no need to copy the old content.
         // Just need to copy the revision number.
-        DAWN_ASSERT(mLastUpdatedStorage);
+        DAWN_OPT_ASSUME(mLastUpdatedStorage);
         gpuCopyableStorage->SetRevision(mLastUpdatedStorage->GetRevision());
     } else {
         DAWN_TRY(SyncStorage(commandContext, gpuCopyableStorage));
@@ -1672,7 +1672,7 @@ MaybeError GPUUsableBuffer::PredicatedClear(
     uint8_t clearValue,
     uint64_t offset,
     uint64_t size) {
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     // Don't use mapping, mapping is not affected by ID3D11Predicate.
     // Allocate GPU writable storage and sync it. Note: we don't SetPredication() yet otherwise

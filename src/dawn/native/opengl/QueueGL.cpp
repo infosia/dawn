@@ -281,7 +281,7 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
                 DAWN_TRY_ASSIGN(sync,
                                 WrappedEGLSync::Create(display, gl, requestedSyncType, nullptr));
             }
-            DAWN_ASSERT(sync != nullptr);
+            DAWN_OPT_ASSUME(sync != nullptr);
 
             // If we are sharing this sync externally, make sure to flush all commands.
             // The FD cannot be queried before the flush and clients may hang if they try to wait on
@@ -349,7 +349,7 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
     return device->EnqueueAndFlushGL([this](const OpenGLFunctions& gl) -> MaybeError {
         DAWN_GL_TRY(gl, Finish());
         DAWN_TRY(CheckPassedSerials());
-        DAWN_ASSERT(mFencesInFlight->empty());
+        DAWN_OPT_ASSUME(mFencesInFlight->empty());
         mHasPendingUnsignaledCommands = false;
         return {};
     });

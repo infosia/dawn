@@ -41,7 +41,7 @@ ResourceHeapAllocation::ResourceHeapAllocation(const AllocationInfo& info,
     : ResourceMemoryAllocation(info, offset, heap),
       mResource(std::move(resource)),
       mResourceHeapKind(resourceHeapKind) {
-    DAWN_ASSERT((info.mMethod == AllocationMethod::kExternal) == (heap == nullptr));
+    DAWN_OPT_ASSUME((info.mMethod == AllocationMethod::kExternal) == (heap == nullptr));
 }
 
 void ResourceHeapAllocation::Invalidate() {

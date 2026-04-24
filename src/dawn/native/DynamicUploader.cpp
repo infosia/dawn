@@ -45,7 +45,7 @@ DynamicUploader::DynamicUploader(DeviceBase* device) : mDevice(device) {}
 
 ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSize,
                                                           uint64_t offsetAlignment) {
-    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(mDevice->IsLockedByCurrentThreadIfNeeded());
 
     // Disable further sub-allocation should the request be too large.
     if (allocationSize > kRingBufferSize) {
@@ -82,7 +82,7 @@ ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSiz
     for (auto& ringBuffer : mRingBuffers) {
         RingBufferAllocator& ringBufferAllocator = ringBuffer->mAllocator;
         // Prevent overflow.
-        DAWN_ASSERT(ringBufferAllocator.GetSize() >= ringBufferAllocator.GetUsedSize());
+        DAWN_OPT_ASSUME(ringBufferAllocator.GetSize() >= ringBufferAllocator.GetUsedSize());
         startOffset = ringBufferAllocator.Allocate(allocationSize, serial, offsetAlignment);
         if (startOffset != RingBufferAllocator::kInvalidOffset) {
             targetRingBuffer = ringBuffer.get();
@@ -100,7 +100,7 @@ ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSiz
         startOffset = targetRingBuffer->mAllocator.Allocate(allocationSize, serial);
     }
 
-    DAWN_ASSERT(startOffset != RingBufferAllocator::kInvalidOffset);
+    DAWN_OPT_ASSUME(startOffset != RingBufferAllocator::kInvalidOffset);
 
     // Allocate the staging buffer backing the ringbuffer.
     // Note: the first ringbuffer will be lazily created.
@@ -117,7 +117,7 @@ ResultOrError<UploadReservation> DynamicUploader::Reserve(uint64_t allocationSiz
         targetRingBuffer->mStagingBuffer = std::move(stagingBuffer);
     }
 
-    DAWN_ASSERT(targetRingBuffer->mStagingBuffer != nullptr);
+    DAWN_OPT_ASSUME(targetRingBuffer->mStagingBuffer != nullptr);
 
     UploadReservation reservation;
     reservation.buffer = targetRingBuffer->mStagingBuffer;
@@ -158,7 +158,7 @@ MaybeError DynamicUploader::MaybeSubmitPendingCommands() {
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {
-    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(mDevice->IsLockedByCurrentThreadIfNeeded());
 
     // Reclaim memory within the ring buffers by ticking (or removing requests no longer
     // in-flight).
@@ -178,7 +178,7 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
 }
 
 void DynamicUploader::UpdateMemoryPendingSubmit() {
-    DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(mDevice->IsLockedByCurrentThreadIfNeeded());
 
     // Take into account that submits make the pending memory freed in finite time so we no longer
     // need to track that memory.

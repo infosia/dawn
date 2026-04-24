@@ -148,7 +148,7 @@ ObjectType RenderPassEncoder::GetType() const {
 }
 
 void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex) {
-    DAWN_ASSERT(querySet != nullptr);
+    DAWN_OPT_ASSUME(querySet != nullptr);
 
     // Track the query availability with true on render pass for rewrite validation and query
     // reset on render pass on Vulkan
@@ -165,7 +165,7 @@ void RenderPassEncoder::APIEnd() {
 }
 
 void RenderPassEncoder::End() {
-    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
     if (mEnded && IsValidationEnabled()) {
         GetDevice()->HandleEncoderError(DAWN_VALIDATION_ERROR("%s was already ended.", this));

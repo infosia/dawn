@@ -1059,7 +1059,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
                                const TextureCopy& src,
                                const BufferCopy& dst,
                                const BlockExtent3D& copyExtent) {
-    DAWN_ASSERT(!src.texture->GetFormat().isCompressed);
+    DAWN_OPT_ASSUME(!src.texture->GetFormat().isCompressed);
 
     wgpu::TextureViewDimension textureViewDimension;
     {
@@ -1086,8 +1086,8 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
             }
         }
     }
-    DAWN_ASSERT(textureViewDimension != wgpu::TextureViewDimension::Undefined &&
-                textureViewDimension != wgpu::TextureViewDimension::CubeArray);
+    DAWN_OPT_ASSUME(textureViewDimension != wgpu::TextureViewDimension::Undefined &&
+                    textureViewDimension != wgpu::TextureViewDimension::CubeArray);
 
     Ref<ComputePipelineBase> pipeline;
     DAWN_TRY_ASSIGN(pipeline,
@@ -1201,7 +1201,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
         // the original buffer.
         destinationBuffer->SetInitialized(true);
         if (paddingSize > 0) {
-            DAWN_ASSERT(paddingSize < 4);
+            DAWN_OPT_ASSUME(paddingSize < 4);
             // We only need to initialize the last 4 bytes in the temp buffer.
             std::array<uint8_t, 4> clearData = {};
             commandEncoder->APIWriteBuffer(destinationBuffer.Get(),
@@ -1364,7 +1364,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     pass->APIEnd();
 
     if (useIntermediateCopyBuffer) {
-        DAWN_ASSERT(destinationBuffer->GetSize() <= dst.buffer->GetAllocatedSize());
+        DAWN_OPT_ASSUME(destinationBuffer->GetSize() <= dst.buffer->GetAllocatedSize());
         commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
             destinationBuffer.Get(), /*srcOffset=*/0, dst.buffer.Get(),
             /*dstOffset=*/offsetInOriginalBuf, shaderBindingSize);

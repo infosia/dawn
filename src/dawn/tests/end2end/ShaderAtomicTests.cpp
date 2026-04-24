@@ -205,7 +205,7 @@ TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Test code only supports up to 256 workgroup size.
-    DAWN_ASSERT(GetParam().mWorkgroupSizeParameter <= 256);
+    DAWN_OPT_ASSUME(GetParam().mWorkgroupSizeParameter <= 256);
     std::string kConditionalArray = GetParam().mShaderAtomicUseArray ? "[0]" : "";
     std::string kAtomicAddOperation =
         R"(  atomicAdd(&workgroup_buffer)" + kConditionalArray + R"(, 1);)";

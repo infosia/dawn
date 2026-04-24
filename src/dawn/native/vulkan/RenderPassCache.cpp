@@ -416,7 +416,7 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
         case VulkanRenderPassType::CreateRenderPass: {
             // MSAA Render To Single Sampled should not be enabled unless CreateRenderPass2 is also
             // enabled.
-            DAWN_ASSERT(!query.renderToSingleSampleMask.any());
+            DAWN_OPT_ASSUME(!query.renderToSingleSampleMask.any());
 
             RenderPassCreateInfo passInfo;
             InitializePassInfo(mDevice, query, passInfo);

@@ -73,7 +73,7 @@ Server::~Server() {
 WireResult Server::InjectBuffer(WGPUBuffer buffer,
                                 const Handle& handle,
                                 const Handle& deviceHandle) {
-    DAWN_ASSERT(buffer != nullptr);
+    DAWN_OPT_ASSUME(buffer != nullptr);
     Known<WGPUDevice> device;
     WIRE_TRY(Get(deviceHandle.id, &device));
     if (device->generation != deviceHandle.generation) {
@@ -97,7 +97,7 @@ WireResult Server::InjectBuffer(WGPUBuffer buffer,
 WireResult Server::InjectTexture(WGPUTexture texture,
                                  const Handle& handle,
                                  const Handle& deviceHandle) {
-    DAWN_ASSERT(texture != nullptr);
+    DAWN_OPT_ASSUME(texture != nullptr);
     Known<WGPUDevice> device;
     WIRE_TRY(Get(deviceHandle.id, &device));
     if (device->generation != deviceHandle.generation) {
@@ -121,7 +121,7 @@ WireResult Server::InjectTexture(WGPUTexture texture,
 WireResult Server::InjectSurface(WGPUSurface surface,
                                  const Handle& handle,
                                  const Handle& instanceHandle) {
-    DAWN_ASSERT(surface != nullptr);
+    DAWN_OPT_ASSUME(surface != nullptr);
     Known<WGPUInstance> instance;
     WIRE_TRY(Get(instanceHandle.id, &instance));
     if (instance->generation != instanceHandle.generation) {
@@ -143,7 +143,7 @@ WireResult Server::InjectSurface(WGPUSurface surface,
 }
 
 WireResult Server::InjectInstance(WGPUInstance instance, const Handle& handle) {
-    DAWN_ASSERT(instance != nullptr);
+    DAWN_OPT_ASSUME(instance != nullptr);
     Reserved<WGPUInstance> data;
     WIRE_TRY(Allocate(&data, handle));
 

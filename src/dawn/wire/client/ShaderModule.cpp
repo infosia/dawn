@@ -52,7 +52,7 @@ class ShaderModule::CompilationInfoEvent final : public TrackedEvent {
           mUserdata1(callbackInfo.userdata1),
           mUserdata2(callbackInfo.userdata2),
           mShader(std::move(shader)) {
-        DAWN_ASSERT(mShader != nullptr);
+        DAWN_OPT_ASSUME(mShader != nullptr);
     }
 
     EventType GetType() override { return kType; }
@@ -74,7 +74,7 @@ class ShaderModule::CompilationInfoEvent final : public TrackedEvent {
         mShader->mMessages.reserve(info->messageCount);
         mShader->mUtf16s.reserve(info->messageCount);
         for (size_t i = 0; i < info->messageCount; i++) {
-            DAWN_ASSERT(info->messages[i].length != WGPU_STRLEN);
+            DAWN_OPT_ASSUME(info->messages[i].length != WGPU_STRLEN);
             mShader->mMessageStrings.push_back(ToString(info->messages[i].message));
             mShader->mMessages.push_back(info->messages[i]);
             mShader->mMessages[i].message = ToOutputStringView(mShader->mMessageStrings[i]);
@@ -115,7 +115,7 @@ class ShaderModule::CompilationInfoEvent final : public TrackedEvent {
     WireResult ReadyHook(FutureID futureId) {
         // We call this ReadyHook when we already have a cached compilation on the shader (usually
         // from a previous GetCompilationInfo call).
-        DAWN_ASSERT(mShader->mCompilationInfo);
+        DAWN_OPT_ASSUME(mShader->mCompilationInfo);
         mStatus = WGPUCompilationInfoRequestStatus_Success;
         return WireResult::Success;
     }
