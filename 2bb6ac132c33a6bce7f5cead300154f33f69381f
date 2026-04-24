@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de2372ae_3c5a994c",
+        "filename": "src/dawn/native/metal/QuerySetMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T16:02:44Z",
+      "side": 1,
+      "message": "Extra paren",
+      "revId": "2bb6ac132c33a6bce7f5cead300154f33f69381f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
