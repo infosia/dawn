@@ -32,7 +32,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"github.com/stretchr/testify/require"
-	"go.chromium.org/luci/auth"
+	"go.chromium.org/luci/auth/scopes"
 )
 
 func TestDefaultAuthOptions_NoAdditionalScopes(t *testing.T) {
@@ -46,8 +46,8 @@ func TestDefaultAuthOptions_NoAdditionalScopes(t *testing.T) {
 	require.Equal(
 		t,
 		[]string{
-			"https://www.googleapis.com/auth/gerritcodereview",
-			auth.OAuthScopeEmail,
+			scopes.Gerrit,
+			scopes.Email,
 		},
 		authOptions.Scopes[len(authOptions.Scopes)-2:])
 }
@@ -63,8 +63,8 @@ func TestDefaultAuthOptions_AdditionalScopes(t *testing.T) {
 	require.Equal(
 		t,
 		[]string{
-			"https://www.googleapis.com/auth/gerritcodereview",
-			auth.OAuthScopeEmail,
+			scopes.Gerrit,
+			scopes.Email,
 			"scope1",
 			"scope2",
 		},

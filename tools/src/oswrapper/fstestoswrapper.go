@@ -57,7 +57,7 @@ var (
 // Caveats/known differences from real os.* functions:
 //   - Paths in error messages will never have a leading / even if it was in
 //     the provided path. For example, ReadFile("/root") when /root does not
-//     exist will have the error message "open root: file does not exist". This
+//     exist will have the error message "lstat root: file does not exist". This
 //     is a side-effect of fs.FS requiring that Open() reject names that do not
 //     satisfy fs.ValidPath(), which requires that there is no leading /.
 //     TODO(crbug.com/436025865): Update the implementation to correctly add
@@ -528,6 +528,18 @@ func (w FSTestFilesystemReaderWriter) Walk(root string, fn filepath.WalkFunc) er
 		}
 		return fn(fullPath, info, nil)
 	}
+
+	// filepath.Walk does not follow the root if it is a symlink, but fs.WalkDir does.
+	// To match filepath.Walk's behavior, we check if the root is a symlink and handle it
+	// separately if so.
+	fi, err := fs.Lstat(w.fs(), fsRoot)
+	if err != nil {
+		return fn(root, nil, err)
+	}
+	if fi.Mode()&fs.ModeSymlink != 0 {
+		return walkDirFn(fsRoot, fs.FileInfoToDirEntry(fi), nil)
+	}
+
 	return fs.WalkDir(w.fs(), fsRoot, walkDirFn)
 }
 
