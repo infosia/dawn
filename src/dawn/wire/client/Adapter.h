@@ -80,7 +80,6 @@ class Adapter final : public ObjectWithEventsBase {
     WGPUAdapterPropertiesVk mVkProperties;
     std::vector<WGPUSubgroupMatrixConfig> mSubgroupMatrixConfigs;
     WGPUDawnAdapterPropertiesPowerPreference mPowerProperties;
-    WGPUAdapterPropertiesExplicitComputeSubgroupSizeConfigs mExplicitComputeSubgroupSizeConfigs;
 };
 
 }  // namespace dawn::wire::client

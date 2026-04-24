@@ -1433,26 +1433,17 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     return Extent3D{workgroupInfo.x, workgroupInfo.y, workgroupInfo.z};
 }
 
-MaybeError ValidateExplicitComputeSubgroupSize(const tint::WorkgroupInfo& workgroupInfo,
-                                               uint32_t minExplicitSubgroupSize,
-                                               uint32_t maxExplicitSubgroupSize,
-                                               uint32_t maxComputeWorkgroupSubgroups) {
+MaybeError ValidateSubgroupSizeAttribute(const tint::WorkgroupInfo& workgroupInfo,
+                                         uint32_t minSubgroupSize,
+                                         uint32_t maxSubgroupSize) {
     if (workgroupInfo.subgroup_size.has_value()) {
-        DAWN_ASSERT(minExplicitSubgroupSize > 0 && maxExplicitSubgroupSize > 0);
+        DAWN_ASSERT(minSubgroupSize > 0 && maxSubgroupSize > 0);
         const uint32_t explicitSubgroupSize = workgroupInfo.subgroup_size.value();
-        DAWN_INVALID_IF(
-            explicitSubgroupSize < minExplicitSubgroupSize ||
-                explicitSubgroupSize > maxExplicitSubgroupSize,
+        DAWN_INTERNAL_ERROR_IF(
+            explicitSubgroupSize < minSubgroupSize || explicitSubgroupSize > maxSubgroupSize,
             "The subgroup_size attribute (%u) is not in the allowed range "
-            "[minExplicitComputeSubgroupSize, maxExplicitComputeSubgroupSize] ([%u, %u]).",
-            explicitSubgroupSize, minExplicitSubgroupSize, maxExplicitSubgroupSize);
-        uint64_t numInvocations =
-            static_cast<uint64_t>(workgroupInfo.x) * workgroupInfo.y * workgroupInfo.z;
-        DAWN_INVALID_IF(
-            numInvocations > maxComputeWorkgroupSubgroups * explicitSubgroupSize,
-            "The total number of workgroup invocations (%u) exceeds the product of"
-            "maxComputeWorkgroupSubgroups and the subgroup_size attribute (%u * %u = %u).",
-            numInvocations, maxComputeWorkgroupSubgroups, explicitSubgroupSize, numInvocations);
+            "([%u, %u]).",
+            explicitSubgroupSize, minSubgroupSize, maxSubgroupSize);
     }
 
     return {};

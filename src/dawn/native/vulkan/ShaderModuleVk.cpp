@@ -113,8 +113,7 @@ ShaderModule::~ShaderModule() = default;
     X(LimitsForCompilationRequest, limits)                                           \
     X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
     X(uint32_t, maxSubgroupSize)                                                     \
-    X(uint32_t, minExplicitComputeSubgroupSize)                                      \
-    X(uint32_t, maxExplicitComputeSubgroupSize)                                      \
+    X(uint32_t, minSubgroupSize)                                                     \
     X(uint32_t, maxComputeWorkgroupSubgroups)                                        \
     X(bool, usesSubgroupMatrix)                                                      \
     X(std::vector<SubgroupMatrixConfig>, subgroupMatrixConfig)                       \
@@ -340,13 +339,12 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.adapterSupportedLimits = UnsafeUnserializedValue(
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1));
     req.maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
+
     if (GetDevice()->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
-        req.minExplicitComputeSubgroupSize =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize();
-        req.maxExplicitComputeSubgroupSize =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize();
+        const auto& subgroupSizeInfo = ToBackend(GetDevice()->GetPhysicalDevice())->GetDeviceInfo();
+        req.minSubgroupSize = subgroupSizeInfo.subgroupSizeControlProperties.minSubgroupSize;
         req.maxComputeWorkgroupSubgroups =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxComputeWorkgroupSubgroups();
+            subgroupSizeInfo.subgroupSizeControlProperties.maxComputeWorkgroupSubgroups;
     }
 
     CacheResult<CompiledSpirv> compilation;
@@ -396,9 +394,24 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     _, ValidateComputeStageWorkgroupSize(
                            tintResult->workgroup_info, r.usesSubgroupMatrix, r.maxSubgroupSize,
                            r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
-                DAWN_TRY(ValidateExplicitComputeSubgroupSize(
-                    tintResult->workgroup_info, r.minExplicitComputeSubgroupSize,
-                    r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
+                DAWN_TRY(ValidateSubgroupSizeAttribute(tintResult->workgroup_info,
+                                                       r.minSubgroupSize, r.maxSubgroupSize));
+
+                if (tintResult->workgroup_info.subgroup_size.has_value()) {
+                    uint32_t explicitSubgroupSize =
+                        tintResult->workgroup_info.subgroup_size.value();
+                    uint64_t numInvocations = static_cast<uint64_t>(tintResult->workgroup_info.x) *
+                                              tintResult->workgroup_info.y *
+                                              tintResult->workgroup_info.z;
+                    uint64_t maxNumInvocations =
+                        r.maxComputeWorkgroupSubgroups * explicitSubgroupSize;
+                    DAWN_INTERNAL_ERROR_IF(
+                        numInvocations > maxNumInvocations,
+                        "The total number of workgroup invocations (%u) exceeds %u (%u "
+                        "(subgroup_size_attribute) * %u).",
+                        numInvocations, maxNumInvocations, explicitSubgroupSize,
+                        r.maxComputeWorkgroupSubgroups);
+                }
             }
 
             DAWN_TRY(ValidateSubgroupMatrixConfiguration(tintResult->subgroup_matrix_info,

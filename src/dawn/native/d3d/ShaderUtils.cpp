@@ -256,9 +256,10 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
                         ValidateComputeStageWorkgroupSize(
                             result->workgroup_info, /*usesSubgroupMatrix=*/false, r.maxSubgroupSize,
                             r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
-        DAWN_TRY(ValidateExplicitComputeSubgroupSize(
-            result->workgroup_info, r.minExplicitComputeSubgroupSize,
-            r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
+
+        DAWN_TRY(ValidateSubgroupSizeAttribute(result->workgroup_info, r.waveLaneCountMin,
+                                               r.waveLaneCountMax));
+
         compiledShader->workgroupSize = workgroupSize;
     }
 
