@@ -109,6 +109,10 @@ using VertexAttributeMask = ityp::bitset<VertexAttributeLocation, kMaxVertexAttr
 template <typename Value>
 using PerVertexAttribute = ityp::array<VertexAttributeLocation, Value, kMaxVertexAttributes>;
 
+// Indices of queries in a QuerySet.
+using QueryIndex = TypedInteger<struct QueryIndexT, uint32_t>;
+constexpr QueryIndex kQuerySetIndexUndefinedTyped = QueryIndex(~uint32_t(0));
+
 // Serials are 64bit integers that are incremented by one each time to produce unique values.
 // Some serials (like queue serials) are compared numerically to know which one is before
 // another, while some serials are only checked for equality. We call serials only checked
