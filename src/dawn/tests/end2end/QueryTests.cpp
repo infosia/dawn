@@ -399,6 +399,46 @@ TEST_P(OcclusionQueryTests, ResolveWithoutWritten) {
     EXPECT_BUFFER_U64_RANGE_EQ(&kZero, destination, 0, 1);
 }
 
+// Test that if an encoder records a query but is discarded (not submitted), the query remains
+// unavailable and is zero-initialized during resolution.
+TEST_P(OcclusionQueryTests, UnsubmittedEncoderMarksQueryAvailable) {
+    constexpr uint32_t kQueryCount = 16;
+
+    wgpu::QuerySet querySet = CreateOcclusionQuerySet(kQueryCount);
+    wgpu::Buffer destination = CreateResolveBuffer(kQueryCount * sizeof(uint64_t));
+    // Initialize destination buffer with a sentinel value.
+    std::vector<uint64_t> sentinelValues(kQueryCount, kSentinelValue);
+    queue.WriteBuffer(destination, 0, sentinelValues.data(), kQueryCount * sizeof(uint64_t));
+
+    // 1. Create a "Phantom" encoder, record occlusion queries, but discard it.
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::Texture renderTarget = CreateRenderTexture(kColorFormat);
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.occlusionQuerySet = querySet;
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        for (uint32_t i = 0; i < kQueryCount; ++i) {
+            pass.BeginOcclusionQuery(i);
+            pass.EndOcclusionQuery();
+        }
+        pass.End();
+        encoder.Finish();
+        // Encoder is discarded here without being submitted.
+    }
+
+    // 2. Create a "Resolving" encoder and resolve the query set.
+    // Even though queries were "recorded" in the phantom encoder, it was never submitted.
+    // Dawn should see them as unavailable and zero-initialize them during resolution.
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.ResolveQuerySet(querySet, 0, kQueryCount, destination, 0);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // 3. Verify that the destination buffer contains 0.
+    std::vector<uint64_t> expectedZeros(kQueryCount, 0);
+    EXPECT_BUFFER_U64_RANGE_EQ(expectedZeros.data(), destination, 0, kQueryCount);
+}
+
 // Test setting an occlusion query to non-zero, then rewriting it without drawing, resolves to 0.
 TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
@@ -1109,6 +1149,40 @@ TEST_P(TimestampQueryTests, ResolveWithoutWritten) {
     queue.Submit(1, &commands);
 
     std::vector<uint64_t> expectedZeros(kQueryCount);
+    EXPECT_BUFFER_U64_RANGE_EQ(expectedZeros.data(), destination, 0, kQueryCount);
+}
+
+// Test that if an encoder records a timestamp query but is discarded (not submitted), the query
+// remains unavailable and is zero-initialized during resolution.
+TEST_P(TimestampQueryTests, UnsubmittedEncoderMarksQueryAvailable) {
+    constexpr uint32_t kQueryCount = 16;
+
+    wgpu::QuerySet querySet = CreateQuerySetForTimestamp(kQueryCount);
+    wgpu::Buffer destination = CreateResolveBuffer(kQueryCount * sizeof(uint64_t));
+    // Initialize destination buffer with a sentinel value.
+    std::vector<uint64_t> sentinelValues(kQueryCount, kSentinelValue);
+    queue.WriteBuffer(destination, 0, sentinelValues.data(), kQueryCount * sizeof(uint64_t));
+
+    // 1. Create a "Phantom" encoder, record timestamp queries, but discard it.
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        for (uint32_t i = 0; i < kQueryCount; ++i) {
+            encoder.WriteTimestamp(querySet, i);
+        }
+        encoder.Finish();
+        // Encoder is discarded here and never submitted.
+    }
+
+    // 2. Create a "Resolving" encoder and resolve the query set.
+    // Even though queries were "recorded" in the phantom encoder, it was never submitted.
+    // Dawn should see them as unavailable and zero-initialize them during resolution.
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    encoder.ResolveQuerySet(querySet, 0, kQueryCount, destination, 0);
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // 3. Verify that the destination buffer contains 0.
+    std::vector<uint64_t> expectedZeros(kQueryCount, 0);
     EXPECT_BUFFER_U64_RANGE_EQ(expectedZeros.data(), destination, 0, kQueryCount);
 }
 

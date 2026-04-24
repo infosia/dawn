@@ -33,9 +33,7 @@
 #include <cstring>
 #include <utility>
 
-#include "dawn/common/Constants.h"
 #include "dawn/native/Adapter.h"
-#include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -145,17 +143,6 @@ void RenderPassEncoder::DestroyImpl(DestroyReason reason) {
 
 ObjectType RenderPassEncoder::GetType() const {
     return ObjectType::RenderPassEncoder;
-}
-
-void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, QueryIndex queryIndex) {
-    DAWN_ASSERT(querySet != nullptr);
-
-    // Track the query availability with true on render pass for rewrite validation and query
-    // reset on render pass on Vulkan
-    mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
-
-    // Track it again on command encoder for zero-initializing when resolving unused queries.
-    mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
 }
 
 void RenderPassEncoder::APIEnd() {
@@ -440,7 +427,11 @@ void RenderPassEncoder::APIEndOcclusionQuery() {
                 DAWN_INVALID_IF(!mOcclusionQueryActive, "No occlusion queries are active.");
             }
 
-            TrackQueryAvailability(mOcclusionQuerySet.Get(), mCurrentOcclusionQueryIndex);
+            // The render pass usage tracker contains data about written queries. This is
+            // necessary on Vulkan to be able to reset queries before the start of render passes
+            // (it can only be done outside of a render pass).
+            mUsageTracker.TrackQueryAvailability(mOcclusionQuerySet.Get(),
+                                                 mCurrentOcclusionQueryIndex);
 
             mOcclusionQueryActive = false;
 
@@ -470,7 +461,12 @@ void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t query
                                  querySet);
             }
 
-            TrackQueryAvailability(querySet, queryIndex);
+            mCommandEncoder->TrackUsedQuerySet(querySet);
+
+            // The render pass usage tracker contains data about written queries. This is
+            // necessary on Vulkan to be able to reset queries before the start of render passes
+            // (it can only be done outside of a render pass).
+            mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);
