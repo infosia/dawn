@@ -70,12 +70,6 @@ MaybeError PhysicalDeviceBase::Initialize() {
 
     NormalizeLimits(&mLimits);
 
-    // Choose a default value of `MaxComputeWorkgroupSubgroups` that makes it possible to have
-    // `SubgroupSize * MaxComputeWorkgroupSubgroups > kMaxComputeInvocationsPerWorkgroup` for unit
-    // test.
-    mMaxComputeWorkgroupSubgroups =
-        mLimits.v1.maxComputeInvocationsPerWorkgroup / kDefaultSubgroupMinSize / 2;
-
     return {};
 }
 
@@ -226,17 +220,5 @@ MaybeError PhysicalDeviceBase::ResetInternalDeviceForTestingImpl() {
 void PhysicalDeviceBase::PopulateBackendFormatCapabilities(
     wgpu::TextureFormat format,
     UnpackedPtr<DawnFormatCapabilities>& capabilities) const {}
-
-uint32_t PhysicalDeviceBase::GetMinExplicitComputeSubgroupSize() const {
-    return mMinExplicitComputeSubgroupSize;
-}
-
-uint32_t PhysicalDeviceBase::GetMaxExplicitComputeSubgroupSize() const {
-    return mMaxExplicitComputeSubgroupSize;
-}
-
-uint32_t PhysicalDeviceBase::GetMaxComputeWorkgroupSubgroups() const {
-    return mMaxComputeWorkgroupSubgroups;
-}
 
 }  // namespace dawn::native

@@ -131,15 +131,6 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     if (auto* d3dProperties = info.Get<AdapterPropertiesD3D>()) {
         d3dProperties->shaderModel = 0;
     }
-    if (auto* explicitComputeSubgroupSizeConfigs =
-            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
-            GetMinExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
-            GetMaxExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxComputeWorkgroupSubgroups =
-            GetMaxComputeWorkgroupSubgroups();
-    }
 }
 
 FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
@@ -536,12 +527,6 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         wgSize, ValidateComputeStageWorkgroupSize(tintResult->workgroup_info,
                                                   computeStage.metadata->usesSubgroupMatrix,
                                                   maxSubgroupSize, limits, adapterSupportedLimits));
-
-    DAWN_TRY(ValidateExplicitComputeSubgroupSize(
-        tintResult->workgroup_info,
-        GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize(),
-        GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize(),
-        GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxComputeWorkgroupSubgroups()));
 
     return wgSize;
 }

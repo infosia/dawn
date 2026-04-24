@@ -334,14 +334,13 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.adapterSupportedLimits = UnsafeUnserializedValue(
         LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1));
     req.hlsl.maxSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
+    req.hlsl.minSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMinSize();
 
     if (device->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
-        req.hlsl.minExplicitComputeSubgroupSize =
-            device->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize();
-        req.hlsl.maxExplicitComputeSubgroupSize =
-            device->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize();
-        req.hlsl.maxComputeWorkgroupSubgroups =
-            device->GetAdapter()->GetPhysicalDevice()->GetMaxComputeWorkgroupSubgroups();
+        const D3D12DeviceInfo& deviceInfo =
+            ToBackend(device->GetAdapter()->GetPhysicalDevice())->GetDeviceInfo();
+        req.hlsl.waveLaneCountMin = deviceInfo.waveLaneCountMin;
+        req.hlsl.waveLaneCountMax = deviceInfo.waveLaneCountMax;
     }
 
     CacheResult<d3d::CompiledShader> compiledShader;

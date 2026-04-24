@@ -256,9 +256,28 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
                         ValidateComputeStageWorkgroupSize(
                             result->workgroup_info, /*usesSubgroupMatrix=*/false, r.maxSubgroupSize,
                             r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
-        DAWN_TRY(ValidateExplicitComputeSubgroupSize(
-            result->workgroup_info, r.minExplicitComputeSubgroupSize,
-            r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
+
+        if (result->workgroup_info.subgroup_size.has_value()) {
+            const uint32_t explicitSubgroupSize = result->workgroup_info.subgroup_size.value();
+            if (explicitSubgroupSize < r.waveLaneCountMin ||
+                explicitSubgroupSize > r.waveLaneCountMax) {
+                if (r.waveLaneCountMin == r.minSubgroupSize &&
+                    r.waveLaneCountMax == r.maxSubgroupSize) {
+                    return DAWN_VALIDATION_ERROR(
+                        "The subgroup_size attribute (%u) is not in the allowed range "
+                        "([%u, %u]).",
+                        explicitSubgroupSize, r.waveLaneCountMin, r.waveLaneCountMax);
+                } else {
+                    return DAWN_VALIDATION_ERROR(
+                        "The subgroup_size attribute (%u) is not in the allowed range "
+                        "([%u, %u]). Note that on this device the allowed range is not "
+                        "[minSubgroupSize, maxSubgroupsize]([%u, %u]).",
+                        explicitSubgroupSize, r.waveLaneCountMin, r.waveLaneCountMax,
+                        r.minSubgroupSize, r.maxSubgroupSize);
+                }
+            }
+        }
+
         compiledShader->workgroupSize = workgroupSize;
     }
 

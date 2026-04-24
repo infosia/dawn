@@ -72,10 +72,10 @@ using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterS
     X(tint::hlsl::writer::Options, tintOptions)                                      \
     X(LimitsForCompilationRequest, limits)                                           \
     X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
+    X(uint32_t, minSubgroupSize)                                                     \
     X(uint32_t, maxSubgroupSize)                                                     \
-    X(uint32_t, minExplicitComputeSubgroupSize)                                      \
-    X(uint32_t, maxExplicitComputeSubgroupSize)                                      \
-    X(uint32_t, maxComputeWorkgroupSubgroups)                                        \
+    X(uint32_t, waveLaneCountMin)                                                    \
+    X(uint32_t, waveLaneCountMax)                                                    \
     X(bool, disableSymbolRenaming)                                                   \
     X(bool, dumpShaders)                                                             \
     X(bool, dumpShadersOnFailure)
