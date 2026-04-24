@@ -114,7 +114,7 @@ ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::Create(DisplayEGL* display,
     if (egl.HasExt(EGLExt::FenceSync)) {
         sync = egl.CreateSyncKHR(display->GetDisplay(), type, attribs);
     } else {
-        DAWN_ASSERT(egl.IsAtLeastVersion(1, 5));
+        DAWN_CHECK(egl.IsAtLeastVersion(1, 5));
         std::vector<EGLAttrib> convertedAttribs = ConvertEGLIntParameterListToEGLAttrib(attribs);
         sync = egl.CreateSync(display->GetDisplay(), type, convertedAttribs.data());
     }
@@ -135,7 +135,7 @@ ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::AcquireExternal(DisplayEGL* d
         EGLint syncType = 0;
         queryResult = egl.GetSyncAttribKHR(display->GetDisplay(), sync, EGL_SYNC_TYPE, &syncType);
     } else {
-        DAWN_ASSERT(egl.IsAtLeastVersion(1, 5));
+        DAWN_CHECK(egl.IsAtLeastVersion(1, 5));
         EGLAttrib syncType = 0;
         queryResult = egl.GetSyncAttrib(display->GetDisplay(), sync, EGL_SYNC_TYPE, &syncType);
     }
@@ -147,8 +147,8 @@ ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::AcquireExternal(DisplayEGL* d
 
 WrappedEGLSync::WrappedEGLSync(DisplayEGL* display, EGLSync sync, bool ownsSync)
     : mDisplay(display), mSync(sync), mOwnsSync(ownsSync) {
-    DAWN_ASSERT(mDisplay != nullptr);
-    DAWN_ASSERT(mSync != EGL_NO_SYNC);
+    DAWN_CHECK(mDisplay != nullptr);
+    DAWN_CHECK(mSync != EGL_NO_SYNC);
 }
 
 WrappedEGLSync::~WrappedEGLSync() {
@@ -157,7 +157,7 @@ WrappedEGLSync::~WrappedEGLSync() {
         if (egl.HasExt(EGLExt::FenceSync)) {
             egl.DestroySyncKHR(mDisplay->GetDisplay(), mSync);
         } else {
-            DAWN_ASSERT(egl.IsAtLeastVersion(1, 5));
+            DAWN_CHECK(egl.IsAtLeastVersion(1, 5));
             egl.DestroySync(mDisplay->GetDisplay(), mSync);
         }
     }
@@ -169,7 +169,7 @@ EGLSync WrappedEGLSync::Get() const {
 
 MaybeError WrappedEGLSync::Signal(const OpenGLFunctions&, EGLenum mode) {
     const EGLFunctions& egl = mDisplay->egl.get();
-    DAWN_ASSERT(egl.HasExt(EGLExt::ReusableSync));
+    DAWN_CHECK(egl.HasExt(EGLExt::ReusableSync));
 
     DAWN_TRY(CheckEGL(egl, egl.SignalSync(mDisplay->GetDisplay(), mSync, mode), "eglSignalSync"));
     return {};
@@ -184,7 +184,7 @@ ResultOrError<EGLenum> WrappedEGLSync::ClientWait(const OpenGLFunctions&,
     if (egl.HasExt(EGLExt::FenceSync)) {
         result = egl.ClientWaitSyncKHR(mDisplay->GetDisplay(), mSync, flags, uint64_t(timeout));
     } else {
-        DAWN_ASSERT(egl.IsAtLeastVersion(1, 5));
+        DAWN_CHECK(egl.IsAtLeastVersion(1, 5));
         result = egl.ClientWaitSync(mDisplay->GetDisplay(), mSync, flags, uint64_t(timeout));
     }
 
@@ -194,7 +194,7 @@ ResultOrError<EGLenum> WrappedEGLSync::ClientWait(const OpenGLFunctions&,
 
 MaybeError WrappedEGLSync::Wait(const OpenGLFunctions&) {
     const EGLFunctions& egl = mDisplay->egl.get();
-    DAWN_ASSERT(egl.HasExt(EGLExt::WaitSync));
+    DAWN_CHECK(egl.HasExt(EGLExt::WaitSync));
 
     constexpr EGLint flags = 0;
     DAWN_TRY(CheckEGL(egl, egl.WaitSync(mDisplay->GetDisplay(), mSync, flags), "eglWaitSync"));
@@ -203,7 +203,7 @@ MaybeError WrappedEGLSync::Wait(const OpenGLFunctions&) {
 
 ResultOrError<EGLint> WrappedEGLSync::DupFD(const OpenGLFunctions&) {
     const EGLFunctions& egl = mDisplay->egl.get();
-    DAWN_ASSERT(egl.HasExt(EGLExt::NativeFenceSync));
+    DAWN_CHECK(egl.HasExt(EGLExt::NativeFenceSync));
 
     EGLint fd = egl.DupNativeFenceFD(mDisplay->GetDisplay(), mSync);
     DAWN_TRY(CheckEGL(egl, fd != EGL_NO_NATIVE_FENCE_FD_ANDROID, "eglDupNativeFenceFDANDROID"));
