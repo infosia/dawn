@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-04-22 08:44:49AM
+# Last rolled: 2026-04-24 09:17:47PM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -2547,16 +2547,19 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,operation,rendering,3d_texture_slices
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="r32float";sameTexture=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="rg32float";sameTexture=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="rgb10a2unorm";sameTexture=false [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="rgb10a2unorm";sameTexture=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="rgba8unorm-srgb";sameTexture=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_mip_level:format="rgba8unorm-srgb";sameTexture=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:multiple_color_attachments,same_slice_with_diff_mip_levels:format="rgba8unorm-srgb";depthSlice=1 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="bgra8unorm";mipLevel=2;depthSlice=0 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="bgra8unorm";mipLevel=2;depthSlice=1 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="r32float";mipLevel=1;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="r32float";mipLevel=2;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rg32float";mipLevel=1;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rg32float";mipLevel=2;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgb10a2unorm";mipLevel=1;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgb10a2unorm";mipLevel=2;depthSlice=0 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgb10a2unorm";mipLevel=2;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba32float";mipLevel=2;depthSlice=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=0;depthSlice=0 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,rendering,3d_texture_slices:one_color_attachment,mip_levels:format="rgba8unorm-srgb";mipLevel=1;depthSlice=1 [ Failure ]
