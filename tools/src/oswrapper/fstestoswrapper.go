@@ -57,7 +57,7 @@ var (
 // Caveats/known differences from real os.* functions:
 //   - Paths in error messages will never have a leading / even if it was in
 //     the provided path. For example, ReadFile("/root") when /root does not
-//     exist will have the error message "open root: file does not exist". This
+//     exist will have the error message "lstat root: file does not exist". This
 //     is a side-effect of fs.FS requiring that Open() reject names that do not
 //     satisfy fs.ValidPath(), which requires that there is no leading /.
 //     TODO(crbug.com/436025865): Update the implementation to correctly add

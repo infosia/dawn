@@ -38,13 +38,14 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/utils"
 	"go.chromium.org/luci/auth"
 	bbpb "go.chromium.org/luci/buildbucket/proto"
+	bbgrpcpb "go.chromium.org/luci/buildbucket/proto/grpcpb"
 	"go.chromium.org/luci/grpc/prpc"
 	"go.chromium.org/luci/hardcoded/chromeinfra"
 )
 
 // Buildbucket is the client to communicate with Buildbucket.
 type Buildbucket struct {
-	client bbpb.BuildsClient
+	client bbgrpcpb.BuildsClient
 }
 
 // Builder describes a buildbucket builder
@@ -166,15 +167,12 @@ func New(ctx context.Context, credentials auth.Options) (*Buildbucket, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, err := bbpb.NewBuildsClient(
+	client := bbgrpcpb.NewBuildsClient(
 		&prpc.Client{
 			C:       http,
 			Host:    chromeinfra.BuildbucketHost,
 			Options: prpc.DefaultOptions(),
-		}), nil
-	if err != nil {
-		return nil, err
-	}
+		})
 
 	return &Buildbucket{client}, nil
 }
