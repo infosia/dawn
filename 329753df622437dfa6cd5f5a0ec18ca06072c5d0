@@ -74,6 +74,30 @@
       },
       "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c90c2a0_ed9b5354",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-24T06:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef16b2f0_78b16754",
+      "range": {
+        "startLine": 474,
+        "startChar": 1,
+        "endLine": 474,
+        "endChar": 19
+      },
+      "revId": "329753df622437dfa6cd5f5a0ec18ca06072c5d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
