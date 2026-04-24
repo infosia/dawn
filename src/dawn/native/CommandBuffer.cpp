@@ -27,8 +27,6 @@
 
 #include "dawn/native/CommandBuffer.h"
 
-#include <utility>
-
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -36,6 +34,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/ObjectType_autogen.h"
+#include "dawn/native/QuerySet.h"
 #include "dawn/native/Texture.h"
 
 namespace dawn::native {
@@ -381,6 +380,23 @@ std::array<uint32_t, 4> ConvertToUnsignedIntegerColor(dawn::native::Color color)
         static_cast<uint32_t>(color.r), static_cast<uint32_t>(color.g),
         static_cast<uint32_t>(color.b), static_cast<uint32_t>(color.a)};
     return outputValue;
+}
+
+void UpdateQueryAvailability(const WriteTimestampCmd* cmd) {
+    cmd->querySet->MarkQueryAvailable(cmd->queryIndex);
+}
+
+void UpdateQueryAvailability(const EndOcclusionQueryCmd* cmd) {
+    cmd->querySet->MarkQueryAvailable(cmd->queryIndex);
+}
+
+void UpdateQueryAvailability(const TimestampWrites& writes) {
+    if (writes.beginningOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
+        writes.querySet->MarkQueryAvailable(writes.beginningOfPassWriteIndex);
+    }
+    if (writes.endOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
+        writes.querySet->MarkQueryAvailable(writes.endOfPassWriteIndex);
+    }
 }
 
 }  // namespace dawn::native
