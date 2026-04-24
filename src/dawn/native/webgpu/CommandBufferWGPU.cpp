@@ -176,8 +176,9 @@ void EncodeComputePass(const DawnProcTable& wgpu,
 
             case Command::WriteTimestamp: {
                 auto cmd = commands.NextCommand<WriteTimestampCmd>();
-                wgpu.computePassEncoderWriteTimestamp(
-                    passEncoder, ToBackend(cmd->querySet)->GetInnerHandle(), cmd->queryIndex);
+                wgpu.computePassEncoderWriteTimestamp(passEncoder,
+                                                      ToBackend(cmd->querySet)->GetInnerHandle(),
+                                                      uint32_t{cmd->queryIndex});
                 break;
             }
 
@@ -303,7 +304,7 @@ void EncodeRenderPass(const Device* device,
 
             case Command::BeginOcclusionQuery: {
                 auto cmd = commands.NextCommand<BeginOcclusionQueryCmd>();
-                wgpu.renderPassEncoderBeginOcclusionQuery(passEncoder, cmd->queryIndex);
+                wgpu.renderPassEncoderBeginOcclusionQuery(passEncoder, uint32_t{cmd->queryIndex});
                 break;
             }
 
@@ -315,8 +316,9 @@ void EncodeRenderPass(const Device* device,
 
             case Command::WriteTimestamp: {
                 auto cmd = commands.NextCommand<WriteTimestampCmd>();
-                wgpu.renderPassEncoderWriteTimestamp(
-                    passEncoder, ToBackend(cmd->querySet)->GetInnerHandle(), cmd->queryIndex);
+                wgpu.renderPassEncoderWriteTimestamp(passEncoder,
+                                                     ToBackend(cmd->querySet)->GetInnerHandle(),
+                                                     uint32_t{cmd->queryIndex});
                 break;
             }
 
@@ -516,7 +518,7 @@ void CaptureTimestampWriteCommand(CaptureContext& captureContext, CommandIterato
     schema::CommandBufferCommandWriteTimestampCmd data{{
         .data = {{
             .querySetId = captureContext.GetId(cmd.querySet),
-            .queryIndex = cmd.queryIndex,
+            .queryIndex = uint32_t{cmd.queryIndex},
         }},
     }};
     Serialize(captureContext, data);
@@ -611,7 +613,7 @@ MaybeError CaptureRenderPass(CaptureContext& captureContext, CommandIterator& co
                 const auto& cmd = *commands.NextCommand<BeginOcclusionQueryCmd>();
                 schema::CommandBufferCommandBeginOcclusionQueryCmd data{{
                     .data = {{
-                        .queryIndex = cmd.queryIndex,
+                        .queryIndex = uint32_t{cmd.queryIndex},
                     }},
                 }};
                 Serialize(captureContext, data);
@@ -974,8 +976,8 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
                 schema::CommandBufferCommandResolveQuerySetCmd data{{
                     .data = {{
                         .querySetId = captureContext.GetId(cmd.querySet.Get()),
-                        .firstQuery = cmd.firstQuery,
-                        .queryCount = cmd.queryCount,
+                        .firstQuery = uint32_t{cmd.firstQuery},
+                        .queryCount = uint32_t{cmd.queryCount},
                         .destinationId = captureContext.GetId(cmd.destination.Get()),
                         .destinationOffset = cmd.destinationOffset,
                     }},
@@ -1092,15 +1094,16 @@ ResultOrError<WGPUCommandBuffer> CommandBuffer::Encode() {
             case Command::ResolveQuerySet: {
                 auto cmd = mCommands.NextCommand<ResolveQuerySetCmd>();
                 wgpu.commandEncoderResolveQuerySet(
-                    innerEncoder, ToBackend(cmd->querySet)->GetInnerHandle(), cmd->firstQuery,
-                    cmd->queryCount, ToBackend(cmd->destination)->GetInnerHandle(),
-                    cmd->destinationOffset);
+                    innerEncoder, ToBackend(cmd->querySet)->GetInnerHandle(),
+                    uint32_t{cmd->firstQuery}, uint32_t{cmd->queryCount},
+                    ToBackend(cmd->destination)->GetInnerHandle(), cmd->destinationOffset);
                 break;
             }
             case Command::WriteTimestamp: {
                 auto cmd = mCommands.NextCommand<WriteTimestampCmd>();
-                wgpu.commandEncoderWriteTimestamp(
-                    innerEncoder, ToBackend(cmd->querySet)->GetInnerHandle(), cmd->queryIndex);
+                wgpu.commandEncoderWriteTimestamp(innerEncoder,
+                                                  ToBackend(cmd->querySet)->GetInnerHandle(),
+                                                  uint32_t{cmd->queryIndex});
                 break;
             }
             case Command::InsertDebugMarker: {

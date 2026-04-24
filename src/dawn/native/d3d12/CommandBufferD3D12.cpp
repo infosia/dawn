@@ -120,50 +120,44 @@ bool CanUseCopyResource(CopyBufferToBufferCmd* copy) {
 
 void RecordWriteTimestampCmd(ID3D12GraphicsCommandList* commandList,
                              QuerySetBase* querySet,
-                             uint32_t queryIndex) {
+                             QueryIndex queryIndex) {
     DAWN_ASSERT(D3D12QueryType(ToBackend(querySet)->GetQueryType()) == D3D12_QUERY_TYPE_TIMESTAMP);
     commandList->EndQuery(ToBackend(querySet)->GetQueryHeap(), D3D12_QUERY_TYPE_TIMESTAMP,
-                          queryIndex);
+                          uint32_t{queryIndex});
 }
 
 void RecordResolveQuerySetCmd(ID3D12GraphicsCommandList* commandList,
                               Device* device,
                               QuerySet* querySet,
-                              uint32_t firstQuery,
-                              uint32_t queryCount,
+                              QueryIndex firstQuery,
+                              QueryIndex queryCount,
                               Buffer* destination,
                               uint64_t destinationOffset) {
-    const std::vector<bool>& availability = querySet->GetQueryAvailability();
+    QueryIndex current = firstQuery;
+    QueryIndex last = firstQuery + queryCount;
 
-    auto currentIt = availability.begin() + firstQuery;
-    auto lastIt = availability.begin() + firstQuery + queryCount;
-
-    // Traverse available queries in the range of [firstQuery, firstQuery +  queryCount - 1]
-    while (currentIt != lastIt) {
-        auto firstTrueIt = std::find(currentIt, lastIt, true);
-        // No available query found for resolving
-        if (firstTrueIt == lastIt) {
-            break;
+    // Traverse available queries in the range of [firstQuery, firstQuery +  queryCount)
+    while (current < last) {
+        if (!querySet->IsQueryAvailable(current)) {
+            current++;
+            continue;
         }
-        auto nextFalseIt = std::find(firstTrueIt, lastIt, false);
 
-        // The query index of firstTrueIt where the resolving starts
-        uint32_t resolveQueryIndex =
-            static_cast<uint32_t>(std::distance(availability.begin(), firstTrueIt));
-        // The queries count between firstTrueIt and nextFalseIt need to be resolved
-        uint32_t resolveQueryCount = static_cast<uint32_t>(std::distance(firstTrueIt, nextFalseIt));
+        QueryIndex firstAvailable = current;
+        while (current < last && querySet->IsQueryAvailable(current)) {
+            current++;
+        }
+        QueryIndex availableCount = current - firstAvailable;
 
-        // Calculate destinationOffset based on the current resolveQueryIndex and firstQuery
-        uint64_t resolveDestinationOffset =
-            destinationOffset + (resolveQueryIndex - firstQuery) * sizeof(uint64_t);
+        // Compute the offset for this range of available queries in the buffer.
+        uint64_t resolveBufferOffset =
+            destinationOffset + ToQueryStorageSize(firstAvailable - firstQuery);
 
         // Resolve the queries between firstTrueIt and nextFalseIt (which is at most lastIt)
-        commandList->ResolveQueryData(
-            querySet->GetQueryHeap(), D3D12QueryType(querySet->GetQueryType()), resolveQueryIndex,
-            resolveQueryCount, destination->GetD3D12Resource(), resolveDestinationOffset);
-
-        // Set current iterator to next false
-        currentIt = nextFalseIt;
+        commandList->ResolveQueryData(querySet->GetQueryHeap(),
+                                      D3D12QueryType(querySet->GetQueryType()),
+                                      uint32_t{firstAvailable}, uint32_t{availableCount},
+                                      destination->GetD3D12Resource(), resolveDestinationOffset);
     }
 }
 
@@ -1305,10 +1299,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
             case Command::ResolveQuerySet: {
                 ResolveQuerySetCmd* cmd = mCommands.NextCommand<ResolveQuerySetCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
-                uint32_t firstQuery = cmd->firstQuery;
-                uint32_t queryCount = cmd->queryCount;
                 Buffer* destination = ToBackend(cmd->destination.Get());
-                uint64_t destinationOffset = cmd->destinationOffset;
 
                 [[maybe_unused]] bool cleared;
                 DAWN_TRY_ASSIGN(
@@ -1319,14 +1310,15 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 // resolve the available part of sparse queries. In order to resolve the
                 // unavailables as 0s, we need to clear the resolving region of the destination
                 // buffer to 0s.
-                auto startIt = querySet->GetQueryAvailability().begin() + firstQuery;
-                auto endIt = querySet->GetQueryAvailability().begin() + firstQuery + queryCount;
-                bool hasUnavailableQueries = std::find(startIt, endIt, false) != endIt;
+                bool clearNeeded =
+                    !querySet->AreAllQueriesAvailable(cmd->firstQuery, cmd->queryCount);
+
                 // Workaround for resolving overlapping queries to a same buffer on Intel Gen12 GPUs
                 // due to D3D12 driver issue.
                 // See http://crbug.com/dawn/1546 for more information.
-                bool clearNeeded = device->IsToggleEnabled(Toggle::ClearBufferBeforeResolveQueries);
-                if (hasUnavailableQueries || clearNeeded) {
+                clearNeeded |= device->IsToggleEnabled(Toggle::ClearBufferBeforeResolveQueries);
+
+                if (clearNeeded) {
                     DAWN_TRY(device->ClearBufferToZero(commandContext, destination,
                                                        destinationOffset,
                                                        queryCount * sizeof(uint64_t)));
@@ -1335,8 +1327,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 destination->TrackUsageAndTransitionNow(commandContext,
                                                         wgpu::BufferUsage::QueryResolve);
 
-                RecordResolveQuerySetCmd(commandList, device, querySet, firstQuery, queryCount,
-                                         destination, destinationOffset);
+                RecordResolveQuerySetCmd(commandList, device, querySet, cmd->firstQuery,
+                                         cmd->queryCount, destination, cmd->destinationOffset);
 
                 break;
             }
@@ -1432,7 +1424,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
     ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
 
     // Write timestamp at the beginning of compute pass if it's set.
-    if (computePass->timestampWrites.beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+    if (computePass->timestampWrites.beginningOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
         RecordWriteTimestampCmd(commandList, computePass->timestampWrites.querySet.Get(),
                                 computePass->timestampWrites.beginningOfPassWriteIndex);
     }
@@ -1485,7 +1477,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
 
                 // Write timestamp at the end of compute pass if it's set.
                 if (computePass->timestampWrites.endOfPassWriteIndex !=
-                    wgpu::kQuerySetIndexUndefined) {
+                    kQuerySetIndexUndefinedTyped) {
                     RecordWriteTimestampCmd(commandList,
                                             computePass->timestampWrites.querySet.Get(),
                                             computePass->timestampWrites.endOfPassWriteIndex);
@@ -1773,7 +1765,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
     ID3D12GraphicsCommandList* commandList = commandContext->GetCommandList();
 
     // Write timestamp at the beginning of render pass if it's set.
-    if (renderPass->timestampWrites.beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined) {
+    if (renderPass->timestampWrites.beginningOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
         RecordWriteTimestampCmd(commandList, renderPass->timestampWrites.querySet.Get(),
                                 renderPass->timestampWrites.beginningOfPassWriteIndex);
     }
@@ -2025,7 +2017,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
 
                 // Write timestamp at the end of render pass if it's set.
                 if (renderPass->timestampWrites.endOfPassWriteIndex !=
-                    wgpu::kQuerySetIndexUndefined) {
+                    kQuerySetIndexUndefinedTyped) {
                     RecordWriteTimestampCmd(commandList, renderPass->timestampWrites.querySet.Get(),
                                             renderPass->timestampWrites.endOfPassWriteIndex);
                 }
@@ -2110,7 +2102,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 DAWN_ASSERT(D3D12QueryType(querySet->GetQueryType()) ==
                             D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->BeginQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
-                                        cmd->queryIndex);
+                                        uint32_t{cmd->queryIndex});
                 break;
             }
 
@@ -2120,7 +2112,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 DAWN_ASSERT(D3D12QueryType(querySet->GetQueryType()) ==
                             D3D12_QUERY_TYPE_BINARY_OCCLUSION);
                 commandList->EndQuery(querySet->GetQueryHeap(), D3D12_QUERY_TYPE_BINARY_OCCLUSION,
-                                      cmd->queryIndex);
+                                      uint32_t{cmd->queryIndex});
                 break;
             }
 
