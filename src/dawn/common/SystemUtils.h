@@ -54,6 +54,17 @@ void GetMacOSVersion(int32_t* majorVersion, int32_t* minorVersion = nullptr);
 bool IsMacOSVersionAtLeast(uint32_t majorVersion, uint32_t minorVersion = 0);
 #endif
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+struct WindowsVersion {
+    uint32_t buildNumber;
+    uint32_t updateBuildRevision;
+
+    auto operator<=>(const WindowsVersion&) const = default;
+};
+
+WindowsVersion GetCurrentWindowsVersion();
+#endif
+
 class ScopedEnvironmentVar {
   public:
     ScopedEnvironmentVar();
