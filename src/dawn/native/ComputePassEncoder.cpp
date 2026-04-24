@@ -592,7 +592,7 @@ void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t quer
                     Feature::ChromiumExperimentalTimestampQueryInsidePasses));
             }
 
-            mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);
+            mCommandEncoder->TrackUsedQuerySet(querySet);
 
             WriteTimestampCmd* cmd =
                 allocator->Allocate<WriteTimestampCmd>(Command::WriteTimestamp);
