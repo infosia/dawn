@@ -70,11 +70,13 @@ class vector : public std::vector<Value> {
         return *this;
     }
 
-    Value& operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](static_cast<I>(i)); }
+    Base::reference operator[](Index i) { return Base::operator[](static_cast<I>(i)); }
+    constexpr Base::const_reference operator[](Index i) const {
+        return Base::operator[](static_cast<I>(i));
+    }
 
-    Value& at(Index i) { return Base::at(static_cast<I>(i)); }
-    constexpr const Value& at(Index i) const { return Base::at(static_cast<I>(i)); }
+    Base::reference at(Index i) { return Base::at(static_cast<I>(i)); }
+    constexpr Base::const_reference at(Index i) const { return Base::at(static_cast<I>(i)); }
 
     constexpr Index size() const {
         DAWN_ASSERT(std::numeric_limits<I>::max() >= Base::size());
