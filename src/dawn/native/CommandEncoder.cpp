@@ -1560,7 +1560,10 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->renderArea = renderArea;
 
-            cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
+            if (descriptor->occlusionQuerySet) {
+                TrackUsedQuerySet(descriptor->occlusionQuerySet);
+                cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
+            }
 
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
