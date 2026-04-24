@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37bac94e_7e9842ff",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T08:25:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be merged in Xe 3 LPG? It sounds like the same architecture just small GPU, or are there architectural differences between them?",
+      "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
