@@ -25,6 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef UNSAFE_BUFFERS_BUILD
+// TODO(crbug.com/40285824): Remove this and convert code to safer constructs.
+#pragma allow_unsafe_buffers
+#endif
+
 #include "dawn/common/SystemUtils.h"
 
 #include "dawn/common/Assert.h"
@@ -220,6 +225,56 @@ std::optional<std::string> GetModuleDirectory() {
     }
     return modPath->substr(0, lastPathSepLoc + 1);
 }
+
+#if DAWN_PLATFORM_IS(WINDOWS)
+// Referenced from base/win/windows_version.cc in Chromium
+WindowsVersion GetCurrentWindowsVersion() {
+    // Referenced from base/win/registry.cc in Chromium
+    auto ReadFromSZRegistryKey = [](HKEY registerKey, const char* registerKeyName) -> uint32_t {
+        DWORD valueType;
+        DWORD returnSize;
+        if (RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType, nullptr,
+                             &returnSize) != ERROR_SUCCESS) {
+            return 0;
+        }
+        std::vector<char> returnStringValue(returnSize);
+        auto hr = RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType,
+                                   reinterpret_cast<LPBYTE>(returnStringValue.data()), &returnSize);
+        if (hr != ERROR_SUCCESS || valueType != REG_SZ) {
+            return 0;
+        }
+        constexpr int32_t kRadix = 10;
+        return static_cast<uint32_t>(strtol(returnStringValue.data(), nullptr, kRadix));
+    };
+
+    // Referenced from base/win/registry.cc in Chromium
+    auto ReadFromDWORDRegistryKey = [](HKEY registerKey, const char* registerKeyName) -> uint32_t {
+        DWORD valueType;
+        DWORD value = 0;
+        DWORD valueSize = sizeof(value);
+        if (RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType,
+                             reinterpret_cast<LPBYTE>(&value), &valueSize) != ERROR_SUCCESS ||
+            valueType != REG_DWORD) {
+            return 0;
+        }
+        return value;
+    };
+
+    constexpr wchar_t kRegKeyWindowsNTCurrentVersion[] =
+        L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, kRegKeyWindowsNTCurrentVersion, 0, KEY_QUERY_VALUE,
+                      &hKey) != ERROR_SUCCESS) {
+        return {0, 0};
+    }
+
+    WindowsVersion version = {};
+    version.buildNumber = ReadFromSZRegistryKey(hKey, "CurrentBuildNumber");
+    version.updateBuildRevision = ReadFromDWORDRegistryKey(hKey, "UBR");
+    RegCloseKey(hKey);
+    return version;
+}
+#endif
 
 // ScopedEnvironmentVar
 
