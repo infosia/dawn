@@ -196,6 +196,40 @@ TEST_F(ITypVectorTest, BeginEndFrontBackData) {
     ASSERT_EQ(constVec.data(), &constVec[Key(0)]);
 }
 
+// Special case to make sure that operator[] works for ityp::vector<I, bool> as vector<bool> doesn't
+// return a bool& for these (so that vector<bool> may use a bitfield internally).
+TEST_F(ITypVectorTest, BoolVectorIndexing) {
+    {
+        ityp::vector<Key, bool> vec(Key(5));
+        const auto& const_vec = vec;
+
+        vec[Key(2)] = true;
+        vec[Key(1)] = true;
+        vec[Key(4)] = true;
+
+        ASSERT_EQ(const_vec[Key(0)], false);
+        ASSERT_EQ(const_vec[Key(1)], true);
+        ASSERT_EQ(const_vec[Key(2)], true);
+        ASSERT_EQ(const_vec[Key(3)], false);
+        ASSERT_EQ(const_vec[Key(4)], true);
+    }
+
+    {
+        ityp::vector<Key, bool> vec(Key(5));
+        const auto& const_vec = vec;
+
+        vec.at(Key(2)) = true;
+        vec.at(Key(1)) = true;
+        vec.at(Key(4)) = true;
+
+        ASSERT_EQ(const_vec.at(Key(0)), false);
+        ASSERT_EQ(const_vec.at(Key(1)), true);
+        ASSERT_EQ(const_vec.at(Key(2)), true);
+        ASSERT_EQ(const_vec.at(Key(3)), false);
+        ASSERT_EQ(const_vec.at(Key(4)), true);
+    }
+}
+
 // Name "*DeathTest" per https://google.github.io/googletest/advanced.html#death-test-naming
 using ITypVectorDeathTest = ITypVectorTest;
 
