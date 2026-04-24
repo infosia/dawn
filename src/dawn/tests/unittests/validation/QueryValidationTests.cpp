@@ -419,6 +419,19 @@ TEST_F(TimestampQueryValidationTest, TimestampWritesOnComputePass) {
         querySet.Destroy();
         ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
     }
+
+    // Fail to write timestamps to a destroyed query set, even if not used
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        EncodeComputePassWithTimestampWrites(
+            encoder,
+            {nullptr, querySet, wgpu::kQuerySetIndexUndefined, wgpu::kQuerySetIndexUndefined});
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        wgpu::Queue queue = device.GetQueue();
+        querySet.Destroy();
+        ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
+    }
 }
 
 // Test timestampWrites in render pass descriptor
@@ -515,6 +528,19 @@ TEST_F(TimestampQueryValidationTest, TimestampWritesOnRenderPass) {
     {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         EncodeRenderPassWithTimestampWrites(encoder, {nullptr, querySet, 0, 1});
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        wgpu::Queue queue = device.GetQueue();
+        querySet.Destroy();
+        ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
+    }
+
+    // Fail to write timestamps to a destroyed query set, even if not used
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        EncodeRenderPassWithTimestampWrites(
+            encoder,
+            {nullptr, querySet, wgpu::kQuerySetIndexUndefined, wgpu::kQuerySetIndexUndefined});
 
         wgpu::CommandBuffer commands = encoder.Finish();
         wgpu::Queue queue = device.GetQueue();
