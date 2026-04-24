@@ -1628,8 +1628,9 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             }
 
             case Command::EndOcclusionQuery: {
-                mCommands.NextCommand<EndOcclusionQueryCmd>();
+                EndOcclusionQueryCmd* cmd = mCommands.NextCommand<EndOcclusionQueryCmd>();
                 DAWN_GL_TRY(gl, EndQuery(GL_ANY_SAMPLES_PASSED));
+                UpdateQueryAvailability(cmd);
                 break;
             }
 
