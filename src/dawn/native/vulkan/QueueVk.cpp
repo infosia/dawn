@@ -184,16 +184,16 @@ MaybeError Queue::WaitForIdleForDestructionImpl() {
 }
 
 CommandRecordingContext* Queue::GetPendingRecordingContext(SubmitMode submitMode) {
-    DAWN_ASSERT(mRecordingContext.commandBuffer != VK_NULL_HANDLE);
+    DAWN_OPT_ASSUME(mRecordingContext.commandBuffer != VK_NULL_HANDLE);
     mRecordingContext.needsSubmit |= (submitMode == SubmitMode::Normal);
     mRecordingContext.used = true;
     return &mRecordingContext;
 }
 
 MaybeError Queue::PrepareRecordingContext() {
-    DAWN_ASSERT(!mRecordingContext.needsSubmit);
-    DAWN_ASSERT(mRecordingContext.commandBuffer == VK_NULL_HANDLE);
-    DAWN_ASSERT(mRecordingContext.commandPool == VK_NULL_HANDLE);
+    DAWN_OPT_ASSUME(!mRecordingContext.needsSubmit);
+    DAWN_OPT_ASSUME(mRecordingContext.commandBuffer == VK_NULL_HANDLE);
+    DAWN_OPT_ASSUME(mRecordingContext.commandPool == VK_NULL_HANDLE);
 
     CommandPoolAndBuffer commands;
     DAWN_TRY_ASSIGN(commands, BeginVkCommandBuffer());
@@ -210,7 +210,7 @@ MaybeError Queue::PrepareRecordingContext() {
 // This should not be necessary in most cases, and is provided only to work around driver issues
 // on some hardware.
 MaybeError Queue::SplitRecordingContext(CommandRecordingContext* recordingContext) {
-    DAWN_ASSERT(recordingContext->used);
+    DAWN_OPT_ASSUME(recordingContext->used);
     Device* device = ToBackend(GetDevice());
 
     DAWN_TRY(CheckVkSuccess(device->fn.EndCommandBuffer(recordingContext->commandBuffer),
@@ -392,7 +392,7 @@ ResultOrError<VkFence> Queue::GetUnusedFence() {
         mUnusedFences.Use([&](auto unusedFences) -> std::optional<ResultOrError<VkFence>> {
             if (!unusedFences->empty()) {
                 VkFence fence = unusedFences->back();
-                DAWN_ASSERT(fence != VK_NULL_HANDLE);
+                DAWN_OPT_ASSUME(fence != VK_NULL_HANDLE);
                 DAWN_TRY(
                     CheckVkSuccess(device->fn.ResetFences(vkDevice, 1, &*fence), "vkResetFences"));
 

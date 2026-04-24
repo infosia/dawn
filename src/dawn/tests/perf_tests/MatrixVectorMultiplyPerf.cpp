@@ -187,7 +187,7 @@ void MatrixVectorMultiplyPerf::SetUpPerfTest() {
                           GetParam().mStoreType == StoreType::U8);
 
     // D3D12 device must be using DXC to support subgroups feature.
-    DAWN_ASSERT(!mUsingSubgroups || !IsD3D12() || IsDXC());
+    DAWN_OPT_ASSUME(!mUsingSubgroups || !IsD3D12() || IsDXC());
 
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.usage = wgpu::BufferUsage::Storage;
@@ -422,7 +422,7 @@ fn main(
         case (KernelImplementation::WorkgroupShared): {
             const uint32_t workgroupSize = 64;
             // workgroupSize should be power of 2.
-            DAWN_ASSERT((workgroupSize & (workgroupSize - 1)) == 0);
+            DAWN_OPT_ASSUME((workgroupSize & (workgroupSize - 1)) == 0);
 
             std::stringstream workgroupSumStream;
             for (uint32_t i = workgroupSize / 2; i >= 1; i /= 2) {

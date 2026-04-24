@@ -80,8 +80,8 @@ class TextureShaderBuiltinTests : public DawnTest {
                                 uint32_t mipLevelCount,
                                 uint32_t sampleCount,
                                 wgpu::TextureViewDimension textureBindingViewDimension) {
-        DAWN_ASSERT(arrayLayerCount > 0 && mipLevelCount > 0);
-        DAWN_ASSERT(sampleCount == 1 || sampleCount == 4);
+        DAWN_OPT_ASSUME(arrayLayerCount > 0 && mipLevelCount > 0);
+        DAWN_OPT_ASSUME(sampleCount == 1 || sampleCount == 4);
 
         const uint32_t textureWidthLevel0 = 1 << mipLevelCount;
         const uint32_t textureHeightLevel0 = 1 << mipLevelCount;
@@ -212,7 +212,7 @@ TEST_P(TextureShaderBuiltinTests, BaseMipLevelTextureView) {
 
     constexpr uint32_t kBaseMipLevel = 1;
     constexpr uint32_t kViewMipLevelCount = 2;
-    DAWN_ASSERT(kBaseMipLevel + kViewMipLevelCount <= kMipLevels);
+    DAWN_OPT_ASSUME(kBaseMipLevel + kViewMipLevelCount <= kMipLevels);
     wgpu::TextureView texView = CreateTextureView(tex, "texView", wgpu::TextureViewDimension::e2D,
                                                   kBaseMipLevel, kViewMipLevelCount);
 
@@ -276,7 +276,7 @@ TEST_P(TextureShaderBuiltinTests, BaseMipLevelTextureViewCube) {
 
     constexpr uint32_t kBaseMipLevel = 1;
     constexpr uint32_t kViewMipLevelCount = 2;
-    DAWN_ASSERT(kBaseMipLevel + kViewMipLevelCount <= kMipLevels);
+    DAWN_OPT_ASSUME(kBaseMipLevel + kViewMipLevelCount <= kMipLevels);
     wgpu::TextureView texViewCube =
         CreateTextureView(texCube, "texViewCube", wgpu::TextureViewDimension::Cube, kBaseMipLevel,
                           kViewMipLevelCount);
@@ -463,8 +463,8 @@ TEST_P(TextureShaderBuiltinTests, OnePipelineMultipleDispatches) {
         kSampleCount_1,
         kMipLevelsView_2,
     };
-    DAWN_ASSERT(sizeof(expected_1) == sizeof(expected_2));
-    DAWN_ASSERT(sizeof(expected_1) == sizeof(expected_3));
+    DAWN_OPT_ASSUME(sizeof(expected_1) == sizeof(expected_2));
+    DAWN_OPT_ASSUME(sizeof(expected_1) == sizeof(expected_3));
 
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.size = sizeof(expected_1);
@@ -610,7 +610,7 @@ TEST_P(TextureShaderBuiltinTests, OneShaderModuleMultipleEntryPoints) {
         kSampleCount_2,
         99,
     };
-    DAWN_ASSERT(sizeof(expected_1) == sizeof(expected_2));
+    DAWN_OPT_ASSUME(sizeof(expected_1) == sizeof(expected_2));
 
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.size = sizeof(expected_1);
@@ -731,7 +731,7 @@ TEST_P(TextureShaderBuiltinTests, MultiplePipelinesOneBindGroup) {
         // Output from second dispatch with different pipeline
         kMipLevels_2,
     };
-    DAWN_ASSERT(sizeof(expected_1) == sizeof(expected_2));
+    DAWN_OPT_ASSUME(sizeof(expected_1) == sizeof(expected_2));
 
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.size = sizeof(expected_1);

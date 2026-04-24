@@ -67,7 +67,7 @@ class EncodingContext {
         if (ConsumedError(ValidateCanEncodeOn(encoder))) {
             return false;
         }
-        DAWN_ASSERT(!mWereCommandsAcquired);
+        DAWN_OPT_ASSUME(!mWereCommandsAcquired);
         return !ConsumedError(encodeFunction(&mPendingCommands));
     }
 
@@ -79,7 +79,7 @@ class EncodingContext {
         if (ConsumedError(ValidateCanEncodeOn(encoder), formatStr, args...)) {
             return false;
         }
-        DAWN_ASSERT(!mWereCommandsAcquired);
+        DAWN_OPT_ASSUME(!mWereCommandsAcquired);
         return !ConsumedError(encodeFunction(&mPendingCommands), formatStr, args...);
     }
 

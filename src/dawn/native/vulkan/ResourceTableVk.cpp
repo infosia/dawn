@@ -218,7 +218,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
 
             // The metadata buffer will be copied to.
             Buffer* metadataBuffer = ToBackend(GetMetadataBuffer());
-            DAWN_ASSERT(metadataBuffer->IsInitialized());
+            DAWN_OPT_ASSUME(metadataBuffer->IsInitialized());
             auto scopedUseMetadataBuffer = metadataBuffer->UseInternal();
             metadataBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
 

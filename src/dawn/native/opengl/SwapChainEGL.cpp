@@ -169,7 +169,7 @@ void SwapChainEGL::DetachFromSurfaceImpl() {
 }
 
 MaybeError SwapChainEGL::CreateEGLSurface(const DisplayEGL* display) {
-    DAWN_ASSERT(mEGLSurface == EGL_NO_SURFACE);
+    DAWN_OPT_ASSUME(mEGLSurface == EGL_NO_SURFACE);
 
     EGLConfig config = display->ChooseConfig(EGL_WINDOW_BIT, GetFormat());
     if (config == kNoConfig) {
@@ -189,7 +189,7 @@ MaybeError SwapChainEGL::CreateEGLSurface(const DisplayEGL* display) {
     };
 
     if (GetFormat() == wgpu::TextureFormat::RGBA8UnormSrgb) {
-        DAWN_ASSERT(egl.HasExt(EGLExt::GLColorspace));
+        DAWN_OPT_ASSUME(egl.HasExt(EGLExt::GLColorspace));
         AddAttrib(EGL_GL_COLORSPACE_KHR, EGL_GL_COLORSPACE_SRGB_KHR);
     }
 

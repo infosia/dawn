@@ -173,8 +173,8 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
 
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
-        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(view),
-                                        GetOrder()[mDefaultResources.size()]));
+        DAWN_OPT_ASSUME(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(view),
+                                            GetOrder()[mDefaultResources.size()]));
         mDefaultResources.push_back(view);
 
         return {};
@@ -183,8 +183,8 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
     auto AddDefaultSampler = [&](Ref<SamplerBase> sampler) {
         // Check that the resource we will have will match the order of default textures that we
         // will give to the shader compilation.
-        DAWN_ASSERT(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(sampler),
-                                        GetOrder()[mDefaultResources.size()]));
+        DAWN_OPT_ASSUME(AreTypeIDCompatible(ResourceTableBase::ComputeTypeId(sampler),
+                                            GetOrder()[mDefaultResources.size()]));
         mDefaultResources.push_back(sampler);
     };
 

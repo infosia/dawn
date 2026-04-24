@@ -34,7 +34,7 @@ namespace dawn::wire::client {
 
 ObjectBase::ObjectBase(const ObjectBaseParams& params)
     : mClient(params.client), mHandle(params.handle) {
-    DAWN_ASSERT(IsRegistered());
+    DAWN_OPT_ASSUME(IsRegistered());
 }
 
 bool ObjectBase::IsRegistered() const {
@@ -42,7 +42,7 @@ bool ObjectBase::IsRegistered() const {
 }
 
 const ObjectHandle& ObjectBase::GetWireHandle(const ClientBase* forClient) const {
-    DAWN_ASSERT(IsRegistered());
+    DAWN_OPT_ASSUME(IsRegistered());
     // TODO(crbug.com/440387003): This causes a crash if the client manages to
     // reuse an object from a different client. This should really be handled
     // with a proper validation error, but that is much more difficult, and this
@@ -52,7 +52,7 @@ const ObjectHandle& ObjectBase::GetWireHandle(const ClientBase* forClient) const
 }
 
 Client* ObjectBase::GetClient() const {
-    DAWN_ASSERT(IsRegistered());
+    DAWN_OPT_ASSUME(IsRegistered());
     return mClient;
 }
 

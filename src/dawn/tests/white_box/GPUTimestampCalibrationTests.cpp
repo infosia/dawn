@@ -245,8 +245,8 @@ class GPUTimestampCalibrationTests : public DawnTestWithParams<GPUTimestampCalib
             case EncoderType::NonPass: {
                 // The "chromium-experimental-timestamp-query-inside-passes" feature is not
                 // supported on command encoder
-                DAWN_ASSERT(GetParam().mFeatureName !=
-                            wgpu::FeatureName::ChromiumExperimentalTimestampQueryInsidePasses);
+                DAWN_OPT_ASSUME(GetParam().mFeatureName !=
+                                wgpu::FeatureName::ChromiumExperimentalTimestampQueryInsidePasses);
                 encoder.WriteTimestamp(querySet, 0);
                 encoder.WriteTimestamp(querySet, 1);
                 break;

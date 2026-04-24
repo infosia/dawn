@@ -91,7 +91,7 @@ ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial wai
     bool ready = false;
     std::array<std::pair<const dawn::native::SystemEventReceiver&, bool*>, 1> events{
         {{*receiver, &ready}}};
-    DAWN_ASSERT(waitSerial <= GetLastSubmittedCommandSerial());
+    DAWN_OPT_ASSUME(waitSerial <= GetLastSubmittedCommandSerial());
     bool didComplete = WaitAnySystemEvent(events.begin(), events.end(), timeout);
     // Return the SystemEventReceiver to the pool of receivers so it can be re-waited in the
     // future.

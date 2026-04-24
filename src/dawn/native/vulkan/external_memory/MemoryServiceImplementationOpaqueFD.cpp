@@ -175,7 +175,7 @@ class ServiceImplementationOpaqueFD : public ServiceImplementation {
         createInfoChain.Add(&externalMemoryImageCreateInfo,
                             VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO);
 
-        DAWN_ASSERT(IsSampleCountSupported(mDevice, createInfo));
+        DAWN_OPT_ASSUME(IsSampleCountSupported(mDevice, createInfo));
 
         VkImage image;
         DAWN_TRY(CheckVkSuccess(

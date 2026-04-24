@@ -40,9 +40,9 @@ BuddyMemoryAllocator::BuddyMemoryAllocator(uint64_t maxSystemSize,
     : mMemoryBlockSize(memoryBlockSize),
       mBuddyBlockAllocator(maxSystemSize),
       mHeapAllocator(heapAllocator) {
-    DAWN_ASSERT(memoryBlockSize <= maxSystemSize);
-    DAWN_ASSERT(IsPowerOfTwo(mMemoryBlockSize));
-    DAWN_ASSERT(maxSystemSize % mMemoryBlockSize == 0);
+    DAWN_OPT_ASSUME(memoryBlockSize <= maxSystemSize);
+    DAWN_OPT_ASSUME(IsPowerOfTwo(mMemoryBlockSize));
+    DAWN_OPT_ASSUME(maxSystemSize % mMemoryBlockSize == 0);
 
     mTrackedSubAllocations.resize(maxSystemSize / mMemoryBlockSize);
 }
@@ -50,7 +50,7 @@ BuddyMemoryAllocator::BuddyMemoryAllocator(uint64_t maxSystemSize,
 BuddyMemoryAllocator::~BuddyMemoryAllocator() = default;
 
 uint64_t BuddyMemoryAllocator::GetMemoryIndex(uint64_t offset) const {
-    DAWN_ASSERT(offset != BuddyAllocator::kInvalidOffset);
+    DAWN_OPT_ASSUME(offset != BuddyAllocator::kInvalidOffset);
     return offset / mMemoryBlockSize;
 }
 
@@ -109,11 +109,11 @@ ResultOrError<ResourceMemoryAllocation> BuddyMemoryAllocator::Allocate(uint64_t 
 void BuddyMemoryAllocator::Deallocate(const ResourceMemoryAllocation& allocation) {
     const AllocationInfo info = allocation.GetInfo();
 
-    DAWN_ASSERT(info.mMethod == AllocationMethod::kSubAllocated);
+    DAWN_OPT_ASSUME(info.mMethod == AllocationMethod::kSubAllocated);
 
     const uint64_t memoryIndex = GetMemoryIndex(info.mBlockOffset);
 
-    DAWN_ASSERT(mTrackedSubAllocations[memoryIndex].refcount > 0);
+    DAWN_OPT_ASSUME(mTrackedSubAllocations[memoryIndex].refcount > 0);
     mTrackedSubAllocations[memoryIndex].refcount--;
 
     if (mTrackedSubAllocations[memoryIndex].refcount == 0) {

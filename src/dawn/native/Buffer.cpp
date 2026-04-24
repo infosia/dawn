@@ -1044,9 +1044,9 @@ void BufferBase::MarkUsedInPendingCommands() {
 }
 
 void BufferBase::MarkUsedInPendingCommands(ExecutionSerial pendingSerial) {
-    DAWN_ASSERT(!GetDevice()->IsValidationEnabled() ||
-                mState.load(std::memory_order::relaxed) == BufferState::InUse);
-    DAWN_ASSERT(pendingSerial >= mLastUsageSerial);
+    DAWN_OPT_ASSUME(!GetDevice()->IsValidationEnabled() ||
+                    mState.load(std::memory_order::relaxed) == BufferState::InUse);
+    DAWN_OPT_ASSUME(pendingSerial >= mLastUsageSerial);
     mLastUsageSerial = pendingSerial;
 }
 
@@ -1139,7 +1139,7 @@ BufferBase::ScopedUseBuffer::ScopedUseBuffer() = default;
 
 BufferBase::ScopedUseBuffer::ScopedUseBuffer(BufferBase* buffer) : mBuffer(buffer) {
     DAWN_CHECK(mBuffer);
-    DAWN_ASSERT(mBuffer->mState.load(std::memory_order::relaxed) == BufferState::InUse);
+    DAWN_OPT_ASSUME(mBuffer->mState.load(std::memory_order::relaxed) == BufferState::InUse);
 }
 
 BufferBase::ScopedUseBuffer::~ScopedUseBuffer() {

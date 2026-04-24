@@ -147,7 +147,7 @@ class ReadOnlyDepthStencilAttachmentTests
                     });
             }
         } else {
-            DAWN_ASSERT(spec.sampledAspect == wgpu::TextureAspect::StencilOnly);
+            DAWN_OPT_ASSUME(spec.sampledAspect == wgpu::TextureAspect::StencilOnly);
             // Sample from stencil attachment and draw that sampled texel into color buffer.
             pipelineDescriptor.cFragment.module = utils::CreateShaderModule(device, R"(
                     @group(0) @binding(0) var samp : sampler;

@@ -56,7 +56,7 @@ bool Service::CheckSupport(const VulkanDeviceInfo& deviceInfo,
 
 Service::Service(Device* device, VkExternalSemaphoreHandleTypeFlagBits handleType) {
 #if DAWN_PLATFORM_IS(FUCHSIA)  // Fuchsia
-    DAWN_ASSERT(handleType == VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_ZIRCON_EVENT_BIT_FUCHSIA);
+    DAWN_OPT_ASSUME(handleType == VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_ZIRCON_EVENT_BIT_FUCHSIA);
     mServiceImpl = CreateZirconHandleService(device);
 #elif DAWN_PLATFORM_IS(LINUX) || DAWN_PLATFORM_IS(CHROMEOS)  // Android, ChromeOS and Linux
     mServiceImpl = CreateFDService(device, handleType);
@@ -74,27 +74,27 @@ bool Service::Supported() {
 }
 
 void Service::CloseHandle(ExternalSemaphoreHandle handle) {
-    DAWN_ASSERT(mServiceImpl);
+    DAWN_OPT_ASSUME(mServiceImpl);
     mServiceImpl->CloseHandle(handle);
 }
 
 ResultOrError<VkSemaphore> Service::ImportSemaphore(ExternalSemaphoreHandle handle) {
-    DAWN_ASSERT(mServiceImpl);
+    DAWN_OPT_ASSUME(mServiceImpl);
     return mServiceImpl->ImportSemaphore(handle);
 }
 
 ResultOrError<VkSemaphore> Service::CreateExportableSemaphore() {
-    DAWN_ASSERT(mServiceImpl);
+    DAWN_OPT_ASSUME(mServiceImpl);
     return mServiceImpl->CreateExportableSemaphore();
 }
 
 ResultOrError<ExternalSemaphoreHandle> Service::ExportSemaphore(VkSemaphore semaphore) {
-    DAWN_ASSERT(mServiceImpl);
+    DAWN_OPT_ASSUME(mServiceImpl);
     return mServiceImpl->ExportSemaphore(semaphore);
 }
 
 ExternalSemaphoreHandle Service::DuplicateHandle(ExternalSemaphoreHandle handle) {
-    DAWN_ASSERT(mServiceImpl);
+    DAWN_OPT_ASSUME(mServiceImpl);
     return mServiceImpl->DuplicateHandle(handle);
 }
 

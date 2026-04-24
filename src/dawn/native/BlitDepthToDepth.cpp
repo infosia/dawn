@@ -110,8 +110,8 @@ MaybeError BlitDepthToDepth(DeviceBase* device,
                             const TextureCopy& src,
                             const TextureCopy& dst,
                             const TexelExtent3D& copyExtent) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
-    // DAWN_ASSERT that the texture have depth and are not multisampled.
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
+    // DAWN_OPT_ASSUME that the texture have depth and are not multisampled.
     DAWN_CHECK(src.texture->GetFormat().HasDepth());
     DAWN_CHECK(dst.texture->GetFormat().HasDepth());
     DAWN_CHECK(src.texture->GetSampleCount() == 1u);

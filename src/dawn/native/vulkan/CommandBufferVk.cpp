@@ -264,7 +264,7 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
 
             // Set the resource table as the first set if it starts being used.
             if (mUsesResourceTable) {
-                DAWN_ASSERT(mResourceTable != nullptr);
+                DAWN_OPT_ASSUME(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
                 vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout, 0, 1, &*set, 0,
                                          nullptr);
@@ -1758,7 +1758,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 workCommandCount++;
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                DAWN_OPT_ASSUME(buffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
                     vk.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
@@ -1773,7 +1773,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 MultiDrawIndirectCmd* cmd = iter->NextCommand<MultiDrawIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
@@ -1798,7 +1798,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 MultiDrawIndexedIndirectCmd* cmd = iter->NextCommand<MultiDrawIndexedIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());

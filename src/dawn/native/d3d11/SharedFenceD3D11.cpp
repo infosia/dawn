@@ -52,7 +52,7 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(
     Device* device,
     StringView label,
     const SharedFenceDXGISharedHandleDescriptor* descriptor) {
-    DAWN_ASSERT(!device->IsToggleEnabled(Toggle::D3D11DisableFence));
+    DAWN_OPT_ASSUME(!device->IsToggleEnabled(Toggle::D3D11DisableFence));
 
     DAWN_INVALID_IF(descriptor->handle == nullptr, "shared HANDLE is missing.");
 
@@ -80,7 +80,7 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(Device* device,
     DAWN_TRY(CheckHRESULT(
         d3d11Fence->CreateSharedHandle(nullptr, GENERIC_ALL, nullptr, ownedHandle.GetMut()),
         "D3D11: creating fence shared handle"));
-    DAWN_ASSERT(ownedHandle.IsValid());
+    DAWN_OPT_ASSUME(ownedHandle.IsValid());
     Ref<SharedFence> fence = AcquireRef(new SharedFence(device, label, std::move(ownedHandle)));
     fence->mFence = std::move(d3d11Fence);
     return fence;

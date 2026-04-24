@@ -70,7 +70,7 @@ inline Dst checked_cast(const Src& value) {
 template <typename T>
     requires std::integral<T>
 bool RangesOverlap(T x0, T x1, T y0, T y1) {
-    DAWN_ASSERT(x0 <= x1 && y0 <= y1);
+    DAWN_OPT_ASSUME(x0 <= x1 && y0 <= y1);
     // Two ranges DON'T have overlap if and only if:
     // 1. [x0, x1] [y0, y1], or
     // 2. [y0, y1] [x0, x1]

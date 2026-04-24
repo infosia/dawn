@@ -151,7 +151,7 @@ WireResult Client::DoQueueWorkDoneCallback(ObjectHandle eventManager,
 WGPUFuture Queue::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& callbackInfo) {
     // TODO(crbug.com/dawn/2052): Once we always return a future, change this to log to the instance
     // (note, not raise a validation error to the device) and return the null future.
-    DAWN_ASSERT(callbackInfo.nextInChain == nullptr);
+    DAWN_OPT_ASSUME(callbackInfo.nextInChain == nullptr);
 
     Client* client = GetClient();
     auto [futureIDInternal, tracked] =

@@ -555,7 +555,7 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
         // The external texture is still added to the entries to be used in validation and to know
         // where the additional bindings are located.
         if (entry.Has<ExternalTextureBindingLayout>()) {
-            DAWN_ASSERT(entry->bindingArraySize <= 1);
+            DAWN_OPT_ASSUME(entry->bindingArraySize <= 1);
 
             BindingInfo plane0Entry = CreateSampledTextureBindingForExternalTexture(
                 nextOpenBindingNumberForNewEntry--, entry->visibility);
@@ -663,7 +663,7 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
     return result;
 }
 
-// This is a utility function to help DAWN_ASSERT that the BGL-binding comparator places buffers
+// This is a utility function to help DAWN_OPT_ASSUME that the BGL-binding comparator places buffers
 // first.
 bool CheckBufferBindingsFirst(ityp::span<BindingIndex, const BindingInfo> bindings) {
     BindingIndex lastBufferIndex{0};
@@ -694,7 +694,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
     mBindingInfo = std::move(unpackedBindings.entries);
     mBindingMap = std::move(unpackedBindings.apiBindingMap);
 
-    DAWN_ASSERT(CheckBufferBindingsFirst({mBindingInfo.data(), GetBindingCount()}));
+    DAWN_OPT_ASSUME(CheckBufferBindingsFirst({mBindingInfo.data(), GetBindingCount()}));
 
     // Compute various counts of expanded bindings and other metadata.
     std::array<BindingIndex, BindingTypeOrder_Count + 1> counts{};
@@ -1023,10 +1023,10 @@ size_t BindGroupLayoutInternalBase::GetBindingDataSize() const {
     const size_t bindingCount = size_t(mBindingInfo.size());
 
     size_t objectPointerStart = bufferCount * sizeof(BufferBindingData);
-    DAWN_ASSERT(IsAligned(objectPointerStart, alignof(Ref<ObjectBase>)));
+    DAWN_OPT_ASSUME(IsAligned(objectPointerStart, alignof(Ref<ObjectBase>)));
     size_t bufferSizeArrayStart =
         Align(objectPointerStart + bindingCount * sizeof(Ref<ObjectBase>), sizeof(uint64_t));
-    DAWN_ASSERT(IsAligned(bufferSizeArrayStart, alignof(uint64_t)));
+    DAWN_OPT_ASSUME(IsAligned(bufferSizeArrayStart, alignof(uint64_t)));
     return bufferSizeArrayStart + mUnverifiedBufferCount * sizeof(uint64_t);
 }
 
@@ -1040,9 +1040,9 @@ BindGroupLayoutInternalBase::ComputeBindingDataPointers(void* dataStart) const {
     uint64_t* unverifiedBufferSizes =
         AlignPtr(reinterpret_cast<uint64_t*>(bindings + bindingCount), sizeof(uint64_t));
 
-    DAWN_ASSERT(IsPtrAligned(bufferData, alignof(BufferBindingData)));
-    DAWN_ASSERT(IsPtrAligned(bindings, alignof(Ref<ObjectBase>)));
-    DAWN_ASSERT(IsPtrAligned(unverifiedBufferSizes, alignof(uint64_t)));
+    DAWN_OPT_ASSUME(IsPtrAligned(bufferData, alignof(BufferBindingData)));
+    DAWN_OPT_ASSUME(IsPtrAligned(bindings, alignof(Ref<ObjectBase>)));
+    DAWN_OPT_ASSUME(IsPtrAligned(unverifiedBufferSizes, alignof(uint64_t)));
 
     return {{bufferData, GetBindingTypeEnd(BindingTypeOrder_RegularBuffer)},
             {bindings, GetBindingCount()},

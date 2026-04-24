@@ -157,7 +157,7 @@ class TextureCorruptionTests : public DawnTestWithParams<TextureCorruptionTestsP
                         // texture sampling and rendering because either sampling operation will
                         // lead to precision loss or rendering a solid color is easier to implement
                         // and compare.
-                        DAWN_ASSERT(elementNumPerTexel == 1);
+                        DAWN_OPT_ASSUME(elementNumPerTexel == 1);
                         data[i * elementNumPerRow + j] = 0xFFFFFFFF;
                     } else if (type != WriteType::ClearTexture) {
                         data[i * elementNumPerRow + j * elementNumPerTexel + k] = srcValue;
@@ -186,7 +186,7 @@ class TextureCorruptionTests : public DawnTestWithParams<TextureCorruptionTestsP
             case WriteType::RenderFromTextureSample:
             case WriteType::RenderFromTextureLoad: {
                 // Write data into a single layer temp texture and read from this texture if needed
-                DAWN_ASSERT(format == wgpu::TextureFormat::RGBA8Unorm);
+                DAWN_OPT_ASSUME(format == wgpu::TextureFormat::RGBA8Unorm);
                 wgpu::TextureView tempView;
                 if (type != WriteType::RenderConstant) {
                     wgpu::Texture tempTexture = Create2DTexture(copySize, format, 1, 1);
@@ -339,7 +339,7 @@ class TextureCorruptionTests : public DawnTestWithParams<TextureCorruptionTestsP
         // Most 2d-array textures being tested have only 2 layers. But if the texture has a lot of
         // layers, select a few layers to test.
         if (depthOrArrayLayerCount > 2) {
-            DAWN_ASSERT(sampleCount == 1);
+            DAWN_OPT_ASSUME(sampleCount == 1);
             uint32_t divider = 4;
             for (uint32_t i = 1; i <= divider; ++i) {
                 int32_t testedLayer = depthOrArrayLayerCount * i / divider - 1;
@@ -474,8 +474,8 @@ class TextureCorruptionTests_Multisample : public TextureCorruptionTests {
                                      uint32_t sampleCount,
                                      uint32_t srcValue,
                                      wgpu::TextureFormat format) override {
-        DAWN_ASSERT(depthOrArrayLayer == 0);
-        DAWN_ASSERT(mipLevel == 0);
+        DAWN_OPT_ASSUME(depthOrArrayLayer == 0);
+        DAWN_OPT_ASSUME(mipLevel == 0);
         uint32_t bytesPerTexel = utils::GetTexelBlockSizeInBytes(format);
 
         return ExpectMultisampledFloatData(texture, textureSize.width, textureSize.height,

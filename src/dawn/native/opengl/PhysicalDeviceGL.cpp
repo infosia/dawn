@@ -166,9 +166,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     if (mFunctions.GetVersion().IsES()) {
-        DAWN_ASSERT(GetBackendType() == wgpu::BackendType::OpenGLES);
+        DAWN_OPT_ASSUME(GetBackendType() == wgpu::BackendType::OpenGLES);
     } else {
-        DAWN_ASSERT(GetBackendType() == wgpu::BackendType::OpenGL);
+        DAWN_OPT_ASSUME(GetBackendType() == wgpu::BackendType::OpenGL);
     }
 
     mName = reinterpret_cast<const char*>(mFunctions.GetString(GL_RENDERER));

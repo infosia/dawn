@@ -253,8 +253,8 @@ SubresourceStorage<T>::SubresourceStorage(Aspect aspects,
                                           uint32_t mipLevelCount,
                                           const T& initialValue)
     : mAspects(aspects), mMipLevelCount(mipLevelCount), mArrayLayerCount(arrayLayerCount) {
-    DAWN_ASSERT(arrayLayerCount <= std::numeric_limits<decltype(mArrayLayerCount)>::max());
-    DAWN_ASSERT(mipLevelCount <= std::numeric_limits<decltype(mMipLevelCount)>::max());
+    DAWN_OPT_ASSUME(arrayLayerCount <= std::numeric_limits<decltype(mArrayLayerCount)>::max());
+    DAWN_OPT_ASSUME(mipLevelCount <= std::numeric_limits<decltype(mMipLevelCount)>::max());
 
     Fill(initialValue);
 }
@@ -262,7 +262,7 @@ SubresourceStorage<T>::SubresourceStorage(Aspect aspects,
 template <typename T>
 void SubresourceStorage<T>::Fill(const T& value) {
     uint32_t aspectCount = GetAspectCount(mAspects);
-    DAWN_ASSERT(aspectCount <= kMaxAspects);
+    DAWN_OPT_ASSUME(aspectCount <= kMaxAspects);
 
     for (uint32_t aspectIndex = 0; aspectIndex < aspectCount; aspectIndex++) {
         mAspectCompressed[aspectIndex] = true;
@@ -273,10 +273,10 @@ void SubresourceStorage<T>::Fill(const T& value) {
 template <typename T>
 template <typename F>
 void SubresourceStorage<T>::Update(const SubresourceRange& range, F&& updateFunc) {
-    DAWN_ASSERT(range.baseArrayLayer < mArrayLayerCount &&
-                range.baseArrayLayer + range.layerCount <= mArrayLayerCount);
-    DAWN_ASSERT(range.baseMipLevel < mMipLevelCount &&
-                range.baseMipLevel + range.levelCount <= mMipLevelCount);
+    DAWN_OPT_ASSUME(range.baseArrayLayer < mArrayLayerCount &&
+                    range.baseArrayLayer + range.layerCount <= mArrayLayerCount);
+    DAWN_OPT_ASSUME(range.baseMipLevel < mMipLevelCount &&
+                    range.baseMipLevel + range.levelCount <= mMipLevelCount);
 
     bool fullLayers = range.baseMipLevel == 0 && range.levelCount == mMipLevelCount;
     bool fullAspects =
@@ -336,9 +336,9 @@ void SubresourceStorage<T>::Update(const SubresourceRange& range, F&& updateFunc
 template <typename T>
 template <typename U, typename F>
 void SubresourceStorage<T>::Merge(const SubresourceStorage<U>& other, F&& mergeFunc) {
-    DAWN_ASSERT(mAspects == other.mAspects);
-    DAWN_ASSERT(mArrayLayerCount == other.mArrayLayerCount);
-    DAWN_ASSERT(mMipLevelCount == other.mMipLevelCount);
+    DAWN_OPT_ASSUME(mAspects == other.mAspects);
+    DAWN_OPT_ASSUME(mArrayLayerCount == other.mArrayLayerCount);
+    DAWN_OPT_ASSUME(mMipLevelCount == other.mMipLevelCount);
 
     for (Aspect aspect : IterateEnumMask(mAspects)) {
         uint32_t aspectIndex = GetAspectIndex(aspect);
@@ -442,9 +442,9 @@ R SubresourceStorage<T>::Iterate(F&& iterateFunc) const {
 template <typename T>
 const T& SubresourceStorage<T>::Get(Aspect aspect, uint32_t arrayLayer, uint32_t mipLevel) const {
     uint32_t aspectIndex = GetAspectIndex(aspect);
-    DAWN_ASSERT(aspectIndex < GetAspectCount(mAspects));
-    DAWN_ASSERT(arrayLayer < mArrayLayerCount);
-    DAWN_ASSERT(mipLevel < mMipLevelCount);
+    DAWN_OPT_ASSUME(aspectIndex < GetAspectCount(mAspects));
+    DAWN_OPT_ASSUME(arrayLayer < mArrayLayerCount);
+    DAWN_OPT_ASSUME(mipLevel < mMipLevelCount);
 
     // Fastest path, the aspect is compressed!
     if (mAspectCompressed[aspectIndex]) {
@@ -487,13 +487,13 @@ bool SubresourceStorage<T>::IsLayerCompressedForTesting(Aspect aspect, uint32_t 
 
 template <typename T>
 void SubresourceStorage<T>::DecompressAspect(uint32_t aspectIndex) {
-    DAWN_ASSERT(mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(mAspectCompressed[aspectIndex]);
     const T& aspectData = DataInline(aspectIndex);
     mAspectCompressed[aspectIndex] = false;
 
     // Extra allocations are only needed when aspects are decompressed. Create them lazily.
     if (mData == nullptr) {
-        DAWN_ASSERT(mLayerCompressed == nullptr);
+        DAWN_OPT_ASSUME(mLayerCompressed == nullptr);
 
         uint32_t aspectCount = GetAspectCount(mAspects);
         mLayerCompressed = std::make_unique<bool[]>(aspectCount * mArrayLayerCount);
@@ -504,16 +504,16 @@ void SubresourceStorage<T>::DecompressAspect(uint32_t aspectIndex) {
         }
     }
 
-    DAWN_ASSERT(LayerCompressed(aspectIndex, 0));
+    DAWN_OPT_ASSUME(LayerCompressed(aspectIndex, 0));
     for (uint32_t layer = 0; layer < mArrayLayerCount; layer++) {
         Data(aspectIndex, layer) = aspectData;
-        DAWN_ASSERT(LayerCompressed(aspectIndex, layer));
+        DAWN_OPT_ASSUME(LayerCompressed(aspectIndex, layer));
     }
 }
 
 template <typename T>
 void SubresourceStorage<T>::RecompressAspect(uint32_t aspectIndex) {
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     // All layers of the aspect must be compressed for the aspect to possibly recompress.
     for (uint32_t layer = 0; layer < mArrayLayerCount; layer++) {
         if (!LayerCompressed(aspectIndex, layer)) {
@@ -534,8 +534,8 @@ void SubresourceStorage<T>::RecompressAspect(uint32_t aspectIndex) {
 
 template <typename T>
 void SubresourceStorage<T>::DecompressLayer(uint32_t aspectIndex, uint32_t layer) {
-    DAWN_ASSERT(LayerCompressed(aspectIndex, layer));
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(LayerCompressed(aspectIndex, layer));
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     const T& layerData = Data(aspectIndex, layer);
     LayerCompressed(aspectIndex, layer) = false;
 
@@ -548,8 +548,8 @@ void SubresourceStorage<T>::DecompressLayer(uint32_t aspectIndex, uint32_t layer
 
 template <typename T>
 void SubresourceStorage<T>::RecompressLayer(uint32_t aspectIndex, uint32_t layer) {
-    DAWN_ASSERT(!LayerCompressed(aspectIndex, layer));
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(!LayerCompressed(aspectIndex, layer));
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     const T& level0Data = Data(aspectIndex, layer, 0);
 
     for (uint32_t level = 1; level < mMipLevelCount; level++) {
@@ -568,36 +568,36 @@ SubresourceRange SubresourceStorage<T>::GetFullLayerRange(Aspect aspect, uint32_
 
 template <typename T>
 bool& SubresourceStorage<T>::LayerCompressed(uint32_t aspectIndex, uint32_t layer) {
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     return mLayerCompressed[aspectIndex * mArrayLayerCount + layer];
 }
 
 template <typename T>
 bool SubresourceStorage<T>::LayerCompressed(uint32_t aspectIndex, uint32_t layer) const {
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     return mLayerCompressed[aspectIndex * mArrayLayerCount + layer];
 }
 
 template <typename T>
 T& SubresourceStorage<T>::DataInline(uint32_t aspectIndex) {
-    DAWN_ASSERT(mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(mAspectCompressed[aspectIndex]);
     return mInlineAspectData[aspectIndex];
 }
 template <typename T>
 T& SubresourceStorage<T>::Data(uint32_t aspectIndex, uint32_t layer, uint32_t level) {
-    DAWN_ASSERT(level == 0 || !LayerCompressed(aspectIndex, layer));
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(level == 0 || !LayerCompressed(aspectIndex, layer));
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     return mData[(aspectIndex * mArrayLayerCount + layer) * mMipLevelCount + level];
 }
 template <typename T>
 const T& SubresourceStorage<T>::DataInline(uint32_t aspectIndex) const {
-    DAWN_ASSERT(mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(mAspectCompressed[aspectIndex]);
     return mInlineAspectData[aspectIndex];
 }
 template <typename T>
 const T& SubresourceStorage<T>::Data(uint32_t aspectIndex, uint32_t layer, uint32_t level) const {
-    DAWN_ASSERT(level == 0 || !LayerCompressed(aspectIndex, layer));
-    DAWN_ASSERT(!mAspectCompressed[aspectIndex]);
+    DAWN_OPT_ASSUME(level == 0 || !LayerCompressed(aspectIndex, layer));
+    DAWN_OPT_ASSUME(!mAspectCompressed[aspectIndex]);
     return mData[(aspectIndex * mArrayLayerCount + layer) * mMipLevelCount + level];
 }
 

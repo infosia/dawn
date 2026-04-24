@@ -106,8 +106,8 @@ TestAdapterProperties::TestAdapterProperties(const wgpu::AdapterInfo& info,
       innerBackendType(innerBackendType),
       compatibilityMode(compatibilityMode),
       selected(selected) {
-    DAWN_ASSERT((backendType == wgpu::BackendType::WebGPU) !=
-                (innerBackendType == wgpu::BackendType::Undefined));
+    DAWN_OPT_ASSUME((backendType == wgpu::BackendType::WebGPU) !=
+                    (innerBackendType == wgpu::BackendType::Undefined));
 }
 
 std::string TestAdapterProperties::ParamName() const {

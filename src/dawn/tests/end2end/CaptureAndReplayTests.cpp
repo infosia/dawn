@@ -1579,8 +1579,8 @@ class OcclusionExpectation : public detail::Expectation {
     explicit OcclusionExpectation(const std::vector<Result> expected) { mExpected = expected; }
 
     testing::AssertionResult Check(const void* data, size_t size) override {
-        DAWN_ASSERT(size % sizeof(uint64_t) == 0);
-        DAWN_ASSERT(size / sizeof(uint64_t) == mExpected.size());
+        DAWN_OPT_ASSUME(size % sizeof(uint64_t) == 0);
+        DAWN_OPT_ASSUME(size / sizeof(uint64_t) == mExpected.size());
         const uint64_t* actual = static_cast<const uint64_t*>(data);
         for (size_t i = 0; i < size / sizeof(uint64_t); i++) {
             if (actual[i] == kSentinelValue) {

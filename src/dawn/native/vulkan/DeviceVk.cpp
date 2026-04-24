@@ -992,7 +992,7 @@ void Device::CheckDebugMessagesAfterDestruction() const {
     }
 
     // Crash in debug
-    DAWN_ASSERT(false);
+    DAWN_OPT_ASSUME(false);
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
@@ -1140,7 +1140,7 @@ bool Device::NeedsStaticSamplerForExternalTexture() const {
 }
 
 AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     AllocatorMemoryInfo info = {};
     info.totalAllocatedMemory = GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
     info.totalUsedMemory = GetResourceMemoryAllocator()->GetTotalUsedMemory();
@@ -1186,7 +1186,7 @@ bool Device::ReduceMemoryUsageImpl() {
     if (ConsumedError(TickImpl())) {
         return false;
     }
-    DAWN_ASSERT(deletionSerial <= queue->GetLastSubmittedCommandSerial());
+    DAWN_OPT_ASSUME(deletionSerial <= queue->GetLastSubmittedCommandSerial());
 
     // Check again if there is anything left to delete as tick might have deleted objects.
     return GetLastPendingDeletionSerial() != kBeginningOfGPUTime;
@@ -1214,8 +1214,8 @@ std::optional<DeviceGuard> Device::UseGuardForCreateBindGroupLayout() {
 bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                           wgpu::BufferUsage originalUsage,
                                                           size_t bufferSize) const {
-    DAWN_ASSERT(IsSubset(storageUsage, wgpu::BufferUsage::Storage | kInternalStorageBuffer |
-                                           kReadOnlyStorageBuffer));
+    DAWN_OPT_ASSUME(IsSubset(storageUsage, wgpu::BufferUsage::Storage | kInternalStorageBuffer |
+                                               kReadOnlyStorageBuffer));
     if (originalUsage & kMappableBufferUsages) {
         return HasFeature(Feature::BufferMapExtendedUsages);
     }
@@ -1224,7 +1224,7 @@ bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage stor
 
 // Prepares the Empty Pass QuerySet, creating and resetting it if needed.
 MaybeError Device::PrepareEmptyPassQuerySet(CommandRecordingContext* recordingContext) {
-    DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
+    DAWN_OPT_ASSUME(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
     if (!mEmptyPassQuerySet) {
         QuerySetDescriptor descriptor;
         descriptor.type = wgpu::QueryType::Occlusion;
@@ -1246,9 +1246,9 @@ MaybeError Device::PrepareEmptyPassQuerySet(CommandRecordingContext* recordingCo
 // Must call PrepareEmptyPassQuerySet outside of recording a render pass prior to calling this every
 // time.
 Ref<QuerySetBase> Device::UseEmptyPassQuerySet() {
-    DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
-    DAWN_ASSERT(mEmptyPassQuerySet);
-    DAWN_ASSERT(!mEmptyPassQuerySetNeedsReset);
+    DAWN_OPT_ASSUME(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
+    DAWN_OPT_ASSUME(mEmptyPassQuerySet);
+    DAWN_OPT_ASSUME(!mEmptyPassQuerySetNeedsReset);
 
     mEmptyPassQuerySetNeedsReset = true;
     return mEmptyPassQuerySet;

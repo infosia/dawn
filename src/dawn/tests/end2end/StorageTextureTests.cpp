@@ -64,7 +64,7 @@ class StorageTextureTests : public DawnTest {
                                  uint32_t depthOrArrayLayer,
                                  float alsoAdd = 0) {
         const uint32_t pixelValue = 1 + x + kWidth * (y + kHeight * depthOrArrayLayer);
-        DAWN_ASSERT(pixelValue <= 255u / 4);
+        DAWN_OPT_ASSUME(pixelValue <= 255u / 4);
 
         switch (format) {
             // 32-bit unsigned integer formats
@@ -293,9 +293,9 @@ class StorageTextureTests : public DawnTest {
                 uint32_t* valuePtr = static_cast<uint32_t*>(pixelValuePtr);
 
                 auto MakeRG11B10 = [](uint32_t r, uint32_t g, uint32_t b) {
-                    DAWN_ASSERT((r & 0x7FF) == r);
-                    DAWN_ASSERT((g & 0x7FF) == g);
-                    DAWN_ASSERT((b & 0x3FF) == b);
+                    DAWN_OPT_ASSUME((r & 0x7FF) == r);
+                    DAWN_OPT_ASSUME((g & 0x7FF) == g);
+                    DAWN_OPT_ASSUME((b & 0x3FF) == b);
                     return r | g << 11 | b << 22;
                 };
 
@@ -641,7 +641,7 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
         wgpu::TextureFormat format,
         wgpu::TextureViewDimension dimension = wgpu::TextureViewDimension::e2D) {
         uint32_t texelSize = utils::GetTexelBlockSizeInBytes(format);
-        DAWN_ASSERT(kWidth * texelSize <= kTextureBytesPerRowAlignment);
+        DAWN_OPT_ASSUME(kWidth * texelSize <= kTextureBytesPerRowAlignment);
 
         const uint32_t bytesPerTextureRow = texelSize * kWidth;
         const uint32_t sliceCount =
@@ -884,7 +884,7 @@ fn IsEqualTo(pixel : vec4f, expected : vec4f) -> bool {
 
         // Check if the contents in the result buffer are what we expect.
         uint32_t texelSize = utils::GetTexelBlockSizeInBytes(format);
-        DAWN_ASSERT(size.width * texelSize <= kTextureBytesPerRowAlignment);
+        DAWN_OPT_ASSUME(size.width * texelSize <= kTextureBytesPerRowAlignment);
 
         for (size_t z = 0; z < size.depthOrArrayLayers; ++z) {
             for (size_t y = 0; y < size.height; ++y) {

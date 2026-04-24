@@ -57,7 +57,7 @@ ResultOrError<ComPtr<IDXGIFactory4>> CreateFactory(const PlatformFunctions* func
         return DAWN_INTERNAL_ERROR("Failed to create a DXGI factory");
     }
 
-    DAWN_ASSERT(factory != nullptr);
+    DAWN_OPT_ASSUME(factory != nullptr);
     return std::move(factory);
 }
 

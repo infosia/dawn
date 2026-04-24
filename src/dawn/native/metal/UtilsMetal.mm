@@ -780,7 +780,7 @@ TextureBufferCopySplit ComputeTextureBufferCopySplit(const Texture* texture,
     const uint32_t lastImageDataSize = 0;  // workaround case 3
     const TexelCount lastRowCopyExtentHeight =
         clampedCopyExtent.height - blockInfo.ToTexelHeight(copyExtent.height - BlockCount(1));
-    DAWN_ASSERT(lastRowCopyExtentHeight <= blockInfo.height);
+    DAWN_OPT_ASSUME(lastRowCopyExtentHeight <= blockInfo.height);
 
     const BlockOrigin3D localOrigin = {origin.x, origin.y + copyExtent.height - BlockCount(1),
                                        origin.z + copyExtent.depthOrArrayLayers - BlockCount(1)};
@@ -795,7 +795,7 @@ MaybeError EnsureDestinationTextureInitialized(CommandRecordingContext* commandC
                                                Texture* texture,
                                                const TextureCopy& dst,
                                                const Extent3D& size) {
-    DAWN_ASSERT(texture == dst.texture.Get());
+    DAWN_OPT_ASSUME(texture == dst.texture.Get());
     SubresourceRange range = GetSubresourcesAffectedByCopy(dst, size);
     if (IsCompleteSubresourceCopiedTo(dst.texture.Get(), size, dst.mipLevel, dst.aspect)) {
         texture->SetIsSubresourceContentInitialized(true, range);

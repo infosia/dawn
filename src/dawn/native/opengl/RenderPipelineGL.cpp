@@ -374,13 +374,13 @@ MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,
             } else if ((descriptor->blend == nullptr) != (prevDescriptor->blend == nullptr)) {
                 // TODO(crbug.com/dawn/582): GLES < 3.2 does not support different blend states
                 // per color target. Add validation to prevent this as it is not.
-                DAWN_ASSERT(false);
+                DAWN_OPT_ASSUME(false);
             } else if (descriptor->blend != nullptr) {
                 if (!Equal(descriptor->blend->alpha, prevDescriptor->blend->alpha) ||
                     !Equal(descriptor->blend->color, prevDescriptor->blend->color) ||
                     descriptor->writeMask != prevDescriptor->writeMask) {
                     // TODO(crbug.com/dawn/582)
-                    DAWN_ASSERT(false);
+                    DAWN_OPT_ASSUME(false);
                 }
             }
         }

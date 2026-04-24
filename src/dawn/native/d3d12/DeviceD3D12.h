@@ -48,10 +48,10 @@ class SamplerHeapCache;
 class ShaderVisibleDescriptorAllocator;
 class StagingDescriptorAllocator;
 
-#define ASSERT_SUCCESS(hr)                 \
-    do {                                   \
-        HRESULT succeeded = hr;            \
-        DAWN_ASSERT(SUCCEEDED(succeeded)); \
+#define ASSERT_SUCCESS(hr)                     \
+    do {                                       \
+        HRESULT succeeded = hr;                \
+        DAWN_OPT_ASSUME(SUCCEEDED(succeeded)); \
     } while (0)
 
 // Definition of backend types

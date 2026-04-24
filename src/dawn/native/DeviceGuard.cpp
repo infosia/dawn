@@ -35,7 +35,7 @@
 namespace dawn::native {
 
 DeviceMutex::~DeviceMutex() {
-    DAWN_ASSERT(mRecursionStackDepth == 0);
+    DAWN_OPT_ASSUME(mRecursionStackDepth == 0);
 }
 
 void DeviceMutex::Lock() {

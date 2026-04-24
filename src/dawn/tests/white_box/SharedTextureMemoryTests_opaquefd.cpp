@@ -261,7 +261,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
     std::vector<std::vector<wgpu::SharedTextureMemory>> CreatePerDeviceSharedTextureMemories(
         const std::vector<wgpu::Device>& devices,
         int layerCount) override {
-        DAWN_ASSERT(!devices.empty());
+        DAWN_OPT_ASSUME(!devices.empty());
 
         std::vector<std::vector<wgpu::SharedTextureMemory>> memories;
         for (VkFormat format : {
