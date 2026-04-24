@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46c2c278_9a55eedc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-04-24T17:23:03Z",
+      "side": 1,
+      "message": "This change is more likely to induce performance hits. We need to check skia graphite benchmarks to see the impact",
+      "revId": "9a2710e3ceeb369abcce319825e1ed7f84cb4e3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
