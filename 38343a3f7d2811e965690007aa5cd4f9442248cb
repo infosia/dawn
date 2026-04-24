@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "062eb6da_999f7691",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T18:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61f4c92_3262d3aa",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2be3358d_c9f1d457",
@@ -83,6 +101,24 @@
       "writtenOn": "2026-04-23T09:08:23Z",
       "side": 1,
       "message": "I think these are no longer needed.",
+      "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08756ad6_d5a0c7e2",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-24T18:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b86d2045_4359b2d0",
       "revId": "38343a3f7d2811e965690007aa5cd4f9442248cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
