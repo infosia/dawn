@@ -340,14 +340,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.adapterSupportedLimits = UnsafeUnserializedValue(
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1));
     req.maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
-    if (GetDevice()->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
-        req.minExplicitComputeSubgroupSize =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize();
-        req.maxExplicitComputeSubgroupSize =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize();
-        req.maxComputeWorkgroupSubgroups =
-            GetDevice()->GetAdapter()->GetPhysicalDevice()->GetMaxComputeWorkgroupSubgroups();
-    }
 
     CacheResult<CompiledSpirv> compilation;
     DAWN_TRY_LOAD_OR_RUN(
@@ -396,9 +388,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     _, ValidateComputeStageWorkgroupSize(
                            tintResult->workgroup_info, r.usesSubgroupMatrix, r.maxSubgroupSize,
                            r.limits, r.adapterSupportedLimits.UnsafeGetValue()));
-                DAWN_TRY(ValidateExplicitComputeSubgroupSize(
-                    tintResult->workgroup_info, r.minExplicitComputeSubgroupSize,
-                    r.maxExplicitComputeSubgroupSize, r.maxComputeWorkgroupSubgroups));
             }
 
             DAWN_TRY(ValidateSubgroupMatrixConfiguration(tintResult->subgroup_matrix_info,

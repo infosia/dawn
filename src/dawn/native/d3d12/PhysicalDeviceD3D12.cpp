@@ -125,19 +125,6 @@ MaybeError PhysicalDevice::InitializeImpl() {
     // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
     mSubgroupMaxSize = 128u;
 
-    mMinExplicitComputeSubgroupSize = mDeviceInfo.waveLaneCountMin;
-    mMaxExplicitComputeSubgroupSize = mDeviceInfo.waveLaneCountMax;
-    if (mDeviceInfo.waveLaneCountMin > 0) {
-        // D3D12 doesn't have limit on the maximum subgroups in one workgroup so we choose a value
-        // to
-        // ensure `computeInvocationsPerWorkgroup <= maxComputeWorkgroupSubgroups *
-        // computeSubgroupSize` is always satisfied.
-        mMaxComputeWorkgroupSubgroups =
-            D3D12_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP / mDeviceInfo.waveLaneCountMin;
-    } else {
-        mMaxComputeWorkgroupSubgroups = D3D12_CS_THREAD_GROUP_MAX_THREADS_PER_GROUP;
-    }
-
     return {};
 }
 
@@ -977,15 +964,6 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
     if (auto* d3dProperties = info.Get<AdapterPropertiesD3D>()) {
         // Report highest supported shader model version, instead of actual applied version.
         d3dProperties->shaderModel = GetDeviceInfo().highestSupportedShaderModel;
-    }
-    if (auto* explicitComputeSubgroupSizeConfigs =
-            info.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        explicitComputeSubgroupSizeConfigs->minExplicitComputeSubgroupSize =
-            GetMinExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxExplicitComputeSubgroupSize =
-            GetMaxExplicitComputeSubgroupSize();
-        explicitComputeSubgroupSizeConfigs->maxComputeWorkgroupSubgroups =
-            GetMaxComputeWorkgroupSubgroups();
     }
 }
 

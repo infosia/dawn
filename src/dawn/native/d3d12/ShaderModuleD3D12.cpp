@@ -335,15 +335,6 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1));
     req.hlsl.maxSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
-    if (device->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
-        req.hlsl.minExplicitComputeSubgroupSize =
-            device->GetAdapter()->GetPhysicalDevice()->GetMinExplicitComputeSubgroupSize();
-        req.hlsl.maxExplicitComputeSubgroupSize =
-            device->GetAdapter()->GetPhysicalDevice()->GetMaxExplicitComputeSubgroupSize();
-        req.hlsl.maxComputeWorkgroupSubgroups =
-            device->GetAdapter()->GetPhysicalDevice()->GetMaxComputeWorkgroupSubgroups();
-    }
-
     CacheResult<d3d::CompiledShader> compiledShader;
     DAWN_TRY_LOAD_OR_RUN(compiledShader, device, std::move(req),
                          d3d::CompiledShader::FromValidatedBlob, d3d::CompileShader,
