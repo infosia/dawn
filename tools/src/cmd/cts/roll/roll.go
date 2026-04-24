@@ -362,7 +362,7 @@ func (r *roller) roll(ctx context.Context) error {
 
 	if r.flags.dryRun {
 		log.Printf("Filtered Queried Test List:")
-		log.Printf(generatedFiles[common.TestListRelPath])
+		log.Printf("%s", generatedFiles[common.TestListRelPath])
 	}
 
 	// Pull out the test list from the generated files
