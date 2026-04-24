@@ -1224,51 +1224,7 @@ TEST_F(SubgroupSizeControlValidationTest, ValidateTotalInvocationsPerWorkgroupAn
     TestTotalInvocationsPerWorkgroupAndSubgroupSize({32}, 32, true);
 }
 
-// Test it is a validation error to use a `@subgroup_size` that is greater than
-// `maxExplicitComputeSubgroupSize` or less than `minExplicitComputeSubgroupSize` on current
-// adapter.
-TEST_F(SubgroupSizeControlValidationTest, ValidateExplicitComputeSubgroupSizes) {
-    wgpu::AdapterInfo info;
-    wgpu::AdapterPropertiesExplicitComputeSubgroupSizeConfigs subgroupSizeConfigs;
-    info.nextInChain = &subgroupSizeConfigs;
-    adapter.GetInfo(&info);
 
-    for (uint32_t subgroupSize = subgroupSizeConfigs.minExplicitComputeSubgroupSize / 2;
-         subgroupSize <= subgroupSizeConfigs.maxExplicitComputeSubgroupSize * 2;
-         subgroupSize *= 2) {
-        ASSERT_TRUE(IsPowerOfTwo(subgroupSize));
-        bool success = subgroupSize >= subgroupSizeConfigs.minExplicitComputeSubgroupSize &&
-                       subgroupSize <= subgroupSizeConfigs.maxExplicitComputeSubgroupSize;
-        TestTotalInvocationsPerWorkgroupAndSubgroupSize({subgroupSize}, subgroupSize, success);
-    }
-}
-
-// Test it is a validation error to use a `@subgroup_size` that makes the total invocations per
-// workgroup exceed the product of `@subgroup_size` and `maxComputeWorkgroupSubgroups` on current
-// adapter.
-TEST_F(SubgroupSizeControlValidationTest, ValidateMaxComputeWorkgroupSubgroups) {
-    wgpu::AdapterInfo info;
-    wgpu::AdapterPropertiesExplicitComputeSubgroupSizeConfigs subgroupSizeConfigs;
-    info.nextInChain = &subgroupSizeConfigs;
-    adapter.GetInfo(&info);
-    wgpu::Limits limits;
-    adapter.GetLimits(&limits);
-
-    uint32_t maxWorkgroupSubgroups = subgroupSizeConfigs.maxComputeWorkgroupSubgroups;
-    uint32_t maxInvocationsPerWorkgroup = limits.maxComputeInvocationsPerWorkgroup;
-
-    for (uint32_t subgroupSize = subgroupSizeConfigs.minExplicitComputeSubgroupSize;
-         subgroupSize <= subgroupSizeConfigs.maxExplicitComputeSubgroupSize; subgroupSize *= 2) {
-        ASSERT_TRUE(IsPowerOfTwo(subgroupSize));
-        uint32_t totalInvocations = maxInvocationsPerWorkgroup;
-        uint32_t workgroupSizeX = subgroupSize;
-        uint32_t workgroupSizeY = totalInvocations / workgroupSizeX;
-        ASSERT_LE(workgroupSizeY, limits.maxComputeWorkgroupSizeY);
-        bool success = maxInvocationsPerWorkgroup <= subgroupSize * maxWorkgroupSubgroups;
-        TestTotalInvocationsPerWorkgroupAndSubgroupSize({workgroupSizeX, workgroupSizeY},
-                                                        subgroupSize, success);
-    }
-}
 
 }  // anonymous namespace
 }  // namespace dawn

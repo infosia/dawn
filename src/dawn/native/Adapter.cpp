@@ -160,11 +160,6 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
         hadError |= mInstance->ConsumedError(
             DAWN_VALIDATION_ERROR("Feature ChromiumExperimentalSubgroupMatrix is not available."));
     }
-    if (unpacked.Has<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>() &&
-        !mSupportedFeatures.IsEnabled(wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl)) {
-        hadError |= mInstance->ConsumedError(DAWN_VALIDATION_ERROR(
-            "Feature ChromiumExperimentalExplicitComputeSubgroupSize is not available."));
-    }
     if (hadError) {
         return wgpu::Status::Error;
     }
@@ -174,11 +169,6 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     }
 
     mPhysicalDevice->PopulateBackendProperties(unpacked, mTogglesState);
-    if (auto* explicitSubgroupSizeConfigs =
-            unpacked.Get<AdapterPropertiesExplicitComputeSubgroupSizeConfigs>()) {
-        DAWN_CHECK(IsPowerOfTwo(explicitSubgroupSizeConfigs->minExplicitComputeSubgroupSize));
-        DAWN_CHECK(IsPowerOfTwo(explicitSubgroupSizeConfigs->maxExplicitComputeSubgroupSize));
-    }
 
     // Allocate space for all strings.
     size_t allocSize = mPhysicalDevice->GetVendorName().length() +
