@@ -57,7 +57,6 @@ class MockMemoryTransferService : public MemoryTransferService {
         ~MockWriteHandle() override;
         MOCK_METHOD(void, Destroy, ());
 
-        MOCK_METHOD(bool, DeserializeDataUpdate, (const void*, size_t, size_t, size_t), (override));
         MOCK_METHOD(bool,
                     DeserializeDataUpdate,
                     (std::span<const uint8_t>, std::span<uint8_t>, size_t),
