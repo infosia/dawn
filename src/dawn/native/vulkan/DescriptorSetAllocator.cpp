@@ -56,7 +56,7 @@ DescriptorSetAllocator::DescriptorSetAllocator(
     uint32_t totalDescriptorCount = 0;
     mPoolSizes.reserve(descriptorCountPerType.size());
     for (const auto& [type, count] : descriptorCountPerType) {
-        DAWN_ASSERT(count > 0);
+        DAWN_OPT_ASSUME(count > 0);
         totalDescriptorCount += count;
         mPoolSizes.push_back(VkDescriptorPoolSize{type, count});
     }
@@ -78,7 +78,7 @@ DescriptorSetAllocator::DescriptorSetAllocator(
 
 DescriptorSetAllocator::~DescriptorSetAllocator() {
     for (auto& pool : mDescriptorPools) {
-        DAWN_ASSERT(pool.freeSetIndices.size() == mMaxSets);
+        DAWN_OPT_ASSUME(pool.freeSetIndices.size() == mMaxSets);
         if (pool.vkPool != VK_NULL_HANDLE) {
             mDevice->GetFencedDeleter()->DeleteWhenUnused(pool.vkPool);
         }
@@ -116,7 +116,7 @@ void DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo)
     {
         Mutex::AutoLock lock(&mMutex);
 
-        DAWN_ASSERT(allocationInfo != nullptr);
+        DAWN_OPT_ASSUME(allocationInfo != nullptr);
         DAWN_CHECK(allocationInfo->set != VK_NULL_HANDLE);
 
         // We can't reuse the descriptor set right away because the Vulkan spec says in the

@@ -57,13 +57,13 @@ struct ImmediateDataContent {
 
     template <typename Out>
     const Out* Get(uint32_t offset) const {
-        DAWN_ASSERT(sizeof(Out) + offset <= sizeof(T));
+        DAWN_OPT_ASSUME(sizeof(Out) + offset <= sizeof(T));
         return reinterpret_cast<const Out*>(&mData[offset]);
     }
 
     template <typename Out>
     Out* Get(uint32_t offset) {
-        DAWN_ASSERT(sizeof(Out) + offset <= sizeof(T));
+        DAWN_OPT_ASSUME(sizeof(Out) + offset <= sizeof(T));
         return reinterpret_cast<Out*>(&mData[offset]);
     }
 

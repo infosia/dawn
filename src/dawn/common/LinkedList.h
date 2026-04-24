@@ -149,7 +149,7 @@ class LinkNode {
 
     // Check if |this| is in a list.
     bool IsInList() const {
-        DAWN_ASSERT((this->previous_ == nullptr) == (this->next_ == nullptr));
+        DAWN_OPT_ASSUME((this->previous_ == nullptr) == (this->next_ == nullptr));
         return this->next_ != nullptr;
     }
 

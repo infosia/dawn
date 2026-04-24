@@ -69,7 +69,7 @@ GLFormatTable BuildGLFormatTable(const OpenGLFunctions& gl) {
     auto AddFormat = [&table, &gl](wgpu::TextureFormat dawnFormat, GLenum internalFormat,
                                    GLenum format, GLenum type, Type componentType) {
         FormatIndex index = ComputeFormatIndex(dawnFormat);
-        DAWN_ASSERT(index < table.size());
+        DAWN_OPT_ASSUME(index < table.size());
 
         table[index].internalFormat = internalFormat;
         table[index].format = format;
@@ -150,7 +150,7 @@ GLFormatTable BuildGLFormatTable(const OpenGLFunctions& gl) {
 
     // Internal format for stencil8 can be either GL_STENCIL_INDEX8 or GL_DEPTH24_STENCIL8
     GLenum internalFormatForStencil8 = GetStencil8InternalFormat(gl);
-    DAWN_ASSERT(internalFormatForStencil8 == GL_STENCIL_INDEX8 || internalFormatForStencil8 == GL_DEPTH24_STENCIL8);
+    DAWN_OPT_ASSUME(internalFormatForStencil8 == GL_STENCIL_INDEX8 || internalFormatForStencil8 == GL_DEPTH24_STENCIL8);
     bool useStencilIndex8 = internalFormatForStencil8 == GL_STENCIL_INDEX8;
     AddFormat(wgpu::TextureFormat::Stencil8, internalFormatForStencil8, useStencilIndex8 ? GL_STENCIL : GL_DEPTH_STENCIL, useStencilIndex8 ? GL_UNSIGNED_BYTE : GL_UNSIGNED_INT_24_8, Type::DepthStencil);
 

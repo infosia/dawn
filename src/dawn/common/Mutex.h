@@ -90,8 +90,8 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
     ~MutexBase() override = default;
 
     // This method is only enabled when DAWN_ENABLE_ASSERTS is turned on.
-    // Thus it should only be wrapped inside DAWN_ASSERT() macro.
-    // i.e. DAWN_ASSERT(mutex.IsLockedByCurrentThread())
+    // Thus it should only be wrapped inside DAWN_OPT_ASSUME() macro.
+    // i.e. DAWN_OPT_ASSUME(mutex.IsLockedByCurrentThread())
     bool IsLockedByCurrentThread() {
 #if defined(DAWN_ENABLE_ASSERTS)
         return mOwner.load(std::memory_order_acquire) == std::this_thread::get_id();
@@ -106,7 +106,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
 #if defined(DAWN_ENABLE_ASSERTS)
         auto currentThread = std::this_thread::get_id();
         if constexpr (!std::is_same_v<MutexT, std::recursive_mutex>) {
-            DAWN_ASSERT(mOwner.load(std::memory_order_acquire) != currentThread);
+            DAWN_OPT_ASSUME(mOwner.load(std::memory_order_acquire) != currentThread);
         }
 #endif  // DAWN_ENABLE_ASSERTS
 
@@ -120,7 +120,7 @@ class DAWN_MUTEX_CAPABILITY MutexBase : public RefCounted, NonCopyable {
 
     void Unlock() DAWN_UNLOCK_FUNCTION {
 #if defined(DAWN_ENABLE_ASSERTS)
-        DAWN_ASSERT(IsLockedByCurrentThread());
+        DAWN_OPT_ASSUME(IsLockedByCurrentThread());
         if (--mRecursionStackDepth == 0) {
             mOwner.store(std::thread::id(), std::memory_order_release);
         }

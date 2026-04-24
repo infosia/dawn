@@ -434,8 +434,8 @@ class CopySplitTest : public testing::TestWithParam<CopySplitTestParam> {
                 wgpu::TextureDimension dimension,
                 bool relaxed) {
         const TypedTexelBlockInfo& blockInfo = textureSpec.blockInfo;
-        DAWN_ASSERT(textureSpec.copySize.width % blockInfo.width == 0_tc &&
-                    textureSpec.copySize.height % blockInfo.height == 0_tc);
+        DAWN_OPT_ASSUME(textureSpec.copySize.width % blockInfo.width == 0_tc &&
+                        textureSpec.copySize.height % blockInfo.height == 0_tc);
 
         // Add trace so that failures emit the input test specs
         std::stringstream trace;

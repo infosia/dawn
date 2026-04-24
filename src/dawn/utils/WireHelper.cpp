@@ -71,14 +71,14 @@ class WireServerTraceLayer : public dawn::wire::CommandHandler {
         if (!std::filesystem::is_directory(mDir)) {
             std::error_code ec;
             std::filesystem::create_directories(mDir, ec);
-            DAWN_ASSERT(ec.value() == 0);
-            DAWN_ASSERT(std::filesystem::is_directory(mDir));
+            DAWN_OPT_ASSUME(ec.value() == 0);
+            DAWN_OPT_ASSUME(std::filesystem::is_directory(mDir));
         }
 
         // Prepend the filename with the directory.
         filename = mDir + filename;
 
-        DAWN_ASSERT(!mFile.is_open());
+        DAWN_OPT_ASSUME(!mFile.is_open());
         mFile.open(filename, std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
 
         // Write the initial 8 bytes. This means the fuzzer should never inject an
@@ -106,7 +106,7 @@ class WireHelperDirect : public WireHelper {
 
     wgpu::Instance RegisterInstance(WGPUInstance backendInstance,
                                     const WGPUInstanceDescriptor* wireDesc) override {
-        DAWN_ASSERT(backendInstance != nullptr);
+        DAWN_OPT_ASSUME(backendInstance != nullptr);
         return wgpu::Instance(backendInstance);
     }
 
@@ -155,7 +155,7 @@ class WireHelperProxy : public WireHelper {
 
     wgpu::Instance RegisterInstance(WGPUInstance backendInstance,
                                     const WGPUInstanceDescriptor* wireDesc) override {
-        DAWN_ASSERT(backendInstance != nullptr);
+        DAWN_OPT_ASSUME(backendInstance != nullptr);
 
         auto reserved = mWireClient->ReserveInstance(wireDesc);
         mWireServer->InjectInstance(backendInstance, reserved.handle);
@@ -205,7 +205,7 @@ void WireHelper::WaitUntilIdle(dawn::native::Instance* serverInstance,
                                wgpu::Instance clientInstance) {
     while (true) {
         bool C2SFlushed = FlushClient();
-        DAWN_ASSERT(C2SFlushed);
+        DAWN_OPT_ASSUME(C2SFlushed);
 
         if (!dawn::native::InstanceProcessEvents(serverInstance->Get())) {
             if (clientInstance != nullptr) {

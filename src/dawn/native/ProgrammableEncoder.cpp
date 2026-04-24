@@ -176,7 +176,7 @@ MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
         // BGL creation sorts bindings such that the dynamic buffer bindings are first.
         const BufferBindingInfo& bindingLayout =
             std::get<BufferBindingInfo>(bindingInfo.bindingLayout);
-        DAWN_ASSERT(bindingLayout.hasDynamicOffset);
+        DAWN_OPT_ASSUME(bindingLayout.hasDynamicOffset);
 
         uint64_t requiredAlignment;
         switch (bindingLayout.type) {
@@ -202,8 +202,9 @@ MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
 
         // During BindGroup creation, validation ensures binding offset + binding size
         // <= buffer size.
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() >= bufferBinding.size);
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() - bufferBinding.size >= bufferBinding.offset);
+        DAWN_OPT_ASSUME(bufferBinding.buffer->GetSize() >= bufferBinding.size);
+        DAWN_OPT_ASSUME(bufferBinding.buffer->GetSize() - bufferBinding.size >=
+                        bufferBinding.offset);
 
         if ((dynamicOffsets[i] >
              bufferBinding.buffer->GetSize() - bufferBinding.offset - bufferBinding.size)) {
@@ -244,7 +245,7 @@ void ProgrammableEncoder::RecordSetBindGroup(CommandAllocator* allocator,
 
 MaybeError ProgrammableEncoder::SetResourceTable(ResourceTableBase* table,
                                                  CommandAllocator* allocator) {
-    DAWN_ASSERT(allocator);
+    DAWN_OPT_ASSUME(allocator);
 
     if (GetDevice()->IsValidationEnabled()) {
         if (table) {

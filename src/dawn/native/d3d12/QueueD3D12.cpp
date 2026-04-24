@@ -93,7 +93,7 @@ void Queue::DestroyImpl(DestroyReason reason) {
 
 ResultOrError<Ref<d3d::SharedFence>> Queue::GetOrCreateSharedFence() {
     if (mSharedFence == nullptr) {
-        DAWN_ASSERT(!IsAlive());
+        DAWN_OPT_ASSUME(!IsAlive());
         return SharedFence::Create(ToBackend(GetDevice()), "Internal shared DXGI fence", mFence);
     }
     return mSharedFence;
@@ -124,7 +124,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
 MaybeError Queue::SubmitPendingCommandsImpl() {
     Device* device = ToBackend(GetDevice());
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     if (!mPendingCommands.NeedsSubmit()) {
         return {};
@@ -141,10 +141,10 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
 
 MaybeError Queue::NextSerial() {
     Device* device = ToBackend(GetDevice());
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
     // NextSerial should not ever be called with a command list that needs submission since the
     // underlying command allocator could be recycled after the serial completes on the GPU.
-    DAWN_ASSERT(!mPendingCommands.NeedsSubmit());
+    DAWN_OPT_ASSUME(!mPendingCommands.NeedsSubmit());
 
     IncrementLastSubmittedCommandSerial();
 
@@ -228,7 +228,7 @@ void Queue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
 }
 
 MaybeError Queue::OpenPendingCommands() {
-    DAWN_ASSERT(mLastAllocatorUsed == kNoCommandAllocator);
+    DAWN_OPT_ASSUME(mLastAllocatorUsed == kNoCommandAllocator);
 
     // If there are no free allocators, get the oldest serial in flight and wait on it
     if (mFreeAllocators.none()) {
@@ -249,7 +249,7 @@ MaybeError Queue::OpenPendingCommands() {
 
     // Lazily create an allocator or reset an existing one to start a new command list on it.
     if (freeIndex >= mAllocatorCount) {
-        DAWN_ASSERT(freeIndex == mAllocatorCount);
+        DAWN_OPT_ASSUME(freeIndex == mAllocatorCount);
         mAllocatorCount++;
 
         DAWN_TRY(

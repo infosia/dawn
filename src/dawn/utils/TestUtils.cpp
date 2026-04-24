@@ -58,7 +58,7 @@ uint32_t GetMinimumBytesPerRow(wgpu::TextureFormat format,
                                uint32_t textureBytesPerRowAlignment) {
     const uint32_t bytesPerBlock = dawn::utils::GetTexelBlockSizeInBytes(format);
     const uint32_t blockWidth = dawn::utils::GetTextureFormatBlockWidth(format);
-    DAWN_ASSERT(width % blockWidth == 0);
+    DAWN_OPT_ASSUME(width % blockWidth == 0);
     return Align(bytesPerBlock * (width / blockWidth), textureBytesPerRowAlignment);
 }
 
@@ -70,7 +70,7 @@ TextureDataCopyLayout GetTextureDataCopyLayoutForTextureAtLevel(
     uint32_t rowsPerImage,
     uint32_t textureBytesPerRowAlignment) {
     // Compressed texture formats not supported in this function yet.
-    DAWN_ASSERT(dawn::utils::GetTextureFormatBlockWidth(format) == 1);
+    DAWN_OPT_ASSUME(dawn::utils::GetTextureFormatBlockWidth(format) == 1);
 
     TextureDataCopyLayout layout;
 
@@ -112,9 +112,9 @@ uint64_t RequiredBytesInCopy(uint64_t bytesPerRow,
     uint32_t blockSize = dawn::utils::GetTexelBlockSizeInBytes(textureFormat);
     uint32_t blockWidth = dawn::utils::GetTextureFormatBlockWidth(textureFormat);
     uint32_t blockHeight = dawn::utils::GetTextureFormatBlockHeight(textureFormat);
-    DAWN_ASSERT(copyExtent.width % blockWidth == 0);
+    DAWN_OPT_ASSUME(copyExtent.width % blockWidth == 0);
     uint32_t widthInBlocks = copyExtent.width / blockWidth;
-    DAWN_ASSERT(copyExtent.height % blockHeight == 0);
+    DAWN_OPT_ASSUME(copyExtent.height % blockHeight == 0);
     uint32_t heightInBlocks = copyExtent.height / blockHeight;
     return RequiredBytesInCopy(bytesPerRow, rowsPerImage, widthInBlocks, heightInBlocks,
                                copyExtent.depthOrArrayLayers, blockSize);

@@ -180,7 +180,7 @@ MaybeError ResourceTable::Initialize() {
     // written as needed when they are inserted in the ResourceTable.
     Buffer* metadataBuffer = ToBackend(GetMetadataBuffer());
     ID3D12Resource* resource = metadataBuffer->GetD3D12Resource();
-    DAWN_ASSERT(resource != nullptr);
+    DAWN_OPT_ASSUME(resource != nullptr);
 
     // Like StorageBuffer, Tint outputs HLSL shaders for readonly storage buffer with
     // ByteAddressBuffer. So we must use D3D12_BUFFER_SRV_FLAG_RAW when making the SRV
@@ -268,7 +268,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
 
             // The metadata buffer will be copied to.
             Buffer* metadataBuffer = ToBackend(GetMetadataBuffer());
-            DAWN_ASSERT(metadataBuffer->IsInitialized());
+            DAWN_OPT_ASSUME(metadataBuffer->IsInitialized());
             auto scopedUseMetadataBuffer = metadataBuffer->UseInternal();
             metadataBuffer->TrackUsageAndTransitionNow(recordingContext,
                                                        wgpu::BufferUsage::CopyDst);
@@ -276,7 +276,8 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
             // Record a CopyBufferRegion for each update
             // TODO(crbug.com/473354062): reduce number of calls by copying contiguous regions
             for (auto [i, update] : Enumerate(updates)) {
-                DAWN_ASSERT((update.data & 0xFFFF0000) == 0);  // Only low 16 bits used for type id
+                DAWN_OPT_ASSUME((update.data & 0xFFFF0000) ==
+                                0);  // Only low 16 bits used for type id
                 if (SamplerIndex samplerIndex = mSlotToSamplerIndex[update.slot];
                     samplerIndex != kInvalidSamplerIndex) {
                     // Store sampler index in high 16 bits, type id in low 16 bits
@@ -311,7 +312,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
         if (std::holds_alternative<raw_ptr<SamplerBase>>(diff.removed)) {
             // Return the sampler index and mark the slot as unused
             SamplerIndex samplerIndex = mSlotToSamplerIndex[diff.slot];
-            DAWN_ASSERT(samplerIndex != kInvalidSamplerIndex);
+            DAWN_OPT_ASSUME(samplerIndex != kInvalidSamplerIndex);
             mUnusedSamplerIndices.push_back(samplerIndex);
             mSlotToSamplerIndex[diff.slot] = kInvalidSamplerIndex;
         }
@@ -344,7 +345,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
                 // Take a new one and update the map
                 // TODO(crbug.com/499091557): Deduplicate samplers, making the slot point to the
                 // duplicate sampler's index.
-                DAWN_ASSERT(!mUnusedSamplerIndices.empty());
+                DAWN_OPT_ASSUME(!mUnusedSamplerIndices.empty());
                 SamplerIndex samplerIndex = mUnusedSamplerIndices.back();
                 mUnusedSamplerIndices.pop_back();
                 mSlotToSamplerIndex[diff.slot] = samplerIndex;

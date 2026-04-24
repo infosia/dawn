@@ -77,18 +77,18 @@ bool ErrorMonad::IsError() const {
     // ASSERT that the error state is initialized but also return that this is an error if it has
     // not been initialized in release builds. This makes sure that invalid accesses to initializing
     // objects are avoided.
-    DAWN_ASSERT((payload & kInitializedMask) == kInitialized);
+    DAWN_OPT_ASSUME((payload & kInitializedMask) == kInitialized);
     return payload != kInitializedNoErrorPayload;
 }
 
 void ErrorMonad::SetInitializedError() {
     uint64_t previousPayload = RefCountPayloadFetchAnd(kInitializedErrorPayload);
-    DAWN_ASSERT(previousPayload == kNotInitializedPayload);
+    DAWN_OPT_ASSUME(previousPayload == kNotInitializedPayload);
 }
 
 void ErrorMonad::SetInitializedNoError() {
     uint64_t previousPayload = RefCountPayloadFetchAnd(kInitializedNoErrorPayload);
-    DAWN_ASSERT(previousPayload == kNotInitializedPayload);
+    DAWN_OPT_ASSUME(previousPayload == kNotInitializedPayload);
 }
 
 ObjectBase::ObjectBase(DeviceBase* device) : ErrorMonad(), mDevice(device) {}
@@ -133,7 +133,7 @@ void ApiObjectList::Destroy(DestroyReason reason) {
             if (ApiObjectBase* object = node->value(); object->TryAddRef()) {
                 objectsToDestroy.push_back(object);
                 bool removed = node->RemoveFromList();
-                DAWN_ASSERT(removed);
+                DAWN_OPT_ASSUME(removed);
             }
 
             node = next;
@@ -170,7 +170,7 @@ ApiObjectBase::ApiObjectBase(DeviceBase* device, DelayedInitializationTag tag, S
 ApiObjectBase::ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag) : ObjectBase(device) {}
 
 ApiObjectBase::~ApiObjectBase() {
-    DAWN_ASSERT(!IsAlive());
+    DAWN_OPT_ASSUME(!IsAlive());
     delete mLabel.load(std::memory_order_acquire);
 }
 
@@ -241,13 +241,13 @@ void ApiObjectBase::LockAndDeleteThis() {
 }
 
 ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
-    DAWN_ASSERT(GetDevice() != nullptr);
+    DAWN_OPT_ASSUME(GetDevice() != nullptr);
     return GetDevice()->GetObjectTrackingList(GetType());
 }
 
 void ApiObjectBase::Destroy(DestroyReason reason) {
     ApiObjectList* list = GetObjectTrackingList();
-    DAWN_ASSERT(list != nullptr);
+    DAWN_OPT_ASSUME(list != nullptr);
     if (list->Untrack(this)) {
         DestroyImpl(reason);
     }

@@ -568,7 +568,7 @@ class Stream<std::variant<Types...>> {
     template <size_t N, typename LastType>
     static inline void WriteImpl(stream::Sink* sink, const VariantType& t) {
         // Variant must hold the last possible type if no previous match.
-        DAWN_ASSERT(std::holds_alternative<LastType>(t));
+        DAWN_OPT_ASSUME(std::holds_alternative<LastType>(t));
         // Record the type index
         StreamIn(sink, N);
         // Record the value
@@ -596,7 +596,7 @@ class Stream<std::variant<Types...>> {
     static inline MaybeError ReadImpl(stream::Source* source, VariantType* t, size_t typeId) {
         // typeId must be the id of last possible type N if not being 0..N-1, since it has been
         // validated in range 0..N
-        DAWN_ASSERT(typeId == N);
+        DAWN_OPT_ASSUME(typeId == N);
         // Read the value
         LastType value;
         DAWN_TRY(StreamOut(source, &value));

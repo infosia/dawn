@@ -44,7 +44,7 @@ template <typename Root, typename UnpackedPtrT, typename Ext>
 bool UnpackExtension(typename UnpackedPtrT::TupleType& unpacked,
                      typename UnpackedPtrT::BitsetType& bitset,
                      typename UnpackedPtrT::ChainType chain, bool* duplicate) {
-    DAWN_ASSERT(chain != nullptr);
+    DAWN_OPT_ASSUME(chain != nullptr);
     if (chain->sType == STypeFor<Ext>) {
         auto& member = std::get<Ext>(unpacked);
         if (member != nullptr && duplicate) {

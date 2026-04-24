@@ -894,7 +894,7 @@ void DeviceBase::StoreCachedBlob(const CacheKey& key, const Blob& blob) {
 }
 
 MaybeError DeviceBase::ValidateObject(const ApiObjectBase* object) const {
-    DAWN_ASSERT(object != nullptr);
+    DAWN_OPT_ASSUME(object != nullptr);
     DAWN_INVALID_IF(object->GetDevice() != this,
                     "%s is associated with %s, and cannot be used with %s.", object,
                     object->GetDevice(), this);
@@ -905,7 +905,7 @@ MaybeError DeviceBase::ValidateObject(const ApiObjectBase* object) const {
 
 MaybeError DeviceBase::IsNotErrorObject(const ApiObjectBase* object) const {
     DAWN_CHECK(!IsValidationEnabled());
-    DAWN_ASSERT(object != nullptr);
+    DAWN_OPT_ASSUME(object != nullptr);
     DAWN_INVALID_IF(object->IsError(), "%s is invalid due to a previous error.", object);
 
     return {};
@@ -1689,7 +1689,7 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
                                wgpu::FeatureLevel level) {
     DAWN_CHECK(deviceDescriptor);
     // Validate all required features with device toggles.
-    DAWN_ASSERT(GetPhysicalDevice()->SupportsAllRequiredFeatures(
+    DAWN_OPT_ASSUME(GetPhysicalDevice()->SupportsAllRequiredFeatures(
         {deviceDescriptor->requiredFeatures, deviceDescriptor->requiredFeatureCount}, mToggles));
 
     for (uint32_t i = 0; i < deviceDescriptor->requiredFeatureCount; ++i) {
@@ -2424,7 +2424,7 @@ void DeviceBase::ForceEnableFeatureForTesting(Feature feature) {
 void DeviceBase::FlushCallbackTaskQueue() {
     // Callbacks might cause re-entrances. Mutex shouldn't be locked. So we expect there is no
     // locked mutex before entering this method.
-    DAWN_ASSERT(mMutex == nullptr || !mMutex->IsLockedByCurrentThread());
+    DAWN_OPT_ASSUME(mMutex == nullptr || !mMutex->IsLockedByCurrentThread());
 
     Ref<CallbackTaskManager> callbackTaskManager;
 
@@ -2608,7 +2608,7 @@ void DeviceBase::DeferIfLocked(std::function<void()> f) {
 
     // Otherwise, verify that we are only calling this in the thread that is holding the lock and
     // defer the function.
-    DAWN_ASSERT(mMutex->IsLockedByCurrentThread() && mMutex->mDefer);
+    DAWN_OPT_ASSUME(mMutex->IsLockedByCurrentThread() && mMutex->mDefer);
     mMutex->mDefer->Append(std::move(f));
 }
 
@@ -2617,7 +2617,7 @@ bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
 }
 
 void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     std::string prefix = absl::StrFormat("device_%p", static_cast<const void*>(this));
     GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* texture) {
         static_cast<const TextureBase*>(texture)->DumpMemoryStatistics(dump, prefix.c_str());
@@ -2628,7 +2628,7 @@ void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
 }
 
 MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     MemoryUsageInfo info = {};
 
     GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* ptr) {
@@ -2659,7 +2659,7 @@ AllocatorMemoryInfo DeviceBase::GetAllocatorMemoryInfo() const {
 }
 
 bool DeviceBase::ReduceMemoryUsage() {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     if (ConsumedError(GetQueue()->CheckPassedSerials())) {
         return false;
     }
@@ -2679,7 +2679,7 @@ bool DeviceBase::ReduceMemoryUsage() {
 }
 
 void DeviceBase::PerformIdleTasks() {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     PerformIdleTasksImpl();
 }
 

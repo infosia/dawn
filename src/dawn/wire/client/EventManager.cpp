@@ -49,7 +49,7 @@ namespace dawn::wire::client {
 TrackedEvent::TrackedEvent(WGPUCallbackMode mode) : mMode(mode) {}
 
 TrackedEvent::~TrackedEvent() {
-    DAWN_ASSERT(mEventState == EventState::Complete);
+    DAWN_OPT_ASSUME(mEventState == EventState::Complete);
 }
 
 WGPUCallbackMode TrackedEvent::GetCallbackMode() const {
@@ -61,7 +61,7 @@ bool TrackedEvent::IsReady() const {
 }
 
 void TrackedEvent::SetReady() {
-    DAWN_ASSERT(mEventState != EventState::Complete);
+    DAWN_OPT_ASSUME(mEventState != EventState::Complete);
     mEventState = EventState::Ready;
 }
 
@@ -121,7 +121,7 @@ std::pair<FutureID, bool> EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
 
     mTrackedEvents.Use([&](auto trackedEvents) {
         auto [it, inserted] = trackedEvents->emplace(futureID, std::move(event));
-        DAWN_ASSERT(inserted);
+        DAWN_OPT_ASSUME(inserted);
     });
 
     return {futureID, true};
@@ -134,7 +134,7 @@ void EventManager::TransitionTo(EventManager::State state) {
     }
 
     // Only forward state transitions are allowed.
-    DAWN_ASSERT(state > mState);
+    DAWN_OPT_ASSUME(state > mState);
     mState = state;
 
     while (true) {
@@ -200,7 +200,7 @@ namespace {
 bool UpdateAnyCompletedOrReady(std::span<WGPUFutureWaitInfo> waitInfos,
                                const EventManager::EventMap& allEvents,
                                EventManager::EventMap* eventsToComplete) {
-    DAWN_ASSERT(eventsToComplete->empty());
+    DAWN_OPT_ASSUME(eventsToComplete->empty());
 
     bool anyCompleted = false;
     for (auto& waitInfo : waitInfos) {
@@ -219,7 +219,7 @@ bool UpdateAnyCompletedOrReady(std::span<WGPUFutureWaitInfo> waitInfos,
         }
     }
 
-    DAWN_ASSERT(eventsToComplete->empty() || anyCompleted);
+    DAWN_OPT_ASSUME(eventsToComplete->empty() || anyCompleted);
     return anyCompleted;
 }
 }  // anonymous namespace

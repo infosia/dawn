@@ -52,8 +52,8 @@ class InlineMemoryTransferService : public MemoryTransferService {
                                  size_t offset,
                                  std::span<char> serializeData) override {
             if (!data.empty()) {
-                DAWN_ASSERT(data.data() != nullptr);
-                DAWN_ASSERT(serializeData.data() != nullptr);
+                DAWN_OPT_ASSUME(data.data() != nullptr);
+                DAWN_OPT_ASSUME(serializeData.data() != nullptr);
                 memcpy(serializeData.data(), data.data(), data.size());
             }
         }
@@ -98,7 +98,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
     bool DeserializeReadHandle(const void* deserializePointer,
                                size_t deserializeSize,
                                ReadHandle** readHandle) override {
-        DAWN_ASSERT(readHandle != nullptr);
+        DAWN_OPT_ASSUME(readHandle != nullptr);
         *readHandle = new ReadHandleImpl();
         return true;
     }
@@ -106,7 +106,7 @@ class InlineMemoryTransferService : public MemoryTransferService {
     bool DeserializeWriteHandle(const void* deserializePointer,
                                 size_t deserializeSize,
                                 WriteHandle** writeHandle) override {
-        DAWN_ASSERT(writeHandle != nullptr);
+        DAWN_OPT_ASSUME(writeHandle != nullptr);
         *writeHandle = new WriteHandleImpl();
         return true;
     }

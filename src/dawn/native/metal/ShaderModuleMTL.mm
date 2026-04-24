@@ -469,14 +469,14 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
                  "label", utils::GetLabelForTrace(GetLabel()));
 
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(out);
+    DAWN_OPT_ASSUME(!IsError());
+    DAWN_OPT_ASSUME(out);
 
     const char* entryPointName = programmableStage.entryPoint.c_str();
 
     // Vertex stages must specify a renderPipeline
     if (stage == SingleShaderStage::Vertex) {
-        DAWN_ASSERT(renderPipeline != nullptr);
+        DAWN_OPT_ASSUME(renderPipeline != nullptr);
     }
 
     CacheResult<MslCompilation> mslCompilation;
@@ -545,7 +545,7 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                         [error.localizedDescription UTF8String], mslCompilation->msl);
         // clang-format on
     }
-    DAWN_ASSERT(library != nil);
+    DAWN_OPT_ASSUME(library != nil);
     timer.RecordMicroseconds("Metal.newLibraryWithSource.CacheMiss");
 
     NSRef<NSString> name = AcquireNSRef(

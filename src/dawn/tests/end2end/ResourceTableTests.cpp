@@ -1101,7 +1101,7 @@ std::vector<ResourceDescForTypeIDCase> MakeDescForTypeIDCases() {
 TEST_P(ResourceTableTests, HasResourceCompatibilityAllTypes) {
     // We rely on RGBA32Float being unfilterable for this test so that we can test both filterable /
     // unfilterable float without needing any additional extensions.
-    DAWN_ASSERT(!device.HasFeature(wgpu::FeatureName::Float32Filterable));
+    DAWN_OPT_ASSUME(!device.HasFeature(wgpu::FeatureName::Float32Filterable));
 
     auto cases = MakeDescForTypeIDCases();
 

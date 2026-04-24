@@ -506,7 +506,7 @@ MaybeError RenderPipeline::InitializeShaders() {
             const uint32_t uavEndIndex =
                 ToBackend(GetLayout())->GetUAVStartIndex(SingleShaderStage::Fragment) +
                 ToBackend(GetLayout())->GetUAVCount(SingleShaderStage::Fragment);
-            DAWN_ASSERT(uavEndIndex > storageAttachmentSlots.size());
+            DAWN_OPT_ASSUME(uavEndIndex > storageAttachmentSlots.size());
             // Currently all the pixel local storage UAVs are allocated at the last several UAV
             // slots. For example, when there are 4 pixel local storage attachments, we will
             // allocate register u60 to u63 for them.

@@ -276,9 +276,9 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
     wgpu::SType type;
     DAWN_TRY_ASSIGN(type,
                     (unpacked.ValidateBranches<Branch<SharedTextureMemoryIOSurfaceDescriptor>>()));
-    DAWN_ASSERT(type == wgpu::SType::SharedTextureMemoryIOSurfaceDescriptor);
+    DAWN_OPT_ASSUME(type == wgpu::SType::SharedTextureMemoryIOSurfaceDescriptor);
     const auto* descriptor = unpacked.Get<SharedTextureMemoryIOSurfaceDescriptor>();
-    DAWN_ASSERT(descriptor != nullptr);
+    DAWN_OPT_ASSUME(descriptor != nullptr);
 
     DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryIOSurface), "%s is not enabled.",
                     wgpu::FeatureName::SharedTextureMemoryIOSurface);
@@ -294,9 +294,9 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
     wgpu::SType type;
     DAWN_TRY_ASSIGN(type,
                     (unpacked.ValidateBranches<Branch<SharedFenceMTLSharedEventDescriptor>>()));
-    DAWN_ASSERT(type == wgpu::SType::SharedFenceMTLSharedEventDescriptor);
+    DAWN_OPT_ASSUME(type == wgpu::SType::SharedFenceMTLSharedEventDescriptor);
     const auto* descriptor = unpacked.Get<SharedFenceMTLSharedEventDescriptor>();
-    DAWN_ASSERT(descriptor != nullptr);
+    DAWN_OPT_ASSUME(descriptor != nullptr);
 
     DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceMTLSharedEvent), "%s is not enabled.",
                     wgpu::FeatureName::SharedFenceMTLSharedEvent);
@@ -329,7 +329,7 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            uint64_t size) {
     // Metal validation layers forbid  0-sized copies, assert it is skipped prior to calling
     // this function.
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     ToBackend(destination)
         ->EnsureDataInitializedAsDestination(
@@ -372,7 +372,7 @@ MaybeError Device::CopyFromStagingToTextureImpl(BufferBase* source,
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other

@@ -110,7 +110,7 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
         if (timeout > Nanoseconds(0)) {
             // We should never need to wait for queue serials after the device has been
             // Disconnected.
-            DAWN_ASSERT(GetDevice()->GetState() != DeviceBase::State::Disconnected);
+            DAWN_OPT_ASSUME(GetDevice()->GetState() != DeviceBase::State::Disconnected);
 
             // Wait on the serial if it hasn't passed yet.
             ExecutionSerial completedSerial = kWaitSerialTimeout;
@@ -130,7 +130,7 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
         if (timeout > Nanoseconds(0)) {
             // We should never need to wait for queue serials after the device has been
             // Disconnected.
-            DAWN_ASSERT(GetDevice()->GetState() != DeviceBase::State::Disconnected);
+            DAWN_OPT_ASSUME(GetDevice()->GetState() != DeviceBase::State::Disconnected);
 
             // Wait on the serial if it hasn't passed yet.
             ExecutionSerial completedSerial = kWaitSerialTimeout;
@@ -151,7 +151,7 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
 
 MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     // Currently waiting for idle for destruction requires the device lock to be held.
-    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(GetDevice()->IsLockedByCurrentThreadIfNeeded());
     mState.Use<NotifyType::None>([](auto state) {
         DAWN_CHECK(!state->mWaitingForIdle);
         state->mWaitingForIdle = true;

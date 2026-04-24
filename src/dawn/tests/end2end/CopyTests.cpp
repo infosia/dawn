@@ -103,7 +103,7 @@ class ColorExpectation : public detail::CustomTextureExpectation {
     uint32_t DataSize() override { return ColorType::kDataSize; }
 
     testing::AssertionResult Check(const void* data, size_t size) override {
-        DAWN_ASSERT(size == sizeof(ColorType) * mExpected.size());
+        DAWN_OPT_ASSUME(size == sizeof(ColorType) * mExpected.size());
         const ColorType* actual = static_cast<const ColorType*>(data);
 
         for (size_t i = 0; i < mExpected.size(); ++i) {
@@ -118,7 +118,7 @@ class ColorExpectation : public detail::CustomTextureExpectation {
 
   private:
     static CompRepType GetComponent(const ColorType& color, size_t idx) {
-        DAWN_ASSERT(idx <= kNumComponents);
+        DAWN_OPT_ASSUME(idx <= kNumComponents);
         return color.GetCompRep(idx);
     }
 
@@ -714,7 +714,7 @@ class CopyTests_B2T : public CopyTests_WithFormatParam {
                     wgpu::TextureDimension dimension,
                     PixelType::ComponentRepresentation tolerance = {}) {
         const uint32_t bytesPerTexel = PixelType::kDataSize;
-        DAWN_ASSERT(bytesPerTexel == utils::GetTexelBlockSizeInBytes(textureSpec.format));
+        DAWN_OPT_ASSUME(bytesPerTexel == utils::GetTexelBlockSizeInBytes(textureSpec.format));
         const utils::TextureDataCopyLayout copyLayout =
             utils::GetTextureDataCopyLayoutForTextureAtLevel(
                 textureSpec.format, textureSpec.textureSize, textureSpec.copyLevel, dimension,
@@ -1018,8 +1018,8 @@ class CopyTests_B2B : public DawnTest {
                 uint64_t destinationSize,
                 uint64_t destinationOffset,
                 uint64_t copySize) {
-        DAWN_ASSERT(sourceSize % 4 == 0);
-        DAWN_ASSERT(destinationSize % 4 == 0);
+        DAWN_OPT_ASSUME(sourceSize % 4 == 0);
+        DAWN_OPT_ASSUME(destinationSize % 4 == 0);
 
         // Create our two test buffers, destination filled with zeros, source filled with non-zeroes
         std::vector<uint32_t> zeroes(static_cast<size_t>(destinationSize / sizeof(uint32_t)));
@@ -1057,8 +1057,8 @@ class ClearBufferTests : public DawnTest {
     // This is the same signature as ClearBuffer except that the buffers are replaced by
     // only their size.
     void DoTest(uint64_t bufferSize, uint64_t clearOffset, uint64_t clearSize) {
-        DAWN_ASSERT(bufferSize % 4 == 0);
-        DAWN_ASSERT(clearSize % 4 == 0);
+        DAWN_OPT_ASSUME(bufferSize % 4 == 0);
+        DAWN_OPT_ASSUME(clearSize % 4 == 0);
 
         // Create our test buffer, filled with non-zeroes
         std::vector<uint32_t> bufferData(static_cast<size_t>(bufferSize / sizeof(uint32_t)));

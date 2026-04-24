@@ -111,7 +111,7 @@ ResultOrError<WGPUSurface> CreateWGPUSurface(const DawnProcTable& procs,
     }
 
     WGPUSurface innerSurface = procs.instanceCreateSurface(instance, &descriptor);
-    DAWN_ASSERT(innerSurface);
+    DAWN_OPT_ASSUME(innerSurface);
     return innerSurface;
 }
 
@@ -131,7 +131,7 @@ ResultOrError<Ref<SwapChain>> SwapChain::Create(Device* device,
         DAWN_TRY_ASSIGN(innerSurface,
                         CreateWGPUSurface(*device->wgpu, device->GetInnerInstance(), surface));
     }
-    DAWN_ASSERT(innerSurface);
+    DAWN_OPT_ASSUME(innerSurface);
 
     WGPUSurfaceConfiguration innerConfig = {};
     innerConfig.device = device->GetInnerHandle();
@@ -164,7 +164,7 @@ SwapChain::SwapChain(Device* device,
 SwapChain::~SwapChain() = default;
 
 WGPUSurface SwapChain::GetInnerSurface() const {
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
     return mInnerHandle;
 }
 
@@ -178,7 +178,7 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
 
     if (info.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal &&
         info.status != wgpu::SurfaceGetCurrentTextureStatus::SuccessSuboptimal) {
-        DAWN_ASSERT(innerSurfaceTexture.texture == nullptr);
+        DAWN_OPT_ASSUME(innerSurfaceTexture.texture == nullptr);
         return info;
     }
 
@@ -202,7 +202,7 @@ MaybeError SwapChain::PresentImpl() {
 
     DAWN_TRY(CheckWGPUSuccess(status, "surfacePresent"));
 
-    DAWN_ASSERT(mCurrentTexture != nullptr);
+    DAWN_OPT_ASSUME(mCurrentTexture != nullptr);
     mCurrentTexture->Destroy();
     mCurrentTexture = nullptr;
 

@@ -74,7 +74,7 @@ std::vector<ErrorScopePendingAsyncTask> ErrorScope::AcquirePendingAsyncTasks() {
 }
 
 void ErrorScope::CaptureError(wgpu::ErrorType type, std::string_view message) {
-    DAWN_ASSERT(type == mMatchedErrorType);
+    DAWN_OPT_ASSUME(type == mMatchedErrorType);
     // Record the error if the scope doesn't have one yet.
     if (mCapturedError == wgpu::ErrorType::NoError) {
         mCapturedError = type;
@@ -91,7 +91,7 @@ void ErrorScopeStack::Push(wgpu::ErrorFilter filter) {
 }
 
 ErrorScope ErrorScopeStack::Pop() {
-    DAWN_ASSERT(!mScopes.empty());
+    DAWN_OPT_ASSUME(!mScopes.empty());
     ErrorScope scope = std::move(mScopes.back());
     mScopes.pop_back();
     return scope;
