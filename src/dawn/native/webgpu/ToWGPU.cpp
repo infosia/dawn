@@ -161,8 +161,8 @@ WGPUPassTimestampWrites ToWGPU(const TimestampWrites& writes) {
     return {
         .nextInChain = nullptr,
         .querySet = ToBackend(writes.querySet)->GetInnerHandle(),
-        .beginningOfPassWriteIndex = writes.beginningOfPassWriteIndex,
-        .endOfPassWriteIndex = writes.endOfPassWriteIndex,
+        .beginningOfPassWriteIndex = uint32_t{writes.beginningOfPassWriteIndex},
+        .endOfPassWriteIndex = uint32_t{writes.endOfPassWriteIndex},
     };
 }
 
