@@ -28,16 +28,19 @@
 #ifndef SRC_DAWN_NATIVE_QUERYSET_H_
 #define SRC_DAWN_NATIVE_QUERYSET_H_
 
-#include <vector>
-
+#include "dawn/common/ityp_vector.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
 
 MaybeError ValidateQuerySetDescriptor(DeviceBase* device, const QuerySetDescriptor* descriptor);
+
+uint32_t ToQueryStorageSize(QueryIndex count);
+inline constexpr uint32_t kSingleQueryStorageSize = 8;  // size of a uint64_t
 
 class QuerySetBase : public ApiObjectBase {
   public:
@@ -46,13 +49,15 @@ class QuerySetBase : public ApiObjectBase {
     ObjectType GetType() const override;
 
     wgpu::QueryType GetQueryType() const;
-    uint32_t GetQueryCount() const;
+    QueryIndex GetQueryCount() const;
 
-    const std::vector<bool>& GetQueryAvailability() const;
-    void SetQueryAvailability(uint32_t index, bool available);
+    bool IsQueryAvailable(QueryIndex index) const;
+    bool AreAllQueriesAvailable(QueryIndex first, QueryIndex count) const;
+    void SetQueryAvailability(QueryIndex index, bool available);
 
     MaybeError ValidateCanUseInSubmitNow() const;
 
+    // Dawn API
     void APIDestroy();
     wgpu::QueryType APIGetType() const;
     uint32_t APIGetCount() const;
@@ -69,13 +74,13 @@ class QuerySetBase : public ApiObjectBase {
 
   private:
     wgpu::QueryType mQueryType;
-    uint32_t mQueryCount;
+    QueryIndex mQueryCount;
 
     enum class QuerySetState { Unavailable, Available, Destroyed };
     QuerySetState mState = QuerySetState::Unavailable;
 
     // Indicates the available queries on the query set for resolving
-    std::vector<bool> mQueryAvailability;
+    ityp::vector<QueryIndex, bool> mQueryAvailability;
 };
 
 }  // namespace dawn::native
