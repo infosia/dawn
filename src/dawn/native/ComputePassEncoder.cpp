@@ -580,7 +580,9 @@ void ComputePassEncoder::APISetImmediates(uint32_t offset, const void* data, siz
         "encoding %s.SetImmediates(%u, %u, ...).", this, offset, size);
 }
 
-void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex) {
+void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndexUntyped) {
+    QueryIndex queryIndex{queryIndexUntyped};
+
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {

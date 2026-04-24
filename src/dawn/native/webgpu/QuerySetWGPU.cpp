@@ -73,7 +73,7 @@ MaybeError QuerySet::AddReferenced(CaptureContext& captureContext) {
 MaybeError QuerySet::CaptureCreationParameters(CaptureContext& captureContext) {
     schema::QuerySet querySet{{
         .type = GetQueryType(),
-        .count = GetQueryCount(),
+        .count = uint32_t{GetQueryCount()},
     }};
     Serialize(captureContext, querySet);
     return {};
