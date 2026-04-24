@@ -89,6 +89,68 @@ using testing::MockCppCallback;
 DawnTestEnvironment* gTestEnv = nullptr;
 DawnTestBase* gCurrentTest = nullptr;
 
+#if DAWN_PLATFORM_IS(WINDOWS)
+struct WindowsVersion {
+    uint64_t buildNumber;
+    uint64_t updateBuildRevision;
+
+    auto operator<=>(const WindowsVersion& other) const {
+        return std::tie(buildNumber, updateBuildRevision) <=>
+               std::tie(other.buildNumber, other.updateBuildRevision);
+    }
+    bool operator==(const WindowsVersion& other) const = default;
+};
+
+// Referenced from base/win/windows_version.cc in Chromium
+WindowsVersion GetCurrentWindowsVersion() {
+    // Referenced from base/win/registry.cc in Chromium
+    auto ReadFromSZRegistryKey = [](HKEY registerKey, const char* registerKeyName) -> uint64_t {
+        DWORD valueType;
+        DWORD returnSize;
+        if (RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType, nullptr,
+                             &returnSize) != ERROR_SUCCESS) {
+            return 0;
+        }
+        std::vector<char> returnStringValue(returnSize);
+        auto hr = RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType,
+                                   reinterpret_cast<LPBYTE>(returnStringValue.data()), &returnSize);
+        if (hr != ERROR_SUCCESS || valueType != REG_SZ) {
+            return 0;
+        }
+        constexpr int32_t kRadix = 10;
+        return strtol(returnStringValue.data(), nullptr, kRadix);
+    };
+
+    // Referenced from base/win/registry.cc in Chromium
+    auto ReadFromDWORDRegistryKey = [](HKEY registerKey, const char* registerKeyName) -> uint64_t {
+        DWORD valueType;
+        DWORD value = 0;
+        DWORD valueSize = sizeof(value);
+        if (RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType,
+                             reinterpret_cast<LPBYTE>(&value), &valueSize) != ERROR_SUCCESS ||
+            valueType != REG_DWORD) {
+            return 0;
+        }
+        return value;
+    };
+
+    constexpr wchar_t kRegKeyWindowsNTCurrentVersion[] =
+        L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
+    HKEY hKey;
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, kRegKeyWindowsNTCurrentVersion, 0, KEY_QUERY_VALUE,
+                      &hKey) != ERROR_SUCCESS) {
+        return {0, 0};
+    }
+
+    WindowsVersion version = {
+        ReadFromSZRegistryKey(hKey, "CurrentBuildNumber"),
+        ReadFromDWORDRegistryKey(hKey, "UBR"),
+    };
+    RegCloseKey(hKey);
+    return version;
+}
+#endif
+
 template <typename T>
 void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t count) {
     static constexpr unsigned int kBytes = sizeof(T);
@@ -1177,41 +1239,21 @@ bool DawnTestBase::IsWindows11() const {
         return false;
     }
 
-    // Referenced from base/win/registry.cc in Chromium
-    auto ReadFromSZRegistryKey = [](HKEY registerKey, const char* registerKeyName) -> uint64_t {
-        DWORD valueType;
-        DWORD returnSize;
-        if (RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType, nullptr,
-                             &returnSize) != ERROR_SUCCESS) {
-            return 0;
-        }
-        std::vector<char> returnStringValue(returnSize);
-        auto hr = RegQueryValueExA(registerKey, registerKeyName, nullptr, &valueType,
-                                   reinterpret_cast<LPBYTE>(returnStringValue.data()), &returnSize);
-        if (hr != ERROR_SUCCESS || valueType != REG_SZ) {
-            return 0;
-        }
-        constexpr int32_t kRadix = 10;
-        return strtol(returnStringValue.data(), nullptr, kRadix);
-    };
+    return IsWindowsVersionOrGreater(22000u);
+#else
+    return false;
+#endif
+}
 
-    // Referenced from base/win/windows_version.cc in Chromium
-    auto GetCurrentBuildNumber = [&]() -> uint64_t {
-        constexpr wchar_t kRegKeyWindowsNTCurrentVersion[] =
-            L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion";
-        HKEY hKey;
-        if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, kRegKeyWindowsNTCurrentVersion, 0, KEY_QUERY_VALUE,
-                          &hKey) != ERROR_SUCCESS) {
-            return false;
-        }
-        uint64_t v = ReadFromSZRegistryKey(hKey, "CurrentBuildNumber");
-        RegCloseKey(hKey);
-        return v;
-    };
+bool DawnTestBase::IsWindowsVersionOrGreater(uint64_t buildNumber,
+                                             uint64_t updateBuildRevision) const {
+#if DAWN_PLATFORM_IS(WINDOWS)
+    if (!IsWindows10OrGreater()) {
+        return false;
+    }
 
-    static uint64_t currentBuildNumber = GetCurrentBuildNumber();
-    return currentBuildNumber >= 22000u;
-
+    static const WindowsVersion currentVersion = GetCurrentWindowsVersion();
+    return currentVersion >= WindowsVersion{buildNumber, updateBuildRevision};
 #else
     return false;
 #endif
