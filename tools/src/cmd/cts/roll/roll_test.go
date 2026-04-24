@@ -212,7 +212,7 @@ func TestRoller_GenResourceFilesList_NonExistentDirectory(t *testing.T) {
 	_, err := r.genResourceFilesList(context.Background(), wrapper)
 	// TODO(crbug.com/436025865): Add a leading / when FSTestOSWrapper properly
 	// reports absolute paths in errors.
-	require.ErrorContains(t, err, "open non_existent/src/resources: file does not exist")
+	require.ErrorContains(t, err, "non_existent/src/resources: file does not exist")
 }
 
 func TestRoller_GenResourceFilesList_Success(t *testing.T) {
@@ -253,7 +253,7 @@ func TestRoller_GenWebTestSources_NonExistentDirectory(t *testing.T) {
 	_, err := r.genWebTestSources(context.Background(), wrapper)
 	// TODO(crbug.com/436025865): Add a leading / when FSTestOSWrapper properly
 	// reports absolute paths in errors.
-	require.ErrorContains(t, err, "open non_existent/src/webgpu: file does not exist")
+	require.ErrorContains(t, err, "non_existent/src/webgpu: file does not exist")
 }
 
 func _setupGenWebTestSourcesFilesystem(wrapper oswrapper.FSTestOSWrapper, htmlContent string, t *testing.T) {
