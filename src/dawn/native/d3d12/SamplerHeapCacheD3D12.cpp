@@ -49,14 +49,14 @@ SamplerHeapCacheEntry::SamplerHeapCacheEntry(SamplerHeapCache* cache,
                                              std::vector<Sampler*> samplers,
                                              CPUDescriptorHeapAllocation allocation)
     : mCPUAllocation(std::move(allocation)), mSamplers(std::move(samplers)), mCache(cache) {
-    DAWN_ASSERT(mCache != nullptr);
-    DAWN_ASSERT(mCPUAllocation.IsValid());
-    DAWN_ASSERT(!mSamplers.empty());
+    DAWN_CHECK(mCache != nullptr);
+    DAWN_CHECK(mCPUAllocation.IsValid());
+    DAWN_CHECK(!mSamplers.empty());
 }
 
 std::vector<Sampler*>&& SamplerHeapCacheEntry::AcquireSamplers() {
     // This function should only be called when SamplerHeapCacheEntry is created for blueprint.
-    DAWN_ASSERT(!mCPUAllocation.IsValid());
+    DAWN_CHECK(!mCPUAllocation.IsValid());
     return std::move(mSamplers);
 }
 
@@ -64,14 +64,14 @@ SamplerHeapCacheEntry::~SamplerHeapCacheEntry() {
     // If this is a blueprint then the CPU allocation cannot exist and has no entry to remove.
     if (mCPUAllocation.IsValid()) {
         mCache->RemoveCacheEntry(this);
-        DAWN_ASSERT(!mSamplers.empty());
+        DAWN_CHECK(!mSamplers.empty());
         auto* allocator = mCache->GetDevice()->GetSamplerStagingDescriptorAllocator(
             static_cast<uint32_t>(mSamplers.size()));
-        DAWN_ASSERT(allocator != nullptr);
+        DAWN_CHECK(allocator != nullptr);
         (*allocator)->Deallocate(&mCPUAllocation);
     }
 
-    DAWN_ASSERT(!mCPUAllocation.IsValid());
+    DAWN_CHECK(!mCPUAllocation.IsValid());
 }
 
 bool SamplerHeapCacheEntry::Populate(ShaderVisibleDescriptorAllocator* allocator) {
@@ -79,7 +79,7 @@ bool SamplerHeapCacheEntry::Populate(ShaderVisibleDescriptorAllocator* allocator
         return true;
     }
 
-    DAWN_ASSERT(!mSamplers.empty());
+    DAWN_CHECK(!mSamplers.empty());
 
     Device* device = allocator->GetDevice();
 
@@ -126,10 +126,9 @@ ResultOrError<Ref<SamplerHeapCacheEntry>> SamplerHeapCache::GetOrCreate(const Bi
         }
     }
     // All visible samplers should have been added
-    DAWN_ASSERT(samplers.size() == samplerCount);
+    DAWN_CHECK(samplers.size() == samplerCount);
 
     // Check the cache if there exists a sampler heap allocation that corresponds to the
-    // samplers.
     SamplerHeapCacheEntry blueprint(std::move(samplers));
     auto iter = mCache.find(&blueprint);
     if (iter != mCache.end()) {
@@ -166,7 +165,7 @@ ResultOrError<Ref<SamplerHeapCacheEntry>> SamplerHeapCache::GetOrCreate(const Bi
 SamplerHeapCache::SamplerHeapCache(Device* device) : mDevice(device) {}
 
 SamplerHeapCache::~SamplerHeapCache() {
-    DAWN_ASSERT(mCache.empty());
+    DAWN_CHECK(mCache.empty());
 }
 
 Device* SamplerHeapCache::GetDevice() const {
@@ -174,9 +173,9 @@ Device* SamplerHeapCache::GetDevice() const {
 }
 
 void SamplerHeapCache::RemoveCacheEntry(SamplerHeapCacheEntry* entry) {
-    DAWN_ASSERT(entry->GetRefCountForTesting() == 0);
+    DAWN_CHECK(entry->GetRefCountForTesting() == 0);
     size_t removedCount = mCache.erase(entry);
-    DAWN_ASSERT(removedCount == 1);
+    DAWN_CHECK(removedCount == 1);
 }
 
 size_t SamplerHeapCacheEntry::HashFunc::operator()(const SamplerHeapCacheEntry* entry) const {

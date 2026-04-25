@@ -58,16 +58,16 @@ GLenum TargetForTextureViewDimension(wgpu::TextureViewDimension dimension, uint3
             if (sampleCount > 1) {
                 return GL_TEXTURE_2D_MULTISAMPLE;
             }
-            DAWN_ASSERT(sampleCount == 1);
+            DAWN_CHECK(sampleCount == 1);
             return GL_TEXTURE_2D_ARRAY;
         case wgpu::TextureViewDimension::Cube:
-            DAWN_ASSERT(sampleCount == 1);
+            DAWN_CHECK(sampleCount == 1);
             return GL_TEXTURE_CUBE_MAP;
         case wgpu::TextureViewDimension::CubeArray:
-            DAWN_ASSERT(sampleCount == 1);
+            DAWN_CHECK(sampleCount == 1);
             return GL_TEXTURE_CUBE_MAP_ARRAY;
         case wgpu::TextureViewDimension::e3D:
-            DAWN_ASSERT(sampleCount == 1);
+            DAWN_CHECK(sampleCount == 1);
             return GL_TEXTURE_3D;
 
         case wgpu::TextureViewDimension::Undefined:
@@ -243,7 +243,7 @@ MaybeError FramebufferTextureHelper(const OpenGLFunctions& gl,
             break;
         }
         default:
-            DAWN_ASSERT(textarget == GL_TEXTURE_2D || textarget == GL_TEXTURE_2D_MULTISAMPLE);
+            DAWN_CHECK(textarget == GL_TEXTURE_2D || textarget == GL_TEXTURE_2D_MULTISAMPLE);
             DAWN_GL_TRY(
                 gl, FramebufferTexture2D(target, attachment, textarget, textureHandle, mipLevel));
             break;
@@ -414,7 +414,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
             DAWN_GL_TRY(gl, Enable(GL_SCISSOR_TEST));
             DAWN_GL_TRY(gl, DeleteFramebuffers(1, &framebuffer));
         } else {
-            DAWN_ASSERT(range.aspects == Aspect::Color);
+            DAWN_CHECK(range.aspects == Aspect::Color);
 
             // For gl.ClearBufferiv/uiv calls
             constexpr std::array<GLuint, 4> kClearColorDataUint0 = {0u, 0u, 0u, 0u};
@@ -430,7 +430,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
 
             static constexpr uint32_t MAX_TEXEL_SIZE = 16;
             const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
-            DAWN_ASSERT(blockInfo.byteSize <= MAX_TEXEL_SIZE);
+            DAWN_CHECK(blockInfo.byteSize <= MAX_TEXEL_SIZE);
 
             // For gl.ClearTexSubImage calls
             constexpr std::array<GLbyte, MAX_TEXEL_SIZE> kClearColorDataBytes0 = {
@@ -527,11 +527,11 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
             }
         }
     } else {
-        DAWN_ASSERT(range.aspects == Aspect::Color);
+        DAWN_CHECK(range.aspects == Aspect::Color);
 
         // create temp buffer with clear color to copy to the texture image
         const TexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(Aspect::Color).block;
-        DAWN_ASSERT(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
+        DAWN_CHECK(kTextureBytesPerRowAlignment % blockInfo.byteSize == 0);
 
         Extent3D largestMipSize =
             GetMipLevelSingleSubresourcePhysicalSize(range.baseMipLevel, Aspect::Color);
@@ -539,8 +539,8 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
             Align((largestMipSize.width / blockInfo.width) * blockInfo.byteSize, 4);
 
         // Make sure that we are not rounding
-        DAWN_ASSERT(bytesPerRow % blockInfo.byteSize == 0);
-        DAWN_ASSERT(largestMipSize.height % blockInfo.height == 0);
+        DAWN_CHECK(bytesPerRow % blockInfo.byteSize == 0);
+        DAWN_CHECK(largestMipSize.height % blockInfo.height == 0);
 
         uint64_t bufferSize64 = static_cast<uint64_t>(bytesPerRow) *
                                 (largestMipSize.height / blockInfo.height) *
@@ -648,7 +648,7 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
                          view->mHandle = 0;
                      } else if (view->mOwnsHandle == OwnsHandle::Yes) {
                          GLuint handle = 0;
-                         DAWN_ASSERT(gl.IsAtLeastGL(4, 3));
+                         DAWN_CHECK(gl.IsAtLeastGL(4, 3));
                          DAWN_GL_TRY(gl, GenTextures(1, &handle));
                          DAWN_GL_TRY(gl,
                                      TextureView(handle, view->GetGLTarget(), texture->GetHandle(),
@@ -685,7 +685,7 @@ void TextureView::DestroyImpl(DestroyReason reason) {
 }
 
 GLuint TextureView::GetHandle() const {
-    DAWN_ASSERT(mHandle != 0);
+    DAWN_CHECK(mHandle != 0);
     return mHandle;
 }
 
@@ -697,8 +697,8 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
                                           GLenum target,
                                           GLenum attachment,
                                           GLuint depthSlice) {
-    DAWN_ASSERT(depthSlice <
-                static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
+    DAWN_CHECK(depthSlice <
+               static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
 
     // Use the base texture where possible to minimize the amount of copying required on GLES.
     bool useOwnView = GetFormat().format != GetTexture()->GetFormat().format &&
@@ -726,7 +726,7 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
         arrayLayer = GetBaseArrayLayer() + depthSlice;
     }
 
-    DAWN_ASSERT(textureHandle != 0);
+    DAWN_CHECK(textureHandle != 0);
 
     return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,
                                     arrayLayer);

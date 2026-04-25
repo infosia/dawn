@@ -120,7 +120,7 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
 
     mInnerHandle = device->wgpu->deviceCreateTexture(device->GetInnerHandle(), &comboDesc.desc);
 
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_CHECK(mInnerHandle);
 }
 
 Texture::Texture(Device* device,
@@ -139,7 +139,7 @@ Texture::Texture(Device* device,
     // to all platform and use that to indicate if it's a SwapChain texture (assigning
     // mIsSurfaceTexture) and mark frame boundary.
 
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_CHECK(mInnerHandle);
 }
 
 Texture::Texture(Device* device,
@@ -151,7 +151,7 @@ Texture::Texture(Device* device,
     mInnerHandle = surfaceTexture.texture;
     mIsSurfaceTexture = true;
 
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_CHECK(mInnerHandle);
 }
 
 void Texture::DestroyImpl(DestroyReason reason) {
@@ -176,7 +176,7 @@ void Texture::SynchronizeTextureBeforeUse() {
 
         if (mPendingBeginAccess) {
             auto srm = contents->GetSharedResourceMemory().Promote();
-            DAWN_ASSERT(srm != nullptr);
+            DAWN_CHECK(srm != nullptr);
             auto* stm = static_cast<SharedTextureMemory*>(srm.Get());
 
             WGPUSharedTextureMemoryBeginAccessDescriptor innerDesc =
@@ -199,7 +199,7 @@ void Texture::SynchronizeTextureBeforeUse() {
             const DawnProcTable& wgpu = ToBackend(GetDevice())->wgpu.get();
             WGPUStatus status = wgpu.sharedTextureMemoryBeginAccess(stm->GetInnerHandle(),
                                                                     GetInnerHandle(), &innerDesc);
-            DAWN_ASSERT(status == WGPUStatus_Success);
+            DAWN_CHECK(status == WGPUStatus_Success);
 
             mPendingBeginAccess = false;
         }
@@ -226,7 +226,7 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
 
     WGPUTextureView innerView =
         device->wgpu->textureCreateView(ToBackend(texture)->GetInnerHandle(), desc);
-    DAWN_ASSERT(innerView);
+    DAWN_CHECK(innerView);
 
     return AcquireRef(new TextureView(texture, descriptor, innerView));
 }
@@ -304,7 +304,7 @@ MaybeError MapBufferAndWriteTextureData(CaptureContext::ScopedContentWriter& wri
                                            CaptureContext::kCopyBufferSize, innerCallbackInfo);
     wgpu->instanceWaitAny(device->GetInnerInstance(), 1, &waitInfo, UINT64_MAX);
 
-    DAWN_ASSERT(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
+    DAWN_CHECK(mapAsyncResult.status == WGPUMapAsyncStatus_Success);
 
     if (mapAsyncResult.status != WGPUMapAsyncStatus_Success) {
         return DAWN_INTERNAL_ERROR(mapAsyncResult.message);
@@ -363,7 +363,7 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
         // This is because there really is no size for depth24plus but it's conveniently
         // set to 4 in Format.cpp. The code below relies on this as it's going to use
         // r32float as a substitute for depth24plus and r32float has a size of 4.
-        DAWN_ASSERT(!IsDepthAspectDepth24Plus(format, aspect) || blockInfo.byteSize == 4);
+        DAWN_CHECK(!IsDepthAspectDepth24Plus(format, aspect) || blockInfo.byteSize == 4);
 
         // For each mip level copy the texture to a buffer, map it, and write the buffer data for
         // that level.
@@ -401,7 +401,7 @@ MaybeError Texture::CaptureContentIfNeeded(CaptureContext& captureContext,
 
             uint32_t alignedBytesPerRow = Align(usedBytesPerRow, 256);
             BlockCount maxBlockRowsPerRead{CaptureContext::kCopyBufferSize / alignedBytesPerRow};
-            DAWN_ASSERT(maxBlockRowsPerRead > BlockCount{0});
+            DAWN_CHECK(maxBlockRowsPerRead > BlockCount{0});
 
             for (BlockCount z{0}; z < blockSize.depthOrArrayLayers; ++z) {
                 for (BlockCount y{0}; y < blockSize.height; y += maxBlockRowsPerRead) {
