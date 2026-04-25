@@ -43,6 +43,7 @@
 #include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/propagate_buffer_sizes.h"
 #include "src/tint/lang/core/ir/transform/remove_uniform_vector_component_loads.h"
 #include "src/tint/lang/core/ir/transform/resource_table.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
@@ -74,6 +75,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     TINT_CHECK_RESULT(
         core::ir::transform::SubstituteOverrides(module, options.substitute_overrides_config));
+
+    TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
 
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
@@ -174,12 +177,14 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     TINT_CHECK_RESULT(core::ir::transform::Bgra8UnormPolyfill(module));
 
-    if (!options.extensions.use_uniform_buffers) {
-        // DecomposeAccess must come before BlockDecoratedStructs, which will wrap the
-        // uniform variable in a structure.
-        core::ir::transform::DecomposeAccessOptions decompose_config{.uniform = true};
-        TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
-    } else {
+    // DecomposeAccess must come before BlockDecoratedStructs, which will wrap
+    // buffer resource variables in a structure.
+    // Uniform buffers are only unconditionally decomposed if the implementation does not support
+    // uniform buffer standard layout. Otherwise, only buffer type variables are decomposed.
+    core::ir::transform::DecomposeAccessOptions decompose_config{
+        .uniform = !options.extensions.use_uniform_buffers};
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, decompose_config));
+    if (options.extensions.use_uniform_buffers) {
         TINT_CHECK_RESULT(core::ir::transform::Std140(module));
     }
     TINT_CHECK_RESULT(core::ir::transform::BlockDecoratedStructs(module));

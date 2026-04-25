@@ -68,12 +68,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
                 return Failure("using subgroup matrices requires the Vulkan Memory Model");
             }
         }
-        if (ty->Is<core::type::Buffer>()) {
-            return Failure("buffers are not supported by the SPIR-V backend");
-        }
-        if (ty->Is<core::type::U16>()) {
-            return Failure("16-bit unsigned integers are not supported by the SPIR-V backend");
-        }
         if (auto* str = ty->As<core::type::Struct>()) {
             auto res = str->PaddingWithinLimit();
             if (res != Success) {
