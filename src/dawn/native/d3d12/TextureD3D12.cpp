@@ -65,11 +65,11 @@ D3D12_RESOURCE_STATES D3D12TextureUsage(wgpu::TextureUsage usage, const Format& 
     D3D12_RESOURCE_STATES resourceState = D3D12_RESOURCE_STATE_COMMON;
 
     // D3D12 doesn't need special acquire operations for presentable textures.
-    DAWN_CHECK(!(usage & kPresentAcquireTextureUsage));
+    DAWN_ASSERT(!(usage & kPresentAcquireTextureUsage));
     if (usage & kPresentReleaseTextureUsage) {
         // The present usage is only used internally by the swapchain and is never used in
         // combination with other usages.
-        DAWN_CHECK(usage == kPresentReleaseTextureUsage);
+        DAWN_ASSERT(usage == kPresentReleaseTextureUsage);
         return D3D12_RESOURCE_STATE_PRESENT;
     }
 
@@ -125,8 +125,8 @@ D3D12_RESOURCE_FLAGS D3D12ResourceFlags(wgpu::TextureUsage usage, const Format& 
         }
     }
 
-    DAWN_CHECK(!(flags & D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL) ||
-               flags == D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+    DAWN_ASSERT(!(flags & D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL) ||
+                flags == D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
     return flags;
 }
 
@@ -223,7 +223,7 @@ MaybeError Texture::InitializeAsExternalTexture(ComPtr<IUnknown> d3dTexture,
 
     D3D12_RESOURCE_DESC desc = d3d12Texture->GetDesc();
     mD3D12ResourceFlags = desc.Flags;
-    DAWN_CHECK(mD3D12ResourceFlags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS);
+    DAWN_ASSERT(mD3D12ResourceFlags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS);
 
     AllocationInfo info;
     info.mMethod = AllocationMethod::kExternal;
@@ -355,7 +355,7 @@ void Texture::DestroyImpl(DestroyReason reason) {
 }
 
 MaybeError Texture::PinImpl(wgpu::TextureUsage usage) {
-    DAWN_CHECK(!HasPinnedUsage());
+    DAWN_ASSERT(!HasPinnedUsage());
     SubresourceRange pinnedSubresources = GetAllSubresources();
 
     CommandRecordingContext* commandContext =
@@ -372,7 +372,7 @@ MaybeError Texture::PinImpl(wgpu::TextureUsage usage) {
 }
 
 void Texture::UnpinImpl() {
-    DAWN_CHECK(HasPinnedUsage());
+    DAWN_ASSERT(HasPinnedUsage());
 
     // TODO(https://issues.chromium.org/473444516): Investigate what to do for imported textures.
     // Should we consider a pin/unpin pair similar to an access on a queue such that we need to
@@ -392,7 +392,7 @@ D3D12_RESOURCE_FLAGS Texture::GetD3D12ResourceFlags() const {
 }
 
 DXGI_FORMAT Texture::GetD3D12CopyableSubresourceFormat(Aspect aspect) const {
-    DAWN_CHECK(GetFormat().aspects & aspect);
+    DAWN_ASSERT(GetFormat().aspects & aspect);
 
     wgpu::TextureFormat format = GetFormat().format;
     switch (format) {
@@ -404,7 +404,7 @@ DXGI_FORMAT Texture::GetD3D12CopyableSubresourceFormat(Aspect aspect) const {
                     // The depth24 part of a D24_UNORM_S8_UINT texture cannot be copied with D3D and
                     // is also not supported by WebGPU.
                     // See https://gpuweb.github.io/gpuweb/#depth-formats
-                    DAWN_CHECK(format == wgpu::TextureFormat::Depth32FloatStencil8);
+                    DAWN_ASSERT(format == wgpu::TextureFormat::Depth32FloatStencil8);
                     return DXGI_FORMAT_R32_FLOAT;
                 case Aspect::Stencil:
                     return DXGI_FORMAT_R8_UINT;
@@ -412,7 +412,7 @@ DXGI_FORMAT Texture::GetD3D12CopyableSubresourceFormat(Aspect aspect) const {
                     DAWN_UNREACHABLE();
             }
         default:
-            DAWN_CHECK(HasOneBit(GetFormat().aspects));
+            DAWN_ASSERT(HasOneBit(GetFormat().aspects));
             return GetD3D12Format();
     }
 }
@@ -606,8 +606,8 @@ void Texture::TransitionSubresourceRange(std::vector<D3D12_RESOURCE_BARRIER>* ba
         // state at all times that read accesses are happening; otherwise, the
         // texture can enter a state where it could be modified by one read access
         // (e.g., to be compressed or decrompessed) while being read by another.
-        DAWN_CHECK(state->isValidToDecay || mSharedResourceMemoryContents->HasWriteAccess() ||
-                   mSharedResourceMemoryContents->HasExclusiveReadAccess());
+        DAWN_ASSERT(state->isValidToDecay || mSharedResourceMemoryContents->HasWriteAccess() ||
+                    mSharedResourceMemoryContents->HasExclusiveReadAccess());
     }
 
     D3D12_RESOURCE_BARRIER barrier;
@@ -703,7 +703,7 @@ void Texture::TrackUsageAndGetResourceBarrierForPass(
 }
 
 D3D12_RESOURCE_STATES Texture::GetCurrentStateForSwapChain() const {
-    DAWN_CHECK(GetFormat().aspects == Aspect::Color);
+    DAWN_ASSERT(GetFormat().aspects == Aspect::Color);
     return mSubresourceStateAndDecay.Get(Aspect::Color, 0, 0).lastState;
 }
 
@@ -726,11 +726,11 @@ D3D12_RENDER_TARGET_VIEW_DESC Texture::GetRTVDescriptor(const Format& format,
     D3D12_RENDER_TARGET_VIEW_DESC rtvDesc;
     rtvDesc.Format = d3d::DXGITextureFormat(GetDevice(), format.format);
     if (IsMultisampledTexture()) {
-        DAWN_CHECK(GetDimension() == wgpu::TextureDimension::e2D);
-        DAWN_CHECK(GetNumMipLevels() == 1);
-        DAWN_CHECK(sliceCount == 1);
-        DAWN_CHECK(baseSlice == 0);
-        DAWN_CHECK(mipLevel == 0);
+        DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
+        DAWN_ASSERT(GetNumMipLevels() == 1);
+        DAWN_ASSERT(sliceCount == 1);
+        DAWN_ASSERT(baseSlice == 0);
+        DAWN_ASSERT(mipLevel == 0);
         rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2DMS;
         return rtvDesc;
     }
@@ -779,10 +779,10 @@ D3D12_DEPTH_STENCIL_VIEW_DESC Texture::GetDSVDescriptor(uint32_t mipLevel,
     }
 
     if (IsMultisampledTexture()) {
-        DAWN_CHECK(GetNumMipLevels() == 1);
-        DAWN_CHECK(layerCount == 1);
-        DAWN_CHECK(baseArrayLayer == 0);
-        DAWN_CHECK(mipLevel == 0);
+        DAWN_ASSERT(GetNumMipLevels() == 1);
+        DAWN_ASSERT(layerCount == 1);
+        DAWN_ASSERT(baseArrayLayer == 0);
+        DAWN_ASSERT(mipLevel == 0);
         dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DMS;
     } else {
         dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2DARRAY;
@@ -856,7 +856,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
 
         const float clearColorRGBA[4] = {fClearColor, fClearColor, fClearColor, fClearColor};
 
-        DAWN_CHECK(range.aspects == Aspect::Color);
+        DAWN_ASSERT(range.aspects == Aspect::Color);
         for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
              ++level) {
             for (uint32_t layer = range.baseArrayLayer;
@@ -890,7 +890,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
             }
         }
     } else {
-        DAWN_CHECK(!IsMultisampledTexture());
+        DAWN_ASSERT(!IsMultisampledTexture());
 
         // create temp buffer with clear color to copy to the texture image
         TrackUsageAndTransitionNow(commandContext, D3D12_RESOURCE_STATE_COPY_DEST, range);
@@ -1027,10 +1027,10 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
         if (GetTexture()->IsMultisampledTexture()) {
             switch (descriptor->dimension) {
                 case wgpu::TextureViewDimension::e2DArray:
-                    DAWN_CHECK(texture->GetArrayLayers() == 1);
+                    DAWN_ASSERT(texture->GetArrayLayers() == 1);
                     [[fallthrough]];
                 case wgpu::TextureViewDimension::e2D:
-                    DAWN_CHECK(texture->GetDimension() == wgpu::TextureDimension::e2D);
+                    DAWN_ASSERT(texture->GetDimension() == wgpu::TextureDimension::e2D);
                     mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2DMS;
                     break;
 
@@ -1048,7 +1048,7 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
 
                 case wgpu::TextureViewDimension::e2D:
                 case wgpu::TextureViewDimension::e2DArray:
-                    DAWN_CHECK(texture->GetDimension() == wgpu::TextureDimension::e2D);
+                    DAWN_ASSERT(texture->GetDimension() == wgpu::TextureDimension::e2D);
                     mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2DARRAY;
                     mSrvDesc.Texture2DArray.ArraySize = descriptor->arrayLayerCount;
                     mSrvDesc.Texture2DArray.FirstArraySlice = descriptor->baseArrayLayer;
@@ -1059,8 +1059,8 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
                     break;
                 case wgpu::TextureViewDimension::Cube:
                 case wgpu::TextureViewDimension::CubeArray:
-                    DAWN_CHECK(texture->GetDimension() == wgpu::TextureDimension::e2D);
-                    DAWN_CHECK(descriptor->arrayLayerCount % 6 == 0);
+                    DAWN_ASSERT(texture->GetDimension() == wgpu::TextureDimension::e2D);
+                    DAWN_ASSERT(descriptor->arrayLayerCount % 6 == 0);
                     mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBEARRAY;
                     mSrvDesc.TextureCubeArray.First2DArrayFace = descriptor->baseArrayLayer;
                     mSrvDesc.TextureCubeArray.NumCubes = descriptor->arrayLayerCount / 6;
@@ -1069,7 +1069,7 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
                     mSrvDesc.TextureCubeArray.ResourceMinLODClamp = 0;
                     break;
                 case wgpu::TextureViewDimension::e3D:
-                    DAWN_CHECK(texture->GetDimension() == wgpu::TextureDimension::e3D);
+                    DAWN_ASSERT(texture->GetDimension() == wgpu::TextureDimension::e3D);
                     mSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE3D;
                     mSrvDesc.Texture3D.MostDetailedMip = descriptor->baseMipLevel;
                     mSrvDesc.Texture3D.MipLevels = descriptor->mipLevelCount;
@@ -1088,12 +1088,12 @@ DXGI_FORMAT TextureView::GetD3D12Format() const {
 }
 
 const D3D12_SHADER_RESOURCE_VIEW_DESC& TextureView::GetSRVDescriptor() const {
-    DAWN_CHECK(mSrvDesc.Format != DXGI_FORMAT_UNKNOWN);
+    DAWN_ASSERT(mSrvDesc.Format != DXGI_FORMAT_UNKNOWN);
     return mSrvDesc;
 }
 
 D3D12_RENDER_TARGET_VIEW_DESC TextureView::GetRTVDescriptor(uint32_t depthSlice) const {
-    DAWN_CHECK(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
+    DAWN_ASSERT(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
     // We have validated that the depthSlice in render pass's colorAttachments must be undefined for
     // 2d RTVs, which value is set to 0. For 3d RTVs, the baseArrayLayer must be 0. So here we can
     // simply use baseArrayLayer + depthSlice to specify the slice in RTVs without checking the
@@ -1105,7 +1105,7 @@ D3D12_RENDER_TARGET_VIEW_DESC TextureView::GetRTVDescriptor(uint32_t depthSlice)
 
 D3D12_DEPTH_STENCIL_VIEW_DESC TextureView::GetDSVDescriptor(bool depthReadOnly,
                                                             bool stencilReadOnly) const {
-    DAWN_CHECK(GetLevelCount() == 1);
+    DAWN_ASSERT(GetLevelCount() == 1);
     return ToBackend(GetTexture())
         ->GetDSVDescriptor(GetBaseMipLevel(), GetBaseArrayLayer(), GetLayerCount(), GetAspects(),
                            depthReadOnly, stencilReadOnly);
@@ -1115,7 +1115,7 @@ D3D12_UNORDERED_ACCESS_VIEW_DESC TextureView::GetUAVDescriptor() const {
     D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc;
     uavDesc.Format = GetD3D12Format();
 
-    DAWN_CHECK(!GetTexture()->IsMultisampledTexture());
+    DAWN_ASSERT(!GetTexture()->IsMultisampledTexture());
     switch (GetDimension()) {
         case wgpu::TextureViewDimension::e1D:
             uavDesc.ViewDimension = D3D12_UAV_DIMENSION_TEXTURE1D;

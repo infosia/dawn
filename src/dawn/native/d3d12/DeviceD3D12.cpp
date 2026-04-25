@@ -98,7 +98,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     ComPtr<ID3D12DebugDevice> d3d12DebugDevice;
     mIsDebugLayerEnabled = SUCCEEDED(mD3d12Device.As(&d3d12DebugDevice));
 
-    DAWN_CHECK(mD3d12Device != nullptr);
+    DAWN_ASSERT(mD3d12Device != nullptr);
 
     Ref<Queue> queue;
     DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue));
@@ -244,7 +244,7 @@ ResultOrError<ComPtr<ID3D11On12Device>> Device::GetOrCreateD3D11On12DeviceIntern
 
         ComPtr<ID3D11On12Device> d3d11on12Device;
         d3d11Device.As(&d3d11on12Device);
-        DAWN_CHECK(d3d11on12Device);
+        DAWN_ASSERT(d3d11on12Device);
 
         mD3d11On12Device = std::move(d3d11on12Device);
     }
@@ -252,22 +252,22 @@ ResultOrError<ComPtr<ID3D11On12Device>> Device::GetOrCreateD3D11On12DeviceIntern
 }
 
 void Device::Flush11On12DeviceToAvoidLeaks() {
-    DAWN_CHECK(mD3d11On12Device);
+    DAWN_ASSERT(mD3d11On12Device);
 
     ComPtr<ID3D11Device> d3d11Device;
     mD3d11On12Device.As(&d3d11Device);
-    DAWN_CHECK(d3d11Device);
+    DAWN_ASSERT(d3d11Device);
 
     ComPtr<ID3D11DeviceContext> d3d11DeviceContext;
     d3d11Device->GetImmediateContext(&d3d11DeviceContext);
-    DAWN_CHECK(d3d11DeviceContext);
+    DAWN_ASSERT(d3d11DeviceContext);
 
     // 11on12 has a bug where D3D12 resources used only for keyed shared mutexes are not released
     // until work is submitted to the device context and flushed. The most minimal work we can get
     // away with is issuing a TiledResourceBarrier.
     ComPtr<ID3D11DeviceContext2> d3d11DeviceContext2;
     d3d11DeviceContext.As(&d3d11DeviceContext2);
-    DAWN_CHECK(d3d11DeviceContext2);
+    DAWN_ASSERT(d3d11DeviceContext2);
 
     d3d11DeviceContext2->TiledResourceBarrier(nullptr, nullptr);
     d3d11DeviceContext2->Flush();
@@ -683,8 +683,8 @@ const D3D12DeviceInfo& Device::GetDeviceInfo() const {
 void AppendDebugLayerMessagesToError(ID3D12InfoQueue* infoQueue,
                                      uint64_t totalErrors,
                                      ErrorData* error) {
-    DAWN_CHECK(totalErrors > 0);
-    DAWN_CHECK(error != nullptr);
+    DAWN_ASSERT(totalErrors > 0);
+    DAWN_ASSERT(error != nullptr);
 
     uint64_t errorsToPrint = std::min(kMaxDebugMessagesToPrint, totalErrors);
     for (uint64_t i = 0; i < errorsToPrint; ++i) {
@@ -771,7 +771,7 @@ void Device::AppendDeviceLostMessage(ErrorData* error) {
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_CHECK(GetState() == State::Disconnected);
+    DAWN_ASSERT(GetState() == State::Disconnected);
 
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
@@ -792,7 +792,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // We need to handle clearing up com object refs that were enqeued after TickImpl
     mUsedComObjectRefs->ClearUpTo(std::numeric_limits<ExecutionSerial>::max());
 
-    DAWN_CHECK(mUsedComObjectRefs->Empty());
+    DAWN_ASSERT(mUsedComObjectRefs->Empty());
 }
 
 ShaderVisibleDescriptorAllocator* Device::GetViewShaderVisibleDescriptorAllocator() const {
@@ -805,8 +805,8 @@ ShaderVisibleDescriptorAllocator* Device::GetSamplerShaderVisibleDescriptorAlloc
 
 MutexProtected<StagingDescriptorAllocator>* Device::GetViewStagingDescriptorAllocator(
     uint32_t descriptorCount) const {
-    DAWN_CHECK(descriptorCount <= kMaxViewDescriptorsPerBindGroup);
-    DAWN_CHECK(descriptorCount > 0);
+    DAWN_ASSERT(descriptorCount <= kMaxViewDescriptorsPerBindGroup);
+    DAWN_ASSERT(descriptorCount > 0);
     // This is Log2 of the next power of two, plus 1.
     uint32_t allocatorIndex = Log2Ceil(descriptorCount) + 1;
     return mViewAllocators[allocatorIndex].get();
@@ -814,8 +814,8 @@ MutexProtected<StagingDescriptorAllocator>* Device::GetViewStagingDescriptorAllo
 
 MutexProtected<StagingDescriptorAllocator>* Device::GetSamplerStagingDescriptorAllocator(
     uint32_t descriptorCount) const {
-    DAWN_CHECK(descriptorCount <= kMaxSamplerDescriptorsPerBindGroup);
-    DAWN_CHECK(descriptorCount > 0);
+    DAWN_ASSERT(descriptorCount <= kMaxSamplerDescriptorsPerBindGroup);
+    DAWN_ASSERT(descriptorCount > 0);
     // This is Log2 of the next power of two, plus 1.
     uint32_t allocatorIndex = Log2Ceil(descriptorCount) + 1;
     return mSamplerAllocators[allocatorIndex].get();

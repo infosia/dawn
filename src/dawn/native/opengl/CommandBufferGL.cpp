@@ -407,7 +407,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false> {
                         if (ToBackend(view->GetTexture())->GetGLFormat().format ==
                             GL_DEPTH_STENCIL) {
                             Aspect aspect = view->GetAspects();
-                            DAWN_CHECK(HasOneBit(aspect));
+                            DAWN_ASSERT(HasOneBit(aspect));
                             switch (aspect) {
                                 case Aspect::None:
                                 case Aspect::Color:
@@ -555,7 +555,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false> {
 
         const Buffer* internalUniformBuffer =
             ToBackend(mPipelineLayout->GetDevice())->GetInternalTextureBuiltinsUniformBuffer();
-        DAWN_CHECK(internalUniformBuffer);
+        DAWN_ASSERT(internalUniformBuffer);
 
         GLuint internalUniformBufferHandle = internalUniformBuffer->GetHandle();
         DAWN_GL_TRY(
@@ -587,7 +587,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false> {
 
         const Buffer* internalUniformBuffer =
             ToBackend(mPipelineLayout->GetDevice())->GetInternalArrayLengthUniformBuffer();
-        DAWN_CHECK(internalUniformBuffer);
+        DAWN_ASSERT(internalUniformBuffer);
 
         GLuint internalUniformBufferHandle = internalUniformBuffer->GetHandle();
         DAWN_GL_TRY(gl,
@@ -678,7 +678,7 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         if (renderPass->colorAttachments[i].resolveTarget != nullptr) {
             if (readFbo == 0) {
-                DAWN_CHECK(writeFbo == 0);
+                DAWN_ASSERT(writeFbo == 0);
                 DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));
                 DAWN_GL_TRY(gl, GenFramebuffers(1, &writeFbo));
             }
@@ -714,14 +714,14 @@ TexelExtent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy,
     const TextureBase* texture = textureCopy.texture.Get();
     TexelExtent3D virtualSizeAtLevel =
         texture->GetMipLevelSingleSubresourceVirtualSize(textureCopy.mipLevel, textureCopy.aspect);
-    DAWN_CHECK(textureCopy.origin.x <= virtualSizeAtLevel.width);
-    DAWN_CHECK(textureCopy.origin.y <= virtualSizeAtLevel.height);
+    DAWN_ASSERT(textureCopy.origin.x <= virtualSizeAtLevel.width);
+    DAWN_ASSERT(textureCopy.origin.y <= virtualSizeAtLevel.height);
     if (copySize.width > virtualSizeAtLevel.width - textureCopy.origin.x) {
-        DAWN_CHECK(texture->GetFormat().isCompressed);
+        DAWN_ASSERT(texture->GetFormat().isCompressed);
         validTextureCopyExtent.width = virtualSizeAtLevel.width - textureCopy.origin.x;
     }
     if (copySize.height > virtualSizeAtLevel.height - textureCopy.origin.y) {
-        DAWN_CHECK(texture->GetFormat().isCompressed);
+        DAWN_ASSERT(texture->GetFormat().isCompressed);
         validTextureCopyExtent.height = virtualSizeAtLevel.height - textureCopy.origin.y;
     }
 
@@ -734,7 +734,7 @@ class ImmediateConstantTracker : public T {
     ImmediateConstantTracker() = default;
 
     MaybeError Apply(const OpenGLFunctions& gl) {
-        DAWN_CHECK(this->mLastPipeline != nullptr);
+        DAWN_ASSERT(this->mLastPipeline != nullptr);
 
         auto* lastPipeline = this->mLastPipeline;
         ImmediateConstantMask pipelineMask = lastPipeline->GetImmediateMask();
@@ -966,7 +966,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     case wgpu::TextureDimension::e1D:
                     case wgpu::TextureDimension::e2D: {
                         if (target == GL_TEXTURE_2D) {
-                            DAWN_CHECK(texture->GetArrayLayers() == 1);
+                            DAWN_ASSERT(texture->GetArrayLayers() == 1);
                             DAWN_GL_TRY(
                                 gl, FramebufferTexture2D(GL_READ_FRAMEBUFFER, glAttachment, target,
                                                          texture->GetHandle(), src.mipLevel));
@@ -977,7 +977,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                                                        glFormat, glType, offset));
                             break;
                         } else if (target == GL_TEXTURE_CUBE_MAP) {
-                            DAWN_CHECK(texture->GetArrayLayers() == 6);
+                            DAWN_ASSERT(texture->GetArrayLayers() == 6);
                             const uint64_t bytesPerImage =
                                 blockInfo.ToBytes(dst.blocksPerRow * dst.rowsPerImage);
                             for (TexelCount z{0}; z < copySize.depthOrArrayLayers; ++z) {
@@ -1709,7 +1709,7 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                             static_cast<uint32_t>(y), static_cast<uint32_t>(width),
                             static_cast<uint32_t>(height), format.internalFormat, imageSize, data));
             } else if (target == GL_TEXTURE_CUBE_MAP) {
-                DAWN_CHECK(texture->GetArrayLayers() == 6);
+                DAWN_ASSERT(texture->GetArrayLayers() == 6);
                 const uint8_t* pointer = static_cast<const uint8_t*>(data);
                 TexelCount baseLayer = destination.origin.z;
                 for (TexelCount l{0}; l < copySize.depthOrArrayLayers; ++l) {
@@ -1754,7 +1754,7 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                     d += bytesPerRow;
                 }
             } else if (target == GL_TEXTURE_CUBE_MAP) {
-                DAWN_CHECK(texture->GetArrayLayers() == 6);
+                DAWN_ASSERT(texture->GetArrayLayers() == 6);
                 const uint8_t* pointer = static_cast<const uint8_t*>(data);
                 TexelCount baseLayer = destination.origin.z;
                 for (TexelCount l{0}; l < copySize.depthOrArrayLayers; ++l) {
@@ -1774,8 +1774,8 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                     }
                 }
             } else {
-                DAWN_CHECK(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
-                           target == GL_TEXTURE_CUBE_MAP_ARRAY);
+                DAWN_ASSERT(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
+                            target == GL_TEXTURE_CUBE_MAP_ARRAY);
                 const uint8_t* slice = static_cast<const uint8_t*>(data);
 
                 for (; z < destination.origin.z + copySize.depthOrArrayLayers; ++z) {
@@ -1802,8 +1802,8 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
         TexelCount height = copySize.height;
         GLenum adjustedFormat = format.format;
         if (format.format == GL_STENCIL) {
-            DAWN_CHECK(gl.GetVersion().IsDesktop() ||
-                       gl.IsGLExtensionSupported("GL_OES_texture_stencil8"));
+            DAWN_ASSERT(gl.GetVersion().IsDesktop() ||
+                        gl.IsGLExtensionSupported("GL_OES_texture_stencil8"));
             adjustedFormat = GL_STENCIL_INDEX;
         }
         if (bytesPerRow % blockInfo.byteSize == 0) {
@@ -1821,7 +1821,7 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                                       static_cast<uint32_t>(height), adjustedFormat, format.type,
                                       data));
             } else if (target == GL_TEXTURE_CUBE_MAP) {
-                DAWN_CHECK(texture->GetArrayLayers() == 6);
+                DAWN_ASSERT(texture->GetArrayLayers() == 6);
                 const uint8_t* pointer = static_cast<const uint8_t*>(data);
                 TexelCount baseLayer = destination.origin.z;
                 for (TexelCount l{0}; l < copySize.depthOrArrayLayers; ++l) {
@@ -1835,8 +1835,8 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                     pointer += bytesPerImage;
                 }
             } else {
-                DAWN_CHECK(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
-                           target == GL_TEXTURE_CUBE_MAP_ARRAY);
+                DAWN_ASSERT(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
+                            target == GL_TEXTURE_CUBE_MAP_ARRAY);
                 DAWN_GL_TRY(
                     gl, PixelStorei(GL_UNPACK_IMAGE_HEIGHT,
                                     static_cast<uint32_t>(blockInfo.ToTexelHeight(rowsPerImage))));
@@ -1861,7 +1861,7 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                     d += bytesPerRow;
                 }
             } else if (target == GL_TEXTURE_CUBE_MAP) {
-                DAWN_CHECK(texture->GetArrayLayers() == 6);
+                DAWN_ASSERT(texture->GetArrayLayers() == 6);
                 const uint8_t* pointer = static_cast<const uint8_t*>(data);
                 TexelCount baseLayer = destination.origin.z;
                 for (TexelCount l{0}; l < copySize.depthOrArrayLayers; ++l) {
@@ -1879,8 +1879,8 @@ MaybeError DoTexSubImage(const OpenGLFunctions& gl,
                     pointer += bytesPerImage;
                 }
             } else {
-                DAWN_CHECK(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
-                           target == GL_TEXTURE_CUBE_MAP_ARRAY);
+                DAWN_ASSERT(target == GL_TEXTURE_3D || target == GL_TEXTURE_2D_ARRAY ||
+                            target == GL_TEXTURE_CUBE_MAP_ARRAY);
                 const uint8_t* slice = static_cast<const uint8_t*>(data);
                 for (; z < destination.origin.z + copySize.depthOrArrayLayers; ++z) {
                     const uint8_t* d = slice;

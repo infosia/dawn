@@ -397,7 +397,7 @@ uint32_t Device::GetGraphicsQueueFamily() const {
 }
 
 const VkDescriptorSetLayout& Device::GetResourceTableLayout() const {
-    DAWN_CHECK(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
+    DAWN_ASSERT(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
     return mResourceTableLayout;
 }
 
@@ -471,7 +471,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         // tight bounds checking when enabled on buffers (instead of potentially extending by 16
         // bytes or a vertex stride). It also exposes driver support for image robustness.
         if (mDeviceInfo.HasExt(DeviceExt::Robustness2)) {
-            DAWN_CHECK(usedKnobs.HasExt(DeviceExt::Robustness2));
+            DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::Robustness2));
 
             usedKnobs.robustness2Features = mDeviceInfo.robustness2Features;
             featuresChain.Add(&usedKnobs.robustness2Features);
@@ -479,7 +479,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
         // Enable pipelineRobustness to better control where robustness happens.
         if (mDeviceInfo.HasExt(DeviceExt::PipelineRobustness)) {
-            DAWN_CHECK(usedKnobs.HasExt(DeviceExt::PipelineRobustness));
+            DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::PipelineRobustness));
 
             usedKnobs.pipelineRobustnessFeatures = mDeviceInfo.pipelineRobustnessFeatures;
             featuresChain.Add(&usedKnobs.pipelineRobustnessFeatures);
@@ -493,14 +493,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
             usedKnobs.features.robustBufferAccess = VK_FALSE;
             usedKnobs.robustness2Features.robustBufferAccess2 = VK_FALSE;
 
-            DAWN_CHECK(!IsToggleEnabled(Toggle::VulkanUseBufferRobustAccess2));
-            DAWN_CHECK(mDeviceInfo.HasExt(DeviceExt::PipelineRobustness) &&
-                       mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness);
+            DAWN_ASSERT(!IsToggleEnabled(Toggle::VulkanUseBufferRobustAccess2));
+            DAWN_ASSERT(mDeviceInfo.HasExt(DeviceExt::PipelineRobustness) &&
+                        mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness);
         }
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::SubgroupSizeControl));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::SubgroupSizeControl));
 
         // Always request all the features from VK_EXT_subgroup_size_control when available.
         usedKnobs.subgroupSizeControlFeatures = mDeviceInfo.subgroupSizeControlFeatures;
@@ -508,7 +508,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory));
 
         // Always allow initializing workgroup memory with OpConstantNull when available.
         // Note that the driver still won't initialize workgroup memory unless the workgroup
@@ -519,13 +519,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::DemoteToHelperInvocation)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
         usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
         featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderIntegerDotProduct));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderIntegerDotProduct));
 
         usedKnobs.shaderIntegerDotProductFeatures = mDeviceInfo.shaderIntegerDotProductFeatures;
         featuresChain.Add(&usedKnobs.shaderIntegerDotProductFeatures);
@@ -536,23 +536,23 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (IsToggleEnabled(Toggle::UseVulkanMemoryModel)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::VulkanMemoryModel));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::VulkanMemoryModel));
         usedKnobs.vulkanMemoryModelFeatures = mDeviceInfo.vulkanMemoryModelFeatures;
         featuresChain.Add(&usedKnobs.vulkanMemoryModelFeatures);
     }
 
     if (HasFeature(Feature::TextureCompressionBC)) {
-        DAWN_CHECK(mDeviceInfo.features.textureCompressionBC == VK_TRUE);
+        DAWN_ASSERT(mDeviceInfo.features.textureCompressionBC == VK_TRUE);
         usedKnobs.features.textureCompressionBC = VK_TRUE;
     }
 
     if (HasFeature(Feature::TextureCompressionETC2)) {
-        DAWN_CHECK(mDeviceInfo.features.textureCompressionETC2 == VK_TRUE);
+        DAWN_ASSERT(mDeviceInfo.features.textureCompressionETC2 == VK_TRUE);
         usedKnobs.features.textureCompressionETC2 = VK_TRUE;
     }
 
     if (HasFeature(Feature::TextureCompressionASTC)) {
-        DAWN_CHECK(mDeviceInfo.features.textureCompressionASTC_LDR == VK_TRUE);
+        DAWN_ASSERT(mDeviceInfo.features.textureCompressionASTC_LDR == VK_TRUE);
         usedKnobs.features.textureCompressionASTC_LDR = VK_TRUE;
     }
 
@@ -561,18 +561,18 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::PrimitiveIndex)) {
-        DAWN_CHECK(mDeviceInfo.features.geometryShader == VK_TRUE);
+        DAWN_ASSERT(mDeviceInfo.features.geometryShader == VK_TRUE);
         usedKnobs.features.geometryShader = VK_TRUE;
     }
 
     bool shaderFloat16Int8FeaturesAdded = false;
     if (HasFeature(Feature::ShaderF16)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
-                   mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
-                   mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE);
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
+                    mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
+                    mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE);
         if (!IsToggleEnabled(Toggle::DecomposeUniformBuffers)) {
-            DAWN_CHECK(mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess ==
-                       VK_TRUE);
+            DAWN_ASSERT(mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess ==
+                        VK_TRUE);
         }
 
         usedKnobs.shaderFloat16Int8Features.shaderFloat16 = VK_TRUE;
@@ -593,8 +593,8 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
     // Set device feature for subgroups with f16 types.
     if (HasFeature(Feature::ShaderF16) && HasFeature(Feature::Subgroups)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderSubgroupExtendedTypes) &&
-                   mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderSubgroupExtendedTypes) &&
+                    mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
 
         usedKnobs.shaderSubgroupExtendedTypes = mDeviceInfo.shaderSubgroupExtendedTypes;
         featuresChain.Add(&usedKnobs.shaderSubgroupExtendedTypes);
@@ -627,14 +627,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::MultiDrawIndirect)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::DrawIndirectCount) &&
-                   mDeviceInfo.features.multiDrawIndirect == VK_TRUE);
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DrawIndirectCount) &&
+                    mDeviceInfo.features.multiDrawIndirect == VK_TRUE);
         usedKnobs.features.multiDrawIndirect = VK_TRUE;
     }
 
     if (HasFeature(Feature::ChromiumExperimentalSubgroupMatrix)) {
-        DAWN_CHECK(IsToggleEnabled(Toggle::UseVulkanMemoryModel));
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::CooperativeMatrix));
+        DAWN_ASSERT(IsToggleEnabled(Toggle::UseVulkanMemoryModel));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::CooperativeMatrix));
         usedKnobs.cooperativeMatrixFeatures = mDeviceInfo.cooperativeMatrixFeatures;
         featuresChain.Add(&usedKnobs.cooperativeMatrixFeatures);
 
@@ -661,7 +661,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     // by the Dynamic Rendering path.
     if (IsToggleEnabled(Toggle::VulkanUseDynamicRendering) &&
         !HasFeature(Feature::DawnLoadResolveTexture)) {
-        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::DynamicRendering));
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DynamicRendering));
         usedKnobs.dynamicRenderingFeatures = mDeviceInfo.dynamicRenderingFeatures;
         featuresChain.Add(&usedKnobs.dynamicRenderingFeatures);
         mRenderPassType = VulkanRenderPassType::DynamicRendering;
@@ -748,7 +748,7 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            uint64_t size) {
     // It is a validation error to do a 0-sized copy in Vulkan, check it is skipped prior to
     // calling this function.
-    DAWN_CHECK(size != 0);
+    DAWN_ASSERT(size != 0);
 
     CommandRecordingContext* recordingContext =
         ToBackend(GetQueue())->GetPendingRecordingContext(Queue::SubmitMode::Passive);
@@ -996,7 +996,7 @@ void Device::CheckDebugMessagesAfterDestruction() const {
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_CHECK(GetState() == State::Disconnected);
+    DAWN_ASSERT(GetState() == State::Disconnected);
 
     // We failed during initialization so early that we don't even have a VkDevice. There is
     // nothing to do.
@@ -1062,7 +1062,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // VkQueues are destroyed when the VkDevice is destroyed
     // The VkDevice is needed to destroy child objects, so it must be destroyed last after all
     // child objects have been deleted.
-    DAWN_CHECK(mVkDevice != VK_NULL_HANDLE);
+    DAWN_ASSERT(mVkDevice != VK_NULL_HANDLE);
     fn.DestroyDevice(mVkDevice, nullptr);
     mVkDevice = VK_NULL_HANDLE;
 

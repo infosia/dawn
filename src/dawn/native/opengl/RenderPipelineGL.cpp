@@ -283,7 +283,7 @@ GLuint RenderPipeline::GetVertexArrayObject() const {
 }
 
 VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferSlot slot) const {
-    DAWN_CHECK(!IsError());
+    DAWN_ASSERT(!IsError());
     return mAttributesUsingVertexBuffer[slot];
 }
 
@@ -323,7 +323,7 @@ MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,
                                     PersistentPipelineState& persistentPipelineState) {
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
-    DAWN_CHECK(mVertexArrayObject);
+    DAWN_ASSERT(mVertexArrayObject);
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
 
     DAWN_TRY(ApplyFrontFaceAndCulling(gl, GetFrontFace(), GetCullMode()));

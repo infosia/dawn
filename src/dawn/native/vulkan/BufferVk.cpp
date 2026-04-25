@@ -195,7 +195,7 @@ VkMappedMemoryRange GetMappedMemoryRange(const ResourceMemoryAllocation& allocat
                                          size_t offset,
                                          size_t size,
                                          size_t nonCoherentAtomSize) {
-    DAWN_CHECK(IsAligned(allocation.GetOffset(), nonCoherentAtomSize));
+    DAWN_ASSERT(IsAligned(allocation.GetOffset(), nonCoherentAtomSize));
 
     // `offset` must always be a multiple of nonCoherentAtomSize. `size` must either be a multiple
     // of nonCoherentAtomSize or offset+size must be equal to the size of the allocation.
@@ -629,7 +629,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
 
 void* Buffer::GetMappedPointerImpl() {
     uint8_t* memory = mMemoryAllocation.GetMappedPointer();
-    DAWN_CHECK(memory != nullptr);
+    DAWN_ASSERT(memory != nullptr);
     return memory;
 }
 
@@ -665,7 +665,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
     return MapMemoryAndPerformOperation(mapOffset, mapSize, [&](std::span<uint8_t> mapped) {
         uint64_t dstOffset = 0;
         if (needsZeroInitialization) {
-            DAWN_CHECK(mapped.size() == mAllocatedSize);
+            DAWN_ASSERT(mapped.size() == mAllocatedSize);
             std::ranges::fill(mapped, 0x0);
             GetDevice()->IncrementLazyClearCountForTesting();
             dstOffset = bufferOffset;
@@ -674,7 +674,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
         // above or memcpy below.
         SetInitialized(true);
 
-        DAWN_CHECK(mapped.size() >= dstOffset + size);
+        DAWN_ASSERT(mapped.size() >= dstOffset + size);
         memcpy(mapped.data() + dstOffset, data, size);
     });
 }
@@ -686,8 +686,8 @@ MaybeError Buffer::MapMemoryAndPerformOperation(uint64_t requestedOffset,
     Device* device = ToBackend(GetDevice());
     const bool isMappable = GetInternalUsage() & kMappableBufferUsages;
 
-    DAWN_CHECK(mHostVisible);
-    DAWN_CHECK(GetLastUsageSerial() <= device->GetQueue()->GetCompletedCommandSerial());
+    DAWN_ASSERT(mHostVisible);
+    DAWN_ASSERT(GetLastUsageSerial() <= device->GetQueue()->GetCompletedCommandSerial());
 
     VkDeviceMemory deviceMemory = ToBackend(mMemoryAllocation.GetResourceHeap())->GetMemory();
     uint8_t* memory = nullptr;
@@ -831,7 +831,7 @@ bool Buffer::EnsureDataInitializedAsDestination(CommandRecordingContext* recordi
 void Buffer::TransitionMappableBuffersEagerly(Device* device,
                                               CommandRecordingContext* recordingContext,
                                               const absl::flat_hash_set<Ref<Buffer>>& buffers) {
-    DAWN_CHECK(!buffers.empty());
+    DAWN_ASSERT(!buffers.empty());
 
     size_t originalBufferCount = buffers.size();
 
@@ -841,7 +841,7 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
         barrier.Merge(buffer->TrackUsageAndGetResourceBarrier(mapUsage, wgpu::ShaderStage::None));
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
-    DAWN_CHECK(buffers.size() == originalBufferCount);
+    DAWN_ASSERT(buffers.size() == originalBufferCount);
 
     recordingContext->EmitBufferBarrierIfNecessary(device, barrier);
 }
@@ -851,7 +851,7 @@ void Buffer::SetLabelImpl() {
 }
 
 void Buffer::InitializeToZero(CommandRecordingContext* recordingContext) {
-    DAWN_CHECK(NeedsInitialization());
+    DAWN_ASSERT(NeedsInitialization());
 
     ClearBuffer(recordingContext, 0u);
     GetDevice()->IncrementLazyClearCountForTesting();
@@ -862,16 +862,16 @@ void Buffer::ClearBuffer(CommandRecordingContext* recordingContext,
                          uint32_t clearValue,
                          uint64_t offset,
                          uint64_t size) {
-    DAWN_CHECK(recordingContext != nullptr);
+    DAWN_ASSERT(recordingContext != nullptr);
     size = size > 0 ? size : GetAllocatedSize();
-    DAWN_CHECK(size > 0);
+    DAWN_ASSERT(size > 0);
 
     TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
 
     Device* device = ToBackend(GetDevice());
     // VK_WHOLE_SIZE doesn't work on old Windows Intel Vulkan drivers, so we don't use it.
     // Note: Allocated size must be a multiple of 4.
-    DAWN_CHECK(size % 4 == 0);
+    DAWN_ASSERT(size % 4 == 0);
     device->fn.CmdFillBuffer(recordingContext->commandBuffer, mHandle, offset, size, clearValue);
 }
 
