@@ -543,7 +543,10 @@ class BufferViewTest : public DawnTest {
 };
 
 TEST_P(BufferViewTest, BufferViewArrayLength) {
-    DAWN_SUPPRESS_TEST_IF(!IsMetal());
+    DAWN_SUPPRESS_TEST_IF(IsD3D11());
+    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
 
     TestBufferViewArrayLength(128);
     TestBufferViewArrayLength(256);
@@ -553,7 +556,10 @@ TEST_P(BufferViewTest, BufferViewArrayLength) {
 }
 
 TEST_P(BufferViewTest, BufferArrayViewArrayLength) {
-    DAWN_SUPPRESS_TEST_IF(!IsMetal());
+    DAWN_SUPPRESS_TEST_IF(IsD3D11());
+    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
 
     TestBufferArrayViewArrayLength(128);
     TestBufferArrayViewArrayLength(256);
@@ -563,7 +569,10 @@ TEST_P(BufferViewTest, BufferArrayViewArrayLength) {
 }
 
 TEST_P(BufferViewTest, ArrayLengthFunctions) {
-    DAWN_SUPPRESS_TEST_IF(!IsMetal());
+    DAWN_SUPPRESS_TEST_IF(IsD3D11());
+    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
 
     TestArrayLengthFunctions(128);
     TestArrayLengthFunctions(256);
@@ -573,13 +582,19 @@ TEST_P(BufferViewTest, ArrayLengthFunctions) {
 }
 
 TEST_P(BufferViewTest, BufferViewBasics) {
-    DAWN_SUPPRESS_TEST_IF(!IsMetal());
+    DAWN_SUPPRESS_TEST_IF(IsD3D11());
+    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
 
     TestBufferViewBasics();
 }
 
 TEST_P(BufferViewTest, BufferArrayViewBasics) {
-    DAWN_SUPPRESS_TEST_IF(!IsMetal());
+    DAWN_SUPPRESS_TEST_IF(IsD3D11());
+    DAWN_SUPPRESS_TEST_IF(IsD3D12());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGL());
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
 
     TestBufferArrayViewBasics();
 }
