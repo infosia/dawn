@@ -6651,5 +6651,514 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_DecomposeAccessTest, BufferArrayView_Basic_U32) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.array<u32>();
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* access = b.Access(ty.ptr(storage, ty.u32(), core::Access::kReadWrite), call, 5_u);
+        b.Load(access);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %v, 16u, 100u
+    %4:ptr<storage, u32, read_write> = access %3, 5u
+    %5:u32 = load %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, u32, read_write> = access %v, 9u
+    %4:u32 = load %3
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, BufferArrayView_Basic_Vec4f) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.runtime_array(ty.vec4(ty.f32()));
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* access =
+            b.Access(ty.ptr(storage, ty.vec4(ty.f32()), core::Access::kReadWrite), call, 5_u);
+        b.Load(access);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<vec4<f32>>, read_write> = bufferArrayView<array<vec4<f32>>> %v, 16u, 100u
+    %4:ptr<storage, vec4<f32>, read_write> = access %3, 5u
+    %5:vec4<f32> = load %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<vec4<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, vec4<u32>, read_write> = access %v, 6u
+    %4:vec4<u32> = load %3
+    %5:vec4<f32> = bitcast<vec4<f32>> %4
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, BufferArrayView_Basic_Struct) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* str_ = ty.Struct(mod.symbols.New("S"), {
+                                                     {mod.symbols.Register("a"), ty.vec4(ty.f32())},
+                                                     {mod.symbols.Register("b"), ty.vec4(ty.f32())},
+                                                 });
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.runtime_array(str_);
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* access = b.Access(ty.ptr(storage, str_, core::Access::kReadWrite), call, 5_u);
+        b.Load(access);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:vec4<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<S>, read_write> = bufferArrayView<array<S>> %v, 16u, 100u
+    %4:ptr<storage, S, read_write> = access %3, 5u
+    %5:S = load %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:vec4<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, array<vec4<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:S = call %4, 176u
+    ret
+  }
+}
+%4 = func(%start_byte_offset:u32):S {
+  $B3: {
+    %6:u32 = div %start_byte_offset, 16u
+    %7:ptr<storage, vec4<u32>, read_write> = access %v, %6
+    %8:vec4<u32> = load %7
+    %9:vec4<f32> = bitcast<vec4<f32>> %8
+    %10:u32 = add 16u, %start_byte_offset
+    %11:u32 = div %10, 16u
+    %12:ptr<storage, vec4<u32>, read_write> = access %v, %11
+    %13:vec4<u32> = load %12
+    %14:vec4<f32> = bitcast<vec4<f32>> %13
+    %15:S = construct %9, %14
+    ret %15
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, ArrayLength_BufferArrayView_Size_U32) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.array<u32>();
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* len = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, call);
+        b.Let("a", len->Result());
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %v, 16u, 100u
+    %4:u32 = arrayLength %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:u32 = div 100u, 4u
+    %a:u32 = let %3
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, ArrayLength_BufferArrayView_Size_Vec4f) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.runtime_array(ty.vec4(ty.f32()));
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* len = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, call);
+        b.Let("a", len->Result());
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<vec4<f32>>, read_write> = bufferArrayView<array<vec4<f32>>> %v, 16u, 100u
+    %4:u32 = arrayLength %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<storage, array<vec4<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:u32 = div 100u, 16u
+    %a:u32 = let %3
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, ArrayLength_BufferArrayView_Size_Struct) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* str_ = ty.Struct(mod.symbols.New("S"), {
+                                                     {mod.symbols.Register("a"), ty.vec4(ty.f32())},
+                                                     {mod.symbols.Register("b"), ty.vec4(ty.f32())},
+                                                 });
+
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.runtime_array(str_);
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, arr_ty, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{arr_ty}, var, 16_u, 100_u);
+        auto* len = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, call);
+        b.Let("a", len->Result());
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:vec4<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:ptr<storage, array<S>, read_write> = bufferArrayView<array<S>> %v, 16u, 100u
+    %4:u32 = arrayLength %3
+    %a:u32 = let %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:vec4<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, array<vec4<u32>>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func():void {
+  $B2: {
+    %3:u32 = div 100u, 32u
+    %a:u32 = let %3
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, ArrayLength_BufferArrayView_Size_RuntimeStruct) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* str_ =
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.Register("a"), ty.vec4(ty.f32())},
+                                            {mod.symbols.Register("b"), ty.runtime_array(ty.f32())},
+                                        });
+
+    auto* func = b.Function("foo", ty.void_());
+    auto* offset = b.FunctionParam("offset", ty.u32());
+    auto* size = b.FunctionParam("size", ty.u32());
+    func->SetParams({offset, size});
+    b.Append(func->Block(), [&] {
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, str_, core::Access::kReadWrite), core::BuiltinFn::kBufferArrayView,
+            Vector{str_}, var, offset, size);
+        auto* access = b.Access(ty.ptr(storage, ty.runtime_array(ty.f32())), call, 1_u);
+        auto* len = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, access);
+        b.Let("a", len->Result());
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:array<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%offset:u32, %size:u32):void {
+  $B2: {
+    %5:ptr<storage, S, read_write> = bufferArrayView<S> %v, %offset, %size
+    %6:ptr<storage, array<f32>, read_write> = access %5, 1u
+    %7:u32 = arrayLength %6
+    %a:u32 = let %7
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:array<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%offset:u32, %size:u32):void {
+  $B2: {
+    %5:u32 = mul %offset, 1u
+    %6:u32 = sub %size, 16u
+    %7:u32 = div %6, 4u
+    %a:u32 = let %7
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_DecomposeAccessTest, ArrayLength_BufferView_Length_U32) {
+    auto* var = b.Var("v", storage, ty.unsized_buffer(), core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
+    auto* str_ =
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.Register("a"), ty.vec4(ty.f32())},
+                                            {mod.symbols.Register("b"), ty.runtime_array(ty.f32())},
+                                        });
+
+    auto* func = b.Function("foo", ty.void_());
+    auto* offset = b.FunctionParam("offset", ty.u32());
+    auto* length = b.FunctionParam("length", ty.u32());
+    func->SetParams({offset, length});
+    b.Append(func->Block(), [&] {
+        auto* arr_ty = ty.runtime_array(ty.f32());
+        auto* call = b.CallExplicit<core::ir::CoreBuiltinCall>(
+            ty.ptr(storage, str_, core::Access::kReadWrite), core::BuiltinFn::kBufferView,
+            Vector{str_}, var, offset, length);
+        auto* access = b.Access(ty.ptr(storage, arr_ty), call, 1_u);
+        auto* len = b.Call(ty.u32(), core::BuiltinFn::kArrayLength, access);
+        b.Let("a", len->Result());
+        b.Return(func);
+    });
+
+    auto* src = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:array<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%offset:u32, %length:u32):void {
+  $B2: {
+    %5:ptr<storage, S, read_write> = bufferView<S> %v, %offset, %length
+    %6:ptr<storage, array<f32>, read_write> = access %5, 1u
+    %7:u32 = arrayLength %6
+    %a:u32 = let %7
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(16) {
+  a:vec4<f32> @offset(0)
+  b:array<f32> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, array<u32>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = func(%offset:u32, %length:u32):void {
+  $B2: {
+    %5:u32 = mul %offset, 1u
+    %6:u32 = add 16u, %5
+    %7:u32 = sub %length, %6
+    %8:u32 = div %7, 4u
+    %a:u32 = let %8
+    ret
+  }
+}
+)";
+
+    DecomposeAccessOptions options{};
+    Run(DecomposeAccess, options);
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
+
 }  // namespace tint::core::ir::transform
