@@ -1344,8 +1344,8 @@ GPUUsableBuffer::CreateD3D11ShaderResourceViewFromD3DBuffer(ID3D11Buffer* d3d11B
                                                             uint64_t offset,
                                                             uint64_t originalSize) {
     uint64_t size = Align(originalSize, 4);
-    DAWN_ASSERT(IsAligned(offset, 4u));
-    DAWN_ASSERT(size <= GetAllocatedSize());
+    DAWN_CHECK(IsAligned(offset, 4u));
+    DAWN_CHECK(size <= GetAllocatedSize());
     UINT firstElement = static_cast<UINT>(offset / 4);
     UINT numElements = static_cast<UINT>(size / 4);
 
@@ -1369,8 +1369,8 @@ GPUUsableBuffer::CreateD3D11UnorderedAccessViewFromD3DBuffer(ID3D11Buffer* d3d11
                                                              uint64_t offset,
                                                              uint64_t originalSize) {
     uint64_t size = Align(originalSize, 4);
-    DAWN_ASSERT(IsAligned(offset, 4u));
-    DAWN_ASSERT(size <= GetAllocatedSize());
+    DAWN_CHECK(IsAligned(offset, 4u));
+    DAWN_CHECK(size <= GetAllocatedSize());
 
     UINT firstElement = static_cast<UINT>(offset / 4);
     UINT numElements = static_cast<UINT>(size / 4);
@@ -1478,8 +1478,8 @@ MaybeError GPUUsableBuffer::UpdateD3D11ConstantBuffer(
         }
         size_t alignedSize = alignedEnd - alignedOffset;
 
-        DAWN_ASSERT((alignedSize % kConstantBufferUpdateAlignment) == 0);
-        DAWN_ASSERT(alignedSize <= GetAllocatedSize());
+        DAWN_CHECK((alignedSize % kConstantBufferUpdateAlignment) == 0);
+        DAWN_CHECK(alignedSize <= GetAllocatedSize());
         DAWN_ASSERT(offset >= alignedOffset);
 
         // Extra bytes on the left of offset we could write to. This is only valid if
