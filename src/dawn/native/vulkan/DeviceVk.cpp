@@ -50,6 +50,7 @@
 #include "dawn/native/vulkan/ComputePipelineVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/FramebufferCache.h"
+#include "dawn/native/vulkan/FramebufferFetchHelper.h"
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/PipelineCacheVk.h"
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
@@ -192,6 +193,10 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
     if (HasFeature(Feature::ChromiumExperimentalSamplingResourceTable)) {
         DAWN_TRY_ASSIGN(mResourceTableLayout, ResourceTable::MakeDescriptorSetLayout(this));
+    }
+
+    if (HasFeature(Feature::FramebufferFetch)) {
+        mFramebufferFetchHelper = std::make_unique<FramebufferFetchHelper>(this);
     }
 
     return DeviceBase::Initialize(descriptor, std::move(queue));
@@ -401,6 +406,10 @@ const VkDescriptorSetLayout& Device::GetResourceTableLayout() const {
     return mResourceTableLayout;
 }
 
+FramebufferFetchHelper* Device::GetFramebufferFetchHelper() {
+    return mFramebufferFetchHelper.get();
+}
+
 Ref<FencedDeleter>& Device::GetFencedDeleter() {
     return mDeleter;
 }
@@ -522,6 +531,15 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
         usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
         featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
+    }
+
+    if (HasFeature(Feature::FramebufferFetch)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::RasterizationOrderAttachmentAccess));
+        auto& usedKnobFeature = usedKnobs.rasterizationOrderAttachmentAccessFeatures;
+        usedKnobFeature = mDeviceInfo.rasterizationOrderAttachmentAccessFeatures;
+        usedKnobFeature.rasterizationOrderDepthAttachmentAccess = VK_FALSE;
+        usedKnobFeature.rasterizationOrderStencilAttachmentAccess = VK_FALSE;
+        featuresChain.Add(&usedKnobs.rasterizationOrderAttachmentAccessFeatures);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
@@ -1033,6 +1051,8 @@ void Device::DestroyImpl(DestroyReason reason) {
         fn.DestroyDescriptorSetLayout(mVkDevice, mResourceTableLayout, nullptr);
         mResourceTableLayout = VK_NULL_HANDLE;
     }
+
+    mFramebufferFetchHelper.reset();
 
     mDescriptorAllocatorsPendingDeallocation.Use([&](auto pending) {
         for (Ref<DescriptorSetAllocator>& allocator : pending->IterateUpTo(kMaxExecutionSerial)) {
