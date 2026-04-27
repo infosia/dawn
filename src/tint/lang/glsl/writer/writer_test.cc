@@ -88,6 +88,56 @@ void main() {
 )");
 }
 
+TEST_F(GlslWriterTest, RenameInvalidIdentifiers) {
+    auto* str =
+        ty.Struct(mod.symbols.New("MyStruct!"), {
+                                                    {mod.symbols.Register("$a"), ty.i32()},
+                                                    {mod.symbols.Register("b@"), ty.vec4i()},
+                                                });
+    auto* foo = b.Function("f%oo", ty.u32());
+    auto* param = b.FunctionParam("pa^ram", ty.u32());
+    foo->AppendParam(param);
+    b.Append(foo->Block(), [&] {  //
+        b.Return(foo, param);
+    });
+
+    auto* func = b.ComputeFunction("main");
+    auto* idx = b.FunctionParam("123", ty.u32());
+    idx->SetBuiltin(core::BuiltinValue::kLocalInvocationIndex);
+    func->AppendParam(idx);
+    b.Append(func->Block(), [&] {  //
+        auto* var = b.Var("&str", ty.ptr<function>(str));
+        auto* val = b.Load(var);
+        mod.SetName(val, "va(l");
+        auto* a = b.Access<i32>(val, 0_u);
+        mod.SetName(a, ")a");
+        b.Let("let=", b.Call<u32>(foo, idx));
+        b.Return(func);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(
+
+struct tint_struct {
+  int member_0;
+  ivec4 member_1;
+};
+
+uint v(uint v_1) {
+  return v_1;
+}
+void main_inner(uint v_2) {
+  tint_struct v_3 = tint_struct(0, ivec4(0));
+  uint v_4 = v(v_2);
+}
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main() {
+  main_inner(gl_LocalInvocationIndex);
+}
+)");
+}
+
 TEST_F(GlslWriterTest, StripAllNames_CombinedTextureSamplerName) {
     BindingPoint texture_bp{1, 2};
     BindingPoint sampler_bp{3, 4};
