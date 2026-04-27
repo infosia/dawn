@@ -68,8 +68,15 @@ struct State {
     const type::Type* base_ty_ = nullptr;
     const type::Pointer* base_ptr_ty_ = nullptr;
 
+    diag::Diagnostic MakeError(const Source& src) {
+        diag::Diagnostic error{};
+        error.severity = diag::Severity::Error;
+        error.source = src;
+        return error;
+    }
+
     /// Process the module.
-    void Process() {
+    diag::Result<SuccessType> Process() {
         Vector<core::ir::Var*, 4> var_worklist;
         for (auto* inst : *ir.root_block) {
             // Allow this to run before or after PromoteInitializers by handling non-var root_block
@@ -103,10 +110,24 @@ struct State {
 
         for (auto* var : var_worklist) {
             auto* result = var->Result();
+            auto* var_ty = result->Type()->As<core::type::Pointer>();
             SetBaseEleType(var);
 
+            // Figure the final type early to check for potential size issues.
+            const type::Array* array_ty = nullptr;
+            if (!var_ty->StoreType()->HasFixedFootprint()) {
+                // Use a runtime-sized array of the base type.
+                array_ty = ty.runtime_array(BaseEleType());
+            } else {
+                TINT_CHECK_RESULT_UNWRAP(array_length,
+                                         NumBaseElementsChecked(var_ty->StoreType(), var));
+
+                array_length =
+                    std::max(array_length, options.minimum_array_size / BaseEleType()->Size());
+                array_ty = ty.array(BaseEleType(), array_length);
+            }
+
             auto usage_worklist = result->UsagesSorted();
-            auto* var_ty = result->Type()->As<core::type::Pointer>();
             while (!usage_worklist.IsEmpty()) {
                 auto usage = usage_worklist.Pop();
                 auto* inst = usage.instruction;
@@ -152,40 +173,11 @@ struct State {
                     TINT_ICE_ON_NO_MATCH);
             }
 
-            auto HasRuntimeSize = [&](const type::Type* type) {
-                return tint::Switch(
-                    type,
-                    [&](const type::Array* arr) {
-                        return arr->Count()->Is<type::RuntimeArrayCount>();
-                    },
-                    [&](const type::Buffer* buf) {
-                        return buf->Count()->Is<type::RuntimeArrayCount>();
-                    },
-                    [&](const type::Struct* str) {
-                        auto* last =
-                            str->Element(static_cast<uint32_t>(str->Members().Length()) - 1);
-                        if (auto* arr = last->As<type::Array>()) {
-                            return arr->Count()->Is<type::RuntimeArrayCount>();
-                        }
-                        return false;
-                    },
-                    [&](Default) { return false; });
-            };
-
             // Swap the result type of the `var` to the new result type
-            const type::Array* array_ty = nullptr;
-            if (HasRuntimeSize(var_ty->StoreType())) {
-                // Use a runtime-sized array of the base type.
-                array_ty = ty.runtime_array(BaseEleType());
-            } else {
-                auto array_length = NumBaseElements(var_ty->StoreType());
-
-                array_length =
-                    std::max(array_length, options.minimum_array_size / BaseEleType()->Size());
-                array_ty = ty.array(BaseEleType(), array_length);
-            }
             result->SetType(ty.ptr(var_ty->AddressSpace(), array_ty, var_ty->Access()));
         }
+
+        return Success;
     }
 
     const type::Type* BaseEleType() { return base_ty_; }
@@ -193,8 +185,22 @@ struct State {
     const type::Pointer* BaseEleTypePtr() { return base_ptr_ty_; }
 
     // Returns the number of BaseEleType elements need to represent `type` rounded up.
+    diag::Result<uint32_t> NumBaseElementsChecked(const type::Type* type,
+                                                  Instruction* source_inst) {
+        uint64_t num_elements = static_cast<uint64_t>(type->Size());
+        num_elements = (num_elements + BaseEleType()->Size() - 1) / BaseEleType()->Size();
+        if (num_elements > std::numeric_limits<uint32_t>::max()) {
+            diag::Diagnostic error = MakeError(ir.SourceOf(source_inst));
+            error << "required array size (" << num_elements << ") is too large";
+            return diag::Failure(error);
+        }
+        return static_cast<uint32_t>(num_elements);
+    }
+
     uint32_t NumBaseElements(const type::Type* type) {
-        return (type->Size() + BaseEleType()->Size() - 1) / BaseEleType()->Size();
+        uint64_t num_elements = static_cast<uint64_t>(type->Size());
+        num_elements = (num_elements + BaseEleType()->Size() - 1) / BaseEleType()->Size();
+        return static_cast<uint32_t>(num_elements);
     }
 
     // OffsetData represents an unsigned integer expression.
@@ -1382,7 +1388,10 @@ Result<SuccessType> DecomposeAccess(core::ir::Module& ir, const DecomposeAccessO
                           },
                           "before core.DecomposeUniformAccess");
 
-    State{ir, options}.Process();
+    auto res = State{ir, options}.Process();
+    if (res != Success) {
+        return Failure{res.Failure().reason.Str()};
+    }
 
     return Success;
 }
