@@ -33,6 +33,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/IndirectDrawValidationEncoder.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/RenderBundle.h"
@@ -106,7 +107,8 @@ void IndirectDrawMetadata::IndexedIndirectBufferValidationInfo::AddIndirectDraw(
 void IndirectDrawMetadata::IndexedIndirectBufferValidationInfo::AddBatch(
     uint32_t maxDrawCallsPerIndirectValidationBatch,
     uint64_t maxBatchOffsetRange,
-    const IndirectValidationBatch& newBatch) {
+    const IndirectValidationBatch& newBatch,
+    uint32_t validatedDrawIndexOffset) {
     auto it = mBatches.begin();
     while (it != mBatches.end()) {
         IndirectValidationBatch& batch = *it;
@@ -117,7 +119,14 @@ void IndirectDrawMetadata::IndexedIndirectBufferValidationInfo::AddBatch(
             // This batch fits within the limits of an existing batch. Merge it.
             batch.minOffset = min;
             batch.maxOffset = max;
-            batch.draws.insert(batch.draws.end(), newBatch.draws.begin(), newBatch.draws.end());
+            auto drawIt =
+                batch.draws.insert(batch.draws.end(), newBatch.draws.begin(), newBatch.draws.end());
+
+            // Ensure that the indirect draw index is properly offset.
+            while (drawIt != batch.draws.end()) {
+                drawIt->validatedDrawIndex += validatedDrawIndexOffset;
+                drawIt++;
+            }
             return;
         }
 
@@ -127,7 +136,18 @@ void IndirectDrawMetadata::IndexedIndirectBufferValidationInfo::AddBatch(
 
         ++it;
     }
+
     mBatches.push_back(newBatch);
+
+    {
+        IndirectValidationBatch& batch = mBatches.back();
+        auto drawIt = batch.draws.begin();
+        // Ensure that the indirect draw index is properly offset
+        while (drawIt != batch.draws.end()) {
+            drawIt->validatedDrawIndex += validatedDrawIndexOffset;
+            drawIt++;
+        }
+    }
 }
 
 const std::vector<IndirectDrawMetadata::IndirectValidationBatch>&
@@ -159,9 +179,29 @@ IndirectDrawMetadata::GetIndirectMultiDraws() const {
     return mMultiDraws;
 }
 
+std::vector<IndirectDrawMetadata::ValidatedIndirectDraw>&
+IndirectDrawMetadata::GetValidatedIndirectDraws() {
+    if (mValidatedIndirectDraws.empty()) {
+        dawn::ErrorLog() << "Resizing validated indirect draws: " << mTotalIndirectDrawCount;
+        mValidatedIndirectDraws.resize(mTotalIndirectDrawCount);
+    } else {
+        dawn::ErrorLog() << "Already not empty: " << mValidatedIndirectDraws.size();
+        // Should never be resized after allocation.
+        DAWN_ASSERT(mValidatedIndirectDraws.size() == mTotalIndirectDrawCount);
+    }
+    return mValidatedIndirectDraws;
+}
+
+const std::vector<IndirectDrawMetadata::ValidatedIndirectDraw>&
+IndirectDrawMetadata::GetValidatedIndirectDraws() const {
+    return mValidatedIndirectDraws;
+}
+
 void IndirectDrawMetadata::AddBundle(RenderBundleBase* bundle) {
+    dawn::ErrorLog() << "Adding a bundle";
     auto [_, inserted] = mAddedBundles.insert(bundle);
     if (!inserted) {
+        dawn::ErrorLog() << "!! Already inserted !!";
         return;
     }
 
@@ -169,12 +209,30 @@ void IndirectDrawMetadata::AddBundle(RenderBundleBase* bundle) {
          bundle->GetIndirectDrawMetadata().mIndexedIndirectBufferValidationInfo) {
         auto it = mIndexedIndirectBufferValidationInfo.lower_bound(config);
         if (it != mIndexedIndirectBufferValidationInfo.end() && it->first == config) {
+            dawn::ErrorLog() << " - Merging with existing config";
             // We already have batches for the same config. Merge the new ones in.
             for (const IndirectValidationBatch& batch : validationInfo.GetBatches()) {
-                it->second.AddBatch(mMaxDrawCallsPerBatch, mMaxBatchOffsetRange, batch);
+                it->second.AddBatch(mMaxDrawCallsPerBatch, mMaxBatchOffsetRange, batch,
+                                    mTotalIndirectDrawCount);
+                dawn::ErrorLog() << " - Added " << batch.draws.size() << " draws at an offset of "
+                                 << mTotalIndirectDrawCount;
+                mTotalIndirectDrawCount += batch.draws.size();
             }
         } else {
-            mIndexedIndirectBufferValidationInfo.emplace_hint(it, config, validationInfo);
+            dawn::ErrorLog() << " - Inserting a new config";
+            auto newIt =
+                mIndexedIndirectBufferValidationInfo.emplace_hint(it, config, validationInfo);
+            for (const IndirectValidationBatch& batch : newIt->second.GetBatches()) {
+                auto drawIt = batch.draws.begin();
+                // Ensure that the indirect draw index is properly offset.
+                while (drawIt != batch.draws.end()) {
+                    // drawIt->validatedDrawIndex += mTotalIndirectDrawCount;
+                    drawIt++;
+                }
+                dawn::ErrorLog() << " - Added " << batch.draws.size() << " draws at an offset of "
+                                 << mTotalIndirectDrawCount;
+                mTotalIndirectDrawCount += batch.draws.size();
+            }
         }
     }
 }
@@ -186,6 +244,10 @@ void IndirectDrawMetadata::AddIndexedIndirectDraw(wgpu::IndexFormat indexFormat,
                                                   uint64_t indirectOffset,
                                                   bool duplicateBaseVertexInstance,
                                                   DrawIndexedIndirectCmd* cmd) {
+    dawn::ErrorLog() << "Adding Indexed Draw";
+    dawn::ErrorLog() << " - buffer: " << indirectBuffer;
+    dawn::ErrorLog() << " - offset: " << indirectOffset;
+
     uint64_t numIndexBufferElements;
     uint64_t indexBufferOffsetInElements;
     switch (indexFormat) {
@@ -209,8 +271,8 @@ void IndirectDrawMetadata::AddIndexedIndirectDraw(wgpu::IndexFormat indexFormat,
             config, IndexedIndirectBufferValidationInfo(indirectBuffer));
         it = result.first;
     }
-
     IndirectDraw draw{};
+    draw.validatedDrawIndex = mTotalIndirectDrawCount++;
     draw.inputBufferOffset = indirectOffset;
     draw.numIndexBufferElements = numIndexBufferElements;
     draw.indexBufferOffsetInElements = indexBufferOffsetInElements;
@@ -222,6 +284,10 @@ void IndirectDrawMetadata::AddIndirectDraw(BufferBase* indirectBuffer,
                                            uint64_t indirectOffset,
                                            bool duplicateBaseVertexInstance,
                                            DrawIndirectCmd* cmd) {
+    dawn::ErrorLog() << "Adding Draw";
+    dawn::ErrorLog() << " - buffer: " << indirectBuffer;
+    dawn::ErrorLog() << " - offset: " << indirectOffset;
+
     const IndexedIndirectConfig config = {reinterpret_cast<uintptr_t>(indirectBuffer),
                                           duplicateBaseVertexInstance, DrawType::NonIndexed};
     auto it = mIndexedIndirectBufferValidationInfo.find(config);
@@ -232,6 +298,7 @@ void IndirectDrawMetadata::AddIndirectDraw(BufferBase* indirectBuffer,
     }
 
     IndirectDraw draw{};
+    draw.validatedDrawIndex = mTotalIndirectDrawCount++;
     draw.inputBufferOffset = indirectOffset;
     draw.numIndexBufferElements = 0;
     draw.cmd = cmd;

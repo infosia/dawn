@@ -35,6 +35,7 @@
 
 #include "absl/functional/function_ref.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroupTracker.h"
 #include "dawn/native/CommandEncoder.h"
@@ -1330,7 +1331,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                                                       wgpu::ShaderStage::None, range);
                         return {};
                     }));
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd));
+                dawn::ErrorLog() << "== RecordRenderPass[" << nextRenderPassNumber << "] ==";
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd, nextRenderPassNumber));
+                dawn::ErrorLog() << "== /RecordRenderPass[" << nextRenderPassNumber << "] ==";
 
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
@@ -1660,9 +1663,14 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 }
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
-                                           BeginRenderPassCmd* renderPassCmd) {
+                                           BeginRenderPassCmd* renderPassCmd,
+                                           size_t renderPassNumber) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
+
+    auto& indirectMetadata = GetIndirectDrawMetadata();
+    const IndirectDrawMetadata& metadata = indirectMetadata[renderPassNumber];
+    size_t indirectDrawIndex = 0;
 
     // Write timestamp at the beginning of render pass if it's set.
     // We've observed that this must be called before the render pass or the timestamps produced
@@ -1745,11 +1753,29 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             case Command::DrawIndirect: {
                 workCommandCount++;
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
+
+                Buffer* buffer;
+                VkDeviceSize offset;
+                if (draw->indirectBuffer != nullptr) {
+                    buffer = ToBackend(draw->indirectBuffer.Get());
+                    offset = static_cast<VkDeviceSize>(draw->indirectOffset);
+                } else {
+                    dawn::ErrorLog()
+                        << "DrawIndirect with validated draw[" << indirectDrawIndex << "]";
+                    const std::vector<IndirectDrawMetadata::ValidatedIndirectDraw>& validatedDraws =
+                        metadata.GetValidatedIndirectDraws();
+                    const IndirectDrawMetadata::ValidatedIndirectDraw& validatedDraw =
+                        validatedDraws[indirectDrawIndex++];
+                    buffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                    offset = validatedDraw.indirectOffset;
+                    dawn::ErrorLog() << " - buffer: " << validatedDraw.indirectBuffer.Get();
+                    dawn::ErrorLog() << " - offset: " << validatedDraw.indirectOffset << " (vs. "
+                                     << draw->indirectOffset << ")";
+                }
+                DAWN_ASSERT(buffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
-                    vk.CmdDrawIndirect(commands, buffer->GetHandle(),
-                                       static_cast<VkDeviceSize>(draw->indirectOffset), 1, 0);
+                    vk.CmdDrawIndirect(commands, buffer->GetHandle(), offset, 1, 0);
                 }));
                 break;
             }
@@ -1757,13 +1783,29 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             case Command::DrawIndexedIndirect: {
                 workCommandCount++;
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
+
+                Buffer* buffer;
+                VkDeviceSize offset;
+                if (draw->indirectBuffer != nullptr) {
+                    buffer = ToBackend(draw->indirectBuffer.Get());
+                    offset = static_cast<VkDeviceSize>(draw->indirectOffset);
+                } else {
+                    dawn::ErrorLog()
+                        << "DrawIndexedIndirect with validated draw[" << indirectDrawIndex << "]";
+                    const std::vector<IndirectDrawMetadata::ValidatedIndirectDraw>& validatedDraws =
+                        metadata.GetValidatedIndirectDraws();
+                    const IndirectDrawMetadata::ValidatedIndirectDraw& validatedDraw =
+                        validatedDraws[indirectDrawIndex++];
+                    buffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                    offset = validatedDraw.indirectOffset;
+                    dawn::ErrorLog() << " - buffer: " << validatedDraw.indirectBuffer.Get();
+                    dawn::ErrorLog() << " - offset: " << validatedDraw.indirectOffset << " (vs. "
+                                     << draw->indirectOffset << ")";
+                }
                 DAWN_ASSERT(buffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
-                    vk.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
-                                              static_cast<VkDeviceSize>(draw->indirectOffset), 1,
-                                              0);
+                    vk.CmdDrawIndexedIndirect(commands, buffer->GetHandle(), offset, 1, 0);
                 }));
                 break;
             }

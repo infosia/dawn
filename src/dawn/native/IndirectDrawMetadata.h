@@ -62,6 +62,7 @@ class IndirectDrawMetadata : public NonCopyable {
     };
 
     struct IndirectDraw {
+        uint32_t validatedDrawIndex;
         uint64_t inputBufferOffset;
         uint64_t numIndexBufferElements;
         uint64_t indexBufferOffsetInElements;
@@ -71,6 +72,11 @@ class IndirectDrawMetadata : public NonCopyable {
         // the backend processes the command. Valid until the backend has processed the
         // commands.
         raw_ptr<DrawIndirectCmd> cmd;
+    };
+
+    struct ValidatedIndirectDraw {
+        Ref<BufferBase> indirectBuffer;
+        uint64_t indirectOffset;
     };
 
     struct IndirectValidationBatch {
@@ -115,7 +121,8 @@ class IndirectDrawMetadata : public NonCopyable {
         // it's added to mBatch.
         void AddBatch(uint32_t maxDrawCallsPerIndirectValidationBatch,
                       uint64_t maxBatchOffsetRange,
-                      const IndirectValidationBatch& batch);
+                      const IndirectValidationBatch& batch,
+                      uint32_t indirectDrawIndexOffset);
 
         const std::vector<IndirectValidationBatch>& GetBatches() const;
 
@@ -186,11 +193,17 @@ class IndirectDrawMetadata : public NonCopyable {
 
     const std::vector<IndirectMultiDraw>& GetIndirectMultiDraws() const;
 
+    std::vector<ValidatedIndirectDraw>& GetValidatedIndirectDraws();
+    const std::vector<ValidatedIndirectDraw>& GetValidatedIndirectDraws() const;
+
   private:
     IndexedIndirectBufferValidationInfoMap mIndexedIndirectBufferValidationInfo;
     absl::flat_hash_set<RenderBundleBase*> mAddedBundles;
 
     std::vector<IndirectMultiDraw> mMultiDraws;
+
+    uint32_t mTotalIndirectDrawCount = 0;
+    std::vector<ValidatedIndirectDraw> mValidatedIndirectDraws;
 
     uint64_t mMaxBatchOffsetRange;
     uint32_t mMaxDrawCallsPerBatch;

@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Strings.h"
 #include "dawn/native/BindGroup.h"
@@ -490,6 +491,11 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
         return {};
     }
 
+    std::vector<IndirectDrawMetadata::ValidatedIndirectDraw>& validatedDraws =
+        indirectDrawMetadata->GetValidatedIndirectDraws();
+    dawn::ErrorLog() << "/// Validating Indirect Commands \\\\\\";
+    dawn::ErrorLog() << "Validated Draw Count: " << validatedDraws.size();
+
     const uint64_t maxStorageBufferBindingSize = device->GetLimits().v1.maxStorageBufferBindingSize;
     const uint32_t minStorageBufferOffsetAlignment =
         device->GetLimits().v1.minStorageBufferOffsetAlignment;
@@ -670,7 +676,16 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
                 indirectDraw->indexOffsetAsNumElements = uint32_t(draw.indexBufferOffsetInElements);
                 indirectDraw++;
 
-                draw.cmd->indirectBuffer = outputParamsBuffer.GetBuffer();
+                dawn::ErrorLog() << "Validating indirect draw index: " << draw.validatedDrawIndex;
+                DAWN_ASSERT(validatedDraws.size() > draw.validatedDrawIndex);
+                IndirectDrawMetadata::ValidatedIndirectDraw& validatedDraw =
+                    validatedDraws[draw.validatedDrawIndex];
+                validatedDraw.indirectBuffer = outputParamsBuffer.GetBuffer();
+                validatedDraw.indirectOffset = outputParamsOffset;
+                dawn::ErrorLog() << " - buffer: " << outputParamsBuffer.GetBuffer();
+                dawn::ErrorLog() << " - offset: " << outputParamsOffset;
+
+                // draw.cmd->indirectBuffer = outputParamsBuffer.GetBuffer();
                 draw.cmd->indirectOffset = outputParamsOffset;
                 if (pass.flags & kIndexedDraw) {
                     outputParamsOffset += kDrawIndexedIndirectSize;
