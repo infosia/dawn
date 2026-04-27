@@ -56,7 +56,8 @@ class CommandBuffer final : public CommandBufferBase {
                                   PipelineStateTracker* pipelineStateTracker);
     MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                                  const ScopedSwapStateCommandRecordingContext* commandContext,
-                                 PipelineStateTracker* pipelineStateTracker);
+                                 PipelineStateTracker* pipelineStateTracker,
+                                 PassIndex renderPassIndex);
     void HandleDebugCommands(const ScopedSwapStateCommandRecordingContext* commandContext,
                              CommandIterator* iter,
                              Command command);

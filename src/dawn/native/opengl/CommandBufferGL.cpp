@@ -822,7 +822,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                     GetDevice(), cmd, [&](TextureBase* texture, const SubresourceRange& range) {
                         return ToBackend(texture)->EnsureSubresourceContentInitialized(gl, range);
                     }));
-                DAWN_TRY(ExecuteRenderPass(cmd, gl));
+                DAWN_TRY(ExecuteRenderPass(cmd, gl, nextRenderPassNumber));
 
                 nextRenderPassNumber++;
                 break;
@@ -1260,8 +1260,12 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
 }
 
 MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
-                                            const OpenGLFunctions& gl) {
+                                            const OpenGLFunctions& gl,
+                                            PassIndex renderPassIndex) {
     GLuint fbo = 0;
+
+    const IndirectDrawMetadata& metadata = GetIndirectDrawMetadata()[renderPassIndex];
+    IndirectDrawIndex indirectDrawIndex{0};
 
     // Create the framebuffer used for this render pass and calls the correct glDrawBuffers
     {
@@ -1454,14 +1458,16 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
 
-                uint64_t indirectBufferOffset = draw->indirectOffset;
-                Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                Buffer* indirectBuffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                DAWN_ASSERT(indirectBuffer != nullptr);
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBuffer->GetHandle()));
-                DAWN_GL_TRY(
-                    gl, DrawArraysIndirect(
-                            lastPipeline->GetGLPrimitiveTopology(),
-                            reinterpret_cast<void*>(static_cast<intptr_t>(indirectBufferOffset))));
+                DAWN_GL_TRY(gl, DrawArraysIndirect(lastPipeline->GetGLPrimitiveTopology(),
+                                                   reinterpret_cast<void*>(static_cast<intptr_t>(
+                                                       validatedDraw.indirectOffset))));
                 indirectBuffer->TrackUsage();
                 break;
             }
@@ -1475,7 +1481,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_TRY(vertexStateBufferBindingTracker.Apply(gl, 0, 0));
                 DAWN_TRY(bindGroupTracker.Apply(gl));
 
-                Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                Buffer* indirectBuffer = ToBackend(validatedDraw.indirectBuffer.Get());
                 DAWN_ASSERT(indirectBuffer != nullptr);
 
                 const auto topology = lastPipeline->GetGLPrimitiveTopology();
@@ -1486,10 +1495,9 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 }
 
                 DAWN_GL_TRY(gl, BindBuffer(GL_DRAW_INDIRECT_BUFFER, indirectBuffer->GetHandle()));
-                DAWN_GL_TRY(
-                    gl, DrawElementsIndirect(
-                            topology, indexBufferFormat,
-                            reinterpret_cast<void*>(static_cast<intptr_t>(draw->indirectOffset))));
+                DAWN_GL_TRY(gl, DrawElementsIndirect(topology, indexBufferFormat,
+                                                     reinterpret_cast<void*>(static_cast<intptr_t>(
+                                                         validatedDraw.indirectOffset))));
                 indirectBuffer->TrackUsage();
                 break;
             }
