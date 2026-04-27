@@ -89,13 +89,13 @@ class vector : private std::vector<Value> {
         return Base::data();
     }
 
-    constexpr Base::reference operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
+    constexpr Base::reference operator[](Index i) { return Base::operator[](ToSizeTChecked(i)); }
     constexpr Base::const_reference operator[](Index i) const {
-        return Base::operator[](CheckedIndex(i));
+        return Base::operator[](ToSizeTChecked(i));
     }
 
-    constexpr Base::reference at(Index i) { return Base::at(CheckedIndex(i)); }
-    constexpr Base::const_reference at(Index i) const { return Base::at(CheckedIndex(i)); }
+    constexpr Base::reference at(Index i) { return Base::at(ToSizeTChecked(i)); }
+    constexpr Base::const_reference at(Index i) const { return Base::at(ToSizeTChecked(i)); }
 
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 
@@ -106,11 +106,6 @@ class vector : private std::vector<Value> {
     }
 
     constexpr void reserve(Index size) { Base::reserve(ToSizeTChecked(size)); }
-
-  private:
-    constexpr inline size_t CheckedIndex(Index i) const {
-        return BoundCheckedIndex(i, size(), Base::size());
-    }
 };
 
 }  // namespace dawn::ityp

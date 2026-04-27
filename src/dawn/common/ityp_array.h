@@ -65,20 +65,15 @@ class array : private ::std::array<Value, Size> {
     using Base::empty;
     using Base::fill;
 
-    constexpr Value& operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
+    constexpr Value& operator[](Index i) { return Base::operator[](ToSizeTChecked(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](ToSizeTChecked(i)); }
 
-    constexpr Value& at(Index i) { return Base::at(CheckedIndex(i)); }
-    constexpr const Value& at(Index i) const { return Base::at(CheckedIndex(i)); }
+    constexpr Value& at(Index i) { return Base::at(ToSizeTChecked(i)); }
+    constexpr const Value& at(Index i) const { return Base::at(ToSizeTChecked(i)); }
 
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
 
     constexpr bool operator==(const array<Index, Value, Size>& other) const = default;
-
-  private:
-    constexpr inline size_t CheckedIndex(Index i) const {
-        return BoundCheckedIndex(i, size(), Base::size());
-    }
 };
 
 }  // namespace dawn::ityp

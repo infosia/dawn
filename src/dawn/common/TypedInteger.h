@@ -79,6 +79,14 @@ template <typename Tag, typename T>
 #if defined(DAWN_ENABLE_ASSERTS)
 using TypedInteger = detail::TypedIntegerImpl<Tag, T>;
 #else
+
+namespace detail {
+template <typename Tag, typename T>
+struct alignas(T) TypedIntegerImpl2 {
+    static_assert(std::is_integral<T>::value, "TypedInteger must be integral");
+    T mValue;
+};
+
 using TypedInteger = T;
 #endif
 

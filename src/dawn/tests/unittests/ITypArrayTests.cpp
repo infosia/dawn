@@ -132,14 +132,13 @@ TEST_F(ITypArrayDeathTest, OversizedIndex) {
     static constexpr Key64 kHugeKey64{0x1'0000'0000LLU};
 
     ityp::array<Key64, Val, 10> vec;
-
-    vec[Key64(9)];
-    // Regular out-of-bounds.
-    EXPECT_DEATH(vec[Key64(10)], "");
-
     vec[Key64(0)];
-    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
-    EXPECT_DEATH(vec[kHugeKey64], "");
+    vec[Key64(9)];
+
+    if constexpr (sizeof(size_t) < sizeof(uint64_t)) {
+        // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+        EXPECT_DEATH(vec[kHugeKey64], "");
+    }
 }
 
 }  // anonymous namespace

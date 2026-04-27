@@ -60,14 +60,9 @@ class span : private ::std::span<Value> {
 
     using Base::data;
 
-    constexpr Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
+    constexpr Value& operator[](Index i) const { return Base::operator[](ToSizeTChecked(i)); }
 
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
-
-  private:
-    constexpr inline size_t CheckedIndex(Index i) const {
-        return BoundCheckedIndex(i, size(), Base::size());
-    }
 };
 
 // ityp::SpanFromUntyped<Index>(myValues, myValueCount) creates a span<Index, Value> from a C-style

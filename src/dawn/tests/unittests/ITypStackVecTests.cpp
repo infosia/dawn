@@ -89,16 +89,15 @@ TEST_F(ITypStackVecDeathTest, OversizedIndex) {
 
     ityp::stack_vec<Key64, Val, 20> vec(Key64(10));
 
-    vec[Key64(9)];
-    // Regular out-of-bounds.
-    EXPECT_DEATH(vec[Key64(10)], "");
-
     vec[Key64(0)];
-    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
-    EXPECT_DEATH(vec[kHugeKey64], "");
+    vec[Key64(9)];
 
-    EXPECT_DEATH(vec.resize(kHugeKey64), "");
-    EXPECT_DEATH(vec.reserve(kHugeKey64), "");
+    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+    if constexpr (sizeof(size_t) < sizeof(uint64_t)) {
+        EXPECT_DEATH(vec[kHugeKey64], "");
+        EXPECT_DEATH(vec.resize(kHugeKey64), "");
+        EXPECT_DEATH(vec.reserve(kHugeKey64), "");
+    }
 }
 
 }  // anonymous namespace

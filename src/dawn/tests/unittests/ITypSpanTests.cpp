@@ -149,13 +149,13 @@ TEST_F(ITypSpanDeathTest, OversizedIndex) {
     std::array<Val, 10> arr;
     ityp::span<Key64, Val> span(arr.data(), Key64(arr.size()));
 
-    span[Key64(9)];
-    // Regular out-of-bounds.
-    EXPECT_DEATH(span[Key64(10)], "");
-
     span[Key64(0)];
-    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
-    EXPECT_DEATH(span[kHugeKey64], "");
+    span[Key64(9)];
+
+    if constexpr (sizeof(size_t) < sizeof(uint64_t)) {
+        // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+        EXPECT_DEATH(span[kHugeKey64], "");
+    }
 }
 
 }  // anonymous namespace

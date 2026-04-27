@@ -256,18 +256,16 @@ TEST_F(ITypVectorDeathTest, OversizedIndex) {
     EXPECT_DEATH((ityp::vector<Key64, Val>(kHugeKey64, Val(7))), "");
 
     ityp::vector<Key64, Val> vec(Key64(10), Val(7));
-
-    vec[Key64(9)];
-    // Regular out-of-bounds.
-    EXPECT_DEATH(vec[Key64(10)], "");
-
     vec[Key64(0)];
-    // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
-    EXPECT_DEATH(vec[kHugeKey64], "");
+    vec[Key64(9)];
 
-    EXPECT_DEATH(vec.resize(kHugeKey64), "");
-    EXPECT_DEATH(vec.resize(kHugeKey64, Val(7)), "");
-    EXPECT_DEATH(vec.reserve(kHugeKey64), "");
+    if constexpr (sizeof(size_t) < sizeof(uint64_t)) {
+        // If this were cast to a 32-bit size_t without a check, it would be in-bounds.
+        EXPECT_DEATH(vec[kHugeKey64], "");
+        EXPECT_DEATH(vec.resize(kHugeKey64), "");
+        EXPECT_DEATH(vec.resize(kHugeKey64, Val(7)), "");
+        EXPECT_DEATH(vec.reserve(kHugeKey64), "");
+    }
 }
 
 }  // anonymous namespace

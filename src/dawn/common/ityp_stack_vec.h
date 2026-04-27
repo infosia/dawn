@@ -51,19 +51,14 @@ class stack_vec : private absl::InlinedVector<Value, StaticCapacity> {
     using Base::data;
     using Base::empty;
 
-    constexpr Value& operator[](Index i) { return Base::operator[](CheckedIndex(i)); }
-    constexpr const Value& operator[](Index i) const { return Base::operator[](CheckedIndex(i)); }
+    constexpr Value& operator[](Index i) { return Base::operator[](ToSizeTChecked(i)); }
+    constexpr const Value& operator[](Index i) const { return Base::operator[](ToSizeTChecked(i)); }
 
     constexpr void resize(Index size) { Base::resize(ToSizeTChecked(size)); }
 
     constexpr void reserve(Index size) { Base::reserve(ToSizeTChecked(size)); }
 
     constexpr Index size() const { return Index(static_cast<I>(Base::size())); }
-
-  private:
-    constexpr inline size_t CheckedIndex(Index i) const {
-        return BoundCheckedIndex(i, size(), Base::size());
-    }
 };
 
 }  // namespace dawn::ityp

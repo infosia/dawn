@@ -58,11 +58,25 @@ inline constexpr uint32_t u32_sizeof = detail::u32_sizeof<T>();
 template <typename T>
 inline constexpr uint32_t u32_alignof = detail::u32_alignof<T>();
 
-// Only defined for unsigned integers because that is all that is
-// needed at the time of writing.
+// A checked cast is only required if we're casting from a larger type to a smaller type,
+// or, if they're the same byte size, they have different signedness.
+template <typename Dst, typename Src>
+constexpr bool RequiresCheckedCast =
+    (sizeof(Src) > sizeof(Dst)) || (std::is_signed_v<Src> != std::is_signed_v<Dst>);
+
+// Default version is unchecked. The overload below subsumes this one if the RequiresCheckedCast
+// concept is matched.
+// Only defined for unsigned integers because that is all that is needed at the
+// time of writing.
 template <typename Dst, typename Src>
     requires std::unsigned_integral<Src>
-inline Dst checked_cast(const Src& value) {
+constexpr Dst checked_cast(const Src& value) {
+    return static_cast<Dst>(value);
+}
+
+template <typename Dst, typename Src>
+    requires std::unsigned_integral<Src> && RequiresCheckedCast<Dst, Src>
+constexpr Dst checked_cast(const Src& value) {
     DAWN_CHECK(value <= std::numeric_limits<Dst>::max());
     return static_cast<Dst>(value);
 }
@@ -85,26 +99,6 @@ template <typename Index>
 constexpr inline size_t ToSizeTChecked(Index size) {
     using I = UnderlyingType<Index>;
     return checked_cast<size_t>(static_cast<I>(size));
-}
-
-template <typename Index>
-    requires UnsignedUnderlyingType<Index>
-constexpr inline size_t BoundCheckedIndex(Index i, Index typedSize, size_t untypedSize) {
-    // We take both the typed size and untyped size just so we can do the DAWN_ASSERT below.
-    // That logic assumes the two are equal, so we check, but this check should hopefully be easy
-    // for the compiler to optimize away.
-    DAWN_CHECK(static_cast<uint64_t>(typedSize) == static_cast<uint64_t>(untypedSize));
-
-    // Check that the index is in bounds. Unlike libc++ hardening checks, this is done before the
-    // cast to size_t, to make sure we don't do an invalid cast when Index is larger than size_t.
-    DAWN_CHECK(i < typedSize);
-
-    size_t ret = static_cast<size_t>(i);
-    // If libc++/absl hardening is enabled, the underlying container will try to do the bounds check
-    // again. Hint the compiler in case it can't deduce from above that the hardening is redundant.
-    // SECURITY CRITICAL: It's important that this assert be correct!
-    DAWN_ASSERT(ret < untypedSize);
-    return ret;
 }
 
 }  // namespace dawn
