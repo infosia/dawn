@@ -16,6 +16,52 @@
       "message": "LGTM",
       "revId": "89701aac088bd98023d37b19cb26fec6011b8623",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "974270f2_815ec679",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T14:27:03Z",
+      "side": 1,
+      "message": "I think calling the type `param_ptr` makes it a bit clearer otherwise I\u0027d think it\u0027s the param itself.\n\n```suggestion\n            for (auto* param : func-\u003eParams()) {\n                auto* param_ptr \u003d param-\u003eType()-\u003eAs\u003ccore::type::Pointer\u003e();\n                if (param_ptr \u0026\u0026 core::IsHostShareable(param_ptr-\u003eAddressSpace())) {\n```",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 76
+      },
+      "revId": "89701aac088bd98023d37b19cb26fec6011b8623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbbe0d4e_b3dd6c88",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T14:27:03Z",
+      "side": 1,
+      "message": "```suggestion\n                    type_queue.Push(param_ptr-\u003eStoreType());\n```",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 56
+      },
+      "revId": "89701aac088bd98023d37b19cb26fec6011b8623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
