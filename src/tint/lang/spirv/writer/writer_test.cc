@@ -416,5 +416,40 @@ TEST_F(SpirvWriterTest, CanGenerate_StructMemberPadding_TooLarge) {
     EXPECT_THAT(result.Failure().reason, testing::HasSubstr("is larger than the maximum"));
 }
 
+TEST_F(SpirvWriterTest, PolyfillPixelCenter) {
+    auto* position = b.FunctionParam("position", ty.vec4f());
+    position->SetBuiltin(core::BuiltinValue::kPosition);
+
+    auto* ep = b.FragmentFunction("main", ty.void_());
+    ep->SetParams({position});
+
+    b.Append(ep->Block(), [&] {
+        b.Let("p", position);
+        b.Return(ep);
+    });
+
+    Options options;
+    options.polyfill_pixel_center = true;
+    auto result = Generate(options);
+    ASSERT_EQ(result, Success) << result.Failure() << output_;
+    EXPECT_INST(R"(
+       %main = OpFunction %void None %12
+         %13 = OpLabel
+         %14 = OpLoad %v4float %main_position_Input None
+         %15 = OpVectorShuffle %v2float %14 %14 0 1
+         %17 = OpExtInst %v2float %18 Floor %15
+         %19 = OpFAdd %v2float %17 %20
+         %22 = OpExtInst %v4float %18 InterpolateAtOffset %main_loc0_Input %23
+         %24 = OpCompositeExtract %float %22 2
+         %25 = OpCompositeExtract %float %22 3
+         %26 = OpFDiv %float %24 %25
+         %27 = OpFDiv %float %float_1 %25
+         %29 = OpCompositeConstruct %v4float %19 %26 %27
+         %30 = OpFunctionCall %void %main_inner %29
+               OpReturn
+               OpFunctionEnd
+)");
+}
+
 }  // namespace
 }  // namespace tint::spirv::writer

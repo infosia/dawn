@@ -121,6 +121,8 @@ match iu8: i8 | u8
 
 match storage
   : address_space.storage
+match in
+  : address_space.__in
 match workgroup_or_storage
   : address_space.workgroup
   | address_space.storage
@@ -1961,4 +1963,10 @@ fn group_non_uniform_s_min(scope: u32, group_operation: u32, value: vec<N, T>) -
 fn group_non_uniform_s_max(scope: u32, group_operation: u32, value: T) -> T
 @must_use @stage("fragment", "compute") implicit(N: num, T: iu32)
 fn group_non_uniform_s_max(scope: u32, group_operation: u32, value: vec<N, T>) -> vec<N, T>
+
+@stage("fragment") implicit(T: f32_f16, N: num)
+fn interpolate_at_offset(ptr<in, vec<N, T>, readable>, vec2<f32>) -> vec<N, T>
+
+@stage("fragment") implicit(T: f32_f16)
+fn interpolate_at_offset(ptr<in, T, readable>, vec2<f32>) -> T
 
