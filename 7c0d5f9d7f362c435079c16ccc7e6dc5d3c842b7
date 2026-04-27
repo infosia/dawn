@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7a503fd_9c394746",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T20:30:41Z",
+      "side": 1,
+      "message": "I think this is more then just `\u0026`, like a  `*` or `)` or `(` wouldn\u0027t be allowed. I think we need this to be an allow list instead of a deny list.",
+      "revId": "7c0d5f9d7f362c435079c16ccc7e6dc5d3c842b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
