@@ -3285,17 +3285,17 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
 ////////////////////////////////////////////////////////////////////////////////
 // chromium_experimental_resource_table                                       //
 ////////////////////////////////////////////////////////////////////////////////
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_1d<K> >(index: I) -> bool
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_2d<K> >(index: I) -> bool
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_2d_array<K> >(index: I) -> bool
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_3d<K> >(index: I) -> bool
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_cube<K> >(index: I) -> bool
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_cube_array<K> >(index: I) -> bool
 @must_use implicit(K: fiu32, I: iu32)
   fn hasResource<T: texture_multisampled_2d<K> >(index: I) -> bool
@@ -3309,6 +3309,8 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
   fn hasResource<T: texture_depth_cube_array>(index: I) ->  bool
 @must_use implicit(I: iu32)
   fn hasResource<T: texture_depth_multisampled_2d>(index: I) -> bool
+@must_use implicit(I: iu32)
+  fn hasResource<S: sampler>(index: I) -> bool
 @must_use implicit(I: iu32)
   fn hasResource<S: sampler_comparison>(index: I) -> bool
 
@@ -3327,17 +3329,17 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
 @must_use implicit(F: sampler_filter, I: iu32)
   fn hasResource<S: sampler_filtered<F> >(index: I) -> bool
 
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_1d<K> >(index: I) -> T
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_2d<K> >(index: I) -> T
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_2d_array<K> >(index: I) -> T
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_3d<K> >(index: I) -> T
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_cube<K> >(index: I) -> T
-@must_use implicit(K: iu32, I: iu32)
+@must_use implicit(K: fiu32, I: iu32)
   fn getResource<T: texture_cube_array<K> >(index: I) -> T
 @must_use implicit(K: iu32, I: iu32)
   fn getResource<T: texture_multisampled_2d<K> >(index: I) -> T
@@ -3351,6 +3353,8 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
   fn getResource<T: texture_depth_cube_array>(index: I) ->  T
 @must_use implicit(I: iu32)
   fn getResource<T: texture_depth_multisampled_2d>(index: I) -> T
+@must_use implicit(I: iu32)
+  fn getResource<S: sampler>(index: I) -> S
 @must_use implicit(I: iu32)
   fn getResource<S: sampler_comparison>(index: I) -> S
 
