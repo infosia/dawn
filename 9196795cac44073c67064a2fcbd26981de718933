@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6ff7cd_5a005de1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T18:07:24Z",
+      "side": 1,
+      "message": "Tint has macros we use for unsafe buffer usage, and Ryan has audited a lot of them/tightened them over the last weeks.",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
