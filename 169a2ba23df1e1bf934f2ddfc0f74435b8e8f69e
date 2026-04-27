@@ -33,6 +33,24 @@
       "message": "nit: can we comment that this is for the `MTLArgumendDescriptor`? It\u0027s noted in the `MTLDevice.h` header but very mysterious otherwise.",
       "revId": "169a2ba23df1e1bf934f2ddfc0f74435b8e8f69e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00eefd2c_fe737092",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T14:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a42fb27_25edf246",
+      "revId": "169a2ba23df1e1bf934f2ddfc0f74435b8e8f69e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
