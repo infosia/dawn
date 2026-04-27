@@ -512,6 +512,25 @@ bool IsASCII(std::string_view str) {
     return true;
 }
 
+bool IsIdentifier(std::string_view str) {
+    if (str.empty()) {
+        return false;
+    }
+    auto is_alpha_or_underscore = [](char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+    };
+    auto is_digit = [](char c) { return c >= '0' && c <= '9'; };
+    if (!is_alpha_or_underscore(str.front())) {
+        return false;
+    }
+    for (size_t i = 1; i < str.length(); i++) {
+        if (!is_alpha_or_underscore(str[i]) && !is_digit(str[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
 }  // namespace utf8
 
 namespace utf16 {

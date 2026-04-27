@@ -1901,7 +1901,7 @@ class Printer : public tint::TextGenerator {
 
     /// @returns `true` if @p ident should be renamed
     bool ShouldRename(std::string_view ident) {
-        return options_.strip_all_names || IsKeyword(ident) || !tint::utf8::IsASCII(ident);
+        return options_.strip_all_names || IsKeyword(ident) || !tint::utf8::IsIdentifier(ident);
     }
 
     /// @param s the structure

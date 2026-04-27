@@ -107,6 +107,10 @@ size_t Encode(CodePoint code_point, std::span<uint8_t> buffer);
 /// (code-points 0x00..0x7f).
 bool IsASCII(std::string_view);
 
+/// @returns true if the string is a valid identifier (starts with a letter or underscore,
+/// followed by letters, numbers, or underscores).
+bool IsIdentifier(std::string_view);
+
 }  // namespace utf8
 
 namespace utf16 {
