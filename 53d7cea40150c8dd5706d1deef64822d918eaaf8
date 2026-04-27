@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9315cae0_978568c0",
+        "filename": "src/dawn/native/IntegerTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T13:35:51Z",
+      "side": 1,
+      "message": "nit: just use `wgpu::kQuerySetIndexUndefined`? To make it clear this matches the API\n\n```suggestion\nconstexpr QueryIndex kQuerySetIndexUndefinedTyped \u003d QueryIndex(wgpu::kQuerySetIndexUndefined);\n```",
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cba1ef8_878b3dc2",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T13:35:51Z",
+      "side": 1,
+      "message": "nit: `end` or something that indicates this is after the last entry",
+      "range": {
+        "startLine": 502,
+        "startChar": 15,
+        "endLine": 502,
+        "endChar": 19
+      },
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8e0381b_3b4cea9f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T13:35:51Z",
+      "side": 1,
+      "message": "this pattern is used 3 times but it\u0027s kind of hard to read the correctness of it, is there any way to factor it out? not a big deal if not",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
