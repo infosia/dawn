@@ -33,6 +33,24 @@
       "message": "This should be guaranteed to fit in a u32 since it\u0027s validated in `ValidateComputeStageWorkgroupSize`.\n\nThen we can do this:\n\n```\n// Assuming we pass the full subgroups flag, which we do IIRC\nuint32_t subgroupCount \u003d numInvocations / explicitSubgroupSize;\nDAWN_INTERNAL_ERROR_IF(subgroupCount \u003e r.maxComputeWorkgroupSubgroups, \"...\");\n```",
       "revId": "ce4198f1ecc4d350e0ca4220b9cc2792c3edd826",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "621ec4c4_e4e2b017",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-27T08:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5808ecef_c0378e41",
+      "revId": "ce4198f1ecc4d350e0ca4220b9cc2792c3edd826",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
