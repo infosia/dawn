@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9147720_e0c41795",
+        "filename": "src/dawn/native/PassResourceUsage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:43:15Z",
+      "side": 1,
+      "message": "https://crbug.com/506912895",
+      "parentUuid": "08d3e6bf_348ed449",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92371e33_414a17cf",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-27T15:08:51Z",
       "side": 1,
       "message": "nit: move in the previous CL that adds the vector (but also it might not add that vector)",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eadccd4e_f6f65a13",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92371e33_414a17cf",
       "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c690318_e7f390dc",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca799dfb_69458fe6",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a65b123_1ebf083a",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e2cdfb1_8976fe98",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b081dfb6_34077cad",
@@ -82,6 +154,24 @@
       "writtenOn": "2026-04-27T15:08:51Z",
       "side": 1,
       "message": "```suggestion\n    return uint32_t{bindingIndex};\n```",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf6dcb0f_f9a5bc26",
+        "filename": "src/dawn/native/metal/UtilsMetal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b081dfb6_34077cad",
       "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
