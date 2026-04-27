@@ -254,6 +254,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cde32a3_5a718a30",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-27T18:06:47Z",
+      "side": 1,
+      "message": "Ok I implemented it as best I could figure out. [This](https://dawn-review.git.corp.google.com/c/dawn/+/290895/22..23) is the relevant diff.",
+      "parentUuid": "6ada6a45_fda1e008",
+      "range": {
+        "startLine": 1921,
+        "startChar": 0,
+        "endLine": 1928,
+        "endChar": 17
+      },
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b118036f_0831557e",
@@ -372,6 +396,24 @@
       "writtenOn": "2026-04-23T08:59:51Z",
       "side": 1,
       "message": "I wonder if we could use a `BindGroupLayout` created reentrantly: we have support for texture bindings with [`kInputAttachmentDim`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d01f3fea318f80b5541e1d5eb8dfeb174820926be;l\u003d394) such that we could in the CommandBuffer do something like:\n\n```\nPerColorAttachment\u003cBindGroupLayoutEntry\u003e bglEntries;\nPerColorAttachment\u003cBindGroupEntry\u003e bgEntries;\nfor each attachment {\n    bglEntries[i].texture.dimension \u003d kInputAttachmentDim;\n    // ...\n}\nDAWN_TRY_ASSIGN(bgl, device-\u003eCreateBGL(...));\nDAWN_TRY_ASSIGN(bg, device-\u003eCreateBG(...));\n\nVkDescriptorSet inputAttachmentSet \u003d ToBackend(bg)-\u003eGetHandle();\n```\n\nThe BindGroupLayout would be cached between submissions like all contentless objects.",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3bb3676_ca82fb08",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2026-04-27T18:06:47Z",
+      "side": 1,
+      "message": "I think we\u0027d still need an LRU cache of sorts, rather than just the cache of currently alive BGLs, to make this effective? In that case I\u0027m not sure it\u0027s easier than just having a LRU cache of VkDescriptorSets in FramebufferFetchHelper.\n\nIf I\u0027m misunderstanding the suggestion or it\u0027s really critical let me know, otherwise maybe I can skip this change?",
+      "parentUuid": "604bb562_3806459f",
       "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
