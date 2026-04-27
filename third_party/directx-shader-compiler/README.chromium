@@ -4,7 +4,7 @@ URL: https://github.com/microsoft/DirectX-Shader-Compiler
 Update Mechanism: Autoroll
 Security Critical: yes
 Version: N/A
-Revision: bacbfaa6600f602df5cc33632c2b08d1404c0319
+Revision: ec9d97a98b083c757b2832da50984e72f4189f3b
 License: LLVM
 License File: LICENSE
 Shipped: yes
