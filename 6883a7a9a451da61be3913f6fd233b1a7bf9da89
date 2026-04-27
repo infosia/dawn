@@ -33,6 +33,24 @@
       "message": "Does this replace an existing, later TrackUsedQuerySet call? Can that one be removed?",
       "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e169a1f_d1a92bf8",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:46:01Z",
+      "side": 1,
+      "message": "Asked offline and the answer is: yes, but that one is wrapped up with timestamp queries too. It will be removed in a later CL",
+      "parentUuid": "a3527789_17ae2fdc",
+      "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
