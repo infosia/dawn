@@ -51,6 +51,24 @@
       "parentUuid": "fa6ff7cd_5a005de1",
       "revId": "9196795cac44073c67064a2fcbd26981de718933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c103b514_56bb3d4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T18:29:18Z",
+      "side": 1,
+      "message": "Yes, those are the existing macros we\u0027ve got in the codebase. I believe in all cases Ryan has audited them to determine they\u0027re required given how tint is built.",
+      "parentUuid": "751c62c8_efbc41e8",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
