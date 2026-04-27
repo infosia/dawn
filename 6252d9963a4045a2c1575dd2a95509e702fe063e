@@ -51,6 +51,24 @@
       "parentUuid": "37bac94e_7e9842ff",
       "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de9ffed4_0e1393d4",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-27T02:56:39Z",
+      "side": 1,
+      "message": "Correction: Wildcat Lake supports cooperative matrix.",
+      "parentUuid": "9418737d_2bdcdcea",
+      "revId": "6252d9963a4045a2c1575dd2a95509e702fe063e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
