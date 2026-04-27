@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5391470f_228dcc59",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-27T17:16:22Z",
+      "side": 1,
+      "message": "```suggestion\nWith https://issues.chromium.org/issues/496379067, a bug was\n```",
+      "revId": "13ed81209b738b9aff8151206bdb915855ef99c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ff0af24b_e8d29377",
