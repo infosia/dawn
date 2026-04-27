@@ -34,6 +34,24 @@
       "parentUuid": "34e39cf5_5b7c26b9",
       "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff1d480_e1779cc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-27T17:09:03Z",
+      "side": 1,
+      "message": "I don\u0027t have a great explanation for why it works on the bot other than maybe that it works correctly when run through `luci-auth`. It does seem like this dependency should be updated, though.\n\nI\u0027m surprised that the oswrapper tests would start failing as a result, but I\u0027ll try to patch this in and take a look later today.",
+      "parentUuid": "31d0f246_e6a1253e",
+      "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
