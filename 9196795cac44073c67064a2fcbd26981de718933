@@ -16,6 +16,23 @@
       "message": "Tint has macros we use for unsafe buffer usage, and Ryan has audited a lot of them/tightened them over the last weeks.",
       "revId": "9196795cac44073c67064a2fcbd26981de718933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1966eced_7fda38f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-27T18:24:06Z",
+      "side": 1,
+      "message": "Is this meant to replace the existing warning suppressions that we have in Tint? i.e. INT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE and TINT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE_IN_CONTAINER",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
