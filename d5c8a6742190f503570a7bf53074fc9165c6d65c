@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb094a32_ffa10d61",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-27T21:14:48Z",
+      "side": 1,
+      "message": "I don\u0027t know if we really need to do the OOB checks ourself. What I was suggesting is that we only do the checked_cast on Index if necessary. I started trying to explain it, but found it was easier to code the diffs. See: https://dawn-review.git.corp.google.com/c/dawn/+/305358. What do you think?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "aa04c046_87c6213a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/Numeric.h",
+              "range": {
+                "startLine": 103,
+                "startChar": 0,
+                "endLine": 107,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
