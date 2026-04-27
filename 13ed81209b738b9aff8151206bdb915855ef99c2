@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e13484a9_abaabb37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-27T17:18:26Z",
+      "side": 1,
+      "message": "I\u0027ll try to be better about these links in the future.",
+      "parentUuid": "00e1e213_6011bad3",
+      "revId": "13ed81209b738b9aff8151206bdb915855ef99c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ff0af24b_e8d29377",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
