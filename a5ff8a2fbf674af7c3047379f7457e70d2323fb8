@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7655cb36_3e7f7041",
+        "filename": "src/dawn/native/metal/SwapChainMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T14:00:23Z",
+      "side": 1,
+      "message": "Why was this added?",
+      "revId": "a5ff8a2fbf674af7c3047379f7457e70d2323fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98fd7adb_e517498f",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T14:00:23Z",
+      "side": 1,
+      "message": "nit: this could use `TextureBase::IsMultisampledTexture` (and rename it to `IsMultisampled()` in a follow-up?)",
+      "revId": "a5ff8a2fbf674af7c3047379f7457e70d2323fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
