@@ -48,7 +48,8 @@ class WireErrorCallbackTests : public WireTest {};
 // Test the return wire for device user warning callbacks
 TEST_F(WireErrorCallbackTests, DeviceLoggingCallback) {
     testing::MockCppCallback<wgpu::LoggingCallback<void>*> mockCallback;
-    device.SetLoggingCallback(mockCallback.Callback());
+    device.SetLoggingCallback(mockCallback.TemplatedCallback(),
+                              mockCallback.TemplatedCallbackUserdata());
 
     // Setting the injected warning callback should stay on the client side and do nothing
     FlushClient();
