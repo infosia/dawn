@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "274017b8_6e71c2ec",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-27T18:53:48Z",
+      "side": 1,
+      "message": "For consistency with other loops in the CL?\n```suggestion\n                for (QueryIndex i : Range(queryCount)) {\n```",
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3cba1ef8_878b3dc2",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 10
@@ -54,6 +71,30 @@
       "writtenOn": "2026-04-27T13:35:51Z",
       "side": 1,
       "message": "this pattern is used 3 times but it\u0027s kind of hard to read the correctness of it, is there any way to factor it out? not a big deal if not",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a2256e_c49a9e09",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-27T18:53:48Z",
+      "side": 1,
+      "message": "+1. I misread what these loops were doing initially and had started a long comment about it in `CommandBufferD3D12` before realizing it was a mistake on my part.",
+      "parentUuid": "c8e0381b_3b4cea9f",
       "range": {
         "startLine": 505,
         "startChar": 0,
