@@ -33,6 +33,24 @@
       "message": "Is this meant to replace the existing warning suppressions that we have in Tint? i.e. INT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE and TINT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE_IN_CONTAINER",
       "revId": "9196795cac44073c67064a2fcbd26981de718933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "751c62c8_efbc41e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-27T18:27:45Z",
+      "side": 1,
+      "message": "Do you know if these are the macros?\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/utils/macros/compiler.h;l\u003d135-138",
+      "parentUuid": "fa6ff7cd_5a005de1",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
