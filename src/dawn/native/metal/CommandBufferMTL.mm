@@ -1197,7 +1197,7 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                             device->IsToggleEnabled(Toggle::MetalFillEmptyOcclusionQueriesWithZero)
                                 ? &emptyOcclusionQueries
                                 : nullptr,
-                            multiDrawExecutions);
+                            multiDrawExecutions, nextRenderPassNumber);
                     },
                     cmd));
                 for (const auto& [querySet, queryIndex] : emptyOcclusionQueries) {
@@ -1753,7 +1753,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
     id<MTLRenderCommandEncoder> encoder,
     BeginRenderPassCmd* renderPassCmd,
     EmptyOcclusionQueries* emptyOcclusionQueries,
-    const std::vector<MultiDrawExecutionData>& multiDrawExecutions) {
+    const std::vector<MultiDrawExecutionData>& multiDrawExecutions,
+    PassIndex renderPassIndex) {
     bool enableVertexPulling = GetDevice()->IsToggleEnabled(Toggle::MetalEnableVertexPulling);
     RenderPipeline* lastPipeline = nullptr;
     id<MTLBuffer> indexBuffer = nullptr;
@@ -1763,6 +1764,9 @@ MaybeError CommandBuffer::EncodeRenderPass(
     uint32_t multiDrawIndex = 0;
 
     bool didDrawInCurrentOcclusionQuery = false;
+
+    const IndirectDrawMetadata& metadata = GetIndirectDrawMetadata()[renderPassIndex];
+    IndirectDrawIndex indirectDrawIndex{0};
 
     StorageBufferLengthTracker storageBufferLengths{GetDevice()};
     VertexBufferTracker vertexBuffers(&storageBufferLengths);
@@ -1867,12 +1871,17 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 storageBufferLengths.Apply(lastPipeline, enableVertexPulling);
                 immediates.Apply(encoder, &storageBufferLengths);
 
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                Buffer* buffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                DAWN_ASSERT(buffer != nullptr);
                 buffer->TrackUsage();
+
                 id<MTLBuffer> indirectBuffer = buffer->GetMTLBuffer();
                 [encoder drawPrimitives:lastPipeline->GetMTLPrimitiveTopology()
                           indirectBuffer:indirectBuffer
-                    indirectBufferOffset:draw->indirectOffset];
+                    indirectBufferOffset:validatedDraw.indirectOffset];
                 didDrawInCurrentOcclusionQuery = true;
                 break;
             }
@@ -1885,17 +1894,20 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 storageBufferLengths.Apply(lastPipeline, enableVertexPulling);
                 immediates.Apply(encoder, &storageBufferLengths);
 
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
 
+                Buffer* buffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                DAWN_ASSERT(buffer != nullptr);
                 buffer->TrackUsage();
+
                 id<MTLBuffer> indirectBuffer = buffer->GetMTLBuffer();
                 [encoder drawIndexedPrimitives:lastPipeline->GetMTLPrimitiveTopology()
                                      indexType:indexBufferType
                                    indexBuffer:indexBuffer
                              indexBufferOffset:indexBufferBaseOffset
                                 indirectBuffer:indirectBuffer
-                          indirectBufferOffset:draw->indirectOffset];
+                          indirectBufferOffset:validatedDraw.indirectOffset];
                 didDrawInCurrentOcclusionQuery = true;
                 break;
             }
