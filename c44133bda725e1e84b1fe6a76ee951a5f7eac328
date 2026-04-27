@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "133ec983_abef3cc0",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:16:00Z",
+      "side": 1,
+      "message": "nit: \"first\" is a bit confusing IMHO, we could just keep calling it id and comment that `Entry` might refer to a whole binding_array.",
+      "revId": "c44133bda725e1e84b1fe6a76ee951a5f7eac328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0c6eb4_fab7e089",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:16:00Z",
+      "side": 1,
+      "message": "Not yet, but eventually yes, but not dynamic buffers.",
+      "revId": "c44133bda725e1e84b1fe6a76ee951a5f7eac328",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
