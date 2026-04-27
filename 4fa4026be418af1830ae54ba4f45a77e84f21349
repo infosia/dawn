@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5a18d06_1e4b2e27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T08:46:39Z",
+      "side": 1,
+      "message": "The important part is that on Intel we report the D3D12 subgroup max size instead of 128.",
+      "revId": "4fa4026be418af1830ae54ba4f45a77e84f21349",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "87266055_3f7e0f25",
@@ -14,6 +31,23 @@
       "writtenOn": "2026-04-27T07:53:02Z",
       "side": 1,
       "message": "PTAL, thanks!",
+      "revId": "4fa4026be418af1830ae54ba4f45a77e84f21349",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0b9d64_a7efb409",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T08:46:39Z",
+      "side": 1,
+      "message": "nit: move to `ComputeSubgroupMaxSize() const` and assign to `mSubgroupMaxSize` in `InitializeImpl` to make the side effects very clear.",
       "revId": "4fa4026be418af1830ae54ba4f45a77e84f21349",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
