@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f2048d_117e2d10",
+        "filename": "src/dawn/native/metal/SwapChainMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T14:43:43Z",
+      "side": 1,
+      "message": "This file uses `MetalPixelFormat`. For some reason my IDE was unhappy without the include. IWYU would say we should have it anyway.",
+      "parentUuid": "7655cb36_3e7f7041",
+      "revId": "a5ff8a2fbf674af7c3047379f7457e70d2323fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98fd7adb_e517498f",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-27T14:00:23Z",
       "side": 1,
       "message": "nit: this could use `TextureBase::IsMultisampledTexture` (and rename it to `IsMultisampled()` in a follow-up?)",
+      "revId": "a5ff8a2fbf674af7c3047379f7457e70d2323fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62a5bc0c_6b7ba141",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T14:43:43Z",
+      "side": 1,
+      "message": "https://crbug.com/506912892",
+      "parentUuid": "98fd7adb_e517498f",
       "revId": "a5ff8a2fbf674af7c3047379f7457e70d2323fb8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
