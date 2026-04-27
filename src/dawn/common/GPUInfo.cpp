@@ -56,7 +56,7 @@ const PCIDeviceID kMaliG68 = 0x92041010;
 DriverVersion::DriverVersion() = default;
 
 DriverVersion::DriverVersion(const std::initializer_list<uint16_t>& version) {
-    DAWN_ASSERT(version.size() <= kMaxVersionFields);
+    DAWN_CHECK(version.size() <= kMaxVersionFields);
     mDriverVersion.assign(version.begin(), version.end());
 }
 
@@ -97,7 +97,7 @@ std::strong_ordering DriverVersion::operator<=>(const DriverVersion& other) cons
 // more details.
 IntelWindowsDriverVersion::IntelWindowsDriverVersion(const DriverVersion& driverVersion) {
     size_t size = driverVersion.size();
-    DAWN_ASSERT(size >= 2);
+    DAWN_CHECK(size >= 2);
     mBuildNumber = driverVersion[size - 2] * 10000 + driverVersion[size - 1];
 }
 

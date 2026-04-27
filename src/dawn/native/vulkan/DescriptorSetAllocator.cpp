@@ -56,7 +56,7 @@ DescriptorSetAllocator::DescriptorSetAllocator(
     uint32_t totalDescriptorCount = 0;
     mPoolSizes.reserve(descriptorCountPerType.size());
     for (const auto& [type, count] : descriptorCountPerType) {
-        DAWN_ASSERT(count > 0);
+        DAWN_CHECK(count > 0);
         totalDescriptorCount += count;
         mPoolSizes.push_back(VkDescriptorPoolSize{type, count});
     }
@@ -68,7 +68,7 @@ DescriptorSetAllocator::DescriptorSetAllocator(
     // that at least one descriptor set can be made (bindings with visibility none can force giant
     // sets to be made).
     mMaxSets = std::max(kMaxDescriptorsPerPool / totalDescriptorCount, 1u);
-    DAWN_ASSERT(mMaxSets > 0);
+    DAWN_CHECK(mMaxSets > 0);
 
     // Grow the number of descriptors in the pool to fit the computed |mMaxSets|.
     for (auto& poolSize : mPoolSizes) {

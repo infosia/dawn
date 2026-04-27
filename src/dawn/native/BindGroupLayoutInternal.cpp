@@ -555,7 +555,7 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
         // The external texture is still added to the entries to be used in validation and to know
         // where the additional bindings are located.
         if (entry.Has<ExternalTextureBindingLayout>()) {
-            DAWN_ASSERT(entry->bindingArraySize <= 1);
+            DAWN_CHECK(entry->bindingArraySize <= 1);
 
             BindingInfo plane0Entry = CreateSampledTextureBindingForExternalTexture(
                 nextOpenBindingNumberForNewEntry--, entry->visibility);
@@ -1023,10 +1023,10 @@ size_t BindGroupLayoutInternalBase::GetBindingDataSize() const {
     const size_t bindingCount = size_t(mBindingInfo.size());
 
     size_t objectPointerStart = bufferCount * sizeof(BufferBindingData);
-    DAWN_ASSERT(IsAligned(objectPointerStart, alignof(Ref<ObjectBase>)));
+    DAWN_CHECK(IsAligned(objectPointerStart, alignof(Ref<ObjectBase>)));
     size_t bufferSizeArrayStart =
         Align(objectPointerStart + bindingCount * sizeof(Ref<ObjectBase>), sizeof(uint64_t));
-    DAWN_ASSERT(IsAligned(bufferSizeArrayStart, alignof(uint64_t)));
+    DAWN_CHECK(IsAligned(bufferSizeArrayStart, alignof(uint64_t)));
     return bufferSizeArrayStart + mUnverifiedBufferCount * sizeof(uint64_t);
 }
 
@@ -1040,9 +1040,9 @@ BindGroupLayoutInternalBase::ComputeBindingDataPointers(void* dataStart) const {
     uint64_t* unverifiedBufferSizes =
         AlignPtr(reinterpret_cast<uint64_t*>(bindings + bindingCount), sizeof(uint64_t));
 
-    DAWN_ASSERT(IsPtrAligned(bufferData, alignof(BufferBindingData)));
-    DAWN_ASSERT(IsPtrAligned(bindings, alignof(Ref<ObjectBase>)));
-    DAWN_ASSERT(IsPtrAligned(unverifiedBufferSizes, alignof(uint64_t)));
+    DAWN_CHECK(IsPtrAligned(bufferData, alignof(BufferBindingData)));
+    DAWN_CHECK(IsPtrAligned(bindings, alignof(Ref<ObjectBase>)));
+    DAWN_CHECK(IsPtrAligned(unverifiedBufferSizes, alignof(uint64_t)));
 
     return {{bufferData, GetBindingTypeEnd(BindingTypeOrder_RegularBuffer)},
             {bindings, GetBindingCount()},
