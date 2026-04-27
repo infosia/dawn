@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3527789_17ae2fdc",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T13:43:26Z",
+      "side": 1,
+      "message": "Does this replace an existing, later TrackUsedQuerySet call? Can that one be removed?",
+      "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
