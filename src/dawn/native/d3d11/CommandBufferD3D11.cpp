@@ -339,7 +339,8 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 }
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
-                DAWN_TRY(ExecuteRenderPass(cmd, commandContext, &pipelineStateTracker));
+                DAWN_TRY(ExecuteRenderPass(cmd, commandContext, &pipelineStateTracker,
+                                           nextRenderPassNumber));
 
                 nextRenderPassNumber++;
                 break;
@@ -639,7 +640,11 @@ MaybeError CommandBuffer::ExecuteComputePass(
 MaybeError CommandBuffer::ExecuteRenderPass(
     BeginRenderPassCmd* renderPass,
     const ScopedSwapStateCommandRecordingContext* commandContext,
-    PipelineStateTracker* pipelineStateTracker) {
+    PipelineStateTracker* pipelineStateTracker,
+    PassIndex renderPassIndex) {
+    const IndirectDrawMetadata& metadata = GetIndirectDrawMetadata()[renderPassIndex];
+    IndirectDrawIndex indirectDrawIndex{0};
+
     // For the color attachments that the clear_color_with_draw workaround has applied, we can skip
     // the clear for them.
     for (auto i : ClearWithDrawHelper::GetAppliedColorAttachments(GetDevice(), renderPass)) {
@@ -773,7 +778,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             case Command::DrawIndirect: {
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
 
-                auto* indirectBuffer = ToGPUUsableBuffer(draw->indirectBuffer.Get());
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                auto* indirectBuffer = ToGPUUsableBuffer(validatedDraw.indirectBuffer.Get());
                 DAWN_ASSERT(indirectBuffer != nullptr);
 
                 DAWN_TRY(bindGroupTracker.Apply());
@@ -784,7 +792,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                     // Copy StartVertexLocation and StartInstanceLocation into the uniform buffer
                     // for built-in variables.
                     uint64_t offset =
-                        draw->indirectOffset +
+                        validatedDraw.indirectOffset +
                         offsetof(D3D11_DRAW_INSTANCED_INDIRECT_ARGS, StartVertexLocation);
                     DAWN_TRY(Buffer::Copy(commandContext, indirectBuffer, offset,
                                           sizeof(uint32_t) * 2,
@@ -796,7 +804,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 DAWN_TRY_ASSIGN(d3dBuffer,
                                 indirectBuffer->GetD3D11NonConstantBuffer(commandContext));
                 commandContext->GetD3D11DeviceContext3()->DrawInstancedIndirect(
-                    d3dBuffer, draw->indirectOffset);
+                    d3dBuffer, validatedDraw.indirectOffset);
 
                 break;
             }
@@ -804,7 +812,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             case Command::DrawIndexedIndirect: {
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
-                auto* indirectBuffer = ToGPUUsableBuffer(draw->indirectBuffer.Get());
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                auto* indirectBuffer = ToGPUUsableBuffer(validatedDraw.indirectBuffer.Get());
                 DAWN_ASSERT(indirectBuffer != nullptr);
 
                 DAWN_TRY(bindGroupTracker.Apply());
@@ -815,7 +826,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                     // Copy StartVertexLocation and StartInstanceLocation into the uniform buffer
                     // for built-in variables.
                     uint64_t offset =
-                        draw->indirectOffset +
+                        validatedDraw.indirectOffset +
                         offsetof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS, BaseVertexLocation);
                     DAWN_TRY(Buffer::Copy(commandContext, indirectBuffer, offset,
                                           sizeof(uint32_t) * 2,
@@ -827,7 +838,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 DAWN_TRY_ASSIGN(d3dBuffer,
                                 indirectBuffer->GetD3D11NonConstantBuffer(commandContext));
                 commandContext->GetD3D11DeviceContext3()->DrawIndexedInstancedIndirect(
-                    d3dBuffer, draw->indirectOffset);
+                    d3dBuffer, validatedDraw.indirectOffset);
 
                 break;
             }

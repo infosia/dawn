@@ -341,9 +341,6 @@ class RenderBundleIndirectValidationTest : public DawnTest {
 // a specific scenario where the a render bundle with the indirect draw was executed multiple times
 // in a single encoder. Test based on a POC produced for that issue.
 TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
-    // Test currently fails on all backends
-    DAWN_TEST_UNSUPPORTED_IF(true);
-
     const uint32_t OOB_COUNT = 100000;
 
     // Render Pass
