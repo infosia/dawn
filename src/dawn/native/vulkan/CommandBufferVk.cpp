@@ -1335,7 +1335,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                                                       wgpu::ShaderStage::None, range);
                         return {};
                     }));
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd, usage));
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd, usage, nextRenderPassNumber));
 
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
@@ -1671,9 +1671,13 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
                                            BeginRenderPassCmd* renderPassCmd,
-                                           const RenderPassResourceUsage& usage) {
+                                           const RenderPassResourceUsage& usage,
+                                           PassIndex renderPassIndex) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
+
+    const IndirectDrawMetadata& metadata = GetIndirectDrawMetadata()[renderPassIndex];
+    IndirectDrawIndex indirectDrawIndex{0};
 
     // Write timestamp at the beginning of render pass if it's set.
     // We've observed that this must be called before the render pass or the timestamps produced
@@ -1762,11 +1766,16 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             case Command::DrawIndirect: {
                 workCommandCount++;
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
+
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                Buffer* indirectBuffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                DAWN_ASSERT(indirectBuffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
-                    vk.CmdDrawIndirect(commands, buffer->GetHandle(),
-                                       static_cast<VkDeviceSize>(draw->indirectOffset), 1, 0);
+                    vk.CmdDrawIndirect(commands, indirectBuffer->GetHandle(),
+                                       validatedDraw.indirectOffset, 1, 0);
                 }));
                 break;
             }
@@ -1774,13 +1783,16 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             case Command::DrawIndexedIndirect: {
                 workCommandCount++;
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
-                Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+
+                IndirectDrawMetadata::ValidatedIndirectDraw validatedDraw =
+                    metadata.GetValidatedIndirectDraw(draw, indirectDrawIndex++);
+
+                Buffer* indirectBuffer = ToBackend(validatedDraw.indirectBuffer.Get());
+                DAWN_ASSERT(indirectBuffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
-                    vk.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
-                                              static_cast<VkDeviceSize>(draw->indirectOffset), 1,
-                                              0);
+                    vk.CmdDrawIndexedIndirect(commands, indirectBuffer->GetHandle(),
+                                              validatedDraw.indirectOffset, 1, 0);
                 }));
                 break;
             }
