@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Strings.h"
 #include "dawn/native/BindGroup.h"

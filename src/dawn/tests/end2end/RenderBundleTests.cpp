@@ -342,7 +342,7 @@ class RenderBundleIndirectValidationTest : public DawnTest {
 // in a single encoder. Test based on a POC produced for that issue.
 TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
     // Test currently fails on all backends
-    DAWN_TEST_UNSUPPORTED_IF(true);
+    // DAWN_TEST_UNSUPPORTED_IF(true);
 
     const uint32_t OOB_COUNT = 100000;
 
