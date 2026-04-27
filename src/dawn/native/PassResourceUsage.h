@@ -102,6 +102,7 @@ struct RenderPassResourceUsage : public SyncScopeResourceUsage {
     // Storage to track the occlusion queries used during the pass.
     std::vector<QuerySetBase*> querySets;
     std::vector<std::vector<bool>> queryAvailabilities;
+    bool usesFramebufferFetch = false;
 };
 
 using RenderPassUsages = std::vector<RenderPassResourceUsage>;
