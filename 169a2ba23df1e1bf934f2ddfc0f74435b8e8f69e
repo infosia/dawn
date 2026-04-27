@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84be0b4_0f096b69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T13:57:59Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "169a2ba23df1e1bf934f2ddfc0f74435b8e8f69e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a42fb27_25edf246",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T13:57:59Z",
+      "side": 1,
+      "message": "nit: can we comment that this is for the `MTLArgumendDescriptor`? It\u0027s noted in the `MTLDevice.h` header but very mysterious otherwise.",
+      "revId": "169a2ba23df1e1bf934f2ddfc0f74435b8e8f69e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
