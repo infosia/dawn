@@ -69,6 +69,42 @@
       "parentUuid": "751c62c8_efbc41e8",
       "revId": "9196795cac44073c67064a2fcbd26981de718933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6804497c_aa7e70e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-27T18:37:26Z",
+      "side": 1,
+      "message": "I\u0027ll use them then, thanks!",
+      "parentUuid": "c103b514_56bb3d4b",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "399ae2c2_a24d9fed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-27T18:37:26Z",
+      "side": 1,
+      "message": "There is a project about add warning suppressions for dawn. During development some files in tint required those suppressions, so this changes were done. Let me check how to use the already implemented macros.",
+      "parentUuid": "1966eced_7fda38f4",
+      "revId": "9196795cac44073c67064a2fcbd26981de718933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
