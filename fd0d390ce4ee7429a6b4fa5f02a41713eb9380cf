@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a91139_c096369f",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-27T21:16:41Z",
+      "side": 1,
+      "message": "Btw, this is a new thing with how concepts work in C++20 concepts. A more contrained concept beats out less constrained ones in overload resolution. It\u0027s very cool.",
+      "range": {
+        "startLine": 67,
+        "startChar": 52,
+        "endLine": 67,
+        "endChar": 61
+      },
+      "revId": "fd0d390ce4ee7429a6b4fa5f02a41713eb9380cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
