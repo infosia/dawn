@@ -330,6 +330,57 @@ kernel void tint_entry_point(uint v_7 [[thread_index_in_threadgroup]]) {
 )");
 }
 
+TEST_F(MslWriterTest, RenameInvalidIdentifiers) {
+    auto* str =
+        ty.Struct(mod.symbols.New("My!Struct"), {
+                                                    {mod.symbols.Register("a$"), ty.i32()},
+                                                    {mod.symbols.Register("@b"), ty.vec4i()},
+                                                });
+    auto* foo = b.Function("f%oo", ty.u32());
+    auto* param = b.FunctionParam("pa^ram", ty.u32());
+    foo->AppendParam(param);
+    b.Append(foo->Block(), [&] {  //
+        b.Return(foo, param);
+    });
+
+    auto* func = b.ComputeFunction("entry");
+    auto* idx = b.FunctionParam("123", ty.u32());
+    idx->SetBuiltin(core::BuiltinValue::kLocalInvocationIndex);
+    func->AppendParam(idx);
+    b.Append(func->Block(), [&] {  //
+        auto* var = b.Var("s*tr", ty.ptr<function>(str));
+        auto* val = b.Load(var);
+        mod.SetName(val, "va(l");
+        auto* a = b.Access<i32>(val, 0_u);
+        mod.SetName(a, "a)");
+        b.Let("let=", b.Call<u32>(foo, idx));
+        b.Return(func);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_.msl;
+    EXPECT_EQ(output_.msl, MetalHeader() + R"(
+struct tint_struct {
+  int tint_member;
+  int4 tint_member_1;
+};
+
+uint v(uint v_1) {
+  return v_1;
+}
+
+void entry_inner(uint v_2) {
+  tint_struct v_3 = {};
+  uint const v_4 = v(v_2);
+}
+
+[[max_total_threads_per_threadgroup(1)]]
+kernel void entry(uint v_5 [[thread_index_in_threadgroup]]) {
+  entry_inner(v_5);
+}
+)");
+}
+
 TEST_F(MslWriterTest, VertexPulling) {
     auto* ep = b.Function("entry", ty.vec4f(), core::ir::Function::PipelineStage::kVertex);
     ep->SetReturnBuiltin(core::BuiltinValue::kPosition);

@@ -95,6 +95,63 @@ void tint_entry_point(tint_struct_1 v_8) {
 )");
 }
 
+TEST_F(HlslWriterTest, RenameInvalidIdentifiers) {
+    auto* str =
+        ty.Struct(mod.symbols.New("My!Struct"), {
+                                                    {mod.symbols.Register("a$"), ty.i32()},
+                                                    {mod.symbols.Register("@b"), ty.vec4i()},
+                                                });
+    auto* foo = b.Function("f%oo", ty.u32());
+    auto* param = b.FunctionParam("pa^ram", ty.u32());
+    foo->AppendParam(param);
+    b.Append(foo->Block(), [&] {  //
+        b.Return(foo, param);
+    });
+
+    auto* func = b.ComputeFunction("main");
+    auto* idx = b.FunctionParam("123", ty.u32());
+    idx->SetBuiltin(core::BuiltinValue::kLocalInvocationIndex);
+    func->AppendParam(idx);
+    b.Append(func->Block(), [&] {  //
+        auto* var = b.Var("s*tr", ty.ptr<function>(str));
+        auto* val = b.Load(var);
+        mod.SetName(val, "va(l");
+        auto* a = b.Access<i32>(val, 0_u);
+        mod.SetName(a, "a)");
+        b.Let("let=", b.Call<u32>(foo, idx));
+        b.Return(func);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(struct tint_struct {
+  int tint_member;
+  int4 tint_member_1;
+};
+
+struct main_inputs {
+  uint tint_member_2 : SV_GroupIndex;
+};
+
+
+uint v(uint v_1) {
+  return v_1;
+}
+
+void main_inner(uint v_2) {
+  tint_struct v_3 = (tint_struct)0;
+  tint_struct v_4 = v_3;
+  uint v_5 = v(v_2);
+}
+
+[numthreads(1, 1, 1)]
+void main(main_inputs inputs) {
+  main_inner(inputs.tint_member_2);
+}
+
+)");
+}
+
 TEST_F(HlslWriterTest, CanGenerate_TexelBufferUnsupported) {
     auto* buffer_ty = ty.texel_buffer(core::TexelFormat::kRgba8Unorm, core::Access::kRead);
     auto* var = b.Var("buf", ty.ptr<handle>(buffer_ty));

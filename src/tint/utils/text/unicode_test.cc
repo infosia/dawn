@@ -843,5 +843,34 @@ INSTANTIATE_TEST_SUITE_P(Invalid,
                              {0xdc00, 0x0040},  // surrogate, non-surrogate
                          }));
 
+////////////////////////////////////////////////////////////////////////////////
+// IsASCII tests
+////////////////////////////////////////////////////////////////////////////////
+TEST(UnicodeTest, IsASCII) {
+    EXPECT_TRUE(utf8::IsASCII(""));
+    EXPECT_TRUE(utf8::IsASCII("abc"));
+    EXPECT_TRUE(utf8::IsASCII("123"));
+    EXPECT_TRUE(utf8::IsASCII("_"));
+    EXPECT_TRUE(utf8::IsASCII(" \t\n"));
+    EXPECT_FALSE(utf8::IsASCII("नमस्ते"));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// IsIdentifier tests
+////////////////////////////////////////////////////////////////////////////////
+TEST(UnicodeTest, IsIdentifier) {
+    EXPECT_FALSE(utf8::IsIdentifier(""));
+    EXPECT_TRUE(utf8::IsIdentifier("a"));
+    EXPECT_TRUE(utf8::IsIdentifier("_"));
+    EXPECT_TRUE(utf8::IsIdentifier("abc"));
+    EXPECT_TRUE(utf8::IsIdentifier("_abc"));
+    EXPECT_TRUE(utf8::IsIdentifier("abc123"));
+    EXPECT_TRUE(utf8::IsIdentifier("_123"));
+    EXPECT_FALSE(utf8::IsIdentifier("1abc"));
+    EXPECT_FALSE(utf8::IsIdentifier("abc&"));
+    EXPECT_FALSE(utf8::IsIdentifier("abc def"));
+    EXPECT_FALSE(utf8::IsIdentifier("abc-def"));
+}
+
 }  // namespace utf16_tests
 }  // namespace tint
