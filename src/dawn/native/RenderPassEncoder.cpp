@@ -33,6 +33,7 @@
 #include <cstring>
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandEncoder.h"
@@ -104,6 +105,7 @@ Ref<RenderPassEncoder> RenderPassEncoder::Create(
     bool depthReadOnly,
     bool stencilReadOnly,
     EndCallback endCallback) {
+    dawn::ErrorLog() << __FUNCTION__;
     return AcquireRef(new RenderPassEncoder(device, descriptor, commandEncoder, encodingContext,
                                             std::move(usageTracker), std::move(attachmentState),
                                             renderArea, depthReadOnly, stencilReadOnly,
@@ -152,6 +154,8 @@ void RenderPassEncoder::APIEnd() {
 }
 
 void RenderPassEncoder::End() {
+    dawn::ErrorLog() << __FUNCTION__;
+
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
     if (mEnded && IsValidationEnabled()) {

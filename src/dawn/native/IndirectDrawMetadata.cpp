@@ -33,6 +33,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/IndirectDrawValidationEncoder.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/RenderBundle.h"
@@ -178,9 +179,29 @@ IndirectDrawMetadata::GetIndirectMultiDraws() const {
     return mMultiDraws;
 }
 
+ityp::vector<IndirectDrawIndex, IndirectDrawMetadata::ValidatedIndirectDraw>&
+IndirectDrawMetadata::GetValidatedIndirectDraws() {
+    if (mValidatedIndirectDraws.empty()) {
+        dawn::ErrorLog() << "Resizing validated indirect draws: " << mNextIndirectDrawIndex;
+        mValidatedIndirectDraws.resize(mNextIndirectDrawIndex);
+    } else {
+        dawn::ErrorLog() << "Already not empty: " << mValidatedIndirectDraws.size();
+        // Should never be resized after allocation.
+        DAWN_ASSERT(mValidatedIndirectDraws.size() == mNextIndirectDrawIndex);
+    }
+    return mValidatedIndirectDraws;
+}
+
+const ityp::vector<IndirectDrawIndex, IndirectDrawMetadata::ValidatedIndirectDraw>&
+IndirectDrawMetadata::GetValidatedIndirectDraws() const {
+    return mValidatedIndirectDraws;
+}
+
 void IndirectDrawMetadata::AddBundle(RenderBundleBase* bundle) {
+    dawn::ErrorLog() << "Adding a bundle";
     auto [_, inserted] = mAddedBundles.insert(bundle);
     if (!inserted) {
+        dawn::ErrorLog() << "!! Already inserted !!";
         return;
     }
 
@@ -209,6 +230,10 @@ void IndirectDrawMetadata::AddIndexedIndirectDraw(wgpu::IndexFormat indexFormat,
                                                   uint64_t indirectOffset,
                                                   bool duplicateBaseVertexInstance,
                                                   DrawIndexedIndirectCmd* cmd) {
+    dawn::ErrorLog() << "Adding Indexed Draw";
+    dawn::ErrorLog() << " - buffer: " << indirectBuffer;
+    dawn::ErrorLog() << " - offset: " << indirectOffset;
+
     uint64_t numIndexBufferElements;
     uint64_t indexBufferOffsetInElements;
     switch (indexFormat) {
@@ -232,7 +257,6 @@ void IndirectDrawMetadata::AddIndexedIndirectDraw(wgpu::IndexFormat indexFormat,
             config, IndexedIndirectBufferValidationInfo(indirectBuffer));
         it = result.first;
     }
-
     IndirectDraw draw{};
     draw.validatedDrawIndex = mNextIndirectDrawIndex++;
     draw.inputBufferOffset = indirectOffset;
@@ -246,6 +270,10 @@ void IndirectDrawMetadata::AddIndirectDraw(BufferBase* indirectBuffer,
                                            uint64_t indirectOffset,
                                            bool duplicateBaseVertexInstance,
                                            DrawIndirectCmd* cmd) {
+    dawn::ErrorLog() << "Adding Draw";
+    dawn::ErrorLog() << " - buffer: " << indirectBuffer;
+    dawn::ErrorLog() << " - offset: " << indirectOffset;
+
     const IndexedIndirectConfig config = {reinterpret_cast<uintptr_t>(indirectBuffer),
                                           duplicateBaseVertexInstance, DrawType::NonIndexed};
     auto it = mIndexedIndirectBufferValidationInfo.find(config);

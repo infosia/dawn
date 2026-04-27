@@ -36,6 +36,7 @@
 #include "absl/container/flat_hash_set.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
+#include "dawn/common/ityp_vector.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandBufferStateTracker.h"
 #include "dawn/native/Commands.h"
@@ -77,6 +78,11 @@ class IndirectDrawMetadata : public NonCopyable {
         // the backend processes the command. Valid until the backend has processed the
         // commands.
         raw_ptr<DrawIndirectCmd> cmd;
+    };
+
+    struct ValidatedIndirectDraw {
+        Ref<BufferBase> indirectBuffer;
+        uint64_t indirectOffset;
     };
 
     struct IndirectValidationBatch {
@@ -193,6 +199,9 @@ class IndirectDrawMetadata : public NonCopyable {
 
     const std::vector<IndirectMultiDraw>& GetIndirectMultiDraws() const;
 
+    ityp::vector<IndirectDrawIndex, ValidatedIndirectDraw>& GetValidatedIndirectDraws();
+    const ityp::vector<IndirectDrawIndex, ValidatedIndirectDraw>& GetValidatedIndirectDraws() const;
+
   private:
     IndexedIndirectBufferValidationInfoMap mIndexedIndirectBufferValidationInfo;
     absl::flat_hash_set<RenderBundleBase*> mAddedBundles;
@@ -200,6 +209,7 @@ class IndirectDrawMetadata : public NonCopyable {
     std::vector<IndirectMultiDraw> mMultiDraws;
 
     IndirectDrawIndex mNextIndirectDrawIndex{0};
+    ityp::vector<IndirectDrawIndex, ValidatedIndirectDraw> mValidatedIndirectDraws;
 
     uint64_t mMaxBatchOffsetRange;
     uint32_t mMaxDrawCallsPerBatch;
