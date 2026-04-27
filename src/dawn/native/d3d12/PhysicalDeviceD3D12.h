@@ -91,6 +91,8 @@ class PhysicalDevice : public d3d::PhysicalDevice {
     void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
                                    const TogglesState& adapterToggles) const override;
 
+    uint32_t ComputeSubgroupMaxSize() const;
+
     ComPtr<ID3D12Device> mD3d12Device;
 
     D3D12DeviceInfo mDeviceInfo = {};

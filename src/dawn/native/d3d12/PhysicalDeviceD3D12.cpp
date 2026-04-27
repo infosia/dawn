@@ -120,10 +120,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     mSubgroupMinSize = mDeviceInfo.waveLaneCountMin;
-    // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
-    // unclear. Use 128 instead, which is the largest possible size. Reference:
-    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
-    mSubgroupMaxSize = 128u;
+    mSubgroupMaxSize = ComputeSubgroupMaxSize();
 
     mMinExplicitComputeSubgroupSize = mDeviceInfo.waveLaneCountMin;
     mMaxExplicitComputeSubgroupSize = mDeviceInfo.waveLaneCountMax;
@@ -903,6 +900,18 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+}
+
+uint32_t PhysicalDevice::ComputeSubgroupMaxSize() const {
+    // On Intel GPUs the WaveLaneCountMax reported by D3D12 is reliable, so use it directly.
+    if (gpu_info::IsIntel(GetVendorId())) {
+        return mDeviceInfo.waveLaneCountMax;
+    }
+
+    // On other vendors the value is unreliable or its meaning is unclear, so fall back to 128
+    // which is the largest possible wave/subgroup size. Reference:
+    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
+    return 128u;
 }
 
 MaybeError PhysicalDevice::ValidateUseOfD3D12() const {
