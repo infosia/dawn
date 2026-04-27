@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08d3e6bf_348ed449",
+        "filename": "src/dawn/native/PassResourceUsage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "nit: this is because the clang plugin doesn\u0027t know how to handle containers, this is still WIP and might come later. Remove this comment for now?",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92371e33_414a17cf",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "nit: move in the previous CL that adds the vector (but also it might not add that vector)",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e2cdfb1_8976fe98",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "nit: we can use `MTLBindingAccessReadOnly` to remove the deprecation warning (unless it require a version of the SDK that we don\u0027t have, but that\u0027s just an enum so maybe it\u0027s ok?)",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca799dfb_69458fe6",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "Looking at the doc (mildly clear) and the WebKit source code, this definitely the access mode for the contents of the resource in that argument. So we should set it to readonly, except for storage textures and buffers.",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b081dfb6_34077cad",
+        "filename": "src/dawn/native/metal/UtilsMetal.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "```suggestion\n    return uint32_t{bindingIndex};\n```",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "730a5986_e5fe575d",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-27T15:08:51Z",
+      "side": 1,
+      "message": "Talking offline, I\u0027m concerned about the need to track the texture views in the PassResourceUsageTracker, it\u0027s already very expensive and I\u0027d like to avoid adding more to it if possible.\n\nWhen we start using MTLHazardModeUntracked, we\u0027ll need a mechanism to keep resources alive until they are no longer needed. Let\u0027s introduce that alraedy, just for MTLTextureViews so that we don\u0027t need to call `useResource` on them.\n\nThe part of `useResource` that adds a memory barrier might be slightly pessimized by this because we don\u0027t tell Metal about subresource information. That seems ok, because looking at Metal4 there doesn\u0027t seem to be a way to tell to decompress framebuffer-compressed textures.",
+      "revId": "ef939a297525d56e512604b0ecc6dfc8efaf272b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
