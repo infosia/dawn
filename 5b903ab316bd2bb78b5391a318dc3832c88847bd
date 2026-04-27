@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5022b29d_2a18c3c6",
+        "filename": "src/dawn/native/metal/PipelineLayoutMTL.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb67b7bc_25c27f04",
+      "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65a029b2_e9a2281f",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-04-27T14:17:45Z",
       "side": 1,
       "message": "This order works (the argument buffers go down from the end of the buffer table and vertex go up from the start, but it\u0027s a bit weird). Can we have a TODO to revisit this, for example by having the immediate buffer first, then argument buffers, then vertex buffers?",
+      "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f04b3a9_3c374a1f",
+        "filename": "src/dawn/native/metal/PipelineLayoutMTL.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65a029b2_e9a2281f",
       "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15ec7439_4cdf2077",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3382ab_67cf9e35",
+      "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7b77db9_d20027e6",
@@ -118,6 +172,24 @@
       "side": 1,
       "message": "yea, in this case I\u0027d say:\n\n```\nNote, bp-\u003ebinding is the remapped binding point, not the WGSL binding point\n```",
       "parentUuid": "a7b77db9_d20027e6",
+      "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7682b1_ea0af92d",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-27T15:03:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f0937f_d70a4dcc",
       "revId": "5b903ab316bd2bb78b5391a318dc3832c88847bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
