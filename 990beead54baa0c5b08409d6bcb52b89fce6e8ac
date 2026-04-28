@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67f84a17_aeedf892",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-04-28T19:01:07Z",
+      "side": 1,
+      "message": "LGTM modulo James\u0027 concerns",
+      "revId": "990beead54baa0c5b08409d6bcb52b89fce6e8ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ba928bc_c5409827",
