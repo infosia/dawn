@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eb33345_ce8c425e",
+        "filename": "src/dawn/native/PassResourceUsageTracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:08:50Z",
+      "side": 1,
+      "message": "optional nit: `MarkFramebufferFetchUsed`",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 32
+      },
+      "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be225889_b5f33958",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:08:50Z",
+      "side": 1,
+      "message": "nit: this change is no longer needed.",
+      "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71ef256c_e8e6f6b4",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:08:50Z",
+      "side": 1,
+      "message": "Is FBF validated out for depth-only passes?",
+      "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b256d9ad_de4c0db3",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:08:50Z",
+      "side": 1,
+      "message": "Is there a way we can make it clear to the caller that the VkDescriptorSet is transient?",
+      "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

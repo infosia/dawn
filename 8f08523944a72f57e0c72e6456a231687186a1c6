@@ -418,6 +418,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf12fda_a13e23be",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:08:50Z",
+      "side": 1,
+      "message": "Ok, this seems like a bit too much for this CL, and I also don\u0027t know how we\u0027d handle the depthSlice. This was to try to avoid manually having Vulkan DS/DSL code but since it\u0027s no immediately obvious / trivial to change, keeping as is SGTM.",
+      "parentUuid": "b3bb3676_ca82fb08",
+      "revId": "8f08523944a72f57e0c72e6456a231687186a1c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d869d5b2_28d18e85",
