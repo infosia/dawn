@@ -22,6 +22,30 @@
       },
       "revId": "37c323e1b3c6c5cd0ac8245cc836290f49f2aa70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1464ae39_4a9dcee3",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T17:58:59Z",
+      "side": 1,
+      "message": "Oops missed this earlier. Guess I was accidentally testing the bounds checks instead of the narrowing checks.",
+      "parentUuid": "1f75dd7a_764550e2",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "37c323e1b3c6c5cd0ac8245cc836290f49f2aa70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
