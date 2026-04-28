@@ -43,7 +43,7 @@ bool WaitListEvent::IsSignaled() const {
 
 void WaitListEvent::Signal() {
     uint64_t prevSignalCount = mRemainingSignalCount.fetch_sub(1, std::memory_order_release);
-    DAWN_ASSERT(prevSignalCount != 0);
+    DAWN_OPT_ASSUME(prevSignalCount != 0);
     if (prevSignalCount == 1) {
         std::lock_guard<std::mutex> lock(mMutex);
         for (SyncWaiter* w : std::move(mSyncWaiters)) {

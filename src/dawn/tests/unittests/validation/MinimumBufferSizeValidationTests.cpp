@@ -59,7 +59,7 @@ void WithEachSizeOffsetBy(int64_t offset, const std::vector<uint64_t>& originalS
     std::vector<uint64_t> modifiedSizes = originalSizes;
     for (size_t i = 0; i < originalSizes.size(); ++i) {
         if (offset < 0) {
-            DAWN_ASSERT(originalSizes[i] >= static_cast<uint64_t>(-offset));
+            DAWN_OPT_ASSUME(originalSizes[i] >= static_cast<uint64_t>(-offset));
         }
         // Run the function with an element offset, and restore element afterwards
         modifiedSizes[i] += offset;
@@ -231,7 +231,7 @@ class MinBufferSizeTestsBase : public ValidationTest {
     // Creates bind group layout with given minimum sizes for each binding
     wgpu::BindGroupLayout CreateBindGroupLayout(const std::vector<BindingDescriptor>& bindings,
                                                 const std::vector<uint64_t>& minimumSizes) {
-        DAWN_ASSERT(bindings.size() == minimumSizes.size());
+        DAWN_OPT_ASSUME(bindings.size() == minimumSizes.size());
         std::vector<wgpu::BindGroupLayoutEntry> entries;
 
         for (size_t i = 0; i < bindings.size(); ++i) {
@@ -269,7 +269,7 @@ class MinBufferSizeTestsBase : public ValidationTest {
     wgpu::BindGroup CreateBindGroup(wgpu::BindGroupLayout layout,
                                     const std::vector<BindingDescriptor>& bindings,
                                     const std::vector<uint64_t>& bindingSizes) {
-        DAWN_ASSERT(bindings.size() == bindingSizes.size());
+        DAWN_OPT_ASSUME(bindings.size() == bindingSizes.size());
 
         std::vector<wgpu::BindGroupEntry> entries;
         entries.reserve(bindingSizes.size());
@@ -282,7 +282,7 @@ class MinBufferSizeTestsBase : public ValidationTest {
             wgpu::BindGroupEntry entry = {};
             entry.binding = bindings[i].binding;
             entry.buffer = buffer;
-            DAWN_ASSERT(bindingSizes[i] < 1024);
+            DAWN_OPT_ASSUME(bindingSizes[i] < 1024);
             entry.size = bindingSizes[i];
             entries.push_back(entry);
         }

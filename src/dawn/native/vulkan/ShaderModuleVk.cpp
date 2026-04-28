@@ -219,7 +219,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     ToSPIRVBindPoint(group, etInfo.staticSampler.value());
             } else {
                 // Case 1. Nothing to do.
-                DAWN_ASSERT(!GetDevice()->NeedsStaticSamplerForExternalTexture());
+                DAWN_OPT_ASSUME(!GetDevice()->NeedsStaticSamplerForExternalTexture());
             }
         }
     }

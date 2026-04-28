@@ -140,7 +140,7 @@ class EventManager final : NonMovable {
             if (trackedEvent->GetType() != Event::kType) {
                 // Assert here for debugging, before returning a fatal error that is handled upwards
                 // in production.
-                DAWN_ASSERT(trackedEvent->GetType() == Event::kType);
+                DAWN_OPT_ASSUME(trackedEvent->GetType() == Event::kType);
                 return WireResult::FatalError;
             }
 

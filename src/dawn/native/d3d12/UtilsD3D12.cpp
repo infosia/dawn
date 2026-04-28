@@ -70,7 +70,7 @@ uint64_t RequiredCopySizeByD3D12(const BlockCount blocksPerRow,
     // Compute (block) size of the last image as D3D12 does, which includes the size of whole last
     // row
     BlockCount lastRow = copySize.width;
-    DAWN_ASSERT(rowsPerImage > copySize.height);
+    DAWN_OPT_ASSUME(rowsPerImage > copySize.height);
     BlockCount lastImageByD3D12 = blocksPerRow * (rowsPerImage - BlockCount{1}) + lastRow;
     // Compute total (block) size as D3D12 does
     BlockCount requiredCopySizeByD3D12 = allButLastImage + lastImageByD3D12;
@@ -148,7 +148,7 @@ D3D12_COMPARISON_FUNC ToD3D12ComparisonFunc(wgpu::CompareFunction func) {
 }
 
 D3D12_SHADER_VISIBILITY ShaderVisibilityType(wgpu::ShaderStage visibility) {
-    DAWN_ASSERT(visibility != wgpu::ShaderStage::None);
+    DAWN_OPT_ASSUME(visibility != wgpu::ShaderStage::None);
 
     if (visibility == wgpu::ShaderStage::Vertex) {
         return D3D12_SHADER_VISIBILITY_VERTEX;
@@ -222,7 +222,7 @@ void RecordBufferTextureCopyFromSplits(BufferTextureCopyDirection direction,
             commandList->CopyTextureRegion(&textureLocation, to.x, to.y, to.z, &bufferLocation,
                                            &sourceRegion);
         } else {
-            DAWN_ASSERT(direction == BufferTextureCopyDirection::T2B);
+            DAWN_OPT_ASSUME(direction == BufferTextureCopyDirection::T2B);
             const D3D12_BOX sourceRegion =
                 ComputeD3D12BoxFromOffsetAndSize(textureOffset, copySize);
             const Origin3D bo = bufferOffset.ToOrigin3D();
@@ -308,7 +308,7 @@ void RecordBufferTextureCopyWithBufferHandle(BufferTextureCopyDirection directio
                                              BlockCount rowsPerImage,
                                              const TextureCopy& textureCopy,
                                              const BlockExtent3D& copySize) {
-    DAWN_ASSERT(HasOneBit(textureCopy.aspect));
+    DAWN_OPT_ASSUME(HasOneBit(textureCopy.aspect));
 
     TextureBase* texture = textureCopy.texture.Get();
     const TypedTexelBlockInfo& blockInfo = GetBlockInfo(textureCopy);
@@ -324,7 +324,7 @@ void RecordBufferTextureCopyWithBufferHandle(BufferTextureCopyDirection directio
         case wgpu::TextureDimension::e1D: {
             // 1D textures copy splits are a subset of the single-layer 2D texture copy splits,
             // at least while 1D textures can only have a single array layer.
-            DAWN_ASSERT(texture->GetArrayLayers() == 1);
+            DAWN_OPT_ASSUME(texture->GetArrayLayers() == 1);
             TextureCopySubresource copySubresource = Compute2DTextureCopySubresource(
                 origin, copySize, blockInfo, offset, blocksPerRow, useRelaxedRowPitchAndOffset);
             RecordBufferTextureCopyFromSplits(

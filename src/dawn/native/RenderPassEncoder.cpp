@@ -165,7 +165,7 @@ void RenderPassEncoder::APIEnd() {
 }
 
 void RenderPassEncoder::End() {
-    DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
     if (mEnded && IsValidationEnabled()) {
         GetDevice()->HandleEncoderError(DAWN_VALIDATION_ERROR("%s was already ended.", this));

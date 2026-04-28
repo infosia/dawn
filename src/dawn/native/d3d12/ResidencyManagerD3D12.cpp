@@ -77,8 +77,8 @@ void ResidencyManager::UnlockAllocation(Pageable* pageable) {
         return;
     }
 
-    DAWN_ASSERT(pageable->IsResidencyLocked());
-    DAWN_ASSERT(!pageable->IsInResidencyLRUCache());
+    DAWN_OPT_ASSUME(pageable->IsResidencyLocked());
+    DAWN_OPT_ASSUME(!pageable->IsInResidencyLRUCache());
     pageable->DecrementResidencyLock();
 
     // If another lock still exists on the heap, nothing further should be done.
@@ -98,7 +98,7 @@ ResidencyManager::MemorySegmentInfo* ResidencyManager::GetMemorySegmentInfo(
         case MemorySegment::Local:
             return &mVideoMemoryInfo.local;
         case MemorySegment::NonLocal:
-            DAWN_ASSERT(!mDevice->GetDeviceInfo().isUMA);
+            DAWN_OPT_ASSUME(!mDevice->GetDeviceInfo().isUMA);
             return &mVideoMemoryInfo.nonLocal;
         default:
             DAWN_UNREACHABLE();
@@ -206,7 +206,7 @@ MaybeError ResidencyManager::EnsureCanAllocate(uint64_t allocationSize,
 // memory, we should evict until there is. Returns the number of bytes evicted.
 ResultOrError<uint64_t> ResidencyManager::EnsureCanMakeResident(uint64_t sizeToMakeResident,
                                                                 MemorySegmentInfo* memorySegment) {
-    DAWN_ASSERT(mResidencyManagementEnabled);
+    DAWN_OPT_ASSUME(mResidencyManagementEnabled);
 
     UpdateMemorySegmentInfo(memorySegment);
 
@@ -296,7 +296,7 @@ MaybeError ResidencyManager::EnsureHeapsAreResident(Heap** heaps, size_t heapCou
     }
 
     if (nonLocalSizeToMakeResident > 0) {
-        DAWN_ASSERT(!mDevice->GetDeviceInfo().isUMA);
+        DAWN_OPT_ASSUME(!mDevice->GetDeviceInfo().isUMA);
         return MakeAllocationsResident(&mVideoMemoryInfo.nonLocal, nonLocalSizeToMakeResident,
                                        nonLocalHeapsToMakeResident.size(),
                                        nonLocalHeapsToMakeResident.data());
@@ -355,15 +355,15 @@ void ResidencyManager::TrackResidentAllocation(Pageable* pageable) {
         return;
     }
 
-    DAWN_ASSERT(pageable->IsInList() == false);
+    DAWN_OPT_ASSUME(pageable->IsInList() == false);
     GetMemorySegmentInfo(pageable->GetMemorySegment())->lruCache.Append(pageable);
 }
 
 // Places an artifical cap on Dawn's budget so we can test in a predictable manner. If used,
 // this function must be called before any resources have been created.
 void ResidencyManager::RestrictBudgetForTesting(uint64_t artificialBudgetCap) {
-    DAWN_ASSERT(mVideoMemoryInfo.nonLocal.lruCache.empty());
-    DAWN_ASSERT(!mRestrictBudgetForTesting);
+    DAWN_OPT_ASSUME(mVideoMemoryInfo.nonLocal.lruCache.empty());
+    DAWN_OPT_ASSUME(!mRestrictBudgetForTesting);
 
     mRestrictBudgetForTesting = true;
     UpdateVideoMemoryInfo();

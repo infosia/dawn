@@ -319,7 +319,7 @@ MaybeError Device::CreateZeroBuffer() {
         DAWN_TRY_ASSIGN(zeroBufferBase, CreateBuffer(&zeroBufferDescriptor));
 
         void* mappedPointer = zeroBufferBase->GetMappedPointer();
-        DAWN_ASSERT(mappedPointer != nullptr);
+        DAWN_OPT_ASSUME(mappedPointer != nullptr);
         memset(mappedPointer, 0, zeroBufferBase->GetAllocatedSize());
         DAWN_TRY(zeroBufferBase->Unmap());
     } else {
@@ -566,7 +566,7 @@ void Device::CopyFromStagingToBufferHelper(CommandRecordingContext* commandConte
                                            BufferBase* destination,
                                            uint64_t destinationOffset,
                                            uint64_t size) {
-    DAWN_ASSERT(commandContext != nullptr);
+    DAWN_OPT_ASSUME(commandContext != nullptr);
     Buffer* dstBuffer = ToBackend(destination);
     Buffer* srcBuffer = ToBackend(source);
     dstBuffer->TrackUsageAndTransitionNow(commandContext, wgpu::BufferUsage::CopyDst);
@@ -664,7 +664,7 @@ MaybeError Device::ImportSharedHandleResource(HANDLE handle,
 void Device::DisposeKeyedMutex(ComPtr<IDXGIKeyedMutex> dxgiKeyedMutex) {
     ComPtr<ID3D11Resource> d3d11Resource;
     dxgiKeyedMutex.As(&d3d11Resource);
-    DAWN_ASSERT(d3d11Resource);
+    DAWN_OPT_ASSUME(d3d11Resource);
 
     ID3D11Resource* d3d11ResourcePtr = d3d11Resource.Get();
     mD3d11On12Device->ReleaseWrappedResources(&d3d11ResourcePtr, 1);

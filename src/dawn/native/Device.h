@@ -459,8 +459,8 @@ class DeviceBase : public ErrorSink,
 
     // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
     // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is
-    // turned on. Thus it should only be wrapped inside DAWN_ASSERT() macro. i.e.
-    // DAWN_ASSERT(device.IsLockedByCurrentThread())
+    // turned on. Thus it should only be wrapped inside DAWN_OPT_ASSUME() macro. i.e.
+    // DAWN_OPT_ASSUME(device.IsLockedByCurrentThread())
     bool IsLockedByCurrentThreadIfNeeded() const;
 
     Ref<ComputePipelineBase> AddOrGetCachedComputePipeline(

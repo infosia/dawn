@@ -40,7 +40,7 @@ BufferMock::BufferMock(DeviceMock* device,
                        std::optional<uint64_t> allocatedSizeOverride)
     : BufferBase(device, descriptor) {
     mAllocatedSize = allocatedSizeOverride.value_or(GetSize());
-    DAWN_ASSERT(mAllocatedSize >= GetSize());
+    DAWN_OPT_ASSUME(mAllocatedSize >= GetSize());
     mBackingData = std::unique_ptr<uint8_t[]>(new uint8_t[mAllocatedSize.value()]);
 
     ON_CALL(*this, DestroyImpl).WillByDefault([this](DestroyReason reason) {

@@ -61,7 +61,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     desc.nextInChain = nullptr;
     desc.label = ToOutputStringView(label);
     const PipelineLayoutBase* layout = GetLayout();
-    DAWN_ASSERT(layout != nullptr);
+    DAWN_OPT_ASSUME(layout != nullptr);
     desc.layout = ToBackend(layout)->GetInnerHandle();
 
     const ProgrammableStage& stage = GetStage(SingleShaderStage::Compute);
@@ -77,7 +77,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
 
     auto device = ToBackend(GetDevice());
     mInnerHandle = device->wgpu->deviceCreateComputePipeline(device->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 
     // Shader reflection after the application of overrides is required by the frontend for the
     // workgroup size.

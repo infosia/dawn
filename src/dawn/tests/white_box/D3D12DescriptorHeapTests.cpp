@@ -92,7 +92,7 @@ class D3D12DescriptorHeapTests : public DawnTest {
     utils::BasicRenderPass MakeRenderPass(uint32_t width,
                                           uint32_t height,
                                           wgpu::TextureFormat format) {
-        DAWN_ASSERT(width > 0 && height > 0);
+        DAWN_OPT_ASSUME(width > 0 && height > 0);
 
         wgpu::TextureDescriptor descriptor;
         descriptor.dimension = wgpu::TextureDimension::e2D;
@@ -109,7 +109,7 @@ class D3D12DescriptorHeapTests : public DawnTest {
     }
 
     std::array<float, 4> GetSolidColor(uint32_t n) const {
-        DAWN_ASSERT(n >> 24 == 0);
+        DAWN_OPT_ASSUME(n >> 24 == 0);
         float b = (n & 0xFF) / 255.0f;
         float g = ((n >> 8) & 0xFF) / 255.0f;
         float r = ((n >> 16) & 0xFF) / 255.0f;
@@ -226,7 +226,7 @@ TEST_P(D3D12DescriptorHeapTests, SwitchOverViewHeapBecauseOfBindingGroup0) {
     // This test is written assuming a certain heap size to trigger
     // AllocateAndSwitchShaderVisibleHeap when binding group 0 (see below). If this value is
     // changed, we likely need to update this test.
-    DAWN_ASSERT(heapSize == 32);
+    DAWN_OPT_ASSUME(heapSize == 32);
 
     const HeapVersionID heapSerial = allocator->GetShaderVisibleHeapSerialForTesting();
 
@@ -347,7 +347,7 @@ TEST_P(D3D12DescriptorHeapTests, SwitchOverSamplerHeap) {
 
     // This test is written assuming a certain heap size. If this value is changed, we likely need
     // to update this test.
-    DAWN_ASSERT(samplerHeapSize == 16);
+    DAWN_OPT_ASSUME(samplerHeapSize == 16);
 
     utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
 
@@ -482,7 +482,7 @@ TEST_P(D3D12DescriptorHeapTests, SwitchOverSamplerHeapBecauseOfBindingGroup0) {
 
     // This test is written assuming a certain heap size to trigger. If this value is changed, we
     // likely need to update this test.
-    DAWN_ASSERT(samplerHeapSize == 16);
+    DAWN_OPT_ASSUME(samplerHeapSize == 16);
 
     utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
 
@@ -1520,7 +1520,7 @@ TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapGradually) {
     Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
     auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
     const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         heapSize >
         mImplicitDescriptorCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
 
@@ -1564,7 +1564,7 @@ TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapLargeJumps) {
     Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
     auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
     const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         heapSize >
         mImplicitDescriptorCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
 
@@ -1608,7 +1608,7 @@ TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapLargestJump) {
     Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
     auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
     const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         heapSize >
         mImplicitDescriptorCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
 
@@ -1667,7 +1667,7 @@ TEST_P(D3D12ResourceTableDescriptorHeapTests, SwitchOverViewHeapTableAndBindGrou
     Device* d3dDevice = reinterpret_cast<Device*>(device.Get());
     auto* allocator = d3dDevice->GetViewShaderVisibleDescriptorAllocator();
     const uint64_t heapSize = allocator->GetShaderVisibleHeapSizeForTesting();
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         heapSize >
         mImplicitDescriptorCount);  // Don't test with UseD3D12SmallShaderVisibleHeapForTesting
 

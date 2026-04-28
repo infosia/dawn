@@ -142,7 +142,7 @@ class BackendD3D12 : public SharedTextureMemoryTestBackend {
         HRESULT hr = d3d12Device->CreateCommittedResource(
             &heapProps, D3D12_HEAP_FLAG_NONE, &texDesc, D3D12_RESOURCE_STATE_COMMON, &clearValue,
             IID_PPV_ARGS(&d3d12Resource));
-        DAWN_ASSERT(hr == S_OK);
+        DAWN_OPT_ASSUME(hr == S_OK);
 
         switch (mMode) {
             case Mode::D3D12Resource: {
@@ -227,7 +227,7 @@ class BackendD3D12 : public SharedTextureMemoryTestBackend {
                 HRESULT hr = d3d12Device->CreateCommittedResource(
                     &heapProps, D3D12_HEAP_FLAG_NONE, &texDesc, D3D12_RESOURCE_STATE_COMMON,
                     &clearValue, IID_PPV_ARGS(&d3d12Resource));
-                DAWN_ASSERT(hr == S_OK);
+                DAWN_OPT_ASSUME(hr == S_OK);
 
                 std::vector<wgpu::SharedTextureMemory> perDeviceMemories;
                 switch (mMode) {

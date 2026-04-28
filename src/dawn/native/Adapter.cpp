@@ -90,7 +90,7 @@ InstanceBase* AdapterBase::GetInstance() const {
 
 InstanceBase* AdapterBase::APIGetInstance() const {
     InstanceBase* instance = mInstance.Get();
-    DAWN_ASSERT(instance != nullptr);
+    DAWN_OPT_ASSUME(instance != nullptr);
     instance->APIAddRef();
     return instance;
 }

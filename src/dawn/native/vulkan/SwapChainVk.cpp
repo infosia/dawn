@@ -252,7 +252,7 @@ ResultOrError<SwapChain::Config> SwapChain::ChooseConfig(
             modeIndex++;
         }
 
-        DAWN_ASSERT(modeIndex < kPresentModeFallbacks.size());
+        DAWN_OPT_ASSUME(modeIndex < kPresentModeFallbacks.size());
         config.presentMode = kPresentModeFallbacks[modeIndex];
     }
 
@@ -325,8 +325,9 @@ ResultOrError<SwapChain::Config> SwapChain::ChooseConfig(
 
     // Choose the number of images for the swapchain= and clamp it to the min and max from the
     // surface capabilities. maxImageCount = 0 means there is no limit.
-    DAWN_ASSERT(surfaceInfo.capabilities.maxImageCount == 0 ||
-                surfaceInfo.capabilities.minImageCount <= surfaceInfo.capabilities.maxImageCount);
+    DAWN_OPT_ASSUME(surfaceInfo.capabilities.maxImageCount == 0 ||
+                    surfaceInfo.capabilities.minImageCount <=
+                        surfaceInfo.capabilities.maxImageCount);
     uint32_t targetCount = MinImageCountForPresentMode(config.presentMode);
 
     targetCount = std::max(targetCount, surfaceInfo.capabilities.minImageCount);
@@ -524,7 +525,7 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureInternal(bool is
             DAWN_TRY(CheckVkSuccess(::VkResult(result), "AcquireNextImage"));
     }
 
-    DAWN_ASSERT(result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR);
+    DAWN_OPT_ASSUME(result == VK_SUCCESS || result == VK_SUBOPTIMAL_KHR);
     PerImage& lastImage = mImages[mLastImageIndex];
 
     // Make any further rendering operations that might use the swapchain texture wait on the
@@ -644,7 +645,7 @@ ResultOrError<VkSurfaceKHR> CreateVulkanSurface(InstanceBase* instance,
 #if DAWN_PLATFORM_IS(ANDROID)
         case Surface::Type::AndroidWindow: {
             if (info.HasExt(InstanceExt::AndroidSurface)) {
-                DAWN_ASSERT(surface->GetAndroidNativeWindow() != nullptr);
+                DAWN_OPT_ASSUME(surface->GetAndroidNativeWindow() != nullptr);
 
                 VkAndroidSurfaceCreateInfoKHR createInfo;
                 createInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
@@ -706,7 +707,7 @@ ResultOrError<VkSurfaceKHR> CreateVulkanSurface(InstanceBase* instance,
             // See https://xcb.freedesktop.org/MixingCalls/ for more information about
             // interoperability between Xlib and XCB
             const X11Functions* x11 = instance->GetOrLoadX11Functions();
-            DAWN_ASSERT(x11 != nullptr);
+            DAWN_OPT_ASSUME(x11 != nullptr);
 
             if (info.HasExt(InstanceExt::XcbSurface) && x11->IsX11XcbLoaded()) {
                 VkXcbSurfaceCreateInfoKHR createInfo;

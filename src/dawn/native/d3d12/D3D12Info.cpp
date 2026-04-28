@@ -152,12 +152,12 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
     }
 
     // D3D_SHADER_MODEL is encoded as 0xMm with M the major version and m the minor version
-    DAWN_ASSERT(driverShaderModel <= 0xFF);
+    DAWN_OPT_ASSUME(driverShaderModel <= 0xFF);
     uint32_t shaderModelMajor = (driverShaderModel & 0xF0) >> 4;
     uint32_t shaderModelMinor = (driverShaderModel & 0xF);
 
-    DAWN_ASSERT(shaderModelMajor < 10);
-    DAWN_ASSERT(shaderModelMinor < 10);
+    DAWN_OPT_ASSUME(shaderModelMajor < 10);
+    DAWN_OPT_ASSUME(shaderModelMinor < 10);
     info.highestSupportedShaderModel = 10 * shaderModelMajor + shaderModelMinor;
 
     // Device support wave intrinsics if shader model >= SM6.0 and capabilities flag WaveOps is set.

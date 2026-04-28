@@ -896,7 +896,7 @@ class VertexBufferTracker {
 
 MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContext,
                                           BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
+    DAWN_OPT_ASSUME(renderPass != nullptr);
 
     for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         TextureViewBase* resolveTarget = renderPass->colorAttachments[i].resolveTarget.Get();
@@ -921,7 +921,7 @@ MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContex
 
 void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
                                    BeginRenderPassCmd* renderPass) {
-    DAWN_ASSERT(renderPass != nullptr);
+    DAWN_OPT_ASSUME(renderPass != nullptr);
 
     for (ColorAttachmentIndex i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         TextureViewBase* resolveTarget = renderPass->colorAttachments[i].resolveTarget.Get();
@@ -1828,7 +1828,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                DAWN_OPT_ASSUME(buffer != nullptr);
 
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndexedIndirectCommandSignature();
@@ -1845,7 +1845,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 Buffer* countBuffer = ToBackend(draw->drawCountBuffer.Get());
 
@@ -1872,7 +1872,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 immediates.Apply(commandContext);
 
                 Buffer* indirectBuffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 Buffer* countBuffer = ToBackend(draw->drawCountBuffer.Get());
 

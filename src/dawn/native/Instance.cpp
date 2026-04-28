@@ -151,7 +151,7 @@ static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo = {
     X(Maximum, timedWaitAnyMaxCount, kTimedWaitAnyMaxCountDefault)
 
 void GetDefaultLimits(InstanceLimits* limits) {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
 #define X(Class, limitName, limitValue) limits->limitName = limitValue;
     INSTANCE_LIMITS(X)
 #undef X
@@ -187,7 +187,7 @@ MaybeError ValidateLimits(const InstanceLimits& requiredLimits) {
 }
 
 wgpu::Status APIGetInstanceLimits(InstanceLimits* limits) {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
     if (limits->nextInChain != nullptr) {
         return wgpu::Status::Error;
     }
@@ -699,7 +699,7 @@ void InstanceBase::ConsumeError(std::unique_ptr<ErrorData> error,
                                 InternalErrorType additionalAllowedErrors) {
     // Note: `additionalAllowedErrors` is ignored. The instance considers every type of error to be
     // an error that is logged.
-    DAWN_ASSERT(error != nullptr);
+    DAWN_OPT_ASSUME(error != nullptr);
     EmitLog(WGPULoggingType_Error, error->GetFormattedMessage());
 }
 
@@ -792,7 +792,7 @@ bool InstanceBase::APIHasWGSLLanguageFeature(wgpu::WGSLLanguageFeatureName featu
 }
 
 void InstanceBase::APIGetWGSLLanguageFeatures(SupportedWGSLLanguageFeatures* features) const {
-    DAWN_ASSERT(features != nullptr);
+    DAWN_OPT_ASSUME(features != nullptr);
 
     size_t featureCount = mWGSLFeatures.size();
     wgpu::WGSLLanguageFeatureName* wgslFeatures = new wgpu::WGSLLanguageFeatureName[featureCount];

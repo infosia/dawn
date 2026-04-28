@@ -66,8 +66,8 @@ PhysicalDevice::PhysicalDevice(Backend* backend, WGPUAdapter innerAdapter)
     }
 
     WGPUStatus status = GetFunctions().adapterGetInfo(mInnerAdapter, &info);
-    DAWN_ASSERT(status == WGPUStatus_Success);
-    DAWN_ASSERT(info.backendType != WGPUBackendType_WebGPU);
+    DAWN_OPT_ASSUME(status == WGPUStatus_Success);
+    DAWN_OPT_ASSUME(info.backendType != WGPUBackendType_WebGPU);
 
     mVendorName = ToString(info.vendor);
     mArchitectureName = ToString(info.architecture);
@@ -125,7 +125,7 @@ ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapab
     WGPUSurface innerSurface;
     DAWN_TRY_ASSIGN(innerSurface, CreateWGPUSurface(mBackend->GetFunctions(),
                                                     mBackend->GetInnerInstance(), surface));
-    DAWN_ASSERT(innerSurface);
+    DAWN_OPT_ASSUME(innerSurface);
 
     WGPUSurfaceCapabilities innerCapabilities = WGPU_SURFACE_CAPABILITIES_INIT;
     WGPUStatus status = mBackend->GetFunctions().surfaceGetCapabilities(innerSurface, mInnerAdapter,
@@ -159,7 +159,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
-    DAWN_ASSERT(kEnumCount<Feature> == static_cast<uint32_t>(kFeatureNameAndInfoList.size()));
+    DAWN_OPT_ASSUME(kEnumCount<Feature> == static_cast<uint32_t>(kFeatureNameAndInfoList.size()));
     for (uint32_t f = 0; f < kEnumCount<Feature>; f++) {
         Feature feature = static_cast<Feature>(f);
         WGPUFeatureName apiFeature = ToAPI(ToAPI(feature));

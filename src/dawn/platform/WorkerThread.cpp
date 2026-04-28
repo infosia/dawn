@@ -65,7 +65,7 @@ AsyncTaskHandleImpl::AsyncTaskHandleImpl(PostWorkerTaskCallback cb, void* userda
     : mCallback(cb), mUserdata(userdata) {}
 
 AsyncTaskHandleImpl::~AsyncTaskHandleImpl() {
-    DAWN_ASSERT(mCompleted);
+    DAWN_OPT_ASSUME(mCompleted);
 }
 
 void AsyncTaskHandleImpl::Wait() {
@@ -88,7 +88,7 @@ AsyncJobHandleImpl::AsyncJobHandleImpl(PostWorkerJobCallback cb, void* userdata)
     : mThread(&AsyncJobHandleImpl::JobThreadLoop, this, cb, userdata) {}
 
 AsyncJobHandleImpl::~AsyncJobHandleImpl() {
-    DAWN_ASSERT(mJoined);
+    DAWN_OPT_ASSUME(mJoined);
 }
 
 void AsyncJobHandleImpl::Cancel() {

@@ -211,7 +211,7 @@
                     {% do assert(member.annotation != "const*const*", "const*const* not valid here") %}
                     auto memberLength = {{member_length(member, "record.")}};
                     auto size = WireAlignSizeofN<{{member_transfer_type(member.type)}}>(memberLength);
-                    DAWN_ASSERT(size);
+                    DAWN_OPT_ASSUME(size);
                     result += *size;
                     //* Structures might contain more pointers so we need to add their extra size as well.
                     {% if member.type.category == "structure" %}
@@ -281,8 +281,8 @@
         {% endif %}
         {% if record.chained %}
             //* Should be set by the root descriptor's call to SerializeChainedStruct.
-            DAWN_ASSERT(transfer->chain.sType == {{as_cEnum(types["s type"].name, record.name)}});
-            DAWN_ASSERT(transfer->chain.hasNext == (record.chain.next != nullptr));
+            DAWN_OPT_ASSUME(transfer->chain.sType == {{as_cEnum(types["s type"].name, record.name)}});
+            DAWN_OPT_ASSUME(transfer->chain.hasNext == (record.chain.next != nullptr));
         {% endif %}
 
         //* Iterate members, sorted in reverse on "attribute" so that "value" types are serialized first.
@@ -350,7 +350,7 @@
             , const ObjectIdResolver& resolver
         {%- endif -%}) {
         {% if is_cmd %}
-            DAWN_ASSERT(transfer->commandId == WireCmd::{{Return}}{{name}});
+            DAWN_OPT_ASSUME(transfer->commandId == WireCmd::{{Return}}{{name}});
         {% endif %}
         {% if record.derived_method %}
             record->selfId = transfer->self;
@@ -399,8 +399,8 @@
             //* Should be set by the root descriptor's call to DeserializeChainedStruct.
             //* Don't check |record->chain.next| matches because it is not set until the
             //* next iteration inside DeserializeChainedStruct.
-            DAWN_ASSERT(record->chain.sType == {{as_cEnum(types["s type"].name, record.name)}});
-            DAWN_ASSERT(record->chain.next == nullptr);
+            DAWN_OPT_ASSUME(record->chain.sType == {{as_cEnum(types["s type"].name, record.name)}});
+            DAWN_OPT_ASSUME(record->chain.next == nullptr);
         {% endif %}
 
         //* Iterate members, sorted in reverse on "attribute" so that "value" types are serialized first.
@@ -620,7 +620,7 @@ WireResult WGPUStringViewSerialize(
         } else if (length == WGPU_STRLEN) {
             transfer->length = UINT64_MAX;
         } else {
-            DAWN_ASSERT(false);
+            DAWN_OPT_ASSUME(false);
         }
         return WireResult::Success;
     }

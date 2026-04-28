@@ -121,7 +121,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
                                  << ") var<storage, read_write> result" << index
                                  << " : DepthResult;\n";
 
-                    DAWN_ASSERT(components.size() == 1 && components[0] == 0);
+                    DAWN_OPT_ASSUME(components.size() == 1 && components[0] == 0);
                     shaderBody << "\nresult" << index << ".value = textureLoad(tex" << index
                                << ", vec2i(0, 0), 0);";
                     break;
@@ -133,7 +133,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
                                  << ") var<storage, read_write> result" << index
                                  << " : DepthResult;\n";
 
-                    DAWN_ASSERT(components.size() == 1 && components[0] == 0);
+                    DAWN_OPT_ASSUME(components.size() == 1 && components[0] == 0);
                     shaderBody << "\nresult" << index << ".value = textureLoad(tex" << index
                                << ", vec2i(0, 0), 0)[0];";
                     break;
@@ -463,7 +463,7 @@ class DepthStencilSamplingTest : public DawnTestWithParams<DepthStencilSamplingT
         ~ExtraStencilComponentsExpectation() override = default;
 
         testing::AssertionResult Check(const void* rawData, size_t size) override {
-            DAWN_ASSERT(size == sizeof(StencilData));
+            DAWN_OPT_ASSUME(size == sizeof(StencilData));
             const uint32_t* data = static_cast<const uint32_t*>(rawData);
 
             StencilData ssss = {mExpected, mExpected, mExpected, mExpected};

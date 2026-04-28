@@ -167,7 +167,7 @@ BasicRenderPass CreateBasicRenderPass(const wgpu::Device& device,
                                       uint32_t width,
                                       uint32_t height,
                                       wgpu::TextureFormat format) {
-    DAWN_ASSERT(width > 0 && height > 0);
+    DAWN_OPT_ASSUME(width > 0 && height > 0);
 
     wgpu::TextureDescriptor descriptor;
     descriptor.dimension = wgpu::TextureDimension::e2D;

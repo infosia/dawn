@@ -1526,7 +1526,7 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
         imageFormatListInfo.pViewFormats = viewFormats.data();
     }
 
-    DAWN_ASSERT(IsSampleCountSupported(device, createInfo));
+    DAWN_OPT_ASSUME(IsSampleCountSupported(device, createInfo));
 
     if (GetArrayLayers() >= 6 && GetBaseSize().width == GetBaseSize().height) {
         createInfo.flags |= VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;

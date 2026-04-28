@@ -352,7 +352,7 @@ int SampleBase::Run(unsigned int delay) {
     while (!glfwWindowShouldClose(sample->window)) {
         sample->FrameImpl();
         wgpu::Status presentStatus = sample->surface.Present();
-        DAWN_ASSERT(presentStatus == wgpu::Status::Success);
+        DAWN_OPT_ASSUME(presentStatus == wgpu::Status::Success);
         glfwPollEvents();
         if (delay) {
             dawn::utils::USleep(delay);
@@ -406,7 +406,7 @@ bool SampleBase::Setup() {
     config.format = capabilities.formats[0];
     config.width = width;
     config.height = height;
-    DAWN_ASSERT(capabilities.presentModeCount > 0);
+    DAWN_OPT_ASSUME(capabilities.presentModeCount > 0);
     config.presentMode = capabilities.presentModes[0];
     surface.Configure(&config);
     this->preferredSurfaceTextureFormat = capabilities.formats[0];
