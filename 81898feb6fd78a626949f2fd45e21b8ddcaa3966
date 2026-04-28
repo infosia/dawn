@@ -88,6 +88,24 @@
       "parentUuid": "023828a9_8284a275",
       "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99cf79c6_a5a89334",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-28T20:15:29Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/305636 is a copy of this CL with the additional fixes. PS1 is identical to PS4 of this CL, PS2 has the symlink fixes.",
+      "parentUuid": "46d3a413_c07b8804",
+      "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
