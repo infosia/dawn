@@ -40,6 +40,30 @@
       ],
       "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebfb6be1_d54d513e",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:29:04Z",
+      "side": 1,
+      "message": "I was initially going to just rely on the compiler to optimize out the check in `checked_cast` if it wouldn\u0027t be necessary. I would probably do that instead of having our own logic for whether the check is needed even though I\u0027m sure we can get that logic correct.\n\nBut then I figured, why have two checks (checked_cast + hardening check), when we only need one? Which is how I ended up just implementing the checks in Dawn. I didn\u0027t try to check whether the compiler would be able to optimize to combine the two checks.\n\nI don\u0027t have a very strong opinion between the two, so if you think that way is better I\u0027m fine with it.",
+      "parentUuid": "bb094a32_ffa10d61",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
