@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f2ee66f3_a79fe771",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-28T14:47:56Z",
+      "side": 1,
+      "message": "I think the commit comment needs updating as well.",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7c78bf_e7c978bd",
         "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
         "patchSetId": 19
