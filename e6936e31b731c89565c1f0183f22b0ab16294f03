@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77c9f316_e629d34d",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "Having only an API to set the surfaces is likely not enough, as the changes to the test code show: when handing a replay, the application using the replay can\u0027t know a priori how many surfaces are needed and of what size. In the tests we hardcode 1 surface but it\u0027s only because we have specific knowledge of the workload.\n\nInstead we could have a new API here that gives reflection of how many surfaces need to be provided, as well as some metadata about them, like their first configured size and label. This why users of the replay API can size the windows and set their title to match.\n\nThen the changes in DawnTest.h/.cpp and SurfaceTests.cpp can be changed to automatically spawn GLFW windows as needed when starting to run the replay. Likewise in CaptureAndReaplayTests.cpp.",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fed4418f_719d7e9c",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "IIRC we should be able to call configure repeatedly without unconfiguring first, so why is this needed?",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "050d5104_90e19dd2",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "nit: this doesn\u0027t need to be `ResultOrError` and we can propagate the simplification of error handling up the callgraph.",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61dceb6f_fb78947b",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "is that ever the case?",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2839a99d_a66aaf1b",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "What dangling pointer happens if we don\u0027t do this part of the change? It looks like the `CaptureContext` has Refs for all objects so nothing should be dangling.",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b4a2c8_95f881c1",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "Why not just DAWN_TRY here and in all three other spots?",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbae7ff9_b2c183c9",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "We probably don\u0027t need to capture anything here, the configure is captured above and should be sufficient for replay. Unconfigure is just to lose the reference to the last configured device but for replay it doesn\u0027t really matter.",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef413fa4_8c15514e",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47dc0b74_bc92d8a4",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:38:26Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant with the texture being created with the command [1]? (at the moment)",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
