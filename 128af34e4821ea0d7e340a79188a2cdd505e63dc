@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffdeb820_04c64b90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:56:20Z",
+      "side": 1,
+      "message": "+CC Dan for the suggestion of changes in how Dawn and Tint interact for argument buffers.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "272a73e3_c8a928df",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:56:20Z",
+      "side": 1,
+      "message": "Seems done? (and separable given this CL will have iterations)",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d99309_f15852ab",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:56:20Z",
+      "side": 1,
+      "message": "This will be a `vector\u003c{Id, tint::ResourceType, maybe an arraySize}\u003e`.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfff4bf7_92894cbc",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:56:20Z",
+      "side": 1,
+      "message": "All of these enums and structs should be possible to represent using a `ResourceType` below. Buffers and storage textures aren\u0027t present yet, but we\u0027ll want to add them to bindless eventually so we might as well do it now. (storage textures could use the formatless version).\n\nThen all the code in BindGroupLayoutMTL.h to create the `BindingType` could be a helper function in `TintUtils.h` taking a `dawn::native::BindingInfo` and returning a `ResourceType`. For consistency (in a follow-up) we could also move `AreTypeIDCompatible` and `ResourceTableBase::ComputeTypeId` (for various resource types) in the same file.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5cf596a_2c4bde46",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:56:20Z",
+      "side": 1,
+      "message": "Isn\u0027t that handled by a separate transform such that we don\u0027t need to say that there\u0027s a dynamic offset here? This info is about how to get the base pointer of the buffer, and another transform will add the offset to all the indices.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
