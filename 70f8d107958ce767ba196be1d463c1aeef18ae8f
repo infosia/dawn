@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "811d100b_cad9470a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T17:07:16Z",
+      "side": 1,
+      "message": "Yup I realized that right after pushing too. But got distracted revising some other things.",
+      "parentUuid": "f2ee66f3_a79fe771",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c7c78bf_e7c978bd",
@@ -65,6 +89,24 @@
           ]
         }
       ],
+      "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f234e27_65d1ba0e",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T17:07:16Z",
+      "side": 1,
+      "message": "Oops right, thanks!\n\nI do want to keep testing hardening for now (as it was before this CL), we can figure out changes to that later on. So I reverted (re-added) the bounds checks for Absl, and the MSVC skips.",
+      "parentUuid": "3c7c78bf_e7c978bd",
       "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
