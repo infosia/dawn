@@ -96,16 +96,25 @@ class SurfaceTests : public DawnTest {
     }
 
     void TearDown() override {
-        wgpu::Surface surface;
-        std::unique_ptr<GLFWwindow, GLFWindowDestroyer> replayWindow;
+        std::vector<std::unique_ptr<GLFWwindow, GLFWindowDestroyer>> replayWindows;
         if (IsCaptureReplayCheckingEnabled()) {
-            // Set GLFW_NO_API to avoid GLFW bringing up a GL context that we won't use.
-            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-            replayWindow.reset(glfwCreateWindow(400, 500, "SurfaceTests window", nullptr, nullptr));
+            auto surfaceInfos = GetCapture()->GetSurfaceInfos();
+            std::vector<wgpu::Surface> surfaces;
+            surfaces.reserve(surfaceInfos.size());
+            replayWindows.reserve(surfaceInfos.size());
+            for (const auto& info : surfaceInfos) {
+                // Set GLFW_NO_API to avoid GLFW bringing up a GL context that we won't use.
+                glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+                auto replayWindow =
+                    std::unique_ptr<GLFWwindow, GLFWindowDestroyer>(glfwCreateWindow(
+                        info.width, info.height, "SurfaceTests window", nullptr, nullptr));
 
-            // Create a surface for the replay.
-            surface = wgpu::glfw::CreateSurfaceForWindow(GetInstance(), replayWindow.get());
-            SetReplaySurface(surface);
+                // Create a surface for the replay.
+                surfaces.push_back(
+                    wgpu::glfw::CreateSurfaceForWindow(GetInstance(), replayWindow.get()));
+                replayWindows.push_back(std::move(replayWindow));
+            }
+            SetReplaySurfaces(std::move(surfaces));
         } else {
             // Destroy the surface before the window as required by webgpu-native.
             window.reset();
@@ -116,10 +125,11 @@ class SurfaceTests : public DawnTest {
         // At this point DawnTest::TearDown() has finished, which means the capture context
         // has been cleared and all surfaces held by it are released.
         // Now it's safe to destroy the windows.
-        surface = nullptr;
         if (IsCaptureReplayCheckingEnabled()) {
-            DAWN_ASSERT(replayWindow);
-            replayWindow.reset();
+            for (auto& replayWindow : replayWindows) {
+                DAWN_ASSERT(replayWindow);
+                replayWindow.reset();
+            }
             DAWN_ASSERT(window);
             window.reset();
         }

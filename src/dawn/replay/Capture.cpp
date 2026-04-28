@@ -31,6 +31,8 @@
 #include <sstream>
 #include <utility>
 
+#include "src/dawn/replay/SurfaceDiscovery.h"
+
 namespace dawn::replay {
 
 Capture::~Capture() = default;
@@ -69,6 +71,12 @@ bool CaptureImpl::Walk(RootCommandVisitor& visitor) {
         return false;
     }
     return true;
+}
+
+std::vector<SurfaceInfo> CaptureImpl::GetSurfaceInfos() const {
+    SurfaceDiscoveryVisitor discovery;
+    const_cast<CaptureImpl*>(this)->Walk(discovery);
+    return discovery.GetSurfaceInfos();
 }
 
 ReadHead CaptureImpl::GetCommandReadHead() const {
