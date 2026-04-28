@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
+#include <tuple>
 
 #include "gtest/gtest.h"
 #include "src/tint/lang/core/enums.h"
@@ -1680,6 +1681,107 @@ TEST_F(IR_ValidatorTest, Function_Interpolate_Integral_NotFlat) {
                     R"(:1:27 error: interpolation attribute type must be flat for integral types
 %my_func = @fragment func(%p:i32 [@location(0), @interpolate(linear, center)]):void {
                           ^^^^^^
+)")) << res.Failure();
+}
+
+using IR_ValidatorInterpolationComboValidTest =
+    IRTestParamHelper<std::tuple<InterpolationType, InterpolationSampling>>;
+TEST_P(IR_ValidatorInterpolationComboValidTest, Combinations) {
+    auto [type, sampling] = GetParam();
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
+    auto* p = b.FunctionParam("p", ty.f32());
+    p->SetLocation(0);
+    p->SetInterpolation(Interpolation{type, sampling});
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success) << res.Failure();
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    IR_ValidatorTest,
+    IR_ValidatorInterpolationComboValidTest,
+    testing::Values(
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kUndefined),
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kFirst),
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kEither),
+        std::make_tuple(InterpolationType::kLinear, InterpolationSampling::kUndefined),
+        std::make_tuple(InterpolationType::kLinear, InterpolationSampling::kCenter),
+        std::make_tuple(InterpolationType::kLinear, InterpolationSampling::kCentroid),
+        std::make_tuple(InterpolationType::kLinear, InterpolationSampling::kSample),
+        std::make_tuple(InterpolationType::kPerspective, InterpolationSampling::kUndefined),
+        std::make_tuple(InterpolationType::kPerspective, InterpolationSampling::kCenter),
+        std::make_tuple(InterpolationType::kPerspective, InterpolationSampling::kCentroid),
+        std::make_tuple(InterpolationType::kPerspective, InterpolationSampling::kSample)));
+
+using IR_ValidatorInterpolationComboInvalidTest =
+    IRTestParamHelper<std::tuple<InterpolationType, InterpolationSampling, std::string>>;
+TEST_P(IR_ValidatorInterpolationComboInvalidTest, Combinations) {
+    auto [type, sampling, expected_error] = GetParam();
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
+    auto* p = b.FunctionParam("p", ty.f32());
+    p->SetLocation(0);
+    p->SetInterpolation(Interpolation{type, sampling});
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr(expected_error)) << res.Failure();
+}
+
+static const char* kFlatError =
+    "flat interpolation can only use 'first', 'either' or undefined sampling parameters";
+static const char* kLinearPerspectiveError =
+    "linear and perspective interpolation can only use 'center', 'centroid', 'sample', or "
+    "undefined "
+    "sampling parameters";
+
+INSTANTIATE_TEST_SUITE_P(
+    IR_ValidatorTest,
+    IR_ValidatorInterpolationComboInvalidTest,
+    testing::Values(
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kCenter, kFlatError),
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kCentroid, kFlatError),
+        std::make_tuple(InterpolationType::kFlat, InterpolationSampling::kSample, kFlatError),
+        std::make_tuple(InterpolationType::kLinear,
+                        InterpolationSampling::kFirst,
+                        kLinearPerspectiveError),
+        std::make_tuple(InterpolationType::kLinear,
+                        InterpolationSampling::kEither,
+                        kLinearPerspectiveError),
+        std::make_tuple(InterpolationType::kPerspective,
+                        InterpolationSampling::kFirst,
+                        kLinearPerspectiveError),
+        std::make_tuple(InterpolationType::kPerspective,
+                        InterpolationSampling::kEither,
+                        kLinearPerspectiveError),
+        std::make_tuple(InterpolationType::kUndefined,
+                        InterpolationSampling::kCenter,
+                        "undefined interpolation should on have an undefined sampling parameter")));
+
+TEST_F(IR_ValidatorTest, Function_Interpolate_IntegralVector_NotFlat) {
+    auto* f = FragmentEntryPoint("my_func");
+
+    auto* p = b.FunctionParam("p", ty.vec2<i32>());
+    p->SetLocation(0);
+    p->SetInterpolation(Interpolation{InterpolationType::kLinear, InterpolationSampling::kCenter});
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:1:27 error: interpolation attribute type must be flat for integral types
+%my_func = @fragment func(%p:vec2<i32> [@location(0), @interpolate(linear, center)]):void {
+                          ^^^^^^^^^^^^
 )")) << res.Failure();
 }
 
