@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1bc414_7ed0c7a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "Can you please add a Bug?\n\nI just opened one:\n```\nBug: chromium:507078598\nDoc: go/unsafe-buffer-dawn\n```",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4839dc16_3417bcca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "Thanks Arturo!",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "430267f8_652d3aa3",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "This is not defined. Could you also add `DAWN_UNSAFE_BUFFER_USAGE` definition too?",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c20fdafa_123d474e",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1f5939e_639c1f50",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "I see tint has already: `TINT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE`. This is very cumbersome in my opinion. However, I would understand Dawn wanting to be consistent with Tint.\n\n@cwallez@chromium.org I will let you decide how to name this.",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
