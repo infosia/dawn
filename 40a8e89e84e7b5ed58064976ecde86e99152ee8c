@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9598202e_f75e565a",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T17:07:59Z",
+      "side": 1,
+      "message": "For posterity: https://godbolt.org/z/94sE8zses",
+      "revId": "40a8e89e84e7b5ed58064976ecde86e99152ee8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
