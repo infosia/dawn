@@ -53,13 +53,14 @@ class PipelineLayout final : public PipelineLayoutBase {
     struct Specialization {
         PerBindGroup<BindGroupLayout::Specialization> bindGroups = {};
         uint32_t pushConstantBytes;
+        uint32_t framebufferFetchAttachmentCount = 0;
 
         template <typename H>
         friend H AbslHashValue(H h, const Specialization& s) {
             for (auto& bg : s.bindGroups) {
                 h = H::combine(std::move(h), bg);
             }
-            return H::combine(std::move(h), s.pushConstantBytes);
+            return H::combine(std::move(h), s.pushConstantBytes, s.framebufferFetchAttachmentCount);
         }
         bool operator==(const Specialization& other) const = default;
     };
