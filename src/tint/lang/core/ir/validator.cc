@@ -3770,10 +3770,40 @@ void Validator::CheckInterpolation(const CastableBase* anchor,
                                         "'kAllowLocationForNumericElements' capability";
                 }
 
-                if (t->IsIntegerScalar()) {
+                if (t->IsIntegerScalarOrVector()) {
                     if (a.interpolation.value().type != InterpolationType::kFlat) {
                         AddError(anchor)
                             << "interpolation attribute type must be flat for integral types";
+                    }
+                }
+
+                auto interp_type = a.interpolation.value().type;
+                auto interp_sampling = a.interpolation.value().sampling;
+                if (interp_sampling != InterpolationSampling::kUndefined) {
+                    switch (interp_type) {
+                        case InterpolationType::kFlat:
+                            if (interp_sampling != InterpolationSampling::kFirst &&
+                                interp_sampling != InterpolationSampling::kEither) {
+                                AddError(anchor) << "flat interpolation can only use 'first', "
+                                                    "'either' or undefined sampling parameters";
+                            }
+                            break;
+                        case InterpolationType::kLinear:
+                        case InterpolationType::kPerspective:
+                            if (interp_sampling != InterpolationSampling::kCenter &&
+                                interp_sampling != InterpolationSampling::kCentroid &&
+                                interp_sampling != InterpolationSampling::kSample) {
+                                AddError(anchor) << "linear and perspective interpolation can only "
+                                                    "use 'center', 'centroid', 'sample', or "
+                                                    "undefined sampling parameters";
+                            }
+                            break;
+                        case InterpolationType::kUndefined:
+                            AddError(anchor) << "undefined interpolation should on have an "
+                                                "undefined sampling parameter";
+                            break;
+                        default:
+                            TINT_UNREACHABLE();
                     }
                 }
 
