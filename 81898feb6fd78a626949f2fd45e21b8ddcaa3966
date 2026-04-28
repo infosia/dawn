@@ -52,6 +52,24 @@
       "parentUuid": "31d0f246_e6a1253e",
       "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023828a9_8284a275",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-28T00:58:36Z",
+      "side": 1,
+      "message": "It looks like Go 1.25 included some minor changes to symlink behavior which are likely the cause of the test failures (since the failing tests verify that the fake filesystem implementation matches the real filesystem\u0027s behavior).\n\nFrom [here](https://go.dev/doc/go1.25#iofspkgiofs):\n\n```\nio/fs¶\nA new ReadLinkFS interface provides the ability to read symbolic links in a filesystem.\n```\n\nand [here](https://go.dev/doc/go1.25#testingfstestpkgtestingfstest):\n\n```\ntesting/fstest¶\nMapFS implements the new io/fs.ReadLinkFS interface. TestFS will verify the functionality of the io/fs.ReadLinkFS interface if implemented. TestFS will no longer follow symlinks to avoid unbounded recursion.\n```\n\nThe correct fix should be to update `fstestoswrapper.go` to properly emulate the real filesystem\u0027s behavior in Go 1.25.\n\nI tried throwing Gemini at the problem, but it introduced a bunch of test failures and a deadlock, so no example to link to right now. If you don\u0027t have time to poke at this tomorrow, I can try taking a closer look.",
+      "parentUuid": "eff1d480_e1779cc9",
+      "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
