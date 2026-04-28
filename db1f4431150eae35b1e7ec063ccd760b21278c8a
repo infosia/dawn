@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8254168d_c5cf2a32",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:46:01Z",
+      "side": 1,
+      "message": "Does this mean that we need a review for all additions? Dawn is likely to have a bunch because we manipulates a lot information coming from system APIs and we\u0027ll need to wrap them in spans or equivalents for the rest of Dawn to consume. Having a review for each will be cumbersome (also `USE OF THIS MACRO SHOULD BE VERY RARE` is a bit of a lie for Dawn, it should be very rare except at API boundaries)",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "430267f8_652d3aa3",
         "filename": "src/dawn/common/Compiler.h",
         "patchSetId": 3
@@ -60,6 +77,23 @@
         "endLine": 230,
         "endChar": 30
       },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cb11658_9e43df33",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:46:01Z",
+      "side": 1,
+      "message": "```suggestion\n#if DAWN_COMPILER_IS(CLANG)\n```",
       "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -100,6 +134,30 @@
       "writtenOn": "2026-04-28T09:35:28Z",
       "side": 1,
       "message": "I see tint has already: `TINT_DISABLE_WARNING_UNSAFE_BUFFER_USAGE`. This is very cumbersome in my opinion. However, I would understand Dawn wanting to be consistent with Tint.\n\n@cwallez@chromium.org I will let you decide how to name this.",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c87cd8_0e457e5f",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T09:46:01Z",
+      "side": 1,
+      "message": "+CC Dan, WDYT of putting this code in `src/utils/compiler.h` and migrating Tint to use `DAWN_UNSAFE_BUFFERS` instead of the current macro?",
+      "parentUuid": "c1f5939e_639c1f50",
       "range": {
         "startLine": 256,
         "startChar": 8,
