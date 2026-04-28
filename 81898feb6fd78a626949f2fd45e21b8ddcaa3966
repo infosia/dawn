@@ -70,6 +70,24 @@
       "parentUuid": "eff1d480_e1779cc9",
       "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46d3a413_c07b8804",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-28T18:48:13Z",
+      "side": 1,
+      "message": "After a few iterations, I was able to get Gemini to produce a fix that is relatively minimal, gets the tests passing, and in general looks reasonable. I\u0027ll clean it up a bit and upload a copy of this with it applied.",
+      "parentUuid": "023828a9_8284a275",
+      "revId": "81898feb6fd78a626949f2fd45e21b8ddcaa3966",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
