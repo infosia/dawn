@@ -1576,9 +1576,8 @@ crbug.com/501084916 [ qualcomm win11 ] webgpu:api,validation,capability_checks,l
 crbug.com/501070661 [ dawn-backend-validation qualcomm win11 ] webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:* [ Failure ]
 crbug.com/501070661 [ dawn-backend-validation qualcomm webgpu-adapter-default win11 ] webgpu:web_platform,copyToTexture,ImageBitmap:* [ Failure ]
 
+crbug.com/499140183 webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
 crbug.com/499140183 [ intel win ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,reuse:* [ Failure ]
-crbug.com/499140183 [ intel linux ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
-crbug.com/499140183 [ linux nvidia ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
 crbug.com/499140183 [ android-pixel-6 ] webgpu:api,operation,command_buffer,queries,timestampQuery:resolve_unused_slots:* [ Failure ]
 crbug.com/499140183 [ intel linux ] webgpu:api,operation,command_buffer,queries,timestampQuery:resolve_unused_slots:* [ Failure ]
 crbug.com/499140183 [ linux nvidia ] webgpu:api,operation,command_buffer,queries,timestampQuery:resolve_unused_slots:* [ Failure ]
@@ -1593,7 +1592,6 @@ crbug.com/0000 [ android-pixel-4 ] webgpu:shader,execution,expression,call,built
 ################################################################################
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth24plus-stencil8" [ Failure ]
 crbug.com/0000 [ android-pixel-4 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth32float-stencil8" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,unsubmitted_render_pass: [ Failure ]
 crbug.com/0000 [ apple mac ] webgpu:api,operation,command_buffer,queries,timestampQuery:many_query_sets:numQuerySets=256;stage="compute" [ Failure ]
 crbug.com/0000 [ apple mac ] webgpu:api,operation,command_buffer,queries,timestampQuery:many_query_sets:numQuerySets=256;stage="render" [ Failure ]
 crbug.com/0000 [ apple mac ] webgpu:api,operation,command_buffer,queries,timestampQuery:many_query_sets:numQuerySets=64;stage="compute" [ Failure ]
