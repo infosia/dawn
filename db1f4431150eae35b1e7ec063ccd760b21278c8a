@@ -295,6 +295,30 @@
       },
       "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "535ebccb_3bd7a968",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-28T14:35:57Z",
+      "side": 1,
+      "message": "I would prefer this too",
+      "parentUuid": "67eb003a_1cfc72b2",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
