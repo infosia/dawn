@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1485e78d_3e5e215b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T12:50:54Z",
+      "side": 1,
+      "message": "nit: in general we add a tag at the start to make it clear that thi is a cherry-pick, like `[M42] [native][d3d12] ....`",
+      "revId": "13ed81209b738b9aff8151206bdb915855ef99c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5391470f_228dcc59",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
