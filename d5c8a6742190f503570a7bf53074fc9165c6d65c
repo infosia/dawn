@@ -64,6 +64,30 @@
       },
       "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "684ccbc1_59624511",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-28T12:51:33Z",
+      "side": 1,
+      "message": "Wrt to `checked_cast`, if you want to rely on the compiler to optimize out the check, I suppose we could do that; but I trust the compiler less in this case because it wants to optimize less around aborts (checks). If we keep the code I added, we should beef up the testing for `checked_cast`.\n\nWrt to two checks (checked_cast + hardening), I feel like we shouldn\u0027t do the hardening ourselves, because then there\u0027s a difference beyond strong typing between the `ityp` containers and regular containers. OOB access in containers is an understood problem, and there\u0027s enough hardening in standard libraries that I don\u0027t think we need to do it ourselves.",
+      "parentUuid": "ebfb6be1_d54d513e",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
