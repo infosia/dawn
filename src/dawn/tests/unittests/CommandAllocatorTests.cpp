@@ -31,6 +31,7 @@
 
 #include "dawn/native/CommandAllocator.h"
 #include "gtest/gtest.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -141,7 +142,7 @@ TEST(CommandAllocator, BasicWithData) {
 
         uint32_t* values = allocator.AllocateData<uint32_t>(5);
         for (size_t i = 0; i < 5; i++) {
-            values[i] = myValues[i];
+            DAWN_UNSAFE_TODO(values[i]) = DAWN_UNSAFE_TODO(myValues[i]);
         }
     }
 
@@ -159,7 +160,7 @@ TEST(CommandAllocator, BasicWithData) {
 
         uint32_t* values = iterator.NextData<uint32_t>(5);
         for (size_t i = 0; i < 5; i++) {
-            ASSERT_EQ(values[i], myValues[i]);
+            DAWN_UNSAFE_TODO(ASSERT_EQ(values[i], myValues[i]));
         }
 
         hasNext = iterator.NextCommandId(&type);
@@ -223,7 +224,7 @@ TEST(CommandAllocator, LargeCommands) {
     for (int i = 0; i < kCommandCount; i++) {
         CommandBig* big = allocator.Allocate<CommandBig>(CommandType::Big);
         for (int j = 0; j < kBigBufferSize; j++) {
-            big->buffer[j] = count++;
+            DAWN_UNSAFE_TODO(big->buffer[j]) = count++;
         }
     }
 
@@ -236,7 +237,7 @@ TEST(CommandAllocator, LargeCommands) {
 
         CommandBig* big = iterator.NextCommand<CommandBig>();
         for (int i = 0; i < kBigBufferSize; i++) {
-            ASSERT_EQ(big->buffer[i], count);
+            DAWN_UNSAFE_TODO(ASSERT_EQ(big->buffer[i], count));
             count++;
         }
         numCommands++;
@@ -451,8 +452,8 @@ TEST(CommandAllocator, AllocateDataDefaultInitializes) {
 
     IntWithDefault<35>* int35 = allocator.AllocateData<IntWithDefault<35>>(3);
     ASSERT_EQ(int35[0].value, 35);
-    ASSERT_EQ(int35[1].value, 35);
-    ASSERT_EQ(int35[2].value, 35);
+    DAWN_UNSAFE_TODO(ASSERT_EQ(int35[1].value, 35));
+    DAWN_UNSAFE_TODO(ASSERT_EQ(int35[2].value, 35));
 
     CommandIterator iterator(std::move(allocator));
     iterator.MakeEmptyAsDataWasDestroyed();
@@ -476,12 +477,12 @@ TEST(CommandAllocator, AcquireCommandBlocks) {
         CommandAllocator& allocator = allocators[j];
         for (size_t i = 0; i < kNumCommandsPerAllocator; ++i) {
             CommandPipeline* pipeline = allocator.Allocate<CommandPipeline>(CommandType::Pipeline);
-            pipeline->pipeline = pipelines[j][i];
-            pipeline->attachmentPoint = attachmentPoints[j][i];
+            pipeline->pipeline = DAWN_UNSAFE_TODO(pipelines[j][i]);
+            pipeline->attachmentPoint = DAWN_UNSAFE_TODO(attachmentPoints[j][i]);
 
             CommandDraw* draw = allocator.Allocate<CommandDraw>(CommandType::Draw);
-            draw->first = firsts[j][i];
-            draw->count = counts[j][i];
+            draw->first = DAWN_UNSAFE_TODO(firsts[j][i]);
+            draw->count = DAWN_UNSAFE_TODO(counts[j][i]);
         }
     }
 
@@ -495,16 +496,16 @@ TEST(CommandAllocator, AcquireCommandBlocks) {
             ASSERT_EQ(type, CommandType::Pipeline);
 
             CommandPipeline* pipeline = iterator.NextCommand<CommandPipeline>();
-            ASSERT_EQ(pipeline->pipeline, pipelines[j][i]);
-            ASSERT_EQ(pipeline->attachmentPoint, attachmentPoints[j][i]);
+            DAWN_UNSAFE_TODO(ASSERT_EQ(pipeline->pipeline, pipelines[j][i]));
+            DAWN_UNSAFE_TODO(ASSERT_EQ(pipeline->attachmentPoint, attachmentPoints[j][i]));
 
             hasNext = iterator.NextCommandId(&type);
             ASSERT_TRUE(hasNext);
             ASSERT_EQ(type, CommandType::Draw);
 
             CommandDraw* draw = iterator.NextCommand<CommandDraw>();
-            ASSERT_EQ(draw->first, firsts[j][i]);
-            ASSERT_EQ(draw->count, counts[j][i]);
+            DAWN_UNSAFE_TODO(ASSERT_EQ(draw->first, firsts[j][i]));
+            DAWN_UNSAFE_TODO(ASSERT_EQ(draw->count, counts[j][i]));
         }
     }
     CommandType type;

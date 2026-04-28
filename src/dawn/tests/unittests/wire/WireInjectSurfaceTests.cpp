@@ -31,6 +31,7 @@
 #include "dawn/tests/unittests/wire/WireTest.h"
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/WireServer.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::wire {
 namespace {
@@ -192,19 +193,20 @@ TEST_F(WireInjectSurfaceTests, Capabilities) {
 
     EXPECT_EQ(caps.formatCount, mCapabilities.formatCount);
     for (uint32_t i = 0; i < caps.formatCount; i++) {
-        EXPECT_EQ(static_cast<WGPUTextureFormat>(caps.formats[i]), mCapabilities.formats[i]);
+        DAWN_UNSAFE_TODO(
+            EXPECT_EQ(static_cast<WGPUTextureFormat>(caps.formats[i]), mCapabilities.formats[i]));
     }
 
     EXPECT_EQ(caps.presentModeCount, mCapabilities.presentModeCount);
     for (uint32_t i = 0; i < caps.presentModeCount; i++) {
-        EXPECT_EQ(static_cast<WGPUPresentMode>(caps.presentModes[i]),
-                  mCapabilities.presentModes[i]);
+        DAWN_UNSAFE_TODO(EXPECT_EQ(static_cast<WGPUPresentMode>(caps.presentModes[i]),
+                                   mCapabilities.presentModes[i]));
     }
 
     EXPECT_EQ(caps.alphaModeCount, mCapabilities.alphaModeCount);
     for (uint32_t i = 0; i < caps.alphaModeCount; i++) {
-        EXPECT_EQ(static_cast<WGPUCompositeAlphaMode>(caps.alphaModes[i]),
-                  mCapabilities.alphaModes[i]);
+        DAWN_UNSAFE_TODO(EXPECT_EQ(static_cast<WGPUCompositeAlphaMode>(caps.alphaModes[i]),
+                                   mCapabilities.alphaModes[i]));
     }
 
     EXPECT_EQ(static_cast<WGPUTextureUsage>(caps.usages), mCapabilities.usages);

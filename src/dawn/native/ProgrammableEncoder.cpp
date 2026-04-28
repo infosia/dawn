@@ -41,6 +41,7 @@
 #include "dawn/native/ResourceTable.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -238,7 +239,7 @@ void ProgrammableEncoder::RecordSetBindGroup(CommandAllocator* allocator,
     cmd->dynamicOffsetCount = dynamicOffsetCount;
     if (dynamicOffsetCount > 0) {
         uint32_t* offsets = allocator->AllocateData<uint32_t>(cmd->dynamicOffsetCount);
-        memcpy(offsets, dynamicOffsets, dynamicOffsetCount * sizeof(uint32_t));
+        DAWN_UNSAFE_TODO(memcpy(offsets, dynamicOffsets, dynamicOffsetCount * sizeof(uint32_t)));
     }
 }
 

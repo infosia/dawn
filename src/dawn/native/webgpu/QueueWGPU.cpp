@@ -41,6 +41,7 @@
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -75,7 +76,8 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
         for (uint32_t i = 0; i < commandCount; ++i) {
             schema::ObjectId id;
-            DAWN_TRY_ASSIGN(id, mCaptureContext->AddResourceAndGetId(ToBackend(commands[i])));
+            DAWN_UNSAFE_TODO(
+                DAWN_TRY_ASSIGN(id, mCaptureContext->AddResourceAndGetId(ToBackend(commands[i]))));
             commandBufferIds.emplace_back(id);
         }
 
@@ -89,7 +91,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
     std::vector<WGPUCommandBuffer> innerCommandBuffers(commandCount);
     for (uint32_t i = 0; i < commandCount; ++i) {
-        DAWN_TRY_ASSIGN(innerCommandBuffers[i], ToBackend(commands[i])->Encode());
+        DAWN_UNSAFE_TODO(DAWN_TRY_ASSIGN(innerCommandBuffers[i], ToBackend(commands[i])->Encode()));
     }
 
     auto& wgpu = ToBackend(GetDevice())->wgpu.get();

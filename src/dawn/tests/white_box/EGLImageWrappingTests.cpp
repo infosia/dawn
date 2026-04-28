@@ -37,6 +37,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -140,7 +141,8 @@ class EGLImageTestBase : public DawnTest {
     }
 
     bool HasExtension(const char* string) {
-        return strstr(egl.QueryString(egl.GetCurrentDisplay(), EGL_EXTENSIONS), string) != nullptr;
+        return DAWN_UNSAFE_TODO(strstr(egl.QueryString(egl.GetCurrentDisplay(), EGL_EXTENSIONS),
+                                       string)) != nullptr;
     }
 
     void SetUp() override {
@@ -365,7 +367,7 @@ class EGLImageUsageTests : public EGLImageTestBase {
                 gl.DeleteFramebuffers(1, &fbo);
                 return {};
             });
-        ASSERT_EQ(0, memcmp(result.data(), data, dataSize));
+        DAWN_UNSAFE_TODO(ASSERT_EQ(0, memcmp(result.data(), data, dataSize)));
     }
 
     template <class T>

@@ -33,6 +33,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -96,7 +97,7 @@ class D3D11BufferTests : public DawnTest {
         // Check data
         const T* actualData = reinterpret_cast<const T*>(mappedResource.pData);
         for (size_t i = 0; i < expectedData.size(); ++i) {
-            EXPECT_EQ(expectedData[i], actualData[i]);
+            EXPECT_EQ(expectedData[i], DAWN_UNSAFE_TODO(actualData[i]));
         }
 
         // Unmap staging buffer

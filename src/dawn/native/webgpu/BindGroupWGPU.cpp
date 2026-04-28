@@ -42,6 +42,7 @@
 #include "dawn/native/webgpu/SamplerWGPU.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -86,7 +87,7 @@ class ComboBindGroupDescriptor {
         mDesc.layout = ToBackend(desc->layout->GetInternalBindGroupLayout())->GetInnerHandle();
         mDesc.entryCount = desc->entryCount;
         for (uint32_t i = 0; i < desc->entryCount; ++i) {
-            UnpackedPtr<BindGroupEntry> entry = Unpack(&desc->entries[i]);
+            UnpackedPtr<BindGroupEntry> entry = Unpack(&DAWN_UNSAFE_TODO(desc->entries[i]));
             mEntries.push_back(ToWGPU(*entry));
 
             if (auto* externalTextureEntry = entry.Get<ExternalTextureBindingEntry>()) {

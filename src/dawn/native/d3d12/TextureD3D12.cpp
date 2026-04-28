@@ -56,6 +56,7 @@
 #include "dawn/native/d3d12/TextureCopySplitter.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/native/utils/RenderDoc.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
 
@@ -910,7 +911,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
 
             DAWN_TRY(device->GetDynamicUploader()->WithUploadReservation(
                 uploadSize, blockInfo.byteSize, [&](UploadReservation reservation) -> MaybeError {
-                    memset(reservation.mappedPointer, clearColor, uploadSize);
+                    DAWN_UNSAFE_TODO(memset(reservation.mappedPointer, clearColor, uploadSize));
 
                     for (uint32_t level = range.baseMipLevel;
                          level < range.baseMipLevel + range.levelCount; ++level) {

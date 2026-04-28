@@ -91,6 +91,7 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -1693,7 +1694,7 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
         {deviceDescriptor->requiredFeatures, deviceDescriptor->requiredFeatureCount}, mToggles));
 
     for (uint32_t i = 0; i < deviceDescriptor->requiredFeatureCount; ++i) {
-        mEnabledFeatures.EnableFeature(deviceDescriptor->requiredFeatures[i]);
+        mEnabledFeatures.EnableFeature(DAWN_UNSAFE_TODO(deviceDescriptor->requiredFeatures[i]));
     }
 
     // Handle features that implicitly enable other features.

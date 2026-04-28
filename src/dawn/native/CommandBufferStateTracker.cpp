@@ -45,6 +45,7 @@
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/PipelineLayout.h"
 #include "dawn/native/RenderPipeline.h"
+#include "src/utils/compiler.h"
 
 // TODO(dawn:563): None of the error messages in this file include the buffer objects they are
 // validating against. It would be nice to improve that, but difficult to do without incurring
@@ -792,7 +793,8 @@ void CommandBufferStateTracker::SetBindGroup(BindGroupIndex index,
                                              uint32_t dynamicOffsetCount,
                                              const uint32_t* dynamicOffsets) {
     mBindgroups[index] = bindgroup;
-    mDynamicOffsets[index].assign(dynamicOffsets, dynamicOffsets + dynamicOffsetCount);
+    mDynamicOffsets[index].assign(dynamicOffsets,
+                                  DAWN_UNSAFE_TODO(dynamicOffsets + dynamicOffsetCount));
     mAspects.reset(VALIDATION_ASPECT_BIND_GROUPS);
 }
 

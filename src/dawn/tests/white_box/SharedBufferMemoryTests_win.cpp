@@ -35,6 +35,7 @@
 #include "dawn/tests/white_box/SharedBufferMemoryTests.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -51,7 +52,7 @@ void WriteD3D12UploadBuffer(ID3D12Resource* resource, uint32_t data) {
     range.Begin = 0;
     range.End = kBufferSize;
     resource->Map(0, &range, &mappedBufferBegin);
-    memcpy(mappedBufferBegin, &data, kBufferSize);
+    DAWN_UNSAFE_TODO(memcpy(mappedBufferBegin, &data, kBufferSize));
     resource->Unmap(0, &range);
 }
 
@@ -326,7 +327,7 @@ class D3D12SharedMemoryFileHandleBackend : public SharedBufferMemoryTestBackend 
             void* ptr = MapViewOfFile(mSharedMemoryHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
             EXPECT_NE(ptr, nullptr);
 
-            memcpy(ptr, &initializationData, sizeof(initializationData));
+            DAWN_UNSAFE_TODO(memcpy(ptr, &initializationData, sizeof(initializationData)));
 
             UnmapViewOfFile(ptr);
         }

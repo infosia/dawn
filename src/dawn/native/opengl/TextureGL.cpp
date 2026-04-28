@@ -44,6 +44,7 @@
 #include "dawn/native/opengl/SharedFenceGL.h"
 #include "dawn/native/opengl/SharedTextureMemoryGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -561,7 +562,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
         DAWN_TRY_ASSIGN(srcBuffer, Buffer::CreateInternalBuffer(device, &descriptor, false));
 
         // Fill the buffer with clear color
-        memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize);
+        DAWN_UNSAFE_TODO(memset(srcBuffer->GetMappedRange(0, bufferSize), clearColor, bufferSize));
         DAWN_TRY(srcBuffer->Unmap());
 
         DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_UNPACK_BUFFER, srcBuffer->GetHandle()));

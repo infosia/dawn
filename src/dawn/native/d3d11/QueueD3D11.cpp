@@ -49,6 +49,7 @@
 #include "dawn/native/d3d11/TextureD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d11 {
 namespace {
@@ -323,7 +324,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         auto commandContext =
             GetScopedSwapStatePendingCommandContext(QueueBase::SubmitMode::Normal);
         for (uint32_t i = 0; i < commandCount; ++i) {
-            DAWN_TRY(ToBackend(commands[i])->Execute(&commandContext));
+            DAWN_TRY(ToBackend(DAWN_UNSAFE_TODO(commands[i]))->Execute(&commandContext));
         }
     }
     DAWN_TRY(SubmitPendingCommandsImpl());
@@ -450,7 +451,7 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
     Texture* texture = ToBackend(destination.texture);
     DAWN_TRY(texture->SynchronizeTextureBeforeUse(&commandContext));
     return texture->Write(&commandContext, subresources, destination.origin, writeSizePixel,
-                          static_cast<const uint8_t*>(data) + dataLayout.offset,
+                          DAWN_UNSAFE_TODO(static_cast<const uint8_t*>(data) + dataLayout.offset),
                           dataLayout.bytesPerRow, dataLayout.rowsPerImage);
 }
 

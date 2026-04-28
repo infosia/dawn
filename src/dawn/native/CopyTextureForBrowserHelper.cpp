@@ -46,6 +46,7 @@
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -445,33 +446,41 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
         stepsMask |= kDecodeToLinearStep;
         const float* decodingParams = options->srcTransferFunctionParameters;
 
-        uniformData.gammaDecodingParams = {decodingParams[0], decodingParams[1], decodingParams[2],
-                                           decodingParams[3], decodingParams[4], decodingParams[5],
-                                           decodingParams[6]};
+        uniformData.gammaDecodingParams = {decodingParams[0],
+                                           DAWN_UNSAFE_TODO(decodingParams[1]),
+                                           DAWN_UNSAFE_TODO(decodingParams[2]),
+                                           DAWN_UNSAFE_TODO(decodingParams[3]),
+                                           DAWN_UNSAFE_TODO(decodingParams[4]),
+                                           DAWN_UNSAFE_TODO(decodingParams[5]),
+                                           DAWN_UNSAFE_TODO(decodingParams[6])};
 
         stepsMask |= kConvertToDstGamutStep;
         const float* matrix = options->conversionMatrix;
         uniformData.conversionMatrix = {{
             matrix[0],
-            matrix[1],
-            matrix[2],
+            DAWN_UNSAFE_TODO(matrix[1]),
+            DAWN_UNSAFE_TODO(matrix[2]),
             0.0,
-            matrix[3],
-            matrix[4],
-            matrix[5],
+            DAWN_UNSAFE_TODO(matrix[3]),
+            DAWN_UNSAFE_TODO(matrix[4]),
+            DAWN_UNSAFE_TODO(matrix[5]),
             0.0,
-            matrix[6],
-            matrix[7],
-            matrix[8],
+            DAWN_UNSAFE_TODO(matrix[6]),
+            DAWN_UNSAFE_TODO(matrix[7]),
+            DAWN_UNSAFE_TODO(matrix[8]),
             0.0,
         }};
 
         stepsMask |= kEncodeToGammaStep;
         const float* encodingParams = options->dstTransferFunctionParameters;
 
-        uniformData.gammaEncodingParams = {encodingParams[0], encodingParams[1], encodingParams[2],
-                                           encodingParams[3], encodingParams[4], encodingParams[5],
-                                           encodingParams[6]};
+        uniformData.gammaEncodingParams = {encodingParams[0],
+                                           DAWN_UNSAFE_TODO(encodingParams[1]),
+                                           DAWN_UNSAFE_TODO(encodingParams[2]),
+                                           DAWN_UNSAFE_TODO(encodingParams[3]),
+                                           DAWN_UNSAFE_TODO(encodingParams[4]),
+                                           DAWN_UNSAFE_TODO(encodingParams[5]),
+                                           DAWN_UNSAFE_TODO(encodingParams[6])};
     }
 
     if (options->dstAlphaMode == wgpu::AlphaMode::Premultiplied) {

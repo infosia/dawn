@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -76,7 +77,7 @@ BindGroupLayout::BindGroupLayout(Device* device,
     externalTextureEntries.reserve(externalTextureCount);
 
     for (size_t i = 0; i < entries.size(); i++) {
-        UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
+        UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&DAWN_UNSAFE_TODO(descriptor->entries[i]));
         entries[i] = *ToAPI(*entry);
 
         switch (entry->buffer.type) {

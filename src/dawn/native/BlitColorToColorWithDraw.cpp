@@ -46,6 +46,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/native/webgpu_absl_format.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -333,7 +334,7 @@ MaybeError ExpandResolveTextureWithDraw(
     uint32_t colorAttachmentHeight = 0;
     for (uint8_t i = 0; i < renderPassDescriptor->colorAttachmentCount; ++i) {
         ColorAttachmentIndex colorIdx(i);
-        const auto& colorAttachment = renderPassDescriptor->colorAttachments[i];
+        const auto& colorAttachment = DAWN_UNSAFE_TODO(renderPassDescriptor->colorAttachments[i]);
         TextureViewBase* view = colorAttachment.view;
         if (!view) {
             continue;
@@ -385,7 +386,8 @@ MaybeError ExpandResolveTextureWithDraw(
 
         for (auto colorIdx : pipelineKey.attachmentsToExpandResolve) {
             uint8_t i = static_cast<uint8_t>(colorIdx);
-            const auto& colorAttachment = renderPassDescriptor->colorAttachments[i];
+            const auto& colorAttachment =
+                DAWN_UNSAFE_TODO(renderPassDescriptor->colorAttachments[i]);
             bgEntries.push_back({});
             auto& bgEntry = bgEntries.back();
             bgEntry.binding = i;

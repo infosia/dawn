@@ -35,6 +35,7 @@
 #include "dawn/native/Queue.h"
 #include "dawn/native/SharedFence.h"
 #include "dawn/native/dawn_platform.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -223,7 +224,7 @@ SharedTextureMemoryContents* SharedTextureMemoryBase::GetContents() const {
 void APISharedTextureMemoryEndAccessStateFreeMembers(WGPUSharedTextureMemoryEndAccessState cState) {
     auto* state = reinterpret_cast<SharedTextureMemoryBase::EndAccessState*>(&cState);
     for (size_t i = 0; i < state->fenceCount; ++i) {
-        state->fences[i]->APIRelease();
+        DAWN_UNSAFE_TODO(state->fences[i])->APIRelease();
     }
     delete[] state->fences;
     delete[] state->signaledValues;

@@ -30,6 +30,7 @@
 #include <string>
 
 #include "dawn/native/Limits.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::stream {
 
@@ -39,7 +40,7 @@ void Stream<std::string>::Write(Sink* s, const std::string& t) {
     size_t size = t.length() * sizeof(char);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, t.data(), size));
     }
 }
 
@@ -59,7 +60,7 @@ void Stream<std::wstring>::Write(Sink* s, const std::wstring& t) {
     size_t size = t.length() * sizeof(wchar_t);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, t.data(), size));
     }
 }
 
@@ -80,7 +81,7 @@ void Stream<std::string_view>::Write(Sink* s, const std::string_view& t) {
     size_t size = t.length() * sizeof(char);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, t.data(), size));
     }
 }
 
@@ -90,7 +91,7 @@ void Stream<std::wstring_view>::Write(Sink* s, const std::wstring_view& t) {
     size_t size = t.length() * sizeof(wchar_t);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, t.data(), size));
     }
 }
 

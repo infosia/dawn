@@ -49,6 +49,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -646,14 +647,16 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     for (Pass& pass : passes) {
         // We use std::malloc here because it guarantees maximal scalar alignment.
         pass.batchData = {std::malloc(pass.batchDataSize), std::free};
-        memset(pass.batchData.get(), 0, pass.batchDataSize);
+        DAWN_UNSAFE_TODO(memset(pass.batchData.get(), 0, pass.batchDataSize));
         uint8_t* batchData = static_cast<uint8_t*>(pass.batchData.get());
         for (Batch& batch : pass.batches) {
-            batch.batchInfo = new (&batchData[batch.dataBufferOffset]) BatchInfo();
+            batch.batchInfo =
+                new (&DAWN_UNSAFE_TODO(batchData[batch.dataBufferOffset])) BatchInfo();
             batch.batchInfo->numDraws = static_cast<uint32_t>(batch.metadata->draws.size());
             batch.batchInfo->flags = pass.flags;
 
-            IndirectDraw* indirectDraw = reinterpret_cast<IndirectDraw*>(batch.batchInfo.get() + 1);
+            IndirectDraw* indirectDraw =
+                reinterpret_cast<IndirectDraw*>(DAWN_UNSAFE_TODO(batch.batchInfo.get() + 1));
             uint64_t outputParamsOffset = batch.outputParamsOffset;
             for (auto& draw : batch.metadata->draws) {
                 // The shader uses this to index an array of u32, hence the division by 4 bytes.
@@ -668,7 +671,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
 
                 // This is only used in the GL backend.
                 indirectDraw->indexOffsetAsNumElements = uint32_t(draw.indexBufferOffsetInElements);
-                indirectDraw++;
+                DAWN_UNSAFE_TODO(indirectDraw++);
 
                 draw.cmd->indirectBuffer = outputParamsBuffer.GetBuffer();
                 draw.cmd->indirectOffset = outputParamsOffset;

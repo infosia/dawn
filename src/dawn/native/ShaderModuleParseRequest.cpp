@@ -35,6 +35,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ShaderModule.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -85,8 +86,8 @@ ShaderModuleParseRequest BuildShaderModuleParseRequest(
 
         ShaderModuleParseSpirvDescription spirv = {
             {// TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
-             .spirvCode = UnsafeUnserializedValue(
-                 std::vector<uint32_t>(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize)),
+             .spirvCode = UnsafeUnserializedValue(std::vector<uint32_t>(
+                 spirvDesc->code, DAWN_UNSAFE_TODO(spirvDesc->code + spirvDesc->codeSize))),
              .allowNonUniformDerivatives =
                  spirvOptions ? static_cast<bool>(spirvOptions->allowNonUniformDerivatives)
                               : false}};

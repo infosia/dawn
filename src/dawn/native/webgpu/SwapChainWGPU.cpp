@@ -39,6 +39,7 @@
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
 #include "dawn/native/webgpu/WebGPUError.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -140,7 +141,7 @@ ResultOrError<Ref<SwapChain>> SwapChain::Create(Device* device,
     innerConfig.viewFormatCount = config->viewFormatCount;
     std::vector<WGPUTextureFormat> viewFormats;
     for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
-        viewFormats.push_back(ToAPI(config->viewFormats[i]));
+        viewFormats.push_back(ToAPI(DAWN_UNSAFE_TODO(config->viewFormats[i])));
     }
     innerConfig.viewFormats = viewFormats.data();
     innerConfig.alphaMode = ToAPI(config->alphaMode);

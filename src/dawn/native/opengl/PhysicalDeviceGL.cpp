@@ -42,6 +42,7 @@
 #include "dawn/native/opengl/SwapChainEGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -63,7 +64,7 @@ uint32_t GetVendorIdFromVendors(const char* vendor) {
     uint32_t vendorId = 0;
     for (const auto& it : kVendors) {
         // Matching vendor name with vendor string
-        if (strstr(vendor, it.vendorName) != nullptr) {
+        if (DAWN_UNSAFE_TODO(strstr(vendor, it.vendorName)) != nullptr) {
             vendorId = it.vendorId;
             break;
         }
@@ -520,7 +521,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
     bool useANGLETextureSharing = false;
     for (size_t i = 0; i < descriptor->requiredFeatureCount; ++i) {
-        if (descriptor->requiredFeatures[i] == wgpu::FeatureName::ANGLETextureSharing) {
+        if (DAWN_UNSAFE_TODO(descriptor->requiredFeatures[i]) ==
+            wgpu::FeatureName::ANGLETextureSharing) {
             useANGLETextureSharing = true;
         }
     }

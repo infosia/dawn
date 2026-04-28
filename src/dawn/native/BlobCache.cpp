@@ -34,6 +34,7 @@
 #include "dawn/native/CacheKey.h"
 #include "dawn/native/Instance.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -48,9 +49,9 @@ Blob GenerateHashPrefixedPayload(size_t valueSize, const void* value) {
     const size_t byteSizeWithHash = valueSize + mHashByteSize;
     Blob result = CreateBlob(byteSizeWithHash);
     Hash* hashHeader = reinterpret_cast<Hash*>(result.Data());
-    uint8_t* payload = result.Data() + mHashByteSize;
+    uint8_t* payload = DAWN_UNSAFE_TODO(result.Data() + mHashByteSize);
     // Copy the payload into buffer and compute the hash as prefix.
-    memcpy(payload, value, valueSize);
+    DAWN_UNSAFE_TODO(memcpy(payload, value, valueSize));
     *hashHeader = Hasher::Hash(payload, valueSize);
 
     return result;
@@ -65,14 +66,14 @@ ResultOrError<Blob> CheckAndUnpackHashPrefixedPayload(uint8_t* buffer, size_t si
     // Compute and validate the payload's hash.
     size_t payloadByteSize = sizeWithHash - mHashByteSize;
     Hash* expectedHash = (reinterpret_cast<Hash*>(buffer));
-    uint8_t* payload = buffer + mHashByteSize;
+    uint8_t* payload = DAWN_UNSAFE_TODO(buffer + mHashByteSize);
     Hash payloadHash = Hasher::Hash(payload, payloadByteSize);
     auto printHash = [](const void* hash) {
         std::stringstream ss;
         const uint8_t* hashBytes = static_cast<const uint8_t*>(hash);
         for (size_t i = 0; i < mHashByteSize; i++) {
             ss << std::uppercase << std::hex << std::setw(2) << std::setfill('0')
-               << static_cast<int>(hashBytes[i]);
+               << static_cast<int>(DAWN_UNSAFE_TODO(hashBytes[i]));
         }
         return ss.str();
     };
@@ -112,7 +113,7 @@ void BlobCache::Store(const CacheKey& key, const Blob& value) {
 Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void* value) {
     if (!mHashValidation) {
         Blob blob = CreateBlob(valueSize);
-        memcpy(blob.Data(), value, valueSize);
+        DAWN_UNSAFE_TODO(memcpy(blob.Data(), value, valueSize));
         return blob;
     }
     return details::GenerateHashPrefixedPayload(valueSize, value);

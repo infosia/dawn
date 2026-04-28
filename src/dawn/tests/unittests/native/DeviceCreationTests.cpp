@@ -41,6 +41,7 @@
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -229,7 +230,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             bool foundFeatureName = false;
             for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
-                if (featureName == supportedFeatures.features[fi]) {
+                if (featureName == DAWN_UNSAFE_TODO(supportedFeatures.features[fi])) {
                     foundFeatureName = true;
                     break;
                 }
@@ -261,7 +262,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
                 bool foundFeatureName = false;
                 for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
-                    if (featureName == supportedFeatures.features[fi]) {
+                    if (featureName == DAWN_UNSAFE_TODO(supportedFeatures.features[fi])) {
                         foundFeatureName = true;
                         break;
                     }
@@ -284,7 +285,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
                 bool foundFeatureName = false;
                 for (uint32_t fi = 0; fi < supportedFeatures.featureCount; ++fi) {
-                    if (featureName == supportedFeatures.features[fi]) {
+                    if (featureName == DAWN_UNSAFE_TODO(supportedFeatures.features[fi])) {
                         foundFeatureName = true;
                         break;
                     }

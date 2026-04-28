@@ -42,6 +42,7 @@
 #include "dawn/native/opengl/UtilsGL.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -82,7 +83,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         [this, commandCount, commands](const OpenGLFunctions& gl) -> MaybeError {
             TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
             for (uint32_t i = 0; i < commandCount; ++i) {
-                DAWN_TRY(ToBackend(commands[i])->Execute(gl));
+                DAWN_UNSAFE_TODO(DAWN_TRY(ToBackend(commands[i])->Execute(gl)));
             }
             TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
             return {};

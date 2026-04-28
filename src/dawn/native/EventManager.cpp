@@ -43,6 +43,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Queue.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -393,7 +394,7 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
     mEvents.Use([&](auto events) {
         FutureID firstInvalidFutureID = mNextFutureID;
         for (size_t i = 0; i < count; ++i) {
-            FutureID futureID = infos[i].future.id;
+            FutureID futureID = DAWN_UNSAFE_TODO(infos[i]).future.id;
 
             // Check for cases that are undefined behavior in the API contract.
             DAWN_CHECK(futureID != 0);
@@ -403,10 +404,10 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
             // completed.
             auto it = events->find(futureID);
             if (it == events->end()) {
-                infos[i].completed = true;
+                DAWN_UNSAFE_TODO(infos[i]).completed = true;
                 anyCompleted = true;
             } else {
-                infos[i].completed = false;
+                DAWN_UNSAFE_TODO(infos[i]).completed = false;
                 TrackedEvent* event = it->second.Get();
                 futures.push_back(TrackedFutureWaitInfo{futureID, event, i, false});
             }
@@ -430,7 +431,7 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
     // Call callbacks and update return values.
     for (auto it = futures.begin(); it != readyEnd; ++it) {
         // Set completed before calling the callback.
-        infos[it->indexInInfos].completed = true;
+        DAWN_UNSAFE_TODO(infos[it->indexInInfos]).completed = true;
         it->event->EnsureComplete(EventCompletionType::Ready);
     }
 

@@ -45,6 +45,7 @@
 #include "dawn/native/Queue.h"
 #include "dawn/native/Sampler.h"
 #include "dawn/native/ShaderModule.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::utils {
 
@@ -71,7 +72,7 @@ ResultOrError<Ref<BufferBase>> CreateBufferFromData(DeviceBase* device,
     descriptor.mappedAtCreation = true;
     Ref<BufferBase> buffer;
     DAWN_TRY_ASSIGN(buffer, device->CreateBuffer(&descriptor));
-    memcpy(buffer->GetMappedRange(0, size), data, size);
+    DAWN_UNSAFE_TODO(memcpy(buffer->GetMappedRange(0, size), data, size));
     DAWN_TRY(buffer->Unmap());
     return buffer;
 }
@@ -235,7 +236,7 @@ std::string_view NormalizeMessageString(StringView in) {
     if (in.IsUndefined()) {
         return {};
     }
-    return std::string_view(in.data, strnlen(in.data, in.length));
+    return std::string_view(in.data, DAWN_UNSAFE_TODO(strnlen(in.data, in.length)));
 }
 
 }  // namespace dawn::native::utils

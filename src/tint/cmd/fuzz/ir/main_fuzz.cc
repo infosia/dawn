@@ -31,6 +31,7 @@
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/utils/compiler.h"
 
 #if TINT_BUILD_IR_BINARY
 
@@ -91,7 +92,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 
     tint::Vector<std::string_view, 8> arguments;
     for (int i = 1; i < *argc; i++) {
-        std::string_view arg((*argv)[i]);
+        std::string_view arg(DAWN_UNSAFE_TODO((*argv)[i]));
         if (!arg.empty()) {
             arguments.Push(arg);
         }
@@ -105,7 +106,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
         std::cerr << "Standard libfuzzer ";  // libfuzzer will print 'Usage:'
         static char help[] = "-help=1";
         *argc = 2;
-        (*argv)[1] = help;
+        DAWN_UNSAFE_TODO((*argv)[1]) = help;
     };
 
     auto& opt_help = opts.Add<tint::cli::BoolOption>("help", "shows the usage");

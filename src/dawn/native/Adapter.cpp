@@ -43,6 +43,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -184,7 +185,7 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
 
     auto AddString = [&](const std::string& in, StringView* out) {
         DAWN_CHECK(in.length() <= outBuffer.length());
-        memcpy(outBuffer.data(), in.data(), in.length());
+        DAWN_UNSAFE_TODO(memcpy(outBuffer.data(), in.data(), in.length()));
         *out = {outBuffer.data(), in.length()};
         outBuffer = outBuffer.subspan(in.length());
     };
@@ -298,7 +299,7 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
 
     std::unordered_set<wgpu::FeatureName> requiredFeatureSet;
     for (uint32_t i = 0; i < descriptor->requiredFeatureCount; ++i) {
-        requiredFeatureSet.insert(descriptor->requiredFeatures[i]);
+        requiredFeatureSet.insert(DAWN_UNSAFE_TODO(descriptor->requiredFeatures[i]));
     }
 
     // Validate all required features are supported by the adapter and suitable under device

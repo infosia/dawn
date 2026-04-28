@@ -52,6 +52,7 @@
 #include "dawn/native/vulkan/SharedFenceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::vulkan {
 
@@ -1331,7 +1332,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
             blocksPerRow * largestMipSize.height * largestMipSize.depthOrArrayLayers;
         uint64_t uploadSize = blockInfo.ToBytes(uploadBlocks);
 
-        DAWN_TRY(device->GetDynamicUploader()->WithUploadReservation(
+        DAWN_UNSAFE_TODO(DAWN_TRY(device->GetDynamicUploader()->WithUploadReservation(
             uploadSize, blockInfo.byteSize, [&](UploadReservation reservation) -> MaybeError {
                 memset(reservation.mappedPointer, uClearColor, uploadSize);
 
@@ -1371,7 +1372,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                                                 GetHandle(), VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
                                                 regions.size(), regions.data());
                 return {};
-            }));
+            })));
     }
 
     if (clearValue == TextureBase::ClearValue::Zero) {

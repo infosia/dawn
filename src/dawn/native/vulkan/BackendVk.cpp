@@ -42,6 +42,7 @@
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/compiler.h"
 
 // TODO(crbug.com/dawn/283): Link against the Vulkan Loader and remove this.
 #if defined(DAWN_ENABLE_SWIFTSHADER)
@@ -215,7 +216,7 @@ bool ShouldReportDebugMessage(const char* messageId, const char* message) {
     // The messageId is ignored because drivers may report
     // __FILE__: __LINE__ info here.
     // https://github.com/Mesa3D/mesa/blob/22.2/src/amd/vulkan/radv_device.c#L1201
-    if (strcmp(message, "VK_SUCCESS") == 0) {
+    if (DAWN_UNSAFE_TODO(strcmp(message, "VK_SUCCESS")) == 0) {
         return false;
     }
 
@@ -226,8 +227,8 @@ bool ShouldReportDebugMessage(const char* messageId, const char* message) {
     }
 
     for (const SkippedMessage& msg : kSkippedMessages) {
-        if (strstr(messageId, msg.messageId) != nullptr &&
-            strstr(message, msg.messageContents) != nullptr) {
+        if (DAWN_UNSAFE_TODO(strstr(messageId, msg.messageId)) != nullptr &&
+            DAWN_UNSAFE_TODO(strstr(message, msg.messageContents)) != nullptr) {
             return false;
         }
     }
@@ -272,7 +273,7 @@ OnDebugUtilsCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
     // a device debug prefix out of one of them. If a debug prefix is found and matches
     // a registered device, forward the message on to it.
     for (uint32_t i = 0; i < pCallbackData->objectCount; ++i) {
-        const VkDebugUtilsObjectNameInfoEXT& object = pCallbackData->pObjects[i];
+        const VkDebugUtilsObjectNameInfoEXT& object = DAWN_UNSAFE_TODO(pCallbackData->pObjects[i]);
         std::string deviceDebugPrefix = GetDeviceDebugPrefixFromDebugName(object.pObjectName);
         if (deviceDebugPrefix.empty()) {
             continue;

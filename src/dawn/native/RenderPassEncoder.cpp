@@ -46,6 +46,7 @@
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/ValidationUtils.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -341,29 +342,32 @@ void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* cons
                 bool depthReadOnlyInPass = IsDepthReadOnly();
                 bool stencilReadOnlyInPass = IsStencilReadOnly();
                 for (uint32_t i = 0; i < count; ++i) {
-                    DAWN_TRY(GetDevice()->ValidateObject(renderBundles[i]));
+                    DAWN_UNSAFE_TODO(DAWN_TRY(GetDevice()->ValidateObject(renderBundles[i])));
 
-                    DAWN_INVALID_IF(attachmentState != renderBundles[i]->GetAttachmentState(),
-                                    "Attachment state of renderBundles[%i] (%s) is not "
-                                    "compatible with %s.\n"
-                                    "%s expects an attachment state of %s.\n"
-                                    "renderBundles[%i] (%s) has an attachment state of %s.",
-                                    i, renderBundles[i], this, this, attachmentState, i,
-                                    renderBundles[i], renderBundles[i]->GetAttachmentState());
+                    DAWN_UNSAFE_TODO(
+                        DAWN_INVALID_IF(attachmentState != renderBundles[i]->GetAttachmentState(),
+                                        "Attachment state of renderBundles[%i] (%s) is not "
+                                        "compatible with %s.\n"
+                                        "%s expects an attachment state of %s.\n"
+                                        "renderBundles[%i] (%s) has an attachment state of %s.",
+                                        i, renderBundles[i], this, this, attachmentState, i,
+                                        renderBundles[i], renderBundles[i]->GetAttachmentState()));
 
-                    bool depthReadOnlyInBundle = renderBundles[i]->IsDepthReadOnly();
-                    DAWN_INVALID_IF(depthReadOnlyInPass && !depthReadOnlyInBundle,
-                                    "DepthReadOnly (%u) of renderBundle[%i] (%s) is not compatible "
-                                    "with DepthReadOnly (%u) of %s.",
-                                    depthReadOnlyInBundle, i, renderBundles[i], depthReadOnlyInPass,
-                                    this);
+                    bool depthReadOnlyInBundle =
+                        DAWN_UNSAFE_TODO(renderBundles[i])->IsDepthReadOnly();
+                    DAWN_UNSAFE_TODO(DAWN_INVALID_IF(
+                        depthReadOnlyInPass && !depthReadOnlyInBundle,
+                        "DepthReadOnly (%u) of renderBundle[%i] (%s) is not compatible "
+                        "with DepthReadOnly (%u) of %s.",
+                        depthReadOnlyInBundle, i, renderBundles[i], depthReadOnlyInPass, this));
 
-                    bool stencilReadOnlyInBundle = renderBundles[i]->IsStencilReadOnly();
-                    DAWN_INVALID_IF(stencilReadOnlyInPass && !stencilReadOnlyInBundle,
-                                    "StencilReadOnly (%u) of renderBundle[%i] (%s) is not "
-                                    "compatible with StencilReadOnly (%u) of %s.",
-                                    stencilReadOnlyInBundle, i, renderBundles[i],
-                                    stencilReadOnlyInPass, this);
+                    bool stencilReadOnlyInBundle =
+                        DAWN_UNSAFE_TODO(renderBundles[i])->IsStencilReadOnly();
+                    DAWN_UNSAFE_TODO(DAWN_INVALID_IF(
+                        stencilReadOnlyInPass && !stencilReadOnlyInBundle,
+                        "StencilReadOnly (%u) of renderBundle[%i] (%s) is not "
+                        "compatible with StencilReadOnly (%u) of %s.",
+                        stencilReadOnlyInBundle, i, renderBundles[i], stencilReadOnlyInPass, this));
                 }
             }
 
@@ -375,14 +379,14 @@ void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* cons
 
             Ref<RenderBundleBase>* bundles = allocator->AllocateData<Ref<RenderBundleBase>>(count);
             for (uint32_t i = 0; i < count; ++i) {
-                bundles[i] = renderBundles[i];
+                DAWN_UNSAFE_TODO(bundles[i]) = DAWN_UNSAFE_TODO(renderBundles[i]);
 
-                mUsageTracker.MergeResourceUsages(bundles[i]->GetResourceUsage());
+                mUsageTracker.MergeResourceUsages(DAWN_UNSAFE_TODO(bundles[i])->GetResourceUsage());
                 if (IsValidationEnabled()) {
-                    mIndirectDrawMetadata.AddBundle(renderBundles[i]);
+                    mIndirectDrawMetadata.AddBundle(DAWN_UNSAFE_TODO(renderBundles[i]));
                 }
 
-                mDrawCount += bundles[i]->GetDrawCount();
+                mDrawCount += DAWN_UNSAFE_TODO(bundles[i])->GetDrawCount();
             }
 
             return {};

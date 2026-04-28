@@ -40,6 +40,7 @@
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -80,7 +81,7 @@ MaybeError ValidateRenderBundleEncoderDescriptor(DeviceBase* device,
     bool allColorFormatsUndefined = true;
     ColorAttachmentFormats colorAttachmentFormats;
     for (uint32_t i = 0; i < descriptor->colorFormatCount; ++i) {
-        wgpu::TextureFormat format = descriptor->colorFormats[i];
+        wgpu::TextureFormat format = DAWN_UNSAFE_TODO(descriptor->colorFormats[i]);
         if (format != wgpu::TextureFormat::Undefined) {
             DAWN_TRY_CONTEXT(ValidateColorAttachmentFormat(device, format),
                              "validating colorFormats[%u]", i);

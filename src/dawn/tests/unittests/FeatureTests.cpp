@@ -33,6 +33,7 @@
 #include "dawn/native/null/DeviceNull.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -171,7 +172,8 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
                 ASSERT_EQ(requiredFeaturesSet.size() + (explicitlyRequireCore ? 0 : 1),
                           enabledFeatures.featureCount);
                 for (uint32_t i = 0; i < enabledFeatures.featureCount; ++i) {
-                    wgpu::FeatureName enabledFeature = enabledFeatures.features[i];
+                    wgpu::FeatureName enabledFeature =
+                        DAWN_UNSAFE_TODO(enabledFeatures.features[i]);
                     if (!explicitlyRequireCore &&
                         enabledFeature == wgpu::FeatureName::CoreFeaturesAndLimits) {
                         continue;

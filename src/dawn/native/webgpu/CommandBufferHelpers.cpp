@@ -37,6 +37,7 @@
 #include "dawn/native/webgpu/ComputePipelineWGPU.h"
 #include "dawn/native/webgpu/RenderBundleWGPU.h"
 #include "dawn/native/webgpu/RenderPipelineWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -52,7 +53,8 @@ void CaptureSharedCommand(CaptureContext& captureContext, CommandIterator& comma
                     .index = uint32_t(cmd.index),
                     .bindGroupId = captureContext.GetId(cmd.group),
                     .dynamicOffsets = std::vector<uint32_t>(
-                        dynamicOffsetsData, dynamicOffsetsData + cmd.dynamicOffsetCount),
+                        dynamicOffsetsData,
+                        DAWN_UNSAFE_TODO(dynamicOffsetsData + cmd.dynamicOffsetCount)),
                 }},
             }};
             Serialize(captureContext, data);
@@ -64,7 +66,7 @@ void CaptureSharedCommand(CaptureContext& captureContext, CommandIterator& comma
             schema::CommandBufferCommandSetImmediatesCmd data{{
                 .data = {{
                     .offset = cmd.offset,
-                    .data = std::vector<uint8_t>(values, values + cmd.size),
+                    .data = std::vector<uint8_t>(values, DAWN_UNSAFE_TODO(values + cmd.size)),
                 }},
             }};
             Serialize(captureContext, data);

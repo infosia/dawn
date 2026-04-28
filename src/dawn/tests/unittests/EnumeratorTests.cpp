@@ -35,6 +35,7 @@
 #include "dawn/common/ityp_span.h"
 #include "dawn/common/ityp_vector.h"
 #include "gtest/gtest.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -46,7 +47,7 @@ class EnumeratorTest : public testing::Test {
         size_t i = 0;
         for (auto [index, value] : Enumerate(thingToEnumerate)) {
             ASSERT_EQ(index, Index(i));
-            ASSERT_EQ(value, values[i]);
+            DAWN_UNSAFE_TODO(ASSERT_EQ(value, values[i]));
             i++;
         }
     }
