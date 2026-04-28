@@ -27,7 +27,10 @@
 
 #include "dawn/wire/WireServer.h"
 
+#include <limits>
+
 #include "dawn/wire/server/Server.h"
+#include "src/dawn/common/Compiler.h"
 
 namespace dawn::wire {
 
