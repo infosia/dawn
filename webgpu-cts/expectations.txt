@@ -393,6 +393,39 @@ crbug.com/492228014 [ android-pixel-6 android-t ] webgpu:api,validation,capabili
 # These failures prevent further tests from executing. These will likely be fixed by a driver update.
 crbug.com/495510120 [ android-pixel-10 ] webgpu:shader,execution,memory_layout:* [ Skip ]
 
+# These failures are the result of upgrading the Pixel 10 devices from OS image
+# BD3A.250721.001 to CP1A.260405.005. They should be investigated further, but
+# need to be blanked skipped in the beginning in order to unblock the upgrade.
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,command_buffer,* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,limits,max_combined_limits:max_storage_buffer_texture_frag_outputs:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,memory_sync,texture,readonly_depth_stencil:sampling_while_testing:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,memory_sync,texture,same_subresource:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,render_pass,clear_value:stencil_clear_value:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,render_pass,resolve:render_pass_resolve:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,render_pipeline,* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,rendering,3d_texture_slices:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,rendering,color_target_state:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,rendering,depth_bias:depth_bias_24bit_format:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,rendering,depth_bias:depth_bias:quadAngle* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,rendering,stencil:stencil_accumulation:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,sampling,anisotropy:anisotropic_filter_mipmap_color:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,storage_texture,read_write:basic:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,texture_view,format_reinterpretation:render_and_resolve_attachment:format="bgra8unorm-srgb";* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,texture_view,texture_component_swizzle:read_swizzle:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,texture_view,write:format:method="render-pass-resolve";* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,texture_view,write:format:method="render-pass-store";* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,texture_view,write:format:method="storage-write-fragment";* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm8x4-bgra";* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,vertex_state,index_format:index_format,change_pipeline_after_setIndexBuffer:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,vertex_state,index_format:index_format,setIndexBuffer_before_setPipeline:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:api,operation,vertex_state,index_format:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureDimensions:depth:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureDimensions:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureNumLevels:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureSample:* [ Skip ]
+
 ################################################################################
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
