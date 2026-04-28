@@ -88,6 +88,30 @@
       },
       "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90345920_32f14a94",
+        "filename": "src/dawn/common/Numeric.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T13:26:36Z",
+      "side": 1,
+      "message": "Both fair points.\n\nI think it is OK to rely on optimizations for casts that don\u0027t require checks. It should be pretty straightforward. I tested and Clang was able to optimize this.\n\nUnfortunately Clang was NOT able to combine the two checks (checked_cast + hardening check). But I think this is fine because it ONLY matters for 64-bit index types on 32-bit builds.\n\nResults here: https://godbolt.org/z/6b7hvcdch\n\nRevision incoming.",
+      "parentUuid": "684ccbc1_59624511",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "d5c8a6742190f503570a7bf53074fc9165c6d65c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
