@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23cdc9d6_2ef6433a",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-28T15:02:35Z",
+      "side": 0,
+      "message": "Are these tests not still useful when using the other subgroup min/max values?\nWe\u0027d have to skip the known-bad Intel Gen12 case, but otherwise they seem like they\u0027d be good to have.",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1a0d65c_4d263b7d",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-28T15:02:35Z",
+      "side": 0,
+      "message": "Again, aren\u0027t these still useful if we switch them to use the other subgroup min/max limits?",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

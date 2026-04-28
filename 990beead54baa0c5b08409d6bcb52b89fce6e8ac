@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ba928bc_c5409827",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-28T15:02:35Z",
+      "side": 1,
+      "message": "Is it worth also checking for the known-bad Intel Gen12 edge case here to produce a useful error to the developer? Otherwise will the D3D pipeline creation fail with a meaningful error message?",
+      "revId": "990beead54baa0c5b08409d6bcb52b89fce6e8ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
