@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c7c78bf_e7c978bd",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-28T14:44:37Z",
+      "side": 1,
+      "message": "You\u0027ll note that in my CL, I also modified the tests to only perform these death tests when `size_t` is 32-bit, because otherwise you\u0027re relying on hardening, which isn\u0027t guaranteed (MSVC or release builds).",
+      "fixSuggestions": [
+        {
+          "fixId": "7acc9a41_6b76a931",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+              "range": {
+                "startLine": 137,
+                "startChar": 0,
+                "endLine": 139,
+                "endChar": 0
+              },
+              "replacement": "    // Death tests for out-of-bounds and oversized indices are only performed\n    // when size_t is 32-bit. On 64-bit systems, out-of-bounds access may only\n    // trigger a crash with container hardening enabled, which is not guaranteed.\n    if (sizeof(size_t) \u003d\u003d 4) {\n        // Regular out-of-bounds.\n        EXPECT_DEATH(vec[Key64(10)], \"\");\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+              "range": {
+                "startLine": 140,
+                "startChar": 0,
+                "endLine": 143,
+                "endChar": 0
+              },
+              "replacement": "        vec[Key64(0)];\n        // If this were cast to a 32-bit size_t without a check, it would be in-bounds.\n        EXPECT_DEATH(vec[kHugeKey64], \"\");\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
