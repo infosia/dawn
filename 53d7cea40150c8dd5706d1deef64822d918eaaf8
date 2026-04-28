@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77668209_908deb78",
+        "filename": "src/dawn/native/IntegerTypes.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T11:20:18Z",
+      "side": 1,
+      "message": "Done, had to add `dawn_platform.h` to this file\u0027s includes.",
+      "parentUuid": "9315cae0_978568c0",
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "274017b8_6e71c2ec",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93a132e4_00b74352",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T11:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274017b8_6e71c2ec",
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cba1ef8_878b3dc2",
@@ -48,6 +84,30 @@
       "writtenOn": "2026-04-27T13:35:51Z",
       "side": 1,
       "message": "nit: `end` or something that indicates this is after the last entry",
+      "range": {
+        "startLine": 502,
+        "startChar": 15,
+        "endLine": 502,
+        "endChar": 19
+      },
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "227e2cfe_3794cdde",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T11:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cba1ef8_878b3dc2",
       "range": {
         "startLine": 502,
         "startChar": 15,
@@ -95,6 +155,30 @@
       "side": 1,
       "message": "+1. I misread what these loops were doing initially and had started a long comment about it in `CommandBufferD3D12` before realizing it was a mistake on my part.",
       "parentUuid": "c8e0381b_3b4cea9f",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 515,
+        "endChar": 61
+      },
+      "revId": "53d7cea40150c8dd5706d1deef64822d918eaaf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e584551e_73bb9fa4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T11:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a2256e_c49a9e09",
       "range": {
         "startLine": 505,
         "startChar": 0,
