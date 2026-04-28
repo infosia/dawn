@@ -24,6 +24,29 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0f02310_25c9d9ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-04-28T09:54:09Z",
+      "side": 1,
+      "message": "Can you add a bug ID?\n\nI added:\n```\nBug: chromium:507077205\nDoc: \n```",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4839dc16_3417bcca",
@@ -54,6 +77,65 @@
       "writtenOn": "2026-04-28T09:46:01Z",
       "side": 1,
       "message": "Does this mean that we need a review for all additions? Dawn is likely to have a bunch because we manipulates a lot information coming from system APIs and we\u0027ll need to wrap them in spans or equivalents for the rest of Dawn to consume. Having a review for each will be cumbersome (also `USE OF THIS MACRO SHOULD BE VERY RARE` is a bit of a lie for Dawn, it should be very rare except at API boundaries)",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f37e25e9_7370439a",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-04-28T09:54:09Z",
+      "side": 1,
+      "message": "I guess this was an inspirational take. We don\u0027t even do this in Chrome ;-)\nHaving UNSAFE_BUFFERS at boundary is expected.\n\nIn the comment below, I am proposing removing this comment.",
+      "parentUuid": "8254168d_c5cf2a32",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05276bef_75030be4",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-04-28T09:54:09Z",
+      "side": 1,
+      "message": "I think we can drop this part. Even in Chrome, we don\u0027t really request a security review for every `UNSAFE_BUFFERS(...)` locations. This was more inspirational at that time.",
+      "range": {
+        "startLine": 223,
+        "startChar": 30,
+        "endLine": 225,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7f746628_22623343",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/Compiler.h",
+              "range": {
+                "startLine": 223,
+                "startChar": 0,
+                "endLine": 226,
+                "endChar": 0
+              },
+              "replacement": "// must be manually verifiable using only local invariants. Valid invariants include:\n"
+            }
+          ]
+        }
+      ],
       "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +191,29 @@
         "id": 3470507
       },
       "writtenOn": "2026-04-28T09:35:28Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aba6186c_f8fe0515",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003626
+      },
+      "writtenOn": "2026-04-28T09:54:09Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
       "range": {
