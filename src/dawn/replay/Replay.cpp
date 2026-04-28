@@ -47,6 +47,7 @@
 #include "dawn/replay/Capture.h"
 #include "dawn/replay/Deserialization.h"
 #include "src/dawn/replay/ReplayImpl.h"
+#include "src/dawn/replay/SurfaceDiscovery.h"
 
 namespace dawn::replay {
 
@@ -131,56 +132,6 @@ class DawnResourceVisitor : public ResourceVisitor {
     DawnRootCommandVisitor* mVisitor;
 };
 
-namespace {
-
-class SurfaceDiscoveryVisitor : public RootCommandVisitor {
-  public:
-    using RootCommandVisitor::operator();
-    MaybeError operator()(const schema::RootCommandSurfaceConfigureCmdData& data) override {
-        mSurfaceIds.insert(data.surfaceId);
-        return {};
-    }
-    MaybeError operator()(const schema::RootCommandSurfaceUnconfigureCmdData& data) override {
-        mSurfaceIds.insert(data.surfaceId);
-        return {};
-    }
-    MaybeError operator()(const schema::RootCommandSurfacePresentCmdData& data) override {
-        mSurfaceIds.insert(data.surfaceId);
-        return {};
-    }
-    MaybeError operator()(const schema::RootCommandSurfaceGetCurrentTextureCmdData& data) override {
-        mSurfaceIds.insert(data.surfaceId);
-        return {};
-    }
-
-    MaybeError operator()(const CreateResourceData& data) override { return {}; }
-    MaybeError operator()(const schema::RootCommandWriteBufferCmdData& data) override { return {}; }
-    MaybeError operator()(const schema::RootCommandWriteTextureCmdData& data) override {
-        return {};
-    }
-    MaybeError operator()(const schema::RootCommandQueueSubmitCmdData& data) override { return {}; }
-    MaybeError operator()(const schema::RootCommandSetLabelCmdData& data) override { return {}; }
-    MaybeError operator()(const schema::RootCommandInitTextureCmdData& data) override { return {}; }
-    MaybeError operator()(const schema::RootCommandEndCmdData& data) override { return {}; }
-
-    ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
-    void SetContentReadHead(ReadHead* readHead) override {}
-
-    const std::set<schema::ObjectId>& GetSurfaceIds() const { return mSurfaceIds; }
-
-  private:
-    struct NoopResourceVisitor : ResourceVisitor {
-#define DAWN_REPLAY_RESOURCE_VISITOR_OVERRIDE(ENUM, TYPE) \
-    MaybeError operator()(const TYPE& data) override { return {}; }
-        DAWN_REPLAY_RESOURCE_DATA_MAP(DAWN_REPLAY_RESOURCE_VISITOR_OVERRIDE)
-#undef DAWN_REPLAY_RESOURCE_VISITOR_OVERRIDE
-    };
-    NoopResourceVisitor mResourceVisitor;
-    std::set<schema::ObjectId> mSurfaceIds;
-};
-
-}  // anonymous namespace
-
 class DawnRootCommandVisitor : public RootCommandVisitor {
   public:
     using RootCommandVisitor::operator();
@@ -189,7 +140,7 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     ~DawnRootCommandVisitor() override = default;
 
     void SetSurfaces(const std::vector<wgpu::Surface>& surfaces,
-                     const std::set<schema::ObjectId>& capturedSurfaceIds) {
+                     const std::vector<schema::ObjectId>& capturedSurfaceIds) {
         DAWN_ASSERT(surfaces.size() >= capturedSurfaceIds.size());
         auto it = surfaces.begin();
         for (auto id : capturedSurfaceIds) {
@@ -1566,6 +1517,10 @@ void ReplayImpl::SetSurfaces(std::vector<wgpu::Surface> surfaces) {
     SurfaceDiscoveryVisitor discovery;
     mCapture->Walk(discovery);
     mVisitor->SetSurfaces(surfaces, discovery.GetSurfaceIds());
+}
+
+Capture* ReplayImpl::GetCapture() const {
+    return mCapture.get();
 }
 
 MaybeError ReplayImpl::Play() {
