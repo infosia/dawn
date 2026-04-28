@@ -42,61 +42,43 @@ namespace tint::core::type {
 const core::type::Type* ResourceTypeToType(core::type::Manager& ty, ResourceType type) {
     switch (type) {
         case ResourceType::kTexture1d_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::k1d, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTexture1d_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::k1d, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::k1d, ty.f32());
         case ResourceType::kTexture1d_i32:
             return ty.sampled_texture(core::type::TextureDimension::k1d, ty.i32());
         case ResourceType::kTexture1d_u32:
             return ty.sampled_texture(core::type::TextureDimension::k1d, ty.u32());
         case ResourceType::kTexture2d_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTexture2d_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
         case ResourceType::kTexture2d_i32:
             return ty.sampled_texture(core::type::TextureDimension::k2d, ty.i32());
         case ResourceType::kTexture2d_u32:
             return ty.sampled_texture(core::type::TextureDimension::k2d, ty.u32());
         case ResourceType::kTexture2dArray_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTexture2dArray_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.f32());
         case ResourceType::kTexture2dArray_i32:
             return ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.i32());
         case ResourceType::kTexture2dArray_u32:
             return ty.sampled_texture(core::type::TextureDimension::k2dArray, ty.u32());
         case ResourceType::kTexture3d_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::k3d, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTexture3d_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::k3d, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::k3d, ty.f32());
         case ResourceType::kTexture3d_i32:
             return ty.sampled_texture(core::type::TextureDimension::k3d, ty.i32());
         case ResourceType::kTexture3d_u32:
             return ty.sampled_texture(core::type::TextureDimension::k3d, ty.u32());
         case ResourceType::kTextureCube_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::kCube, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTextureCube_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::kCube, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::kCube, ty.f32());
         case ResourceType::kTextureCube_i32:
             return ty.sampled_texture(core::type::TextureDimension::kCube, ty.i32());
         case ResourceType::kTextureCube_u32:
             return ty.sampled_texture(core::type::TextureDimension::kCube, ty.u32());
         case ResourceType::kTextureCubeArray_f32_filterable:
-            return ty.sampled_texture(core::type::TextureDimension::kCubeArray, ty.f32(),
-                                      core::TextureFilterable::kFilterable);
         case ResourceType::kTextureCubeArray_f32_unfilterable:
-            return ty.sampled_texture(core::type::TextureDimension::kCubeArray, ty.f32(),
-                                      core::TextureFilterable::kUnfilterable);
+            return ty.sampled_texture(core::type::TextureDimension::kCubeArray, ty.f32());
         case ResourceType::kTextureCubeArray_i32:
             return ty.sampled_texture(core::type::TextureDimension::kCubeArray, ty.i32());
         case ResourceType::kTextureCubeArray_u32:
@@ -121,9 +103,8 @@ const core::type::Type* ResourceTypeToType(core::type::Manager& ty, ResourceType
             return ty.depth_multisampled_texture(core::type::TextureDimension::k2d);
 
         case ResourceType::kSampler_filtering:
-            return ty.sampler(core::SamplerFiltering::kFiltering);
         case ResourceType::kSampler_non_filtering:
-            return ty.sampler(core::SamplerFiltering::kNonFiltering);
+            return ty.sampler();
         case ResourceType::kSampler_comparison:
             return ty.comparison_sampler();
         default:
@@ -140,14 +121,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTexture1d_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTexture1d_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTexture1d_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTexture1d_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTexture1d_u32; },
@@ -156,14 +130,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTexture2d_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTexture2d_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTexture2d_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTexture2d_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTexture2d_u32; },
@@ -172,14 +139,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTexture2dArray_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTexture2dArray_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTexture2dArray_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTexture2dArray_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTexture2dArray_u32; },
@@ -188,14 +148,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTexture3d_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTexture3d_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTexture3d_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTexture3d_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTexture3d_u32; },
@@ -204,14 +157,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTextureCube_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTextureCube_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTextureCube_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTextureCube_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTextureCube_u32; },
@@ -220,14 +166,7 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                     return tint::Switch(
                         sa->Type(),
                         [&](const core::type::F32*) {
-                            switch (sa->Filterable()) {
-                                case core::TextureFilterable::kFilterable:
-                                    return ResourceType::kTextureCubeArray_f32_filterable;
-                                case core::TextureFilterable::kUnfilterable:
-                                    return ResourceType::kTextureCubeArray_f32_unfilterable;
-                                case core::TextureFilterable::kUndefined:
-                                    TINT_UNREACHABLE();
-                            }
+                            return ResourceType::kTextureCubeArray_f32_unknown_filterable;
                         },
                         [&](const core::type::I32*) { return ResourceType::kTextureCubeArray_i32; },
                         [&](const core::type::U32*) { return ResourceType::kTextureCubeArray_u32; },
@@ -266,50 +205,15 @@ ResourceType TypeToResourceType(const core::type::Type* in_type) {
                 return ResourceType::kSampler_comparison;
             }
 
-            TINT_ASSERT(s->Filtering() != core::SamplerFiltering::kUndefined);
-            if (s->Filtering() == core::SamplerFiltering::kFiltering) {
-                return ResourceType::kSampler_filtering;
-            }
-            return ResourceType::kSampler_non_filtering;
+            return ResourceType::kSampler;
         },
         TINT_ICE_ON_NO_MATCH);
 }
 
 std::vector<ResourceType> ConvertsFrom(const core::type::Type* in_type) {
     return tint::Switch(
-        in_type,
-        [&](const core::type::SampledTexture* sa) -> std::vector<ResourceType> {
-            if (sa->Filterable() != core::TextureFilterable::kUnfilterable) {
-                return {};
-            }
-            TINT_ASSERT((sa->Type()->Is<core::type::F32>()));
-
-            switch (sa->Dim()) {
-                case core::type::TextureDimension::k1d:
-                    return {ResourceType::kTexture1d_f32_filterable};
-                case core::type::TextureDimension::k2d:
-                    return {ResourceType::kTexture2d_f32_filterable, ResourceType::kTextureDepth2d};
-                case core::type::TextureDimension::k2dArray:
-                    return {ResourceType::kTexture2dArray_f32_filterable,
-                            ResourceType::kTextureDepth2dArray};
-                case core::type::TextureDimension::k3d:
-                    return {ResourceType::kTexture3d_f32_filterable};
-                case core::type::TextureDimension::kCube:
-                    return {ResourceType::kTextureCube_f32_filterable,
-                            ResourceType::kTextureDepthCube};
-                case core::type::TextureDimension::kCubeArray:
-                    return {ResourceType::kTextureCubeArray_f32_unfilterable,
-                            ResourceType::kTextureDepthCubeArray};
-                case core::type::TextureDimension::kNone:
-                    TINT_UNREACHABLE();
-            }
-        },
-        [&](const core::type::Sampler* s) -> std::vector<ResourceType> {
-            if (s->Filtering() == core::SamplerFiltering::kNonFiltering) {
-                return {ResourceType::kSampler_filtering};
-            }
-            return {};
-        },
+        in_type, [&](const core::type::SampledTexture*) -> std::vector<ResourceType> { return {}; },
+        [&](const core::type::Sampler*) -> std::vector<ResourceType> { return {}; },
         [](Default) -> std::vector<ResourceType> { return {}; });
 }
 

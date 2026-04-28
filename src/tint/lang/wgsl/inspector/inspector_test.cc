@@ -2007,18 +2007,14 @@ fn ep_func() {
 
 TEST_F(InspectorGetResourceBindingsTest, TextureFilterable) {
     auto* src = R"(
-@group(0) @binding(0) var tex1 : texture_2d<f32, filterable>;
 @group(0) @binding(1) var tex2 : texture_2d<f32>;
-@group(0) @binding(2) var tex3 : texture_2d<f32, unfilterable>;
 @group(0) @binding(3) var tex4 : texture_depth_2d;
 @group(0) @binding(4) var tex5 : texture_multisampled_2d<f32>;
 @group(0) @binding(5) var tex6 : texture_2d<i32>;
 
 @fragment
 fn ep_func() {
-    _ = tex1;
     _ = tex2;
-    _ = tex3;
     _ = tex4;
     _ = tex5;
     _ = tex6;
@@ -2028,50 +2024,36 @@ fn ep_func() {
 
     auto result = inspector.GetResourceBindings("ep_func");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
-    ASSERT_EQ(6u, result.size());
+    ASSERT_EQ(4u, result.size());
 
     EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[0].resource_type);
     EXPECT_EQ(0u, result[0].bind_group);
-    EXPECT_EQ(0u, result[0].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kFilterable, result[0].sampled_kind);
+    EXPECT_EQ(1u, result[0].binding);
+    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kUnknownFilterable, result[0].sampled_kind);
 
-    EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[1].resource_type);
+    EXPECT_EQ(ResourceBinding::ResourceType::kDepthTexture, result[1].resource_type);
     EXPECT_EQ(0u, result[1].bind_group);
-    EXPECT_EQ(1u, result[1].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kUnknownFilterable, result[1].sampled_kind);
+    EXPECT_EQ(3u, result[1].binding);
 
-    EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[2].resource_type);
+    EXPECT_EQ(ResourceBinding::ResourceType::kMultisampledTexture, result[2].resource_type);
     EXPECT_EQ(0u, result[2].bind_group);
-    EXPECT_EQ(2u, result[2].binding);
+    EXPECT_EQ(4u, result[2].binding);
     EXPECT_EQ(inspector::ResourceBinding::SampledKind::kUnfilterable, result[2].sampled_kind);
 
-    EXPECT_EQ(ResourceBinding::ResourceType::kDepthTexture, result[3].resource_type);
+    EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[3].resource_type);
     EXPECT_EQ(0u, result[3].bind_group);
-    EXPECT_EQ(3u, result[3].binding);
-
-    EXPECT_EQ(ResourceBinding::ResourceType::kMultisampledTexture, result[4].resource_type);
-    EXPECT_EQ(0u, result[4].bind_group);
-    EXPECT_EQ(4u, result[4].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kUnfilterable, result[4].sampled_kind);
-
-    EXPECT_EQ(ResourceBinding::ResourceType::kSampledTexture, result[5].resource_type);
-    EXPECT_EQ(0u, result[5].bind_group);
-    EXPECT_EQ(5u, result[5].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kSInt, result[5].sampled_kind);
+    EXPECT_EQ(5u, result[3].binding);
+    EXPECT_EQ(inspector::ResourceBinding::SampledKind::kSInt, result[3].sampled_kind);
 }
 
 TEST_F(InspectorGetResourceBindingsTest, SamplerFiltering) {
     auto* src = R"(
-@group(0) @binding(0) var samp1 : sampler<filtering>;
-@group(0) @binding(1) var samp2 : sampler;
-@group(0) @binding(2) var samp3 : sampler<non_filtering>;
+@group(0) @binding(0) var samp1 : sampler;
 @group(0) @binding(3) var samp4 : sampler_comparison;
 
 @fragment
 fn ep_func() {
     _ = samp1;
-    _ = samp2;
-    _ = samp3;
     _ = samp4;
 }
 )";
@@ -2079,27 +2061,17 @@ fn ep_func() {
 
     auto result = inspector.GetResourceBindings("ep_func");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
-    ASSERT_EQ(4u, result.size());
+    ASSERT_EQ(2u, result.size());
 
     EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[0].resource_type);
     EXPECT_EQ(0u, result[0].bind_group);
     EXPECT_EQ(0u, result[0].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kFiltering, result[0].sampler_type);
+    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kUnknownFiltering, result[0].sampler_type);
 
     EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[1].resource_type);
     EXPECT_EQ(0u, result[1].bind_group);
-    EXPECT_EQ(1u, result[1].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kUnknownFiltering, result[1].sampler_type);
-
-    EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[2].resource_type);
-    EXPECT_EQ(0u, result[2].bind_group);
-    EXPECT_EQ(2u, result[2].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kNonFiltering, result[2].sampler_type);
-
-    EXPECT_EQ(ResourceBinding::ResourceType::kSampler, result[3].resource_type);
-    EXPECT_EQ(0u, result[3].bind_group);
-    EXPECT_EQ(3u, result[3].binding);
-    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kComparison, result[3].sampler_type);
+    EXPECT_EQ(3u, result[1].binding);
+    EXPECT_EQ(inspector::ResourceBinding::SamplerType::kComparison, result[1].sampler_type);
 }
 
 TEST_F(InspectorGetResourceBindingsTest, InputAttachment) {
@@ -3317,7 +3289,7 @@ TEST_F(InspectorGetResourceTableInfoTest, ResourceTable) {
 enable chromium_experimental_resource_table;
 
 @fragment fn ep() {
-  _ = hasResource<texture_2d<f32, filterable>>(0);
+  _ = hasResource<texture_2d<f32>>(0);
   _ = getResource<texture_3d<i32>>(1);
 }
 )";
@@ -3331,7 +3303,7 @@ enable chromium_experimental_resource_table;
 
     std::vector<ResourceType> types(result.begin(), result.end());
     std::sort(types.begin(), types.end());
-    EXPECT_EQ(ResourceType::kTexture2d_f32_filterable, types[0]);
+    EXPECT_EQ(ResourceType::kTexture2d_f32_unknown_filterable, types[0]);
     EXPECT_EQ(ResourceType::kTexture3d_i32, types[1]);
 }
 
@@ -3340,12 +3312,11 @@ TEST_F(InspectorGetResourceTableInfoTest, ResourceTable_Multiple) {
 enable chromium_experimental_resource_table;
 
 @fragment fn ep() {
-  _ = textureDimensions(getResource<texture_cube<f32, unfilterable>>(3));
-  _ = textureDimensions(getResource<texture_cube<f32, filterable>>(3));
-  _ = textureDimensions(getResource<texture_1d<f32, filterable>>(3));
+  _ = textureDimensions(getResource<texture_cube<f32>>(3));
+  _ = textureDimensions(getResource<texture_1d<f32>>(3));
 
-  _ = hasResource<texture_2d<f32, filterable>>(0);
-  _ = getResource<texture_3d<f32, filterable>>(1);
+  _ = hasResource<texture_2d<f32>>(0);
+  _ = getResource<texture_3d<f32>>(1);
 }
 )";
 
@@ -3354,16 +3325,15 @@ enable chromium_experimental_resource_table;
     auto result = inspector.GetResourceTableInfo("ep");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(5u, result.size());
+    ASSERT_EQ(4u, result.size());
 
     std::vector<ResourceType> types(result.begin(), result.end());
     std::sort(types.begin(), types.end());
 
-    EXPECT_EQ(ResourceType::kTexture1d_f32_filterable, types[0]);
-    EXPECT_EQ(ResourceType::kTexture2d_f32_filterable, types[1]);
-    EXPECT_EQ(ResourceType::kTexture3d_f32_filterable, types[2]);
-    EXPECT_EQ(ResourceType::kTextureCube_f32_filterable, types[3]);
-    EXPECT_EQ(ResourceType::kTextureCube_f32_unfilterable, types[4]);
+    EXPECT_EQ(ResourceType::kTexture1d_f32_unknown_filterable, types[0]);
+    EXPECT_EQ(ResourceType::kTexture2d_f32_unknown_filterable, types[1]);
+    EXPECT_EQ(ResourceType::kTexture3d_f32_unknown_filterable, types[2]);
+    EXPECT_EQ(ResourceType::kTextureCube_f32_unknown_filterable, types[3]);
 }
 
 TEST_F(InspectorGetResourceTableInfoTest, ResourceTable_Nested) {
@@ -3371,13 +3341,11 @@ TEST_F(InspectorGetResourceTableInfoTest, ResourceTable_Nested) {
 enable chromium_experimental_resource_table;
 
 fn nested() {
-  _ = textureDimensions(getResource<texture_cube<f32, filterable>>(3));
-  _ = textureDimensions(getResource<texture_1d<f32, unfilterable>>(3));
+  _ = textureDimensions(getResource<texture_cube<f32>>(3));
+  _ = textureDimensions(getResource<texture_1d<f32>>(3));
 
-  _ = hasResource<texture_2d<f32, filterable>>(0);
-  _ = getResource<texture_3d<f32, filterable>>(1);
-  _ = hasResource<texture_2d<f32, unfilterable>>(0);
-  _ = getResource<texture_3d<f32, unfilterable>>(1);
+  _ = hasResource<texture_2d<f32>>(0);
+  _ = getResource<texture_3d<f32>>(1);
 }
 
 @fragment fn ep() {
@@ -3390,17 +3358,15 @@ fn nested() {
     auto result = inspector.GetResourceTableInfo("ep");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(6u, result.size());
+    ASSERT_EQ(4u, result.size());
 
     std::vector<ResourceType> types(result.begin(), result.end());
     std::sort(types.begin(), types.end());
 
-    EXPECT_EQ(ResourceType::kTexture1d_f32_unfilterable, types[0]);
-    EXPECT_EQ(ResourceType::kTexture2d_f32_filterable, types[1]);
-    EXPECT_EQ(ResourceType::kTexture2d_f32_unfilterable, types[2]);
-    EXPECT_EQ(ResourceType::kTexture3d_f32_filterable, types[3]);
-    EXPECT_EQ(ResourceType::kTexture3d_f32_unfilterable, types[4]);
-    EXPECT_EQ(ResourceType::kTextureCube_f32_filterable, types[5]);
+    EXPECT_EQ(ResourceType::kTexture1d_f32_unknown_filterable, types[0]);
+    EXPECT_EQ(ResourceType::kTexture2d_f32_unknown_filterable, types[1]);
+    EXPECT_EQ(ResourceType::kTexture3d_f32_unknown_filterable, types[2]);
+    EXPECT_EQ(ResourceType::kTextureCube_f32_unknown_filterable, types[3]);
 }
 
 TEST_F(InspectorGetResourceTableInfoTest, ResourceTable_Samplers) {
@@ -3408,7 +3374,7 @@ TEST_F(InspectorGetResourceTableInfoTest, ResourceTable_Samplers) {
 enable chromium_experimental_resource_table;
 
 @fragment fn ep() {
-  _ = hasResource<sampler<filtering>>(0);
+  _ = hasResource<sampler>(0);
   _ = getResource<sampler_comparison>(1);
 }
 )";
@@ -3422,7 +3388,7 @@ enable chromium_experimental_resource_table;
 
     std::vector<ResourceType> types(result.begin(), result.end());
     std::sort(types.begin(), types.end());
-    EXPECT_EQ(ResourceType::kSampler_filtering, types[0]);
+    EXPECT_EQ(ResourceType::kSampler, types[0]);
     EXPECT_EQ(ResourceType::kSampler_comparison, types[1]);
 }
 

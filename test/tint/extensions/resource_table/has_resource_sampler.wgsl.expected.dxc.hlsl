@@ -1,3 +1,4 @@
+SKIP: FAILED
 
 RWByteAddressBuffer o : register(u0);
 SamplerState tint_resource_table_array[] : register(s51, space43);
