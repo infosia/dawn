@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fae6c753_fcc27a44",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-28T00:23:17Z",
+      "side": 1,
+      "message": "TBF, I don\u0027t think we can actually issue an error. We can overflow the intermediate result (which is what the bug does), but size must fit in 32-bits.",
+      "revId": "653499f29022f4e2e7aed9d41b2a8003fa2f56b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

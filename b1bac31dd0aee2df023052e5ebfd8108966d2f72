@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7acb31_cc3154ee",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-28T00:23:17Z",
+      "side": 0,
+      "message": "HasFixedFootprint has been fixed since this was added, so I just simplified the code.",
+      "revId": "b1bac31dd0aee2df023052e5ebfd8108966d2f72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
