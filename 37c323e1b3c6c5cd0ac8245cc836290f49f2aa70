@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f75dd7a_764550e2",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-28T16:59:24Z",
+      "side": 1,
+      "message": "Is this condition correct? We want to skip if `sizeof(size_t) \u003d\u003d sizeof(uint64_t)`, right?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "37c323e1b3c6c5cd0ac8245cc836290f49f2aa70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
