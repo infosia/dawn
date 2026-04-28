@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fb9f9b1_2be71942",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-28T15:04:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a0ad94_57452f48",
+      "revId": "653499f29022f4e2e7aed9d41b2a8003fa2f56b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4eaebd5_3acb1a08",
@@ -67,6 +85,24 @@
       "writtenOn": "2026-04-28T13:39:03Z",
       "side": 1,
       "message": "Do any of these other ones need to be checked as well?",
+      "revId": "653499f29022f4e2e7aed9d41b2a8003fa2f56b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab21db46_9b6c245a",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-28T15:04:44Z",
+      "side": 1,
+      "message": "I made the other version calculate in 64-bit and cast back down.",
+      "parentUuid": "c4eaebd5_3acb1a08",
       "revId": "653499f29022f4e2e7aed9d41b2a8003fa2f56b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
