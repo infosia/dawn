@@ -50,12 +50,21 @@ namespace tint::mock {
 /// A mock non-core type used for testing the non-core type validation rule.
 class NonCoreType final : public Castable<NonCoreType, core::type::Type> {
   public:
-    NonCoreType() : Base(0u, core::type::Flags{}) {}
-    bool Equals(const UniqueNode& other) const override { return other.Is<NonCoreType>(); }
-    std::string FriendlyName() const override { return "NonCoreType"; }
-    core::type::Type* Clone(core::type::CloneContext& ctx) const override {
-        return ctx.dst.mgr->Get<NonCoreType>();
+    explicit NonCoreType(uint32_t align = 0u) : Base(0u, core::type::Flags{}), align_(align) {}
+    bool Equals(const UniqueNode& other) const override {
+        if (auto* other_nc = other.As<NonCoreType>()) {
+            return other_nc->align_ == align_;
+        }
+        return false;
     }
+    std::string FriendlyName() const override { return "NonCoreType"; }
+    uint32_t Align() const override { return align_ == 0u ? Base::Align() : align_; }
+    core::type::Type* Clone(core::type::CloneContext& ctx) const override {
+        return ctx.dst.mgr->Get<NonCoreType>(align_);
+    }
+
+  private:
+    uint32_t align_;
 };
 }  // namespace tint::mock
 
@@ -289,13 +298,33 @@ TEST_F(IR_ValidatorTest, StructMember_AlignZero) {
 )")) << res.Failure();
 }
 
-TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
+TEST_F(IR_ValidatorTest, StructMember_AlignNotPowerOfTwo) {
     core::IOAttributes attrs = {};
     tint::Vector<const core::type::StructMember*, 4> members;
     members.Push(ty.Get<core::type::StructMember>(mod.symbols.New("v"), ty.u32(), 0u, 0u,
-                                                  /* align */ 10u, 16u, std::move(attrs)));
+                                                  /* align */ 3u, 16u, std::move(attrs)));
     auto* str_ty = ty.Get<core::type::Struct>(mod.symbols.New("MyStruct"), std::move(members),
-                                              tint::RoundUp(0u, 16u));
+                                              tint::RoundUp(3u, 16u));
+
+    auto* v = b.Var(ty.ptr(private_, str_ty));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(R"(:6:3 error: var: struct member alignment must be a power of 2
+  %1:ptr<private, MyStruct, read_write> = var undef
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
+    core::IOAttributes attrs = {};
+    tint::Vector<const core::type::StructMember*, 4> members;
+    members.Push(ty.Get<core::type::StructMember>(mod.symbols.New("v"), ty.vec3<f32>(), 0u, 0u,
+                                                  /* align */ 8u, 16u, std::move(attrs)));
+    auto* str_ty = ty.Get<core::type::Struct>(mod.symbols.New("MyStruct"), std::move(members),
+                                              tint::RoundUp(8u, 16u));
 
     auto* v = b.Var(ty.ptr(private_, str_ty));
     mod.root_block->Append(v);
@@ -305,7 +334,7 @@ TEST_F(IR_ValidatorTest, StructMember_AlignNotDivisibleByTypeAlignment) {
     EXPECT_THAT(
         res.Failure().reason,
         testing::HasSubstr(
-            R"(:6:3 error: var: struct member alignment (10) must be divisible by type alignment (4)
+            R"(:6:3 error: var: struct member alignment (8) must be divisible by type alignment (16)
   %1:ptr<private, MyStruct, read_write> = var undef
   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 )")) << res.Failure();
@@ -333,13 +362,36 @@ TEST_F(IR_ValidatorTest, StructMember_TypeAlignZero) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, StructMember_TypeAlignNotPowerOfTwo) {
+    core::IOAttributes attrs = {};
+    tint::Vector<const core::type::StructMember*, 4> members;
+    members.Push(ty.Get<core::type::StructMember>(
+        mod.symbols.New("v"), ty.Get<tint::mock::NonCoreType>(/* align */ 5u), 0u, 0u,
+        /* align */ 8u, 8u, std::move(attrs)));
+    auto* str_ty = ty.Get<core::type::Struct>(mod.symbols.New("MyStruct"), std::move(members),
+                                              tint::RoundUp(0u, 16u));
+
+    auto* v = b.Var(ty.ptr(private_, str_ty));
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowNonCoreTypes});
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(R"(:6:3 error: var: struct member type alignment must be a power of 2
+  %1:ptr<private, MyStruct, read_write> = var undef
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, Structure_MemberAlignmentCausesSizeOverflow) {
-    auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  Vector{
-                      ty.Get<type::StructMember>(mod.symbols.New("a"), ty.u32(), 0u, 0u,
-                                                 u32::kHighestValue - 63, 128u, IOAttributes{}),
-                  });
+    core::IOAttributes attrs = {};
+    tint::Vector<const core::type::StructMember*, 4> members;
+    members.Push(ty.Get<core::type::StructMember>(mod.symbols.New("a"), ty.u32(), 0u, 0u,
+                                                  /* align */ 4u, 4u, std::move(attrs)));
+    auto* str_ty = ty.Get<core::type::Struct>(mod.symbols.New("S"), std::move(members),
+                                              /* size */ 0u);
+
     mod.root_block->Append(b.Var("my_struct", private_, str_ty));
 
     auto* fn = b.Function("F", ty.void_());

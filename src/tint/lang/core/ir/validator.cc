@@ -110,6 +110,7 @@
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/internal_limits.h"
 #include "src/tint/utils/macros/defer.h"
+#include "src/tint/utils/math/math.h"
 #include "src/tint/utils/result.h"
 #include "src/tint/utils/rtti/castable.h"
 #include "src/tint/utils/rtti/switch.h"
@@ -2197,11 +2198,19 @@ void Validator::CheckType(const core::type::Type* root,
                         diag() << "struct member must not have an alignment of 0";
                         return false;
                     }
+                    if (!tint::IsPowerOfTwo(member->Align())) {
+                        diag() << "struct member alignment must be a power of 2";
+                        return false;
+                    }
+
                     if (member->Type()->Align() == 0) {
                         diag() << "struct member type must not have an alignment of 0";
                         return false;
                     }
-
+                    if (!tint::IsPowerOfTwo(member->Type()->Align())) {
+                        diag() << "struct member type alignment must be a power of 2";
+                        return false;
+                    }
                     if (!capabilities_.Contains(Capability::kAllowStructMatrixDecorations)) {
                         if (member->RowMajor()) {
                             diag() << "Row major annotation not allowed on structures";
