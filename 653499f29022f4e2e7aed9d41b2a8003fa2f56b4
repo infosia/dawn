@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37a0ad94_57452f48",
+        "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-28T14:54:01Z",
+      "side": 1,
+      "message": "Hmm, I guess the others I can just make uint64_t and static cast back to uint32_t.",
+      "parentUuid": "fae6c753_fcc27a44",
+      "revId": "653499f29022f4e2e7aed9d41b2a8003fa2f56b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4eaebd5_3acb1a08",
         "filename": "src/tint/lang/core/ir/transform/decompose_access.cc",
         "patchSetId": 1
