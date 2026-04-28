@@ -109,6 +109,24 @@
       "parentUuid": "3c7c78bf_e7c978bd",
       "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94499dc2_9e1b8b9f",
+        "filename": "src/dawn/tests/unittests/ITypArrayTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-28T18:01:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0f234e27_65d1ba0e",
+      "revId": "70f8d107958ce767ba196be1d463c1aeef18ae8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
