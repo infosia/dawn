@@ -205,6 +205,7 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                 std::cout << " • Running: " << currently_running << '\n';
             }
             auto mod = acquire_module();
+            mod.dump_ir_when_validating = context.options.dump_ir_when_validating;
             if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities,
                                          "start " + std::string(currently_running)) !=
                 tint::Success) {
@@ -216,6 +217,10 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                 }
                 continue;
             }
+
+            // Enable validation assertions.
+            // Any validation failure after this point is a bug in Tint which we want to find.
+            mod.enable_validation_asserts = true;
 
             if (auto result = fuzzer.fn(mod, context, data); result != Success) {
                 if (options.verbose) {
