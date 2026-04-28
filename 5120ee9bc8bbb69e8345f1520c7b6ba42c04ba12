@@ -151,6 +151,24 @@
       "parentUuid": "b256d9ad_de4c0db3",
       "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45bf924e_871cb20d",
+        "filename": "src/dawn/native/vulkan/FramebufferFetchHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T13:26:06Z",
+      "side": 1,
+      "message": "Yeah that\u0027s enough, thanks!",
+      "parentUuid": "5e9d1666_b7658f5a",
+      "revId": "5120ee9bc8bbb69e8345f1520c7b6ba42c04ba12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
