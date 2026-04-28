@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6abae92_98c01d67",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "I put the Reflection API in the next CL and added some TODOs here (as I\u0027m still in the middle of test refectoring)",
+      "parentUuid": "77c9f316_e629d34d",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fed4418f_719d7e9c",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-28T09:38:26Z",
       "side": 1,
       "message": "IIRC we should be able to call configure repeatedly without unconfiguring first, so why is this needed?",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f928b5cf_28404c93",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "Removed the unconfigure capture and the counter. (Now that we removed the `CaptureSurfaceUnconfigure` from DetachFromSurfaceImpl, we can remove these extra logic. Before it needs to track the count to actually emit unconfigure as there are 2 places calling unconfigure.)",
+      "parentUuid": "fed4418f_719d7e9c",
       "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51f7b218_f9d5c46f",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "050d5104_90e19dd2",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61dceb6f_fb78947b",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-04-28T09:38:26Z",
       "side": 1,
       "message": "is that ever the case?",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3fede45_4e89794a",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "Done (Changed to DAWN_ASSERT)",
+      "parentUuid": "61dceb6f_fb78947b",
       "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a5f35a_0f694f9d",
+        "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "It\u0027s Ref\u003cSurface\u003e in `mSurfaceIds` needs to be cleared to avoid dangling pointer (window destroyed but Surface still has a raw_ptr to window (e.g. mMetalLayer))\nBut it feels weird to only clear `mSurfaceIds` but not `mObjectIds` in `ReleaseReferences`.\nBy the time `EndCapture` (-\u003e `ReleaseReferences`) is called, clearing these is fine.",
+      "parentUuid": "2839a99d_a66aaf1b",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88b4a2c8_95f881c1",
@@ -103,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fa3c21c_d895dfa1",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88b4a2c8_95f881c1",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbae7ff9_b2c183c9",
@@ -116,6 +224,24 @@
       "writtenOn": "2026-04-28T09:38:26Z",
       "side": 1,
       "message": "We probably don\u0027t need to capture anything here, the configure is captured above and should be sufficient for replay. Unconfigure is just to lose the reference to the last configured device but for replay it doesn\u0027t really matter.",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d22a38_b9ef6f58",
+        "filename": "src/dawn/native/webgpu/SwapChainWGPU.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbae7ff9_b2c183c9",
       "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -150,6 +276,24 @@
       "writtenOn": "2026-04-28T09:38:26Z",
       "side": 1,
       "message": "Isn\u0027t this redundant with the texture being created with the command [1]? (at the moment)",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3740542b_920ce24b",
+        "filename": "src/dawn/serialization/Schema.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-28T23:44:45Z",
+      "side": 1,
+      "message": "I think it\u0027s useful when inspecting all textures and display those that are surface textures? (But it\u0027s unused now)",
+      "parentUuid": "47dc0b74_bc92d8a4",
       "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
