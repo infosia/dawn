@@ -42,6 +42,11 @@ using CaptureStream = std::istream;
 
 class RootCommandVisitor;
 
+struct SurfaceInfo {
+    uint32_t width;
+    uint32_t height;
+};
+
 // The public API of a Capture.
 // In the future it should have calls to get information (e.g. number of commands)
 class DAWN_REPLAY_EXPORT Capture {
@@ -55,7 +60,8 @@ class DAWN_REPLAY_EXPORT Capture {
     // Returns true if walk successful.
     virtual bool Walk(RootCommandVisitor& visitor) = 0;
 
-    // TODO(507548342): Reflection API for Surfaces.
+    // Reflections
+    virtual std::vector<SurfaceInfo> GetSurfaceInfos() const = 0;
     // TODO(507548342): Reflection API for general RecordableObjects.
 };
 
