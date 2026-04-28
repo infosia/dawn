@@ -51,6 +51,24 @@
       "parentUuid": "a3527789_17ae2fdc",
       "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ddf1031_568d14b3",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-28T11:20:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8e169a1f_d1a92bf8",
+      "revId": "6883a7a9a451da61be3913f6fd233b1a7bf9da89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
