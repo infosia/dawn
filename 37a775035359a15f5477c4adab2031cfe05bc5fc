@@ -16,6 +16,91 @@
       "message": "PTAL!",
       "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9ee6954_ffce0c98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:57:18Z",
+      "side": 1,
+      "message": "This is nice!",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f32abd7_9c82a21f",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:57:18Z",
+      "side": 1,
+      "message": "You should be able to also lift expectations for Gregg\u0027s new query CTS tests.\n\nBe sure to rebase first because I JUST updated one of the expectations.",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4cc87b2_84d20aa2",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:57:18Z",
+      "side": 1,
+      "message": "nit: You can `encoder.Finish()` here too. Makes the test very slightly stricter.\n\nUpdate the test title to match.",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73cc7465_3928b3eb",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:57:18Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a62f5679_fa60588f",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-28T12:57:18Z",
+      "side": 1,
+      "message": "Duplicate this test but for begin/end?\n\nOr don\u0027t bother because I think it\u0027s covered by CTS.",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
