@@ -36,6 +36,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/ResourceTableDefaultResources.h"
+#include "src/utils/compiler.h"
 #include "tint/tint.h"
 
 namespace dawn::native {
@@ -187,7 +188,7 @@ MaybeError ResourceTableBase::InitializeBase() {
     // Store APISize at element 0 in the metadata buffer, which will be used in the shader to index
     // default resources at APISize + resource type index.
     data[0] = uint32_t(mAPISize);
-    memset(data + 1, 0, metadataDesc.size - sizeof(uint32_t));
+    DAWN_UNSAFE_TODO(memset(data + 1, 0, metadataDesc.size - sizeof(uint32_t)));
     DAWN_TRY(mMetadataBuffer->Unmap());
 
     // Add the default resources at the end of the table.

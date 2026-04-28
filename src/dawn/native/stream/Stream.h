@@ -47,6 +47,7 @@
 #include "dawn/native/Error.h"
 #include "dawn/native/stream/Sink.h"
 #include "dawn/native/stream/Source.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::ityp {
 template <typename Index, size_t N>
@@ -117,11 +118,13 @@ inline MaybeError StreamOut(Source* s) {
 template <typename T>
 class Stream<T, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T& v) { memcpy(s->GetSpace(sizeof(T)), &v, sizeof(T)); }
+    static void Write(Sink* s, const T& v) {
+        DAWN_UNSAFE_TODO(memcpy(s->GetSpace(sizeof(T)), &v, sizeof(T)));
+    }
     static MaybeError Read(Source* s, T* v) {
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, sizeof(T)));
-        memcpy(v, ptr, sizeof(T));
+        DAWN_UNSAFE_TODO(memcpy(v, ptr, sizeof(T)));
         return {};
     }
 };
@@ -307,14 +310,14 @@ class Stream<T[N], std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
     static void Write(Sink* s, const T (&t)[N]) {
         static_assert(N > 0);
-        memcpy(s->GetSpace(sizeof(t)), &t, sizeof(t));
+        DAWN_UNSAFE_TODO(memcpy(s->GetSpace(sizeof(t)), &t, sizeof(t)));
     }
 
     static MaybeError Read(Source* s, T (*t)[N]) {
         static_assert(N > 0);
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(*t, ptr, sizeof(*t));
+        DAWN_UNSAFE_TODO(memcpy(*t, ptr, sizeof(*t)));
         return {};
     }
 };
@@ -326,7 +329,7 @@ class Stream<T[N], std::enable_if_t<!std::is_fundamental_v<T>>> {
     static void Write(Sink* s, const T (&t)[N]) {
         static_assert(N > 0);
         for (size_t i = 0; i < N; i++) {
-            StreamIn(s, t[i]);
+            StreamIn(s, DAWN_UNSAFE_TODO(t[i]));
         }
     }
 
@@ -373,14 +376,14 @@ class Stream<std::array<T, Size>, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
     static void Write(Sink* s, const std::array<T, Size>& t) {
         static_assert(Size > 0);
-        memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t));
+        DAWN_UNSAFE_TODO(memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t)));
     }
 
     static MaybeError Read(Source* s, std::array<T, Size>* t) {
         static_assert(Size > 0);
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(t->data(), ptr, sizeof(*t));
+        DAWN_UNSAFE_TODO(memcpy(t->data(), ptr, sizeof(*t)));
         return {};
     }
 };
@@ -618,7 +621,7 @@ struct Iterable {
 template <typename T>
 auto Iterable(const T* ptr, size_t count) {
     using Iterator = const T*;
-    return detail::Iterable<Iterator>{ptr, ptr + count};
+    return detail::Iterable<Iterator>{ptr, DAWN_UNSAFE_TODO(ptr + count)};
 }
 
 // Stream specialization for detail::Iterable which writes the number of elements,
@@ -628,7 +631,7 @@ class Stream<detail::Iterable<Iterator>> {
   public:
     static void Write(stream::Sink* sink, const detail::Iterable<Iterator>& iter) {
         StreamIn(sink, std::distance(iter.begin, iter.end));
-        for (auto it = iter.begin; it != iter.end; ++it) {
+        for (auto it = iter.begin; it != iter.end; DAWN_UNSAFE_TODO(++it)) {
             StreamIn(sink, *it);
         }
     }

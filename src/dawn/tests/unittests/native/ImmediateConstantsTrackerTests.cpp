@@ -33,6 +33,7 @@
 #include "dawn/tests/DawnNativeTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -105,8 +106,9 @@ TEST_F(ImmediateConstantsTrackerTest, SetImmediates) {
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
         uint32_t userImmediateDataRangeOffset = userImmediateDataStartByteOffset + rangeOffset;
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<int32_t>(userImmediateDataRangeOffset),
-                           &userImmediateData[dataOffset], userImmediateDataSize) == 0);
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<int32_t>(userImmediateDataRangeOffset),
+                               &userImmediateData[dataOffset], userImmediateDataSize) == 0));
     }
 
     // ComputeImmediateConstantsTracker
@@ -119,8 +121,9 @@ TEST_F(ImmediateConstantsTrackerTest, SetImmediates) {
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
         uint32_t userImmediateDataRangeOffset = userImmediateDataStartByteOffset + rangeOffset;
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<int32_t>(userImmediateDataRangeOffset),
-                           &userImmediateData[dataOffset], userImmediateDataSize) == 0);
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<int32_t>(userImmediateDataRangeOffset),
+                               &userImmediateData[dataOffset], userImmediateDataSize) == 0));
     }
 
     device.Destroy();
@@ -148,10 +151,12 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetClampFragDepth) {
         clampFragDepthStartOffsetBytes + offsetof(ClampFragDepthArgs, minClampFragDepth);
     size_t maxClampFragDepthOffsetBytes =
         clampFragDepthStartOffsetBytes + offsetof(ClampFragDepthArgs, maxClampFragDepth);
-    EXPECT_TRUE(memcmp(tracker.GetContent().Get<float>(minClampFragDepthOffsetBytes),
-                       &minClampFragDepth, sizeof(float)) == 0);
-    EXPECT_TRUE(memcmp(tracker.GetContent().Get<float>(maxClampFragDepthOffsetBytes),
-                       &maxClampFragDepth, sizeof(float)) == 0);
+    DAWN_UNSAFE_TODO(
+        EXPECT_TRUE(memcmp(tracker.GetContent().Get<float>(minClampFragDepthOffsetBytes),
+                           &minClampFragDepth, sizeof(float)) == 0));
+    DAWN_UNSAFE_TODO(
+        EXPECT_TRUE(memcmp(tracker.GetContent().Get<float>(maxClampFragDepthOffsetBytes),
+                           &maxClampFragDepth, sizeof(float)) == 0));
 
     device.Destroy();
 }
@@ -175,10 +180,12 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstVertexByteOffset), &firstVertex,
-                           sizeof(uint32_t)) == 0);
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstInstanceByteOffset),
-                           &firstInstance, sizeof(uint32_t)) == 0);
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstVertexByteOffset),
+                               &firstVertex, sizeof(uint32_t)) == 0));
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstInstanceByteOffset),
+                               &firstInstance, sizeof(uint32_t)) == 0));
     }
 
     // SetFirstVertex()
@@ -193,8 +200,9 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstVertexByteOffset), &firstVertex,
-                           sizeof(uint32_t)) == 0);
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstVertexByteOffset),
+                               &firstVertex, sizeof(uint32_t)) == 0));
     }
 
     // SetFirstInstance()
@@ -209,8 +217,9 @@ TEST_F(RenderImmediateConstantsTrackerTest, SetFirstIndexOffset) {
                               kImmediateConstantElementByteSize;
         EXPECT_TRUE(tracker.GetDirtyBits() == expected);
 
-        EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstInstanceByteOffset),
-                           &firstInstance, sizeof(uint32_t)) == 0);
+        DAWN_UNSAFE_TODO(
+            EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(firstInstanceByteOffset),
+                               &firstInstance, sizeof(uint32_t)) == 0));
     }
 
     device.Destroy();
@@ -243,13 +252,13 @@ TEST_F(ComputeImmediateConstantsTrackerTest, SetNumWorkgroupDimensions) {
         numWorkgroupsStartByteOffset + offsetof(NumWorkgroupsDimensions, numWorkgroupsY);
     size_t numWorkgroupZByteOffset =
         numWorkgroupsStartByteOffset + offsetof(NumWorkgroupsDimensions, numWorkgroupsZ);
-    EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupXByteOffset), &numWorkgroupsX,
-                       sizeof(uint32_t)) == 0);
+    DAWN_UNSAFE_TODO(EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupXByteOffset),
+                                        &numWorkgroupsX, sizeof(uint32_t)) == 0));
 
-    EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupYByteOffset), &numWorkgroupsY,
-                       sizeof(uint32_t)) == 0);
-    EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupZByteOffset), &numWorkgroupsZ,
-                       sizeof(uint32_t)) == 0);
+    DAWN_UNSAFE_TODO(EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupYByteOffset),
+                                        &numWorkgroupsY, sizeof(uint32_t)) == 0));
+    DAWN_UNSAFE_TODO(EXPECT_TRUE(memcmp(tracker.GetContent().Get<uint32_t>(numWorkgroupZByteOffset),
+                                        &numWorkgroupsZ, sizeof(uint32_t)) == 0));
     device.Destroy();
 }
 

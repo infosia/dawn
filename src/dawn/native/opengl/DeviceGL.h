@@ -45,6 +45,7 @@
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
 #include "dawn/native/opengl/OpenGLFunctions.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 class AHBFunctions;
@@ -156,10 +157,10 @@ class Device final : public DeviceBase {
 
         // Call is deferred; must copy data.
         auto* d = static_cast<const char*>(data);
-        return EnqueueGL(
-            [data = std::vector<char>(d, d + size), work](const OpenGLFunctions& gl) -> MaybeError {
-                return work(gl, data.data(), data.size());
-            });
+        return EnqueueGL([data = std::vector<char>(d, DAWN_UNSAFE_TODO(d + size)),
+                          work](const OpenGLFunctions& gl) -> MaybeError {
+            return work(gl, data.data(), data.size());
+        });
     }
 
     // Flush any pending GL commands enqueued via EnqueueGL().

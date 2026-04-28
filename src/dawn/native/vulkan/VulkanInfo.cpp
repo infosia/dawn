@@ -36,6 +36,7 @@
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::vulkan {
 
@@ -174,8 +175,10 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
         VkPhysicalDeviceMemoryProperties memory;
         vkFunctions.GetPhysicalDeviceMemoryProperties(vkPhysicalDevice, &memory);
 
-        info.memoryTypes.assign(memory.memoryTypes, memory.memoryTypes + memory.memoryTypeCount);
-        info.memoryHeaps.assign(memory.memoryHeaps, memory.memoryHeaps + memory.memoryHeapCount);
+        info.memoryTypes.assign(memory.memoryTypes,
+                                DAWN_UNSAFE_TODO(memory.memoryTypes + memory.memoryTypeCount));
+        info.memoryHeaps.assign(memory.memoryHeaps,
+                                DAWN_UNSAFE_TODO(memory.memoryHeaps + memory.memoryHeapCount));
     }
 
     // Gather info about device queue families

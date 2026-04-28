@@ -45,6 +45,7 @@
 #include "dawn/native/webgpu/Serialization.h"
 #include "dawn/native/webgpu/TextureWGPU.h"
 #include "dawn/native/webgpu/ToWGPU.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::webgpu {
 
@@ -294,7 +295,8 @@ void EncodeRenderPass(const Device* device,
                 wgpuBundles.reserve(cmd->count);
 
                 for (uint32_t i = 0; i < cmd->count; ++i) {
-                    wgpuBundles.push_back(ToBackend(bundles[i].Get())->GetInnerHandle());
+                    wgpuBundles.push_back(
+                        ToBackend(DAWN_UNSAFE_TODO(bundles[i]).Get())->GetInnerHandle());
                 }
                 wgpu.renderPassEncoderExecuteBundles(passEncoder, wgpuBundles.size(),
                                                      wgpuBundles.data());
@@ -495,7 +497,7 @@ MaybeError GatherReferencedResourcesFromRenderPass(CaptureContext& captureContex
                 auto cmd = commands.NextCommand<ExecuteBundlesCmd>();
                 auto bundles = commands.NextData<Ref<RenderBundleBase>>(cmd->count);
                 for (uint32_t i = 0; i < cmd->count; ++i) {
-                    usedResources.renderBundles.push_back(bundles[i].Get());
+                    usedResources.renderBundles.push_back(DAWN_UNSAFE_TODO(bundles[i]).Get());
                 }
                 break;
             }
@@ -597,7 +599,7 @@ MaybeError CaptureRenderPass(CaptureContext& captureContext, CommandIterator& co
                 auto bundles = commands.NextData<Ref<RenderBundleBase>>(cmd.count);
                 std::vector<schema::ObjectId> bundleIds;
                 for (uint32_t i = 0; i < cmd.count; ++i) {
-                    bundleIds.push_back(captureContext.GetId(bundles[i].Get()));
+                    bundleIds.push_back(captureContext.GetId(DAWN_UNSAFE_TODO(bundles[i]).Get()));
                 }
                 schema::CommandBufferCommandExecuteBundlesCmd data{{
                     .data = {{
@@ -907,7 +909,7 @@ MaybeError CommandBuffer::CaptureCreationParameters(CaptureContext& captureConte
                     .data = {{
                         .bufferId = captureContext.GetId(cmd.buffer.Get()),
                         .bufferOffset = cmd.offset,
-                        .data = std::vector<uint8_t>(values, values + cmd.size),
+                        .data = std::vector<uint8_t>(values, DAWN_UNSAFE_TODO(values + cmd.size)),
                     }},
                 }};
                 Serialize(captureContext, data);

@@ -65,6 +65,7 @@
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
 namespace {
@@ -320,7 +321,7 @@ MaybeError Device::CreateZeroBuffer() {
 
         void* mappedPointer = zeroBufferBase->GetMappedPointer();
         DAWN_ASSERT(mappedPointer != nullptr);
-        memset(mappedPointer, 0, zeroBufferBase->GetAllocatedSize());
+        DAWN_UNSAFE_TODO(memset(mappedPointer, 0, zeroBufferBase->GetAllocatedSize()));
         DAWN_TRY(zeroBufferBase->Unmap());
     } else {
         zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
@@ -334,7 +335,7 @@ MaybeError Device::CreateZeroBuffer() {
         DAWN_TRY(GetDynamicUploader()->WithUploadReservation(
             kZeroBufferSize, kCopyBufferToBufferOffsetAlignment,
             [&](UploadReservation reservation) -> MaybeError {
-                memset(reservation.mappedPointer, 0u, kZeroBufferSize);
+                DAWN_UNSAFE_TODO(memset(reservation.mappedPointer, 0u, kZeroBufferSize));
 
                 CopyFromStagingToBufferHelper(commandContext, reservation.buffer.Get(),
                                               reservation.offsetInBuffer, zeroBufferBase.Get(), 0,

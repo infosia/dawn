@@ -32,6 +32,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/ityp_array.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 namespace {
@@ -513,7 +514,7 @@ void FeaturesSet::ToSupportedFeatures(SupportedFeatures* supportedFeatures) cons
     wgpu::FeatureName* features = new wgpu::FeatureName[count];
     uint32_t index = 0;
     for (Feature f : featuresBitSet) {
-        features[index++] = ToAPI(f);
+        DAWN_UNSAFE_TODO(features[index++]) = ToAPI(f);
     }
     DAWN_ASSERT(index == count);
     supportedFeatures->features = features;

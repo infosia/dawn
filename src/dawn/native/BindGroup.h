@@ -45,6 +45,7 @@
 #include "dawn/native/dawn_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -114,7 +115,7 @@ class BindGroupBase : public ApiObjectBase {
               device,
               descriptor,
               AlignPtr(
-                  reinterpret_cast<char*>(derived) + sizeof(Derived),
+                  DAWN_UNSAFE_TODO(reinterpret_cast<char*>(derived) + sizeof(Derived)),
                   descriptor->layout->GetInternalBindGroupLayout()->GetBindingDataAlignment())) {
         static_assert(std::is_base_of<BindGroupBase, Derived>::value);
     }

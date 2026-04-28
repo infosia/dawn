@@ -37,6 +37,7 @@
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/PhysicalDeviceD3D11.h"
 #include "dawn/native/d3d11/PlatformFunctionsD3D11.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d11 {
 namespace {
@@ -70,7 +71,8 @@ MaybeError ValidateRequestOptions(const UnpackedPtr<RequestAdapterOptions>& opti
 
     if (auto* luidOptions = options.Get<d3d::RequestAdapterOptionsLUID>()) {
         DAWN_INVALID_IF(
-            memcmp(&adapterDesc.AdapterLuid, &luidOptions->adapterLUID, sizeof(LUID)) != 0,
+            DAWN_UNSAFE_TODO(
+                memcmp(&adapterDesc.AdapterLuid, &luidOptions->adapterLUID, sizeof(LUID))) != 0,
             "RequestAdapterOptionsLUID and RequestAdapterOptionsD3D11Device don't match.");
     }
 

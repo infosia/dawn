@@ -34,6 +34,7 @@
 #include "dawn/tests/unittests/wire/WireTest.h"
 #include "dawn/wire/WireClient.h"
 #include "gmock/gmock.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::wire {
 namespace {
@@ -68,14 +69,15 @@ TEST_F(WireWriteBufferTests, WriteBufferChunkedCommands) {
     FlushClient();
 
     auto expected = std::make_unique<uint8_t[]>(kLargeAllocationSize);
-    std::memset(expected.get(), 0b10101010, kLargeAllocationSize);
+    DAWN_UNSAFE_TODO(std::memset(expected.get(), 0b10101010, kLargeAllocationSize));
     queue.WriteBuffer(buffer, 0, expected.get(), kLargeAllocationSize);
 
-    EXPECT_CALL(
-        api, QueueWriteBuffer(apiQueue, apiBuffer, 0, MatchesLambda([&](void const* actual) {
-                                  return !std::memcmp(expected.get(), actual, kLargeAllocationSize);
-                              }),
-                              kLargeAllocationSize))
+    DAWN_UNSAFE_TODO(
+        EXPECT_CALL(api, QueueWriteBuffer(
+                             apiQueue, apiBuffer, 0, MatchesLambda([&](void const* actual) {
+                                 return !std::memcmp(expected.get(), actual, kLargeAllocationSize);
+                             }),
+                             kLargeAllocationSize)))
         .Times(1);
     FlushClient();
 }

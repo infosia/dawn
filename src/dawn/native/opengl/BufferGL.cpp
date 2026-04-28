@@ -35,6 +35,7 @@
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -264,7 +265,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 
             // The frontend asks that the pointer returned by GetMappedPointer is from the start of
             // the resource but OpenGL gives us the pointer at offset. Remove the offset.
-            self->mMappedData = static_cast<uint8_t*>(mappedData) - offset;
+            self->mMappedData = DAWN_UNSAFE_TODO(static_cast<uint8_t*>(mappedData) - offset);
             return {};
         });
 }
@@ -292,7 +293,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
             if (self->mCPUStaging.size() > 0) {
                 auto mappedData = DAWN_GL_TRY_ALWAYS_CHECK(
                     gl, MapBufferRange(GL_ARRAY_BUFFER, 0, self->GetSize(), GL_MAP_WRITE_BIT));
-                memcpy(mappedData, self->mCPUStaging.data(), self->GetSize());
+                DAWN_UNSAFE_TODO(memcpy(mappedData, self->mCPUStaging.data(), self->GetSize()));
                 self->mCPUStaging.resize(0);
             }
             DAWN_GL_TRY(gl, UnmapBuffer(GL_ARRAY_BUFFER));

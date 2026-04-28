@@ -36,6 +36,7 @@
 #include "dawn/native/d3d12/HeapD3D12.h"
 #include "dawn/native/d3d12/PhysicalDeviceD3D12.h"
 #include "dawn/native/d3d12/QueueD3D12.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
 
@@ -258,7 +259,7 @@ MaybeError ResidencyManager::EnsureHeapsAreResident(Heap** heaps, size_t heapCou
 
     ExecutionSerial pendingCommandSerial = mDevice->GetQueue()->GetPendingCommandSerial();
     for (size_t i = 0; i < heapCount; i++) {
-        Heap* heap = heaps[i];
+        Heap* heap = DAWN_UNSAFE_TODO(heaps[i]);
 
         // Heaps that are locked resident are not tracked in the LRU cache.
         if (heap->IsResidencyLocked()) {

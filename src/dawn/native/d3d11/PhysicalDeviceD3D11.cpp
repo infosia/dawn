@@ -41,6 +41,7 @@
 #include "dawn/native/d3d11/PlatformFunctionsD3D11.h"
 #include "dawn/native/d3d11/UtilsD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d11 {
 
@@ -419,8 +420,8 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
             heapInfo[0].size = mDeviceInfo.dedicatedVideoMemory;
             heapInfo[0].properties = wgpu::HeapProperty::DeviceLocal;
 
-            heapInfo[1].size = mDeviceInfo.sharedSystemMemory;
-            heapInfo[1].properties =
+            DAWN_UNSAFE_TODO(heapInfo[1]).size = mDeviceInfo.sharedSystemMemory;
+            DAWN_UNSAFE_TODO(heapInfo[1]).properties =
                 wgpu::HeapProperty::HostVisible | wgpu::HeapProperty::HostCoherent |
                 wgpu::HeapProperty::HostUncached | wgpu::HeapProperty::HostCached;
         }

@@ -32,6 +32,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/stream/Stream.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -102,7 +103,7 @@ bool Blob::operator==(const Blob& other) const {
     if (other.Size() != Size()) {
         return false;
     }
-    return 0 == memcmp(Data(), other.Data(), Size());
+    return 0 == DAWN_UNSAFE_TODO(memcmp(Data(), other.Data(), Size()));
 }
 
 template <>
@@ -111,7 +112,7 @@ void stream::Stream<Blob>::Write(stream::Sink* s, const Blob& b) {
     StreamIn(s, size);
     if (size > 0) {
         void* ptr = s->GetSpace(size);
-        memcpy(ptr, b.Data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, b.Data(), size));
     }
 }
 
@@ -123,7 +124,7 @@ MaybeError stream::Stream<Blob>::Read(stream::Source* s, Blob* b) {
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, size));
         *b = CreateBlob(size);
-        memcpy(b->Data(), ptr, size);
+        DAWN_UNSAFE_TODO(memcpy(b->Data(), ptr, size));
     } else {
         *b = Blob();
     }

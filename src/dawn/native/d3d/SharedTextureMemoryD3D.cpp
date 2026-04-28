@@ -35,6 +35,7 @@
 #include "dawn/native/d3d/Forward.h"
 #include "dawn/native/d3d/QueueD3D.h"
 #include "dawn/native/d3d/SharedFenceD3D.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d {
 
@@ -49,7 +50,7 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
     DAWN_TRY((descriptor.ValidateSubset<SharedTextureMemoryD3DSwapchainBeginState,
                                         SharedTextureMemoryD3D11BeginState>()));
     for (size_t i = 0; i < descriptor->fenceCount; ++i) {
-        SharedFenceBase* fence = descriptor->fences[i];
+        SharedFenceBase* fence = DAWN_UNSAFE_TODO(descriptor->fences[i]);
 
         SharedFenceExportInfo exportInfo;
         DAWN_TRY(fence->ExportInfo(&exportInfo));

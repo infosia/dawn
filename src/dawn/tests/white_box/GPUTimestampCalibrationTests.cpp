@@ -34,6 +34,7 @@
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -81,10 +82,11 @@ class ExpectBetweenTimestamps : public detail::Expectation {
         }
 
         for (size_t i = 0; i < size / sizeof(uint64_t); ++i) {
-            if (actual[i] < mMinValue || actual[i] > mMaxValue) {
+            if (DAWN_UNSAFE_TODO(actual[i]) < mMinValue ||
+                DAWN_UNSAFE_TODO(actual[i]) > mMaxValue) {
                 return testing::AssertionFailure()
                        << "Expected data[" << i << "] to be between " << mMinValue << " and "
-                       << mMaxValue << ", actual " << actual[i] << "\n";
+                       << mMaxValue << ", actual " << DAWN_UNSAFE_TODO(actual[i]) << "\n";
             }
         }
 

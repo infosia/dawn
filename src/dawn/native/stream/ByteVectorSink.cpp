@@ -30,6 +30,7 @@
 #include <iomanip>
 
 #include "dawn/native/stream/Stream.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::stream {
 
@@ -46,7 +47,7 @@ void stream::Stream<ByteVectorSink>::Write(stream::Sink* sink, const ByteVectorS
     size_t size = vec.size();
     if (size > 0) {
         void* ptr = sink->GetSpace(size);
-        memcpy(ptr, vec.data(), size);
+        DAWN_UNSAFE_TODO(memcpy(ptr, vec.data(), size));
     }
 }
 

@@ -37,6 +37,7 @@
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/PipelineLayout.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -69,7 +70,7 @@ class BindGroupTrackerBase {
 
         mBindGroups[index] = bindGroup;
         mDynamicOffsets[index].count = BindingIndex(dynamicOffsetCount);
-        std::copy(dynamicOffsets, dynamicOffsets + dynamicOffsetCount,
+        std::copy(dynamicOffsets, DAWN_UNSAFE_TODO(dynamicOffsets + dynamicOffsetCount),
                   mDynamicOffsets[index].offsets.begin());
     }
 

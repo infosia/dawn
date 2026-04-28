@@ -35,6 +35,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Math.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -188,7 +189,7 @@ size_t CommandAllocator::GetCommandBlocksCount() const {
 CommandBlocks&& CommandAllocator::AcquireBlocks() {
     DAWN_ASSERT(mCurrentPtr != nullptr && mEndPtr != nullptr);
     DAWN_ASSERT(IsPtrAligned(mCurrentPtr, alignof(uint32_t)));
-    DAWN_ASSERT(mCurrentPtr + sizeof(uint32_t) <= mEndPtr);
+    DAWN_UNSAFE_TODO(DAWN_ASSERT(mCurrentPtr + sizeof(uint32_t) <= mEndPtr));
     *reinterpret_cast<uint32_t*>(mCurrentPtr) = detail::kEndOfBlock;
 
     mCurrentPtr = nullptr;
@@ -229,14 +230,14 @@ bool CommandAllocator::GetNewBlock(size_t minimumSize) {
     }
 
     mCurrentPtr = AlignPtr(block.get(), alignof(uint32_t));
-    mEndPtr = block.get() + mLastAllocationSize;
+    mEndPtr = DAWN_UNSAFE_TODO(block.get() + mLastAllocationSize);
     mBlocks.push_back({mLastAllocationSize, std::move(block)});
     return true;
 }
 
 void CommandAllocator::ResetPointers() {
     mCurrentPtr = reinterpret_cast<char*>(&mPlaceholderSpace[0]);
-    mEndPtr = reinterpret_cast<char*>(&mPlaceholderSpace[1]);
+    mEndPtr = reinterpret_cast<char*>(&DAWN_UNSAFE_TODO(mPlaceholderSpace[1]));
 }
 
 }  // namespace dawn::native

@@ -36,6 +36,7 @@
 #include "dawn/utils/ComboRenderBundleEncoderDescriptor.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -3872,7 +3873,7 @@ class BindingsValidationTest : public BindGroupLayoutCompatibilityTest {
         PlaceholderRenderPass PlaceholderRenderPass(device);
         wgpu::RenderPassEncoder rp = encoder.BeginRenderPass(&PlaceholderRenderPass);
         for (uint32_t i = 0; i < count; ++i) {
-            rp.SetBindGroup(i, bg[i]);
+            rp.SetBindGroup(i, DAWN_UNSAFE_TODO(bg[i]));
         }
         rp.SetPipeline(pipeline);
         rp.Draw(3);
@@ -3891,7 +3892,7 @@ class BindingsValidationTest : public BindGroupLayoutCompatibilityTest {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
         wgpu::ComputePassEncoder cp = encoder.BeginComputePass();
         for (uint32_t i = 0; i < count; ++i) {
-            cp.SetBindGroup(i, bg[i]);
+            cp.SetBindGroup(i, DAWN_UNSAFE_TODO(bg[i]));
         }
         cp.SetPipeline(pipeline);
         cp.DispatchWorkgroups(1);

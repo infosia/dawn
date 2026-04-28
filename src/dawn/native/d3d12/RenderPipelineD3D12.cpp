@@ -44,6 +44,7 @@
 #include "dawn/native/d3d12/TextureD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::d3d12 {
 namespace {
@@ -412,16 +413,17 @@ MaybeError RenderPipeline::InitializeImpl() {
     auto highestColorAttachmentIndexPlusOne = GetHighestBitIndexPlusOne(GetColorAttachmentsMask());
     for (uint8_t i = 0; i < kMaxColorAttachments; i++) {
         if (i < static_cast<uint8_t>(highestColorAttachmentIndexPlusOne)) {
-            descriptorD3D12.RTVFormats[i] = GetNullRTVDXGIFormatForD3D12RenderPass();
+            DAWN_UNSAFE_TODO(descriptorD3D12.RTVFormats[i]) =
+                GetNullRTVDXGIFormatForD3D12RenderPass();
         } else {
-            descriptorD3D12.RTVFormats[i] = DXGI_FORMAT_UNKNOWN;
+            DAWN_UNSAFE_TODO(descriptorD3D12.RTVFormats[i]) = DXGI_FORMAT_UNKNOWN;
         }
-        descriptorD3D12.BlendState.RenderTarget[i].LogicOp = D3D12_LOGIC_OP_NOOP;
+        DAWN_UNSAFE_TODO(descriptorD3D12.BlendState.RenderTarget[i]).LogicOp = D3D12_LOGIC_OP_NOOP;
     }
     for (auto i : GetColorAttachmentsMask()) {
-        descriptorD3D12.RTVFormats[static_cast<uint8_t>(i)] =
+        DAWN_UNSAFE_TODO(descriptorD3D12.RTVFormats[static_cast<uint8_t>(i)]) =
             d3d::DXGITextureFormat(device, GetColorAttachmentFormat(i));
-        descriptorD3D12.BlendState.RenderTarget[static_cast<uint8_t>(i)] =
+        DAWN_UNSAFE_TODO(descriptorD3D12.BlendState.RenderTarget[static_cast<uint8_t>(i)]) =
             ComputeColorDesc(device, GetColorTargetState(i));
     }
     DAWN_ASSERT(highestColorAttachmentIndexPlusOne <= kMaxColorAttachmentsTyped);

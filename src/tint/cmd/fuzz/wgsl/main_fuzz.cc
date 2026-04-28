@@ -35,6 +35,7 @@
 #include "src/tint/utils/command/command.h"
 #include "src/tint/utils/text/base64.h"
 #include "src/tint/utils/text/string.h"
+#include "src/utils/compiler.h"
 
 #if TINT_BUILD_HLSL_WRITER
 #include "src/tint/lang/hlsl/validate/validate.h"
@@ -103,7 +104,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
 
     tint::Vector<std::string_view, 8> arguments;
     for (int i = 1; i < *argc; i++) {
-        std::string_view arg((*argv)[i]);
+        std::string_view arg(DAWN_UNSAFE_TODO((*argv)[i]));
         if (!arg.empty()) {
             arguments.Push(arg);
         }
@@ -118,7 +119,7 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
         std::cerr << "Standard libfuzzer ";  // libfuzzer will print 'Usage:'
         static char help[] = "-help=1";
         *argc = 2;
-        (*argv)[1] = help;
+        DAWN_UNSAFE_TODO((*argv)[1]) = help;
     };
 
     auto& opt_help = opts.Add<tint::cli::BoolOption>("help", "shows the usage");

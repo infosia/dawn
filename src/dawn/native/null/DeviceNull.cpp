@@ -39,6 +39,7 @@
 #include "dawn/native/Surface.h"
 #include "dawn/native/TintUtils.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/compiler.h"
 #include "tint/tint.h"
 
 namespace dawn::native::null {
@@ -400,13 +401,13 @@ void Buffer::CopyFromStaging(BufferBase* staging,
                              uint64_t destinationOffset,
                              uint64_t size) {
     uint8_t* ptr = reinterpret_cast<uint8_t*>(staging->GetMappedPointer());
-    memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size);
+    DAWN_UNSAFE_TODO(memcpy(mBackingData.get() + destinationOffset, ptr + sourceOffset, size));
 }
 
 void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
     DAWN_ASSERT(bufferOffset + size <= GetSize());
     DAWN_ASSERT(mBackingData);
-    memcpy(mBackingData.get() + bufferOffset, data, size);
+    DAWN_UNSAFE_TODO(memcpy(mBackingData.get() + bufferOffset, data, size));
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {

@@ -31,6 +31,7 @@
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "dawn/utils/WireHelper.h"
+#include "src/utils/compiler.h"
 
 namespace dawn {
 namespace {
@@ -183,12 +184,13 @@ TEST_F(WGSLFeatureValidationTest, GetFeatures) {
 
     // Exactly featureCount features should be written, and all return true in HasWGSLFeature.
     for (size_t i = 0; i < supportedFeatures.featureCount; i++) {
-        ASSERT_TRUE(instance.HasWGSLLanguageFeature(features[i]));
+        DAWN_UNSAFE_TODO(ASSERT_TRUE(instance.HasWGSLLanguageFeature(features[i])));
     }
 
     // Test the presence / absence of some known testing features.
     const wgpu::WGSLLanguageFeatureName* begin = features;
-    const wgpu::WGSLLanguageFeatureName* end = features + supportedFeatures.featureCount;
+    const wgpu::WGSLLanguageFeatureName* end =
+        DAWN_UNSAFE_TODO(features + supportedFeatures.featureCount);
     ASSERT_NE(std::find(begin, end, wgpu::WGSLLanguageFeatureName::ChromiumTestingShipped), end);
     ASSERT_NE(
         std::find(begin, end, wgpu::WGSLLanguageFeatureName::ChromiumTestingShippedWithKillswitch),

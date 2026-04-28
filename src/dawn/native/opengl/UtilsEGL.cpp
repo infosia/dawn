@@ -33,6 +33,7 @@
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native::opengl {
 
@@ -40,7 +41,8 @@ namespace {
 std::vector<EGLAttrib> ConvertEGLIntParameterListToEGLAttrib(const EGLint* intAttribs) {
     std::vector<EGLAttrib> attribs;
     if (intAttribs) {
-        for (const EGLint* curAttrib = intAttribs; *curAttrib != EGL_NONE; curAttrib++) {
+        for (const EGLint* curAttrib = intAttribs; *curAttrib != EGL_NONE;
+             DAWN_UNSAFE_TODO(curAttrib++)) {
             attribs.push_back(static_cast<EGLAttrib>(*curAttrib));
         }
     }

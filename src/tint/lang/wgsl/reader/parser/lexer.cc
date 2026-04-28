@@ -25,11 +25,6 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef UNSAFE_BUFFERS_BUILD
-// TODO(crbug.com/439062058): Remove this and convert code to safer constructs.
-#pragma allow_unsafe_buffers
-#endif
-
 #include "src/tint/lang/wgsl/reader/parser/lexer.h"
 
 #include <algorithm>
@@ -49,6 +44,7 @@
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/strconv/parse_num.h"
 #include "src/tint/utils/text/unicode.h"
+#include "src/utils/compiler.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
 
@@ -819,7 +815,7 @@ std::optional<Token> Lexer::try_hex_float() {
 
     // Reinterpret as f16 and return
     double result_f64;
-    std::memcpy(&result_f64, &result_u64, 8);
+    DAWN_UNSAFE_TODO(std::memcpy(&result_f64, &result_u64, 8));
 
     if (has_f_suffix) {
         // Check value fits in f32

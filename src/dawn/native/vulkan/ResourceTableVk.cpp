@@ -38,6 +38,7 @@
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/compiler.h"
 namespace dawn::native::vulkan {
 
 // static
@@ -225,7 +226,7 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
             // Prepare the copies.
             std::vector<VkBufferCopy> copies(updates.size());
             for (auto [i, update] : Enumerate(updates)) {
-                stagedData[i] = update.data;
+                DAWN_UNSAFE_TODO(stagedData[i]) = update.data;
 
                 VkBufferCopy copy{
                     .srcOffset = reservation.offsetInBuffer + i * sizeof(uint32_t),

@@ -44,6 +44,7 @@
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/RenderPipeline.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
+#include "src/utils/compiler.h"
 
 namespace dawn::native {
 
@@ -58,13 +59,13 @@ struct ImmediateDataContent {
     template <typename Out>
     const Out* Get(uint32_t offset) const {
         DAWN_ASSERT(sizeof(Out) + offset <= sizeof(T));
-        return reinterpret_cast<const Out*>(&mData[offset]);
+        return reinterpret_cast<const Out*>(&DAWN_UNSAFE_TODO(mData[offset]));
     }
 
     template <typename Out>
     Out* Get(uint32_t offset) {
         DAWN_ASSERT(sizeof(Out) + offset <= sizeof(T));
-        return reinterpret_cast<Out*>(&mData[offset]);
+        return reinterpret_cast<Out*>(&DAWN_UNSAFE_TODO(mData[offset]));
     }
 
   private:
@@ -81,8 +82,8 @@ class UserImmediateConstantsTrackerBase {
     // Setters
     void SetImmediates(uint32_t offset, uint8_t* values, uint32_t size) {
         uint8_t* destData = mContent.template Get<uint8_t>(offsetof(T, userConstants) + offset);
-        if (memcmp(destData, values, size) != 0) {
-            memcpy(destData, values, size);
+        if (DAWN_UNSAFE_TODO(memcmp(destData, values, size)) != 0) {
+            DAWN_UNSAFE_TODO(memcpy(destData, values, size));
             mDirty |= GetImmediateConstantBlockBits(offsetof(T, userConstants),
                                                     sizeof(UserImmediateConstants));
         }
@@ -110,8 +111,8 @@ class UserImmediateConstantsTrackerBase {
     void UpdateImmediateConstants(size_t dataOffset, const U& data) {
         constexpr size_t dataSize = sizeof(U);
         U* destData = mContent.template Get<U>(uint32_t(dataOffset));
-        if (memcmp(destData, &data, dataSize) != 0) {
-            memcpy(destData, &data, dataSize);
+        if (DAWN_UNSAFE_TODO(memcmp(destData, &data, dataSize)) != 0) {
+            DAWN_UNSAFE_TODO(memcpy(destData, &data, dataSize));
             mDirty |= GetImmediateConstantBlockBits(dataOffset, dataSize);
         }
     }
