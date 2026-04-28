@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17687860_683feb91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2026-04-28T21:48:18Z",
+      "side": 1,
+      "message": "PTAL\n\n+CC rharrison as the other person involved with the fake filesystem work. The generated code looks reasonable and the `_MatchesReal` tests verify that the behavior matches the real filesystem, so I don\u0027t think there will be any issues.\n\nAs a note, I reverted the minor `_test.go` changes that removed `open` from several test error messages. The removal was not necessary to have the tests pass for me locally on Go 1.25, which is the version specified in `go.mod`.",
+      "revId": "2ae844892811c2dc72a57b5c44714c49e7cb0027",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
