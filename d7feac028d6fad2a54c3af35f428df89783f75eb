@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e4d6bf1_83722846",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-28T14:40:24Z",
+      "side": 1,
+      "message": "Having looking closer at how your version of the macro works and what it looks like in situ, I prefer it over the existing coarser TINT macro (I also wasn\u0027t aware of the UNSAFE_BUFFER_BUILD macro, which I really like seeing removed).\n\nAs mentioned on the other review I agree with having a single pair of macros for the repo instead of a pair for tint and a pair for dawn",
+      "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
