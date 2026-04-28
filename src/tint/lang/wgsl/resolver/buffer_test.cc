@@ -395,9 +395,18 @@ TEST_F(ResolverBufferViewTest, Return_NonHostShareable) {
          Vector{Assign(Phony(), Call(Ident("bufferView", array), AddressOf(gv), 0_i))});
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(),
-              R"(error: override-sized arrays can only be used in the <workgroup> address space
-note:  while instantiating bufferView)");
+    EXPECT_EQ(r()->error(), R"(error: return type of bufferView must be host-shareable)");
+}
+
+TEST_F(ResolverBufferViewTest, Return_NonHostShareable_Workgroup) {
+    Override("o", ty.u32());
+    auto* gv = GlobalVar("v", workgroup, ty.buffer(128));
+    auto array = ty.array(ty.u32(), Expr(Ident("o")));
+    Func("foo", Empty, ty.void_(),
+         Vector{Assign(Phony(), Call(Ident("bufferView", array), AddressOf(gv), 0_i))});
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), R"(error: return type of bufferView must be host-shareable)");
 }
 
 TEST_F(ResolverBufferViewTest, Offset_Overflow) {
