@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f92995c_7dd4b9d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-28T20:18:01Z",
+      "side": 1,
+      "message": "As discussed earlier, this is just the Vulkan implementation for the sake of validating the concept. Please ignore the copious log messages I\u0027ve been using for debugging, those will obviously go away soon. 😊\n\nA few things worth highlighting/discussing:\n - Not clear to me if MultiDrawIndirect needs to be accounted for as well?\n - The process of setting the indices feels a little fragile because of how bundles add their draws to the validation metadata in batches. Tempted to try and make some of that less clever now that we need to touch some of it as it\u0027s added anyway.\n - Metal is already looking up the metadata based on the render pass number, but it\u0027ll need to be added to other backends. Might be worth trying to make that a bit more formal/unified?",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
