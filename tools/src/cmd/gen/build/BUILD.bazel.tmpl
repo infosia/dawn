@@ -1,5 +1,6 @@
 {{- /* Collect all the conditionals used by all targets in this directory */}}
 {{- $AllConditionals := $.DecomposedConditionals}}
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 load("//src/tint:flags.bzl", "COPTS")
 load("@bazel_skylib//lib:selects.bzl", "selects")
 {{/* newline */}}
