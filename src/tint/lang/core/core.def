@@ -3140,6 +3140,10 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
 @must_use @const conv mat4x3<T: f32>(mat4x3<f16>) -> mat4x3<T>
 @must_use @const conv mat4x4<T: f32>(mat4x4<f16>) -> mat4x4<T>
 
+match test_as_u32: u32
+
+@must_use @const implicit(T:test_as_u32 ) conv u64(T) -> u64
+
 ////////////////////////////////////////////////////////////////////////////////
 // Unary Operators                                                            //
 ////////////////////////////////////////////////////////////////////////////////
@@ -3238,6 +3242,9 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
   op | (vec<N, T>, vec<N, T>) -> vec<N, T>
 
 @must_use @const
+  op | (u64, u64) -> u64
+
+@must_use @const
   op && (bool, bool) -> bool
 @must_use @const
   op || (bool, bool) -> bool
@@ -3276,6 +3283,9 @@ ctor mat4x4<T: f32_f16>(T, T, T, T,
   op << (T, u32) -> T
 @must_use @const implicit(T: iu32, N: num)
   op << (vec<N, T>, vec<N, u32>) -> vec<N, T>
+
+@must_use @const
+  op << (u64, u32) -> u64
 
 @must_use @const implicit(T: iu32)
   op >> (T, u32) -> T
