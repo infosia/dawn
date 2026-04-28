@@ -195,7 +195,7 @@ VkMappedMemoryRange GetMappedMemoryRange(const ResourceMemoryAllocation& allocat
                                          size_t offset,
                                          size_t size,
                                          size_t nonCoherentAtomSize) {
-    DAWN_ASSERT(IsAligned(allocation.GetOffset(), nonCoherentAtomSize));
+    DAWN_CHECK(IsAligned(allocation.GetOffset(), nonCoherentAtomSize));
 
     // `offset` must always be a multiple of nonCoherentAtomSize. `size` must either be a multiple
     // of nonCoherentAtomSize or offset+size must be equal to the size of the allocation.

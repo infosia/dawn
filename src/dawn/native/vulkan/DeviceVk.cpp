@@ -547,12 +547,12 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::TextureCompressionETC2)) {
-        DAWN_ASSERT(mDeviceInfo.features.textureCompressionETC2 == VK_TRUE);
+        DAWN_CHECK(mDeviceInfo.features.textureCompressionETC2 == VK_TRUE);
         usedKnobs.features.textureCompressionETC2 = VK_TRUE;
     }
 
     if (HasFeature(Feature::TextureCompressionASTC)) {
-        DAWN_ASSERT(mDeviceInfo.features.textureCompressionASTC_LDR == VK_TRUE);
+        DAWN_CHECK(mDeviceInfo.features.textureCompressionASTC_LDR == VK_TRUE);
         usedKnobs.features.textureCompressionASTC_LDR = VK_TRUE;
     }
 
@@ -561,18 +561,18 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::PrimitiveIndex)) {
-        DAWN_ASSERT(mDeviceInfo.features.geometryShader == VK_TRUE);
+        DAWN_CHECK(mDeviceInfo.features.geometryShader == VK_TRUE);
         usedKnobs.features.geometryShader = VK_TRUE;
     }
 
     bool shaderFloat16Int8FeaturesAdded = false;
     if (HasFeature(Feature::ShaderF16)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
-                    mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
-                    mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE);
+        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
+                   mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
+                   mDeviceInfo._16BitStorageFeatures.storageBuffer16BitAccess == VK_TRUE);
         if (!IsToggleEnabled(Toggle::DecomposeUniformBuffers)) {
-            DAWN_ASSERT(mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess ==
-                        VK_TRUE);
+            DAWN_CHECK(mDeviceInfo._16BitStorageFeatures.uniformAndStorageBuffer16BitAccess ==
+                       VK_TRUE);
         }
 
         usedKnobs.shaderFloat16Int8Features.shaderFloat16 = VK_TRUE;
@@ -593,8 +593,8 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
     // Set device feature for subgroups with f16 types.
     if (HasFeature(Feature::ShaderF16) && HasFeature(Feature::Subgroups)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderSubgroupExtendedTypes) &&
-                    mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
+        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::ShaderSubgroupExtendedTypes) &&
+                   mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE);
 
         usedKnobs.shaderSubgroupExtendedTypes = mDeviceInfo.shaderSubgroupExtendedTypes;
         featuresChain.Add(&usedKnobs.shaderSubgroupExtendedTypes);
@@ -627,14 +627,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::MultiDrawIndirect)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DrawIndirectCount) &&
-                    mDeviceInfo.features.multiDrawIndirect == VK_TRUE);
+        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::DrawIndirectCount) &&
+                   mDeviceInfo.features.multiDrawIndirect == VK_TRUE);
         usedKnobs.features.multiDrawIndirect = VK_TRUE;
     }
 
     if (HasFeature(Feature::ChromiumExperimentalSubgroupMatrix)) {
-        DAWN_ASSERT(IsToggleEnabled(Toggle::UseVulkanMemoryModel));
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::CooperativeMatrix));
+        DAWN_CHECK(IsToggleEnabled(Toggle::UseVulkanMemoryModel));
+        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::CooperativeMatrix));
         usedKnobs.cooperativeMatrixFeatures = mDeviceInfo.cooperativeMatrixFeatures;
         featuresChain.Add(&usedKnobs.cooperativeMatrixFeatures);
 
@@ -661,7 +661,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     // by the Dynamic Rendering path.
     if (IsToggleEnabled(Toggle::VulkanUseDynamicRendering) &&
         !HasFeature(Feature::DawnLoadResolveTexture)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DynamicRendering));
+        DAWN_CHECK(usedKnobs.HasExt(DeviceExt::DynamicRendering));
         usedKnobs.dynamicRenderingFeatures = mDeviceInfo.dynamicRenderingFeatures;
         featuresChain.Add(&usedKnobs.dynamicRenderingFeatures);
         mRenderPassType = VulkanRenderPassType::DynamicRendering;
