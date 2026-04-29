@@ -147,10 +147,14 @@ struct Options {
         /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
         bool polyfill_subgroup_broadcast_f16 = false;
 
+        /// Set to `true` to decompose workgroup accesses via DecomposeAccess.
+        bool d3d12_decompose_workgroup_access = false;
+
         TINT_REFLECT(Workarounds,
                      scalarize_max_min_clamp,
                      polyfill_reflect_vec2_f32,
-                     polyfill_subgroup_broadcast_f16);
+                     polyfill_subgroup_broadcast_f16,
+                     d3d12_decompose_workgroup_access);
         bool operator==(const Workarounds&) const = default;
     };
 
