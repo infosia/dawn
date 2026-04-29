@@ -392,6 +392,7 @@ class DeviceBase : public ErrorSink,
     virtual uint64_t GetBufferCopyOffsetAlignmentForDepthStencil() const;
 
     virtual float GetTimestampPeriodInNS() const = 0;
+    virtual bool AreTimestampsQuantized() const;
 
     virtual bool ShouldDuplicateNumWorkgroupsForDispatchIndirect(
         ComputePipelineBase* computePipeline) const;
