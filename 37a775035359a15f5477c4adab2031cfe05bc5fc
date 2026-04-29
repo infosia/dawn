@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b36df14_638ab94d",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f32abd7_9c82a21f",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4cc87b2_84d20aa2",
@@ -65,6 +83,24 @@
       "writtenOn": "2026-04-28T12:57:18Z",
       "side": 1,
       "message": "nit: You can `encoder.Finish()` here too. Makes the test very slightly stricter.\n\nUpdate the test title to match.",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d99250a_c5ed4eaa",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cc87b2_84d20aa2",
       "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07d896e6_8796dac0",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73cc7465_3928b3eb",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a62f5679_fa60588f",
@@ -99,6 +153,24 @@
       "writtenOn": "2026-04-28T12:57:18Z",
       "side": 1,
       "message": "Duplicate this test but for begin/end?\n\nOr don\u0027t bother because I think it\u0027s covered by CTS.",
+      "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbcf60f2_1953b667",
+        "filename": "src/dawn/tests/end2end/QueryTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:43:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a62f5679_fa60588f",
       "revId": "37a775035359a15f5477c4adab2031cfe05bc5fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
