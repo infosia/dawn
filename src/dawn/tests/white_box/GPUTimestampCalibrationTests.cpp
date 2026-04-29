@@ -279,7 +279,7 @@ class GPUTimestampCalibrationTests : public DawnTestWithParams<GPUTimestampCalib
         queue.Submit(1, &resolveCommands);
 
         float errorToleranceRatio = 0.0f;
-        if (!HasToggleEnabled("disable_timestamp_query_conversion")) {
+        if (HasToggleEnabled("timestamp_quantization")) {
             float period = mBackend->GetTimestampPeriod();
             gpuTimestamp0 = static_cast<uint64_t>(static_cast<double>(gpuTimestamp0 * period));
             gpuTimestamp1 = static_cast<uint64_t>(static_cast<double>(gpuTimestamp1 * period));
@@ -300,21 +300,20 @@ class GPUTimestampCalibrationTests : public DawnTestWithParams<GPUTimestampCalib
 };
 
 // Check that the timestamps got by timestamp query are between the two timestamps from
-// GetClockCalibration() with the 'disable_timestamp_query_conversion' toggle disabled or enabled.
+// GetClockCalibration() with the 'timestamp_quantization' toggle disabled or enabled.
 TEST_P(GPUTimestampCalibrationTests, TimestampsCalibration) {
     RunTest();
 }
 
-DAWN_INSTANTIATE_TEST_P(
-    GPUTimestampCalibrationTests,
-    // Test with the disable_timestamp_query_conversion toggle forced on and off.
-    {D3D12Backend({"disable_timestamp_query_conversion"}, {}),
-     D3D12Backend({}, {"disable_timestamp_query_conversion"}),
-     MetalBackend({"disable_timestamp_query_conversion"}, {}),
-     MetalBackend({}, {"disable_timestamp_query_conversion"})},
-    {wgpu::FeatureName::TimestampQuery,
-     wgpu::FeatureName::ChromiumExperimentalTimestampQueryInsidePasses},
-    {EncoderType::NonPass, EncoderType::ComputePass, EncoderType::RenderPass});
+DAWN_INSTANTIATE_TEST_P(GPUTimestampCalibrationTests,
+                        // Test with the timestamp_quantization toggle forced on and off.
+                        {D3D12Backend({"timestamp_quantization"}, {}),
+                         D3D12Backend({}, {"timestamp_quantization"}),
+                         MetalBackend({"timestamp_quantization"}, {}),
+                         MetalBackend({}, {"timestamp_quantization"})},
+                        {wgpu::FeatureName::TimestampQuery,
+                         wgpu::FeatureName::ChromiumExperimentalTimestampQueryInsidePasses},
+                        {EncoderType::NonPass, EncoderType::ComputePass, EncoderType::RenderPass});
 
 }  // anonymous namespace
 }  // namespace dawn
