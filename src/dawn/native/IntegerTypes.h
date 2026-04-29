@@ -143,6 +143,10 @@ constexpr ExecutionSerial kBeginningOfGPUTime = ExecutionSerial(0);
 using PipelineCompatibilityToken = TypedInteger<struct PipelineCompatibilityTokenT, uint64_t>;
 constexpr PipelineCompatibilityToken kExplicitPCT = PipelineCompatibilityToken(0);
 
+// An identifier that indicates the index of a RenderPass or ComputePass in a command buffer.
+// Used to look up additional information related to the pass, such a resource usages.
+using PassIndex = TypedInteger<struct PassIndexT, uint32_t>;
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_INTEGERTYPES_H_

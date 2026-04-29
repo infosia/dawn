@@ -685,7 +685,7 @@ MaybeError CaptureRenderPass(CaptureContext& captureContext, CommandIterator& co
 
 template <typename T>
 MaybeError AddReferencedPassResourceUsages(CaptureContext& captureContext,
-                                           const std::vector<T>& syncScopeResourceUsages) {
+                                           const T& syncScopeResourceUsages) {
     for (const auto& usages : syncScopeResourceUsages) {
         for (auto buffer : usages.buffers) {
             DAWN_TRY(captureContext.AddResource(ToBackend(buffer)));
@@ -1008,8 +1008,8 @@ ResultOrError<WGPUCommandBuffer> CommandBuffer::Encode() {
     WGPUCommandEncoder innerEncoder =
         wgpu.deviceCreateCommandEncoder(ToBackend(GetDevice())->GetInnerHandle(), nullptr);
 
-    size_t nextComputePassNumber = 0;
-    size_t nextRenderPassNumber = 0;
+    PassIndex nextComputePassNumber{0};
+    PassIndex nextRenderPassNumber{0};
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
