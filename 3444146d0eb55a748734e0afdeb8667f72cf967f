@@ -16,6 +16,132 @@
       "message": "As discussed earlier, this is just the Vulkan implementation for the sake of validating the concept. Please ignore the copious log messages I\u0027ve been using for debugging, those will obviously go away soon. 😊\n\nA few things worth highlighting/discussing:\n - Not clear to me if MultiDrawIndirect needs to be accounted for as well?\n - The process of setting the indices feels a little fragile because of how bundles add their draws to the validation metadata in batches. Tempted to try and make some of that less clever now that we need to touch some of it as it\u0027s added anyway.\n - Metal is already looking up the metadata based on the render pass number, but it\u0027ll need to be added to other backends. Might be worth trying to make that a bit more formal/unified?",
       "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1524893a_0a04dcf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "Approach looks very good. That whole batch business is a bit bonkers, +1 to making it less smart if it helps clarity.",
+      "parentUuid": "4f92995c_7dd4b9d0",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cbc3cb7_3c83adc5",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "nit: might be worth adding a TypedInteger for the RenderPassIndex as we start to have a bunch of them.",
+      "range": {
+        "startLine": 1667,
+        "startChar": 43,
+        "endLine": 1667,
+        "endChar": 49
+      },
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "940b8c2d_e445fc7d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "ditto TypedInteger for the indirectDrawIndex.",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2d87c5d_b7c9a1b9",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "Looks good, although eventually we can remove draw-\u003eindirectBuffer/offset altogether.",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f82006f2_5fd0e8cc",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "We\u0027ll need an issue to look at the same fix for MDI as well.",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6045351a_6e0c038f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "Let\u0027s have a TODO for indirect dispatches as well.",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27c6155_115776f6",
+        "filename": "src/dawn/tests/end2end/RenderBundleTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T13:28:39Z",
+      "side": 1,
+      "message": "Test changes LGTM, we can land separately!",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
