@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62622ea2_ab3d2cbd",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-29T13:19:25Z",
+      "side": 1,
+      "message": "I wouldn\u0027t worry about it for comments. We do use 100 columns, but it\u0027s not worth the effort to reflow.",
+      "parentUuid": "d2bdb285_ba4480a8",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 70
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a835ee41_6c358da0",
         "filename": "src/utils/compiler.h",
         "patchSetId": 6
