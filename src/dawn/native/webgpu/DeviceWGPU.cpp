@@ -448,6 +448,10 @@ float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
 }
 
+bool Device::AreTimestampsQuantized() const {
+    return true;
+}
+
 bool Device::CanResolveSubRect() const {
     // Related code in src/dawn/native/RenderPassWorkaroundsHelper.cpp
     // WebGPU backend will pass down cmd->resolveRect to the inner layer backend to handle it

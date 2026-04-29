@@ -60,6 +60,7 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
     bool CanResolveSubRect() const override;
 
     float GetTimestampPeriodInNS() const override;
+    bool AreTimestampsQuantized() const override;
 
     bool NeedsIndirectGPUValidation() const override;
 
