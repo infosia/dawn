@@ -34,6 +34,7 @@
 #include "src/dawn/node/binding/GPUBuffer.h"
 #include "src/dawn/node/binding/GPURenderBundle.h"
 #include "src/dawn/node/binding/GPURenderPipeline.h"
+#include "src/dawn/node/binding/GPUResourceTable.h"
 
 namespace wgpu::binding {
 
@@ -102,6 +103,19 @@ void GPURenderBundleEncoder::setImmediates(Napi::Env env,
     }
 
     enc_.SetImmediates(rangeOffset, dataSpan.data(), dataSpan.size());
+}
+
+void GPURenderBundleEncoder::setResourceTable(
+    Napi::Env env,
+    std::optional<interop::Interface<interop::GPUResourceTable>> table) {
+    Converter conv(env);
+
+    wgpu::ResourceTable resourceTable{};
+    if (!conv(resourceTable, table)) {
+        return;
+    }
+
+    enc_.SetResourceTable(resourceTable);
 }
 
 void GPURenderBundleEncoder::pushDebugGroup(Napi::Env, std::string groupLabel) {

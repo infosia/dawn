@@ -1491,6 +1491,38 @@ bool Converter::Convert(wgpu::BindGroupEntry& out, const interop::GPUBindGroupEn
     return Throw("invalid value for GPUBindGroupEntry.resource");
 }
 
+bool Converter::Convert(wgpu::BindingResource& out, const interop::GPUBindingResource& in) {
+    out = {};
+
+    if (auto* res = std::get_if<interop::Interface<interop::GPUSampler>>(&in)) {
+        return Convert(out.sampler, *res);
+    }
+    if (auto* res = std::get_if<interop::Interface<interop::GPUTexture>>(&in)) {
+        wgpu::Texture texture;
+        if (!Convert(texture, *res)) {
+            return false;
+        }
+        out.textureView = texture.CreateView();
+        return true;
+    }
+    if (auto* res = std::get_if<interop::Interface<interop::GPUTextureView>>(&in)) {
+        return Convert(out.textureView, *res);
+    }
+    if (auto* res = std::get_if<interop::Interface<interop::GPUBuffer>>(&in)) {
+        return Convert(out.buffer, *res);
+    }
+    if (auto* res = std::get_if<interop::GPUBufferBinding>(&in)) {
+        auto buffer = res->buffer.As<GPUBuffer>();
+        out.size = wgpu::kWholeSize;
+        if (!buffer || !Convert(out.offset, res->offset) || !Convert(out.size, res->size)) {
+            return false;
+        }
+        out.buffer = *buffer;
+        return true;
+    }
+    return Throw("invalid value for GPUBindGroupEntry.resource");
+}
+
 bool Converter::Convert(wgpu::BindGroupLayoutEntry& out,
                         const interop::GPUBindGroupLayoutEntry& in) {
     // Chain the external texture binding layout if present in the dictionary.
@@ -1690,6 +1722,9 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kPrimitiveIndex:
             out = wgpu::FeatureName::PrimitiveIndex;
             return true;
+        case interop::GPUFeatureName::kChromiumExperimentalSamplingResourceTable:
+            out = wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable;
+            return true;
     }
     return false;
 }
@@ -1725,6 +1760,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(TextureFormatsTier2, kTextureFormatsTier2);
         CASE(TextureComponentSwizzle, kTextureComponentSwizzle);
         CASE(PrimitiveIndex, kPrimitiveIndex);
+        CASE(ChromiumExperimentalSamplingResourceTable, kChromiumExperimentalSamplingResourceTable);
 
 #undef CASE
 
@@ -1784,7 +1820,6 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::AdapterPropertiesWGPU:
         case wgpu::FeatureName::SharedBufferMemoryD3D12SharedMemoryFileMappingHandle:
         case wgpu::FeatureName::SharedTextureMemoryD3D12Resource:
-        case wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable:
         case wgpu::FeatureName::SubgroupSizeControl:
         case wgpu::FeatureName::AtomicVec2uMinMax:
         case wgpu::FeatureName::Unorm16FormatsForExternalTexture:

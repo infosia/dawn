@@ -69,6 +69,7 @@ DECLARE_IMPL(GPUPipelineLayout);
 DECLARE_IMPL(GPUQuerySet);
 DECLARE_IMPL(GPURenderBundle);
 DECLARE_IMPL(GPURenderPipeline);
+DECLARE_IMPL(GPUResourceTable);
 DECLARE_IMPL(GPUSampler);
 DECLARE_IMPL(GPUShaderModule);
 DECLARE_IMPL(GPUTexture);
@@ -237,6 +238,8 @@ class Converter {
     [[nodiscard]] bool Convert(wgpu::StoreOp& out, const interop::GPUStoreOp& in);
 
     [[nodiscard]] bool Convert(wgpu::BindGroupEntry& out, const interop::GPUBindGroupEntry& in);
+
+    [[nodiscard]] bool Convert(wgpu::BindingResource& out, const interop::GPUBindingResource& in);
 
     [[nodiscard]] bool Convert(wgpu::BindGroupLayoutEntry& out,
                                const interop::GPUBindGroupLayoutEntry& in);

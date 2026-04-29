@@ -39,7 +39,6 @@
 #include "src/dawn/node/binding/GPUBindGroup.h"
 #include "src/dawn/node/binding/GPUBindGroupLayout.h"
 #include "src/dawn/node/binding/GPUBuffer.h"
-#include "src/dawn/node/binding/GPUCommandBuffer.h"
 #include "src/dawn/node/binding/GPUCommandEncoder.h"
 #include "src/dawn/node/binding/GPUComputePipeline.h"
 #include "src/dawn/node/binding/GPUPipelineLayout.h"
@@ -47,6 +46,7 @@
 #include "src/dawn/node/binding/GPUQueue.h"
 #include "src/dawn/node/binding/GPURenderBundleEncoder.h"
 #include "src/dawn/node/binding/GPURenderPipeline.h"
+#include "src/dawn/node/binding/GPUResourceTable.h"
 #include "src/dawn/node/binding/GPUSampler.h"
 #include "src/dawn/node/binding/GPUShaderModule.h"
 #include "src/dawn/node/binding/GPUSupportedFeatures.h"
@@ -422,6 +422,13 @@ interop::Interface<interop::GPUPipelineLayout> GPUDevice::createPipelineLayout(
         return {};
     }
 
+    wgpu::PipelineLayoutResourceTable resourceTable{};
+    if (descriptor.usesResourceTable) {
+        resourceTable.usesResourceTable = true;
+        resourceTable.nextInChain = desc.nextInChain;
+        desc.nextInChain = &resourceTable;
+    }
+
     return interop::GPUPipelineLayout::Create<GPUPipelineLayout>(
         env, desc, device_.CreatePipelineLayout(&desc));
 }
@@ -589,6 +596,20 @@ interop::Interface<interop::GPURenderBundleEncoder> GPUDevice::createRenderBundl
 
     return interop::GPURenderBundleEncoder::Create<GPURenderBundleEncoder>(
         env, desc, device_.CreateRenderBundleEncoder(&desc));
+}
+
+interop::Interface<interop::GPUResourceTable> GPUDevice::createResourceTable(
+    Napi::Env env,
+    interop::GPUResourceTableDescriptor descriptor) {
+    Converter conv(env, device_);
+
+    wgpu::ResourceTableDescriptor desc{};
+    if (!conv(desc.label, descriptor.label) || !conv(desc.size, descriptor.size)) {
+        return {};
+    }
+
+    return interop::GPUResourceTable::Create<GPUResourceTable>(env, desc,
+                                                               device_.CreateResourceTable(&desc));
 }
 
 interop::Interface<interop::GPUQuerySet> GPUDevice::createQuerySet(
