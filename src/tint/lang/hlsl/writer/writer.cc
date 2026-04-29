@@ -96,8 +96,10 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         }
         if (call->Func() == core::BuiltinFn::kAtomicStoreMax ||
             call->Func() == core::BuiltinFn::kAtomicStoreMin) {
-            return Failure(
-                "64-bit (vec2u) atomic operations are not yet supported by the HLSL backend");
+            if (options.compiler != Options::Compiler::kDXC) {
+                return Failure(
+                    "64-bit atomic operations are not supported by the HLSL FXC backend");
+            }
         }
     }
 
