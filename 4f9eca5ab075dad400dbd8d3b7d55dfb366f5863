@@ -43,6 +43,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a835ee41_6c358da0",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T12:54:35Z",
+      "side": 1,
+      "message": "```suggestion\n#if DAWN_COMPILER_IS(CLANG)\n```",
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f212d82_dbbb3c5c",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T12:54:35Z",
+      "side": 1,
+      "message": "```suggestion\n#define DAWN_UNSAFE_BUFFERS(...)             \\\n  _Pragma(\"clang unsafe_buffer_usage begin\") \\\n  __VA_ARGS__                                \\\n```",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3e0dc17c_abee868d",
         "filename": "src/utils/compiler.h",
         "patchSetId": 6
