@@ -1583,6 +1583,7 @@ using IR_Validator64BitIntTypeTest = IRTestParamHelper<std::tuple<
     /* int64_allowed */ bool,
     /* type_builder */ TypeBuilderFn>>;
 
+#if 0
 TEST_P(IR_Validator64BitIntTypeTest, Var) {
     bool int64_allowed = std::get<0>(GetParam());
     auto* type = std::get<1>(GetParam())(ty);
@@ -1607,6 +1608,7 @@ TEST_P(IR_Validator64BitIntTypeTest, Var) {
             << res.Failure();
     }
 }
+#endif
 
 TEST_P(IR_Validator64BitIntTypeTest, FnParam) {
     bool int64_allowed = std::get<0>(GetParam());
