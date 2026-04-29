@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9145fec7_eae20981",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T13:48:30Z",
+      "side": 1,
+      "message": "thank you for the clarification. I had already the changes",
+      "parentUuid": "62622ea2_ab3d2cbd",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 70
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a835ee41_6c358da0",
@@ -78,6 +102,24 @@
       "writtenOn": "2026-04-29T12:54:35Z",
       "side": 1,
       "message": "```suggestion\n#if DAWN_COMPILER_IS(CLANG)\n```",
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f918ce_585e1e5b",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T13:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a835ee41_6c358da0",
       "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c14580_33612ba4",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T13:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f212d82_dbbb3c5c",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e0dc17c_abee868d",
@@ -118,6 +184,30 @@
       "writtenOn": "2026-04-29T12:38:10Z",
       "side": 1,
       "message": "Run `git cl format`. This will allign the `\\`  (at least, that\u0027s what it would do in chrome)",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 6
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e5956d_f18fac75",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T13:48:30Z",
+      "side": 1,
+      "message": "I ran `git cl format`, but there was no modifications on this line. I did the changes manually",
+      "parentUuid": "3e0dc17c_abee868d",
       "range": {
         "startLine": 204,
         "startChar": 0,
