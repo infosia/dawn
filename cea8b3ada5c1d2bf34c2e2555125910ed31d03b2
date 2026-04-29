@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eb98fe9_1836b004",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-29T22:04:51Z",
+      "side": 0,
+      "message": "I\u0027ve effectively replaced this branch with one that creates a new `IndexedIndirectBufferValidationInfo` and then merges the batches into it as if it were an existing one. This will be a bit slower, but my intuition is that it\u0027s probably worth it to simplify the flow here now that we\u0027re adding even more logic to the process of merging in draws from a bundle.\n\nIf you\u0027re concerned about the potential added overhead let me know and I can revert and duplicate some logic here.",
+      "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
