@@ -29,7 +29,6 @@
 
 # Checks to enforce
 .buffers,libc
-
 -src/dawn/native/
 -src/dawn/node
 -src/dawn/tests
