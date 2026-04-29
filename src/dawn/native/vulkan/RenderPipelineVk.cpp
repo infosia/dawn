@@ -847,6 +847,9 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
                                                           1, &createInfo, nullptr, &*pipeline),
                        "CreateGraphicsPipelines"));
     result.pipeline = AcquireRef(new RefCountedVkHandle<VkPipeline>(device, pipeline));
+    // `GPU.Vulkan.PipelineCache.vkCreateGraphicsPipelines2` is also recorded from Chromium using
+    // Skia-Ganesh backend.
+    cacheTimer.RecordMicroseconds("GPU.Vulkan.PipelineCache.vkCreateGraphicsPipelines2");
     cacheTimer.RecordMicroseconds(cache->CacheHit() ? "Vulkan.CreateGraphicsPipelines.CacheHit"
                                                     : "Vulkan.CreateGraphicsPipelines.CacheMiss");
 
