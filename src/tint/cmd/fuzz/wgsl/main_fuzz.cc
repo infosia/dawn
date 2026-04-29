@@ -35,6 +35,7 @@
 #include <span>
 #include <string>
 
+#include "src/tint/cmd/fuzz/common/helper.h"
 #include "src/tint/cmd/fuzz/wgsl/fuzz.h"
 #include "src/tint/utils/command/cli.h"
 #include "src/tint/utils/command/command.h"
@@ -49,23 +50,12 @@ namespace {
 
 tint::fuzz::wgsl::Options options;
 
-[[nodiscard]] inline std::string ReplaceAll(std::string str,
-                                            std::string_view substr,
-                                            std::string_view replacement) {
-    size_t pos = 0;
-    while ((pos = str.find(substr, pos)) != std::string_view::npos) {
-        str.replace(pos, substr.length(), replacement);
-        pos += replacement.length();
-    }
-    return str;
-}
-
 std::string get_default_dxc_path(char*** argv) {
     std::string default_dxc_path = "";
 #if TINT_BUILD_HLSL_WRITER
     // Assume the DXC library is in the same directory as this executable
     std::string exe_path = (*argv)[0];
-    exe_path = ReplaceAll(exe_path, "\\", "/");
+    exe_path = tint::fuzz::common::ReplaceAll(exe_path, "\\", "/");
     auto pos = exe_path.rfind('/');
     if (pos != std::string::npos) {
         default_dxc_path = exe_path.substr(0, pos) + '/' + tint::hlsl::validate::kDxcDLLName;
@@ -161,12 +151,15 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     options.verbose = opt_verbose.value.value_or(false);
     options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
-    options.vk_icd = opt_vk_icd.value.value_or("");
+    options.vk_icd = opt_vk_icd.value.value_or(tint::fuzz::common::GetDefaultVkICDPath(argv));
 #endif
     options.dump = opt_dump.value.value_or(false);
     options.dump_ir_when_validating = opt_dump_ir.value.value_or(false);
 
     print_dxc_path_found(options.dxc);
+#if TINT_BUILD_FUZZER_VULKAN_SUPPORT
+    tint::fuzz::common::PrintVkICDPathFound(options.vk_icd);
+#endif
 #if DAWN_ASAN_ENABLED() && !defined(NDEBUG)
     // TODO(crbug.com/352402877): Avoid DXC timeouts on asan + debug fuzzer builds
     std::cout << "DXC validation disabled in asan + debug builds"

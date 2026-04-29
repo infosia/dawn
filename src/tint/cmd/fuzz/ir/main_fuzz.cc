@@ -33,6 +33,7 @@
 #include <cstddef>
 #include <span>
 
+#include "src/tint/cmd/fuzz/common/helper.h"
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
@@ -143,7 +144,8 @@ extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* 
     options.run_concurrently = opt_concurrent.value.value_or(false);
     options.verbose = opt_verbose.value.value_or(false);
 #if TINT_BUILD_FUZZER_VULKAN_SUPPORT
-    options.vk_icd = opt_vk_icd.value.value_or("");
+    options.vk_icd = opt_vk_icd.value.value_or(tint::fuzz::common::GetDefaultVkICDPath(argv));
+    tint::fuzz::common::PrintVkICDPathFound(options.vk_icd);
 #endif
     options.dump_ir_when_validating = opt_dump_ir.value.value_or(false);
 
