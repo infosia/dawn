@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f8328e_45e4c4c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-04-29T00:24:56Z",
+      "side": 1,
+      "message": "Please verify this is actually true and not some other bug in Chromium/Dawn by looking at the source code to the debug layer .",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 69
+      },
+      "revId": "6321a15a209ddebe85f551a3b9b1922d55e40a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
