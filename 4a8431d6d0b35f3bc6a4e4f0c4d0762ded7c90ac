@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad76a051_d948ef30",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-29T14:18:15Z",
+      "side": 1,
+      "message": "Yes because we might not reach that callsite since we\u0027re only decomposing buffers. If one of the callsites is just a standard runtime array it would be missed.",
+      "parentUuid": "5e103b93_9036b446",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e35d8d93_448022d1",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e4e339f_ed4bdf95",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-29T14:18:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e35d8d93_448022d1",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee42094e_e33b5a3d",
@@ -65,6 +101,24 @@
       "writtenOn": "2026-04-29T02:55:31Z",
       "side": 1,
       "message": "Same as above",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd8f6355_fe67392f",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2026-04-29T14:18:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee42094e_e33b5a3d",
       "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
