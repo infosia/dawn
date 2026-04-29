@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fed85c7_43042fd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 4783995
+      },
+      "writtenOn": "2026-04-29T20:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d70be0_6f800e00",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "f479a9526e6b38141c6e9320858bc6f12a251013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4139f427_a5a8d22d",
@@ -37,6 +61,30 @@
       "writtenOn": "2026-04-29T15:40:28Z",
       "side": 1,
       "message": "Nice!\n\nIt would be nice to talk about removing the directory opt-outs.\n\nWhat about:\n```\nspanification: Add #pragma allow_unsafe_buffers to Dawn (Linux/Win)\n\nAs part of the effort to enforce -Wunsafe-buffer-usage globally in\nDawn, this CL transitions from coarse, GN-level directory\nsuppressions to targeted file-level `#pragma allow_unsafe_buffers`\nexclusions for currently failing files on Linux and Windows.\n\nThis establishes a new baseline where newly added files, and\nexisting files without the pragma, are strictly checked for safe\nbuffer usage. This immediately prevents the introduction of new\nunsafe patterns into the codebase from clean files.\n\nUpcoming follow-ups for this effort include:\n- Running the automation script for additional platforms.\n- Removing the top-level directory exclusions from\n  unsafe_buffers_paths.txt.\n- Transitioning from coarse file-level pragmas to fine-grained,\n  instruction-level opt-outs (UNSAFE_TODO).\n\nThis CL has no behavior changes.\n\nThis patch was fully automated using:\nhttps://paste.googleplex.com/6662342478790656\n\nFor more context, see the internal doc:\nhttp://go/unsafe-buffer-dawn\n\nBug: 507078598, 504659032\nChange-Id: Ic233853bd3a8a8a4730c800cef25606c17639593\n```",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "f479a9526e6b38141c6e9320858bc6f12a251013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce5e805_21000de1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4783995
+      },
+      "writtenOn": "2026-04-29T20:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4139f427_a5a8d22d",
       "range": {
         "startLine": 7,
         "startChar": 0,
