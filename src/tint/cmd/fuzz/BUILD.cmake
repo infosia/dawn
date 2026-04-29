@@ -34,5 +34,6 @@
 #                       Do not modify this file directly
 ################################################################################
 
+include(cmd/fuzz/common/BUILD.cmake)
 include(cmd/fuzz/ir/BUILD.cmake)
 include(cmd/fuzz/wgsl/BUILD.cmake)

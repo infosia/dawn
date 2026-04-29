@@ -85,6 +85,7 @@ if (tint_build_ir_binary && tint_build_wgsl_reader) {
       "${dawn_root}/src/utils",
       "${tint_lpm_dir}:libprotobuf-mutator",
       "${tint_src_dir}/api/common",
+      "${tint_src_dir}/cmd/fuzz/common",
       "${tint_src_dir}/cmd/fuzz/ir:fuzz",
       "${tint_src_dir}/cmd/fuzz/ir/helpers",
       "${tint_src_dir}/lang/core",

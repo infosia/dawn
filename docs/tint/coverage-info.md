@@ -97,11 +97,11 @@ vpython3 tools/code_coverage/coverage.py tint_ir_fuzzer \
     -b out/gn-coverage \
     -o coverage_report \
     --format html \
-    -a out/gn-coverage/gen/third_party/mesa/install/lib/x86_64-linux-gnu/libvulkan_lvp.so \
+    -a out/gn-coverage/libvulkan_lvp.so \
     --path-equivalence=/third_party/mesa,$(pwd)/third_party/mesa \
-    --path-equivalence=$(pwd)/out/gn-coverage/src,$(pwd)/out/gn-coverage/gen/third_party/mesa/mesa_setup/src \
+    --path-equivalence=$(pwd)/out/gn-coverage/src,$(pwd)/out/gn-coverage/gen/third_party/mesa/mesa_build_setup/src \
     -i '\/usr\/.*' \
-    -c 'out/gn-coverage/tint_ir_fuzzer -max_total_time=30 --vk_icd=./out/gn-coverage/gen/third_party/mesa/install/share/vulkan/icd.d/lvp_icd.x86_64.json'
+    -c 'out/gn-coverage/tint_ir_fuzzer -max_total_time=30'
 ```
 
 *   `-a`: Adds the dynamically loaded driver as object source to the
