@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a851ded_4fc2fef2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-29T17:38:50Z",
+      "side": 1,
+      "message": "Awesome!",
+      "revId": "d792df47dd60c03c58d7364ef5e2c81131b52255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d9e7e5e_3d534db8",
+        "filename": "src/dawn/node/binding/GPUComputePassEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-29T17:38:50Z",
+      "side": 1,
+      "message": "I assume this doesn\u0027t fail if `table` is nullopt?",
+      "range": {
+        "startLine": 139,
+        "startChar": 29,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "d792df47dd60c03c58d7364ef5e2c81131b52255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
