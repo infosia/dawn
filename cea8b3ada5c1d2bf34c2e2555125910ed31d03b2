@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b8d5de_f3896cdb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-29T20:16:23Z",
+      "side": 1,
+      "message": "PTAL! Prepping for adding even more per-pass side channel info for indirect validation metadata.",
+      "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44ad5ac2_7b1337fd",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-29T20:16:23Z",
+      "side": 1,
+      "message": "This I don\u0027t feel great about, but it\u0027s used for both renderpass resource usages which now DO use a `PassIndex` and compute pass dispatch usages, which shouldn\u0027t have a `PassIndex`. Suggestions welcome!",
+      "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
