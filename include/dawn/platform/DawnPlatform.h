@@ -199,6 +199,9 @@ class DAWN_PLATFORM_EXPORT Platform {
     // Hook for querying if a Finch feature is enabled.
     virtual bool IsFeatureEnabled(Features feature);
 
+    // Returns true if using SkiaGraphite backkend.
+    virtual bool IsSkiaGraphite();
+
   private:
     Platform(const Platform&) = delete;
     Platform& operator=(const Platform&) = delete;

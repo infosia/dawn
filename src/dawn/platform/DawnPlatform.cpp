@@ -115,4 +115,8 @@ bool Platform::IsFeatureEnabled(Features feature) {
     return false;
 }
 
+bool Platform::IsSkiaGraphite() {
+    return false;
+}
+
 }  // namespace dawn::platform
