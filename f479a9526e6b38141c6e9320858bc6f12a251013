@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "78d70be0_6f800e00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T15:42:38Z",
+      "side": 1,
+      "message": "```\nThis paste entry is protected and currently only viewable by the owner (frankchavez@google.com).\n```\n\nCould you please update the permissions and make sure to upload the latest version of the script adapted to Dawn?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "f479a9526e6b38141c6e9320858bc6f12a251013",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4139f427_a5a8d22d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
