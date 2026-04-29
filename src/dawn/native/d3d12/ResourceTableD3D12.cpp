@@ -32,7 +32,6 @@
 
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/MatchVariant.h"
-#include "dawn/common/Range.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/ResourceTableDefaultResources.h"
@@ -44,6 +43,65 @@
 #include "dawn/native/d3d12/StagingDescriptorAllocatorD3D12.h"
 
 namespace dawn::native::d3d12 {
+
+// SamplerIndexPool manages a limited pool of sampler indices (e.g. 2048 on D3D12). It also
+// implements deduplication by returning the same sampler index for an input 'Sampler*', internally
+// tracking ref counts to return the index when all refs to the same 'Sampler*' are released.
+// Note that this assumes that the same 'Sampler*' is returned for the same SamplerDescriptor.
+class ResourceTable::SamplerIndexPool {
+  public:
+    using SamplerIndex = TypedInteger<struct SamplerIndexT, uint16_t>;
+
+    explicit SamplerIndexPool(uint32_t numSamplers) {
+        // Init unused sampler indices with 0..numSamplers-1
+        mUnused.resize(numSamplers);
+        for (uint16_t i = 0; i < mUnused.size(); ++i) {
+            mUnused[i] = SamplerIndex{i};
+        }
+    }
+
+    // Acquire a sampler index for the input sampler. Returns the index, and 'true' if this is a
+    // newly acquired sampler index, 'false' if it has already been acquired before for the same
+    // Sampler*.
+    std::pair<SamplerIndex, bool> Acquire(const Sampler* sampler) {
+        auto [iter, inserted] = mSamplerToEntry.try_emplace(sampler);
+        SamplerEntry& entry = iter->second;
+        if (inserted) {
+            // Grab a new one
+            DAWN_ASSERT(!mUnused.empty());
+            entry.index = mUnused.back();
+            mUnused.pop_back();
+            DAWN_ASSERT(entry.refCount == 0);
+        }
+        ++entry.refCount;
+        return {entry.index, inserted};
+    }
+
+    // Release the sampler index for the input sampler. If it is the last one, it the sampler index
+    // is returned to the pool.
+    void Release(const Sampler* sampler) {
+        // If this is the last ref to this sampler, return the index to the pool
+        auto iter = mSamplerToEntry.find(sampler);
+        DAWN_ASSERT(iter != mSamplerToEntry.end());
+        auto& entry = iter->second;
+        DAWN_ASSERT(entry.refCount > 0);
+        if (--entry.refCount == 0) {
+            mUnused.push_back(entry.index);
+            mSamplerToEntry.erase(iter);
+        }
+    }
+
+  private:
+    // Unused (available) sampler indices, initialized with range [0, numSamplers-1]
+    std::vector<SamplerIndex> mUnused;
+
+    // Mapping of unique sampler to its index and its reference count (number of slots using it).
+    struct SamplerEntry {
+        SamplerIndex index;
+        uint32_t refCount;
+    };
+    absl::flat_hash_map<const Sampler*, SamplerEntry> mSamplerToEntry;
+};
 
 // static
 ResultOrError<ResourceTable::DescriptorRanges> ResourceTable::GetDescriptorRanges(
@@ -167,11 +225,8 @@ MaybeError ResourceTable::Initialize() {
     DAWN_TRY_ASSIGN(mSamplerHeap, AllocateCPUHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_SAMPLER,
                                                   numSamplerDescriptors));
 
-    // Init unused sampler indices with 0..numSamplerDescriptors-1
-    mUnusedSamplerIndices.resize(numSamplerDescriptors);
-    for (uint16_t i = 0; i < mUnusedSamplerIndices.size(); ++i) {
-        mUnusedSamplerIndices[i] = SamplerIndex{i};
-    }
+    // Create sampler index pool with the total number of available sampler descriptors
+    mSamplerIndexPool = std::make_unique<SamplerIndexPool>(numSamplerDescriptors);
     // Resize space for all possible slots
     mSlotToSamplerIndex.resize(ResourceTableSlot{GetSizeWithDefaultResources()},
                                kInvalidSamplerIndex);
@@ -308,11 +363,11 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
         // TODO(https://issues.chromium.org/473444515): Support buffer, texel buffers and storage
         // textures.
 
-        if (std::holds_alternative<raw_ptr<SamplerBase>>(diff.removed)) {
-            // Return the sampler index and mark the slot as unused
-            SamplerIndex samplerIndex = mSlotToSamplerIndex[diff.slot];
-            DAWN_ASSERT(samplerIndex != kInvalidSamplerIndex);
-            mUnusedSamplerIndices.push_back(samplerIndex);
+        if (auto* samplerBase = std::get_if<raw_ptr<SamplerBase>>(&diff.removed)) {
+            auto* sampler = ToBackend(*samplerBase);
+            // Release this sampler's index. It'll be returned to the pool if this is the last ref.
+            mSamplerIndexPool->Release(sampler);
+            // Clear the table entry
             mSlotToSamplerIndex[diff.slot] = kInvalidSamplerIndex;
         }
 
@@ -339,21 +394,18 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
             },
             [&](SamplerBase* samplerBase) {
                 auto* sampler = ToBackend(samplerBase);
-                const auto& samplerDesc = sampler->GetSamplerDescriptor();
-
-                // Take a new one and update the map
-                // TODO(crbug.com/499091557): Deduplicate samplers, making the slot point to the
-                // duplicate sampler's index.
-                DAWN_ASSERT(!mUnusedSamplerIndices.empty());
-                SamplerIndex samplerIndex = mUnusedSamplerIndices.back();
-                mUnusedSamplerIndices.pop_back();
+                // Acquire a sampler index. If it's the first time we acquire one for this sampler,
+                // create descriptor for it in the heap.
+                auto [samplerIndex, isNewIndex] = mSamplerIndexPool->Acquire(sampler);
+                if (isNewIndex) {
+                    const D3D12_SAMPLER_DESC& samplerDesc = sampler->GetSamplerDescriptor();
+                    uint32_t offsetInDescriptorCount = uint32_t{samplerIndex};
+                    d3d12Device->CreateSampler(
+                        &samplerDesc, mSamplerHeap.cpuAllocation.OffsetFrom(
+                                          mSamplerHeap.sizeIncrement, offsetInDescriptorCount));
+                }
+                // Update the table entry
                 mSlotToSamplerIndex[diff.slot] = samplerIndex;
-
-                uint32_t offsetInDescriptorCount = uint32_t{samplerIndex};
-
-                d3d12Device->CreateSampler(
-                    &samplerDesc, mSamplerHeap.cpuAllocation.OffsetFrom(mSamplerHeap.sizeIncrement,
-                                                                        offsetInDescriptorCount));
             });
     }
 
@@ -434,8 +486,8 @@ void ResourceTable::DestroyImpl(DestroyReason reason) {
     ResourceTableBase::DestroyImpl(reason);
     FreeCPUHeap(mViewHeap);
     FreeCPUHeap(mSamplerHeap);
-    mUnusedSamplerIndices.clear();
     mSlotToSamplerIndex.clear();
+    mSamplerIndexPool = nullptr;
 }
 
 void ResourceTable::SetLabelImpl() {
