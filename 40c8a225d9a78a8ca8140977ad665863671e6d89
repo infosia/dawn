@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b07da08_5b3ee9c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4807745
+      },
+      "writtenOn": "2026-04-29T03:50:03Z",
+      "side": 1,
+      "message": "Comment removed by: dan sinclair; Reason: spam",
+      "revId": "40c8a225d9a78a8ca8140977ad665863671e6d89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
