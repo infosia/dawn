@@ -1072,13 +1072,13 @@ MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
                                                    uint64_t destinationOffset) {
     DeviceBase* device = encoder->GetDevice();
 
-    const uint32_t quantization_mask = (device->IsToggleEnabled(Toggle::TimestampQuantization))
-                                           ? kTimestampQuantizationMask
-                                           : 0xFFFFFFFF;
+    const uint32_t quantizationMask = device->IsToggleEnabled(Toggle::TimestampQuantization)
+                                          ? kTimestampQuantizationMask
+                                          : 0xFFFFFFFF;
 
     // Timestamp params uniform buffer
     TimestampParams params(uint32_t{queryCount}, static_cast<uint32_t>(destinationOffset),
-                           quantization_mask, device->GetTimestampPeriodInNS());
+                           quantizationMask, device->GetTimestampPeriodInNS());
 
     BufferDescriptor parmsDesc = {};
     parmsDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
@@ -2194,21 +2194,23 @@ void CommandEncoder::APIResolveQuerySet(QuerySetBase* querySet,
             cmd->destination = destination;
             cmd->destinationOffset = destinationOffset;
 
-            // Encode internal compute pipeline for timestamp query
-            if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
-                !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
-                (GetDevice()->GetTimestampPeriodInNS() != 1.0f ||
-                 GetDevice()->IsToggleEnabled(Toggle::TimestampQueryConversionEvenIf1NS))) {
-                // The below function might create new resources. Need to lock the Device.
-                // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
-                // Command Submit time, so the locking would be removed from here at that point.
-                auto deviceGuard = GetDevice()->GetGuard();
-
-                DAWN_TRY(EncodeTimestampsToNanosecondsConversion(
-                    this, querySet, firstQuery, queryCount, destination, destinationOffset));
+            if (querySet->GetQueryType() != wgpu::QueryType::Timestamp) {
+                return {};
             }
 
-            return {};
+            const bool needsConversion =
+                GetDevice()->GetTimestampPeriodInNS() != 1.0f &&
+                !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion);
+            const bool needsQuantization =
+                GetDevice()->IsToggleEnabled(Toggle::TimestampQuantization) &&
+                !GetDevice()->AreTimestampsQuantized();
+            if (!needsConversion && !needsQuantization) {
+                return {};
+            }
+
+            auto deviceGuard = GetDevice()->GetGuard();
+            return EncodeTimestampsToNanosecondsConversion(this, querySet, firstQuery, queryCount,
+                                                           destination, destinationOffset);
         },
         "encoding %s.ResolveQuerySet(%s, %u, %u, %s, %u).", this, querySet, firstQuery, queryCount,
         destination, destinationOffset);
