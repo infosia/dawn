@@ -32,7 +32,6 @@
 #include <vector>
 
 #include "dawn/common/Enumerator.h"
-#include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderBundleEncoderDescriptor.h"
@@ -42,6 +41,12 @@
 
 namespace dawn {
 namespace {
+
+// The number of unique default samplers on D3D12, derived form ResourceTableDefaultResources.
+// These necessarily take up a couple of slots in a resource table.
+constexpr uint32_t kUniqueDefaultSamplers = 2;
+// On D3D12, the max number of unique sampler descriptors available to the user in a ResourceTable.
+constexpr uint32_t kD3D12MaxUniqueSamplers = 2048 - kUniqueDefaultSamplers;
 
 class ResourceTableTests : public DawnTest {
   protected:
@@ -448,6 +453,13 @@ class ResourceTableTests : public DawnTest {
                            &copySize);
 
         return texture;
+    }
+
+    wgpu::Sampler CreateUniqueSampler(uint32_t i) {
+        // Make samplers unique by making one of the values different for each
+        wgpu::SamplerDescriptor descriptor;
+        descriptor.lodMinClamp = (i + 1) / 1000.0f;
+        return device.CreateSampler(&descriptor);
     }
 };
 
@@ -1110,10 +1122,10 @@ TEST_P(ResourceTableTests, HasResourceCompatibilityAllTypes) {
     for (auto [i, c] : Enumerate(cases)) {
         if (std::holds_alternative<ResourceDescForTypeIDCase::TextureDesc>(c.desc)) {
             wgpu::BindingResource resource = {.textureView = c.CreateTestView(device)};
-            table.Update(i, &resource);
+            EXPECT_EQ(wgpu::Status::Success, table.Update(i, &resource));
         } else if (std::holds_alternative<ResourceDescForTypeIDCase::SamplerDesc>(c.desc)) {
             wgpu::BindingResource resource = {.sampler = c.CreateTestSampler(device)};
-            table.Update(i, &resource);
+            EXPECT_EQ(wgpu::Status::Success, table.Update(i, &resource));
         }
     }
 
@@ -1788,82 +1800,225 @@ TEST_P(ResourceTableTests, RemoveThenAddSamplerMultipleInSameSlot) {
     EXPECT_BUFFER_FLOAT_RANGE_EQ(expectedGreen, resultBuffer, 1 * 4 * sizeof(float), 4);
 }
 
-// On D3D12 the number of sampler descriptors in a GPU heap is limited to 2048. This test
-// allocates a resource table larger than that, adds 2048 samplers, draws, removes them all,
-// then adds 2048 again in different slots, and draws again, making sure this is supported.
-// Effectively, this tests that the resource table correctly handles removal of samplers.
-TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
+// Test what happens when we add more than kD3D12MaxUniqueSamplers unique samplers
+TEST_P(ResourceTableTests, AddUniqueSamplersOverLimit) {
     // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
 
-    const utils::RGBA8 red = utils::RGBA8::kRed;
-    wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
         enable chromium_experimental_resource_table;
-        @vertex fn vs() -> @builtin(position) vec4f {
-            return vec4f(0, 0, 0.5, 0.5);
-        }
-        @fragment fn fs() -> @location(0) vec4f {
-            // Make sure pipeline layout is marked as usesResourceTable
-            // to ensure ResourceTable::PopulateSamplers is called.
-            _ = getResource<sampler<non_filtering>>(0);
-            return vec4f(1, 0, 0, 1);
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32, filterable>>(0);
         }
     )");
+    auto pipeline = device.CreateComputePipeline(&csDesc);
 
-    // Create the pipeline.
-    utils::ComboRenderPipelineDescriptor pDesc;
-    pDesc.vertex.module = module;
-    pDesc.cFragment.module = module;
-    pDesc.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
-    pDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
-    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pDesc);
-
-    auto draw = [&](wgpu::ResourceTable table) {
-        // Create a 1x1 render target to verify the result.
-        utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
-
-        // Render.
+    auto dispatch = [&](wgpu::ResourceTable table, bool shouldSucceed = true) {
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
-        pass.SetPipeline(pipeline);
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
         pass.SetResourceTable(table);
-        pass.Draw(1);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        if (shouldSucceed) {
+            queue.Submit(1, &commands);
+        } else {
+            ASSERT_DEVICE_ERROR(queue.Submit(1, &commands));
+        }
+    };
+
+    wgpu::ResourceTable table = MakeResourceTable(2049);
+
+    // Initial draw so that default resources are processed
+    dispatch(table);
+
+    // Add kD3D12MaxUniqueSamplers, should all succeed
+    for (auto i : Range(kD3D12MaxUniqueSamplers)) {
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(i)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(i, &br));
+    }
+
+    dispatch(table);
+
+    // Now add one more, should fail
+    {
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(kD3D12MaxUniqueSamplers)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(kD3D12MaxUniqueSamplers, &br));
+    }
+
+    bool shouldSucceed = !IsD3D12();
+    dispatch(table, shouldSucceed);
+}
+
+// Test that adding a sampler, draw, then remove and add a duplicate sampler and draw works. This
+// tests that deduplication logic handles when no more refs are left to a sampler, and then a
+// duplicate sampler is added back. On D3D12, internally this may result in a new sampler index,
+// which should be fine.
+TEST_P(ResourceTableTests, RemoveAddDuplicateSampler) {
+    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32, filterable>>(0);
+        }
+    )");
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    auto dispatch = [&](wgpu::ResourceTable table) {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetResourceTable(table);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
         pass.End();
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
-
-        // Verify the result is red.
-        EXPECT_PIXEL_RGBA8_EQ(red, renderPass.color, 0, 0);
     };
 
-    // Make a table with double the max number of samplers on D3D12.
-    // D3D12's max is 2048 samplers, minus 3 for the default samplers that are always in the table.
-    constexpr uint32_t kMaxUserSamplers = 2048 - 3;
-    wgpu::ResourceTable table = MakeResourceTable(kMaxUserSamplers * 2);
+    wgpu::ResourceTable table = MakeResourceTable(2);
 
-    // Add samplers to slots 0..kMaxUserSamplers-1
-    for (uint32_t i : Range(kMaxUserSamplers)) {
-        wgpu::BindingResource br{.sampler = device.CreateSampler()};
-        table.Update(i, &br);
+    // Initial draw so that default resources are processed
+    dispatch(table);
+
+    {
+        // Add a unique sampler in slot 1
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(42)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(1, &br));
+    }
+    dispatch(table);
+
+    {
+        // Remove the sampler in slot 1
+        EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(1));
+
+        WaitForAllOperations();
+
+        // Add another sampler in slot 0
+        // This is to coax the backend into potentially assigning a different sampler index for this
+        // same sampler.
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(123)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(0, &br));
+
+        // Add back the origin sampler in slot 1
+        wgpu::BindingResource br2{.sampler = CreateUniqueSampler(42)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(1, &br2));
+    }
+
+    dispatch(table);
+}
+
+// On D3D12 the number of sampler descriptors in a GPU heap is limited to 2048. We deduplicate
+// samplers, so test that we can add more than 2048 samplers to the resource table, as long as there
+// are duplicates. We test this by creating a table of size 2*2048, add 2048 unique samplers in the
+// first half of the table, then add the same set of sampers in the second half of the table.
+TEST_P(ResourceTableTests, AddDuplicateSamplersTwice) {
+    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32, filterable>>(0);
+        }
+    )");
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    auto dispatch = [&](wgpu::ResourceTable table) {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetResourceTable(table);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    };
+
+    // Make a table with double the max number of unique samplers on D3D12.
+    wgpu::ResourceTable table = MakeResourceTable(kD3D12MaxUniqueSamplers * 2);
+
+    // Add samplers to slots 0..kD3D12MaxUniqueSamplers-1
+    for (uint32_t i : Range(kD3D12MaxUniqueSamplers)) {
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(i)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(i, &br));
     }
 
     // Draw so that the CPU to GPU sampler heap creation and copy occurs.
-    draw(table);
+    dispatch(table);
 
-    // Remove all samplers
-    for (uint32_t i : Range(kMaxUserSamplers)) {
-        table.RemoveBinding(i);
-    }
-
-    // Add samplers to slots kMaxUserSamplers..kMaxUserSamplers*2-1
-    for (uint32_t i : Range(kMaxUserSamplers)) {
-        wgpu::BindingResource br{.sampler = device.CreateSampler()};
-        table.Update(i + kMaxUserSamplers, &br);
+    // Add the same samplers to slots kD3D12MaxUniqueSamplers..kD3D12MaxUniqueSamplers*2-1
+    for (uint32_t i : Range(kD3D12MaxUniqueSamplers)) {
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(i)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(i + kD3D12MaxUniqueSamplers, &br));
     }
 
     // Draw again. If we didn't handle removal of samplers correctly, this will fail
     // for surpassing the 2048 sampler descriptor per heap limit.
-    draw(table);
+    dispatch(table);
+}
+
+// On D3D12 the number of sampler descriptors in a GPU heap is limited to 2048. This test
+// allocates a resource table larger than that, adds 2048 unique samplers, draws, removes them all,
+// then adds 2048 unique samplers (different from the first set) again in different slots,
+// and draws again, making sure this is supported. Effectively, this tests that the resource table
+// correctly handles removal of samplers.
+TEST_P(ResourceTableTests, AddAndRemoveMaxSamplersTwice) {
+    // TODO(https://issues.chromium.org/issues/490066027): Fails on Mali G78
+    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsARM());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = utils::CreateShaderModule(device, R"(
+        enable chromium_experimental_resource_table;
+        @compute @workgroup_size(1) fn main() {
+            _ = hasResource<texture_2d<f32, filterable>>(0);
+        }
+    )");
+    auto pipeline = device.CreateComputePipeline(&csDesc);
+
+    auto dispatch = [&](wgpu::ResourceTable table) {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetResourceTable(table);
+        pass.SetPipeline(pipeline);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    };
+
+    // Make a table with double the max number of samplers on D3D12.
+    wgpu::ResourceTable table = MakeResourceTable(kD3D12MaxUniqueSamplers * 2);
+
+    // Add samplers to slots 0..kD3D12MaxUniqueSamplers-1
+    for (uint32_t i : Range(kD3D12MaxUniqueSamplers)) {
+        // Make samplers unique by making one of the values different for each
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(i)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(i, &br));
+    }
+
+    // Draw so that the CPU to GPU sampler heap creation and copy occurs.
+    dispatch(table);
+
+    // Remove all samplers
+    for (uint32_t i : Range(kD3D12MaxUniqueSamplers)) {
+        EXPECT_EQ(wgpu::Status::Success, table.RemoveBinding(i));
+    }
+
+    // Add different samplers to slots kD3D12MaxUniqueSamplers..kD3D12MaxUniqueSamplers*2-1
+    for (uint32_t i : Range(kD3D12MaxUniqueSamplers)) {
+        wgpu::BindingResource br{.sampler = CreateUniqueSampler(kD3D12MaxUniqueSamplers + i)};
+        EXPECT_EQ(wgpu::Status::Success, table.Update(i + kD3D12MaxUniqueSamplers, &br));
+    }
+
+    // Draw again. If we didn't handle removal of samplers correctly, this will fail
+    // for surpassing the 2048 sampler descriptor per heap limit.
+    dispatch(table);
 }
 
 // Test that removing then adding a texture in a slot works as expected.

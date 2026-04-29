@@ -28,9 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_D3D12_RESOURCETABLED3D12_H_
 #define SRC_DAWN_NATIVE_D3D12_RESOURCETABLED3D12_H_
 
+#include <memory>
 #include <vector>
 
-#include "dawn/common/MutexProtected.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ResourceTable.h"
 #include "dawn/native/d3d12/CPUDescriptorHeapAllocationD3D12.h"
@@ -112,8 +112,9 @@ class ResourceTable final : public ResourceTableBase {
     using SamplerIndex = TypedInteger<struct SamplerIndexT, uint16_t>;
     static constexpr auto kInvalidSamplerIndex = SamplerIndex{uint16_t{0xFFFF}};
 
-    // Available sampler indices, initialized with range [0,2047]
-    std::vector<SamplerIndex> mUnusedSamplerIndices;
+    class SamplerIndexPool;
+    std::unique_ptr<SamplerIndexPool> mSamplerIndexPool;
+
     // Current mapping of resource table slot to sampler index
     ityp::vector<ResourceTableSlot, SamplerIndex> mSlotToSamplerIndex;
 };
