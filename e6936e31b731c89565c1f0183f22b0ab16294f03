@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a49c8eab_950d9fca",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T17:43:16Z",
+      "side": 1,
+      "message": "Can we move the changes to tests in the next CL then? Otherwise we\u0027re going to have an intermediate state that\u0027s not great.\n\nAlternatively we can add the reflection API for surfaces here, it\u0027s not that big.",
+      "parentUuid": "c6abae92_98c01d67",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fed4418f_719d7e9c",
         "filename": "src/dawn/native/webgpu/CaptureContext.cpp",
         "patchSetId": 18
