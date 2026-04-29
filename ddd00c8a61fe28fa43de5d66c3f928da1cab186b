@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "663092e6_4dc0d435",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T03:16:21Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "ddd00c8a61fe28fa43de5d66c3f928da1cab186b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d083bd2_b42a2634",
+        "filename": "test/tint/builtins/bufferArrayView/runtime_array_in_struct.wgsl.expected.msl",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T03:16:21Z",
+      "side": 1,
+      "message": "Yikes. I made a note a while back that our inliner is sometimes a bit too aggressive. Maybe I should go fix that so this becomes a little more readable...",
+      "range": {
+        "startLine": 34,
+        "startChar": 139,
+        "endLine": 34,
+        "endChar": 473
+      },
+      "revId": "ddd00c8a61fe28fa43de5d66c3f928da1cab186b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
