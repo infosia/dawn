@@ -783,8 +783,8 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
         return {};
     };
 
-    size_t nextComputePassNumber = 0;
-    size_t nextRenderPassNumber = 0;
+    PassIndex nextComputePassNumber{0};
+    PassIndex nextRenderPassNumber{0};
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
