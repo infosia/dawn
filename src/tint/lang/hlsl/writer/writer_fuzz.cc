@@ -57,6 +57,7 @@ struct FuzzedOptions {
     Options::Compiler compiler;
     bool scalarize_max_min_clamp;
     bool polyfill_subgroup_broadcast_f16;
+    bool d3d12_decompose_workgroup_access;
     std::bitset<kMaxInterStageLocations> interstage_locations;
     std::optional<uint32_t> first_index_offset;
     std::optional<uint32_t> first_instance_offset;
@@ -78,6 +79,7 @@ struct FuzzedOptions {
                  compiler,
                  scalarize_max_min_clamp,
                  polyfill_subgroup_broadcast_f16,
+                 d3d12_decompose_workgroup_access,
                  interstage_locations,
                  first_index_offset,
                  first_instance_offset,
@@ -123,6 +125,8 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     options.workarounds.polyfill_reflect_vec2_f32 = fuzzed_options.polyfill_reflect_vec2_f32;
     options.workarounds.polyfill_subgroup_broadcast_f16 =
         fuzzed_options.polyfill_subgroup_broadcast_f16;
+    options.workarounds.d3d12_decompose_workgroup_access =
+        fuzzed_options.d3d12_decompose_workgroup_access;
     options.extensions.polyfill_dot_4x8_packed = fuzzed_options.polyfill_dot_4x8_packed;
     options.extensions.polyfill_pack_unpack_4x8 = fuzzed_options.polyfill_pack_unpack_4x8;
     options.compiler = fuzzed_options.compiler;
