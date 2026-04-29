@@ -567,20 +567,11 @@ ResourceTableBase::Updates ResourceTableBase::AcquireDirtySlotUpdates() {
         }
         state.resourceDirty = false;
 
-        auto ToResourceDiffResource =
-            [](const SlotState::Resource& resource) -> ResourceDiff::Resource {
-            if (auto view = GetRef<TextureViewBase>(resource)) {
-                return view.Get();
-            }
-            if (auto sampler = GetRef<SamplerBase>(resource)) {
-                return sampler.Get();
-            }
-            return std::monostate{};
+        ResourceDiff update{
+            .slot = dirtySlot,
+            .removed = state.lastResource,
+            .added = state.resource,
         };
-
-        ResourceDiff update{.slot = dirtySlot,
-                            .removed = ToResourceDiffResource(state.lastResource),
-                            .added = ToResourceDiffResource(state.resource)};
 
         // At least one of removed and added must be set
         DAWN_ASSERT(!(std::holds_alternative<std::monostate>(update.removed) &&

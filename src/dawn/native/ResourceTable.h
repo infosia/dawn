@@ -129,8 +129,7 @@ class ResourceTableBase : public ApiObjectBase, public WeakRefSupport<ResourceTa
         uint32_t data;           // tint::ResourceType in the low 16 bits
     };
     struct ResourceDiff {
-        using Resource =
-            std::variant<std::monostate, raw_ptr<TextureViewBase>, raw_ptr<SamplerBase>>;
+        using Resource = std::variant<std::monostate, Ref<TextureViewBase>, Ref<SamplerBase>>;
         ResourceTableSlot slot;
         Resource removed;  // Resource removed from 'slot', if any
         Resource added;    // Resource added to 'slot', if any
