@@ -16,6 +16,24 @@
       "message": "FYI, we were considering removing the Bazel build from the project, because it is partially unmaintained (i.e. certain newer build configurations haven\u0027t been added) and no code owner, and we were not aware of anyone depending on it.\n\nAre you actively depending on the Bazel build?",
       "revId": "fd2a1deb72971279e2230f3adc5503e4d69b5b3c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3efb08_34a235cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4663243
+      },
+      "writtenOn": "2026-04-29T23:54:45Z",
+      "side": 1,
+      "message": "Yes, I heavily depend on the Bazel build, so if another blocker pops up, it could affect my productivity and I might need to send additional CLs to fix it.\n\nBy the way, could you submit this CL to CQ? I forgot that this is my first contribution on dawn-review.googlesource.com.",
+      "parentUuid": "0fe786d3_1e60fb34",
+      "revId": "fd2a1deb72971279e2230f3adc5503e4d69b5b3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
