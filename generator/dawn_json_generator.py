@@ -746,6 +746,7 @@ def parse_json(json, enabled_tags, disabled_tags=None):
         'c_methods_sorted_by_parent':
         get_c_methods_sorted_by_parent(api_params),
         'c_methods_sorted_by_name': get_c_methods_sorted_by_name(api_params),
+        'cpp_methods': lambda typ: cpp_methods(api_params, typ),
     }
 
 
@@ -1398,6 +1399,18 @@ def c_methods(params, typ):
         assert False, "c_methods only valid on objects and structure"
 
 
+def cpp_methods(params, typ):
+    if typ.category == 'structure':
+        methods = []
+        for member in typ.members:
+            if member.type.category == 'callback info':
+                methods.append(
+                    Method(Name(" ".join(["set"] + member.name.chunks[:-1])),
+                           None, [member], False, {}))
+        return methods
+    else:
+        assert False, "cpp_methods only valid on structures"
+
 def get_c_methods_sorted_by_parent(api_params):
     return sorted([(typ, c_methods(api_params, typ))
                    for typ in (api_params['by_category']['object'] +
@@ -1431,9 +1444,8 @@ def has_callback_info(method):
         and arg.type.category != 'callback info' for arg in method.arguments)
 
 
-def has_callbackInfoStruct(method):
-    return any(arg.type.category == 'callback info'
-               for arg in method.arguments)
+def has_callbackInfoStruct(args):
+    return any(arg.type.category == 'callback info' for arg in args)
 
 
 def is_wire_serializable(type):
