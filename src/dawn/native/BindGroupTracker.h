@@ -49,8 +49,8 @@ class BindGroupTrackerBase {
                         BindGroupBase* bindGroup,
                         uint32_t dynamicOffsetCount,
                         uint32_t* dynamicOffsets) {
-        DAWN_ASSERT(index < kMaxBindGroupsTyped);
-        DAWN_ASSERT(dynamicOffsetCount <= kMaxDynamicOffsetsPerBindGroup);
+        DAWN_OPT_ASSUME(index < kMaxBindGroupsTyped);
+        DAWN_OPT_ASSUME(dynamicOffsetCount <= kMaxDynamicOffsetsPerBindGroup);
 
         if (mBindGroupLayoutsMask[index]) {
             // It is okay to only dirty bind groups that are used by the current pipeline

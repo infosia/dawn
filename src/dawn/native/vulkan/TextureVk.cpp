@@ -96,10 +96,10 @@ wgpu::TextureUsage MergeDepthStencilUsage(wgpu::TextureUsage depth, wgpu::Textur
     // check if we are in one of the RenderAttachment + (ReadOnlyAttachment|readonly usage) cases
     // and know only the aspect with the readonly attachment might contain extra usages like
     // TextureBinding.
-    DAWN_ASSERT(depth == wgpu::TextureUsage::RenderAttachment ||
-                IsSubset(depth, ~wgpu::TextureUsage::RenderAttachment));
-    DAWN_ASSERT(stencil == wgpu::TextureUsage::RenderAttachment ||
-                IsSubset(stencil, ~wgpu::TextureUsage::RenderAttachment));
+    DAWN_OPT_ASSUME(depth == wgpu::TextureUsage::RenderAttachment ||
+                    IsSubset(depth, ~wgpu::TextureUsage::RenderAttachment));
+    DAWN_OPT_ASSUME(stencil == wgpu::TextureUsage::RenderAttachment ||
+                    IsSubset(stencil, ~wgpu::TextureUsage::RenderAttachment));
 
     if (depth == wgpu::TextureUsage::RenderAttachment && stencil & kReadOnlyRenderAttachment) {
         return kDepthWritableStencilReadOnlyAttachment | (stencil & ~kReadOnlyRenderAttachment);
@@ -119,8 +119,8 @@ wgpu::TextureUsage MergeDepthStencilUsage(wgpu::TextureUsage depth, wgpu::Textur
 VkAccessFlags VulkanAccessFlags(wgpu::TextureUsage usage, const Format& format) {
     if (usage & kReservedTextureUsage) {
         // Handle the special readonly usages for mixed depth-stencil.
-        DAWN_ASSERT(IsSubset(kDepthReadOnlyStencilWritableAttachment, usage) ||
-                    IsSubset(kDepthWritableStencilReadOnlyAttachment, usage));
+        DAWN_OPT_ASSUME(IsSubset(kDepthReadOnlyStencilWritableAttachment, usage) ||
+                        IsSubset(kDepthWritableStencilReadOnlyAttachment, usage));
 
         // Add any additional access flags for the non-attachment part of the usage.
         const wgpu::TextureUsage nonAttachmentUsages =
@@ -170,7 +170,7 @@ VkAccessFlags VulkanAccessFlags(wgpu::TextureUsage usage, const Format& format) 
     if (usage & kPresentAcquireTextureUsage) {
         // The present acquire usage is only used internally by the swapchain and is never used in
         // combination with other usages.
-        DAWN_ASSERT(usage == kPresentAcquireTextureUsage);
+        DAWN_OPT_ASSUME(usage == kPresentAcquireTextureUsage);
         // The Vulkan spec has the following note:
         //
         //   When the presentable image will be accessed by some stage S, the recommended idiom
@@ -190,7 +190,7 @@ VkAccessFlags VulkanAccessFlags(wgpu::TextureUsage usage, const Format& format) 
     if (usage & kPresentReleaseTextureUsage) {
         // The present release usage is only used internally by the swapchain and is never used in
         // combination with other usages.
-        DAWN_ASSERT(usage == kPresentReleaseTextureUsage);
+        DAWN_OPT_ASSUME(usage == kPresentReleaseTextureUsage);
         // The Vulkan spec has the following note:
         //
         //   When transitioning the image to VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR or
@@ -215,8 +215,8 @@ VkPipelineStageFlags VulkanPipelineStage(wgpu::TextureUsage usage,
                                          const Format& format) {
     if (usage & kReservedTextureUsage) {
         // Handle the special readonly usages for mixed depth-stencil.
-        DAWN_ASSERT(IsSubset(kDepthReadOnlyStencilWritableAttachment, usage) ||
-                    IsSubset(kDepthWritableStencilReadOnlyAttachment, usage));
+        DAWN_OPT_ASSUME(IsSubset(kDepthReadOnlyStencilWritableAttachment, usage) ||
+                        IsSubset(kDepthWritableStencilReadOnlyAttachment, usage));
 
         // Convert all the reserved attachment usages into just RenderAttachment.
         const wgpu::TextureUsage nonAttachmentUsages =
@@ -267,7 +267,7 @@ VkPipelineStageFlags VulkanPipelineStage(wgpu::TextureUsage usage,
     if (usage & kPresentAcquireTextureUsage) {
         // The present acquire usage is only used internally by the swapchain and is never used in
         // combination with other usages.
-        DAWN_ASSERT(usage == kPresentAcquireTextureUsage);
+        DAWN_OPT_ASSUME(usage == kPresentAcquireTextureUsage);
         // The vkAcquireNextImageKHR method is a read operation in Vulkan which completes
         // before the semaphore/fence out parameters are signaled. This means that future uses
         // of the texture must performs a memory barriers that synchronizes with that
@@ -291,7 +291,7 @@ VkPipelineStageFlags VulkanPipelineStage(wgpu::TextureUsage usage,
     if (usage & kPresentReleaseTextureUsage) {
         // The present release usage is only used internally by the swapchain and is never used in
         // combination with other usages.
-        DAWN_ASSERT(usage == kPresentReleaseTextureUsage);
+        DAWN_OPT_ASSUME(usage == kPresentReleaseTextureUsage);
         // The Vulkan spec has the following note:
         //
         //   When transitioning the image to VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR or
@@ -308,7 +308,7 @@ VkPipelineStageFlags VulkanPipelineStage(wgpu::TextureUsage usage,
     }
 
     // A zero value isn't a valid pipeline stage mask
-    DAWN_ASSERT(flags != 0);
+    DAWN_OPT_ASSUME(flags != 0);
     return flags;
 }
 
@@ -669,8 +669,8 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
     }
     if (usage & wgpu::TextureUsage::StorageBinding) {
         // Storage bit should only be included if the format actually supports a storage uage.
-        DAWN_ASSERT(format.SupportsReadOnlyStorageUsage() ||
-                    format.SupportsWriteOnlyStorageUsage());
+        DAWN_OPT_ASSUME(format.SupportsReadOnlyStorageUsage() ||
+                        format.SupportsWriteOnlyStorageUsage());
         flags |= VK_IMAGE_USAGE_STORAGE_BIT;
     }
     if (usage & wgpu::TextureUsage::RenderAttachment) {
@@ -692,7 +692,7 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
 
     // Choosing Vulkan image usages should not know about kReadOnlyRenderAttachment because that's
     // a property of when the image is used, not of the creation.
-    DAWN_ASSERT(!(usage & kReadOnlyRenderAttachment));
+    DAWN_OPT_ASSUME(!(usage & kReadOnlyRenderAttachment));
 
     return flags;
 }
@@ -860,7 +860,7 @@ MaybeError ValidateVulkanImageCanBeWrapped(const DeviceBase*,
 
 bool IsSampleCountSupported(const dawn::native::vulkan::Device* device,
                             const VkImageCreateInfo& imageCreateInfo) {
-    DAWN_ASSERT(device);
+    DAWN_OPT_ASSUME(device);
 
     VkPhysicalDevice vkPhysicalDevice =
         ToBackend(device->GetPhysicalDevice())->GetVkPhysicalDevice();
@@ -988,7 +988,7 @@ void Texture::TransitionUsageForPass(CommandRecordingContext* recordingContext,
                         combinedInfo->usage =
                             MergeDepthStencilUsage(combinedInfo->usage, syncInfo.usage);
                     } else {
-                        DAWN_ASSERT(aspectsToMerge == (Aspect::Depth | Aspect::Stencil));
+                        DAWN_OPT_ASSUME(aspectsToMerge == (Aspect::Depth | Aspect::Stencil));
                         combinedInfo->usage = syncInfo.usage;
                     }
                     combinedInfo->shaderStages |= syncInfo.shaderStages;
@@ -1087,7 +1087,7 @@ void Texture::TransitionUsageNow(CommandRecordingContext* recordingContext,
     TweakTransition(recordingContext, &barriers, 0);
 
     if (!barriers.empty()) {
-        DAWN_ASSERT(srcStages != 0 && dstStages != 0);
+        DAWN_OPT_ASSUME(srcStages != 0 && dstStages != 0);
         ToBackend(GetDevice())
             ->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0,
                                     nullptr, 0, nullptr, barriers.size(), barriers.data());
@@ -1132,7 +1132,7 @@ void Texture::TransitionUsageAndGetResourceBarrierImpl(
     std::vector<VkImageMemoryBarrier>* imageBarriers,
     VkPipelineStageFlags* srcStages,
     VkPipelineStageFlags* dstStages) {
-    DAWN_ASSERT(imageBarriers != nullptr);
+    DAWN_OPT_ASSUME(imageBarriers != nullptr);
     const Format& format = GetFormat();
 
     if (shaderStages == wgpu::ShaderStage::None) {
@@ -1226,7 +1226,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                     case wgpu::TextureDimension::e3D:
                         viewDesc.dimension = wgpu::TextureViewDimension::e3D;
                         depthSliceCount = mipSize.depthOrArrayLayers;
-                        DAWN_ASSERT(layer == 0);
+                        DAWN_OPT_ASSUME(layer == 0);
                         break;
                     case wgpu::TextureDimension::e1D:
                     case wgpu::TextureDimension::Undefined:
@@ -1317,8 +1317,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                            range);
 
         // need to clear the texture with a copy from buffer
-        DAWN_ASSERT(range.aspects == Aspect::Color || range.aspects == Aspect::Plane0 ||
-                    range.aspects == Aspect::Plane1 || range.aspects == Aspect::Plane2);
+        DAWN_OPT_ASSUME(range.aspects == Aspect::Color || range.aspects == Aspect::Plane0 ||
+                        range.aspects == Aspect::Plane1 || range.aspects == Aspect::Plane2);
         const TypedTexelBlockInfo& blockInfo = GetFormat().GetAspectInfo(range.aspects).block;
 
         BlockExtent3D largestMipSize = blockInfo.ToBlock(
@@ -1385,7 +1385,7 @@ MaybeError Texture::PinImpl(wgpu::TextureUsage usage) {
     // Pinning means that until unpinned, the texture will have specific usage and can be used
     // freely in shaders without any further check or memory barrier tracking. Ensure all
     // subresources are cleared and transitioned to the usage.
-    DAWN_ASSERT(!HasPinnedUsage());
+    DAWN_OPT_ASSUME(!HasPinnedUsage());
     SubresourceRange pinnedSubresources = GetAllSubresources();
 
     CommandRecordingContext* recordingContext =
@@ -1401,7 +1401,7 @@ MaybeError Texture::PinImpl(wgpu::TextureUsage usage) {
 }
 
 void Texture::UnpinImpl() {
-    DAWN_ASSERT(HasPinnedUsage());
+    DAWN_OPT_ASSUME(HasPinnedUsage());
 
     // TODO(https://issues.chromium.org/473444516): Investigate what to do for imported textures.
     // Should we consider a pin/unpin pair similar to an access on a queue such that we need to
@@ -1424,7 +1424,7 @@ MaybeError Texture::EnsureSubresourceContentInitialized(CommandRecordingContext*
 VkImageLayout Texture::GetCurrentLayout(Aspect aspect,
                                         uint32_t arrayLayer,
                                         uint32_t mipLevel) const {
-    DAWN_ASSERT(GetFormat().aspects == Aspect::Color);
+    DAWN_OPT_ASSUME(GetFormat().aspects == Aspect::Color);
     return VulkanImageLayout(mSubresourceLastSyncInfos.Get(aspect, arrayLayer, mipLevel).usage);
 }
 
@@ -1470,7 +1470,7 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
     // If this triggers, it means it's time to add tests and implement support for readonly
     // depth-stencil attachments that are also used as readonly storage bindings in the pass.
     // Have fun! :)
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         !(GetFormat().HasDepthOrStencil() && (GetUsage() & wgpu::TextureUsage::StorageBinding)));
 
     // Create the Vulkan image "container". We don't need to check that the format supports the
@@ -1526,7 +1526,7 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
         imageFormatListInfo.pViewFormats = viewFormats.data();
     }
 
-    DAWN_ASSERT(IsSampleCountSupported(device, createInfo));
+    DAWN_OPT_ASSUME(IsSampleCountSupported(device, createInfo));
 
     if (GetArrayLayers() >= 6 && GetBaseSize().width == GetBaseSize().height) {
         createInfo.flags |= VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT;
@@ -1672,7 +1672,7 @@ void ImportedTextureBase::TransitionEagerlyForExport(CommandRecordingContext* re
     mExternalState = ExternalState::EagerlyTransitioned;
 
     // Get any usage, ideally the last one to do nothing
-    DAWN_ASSERT(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
+    DAWN_OPT_ASSUME(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
     const SubresourceRange range = {GetDisjointVulkanAspects(), {0, 1}, {0, 1}};
     const TextureSyncInfo syncInfo = mSubresourceLastSyncInfos.Get(range.aspects, 0, 0);
 
@@ -1684,7 +1684,7 @@ void ImportedTextureBase::TransitionEagerlyForExport(CommandRecordingContext* re
     TransitionUsageAndGetResourceBarrier(syncInfo.usage, syncInfo.shaderStages, range, &barriers,
                                          &srcStages, &dstStages);
 
-    DAWN_ASSERT(barriers.size() == 1);
+    DAWN_OPT_ASSUME(barriers.size() == 1);
     VkImageMemoryBarrier& barrier = barriers[0];
     // The barrier must be paired with another barrier that will specify the dst access mask on the
     // importing queue.
@@ -1718,14 +1718,14 @@ bool ImportedTextureBase::CanReuseWithoutBarrier(wgpu::TextureUsage lastUsage,
 void ImportedTextureBase::TweakTransition(CommandRecordingContext* recordingContext,
                                           std::vector<VkImageMemoryBarrier>* barriers,
                                           size_t transitionBarrierStart) {
-    DAWN_ASSERT(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
+    DAWN_OPT_ASSUME(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
 
     mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 
     // transitionBarrierStart specify the index where barriers for current transition start in
     // the vector. barriers->size() - transitionBarrierStart is the number of barriers that we
     // have already added into the vector during current transition.
-    DAWN_ASSERT(barriers->size() - transitionBarrierStart <= 1);
+    DAWN_OPT_ASSUME(barriers->size() - transitionBarrierStart <= 1);
 
     if (mExternalState == ExternalState::PendingAcquire ||
         mExternalState == ExternalState::EagerlyTransitioned) {
@@ -1806,7 +1806,7 @@ void ImportedTextureBase::TweakTransition(CommandRecordingContext* recordingCont
 MaybeError ImportedTextureBase::EndAccess(ExternalSemaphoreHandle* handle,
                                           VkImageLayout* releasedOldLayout,
                                           VkImageLayout* releasedNewLayout) {
-    DAWN_ASSERT(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
+    DAWN_OPT_ASSUME(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
 
     // Release the texture
     mExternalState = ExternalState::Released;
@@ -1836,7 +1836,7 @@ MaybeError ImportedTextureBase::EndAccess(ExternalSemaphoreHandle* handle,
 
         currentLayout = targetLayout;
     }
-    DAWN_ASSERT(mExternalSemaphoreHandle != kNullExternalSemaphoreHandle);
+    DAWN_OPT_ASSUME(mExternalSemaphoreHandle != kNullExternalSemaphoreHandle);
 
     // Write out the layouts and signal semaphore
     *releasedOldLayout = currentLayout;
@@ -1934,7 +1934,7 @@ MaybeError ExternalVkImageTexture::Initialize(const ExternalImageDescriptorVk* d
     // the combined aspect without checking for disjoint support.
     // TODO(dawn:1548): Support multi-planar images with the DISJOINT feature and potentially allow
     // acting on planes individually? Always using Color is valid even for disjoint images.
-    DAWN_ASSERT(!GetFormat().IsMultiPlanar() || mCombinedAspect == Aspect::Color);
+    DAWN_OPT_ASSUME(!GetFormat().IsMultiPlanar() || mCombinedAspect == Aspect::Color);
 
     mExternalState = ExternalState::PendingAcquire;
     mLastExternalState = ExternalState::Released;
@@ -2066,7 +2066,7 @@ void SharedTexture::Initialize(SharedTextureMemory* memory) {
 
 void SharedTexture::SetPendingAcquire(VkImageLayout pendingAcquireOldLayout,
                                       VkImageLayout pendingAcquireNewLayout) {
-    DAWN_ASSERT(GetSharedResourceMemoryContents() != nullptr);
+    DAWN_OPT_ASSUME(GetSharedResourceMemoryContents() != nullptr);
     mExternalState = ExternalState::PendingAcquire;
     mLastExternalState = ExternalState::PendingAcquire;
 
@@ -2083,7 +2083,7 @@ MaybeError SharedTexture::OnBeforeSubmit(CommandRecordingContext* context) {
 
     for (const auto& fence : fences) {
         // All semaphores are binary semaphores.
-        DAWN_ASSERT(fence.signaledValue == 1u);
+        DAWN_OPT_ASSUME(fence.signaledValue == 1u);
         ExternalSemaphoreHandle semaphoreHandle = ToBackend(fence.object)->GetHandle().Get();
 
         VkSemaphore semaphore;
@@ -2141,7 +2141,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
             // The YCbCr conversion can be specified by the user with the YCbCrVulkanSamplers
             // feature.
-            DAWN_ASSERT(device->HasFeature(Feature::YCbCrVulkanSamplers));
+            DAWN_OPT_ASSUME(device->HasFeature(Feature::YCbCrVulkanSamplers));
 
             yCbCr = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
             yCbCr.nextInChain = nullptr;
@@ -2151,7 +2151,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
             // TODO(https://crbug.com/497675620): Specialize the conversion at the same time as all
             // the other state, in order to take advantage of hardware YCbCr to RGB conversion when
             // present.
-            DAWN_ASSERT(device->HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture));
+            DAWN_OPT_ASSUME(device->HasFeature(Feature::OpaqueYCbCrAndroidForExternalTexture));
 
             yCbCr = StaticSamplerSpecialization::GetYCbCrForTextureView(
                 static_cast<VkFormat>(stmContents->GetYCbCrVkDesc().vkFormat),
@@ -2166,7 +2166,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
         createInfo.pNext = &samplerYCbCrInfo;
     } else {
-        DAWN_ASSERT(!descriptor.Has<YCbCrVkDescriptor>());
+        DAWN_OPT_ASSUME(!descriptor.Has<YCbCrVkDescriptor>());
     }
 
     DAWN_TRY(CheckVkSuccess(
@@ -2282,8 +2282,8 @@ VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
 }
 
 ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlice) {
-    DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e3D);
-    DAWN_ASSERT(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
+    DAWN_OPT_ASSUME(GetTexture()->GetDimension() == wgpu::TextureDimension::e3D);
+    DAWN_OPT_ASSUME(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
 
     if (mHandlesFor2DViewOn3D.empty()) {
         mHandlesFor2DViewOn3D.resize(GetSingleSubresourceVirtualSize().depthOrArrayLayers);
@@ -2308,7 +2308,7 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
 }
 
 bool TextureView::IsYCbCrFilterable() const {
-    DAWN_ASSERT(IsYCbCr());
+    DAWN_OPT_ASSUME(IsYCbCr());
     return mIsYCbCrFilterable;
 }
 

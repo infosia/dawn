@@ -62,13 +62,13 @@ wgpu::ShaderModule CreateShaderModuleFromASM(
     wgpu::ShaderModule result = nullptr;
 
     spv_context context = spvContextCreate(SPV_ENV_UNIVERSAL_1_3);
-    DAWN_ASSERT(context != nullptr);
+    DAWN_OPT_ASSUME(context != nullptr);
 
     spv_binary spirv = nullptr;
     spv_diagnostic diagnostic = nullptr;
     if (spvTextToBinary(context, source, strlen(source), &spirv, &diagnostic) == SPV_SUCCESS) {
-        DAWN_ASSERT(spirv != nullptr);
-        DAWN_ASSERT(spirv->wordCount <= std::numeric_limits<uint32_t>::max());
+        DAWN_OPT_ASSUME(spirv != nullptr);
+        DAWN_OPT_ASSUME(spirv->wordCount <= std::numeric_limits<uint32_t>::max());
 
         wgpu::ShaderSourceSPIRV spirvDesc;
         spirvDesc.codeSize = static_cast<uint32_t>(spirv->wordCount);
@@ -79,7 +79,7 @@ wgpu::ShaderModule CreateShaderModuleFromASM(
         descriptor.nextInChain = &spirvDesc;
         result = device.CreateShaderModule(&descriptor);
     } else {
-        DAWN_ASSERT(diagnostic != nullptr);
+        DAWN_OPT_ASSUME(diagnostic != nullptr);
         dawn::WarningLog() << "CreateShaderModuleFromASM SPIRV assembly error:"
                            << diagnostic->position.line + 1 << ":"
                            << diagnostic->position.column + 1 << ": " << diagnostic->error;

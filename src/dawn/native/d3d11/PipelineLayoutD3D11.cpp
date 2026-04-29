@@ -151,7 +151,7 @@ MaybeError PipelineLayout::Initialize(Device* device) {
     }
 
     for (SingleShaderStage stage : IterateStages(kAllStages)) {
-        DAWN_ASSERT(constantBufferCounter[stage] <= kReservedConstantBufferSlot);
+        DAWN_OPT_ASSUME(constantBufferCounter[stage] <= kReservedConstantBufferSlot);
     }
 
     return {};

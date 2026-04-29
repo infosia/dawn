@@ -83,7 +83,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
         return DAWN_INTERNAL_ERROR("Error creating pipeline state " +
                                    std::string([error.localizedDescription UTF8String]));
     }
-    DAWN_ASSERT(mMtlComputePipelineState != nil);
+    DAWN_OPT_ASSUME(mMtlComputePipelineState != nil);
     timer.RecordMicroseconds("Metal.newComputePipelineStateWithDescriptor.CacheMiss");
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;

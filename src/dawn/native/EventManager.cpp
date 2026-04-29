@@ -493,7 +493,7 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, NonPro
 EventManager::TrackedEvent::~TrackedEvent() {
     DAWN_CHECK(mFutureID != kNullFutureID);
 #if defined(DAWN_ENABLE_ASSERTS)
-    std::call_once(mFlag, []() { DAWN_ASSERT(false); });
+    std::call_once(mFlag, []() { DAWN_OPT_ASSUME(false); });
 #endif
 }
 

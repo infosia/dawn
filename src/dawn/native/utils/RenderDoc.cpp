@@ -66,7 +66,7 @@ RenderDocApiType* GetRenderDocApi(DeviceBase* device) {
         }
 
         GetApiFunc(kRenderDocApiVersion, &api);
-        DAWN_ASSERT(api);
+        DAWN_OPT_ASSUME(api);
         return reinterpret_cast<RenderDocApiType*>(api);
     }();
 

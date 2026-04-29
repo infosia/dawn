@@ -53,7 +53,7 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     if (GetDevice()->NeedsStaticSamplerForExternalTexture() && GetLayout()->HasExternalTextures()) {
-        DAWN_ASSERT(!GetLayout()->HasAPIStaticSamplers());
+        DAWN_OPT_ASSUME(!GetLayout()->HasAPIStaticSamplers());
         mRequiresSpecialization = true;
     }
 
@@ -162,7 +162,7 @@ ResultOrError<ComputePipeline::SpecializationResult> ComputePipeline::Initialize
     }
 
     if (explicitSubgroupSize.has_value()) {
-        DAWN_ASSERT(device->GetDeviceInfo().HasExt(DeviceExt::SubgroupSizeControl));
+        DAWN_OPT_ASSUME(device->GetDeviceInfo().HasExt(DeviceExt::SubgroupSizeControl));
         subgroupSizeInfo.requiredSubgroupSize = explicitSubgroupSize.value();
         stageExtChain.Add(
             &subgroupSizeInfo,
@@ -226,12 +226,12 @@ bool ComputePipeline::RequiresSpecialization() const {
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
-    DAWN_ASSERT(mHandles.pipeline != VK_NULL_HANDLE);
+    DAWN_OPT_ASSUME(mHandles.pipeline != VK_NULL_HANDLE);
     return mHandles.pipeline;
 }
 
 VkPipelineLayout ComputePipeline::GetVkLayout() const {
-    DAWN_ASSERT(mHandles.layout != nullptr);
+    DAWN_OPT_ASSUME(mHandles.layout != nullptr);
     return mHandles.layout;
 }
 

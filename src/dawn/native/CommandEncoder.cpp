@@ -543,7 +543,7 @@ MaybeError ValidateColorAttachmentDepthSlice(const TextureViewBase* attachment,
 MaybeError ValidateDawnRenderPassSampleCount(
     const DeviceBase* device,
     const DawnRenderPassSampleCount* renderPassSampleCount) {
-    DAWN_ASSERT(renderPassSampleCount != nullptr);
+    DAWN_OPT_ASSUME(renderPassSampleCount != nullptr);
 
     DAWN_INVALID_IF(
         !device->HasFeature(Feature::MSAARenderToSingleSampled),
@@ -565,7 +565,7 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
     TextureViewBase* attachment = colorAttachment.view;
     DAWN_CHECK(attachment);
 
-    DAWN_ASSERT(renderPassSampleCount != nullptr);
+    DAWN_OPT_ASSUME(renderPassSampleCount != nullptr);
     DAWN_CHECK(device->HasFeature(Feature::MSAARenderToSingleSampled));
 
     uint32_t passSampleCount = renderPassSampleCount->sampleCount;
@@ -1292,7 +1292,7 @@ ComputePassEncoder* CommandEncoder::APIBeginComputePass(const ComputePassDescrip
 
 Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescriptor* descriptor) {
     DeviceBase* device = GetDevice();
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     bool success = mEncodingContext.TryEncode(
         this,
@@ -1352,7 +1352,7 @@ RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor
 
 Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescriptor* rawDescriptor) {
     DeviceBase* device = GetDevice();
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     RenderPassResourceUsageTracker usageTracker;
 

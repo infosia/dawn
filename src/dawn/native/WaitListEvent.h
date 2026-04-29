@@ -166,7 +166,7 @@ bool WaitListEvent::WaitAny(It eventAndReadyStateBegin,
     [[maybe_unused]] bool waitDone = false;
     if (timeout > kMaxDurationNanos) {
         waiter.cv.wait(waiterLock, [&waiter]() { return waiter.waitDone; });
-        DAWN_ASSERT(waiter.waitDone);
+        DAWN_OPT_ASSUME(waiter.waitDone);
         waitDone = true;
     } else {
         waitDone =
@@ -201,7 +201,7 @@ bool WaitListEvent::WaitAny(It eventAndReadyStateBegin,
         }
     }
 
-    DAWN_ASSERT(!waitDone || foundSignaled);
+    DAWN_OPT_ASSUME(!waitDone || foundSignaled);
     return foundSignaled;
 }
 

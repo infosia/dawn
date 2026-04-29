@@ -77,7 +77,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const std::optional<tint::hlsl::writer::PixelLocalOptions>& pixelLocalOptions) {
     Device* device = ToBackend(GetDevice());
     TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D11::Compile");
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
 
     d3d::D3DCompilationRequest req = {};
     req.tracePlatform = UnsafeUnserializedValue(device->GetPlatform());
@@ -95,7 +95,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.bytecode.compiler = d3d::Compiler::FXC;
     req.bytecode.d3dCompile =
         UnsafeUnserializedValue(pD3DCompile{device->GetFunctions()->d3dCompile});
-    DAWN_ASSERT(device->GetDeviceInfo().shaderModel == 50);
+    DAWN_OPT_ASSUME(device->GetDeviceInfo().shaderModel == 50);
     switch (stage) {
         case SingleShaderStage::Vertex:
             req.bytecode.fxcShaderProfile = "vs_5_0";
@@ -114,7 +114,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                 .group = 0,
                 .binding = layout->GetBindingTableIndexMap()[group][index][stage],
             };
-            DAWN_ASSERT(dstBindingPoint.binding != PipelineLayout::kInvalidSlot);
+            DAWN_OPT_ASSUME(dstBindingPoint.binding != PipelineLayout::kInvalidSlot);
             return dstBindingPoint;
         });
 

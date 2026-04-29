@@ -324,8 +324,8 @@ ResourceAllocatorManager::~ResourceAllocatorManager() {
 
     FreeRecycledAllocations();
 
-    DAWN_ASSERT(mAllocationsToDelete.Empty());
-    DAWN_ASSERT(mHeapsToDelete.Empty());
+    DAWN_OPT_ASSUME(mAllocationsToDelete.Empty());
+    DAWN_OPT_ASSUME(mHeapsToDelete.Empty());
 }
 
 ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
@@ -354,7 +354,7 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
         resourceDescriptor.DepthOrArraySize > 1 && colorFormatBytesPerBlock > 0) {
         // Multisample textures have one layer at most. Only non-multisample textures need the
         // workaround.
-        DAWN_ASSERT(revisedDescriptor.SampleDesc.Count <= 1);
+        DAWN_OPT_ASSUME(revisedDescriptor.SampleDesc.Count <= 1);
         // Make sure the result fits in DepthOrArraySize which is a UINT16
         uint64_t depthOrArraySize =
             revisedDescriptor.DepthOrArraySize +
@@ -426,11 +426,11 @@ void ResourceAllocatorManager::DeallocateMemory(ResourceHeapAllocation& allocati
     // calls DeallocateMemory again using the same allocation.
     allocation.Invalidate();
 
-    DAWN_ASSERT(allocation.GetD3D12Resource() == nullptr);
+    DAWN_OPT_ASSUME(allocation.GetD3D12Resource() == nullptr);
 }
 
 void ResourceAllocatorManager::FreeSubAllocatedMemory(ResourceHeapAllocation& allocation) {
-    DAWN_ASSERT(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
+    DAWN_OPT_ASSUME(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
 
     const size_t resourceHeapKindIndex = static_cast<size_t>(allocation.GetResourceHeapKind());
     mSubAllocatedResourceAllocators[resourceHeapKindIndex]->Deallocate(allocation);

@@ -215,7 +215,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
     NSRef<MTLTextureDescriptor> mtlDescRef = AcquireNSRef([MTLTextureDescriptor new]);
     MTLTextureDescriptor* mtlDesc = mtlDescRef.Get();
 
-    DAWN_ASSERT(!GetFormat().IsMultiPlanar());
+    DAWN_OPT_ASSUME(!GetFormat().IsMultiPlanar());
     mtlDesc.width = GetBaseSize().width;
     mtlDesc.sampleCount = GetSampleCount();
     // Metal only allows format reinterpretation to happen on swizzle pattern or conversion
@@ -249,7 +249,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
         case wgpu::TextureDimension::e1D:
             mtlDesc.arrayLength = 1;
             mtlDesc.depth = 1;
-            DAWN_ASSERT(mtlDesc.sampleCount == 1);
+            DAWN_OPT_ASSUME(mtlDesc.sampleCount == 1);
             mtlDesc.textureType = MTLTextureType1D;
             break;
 
@@ -258,7 +258,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
             mtlDesc.arrayLength = GetArrayLayers();
             mtlDesc.depth = 1;
             if (mtlDesc.arrayLength > 1) {
-                DAWN_ASSERT(mtlDesc.sampleCount == 1);
+                DAWN_OPT_ASSUME(mtlDesc.sampleCount == 1);
                 mtlDesc.textureType = MTLTextureType2DArray;
             } else if (mtlDesc.sampleCount > 1) {
                 mtlDesc.textureType = MTLTextureType2DMultisample;
@@ -270,7 +270,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
             mtlDesc.height = GetBaseSize().height;
             mtlDesc.depth = GetBaseSize().depthOrArrayLayers;
             mtlDesc.arrayLength = 1;
-            DAWN_ASSERT(mtlDesc.sampleCount == 1);
+            DAWN_OPT_ASSUME(mtlDesc.sampleCount == 1);
             mtlDesc.textureType = MTLTextureType3D;
             break;
     }
@@ -338,8 +338,8 @@ MaybeError Texture::InitializeAsInternalTexture(const UnpackedPtr<TextureDescrip
     } else {
         // Metal doesn't allow creating multiplanar texture directly. So we create an IOSurface
         // internally and wrap it.
-        DAWN_ASSERT(descriptor->dimension == wgpu::TextureDimension::e2D &&
-                    descriptor->mipLevelCount == 1 && descriptor->size.depthOrArrayLayers == 1);
+        DAWN_OPT_ASSUME(descriptor->dimension == wgpu::TextureDimension::e2D &&
+                        descriptor->mipLevelCount == 1 && descriptor->size.depthOrArrayLayers == 1);
 
         mIOSurface = CreateMultiPlanarIOSurface(descriptor->format, descriptor->size.width,
                                                 descriptor->size.height);
@@ -435,7 +435,7 @@ void Texture::DestroyImpl(DestroyReason reason) {
 
 void Texture::SetLabelImpl() {
     if (!GetFormat().IsMultiPlanar()) {
-        DAWN_ASSERT(mMtlPlaneTextures.size() == 1);
+        DAWN_OPT_ASSUME(mMtlPlaneTextures.size() == 1);
         SetDebugName(GetDevice(), mMtlPlaneTextures[0].Get(), "Dawn_Texture", GetLabel());
     } else {
         for (size_t i = 0; i < mMtlPlaneTextures.size(); ++i) {
@@ -457,23 +457,23 @@ id<MTLTexture> Texture::GetMTLTexture(Aspect aspect) const {
     id<MTLTexture> tex;
     switch (aspect) {
         case Aspect::Plane0:
-            DAWN_ASSERT(mMtlPlaneTextures.size() > 1);
+            DAWN_OPT_ASSUME(mMtlPlaneTextures.size() > 1);
             tex = mMtlPlaneTextures[0].Get();
             break;
         case Aspect::Plane1:
-            DAWN_ASSERT(mMtlPlaneTextures.size() > 1);
+            DAWN_OPT_ASSUME(mMtlPlaneTextures.size() > 1);
             tex = mMtlPlaneTextures[1].Get();
             break;
         case Aspect::Plane2:
-            DAWN_ASSERT(mMtlPlaneTextures.size() > 2);
+            DAWN_OPT_ASSUME(mMtlPlaneTextures.size() > 2);
             tex = mMtlPlaneTextures[2].Get();
             break;
         default:
-            DAWN_ASSERT(mMtlPlaneTextures.size() == 1);
+            DAWN_OPT_ASSUME(mMtlPlaneTextures.size() == 1);
             tex = mMtlPlaneTextures[0].Get();
             break;
     }
-    DAWN_ASSERT(tex != nullptr);
+    DAWN_OPT_ASSUME(tex != nullptr);
     return tex;
 }
 
@@ -482,14 +482,14 @@ IOSurfaceRef Texture::GetIOSurface() {
 }
 
 NSPRef<id<MTLTexture>> Texture::CreateFormatView(wgpu::TextureFormat format) {
-    DAWN_ASSERT(!GetFormat().IsMultiPlanar());
-    DAWN_ASSERT(mMtlFormat != MTLPixelFormatInvalid);
+    DAWN_OPT_ASSUME(!GetFormat().IsMultiPlanar());
+    DAWN_OPT_ASSUME(mMtlFormat != MTLPixelFormatInvalid);
 
     if (GetFormat().format == format) {
         return mMtlPlaneTextures[0];
     }
 
-    DAWN_ASSERT(
+    DAWN_OPT_ASSUME(
         AllowFormatReinterpretationWithoutFlag(mMtlFormat, MetalPixelFormat(GetDevice(), format)));
     return AcquireNSPRef([mMtlPlaneTextures[0].Get()
         newTextureViewWithPixelFormat:MetalPixelFormat(GetDevice(), format)]);
@@ -511,7 +511,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
     const double dClearColor = (clearValue == TextureBase::ClearValue::Zero) ? 0.0 : 1.0;
 
     if ((mMtlUsage & MTLTextureUsageRenderTarget) != 0) {
-        DAWN_ASSERT(GetFormat().IsRenderable());
+        DAWN_OPT_ASSUME(GetFormat().IsRenderable());
 
         // End the blit encoder if it is open.
         commandContext->EndBlit();
@@ -545,7 +545,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                             continue;
                         }
 
-                        DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
+                        DAWN_OPT_ASSUME(GetDimension() == wgpu::TextureDimension::e2D);
                         switch (aspect) {
                             case Aspect::Depth:
                                 descriptor.depthAttachment.texture = GetMTLTexture(aspect);
@@ -575,10 +575,10 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                 }
             }
         } else if (GetFormat().IsMultiPlanar()) {
-            DAWN_ASSERT(range.levelCount == 1);
-            DAWN_ASSERT(range.layerCount == 1);
-            DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
-            DAWN_ASSERT(GetBaseSize().depthOrArrayLayers == 1);
+            DAWN_OPT_ASSUME(range.levelCount == 1);
+            DAWN_OPT_ASSUME(range.layerCount == 1);
+            DAWN_OPT_ASSUME(GetDimension() == wgpu::TextureDimension::e2D);
+            DAWN_OPT_ASSUME(GetBaseSize().depthOrArrayLayers == 1);
 
             // At least one aspect needs clearing. Iterate the aspects individually to
             // determine which to clear.
@@ -607,7 +607,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
             }
 
         } else {
-            DAWN_ASSERT(GetFormat().IsColor());
+            DAWN_OPT_ASSUME(GetFormat().IsColor());
             for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
                  ++level) {
                 // Create multiple render passes with each subresource as a color attachment to
@@ -666,7 +666,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
             }
         }
     } else {
-        DAWN_ASSERT(!IsMultisampledTexture());
+        DAWN_OPT_ASSUME(!IsMultisampledTexture());
 
         // Encode a buffer to texture copy to clear each subresource.
         for (Aspect aspect : IterateEnumMask(range.aspects)) {
@@ -729,8 +729,8 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
 }
 
 MTLBlitOption Texture::ComputeMTLBlitOption(Aspect aspect) const {
-    DAWN_ASSERT(HasOneBit(aspect));
-    DAWN_ASSERT(GetFormat().aspects & aspect);
+    DAWN_OPT_ASSUME(HasOneBit(aspect));
+    DAWN_OPT_ASSUME(GetFormat().aspects & aspect);
 
     if (mMtlFormat == MTLPixelFormatDepth32Float_Stencil8) {
         // We only provide a blit option if the format has both depth and stencil.
@@ -787,7 +787,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         // For multiplanar texture, plane view is already created in
         // InitializeFromInternalMultiPlanarTexture(). The view is only nullptr if aspect is
         // invalid.
-        DAWN_ASSERT(mtlTexture != nullptr);
+        DAWN_OPT_ASSUME(mtlTexture != nullptr);
         mMtlTextureView = mtlTexture;
     } else {
         MTLTextureType textureViewType =
@@ -798,7 +798,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         MTLPixelFormat textureFormat = MetalPixelFormat(device, texture->GetFormat().format);
         if (aspect == Aspect::Stencil && textureFormat != MTLPixelFormatStencil8) {
             // Note we never use MTLPixelFormatDepth24Unorm_Stencil8 (doesn't exist on Apple GPUs).
-            DAWN_ASSERT(textureFormat == MTLPixelFormatDepth32Float_Stencil8);
+            DAWN_OPT_ASSUME(textureFormat == MTLPixelFormatDepth32Float_Stencil8);
             viewFormat = MTLPixelFormatX32_Stencil8;
         } else if (texture->GetFormat().HasDepth() && texture->GetFormat().HasStencil()) {
             // Depth-only views for depth/stencil textures in Metal simply use the original
@@ -849,13 +849,13 @@ void TextureView::SetLabelImpl() {
 }
 
 id<MTLTexture> TextureView::GetMTLTexture() const {
-    DAWN_ASSERT(mMtlTextureView != nullptr);
+    DAWN_OPT_ASSUME(mMtlTextureView != nullptr);
     return mMtlTextureView.Get();
 }
 
 TextureView::AttachmentInfo TextureView::GetAttachmentInfo() const {
-    DAWN_ASSERT(GetInternalUsage() &
-                (wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::StorageAttachment));
+    DAWN_OPT_ASSUME(GetInternalUsage() &
+                    (wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::StorageAttachment));
     // Use our own view if the formats do not match.
     // If the formats do not match, format reinterpretation will be required.
     // Note: Depth/stencil formats don't support reinterpretation.
@@ -865,7 +865,7 @@ TextureView::AttachmentInfo TextureView::GetAttachmentInfo() const {
     bool useOwnView = GetFormat().format != GetTexture()->GetFormat().format &&
                       !GetTexture()->GetFormat().HasDepthOrStencil();
     if (useOwnView) {
-        DAWN_ASSERT(mMtlTextureView.Get());
+        DAWN_OPT_ASSUME(mMtlTextureView.Get());
         return {mMtlTextureView, 0, 0};
     }
     AttachmentInfo info;
@@ -879,7 +879,7 @@ std::optional<MTLTextureSwizzleChannels> TextureView::ComputeMetalSwizzle() {
     if (!SupportTextureComponentSwizzle(ToBackend(GetDevice())->GetMTLDevice())) {
         // If the device doesn't support texture component swizzling,
         // we should have caught this during validation.
-        DAWN_ASSERT(GetSwizzle() == kRGBASwizzle);
+        DAWN_OPT_ASSUME(GetSwizzle() == kRGBASwizzle);
         return {};
     }
 

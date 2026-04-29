@@ -89,7 +89,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
         wgpu.deviceImportSharedTextureMemory(device->GetInnerHandle(), &innerDesc);
     // APIImportSharedTextureMemory always returns a shared texture memory. Either a valid object or
     // an error one.
-    DAWN_ASSERT(innerHandle);
+    DAWN_OPT_ASSUME(innerHandle);
 
     WGPUSharedTextureMemoryProperties innerProperties = WGPU_SHARED_TEXTURE_MEMORY_PROPERTIES_INIT;
     WGPUStatus status = wgpu.sharedTextureMemoryGetProperties(innerHandle, &innerProperties);
@@ -150,7 +150,7 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     if (innerState.initialized) {
         texture->SetIsSubresourceContentInitialized(true, texture->GetAllSubresources());
     }
-    DAWN_ASSERT(texture->IsInitialized() == static_cast<bool>(innerState.initialized));
+    DAWN_OPT_ASSUME(texture->IsInitialized() == static_cast<bool>(innerState.initialized));
 
     if (auto* mtlEndStateChain = state.Get<SharedTextureMemoryMetalEndAccessState>()) {
         DAWN_TRY(ToBackend(GetDevice()->GetQueue())->SubmitPendingCommands());
@@ -181,7 +181,7 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
 
     // Only that Texture is used by gpu will enter EndAccess.
     // The fence could only be from the inner queue.
-    DAWN_ASSERT(innerState.fenceCount == 1);
+    DAWN_OPT_ASSUME(innerState.fenceCount == 1);
 
     Ref<SharedFence> fence;
     DAWN_TRY_ASSIGN(

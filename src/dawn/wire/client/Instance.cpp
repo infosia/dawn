@@ -71,7 +71,7 @@ class RequestAdapterEvent : public TrackedEvent {
                          const WGPULimits* limits,
                          uint32_t featuresCount,
                          const WGPUFeatureName* features) {
-        DAWN_ASSERT(mAdapter != nullptr);
+        DAWN_OPT_ASSUME(mAdapter != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestAdapterStatus_Success) {
@@ -309,14 +309,14 @@ bool Instance::APIHasWGSLLanguageFeature(WGPUWGSLLanguageFeatureName feature) co
 }
 
 void Instance::APIGetWGSLLanguageFeatures(WGPUSupportedWGSLLanguageFeatures* features) const {
-    DAWN_ASSERT(features != nullptr);
+    DAWN_OPT_ASSUME(features != nullptr);
     size_t featureCount = mWGSLFeatures.size();
     WGPUWGSLLanguageFeatureName* wgslFeatures = new WGPUWGSLLanguageFeatureName[featureCount];
     uint32_t index = 0;
     for (WGPUWGSLLanguageFeatureName feature : mWGSLFeatures) {
         wgslFeatures[index++] = feature;
     }
-    DAWN_ASSERT(index == featureCount);
+    DAWN_OPT_ASSUME(index == featureCount);
 
     features->featureCount = featureCount;
     features->features = wgslFeatures;
@@ -341,7 +341,7 @@ void APIFreeMembers(WGPUSupportedInstanceFeatures supportedFeatures) {
 // Free-standing API functions
 
 DAWN_WIRE_EXPORT WGPUStatus wgpuDawnWireClientGetInstanceLimits(WGPUInstanceLimits* limits) {
-    DAWN_ASSERT(limits != nullptr);
+    DAWN_OPT_ASSUME(limits != nullptr);
     if (limits->nextInChain != nullptr) {
         dawn::ErrorLog() << "Wire client doesn't support any WGPUInstanceLimits extensions";
         return WGPUStatus_Error;
@@ -359,7 +359,7 @@ DAWN_WIRE_EXPORT WGPUBool wgpuDawnWireClientHasInstanceFeature(WGPUInstanceFeatu
 
 DAWN_WIRE_EXPORT void wgpuDawnWireClientGetInstanceFeatures(
     WGPUSupportedInstanceFeatures* features) {
-    DAWN_ASSERT(features != nullptr);
+    DAWN_OPT_ASSUME(features != nullptr);
 
     features->featureCount = dawn::wire::client::kSupportedFeatures.size();
     features->features = dawn::wire::client::kSupportedFeatures.data();

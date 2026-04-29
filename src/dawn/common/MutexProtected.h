@@ -145,7 +145,7 @@ class DAWN_SCOPED_LOCKABLE Guard : public NonMovable, StackAllocated {
     auto& operator*() const { return *Get(); }
 
     void Defer(std::function<void()> f) {
-        DAWN_ASSERT(mDefer);
+        DAWN_OPT_ASSUME(mDefer);
         mDefer->Append(std::move(f));
     }
 
@@ -206,12 +206,12 @@ class CondVarGuard : public NonMovable, StackAllocated {
 
     template <typename Predicate>
     void Wait(Predicate pred) {
-        DAWN_ASSERT(mNotifyScope.cv);
+        DAWN_OPT_ASSUME(mNotifyScope.cv);
         mNotifyScope.cv->wait(mGuard.mLock, [&] { return pred((*Get())); });
     }
     template <typename Predicate>
     bool WaitFor(Nanoseconds timeout, Predicate pred) {
-        DAWN_ASSERT(mNotifyScope.cv);
+        DAWN_OPT_ASSUME(mNotifyScope.cv);
         if (timeout < kMaxDurationNanos) {
             return mNotifyScope.cv->wait_for(
                 mGuard.mLock, std::chrono::nanoseconds(static_cast<uint64_t>(timeout)),
@@ -233,7 +233,7 @@ class CondVarGuard : public NonMovable, StackAllocated {
     friend class MutexCondVarProtected<NonConstT, CondVarGuard, Traits>;
 
     struct NotifyScopeBase : public StackAllocated {
-        explicit NotifyScopeBase(std::condition_variable* cv) : cv(cv) { DAWN_ASSERT(cv); }
+        explicit NotifyScopeBase(std::condition_variable* cv) : cv(cv) { DAWN_OPT_ASSUME(cv); }
         std::condition_variable* cv = nullptr;
     };
 

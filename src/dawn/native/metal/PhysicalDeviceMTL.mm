@@ -150,7 +150,7 @@ MaybeError GetDeviceIORegistryPCIInfo(id<MTLDevice> device, PCIIDs* ids) {
         return DAWN_INTERNAL_ERROR("Failed to get the IO registry entry for the device");
     }
 
-    DAWN_ASSERT(deviceEntry != IO_OBJECT_NULL);
+    DAWN_OPT_ASSUME(deviceEntry != IO_OBJECT_NULL);
 
     uint32_t vendorId = GetEntryProperty(deviceEntry.Get(), CFSTR("vendor-id"));
     uint32_t deviceId = GetEntryProperty(deviceEntry.Get(), CFSTR("device-id"));
@@ -879,7 +879,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
                                       limits->v1.maxUniformBuffersPerShaderStage +
                                       limits->v1.maxVertexBuffers;
 
-    DAWN_ASSERT(maxBuffersPerStage >= baseMaxBuffersPerStage);
+    DAWN_OPT_ASSUME(maxBuffersPerStage >= baseMaxBuffersPerStage);
     {
         // Allocate all remaining buffers to maxStorageBuffersPerShaderStage.
         // TODO(crbug.com/2158): We can have more of all types of buffers when
@@ -891,7 +891,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     uint32_t baseMaxTexturesPerStage =
         limits->v1.maxSampledTexturesPerShaderStage + limits->v1.maxStorageTexturesPerShaderStage;
 
-    DAWN_ASSERT(mtlLimits.maxTextureArgumentEntriesPerFunc >= baseMaxTexturesPerStage);
+    DAWN_OPT_ASSUME(mtlLimits.maxTextureArgumentEntriesPerFunc >= baseMaxTexturesPerStage);
     {
         uint32_t additional = mtlLimits.maxTextureArgumentEntriesPerFunc - baseMaxTexturesPerStage;
         limits->v1.maxSampledTexturesPerShaderStage += additional / 2;
@@ -1036,7 +1036,7 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info,
         }
     }
     if (auto* subgroupMatrixConfigs = info.Get<AdapterPropertiesSubgroupMatrixConfigs>()) {
-        DAWN_ASSERT([*mDevice supportsFamily:MTLGPUFamilyApple7]);
+        DAWN_OPT_ASSUME([*mDevice supportsFamily:MTLGPUFamilyApple7]);
 
         auto* configs = new SubgroupMatrixConfig[2];
         subgroupMatrixConfigs->configCount = 2;

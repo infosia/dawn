@@ -143,7 +143,7 @@ void IncrementBindingCounts(BindingCounts* bindingCounts,
         perStageBindingCountMember = &PerStageBindingCounts::staticSamplerCount;
     }
 
-    DAWN_ASSERT(perStageBindingCountMember != nullptr);
+    DAWN_OPT_ASSUME(perStageBindingCountMember != nullptr);
     for (SingleShaderStage stage : IterateStages(entry->visibility)) {
         (bindingCounts->perStage[stage].*perStageBindingCountMember) += arraySize;
     }

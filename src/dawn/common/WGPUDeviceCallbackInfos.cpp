@@ -127,11 +127,11 @@ void WGPUDeviceCallbackInfos::CallErrorCallback(WGPUDevice const* device,
     }
 
     // Call the callback without holding the lock to prevent any re-entrant issues.
-    DAWN_ASSERT(callbackInfo->callback != nullptr);
+    DAWN_OPT_ASSUME(callbackInfo->callback != nullptr);
     callbackInfo->callback(device, type, message, callbackInfo->userdata1, callbackInfo->userdata2);
 
     mCallbackInfos.Use([&](auto callbackInfos) {
-        DAWN_ASSERT(callbackInfos->semaphore > 0);
+        DAWN_OPT_ASSUME(callbackInfos->semaphore > 0);
         callbackInfos->semaphore -= 1;
     });
 }
@@ -151,11 +151,11 @@ void WGPUDeviceCallbackInfos::CallLoggingCallback(WGPULoggingType type, WGPUStri
     }
 
     // Call the callback without holding the lock to prevent any re-entrant issues.
-    DAWN_ASSERT(callbackInfo->callback != nullptr);
+    DAWN_OPT_ASSUME(callbackInfo->callback != nullptr);
     callbackInfo->callback(type, message, callbackInfo->userdata1, callbackInfo->userdata2);
 
     mCallbackInfos.Use([&](auto callbackInfos) {
-        DAWN_ASSERT(callbackInfos->semaphore > 0);
+        DAWN_OPT_ASSUME(callbackInfos->semaphore > 0);
         callbackInfos->semaphore -= 1;
     });
 }

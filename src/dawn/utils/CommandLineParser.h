@@ -259,7 +259,7 @@ CommandLineParser::EnumOption<E>::EnumOption(
 
 template <typename E>
 E CommandLineParser::EnumOption<E>::GetValue() const {
-    DAWN_ASSERT(this->IsSet() || mHasDefault);
+    DAWN_OPT_ASSUME(this->IsSet() || mHasDefault);
     return mValue;
 }
 

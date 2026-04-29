@@ -52,7 +52,7 @@ class WindowsDebugLogger : public PlatformDebugLogger {
         }
 
         mShouldExitHandle = CreateEventA(nullptr, TRUE, FALSE, nullptr);
-        DAWN_ASSERT(mShouldExitHandle != nullptr);
+        DAWN_OPT_ASSUME(mShouldExitHandle != nullptr);
 
         mThread = std::thread(
             [](HANDLE shouldExit) {
@@ -66,19 +66,19 @@ class WindowsDebugLogger : public PlatformDebugLogger {
                 SystemHandle file = SystemHandle::Acquire(
                     CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0,
                                        sizeof(*dbWinBuffer), "DBWIN_BUFFER"));
-                DAWN_ASSERT(file.IsValid());
+                DAWN_OPT_ASSUME(file.IsValid());
 
                 dbWinBuffer = static_cast<decltype(dbWinBuffer)>(
                     MapViewOfFile(file.Get(), SECTION_MAP_READ, 0, 0, 0));
-                DAWN_ASSERT(dbWinBuffer != nullptr);
+                DAWN_OPT_ASSUME(dbWinBuffer != nullptr);
 
                 SystemHandle dbWinBufferReady = SystemHandle::Acquire(
                     CreateEventA(nullptr, FALSE, FALSE, "DBWIN_BUFFER_READY"));
-                DAWN_ASSERT(dbWinBufferReady.IsValid());
+                DAWN_OPT_ASSUME(dbWinBufferReady.IsValid());
 
                 SystemHandle dbWinDataReady =
                     SystemHandle::Acquire(CreateEventA(nullptr, FALSE, FALSE, "DBWIN_DATA_READY"));
-                DAWN_ASSERT(dbWinDataReady.IsValid());
+                DAWN_OPT_ASSUME(dbWinDataReady.IsValid());
 
                 std::array<HANDLE, 2> waitHandles = {shouldExit, dbWinDataReady.Get()};
                 while (true) {
@@ -88,7 +88,7 @@ class WindowsDebugLogger : public PlatformDebugLogger {
                     if (wait == WAIT_OBJECT_0) {
                         break;
                     }
-                    DAWN_ASSERT(wait == WAIT_OBJECT_0 + 1);
+                    DAWN_OPT_ASSUME(wait == WAIT_OBJECT_0 + 1);
                     fprintf(stderr, "%.*s\n", static_cast<int>(sizeof(dbWinBuffer->data)),
                             dbWinBuffer->data);
                     fflush(stderr);
@@ -108,7 +108,7 @@ class WindowsDebugLogger : public PlatformDebugLogger {
 
         if (mShouldExitHandle != nullptr) {
             BOOL result = SetEvent(mShouldExitHandle);
-            DAWN_ASSERT(result != 0);
+            DAWN_OPT_ASSUME(result != 0);
             CloseHandle(mShouldExitHandle);
         }
 

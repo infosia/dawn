@@ -55,8 +55,8 @@ Surface::Surface(const ObjectBaseParams& params, const WGPUSurfaceCapabilities* 
     mSupportedAlphaModes.assign(capabilities->alphaModes,
                                 capabilities->alphaModes + capabilities->alphaModeCount);
 
-    DAWN_ASSERT(!mSupportedFormats.empty() && !mSupportedPresentModes.empty() &&
-                !mSupportedAlphaModes.empty());
+    DAWN_OPT_ASSUME(!mSupportedFormats.empty() && !mSupportedPresentModes.empty() &&
+                    !mSupportedAlphaModes.empty());
 }
 
 Surface::~Surface() = default;

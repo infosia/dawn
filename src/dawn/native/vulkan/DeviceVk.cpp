@@ -397,7 +397,7 @@ uint32_t Device::GetGraphicsQueueFamily() const {
 }
 
 const VkDescriptorSetLayout& Device::GetResourceTableLayout() const {
-    DAWN_ASSERT(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
+    DAWN_OPT_ASSUME(HasFeature(Feature::ChromiumExperimentalSamplingResourceTable));
     return mResourceTableLayout;
 }
 
@@ -471,7 +471,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         // tight bounds checking when enabled on buffers (instead of potentially extending by 16
         // bytes or a vertex stride). It also exposes driver support for image robustness.
         if (mDeviceInfo.HasExt(DeviceExt::Robustness2)) {
-            DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::Robustness2));
+            DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::Robustness2));
 
             usedKnobs.robustness2Features = mDeviceInfo.robustness2Features;
             featuresChain.Add(&usedKnobs.robustness2Features);
@@ -479,7 +479,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
         // Enable pipelineRobustness to better control where robustness happens.
         if (mDeviceInfo.HasExt(DeviceExt::PipelineRobustness)) {
-            DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::PipelineRobustness));
+            DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::PipelineRobustness));
 
             usedKnobs.pipelineRobustnessFeatures = mDeviceInfo.pipelineRobustnessFeatures;
             featuresChain.Add(&usedKnobs.pipelineRobustnessFeatures);
@@ -493,14 +493,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
             usedKnobs.features.robustBufferAccess = VK_FALSE;
             usedKnobs.robustness2Features.robustBufferAccess2 = VK_FALSE;
 
-            DAWN_ASSERT(!IsToggleEnabled(Toggle::VulkanUseBufferRobustAccess2));
-            DAWN_ASSERT(mDeviceInfo.HasExt(DeviceExt::PipelineRobustness) &&
-                        mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness);
+            DAWN_OPT_ASSUME(!IsToggleEnabled(Toggle::VulkanUseBufferRobustAccess2));
+            DAWN_OPT_ASSUME(mDeviceInfo.HasExt(DeviceExt::PipelineRobustness) &&
+                            mDeviceInfo.pipelineRobustnessFeatures.pipelineRobustness);
         }
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::SubgroupSizeControl));
+        DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::SubgroupSizeControl));
 
         // Always request all the features from VK_EXT_subgroup_size_control when available.
         usedKnobs.subgroupSizeControlFeatures = mDeviceInfo.subgroupSizeControlFeatures;
@@ -508,7 +508,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory));
+        DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::ZeroInitializeWorkgroupMemory));
 
         // Always allow initializing workgroup memory with OpConstantNull when available.
         // Note that the driver still won't initialize workgroup memory unless the workgroup
@@ -519,13 +519,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::DemoteToHelperInvocation)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
+        DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
         usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
         featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderIntegerDotProduct));
+        DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::ShaderIntegerDotProduct));
 
         usedKnobs.shaderIntegerDotProductFeatures = mDeviceInfo.shaderIntegerDotProductFeatures;
         featuresChain.Add(&usedKnobs.shaderIntegerDotProductFeatures);
@@ -536,13 +536,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (IsToggleEnabled(Toggle::UseVulkanMemoryModel)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::VulkanMemoryModel));
+        DAWN_OPT_ASSUME(usedKnobs.HasExt(DeviceExt::VulkanMemoryModel));
         usedKnobs.vulkanMemoryModelFeatures = mDeviceInfo.vulkanMemoryModelFeatures;
         featuresChain.Add(&usedKnobs.vulkanMemoryModelFeatures);
     }
 
     if (HasFeature(Feature::TextureCompressionBC)) {
-        DAWN_ASSERT(mDeviceInfo.features.textureCompressionBC == VK_TRUE);
+        DAWN_OPT_ASSUME(mDeviceInfo.features.textureCompressionBC == VK_TRUE);
         usedKnobs.features.textureCompressionBC = VK_TRUE;
     }
 
@@ -748,7 +748,7 @@ MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
                                            uint64_t size) {
     // It is a validation error to do a 0-sized copy in Vulkan, check it is skipped prior to
     // calling this function.
-    DAWN_ASSERT(size != 0);
+    DAWN_OPT_ASSUME(size != 0);
 
     CommandRecordingContext* recordingContext =
         ToBackend(GetQueue())->GetPendingRecordingContext(Queue::SubmitMode::Passive);
@@ -992,11 +992,11 @@ void Device::CheckDebugMessagesAfterDestruction() const {
     }
 
     // Crash in debug
-    DAWN_ASSERT(false);
+    DAWN_OPT_ASSUME(false);
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
 
     // We failed during initialization so early that we don't even have a VkDevice. There is
     // nothing to do.
@@ -1062,7 +1062,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // VkQueues are destroyed when the VkDevice is destroyed
     // The VkDevice is needed to destroy child objects, so it must be destroyed last after all
     // child objects have been deleted.
-    DAWN_ASSERT(mVkDevice != VK_NULL_HANDLE);
+    DAWN_OPT_ASSUME(mVkDevice != VK_NULL_HANDLE);
     fn.DestroyDevice(mVkDevice, nullptr);
     mVkDevice = VK_NULL_HANDLE;
 
@@ -1140,7 +1140,7 @@ bool Device::NeedsStaticSamplerForExternalTexture() const {
 }
 
 AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
-    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(IsLockedByCurrentThreadIfNeeded());
     AllocatorMemoryInfo info = {};
     info.totalAllocatedMemory = GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
     info.totalUsedMemory = GetResourceMemoryAllocator()->GetTotalUsedMemory();
@@ -1186,7 +1186,7 @@ bool Device::ReduceMemoryUsageImpl() {
     if (ConsumedError(TickImpl())) {
         return false;
     }
-    DAWN_ASSERT(deletionSerial <= queue->GetLastSubmittedCommandSerial());
+    DAWN_OPT_ASSUME(deletionSerial <= queue->GetLastSubmittedCommandSerial());
 
     // Check again if there is anything left to delete as tick might have deleted objects.
     return GetLastPendingDeletionSerial() != kBeginningOfGPUTime;
@@ -1214,8 +1214,8 @@ std::optional<DeviceGuard> Device::UseGuardForCreateBindGroupLayout() {
 bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
                                                           wgpu::BufferUsage originalUsage,
                                                           size_t bufferSize) const {
-    DAWN_ASSERT(IsSubset(storageUsage, wgpu::BufferUsage::Storage | kInternalStorageBuffer |
-                                           kReadOnlyStorageBuffer));
+    DAWN_OPT_ASSUME(IsSubset(storageUsage, wgpu::BufferUsage::Storage | kInternalStorageBuffer |
+                                               kReadOnlyStorageBuffer));
     if (originalUsage & kMappableBufferUsages) {
         return HasFeature(Feature::BufferMapExtendedUsages);
     }
@@ -1224,7 +1224,7 @@ bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage stor
 
 // Prepares the Empty Pass QuerySet, creating and resetting it if needed.
 MaybeError Device::PrepareEmptyPassQuerySet(CommandRecordingContext* recordingContext) {
-    DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
+    DAWN_OPT_ASSUME(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
     if (!mEmptyPassQuerySet) {
         QuerySetDescriptor descriptor;
         descriptor.type = wgpu::QueryType::Occlusion;
@@ -1246,9 +1246,9 @@ MaybeError Device::PrepareEmptyPassQuerySet(CommandRecordingContext* recordingCo
 // Must call PrepareEmptyPassQuerySet outside of recording a render pass prior to calling this every
 // time.
 Ref<QuerySetBase> Device::UseEmptyPassQuerySet() {
-    DAWN_ASSERT(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
-    DAWN_ASSERT(mEmptyPassQuerySet);
-    DAWN_ASSERT(!mEmptyPassQuerySetNeedsReset);
+    DAWN_OPT_ASSUME(IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass));
+    DAWN_OPT_ASSUME(mEmptyPassQuerySet);
+    DAWN_OPT_ASSUME(!mEmptyPassQuerySetNeedsReset);
 
     mEmptyPassQuerySetNeedsReset = true;
     return mEmptyPassQuerySet;

@@ -663,7 +663,7 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(
     return result;
 }
 
-// This is a utility function to help DAWN_ASSERT that the BGL-binding comparator places buffers
+// This is a utility function to help DAWN_OPT_ASSUME that the BGL-binding comparator places buffers
 // first.
 bool CheckBufferBindingsFirst(ityp::span<BindingIndex, const BindingInfo> bindings) {
     BindingIndex lastBufferIndex{0};

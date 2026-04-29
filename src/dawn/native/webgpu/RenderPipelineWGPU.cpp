@@ -75,7 +75,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     desc.nextInChain = nullptr;
     desc.label = ToOutputStringView(label);
     auto layout = GetLayout();
-    DAWN_ASSERT(layout != nullptr);
+    DAWN_OPT_ASSUME(layout != nullptr);
     desc.layout = ToBackend(layout)->GetInnerHandle();
 
     // Vertex State
@@ -184,7 +184,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     mInnerHandle = device->wgpu->deviceCreateRenderPipeline(device->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
     return {};
 }
 

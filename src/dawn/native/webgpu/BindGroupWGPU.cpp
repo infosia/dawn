@@ -127,7 +127,7 @@ BindGroup::BindGroup(Device* device, const UnpackedPtr<BindGroupDescriptor>& des
     mInnerHandle =
         ToBackend(GetDevice())
             ->wgpu->deviceCreateBindGroup(ToBackend(GetDevice())->GetInnerHandle(), desc.Get());
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 }
 
 MaybeError BindGroup::InitializeImpl() {

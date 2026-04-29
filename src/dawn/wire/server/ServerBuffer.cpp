@@ -160,7 +160,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
     return buffer->mapState.Use([&](auto mapState) {
         if (isWriteMode) {
             if (buffer->handle == nullptr) {
-                DAWN_ASSERT(descriptor->mappedAtCreation);
+                DAWN_OPT_ASSUME(descriptor->mappedAtCreation);
                 // A null buffer indicates that mapping-at-creation failed inside createBuffer.
                 // Unmark the buffer as allocated so we will skip freeing it.
                 buffer->state = AllocationState::Reserved;
@@ -174,7 +174,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                     &writeHandle)) {
                 return WireResult::FatalError;
             }
-            DAWN_ASSERT(writeHandle != nullptr);
+            DAWN_OPT_ASSUME(writeHandle != nullptr);
             mapState->writeHandle.reset(writeHandle);
         }
 
@@ -186,7 +186,7 @@ WireResult Server::DoDeviceCreateBuffer(Known<WGPUDevice> device,
                     &readHandle)) {
                 return WireResult::FatalError;
             }
-            DAWN_ASSERT(readHandle != nullptr);
+            DAWN_OPT_ASSUME(readHandle != nullptr);
             mapState->readHandle.reset(readHandle);
         }
 

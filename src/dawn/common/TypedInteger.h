@@ -100,7 +100,7 @@ class alignas(T) TypedIntegerImpl {
     template <typename I>
         requires std::integral<I> && std::unsigned_integral<T>
     explicit constexpr TypedIntegerImpl(I rhs) : mValue(static_cast<T>(rhs)) {
-        DAWN_ASSERT(rhs >= 0);
+        DAWN_OPT_ASSUME(rhs >= 0);
         static_assert(static_cast<uint64_t>(std::numeric_limits<I>::max()) <=
                       static_cast<uint64_t>(std::numeric_limits<T>::max()));
     }
@@ -118,7 +118,7 @@ class alignas(T) TypedIntegerImpl {
     explicit constexpr operator I() const {
         if constexpr (sizeof(I) < sizeof(T)) {
             // If downcasting, assert that the value is not truncated
-            DAWN_ASSERT(static_cast<I>(this->mValue) == this->mValue);
+            DAWN_OPT_ASSUME(static_cast<I>(this->mValue) == this->mValue);
         }
         return static_cast<I>(this->mValue);
     }
@@ -128,7 +128,7 @@ class alignas(T) TypedIntegerImpl {
 
     // Increment / decrement operators for for-loop iteration
     constexpr TypedIntegerImpl& operator++() {
-        DAWN_ASSERT(this->mValue < std::numeric_limits<T>::max());
+        DAWN_OPT_ASSUME(this->mValue < std::numeric_limits<T>::max());
         ++this->mValue;
         return *this;
     }
@@ -136,13 +136,13 @@ class alignas(T) TypedIntegerImpl {
     constexpr TypedIntegerImpl operator++(int) {
         TypedIntegerImpl ret = *this;
 
-        DAWN_ASSERT(this->mValue < std::numeric_limits<T>::max());
+        DAWN_OPT_ASSUME(this->mValue < std::numeric_limits<T>::max());
         ++this->mValue;
         return ret;
     }
 
     constexpr TypedIntegerImpl& operator--() {
-        DAWN_ASSERT(this->mValue > std::numeric_limits<T>::min());
+        DAWN_OPT_ASSUME(this->mValue > std::numeric_limits<T>::min());
         --this->mValue;
         return *this;
     }
@@ -150,7 +150,7 @@ class alignas(T) TypedIntegerImpl {
     constexpr TypedIntegerImpl operator--(int) {
         TypedIntegerImpl ret = *this;
 
-        DAWN_ASSERT(this->mValue > std::numeric_limits<T>::min());
+        DAWN_OPT_ASSUME(this->mValue > std::numeric_limits<T>::min());
         --this->mValue;
         return ret;
     }
@@ -160,7 +160,7 @@ class alignas(T) TypedIntegerImpl {
     static constexpr decltype(T(0) + T2(0)) AddImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
         // Overflow would wrap around
-        DAWN_ASSERT(lhs.mValue + rhs.mValue >= lhs.mValue);
+        DAWN_OPT_ASSUME(lhs.mValue + rhs.mValue >= lhs.mValue);
         return lhs.mValue + rhs.mValue;
     }
 
@@ -171,12 +171,12 @@ class alignas(T) TypedIntegerImpl {
         if (lhs.mValue > 0) {
             // rhs is positive: |rhs| is at most the distance between max and |lhs|.
             // rhs is negative: (positive + negative) won't overflow
-            DAWN_ASSERT(rhs.mValue <= std::numeric_limits<T>::max() - lhs.mValue);
+            DAWN_OPT_ASSUME(rhs.mValue <= std::numeric_limits<T>::max() - lhs.mValue);
         } else {
             // rhs is postive: (negative + positive) won't underflow
             // rhs is negative: |rhs| isn't less than the (negative) distance between min
             // and |lhs|
-            DAWN_ASSERT(rhs.mValue >= std::numeric_limits<T>::min() - lhs.mValue);
+            DAWN_OPT_ASSUME(rhs.mValue >= std::numeric_limits<T>::min() - lhs.mValue);
         }
         return lhs.mValue + rhs.mValue;
     }
@@ -186,7 +186,7 @@ class alignas(T) TypedIntegerImpl {
     static constexpr decltype(T(0) - T2(0)) SubImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
         // Overflow would wrap around
-        DAWN_ASSERT(lhs.mValue - rhs.mValue <= lhs.mValue);
+        DAWN_OPT_ASSUME(lhs.mValue - rhs.mValue <= lhs.mValue);
         return lhs.mValue - rhs.mValue;
     }
 
@@ -198,11 +198,11 @@ class alignas(T) TypedIntegerImpl {
             // rhs is positive: positive minus positive won't overflow
             // rhs is negative: |rhs| isn't less than the (negative) distance between |lhs|
             // and max.
-            DAWN_ASSERT(rhs.mValue >= lhs.mValue - std::numeric_limits<T>::max());
+            DAWN_OPT_ASSUME(rhs.mValue >= lhs.mValue - std::numeric_limits<T>::max());
         } else {
             // rhs is positive: |rhs| is at most the distance between min and |lhs|
             // rhs is negative: negative minus negative won't overflow
-            DAWN_ASSERT(rhs.mValue <= lhs.mValue - std::numeric_limits<T>::min());
+            DAWN_OPT_ASSUME(rhs.mValue <= lhs.mValue - std::numeric_limits<T>::min());
         }
         return lhs.mValue - rhs.mValue;
     }
@@ -211,8 +211,8 @@ class alignas(T) TypedIntegerImpl {
         requires(std::unsigned_integral<T2> && std::same_as<T, T2>)
     static constexpr decltype(T(0) + T2(0)) MulImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
-        DAWN_ASSERT(lhs.mValue == 0 || rhs.mValue == 0 ||
-                    lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
+        DAWN_OPT_ASSUME(lhs.mValue == 0 || rhs.mValue == 0 ||
+                        lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
         return lhs.mValue * rhs.mValue;
     }
 
@@ -223,16 +223,16 @@ class alignas(T) TypedIntegerImpl {
         // https://wiki.sei.cmu.edu/confluence/display/c/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow
         if (lhs.mValue > 0) {
             if (rhs.mValue > 0) {
-                DAWN_ASSERT(lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
+                DAWN_OPT_ASSUME(lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
             } else {
-                DAWN_ASSERT(rhs.mValue >= (std::numeric_limits<T>::min() / lhs.mValue));
+                DAWN_OPT_ASSUME(rhs.mValue >= (std::numeric_limits<T>::min() / lhs.mValue));
             }
         } else {
             if (rhs.mValue > 0) {
-                DAWN_ASSERT(lhs.mValue >= (std::numeric_limits<T>::min() / rhs.mValue));
+                DAWN_OPT_ASSUME(lhs.mValue >= (std::numeric_limits<T>::min() / rhs.mValue));
             } else {
-                DAWN_ASSERT((lhs.mValue == 0) ||
-                            (rhs.mValue >= (std::numeric_limits<T>::max() / lhs.mValue)));
+                DAWN_OPT_ASSUME((lhs.mValue == 0) ||
+                                (rhs.mValue >= (std::numeric_limits<T>::max() / lhs.mValue)));
             }
         }
         return lhs.mValue * rhs.mValue;
@@ -242,7 +242,7 @@ class alignas(T) TypedIntegerImpl {
         requires(std::unsigned_integral<T2> && std::same_as<T, T2>)
     static constexpr decltype(T(0) + T2(0)) DivImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
-        DAWN_ASSERT(rhs.mValue != 0);
+        DAWN_OPT_ASSUME(rhs.mValue != 0);
         return lhs.mValue / rhs.mValue;
     }
 
@@ -251,8 +251,8 @@ class alignas(T) TypedIntegerImpl {
     static constexpr decltype(T(0) + T2(0)) DivImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
         // https://wiki.sei.cmu.edu/confluence/display/c/INT33-C.+Ensure+that+division+and+remainder+operations+do+not+result+in+divide-by-zero+errors
-        DAWN_ASSERT(!(rhs.mValue == 0 ||
-                      (rhs.mValue == -1 && lhs.mValue == std::numeric_limits<T>::min())));
+        DAWN_OPT_ASSUME(!(rhs.mValue == 0 ||
+                          (rhs.mValue == -1 && lhs.mValue == std::numeric_limits<T>::min())));
         return lhs.mValue / rhs.mValue;
     }
 
@@ -260,7 +260,7 @@ class alignas(T) TypedIntegerImpl {
         requires(std::unsigned_integral<T2> && std::same_as<T, T2>)
     static constexpr decltype(T(0) + T2(0)) ModImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
-        DAWN_ASSERT(rhs.mValue != 0);
+        DAWN_OPT_ASSUME(rhs.mValue != 0);
         return lhs.mValue % rhs.mValue;
     }
 
@@ -269,8 +269,8 @@ class alignas(T) TypedIntegerImpl {
     static constexpr decltype(T(0) + T2(0)) ModImpl(TypedIntegerImpl<Tag, T> lhs,
                                                     TypedIntegerImpl<Tag, T2> rhs) {
         // https://wiki.sei.cmu.edu/confluence/display/c/INT33-C.+Ensure+that+division+and+remainder+operations+do+not+result+in+divide-by-zero+errors
-        DAWN_ASSERT(!(rhs.mValue == 0 ||
-                      (rhs.mValue == -1 && lhs.mValue == std::numeric_limits<T>::min())));
+        DAWN_OPT_ASSUME(!(rhs.mValue == 0 ||
+                          (rhs.mValue == -1 && lhs.mValue == std::numeric_limits<T>::min())));
         return lhs.mValue % rhs.mValue;
     }
 
@@ -278,7 +278,7 @@ class alignas(T) TypedIntegerImpl {
         requires(std::signed_integral<T2> && std::same_as<T, T2>)
     constexpr TypedIntegerImpl operator-() const {
         // The negation of the most negative value cannot be represented.
-        DAWN_ASSERT(this->mValue != std::numeric_limits<T>::min());
+        DAWN_OPT_ASSUME(this->mValue != std::numeric_limits<T>::min());
         return TypedIntegerImpl(-this->mValue);
     }
 

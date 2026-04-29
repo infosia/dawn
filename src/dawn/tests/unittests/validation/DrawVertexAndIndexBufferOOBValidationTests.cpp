@@ -183,7 +183,7 @@ class DrawVertexAndIndexBufferOOBValidationTests : public ValidationTest {
 
     // Create a render pipeline using only one vertex-step-mode Float32x4 buffer
     wgpu::RenderPipeline CreateBasicRenderPipeline(uint32_t bufferStride = kFloat32x4Stride) {
-        DAWN_ASSERT(bufferStride >= kFloat32x4Stride);
+        DAWN_OPT_ASSUME(bufferStride >= kFloat32x4Stride);
 
         std::vector<PipelineVertexBufferDesc> bufferDescList = {
             {bufferStride, wgpu::VertexStepMode::Vertex, {{0, wgpu::VertexFormat::Float32x4}}},
@@ -197,8 +197,8 @@ class DrawVertexAndIndexBufferOOBValidationTests : public ValidationTest {
     wgpu::RenderPipeline CreateBasicRenderPipelineWithInstance(
         uint32_t bufferStride1 = kFloat32x4Stride,
         uint32_t bufferStride2 = kFloat32x2Stride) {
-        DAWN_ASSERT(bufferStride1 >= kFloat32x4Stride);
-        DAWN_ASSERT(bufferStride2 >= kFloat32x2Stride);
+        DAWN_OPT_ASSUME(bufferStride1 >= kFloat32x4Stride);
+        DAWN_OPT_ASSUME(bufferStride2 >= kFloat32x2Stride);
 
         std::vector<PipelineVertexBufferDesc> bufferDescList = {
             {bufferStride1, wgpu::VertexStepMode::Vertex, {{0, wgpu::VertexFormat::Float32x4}}},
@@ -391,7 +391,7 @@ TEST_F(DrawVertexAndIndexBufferOOBValidationTests, DrawVertexBufferOutOfBoundWit
         VertexBufferList vertexBufferList = {
             {0, vertexBuffer, params.bufferOffsetForEncoder, params.bufferSizeForEncoder}};
 
-        DAWN_ASSERT(params.maxValidAccessNumber > 0);
+        DAWN_OPT_ASSUME(params.maxValidAccessNumber > 0);
         uint32_t n = params.maxValidAccessNumber;
         // It is ok to draw n vertices with vertex buffer
         TestRenderPassDraw(pipeline, vertexBufferList, /* vertexCount */ n,
@@ -428,8 +428,8 @@ TEST_F(DrawVertexAndIndexBufferOOBValidationTests, DrawVertexBufferOutOfBoundWit
                  instanceParams.bufferSizeForEncoder},
             };
 
-            DAWN_ASSERT(vertexParams.maxValidAccessNumber > 0);
-            DAWN_ASSERT(instanceParams.maxValidAccessNumber > 0);
+            DAWN_OPT_ASSUME(vertexParams.maxValidAccessNumber > 0);
+            DAWN_OPT_ASSUME(instanceParams.maxValidAccessNumber > 0);
             uint32_t vert = vertexParams.maxValidAccessNumber;
             uint32_t inst = instanceParams.maxValidAccessNumber;
             // It is ok to draw vert vertices
@@ -536,7 +536,7 @@ TEST_F(DrawVertexAndIndexBufferOOBValidationTests, DrawIndexedIndexBufferOOB) {
                                            params.indexBufferOffsetForEncoder,
                                            params.indexBufferSizeForEncoder};
 
-        DAWN_ASSERT(params.maxValidIndexNumber > 0);
+        DAWN_OPT_ASSUME(params.maxValidIndexNumber > 0);
         uint32_t n = params.maxValidIndexNumber;
 
         // Control case
@@ -590,7 +590,7 @@ TEST_F(DrawVertexAndIndexBufferOOBValidationTests, DrawIndexedVertexBufferOOB) {
 
             IndexBufferDesc indexBufferDesc = {indexBuffer, indexFormat};
 
-            DAWN_ASSERT(instanceParams.maxValidAccessNumber > 0);
+            DAWN_OPT_ASSUME(instanceParams.maxValidAccessNumber > 0);
             uint32_t inst = instanceParams.maxValidAccessNumber;
             // Control case
             TestRenderPassDrawIndexed(

@@ -480,7 +480,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         }
         return DAWN_INTERNAL_ERROR(errorMessage);
     }
-    DAWN_ASSERT(mMtlRenderPipelineState != nil);
+    DAWN_OPT_ASSUME(mMtlRenderPipelineState != nil);
     timer.RecordMicroseconds("Metal.newRenderPipelineStateWithDescriptor.CacheMiss");
 
     // Create depth stencil state and cache it, fetch the cached depth stencil state when we
@@ -514,7 +514,7 @@ id<MTLDepthStencilState> RenderPipeline::GetMTLDepthStencilState() {
 }
 
 uint32_t RenderPipeline::GetMtlVertexBufferIndex(VertexBufferSlot slot) const {
-    DAWN_ASSERT(slot < kMaxVertexBuffersTyped);
+    DAWN_OPT_ASSUME(slot < kMaxVertexBuffersTyped);
     return mMtlVertexBufferIndices[slot];
 }
 

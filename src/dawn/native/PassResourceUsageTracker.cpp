@@ -98,7 +98,7 @@ void SyncScopeUsageTracker::MergeTextureUsage(TextureBase* texture,
     passTextureSyncInfo.Merge(
         textureSyncInfo, [](const SubresourceRange&, TextureSyncInfo* storedSyncInfo,
                             const TextureSyncInfo& addedSyncInfo) {
-            DAWN_ASSERT((addedSyncInfo.usage & wgpu::TextureUsage::RenderAttachment) == 0);
+            DAWN_OPT_ASSUME((addedSyncInfo.usage & wgpu::TextureUsage::RenderAttachment) == 0);
             storedSyncInfo->usage |= addedSyncInfo.usage;
             storedSyncInfo->shaderStages |= addedSyncInfo.shaderStages;
         });
@@ -338,7 +338,7 @@ void RenderPassResourceUsageTracker::TrackQueryAvailability(QuerySetBase* queryS
                                                             QueryIndex queryIndex) {
     // The query availability only needs to be tracked again on render passes for checking
     // query overwrite on render pass and resetting query sets on the Vulkan backend.
-    DAWN_ASSERT(querySet != nullptr);
+    DAWN_OPT_ASSUME(querySet != nullptr);
 
     // Gets the iterator for that querySet or create a new vector of bool set to false
     // if the querySet wasn't registered.

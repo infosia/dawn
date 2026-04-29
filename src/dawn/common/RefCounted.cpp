@@ -44,7 +44,7 @@ static constexpr uint64_t kRefCountIncrement = (uint64_t(1) << kPayloadBits);
 
 RefCount::RefCount(uint64_t initCount, uint64_t payload)
     : mRefCount(initCount * kRefCountIncrement + payload) {
-    DAWN_ASSERT((payload & kPayloadMask) == payload);
+    DAWN_OPT_ASSUME((payload & kPayloadMask) == payload);
 }
 
 RefCount::RefCount(uint64_t payload) : RefCount(1, payload) {}
@@ -62,7 +62,7 @@ uint64_t RefCount::GetPayload() const {
 }
 
 uint64_t RefCount::PayloadFetchAnd(uint64_t arg) {
-    DAWN_ASSERT((arg & kPayloadMask) == arg);
+    DAWN_OPT_ASSUME((arg & kPayloadMask) == arg);
 
     // Relaxed memory order is used because modifying the payload does not affect the lifetime of
     // the object.
@@ -70,7 +70,7 @@ uint64_t RefCount::PayloadFetchAnd(uint64_t arg) {
 }
 
 uint64_t RefCount::PayloadFetchOr(uint64_t arg) {
-    DAWN_ASSERT((arg & kPayloadMask) == arg);
+    DAWN_OPT_ASSUME((arg & kPayloadMask) == arg);
 
     // Same memory order reasoning as ::PayloadFetchAnd
     return kPayloadMask & mRefCount.fetch_or(arg, std::memory_order_relaxed);
@@ -108,7 +108,7 @@ bool RefCount::TryIncrement() {
 }
 
 bool RefCount::Decrement() {
-    DAWN_ASSERT((mRefCount & ~kPayloadMask) != 0);
+    DAWN_OPT_ASSUME((mRefCount & ~kPayloadMask) != 0);
 
     // The release fence here is to make sure all accesses to the object on a thread A
     // happen-before the object is deleted on a thread B. The release memory order ensures that
@@ -162,7 +162,7 @@ uint64_t RefCounted::RefCountPayloadFetchOr(uint64_t arg) {
 void RefCounted::AddRef() {
     bool result = mRefCount.Increment();
     // Never increase ref count from 0.
-    DAWN_ASSERT(!result);
+    DAWN_OPT_ASSUME(!result);
 }
 
 void RefCounted::Release() {

@@ -64,22 +64,22 @@ class PerStage {
     explicit PerStage(const T& initialValue) { mData.fill(initialValue); }
 
     T& operator[](SingleShaderStage stage) {
-        DAWN_ASSERT(static_cast<uint32_t>(stage) < kNumStages);
+        DAWN_OPT_ASSUME(static_cast<uint32_t>(stage) < kNumStages);
         return mData[static_cast<uint32_t>(stage)];
     }
     const T& operator[](SingleShaderStage stage) const {
-        DAWN_ASSERT(static_cast<uint32_t>(stage) < kNumStages);
+        DAWN_OPT_ASSUME(static_cast<uint32_t>(stage) < kNumStages);
         return mData[static_cast<uint32_t>(stage)];
     }
 
     T& operator[](wgpu::ShaderStage stageBit) {
         uint32_t bit = static_cast<uint32_t>(stageBit);
-        DAWN_ASSERT(bit != 0 && IsPowerOfTwo(bit) && bit <= (1 << kNumStages));
+        DAWN_OPT_ASSUME(bit != 0 && IsPowerOfTwo(bit) && bit <= (1 << kNumStages));
         return mData[Log2(bit)];
     }
     const T& operator[](wgpu::ShaderStage stageBit) const {
         uint32_t bit = static_cast<uint32_t>(stageBit);
-        DAWN_ASSERT(bit != 0 && IsPowerOfTwo(bit) && bit <= (1 << kNumStages));
+        DAWN_OPT_ASSUME(bit != 0 && IsPowerOfTwo(bit) && bit <= (1 << kNumStages));
         return mData[Log2(bit)];
     }
 

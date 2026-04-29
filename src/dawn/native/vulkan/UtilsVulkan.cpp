@@ -199,14 +199,14 @@ TexelExtent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy,
     const TextureBase* texture = textureCopy.texture.Get();
     TexelExtent3D virtualSizeAtLevel =
         texture->GetMipLevelSingleSubresourceVirtualSize(textureCopy.mipLevel, textureCopy.aspect);
-    DAWN_ASSERT(textureCopy.origin.x <= virtualSizeAtLevel.width);
-    DAWN_ASSERT(textureCopy.origin.y <= virtualSizeAtLevel.height);
+    DAWN_OPT_ASSUME(textureCopy.origin.x <= virtualSizeAtLevel.width);
+    DAWN_OPT_ASSUME(textureCopy.origin.y <= virtualSizeAtLevel.height);
     if (copySize.width > virtualSizeAtLevel.width - textureCopy.origin.x) {
-        DAWN_ASSERT(texture->GetFormat().isCompressed);
+        DAWN_OPT_ASSUME(texture->GetFormat().isCompressed);
         validTextureCopyExtent.width = virtualSizeAtLevel.width - textureCopy.origin.x;
     }
     if (copySize.height > virtualSizeAtLevel.height - textureCopy.origin.y) {
-        DAWN_ASSERT(texture->GetFormat().isCompressed);
+        DAWN_OPT_ASSUME(texture->GetFormat().isCompressed);
         validTextureCopyExtent.height = virtualSizeAtLevel.height - textureCopy.origin.y;
     }
 
@@ -247,15 +247,15 @@ VkBufferImageCopy ComputeBufferImageCopyRegion(const BufferCopy& bufferCopy,
         case wgpu::TextureDimension::Undefined:
             DAWN_UNREACHABLE();
         case wgpu::TextureDimension::e1D:
-            DAWN_ASSERT(textureCopy.origin.z == TexelCount{0} &&
-                        copySizeTexels.depthOrArrayLayers == TexelCount{1});
+            DAWN_OPT_ASSUME(textureCopy.origin.z == TexelCount{0} &&
+                            copySizeTexels.depthOrArrayLayers == TexelCount{1});
             region.imageOffset.x = static_cast<uint32_t>(textureCopy.origin.x);
             region.imageOffset.y = 0;
             region.imageOffset.z = 0;
             region.imageSubresource.baseArrayLayer = 0;
             region.imageSubresource.layerCount = 1;
 
-            DAWN_ASSERT(!textureCopy.texture->GetFormat().isCompressed);
+            DAWN_OPT_ASSUME(!textureCopy.texture->GetFormat().isCompressed);
             region.imageExtent.width = static_cast<uint32_t>(copySizeTexels.width);
             region.imageExtent.height = 1;
             region.imageExtent.depth = 1;
@@ -411,7 +411,7 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversion(
     const YCbCrVkDescriptor& yCbCrDescriptor) {
     uint64_t externalFormat = yCbCrDescriptor.externalFormat;
     VkFormat vulkanFormat = static_cast<VkFormat>(yCbCrDescriptor.vkFormat);
-    DAWN_ASSERT(externalFormat != 0 || vulkanFormat != VK_FORMAT_UNDEFINED);
+    DAWN_OPT_ASSUME(externalFormat != 0 || vulkanFormat != VK_FORMAT_UNDEFINED);
 
     VkComponentMapping vulkanComponent;
     vulkanComponent.r = static_cast<VkComponentSwizzle>(yCbCrDescriptor.vkComponentSwizzleRed);

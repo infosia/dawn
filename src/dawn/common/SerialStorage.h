@@ -178,13 +178,13 @@ void SerialStorage<Derived>::ClearUpTo(Serial serial) {
 
 template <typename Derived>
 typename SerialStorage<Derived>::Serial SerialStorage<Derived>::FirstSerial() const {
-    DAWN_ASSERT(!Empty());
+    DAWN_OPT_ASSUME(!Empty());
     return mStorage.begin()->first;
 }
 
 template <typename Derived>
 typename SerialStorage<Derived>::Serial SerialStorage<Derived>::LastSerial() const {
-    DAWN_ASSERT(!Empty());
+    DAWN_OPT_ASSUME(!Empty());
     return mStorage.back().first;
 }
 

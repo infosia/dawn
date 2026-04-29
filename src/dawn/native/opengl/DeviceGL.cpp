@@ -241,11 +241,11 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 }
 
 const GLFormat& Device::GetGLFormat(const Format& format) {
-    DAWN_ASSERT(format.IsSupported());
-    DAWN_ASSERT(format.GetIndex() < mFormatTable.size());
+    DAWN_OPT_ASSUME(format.IsSupported());
+    DAWN_OPT_ASSUME(format.GetIndex() < mFormatTable.size());
 
     const GLFormat& result = mFormatTable[format.GetIndex()];
-    DAWN_ASSERT(result.isSupportedOnBackend);
+    DAWN_OPT_ASSUME(result.isSupportedOnBackend);
     return result;
 }
 
@@ -401,7 +401,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     // The EGLImage was created from outside of Dawn so it must be on the same display that was
     // provided to create the device. The best check we can do is that we indeed have
     // EGL_KHR_image_base.
-    DAWN_ASSERT(GetEGL(false).HasExt(EGLExt::ImageBase));
+    DAWN_OPT_ASSUME(GetEGL(false).HasExt(EGLExt::ImageBase));
 
     GLuint tex;
     DAWN_GL_TRY(gl, GenTextures(1, &tex));
@@ -526,7 +526,7 @@ MaybeError Device::CopyFromStagingToTextureImpl(BufferBase* source,
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
 
     mTextureBuiltinsBuffer = nullptr;
     mArrayLengthBuffer = nullptr;

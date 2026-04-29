@@ -208,7 +208,7 @@ ExternalTextureColorSpaceParams GetNoopColorSpaceParams() {
             .yCbCrMatrix = wgpu::ColorSpaceYCbCrMatrixDawn::Identity,
         },
         wgpu::PredefinedColorSpace::SRGBLinear, &params);
-    DAWN_ASSERT(status == wgpu::Status::Success);
+    DAWN_OPT_ASSUME(status == wgpu::Status::Success);
 
     return params;
 }
