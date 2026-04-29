@@ -49,6 +49,54 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "93451d51_ba3c56e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f02310_25c9d9ed",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b011335_df7fcd3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e1bc414_7ed0c7a2",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4839dc16_3417bcca",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -99,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0541f873_d0f87f04",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37e25e9_7370439a",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05276bef_75030be4",
@@ -140,6 +206,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "340c05b0_945668aa",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05276bef_75030be4",
+      "range": {
+        "startLine": 223,
+        "startChar": 30,
+        "endLine": 225,
+        "endChar": 22
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "430267f8_652d3aa3",
@@ -163,6 +253,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59188d5a_612bca42",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430267f8_652d3aa3",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 30
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cb11658_9e43df33",
@@ -176,6 +290,24 @@
       "writtenOn": "2026-04-28T09:46:01Z",
       "side": 1,
       "message": "```suggestion\n#if DAWN_COMPILER_IS(CLANG)\n```",
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c79f9966_7346d0b5",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb11658_9e43df33",
       "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -216,6 +348,54 @@
       "writtenOn": "2026-04-28T09:54:09Z",
       "side": 1,
       "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "610e96b5_13aea3b3",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba6186c_f8fe0515",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd8c056c_98c145b8",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c20fdafa_123d474e",
       "range": {
         "startLine": 246,
         "startChar": 0,
@@ -311,6 +491,30 @@
       "side": 1,
       "message": "I would prefer this too",
       "parentUuid": "67eb003a_1cfc72b2",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "db1f4431150eae35b1e7ec063ccd760b21278c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2c5f7aa_c14a3e82",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 4766996
+      },
+      "writtenOn": "2026-04-29T12:11:22Z",
+      "side": 1,
+      "message": "The newest patchset contains the `DAWN_UNSAFE_BUFFERS` macro in `src/dawn/common/Compiler.h`.",
+      "parentUuid": "535ebccb_3bd7a968",
       "range": {
         "startLine": 256,
         "startChar": 8,
