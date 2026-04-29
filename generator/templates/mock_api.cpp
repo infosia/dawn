@@ -83,7 +83,7 @@ void ProcTableAsClass::GetProcTable({{Prefix}}ProcTable* table) {
 {% for type in by_category["object"] %}
     {% for method in type.methods %}
         {% set Suffix = as_CppMethodSuffix(type.name, method.name) %}
-        {% if has_callbackInfoStruct(method) %}
+        {% if has_callbackInfoStruct(method.arguments) %}
             {{as_annotated_cType(method.returns)}} ProcTableAsClass::{{Suffix}}(
                 {{-as_cType(type.name)}} {{as_varName(type.name)}}
                 {%- for arg in method.arguments -%}
