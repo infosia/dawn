@@ -87,7 +87,8 @@ if (!build_with_chromium) {
     ]
     if (dawn_standalone && is_clang) {
       cflags = [
-        # gmock emits deprecated-copy-dtor warnings when using ::testing::Combine
+        # gmock emits deprecated-copy-dtor warnings when using
+        # ::testing::Combine
         "-Wno-deprecated-copy-dtor",
       ]
     }
@@ -348,6 +349,7 @@ dawn_test("dawn_unittests") {
     "unittests/GetProcAddressTests.cpp",
     "unittests/ITypArrayTests.cpp",
     "unittests/ITypBitsetTests.cpp",
+    "unittests/ITypHeapArrayTests.cpp",
     "unittests/ITypSpanTests.cpp",
     "unittests/ITypStackVecTests.cpp",
     "unittests/ITypVectorTests.cpp",
@@ -831,7 +833,8 @@ source_set("white_box_tests_sources") {
     "${dawn_root}/src/dawn/common",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
 
-    # Statically linked and with sources because the end2end white_box tests use Dawn internals.
+    # Statically linked and with sources because the end2end white_box tests use
+    # Dawn internals.
     "${dawn_root}/src/dawn/native:sources",
     "${dawn_root}/src/dawn/native:static",
     "${dawn_root}/src/dawn/utils:system_utils",
