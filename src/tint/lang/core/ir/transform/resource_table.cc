@@ -69,6 +69,15 @@ struct State {
     /// Maps resource_index value to the default offset for that type
     std::unordered_map<ResourceType, uint32_t> resource_type_to_default_idx;
 
+    struct Info {
+        const core::type::Type* binding_type;
+        core::ir::Value* slot_idx;
+        size_t operand_idx;
+    };
+    /// A list of instructions which need to be replaced with the, possibly,
+    /// two indices which are using a resource_table element.
+    Hashmap<ir::CoreBuiltinCall*, Vector<Info, 2>, 8> sampled_call_replacements;
+
     /// Process the module.
     Result<SuccessType> Process() {
         // Find calls to hasResource() and getResource().
@@ -123,6 +132,10 @@ struct State {
             ReplaceUsages(call->Result(), binding_ty, idx);
             TINT_ASSERT(call->Result()->UsagesUnsorted().IsEmpty());
             call->Destroy();
+        }
+
+        for (auto& entry : sampled_call_replacements) {
+            GenSampledGetResource(entry.key, entry.value);
         }
 
         return Success;
@@ -195,7 +208,6 @@ struct State {
         for (auto& usage : result->UsagesSorted()) {
             tint::Switch(
                 usage.instruction,  //
-                [&](core::ir::Let* l) { ReplaceUsages(l->Result(), binding_type, idx); },
                 [&](core::ir::CoreBuiltinCall* call) {
                     switch (call->Func()) {
                         case core::BuiltinFn::kTextureStore:
@@ -203,14 +215,13 @@ struct State {
                         case core::BuiltinFn::kTextureDimensions:
                         case core::BuiltinFn::kTextureNumLayers:
                         case core::BuiltinFn::kTextureNumLevels:
-                        case core::BuiltinFn::kTextureNumSamples: {
+                        case core::BuiltinFn::kTextureNumSamples:
                             b.InsertBefore(call, [&] {
                                 ir::InstructionResult* res =
-                                    GenNonSampledTextureGetResource(binding_type, idx);
+                                    GenNonSampledGetResource(binding_type, idx);
                                 call->SetOperand(usage.operand_index, res);
                             });
                             break;
-                        }
                         case core::BuiltinFn::kTextureGather:
                         case core::BuiltinFn::kTextureGatherCompare:
                         case core::BuiltinFn::kTextureSample:
@@ -219,7 +230,15 @@ struct State {
                         case core::BuiltinFn::kTextureSampleCompareLevel:
                         case core::BuiltinFn::kTextureSampleGrad:
                         case core::BuiltinFn::kTextureSampleLevel:
-                        case core::BuiltinFn::kTextureSampleBaseClampToEdge:
+                        case core::BuiltinFn::kTextureSampleBaseClampToEdge: {
+                            auto info = sampled_call_replacements.GetOrAddZeroEntry(call);
+                            info.value.Push({
+                                .binding_type = binding_type,
+                                .slot_idx = idx,
+                                .operand_idx = usage.operand_index,
+                            });
+                            break;
+                        }
                         default:
                             TINT_UNREACHABLE();
                     }
@@ -231,8 +250,8 @@ struct State {
     }
 
     // Note, assumes it's called inside a builder append block.
-    ir::InstructionResult* GenNonSampledTextureGetResource(const core::type::Type* binding_type,
-                                                           core::ir::Value* idx) {
+    ir::InstructionResult* GenNonSampledGetResource(const core::type::Type* binding_type,
+                                                    core::ir::Value* idx) {
         auto* has_result = b.InstructionResult(ty.bool_());
         GenHasResource(has_result, binding_type, idx);
 
@@ -285,6 +304,83 @@ struct State {
         auto* ptr_ty = ty.ptr(handle, binding_type, read);
         auto* access = b.Access(ptr_ty, (*var)->Result(), final_index);
         return b.Load(access)->Result();
+    }
+
+    // Note, assumes it's called inside a builder append block.
+    ir::InstructionResult* GenSampledGetResource(ir::CoreBuiltinCall* call,
+                                                 const Vector<Info, 2>& args) {
+        //
+        // ir::InstructionResult* res = GenSampledGetResource(binding_type, idx);
+        // entry.key->SetOperand(entry.value.operand_index, res);
+
+        // we can get the texture, or the sampler, or both.
+        TINT_ASSERT(!args.IsEmpty() && args.Length() <= 2);
+
+        //
+        // var<function> tex_resource_type = storage_buffer[slot]
+        //
+        // tex = if tex from_resource_table {
+        //   bool has_tex = hasResource<binding_type>(slot)
+        //   u32 tex_slot = if (has_tex) {
+        //     exit_if slot;
+        //   } else {
+        //     tex_resource_type = default resource type (f32 is filterable)
+        //     exit_if default filterable texture
+        //   }
+        //
+        //   exit_if load tex_slot
+        // } else {
+        //   tex_resource_type = <transform info from dawn on resource type>
+        //   exit_if operand(tex_idx)
+        // }
+        //
+        // sam = if sam from resource_table {
+        //   u32 sam_resource_type = storage_buffer[slot]
+        //   bool has_sam = hasResource<binding_type>(slot)
+        //   u32 sam_slot = if (has_sam) {
+        //     exit_if slot
+        //   } else {
+        //     sam_resource_type = sampler_non_filtering
+        //     exit_if default non_filtering sampler
+        //   }
+        //
+        //
+        //   if (tex_resource_type == resourceType::Unfilterable_{F32, U32, etc} &&
+        //       sam_resource_type == resourceType::Filtering) {
+        //     sam_slot = default_non_filtering sampler
+        //   }
+        //   exit_if load sam_slot
+        // } else {
+        //   sam = if (tex_resource_type == resourceType::Unfilterable_{F32,
+        //   U32, etc} &&
+        //      <sampler info from dawn on resource type> == resourceType::Filtering) {
+        //      sam = load default non_filtering sampler
+        //   } else {
+        //      sam = operand(sam_idx)
+        //   }
+        //   exit_if sam
+        // }
+        //
+        //  call with tex, sam
+
+        if (args.Length() == 2) {
+            // Injecting both the texture and sampler
+            //
+
+            std::array<ir::InstructionResult*, 2> has_results;
+            for (size_t i = 0; i < args.Length(); ++i) {
+                auto& e = args[i];
+
+                auto* has_result = b.InstructionResult(ty.bool_());
+                GenHasResource(has_result, e.binding_type, e.slot_idx);
+                has_results[i] = has_result;
+            }
+
+        } else {
+            // One of the texture/sampler come from a `var` source
+        }
+
+        return nullptr;
     }
 
     void InjectStorageBuffer(const BindingPoint& bp) {

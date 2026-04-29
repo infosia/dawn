@@ -445,7 +445,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_ResourceTableTest, DISABLED_GetResource_ResourceTexture_ResourceSampler) {
+TEST_F(IR_ResourceTableTest, GetResource_ResourceTexture_ResourceSampler) {
     auto* texture_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
     auto* sampler_ty = ty.sampler();
 
