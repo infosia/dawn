@@ -357,10 +357,8 @@ TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
     bufferDesc.usage = wgpu::BufferUsage::Index;
     wgpu::Buffer bigIdx = device.CreateBuffer(&bufferDesc);
 
-    // Indirect buffers
-    wgpu::Buffer indirect[2];
-    indirect[0] = CreateIndirectBuffer({3, 1, 100, 0, 0});
-    indirect[1] = CreateIndirectBuffer({3, 1, 0, 0, 0, OOB_COUNT, 1, 0, 0, 0});
+    // Indirect buffer
+    wgpu::Buffer indirect = CreateIndirectBuffer({3, 1, 0, 0, 0, OOB_COUNT, 1, 0, 0, 0});
 
     // Buffers to use for simple fragment counter
     uint32_t data[] = {0};
@@ -404,7 +402,7 @@ TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
     renderBundleEncoder.SetPipeline(pipeline);
     renderBundleEncoder.SetBindGroup(0, bindGroup);
     renderBundleEncoder.SetIndexBuffer(smallIdx, wgpu::IndexFormat::Uint32);
-    renderBundleEncoder.DrawIndexedIndirect(indirect[0], 0);
+    renderBundleEncoder.DrawIndexedIndirect(indirect, 0);
     wgpu::RenderBundle renderBundle = renderBundleEncoder.Finish();
 
     //
@@ -418,13 +416,20 @@ TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
         pass.SetPipeline(pipeline);
         pass.SetBindGroup(0, bindGroup);
         pass.SetIndexBuffer(bigIdx, wgpu::IndexFormat::Uint32);
-        pass.DrawIndexedIndirect(indirect[1], 0);
-        pass.DrawIndexedIndirect(indirect[1], 20);
+        pass.DrawIndexedIndirect(indirect, 0);
+        pass.DrawIndexedIndirect(indirect, 20);
         pass.End();
+
+        // Copy the fragment counter results to the readback buffer.
+        encoder.CopyBufferToBuffer(counterBuffer, 0, counterRead, 0, 4);
+
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
         queue.WriteBuffer(counterBuffer, 0, data, sizeof(uint32_t));
     }
+
+    // The warm up pass should always produce OOB_COUNT + 3 fragments from the two indirect draws.
+    EXPECT_BUFFER_U32_EQ(OOB_COUNT + 3, counterRead, 0);
 
     //
     // Bug - Same bundle executed in two render passes of one encoder.
@@ -455,7 +460,7 @@ TEST_P(RenderBundleIndirectValidationTest, RepeatedIndirectDrawValidation) {
             pass.SetPipeline(pipeline);
             pass.SetBindGroup(0, bindGroup);
             pass.SetIndexBuffer(smallIdx, wgpu::IndexFormat::Uint32);
-            pass.DrawIndexedIndirect(indirect[0], 0);
+            pass.DrawIndexedIndirect(indirect, 0);
             pass.ExecuteBundles(1, &renderBundle);
             pass.End();
         }
