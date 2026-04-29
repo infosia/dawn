@@ -76,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da512912_7e66a7d1",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-29T20:16:49Z",
+      "side": 1,
+      "message": "Done: https://dawn-review.googlesource.com/c/dawn/+/305935",
+      "parentUuid": "2cbc3cb7_3c83adc5",
+      "range": {
+        "startLine": 1667,
+        "startChar": 43,
+        "endLine": 1667,
+        "endChar": 49
+      },
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "940b8c2d_e445fc7d",
