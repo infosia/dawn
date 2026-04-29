@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40bb4f76_7a630055",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-29T08:48:41Z",
+      "side": 0,
+      "message": "I find I can only test one possible value for `@subgroup_size`. On Intel Gen12 `subgroupMinSize` cannot be used, and on other vendors\u0027 GPU using D3D12 driver `SubgroupMaxSize` (always 128) cannot be used.",
+      "parentUuid": "23cdc9d6_2ef6433a",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a1a0d65c_4d263b7d",
         "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-28T15:02:35Z",
       "side": 0,
       "message": "Again, aren\u0027t these still useful if we switch them to use the other subgroup min/max limits?",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "523fe843_6ce5c932",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-29T08:48:41Z",
+      "side": 0,
+      "message": "In fact we cannot use existing `SubgroupMinSize` and `SubgroupMaxSize` limits for D3D12 (always 128, which cannot be supported on any GPUs).",
+      "parentUuid": "a1a0d65c_4d263b7d",
       "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
