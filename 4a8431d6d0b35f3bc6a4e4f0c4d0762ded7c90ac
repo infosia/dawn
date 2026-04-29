@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4462feb_13a24f30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T02:55:31Z",
+      "side": 1,
+      "message": "LGTM, sorry for the delay!",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e103b93_9036b446",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T02:55:31Z",
+      "side": 1,
+      "message": "Is it necessary to do this placeholder update here?\n\nIf not, I feel like it might be simpler to just leave the other callsites with mismatched types and let them be updated later on.",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e35d8d93_448022d1",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T02:55:31Z",
+      "side": 1,
+      "message": "Nit: Since we know it\u0027s not in the map yet, we can just use `.Add(param, true)`.",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee42094e_e33b5a3d",
+        "filename": "src/tint/lang/msl/writer/raise/decompose_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-29T02:55:31Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "4a8431d6d0b35f3bc6a4e4f0c4d0762ded7c90ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
