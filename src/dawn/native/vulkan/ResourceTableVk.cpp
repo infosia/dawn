@@ -277,7 +277,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
             [&](std::monostate) {
                 // Nothing to do
             },
-            [&](TextureViewBase* textureView) {
+            [&](Ref<TextureViewBase> textureView) {
                 VkImageView handle = ToBackend(textureView)->GetHandle();
                 if (handle == nullptr) {
                     return;
@@ -292,7 +292,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
                 imageWrites.push_back(imageWrite);
                 arrayElements.push_back(uint32_t{diff.slot});
             },
-            [&](SamplerBase* sampler) {
+            [&](Ref<SamplerBase> sampler) {
                 VkSampler handle = ToBackend(sampler)->GetHandle();
                 if (handle == nullptr) {
                     return;
