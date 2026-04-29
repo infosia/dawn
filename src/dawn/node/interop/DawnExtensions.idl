@@ -128,3 +128,41 @@ dictionary GPUBindGroupLayoutEntry {
     GPUSize32 bindingArraySize = 1;
 };
 
+// ============================================================================
+// Resource table
+// ============================================================================
+enum GPUFeatureName {
+    "chromium-experimental-sampling-resource-table",
+};
+
+dictionary GPUResourceTableDescriptor : GPUObjectDescriptorBase {
+    required GPUSize32 size;
+};
+interface GPUDevice {
+    GPUResourceTable createResourceTable(GPUResourceTableDescriptor descriptor);
+};
+
+interface GPUResourceTable {
+    undefined destroy();
+
+    undefined update(GPUIndex32 slot, GPUBindingResource resource);
+    GPUIndex32 insertBinding(GPUBindingResource resource);
+    undefined removeBinding(GPUIndex32 slot);
+
+    readonly attribute GPUSize32Out size;
+};
+GPUResourceTable includes GPUObjectBase;
+
+dictionary GPUPipelineLayoutDescriptor {
+    bool usesResourceTable = false;
+};
+
+interface GPUComputePassEncoder {
+    undefined setResourceTable(GPUResourceTable? table);
+};
+interface GPURenderBundleEncoder {
+    undefined setResourceTable(GPUResourceTable? table);
+};
+interface GPURenderPassEncoder {
+    undefined setResourceTable(GPUResourceTable? table);
+};

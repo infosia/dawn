@@ -3673,6 +3673,13 @@
         "tags": ["dawn"],
         "methods": [
             {
+                "name": "set label",
+                "no autolock": true,
+                "args": [
+                    {"name": "label", "type": "string view"}
+                ]
+            },
+            {
                 "name": "get size",
                 "no autolock": true,
                 "returns": "uint32_t"

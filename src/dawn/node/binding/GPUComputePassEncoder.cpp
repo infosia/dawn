@@ -34,6 +34,7 @@
 #include "src/dawn/node/binding/GPUBuffer.h"
 #include "src/dawn/node/binding/GPUComputePipeline.h"
 #include "src/dawn/node/binding/GPUQuerySet.h"
+#include "src/dawn/node/binding/GPUResourceTable.h"
 
 namespace wgpu::binding {
 
@@ -127,6 +128,19 @@ void GPUComputePassEncoder::setImmediates(Napi::Env env,
     }
 
     enc_.SetImmediates(rangeOffset, dataSpan.data(), dataSpan.size());
+}
+
+void GPUComputePassEncoder::setResourceTable(
+    Napi::Env env,
+    std::optional<interop::Interface<interop::GPUResourceTable>> table) {
+    Converter conv(env);
+
+    wgpu::ResourceTable resourceTable{};
+    if (!conv(resourceTable, table)) {
+        return;
+    }
+
+    enc_.SetResourceTable(resourceTable);
 }
 
 void GPUComputePassEncoder::pushDebugGroup(Napi::Env, std::string groupLabel) {

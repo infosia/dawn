@@ -211,6 +211,8 @@ static_library("dawn_node_binding") {
     "binding/GPURenderPassEncoder.h",
     "binding/GPURenderPipeline.cpp",
     "binding/GPURenderPipeline.h",
+    "binding/GPUResourceTable.cpp",
+    "binding/GPUResourceTable.h",
     "binding/GPUSampler.cpp",
     "binding/GPUSampler.h",
     "binding/GPUShaderModule.cpp",
