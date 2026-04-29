@@ -22,6 +22,30 @@
       },
       "revId": "6321a15a209ddebe85f551a3b9b1922d55e40a55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1538b06_538feed4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2026-04-29T22:29:09Z",
+      "side": 1,
+      "message": "I checked; there is no internal check for the size of the msaa rect. I also made a reduced repro; the error is thrown even when the resolve rect is the size of the whole texture. I think in hindsight, this description is quite confusing, so I will make it more simple.",
+      "parentUuid": "d5f8328e_45e4c4c4",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 69
+      },
+      "revId": "6321a15a209ddebe85f551a3b9b1922d55e40a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
