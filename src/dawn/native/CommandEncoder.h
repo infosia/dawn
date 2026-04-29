@@ -61,7 +61,7 @@ class CommandEncoder final : public ApiObjectBase {
 
     CommandIterator AcquireCommands();
     CommandBufferResourceUsage AcquireResourceUsages();
-    std::vector<IndirectDrawMetadata> AcquireIndirectDrawMetadata();
+    ityp::vector<PassIndex, IndirectDrawMetadata> AcquireIndirectDrawMetadata();
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
 

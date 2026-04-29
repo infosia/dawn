@@ -1277,7 +1277,7 @@ void CommandEncoder::TrackUsedQuerySet(QuerySetBase* querySet) {
     mUsedQuerySets.insert(querySet);
 }
 
-std::vector<IndirectDrawMetadata> CommandEncoder::AcquireIndirectDrawMetadata() {
+ityp::vector<PassIndex, IndirectDrawMetadata> CommandEncoder::AcquireIndirectDrawMetadata() {
     return mEncodingContext.AcquireIndirectDrawMetadata();
 }
 

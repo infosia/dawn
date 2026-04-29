@@ -67,7 +67,7 @@ class CommandBufferBase : public ApiObjectBase {
 
     const CommandBufferResourceUsage& GetResourceUsages() const;
 
-    const std::vector<IndirectDrawMetadata>& GetIndirectDrawMetadata();
+    const ityp::vector<PassIndex, IndirectDrawMetadata>& GetIndirectDrawMetadata();
 
     CommandIterator* GetCommandIteratorForTesting();
 
@@ -80,7 +80,7 @@ class CommandBufferBase : public ApiObjectBase {
     CommandBufferBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
 
     CommandBufferResourceUsage mResourceUsages;
-    std::vector<IndirectDrawMetadata> mIndirectDrawMetadata;
+    ityp::vector<PassIndex, IndirectDrawMetadata> mIndirectDrawMetadata;
     std::string mEncoderLabel;
 };
 
