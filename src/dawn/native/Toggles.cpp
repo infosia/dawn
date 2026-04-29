@@ -748,6 +748,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"decompose_uniform_buffers",
       "Decompose uniform buffers into arrays of vec4<u32> on backends for Vulkan and OpenGL.",
       "https://crbug.com/448452698", ToggleStage::Adapter}},
+    {Toggle::D3D12DecomposeWorkgroupAccess,
+     {"d3d12_decompose_workgroup_access",
+      "Decompose workgroup memory variables into flat scalar arrays and rewrite accesses as "
+      "element-wise loads/stores with bitcasts on selected Intel GPUs on D3D12",
+      "https://crbug.com/341991439", ToggleStage::Device}},
     {Toggle::VulkanEnableF16OnNvidia,
      {"vulkan_enable_f16_on_nvidia", "Enables F16 on Nvidia GPUs with Vulkan",
       "https://crbug.com/42251215", ToggleStage::Adapter}},
