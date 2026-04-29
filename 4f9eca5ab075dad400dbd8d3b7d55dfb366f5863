@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b189a0de_4227b7d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T12:38:10Z",
+      "side": 1,
+      "message": "Thanks! LGTM on my side % nits.",
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2bdb285_ba4480a8",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T12:38:10Z",
+      "side": 1,
+      "message": "nit: I think Dawn/Tint are using 100 columns. Can you please reflow your comments to fit?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 70
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e0dc17c_abee868d",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T12:38:10Z",
+      "side": 1,
+      "message": "Run `git cl format`. This will allign the `\\`  (at least, that\u0027s what it would do in chrome)",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 6
+      },
+      "revId": "4f9eca5ab075dad400dbd8d3b7d55dfb366f5863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
