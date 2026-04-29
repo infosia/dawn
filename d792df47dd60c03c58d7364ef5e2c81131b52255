@@ -39,6 +39,30 @@
       },
       "revId": "d792df47dd60c03c58d7364ef5e2c81131b52255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2befb9cf_c2d4b3cf",
+        "filename": "src/dawn/node/binding/GPUComputePassEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-29T17:40:57Z",
+      "side": 1,
+      "message": "I goes to [that overload in Converter.h](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/node/binding/Converter.h;drc\u003d6c870d0d2261e8931af759c984d24a61a3360bd3;l\u003d371) and leaves table untouched (so set to nullptr) on `std::nullopt`.",
+      "parentUuid": "8d9e7e5e_3d534db8",
+      "range": {
+        "startLine": 139,
+        "startChar": 29,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "d792df47dd60c03c58d7364ef5e2c81131b52255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
