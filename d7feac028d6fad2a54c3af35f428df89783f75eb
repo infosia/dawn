@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc20e07a_c432c0b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T15:11:47Z",
+      "side": 1,
+      "message": "Format to fit 72 columns.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0e7451_3885334e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T15:11:47Z",
+      "side": 1,
+      "message": "Bug: chromium:507077205\nDoc: go/unsafe-buffer-dawn",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "8e4d6bf1_83722846",
@@ -14,6 +60,47 @@
       "writtenOn": "2026-04-28T14:40:24Z",
       "side": 1,
       "message": "Having looking closer at how your version of the macro works and what it looks like in situ, I prefer it over the existing coarser TINT macro (I also wasn\u0027t aware of the UNSAFE_BUFFER_BUILD macro, which I really like seeing removed).\n\nAs mentioned on the other review I agree with having a single pair of macros for the repo instead of a pair for tint and a pair for dawn",
+      "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baa97d06_846ff7c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T15:11:47Z",
+      "side": 1,
+      "message": "The plan is to remove the directory-level exclusions from:\n[unsafe_buffers_paths.txt](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/unsafe_buffers_paths.txt;l\u003d33-37?q\u003ddawn%2Funsafe_bu\u0026ss\u003dchromium)\nand replacing them with file-level exclusions (e.g. UNSAFE_BUFFER_BUILD macro)\n\nIn a second step, experiment with turning all of them into fine grained DAWN_UNSAFE_TODO: https://dawn-review.googlesource.com/305675\n... and idscuss with Dawn owners if we can apply it fully and/or partially depending on the amount of instances added.\n\nSee: https://go/unsafe-buffer-dawn",
+      "parentUuid": "8e4d6bf1_83722846",
+      "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cdc5681_48f5851f",
+        "filename": "src/tint/utils/macros/compiler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2026-04-29T15:11:47Z",
+      "side": 1,
+      "message": "Looking at your other patch:\nhttps://dawn-review.googlesource.com/c/dawn/+/303835\n\nWe already have the shared definition for DAWN_UNSAFE_TODO and others.\n\nSo, should we abandon this patch?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 31
+      },
       "revId": "d7feac028d6fad2a54c3af35f428df89783f75eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
