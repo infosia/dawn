@@ -2561,6 +2561,10 @@ uint64_t DeviceBase::GetBufferCopyOffsetAlignmentForDepthStencil() const {
     return 4u;
 }
 
+bool DeviceBase::AreTimestampsQuantized() const {
+    return false;
+}
+
 MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,

@@ -1401,26 +1401,17 @@ TEST_P(BufferZeroInitTest, ResolveQuerySet) {
 }
 
 DAWN_INSTANTIATE_TEST(BufferZeroInitTest,
-                      D3D11Backend({"nonzero_clear_resources_on_creation_for_testing",
-                                    "timestamp_query_conversion_even_if_1ns"}),
+                      D3D11Backend({"nonzero_clear_resources_on_creation_for_testing"}),
                       D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers",
-                                    "nonzero_clear_resources_on_creation_for_testing",
-                                    "timestamp_query_conversion_even_if_1ns"}),
-                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing",
-                                    "timestamp_query_conversion_even_if_1ns"}),
-                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing",
-                                    "timestamp_query_conversion_even_if_1ns"},
+                                    "nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"},
                                    {"d3d12_create_not_zeroed_heap"}),
-                      MetalBackend({"nonzero_clear_resources_on_creation_for_testing",
-                                    "timestamp_query_conversion_even_if_1ns"}),
-                      OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing",
-                                     "timestamp_query_conversion_even_if_1ns"}),
-                      OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing",
-                                       "timestamp_query_conversion_even_if_1ns"}),
-                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing",
-                                     "timestamp_query_conversion_even_if_1ns"}),
-                      WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing",
-                                     "timestamp_query_conversion_even_if_1ns"}));
+                      MetalBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing"}));
 
 }  // anonymous namespace
 }  // namespace dawn
