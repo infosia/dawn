@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d0f94e_d40be355",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "Let\u0027s add that to `src/dawn/common/SystemUtils.h` instead, similarly to the macOS version check.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e555142_a564fa3e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "nit: both should be uint32_t? At least the revision is a DWORD which is a u32 AFAIK.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "657df587_a8ee0a61",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "This should be unnecessary as `operator \u003c\u003d\u003e` already covers it.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "664c8baf_bbfecf9b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "u-nit: use a designated initializer to make it clear that each value goes in the corresponding field.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cd043d1_2d789e92",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "This can be removed, we don\u0027t support Windows before Windows 10.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d538fd8_29379c07",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "```suggestion\nbool DawnTestBase::IsWindowsVersionAtLeast(uint64_t buildNumber,\n```",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35f14b71_9f1a4383",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4d0fb6d_135f6e58",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:17:19Z",
+      "side": 1,
+      "message": "Why `static`? this makes the variable be evaluated only the first time the function is called, which is not really necessary and overall confusing.",
+      "revId": "b578ee7869cacf98d10117d054dbb0c1b1a6bd24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
