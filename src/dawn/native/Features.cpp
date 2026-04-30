@@ -479,7 +479,7 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
 }  // anonymous namespace
 
 void FeaturesSet::EnableFeature(Feature feature) {
-    DAWN_ASSERT(feature != Feature::InvalidEnum);
+    DAWN_OPT_ASSUME(feature != Feature::InvalidEnum);
     featuresBitSet.set(feature);
 }
 
@@ -488,7 +488,7 @@ void FeaturesSet::EnableFeature(wgpu::FeatureName feature) {
 }
 
 bool FeaturesSet::IsEnabled(Feature feature) const {
-    DAWN_ASSERT(feature != Feature::InvalidEnum);
+    DAWN_OPT_ASSUME(feature != Feature::InvalidEnum);
     return featuresBitSet[feature];
 }
 
@@ -516,7 +516,7 @@ void FeaturesSet::ToSupportedFeatures(SupportedFeatures* supportedFeatures) cons
     for (Feature f : featuresBitSet) {
         features[index++] = ToAPI(f);
     }
-    DAWN_ASSERT(index == count);
+    DAWN_OPT_ASSUME(index == count);
     supportedFeatures->features = features;
 }
 

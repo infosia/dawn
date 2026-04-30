@@ -151,7 +151,7 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
             break;
     }
 
-    DAWN_ASSERT(HasSameTextureCopyExtent(srcCopy, dstCopy, copySize));
+    DAWN_OPT_ASSUME(HasSameTextureCopyExtent(srcCopy, dstCopy, copySize));
     TexelExtent3D imageExtent = ComputeTextureCopyExtent(dstCopy, copySize);
     region.extent.width = static_cast<uint32_t>(imageExtent.width);
     region.extent.height = static_cast<uint32_t>(imageExtent.height);
@@ -264,7 +264,7 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true> {
 
             // Set the resource table as the first set if it starts being used.
             if (mUsesResourceTable) {
-                DAWN_ASSERT(mResourceTable != nullptr);
+                DAWN_OPT_ASSUME(mResourceTable != nullptr);
                 VkDescriptorSet set = mResourceTable->GetHandle();
                 vk.CmdBindDescriptorSets(commandBuffer, bindPoint, mVkLayout, 0, 1, &*set, 0,
                                          nullptr);
@@ -309,7 +309,7 @@ class ImmediateConstantTracker : public T {
     void DirtyAll() { this->mDirty.set(); }
 
     void Apply(const VulkanFunctions& vk, VkCommandBuffer commandBuffer) {
-        DAWN_ASSERT(this->mLastPipeline != nullptr);
+        DAWN_OPT_ASSUME(this->mLastPipeline != nullptr);
         Apply(vk, commandBuffer, ToBackend(this->mLastPipeline)->GetVkLayout(),
               this->mLastPipeline->GetImmediateMask());
     }
@@ -450,7 +450,7 @@ void ResetUsedQuerySetsOnRenderPass(Device* device,
                                     VkCommandBuffer commands,
                                     QuerySetBase* querySet,
                                     const ityp::vector<QueryIndex, bool>& availability) {
-    DAWN_ASSERT(availability.size() == querySet->GetQueryCount());
+    DAWN_OPT_ASSUME(availability.size() == querySet->GetQueryCount());
 
     ForEachAvailableQueryRange(
         QueryIndex(0), availability.size(), [&](QueryIndex i) { return availability[i]; },
@@ -590,11 +590,11 @@ struct ProgrammablePassState : public StackAllocated {
             const auto& bindingInfo =
                 etBindGroup->GetLayout()->GetAPIBindingInfo(etBindPoint.binding);
             const auto& etInfo = std::get<ExternalTextureBindingInfo>(bindingInfo.bindingLayout);
-            DAWN_ASSERT(etInfo.staticSampler.has_value());
+            DAWN_OPT_ASSUME(etInfo.staticSampler.has_value());
 
             const TextureView* view =
                 ToBackend(etBindGroup->GetBindingAsTextureView(etInfo.plane0));
-            DAWN_ASSERT(view != nullptr);
+            DAWN_OPT_ASSUME(view != nullptr);
 
             // Use static samplers for YCbCr external textures. However when the toggle is enabled,
             // we use a static sampler for all the single-planar external textures, which helps with
@@ -633,8 +633,8 @@ struct ProgrammablePassState : public StackAllocated {
         DirtyAll();
 
         // At the moment the only specialization is for using static samplers in ExternalTextures.
-        DAWN_ASSERT(lastPipeline->GetDevice()->NeedsStaticSamplerForExternalTexture() &&
-                    lastPipeline->GetLayout()->HasExternalTextures());
+        DAWN_OPT_ASSUME(lastPipeline->GetDevice()->NeedsStaticSamplerForExternalTexture() &&
+                        lastPipeline->GetLayout()->HasExternalTextures());
         PipelineSpecialization specialization = ComputeSpecializationBaseOnState();
 
         // Recreate the descriptor sets using the specialized VkDescriptorSetLayout.
@@ -781,7 +781,7 @@ MaybeError RecordBeginDynamicRenderPass(CommandRecordingContext* recordingContex
     if (renderPass->attachmentState->HasDepthStencilAttachment()) {
         const auto& attachmentInfo = renderPass->depthStencilAttachment;
         TextureView* view = ToBackend(attachmentInfo.view.Get());
-        DAWN_ASSERT(view);
+        DAWN_OPT_ASSUME(view);
 
         const Format& dsFormat = view->GetTexture()->GetFormat();
         VkImageLayout imageLayout = VulkanImageLayoutForDepthStencilAttachment(
@@ -985,8 +985,8 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
     const TextureCopy& srcCopy,
     const TextureCopy& dstCopy,
     const TexelExtent3D& texelCopySize) {
-    DAWN_ASSERT(srcCopy.texture->GetFormat().CopyCompatibleWith(dstCopy.texture->GetFormat()));
-    DAWN_ASSERT(srcCopy.aspect == dstCopy.aspect);
+    DAWN_OPT_ASSUME(srcCopy.texture->GetFormat().CopyCompatibleWith(dstCopy.texture->GetFormat()));
+    DAWN_OPT_ASSUME(srcCopy.aspect == dstCopy.aspect);
     const TypedTexelBlockInfo& blockInfo = GetBlockInfo(srcCopy);
     const BlockExtent3D copySize = blockInfo.ToBlock(texelCopySize);
     BlockCount widthInBlocks = copySize.width;
@@ -1202,9 +1202,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     // When there are overlapped subresources, the layout of the overlapped
                     // subresources should all be GENERAL instead of what we set now. Currently
                     // it is not allowed to copy with overlapped subresources, but we still
-                    // add the DAWN_ASSERT here as a reminder for this possible misuse.
-                    DAWN_ASSERT(!IsRangeOverlapped(src.origin.z, dst.origin.z,
-                                                   copy->copySize.depthOrArrayLayers));
+                    // add the DAWN_OPT_ASSUME here as a reminder for this possible misuse.
+                    DAWN_OPT_ASSUME(!IsRangeOverlapped(src.origin.z, dst.origin.z,
+                                                       copy->copySize.depthOrArrayLayers));
                 }
 
                 ToBackend(src.texture)
@@ -1607,7 +1607,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = mCommands.NextData<uint8_t>(cmd->size);
                 state.immediates.SetImmediates(cmd->offset, value, cmd->size);
@@ -1728,7 +1728,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 workCommandCount++;
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                DAWN_OPT_ASSUME(buffer != nullptr);
 
                 DAWN_TRY(state.SyncAndRun([&](const VulkanFunctions& vk, VkCommandBuffer commands) {
                     vk.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
@@ -1743,7 +1743,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 MultiDrawIndirectCmd* cmd = iter->NextCommand<MultiDrawIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
@@ -1768,7 +1768,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 MultiDrawIndexedIndirectCmd* cmd = iter->NextCommand<MultiDrawIndexedIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
-                DAWN_ASSERT(indirectBuffer != nullptr);
+                DAWN_OPT_ASSUME(indirectBuffer != nullptr);
 
                 // Count buffer is optional
                 Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
@@ -1881,7 +1881,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = nullptr;
                 value = iter->NextData<uint8_t>(cmd->size);
                 state.immediates.SetImmediates(cmd->offset, value, cmd->size);

@@ -187,7 +187,7 @@ class VulkanImageWrappingTestBase : public DawnTestWithParams<ImageWrappingParam
     void IgnoreSignalSemaphore(wgpu::Texture wrappedTexture) {
         ExternalImageExportInfoVkForTesting exportInfo = GetExternalImageExportInfo();
         bool result = mBackend->ExportImage(wrappedTexture, &exportInfo);
-        DAWN_ASSERT(result);
+        DAWN_OPT_ASSUME(result);
     }
 
   protected:

@@ -91,7 +91,7 @@ bool Service::SupportsImportMemory(ExternalImageType externalImageType,
                                    VkImageUsageFlags usage,
                                    VkImageCreateFlags flags) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(externalImageType);
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->SupportsImportMemory(format, type, tiling, usage, flags);
 }
@@ -101,7 +101,7 @@ bool Service::SupportsCreateImage(const ExternalImageDescriptor* descriptor,
                                   VkImageUsageFlags usage,
                                   bool* supportsDisjoint) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(descriptor->GetType());
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->SupportsCreateImage(descriptor, format, usage, supportsDisjoint);
 }
@@ -110,14 +110,14 @@ ResultOrError<MemoryImportParams> Service::GetMemoryImportParams(
     const ExternalImageDescriptor* descriptor,
     VkImage image) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(descriptor->GetType());
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->GetMemoryImportParams(descriptor, image);
 }
 
 uint32_t Service::GetQueueFamilyIndex(ExternalImageType externalImageType) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(externalImageType);
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->GetQueueFamilyIndex();
 }
@@ -127,7 +127,7 @@ ResultOrError<VkDeviceMemory> Service::ImportMemory(ExternalImageType externalIm
                                                     const MemoryImportParams& importParams,
                                                     VkImage image) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(externalImageType);
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->ImportMemory(handle, importParams, image);
 }
@@ -135,7 +135,7 @@ ResultOrError<VkDeviceMemory> Service::ImportMemory(ExternalImageType externalIm
 ResultOrError<VkImage> Service::CreateImage(const ExternalImageDescriptor* descriptor,
                                             const VkImageCreateInfo& baseCreateInfo) {
     ServiceImplementation* serviceImpl = GetServiceImplementation(descriptor->GetType());
-    DAWN_ASSERT(serviceImpl);
+    DAWN_OPT_ASSUME(serviceImpl);
 
     return serviceImpl->CreateImage(descriptor, baseCreateInfo);
 }

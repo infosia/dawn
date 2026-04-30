@@ -61,7 +61,7 @@ class PlatformTextureGbm : public VideoViewsTestBackend::PlatformTexture {
 
     // TODO(chromium:1258986): Add DISJOINT vkImage support for multi-plannar formats.
     bool CanWrapAsWGPUTexture() override {
-        DAWN_ASSERT(mGbmBo != nullptr);
+        DAWN_OPT_ASSUME(mGbmBo != nullptr);
         // Checks if all plane handles of a multi-planar gbm_bo are same.
         gbm_bo_handle plane0Handle = gbm_bo_get_handle_for_plane(mGbmBo, 0);
         for (int plane = 1; plane < gbm_bo_get_plane_count(mGbmBo); ++plane) {
@@ -116,10 +116,10 @@ class VideoViewsTestBackendGbm : public VideoViewsTestBackend {
                 break;
             }
         }
-        DAWN_ASSERT(mRenderNodeFd > 0);
+        DAWN_OPT_ASSUME(mRenderNodeFd > 0);
 
         gbm_device* gbmDevice = gbm_create_device(mRenderNodeFd);
-        DAWN_ASSERT(gbmDevice != nullptr);
+        DAWN_OPT_ASSUME(gbmDevice != nullptr);
         return gbmDevice;
     }
 

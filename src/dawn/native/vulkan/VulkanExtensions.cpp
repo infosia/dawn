@@ -57,8 +57,8 @@ static constexpr std::array<InstanceExtInfo, kInstanceExtCount> sInstanceExtInfo
 
 const InstanceExtInfo& GetInstanceExtInfo(InstanceExt ext) {
     uint32_t index = static_cast<uint32_t>(ext);
-    DAWN_ASSERT(index < sInstanceExtInfos.size());
-    DAWN_ASSERT(sInstanceExtInfos[index].index == ext);
+    DAWN_OPT_ASSUME(index < sInstanceExtInfos.size());
+    DAWN_OPT_ASSUME(sInstanceExtInfos[index].index == ext);
     return sInstanceExtInfos[index];
 }
 
@@ -80,7 +80,7 @@ InstanceExtSet EnsureDependencies(const InstanceExtSet& advertisedExts) {
     InstanceExtSet trimmedSet;
 
     auto HasDep = [&](InstanceExt ext) -> bool {
-        DAWN_ASSERT(visitedSet[ext]);
+        DAWN_OPT_ASSUME(visitedSet[ext]);
         return trimmedSet[ext];
     };
 
@@ -169,8 +169,8 @@ static constexpr std::array<DeviceExtInfo, kDeviceExtCount> sDeviceExtInfos{{
 
 const DeviceExtInfo& GetDeviceExtInfo(DeviceExt ext) {
     uint32_t index = static_cast<uint32_t>(ext);
-    DAWN_ASSERT(index < sDeviceExtInfos.size());
-    DAWN_ASSERT(sDeviceExtInfos[index].index == ext);
+    DAWN_OPT_ASSUME(index < sDeviceExtInfos.size());
+    DAWN_OPT_ASSUME(sDeviceExtInfos[index].index == ext);
     return sDeviceExtInfos[index];
 }
 
@@ -191,10 +191,10 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
     DeviceExtSet trimmedSet;
 
     // Dawn requires at least Vulkan 1.1
-    DAWN_ASSERT(version >= VK_API_VERSION_1_1);
+    DAWN_OPT_ASSUME(version >= VK_API_VERSION_1_1);
 
     auto HasDep = [&](DeviceExt ext) -> bool {
-        DAWN_ASSERT(visitedSet[ext]);
+        DAWN_OPT_ASSUME(visitedSet[ext]);
         return trimmedSet[ext];
     };
 
@@ -306,8 +306,8 @@ static constexpr std::array<VulkanLayerInfo, kVulkanLayerCount> sVulkanLayerInfo
 
 const VulkanLayerInfo& GetVulkanLayerInfo(VulkanLayer layer) {
     uint32_t index = static_cast<uint32_t>(layer);
-    DAWN_ASSERT(index < sVulkanLayerInfos.size());
-    DAWN_ASSERT(sVulkanLayerInfos[index].layer == layer);
+    DAWN_OPT_ASSUME(index < sVulkanLayerInfos.size());
+    DAWN_OPT_ASSUME(sVulkanLayerInfos[index].layer == layer);
     return sVulkanLayerInfos[index];
 }
 

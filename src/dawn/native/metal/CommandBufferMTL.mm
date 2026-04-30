@@ -93,7 +93,7 @@ void SampleBufferAttachment<PassDescriptor>::SetSampleBuffer(
     PassDescriptor* descriptor,
     id<MTLCounterSampleBuffer> sampleBuffer) {
     attachmentIndex++;
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
+    DAWN_OPT_ASSUME(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].sampleBuffer = sampleBuffer;
 }
 
@@ -102,7 +102,7 @@ template <>
 void SampleBufferAttachment<MTLRenderPassDescriptor>::SetStartSampleIndex(
     MTLRenderPassDescriptor* descriptor,
     NSUInteger sampleIndex) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
+    DAWN_OPT_ASSUME(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].startOfVertexSampleIndex = sampleIndex;
 }
 
@@ -111,7 +111,7 @@ template <>
 void SampleBufferAttachment<MTLRenderPassDescriptor>::SetEndSampleIndex(
     MTLRenderPassDescriptor* descriptor,
     NSUInteger sampleIndex) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
+    DAWN_OPT_ASSUME(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].endOfFragmentSampleIndex = sampleIndex;
 }
 
@@ -120,7 +120,7 @@ template <>
 void SampleBufferAttachment<MTLComputePassDescriptor>::SetStartSampleIndex(
     MTLComputePassDescriptor* descriptor,
     NSUInteger sampleIndex) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
+    DAWN_OPT_ASSUME(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].startOfEncoderSampleIndex = sampleIndex;
 }
 
@@ -131,7 +131,7 @@ void SampleBufferAttachment<MTLComputePassDescriptor>::SetEndSampleIndex(
     NSUInteger sampleIndex) {
     // TODO(dawn:1473): Use MTLComputePassSampleBuffers or query method instead of the magic number
     // 4 when Metal could get the maximum of sampleBufferAttachments on compute pass
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
+    DAWN_OPT_ASSUME(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].endOfEncoderSampleIndex = sampleIndex;
 }
 
@@ -450,7 +450,8 @@ struct StorageBufferLengthTracker {
     StorageBufferLengthTracker() = delete;
     explicit StorageBufferLengthTracker(DeviceBase* device) {
         // Lengths are stored as uint32_t. Make sure that's OK for the device.
-        DAWN_ASSERT(device->GetLimits().v1.maxBufferSize <= std::numeric_limits<uint32_t>::max());
+        DAWN_OPT_ASSUME(device->GetLimits().v1.maxBufferSize <=
+                        std::numeric_limits<uint32_t>::max());
     }
 
     wgpu::ShaderStage dirtyStages = wgpu::ShaderStage::None;
@@ -496,7 +497,7 @@ struct StorageBufferLengthTracker {
             }
 
             bufferCount = Align(bufferCount, 4);
-            DAWN_ASSERT(bufferCount <= data[SingleShaderStage::Vertex].size());
+            DAWN_OPT_ASSUME(bufferCount <= data[SingleShaderStage::Vertex].size());
             dataSize[SingleShaderStage::Vertex] = sizeof(uint32_t) * bufferCount;
         }
 
@@ -504,7 +505,7 @@ struct StorageBufferLengthTracker {
             uint32_t bufferCount = Align(ToBackend(pipeline->GetLayout())
                                              ->GetBufferBindingCount(SingleShaderStage::Fragment),
                                          4);
-            DAWN_ASSERT(bufferCount <= data[SingleShaderStage::Fragment].size());
+            DAWN_OPT_ASSUME(bufferCount <= data[SingleShaderStage::Fragment].size());
             dataSize[SingleShaderStage::Fragment] = sizeof(uint32_t) * bufferCount;
         }
     }
@@ -518,7 +519,7 @@ struct StorageBufferLengthTracker {
 
         uint32_t bufferCount = Align(
             ToBackend(pipeline->GetLayout())->GetBufferBindingCount(SingleShaderStage::Compute), 4);
-        DAWN_ASSERT(bufferCount <= data[SingleShaderStage::Compute].size());
+        DAWN_OPT_ASSUME(bufferCount <= data[SingleShaderStage::Compute].size());
         dataSize[SingleShaderStage::Compute] = sizeof(uint32_t) * bufferCount;
     }
 
@@ -542,7 +543,7 @@ class ImmediateConstantTracker : public T {
     // The data is uploaded using setVertexBytes/setFragmentBytes for render passes
     // or setBytes for compute passes.
     void Apply(EncoderType encoder, StorageBufferLengthTracker* lengthTracker) {
-        DAWN_ASSERT(this->mLastPipeline != nullptr);
+        DAWN_OPT_ASSUME(this->mLastPipeline != nullptr);
 
         // Update the stored immediate constants that have changed
         ImmediateConstantMask pipelineMask = this->mLastPipeline->GetImmediateMask();
@@ -610,8 +611,8 @@ class ImmediateConstantTracker : public T {
                               uint32_t offset,
                               const void* data,
                               size_t size) {
-        DAWN_ASSERT(offset < kMaxImmediateBlockSize);
-        DAWN_ASSERT(size <= sizeof(uint32_t) * (kMaxImmediateBlockSize - offset));
+        DAWN_OPT_ASSUME(offset < kMaxImmediateBlockSize);
+        DAWN_OPT_ASSUME(size <= sizeof(uint32_t) * (kMaxImmediateBlockSize - offset));
         // Copy data to all affected shader stages
         for (auto stage : IterateStages(stages)) {
             std::memcpy(&mImmediateBlockContent[stage][offset], data, size);
@@ -772,7 +773,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
 
                     // Check to make sure sizes will fit into uint32_t below.
                     // TODO(crbug.com/488400770): Warnings for implicit narrowing below are missing.
-                    DAWN_ASSERT(binding.size <= std::numeric_limits<uint32_t>::max());
+                    DAWN_OPT_ASSUME(binding.size <= std::numeric_limits<uint32_t>::max());
 
                     if (hasVertStage) {
                         mLengthTracker->data[SingleShaderStage::Vertex][vertIndex] = binding.size;
@@ -873,7 +874,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
                                   atIndex:argumentBufferIdx];
 
                 if (dynamicOffsetsCount > 0) {
-                    DAWN_ASSERT(dynamicBufferIdx.has_value());
+                    DAWN_OPT_ASSUME(dynamicBufferIdx.has_value());
                     [render setVertexBytes:dynamicOffsets.data()
                                     length:dynamicOffsetsCount * sizeof(uint32_t)
                                    atIndex:dynamicBufferIdx.value()];
@@ -883,14 +884,14 @@ class BindGroupTracker : public BindGroupTrackerBase<true> {
                                      atIndex:dynamicBufferIdx.value()];
                 }
             } else {
-                DAWN_ASSERT(compute != nullptr);
+                DAWN_OPT_ASSUME(compute != nullptr);
 
                 [compute setBuffer:*(group->GetArgumentBuffer())
                             offset:0
                            atIndex:argumentBufferIdx];
 
                 if (dynamicOffsetsCount > 0) {
-                    DAWN_ASSERT(dynamicBufferIdx.has_value());
+                    DAWN_OPT_ASSUME(dynamicBufferIdx.has_value());
                     [compute setBytes:dynamicOffsets.data()
                                length:dynamicOffsetsCount * sizeof(uint32_t)
                               atIndex:dynamicBufferIdx.value()];
@@ -936,11 +937,11 @@ class VertexBufferTracker {
         mVertexBuffers[slot] = mtlBuffer;
         mVertexBufferOffsets[slot] = offset;
 
-        DAWN_ASSERT(buffer->GetSize() >= offset);
+        DAWN_OPT_ASSUME(buffer->GetSize() >= offset);
         // The binding size for a vertex buffer must always be at least 4 so we can do clamping.
         uint64_t bindingSize = std::max(4ull, buffer->GetSize() - offset);
         // (BufferMTL reserves an extra 4 bytes for us in case we're at the very end of the buffer.)
-        DAWN_ASSERT(offset + bindingSize <= buffer->GetAllocatedSize());
+        DAWN_OPT_ASSUME(offset + bindingSize <= buffer->GetAllocatedSize());
 
         // Check to make sure sizes will fit into uint32_t for the shader.
         DAWN_CHECK(bindingSize <= std::numeric_limits<uint32_t>::max());
@@ -1481,7 +1482,7 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                                             cmd);
 
                 } else {
-                    DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+                    DAWN_OPT_ASSUME(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
                     [commandContext->EnsureBlit()
                         sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
                                                    ->GetCounterSampleBuffer()
@@ -1583,7 +1584,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
 
         if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
             kQuerySetIndexUndefinedTyped) {
-            DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+            DAWN_OPT_ASSUME(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
 
             [encoder
                 sampleCountersInBuffer:ToBackend(computePassCmd->timestampWrites.querySet.Get())
@@ -1608,7 +1609,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                 if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
                     computePassCmd->timestampWrites.endOfPassWriteIndex !=
                         kQuerySetIndexUndefinedTyped) {
-                    DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
+                    DAWN_OPT_ASSUME(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
 
                     [encoder
                         sampleCountersInBuffer:ToBackend(
@@ -1690,7 +1691,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = mCommands.NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = mCommands.NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
@@ -1768,7 +1769,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
     // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
     if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
         renderPassCmd->timestampWrites.beginningOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
-        DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
+        DAWN_OPT_ASSUME(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
 
         [encoder
             sampleCountersInBuffer:ToBackend(renderPassCmd->timestampWrites.querySet.Get())
@@ -1881,7 +1882,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 immediates.Apply(encoder, &storageBufferLengths);
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
-                DAWN_ASSERT(buffer != nullptr);
+                DAWN_OPT_ASSUME(buffer != nullptr);
 
                 buffer->TrackUsage();
                 id<MTLBuffer> indirectBuffer = buffer->GetMTLBuffer();
@@ -1991,7 +1992,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
             case Command::SetImmediates: {
                 SetImmediatesCmd* cmd = iter->NextCommand<SetImmediatesCmd>();
-                DAWN_ASSERT(cmd->size > 0);
+                DAWN_OPT_ASSUME(cmd->size > 0);
                 uint8_t* value = iter->NextData<uint8_t>(cmd->size);
                 immediates.SetImmediates(cmd->offset, value, cmd->size);
                 break;
@@ -2033,7 +2034,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
                     renderPassCmd->timestampWrites.endOfPassWriteIndex !=
                         kQuerySetIndexUndefinedTyped) {
-                    DAWN_ASSERT(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
+                    DAWN_OPT_ASSUME(!ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary());
 
                     [encoder
                         sampleCountersInBuffer:ToBackend(

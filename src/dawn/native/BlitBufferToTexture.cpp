@@ -400,7 +400,7 @@ MaybeError BlitBufferToTexture(DeviceBase* device,
                                const TexelCopyBufferLayout& src,
                                const TextureCopy& dst,
                                const TexelExtent3D& copyExtent) {
-    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+    DAWN_OPT_ASSUME(device->IsLockedByCurrentThreadIfNeeded());
 
     // This function assumes bytesPerRow is multiples of 4. Normally it's required that
     // bytesPerRow is aligned to 256. However some backends might enable
@@ -408,8 +408,8 @@ MaybeError BlitBufferToTexture(DeviceBase* device,
     // enables this feature, and the relaxed alignment there is 4.
     DAWN_CHECK((src.bytesPerRow % 4) == 0);
 
-    DAWN_ASSERT(buffer->GetInternalUsage() &
-                (kReadOnlyStorageBuffer | kInternalStorageBuffer | wgpu::BufferUsage::Storage));
+    DAWN_OPT_ASSUME(buffer->GetInternalUsage() &
+                    (kReadOnlyStorageBuffer | kInternalStorageBuffer | wgpu::BufferUsage::Storage));
 
     DAWN_CHECK(!copyExtent.IsEmpty());
 
@@ -424,7 +424,7 @@ MaybeError BlitBufferToTexture(DeviceBase* device,
     DAWN_TRY_ASSIGN(bgl, pipeline->GetBindGroupLayout(0));
 
     const auto ssboAlignment = device->GetLimits().v1.minStorageBufferOffsetAlignment;
-    DAWN_ASSERT(IsPowerOfTwo(ssboAlignment));
+    DAWN_OPT_ASSUME(IsPowerOfTwo(ssboAlignment));
 
     wgpu::TextureViewDimension viewDimension;
     uint32_t baseDepth = 0;

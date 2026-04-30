@@ -187,19 +187,19 @@ struct TypedTexelBlockInfo {
 
     // Convert bytes to blocks
     constexpr BlockCount BytesToBlocks(uint64_t bytes) const {
-        DAWN_ASSERT(bytes % byteSize == 0);
+        DAWN_OPT_ASSUME(bytes % byteSize == 0);
         return BlockCount{bytes / byteSize};
     }
 
     // Convert texel height to block height
     constexpr BlockCount ToBlockHeight(TexelCount value) const {
-        DAWN_ASSERT(value % height == TexelCount{0});
+        DAWN_OPT_ASSUME(value % height == TexelCount{0});
         return BlockCount{static_cast<uint64_t>(value / height)};
     }
 
     // Convert from texel width to block width
     constexpr BlockCount ToBlockWidth(TexelCount value) const {
-        DAWN_ASSERT(value % width == TexelCount{0});
+        DAWN_OPT_ASSUME(value % width == TexelCount{0});
         return BlockCount{static_cast<uint64_t>(value / width)};
     }
 

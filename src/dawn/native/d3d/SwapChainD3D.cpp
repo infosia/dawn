@@ -121,10 +121,10 @@ SwapChain::~SwapChain() = default;
 // surface and that we have a chance to reuse it's underlying IDXGISwapChain and "buffers".
 MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     Surface::Type surfaceType = GetSurface()->GetType();
-    DAWN_ASSERT(surfaceType == Surface::Type::WindowsHWND ||
-                surfaceType == Surface::Type::WindowsCoreWindow ||
-                surfaceType == Surface::Type::WindowsUWPSwapChainPanel ||
-                surfaceType == Surface::Type::WindowsWinUISwapChainPanel);
+    DAWN_OPT_ASSUME(surfaceType == Surface::Type::WindowsHWND ||
+                    surfaceType == Surface::Type::WindowsCoreWindow ||
+                    surfaceType == Surface::Type::WindowsUWPSwapChainPanel ||
+                    surfaceType == Surface::Type::WindowsWinUISwapChainPanel);
 
     // Precompute the configuration parameters we want for the DXGI swapchain.
     mConfig.bufferCount = PresentModeToBufferCount(GetPresentMode());
@@ -198,7 +198,7 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
 }
 
 MaybeError SwapChain::InitializeSwapChainFromScratch() {
-    DAWN_ASSERT(mDXGISwapChain == nullptr);
+    DAWN_OPT_ASSUME(mDXGISwapChain == nullptr);
 
     Device* device = ToBackend(GetDevice());
 

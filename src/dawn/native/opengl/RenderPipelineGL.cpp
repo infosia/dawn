@@ -283,7 +283,7 @@ GLuint RenderPipeline::GetVertexArrayObject() const {
 }
 
 VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferSlot slot) const {
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
     return mAttributesUsingVertexBuffer[slot];
 }
 
@@ -323,7 +323,7 @@ MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,
                                     PersistentPipelineState& persistentPipelineState) {
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
-    DAWN_ASSERT(mVertexArrayObject);
+    DAWN_OPT_ASSUME(mVertexArrayObject);
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
 
     DAWN_TRY(ApplyFrontFaceAndCulling(gl, GetFrontFace(), GetCullMode()));
@@ -374,13 +374,13 @@ MaybeError RenderPipeline::ApplyNow(const OpenGLFunctions& gl,
             } else if ((descriptor->blend == nullptr) != (prevDescriptor->blend == nullptr)) {
                 // TODO(crbug.com/dawn/582): GLES < 3.2 does not support different blend states
                 // per color target. Add validation to prevent this as it is not.
-                DAWN_ASSERT(false);
+                DAWN_OPT_ASSUME(false);
             } else if (descriptor->blend != nullptr) {
                 if (!Equal(descriptor->blend->alpha, prevDescriptor->blend->alpha) ||
                     !Equal(descriptor->blend->color, prevDescriptor->blend->color) ||
                     descriptor->writeMask != prevDescriptor->writeMask) {
                     // TODO(crbug.com/dawn/582)
-                    DAWN_ASSERT(false);
+                    DAWN_OPT_ASSUME(false);
                 }
             }
         }

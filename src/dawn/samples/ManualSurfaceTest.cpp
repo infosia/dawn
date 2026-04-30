@@ -115,7 +115,7 @@ std::string NoPrefix(T wgpuThing) {
 template <typename T>
 void CycleIn(T* value, const std::vector<T>& cycle) {
     auto it = std::find(cycle.begin(), cycle.end(), *value);
-    DAWN_ASSERT(it != cycle.end());
+    DAWN_OPT_ASSUME(it != cycle.end());
     it++;
     if (it != cycle.end()) {
         *value = *it;
@@ -182,8 +182,8 @@ wgpu::RenderPipeline GetOrCreateTrianglePipeline(wgpu::TextureFormat format) {
 }
 
 bool IsSameConfig(const wgpu::SurfaceConfiguration& a, const wgpu::SurfaceConfiguration& b) {
-    DAWN_ASSERT(a.viewFormatCount == 0);
-    DAWN_ASSERT(b.viewFormatCount == 0);
+    DAWN_OPT_ASSUME(a.viewFormatCount == 0);
+    DAWN_OPT_ASSUME(b.viewFormatCount == 0);
     return a.device.Get() == b.device.Get() &&  //
            a.format == b.format &&              //
            a.usage == b.usage &&                //
@@ -272,12 +272,12 @@ void DoRender(WindowData* data) {
     queue.Submit(1, &commands);
 
     wgpu::Status presentStatus = data->surface.Present();
-    DAWN_ASSERT(presentStatus == wgpu::Status::Success);
+    DAWN_OPT_ASSUME(presentStatus == wgpu::Status::Success);
 }
 
 std::ostream& operator<<(std::ostream& o, const wgpu::SurfaceConfiguration& desc) {
     // For now only render attachment is possible.
-    DAWN_ASSERT(desc.usage == wgpu::TextureUsage::RenderAttachment);
+    DAWN_OPT_ASSUME(desc.usage == wgpu::TextureUsage::RenderAttachment);
     o << "RenderAttachment ";
 
     o << desc.width << "x" << desc.height << " ";
@@ -310,7 +310,7 @@ void OnKeyPress(GLFWwindow* window, int key, int, int action, int) {
         return;
     }
 
-    DAWN_ASSERT(windows.contains(window));
+    DAWN_OPT_ASSUME(windows.contains(window));
 
     WindowData* data = windows[window].get();
     switch (key) {
@@ -455,7 +455,7 @@ int main(int argc, const char* argv[]) {
     deviceDesc.SetUncapturedErrorCallback(
         [](const wgpu::Device&, wgpu::ErrorType errorType, wgpu::StringView message) {
             dawn::ErrorLog() << errorType << " error: " << message;
-            DAWN_ASSERT(false);
+            DAWN_OPT_ASSUME(false);
         });
 
     // Setup the device on that adapter.

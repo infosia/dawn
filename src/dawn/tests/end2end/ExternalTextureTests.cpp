@@ -112,7 +112,7 @@ class ExternalTextureTestsBase : public Parent {
                 .yCbCrMatrix = wgpu::ColorSpaceYCbCrMatrixDawn::Rec709,
             },
             wgpu::PredefinedColorSpace::SRGB, &bt709ColorSpaceParams);
-        DAWN_ASSERT(status == wgpu::Status::Success);
+        DAWN_OPT_ASSUME(status == wgpu::Status::Success);
     }
 
     wgpu::ExternalTextureDescriptor InitExternalTextureDescriptor(wgpu::Texture plane0,

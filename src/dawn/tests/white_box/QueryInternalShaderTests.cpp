@@ -57,7 +57,7 @@ class InternalShaderExpectation : public ::dawn::detail::Expectation {
 
     // Expect the actual results are approximately equal to the expected values.
     testing::AssertionResult Check(const void* data, size_t size) override {
-        DAWN_ASSERT(size == sizeof(uint64_t) * mExpected.size());
+        DAWN_OPT_ASSUME(size == sizeof(uint64_t) * mExpected.size());
         // The computations in the shader use a multiplier that's a 16bit integer plus a shift
         // that maximize the multiplier. This means that for the range of periods we care about
         // (1 to 2^16-1 ns per tick), the high order bit of the multiplier will always be set.
@@ -165,7 +165,7 @@ class QueryInternalShaderTests : public DawnTest {
                  uint32_t destinationOffset,
                  uint32_t quantizationMask,
                  float period) {
-        DAWN_ASSERT(destinationOffset % kQueryResolveAlignment == 0);
+        DAWN_OPT_ASSUME(destinationOffset % kQueryResolveAlignment == 0);
 
         uint64_t size = queryCount * sizeof(uint64_t) + destinationOffset;
 

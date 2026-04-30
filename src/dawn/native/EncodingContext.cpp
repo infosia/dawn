@@ -155,7 +155,7 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
         // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
         // Command Submit time, so the locking would be removed from here at that point.
         {
-            DAWN_ASSERT(mDevice->IsLockedByCurrentThreadIfNeeded());
+            DAWN_OPT_ASSUME(mDevice->IsLockedByCurrentThreadIfNeeded());
 
             DAWN_TRY_WITH_CLEANUP(
                 EncodeIndirectDrawValidationCommands(mDevice, commandEncoder, &usageTracker,

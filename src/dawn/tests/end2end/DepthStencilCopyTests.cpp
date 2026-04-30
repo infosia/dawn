@@ -795,7 +795,7 @@ TEST_P(DepthCopyTests, BufferCopySizeEdgeCase) {
 
             // Unable to check the result since either MapAsync and CopyBufferToBuffer requires size
             // to be multiple of 4 bytes.
-            // Just run and don't crash on DAWN_ASSERT.
+            // Just run and don't crash on DAWN_OPT_ASSUME.
         }
     }
 }
@@ -1350,7 +1350,7 @@ TEST_P(StencilCopyTests, BufferCopySizeEdgeCase) {
 
             // Unable to check the result since either MapAsync and CopyBufferToBuffer requires size
             // to be multiple of 4 bytes.
-            // Just run and don't crash on DAWN_ASSERT.
+            // Just run and don't crash on DAWN_OPT_ASSUME.
         }
     }
 }

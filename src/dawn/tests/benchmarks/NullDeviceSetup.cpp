@@ -58,7 +58,7 @@ void NullDeviceBenchmarkFixture::SetUp(const benchmark::State& state) {
             options.backendType = wgpu::BackendType::Null;
             auto nativeAdapter = nativeInstance->EnumerateAdapters(&options)[0];
             adapter = wgpu::Adapter(nativeAdapter.Get());
-            DAWN_ASSERT(adapter != nullptr);
+            DAWN_OPT_ASSUME(adapter != nullptr);
 
             // Create the device.
             wgpu::DeviceDescriptor desc = GetDeviceDescriptor();
@@ -79,7 +79,7 @@ void NullDeviceBenchmarkFixture::SetUp(const benchmark::State& state) {
             adapter.RequestDevice(
                 &desc, wgpu::CallbackMode::AllowSpontaneous,
                 [this](wgpu::RequestDeviceStatus status, wgpu::Device result, wgpu::StringView) {
-                    DAWN_ASSERT(status == wgpu::RequestDeviceStatus::Success);
+                    DAWN_OPT_ASSUME(status == wgpu::RequestDeviceStatus::Success);
                     device = std::move(result);
                 });
         }

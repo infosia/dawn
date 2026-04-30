@@ -61,7 +61,7 @@ uint64_t CountUTF16CodeUnitsFromUTF8String(const std::string_view& utf8String) {
     while (!remaining.empty()) {
         auto [codePoint, utf8CharacterByteLength] = tint::utf8::Decode(remaining);
         // WGSL validation will already have prevented invalid UTF-8.
-        DAWN_ASSERT(utf8CharacterByteLength != 0);
+        DAWN_OPT_ASSUME(utf8CharacterByteLength != 0);
         remaining = remaining.substr(utf8CharacterByteLength);
 
         // Count the number of code units in UTF-16. See https://en.wikipedia.org/wiki/UTF-16 for
@@ -156,7 +156,7 @@ void ParsedCompilationMessages::AddMessage(const tint::diag::Diagnostic& diagnos
             static_cast<uint64_t>(endLineStart - fileStart) + endLineCol - 1;
         // The length of the message is the difference between the starting offset and the
         // ending offset. Negative ranges aren't allowed.
-        DAWN_ASSERT(endOffsetInBytes >= offsetInBytes);
+        DAWN_OPT_ASSUME(endOffsetInBytes >= offsetInBytes);
         lengthInBytes = endOffsetInBytes - offsetInBytes;
         lengthInUTF16 = CountUTF16CodeUnitsFromUTF8String(
             std::string_view(fileStart + offsetInBytes, lengthInBytes));

@@ -270,7 +270,7 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
 }
 
 void Device::DestroyImpl(DestroyReason reason) {
-    DAWN_ASSERT(GetState() == State::Disconnected);
+    DAWN_OPT_ASSUME(GetState() == State::Disconnected);
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the device is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -282,7 +282,7 @@ void Device::DestroyImpl(DestroyReason reason) {
     // Clear pending operations before checking mMemoryUsage because some operations keep a
     // reference to Buffers.
     mPendingOperations.clear();
-    DAWN_ASSERT(mMemoryUsage == 0);
+    DAWN_OPT_ASSUME(mMemoryUsage == 0);
 }
 
 void Device::ForgetPendingOperations() {
@@ -327,7 +327,7 @@ MaybeError Device::IncrementMemoryUsage(uint64_t bytes) {
 }
 
 void Device::DecrementMemoryUsage(uint64_t bytes) {
-    DAWN_ASSERT(mMemoryUsage >= bytes);
+    DAWN_OPT_ASSUME(mMemoryUsage >= bytes);
     mMemoryUsage -= bytes;
 }
 
@@ -404,8 +404,8 @@ void Buffer::CopyFromStaging(BufferBase* staging,
 }
 
 void Buffer::DoWriteBuffer(uint64_t bufferOffset, const void* data, size_t size) {
-    DAWN_ASSERT(bufferOffset + size <= GetSize());
-    DAWN_ASSERT(mBackingData);
+    DAWN_OPT_ASSUME(bufferOffset + size <= GetSize());
+    DAWN_OPT_ASSUME(mBackingData);
     memcpy(mBackingData.get() + bufferOffset, data, size);
 }
 

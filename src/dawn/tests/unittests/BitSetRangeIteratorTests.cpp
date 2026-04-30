@@ -74,7 +74,7 @@ class BitSetRangeIteratorTest : public testing::Test {
         std::bitset<N> stateBits;
         uint32_t bitSize = stateBits.size();
         // Ensure range no overlapping
-        DAWN_ASSERT(bitSize >= 14);
+        DAWN_OPT_ASSUME(bitSize >= 14);
 
         std::vector<std::pair<uint32_t, size_t>> expectedRanges;
         expectedRanges.push_back({2, 3});
@@ -105,7 +105,7 @@ class BitSetRangeIteratorTest : public testing::Test {
         std::bitset<N> otherBits;
 
         uint32_t halfBitSize = stateBits.size() / 2;
-        DAWN_ASSERT(halfBitSize >= 3);
+        DAWN_OPT_ASSUME(halfBitSize >= 3);
 
         std::vector<std::pair<uint32_t, size_t>> expectedRanges;
         expectedRanges.push_back({halfBitSize - 2, 2});

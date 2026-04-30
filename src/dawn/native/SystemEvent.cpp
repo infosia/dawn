@@ -73,7 +73,7 @@ const utils::SystemHandle& SystemEventReceiver::GetPrimitive() const {
 SystemEventPipeSender::~SystemEventPipeSender() {
     // Make sure it's been Signaled (or is empty) before being dropped.
     // Dropping this would "leak" the receiver (it'll never get signalled).
-    DAWN_ASSERT(!mPrimitive.IsValid());
+    DAWN_OPT_ASSUME(!mPrimitive.IsValid());
 }
 
 bool SystemEventPipeSender::IsValid() const {
@@ -81,7 +81,7 @@ bool SystemEventPipeSender::IsValid() const {
 }
 
 void SystemEventPipeSender::Signal() && {
-    DAWN_ASSERT(mPrimitive.IsValid());
+    DAWN_OPT_ASSUME(mPrimitive.IsValid());
 #if DAWN_PLATFORM_IS(WINDOWS)
     {
         bool success = SetEvent(mPrimitive.Get());

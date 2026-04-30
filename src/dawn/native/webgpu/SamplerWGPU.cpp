@@ -83,7 +83,7 @@ Sampler::Sampler(Device* device, const SamplerDescriptor* descriptor)
     WGPUSamplerDescriptor desc = ToWGPU(descriptor);
     mInnerHandle = ToBackend(GetDevice())
                        ->wgpu->deviceCreateSampler(ToBackend(GetDevice())->GetInnerHandle(), &desc);
-    DAWN_ASSERT(mInnerHandle);
+    DAWN_OPT_ASSUME(mInnerHandle);
 }
 
 MaybeError Sampler::Initialize() {

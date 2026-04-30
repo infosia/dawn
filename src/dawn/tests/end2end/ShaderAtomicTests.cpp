@@ -145,6 +145,7 @@ class ShaderAtomicVec2Tests : public DawnTestWithParams<ShaderAtomicVec2TestsPar
 TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Max) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
 
+    DAWN_CHECK(!IsD3D12());
     const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
     const unsigned int dispatchSize = GetParam().mDispatchSizeParameter;
     const unsigned int numInvocations = workgroupSize * dispatchSize;
@@ -205,7 +206,7 @@ TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
     // Test code only supports up to 256 workgroup size.
-    DAWN_ASSERT(GetParam().mWorkgroupSizeParameter <= 256);
+    DAWN_OPT_ASSUME(GetParam().mWorkgroupSizeParameter <= 256);
     std::string kConditionalArray = GetParam().mShaderAtomicUseArray ? "[0]" : "";
     std::string kAtomicAddOperation =
         R"(  atomicAdd(&workgroup_buffer)" + kConditionalArray + R"(, 1);)";

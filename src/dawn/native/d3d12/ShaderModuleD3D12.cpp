@@ -58,11 +58,11 @@ void DumpDXCCompiledShader(Device* device,
                            const dawn::native::d3d::CompiledShader& compiledShader,
                            uint32_t compileFlags) {
     std::ostringstream dumpedMsg;
-    DAWN_ASSERT(!compiledShader.hlslSource.empty());
+    DAWN_OPT_ASSUME(!compiledShader.hlslSource.empty());
     dumpedMsg << "/* Dumped generated HLSL */\n" << compiledShader.hlslSource << "\n";
 
     const Blob& shaderBlob = compiledShader.shaderBlob;
-    DAWN_ASSERT(!shaderBlob.Empty());
+    DAWN_OPT_ASSUME(!shaderBlob.Empty());
     dumpedMsg << "/* DXC compile flags */\n"
               << dawn::native::d3d::CompileFlagsToString(compileFlags) << "\n";
     dumpedMsg << "/* Dumped disassembled DXIL */\n";
@@ -120,7 +120,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         usedInterstageVariables) {
     Device* device = ToBackend(GetDevice());
     TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D12::Compile");
-    DAWN_ASSERT(!IsError());
+    DAWN_OPT_ASSUME(!IsError());
 
     const EntryPointMetadata& entryPoint = GetEntryPoint(programmableStage.entryPoint);
 
@@ -286,7 +286,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                                         : tint::hlsl::writer::Options::Compiler::kDXC;
 
     if (entryPoint.usesNumWorkgroups) {
-        DAWN_ASSERT(stage == SingleShaderStage::Compute);
+        DAWN_OPT_ASSUME(stage == SingleShaderStage::Compute);
         req.hlsl.tintOptions.root_constant_binding_point = tint::BindingPoint{
             layout->GetNumWorkgroupsRegisterSpace(), layout->GetNumWorkgroupsShaderRegister()};
     } else if (stage == SingleShaderStage::Vertex) {

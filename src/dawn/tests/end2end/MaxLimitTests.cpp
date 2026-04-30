@@ -591,7 +591,7 @@ TEST_P(MaxLimitTests, ReallyLargeBindGroup) {
         wgpu::Texture texture = device.CreateTexture(&textureDesc);
 
         if (format == wgpu::TextureFormat::R8Unorm) {
-            DAWN_ASSERT(expectedValue < 255u);
+            DAWN_OPT_ASSUME(expectedValue < 255u);
         }
         wgpu::Buffer textureData =
             utils::CreateBufferFromData(device, wgpu::BufferUsage::CopySrc, {value});
@@ -987,17 +987,17 @@ class MaxInterStageShaderVariablesLimitTests : public MaxLimitTests {
         std::stringstream stream;
 
         if (spec.clipDistancesSize.has_value()) {
-            DAWN_ASSERT(mSupportsClipDistances);
+            DAWN_OPT_ASSUME(mSupportsClipDistances);
             stream << "enable clip_distances;\n";
         }
 
         if (spec.hasPrimitiveIndex) {
-            DAWN_ASSERT(mSupportsPrimitiveIndex);
+            DAWN_OPT_ASSUME(mSupportsPrimitiveIndex);
             stream << "enable primitive_index;\n";
         }
 
         if (spec.hasSubgroupInvocationId || spec.hasSubgroupSize) {
-            DAWN_ASSERT(mSupportsSubgroups);
+            DAWN_OPT_ASSUME(mSupportsSubgroups);
             stream << "enable subgroups;\n";
         }
 

@@ -185,20 +185,20 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
 
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForSampler(
     FlatBindingIndex index) const {
-    DAWN_ASSERT(index < mUnitsForSamplers.size());
+    DAWN_OPT_ASSUME(index < mUnitsForSamplers.size());
     return mUnitsForSamplers[index];
 }
 
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForTextureView(
     FlatBindingIndex index) const {
-    DAWN_ASSERT(index < mUnitsForTextures.size());
+    DAWN_OPT_ASSUME(index < mUnitsForTextures.size());
     return mUnitsForTextures[index];
 }
 
 MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout) {
     DAWN_GL_TRY(gl, UseProgram(mProgram));
     for (TextureUnit unit : mPlaceholderSamplerUnits) {
-        DAWN_ASSERT(mPlaceholderSampler.Get() != nullptr);
+        DAWN_OPT_ASSUME(mPlaceholderSampler.Get() != nullptr);
         DAWN_GL_TRY(gl, BindSampler(GLuint(unit), mPlaceholderSampler->GetHandle()));
     }
 

@@ -53,7 +53,7 @@ AHardwareBuffer* MakeY8Cb8Cr8AHB(uint32_t width,
                                  std::span<const uint8_t> yData,
                                  std::span<const uint8_t> cbData,
                                  std::span<const uint8_t> crData) {
-    DAWN_ASSERT(width % 2 == 0 && height % 2 == 0);
+    DAWN_OPT_ASSUME(width % 2 == 0 && height % 2 == 0);
 
     AHardwareBuffer_Desc ahbDesc = {
         .width = width,

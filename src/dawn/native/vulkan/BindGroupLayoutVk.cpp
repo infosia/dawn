@@ -347,7 +347,7 @@ void BindGroupLayout::ReduceMemoryUsage() {
 ResultOrError<std::unique_ptr<OwnedDescriptorSet>> BindGroupLayout::GetSpecializedSetFor(
     const BindGroup* bg,
     const Specialization& specialization) {
-    DAWN_ASSERT(bg->GetLayout() == this);
+    DAWN_OPT_ASSUME(bg->GetLayout() == this);
 
     VkDescriptorSetLayout dsLayout;
     DAWN_TRY_ASSIGN(dsLayout, GetOrCreateSpecializedHandle(specialization));

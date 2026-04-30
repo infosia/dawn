@@ -331,12 +331,12 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
             }
             if (device->IsToggleEnabled(Toggle::LazyClearResourceOnFirstUse) &&
                 paddingClearSize > 0) {
-                DAWN_TRY(
-                    MapMemoryAndPerformOperation(paddingClearOffset, paddingClearSize,
-                                                 [&paddingClearSize](std::span<uint8_t> mapped) {
-                                                     DAWN_ASSERT(mapped.size() == paddingClearSize);
-                                                     std::ranges::fill(mapped, 0x0);
-                                                 }));
+                DAWN_TRY(MapMemoryAndPerformOperation(
+                    paddingClearOffset, paddingClearSize,
+                    [&paddingClearSize](std::span<uint8_t> mapped) {
+                        DAWN_OPT_ASSUME(mapped.size() == paddingClearSize);
+                        std::ranges::fill(mapped, 0x0);
+                    }));
             }
         } else {
             if (device->IsToggleEnabled(Toggle::NonzeroClearResourcesOnCreationForTesting)) {
@@ -472,8 +472,8 @@ BufferBarrier Buffer::TrackUsageAndGetResourceBarrier(wgpu::BufferUsage usage,
 
     const bool isMapUsage = usage & kMappableBufferUsages;
     if (isMapUsage) {
-        DAWN_ASSERT(shaderStage == wgpu::ShaderStage::None);
-        DAWN_ASSERT(IsSubset(usage, kMappableBufferUsages));
+        DAWN_OPT_ASSUME(shaderStage == wgpu::ShaderStage::None);
+        DAWN_OPT_ASSUME(IsSubset(usage, kMappableBufferUsages));
         // HOST->GPU barriers aren't required. For MapRead, vkQueueSubmit() happens-after all CPU
         // reads are complete. For MapWrite, the writes are made available to the "Host domain" with
         // vkFlushMappedMemory() (or buffers are coherent) and there is an implicit "Host domain" ->
@@ -629,7 +629,7 @@ void Buffer::UnmapImpl(BufferState oldState, BufferState newState) {
 
 void* Buffer::GetMappedPointerImpl() {
     uint8_t* memory = mMemoryAllocation.GetMappedPointer();
-    DAWN_ASSERT(memory != nullptr);
+    DAWN_OPT_ASSUME(memory != nullptr);
     return memory;
 }
 
@@ -665,7 +665,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
     return MapMemoryAndPerformOperation(mapOffset, mapSize, [&](std::span<uint8_t> mapped) {
         uint64_t dstOffset = 0;
         if (needsZeroInitialization) {
-            DAWN_ASSERT(mapped.size() == mAllocatedSize);
+            DAWN_OPT_ASSUME(mapped.size() == mAllocatedSize);
             std::ranges::fill(mapped, 0x0);
             GetDevice()->IncrementLazyClearCountForTesting();
             dstOffset = bufferOffset;
@@ -674,7 +674,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
         // above or memcpy below.
         SetInitialized(true);
 
-        DAWN_ASSERT(mapped.size() >= dstOffset + size);
+        DAWN_OPT_ASSUME(mapped.size() >= dstOffset + size);
         memcpy(mapped.data() + dstOffset, data, size);
     });
 }
@@ -686,8 +686,8 @@ MaybeError Buffer::MapMemoryAndPerformOperation(uint64_t requestedOffset,
     Device* device = ToBackend(GetDevice());
     const bool isMappable = GetInternalUsage() & kMappableBufferUsages;
 
-    DAWN_ASSERT(mHostVisible);
-    DAWN_ASSERT(GetLastUsageSerial() <= device->GetQueue()->GetCompletedCommandSerial());
+    DAWN_OPT_ASSUME(mHostVisible);
+    DAWN_OPT_ASSUME(GetLastUsageSerial() <= device->GetQueue()->GetCompletedCommandSerial());
 
     VkDeviceMemory deviceMemory = ToBackend(mMemoryAllocation.GetResourceHeap())->GetMemory();
     uint8_t* memory = nullptr;
@@ -831,7 +831,7 @@ bool Buffer::EnsureDataInitializedAsDestination(CommandRecordingContext* recordi
 void Buffer::TransitionMappableBuffersEagerly(Device* device,
                                               CommandRecordingContext* recordingContext,
                                               const absl::flat_hash_set<Ref<Buffer>>& buffers) {
-    DAWN_ASSERT(!buffers.empty());
+    DAWN_OPT_ASSUME(!buffers.empty());
 
     size_t originalBufferCount = buffers.size();
 
@@ -841,7 +841,7 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
         barrier.Merge(buffer->TrackUsageAndGetResourceBarrier(mapUsage, wgpu::ShaderStage::None));
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
-    DAWN_ASSERT(buffers.size() == originalBufferCount);
+    DAWN_OPT_ASSUME(buffers.size() == originalBufferCount);
 
     recordingContext->EmitBufferBarrierIfNecessary(device, barrier);
 }
@@ -851,7 +851,7 @@ void Buffer::SetLabelImpl() {
 }
 
 void Buffer::InitializeToZero(CommandRecordingContext* recordingContext) {
-    DAWN_ASSERT(NeedsInitialization());
+    DAWN_OPT_ASSUME(NeedsInitialization());
 
     ClearBuffer(recordingContext, 0u);
     GetDevice()->IncrementLazyClearCountForTesting();
@@ -862,16 +862,16 @@ void Buffer::ClearBuffer(CommandRecordingContext* recordingContext,
                          uint32_t clearValue,
                          uint64_t offset,
                          uint64_t size) {
-    DAWN_ASSERT(recordingContext != nullptr);
+    DAWN_OPT_ASSUME(recordingContext != nullptr);
     size = size > 0 ? size : GetAllocatedSize();
-    DAWN_ASSERT(size > 0);
+    DAWN_OPT_ASSUME(size > 0);
 
     TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
 
     Device* device = ToBackend(GetDevice());
     // VK_WHOLE_SIZE doesn't work on old Windows Intel Vulkan drivers, so we don't use it.
     // Note: Allocated size must be a multiple of 4.
-    DAWN_ASSERT(size % 4 == 0);
+    DAWN_OPT_ASSUME(size % 4 == 0);
     device->fn.CmdFillBuffer(recordingContext->commandBuffer, mHandle, offset, size, clearValue);
 }
 

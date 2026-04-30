@@ -39,7 +39,7 @@ CommandRecordingContext::CommandRecordingContext(const Queue* queue) : mQueue(qu
 
 CommandRecordingContext::~CommandRecordingContext() {
     // Commands must be acquired.
-    DAWN_ASSERT(mCommands == nullptr);
+    DAWN_OPT_ASSUME(mCommands == nullptr);
 }
 
 id<MTLCommandBuffer> CommandRecordingContext::GetCommands() {
@@ -62,9 +62,9 @@ bool CommandRecordingContext::WasUsed() const {
 
 MaybeError CommandRecordingContext::PrepareNextCommandBuffer(id<MTLCommandQueue> queue) {
     @autoreleasepool {
-        DAWN_ASSERT(mCommands == nil);
-        DAWN_ASSERT(!mNeedsSubmit);
-        DAWN_ASSERT(!mUsed);
+        DAWN_OPT_ASSUME(mCommands == nil);
+        DAWN_OPT_ASSUME(!mNeedsSubmit);
+        DAWN_OPT_ASSUME(!mUsed);
 
         mCommands = [queue commandBuffer];
         if (mCommands == nil) {
@@ -81,7 +81,7 @@ NSPRef<id<MTLCommandBuffer>> CommandRecordingContext::AcquireCommands() {
         EndBlit();
     }
 
-    DAWN_ASSERT(!mInEncoder);
+    DAWN_OPT_ASSUME(!mInEncoder);
     mNeedsSubmit = false;
     mUsed = false;
     return std::move(mCommands);
@@ -89,10 +89,10 @@ NSPRef<id<MTLCommandBuffer>> CommandRecordingContext::AcquireCommands() {
 
 id<MTLBlitCommandEncoder> CommandRecordingContext::BeginBlit(MTLBlitPassDescriptor* descriptor) {
     @autoreleasepool {
-        DAWN_ASSERT(descriptor);
-        DAWN_ASSERT(mCommands != nullptr);
-        DAWN_ASSERT(mBlit == nullptr);
-        DAWN_ASSERT(!mInEncoder);
+        DAWN_OPT_ASSUME(descriptor);
+        DAWN_OPT_ASSUME(mCommands != nullptr);
+        DAWN_OPT_ASSUME(mBlit == nullptr);
+        DAWN_OPT_ASSUME(!mInEncoder);
 
         mInEncoder = true;
         mBlit = [*mCommands blitCommandEncoderWithDescriptor:descriptor];
@@ -101,11 +101,11 @@ id<MTLBlitCommandEncoder> CommandRecordingContext::BeginBlit(MTLBlitPassDescript
 }
 
 id<MTLBlitCommandEncoder> CommandRecordingContext::EnsureBlit() {
-    DAWN_ASSERT(mCommands != nullptr);
+    DAWN_OPT_ASSUME(mCommands != nullptr);
 
     if (mBlit == nullptr) {
         @autoreleasepool {
-            DAWN_ASSERT(!mInEncoder);
+            DAWN_OPT_ASSUME(!mInEncoder);
             mInEncoder = true;
             mBlit = [*mCommands blitCommandEncoder];
         }
@@ -114,7 +114,7 @@ id<MTLBlitCommandEncoder> CommandRecordingContext::EnsureBlit() {
 }
 
 void CommandRecordingContext::EndBlit() {
-    DAWN_ASSERT(mCommands != nullptr);
+    DAWN_OPT_ASSUME(mCommands != nullptr);
 
     if (mBlit != nullptr) {
         [*mBlit endEncoding];
@@ -124,7 +124,7 @@ void CommandRecordingContext::EndBlit() {
 }
 
 MaybeError CommandRecordingContext::EncodeSharedEventWorkaround() {
-    DAWN_ASSERT(mQueue->GetDevice()->IsToggleEnabled(
+    DAWN_OPT_ASSUME(mQueue->GetDevice()->IsToggleEnabled(
         Toggle::MetalSerializeTimestampGenerationAndResolution));
 
     if (!mSerializeWorkaround.sharedEvent) {
@@ -147,9 +147,9 @@ MaybeError CommandRecordingContext::EncodeSharedEventWorkaround() {
 
 id<MTLComputeCommandEncoder> CommandRecordingContext::BeginCompute() {
     @autoreleasepool {
-        DAWN_ASSERT(mCommands != nullptr);
-        DAWN_ASSERT(mCompute == nullptr);
-        DAWN_ASSERT(!mInEncoder);
+        DAWN_OPT_ASSUME(mCommands != nullptr);
+        DAWN_OPT_ASSUME(mCompute == nullptr);
+        DAWN_OPT_ASSUME(!mInEncoder);
 
         mInEncoder = true;
         mCompute = [*mCommands computeCommandEncoder];
@@ -160,10 +160,10 @@ id<MTLComputeCommandEncoder> CommandRecordingContext::BeginCompute() {
 id<MTLComputeCommandEncoder> CommandRecordingContext::BeginCompute(
     MTLComputePassDescriptor* descriptor) {
     @autoreleasepool {
-        DAWN_ASSERT(descriptor);
-        DAWN_ASSERT(mCommands != nullptr);
-        DAWN_ASSERT(mCompute == nullptr);
-        DAWN_ASSERT(!mInEncoder);
+        DAWN_OPT_ASSUME(descriptor);
+        DAWN_OPT_ASSUME(mCommands != nullptr);
+        DAWN_OPT_ASSUME(mCompute == nullptr);
+        DAWN_OPT_ASSUME(!mInEncoder);
 
         mInEncoder = true;
         mCompute = [*mCommands computeCommandEncoderWithDescriptor:descriptor];
@@ -172,8 +172,8 @@ id<MTLComputeCommandEncoder> CommandRecordingContext::BeginCompute(
 }
 
 void CommandRecordingContext::EndCompute() {
-    DAWN_ASSERT(mCommands != nullptr);
-    DAWN_ASSERT(mCompute != nullptr);
+    DAWN_OPT_ASSUME(mCommands != nullptr);
+    DAWN_OPT_ASSUME(mCompute != nullptr);
 
     [*mCompute endEncoding];
     mCompute = nullptr;
@@ -183,9 +183,9 @@ void CommandRecordingContext::EndCompute() {
 id<MTLRenderCommandEncoder> CommandRecordingContext::BeginRender(
     MTLRenderPassDescriptor* descriptor) {
     @autoreleasepool {
-        DAWN_ASSERT(mCommands != nullptr);
-        DAWN_ASSERT(mRender == nullptr);
-        DAWN_ASSERT(!mInEncoder);
+        DAWN_OPT_ASSUME(mCommands != nullptr);
+        DAWN_OPT_ASSUME(mRender == nullptr);
+        DAWN_OPT_ASSUME(!mInEncoder);
 
         mInEncoder = true;
         mRender = [*mCommands renderCommandEncoderWithDescriptor:descriptor];
@@ -194,8 +194,8 @@ id<MTLRenderCommandEncoder> CommandRecordingContext::BeginRender(
 }
 
 void CommandRecordingContext::EndRender() {
-    DAWN_ASSERT(mCommands != nullptr);
-    DAWN_ASSERT(mRender != nullptr);
+    DAWN_OPT_ASSUME(mCommands != nullptr);
+    DAWN_OPT_ASSUME(mRender != nullptr);
 
     [*mRender endEncoding];
     mRender = nullptr;
@@ -214,7 +214,7 @@ void CommandRecordingContext::WaitForSharedEvent(id<MTLSharedEvent> sharedEvent,
         EndBlit();
         [*mCommands encodeWaitForEvent:sharedEvent value:signaledValue];
     } else {
-        DAWN_ASSERT(ExecutionSerial(signaledValue) <= mQueue->GetLastSubmittedCommandSerial());
+        DAWN_OPT_ASSUME(ExecutionSerial(signaledValue) <= mQueue->GetLastSubmittedCommandSerial());
     }
 }
 

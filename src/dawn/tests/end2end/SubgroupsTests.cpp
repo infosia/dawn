@@ -206,7 +206,7 @@ class SubgroupsShaderTests : public SubgroupsTestsBase<AdapterTestParam> {
     // workgroup_size built-in value and write back to output buffer. It is expected that all
     // output workgroup_size are equal and valid, i.e. between 1~128 and is a power of 2.
     wgpu::ShaderModule CreateShaderModuleForReadSubgroupSize(uint32_t workgroupSize) {
-        DAWN_ASSERT((1 <= workgroupSize) && (workgroupSize <= 256));
+        DAWN_OPT_ASSUME((1 <= workgroupSize) && (workgroupSize <= 256));
         std::stringstream code;
         EnableExtensions(code) << R"(
 const workgroupSize = )" << workgroupSize
@@ -230,7 +230,7 @@ fn main(
         explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
         testing::AssertionResult Check(const void* data, size_t size) override {
-            DAWN_ASSERT(size == sizeof(int32_t) * mWorkgroupSize);
+            DAWN_OPT_ASSUME(size == sizeof(int32_t) * mWorkgroupSize);
             const uint32_t* actual = static_cast<const uint32_t*>(data);
 
             const uint32_t& outputSubgroupSizeAt0 = actual[0];
@@ -363,7 +363,7 @@ class SubgroupsShaderTestsFragment : public SubgroupsTestsBase<AdapterTestParam>
       public:
         ExpectReadSubgroupSizeOutput() {}
         testing::AssertionResult Check(const void* data, size_t size) override {
-            DAWN_ASSERT(size == sizeof(int32_t));
+            DAWN_OPT_ASSUME(size == sizeof(int32_t));
             const uint32_t* actual = static_cast<const uint32_t*>(data);
             const uint32_t& outputSubgroupSizeAt0 = actual[0];
             // Subgroup size can vary across fragment invocation (unlike compute) but we could still
@@ -560,7 +560,7 @@ class SubgroupsBroadcastTests : public SubgroupsTestsBase<SubgroupsBroadcastTest
     // register's value of subgroup_id 0 for all subgroups, and writes back each invocation's
     // register to buffer broadcastOutput.
     wgpu::ShaderModule CreateShaderModuleForBroadcastSubgroupSize(uint32_t workgroupSize) {
-        DAWN_ASSERT((1 <= workgroupSize) && (workgroupSize <= 256));
+        DAWN_OPT_ASSUME((1 <= workgroupSize) && (workgroupSize <= 256));
         std::stringstream code;
         EnableExtensions(code) << R"(
 const workgroupSize = )" << workgroupSize
@@ -617,7 +617,7 @@ fn main(
         explicit ExpectBroadcastSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
         testing::AssertionResult Check(const void* data, size_t size) override {
-            DAWN_ASSERT(size == sizeof(int32_t) * (1 + mWorkgroupSize));
+            DAWN_OPT_ASSUME(size == sizeof(int32_t) * (1 + mWorkgroupSize));
             const int32_t* actual = static_cast<const int32_t*>(data);
 
             int32_t outputSubgroupSize = actual[0];
@@ -823,7 +823,7 @@ class SubgroupsShaderInclusiveTest
 
     wgpu::ShaderModule CreateShaderModuleForReadSubgroupSize(uint32_t workgroupSize,
                                                              float common_value) {
-        DAWN_ASSERT((1 <= workgroupSize) && (workgroupSize <= 256));
+        DAWN_OPT_ASSUME((1 <= workgroupSize) && (workgroupSize <= 256));
         std::stringstream code;
         EnableExtensions(code) << R"(
 const workgroupSize = )" << workgroupSize
@@ -850,7 +850,7 @@ fn main(
         explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize)
             : mWorkgroupSize(workgroupSize) {}
         testing::AssertionResult Check(const void* data, size_t size) override {
-            DAWN_ASSERT(size == sizeof(float) * mWorkgroupSize);
+            DAWN_OPT_ASSUME(size == sizeof(float) * mWorkgroupSize);
             const float* actual = static_cast<const float*>(data);
 
             auto approximate_f = [](float actual, float expected) {
@@ -952,7 +952,7 @@ class SubgroupSizeControlTests : public DawnTest {
     }
 
     void DoTest(uint32_t subgroupSize) {
-        DAWN_ASSERT(IsPowerOfTwo(subgroupSize));
+        DAWN_OPT_ASSUME(IsPowerOfTwo(subgroupSize));
 
         wgpu::ComputePipeline pipeline =
             CreateComputePipelineWithSubgroupSizeAttribute(subgroupSize, true);

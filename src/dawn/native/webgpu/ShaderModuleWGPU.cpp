@@ -42,7 +42,7 @@ ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
     auto desc = ToAPI(*descriptor);
     WGPUShaderModule innerShaderModule =
         device->wgpu->deviceCreateShaderModule(device->GetInnerHandle(), desc);
-    DAWN_ASSERT(innerShaderModule);
+    DAWN_OPT_ASSUME(innerShaderModule);
 
     Ref<ShaderModule> shader =
         AcquireRef(new ShaderModule(device, descriptor, internalExtensions, innerShaderModule));

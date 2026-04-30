@@ -43,7 +43,7 @@ void DawnMockTest::SetUp() {
     dawnProcSetProcs(&dawn::native::GetProcs());
     Ref<InstanceBase> instance = APICreateInstance(nullptr);
     const auto& adapters = instance->EnumerateAdapters();
-    DAWN_ASSERT(!adapters.empty());
+    DAWN_OPT_ASSUME(!adapters.empty());
 
     wgpu::DeviceDescriptor desc = {};
     desc.SetDeviceLostCallback(wgpu::CallbackMode::AllowSpontaneous,
@@ -55,7 +55,7 @@ void DawnMockTest::SetUp() {
     DeviceDescriptor* nativeDesc = reinterpret_cast<DeviceDescriptor*>(&desc);
 
     auto result = ValidateAndUnpack(nativeDesc);
-    DAWN_ASSERT(result.IsSuccess());
+    DAWN_OPT_ASSUME(result.IsSuccess());
     UnpackedPtr<DeviceDescriptor> unpackedDesc = result.AcquireSuccess();
 
     Ref<DeviceBase::DeviceLostEvent> lostEvent = DeviceBase::DeviceLostEvent::Create(nativeDesc);
