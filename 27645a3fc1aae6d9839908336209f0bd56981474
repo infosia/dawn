@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0355de0_93d77dab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "Thanks for the iteration, getting there.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef33105b_8d4fe2c5",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "Is this needed? We should only use the public API in DawnTest.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6399d6a6_89a4dbb2",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "the return value is not used.",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 20
+      },
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "357fc9e9_8bde79a6",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "Can we CHECK that this is called only after EndCapture?",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c833baf5_027d09ea",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "These won\u0027t be needed anymore.",
+      "range": {
+        "startLine": 1365,
+        "startChar": 0,
+        "endLine": 1387,
+        "endChar": 0
+      },
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b3faf1_63ef4bc6",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "Same comments as in DawnTest",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8638547e_1e6e2430",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "This can be in the section of DawnTest that does the replaying instead of specifically in this test file. This way it will work for future additions as well and keeps the logic in the same place.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1b5eb7_c7ce5481",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "optional nit: some empty line to structure the code a bit more maybe?",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcc328a9_9e37d571",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "and optional nit: we don\u0027t need to reserve, this isn\u0027t perf sensitive code at all.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dbdaeff_8ec8c2bc",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:04:51Z",
+      "side": 1,
+      "message": "`replayWindow.clear()` is sufficient since we use RAII. Likewise for `surfaces`.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
