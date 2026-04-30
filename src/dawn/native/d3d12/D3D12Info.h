@@ -59,6 +59,7 @@ struct D3D12DeviceInfo {
     // Whether the device support wave intrinsics
     bool supportsWaveOps;
     bool supportsExistingHeap;
+    bool supportsInt64Atomics;
     uint32_t waveLaneCountMin;
     // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
     // unclear. Reference:
