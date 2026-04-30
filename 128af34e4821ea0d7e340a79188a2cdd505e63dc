@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9cd6e0f_00138cb3",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-30T17:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "272a73e3_c8a928df",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16d99309_f15852ab",
@@ -48,6 +66,24 @@
       "writtenOn": "2026-04-28T09:56:20Z",
       "side": 1,
       "message": "This will be a `vector\u003c{Id, tint::ResourceType, maybe an arraySize}\u003e`.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d02c478b_780138be",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-30T17:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d99309_f15852ab",
       "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d7c332e_bd8d3100",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-30T17:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfff4bf7_92894cbc",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5cf596a_2c4bde46",
@@ -82,6 +136,24 @@
       "writtenOn": "2026-04-28T09:56:20Z",
       "side": 1,
       "message": "Isn\u0027t that handled by a separate transform such that we don\u0027t need to say that there\u0027s a dynamic offset here? This info is about how to get the base pointer of the buffer, and another transform will add the offset to all the indices.",
+      "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a7892b5_c719a755",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-30T17:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5cf596a_2c4bde46",
       "revId": "128af34e4821ea0d7e340a79188a2cdd505e63dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
