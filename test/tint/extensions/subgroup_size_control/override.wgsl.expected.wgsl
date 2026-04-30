@@ -1,5 +1,5 @@
 enable subgroups;
-enable chromium_experimental_subgroup_size_control;
+enable subgroup_size_control;
 
 override kSubgroupSize : i32;
 

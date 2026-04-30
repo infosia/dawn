@@ -464,8 +464,7 @@ const absl::flat_hash_map<wgpu::FeatureName, absl::flat_hash_set<wgpu::FeatureNa
 
 // Below are experimental features that are not supported by Emscripten.
 #ifndef __EMSCRIPTEN__
-        {wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl,
-         {wgpu::FeatureName::Subgroups}},
+        {wgpu::FeatureName::SubgroupSizeControl, {wgpu::FeatureName::Subgroups}},
 #endif
 
         // Add other implicit enabling rules here

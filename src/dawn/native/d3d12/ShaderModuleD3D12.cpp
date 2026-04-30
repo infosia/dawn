@@ -336,7 +336,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.maxSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
     req.hlsl.minSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMinSize();
 
-    if (device->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
+    if (device->HasFeature(Feature::SubgroupSizeControl)) {
         const D3D12DeviceInfo& deviceInfo =
             ToBackend(device->GetAdapter()->GetPhysicalDevice())->GetDeviceInfo();
         req.hlsl.waveLaneCountMin = deviceInfo.waveLaneCountMin;

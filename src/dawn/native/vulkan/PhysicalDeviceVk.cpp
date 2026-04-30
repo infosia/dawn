@@ -535,7 +535,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (supportsSubgroupsFeature && hasComputeFullSubgroups) {
-        EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
+        EnableFeature(Feature::SubgroupSizeControl);
     }
 
     // HostMappedPointer is not supported on AMD (see: crbug.com/494566064)

@@ -255,7 +255,7 @@ enum attribute {
   // chromium_internal_input_attachments
   input_attachment_index
 
-  // chromium_experimental_subgroup_size_control
+  // subgroup_size_control
   subgroup_size
 }
 

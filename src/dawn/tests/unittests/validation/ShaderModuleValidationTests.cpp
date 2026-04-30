@@ -981,7 +981,7 @@ const WGSLExtensionInfo kExtensions[] = {
     {"chromium_experimental_framebuffer_fetch", true, {wgpu::FeatureName::FramebufferFetch}, {}},
     {"chromium_experimental_subgroup_matrix", true, {wgpu::FeatureName::ChromiumExperimentalSubgroupMatrix}, {}},
     {"chromium_experimental_resource_table", true, {wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable}, {}},
-    {"chromium_experimental_subgroup_size_control", true, {wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl}, {"subgroups"}},
+    {"subgroup_size_control", true, {wgpu::FeatureName::SubgroupSizeControl}, {"subgroups"}},
     {"atomic_vec2u_min_max", true, {wgpu::FeatureName::AtomicVec2uMinMax}, {}}
 
     // Currently the following WGSL extensions are not enabled under any situation.
@@ -1160,8 +1160,7 @@ INSTANTIATE_TEST_SUITE_P(,
 class SubgroupSizeControlValidationTest : public ValidationTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        return {wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl,
-                wgpu::FeatureName::Subgroups};
+        return {wgpu::FeatureName::SubgroupSizeControl};
     }
     void TestTotalInvocationsPerWorkgroupAndSubgroupSize(const std::vector<uint32_t>& workgroupSize,
                                                          uint32_t subgroupSize,
@@ -1170,7 +1169,7 @@ class SubgroupSizeControlValidationTest : public ValidationTest {
             std::ostringstream stream;
             stream << R"(
 enable subgroups;
-enable chromium_experimental_subgroup_size_control;)";
+enable subgroup_size_control;)";
 
             if (setSubgroupSizeAsOverride) {
                 stream << "override kSubgroupSize : u32;\n";

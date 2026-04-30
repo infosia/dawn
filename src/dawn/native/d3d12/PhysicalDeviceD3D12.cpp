@@ -203,7 +203,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     // SubgroupSizeControl feature requires SM >= 6.6 for HLSL attribute `[WaveSize]`.
     if (mDeviceInfo.highestSupportedShaderModel >= 66) {
-        EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
+        EnableFeature(Feature::SubgroupSizeControl);
     }
 #endif
 
