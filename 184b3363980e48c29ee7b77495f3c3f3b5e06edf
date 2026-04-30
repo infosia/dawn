@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e007933_1ce56e3a",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-04-30T19:33:43Z",
+      "side": 1,
+      "message": "Happy to move this to its own header/cpp file, especially as I assume we\u0027ll use it (or a modified version) for Metal.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "184b3363980e48c29ee7b77495f3c3f3b5e06edf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
