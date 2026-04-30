@@ -177,6 +177,35 @@ IndirectDrawMetadata::GetIndirectMultiDraws() const {
     return mMultiDraws;
 }
 
+void IndirectDrawMetadata::SetValidatedIndirectDrawArgs(const IndirectDraw& draw,
+                                                        BufferBase* indirectBuffer,
+                                                        uint64_t indirectOffset) {
+    // The first time validated args are set ensure the array of args is large enough to store all
+    // of the args that will be needed.
+    if (mValidatedIndirectDraws.empty()) {
+        mValidatedIndirectDraws.resize(mNextIndirectDrawIndex);
+    } else {
+        // Should never be resized after the initial allocation.
+        DAWN_ASSERT(mValidatedIndirectDraws.size() == mNextIndirectDrawIndex);
+    }
+
+    IndirectDrawMetadata::ValidatedIndirectDraw& validatedDraw =
+        mValidatedIndirectDraws[draw.validatedDrawIndex];
+    validatedDraw.indirectBuffer = indirectBuffer;
+    validatedDraw.indirectOffset = indirectOffset;
+
+    // TODO(crbug.com/495489174): Altering these values on the original draw command does not work
+    // for render bundles. A future change will remove these in favor of relying only on the
+    // mValidatedIndirectDraws array.
+    draw.cmd->indirectBuffer = indirectBuffer;
+    draw.cmd->indirectOffset = indirectOffset;
+}
+
+const ityp::vector<IndirectDrawIndex, IndirectDrawMetadata::ValidatedIndirectDraw>&
+IndirectDrawMetadata::GetValidatedIndirectDraws() const {
+    return mValidatedIndirectDraws;
+}
+
 void IndirectDrawMetadata::AddBundle(RenderBundleBase* bundle) {
     auto [_, inserted] = mAddedBundles.insert(bundle);
     if (!inserted) {
