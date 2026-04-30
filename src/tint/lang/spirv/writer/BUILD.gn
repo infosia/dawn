@@ -160,7 +160,7 @@ if (tint_build_spv_writer) {
       "${dawn_root}/src/utils",
       "${tint_src_dir}/api/common",
       "${tint_src_dir}/api/helpers",
-      "${tint_src_dir}/cmd/fuzz/ir:fuzz",
+      "${tint_src_dir}/cmd/fuzz/common",
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
       "${tint_src_dir}/lang/core/ir",

@@ -152,7 +152,7 @@ tint_add_target(tint_lang_hlsl_writer_fuzz fuzz
 tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
   tint_api_common
   tint_api_helpers
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
