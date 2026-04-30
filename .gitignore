@@ -164,3 +164,6 @@ compile_commands.json
 
 ### Root user file for gemini cli
 GEMINI.md
+
+### Default when following coverage instructions
+/coverage_report
