@@ -150,14 +150,8 @@ tint_add_target(tint_lang_wgsl_writer_fuzz fuzz
 )
 
 tint_target_add_dependencies(tint_lang_wgsl_writer_fuzz fuzz
-  tint_api_common
-  tint_lang_core
-  tint_lang_core_constant
-  tint_lang_core_type
+  tint_cmd_fuzz_common
   tint_lang_wgsl
-  tint_lang_wgsl_ast
-  tint_lang_wgsl_program
-  tint_lang_wgsl_sem
   tint_lang_wgsl_writer_common
   tint_utils
   tint_utils_bytes
@@ -169,7 +163,6 @@ tint_target_add_dependencies(tint_lang_wgsl_writer_fuzz fuzz
   tint_utils_memory
   tint_utils_reflection
   tint_utils_rtti
-  tint_utils_symbol
   tint_utils_text
 )
 
@@ -180,9 +173,6 @@ tint_target_add_external_dependencies(tint_lang_wgsl_writer_fuzz fuzz
 if(TINT_BUILD_WGSL_READER)
   tint_target_add_sources(tint_lang_wgsl_writer_fuzz fuzz
     "lang/wgsl/writer/writer_fuzz.cc"
-  )
-  tint_target_add_dependencies(tint_lang_wgsl_writer_fuzz fuzz
-    tint_cmd_fuzz_wgsl_fuzz
   )
 endif(TINT_BUILD_WGSL_READER)
 
