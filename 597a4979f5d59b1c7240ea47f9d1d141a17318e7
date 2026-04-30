@@ -16,6 +16,97 @@
       "message": "PTAL! Trying to keep these small and easily digestible. 😊",
       "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db7e9a6b_1a7deaee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:36:49Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "031eb332_9e2744e6",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:36:49Z",
+      "side": 1,
+      "message": "nit: this could be a for loop",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 5
+      },
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73df9c76_e0d9d539",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:36:49Z",
+      "side": 1,
+      "message": "Oooof this is so complicated (and it\u0027s not clear that it needs to be). I hope we get to simplify it one day. For example by merging batches by chunks of 256MB of buffers with aligned starts instead of dynamic starts.",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a371b00d_329f26b4",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:36:49Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ac0ef2_92366d7b",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:36:49Z",
+      "side": 1,
+      "message": "Maybe (but not sure if it makes things cleaner apart from [1]): this could be an `ityp::vector\u003cIndirectDrawIndex, IndirectDraw\u003e`",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
