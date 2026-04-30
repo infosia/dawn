@@ -16,6 +16,41 @@
       "message": "FWIW, I don\u0027t think any of the CQ work for bots older than M145 (or something like that).",
       "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbf076a0_4efe5c3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-04-30T18:06:10Z",
+      "side": 1,
+      "message": "The bug was approved for M144 LTS. PTAL.",
+      "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "459d291d_740e3f67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-04-30T18:06:10Z",
+      "side": 1,
+      "message": "yes, thank you Loko. I have built it locally fine. \n\nThe bug was approved for M144 LTS, so can you help submit it to chromium/7559? I don\u0027t think I have permissions for that. Thanks again.",
+      "parentUuid": "c79c1e98_71a210a3",
+      "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
