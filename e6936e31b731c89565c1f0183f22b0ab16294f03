@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "677ff7ac_77326856",
+        "filename": "include/dawn/replay/Replay.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-04-30T01:46:21Z",
+      "side": 1,
+      "message": "I applied the change as a Patchset here. PTAL",
+      "parentUuid": "a49c8eab_950d9fca",
+      "revId": "e6936e31b731c89565c1f0183f22b0ab16294f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fed4418f_719d7e9c",
