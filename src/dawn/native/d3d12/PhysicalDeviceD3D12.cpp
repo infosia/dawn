@@ -218,6 +218,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.highestSupportedShaderModel >= 66) {
         EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
     }
+
+    if (mDeviceInfo.supportsInt64Atomics) {
+        EnableFeature(Feature::AtomicVec2uMinMax);
+    }
 #endif
 
     D3D12_FEATURE_DATA_FORMAT_SUPPORT bgra8unormFormatInfo = {};

@@ -145,6 +145,7 @@ class ShaderAtomicVec2Tests : public DawnTestWithParams<ShaderAtomicVec2TestsPar
 TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Max) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
 
+    DAWN_CHECK(!IsD3D12());
     const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
     const unsigned int dispatchSize = GetParam().mDispatchSizeParameter;
     const unsigned int numInvocations = workgroupSize * dispatchSize;
