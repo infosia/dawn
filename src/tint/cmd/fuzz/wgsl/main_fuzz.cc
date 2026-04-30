@@ -35,49 +35,14 @@
 #include <span>
 #include <string>
 
-#include "src/tint/cmd/fuzz/common/helper.h"
+#include "src/tint/cmd/fuzz/common/init.h"
 #include "src/tint/cmd/fuzz/wgsl/fuzz.h"
-#include "src/tint/utils/command/cli.h"
-#include "src/tint/utils/command/command.h"
 #include "src/tint/utils/text/base64.h"
 #include "src/tint/utils/text/string.h"
-
-#if TINT_BUILD_HLSL_WRITER
-#include "src/tint/lang/hlsl/validate/validate.h"
-#endif
 
 namespace {
 
 tint::fuzz::wgsl::Options options;
-
-std::string get_default_dxc_path(char*** argv) {
-    std::string default_dxc_path = "";
-#if TINT_BUILD_HLSL_WRITER
-    // Assume the DXC library is in the same directory as this executable
-    std::string exe_path = (*argv)[0];
-    exe_path = tint::fuzz::common::ReplaceAll(exe_path, "\\", "/");
-    auto pos = exe_path.rfind('/');
-    if (pos != std::string::npos) {
-        default_dxc_path = exe_path.substr(0, pos) + '/' + tint::hlsl::validate::kDxcDLLName;
-    } else {
-        // argv[0] doesn't contain path to exe, try relative to cwd
-        default_dxc_path = tint::hlsl::validate::kDxcDLLName;
-    }
-#endif
-    return default_dxc_path;
-}
-
-void print_dxc_path_found(const std::string& dxc_path) {
-#if TINT_BUILD_HLSL_WRITER
-    // Log whether the DXC library was found or not once at initialization.
-    auto dxc = tint::Command::LookPath(dxc_path);
-    if (dxc.Found()) {
-        std::cout << "DXC library found: " << dxc.Path() << "\n";
-    } else {
-        std::cout << "DXC library not found: " << dxc_path << "\n";
-    }
-#endif
-}
 
 }  // namespace
 
@@ -94,78 +59,5 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* input, size_t size) {
 // the LibFuzzer runtime uses dlsym() instead of calling the function directly.
 extern "C" __attribute__((visibility("default"))) int LLVMFuzzerInitialize(int* argc,
                                                                            char*** argv) {
-    tint::cli::OptionSet opts;
-
-    tint::Vector<std::string_view, 8> arguments;
-    for (int i = 1; i < *argc; i++) {
-        std::string_view arg((*argv)[i]);
-        if (!arg.empty()) {
-            arguments.Push(arg);
-        }
-    }
-
-    auto show_help = [&] {
-        std::cerr << "Custom fuzzer options:\n";
-        opts.ShowHelp(std::cerr, true);
-        std::cerr << "\n";
-
-        // Change args to show libfuzzer help
-        std::cerr << "Standard libfuzzer ";  // libfuzzer will print 'Usage:'
-        static char help[] = "-help=1";
-        *argc = 2;
-        (*argv)[1] = help;
-    };
-
-    auto& opt_help = opts.Add<tint::cli::BoolOption>("help", "shows the usage");
-    auto& opt_filter = opts.Add<tint::cli::StringOption>(
-        "filter", "runs only the fuzzers with the given substring");
-    auto& opt_concurrent =
-        opts.Add<tint::cli::BoolOption>("concurrent", "runs the fuzzers concurrently");
-    auto& opt_verbose =
-        opts.Add<tint::cli::BoolOption>("verbose", "prints the name of each fuzzer before running");
-    auto& opt_dxc = opts.Add<tint::cli::StringOption>("dxc", "path to DXC DLL");
-#if TINT_BUILD_FUZZER_VULKAN_SUPPORT
-    auto& opt_vk_icd = opts.Add<tint::cli::StringOption>("vk_icd", "path to Vulkan ICD JSON");
-#endif
-    auto& opt_dump =
-        opts.Add<tint::cli::BoolOption>("dump", "dumps shader input/output from fuzzer");
-    auto& opt_dump_ir =
-        opts.Add<tint::cli::BoolOption>("dump-ir", "Dump IR at each stage of the compilation flow");
-
-    tint::cli::ParseOptions parse_opts;
-    parse_opts.ignore_unknown = true;
-    if (auto res = opts.Parse(arguments, parse_opts); res != tint::Success) {
-        show_help();
-        std::cerr << res.Failure();
-        return 1;
-    }
-
-    if (opt_help.value.value_or(false)) {
-        show_help();
-        return 0;
-    }
-
-    // Read optional user-supplied args or use default provided
-    options.filter = opt_filter.value.value_or("");
-    options.run_concurrently = opt_concurrent.value.value_or(false);
-    options.verbose = opt_verbose.value.value_or(false);
-    options.dxc = opt_dxc.value.value_or(get_default_dxc_path(argv));
-#if TINT_BUILD_FUZZER_VULKAN_SUPPORT
-    options.vk_icd = opt_vk_icd.value.value_or(tint::fuzz::common::GetDefaultVkICDPath(argv));
-#endif
-    options.dump = opt_dump.value.value_or(false);
-    options.dump_ir_when_validating = opt_dump_ir.value.value_or(false);
-
-    print_dxc_path_found(options.dxc);
-#if TINT_BUILD_FUZZER_VULKAN_SUPPORT
-    tint::fuzz::common::PrintVkICDPathFound(options.vk_icd);
-#endif
-#if DAWN_ASAN_ENABLED() && !defined(NDEBUG)
-    // TODO(crbug.com/352402877): Avoid DXC timeouts on asan + debug fuzzer builds
-    std::cout << "DXC validation disabled in asan + debug builds"
-              << "\n";
-    options.dxc = "";
-#endif
-
-    return 0;
+    return tint::fuzz::common::ParseFuzzerOptions(argc, argv, &options);
 }

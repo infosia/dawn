@@ -30,8 +30,12 @@
 #include <filesystem>
 #include <iostream>
 
-#if TINT_BUILD_FUZZER_VULKAN_SUPPORT
+#if TINT_BUILD_FUZZER_VULKAN_SUPPORT || TINT_BUILD_HLSL_WRITER
 #include "src/tint/utils/command/command.h"
+#endif
+
+#if TINT_BUILD_HLSL_WRITER
+#include "src/tint/lang/hlsl/validate/validate.h"
 #endif
 
 namespace tint::fuzz::common {
@@ -72,6 +76,35 @@ void PrintVkICDPathFound([[maybe_unused]] const std::string& vk_icd_path) {
         std::cout << "Vulkan ICD JSON found: " << vk_icd_path << "\n";
     } else {
         std::cout << "Vulkan ICD JSON not found\n";
+    }
+#endif
+}
+
+std::string GetDefaultDxcPath([[maybe_unused]] char*** argv) {
+    std::string default_dxc_path = "";
+#if TINT_BUILD_HLSL_WRITER
+    // Assume the DXC library is in the same directory as this executable
+    std::string exe_path = (*argv)[0];
+    exe_path = ReplaceAll(exe_path, "\\", "/");
+    auto pos = exe_path.rfind('/');
+    if (pos != std::string::npos) {
+        default_dxc_path = exe_path.substr(0, pos) + '/' + tint::hlsl::validate::kDxcDLLName;
+    } else {
+        // argv[0] doesn't contain path to exe, try relative to cwd
+        default_dxc_path = tint::hlsl::validate::kDxcDLLName;
+    }
+#endif
+    return default_dxc_path;
+}
+
+void PrintDxcPathFound([[maybe_unused]] const std::string& dxc_path) {
+#if TINT_BUILD_HLSL_WRITER
+    // Log whether the DXC library was found or not once at initialization.
+    auto dxc = tint::Command::LookPath(dxc_path);
+    if (dxc.Found()) {
+        std::cout << "DXC library found: " << dxc.Path() << "\n";
+    } else {
+        std::cout << "DXC library not found: " << dxc_path << "\n";
     }
 #endif
 }

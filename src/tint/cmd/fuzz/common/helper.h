@@ -48,6 +48,14 @@ std::string GetDefaultVkICDPath(char*** argv);
 /// @param vk_icd_path the path to the Vulkan ICD
 void PrintVkICDPathFound(const std::string& vk_icd_path);
 
+/// @returns the default DXC path for the current executable
+/// @param argv the command line arguments
+std::string GetDefaultDxcPath(char*** argv);
+
+/// Prints the DXC path if it is found
+/// @param dxc_path the path to the DXC library
+void PrintDxcPathFound(const std::string& dxc_path);
+
 }  // namespace tint::fuzz::common
 
 #endif  // SRC_TINT_CMD_FUZZ_COMMON_HELPER_H_
