@@ -16,6 +16,24 @@
       "message": "If I understand the commit message, we want the UMA stat names to match exactly because it\u0027s what makes comparing them possible between the arms of the experiment.\n\nAdding a way to say \"I am this client of the library\" is a hack and an explicit layering violation, so if we need such a hack, we should do it in the layer that cares about. That would mean adding a string comparison in [`gpu::webgpu::DawnPlatform`](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_platform.cc;drc\u003d30b305c5f320177757a739df0d0b60820684fa17;l\u003d265) and duplicating the stat in that case.",
       "revId": "0505b7889db06b3b26f850ce14bc6e7ba60f289e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78638cdd_562f59b6",
+        "filename": "include/dawn/platform/DawnPlatform.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2026-04-30T19:21:34Z",
+      "side": 1,
+      "message": "That makes sense. I\u0027ll update the chromium change to add the hack instead.",
+      "parentUuid": "dae33241_c1bdc7e6",
+      "revId": "0505b7889db06b3b26f850ce14bc6e7ba60f289e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
