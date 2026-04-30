@@ -272,7 +272,11 @@ Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key)
             // the serialized VkPipelineCache is no longer valid.
             auto& deviceProperties = GetDeviceInfo().properties;
             StreamIn(&cacheKey, deviceProperties.pipelineCacheUUID);
-
+            // A fixed string is added to the end of monolithic pipeline cache key in order to make
+            // it identifiable in the BlobCache storage implementation.
+            // TODO(crbug.com/X): Change the BlobCache API so that additional metadata about the
+            // cache entry can be included and remove this workaround.
+            StreamIn(&cacheKey, std::string_view("MonolithicVkPipelineCache"));
             mMonolithicPipelineCache = PipelineCache::CreateMonolithic(this, cacheKey);
         });
 
