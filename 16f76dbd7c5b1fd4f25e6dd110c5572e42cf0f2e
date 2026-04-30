@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fc0fa69_b0efd602",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-30T14:35:11Z",
+      "side": 1,
+      "message": "Dawn also has a `third_party/directx-headers` folder.",
+      "parentUuid": "c4fc6087_5b087e65",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0fd19bf_aca6a84a",
         "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
         "patchSetId": 8
