@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d77d0dba_29f0e89a",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-30T18:03:30Z",
+      "side": 1,
+      "message": "```suggestion\nenum class TextureViewDimension : uint8_t {\n    k1d,\n    k2d,\n    k2dArray,\n    kCube,\n    kCubeArray,\n    k3d,\n};\n```",
+      "revId": "9507ee8dafe8b125dd56cc7f57e4d0a1a586d726",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0adebc8e_87303b13",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-30T18:03:30Z",
+      "side": 1,
+      "message": "```suggestion\n    kStorageTexture_2dArray_read,\n```",
+      "revId": "9507ee8dafe8b125dd56cc7f57e4d0a1a586d726",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c4cc89b_0450b888",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-30T18:03:30Z",
+      "side": 1,
+      "message": "```suggestion\n    kStorageTexture_2dArray_write,\n```",
+      "revId": "9507ee8dafe8b125dd56cc7f57e4d0a1a586d726",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa7e5b1_5388f2e4",
+        "filename": "src/tint/api/common/resource_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-04-30T18:03:30Z",
+      "side": 1,
+      "message": "```suggestion\n    kStorageTexture_1d_read_write,\n    kStorageTexture_2d_read_write,\n    kStorageTexture_2dArray_read_write,\n    kStorageTexture_3d_read_write,\n```",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "9507ee8dafe8b125dd56cc7f57e4d0a1a586d726",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
