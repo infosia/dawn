@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cf04ce0_b5394e4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-30T05:27:11Z",
+      "side": 1,
+      "message": "Why now we don\u0027t run WebGPU CTS on Intel UHD770 bots?",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
