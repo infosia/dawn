@@ -117,14 +117,11 @@ tint_target_add_external_dependencies(tint_lang_wgsl_writer_raise_test test
 # Kind:      fuzz
 ################################################################################
 tint_add_target(tint_lang_wgsl_writer_raise_fuzz fuzz
-  lang/wgsl/writer/raise/ptr_to_ref_fuzz.cc
-  lang/wgsl/writer/raise/raise_fuzz.cc
-  lang/wgsl/writer/raise/value_to_let_fuzz.cc
 )
 
 tint_target_add_dependencies(tint_lang_wgsl_writer_raise_fuzz fuzz
   tint_api_common
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -147,3 +144,14 @@ tint_target_add_dependencies(tint_lang_wgsl_writer_raise_fuzz fuzz
 tint_target_add_external_dependencies(tint_lang_wgsl_writer_raise_fuzz fuzz
   "src_utils"
 )
+
+if(TINT_BUILD_IR_BINARY)
+  tint_target_add_sources(tint_lang_wgsl_writer_raise_fuzz fuzz
+    "lang/wgsl/writer/raise/ptr_to_ref_fuzz.cc"
+    "lang/wgsl/writer/raise/raise_fuzz.cc"
+    "lang/wgsl/writer/raise/value_to_let_fuzz.cc"
+  )
+  tint_target_add_dependencies(tint_lang_wgsl_writer_raise_fuzz fuzz
+    tint_cmd_fuzz_common_ir
+  )
+endif(TINT_BUILD_IR_BINARY)

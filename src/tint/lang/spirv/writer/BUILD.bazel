@@ -155,6 +155,11 @@ alias(
 )
 
 alias(
+  name = "tint_build_ir_binary",
+  actual = "//src/tint:tint_build_ir_binary_true",
+)
+
+alias(
   name = "tint_build_spv_reader",
   actual = "//src/tint:tint_build_spv_reader_true",
 )

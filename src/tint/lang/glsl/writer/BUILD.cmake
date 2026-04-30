@@ -157,12 +157,11 @@ if(TINT_BUILD_GLSL_WRITER)
 # Condition: TINT_BUILD_GLSL_WRITER
 ################################################################################
 tint_add_target(tint_lang_glsl_writer_fuzz fuzz
-  lang/glsl/writer/writer_fuzz.cc
 )
 
 tint_target_add_dependencies(tint_lang_glsl_writer_fuzz fuzz
   tint_api_common
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -194,5 +193,14 @@ if(TINT_BUILD_GLSL_WRITER)
     tint_lang_glsl_writer_printer
   )
 endif(TINT_BUILD_GLSL_WRITER)
+
+if(TINT_BUILD_IR_BINARY)
+  tint_target_add_sources(tint_lang_glsl_writer_fuzz fuzz
+    "lang/glsl/writer/writer_fuzz.cc"
+  )
+  tint_target_add_dependencies(tint_lang_glsl_writer_fuzz fuzz
+    tint_cmd_fuzz_common_ir
+  )
+endif(TINT_BUILD_IR_BINARY)
 
 endif(TINT_BUILD_GLSL_WRITER)

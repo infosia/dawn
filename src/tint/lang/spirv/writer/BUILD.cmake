@@ -172,13 +172,12 @@ if(TINT_BUILD_SPV_WRITER)
 # Condition: TINT_BUILD_SPV_WRITER
 ################################################################################
 tint_add_target(tint_lang_spirv_writer_fuzz fuzz
-  lang/spirv/writer/writer_fuzz.cc
 )
 
 tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
   tint_api_common
   tint_api_helpers
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -207,6 +206,15 @@ if(TINT_BUILD_FUZZER_VULKAN_SUPPORT)
     "vulkan-headers"
   )
 endif(TINT_BUILD_FUZZER_VULKAN_SUPPORT)
+
+if(TINT_BUILD_IR_BINARY)
+  tint_target_add_sources(tint_lang_spirv_writer_fuzz fuzz
+    "lang/spirv/writer/writer_fuzz.cc"
+  )
+  tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
+    tint_cmd_fuzz_common_ir
+  )
+endif(TINT_BUILD_IR_BINARY)
 
 if(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
   tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz

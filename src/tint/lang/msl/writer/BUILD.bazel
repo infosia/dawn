@@ -127,6 +127,11 @@ cc_library(
 )
 
 alias(
+  name = "tint_build_ir_binary",
+  actual = "//src/tint:tint_build_ir_binary_true",
+)
+
+alias(
   name = "tint_build_msl_writer",
   actual = "//src/tint:tint_build_msl_writer_true",
 )

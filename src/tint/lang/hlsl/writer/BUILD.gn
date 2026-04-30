@@ -131,12 +131,12 @@ if (tint_build_unittests) {
 }
 if (tint_build_hlsl_writer) {
   tint_fuzz_source_set("fuzz") {
-    sources = [ "writer_fuzz.cc" ]
+    sources = []
     deps = [
       "${dawn_root}/src/utils",
       "${tint_src_dir}/api/common",
       "${tint_src_dir}/api/helpers",
-      "${tint_src_dir}/cmd/fuzz/ir:fuzz",
+      "${tint_src_dir}/cmd/fuzz/common",
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
       "${tint_src_dir}/lang/core/ir",
@@ -163,6 +163,11 @@ if (tint_build_hlsl_writer) {
         "${tint_src_dir}/lang/hlsl/validate",
         "${tint_src_dir}/lang/hlsl/writer",
       ]
+    }
+
+    if (tint_build_ir_binary) {
+      sources += [ "writer_fuzz.cc" ]
+      deps += [ "${tint_src_dir}/cmd/fuzz/common/ir" ]
     }
   }
 }

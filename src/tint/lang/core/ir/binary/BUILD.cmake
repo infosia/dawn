@@ -130,12 +130,11 @@ if(TINT_BUILD_IR_BINARY)
 # Condition: TINT_BUILD_IR_BINARY
 ################################################################################
 tint_add_target(tint_lang_core_ir_binary_fuzz fuzz
-  lang/core/ir/binary/roundtrip_fuzz.cc
 )
 
 tint_target_add_dependencies(tint_lang_core_ir_binary_fuzz fuzz
   tint_api_common
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -159,7 +158,11 @@ tint_target_add_external_dependencies(tint_lang_core_ir_binary_fuzz fuzz
 )
 
 if(TINT_BUILD_IR_BINARY)
+  tint_target_add_sources(tint_lang_core_ir_binary_fuzz fuzz
+    "lang/core/ir/binary/roundtrip_fuzz.cc"
+  )
   tint_target_add_dependencies(tint_lang_core_ir_binary_fuzz fuzz
+    tint_cmd_fuzz_common_ir
     tint_lang_core_ir_binary
   )
 endif(TINT_BUILD_IR_BINARY)

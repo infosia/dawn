@@ -146,13 +146,12 @@ if(TINT_BUILD_HLSL_WRITER)
 # Condition: TINT_BUILD_HLSL_WRITER
 ################################################################################
 tint_add_target(tint_lang_hlsl_writer_fuzz fuzz
-  lang/hlsl/writer/writer_fuzz.cc
 )
 
 tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
   tint_api_common
   tint_api_helpers
-  tint_cmd_fuzz_ir_fuzz
+  tint_cmd_fuzz_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -184,5 +183,14 @@ if(TINT_BUILD_HLSL_WRITER)
     tint_lang_hlsl_writer
   )
 endif(TINT_BUILD_HLSL_WRITER)
+
+if(TINT_BUILD_IR_BINARY)
+  tint_target_add_sources(tint_lang_hlsl_writer_fuzz fuzz
+    "lang/hlsl/writer/writer_fuzz.cc"
+  )
+  tint_target_add_dependencies(tint_lang_hlsl_writer_fuzz fuzz
+    tint_cmd_fuzz_common_ir
+  )
+endif(TINT_BUILD_IR_BINARY)
 
 endif(TINT_BUILD_HLSL_WRITER)

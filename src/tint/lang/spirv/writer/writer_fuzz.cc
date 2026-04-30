@@ -25,12 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+// GEN_BUILD:CONDITION(tint_build_ir_binary)
+
 #include <span>
 #include <string>
 #include <vector>
 
 #include "src/tint/api/helpers/generate_bindings.h"
-#include "src/tint/cmd/fuzz/ir/fuzz.h"
+#include "src/tint/cmd/fuzz/common/ir/ir_fuzzer.h"
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/spirv/validate/validate.h"

@@ -150,3 +150,8 @@ cc_library(
   visibility = ["//visibility:public"],
 )
 
+alias(
+  name = "tint_build_ir_binary",
+  actual = "//src/tint:tint_build_ir_binary_true",
+)
+
