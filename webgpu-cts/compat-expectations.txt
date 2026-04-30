@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-04-24 09:17:47PM
+# Last rolled: 2026-04-30 05:20:47AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1938,8 +1938,6 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctnes
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="float16x2";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="snorm16x4";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm8";shaderComponentCount=2 [ Skip ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=1;usage2=0 [ Skip ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=512;usage2=0 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,mapping:unmap,state,mappedAtCreation: [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=false;pointList=false;clipDistances=6 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="betweenDefaultAndMaximum";testValueName="atLimit";async=false;pointList=true;clipDistances=6 [ Skip ]
@@ -2084,7 +2082,6 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctnes
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="snorm8";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm8x2";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=1;usage2=2 [ Skip ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=512;usage2=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=false;pointList=false;clipDistances=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=false;pointList=true;clipDistances=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="betweenDefaultAndMaximum";testValueName="atLimit";async=true;pointList=false;clipDistances=2 [ Skip ]
@@ -2244,8 +2241,6 @@ crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctnes
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="sint16";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="uint16x4";shaderComponentCount=2 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint16";primitiveTopology="point-list" [ Skip ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=2;usage2=0 [ Skip ]
-crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,buffer,create:usage:usage1=8;usage2=0 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="atDefault";testValueName="atLimit";async=true;pointList=false;clipDistances=6 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="atMaximum";testValueName="atLimit";async=true;pointList=true;clipDistances=6 [ Skip ]
 crbug.com/0000 [ android-pixel-10 ] webgpu:api,validation,capability_checks,features,clip_distances:createRenderPipeline,at_over:limitTest="betweenDefaultAndMaximum";testValueName="overLimit";async=false;pointList=false;clipDistances=6 [ Skip ]
