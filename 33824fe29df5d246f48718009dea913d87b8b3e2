@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1125a990_df6b7229",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-04-30T08:33:04Z",
+      "side": 1,
+      "message": "LGTM! Might be nice to add tests but this is pretty trivial so not worrying about it. (We might have real tests soonish anyway.)",
+      "revId": "33824fe29df5d246f48718009dea913d87b8b3e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
