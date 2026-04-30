@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "326c6848_c5408d2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T08:25:48Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44ad5ac2_7b1337fd",
@@ -31,6 +48,24 @@
       "writtenOn": "2026-04-29T20:16:23Z",
       "side": 1,
       "message": "This I don\u0027t feel great about, but it\u0027s used for both renderpass resource usages which now DO use a `PassIndex` and compute pass dispatch usages, which shouldn\u0027t have a `PassIndex`. Suggestions welcome!",
+      "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374a2651_3126c031",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T08:25:48Z",
+      "side": 1,
+      "message": "We could inline the outer loop in the caller, it\u0027s used in only one place anyway.",
+      "parentUuid": "44ad5ac2_7b1337fd",
       "revId": "cea8b3ada5c1d2bf34c2e2555125910ed31d03b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
