@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca99cfe9_7272f022",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T17:00:10Z",
+      "side": 1,
+      "message": "nit: missing bug number?",
+      "revId": "0472c0cdf412935b17194814e0383a0758c9ba57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
