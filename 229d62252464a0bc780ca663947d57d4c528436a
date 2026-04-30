@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc7f8716_7587aaaa",
+        "filename": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-30T21:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ca9ff18_a19b6410",
+      "revId": "229d62252464a0bc780ca663947d57d4c528436a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fee2c779_177a7b13",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-04-30T20:40:26Z",
       "side": 1,
       "message": "Doesn\u0027t common ReplaceAll replace this now?",
+      "revId": "229d62252464a0bc780ca663947d57d4c528436a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6767839_7f689f65",
+        "filename": "src/tint/cmd/fuzz/wgsl/main_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-04-30T21:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee2c779_177a7b13",
       "revId": "229d62252464a0bc780ca663947d57d4c528436a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
