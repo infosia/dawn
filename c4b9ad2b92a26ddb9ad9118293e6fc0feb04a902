@@ -60,6 +60,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "832f6204_d3f19b5a",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-30T13:51:29Z",
+      "side": 1,
+      "message": "Toggles that only apply to one backend typically have a prefix, e.g. `D3D12DecomposeWorkgroupAccess`.",
+      "fixSuggestions": [
+        {
+          "fixId": "f6c861bc_ba627207",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Toggles.h",
+              "range": {
+                "startLine": 182,
+                "startChar": 0,
+                "endLine": 183,
+                "endChar": 0
+              },
+              "replacement": "    D3D12DecomposeWorkgroupAccess,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14a9e8fa_a26d2dca",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 2
@@ -71,6 +106,23 @@
       "writtenOn": "2026-04-30T11:07:06Z",
       "side": 1,
       "message": "Any chance that a driver update fixes it?",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1a4d5ea_b4a3475f",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-30T13:51:29Z",
+      "side": 1,
+      "message": "An option that is a workaround for a driver bug should be kept in the `Workarounds` struct instead.\n\nPlease also then add it to the set of fuzzed options in `writer_fuzz.cc` so that we get fuzzing coverage for this.",
       "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
