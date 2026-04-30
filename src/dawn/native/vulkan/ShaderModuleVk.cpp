@@ -352,7 +352,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1));
     req.maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
-    if (GetDevice()->HasFeature(Feature::ChromiumExperimentalSubgroupSizeControl)) {
+    if (GetDevice()->HasFeature(Feature::SubgroupSizeControl)) {
         const auto& subgroupSizeInfo = ToBackend(GetDevice()->GetPhysicalDevice())->GetDeviceInfo();
         req.minSubgroupSize = subgroupSizeInfo.subgroupSizeControlProperties.minSubgroupSize;
         req.maxComputeWorkgroupSubgroups =

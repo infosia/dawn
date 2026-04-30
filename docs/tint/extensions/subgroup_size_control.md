@@ -1,6 +1,6 @@
 # Chromium Experimental Subgroup Size Control
 
-The `chromium_experimental_subgroup_size_control` is an experimental extension that allows the use of the
+The `subgroup_size_control` is an experimental extension that allows the use of the
 `subgroup_size` attribute in compute shaders in WGSL. When the attribute `subgroup_size` is declared, the compute shader will only be executed with the specified subgroup size, and the built-in value `subgroup_size` will be the the value of the attribute `subgroup_size`. Otherwise, the compute shader may be executed with a subgroup size chosen by the GPU driver, which is unknown before the execution of the compute shader.
 
 # Status
@@ -20,12 +20,12 @@ The usage is restricted to `compute` shaders.
 |Vulkan|`requiredSubgroupSize` in `VkPipelineShaderStageRequiredSubgroupSizeCreateInfo` on the API side|`subgroupSizeControl` and `computeFullSubgroups` in `VK_EXT_subgroup_size_control` or Vulkan 1.3|
 |Metal|Not Supported|Not Supported|
 
-- Currently `VK_EXT_subgroup_control` is required to enable feature `Subgroups` so we can always enable `chromium_experimental_subgroup_size_control` when `Subgroups` can be enabled.
+- Currently `VK_EXT_subgroup_control` is required to enable feature `Subgroups` so we can always enable `subgroup_size_control` when `Subgroups` can be enabled.
 - `computeFullSubgroups` is required on Vulkan because we need to set `VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT` when creating Vulkan compute pipeline to ensure subgroup sizes will always be launched with all invocations active.
 - About [71.5%](https://vulkan.gpuinfo.org/listfeaturesextensions.php?extension=VK_EXT_subgroup_size_control) devices support `subgroupSizeControl` and `computeFullSubgroups` according to the report on GPUInfo.org.
 - This extension cannot be supported on Metal.
 - Due to the limited availability, this will need a `enable` statement to be used. For this
-experimental extension it would be `enable chromium_experimental_subgroup_size_control`.
+experimental extension it would be `enable subgroup_size_control`.
 
 # Specification
 
@@ -47,7 +47,7 @@ subgroup_size_attr :
 
 ```wgsl
 enable subgroups;
-enable chromium_experimental_subgroup_size_control;
+enable subgroup_size_control;
 
 @subgroup_size(32)
 @compute @workgroup_size(64, 1, 1)

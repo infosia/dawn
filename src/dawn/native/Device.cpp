@@ -1708,7 +1708,7 @@ void DeviceBase::ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescri
     if (mEnabledFeatures.IsEnabled(Feature::TextureFormatsTier1)) {
         mEnabledFeatures.EnableFeature(Feature::RG11B10UfloatRenderable);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalSubgroupSizeControl)) {
+    if (mEnabledFeatures.IsEnabled(Feature::SubgroupSizeControl)) {
         mEnabledFeatures.EnableFeature(Feature::Subgroups);
     }
 
@@ -1768,9 +1768,8 @@ void DeviceBase::SetWGSLExtensionAllowList() {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumExperimentalResourceTable);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalSubgroupSizeControl)) {
-        mWGSLAllowedFeatures.extensions.insert(
-            tint::wgsl::Extension::kChromiumExperimentalSubgroupSizeControl);
+    if (mEnabledFeatures.IsEnabled(Feature::SubgroupSizeControl)) {
+        mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kSubgroupSizeControl);
     }
 
     // Language features are enabled instance-wide.

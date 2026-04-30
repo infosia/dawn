@@ -444,10 +444,10 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Experimental support for the bindless sampling resource table",
       "https://github.com/Kangz/gpuweb/blob/bindless/proposals/bindless.md",
       FeatureInfo::FeatureState::Experimental}},
-    {Feature::ChromiumExperimentalSubgroupSizeControl,
-     {"Support the \"enable chromium_experimental_subgroup_size_control;\" directive in WGSL.",
+    {Feature::SubgroupSizeControl,
+     {"Support the \"enable subgroup_size_control;\" directive in WGSL.",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/tint/extensions/"
-      "chromium_experimental_subgroup_size_control.md",
+      "subgroup_size_control.md",
       FeatureInfo::FeatureState::Experimental}},
     {Feature::AtomicVec2uMinMax,
      {"Support the \"enable atomic_vec2u_min_max;\" directive for 64-bit atomics via vec2<u32> "
