@@ -1,7 +1,7 @@
 // [hlsl-dxc] flags: --hlsl-shader-model 66
 
 enable subgroups;
-enable chromium_experimental_subgroup_size_control;
+enable subgroup_size_control;
 
 @group(0) @binding(0)
 var<storage, read_write> buffer: array<u32>;

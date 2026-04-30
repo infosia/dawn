@@ -940,11 +940,9 @@ class SubgroupSizeControlTests : public DawnTest {
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         // Always require related features if available.
         std::vector<wgpu::FeatureName> requiredFeatures;
-        if (SupportsFeatures({wgpu::FeatureName::Subgroups,
-                              wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl})) {
+        if (SupportsFeatures({wgpu::FeatureName::SubgroupSizeControl})) {
             mSupportsSubgroupSizeControl = true;
-            requiredFeatures.push_back(wgpu::FeatureName::Subgroups);
-            requiredFeatures.push_back(wgpu::FeatureName::ChromiumExperimentalSubgroupSizeControl);
+            requiredFeatures.push_back(wgpu::FeatureName::SubgroupSizeControl);
         }
         return requiredFeatures;
     }
@@ -992,7 +990,7 @@ class SubgroupSizeControlTests : public DawnTest {
 
         code << R"(
 enable subgroups;
-enable chromium_experimental_subgroup_size_control;)";
+enable subgroup_size_control;)";
 
         if (setSubgroupSizeAsOverride) {
             code << "override kSubgroupSize : u32;\n";
