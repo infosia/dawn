@@ -29,6 +29,9 @@
 #define SRC_DAWN_NATIVE_METAL_BINDGROUPLAYOUTMTL_H_
 
 #import <Metal/Metal.h>
+#include <tint/tint.h>
+
+#include <vector>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/NSRef.h"
@@ -51,6 +54,7 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
     void ReduceMemoryUsage() override;
 
     NSPRef<id<MTLArgumentEncoder>> GetArgumentEncoder() const;
+    void FillTintArgumentBufferInfo(tint::msl::writer::ArgumentBufferInfo& info) const;
 
   private:
     BindGroupLayout(DeviceBase* device, const UnpackedPtr<BindGroupLayoutDescriptor>& descriptor);

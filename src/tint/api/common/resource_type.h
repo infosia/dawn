@@ -80,8 +80,53 @@ enum class ResourceType : uint32_t {
     kSampler_filtering = 40,
     kSampler_non_filtering = 41,
     kSampler_comparison = 42,
+
+    // Format-less storage texture types (we don't need to know the format).
+    kTextureStorage1d_f32_read = 43,
+    kTextureStorage1d_f32_read_write = 44,
+    kTextureStorage1d_f32_write = 45,
+    kTextureStorage1d_i32_read = 46,
+    kTextureStorage1d_i32_read_write = 47,
+    kTextureStorage1d_i32_write = 48,
+    kTextureStorage1d_u32_read = 49,
+    kTextureStorage1d_u32_read_write = 50,
+    kTextureStorage1d_u32_write = 51,
+    kTextureStorage2dArray_f32_read = 52,
+    kTextureStorage2dArray_f32_read_write = 53,
+    kTextureStorage2dArray_f32_write = 54,
+    kTextureStorage2dArray_i32_read = 55,
+    kTextureStorage2dArray_i32_read_write = 56,
+    kTextureStorage2dArray_i32_write = 57,
+    kTextureStorage2dArray_u32_read = 58,
+    kTextureStorage2dArray_u32_read_write = 59,
+    kTextureStorage2dArray_u32_write = 60,
+    kTextureStorage2d_f32_read = 61,
+    kTextureStorage2d_f32_read_write = 62,
+    kTextureStorage2d_f32_write = 63,
+    kTextureStorage2d_i32_read = 64,
+    kTextureStorage2d_i32_read_write = 65,
+    kTextureStorage2d_i32_write = 66,
+    kTextureStorage2d_u32_read = 67,
+    kTextureStorage2d_u32_read_write = 68,
+    kTextureStorage2d_u32_write = 69,
+    kTextureStorage3d_f32_read = 70,
+    kTextureStorage3d_f32_read_write = 71,
+    kTextureStorage3d_f32_write = 72,
+    kTextureStorage3d_i32_read = 73,
+    kTextureStorage3d_i32_read_write = 74,
+    kTextureStorage3d_i32_write = 75,
+    kTextureStorage3d_u32_read = 76,
+    kTextureStorage3d_u32_read_write = 77,
+    kTextureStorage3d_u32_write = 78,
+
+    // Uniform buffer type (we don't need to know the data type of the pointee).
+    kUniformBuffer = 79,
+
+    // Storage buffer type (we don't need to know the data type of the pointee, or the access mode).
+    kStorageBuffer = 80,
+    // NOTE: If adding more items here, be sure to update the range below.
 };
-TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kSampler_comparison);
+TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kStorageBuffer);
 
 constexpr bool IsSampler(ResourceType res_type) {
     switch (res_type) {

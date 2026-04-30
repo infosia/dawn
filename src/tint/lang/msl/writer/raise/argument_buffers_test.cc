@@ -229,32 +229,31 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  c:ptr<storage, f32, read_write> @offset(0), @binding_point(3, 2)
-  b:ptr<storage, u32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, u32, read_write> = var undef @binding_point(3, 4)
+  %c:ptr<storage, f32, read_write> = var undef @binding_point(3, 2)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:ptr<storage, i32, read> = access %5, 0u
-    %7:i32 = load %6
-    %8:ptr<storage, u32, read_write> = access %4, 1u
-    %9:u32 = load %8
-    %10:ptr<storage, f32, read_write> = access %4, 0u
-    %11:f32 = load %10
-    %12:i32 = convert %9
+  $B2: {
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:u32 = load %b
+    %11:f32 = load %c
+    %12:i32 = convert %10
     %13:i32 = convert %11
-    %14:i32 = add %7, %12
+    %14:i32 = add %9, %12
     %15:i32 = add %14, %13
     %16:u32 = convert %15
-    %17:ptr<storage, u32, read_write> = access %4, 1u
-    store %17, %16
+    store %b, %16
     ret
   }
 }
@@ -309,23 +308,24 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<uniform, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<uniform, i32, read> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<uniform, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<uniform, i32, read> = var undef @binding_point(3, 4)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:ptr<uniform, i32, read> = access %5, 0u
-    %7:i32 = load %6
-    %8:ptr<uniform, i32, read> = access %4, 0u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
+  $B2: {
+    %6:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %7:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %8:i32 = load %a
+    %9:i32 = load %b
+    %10:i32 = add %8, %9
     ret
   }
 }
@@ -381,21 +381,24 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  t:texture_2d<f32> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  s:sampler @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(1, 2)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(3, 4)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:texture_2d<f32> = access %5, 0u
-    %7:sampler = access %4, 0u
-    %8:vec4<f32> = textureSample %6, %7, vec2<f32>(0.0f)
+  $B2: {
+    %6:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %7:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %8:texture_2d<f32> = load %t
+    %9:sampler = load %s
+    %10:vec4<f32> = textureSample %8, %9, vec2<f32>(0.0f)
     ret
   }
 }
@@ -452,22 +455,25 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  t:binding_array<texture_2d<f32>, 3> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  s:sampler @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %t:ptr<handle, binding_array<texture_2d<f32>, 3>, read> = var undef @binding_point(1, 2)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(3, 4)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:binding_array<texture_2d<f32>, 3> = access %5, 0u
-    %7:texture_2d<f32> = access %6, 0i
-    %8:sampler = access %4, 0u
-    %9:vec4<f32> = textureSample %7, %8, vec2<f32>(0.0f)
+  $B2: {
+    %6:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %7:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %8:ptr<handle, texture_2d<f32>, read> = access %t, 0i
+    %9:texture_2d<f32> = load %8
+    %10:sampler = load %s
+    %11:vec4<f32> = textureSample %9, %10, vec2<f32>(0.0f)
     ret
   }
 }
@@ -529,31 +535,28 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<uniform, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
 $B1: {  # root
+  %a:ptr<uniform, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
   %c:ptr<private, i32, read_write> = var undef
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
   $B2: {
-    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %7:ptr<uniform, i32, read> = access %6, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %5, 0u
-    %10:i32 = load %9
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:i32 = load %b
     %11:i32 = load %c
     %12:i32 = add %10, %11
-    %13:i32 = add %8, %12
-    %14:ptr<storage, i32, read_write> = access %5, 0u
-    store %14, %13
+    %13:i32 = add %9, %12
+    store %b, %13
     ret
   }
 }
@@ -614,26 +617,26 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
 }
 
 %foo = @fragment func(%param:i32 [@location(1), @interpolate(flat)], %tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %7:ptr<storage, i32, read> = access %6, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %5, 0u
-    %10:i32 = load %9
+  $B2: {
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:i32 = load %b
     %11:i32 = add %10, %param
-    %12:i32 = add %8, %11
-    %13:ptr<storage, i32, read_write> = access %5, 0u
-    store %13, %12
+    %12:i32 = add %9, %11
+    store %b, %12
     ret
   }
 }
@@ -701,16 +704,19 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%foo = func(%a:ptr<storage, i32, read>, %b:ptr<storage, i32, read_write>):void {
-  $B1: {
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
+}
+
+%foo = func():void {
+  $B2: {
     %4:i32 = load %a
     %5:i32 = load %b
     %6:i32 = add %4, %5
@@ -719,12 +725,10 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B2: {
+  $B3: {
     %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
     %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %12:ptr<storage, i32, read> = access %11, 0u
-    %13:ptr<storage, i32, read_write> = access %10, 0u
-    %14:void = call %foo, %12, %13
+    %12:void = call %foo
     ret
   }
 }
@@ -795,16 +799,19 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%foo = func(%param:i32, %a:ptr<storage, i32, read>, %b:ptr<storage, i32, read_write>):void {
-  $B1: {
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
+}
+
+%foo = func(%param:i32):void {
+  $B2: {
     %5:i32 = load %a
     %6:i32 = load %b
     %7:i32 = add %6, %param
@@ -814,12 +821,10 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B2: {
+  $B3: {
     %12:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
     %13:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %14:ptr<storage, i32, read> = access %13, 0u
-    %15:ptr<storage, i32, read_write> = access %12, 0u
-    %16:void = call %foo, 42i, %14, %15
+    %14:void = call %foo, 42i
     ret
   }
 }
@@ -890,27 +895,30 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  t:texture_2d<f32> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  s:sampler @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%foo = func(%param:i32, %t:texture_2d<f32>, %s:sampler):vec4<f32> {
-  $B1: {
-    %5:vec4<f32> = textureSample %t, %s, vec2<f32>(0.0f)
-    ret %5
+$B1: {  # root
+  %t:ptr<handle, texture_2d<f32>, read> = var undef @binding_point(1, 2)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(3, 4)
+}
+
+%foo = func(%param:i32):vec4<f32> {
+  $B2: {
+    %5:texture_2d<f32> = load %t
+    %6:sampler = load %s
+    %7:vec4<f32> = textureSample %5, %6, vec2<f32>(0.0f)
+    ret %7
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B2: {
-    %9:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %10:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %11:texture_2d<f32> = access %10, 0u
-    %12:sampler = access %9, 0u
-    %13:vec4<f32> = call %foo, 42i, %11, %12
+  $B3: {
+    %11:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %12:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %13:vec4<f32> = call %foo, 42i
     ret
   }
 }
@@ -982,28 +990,31 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  t:binding_array<texture_2d<f32>, 3> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  s:sampler @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%foo = func(%param:i32, %t:binding_array<texture_2d<f32>, 3>, %s:sampler):vec4<f32> {
-  $B1: {
-    %5:texture_2d<f32> = access %t, 0i
-    %6:vec4<f32> = textureSample %5, %s, vec2<f32>(0.0f)
-    ret %6
+$B1: {  # root
+  %t:ptr<handle, binding_array<texture_2d<f32>, 3>, read> = var undef @binding_point(1, 2)
+  %s:ptr<handle, sampler, read> = var undef @binding_point(3, 4)
+}
+
+%foo = func(%param:i32):vec4<f32> {
+  $B2: {
+    %5:ptr<handle, texture_2d<f32>, read> = access %t, 0i
+    %6:texture_2d<f32> = load %5
+    %7:sampler = load %s
+    %8:vec4<f32> = textureSample %6, %7, vec2<f32>(0.0f)
+    ret %8
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B2: {
-    %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %12:binding_array<texture_2d<f32>, 3> = access %11, 0u
-    %13:sampler = access %10, 0u
-    %14:vec4<f32> = call %foo, 42i, %12, %13
+  $B3: {
+    %12:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %13:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %14:vec4<f32> = call %foo, 42i
     ret
   }
 }
@@ -1072,30 +1083,31 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
 }
 
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %6:ptr<storage, i32, read> = access %5, 0u
-    %7:ptr<storage, i32, read_write> = access %4, 0u
-    %8:void = call %foo, %6, %7
+  $B2: {
+    %6:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %7:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %8:void = call %foo
     ret
   }
 }
-%foo = func(%a:ptr<storage, i32, read>, %b:ptr<storage, i32, read_write>):void {
-  $B2: {
-    %12:i32 = load %a
-    %13:i32 = load %b
-    %14:i32 = add %12, %13
-    store %b, %14
+%foo = func():void {
+  $B3: {
+    %10:i32 = load %a
+    %11:i32 = load %b
+    %12:i32 = add %10, %11
+    store %b, %12
     ret
   }
 }
@@ -1164,32 +1176,32 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
 }
 
 %foo = func():i32 {
-  $B1: {
+  $B2: {
     ret 42i
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B2: {
-    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %7:ptr<storage, i32, read> = access %6, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %5, 0u
-    %10:i32 = load %9
+  $B3: {
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:i32 = load %b
     %11:i32 = call %foo
     %12:i32 = add %10, %11
-    %13:i32 = add %8, %12
-    %14:ptr<storage, i32, read_write> = access %5, 0u
-    store %14, %13
+    %13:i32 = add %9, %12
+    store %b, %13
     ret
   }
 }
@@ -1270,40 +1282,39 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%bar = func(%a:ptr<storage, i32, read>):i32 {
-  $B1: {
-    %3:i32 = load %a
-    ret %3
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
+}
+
+%bar = func():i32 {
+  $B2: {
+    %4:i32 = load %a
+    ret %4
   }
 }
-%foo = func(%a_1:ptr<storage, i32, read>):i32 {  # %a_1: 'a'
-  $B2: {
-    %6:i32 = call %bar, %a_1
+%foo = func():i32 {
+  $B3: {
+    %6:i32 = call %bar
     ret %6
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B3: {
+  $B4: {
     %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
     %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %12:ptr<storage, i32, read> = access %11, 0u
-    %13:i32 = load %12
-    %14:ptr<storage, i32, read_write> = access %10, 0u
-    %15:i32 = load %14
-    %16:ptr<storage, i32, read> = access %11, 0u
-    %17:i32 = call %foo, %16
-    %18:i32 = add %15, %17
-    %19:i32 = add %13, %18
-    %20:ptr<storage, i32, read_write> = access %10, 0u
-    store %20, %19
+    %12:i32 = load %a
+    %13:i32 = load %b
+    %14:i32 = call %foo
+    %15:i32 = add %13, %14
+    %16:i32 = add %12, %15
+    store %b, %16
     ret
   }
 }
@@ -1386,40 +1397,39 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  b:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
-%foo = func(%a:ptr<storage, i32, read>):i32 {
-  $B1: {
-    %3:i32 = call %bar, %a
-    ret %3
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
+}
+
+%foo = func():i32 {
+  $B2: {
+    %4:i32 = call %bar
+    ret %4
   }
 }
-%bar = func(%a_1:ptr<storage, i32, read>):i32 {  # %a_1: 'a'
-  $B2: {
-    %6:i32 = load %a_1
+%bar = func():i32 {
+  $B3: {
+    %6:i32 = load %a
     ret %6
   }
 }
 %main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
-  $B3: {
+  $B4: {
     %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
     %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %12:ptr<storage, i32, read> = access %11, 0u
-    %13:i32 = load %12
-    %14:ptr<storage, i32, read_write> = access %10, 0u
-    %15:i32 = load %14
-    %16:ptr<storage, i32, read> = access %11, 0u
-    %17:i32 = call %foo, %16
-    %18:i32 = add %15, %17
-    %19:i32 = add %13, %18
-    %20:ptr<storage, i32, read_write> = access %10, 0u
-    store %20, %19
+    %12:i32 = load %a
+    %13:i32 = load %b
+    %14:i32 = call %foo
+    %15:i32 = add %13, %14
+    %16:i32 = add %12, %15
+    store %b, %16
     ret
   }
 }
@@ -1503,27 +1513,27 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  tint_symbol:ptr<uniform, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  tint_symbol_1:ptr<storage, i32, read_write> @offset(0), @binding_point(3, 4)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
 $B1: {  # root
-  %1:ptr<private, i32, read_write> = var undef
+  %1:ptr<uniform, i32, read> = var undef @binding_point(1, 2)
+  %2:ptr<storage, i32, read_write> = var undef @binding_point(3, 4)
+  %3:ptr<private, i32, read_write> = var undef
 }
 
-%foo = func(%3:ptr<uniform, i32, read>):i32 {
+%foo = func():i32 {
   $B2: {
-    %4:i32 = call %bar, %3
-    ret %4
+    %5:i32 = call %bar
+    ret %5
   }
 }
-%bar = func(%6:ptr<uniform, i32, read>):i32 {
+%bar = func():i32 {
   $B3: {
-    %7:i32 = load %6
+    %7:i32 = load %1
     ret %7
   }
 }
@@ -1531,16 +1541,12 @@ $B1: {  # root
   $B4: {
     %11:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
     %12:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %13:ptr<uniform, i32, read> = access %12, 0u
-    %14:i32 = load %13
-    %15:ptr<storage, i32, read_write> = access %11, 0u
-    %16:i32 = load %15
-    %17:ptr<uniform, i32, read> = access %12, 0u
-    %18:i32 = call %foo, %17
-    %19:i32 = add %16, %18
-    %20:i32 = add %14, %19
-    %21:ptr<storage, i32, read_write> = access %11, 0u
-    store %21, %20
+    %13:i32 = load %1
+    %14:i32 = load %2
+    %15:i32 = call %foo
+    %16:i32 = add %14, %15
+    %17:i32 = add %13, %16
+    store %2, %17
     ret
   }
 }
@@ -1610,30 +1616,28 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_3 = struct @align(0), @core.explicit_layout {
 }
 
-tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
-  c:ptr<storage, f32, read_write> @offset(0), @binding_point(3, 2)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
 }
 
 $B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
   %b:ptr<storage, u32, read_write> = var undef @binding_point(3, 4)
+  %c:ptr<storage, f32, read_write> = var undef @binding_point(3, 2)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 20)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(0, 30)]):void {
   $B2: {
-    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
-    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %7:ptr<storage, i32, read> = access %6, 0u
-    %8:i32 = load %7
-    %9:u32 = load %b
-    %10:ptr<storage, f32, read_write> = access %5, 0u
-    %11:f32 = load %10
-    %12:i32 = convert %9
+    %7:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %8:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %9:i32 = load %a
+    %10:u32 = load %b
+    %11:f32 = load %c
+    %12:i32 = convert %10
     %13:i32 = convert %11
-    %14:i32 = add %8, %12
+    %14:i32 = add %9, %12
     %15:i32 = add %14, %13
     %16:u32 = convert %15
     store %b, %16
@@ -1689,24 +1693,19 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read_write> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read_write> = var undef @binding_point(1, 2)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 2)], %tint_dynamic_offset_buffer_1:ptr<storage, array<u32>, read> [@binding_point(0, 3)]):void {
-  $B1: {
-    %4:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %5:ptr<storage, i32, read_write> = access %4, 0u
-    %6:ptr<storage, u32, read> = access %tint_dynamic_offset_buffer_1, 3u
-    %7:u32 = load %6
-    %8:ptr<storage, i32, read_write> = msl.pointer_offset %5, %7
-    %9:i32 = load %8
-    %10:i32 = add %9, %9
-    %11:ptr<storage, i32, read_write> = access %4, 0u
-    %12:ptr<storage, u32, read> = access %tint_dynamic_offset_buffer_1, 3u
-    %13:u32 = load %12
-    %14:ptr<storage, i32, read_write> = msl.pointer_offset %11, %13
-    store %14, %10
+  $B2: {
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:i32 = load %a
+    %7:i32 = add %6, %6
+    store %a, %7
     ret
   }
 }
@@ -1755,18 +1754,19 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
-  a:ptr<storage, i32, read_write> @offset(0), @binding_point(1, 2)
+tint_arg_buffer_struct_1 = struct @align(0), @core.explicit_layout {
+}
+
+$B1: {  # root
+  %a:ptr<storage, i32, read_write> = var undef @binding_point(1, 2)
 }
 
 %foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(0, 2)]):void {
-  $B1: {
-    %3:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
-    %4:ptr<storage, i32, read_write> = access %3, 0u
-    %5:i32 = load %4
+  $B2: {
+    %4:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %5:i32 = load %a
     %6:i32 = add %5, %5
-    %7:ptr<storage, i32, read_write> = access %3, 0u
-    store %7, %6
+    store %a, %6
     ret
   }
 }
@@ -1827,7 +1827,7 @@ $B1: {  # root
     ArgumentBuffersConfig cfg{};
     cfg.group_to_argument_buffer_info.insert({1, info});
     auto result = ArgumentBuffers(mod, cfg);
-    EXPECT_NE(result, Success);
+    ASSERT_NE(result, Success);
     EXPECT_EQ(result.Failure().reason, "dynamic offset supplied for non-buffer type");
 }
 
