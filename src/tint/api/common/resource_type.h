@@ -76,10 +76,55 @@ enum class ResourceType : uint32_t {
     kTextureDepthCubeArray = 37,
     kTextureDepthMultisampled2d = 38,
 
-    kSampler = 39,
-    kSampler_filtering = 40,
-    kSampler_non_filtering = 41,
-    kSampler_comparison = 42,
+    // Uniform buffer type (we don't need to know the data type of the pointee).
+    kUniformBuffer = 39,
+
+    // Storage buffer type (we don't need to know the data type of the pointee, or the access mode).
+    kStorageBuffer = 40,
+
+    // Format-less storage texture types (we don't need to know the format).
+    kTextureStorage1d_f32_read = 41,
+    kTextureStorage1d_f32_read_write = 42,
+    kTextureStorage1d_f32_write = 43,
+    kTextureStorage1d_i32_read = 44,
+    kTextureStorage1d_i32_read_write = 45,
+    kTextureStorage1d_i32_write = 46,
+    kTextureStorage1d_u32_read = 47,
+    kTextureStorage1d_u32_read_write = 48,
+    kTextureStorage1d_u32_write = 49,
+    kTextureStorage2dArray_f32_read = 50,
+    kTextureStorage2dArray_f32_read_write = 51,
+    kTextureStorage2dArray_f32_write = 52,
+    kTextureStorage2dArray_i32_read = 53,
+    kTextureStorage2dArray_i32_read_write = 54,
+    kTextureStorage2dArray_i32_write = 55,
+    kTextureStorage2dArray_u32_read = 56,
+    kTextureStorage2dArray_u32_read_write = 57,
+    kTextureStorage2dArray_u32_write = 58,
+    kTextureStorage2d_f32_read = 59,
+    kTextureStorage2d_f32_read_write = 60,
+    kTextureStorage2d_f32_write = 61,
+    kTextureStorage2d_i32_read = 62,
+    kTextureStorage2d_i32_read_write = 63,
+    kTextureStorage2d_i32_write = 64,
+    kTextureStorage2d_u32_read = 65,
+    kTextureStorage2d_u32_read_write = 66,
+    kTextureStorage2d_u32_write = 67,
+    kTextureStorage3d_f32_read = 68,
+    kTextureStorage3d_f32_read_write = 69,
+    kTextureStorage3d_f32_write = 70,
+    kTextureStorage3d_i32_read = 71,
+    kTextureStorage3d_i32_read_write = 72,
+    kTextureStorage3d_i32_write = 73,
+    kTextureStorage3d_u32_read = 74,
+    kTextureStorage3d_u32_read_write = 75,
+    kTextureStorage3d_u32_write = 76,
+
+    kSampler = 77,
+    kSampler_filtering = 78,
+    kSampler_non_filtering = 79,
+    kSampler_comparison = 80,
+    // NOTE: If adding more items here, be sure to update the range below.
 };
 TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kSampler_comparison);
 
