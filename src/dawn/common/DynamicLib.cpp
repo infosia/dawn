@@ -27,6 +27,7 @@
 
 #include "dawn/common/DynamicLib.h"
 
+#include <algorithm>
 #include <span>
 #include <utility>
 
@@ -49,9 +50,9 @@ DynamicLib::~DynamicLib() {
     Close();
 }
 
-DynamicLib::DynamicLib(DynamicLib&& other) {
+DynamicLib::DynamicLib(DynamicLib&& other) : mNeedsClose(other.mNeedsClose) {
+    // cppcoreguidelines-prefer-member-initializer
     std::swap(mHandle, other.mHandle);
-    mNeedsClose = other.mNeedsClose;
 }
 
 DynamicLib& DynamicLib::operator=(DynamicLib&& other) {
@@ -142,13 +143,11 @@ bool DynamicLib::OpenLoaded(const std::string& filename, std::string* error) {
 bool DynamicLib::Open(const std::string& filename,
                       std::span<const std::string> searchPaths,
                       std::string* error) {
-    for (const std::string& path : searchPaths) {
+    // readability-use-anyofallof
+    return std::ranges::any_of(searchPaths, [&](const std::string& path) {
         const std::string fullPath = path + filename;
-        if (Open(fullPath, error)) {
-            return true;
-        }
-    }
-    return false;
+        return Open(fullPath, error);
+    });
 }
 
 void DynamicLib::Close() {
@@ -186,7 +185,8 @@ void* DynamicLib::GetProc(const std::string& procName, std::string* error) const
         *error = "Windows Error: " + std::to_string(GetLastError());
     }
 #elif DAWN_PLATFORM_IS(POSIX)
-    proc = reinterpret_cast<void*>(dlsym(mHandle, procName.c_str()));
+    // readability-redundant-casting
+    proc = dlsym(mHandle, procName.c_str());
 
     if (proc == nullptr && error != nullptr) {
         *error = dlerror();
