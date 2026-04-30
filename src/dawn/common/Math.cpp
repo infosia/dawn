@@ -80,9 +80,12 @@ uint16_t Float32ToFloat16(float fp32) {
 
     if (mantissaAndExponent > 0x7F800000) {  // NaN
         return 0x7FFF;
-    } else if (mantissaAndExponent > 0x47FFEFFF) {  // Infinity
+    }
+    // readability-else-after-return
+    if (mantissaAndExponent > 0x47FFEFFF) {  // Infinity
         return static_cast<uint16_t>(sign16 | 0x7C00);
-    } else if (mantissaAndExponent < 0x38800000) {  // Denormal
+    }
+    if (mantissaAndExponent < 0x38800000) {  // Denormal
         uint32_t mantissa = (mantissaAndExponent & 0x007FFFFF) | 0x00800000;
         int32_t exponent = 113 - (mantissaAndExponent >> 23);
 
@@ -94,11 +97,10 @@ uint16_t Float32ToFloat16(float fp32) {
 
         return static_cast<uint16_t>(
             sign16 | (mantissaAndExponent + 0x00000FFF + ((mantissaAndExponent >> 13) & 1)) >> 13);
-    } else {
-        return static_cast<uint16_t>(sign16 | (mantissaAndExponent + 0xC8000000 + 0x00000FFF +
-                                               ((mantissaAndExponent >> 13) & 1)) >>
-                                                  13);
     }
+    return static_cast<uint16_t>(
+        sign16 |
+        (mantissaAndExponent + 0xC8000000 + 0x00000FFF + ((mantissaAndExponent >> 13) & 1)) >> 13);
 }
 
 float Float16ToFloat32(uint16_t fp16) {
@@ -116,15 +118,16 @@ float SRGBToLinear(float srgb) {
     // sRGB is always used in unsigned normalized formats so clamp to [0.0, 1.0]
     if (srgb <= 0.0f) {
         return 0.0f;
-    } else if (srgb > 1.0f) {
+    }
+    // readability-else-after-return
+    if (srgb > 1.0f) {
         return 1.0f;
     }
 
     if (srgb < 0.04045f) {
         return srgb / 12.92f;
-    } else {
-        return std::pow((srgb + 0.055f) / 1.055f, 2.4f);
     }
+    return std::pow((srgb + 0.055f) / 1.055f, 2.4f);
 }
 
 uint64_t RoundUp(uint64_t n, uint64_t m) {
