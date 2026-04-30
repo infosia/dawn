@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01983a12_994ceb37",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-30T13:58:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be `DAWN_VALIDATION_ERROR` instead of `DAWN_INTERNAL_ERROR`?",
+      "revId": "ddbb4fe91b80fdd5ab7ef09dd1eb94fa1a91885c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af12dc93_c42f075c",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-04-30T13:58:34Z",
+      "side": 1,
+      "message": "Same here, shouldn\u0027t these two be `DAWN_VALIDATION_ERROR_IF` instead?",
+      "fixSuggestions": [
+        {
+          "fixId": "b2b99331_d3f99296",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+              "range": {
+                "startLine": 401,
+                "startChar": 0,
+                "endLine": 402,
+                "endChar": 0
+              },
+              "replacement": "                    DAWN_VALIDATION_ERROR_IF(\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+              "range": {
+                "startLine": 418,
+                "startChar": 0,
+                "endLine": 419,
+                "endChar": 0
+              },
+              "replacement": "                    DAWN_VALIDATION_ERROR_IF(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ddbb4fe91b80fdd5ab7ef09dd1eb94fa1a91885c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
