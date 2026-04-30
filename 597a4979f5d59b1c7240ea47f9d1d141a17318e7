@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a8ba13b_ad1140d8",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-30T17:49:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031eb332_9e2744e6",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 5
+      },
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73df9c76_e0d9d539",
@@ -71,6 +95,24 @@
       "writtenOn": "2026-04-30T12:36:49Z",
       "side": 1,
       "message": "Oooof this is so complicated (and it\u0027s not clear that it needs to be). I hope we get to simplify it one day. For example by merging batches by chunks of 256MB of buffers with aligned starts instead of dynamic starts.",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dbdfdca_b77e2989",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-30T17:49:57Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s pretty awkward. I\u0027ve added a TODO to look into it as a followup.",
+      "parentUuid": "73df9c76_e0d9d539",
       "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +147,24 @@
       "writtenOn": "2026-04-30T12:36:49Z",
       "side": 1,
       "message": "Maybe (but not sure if it makes things cleaner apart from [1]): this could be an `ityp::vector\u003cIndirectDrawIndex, IndirectDraw\u003e`",
+      "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "639b18f2_bfa6abee",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-30T17:49:57Z",
+      "side": 1,
+      "message": "I wondered about that, but the thing that made me avoid it was that the draws in this struct are not ordered. They get merged together and potentially mixed up as the batches are built, and I didn\u0027t want to imply that the draws here always appeared in the order that they were drawn.",
+      "parentUuid": "f3ac0ef2_92366d7b",
       "revId": "597a4979f5d59b1c7240ea47f9d1d141a17318e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
