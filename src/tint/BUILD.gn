@@ -344,9 +344,16 @@ group("fuzzers") {
   data_deps = []
   if (tint_build_wgsl_reader) {
     data_deps += [ "${tint_src_dir}/cmd/fuzz/wgsl" ]
+    if (tint_build_mesa && tint_build_fuzzer_vulkan_support) {
+      data_deps += [ "${tint_src_dir}/cmd/fuzz/wgsl_mesa" ]
+    }
   }
   if (tint_build_ir_binary) {
     data_deps += [ "${tint_src_dir}/cmd/fuzz/ir" ]
+    if (tint_build_mesa && tint_build_fuzzer_vulkan_support &&
+        tint_build_wgsl_reader) {
+      data_deps += [ "${tint_src_dir}/cmd/fuzz/ir_mesa" ]
+    }
   }
 }
 
