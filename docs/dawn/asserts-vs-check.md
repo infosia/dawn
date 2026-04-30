@@ -37,6 +37,22 @@ For the initial phase, `DAWN_ASSERT`s that will be promoted are:
 
 CL: <https://dawn-review.git.corp.google.com/c/dawn/+/302235>
 
+
+## Fix: `DAWN_ASSERT` to `DAWN_RELEASE_ASSUME`
+
+Previously, in release, `DAWN_ASSERT` was converted into `__builtin_assume`. This is likely a surprise to most developers and can lead to dangerous outcomes.
+
+This `assume` tells the compiler that a specific expression holds. The compiler then can do code generation based on this assumption.
+If the assumption turns out to have been false, the result can be undefined behavior (UB).
+
+Here is an example of `DAWN_ASSERT` being converted to an `assume` and then removing mandatory bounds checks. (This was very BAD)
+CL: <https://dawn-review.git.corp.google.com/c/dawn/+/260462>
+
+
+In conclusion, we should move away from assert implying an assume, as this can lead to unintended consequences.
+The macro `DAWN_ASSERT` will simply assert in debug and be a no-op in release.
+For the cases where the intention really was to inform the compiler about assumptions we should use `DAWN_RELEASE_ASSUME`.
+
 ## Drawback(s)
 
 The main drawback here is when do we get to remove these checks? **The answer is likely never!**
