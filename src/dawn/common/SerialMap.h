@@ -78,7 +78,7 @@ void SerialMap<Serial, Value>::Enqueue(Value&& value, Serial serial) {
 
 template <typename Serial, typename Value>
 void SerialMap<Serial, Value>::Enqueue(const std::vector<Value>& values, Serial serial) {
-    DAWN_ASSERT(values.size() > 0);
+    DAWN_RELEASE_ASSUME(values.size() > 0);
     for (const Value& value : values) {
         Enqueue(value, serial);
     }
@@ -86,7 +86,7 @@ void SerialMap<Serial, Value>::Enqueue(const std::vector<Value>& values, Serial 
 
 template <typename Serial, typename Value>
 void SerialMap<Serial, Value>::Enqueue(std::vector<Value>&& values, Serial serial) {
-    DAWN_ASSERT(values.size() > 0);
+    DAWN_RELEASE_ASSUME(values.size() > 0);
     for (Value& value : values) {
         Enqueue(std::move(value), serial);
     }

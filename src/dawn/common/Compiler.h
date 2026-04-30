@@ -32,6 +32,11 @@
 
 // Defines macros for compiler-specific functionality
 
+// DAWN_UNUSED
+//
+// Prevents unused variable/expression warnings.
+#define DAWN_UNUSED(EXPR) (true ? (void)0 : (void)(EXPR))
+
 // DAWN_UNUSED_FUNC
 //
 // Prevents unused variable/expression warnings on FUNC.
