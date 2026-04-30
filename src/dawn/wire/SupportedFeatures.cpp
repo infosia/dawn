@@ -125,7 +125,7 @@ bool IsFeatureSupported(WGPUFeatureName feature) {
         case WGPUFeatureName_PrimitiveIndex:
         case WGPUFeatureName_AdapterPropertiesWGPU:
         case WGPUFeatureName_ChromiumExperimentalSamplingResourceTable:
-        case WGPUFeatureName_ChromiumExperimentalSubgroupSizeControl:
+        case WGPUFeatureName_SubgroupSizeControl:
         case WGPUFeatureName_AtomicVec2uMinMax:
         case WGPUFeatureName_Unorm16FormatsForExternalTexture:
         case WGPUFeatureName_OpaqueYCbCrAndroidForExternalTexture:

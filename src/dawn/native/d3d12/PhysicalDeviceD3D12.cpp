@@ -202,8 +202,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     // SubgroupSizeControl feature requires SM >= 6.6 for HLSL attribute `[WaveSize]`.
-    if (mDeviceInfo.highestSupportedShaderModel >= 66) {
-        EnableFeature(Feature::ChromiumExperimentalSubgroupSizeControl);
+    if (mDeviceInfo.supportsWaveOps && mDeviceInfo.highestSupportedShaderModel >= 66) {
+        EnableFeature(Feature::SubgroupSizeControl);
     }
 #endif
 
@@ -446,6 +446,7 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
         switch (feature) {
             case wgpu::FeatureName::ShaderF16:
             case wgpu::FeatureName::Subgroups:
+            case wgpu::FeatureName::SubgroupSizeControl:
             case wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable:
                 return FeatureValidationResult(
                     absl::StrFormat("Feature %s requires DXC for D3D12.", feature));

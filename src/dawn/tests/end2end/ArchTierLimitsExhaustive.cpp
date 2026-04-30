@@ -407,7 +407,7 @@ TEST_P(TierArchInfoTest_TieredMaxLimits, ExhaustiveTestAllFeatures) {
         SharedBufferMemoryD3D12SharedMemoryFileMappingHandle,
         SharedTextureMemoryD3D12Resource,
         ChromiumExperimentalSamplingResourceTable,
-        ChromiumExperimentalSubgroupSizeControl,
+        SubgroupSizeControl,
         AtomicVec2uMinMax,
         Unorm16FormatsForExternalTexture,
         Unorm16Filterable,

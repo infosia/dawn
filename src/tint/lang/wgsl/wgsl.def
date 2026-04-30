@@ -101,7 +101,7 @@ enum extension {
   // A Chromium-specific extension for resource table
   chromium_experimental_resource_table
   // A Chromium-specific extension for the attribute `subgroup_size`
-  chromium_experimental_subgroup_size_control
+  subgroup_size_control
   // WGSL Extension for atomic vec2u min max
   atomic_vec2u_min_max
 }
