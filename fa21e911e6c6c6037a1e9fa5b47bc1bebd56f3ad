@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8a9b7c2_39ab37e8",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-04-30T22:10:24Z",
+      "side": 1,
+      "message": "This was an oversight from my previous CL that I caught after seeing some CTS failures. The bundle will have it\u0027s own indexing for the indirect draws it contains, [0..N], and if we increment the mNextIndirectDrawIndex with every *batch* then we\u0027ll wind up with holes in the indirect call indexing and `SetValidatedIndirectDrawArgs` will try indexing out of bounds. The solution is that we apply the same offset to the entire bundle.",
+      "revId": "fa21e911e6c6c6037a1e9fa5b47bc1bebd56f3ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
