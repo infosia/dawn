@@ -34,6 +34,24 @@
       "parentUuid": "19f4cf48_d19367e9",
       "revId": "d084b4b9057a7b357416d5ed4d13a24255ebd5a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03171e0f_7b5c42c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T12:23:57Z",
+      "side": 1,
+      "message": "In general I\u0027m not sure what we\u0027re trying to gain with `OPT_ASSUME`. Most what were previously `ASSERT`s giving useful information to the compiler, we\u0027re hoping to turn into `CHECK`s that won\u0027t give optimization hints. The ones we\u0027re not going to turn into `CHECK`s are either too expensive because they execute a lot of code (so the compiler can\u0027t really use the `__builtin_assume` call anyway), or too performance sensitive.\n\nWhat about keeping `ASSERT` as is, but in \"hardening mode\" like in Chromium, removing the `__builtin_assume` from it. Then we can have a `DAWN_OPT_ASSUME` for the very few cases where it was actually important for performance.\n\nSo we\u0027d have the following:\n\n - `DAWN_RELEASE_ASSUME` (very rare), checks the condition in Debug, `__builtin_assume` in Release.\n - `DAWN_ASSERT` (somewhat rare), checks the condition in Debug, noop in hardenend Release, `__builtin_assume` in non-hardenend Release.\n - `DAWN_CHECK` (common), checks the condition in Debug and hardened Release, `__builtin_assume` in non-hardened Release.",
+      "parentUuid": "f822a318_07d337e3",
+      "revId": "d084b4b9057a7b357416d5ed4d13a24255ebd5a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
