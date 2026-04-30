@@ -62,14 +62,10 @@ Checks: "-*,\
           -cert-oop11-cpp,\
           -cert-oop54-cpp,\
           -cert-str34-c,\
-          -cert-str34-c,\
-          -cert-str34-c,\
-          -cert-str34-c,\
           -clang-analyzer-*,\
           concurrency-*,\
           -concurrency-mt-unsafe,\
           cppcoreguidelines-*,\
-          -concurrency-mt-unsafe,\
           -cppcoreguidelines-avoid-c-arrays,\
           -cppcoreguidelines-avoid-const-or-ref-data-members,\
           -cppcoreguidelines-avoid-do-while,\
