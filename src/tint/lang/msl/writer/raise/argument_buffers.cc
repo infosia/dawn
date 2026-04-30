@@ -33,8 +33,12 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/binding_array.h"
+#include "src/tint/lang/core/type/resource_type.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
+#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/msl/builtin_fn.h"
 #include "src/tint/lang/msl/ir/builtin_call.h"
+#include "src/tint/lang/msl/writer/common/options.h"
 
 namespace tint::msl::writer::raise {
 namespace {
@@ -173,9 +177,67 @@ struct State {
         return Success;
     }
 
+    const core::type::Type* CreatePlaceholderMemberType(
+        const tint::msl::writer::ArgumentBufferInfo::Entry& member) {
+        switch (member.type) {
+            // We assume the layout of a buffer pointer is independent of the pointed-to type.
+            case tint::ResourceType::kUniformBuffer:
+                return ty.ptr(uniform, ty.i32(), read);
+            case tint::ResourceType::kStorageBuffer:
+                return ty.ptr(storage, ty.i32(), read);
+
+            // Metal doesn't care about format, only component type, so use R32* for everything.
+            // clang-format off
+            case tint::ResourceType::kTextureStorage1d_f32_read:            return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Float, core::Access::kRead);
+            case tint::ResourceType::kTextureStorage1d_f32_read_write:      return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Float, core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage1d_f32_write:           return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Float, core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage1d_i32_read:            return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Sint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage1d_i32_read_write:      return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Sint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage1d_i32_write:           return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Sint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage1d_u32_read:            return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Uint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage1d_u32_read_write:      return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Uint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage1d_u32_write:           return ty.storage_texture(core::type::TextureDimension::k1d,      core::TexelFormat::kR32Uint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2dArray_f32_read:       return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Float, core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2dArray_f32_read_write: return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Float, core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2dArray_f32_write:      return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Float, core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2dArray_i32_read:       return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Sint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2dArray_i32_read_write: return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Sint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2dArray_i32_write:      return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Sint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2dArray_u32_read:       return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Uint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2dArray_u32_read_write: return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Uint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2dArray_u32_write:      return ty.storage_texture(core::type::TextureDimension::k2dArray, core::TexelFormat::kR32Uint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2d_f32_read:            return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Float, core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2d_f32_read_write:      return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Float, core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2d_f32_write:           return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Float, core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2d_i32_read:            return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Sint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2d_i32_read_write:      return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Sint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2d_i32_write:           return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Sint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage2d_u32_read:            return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Uint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage2d_u32_read_write:      return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Uint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage2d_u32_write:           return ty.storage_texture(core::type::TextureDimension::k2d,      core::TexelFormat::kR32Uint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage3d_f32_read:            return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Float, core::Access::kRead);
+            case tint::ResourceType::kTextureStorage3d_f32_read_write:      return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Float, core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage3d_f32_write:           return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Float, core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage3d_i32_read:            return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Sint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage3d_i32_read_write:      return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Sint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage3d_i32_write:           return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Sint,  core::Access::kWrite);
+            case tint::ResourceType::kTextureStorage3d_u32_read:            return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Uint,  core::Access::kRead);
+            case tint::ResourceType::kTextureStorage3d_u32_read_write:      return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Uint,  core::Access::kReadWrite);
+            case tint::ResourceType::kTextureStorage3d_u32_write:           return ty.storage_texture(core::type::TextureDimension::k3d,      core::TexelFormat::kR32Uint,  core::Access::kWrite);
+                // clang-format on
+
+            default:
+                return core::type::ResourceTypeToType(ty, member.type);
+
+            case tint::ResourceType::kEmpty:
+                break;
+        }
+        TINT_ICE();
+    }
+
     /// Create the argument buffers. Each bind group will have a separate structure.
     void CreateArgumentBuffers() {
-        Vector<core::ir::Var*, 4> vars;
+        Hashmap<BindingPoint, core::ir::Var*, 4> bindpoint_to_var;
         for (auto* global : *ir.root_block) {
             auto* var = global->As<core::ir::Var>();
             if (!var) {
@@ -192,56 +254,54 @@ struct State {
                 continue;
             }
 
-            vars.Push(var);
+            bindpoint_to_var.Add(*bp, var);
         }
 
-        // Metal requires the argument buffer `id` entries to be in increasing order. Sort the Vars
-        // such that when we create the struct we will create it in ascending order.
-        vars.Sort([&](const auto* va, const auto* vb) {
-            return va->BindingPoint() < vb->BindingPoint();
-        });
+        // Construct the argbuf struct definition.
+        for (const auto& [group, argument_buffer_info] : config.group_to_argument_buffer_info) {
+            // Translate argbuf members from Tint API into IR.
+            Vector<core::type::Manager::StructMemberDesc, 8> struct_members;
+            for (const auto member : argument_buffer_info.struct_members) {
+                Symbol name;
+                const core::type::Type* type = nullptr;
 
-        // Collect a list of struct members for the variable declarations.
-        Hashmap<uint32_t, Vector<core::type::Manager::StructMemberDesc, 8>, 4> group_to_members;
-        for (auto& var : vars) {
-            auto bp = var->BindingPoint();
-            auto* type = var->Result()->Type();
+                // If there's a var for this bindpoint, get the type info from it.
+                // Otherwise, take it from the config.
+                if (auto var = bindpoint_to_var.GetOr(BindingPoint{group, member.id}, nullptr)) {
+                    type = var->Result()->Type();
+                    // Handle types drop the pointer and are passed around by value.
+                    auto* ptr = type->As<core::type::Pointer>();
+                    if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
+                        type = ptr->StoreType();
+                    }
 
-            // Handle types drop the pointer and are passed around by value.
-            auto* ptr = type->As<core::type::Pointer>();
-            if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
-                type = ptr->StoreType();
+                    name = ir.NameOf(var);
+                    if (!name) {
+                        name = ir.symbols.New("unnamed");
+                    }
+                    module_vars.Push(var);
+
+                    var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
+                } else {
+                    type = CreatePlaceholderMemberType(member);
+                    name = ir.symbols.New("placeholder");
+                }
+
+                struct_members.Push(core::type::Manager::StructMemberDesc{
+                    name, type,
+                    core::IOAttributes{
+                        .binding_point = BindingPoint{group, member.id},
+                    }});
             }
 
-            auto name = ir.NameOf(var);
-            if (!name) {
-                name = ir.symbols.New();
-            }
-            module_vars.Push(var);
-
-            auto& struct_members = group_to_members.GetOrAddZero(bp->group);
-            var_to_struct_idx.Add(var, static_cast<uint32_t>(struct_members.Length()));
-
-            struct_members.Push(core::type::Manager::StructMemberDesc{
-                name, type,
-                core::IOAttributes{
-                    .binding_point = BindingPoint{bp->group, bp->binding},
-                }});
-        }
-
-        // Sort the keys for deterministic struct generation
-        auto keys = group_to_members.Keys().Sort();
-
-        for (auto& k : keys) {
             // Create the structure.
-            auto name = ir.symbols.New(std::string(kArgBufferName) + "_" + std::to_string(k));
-            auto members = group_to_members.Get(k);
+            auto name = ir.symbols.New(std::string(kArgBufferName) + "_" + std::to_string(group));
 
-            auto* strct = ty.Struct(name, std::move(*members));
+            auto* strct = ty.Struct(name, std::move(struct_members));
             strct->SetStructFlag(core::type::kExplicitLayout);
 
             auto* type = ty.ptr(uniform, strct, read);
-            arg_buffers.Add(k, type);
+            arg_buffers.Add(group, type);
         }
     }
 
