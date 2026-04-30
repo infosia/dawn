@@ -31,6 +31,7 @@
 
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/TintUtils.h"
 #include "dawn/native/metal/BindGroupMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
@@ -77,11 +78,18 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device,
                     // Metal backend.
                     DAWN_UNREACHABLE();
                 },
-                [&](const TextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
-                [&](const StorageTextureBindingInfo&) { desc.dataType = MTLDataTypeTexture; },
+                [&](const TextureBindingInfo& layout) {
+                    desc.dataType = MTLDataTypeTexture;
+                    desc.textureType =
+                        MetalTextureViewType(layout.viewDimension, layout.multisampled);
+                },
+                [&](const StorageTextureBindingInfo& layout) {
+                    desc.dataType = MTLDataTypeTexture;
+                    desc.textureType = MetalTextureViewType(layout.viewDimension, false);
+                },
                 [&](const TexelBufferBindingInfo&) { DAWN_UNREACHABLE(); },
-                [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
-                [](const ExternalTextureBindingInfo&) { DAWN_UNREACHABLE(); });
+                [&](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); },
+                [&](const ExternalTextureBindingInfo&) { DAWN_UNREACHABLE(); });
 
             descriptors.push_back(desc);
         }
@@ -112,6 +120,26 @@ void BindGroupLayout::ReduceMemoryUsage() {
 
 NSPRef<id<MTLArgumentEncoder>> BindGroupLayout::GetArgumentEncoder() const {
     return mArgumentEncoder;
+}
+
+void BindGroupLayout::FillTintArgumentBufferInfo(
+    tint::msl::writer::ArgumentBufferInfo& info) const {
+    uint32_t curDynamicOffset = 0;
+
+    for (BindingIndex bindingIndex : Range(GetBindingCount())) {
+        const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+
+        if (const auto* binding = std::get_if<BufferBindingInfo>(&bindingInfo.bindingLayout)) {
+            if (binding->hasDynamicOffset) {
+                info.binding_info_to_offset_index.insert(
+                    {uint32_t(bindingIndex), curDynamicOffset++});
+            }
+        }
+        info.struct_members.push_back({
+            .id = uint32_t(bindingIndex),
+            .type = dawn::native::ToResourceType(bindingInfo),
+        });
+    }
 }
 
 }  // namespace dawn::native::metal
