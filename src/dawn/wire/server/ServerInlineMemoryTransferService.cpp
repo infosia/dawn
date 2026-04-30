@@ -52,8 +52,8 @@ class InlineMemoryTransferService : public MemoryTransferService {
                                  size_t offset,
                                  std::span<char> serializeData) override {
             if (!data.empty()) {
-                DAWN_ASSERT(data.data() != nullptr);
-                DAWN_ASSERT(serializeData.data() != nullptr);
+                DAWN_CHECK(data.data() != nullptr);
+                DAWN_CHECK(serializeData.data() != nullptr);
                 memcpy(serializeData.data(), data.data(), data.size());
             }
         }

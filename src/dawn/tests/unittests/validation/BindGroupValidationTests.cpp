@@ -593,7 +593,7 @@ TEST_F(BindGroupValidationTest, StorageTextureUsage) {
     ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, layout, {{0, view}}));
 
     // Multisampled texture is invalid with storage buffer binding
-    // Regression case for crbug.com/dawn/614 where this hit an DAWN_ASSERT.
+    // Regression case for crbug.com/dawn/614 where this hit a DAWN_ASSERT.
     descriptor.sampleCount = 4;
     descriptor.usage |= wgpu::TextureUsage::RenderAttachment;
     view = device.CreateTexture(&descriptor).CreateView();
