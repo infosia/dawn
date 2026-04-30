@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41d295ed_a41091c5",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-30T08:26:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d625745d_208f6e25",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1a0d65c_4d263b7d",
@@ -103,6 +121,24 @@
       "side": 0,
       "message": "Yeah I was just thinking of testing the cases that are known to be invalid, but I guess that might not be useful without having the valid control case.\n\nMaybe just keep the error tests for the E2E tests as I suggested above?",
       "parentUuid": "523fe843_6ce5c932",
+      "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83f48312_96fdcde1",
+        "filename": "src/dawn/tests/unittests/validation/ShaderModuleValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-04-30T08:26:58Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "cc06f851_faee089b",
       "revId": "35e124b3aad87032541747a0a4bc1bb87bc338c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
