@@ -33,6 +33,46 @@
       "message": "Why now we don\u0027t run WebGPU CTS on Intel UHD770 bots?",
       "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14ccbf4b_33e4ebfe",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:07:06Z",
+      "side": 1,
+      "message": "The toggle description should say what the Toggle does instead of what it was created for.",
+      "range": {
+        "startLine": 753,
+        "startChar": 34,
+        "endLine": 753,
+        "endChar": 85
+      },
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14a9e8fa_a26d2dca",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-04-30T11:07:06Z",
+      "side": 1,
+      "message": "Any chance that a driver update fixes it?",
+      "revId": "c4b9ad2b92a26ddb9ad9118293e6fc0feb04a902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
