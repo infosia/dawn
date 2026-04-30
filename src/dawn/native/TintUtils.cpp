@@ -27,6 +27,7 @@
 
 #include "dawn/native/TintUtils.h"
 
+#include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Pipeline.h"
@@ -183,6 +184,222 @@ std::unordered_map<tint::OverrideId, double> BuildSubstituteOverridesTransformCo
         map.insert({{o.id.value}, value});
     }
     return map;
+}
+
+tint::ResourceType ToResourceType(const dawn::native::BindingInfo& bindingInfo) {
+    return MatchVariant(
+        bindingInfo.bindingLayout,
+        [&](const BufferBindingInfo& binding) {
+            switch (binding.type) {
+                case wgpu::BufferBindingType::Uniform:
+                    return tint::ResourceType::kUniformBuffer;
+                case wgpu::BufferBindingType::Storage:
+                case wgpu::BufferBindingType::ReadOnlyStorage:
+                case kInternalStorageBufferBinding:
+                case kInternalReadOnlyStorageBufferBinding:
+                    return tint::ResourceType::kStorageBuffer;
+                case wgpu::BufferBindingType::BindingNotUsed:
+                case wgpu::BufferBindingType::Undefined:
+                    break;
+            }
+            DAWN_UNREACHABLE();
+        },
+        [&](const SamplerBindingInfo& binding) {
+            switch (binding.type) {
+                case wgpu::SamplerBindingType::Comparison:
+                    return tint::ResourceType::kSampler_comparison;
+                case wgpu::SamplerBindingType::Filtering:
+                    return tint::ResourceType::kSampler_filtering;
+                case wgpu::SamplerBindingType::NonFiltering:
+                    return tint::ResourceType::kSampler_non_filtering;
+                case wgpu::SamplerBindingType::BindingNotUsed:
+                case wgpu::SamplerBindingType::Undefined:
+                case kUnknownFilteringSamplerBindingType:
+                    break;
+            }
+            DAWN_UNREACHABLE();
+        },
+        [&](const TextureBindingInfo& binding) {
+            if (binding.multisampled) {
+                switch (binding.sampleType) {
+                    case wgpu::TextureSampleType::UnfilterableFloat:
+                        return tint::ResourceType::kTextureMultisampled2d_f32;
+                    case wgpu::TextureSampleType::Uint:
+                        return tint::ResourceType::kTextureMultisampled2d_u32;
+                    case wgpu::TextureSampleType::Sint:
+                        return tint::ResourceType::kTextureMultisampled2d_i32;
+                    case wgpu::TextureSampleType::Depth:
+                        return tint::ResourceType::kTextureDepthMultisampled2d;
+                    case wgpu::TextureSampleType::Float:
+                    case wgpu::TextureSampleType::BindingNotUsed:
+                    case wgpu::TextureSampleType::Undefined:
+                    case kUnknownFilterableFloatSampleType:
+                    case kInternalResolveAttachmentSampleType:
+                        break;
+                }
+                DAWN_UNREACHABLE();
+            }
+
+            if (binding.sampleType == wgpu::TextureSampleType::Depth) {
+                switch (binding.viewDimension) {
+                    case wgpu::TextureViewDimension::e2D:
+                        return tint::ResourceType::kTextureDepth2d;
+                    case wgpu::TextureViewDimension::e2DArray:
+                        return tint::ResourceType::kTextureDepth2dArray;
+                    case wgpu::TextureViewDimension::Cube:
+                        return tint::ResourceType::kTextureDepthCube;
+                    case wgpu::TextureViewDimension::CubeArray:
+                        return tint::ResourceType::kTextureDepthCubeArray;
+                    case wgpu::TextureViewDimension::Undefined:
+                    case wgpu::TextureViewDimension::e1D:
+                    case wgpu::TextureViewDimension::e3D:
+                    case kInternalInputAttachmentDim:
+                        break;
+                }
+                DAWN_UNREACHABLE();
+            }
+
+            switch (binding.sampleType) {
+                case wgpu::TextureSampleType::Float:
+                case wgpu::TextureSampleType::UnfilterableFloat: {
+                    bool filterable = binding.sampleType == wgpu::TextureSampleType::Float;
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return filterable ? tint::ResourceType::kTexture1d_f32_filterable
+                                              : tint::ResourceType::kTexture1d_f32_unfilterable;
+                        case wgpu::TextureViewDimension::e2D:
+                            return filterable ? tint::ResourceType::kTexture2d_f32_filterable
+                                              : tint::ResourceType::kTexture2d_f32_unfilterable;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return filterable
+                                       ? tint::ResourceType::kTexture2dArray_f32_filterable
+                                       : tint::ResourceType::kTexture2dArray_f32_unfilterable;
+                        case wgpu::TextureViewDimension::Cube:
+                            return filterable ? tint::ResourceType::kTextureCube_f32_filterable
+                                              : tint::ResourceType::kTextureCube_f32_unfilterable;
+                        case wgpu::TextureViewDimension::CubeArray:
+                            return filterable
+                                       ? tint::ResourceType::kTextureCubeArray_f32_filterable
+                                       : tint::ResourceType::kTextureCubeArray_f32_unfilterable;
+                        case wgpu::TextureViewDimension::e3D:
+                            return filterable ? tint::ResourceType::kTexture3d_f32_filterable
+                                              : tint::ResourceType::kTexture3d_f32_unfilterable;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                }
+                case wgpu::TextureSampleType::Uint:
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return tint::ResourceType::kTexture1d_u32;
+                        case wgpu::TextureViewDimension::e2D:
+                            return tint::ResourceType::kTexture2d_u32;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return tint::ResourceType::kTexture2dArray_u32;
+                        case wgpu::TextureViewDimension::Cube:
+                            return tint::ResourceType::kTextureCube_u32;
+                        case wgpu::TextureViewDimension::CubeArray:
+                            return tint::ResourceType::kTextureCubeArray_u32;
+                        case wgpu::TextureViewDimension::e3D:
+                            return tint::ResourceType::kTexture3d_u32;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                case wgpu::TextureSampleType::Sint:
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return tint::ResourceType::kTexture1d_i32;
+                        case wgpu::TextureViewDimension::e2D:
+                            return tint::ResourceType::kTexture2d_i32;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return tint::ResourceType::kTexture2dArray_i32;
+                        case wgpu::TextureViewDimension::Cube:
+                            return tint::ResourceType::kTextureCube_i32;
+                        case wgpu::TextureViewDimension::CubeArray:
+                            return tint::ResourceType::kTextureCubeArray_i32;
+                        case wgpu::TextureViewDimension::e3D:
+                            return tint::ResourceType::kTexture3d_i32;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                case wgpu::TextureSampleType::BindingNotUsed:
+                case wgpu::TextureSampleType::Undefined:
+                case wgpu::TextureSampleType::Depth:
+                case kUnknownFilterableFloatSampleType:
+                case kInternalResolveAttachmentSampleType:
+                    break;
+            }
+            DAWN_UNREACHABLE();
+        },
+        [&](const StorageTextureBindingInfo& binding) {
+            switch (binding.access) {
+                case wgpu::StorageTextureAccess::ReadOnly:
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return tint::ResourceType::kStorageTexture_1d_read;
+                        case wgpu::TextureViewDimension::e2D:
+                            return tint::ResourceType::kStorageTexture_2d_read;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return tint::ResourceType::kStorageTexture_2dArray_read;
+                        case wgpu::TextureViewDimension::e3D:
+                            return tint::ResourceType::kStorageTexture_3d_read;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case wgpu::TextureViewDimension::Cube:
+                        case wgpu::TextureViewDimension::CubeArray:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                case wgpu::StorageTextureAccess::WriteOnly:
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return tint::ResourceType::kStorageTexture_1d_write;
+                        case wgpu::TextureViewDimension::e2D:
+                            return tint::ResourceType::kStorageTexture_2d_write;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return tint::ResourceType::kStorageTexture_2dArray_write;
+                        case wgpu::TextureViewDimension::e3D:
+                            return tint::ResourceType::kStorageTexture_3d_write;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case wgpu::TextureViewDimension::Cube:
+                        case wgpu::TextureViewDimension::CubeArray:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                case wgpu::StorageTextureAccess::ReadWrite:
+                    switch (binding.viewDimension) {
+                        case wgpu::TextureViewDimension::e1D:
+                            return tint::ResourceType::kStorageTexture_1d_read_write;
+                        case wgpu::TextureViewDimension::e2D:
+                            return tint::ResourceType::kStorageTexture_2d_read_write;
+                        case wgpu::TextureViewDimension::e2DArray:
+                            return tint::ResourceType::kStorageTexture_2dArray_read_write;
+                        case wgpu::TextureViewDimension::e3D:
+                            return tint::ResourceType::kStorageTexture_3d_read_write;
+                        case wgpu::TextureViewDimension::Undefined:
+                        case wgpu::TextureViewDimension::Cube:
+                        case wgpu::TextureViewDimension::CubeArray:
+                        case kInternalInputAttachmentDim:
+                            break;
+                    }
+                    DAWN_UNREACHABLE();
+                case wgpu::StorageTextureAccess::BindingNotUsed:
+                case wgpu::StorageTextureAccess::Undefined:
+                    break;
+            }
+            DAWN_UNREACHABLE();
+        },
+        [&](const StaticSamplerBindingInfo&) -> tint::ResourceType { DAWN_UNREACHABLE(); },
+        [&](const TexelBufferBindingInfo&) -> tint::ResourceType { DAWN_UNREACHABLE(); },
+        [&](const ExternalTextureBindingInfo&) -> tint::ResourceType { DAWN_UNREACHABLE(); },
+        [&](const InputAttachmentBindingInfo&) -> tint::ResourceType { DAWN_UNREACHABLE(); });
 }
 
 }  // namespace dawn::native

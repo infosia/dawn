@@ -32,6 +32,15 @@
 
 namespace tint {
 
+enum class TextureViewDimension : uint8_t {
+    k1d,
+    k2d,
+    k2dArray,
+    kCube,
+    kCubeArray,
+    k3d,
+};
+
 enum class ResourceType : uint32_t {
     kEmpty,
 
@@ -70,9 +79,30 @@ enum class ResourceType : uint32_t {
     kTextureDepthCubeArray,
     kTextureDepthMultisampled2d,
 
+    // Uniform buffer type (we don't need to know the data type of the pointee).
+    kUniformBuffer,
+
+    // Storage buffer type (we don't need to know the data type of the pointee, or the access mode).
+    kStorageBuffer,
+
+    // Format-less storage texture types (we don't need to know the format).
+    kStorageTexture_1d_read,
+    kStorageTexture_2d_read,
+    kStorageTexture_2dArray_read,
+    kStorageTexture_3d_read,
+    kStorageTexture_1d_write,
+    kStorageTexture_2d_write,
+    kStorageTexture_2dArray_write,
+    kStorageTexture_3d_write,
+    kStorageTexture_1d_read_write,
+    kStorageTexture_2d_read_write,
+    kStorageTexture_2dArray_read_write,
+    kStorageTexture_3d_read_write,
+
     kSampler_filtering,
     kSampler_non_filtering,
     kSampler_comparison,
+    // NOTE: If adding more items here, be sure to update the range below.
 };
 TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kSampler_comparison);
 

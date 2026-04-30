@@ -58,6 +58,8 @@ std::unordered_map<tint::OverrideId, double> BuildSubstituteOverridesTransformCo
     const EntryPointMetadata& metadata,
     const PipelineConstantEntries& constants);
 
+tint::ResourceType ToResourceType(const dawn::native::BindingInfo& bindingInfo);
+
 namespace stream {
 // Uses tint::ForeachField when available to implement the stream::Stream trait for types.
 template <typename T>
