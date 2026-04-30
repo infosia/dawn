@@ -298,7 +298,7 @@ OnDebugUtilsCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
     return VK_FALSE;
 }
 
-// A debug callback specifically for instance creation so that we don't fire an DAWN_ASSERT when
+// A debug callback specifically for instance creation so that we don't fire a DAWN_ASSERT when
 // the instance fails creation in an expected manner (for example the system not having
 // Vulkan drivers).
 VKAPI_ATTR VkBool32 VKAPI_CALL
