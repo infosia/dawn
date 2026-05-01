@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0877a3ed_9af9999b",
+        "filename": ".clang-tidy",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-01T15:28:47Z",
+      "side": 1,
+      "message": "\"AI was used to make some of these changes.\"\nYou can see the kind of changes AI makes. This is the best model\nI dont even know if it understands how this file works.",
+      "parentUuid": "bcb63ef7_7f428846",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2e154ca_2bab2f9e",
         "filename": ".clang-tidy",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-01T04:46:45Z",
       "side": 1,
       "message": "Should probably keep this one, it\u0027s an alias for the other magic number check we kept (and it\u0027s kinda annoying)\n```suggestion\n          -cppcoreguidelines-avoid-magic-numbers,\\\n```",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48baa83c_d2241702",
+        "filename": ".clang-tidy",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-01T15:28:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e154ca_2bab2f9e",
       "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
