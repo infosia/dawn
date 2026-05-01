@@ -425,6 +425,7 @@ crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,express
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureNumLevels:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,expression,call,builtin,textureSample:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:* [ Skip ]
 
 ################################################################################
 # Triaged or Manually-Added Flakes and Failures
