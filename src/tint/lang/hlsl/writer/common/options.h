@@ -128,7 +128,8 @@ struct Options {
     /// The downstream compiler to be used
     enum class Compiler : uint8_t {
         kFXC,
-        kDXC,
+        kDXC_2018,  // DXC with HLSL 2018. Will be removed when 2021 is always used.
+        kDXC_2021,  // DXC with HLSL 2021.
     };
 
     /// The set of options to work around driver issues
@@ -218,7 +219,7 @@ struct Options {
     Extensions extensions{};
 
     /// The downstream compiler which will be used
-    Compiler compiler = Compiler::kDXC;
+    Compiler compiler = Compiler::kDXC_2018;
 
     /// Options used to specify a mapping of binding points to indices into a UBO
     /// from which to load buffer sizes.
@@ -297,7 +298,7 @@ namespace tint {
 
 /// Reflect valid value ranges for the PixelLocalAttachment::TexelFormat enum.
 TINT_REFLECT_ENUM_RANGE(hlsl::writer::PixelLocalAttachment::TexelFormat, kR32Sint, kR32Float);
-TINT_REFLECT_ENUM_RANGE(hlsl::writer::Options::Compiler, kFXC, kDXC);
+TINT_REFLECT_ENUM_RANGE(hlsl::writer::Options::Compiler, kFXC, kDXC_2021);
 
 }  // namespace tint
 

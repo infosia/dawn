@@ -283,7 +283,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
                                         ? tint::hlsl::writer::Options::Compiler::kFXC
-                                        : tint::hlsl::writer::Options::Compiler::kDXC;
+                                        : tint::hlsl::writer::Options::Compiler::kDXC_2018;
 
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);

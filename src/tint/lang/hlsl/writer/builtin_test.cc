@@ -132,7 +132,7 @@ TEST_F(HlslWriterTest, BuiltinTruncDxc) {
     });
 
     Options opts;
-    opts.compiler = Options::Compiler::kDXC;
+    opts.compiler = Options::Compiler::kDXC_2018;
     auto result = Generate(opts);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
