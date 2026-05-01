@@ -72,7 +72,7 @@ class HlslWriterTestHelperBase : public BASE {
             const char* dxc_path = validate::kDxcDLLName;
             auto dxc = tint::Command::LookPath(dxc_path);
             if (dxc.Found()) {
-                uint32_t hlsl_shader_model = 66;
+                auto hlsl_shader_model = validate::HlslShaderModel::kSM_6_6;
                 bool require_16bit_types = true;
 
                 auto validate_res = validate::ValidateUsingDXC(
