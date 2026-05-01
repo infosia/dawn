@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1b472eb_cce55289",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-01T12:23:47Z",
+      "side": 1,
+      "message": "Actually, let me rephrase since this has changed recently, the version of `third_party/directx-headers` we use is determined by the version DXC wants to use, which is an earlier revision.",
+      "parentUuid": "60c8227d_c8578161",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0fd19bf_aca6a84a",
         "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
         "patchSetId": 8
