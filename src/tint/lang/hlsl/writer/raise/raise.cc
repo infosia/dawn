@@ -362,6 +362,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     {
         raise::BuiltinPolyfillConfig config;
         config.polyfill_trunc = (options.compiler == Options::Compiler::kFXC);
+        config.use_hlsl_2021_select = (options.compiler == Options::Compiler::kDXC_2021);
         TINT_CHECK_RESULT(raise::BuiltinPolyfill(module, config));
     }
     TINT_CHECK_RESULT(core::ir::transform::VectorizeScalarMatrixConstructors(module));

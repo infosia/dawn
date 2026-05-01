@@ -834,6 +834,9 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitTernary(StringStream& out, const hlsl::ir::Ternary* t) {
+        // When targeting HLSL 2021 we should always be using `select()`, since ternary operators
+        // became short-circuiting.
+        TINT_IR_ASSERT(ir_, options_.compiler != Options::Compiler::kDXC_2021);
         out << "((";
         EmitValue(out, t->Cmp());
         out << ") ? (";
