@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0594537_6082cec4",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: warning: building this file or its dependencies failed; no diagnostics will be i...\n\nwarning: building this file or its dependencies failed; no diagnostics will be issued. When diagnosing, it\u0027s normal that the clang-tidy step is green. You need to click through the step output to find the actual error.\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel` or `mac-clang-tidy-rel`)",
+      "revId": "187da3d79d0c628b67afb10b95f04804f781b053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f989824a_77373883",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel` or `mac-clang-tidy-rel`)",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "187da3d79d0c628b67afb10b95f04804f781b053",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

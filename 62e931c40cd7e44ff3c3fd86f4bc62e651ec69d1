@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71d0769e_cf114cdc",
+        "filename": "src/dawn/replay/CaptureWalker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Expose a `SurfaceDiscoveryVisitor` issue when running GetSurfaceInfo in DawnTest: Add `SkipEncoderCommands` and `SkipRenderBundleCommands` in `CaptureWalker` to correctly advance the ReadHead when skipping CommandBuffer/RenderBundle creation.\nAdd a unittest.",
+      "revId": "62e931c40cd7e44ff3c3fd86f4bc62e651ec69d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

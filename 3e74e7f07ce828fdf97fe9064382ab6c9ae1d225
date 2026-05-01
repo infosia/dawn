@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4c8b4a1_1f693f06",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-use-concise-preprocessor-directives\n\npreprocessor condition c...\n\ncheck: readability-use-concise-preprocessor-directives\n\npreprocessor condition can be written more concisely using \u0027#ifdef\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/readability/use-concise-preprocessor-directives.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-use-concise-preprocessor-directives` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "3e74e7f07ce828fdf97fe9064382ab6c9ae1d225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

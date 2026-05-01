@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e89fc2_9de64016",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "ef33105b_8d4fe2c5",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6399d6a6_89a4dbb2",
@@ -48,6 +66,30 @@
       "writtenOn": "2026-04-30T11:04:51Z",
       "side": 1,
       "message": "the return value is not used.",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 20
+      },
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95aea571_a0997bf1",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done (nit: actually this is to be parrallel with Replay, and can save a GetCapture())",
+      "parentUuid": "6399d6a6_89a4dbb2",
       "range": {
         "startLine": 174,
         "startChar": 4,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91cdd163_4e2f896e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "357fc9e9_8bde79a6",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c833baf5_027d09ea",
@@ -88,6 +148,30 @@
       "writtenOn": "2026-04-30T11:04:51Z",
       "side": 1,
       "message": "These won\u0027t be needed anymore.",
+      "range": {
+        "startLine": 1365,
+        "startChar": 0,
+        "endLine": 1387,
+        "endChar": 0
+      },
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3470fe09_93e15400",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c833baf5_027d09ea",
       "range": {
         "startLine": 1365,
         "startChar": 0,
@@ -115,6 +199,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "329ef7bb_d6b2d582",
+        "filename": "src/dawn/tests/end2end/CaptureAndReplayTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b3faf1_63ef4bc6",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8638547e_1e6e2430",
@@ -128,6 +230,24 @@
       "writtenOn": "2026-04-30T11:04:51Z",
       "side": 1,
       "message": "This can be in the section of DawnTest that does the replaying instead of specifically in this test file. This way it will work for future additions as well and keeps the logic in the same place.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d7e65d9_570c1e63",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done (glfw3 isn\u0027t always available, has to guard with DAWN_SUPPORTS_GLFW_FOR_WINDOWING and related replay window stuff in DawnTest)",
+      "parentUuid": "8638547e_1e6e2430",
       "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -149,6 +269,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e5993c_80dbeb6e",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1b5eb7_c7ce5481",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcc328a9_9e37d571",
@@ -166,6 +304,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b33f058_95a69bae",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc328a9_9e37d571",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dbdaeff_8ec8c2bc",
@@ -179,6 +335,24 @@
       "writtenOn": "2026-04-30T11:04:51Z",
       "side": 1,
       "message": "`replayWindow.clear()` is sufficient since we use RAII. Likewise for `surfaces`.",
+      "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a76cc149_0be354bb",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-01T03:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dbdaeff_8ec8c2bc",
       "revId": "27645a3fc1aae6d9839908336209f0bd56981474",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
