@@ -152,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba40691e_c1386dd0",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-01T22:59:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a2d87c5d_b7c9a1b9",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f82006f2_5fd0e8cc",
@@ -169,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "149c2160_90f842a9",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-01T22:59:48Z",
+      "side": 1,
+      "message": "Done. Added the comment at [1].",
+      "parentUuid": "f82006f2_5fd0e8cc",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6045351a_6e0c038f",
@@ -182,6 +218,24 @@
       "writtenOn": "2026-04-29T13:28:39Z",
       "side": 1,
       "message": "Let\u0027s have a TODO for indirect dispatches as well.",
+      "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee947b70_57d0cdb7",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-01T22:59:48Z",
+      "side": 1,
+      "message": "We don\u0027t have any validation of indirect dispatches that would change the args.",
+      "parentUuid": "6045351a_6e0c038f",
       "revId": "3444146d0eb55a748734e0afdeb8667f72cf967f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

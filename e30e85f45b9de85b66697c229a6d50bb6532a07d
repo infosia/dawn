@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "899e3cea_9ad709b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-01T22:59:48Z",
+      "side": 1,
+      "message": "Okay, implemented for all the backends! Should be ready to land. PTAL.",
+      "revId": "e30e85f45b9de85b66697c229a6d50bb6532a07d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a28ad0d_26c36622",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-01T22:59:48Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "e30e85f45b9de85b66697c229a6d50bb6532a07d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
