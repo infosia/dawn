@@ -82,14 +82,12 @@ MaybeError ValidateCanViewTextureAs(const DeviceBase* device,
     const Format& format = texture->GetFormat();
 
     if (aspect != wgpu::TextureAspect::All) {
-        wgpu::TextureFormat aspectFormat = format.GetAspectInfo(aspect).format;
+        const wgpu::TextureFormat aspectFormat = format.GetAspectInfo(aspect).format;
         if (viewFormat.format == aspectFormat) {
             return {};
-        } else {
-            return DAWN_VALIDATION_ERROR(
-                "The view format (%s) is not compatible with %s of %s (%s).", viewFormat.format,
-                aspect, format.format, aspectFormat);
         }
+        return DAWN_VALIDATION_ERROR("The view format (%s) is not compatible with %s of %s (%s).",
+                                     viewFormat.format, aspect, format.format, aspectFormat);
     }
 
     if (format.format == viewFormat.format) {
@@ -1289,7 +1287,9 @@ uint32_t TextureBase::GetNumMipLevels() const {
 }
 SubresourceRange TextureBase::GetAllSubresources() const {
     DAWN_CHECK(!IsError());
-    return {mFormat->aspects, {0, GetArrayLayers()}, {0, mMipLevelCount}};
+    return {mFormat->aspects,
+            {.first = 0, .count = GetArrayLayers()},
+            {.first = 0, .count = mMipLevelCount}};
 }
 uint32_t TextureBase::GetSampleCount() const {
     DAWN_CHECK(!IsError());
@@ -1344,7 +1344,7 @@ ExecutionSerial TextureBase::OnEndAccess() {
     Unpin();
 
     mState.hasAccess = false;
-    ExecutionSerial lastUsageSerial = mLastSharedTextureMemoryUsageSerial;
+    const ExecutionSerial lastUsageSerial = mLastSharedTextureMemoryUsageSerial;
     mLastSharedTextureMemoryUsageSerial = kBeginningOfGPUTime;
     return lastUsageSerial;
 }
@@ -1497,9 +1497,11 @@ Extent3D TextureBase::ClampToMipLevelVirtualSize(uint32_t level,
                                           ? (virtualSizeAtLevel.width - origin.x)
                                           : extent.width;
     uint32_t clampedCopyExtentHeight = (extent.height > virtualSizeAtLevel.height - origin.y)
-                                           ? (virtualSizeAtLevel.height - origin.y)
+                                           ? virtualSizeAtLevel.height - origin.y
                                            : extent.height;
-    return {clampedCopyExtentWidth, clampedCopyExtentHeight, extent.depthOrArrayLayers};
+    return {.width = clampedCopyExtentWidth,
+            .height = clampedCopyExtentHeight,
+            .depthOrArrayLayers = extent.depthOrArrayLayers};
 }
 
 Extent3D TextureBase::GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect aspect) const {
@@ -1814,17 +1816,15 @@ void TextureBase::APISetOwnershipForMemoryDump(uint64_t ownerGuid) {
 
 // TextureViewQuery
 
-TextureViewQuery::TextureViewQuery(const UnpackedPtr<TextureViewDescriptor>& desc) {
-    // TextureViewDescriptor fields
-    format = desc->format;
-    dimension = desc->dimension;
-    baseMipLevel = desc->baseMipLevel;
-    mipLevelCount = desc->mipLevelCount;
-    baseArrayLayer = desc->baseArrayLayer;
-    arrayLayerCount = desc->arrayLayerCount;
-    aspect = desc->aspect;
-    usage = desc->usage;
-
+TextureViewQuery::TextureViewQuery(const UnpackedPtr<TextureViewDescriptor>& desc)
+    : format(desc->format),
+      dimension(desc->dimension),
+      baseMipLevel(desc->baseMipLevel),
+      mipLevelCount(desc->mipLevelCount),
+      baseArrayLayer(desc->baseArrayLayer),
+      arrayLayerCount(desc->arrayLayerCount),
+      aspect(desc->aspect),
+      usage(desc->usage) {
     if (auto* swizzleDesc = desc.Get<TextureComponentSwizzleDescriptor>()) {
         auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
         swizzleRed = swizzle.r;
@@ -1887,7 +1887,9 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
 }
 
 TextureViewBase::TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
-    : ApiObjectBase(device, tag, label), mFormat(kUnusedFormat) {}
+    : ApiObjectBase(device, tag, label),
+      mFormat(kUnusedFormat),
+      mDimension(wgpu::TextureViewDimension::Undefined) {}
 
 TextureViewBase::~TextureViewBase() = default;
 

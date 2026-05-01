@@ -64,7 +64,7 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
     BindingCounts bindingCounts{};
 
     // Validation for any pixel local storage.
-    if (auto* pls = unpacked.Get<PipelineLayoutPixelLocalStorage>()) {
+    if (const auto* pls = unpacked.Get<PipelineLayoutPixelLocalStorage>()) {
         absl::InlinedVector<StorageAttachmentInfoForValidation, 4> attachments;
         for (size_t i = 0; i < pls->storageAttachmentCount; i++) {
             const PipelineLayoutStorageAttachment& attachment = pls->storageAttachments[i];

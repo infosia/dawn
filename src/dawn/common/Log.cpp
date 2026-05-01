@@ -102,7 +102,7 @@ LogMessage::~LogMessage() {
 }
 #else  // defined(DAWN_DISABLE_LOGGING)
 LogMessage::~LogMessage() {
-    std::string fullMessage = mStream.str();
+    const std::string fullMessage = mStream.str();
 
     // If this message has been moved, its stream is empty.
     if (fullMessage.empty()) {
@@ -135,8 +135,8 @@ LogMessage::~LogMessage() {
 #endif  // DAWN_PLATFORM_IS(WINDOWS) && defined(OFFICIAL_BUILD)
 
     // Note: we use fprintf because <iostream> includes static initializers.
-    fprintf(outputStream, "%s: %s\n", severityName, fullMessage.c_str());
-    fflush(outputStream);
+    (void)fprintf(outputStream, "%s: %s\n", severityName, fullMessage.c_str());  // NOLINT
+    (void)fflush(outputStream);
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 }
 #endif  // defined(DAWN_DISABLE_LOGGING)

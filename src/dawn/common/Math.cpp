@@ -27,9 +27,10 @@
 
 #include "dawn/common/Math.h"
 
-#include <algorithm>
 #include <bit>
 #include <cmath>
+#include <cstddef>
+#include <cstdint>
 #include <limits>
 
 #include "dawn/common/Assert.h"
@@ -69,22 +70,24 @@ bool IsAligned(uint32_t value, size_t alignment) {
     DAWN_ASSERT(alignment <= UINT32_MAX);
     DAWN_ASSERT(IsPowerOfTwo(alignment));
     DAWN_ASSERT(alignment != 0);
-    uint32_t alignment32 = static_cast<uint32_t>(alignment);
+    const auto alignment32 = static_cast<uint32_t>(alignment);
     return (value & (alignment32 - 1)) == 0;
 }
 
 uint16_t Float32ToFloat16(float fp32) {
-    uint32_t fp32i = std::bit_cast<uint32_t>(fp32);
-    uint32_t sign16 = (fp32i & 0x80000000) >> 16;
+    const auto fp32i = std::bit_cast<uint32_t>(fp32);
+    const uint32_t sign16 = (fp32i & 0x80000000) >> 16;
     uint32_t mantissaAndExponent = fp32i & 0x7FFFFFFF;
 
     if (mantissaAndExponent > 0x7F800000) {  // NaN
         return 0x7FFF;
-    } else if (mantissaAndExponent > 0x47FFEFFF) {  // Infinity
+    }
+    if (mantissaAndExponent > 0x47FFEFFF) {  // Infinity
         return static_cast<uint16_t>(sign16 | 0x7C00);
-    } else if (mantissaAndExponent < 0x38800000) {  // Denormal
-        uint32_t mantissa = (mantissaAndExponent & 0x007FFFFF) | 0x00800000;
-        int32_t exponent = 113 - (mantissaAndExponent >> 23);
+    }
+    if (mantissaAndExponent < 0x38800000) {  // Denormal
+        const uint32_t mantissa = (mantissaAndExponent & 0x007FFFFF) | 0x00800000;
+        const int32_t exponent = 113 - static_cast<int32_t>(mantissaAndExponent >> 23);
 
         if (exponent < 24) {
             mantissaAndExponent = mantissa >> exponent;
@@ -94,16 +97,15 @@ uint16_t Float32ToFloat16(float fp32) {
 
         return static_cast<uint16_t>(
             sign16 | (mantissaAndExponent + 0x00000FFF + ((mantissaAndExponent >> 13) & 1)) >> 13);
-    } else {
-        return static_cast<uint16_t>(sign16 | (mantissaAndExponent + 0xC8000000 + 0x00000FFF +
-                                               ((mantissaAndExponent >> 13) & 1)) >>
-                                                  13);
     }
+    return static_cast<uint16_t>(
+        sign16 |
+        (mantissaAndExponent + 0xC8000000 + 0x00000FFF + ((mantissaAndExponent >> 13) & 1)) >> 13);
 }
 
 float Float16ToFloat32(uint16_t fp16) {
     uint32_t tmp = (fp16 & 0x7fff) << 13 | (fp16 & 0x8000) << 16;
-    float tmp2 = *reinterpret_cast<float*>(&tmp);
+    const float tmp2 = *reinterpret_cast<float*>(&tmp);
     return powf(2.0f, 127.0f - 15.0f) * tmp2;
 }
 
@@ -116,15 +118,15 @@ float SRGBToLinear(float srgb) {
     // sRGB is always used in unsigned normalized formats so clamp to [0.0, 1.0]
     if (srgb <= 0.0f) {
         return 0.0f;
-    } else if (srgb > 1.0f) {
+    }
+    if (srgb > 1.0f) {
         return 1.0f;
     }
 
     if (srgb < 0.04045f) {
         return srgb / 12.92f;
-    } else {
-        return std::pow((srgb + 0.055f) / 1.055f, 2.4f);
     }
+    return std::pow((srgb + 0.055f) / 1.055f, 2.4f);
 }
 
 uint64_t RoundUp(uint64_t n, uint64_t m) {

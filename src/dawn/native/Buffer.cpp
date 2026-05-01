@@ -39,7 +39,6 @@
 #include <string>
 #include <utility>
 
-#include "absl/container/flat_hash_map.h"
 #include "absl/strings/str_format.h"
 #include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
@@ -90,8 +89,9 @@ class ErrorBuffer final : public BufferBase {
         // Check that the size can be used to allocate mFakeMappedData. A malloc(0)
         // is invalid, and on 32bit systems we should avoid a narrowing conversion that
         // would make size = 1 << 32 + 1 allocate one byte.
-        uint64_t size = GetSize();
-        bool isValidSize = size != 0 && size < uint64_t(std::numeric_limits<size_t>::max());
+        const uint64_t size = GetSize();
+        const bool isValidSize =
+            size != 0 && size < static_cast<uint64_t>(std::numeric_limits<size_t>::max());
 
         if (isValidSize) {
             mFakeMappedData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));

@@ -82,9 +82,10 @@ void CopyTextureData(uint8_t* dstPointer,
                      uint32_t actualBytesPerRow,
                      uint32_t dstBytesPerRow,
                      uint32_t srcBytesPerRow) {
-    uint64_t imageAdditionalStride = srcBytesPerRow * (srcRowsPerImage - dstRowsPerImage);
-    bool copyWholeLayer = actualBytesPerRow == dstBytesPerRow && dstBytesPerRow == srcBytesPerRow;
-    bool copyWholeData = copyWholeLayer && imageAdditionalStride == 0;
+    const uint64_t imageAdditionalStride = srcBytesPerRow * (srcRowsPerImage - dstRowsPerImage);
+    const bool copyWholeLayer =
+        actualBytesPerRow == dstBytesPerRow && dstBytesPerRow == srcBytesPerRow;
+    const bool copyWholeData = copyWholeLayer && imageAdditionalStride == 0;
 
     if (!copyWholeLayer) {  // copy row by row
         for (uint32_t d = 0; d < depth; ++d) {
@@ -96,7 +97,7 @@ void CopyTextureData(uint8_t* dstPointer,
             srcPointer += imageAdditionalStride;
         }
     } else {
-        uint64_t layerSize = uint64_t(dstRowsPerImage) * actualBytesPerRow;
+        const uint64_t layerSize = static_cast<uint64_t>(dstRowsPerImage) * actualBytesPerRow;
         if (!copyWholeData) {  // copy layer by layer
             for (uint32_t d = 0; d < depth; ++d) {
                 memcpy(dstPointer, srcPointer, layerSize);
