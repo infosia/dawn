@@ -54,6 +54,7 @@ enum class HlslShaderModel : uint8_t {
     kSM_6_2,
     kSM_6_4,
     kSM_6_6,
+    kSM_6_10,
 };
 
 /// HlslShaderModel less-than operator
