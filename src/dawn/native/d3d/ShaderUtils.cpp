@@ -48,7 +48,8 @@ namespace {
 
 // Be careful that the return vector may contain the pointers that point to non-static memory.
 std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
-                                            const d3d::D3DBytecodeCompilationRequest& r) {
+                                            const d3d::D3DBytecodeCompilationRequest& r,
+                                            const wchar_t* hlslVersion) {
     std::vector<const wchar_t*> arguments;
 
     arguments.push_back(L"-T");
@@ -130,12 +131,12 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
 #undef ASSERT_UNHANDLED
 
     if (r.hasShaderF16Feature) {
-        // enable-16bit-types are only allowed in -HV 2018 (default)
+        // enable-16bit-types is allowed starting in -HV 2018
         arguments.push_back(L"/enable-16bit-types");
     }
 
     arguments.push_back(L"-HV");
-    arguments.push_back(L"2018");
+    arguments.push_back(hlslVersion);
 
     return arguments;
 }
@@ -143,6 +144,7 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
 ResultOrError<ComPtr<IDxcBlob>> CompileShaderDXC(const d3d::D3DBytecodeCompilationRequest& r,
                                                  const std::string& entryPointName,
                                                  const std::string& hlslSource,
+                                                 const wchar_t* hlslVersion,
                                                  bool dumpShadersOnFailure) {
     DxcBuffer dxcBuffer;
     dxcBuffer.Ptr = hlslSource.c_str();
@@ -154,7 +156,7 @@ ResultOrError<ComPtr<IDxcBlob>> CompileShaderDXC(const d3d::D3DBytecodeCompilati
 
     // Note that the contents in `arguments` shouldn't be mutated or moved around as some of the
     // pointers in this vector don't have static lifetime.
-    std::vector<const wchar_t*> arguments = GetDXCArguments(entryPointW, r);
+    std::vector<const wchar_t*> arguments = GetDXCArguments(entryPointW, r, hlslVersion);
     ComPtr<IDxcResult> result;
     DAWN_TRY(CheckHRESULT(
         r.dxcCompiler.UnsafeGetValue()->Compile(&dxcBuffer, arguments.data(), arguments.size(),
@@ -368,10 +370,14 @@ ResultOrError<CompiledShader> CompileShader(d3d::D3DCompilationRequest r) {
         case d3d::Compiler::DXC: {
             TRACE_EVENT0(r.tracePlatform.UnsafeGetValue(), General, "CompileShaderDXC");
             ComPtr<IDxcBlob> compiledDXCShader;
+            const wchar_t* hlslVersion =
+                (r.hlsl.tintOptions.compiler == tint::hlsl::writer::Options::Compiler::kDXC_2018)
+                    ? L"2018"
+                    : L"2021";
             DAWN_TRY_ASSIGN(
                 compiledDXCShader,
                 CompileShaderDXC(r.bytecode, r.hlsl.tintOptions.remapped_entry_point_name,
-                                 compiledShader.hlslSource, dumpShadersOnFailure));
+                                 compiledShader.hlslSource, hlslVersion, dumpShadersOnFailure));
             compiledShader.shaderBlob = CreateBlob(std::move(compiledDXCShader));
             break;
         }

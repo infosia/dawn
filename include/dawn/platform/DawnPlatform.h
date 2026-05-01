@@ -144,6 +144,7 @@ enum class Features {
     kWebGPUEnableRangeAnalysisForRobustness,
     kWebGPUUseSpirv14,
     kWebGPUDecomposeUniformBuffers,
+    kWebGPUUseHLSL2021,
 };
 
 class DAWN_PLATFORM_EXPORT Platform {

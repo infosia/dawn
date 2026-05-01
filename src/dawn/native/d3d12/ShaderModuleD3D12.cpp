@@ -284,6 +284,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.compiler = req.bytecode.compiler == d3d::Compiler::FXC
                                         ? tint::hlsl::writer::Options::Compiler::kFXC
                                         : tint::hlsl::writer::Options::Compiler::kDXC_2018;
+    if (req.bytecode.compiler == d3d::Compiler::DXC &&
+        device->IsToggleEnabled(Toggle::D3D12UseHLSL2021)) {
+        req.hlsl.tintOptions.compiler = tint::hlsl::writer::Options::Compiler::kDXC_2021;
+    }
 
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);
