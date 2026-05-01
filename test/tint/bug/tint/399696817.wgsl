@@ -1,4 +1,4 @@
-// flags: --hlsl-shader-model 66
+// flags: --hlsl-shader-model 6.6
 var<workgroup> a : atomic<i32>;
 
 fn foo(in: u32) {
