@@ -145,6 +145,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6eeb2b52_f1311bfb",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-01T17:32:39Z",
+      "side": 1,
+      "message": "DXC is always ToT. It\u0027s DirectX-Headers that isn\u0027t (last I checked).",
+      "parentUuid": "a5bba450_ee1b975c",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0fd19bf_aca6a84a",
         "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
         "patchSetId": 8
