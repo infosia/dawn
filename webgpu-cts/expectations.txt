@@ -442,6 +442,7 @@ crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,canvas,getC
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_texture_binding:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_2D_Canvas:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageData:copy_subrect_from_ImageData:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:* [ Skip ]
