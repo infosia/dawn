@@ -10,7 +10,7 @@ int workgroupUniformLoad_b75d53() {
   bool v = arg_0;
   GroupMemoryBarrierWithGroupSync();
   bool res = v;
-  return ((all((res == false))) ? (int(1)) : (int(0)));
+  return select(all((res == false)), int(1), int(0));
 }
 
 void compute_main_inner(uint tint_local_index) {

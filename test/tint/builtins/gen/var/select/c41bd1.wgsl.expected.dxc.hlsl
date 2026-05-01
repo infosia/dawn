@@ -7,8 +7,8 @@ int select_c41bd1() {
   bool4 arg_0 = (true).xxxx;
   bool4 arg_1 = (true).xxxx;
   bool arg_2 = true;
-  bool4 res = ((arg_2) ? (arg_1) : (arg_0));
-  return ((all((res == (false).xxxx))) ? (int(1)) : (int(0)));
+  bool4 res = select(arg_2, arg_1, arg_0);
+  return select(all((res == (false).xxxx)), int(1), int(0));
 }
 
 void fragment_main() {
@@ -24,8 +24,8 @@ int select_c41bd1() {
   bool4 arg_0 = (true).xxxx;
   bool4 arg_1 = (true).xxxx;
   bool arg_2 = true;
-  bool4 res = ((arg_2) ? (arg_1) : (arg_0));
-  return ((all((res == (false).xxxx))) ? (int(1)) : (int(0)));
+  bool4 res = select(arg_2, arg_1, arg_0);
+  return select(all((res == (false).xxxx)), int(1), int(0));
 }
 
 [numthreads(1, 1, 1)]
@@ -51,8 +51,8 @@ int select_c41bd1() {
   bool4 arg_0 = (true).xxxx;
   bool4 arg_1 = (true).xxxx;
   bool arg_2 = true;
-  bool4 res = ((arg_2) ? (arg_1) : (arg_0));
-  return ((all((res == (false).xxxx))) ? (int(1)) : (int(0)));
+  bool4 res = select(arg_2, arg_1, arg_0);
+  return select(all((res == (false).xxxx)), int(1), int(0));
 }
 
 VertexOutput vertex_main_inner() {

@@ -95,7 +95,7 @@ TEST_F(HlslWriterTest, BinaryU32Div) {
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 uint tint_div_u32(uint lhs, uint rhs) {
-  return (lhs / (((rhs == 0u)) ? (1u) : (rhs)));
+  return (lhs / select((rhs == 0u), 1u, rhs));
 }
 
 [numthreads(1, 1, 1)]
@@ -122,8 +122,7 @@ TEST_F(HlslWriterTest, BinaryU32Mod) {
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 uint tint_mod_u32(uint lhs, uint rhs) {
-  uint v = (((rhs == 0u)) ? (1u) : (rhs));
-  return (lhs - ((lhs / v) * v));
+  return (lhs - ((lhs / select((rhs == 0u), 1u, rhs)) * select((rhs == 0u), 1u, rhs)));
 }
 
 [numthreads(1, 1, 1)]

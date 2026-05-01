@@ -7,7 +7,7 @@ vector<float16_t, 4> select_830dd9() {
   vector<float16_t, 4> arg_0 = (float16_t(1.0h)).xxxx;
   vector<float16_t, 4> arg_1 = (float16_t(1.0h)).xxxx;
   bool arg_2 = true;
-  vector<float16_t, 4> res = ((arg_2) ? (arg_1) : (arg_0));
+  vector<float16_t, 4> res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ vector<float16_t, 4> select_830dd9() {
   vector<float16_t, 4> arg_0 = (float16_t(1.0h)).xxxx;
   vector<float16_t, 4> arg_1 = (float16_t(1.0h)).xxxx;
   bool arg_2 = true;
-  vector<float16_t, 4> res = ((arg_2) ? (arg_1) : (arg_0));
+  vector<float16_t, 4> res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ vector<float16_t, 4> select_830dd9() {
   vector<float16_t, 4> arg_0 = (float16_t(1.0h)).xxxx;
   vector<float16_t, 4> arg_1 = (float16_t(1.0h)).xxxx;
   bool arg_2 = true;
-  vector<float16_t, 4> res = ((arg_2) ? (arg_1) : (arg_0));
+  vector<float16_t, 4> res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

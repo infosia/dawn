@@ -6,12 +6,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint4 countTrailingZeros_d2b4a0() {
   uint4 arg_0 = (1u).xxxx;
   uint4 v = arg_0;
-  uint4 v_1 = ((((v & (65535u).xxxx) == (0u).xxxx)) ? ((16u).xxxx) : ((0u).xxxx));
-  uint4 v_2 = (((((v >> v_1) & (255u).xxxx) == (0u).xxxx)) ? ((8u).xxxx) : ((0u).xxxx));
-  uint4 v_3 = ((((((v >> v_1) >> v_2) & (15u).xxxx) == (0u).xxxx)) ? ((4u).xxxx) : ((0u).xxxx));
-  uint4 v_4 = (((((((v >> v_1) >> v_2) >> v_3) & (3u).xxxx) == (0u).xxxx)) ? ((2u).xxxx) : ((0u).xxxx));
-  uint4 v_5 = ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & (1u).xxxx) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx));
-  uint4 res = ((v_1 | (v_2 | (v_3 | (v_4 | v_5)))) + (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx)));
+  uint4 res = ((select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx) | (select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx) | (select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx) | (select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx) | select(((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) & (1u).xxxx) == (0u).xxxx), (1u).xxxx, (0u).xxxx))))) + select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) == (0u).xxxx), (1u).xxxx, (0u).xxxx));
   return res;
 }
 
@@ -27,12 +22,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint4 countTrailingZeros_d2b4a0() {
   uint4 arg_0 = (1u).xxxx;
   uint4 v = arg_0;
-  uint4 v_1 = ((((v & (65535u).xxxx) == (0u).xxxx)) ? ((16u).xxxx) : ((0u).xxxx));
-  uint4 v_2 = (((((v >> v_1) & (255u).xxxx) == (0u).xxxx)) ? ((8u).xxxx) : ((0u).xxxx));
-  uint4 v_3 = ((((((v >> v_1) >> v_2) & (15u).xxxx) == (0u).xxxx)) ? ((4u).xxxx) : ((0u).xxxx));
-  uint4 v_4 = (((((((v >> v_1) >> v_2) >> v_3) & (3u).xxxx) == (0u).xxxx)) ? ((2u).xxxx) : ((0u).xxxx));
-  uint4 v_5 = ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & (1u).xxxx) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx));
-  uint4 res = ((v_1 | (v_2 | (v_3 | (v_4 | v_5)))) + (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx)));
+  uint4 res = ((select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx) | (select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx) | (select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx) | (select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx) | select(((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) & (1u).xxxx) == (0u).xxxx), (1u).xxxx, (0u).xxxx))))) + select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) == (0u).xxxx), (1u).xxxx, (0u).xxxx));
   return res;
 }
 
@@ -58,26 +48,21 @@ struct vertex_main_outputs {
 uint4 countTrailingZeros_d2b4a0() {
   uint4 arg_0 = (1u).xxxx;
   uint4 v = arg_0;
-  uint4 v_1 = ((((v & (65535u).xxxx) == (0u).xxxx)) ? ((16u).xxxx) : ((0u).xxxx));
-  uint4 v_2 = (((((v >> v_1) & (255u).xxxx) == (0u).xxxx)) ? ((8u).xxxx) : ((0u).xxxx));
-  uint4 v_3 = ((((((v >> v_1) >> v_2) & (15u).xxxx) == (0u).xxxx)) ? ((4u).xxxx) : ((0u).xxxx));
-  uint4 v_4 = (((((((v >> v_1) >> v_2) >> v_3) & (3u).xxxx) == (0u).xxxx)) ? ((2u).xxxx) : ((0u).xxxx));
-  uint4 v_5 = ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & (1u).xxxx) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx));
-  uint4 res = ((v_1 | (v_2 | (v_3 | (v_4 | v_5)))) + (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == (0u).xxxx)) ? ((1u).xxxx) : ((0u).xxxx)));
+  uint4 res = ((select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx) | (select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx) | (select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx) | (select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx) | select(((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) & (1u).xxxx) == (0u).xxxx), (1u).xxxx, (0u).xxxx))))) + select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) >> select((((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) >> select(((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) >> select((((v >> select(((v & (65535u).xxxx) == (0u).xxxx), (16u).xxxx, (0u).xxxx)) & (255u).xxxx) == (0u).xxxx), (8u).xxxx, (0u).xxxx)) & (15u).xxxx) == (0u).xxxx), (4u).xxxx, (0u).xxxx)) & (3u).xxxx) == (0u).xxxx), (2u).xxxx, (0u).xxxx)) == (0u).xxxx), (1u).xxxx, (0u).xxxx));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
-  VertexOutput v_6 = (VertexOutput)0;
-  v_6.pos = (0.0f).xxxx;
-  v_6.prevent_dce = countTrailingZeros_d2b4a0();
-  VertexOutput v_7 = v_6;
-  return v_7;
+  VertexOutput v_1 = (VertexOutput)0;
+  v_1.pos = (0.0f).xxxx;
+  v_1.prevent_dce = countTrailingZeros_d2b4a0();
+  VertexOutput v_2 = v_1;
+  return v_2;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_8 = vertex_main_inner();
-  vertex_main_outputs v_9 = {v_8.prevent_dce, v_8.pos};
-  return v_9;
+  VertexOutput v_3 = vertex_main_inner();
+  vertex_main_outputs v_4 = {v_3.prevent_dce, v_3.pos};
+  return v_4;
 }
 
