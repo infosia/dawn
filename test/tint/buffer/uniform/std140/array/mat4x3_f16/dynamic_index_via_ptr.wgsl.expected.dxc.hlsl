@@ -24,13 +24,13 @@ vector<float16_t, 4> tint_bitcast_to_f16(uint2 src) {
 
 matrix<float16_t, 4, 3> v_2(uint start_byte_offset) {
   uint4 v_3 = a[(start_byte_offset / 16u)];
-  vector<float16_t, 3> v_4 = tint_bitcast_to_f16((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_3.zw) : (v_3.xy))).xyz;
+  vector<float16_t, 3> v_4 = tint_bitcast_to_f16(select((((start_byte_offset & 15u) >> 2u) == 2u), v_3.zw, v_3.xy)).xyz;
   uint4 v_5 = a[((8u + start_byte_offset) / 16u)];
-  vector<float16_t, 3> v_6 = tint_bitcast_to_f16(((((((8u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_5.zw) : (v_5.xy))).xyz;
+  vector<float16_t, 3> v_6 = tint_bitcast_to_f16(select(((((8u + start_byte_offset) & 15u) >> 2u) == 2u), v_5.zw, v_5.xy)).xyz;
   uint4 v_7 = a[((16u + start_byte_offset) / 16u)];
-  vector<float16_t, 3> v_8 = tint_bitcast_to_f16(((((((16u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_7.zw) : (v_7.xy))).xyz;
+  vector<float16_t, 3> v_8 = tint_bitcast_to_f16(select(((((16u + start_byte_offset) & 15u) >> 2u) == 2u), v_7.zw, v_7.xy)).xyz;
   uint4 v_9 = a[((24u + start_byte_offset) / 16u)];
-  return matrix<float16_t, 4, 3>(v_4, v_6, v_8, tint_bitcast_to_f16(((((((24u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_9.zw) : (v_9.xy))).xyz);
+  return matrix<float16_t, 4, 3>(v_4, v_6, v_8, tint_bitcast_to_f16(select(((((24u + start_byte_offset) & 15u) >> 2u) == 2u), v_9.zw, v_9.xy)).xyz);
 }
 
 typedef matrix<float16_t, 4, 3> ary_ret[4];
@@ -61,9 +61,7 @@ void f() {
   matrix<float16_t, 4, 3> l_a[4] = v_10(0u);
   matrix<float16_t, 4, 3> l_a_i = v_2(v_14);
   uint4 v_16 = a[((v_14 + v_15) / 16u)];
-  vector<float16_t, 3> l_a_i_i = tint_bitcast_to_f16(((((((v_14 + v_15) & 15u) >> 2u) == 2u)) ? (v_16.zw) : (v_16.xy))).xyz;
-  uint v_17 = a[((v_14 + v_15) / 16u)][(((v_14 + v_15) & 15u) >> 2u)];
-  uint v_18 = (((((v_14 + v_15) % 4u) == 0u)) ? (0u) : (1u));
-  s.Store<float16_t>(0u, (((tint_bitcast_to_f16_1(v_17)[v_18] + l_a[0u][0u].x) + l_a_i[0u].x) + l_a_i_i.x));
+  vector<float16_t, 3> l_a_i_i = tint_bitcast_to_f16(select(((((v_14 + v_15) & 15u) >> 2u) == 2u), v_16.zw, v_16.xy)).xyz;
+  s.Store<float16_t>(0u, (((tint_bitcast_to_f16_1(a[((v_14 + v_15) / 16u)][(((v_14 + v_15) & 15u) >> 2u)])[select((((v_14 + v_15) % 4u) == 0u), 0u, 1u)] + l_a[0u][0u].x) + l_a_i[0u].x) + l_a_i_i.x));
 }
 

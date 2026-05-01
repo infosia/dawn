@@ -4,7 +4,7 @@ cbuffer cbuffer_S : register(b0) {
 };
 float2 func(uint pointer_indices[1]) {
   uint4 v = S[((pointer_indices[0u] * 8u) / 16u)];
-  return asfloat(((((((pointer_indices[0u] * 8u) & 15u) >> 2u) == 2u)) ? (v.zw) : (v.xy)));
+  return asfloat(select(((((pointer_indices[0u] * 8u) & 15u) >> 2u) == 2u), v.zw, v.xy));
 }
 
 [numthreads(1, 1, 1)]

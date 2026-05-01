@@ -20,7 +20,7 @@ bool v_3(float v_4) {
 }
 
 float4 v_5(uint v_6) {
-  return ((v_3(v_1(v()))) ? ((1.0f).xxxx) : ((0.0f).xxxx));
+  return select(v_3(v_1(v())), (1.0f).xxxx, (0.0f).xxxx);
 }
 
 tint_struct tint_entry_point(tint_struct_1 v_8) {
