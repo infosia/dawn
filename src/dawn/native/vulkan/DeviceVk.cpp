@@ -534,12 +534,14 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     }
 
     if (HasFeature(Feature::FramebufferFetch)) {
-        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::RasterizationOrderAttachmentAccess));
-        auto& usedKnobFeature = usedKnobs.rasterizationOrderAttachmentAccessFeatures;
-        usedKnobFeature = mDeviceInfo.rasterizationOrderAttachmentAccessFeatures;
-        usedKnobFeature.rasterizationOrderDepthAttachmentAccess = VK_FALSE;
-        usedKnobFeature.rasterizationOrderStencilAttachmentAccess = VK_FALSE;
-        featuresChain.Add(&usedKnobs.rasterizationOrderAttachmentAccessFeatures);
+        if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess)) {
+            DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::RasterizationOrderAttachmentAccess));
+            auto& usedKnobFeature = usedKnobs.rasterizationOrderAttachmentAccessFeatures;
+            usedKnobFeature = mDeviceInfo.rasterizationOrderAttachmentAccessFeatures;
+            usedKnobFeature.rasterizationOrderDepthAttachmentAccess = VK_FALSE;
+            usedKnobFeature.rasterizationOrderStencilAttachmentAccess = VK_FALSE;
+            featuresChain.Add(&usedKnobs.rasterizationOrderAttachmentAccessFeatures);
+        }
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {

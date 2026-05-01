@@ -325,9 +325,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
-    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
-        mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
-                .rasterizationOrderColorAttachmentAccess == VK_TRUE) {
+    if ((mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
+         mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
+                 .rasterizationOrderColorAttachmentAccess == VK_TRUE) ||
+        gpu_info::IsARM(GetVendorId())) {
         // There are four possible ways FramebufferFetch can be supported. Currently only #1 is
         // implemented.
         //

@@ -105,6 +105,50 @@ TEST_P(FramebufferFetchTests, Basic) {
     EXPECT_TEXTURE_EQ(uint32_t(10), texture, {0, 0});
 }
 
+// Check that FramebufferFetch works correctly when alternating between pipelines that
+// use and do not use FramebufferFetch within the same render pass.
+TEST_P(FramebufferFetchTests, MixedRenderPass) {
+    // Pipeline that draws a point without FramebufferFetch, initializing the attachment to 10.
+    utils::ComboRenderPipelineDescriptor pDesc1;
+    InitForSinglePoint(&pDesc1);
+    pDesc1.cFragment.module = utils::CreateShaderModule(device, R"(
+        @fragment fn main() -> @location(0) u32 {
+            return 10;
+        }
+    )");
+    pDesc1.cTargets[0].format = wgpu::TextureFormat::R32Uint;
+    wgpu::RenderPipeline pipeline1 = device.CreateRenderPipeline(&pDesc1);
+
+    // Pipeline that draws a point with FramebufferFetch, adding one to the attachment.
+    utils::ComboRenderPipelineDescriptor pDesc2;
+    InitForSinglePoint(&pDesc2);
+    pDesc2.cFragment.module = utils::CreateShaderModule(device, kExt + R"(
+        @fragment fn main(@color(0) in : u32) -> @location(0) u32 {
+            return in + 1;
+        }
+    )");
+    pDesc2.cTargets[0].format = wgpu::TextureFormat::R32Uint;
+    wgpu::RenderPipeline pipeline2 = device.CreateRenderPipeline(&pDesc2);
+
+    wgpu::Texture texture = MakeAttachment(wgpu::TextureFormat::R32Uint);
+
+    // Draw 1 point with pipeline1, then 5 points with pipeline2.
+    utils::ComboRenderPassDescriptor passDesc({texture.CreateView()});
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&passDesc);
+    pass.SetPipeline(pipeline1);
+    pass.Draw(1);
+    pass.SetPipeline(pipeline2);
+    pass.Draw(5);
+    pass.End();
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    // The result should be 10 + 5 = 15.
+    EXPECT_TEXTURE_EQ(uint32_t(15), texture, {0, 0});
+}
+
 // Check that it is post-blend framebuffer fetch
 TEST_P(FramebufferFetchTests, PostBlend) {
     // Pipeline that draw a point at the center that outputs the current attachment value with

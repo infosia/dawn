@@ -616,7 +616,8 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
         colorBlend.pNext = nullptr;
         colorBlend.flags = 0;
 
-        if (GetStage(SingleShaderStage::Fragment).metadata->fragmentInputMask.any()) {
+        if (GetStage(SingleShaderStage::Fragment).metadata->fragmentInputMask.any() &&
+            device->GetDeviceInfo().HasExt(DeviceExt::RasterizationOrderAttachmentAccess)) {
             colorBlend.flags |=
                 VK_PIPELINE_COLOR_BLEND_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_BIT_EXT;
         }
