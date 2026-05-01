@@ -117,10 +117,10 @@ enum class ExeMode : uint8_t {
 };
 
 #if TINT_BUILD_HLSL_WRITER
-constexpr uint32_t kMinShaderModelForDXC = 60u;
-constexpr uint32_t kMaxSupportedShaderModelForDXC = 66u;
-constexpr uint32_t kMinShaderModelForDP4aInHLSL = 64u;
-constexpr uint32_t kMinShaderModelForPackUnpack4x8InHLSL = 66u;
+constexpr auto kMinShaderModelForDXC = tint::hlsl::validate::HlslShaderModel::kSM_6_0;
+constexpr auto kMinShaderModelForDP4aInHLSL = tint::hlsl::validate::HlslShaderModel::kSM_6_4;
+constexpr auto kMinShaderModelForPackUnpack4x8InHLSL =
+    tint::hlsl::validate::HlslShaderModel::kSM_6_6;
 #endif  // TINT_BUILD_HLSL_WRITER
 
 struct Options {
@@ -181,7 +181,7 @@ struct Options {
 #if TINT_BUILD_HLSL_WRITER
     std::string fxc_path;
     std::string dxc_path;
-    uint32_t hlsl_shader_model = kMinShaderModelForDXC;
+    tint::hlsl::validate::HlslShaderModel hlsl_shader_model = kMinShaderModelForDXC;
     tint::hlsl::writer::PixelLocalOptions pixel_local_options;
 #endif  // TINT_BUILD_HLSL_WRITER
 
@@ -355,15 +355,18 @@ attachment, which can only be one of the below value:
 R32Sint, R32Uint, R32Float.
 )");
 
-    std::stringstream hlslShaderModelStream;
-    hlslShaderModelStream << R"(
-An integer value to set the HLSL shader model for the generated HLSL
-shader, which will only be used with option `--dxc`. Now only integers
-in the range [)" << kMinShaderModelForDXC
-                          << ", " << kMaxSupportedShaderModelForDXC
-                          << "] are accepted. The integer \"6x\" represents shader model 6.x.";
-    auto& hlsl_shader_model = options.Add<ValueOption<uint32_t>>(
-        "hlsl-shader-model", hlslShaderModelStream.str(), Default{kMinShaderModelForDXC});
+    // Default to validating against HLSL 6.0.
+    tint::Vector<EnumName<tint::hlsl::validate::HlslShaderModel>, 4> hlsl_shader_model_enum_names{
+        EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_0, "6.0"),
+        EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_2, "6.2"),
+        EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_4, "6.4"),
+        EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_6, "6.6"),
+    };
+    auto& hlsl_shader_model = options.Add<EnumOption<tint::hlsl::validate::HlslShaderModel>>(
+        "hlsl-shader-model", R"(The D3D Shader Model to compile and validate with.
+Valid values are 6.0, 6.2, 6.4 and 6.6)",
+        hlsl_shader_model_enum_names, Default{tint::hlsl::validate::HlslShaderModel::kSM_6_0});
+    TINT_DEFER(opts->hlsl_shader_model = *hlsl_shader_model.value);
 #endif  // TINT_BUILD_HLSL_WRITER
 
 #if TINT_BUILD_HLSL_WRITER || TINT_BUILD_MSL_WRITER
@@ -783,15 +786,6 @@ Options:
             tint::hlsl::writer::PixelLocalAttachment attachment{~0u, texel_format};
             opts->pixel_local_options.attachments.emplace(member_index.Get(), attachment);
         }
-    }
-
-    if (hlsl_shader_model.value.has_value()) {
-        const uint32_t shader_model = *hlsl_shader_model.value;
-        if (shader_model < kMinShaderModelForDXC || shader_model > kMaxSupportedShaderModelForDXC) {
-            std::cerr << "Invalid HLSL shader model: " << shader_model << "\n";
-            return false;
-        }
-        opts->hlsl_shader_model = shader_model;
     }
 #endif  // TINT_BUILD_HLSL_WRITER
 
@@ -1292,7 +1286,6 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
             options.dxc_path.empty() ? tint::hlsl::validate::kDxcDLLName : options.dxc_path;
         auto dxc = tint::Command::LookPath(dxc_path);
         if (dxc.Found()) {
-            uint32_t hlsl_shader_model = options.hlsl_shader_model;
             bool dxc_require_16bit_types = false;
             for (auto* ty : ir.Types()) {
                 if (ty->Is<tint::core::type::F16>()) {
@@ -1305,7 +1298,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
             }
             dxc_res = tint::hlsl::validate::ValidateUsingDXC(
                 dxc.Path(), result->hlsl, result->entry_point_name, result->pipeline_stage,
-                dxc_require_16bit_types, hlsl_shader_model);
+                dxc_require_16bit_types, options.hlsl_shader_model);
         } else {
             dxc_res.failed = true;
             dxc_res.output = "DXC executable '" + dxc_path + "' not found. Cannot validate.";
