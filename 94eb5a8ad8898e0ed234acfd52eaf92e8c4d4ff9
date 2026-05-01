@@ -86,6 +86,24 @@
       "message": "Let\u0027s drop all the `clang-tidy` comments, they\u0027re just noise.",
       "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46753d28_9ff3439b",
+        "filename": "src/dawn/common/Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-01T15:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9fdb94b_6d812a6b",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
