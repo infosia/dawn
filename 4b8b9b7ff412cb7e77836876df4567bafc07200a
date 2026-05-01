@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40de9ceb_3919a537",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-01T01:57:14Z",
+      "side": 1,
+      "message": "Conversion up to support manual bitcast",
+      "range": {
+        "startLine": 3143,
+        "startChar": 0,
+        "endLine": 3143,
+        "endChar": 38
+      },
+      "revId": "4b8b9b7ff412cb7e77836876df4567bafc07200a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

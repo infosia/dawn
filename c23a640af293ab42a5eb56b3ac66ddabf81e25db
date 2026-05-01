@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995755fd_d1630808",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-01T01:57:14Z",
+      "side": 1,
+      "message": "I have confirmed that  D3D12_Radeon_RX_5500_XT D3D12_Qualcomm_R__Adreno_TM__X1_85_GPU  run the vec2u atomic test.",
+      "revId": "c23a640af293ab42a5eb56b3ac66ddabf81e25db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
