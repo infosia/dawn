@@ -1,7 +1,6 @@
 
 int3 tint_mod_v3i32(int3 lhs, int3 rhs) {
-  int3 v = ((((rhs == (int(0)).xxx) | ((lhs == (int(-2147483648)).xxx) & (rhs == (int(-1)).xxx)))) ? ((int(1)).xxx) : (rhs));
-  return asint((asuint(lhs) - asuint(asint((asuint((lhs / v)) * asuint(v))))));
+  return asint((asuint(lhs) - asuint(asint((asuint((lhs / select(((rhs == (int(0)).xxx) | ((lhs == (int(-2147483648)).xxx) & (rhs == (int(-1)).xxx))), (int(1)).xxx, rhs))) * asuint(select(((rhs == (int(0)).xxx) | ((lhs == (int(-2147483648)).xxx) & (rhs == (int(-1)).xxx))), (int(1)).xxx, rhs)))))));
 }
 
 [numthreads(1, 1, 1)]

@@ -10,9 +10,9 @@ vector<float16_t, 4> tint_bitcast_to_f16(uint2 src) {
 
 matrix<float16_t, 2, 3> v_1(uint start_byte_offset) {
   uint4 v_2 = m[(start_byte_offset / 16u)];
-  vector<float16_t, 3> v_3 = tint_bitcast_to_f16((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_2.zw) : (v_2.xy))).xyz;
+  vector<float16_t, 3> v_3 = tint_bitcast_to_f16(select((((start_byte_offset & 15u) >> 2u) == 2u), v_2.zw, v_2.xy)).xyz;
   uint4 v_4 = m[((8u + start_byte_offset) / 16u)];
-  return matrix<float16_t, 2, 3>(v_3, tint_bitcast_to_f16(((((((8u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_4.zw) : (v_4.xy))).xyz);
+  return matrix<float16_t, 2, 3>(v_3, tint_bitcast_to_f16(select(((((8u + start_byte_offset) & 15u) >> 2u) == 2u), v_4.zw, v_4.xy)).xyz);
 }
 
 [numthreads(1, 1, 1)]

@@ -63,7 +63,7 @@ TEST_F(HlslWriterTest, BuiltinSelectScalar) {
 void main() {
   int x = int(1);
   int y = int(2);
-  int w = ((true) ? (y) : (x));
+  int w = select(true, y, x);
 }
 
 )");
@@ -87,7 +87,7 @@ TEST_F(HlslWriterTest, BuiltinSelectVector) {
 void main() {
   int2 x = int2(int(1), int(2));
   int2 y = int2(int(3), int(4));
-  int2 w = ((bool2(true, false)) ? (y) : (x));
+  int2 w = select(bool2(true, false), y, x);
 }
 
 )");
@@ -132,7 +132,7 @@ TEST_F(HlslWriterTest, BuiltinTruncDxc) {
     });
 
     Options opts;
-    opts.compiler = Options::Compiler::kDXC_2018;
+    opts.compiler = Options::Compiler::kDXC_2021;
     auto result = Generate(opts);
     ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(

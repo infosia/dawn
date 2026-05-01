@@ -7,7 +7,7 @@ uint3 select_b04721() {
   uint3 arg_0 = (1u).xxx;
   uint3 arg_1 = (1u).xxx;
   bool arg_2 = true;
-  uint3 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ uint3 select_b04721() {
   uint3 arg_0 = (1u).xxx;
   uint3 arg_1 = (1u).xxx;
   bool arg_2 = true;
-  uint3 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ uint3 select_b04721() {
   uint3 arg_0 = (1u).xxx;
   uint3 arg_1 = (1u).xxx;
   bool arg_2 = true;
-  uint3 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

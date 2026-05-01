@@ -219,7 +219,7 @@ struct Options {
     Extensions extensions{};
 
     /// The downstream compiler which will be used
-    Compiler compiler = Compiler::kDXC_2018;
+    Compiler compiler = Compiler::kDXC_2021;
 
     /// Options used to specify a mapping of binding points to indices into a UBO
     /// from which to load buffer sizes.

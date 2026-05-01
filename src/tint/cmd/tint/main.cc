@@ -1252,7 +1252,7 @@ tint::msl::writer::ArrayLengthOptions GenerateArrayLengthFromConstants(tint::cor
     gen_options.extensions.polyfill_pack_unpack_4x8 =
         options.hlsl_shader_model < kMinShaderModelForPackUnpack4x8InHLSL;
     gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
-                                   : tint::hlsl::writer::Options::Compiler::kDXC_2018;
+                                   : tint::hlsl::writer::Options::Compiler::kDXC_2021;
     gen_options.bindings = tint::GenerateBindings(ir, options.ep_name, false, false);
     gen_options.resource_table = tint::core::ir::transform::GenerateResourceTableConfig(ir);
 

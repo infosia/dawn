@@ -172,6 +172,7 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     }
 
     // Match Dawn's compile flags
+    // We always target HLSL 2021 here, which Dawn is in the process of migrating to.
     // See dawn\src\dawn_native\d3d12\RenderPipelineD3D12.cpp
     // and dawn_native\d3d\ShaderUtils.cpp (GetDXCArguments)
     std::wstring shader_model_version =
@@ -181,7 +182,7 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     std::vector<const wchar_t*> args{
         L"-T",                                              // Profile
         profile.c_str(),                                    //
-        L"-HV 2018",                                        // Use HLSL 2018
+        L"-HV 2021",                                        // Use HLSL 2021
         L"-E",                                              // Entry point
         entry_point.c_str(),                                //
         L"/Zpr",                                            // D3DCOMPILE_PACK_MATRIX_ROW_MAJOR
