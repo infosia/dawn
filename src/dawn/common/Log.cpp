@@ -102,7 +102,7 @@ LogMessage::~LogMessage() {
 }
 #else  // defined(DAWN_DISABLE_LOGGING)
 LogMessage::~LogMessage() {
-    std::string fullMessage = mStream.str();
+    const std::string fullMessage = mStream.str();
 
     // If this message has been moved, its stream is empty.
     if (fullMessage.empty()) {
