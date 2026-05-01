@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e1ebc4_ba7037dc",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "```suggestion\n          -cppcoreguidelines-avoid-magic-numbers,\\\n```",
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7982250e_18384cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Looks like a few still need to be either fixed or the suppressions kept in. I\u0027m hopping the missing `,` is what is causing the magic-numbers to fire on tricium.",
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc004c4_2231537a",
+        "filename": "src/dawn/common/Math.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-const-correctness\n\nvariable \u0027sign16\u0027 of type \u0027uint32_t\u0027 (aka \u0027unsign...\n\ncheck: misc-const-correctness\n\nvariable \u0027sign16\u0027 of type \u0027uint32_t\u0027 (aka \u0027unsigned int\u0027) can be declared \u0027const\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/misc/const-correctness.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-const-correctness` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b153a4e_6d9e0677",
+        "filename": "src/dawn/common/Math.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-const-correctness\n\nvariable \u0027sign16\u0027 of type \u0027uint32_t\u0027 (aka \u0027unsign...\n\ncheck: misc-const-correctness\n\nvariable \u0027sign16\u0027 of type \u0027uint32_t\u0027 (aka \u0027unsigned int\u0027) can be declared \u0027const\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/misc/const-correctness.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-const-correctness` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4b331d4_2cf44e00",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"uint64_t\" is directly included...\n\ncheck: misc-include-cleaner\n\nno header providing \"uint64_t\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d98678f5_24bad3de",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"std::time\" is directly include...\n\ncheck: misc-include-cleaner\n\nno header providing \"std::time\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 2747,
+        "startChar": 0,
+        "endLine": 2748,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "492e53e6_25e0e37b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2749,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: concurrency-mt-unsafe\n\nfunction is not thread safe (https://clang.llvm.or...\n\ncheck: concurrency-mt-unsafe\n\nfunction is not thread safe (https://clang.llvm.org/extra/clang-tidy/checks/concurrency/mt-unsafe.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: concurrency-mt-unsafe` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 2748,
+        "startChar": 0,
+        "endLine": 2749,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c0ddec0_1e544265",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"dawn::native::PipelineLayoutPi...\n\ncheck: misc-include-cleaner\n\nno header providing \"dawn::native::PipelineLayoutPixelLocalStorage\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113afa14_27ff5c6b",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"dawn::native::YCbCrVkDescripto...\n\ncheck: misc-include-cleaner\n\nno header providing \"dawn::native::YCbCrVkDescriptor\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e387b338_b044fcca",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"dawn::native::Feature\" is dire...\n\ncheck: misc-include-cleaner\n\nno header providing \"dawn::native::Feature\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel`, but not on `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e3c15e_4c48c024",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T17:30:55Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: misc-include-cleaner\n\nno header providing \"DAWN_VALIDATION_ERROR\" is dire...\n\ncheck: misc-include-cleaner\n\nno header providing \"DAWN_VALIDATION_ERROR\" is directly included (https://clang.llvm.org/extra/clang-tidy/checks/misc/include-cleaner.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: misc-include-cleaner` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
