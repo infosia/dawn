@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51dc2f9c_4f66b245",
+        "filename": "unsafe_buffers_paths.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-01T21:03:10Z",
+      "side": 0,
+      "message": "Removing the global suppressions for `dawn/native` and `src/utils` makes sense to me since they are shipped in Chrome.\n\nThe code in the other directories is never shipped in Chrome. Do we really need to remove these suppressions and start flagging those files as needing to be converted to safer constructs?",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
