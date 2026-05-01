@@ -6,13 +6,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint2 countLeadingZeros_70783f() {
   uint2 arg_0 = (1u).xx;
   uint2 v = arg_0;
-  uint2 v_1 = (((v <= (65535u).xx)) ? ((16u).xx) : ((0u).xx));
-  uint2 v_2 = ((((v << v_1) <= (16777215u).xx)) ? ((8u).xx) : ((0u).xx));
-  uint2 v_3 = (((((v << v_1) << v_2) <= (268435455u).xx)) ? ((4u).xx) : ((0u).xx));
-  uint2 v_4 = ((((((v << v_1) << v_2) << v_3) <= (1073741823u).xx)) ? ((2u).xx) : ((0u).xx));
-  uint2 v_5 = (((((((v << v_1) << v_2) << v_3) << v_4) <= (2147483647u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 v_6 = (((((((v << v_1) << v_2) << v_3) << v_4) == (0u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 res = ((v_1 | (v_2 | (v_3 | (v_4 | (v_5 | v_6))))) + v_6);
+  uint2 res = ((select((v <= (65535u).xx), (16u).xx, (0u).xx) | (select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx) | (select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx) | (select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx) | (select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) <= (2147483647u).xx), (1u).xx, (0u).xx) | select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx)))))) + select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx));
   return res;
 }
 
@@ -28,13 +22,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint2 countLeadingZeros_70783f() {
   uint2 arg_0 = (1u).xx;
   uint2 v = arg_0;
-  uint2 v_1 = (((v <= (65535u).xx)) ? ((16u).xx) : ((0u).xx));
-  uint2 v_2 = ((((v << v_1) <= (16777215u).xx)) ? ((8u).xx) : ((0u).xx));
-  uint2 v_3 = (((((v << v_1) << v_2) <= (268435455u).xx)) ? ((4u).xx) : ((0u).xx));
-  uint2 v_4 = ((((((v << v_1) << v_2) << v_3) <= (1073741823u).xx)) ? ((2u).xx) : ((0u).xx));
-  uint2 v_5 = (((((((v << v_1) << v_2) << v_3) << v_4) <= (2147483647u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 v_6 = (((((((v << v_1) << v_2) << v_3) << v_4) == (0u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 res = ((v_1 | (v_2 | (v_3 | (v_4 | (v_5 | v_6))))) + v_6);
+  uint2 res = ((select((v <= (65535u).xx), (16u).xx, (0u).xx) | (select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx) | (select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx) | (select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx) | (select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) <= (2147483647u).xx), (1u).xx, (0u).xx) | select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx)))))) + select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx));
   return res;
 }
 
@@ -60,27 +48,21 @@ struct vertex_main_outputs {
 uint2 countLeadingZeros_70783f() {
   uint2 arg_0 = (1u).xx;
   uint2 v = arg_0;
-  uint2 v_1 = (((v <= (65535u).xx)) ? ((16u).xx) : ((0u).xx));
-  uint2 v_2 = ((((v << v_1) <= (16777215u).xx)) ? ((8u).xx) : ((0u).xx));
-  uint2 v_3 = (((((v << v_1) << v_2) <= (268435455u).xx)) ? ((4u).xx) : ((0u).xx));
-  uint2 v_4 = ((((((v << v_1) << v_2) << v_3) <= (1073741823u).xx)) ? ((2u).xx) : ((0u).xx));
-  uint2 v_5 = (((((((v << v_1) << v_2) << v_3) << v_4) <= (2147483647u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 v_6 = (((((((v << v_1) << v_2) << v_3) << v_4) == (0u).xx)) ? ((1u).xx) : ((0u).xx));
-  uint2 res = ((v_1 | (v_2 | (v_3 | (v_4 | (v_5 | v_6))))) + v_6);
+  uint2 res = ((select((v <= (65535u).xx), (16u).xx, (0u).xx) | (select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx) | (select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx) | (select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx) | (select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) <= (2147483647u).xx), (1u).xx, (0u).xx) | select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx)))))) + select((((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) << select(((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) << select((((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) << select(((v << select((v <= (65535u).xx), (16u).xx, (0u).xx)) <= (16777215u).xx), (8u).xx, (0u).xx)) <= (268435455u).xx), (4u).xx, (0u).xx)) <= (1073741823u).xx), (2u).xx, (0u).xx)) == (0u).xx), (1u).xx, (0u).xx));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
-  VertexOutput v_7 = (VertexOutput)0;
-  v_7.pos = (0.0f).xxxx;
-  v_7.prevent_dce = countLeadingZeros_70783f();
-  VertexOutput v_8 = v_7;
-  return v_8;
+  VertexOutput v_1 = (VertexOutput)0;
+  v_1.pos = (0.0f).xxxx;
+  v_1.prevent_dce = countLeadingZeros_70783f();
+  VertexOutput v_2 = v_1;
+  return v_2;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_9 = vertex_main_inner();
-  vertex_main_outputs v_10 = {v_9.prevent_dce, v_9.pos};
-  return v_10;
+  VertexOutput v_3 = vertex_main_inner();
+  vertex_main_outputs v_4 = {v_3.prevent_dce, v_3.pos};
+  return v_4;
 }
 

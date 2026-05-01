@@ -7,7 +7,7 @@ float2 select_bf3d29() {
   float2 arg_0 = (1.0f).xx;
   float2 arg_1 = (1.0f).xx;
   bool arg_2 = true;
-  float2 res = ((arg_2) ? (arg_1) : (arg_0));
+  float2 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ float2 select_bf3d29() {
   float2 arg_0 = (1.0f).xx;
   float2 arg_1 = (1.0f).xx;
   bool arg_2 = true;
-  float2 res = ((arg_2) ? (arg_1) : (arg_0));
+  float2 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ float2 select_bf3d29() {
   float2 arg_0 = (1.0f).xx;
   float2 arg_1 = (1.0f).xx;
   bool arg_2 = true;
-  float2 res = ((arg_2) ? (arg_1) : (arg_0));
+  float2 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

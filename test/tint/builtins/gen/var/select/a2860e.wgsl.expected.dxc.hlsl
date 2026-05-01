@@ -7,7 +7,7 @@ int4 select_a2860e() {
   int4 arg_0 = (int(1)).xxxx;
   int4 arg_1 = (int(1)).xxxx;
   bool4 arg_2 = (true).xxxx;
-  int4 res = ((arg_2) ? (arg_1) : (arg_0));
+  int4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ int4 select_a2860e() {
   int4 arg_0 = (int(1)).xxxx;
   int4 arg_1 = (int(1)).xxxx;
   bool4 arg_2 = (true).xxxx;
-  int4 res = ((arg_2) ? (arg_1) : (arg_0));
+  int4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ int4 select_a2860e() {
   int4 arg_0 = (int(1)).xxxx;
   int4 arg_1 = (int(1)).xxxx;
   bool4 arg_2 = (true).xxxx;
-  int4 res = ((arg_2) ? (arg_1) : (arg_0));
+  int4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

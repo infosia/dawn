@@ -7,7 +7,7 @@ float16_t select_10e73b() {
   float16_t arg_0 = float16_t(1.0h);
   float16_t arg_1 = float16_t(1.0h);
   bool arg_2 = true;
-  float16_t res = ((arg_2) ? (arg_1) : (arg_0));
+  float16_t res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ float16_t select_10e73b() {
   float16_t arg_0 = float16_t(1.0h);
   float16_t arg_1 = float16_t(1.0h);
   bool arg_2 = true;
-  float16_t res = ((arg_2) ? (arg_1) : (arg_0));
+  float16_t res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ float16_t select_10e73b() {
   float16_t arg_0 = float16_t(1.0h);
   float16_t arg_1 = float16_t(1.0h);
   bool arg_2 = true;
-  float16_t res = ((arg_2) ? (arg_1) : (arg_0));
+  float16_t res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

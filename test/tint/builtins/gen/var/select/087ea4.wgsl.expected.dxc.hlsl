@@ -7,7 +7,7 @@ uint4 select_087ea4() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool arg_2 = true;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ uint4 select_087ea4() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool arg_2 = true;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ uint4 select_087ea4() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool arg_2 = true;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

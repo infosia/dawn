@@ -6,11 +6,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint v = arg_0;
-  uint v_1 = ((((v & 4294901760u) == 0u)) ? (0u) : (16u));
-  uint v_2 = (((((v >> v_1) & 65280u) == 0u)) ? (0u) : (8u));
-  uint v_3 = ((((((v >> v_1) >> v_2) & 240u) == 0u)) ? (0u) : (4u));
-  uint v_4 = (((((((v >> v_1) >> v_2) >> v_3) & 12u) == 0u)) ? (0u) : (2u));
-  uint res = (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == 0u)) ? (4294967295u) : ((v_1 | (v_2 | (v_3 | (v_4 | ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & 2u) == 0u)) ? (0u) : (1u))))))));
+  uint res = select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) == 0u), 4294967295u, (select(((v & 4294901760u) == 0u), 0u, 16u) | (select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u) | (select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u) | (select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u) | select(((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) & 2u) == 0u), 0u, 1u))))));
   return res;
 }
 
@@ -26,11 +22,7 @@ RWByteAddressBuffer prevent_dce : register(u0);
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint v = arg_0;
-  uint v_1 = ((((v & 4294901760u) == 0u)) ? (0u) : (16u));
-  uint v_2 = (((((v >> v_1) & 65280u) == 0u)) ? (0u) : (8u));
-  uint v_3 = ((((((v >> v_1) >> v_2) & 240u) == 0u)) ? (0u) : (4u));
-  uint v_4 = (((((((v >> v_1) >> v_2) >> v_3) & 12u) == 0u)) ? (0u) : (2u));
-  uint res = (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == 0u)) ? (4294967295u) : ((v_1 | (v_2 | (v_3 | (v_4 | ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & 2u) == 0u)) ? (0u) : (1u))))))));
+  uint res = select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) == 0u), 4294967295u, (select(((v & 4294901760u) == 0u), 0u, 16u) | (select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u) | (select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u) | (select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u) | select(((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) & 2u) == 0u), 0u, 1u))))));
   return res;
 }
 
@@ -56,25 +48,21 @@ struct vertex_main_outputs {
 uint firstLeadingBit_f0779d() {
   uint arg_0 = 1u;
   uint v = arg_0;
-  uint v_1 = ((((v & 4294901760u) == 0u)) ? (0u) : (16u));
-  uint v_2 = (((((v >> v_1) & 65280u) == 0u)) ? (0u) : (8u));
-  uint v_3 = ((((((v >> v_1) >> v_2) & 240u) == 0u)) ? (0u) : (4u));
-  uint v_4 = (((((((v >> v_1) >> v_2) >> v_3) & 12u) == 0u)) ? (0u) : (2u));
-  uint res = (((((((v >> v_1) >> v_2) >> v_3) >> v_4) == 0u)) ? (4294967295u) : ((v_1 | (v_2 | (v_3 | (v_4 | ((((((((v >> v_1) >> v_2) >> v_3) >> v_4) & 2u) == 0u)) ? (0u) : (1u))))))));
+  uint res = select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) == 0u), 4294967295u, (select(((v & 4294901760u) == 0u), 0u, 16u) | (select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u) | (select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u) | (select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u) | select(((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) >> select((((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) >> select(((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) >> select((((v >> select(((v & 4294901760u) == 0u), 0u, 16u)) & 65280u) == 0u), 0u, 8u)) & 240u) == 0u), 0u, 4u)) & 12u) == 0u), 0u, 2u)) & 2u) == 0u), 0u, 1u))))));
   return res;
 }
 
 VertexOutput vertex_main_inner() {
-  VertexOutput v_5 = (VertexOutput)0;
-  v_5.pos = (0.0f).xxxx;
-  v_5.prevent_dce = firstLeadingBit_f0779d();
-  VertexOutput v_6 = v_5;
-  return v_6;
+  VertexOutput v_1 = (VertexOutput)0;
+  v_1.pos = (0.0f).xxxx;
+  v_1.prevent_dce = firstLeadingBit_f0779d();
+  VertexOutput v_2 = v_1;
+  return v_2;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_7 = vertex_main_inner();
-  vertex_main_outputs v_8 = {v_7.prevent_dce, v_7.pos};
-  return v_8;
+  VertexOutput v_3 = vertex_main_inner();
+  vertex_main_outputs v_4 = {v_3.prevent_dce, v_3.pos};
+  return v_4;
 }
 

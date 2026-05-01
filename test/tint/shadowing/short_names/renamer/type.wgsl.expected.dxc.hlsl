@@ -15,7 +15,7 @@ float4 v(uint v_1) {
   tint_struct v_2 = {int(1)};
   float v_3 = float(v_2.tint_member);
   bool v_4 = bool(v_3);
-  return ((v_4) ? ((1.0f).xxxx) : ((0.0f).xxxx));
+  return select(v_4, (1.0f).xxxx, (0.0f).xxxx);
 }
 
 tint_struct_1 tint_entry_point(tint_struct_2 v_6) {

@@ -23,9 +23,9 @@ void v_2(uint offset, matrix<float16_t, 2, 3> obj) {
 
 matrix<float16_t, 2, 3> v_3(uint start_byte_offset) {
   uint4 v_4 = u[(start_byte_offset / 16u)];
-  vector<float16_t, 3> v_5 = tint_bitcast_to_f16_1((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_4.zw) : (v_4.xy))).xyz;
+  vector<float16_t, 3> v_5 = tint_bitcast_to_f16_1(select((((start_byte_offset & 15u) >> 2u) == 2u), v_4.zw, v_4.xy)).xyz;
   uint4 v_6 = u[((8u + start_byte_offset) / 16u)];
-  return matrix<float16_t, 2, 3>(v_5, tint_bitcast_to_f16_1(((((((8u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_6.zw) : (v_6.xy))).xyz);
+  return matrix<float16_t, 2, 3>(v_5, tint_bitcast_to_f16_1(select(((((8u + start_byte_offset) & 15u) >> 2u) == 2u), v_6.zw, v_6.xy)).xyz);
 }
 
 [numthreads(1, 1, 1)]
