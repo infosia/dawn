@@ -47,9 +47,6 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/EnumMaskIterator.h"
-#include "dawn/native/ObjectType_autogen.h"
-#include "dawn/native/PassResourceUsage.h"
-#include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/ResourceTable.h"
 #include "dawn/native/SharedTextureMemory.h"
 #include "dawn/native/ValidationUtils_autogen.h"
@@ -1491,8 +1488,8 @@ Extent3D TextureBase::ClampToMipLevelVirtualSize(uint32_t level,
                                                  const Origin3D& origin,
                                                  const Extent3D& extent) const {
     const Extent3D virtualSizeAtLevel = GetMipLevelSingleSubresourceVirtualSize(level, aspect);
-    DAWN_ASSERT(origin.x <= virtualSizeAtLevel.width);
-    DAWN_ASSERT(origin.y <= virtualSizeAtLevel.height);
+    DAWN_RELEASE_ASSUME(origin.x <= virtualSizeAtLevel.width);
+    DAWN_RELEASE_ASSUME(origin.y <= virtualSizeAtLevel.height);
     uint32_t clampedCopyExtentWidth = (extent.width > virtualSizeAtLevel.width - origin.x)
                                           ? (virtualSizeAtLevel.width - origin.x)
                                           : extent.width;

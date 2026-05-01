@@ -868,12 +868,12 @@ bool CommandBufferStateTracker::IndexBufferSet() const {
 }
 
 RenderPipelineBase* CommandBufferStateTracker::GetRenderPipeline() const {
-    DAWN_ASSERT(HasPipeline() && mLastPipeline->GetType() == ObjectType::RenderPipeline);
+    DAWN_RELEASE_ASSUME(HasPipeline() && mLastPipeline->GetType() == ObjectType::RenderPipeline);
     return static_cast<RenderPipelineBase*>(mLastPipeline);
 }
 
 ComputePipelineBase* CommandBufferStateTracker::GetComputePipeline() const {
-    DAWN_ASSERT(HasPipeline() && mLastPipeline->GetType() == ObjectType::ComputePipeline);
+    DAWN_RELEASE_ASSUME(HasPipeline() && mLastPipeline->GetType() == ObjectType::ComputePipeline);
     return static_cast<ComputePipelineBase*>(mLastPipeline);
 }
 
