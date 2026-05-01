@@ -90,8 +90,14 @@ class ErrorBuffer final : public BufferBase {
         // Check that the size can be used to allocate mFakeMappedData. A malloc(0)
         // is invalid, and on 32bit systems we should avoid a narrowing conversion that
         // would make size = 1 << 32 + 1 allocate one byte.
-        uint64_t size = GetSize();
-        bool isValidSize = size != 0 && size < uint64_t(std::numeric_limits<size_t>::max());
+        // clang-tidy: misc-const-correctness - declaring 'size' as const because it is not
+        // modified.
+        const uint64_t size = GetSize();
+        // clang-tidy: misc-const-correctness - declaring 'isValidSize' as const because it is not
+        // modified. clang-tidy: google-readability-casting - using static_cast instead of C-style
+        // cast.
+        const bool isValidSize =
+            size != 0 && size < static_cast<uint64_t>(std::numeric_limits<size_t>::max());
 
         if (isValidSize) {
             mFakeMappedData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));

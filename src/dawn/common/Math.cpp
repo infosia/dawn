@@ -69,12 +69,16 @@ bool IsAligned(uint32_t value, size_t alignment) {
     DAWN_ASSERT(alignment <= UINT32_MAX);
     DAWN_ASSERT(IsPowerOfTwo(alignment));
     DAWN_ASSERT(alignment != 0);
-    uint32_t alignment32 = static_cast<uint32_t>(alignment);
+    // clang-tidy: misc-const-correctness - declaring 'alignment32' as const because it is not
+    // modified. clang-tidy: modernize-use-auto - using auto with static_cast.
+    const auto alignment32 = static_cast<uint32_t>(alignment);
     return (value & (alignment32 - 1)) == 0;
 }
 
 uint16_t Float32ToFloat16(float fp32) {
-    uint32_t fp32i = std::bit_cast<uint32_t>(fp32);
+    // clang-tidy: misc-const-correctness - declaring 'fp32i' as const because it is not modified.
+    // clang-tidy: modernize-use-auto - using auto with bit_cast.
+    const auto fp32i = std::bit_cast<uint32_t>(fp32);
     uint32_t sign16 = (fp32i & 0x80000000) >> 16;
     uint32_t mantissaAndExponent = fp32i & 0x7FFFFFFF;
 

@@ -70,8 +70,12 @@ MaybeError ValidateSamplerDescriptor(DeviceBase* device, const SamplerDescriptor
     DAWN_TRY(ValidateAddressMode(descriptor->addressModeW));
     DAWN_TRY(ValidateCompareFunction(descriptor->compare));
 
-    UnpackedPtr<SamplerDescriptor> unpacked = Unpack(descriptor);
-    if (auto* ycbcr = unpacked.Get<YCbCrVkDescriptor>()) {
+    // clang-tidy: misc-const-correctness - declaring 'unpacked' as const because it is not
+    // modified.
+    const UnpackedPtr<SamplerDescriptor> unpacked = Unpack(descriptor);
+    // clang-tidy: readability-qualified-auto - declaring 'ycbcr' as const auto* because it is not
+    // modified.
+    if (const auto* ycbcr = unpacked.Get<YCbCrVkDescriptor>()) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
                         wgpu::FeatureName::YCbCrVulkanSamplers);
 

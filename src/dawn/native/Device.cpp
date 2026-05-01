@@ -1232,10 +1232,11 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
         if (hasHostMapped) {
             // Creating a buffer from a host-mapped pointer doesn't require the lock.
             return CreateBufferImpl(descriptor);
-        } else {
-            auto deviceGuard = UseGuardForCreateBuffer();
-            return CreateBufferImpl(descriptor);
         }
+        // clang-tidy: readability-else-after-return - Removing redundant else to follow early
+        // return pattern.
+        auto deviceGuard = UseGuardForCreateBuffer();
+        return CreateBufferImpl(descriptor);
     })();
 
     // 2. Error handling.
@@ -2745,7 +2746,8 @@ std::pair<std::string, bool> DeviceBase::GetTraceInfo() {
 
     uint32_t count = s_count.fetch_add(1, std::memory_order_acq_rel);
 
-    std::time_t now = std::time(0);
+    // clang-tidy: modernize-use-nullptr - Using nullptr for the pointer argument in std::time.
+    std::time_t now = std::time(nullptr);
     std::tm tm(*std::localtime(&now));
     std::string traceName(absl::StrFormat("%s-%04d-%02d-%02dT%02d-%02d-%02d-c%03d", traceFileBase,
                                           tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour,
