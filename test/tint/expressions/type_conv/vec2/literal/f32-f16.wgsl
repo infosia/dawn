@@ -1,4 +1,4 @@
-// flags:  --hlsl-shader-model 62
+// flags:  --hlsl-shader-model 6.2
 enable f16;
 var<private> u : vec2<f16> = vec2<f16>(vec2<f32>(1.0f));
 

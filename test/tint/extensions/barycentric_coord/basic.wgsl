@@ -1,5 +1,5 @@
 // flags: --glsl-desktop
-// [hlsl-dxc] flags: --hlsl-shader-model 62
+// [hlsl-dxc] flags: --hlsl-shader-model 6.2
 
 enable chromium_experimental_barycentric_coord;
 
