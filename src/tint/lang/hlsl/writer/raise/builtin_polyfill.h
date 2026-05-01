@@ -42,6 +42,9 @@ namespace tint::hlsl::writer::raise {
 struct BuiltinPolyfillConfig {
     /// Set to `true` to polyfill `trunc()`.
     bool polyfill_trunc = false;
+
+    /// Set to `true` to use HLSL 2021's `select()` instead of a ternary operator.
+    bool use_hlsl_2021_select = false;
 };
 
 /// BuiltinPolyfill is a transform that replaces calls to builtins with polyfills and calls to

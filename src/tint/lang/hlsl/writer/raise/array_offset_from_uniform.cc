@@ -173,6 +173,7 @@ struct State {
                         case BuiltinFn::kWaveReadLaneAt:
                         case BuiltinFn::kModf:
                         case BuiltinFn::kFrexp:
+                        case BuiltinFn::kSelect:
                         case BuiltinFn::kGatherCmp:
                         case BuiltinFn::kGather:
                         case BuiltinFn::kGatherAlpha:

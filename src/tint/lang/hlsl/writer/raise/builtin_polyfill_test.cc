@@ -7550,6 +7550,72 @@ __frexp_result_vec3_f32 = struct @align(16) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, Select_2018) {
+    auto* f = b.FunctionParam<f32>("f");
+    auto* t = b.FunctionParam<f32>("t");
+    auto* cond = b.FunctionParam<bool>("cond");
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({f, t, cond});
+    b.Append(func->Block(), [&] {  //
+        b.Return(func, b.Call(ty.f32(), core::BuiltinFn::kSelect, f, t, cond));
+    });
+
+    auto* src = R"(
+%foo = func(%f:f32, %t:f32, %cond:bool):f32 {
+  $B1: {
+    %5:f32 = select %f, %t, %cond
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%f:f32, %t:f32, %cond:bool):f32 {
+  $B1: {
+    %5:f32 = hlsl.ternary %f, %t, %cond
+    ret %5
+  }
+}
+)";
+
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{.use_hlsl_2021_select = false});
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, Select_2021) {
+    auto* f = b.FunctionParam<f32>("f");
+    auto* t = b.FunctionParam<f32>("t");
+    auto* cond = b.FunctionParam<bool>("cond");
+    auto* func = b.Function("foo", ty.f32());
+    func->SetParams({f, t, cond});
+    b.Append(func->Block(), [&] {  //
+        b.Return(func, b.Call(ty.f32(), core::BuiltinFn::kSelect, f, t, cond));
+    });
+
+    auto* src = R"(
+%foo = func(%f:f32, %t:f32, %cond:bool):f32 {
+  $B1: {
+    %5:f32 = select %f, %t, %cond
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%f:f32, %t:f32, %cond:bool):f32 {
+  $B1: {
+    %5:f32 = hlsl.select %cond, %t, %f
+    ret %5
+  }
+}
+)";
+
+    Run(BuiltinPolyfill, BuiltinPolyfillConfig{.use_hlsl_2021_select = true});
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(HlslWriter_BuiltinPolyfillTest, Trunc) {
     auto* a = b.FunctionParam<f32>("a");
     auto* func = b.Function("foo", ty.f32());

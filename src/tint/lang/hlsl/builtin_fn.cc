@@ -106,6 +106,8 @@ const char* str(BuiltinFn i) {
             return "modf";
         case BuiltinFn::kFrexp:
             return "frexp";
+        case BuiltinFn::kSelect:
+            return "select";
         case BuiltinFn::kLoad:
             return "Load";
         case BuiltinFn::kLoad2:
@@ -248,6 +250,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kF32Tof16:
         case BuiltinFn::kF16Tof32:
         case BuiltinFn::kFrexp:
+        case BuiltinFn::kSelect:
         case BuiltinFn::kGetDimensions:
         case BuiltinFn::kModf:
         case BuiltinFn::kMul:
