@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcb63ef7_7f428846",
+        "filename": ".clang-tidy",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T04:46:45Z",
+      "side": 1,
+      "message": "Just remove them. If they\u0027re good they\u0027re covered by the `abseil-*` at the top. The `-` entries are just needed to remove them from the glob. So, anything passing should be removed.",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e154ca_2bab2f9e",
+        "filename": ".clang-tidy",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T04:46:45Z",
+      "side": 1,
+      "message": "Should probably keep this one, it\u0027s an alias for the other magic number check we kept (and it\u0027s kinda annoying)\n```suggestion\n          -cppcoreguidelines-avoid-magic-numbers,\\\n```",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9fdb94b_6d812a6b",
+        "filename": "src/dawn/common/Log.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2026-05-01T04:46:45Z",
+      "side": 1,
+      "message": "Let\u0027s drop all the `clang-tidy` comments, they\u0027re just noise.",
+      "revId": "94eb5a8ad8898e0ed234acfd52eaf92e8c4d4ff9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
