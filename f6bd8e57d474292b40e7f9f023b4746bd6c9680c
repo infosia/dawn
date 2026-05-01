@@ -68,6 +68,41 @@
       "message": "Lots of failed CQ runs",
       "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1487c3b6_9fdc07c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-05-01T19:05:48Z",
+      "side": 1,
+      "message": "yup. That\u0027s probably because the bots don\u0027t run on backport branches. It was mentioned in fact: \"I don\u0027t think any of the CQ work for bots older than M145 (or something like that)\",  https://dawn-review.git.corp.google.com/c/dawn/+/303155/comments/c79c1e98_71a210a3",
+      "parentUuid": "c4d5c9f9_706d9f44",
+      "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cabb4d8_7e9a9b5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4729644
+      },
+      "writtenOn": "2026-05-01T19:05:48Z",
+      "side": 1,
+      "message": "lokokung@ PTAL.",
+      "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
