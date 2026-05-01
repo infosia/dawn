@@ -536,8 +536,16 @@ struct State {
 
     void Select(core::ir::CoreBuiltinCall* call) {
         auto args = Vector<core::ir::Value*, 4>{call->Args()};
-        auto* ternary = b.ir.CreateInstruction<hlsl::ir::Ternary>(call->DetachResult(), args);
-        ternary->InsertBefore(call);
+        if (config.use_hlsl_2021_select) {
+            // HLSL's argument order for select is (condition, trueval, falseval), which is the
+            // opposite of WGSL/Tint.
+            auto* hlsl_select = b.CallWithResult<hlsl::ir::BuiltinCall>(
+                call->DetachResult(), hlsl::BuiltinFn::kSelect, args[2], args[1], args[0]);
+            hlsl_select->InsertBefore(call);
+        } else {
+            auto* ternary = b.ir.CreateInstruction<hlsl::ir::Ternary>(call->DetachResult(), args);
+            ternary->InsertBefore(call);
+        }
         call->Destroy();
     }
 
