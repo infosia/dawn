@@ -361,10 +361,11 @@ R32Sint, R32Uint, R32Float.
         EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_2, "6.2"),
         EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_4, "6.4"),
         EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_6, "6.6"),
+        EnumName(tint::hlsl::validate::HlslShaderModel::kSM_6_10, "6.10"),
     };
     auto& hlsl_shader_model = options.Add<EnumOption<tint::hlsl::validate::HlslShaderModel>>(
         "hlsl-shader-model", R"(The D3D Shader Model to compile and validate with.
-Valid values are 6.0, 6.2, 6.4 and 6.6)",
+Valid values are 6.0, 6.2, 6.4, 6.6 and 6.10)",
         hlsl_shader_model_enum_names, Default{tint::hlsl::validate::HlslShaderModel::kSM_6_0});
     TINT_DEFER(opts->hlsl_shader_model = *hlsl_shader_model.value);
 #endif  // TINT_BUILD_HLSL_WRITER
