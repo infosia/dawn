@@ -7,7 +7,7 @@ int3 select_8fa62c() {
   int3 arg_0 = (int(1)).xxx;
   int3 arg_1 = (int(1)).xxx;
   bool arg_2 = true;
-  int3 res = ((arg_2) ? (arg_1) : (arg_0));
+  int3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ int3 select_8fa62c() {
   int3 arg_0 = (int(1)).xxx;
   int3 arg_1 = (int(1)).xxx;
   bool arg_2 = true;
-  int3 res = ((arg_2) ? (arg_1) : (arg_0));
+  int3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ int3 select_8fa62c() {
   int3 arg_0 = (int(1)).xxx;
   int3 arg_1 = (int(1)).xxx;
   bool arg_2 = true;
-  int3 res = ((arg_2) ? (arg_1) : (arg_0));
+  int3 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

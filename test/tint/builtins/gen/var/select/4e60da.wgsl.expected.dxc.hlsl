@@ -4,7 +4,7 @@
 
 void select_4e60da() {
   bool arg_2 = true;
-  float2 res = ((arg_2) ? ((1.0f).xx) : ((1.0f).xx));
+  float2 res = select(arg_2, (1.0f).xx, (1.0f).xx);
 }
 
 void fragment_main() {
@@ -17,7 +17,7 @@ void fragment_main() {
 
 void select_4e60da() {
   bool arg_2 = true;
-  float2 res = ((arg_2) ? ((1.0f).xx) : ((1.0f).xx));
+  float2 res = select(arg_2, (1.0f).xx, (1.0f).xx);
 }
 
 [numthreads(1, 1, 1)]
@@ -39,7 +39,7 @@ struct vertex_main_outputs {
 
 void select_4e60da() {
   bool arg_2 = true;
-  float2 res = ((arg_2) ? ((1.0f).xx) : ((1.0f).xx));
+  float2 res = select(arg_2, (1.0f).xx, (1.0f).xx);
 }
 
 VertexOutput vertex_main_inner() {

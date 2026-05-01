@@ -1,7 +1,6 @@
 
 uint tint_mod_u32(uint lhs, uint rhs) {
-  uint v = (((rhs == 0u)) ? (1u) : (rhs));
-  return (lhs - ((lhs / v) * v));
+  return (lhs - ((lhs / select((rhs == 0u), 1u, rhs)) * select((rhs == 0u), 1u, rhs)));
 }
 
 [numthreads(1, 1, 1)]

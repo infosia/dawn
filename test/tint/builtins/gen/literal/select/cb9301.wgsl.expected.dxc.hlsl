@@ -5,7 +5,7 @@
 RWByteAddressBuffer prevent_dce : register(u0);
 int select_cb9301() {
   bool2 res = (true).xx;
-  return ((all((res == (false).xx))) ? (int(1)) : (int(0)));
+  return select(all((res == (false).xx)), int(1), int(0));
 }
 
 void fragment_main() {
@@ -19,7 +19,7 @@ void fragment_main() {
 RWByteAddressBuffer prevent_dce : register(u0);
 int select_cb9301() {
   bool2 res = (true).xx;
-  return ((all((res == (false).xx))) ? (int(1)) : (int(0)));
+  return select(all((res == (false).xx)), int(1), int(0));
 }
 
 [numthreads(1, 1, 1)]
@@ -43,7 +43,7 @@ struct vertex_main_outputs {
 
 int select_cb9301() {
   bool2 res = (true).xx;
-  return ((all((res == (false).xx))) ? (int(1)) : (int(0)));
+  return select(all((res == (false).xx)), int(1), int(0));
 }
 
 VertexOutput vertex_main_inner() {

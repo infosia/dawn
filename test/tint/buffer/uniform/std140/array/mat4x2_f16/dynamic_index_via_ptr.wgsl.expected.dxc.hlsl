@@ -51,8 +51,6 @@ void f() {
   matrix<float16_t, 4, 2> l_a[4] = v_6(0u);
   matrix<float16_t, 4, 2> l_a_i = v_2(v_10);
   vector<float16_t, 2> l_a_i_i = tint_bitcast_to_f16(a[((v_10 + v_11) / 16u)][(((v_10 + v_11) & 15u) >> 2u)]);
-  uint v_12 = a[((v_10 + v_11) / 16u)][(((v_10 + v_11) & 15u) >> 2u)];
-  uint v_13 = (((((v_10 + v_11) % 4u) == 0u)) ? (0u) : (1u));
-  s.Store<float16_t>(0u, (((tint_bitcast_to_f16(v_12)[v_13] + l_a[0u][0u].x) + l_a_i[0u].x) + l_a_i_i.x));
+  s.Store<float16_t>(0u, (((tint_bitcast_to_f16(a[((v_10 + v_11) / 16u)][(((v_10 + v_11) & 15u) >> 2u)])[select((((v_10 + v_11) % 4u) == 0u), 0u, 1u)] + l_a[0u][0u].x) + l_a_i[0u].x) + l_a_i_i.x));
 }
 

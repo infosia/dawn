@@ -95,8 +95,6 @@ void f() {
   matrix<float16_t, 2, 2> l_a_i_a_i_m = v_2((v_19 + v_20));
   vector<float16_t, 2> l_a_i_a_i_m_i = tint_bitcast_to_f16(a[(((v_19 + v_20) + v_21) / 16u)][((((v_19 + v_20) + v_21) & 15u) >> 2u)]);
   uint v_22 = (((v_19 + v_20) + v_21) + (min(uint(i()), 1u) * 2u));
-  uint v_23 = a[(v_22 / 16u)][((v_22 & 15u) >> 2u)];
-  uint v_24 = ((((v_22 % 4u) == 0u)) ? (0u) : (1u));
-  float16_t l_a_i_a_i_m_i_i = tint_bitcast_to_f16(v_23)[v_24];
+  float16_t l_a_i_a_i_m_i_i = tint_bitcast_to_f16(a[(v_22 / 16u)][((v_22 & 15u) >> 2u)])[select(((v_22 % 4u) == 0u), 0u, 1u)];
 }
 

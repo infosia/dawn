@@ -10,7 +10,7 @@ void bar(inout float p) {
     v_1 = false;
   }
   bool cond = v_1;
-  p = ((cond) ? (b) : (a));
+  p = select(cond, b, a);
 }
 
 [numthreads(1, 1, 1)]
