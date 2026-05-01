@@ -23,9 +23,9 @@ vector<float16_t, 4> tint_bitcast_to_f16_1(uint2 src) {
 
 matrix<float16_t, 2, 3> v_2(uint start_byte_offset) {
   uint4 v_3 = u[(start_byte_offset / 16u)];
-  vector<float16_t, 3> v_4 = tint_bitcast_to_f16_1((((((start_byte_offset & 15u) >> 2u) == 2u)) ? (v_3.zw) : (v_3.xy))).xyz;
+  vector<float16_t, 3> v_4 = tint_bitcast_to_f16_1(select((((start_byte_offset & 15u) >> 2u) == 2u), v_3.zw, v_3.xy)).xyz;
   uint4 v_5 = u[((8u + start_byte_offset) / 16u)];
-  return matrix<float16_t, 2, 3>(v_4, tint_bitcast_to_f16_1(((((((8u + start_byte_offset) & 15u) >> 2u) == 2u)) ? (v_5.zw) : (v_5.xy))).xyz);
+  return matrix<float16_t, 2, 3>(v_4, tint_bitcast_to_f16_1(select(((((8u + start_byte_offset) & 15u) >> 2u) == 2u), v_5.zw, v_5.xy)).xyz);
 }
 
 typedef matrix<float16_t, 2, 3> ary_ret[4];

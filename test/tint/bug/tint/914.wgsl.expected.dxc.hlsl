@@ -61,7 +61,7 @@ void mm_write(uint row, uint col, float value) {
 }
 
 uint tint_div_u32(uint lhs, uint rhs) {
-  return (lhs / (((rhs == 0u)) ? (1u) : (rhs)));
+  return (lhs / select((rhs == 0u), 1u, rhs));
 }
 
 void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {

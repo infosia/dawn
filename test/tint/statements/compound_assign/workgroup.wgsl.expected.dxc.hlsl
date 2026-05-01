@@ -7,7 +7,7 @@ groupshared int a;
 groupshared float4 b;
 groupshared float2x2 c;
 int tint_div_i32(int lhs, int rhs) {
-  return (lhs / ((((rhs == int(0)) | ((lhs == int(-2147483648)) & (rhs == int(-1))))) ? (int(1)) : (rhs)));
+  return (lhs / select(((rhs == int(0)) | ((lhs == int(-2147483648)) & (rhs == int(-1)))), int(1), rhs));
 }
 
 void foo_inner(uint tint_local_index) {

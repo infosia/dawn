@@ -7,7 +7,7 @@ uint4 select_c4a4ef() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool4 arg_2 = (true).xxxx;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -24,7 +24,7 @@ uint4 select_c4a4ef() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool4 arg_2 = (true).xxxx;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 
@@ -51,7 +51,7 @@ uint4 select_c4a4ef() {
   uint4 arg_0 = (1u).xxxx;
   uint4 arg_1 = (1u).xxxx;
   bool4 arg_2 = (true).xxxx;
-  uint4 res = ((arg_2) ? (arg_1) : (arg_0));
+  uint4 res = select(arg_2, arg_1, arg_0);
   return res;
 }
 

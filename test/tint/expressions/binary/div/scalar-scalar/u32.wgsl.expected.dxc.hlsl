@@ -1,6 +1,6 @@
 
 uint tint_div_u32(uint lhs, uint rhs) {
-  return (lhs / (((rhs == 0u)) ? (1u) : (rhs)));
+  return (lhs / select((rhs == 0u), 1u, rhs));
 }
 
 [numthreads(1, 1, 1)]

@@ -10,8 +10,8 @@ uint extractBits_ce81f8() {
   uint v = arg_0;
   uint v_1 = min(arg_1, 32u);
   uint v_2 = (32u - min(32u, (v_1 + min(arg_2, 32u))));
-  uint v_3 = (((v_2 < 32u)) ? ((v << uint(v_2))) : (0u));
-  uint res = ((((v_2 + v_1) < 32u)) ? ((v_3 >> uint((v_2 + v_1)))) : (((v_3 >> 31u) >> 1u)));
+  uint v_3 = select((v_2 < 32u), (v << uint(v_2)), 0u);
+  uint res = select(((v_2 + v_1) < 32u), (v_3 >> uint((v_2 + v_1))), ((v_3 >> 31u) >> 1u));
   return res;
 }
 
@@ -31,8 +31,8 @@ uint extractBits_ce81f8() {
   uint v = arg_0;
   uint v_1 = min(arg_1, 32u);
   uint v_2 = (32u - min(32u, (v_1 + min(arg_2, 32u))));
-  uint v_3 = (((v_2 < 32u)) ? ((v << uint(v_2))) : (0u));
-  uint res = ((((v_2 + v_1) < 32u)) ? ((v_3 >> uint((v_2 + v_1)))) : (((v_3 >> 31u) >> 1u)));
+  uint v_3 = select((v_2 < 32u), (v << uint(v_2)), 0u);
+  uint res = select(((v_2 + v_1) < 32u), (v_3 >> uint((v_2 + v_1))), ((v_3 >> 31u) >> 1u));
   return res;
 }
 
@@ -62,8 +62,8 @@ uint extractBits_ce81f8() {
   uint v = arg_0;
   uint v_1 = min(arg_1, 32u);
   uint v_2 = (32u - min(32u, (v_1 + min(arg_2, 32u))));
-  uint v_3 = (((v_2 < 32u)) ? ((v << uint(v_2))) : (0u));
-  uint res = ((((v_2 + v_1) < 32u)) ? ((v_3 >> uint((v_2 + v_1)))) : (((v_3 >> 31u) >> 1u)));
+  uint v_3 = select((v_2 < 32u), (v << uint(v_2)), 0u);
+  uint res = select(((v_2 + v_1) < 32u), (v_3 >> uint((v_2 + v_1))), ((v_3 >> 31u) >> 1u));
   return res;
 }
 
