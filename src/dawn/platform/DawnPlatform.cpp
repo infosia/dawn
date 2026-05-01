@@ -111,6 +111,8 @@ bool Platform::IsFeatureEnabled(Features feature) {
             return true;
         case Features::kWebGPUDecomposeUniformBuffers:
             return true;
+        case Features::kWebGPUUseHLSL2021:
+            return true;
     }
     return false;
 }

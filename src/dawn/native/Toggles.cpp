@@ -792,6 +792,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "samplers are only require to sample YCbCr AHB on Android, this is useful for testing on "
       "other devices.",
       "https://crbug.com/468988322", ToggleStage::Device}},
+    {Toggle::D3D12UseHLSL2021,
+     {"d3d12_use_hlsl_2021", "Use HLSL 2021 when targeting DXC.", "https://crbug.com/508342536",
+      ToggleStage::Device}},
     {Toggle::WaitIsThreadSafe,
      {"wait_is_thread_safe",
       "WaitFor* functions are thread-safe and can be called without the device-lock if implicit "
