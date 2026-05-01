@@ -1789,8 +1789,11 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
                     "copying from %s to depth aspect of %s using blit workaround.", source->buffer,
                     dst.texture.Get());
                 return {};
-            } else if (dst.aspect == Aspect::Stencil &&
-                       GetDevice()->IsToggleEnabled(Toggle::UseBlitForBufferToStencilTextureCopy)) {
+            }
+            // clang-tidy: readability-else-after-return - Removing redundant else to follow early
+            // return pattern.
+            if (dst.aspect == Aspect::Stencil &&
+                GetDevice()->IsToggleEnabled(Toggle::UseBlitForBufferToStencilTextureCopy)) {
                 // The below function might create new resources. Need to lock the Device.
                 // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
                 // Command Submit time, so the locking would be removed from here at that point.
@@ -1801,8 +1804,11 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
                                  "copying from %s to stencil aspect of %s using blit workaround.",
                                  source->buffer, dst.texture.Get());
                 return {};
-            } else if (GetDevice()->IsToggleEnabled(Toggle::UseBlitForB2T) &&
-                       IsBufferToTextureBlitSupported(source->buffer, dst, *copySize)) {
+            }
+            // clang-tidy: readability-else-after-return - Removing redundant else to follow early
+            // return pattern.
+            if (GetDevice()->IsToggleEnabled(Toggle::UseBlitForB2T) &&
+                IsBufferToTextureBlitSupported(source->buffer, dst, *copySize)) {
                 // This function might create new resources. Need to lock the Device.
                 // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
                 // Command Submit time, so the locking would be removed from here at that point.

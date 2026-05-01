@@ -102,7 +102,9 @@ LogMessage::~LogMessage() {
 }
 #else  // defined(DAWN_DISABLE_LOGGING)
 LogMessage::~LogMessage() {
-    std::string fullMessage = mStream.str();
+    // clang-tidy: misc-const-correctness - declaring 'fullMessage' as const because it is not
+    // modified.
+    const std::string fullMessage = mStream.str();
 
     // If this message has been moved, its stream is empty.
     if (fullMessage.empty()) {

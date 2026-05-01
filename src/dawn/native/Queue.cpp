@@ -82,9 +82,16 @@ void CopyTextureData(uint8_t* dstPointer,
                      uint32_t actualBytesPerRow,
                      uint32_t dstBytesPerRow,
                      uint32_t srcBytesPerRow) {
-    uint64_t imageAdditionalStride = srcBytesPerRow * (srcRowsPerImage - dstRowsPerImage);
-    bool copyWholeLayer = actualBytesPerRow == dstBytesPerRow && dstBytesPerRow == srcBytesPerRow;
-    bool copyWholeData = copyWholeLayer && imageAdditionalStride == 0;
+    // clang-tidy: misc-const-correctness - declaring 'imageAdditionalStride' as const because it is
+    // not modified.
+    const uint64_t imageAdditionalStride = srcBytesPerRow * (srcRowsPerImage - dstRowsPerImage);
+    // clang-tidy: misc-const-correctness - declaring 'copyWholeLayer' as const because it is not
+    // modified.
+    const bool copyWholeLayer =
+        actualBytesPerRow == dstBytesPerRow && dstBytesPerRow == srcBytesPerRow;
+    // clang-tidy: misc-const-correctness - declaring 'copyWholeData' as const because it is not
+    // modified.
+    const bool copyWholeData = copyWholeLayer && imageAdditionalStride == 0;
 
     if (!copyWholeLayer) {  // copy row by row
         for (uint32_t d = 0; d < depth; ++d) {
@@ -96,7 +103,10 @@ void CopyTextureData(uint8_t* dstPointer,
             srcPointer += imageAdditionalStride;
         }
     } else {
-        uint64_t layerSize = uint64_t(dstRowsPerImage) * actualBytesPerRow;
+        // clang-tidy: google-readability-casting - using static_cast instead of functional-style
+        // cast. clang-tidy: misc-const-correctness - declaring 'layerSize' as const because it is
+        // not modified.
+        const uint64_t layerSize = static_cast<uint64_t>(dstRowsPerImage) * actualBytesPerRow;
         if (!copyWholeData) {  // copy layer by layer
             for (uint32_t d = 0; d < depth; ++d) {
                 memcpy(dstPointer, srcPointer, layerSize);
