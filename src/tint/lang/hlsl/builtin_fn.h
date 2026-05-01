@@ -81,6 +81,7 @@ enum class BuiltinFn : uint8_t {
     kWaveReadLaneAt,
     kModf,
     kFrexp,
+    kSelect,
     kLoad,
     kLoad2,
     kLoad3,

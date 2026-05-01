@@ -186,6 +186,7 @@ struct State {
                         case hlsl::BuiltinFn::kWaveReadLaneAt:
                         case hlsl::BuiltinFn::kModf:
                         case hlsl::BuiltinFn::kFrexp:
+                        case hlsl::BuiltinFn::kSelect:
                         case hlsl::BuiltinFn::kGatherCmp:
                         case hlsl::BuiltinFn::kGather:
                         case hlsl::BuiltinFn::kGatherAlpha:

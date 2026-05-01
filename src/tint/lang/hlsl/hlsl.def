@@ -44,6 +44,7 @@ import "src/tint/lang/core/filtering_parameters.def"
 // Types                                                                      //
 ////////////////////////////////////////////////////////////////////////////////
 
+type bool
 type u16
 type i32
 type u32
@@ -106,6 +107,7 @@ type rasterizer_ordered_texture_2d<F: texel_format>
 // Type matchers                                                              //
 ////////////////////////////////////////////////////////////////////////////////
 
+match scalar: f32 | f16 | i32 | u32 | u16 | bool
 match iu32: i32 | u32
 match fiu32: f32 | i32 | u32
 match f32_u32: f32 | u32
@@ -303,6 +305,10 @@ implicit(N: num, T: f32_f16) fn modf(vec<N, T>, vec<N, T>) -> vec<N, T>
 
 implicit(T: f32_f16) fn frexp(T, T) -> T
 implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, vec<N, T>) -> vec<N, T>
+
+implicit(T: scalar) fn select(bool, T, T) -> T
+implicit(T: scalar, N: num) fn select(bool, vec<N, T>, vec<N, T>) -> vec<N, T>
+implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec<N, T>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Member Functions                                                           //
