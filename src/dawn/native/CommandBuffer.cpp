@@ -27,6 +27,8 @@
 
 #include "dawn/native/CommandBuffer.h"
 
+#include <utility>
+
 #include "dawn/native/Buffer.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -80,7 +82,9 @@ const std::string& CommandBufferBase::GetEncoderLabel() const {
 }
 
 void CommandBufferBase::SetEncoderLabel(std::string encoderLabel) {
-    mEncoderLabel = encoderLabel;
+    // clang-tidy: performance-unnecessary-value-param - moving the parameter to avoid an
+    // unnecessary copy.
+    mEncoderLabel = std::move(encoderLabel);
 }
 
 MaybeError CommandBufferBase::ValidateCanUseInSubmitNow() const {

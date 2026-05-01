@@ -82,14 +82,15 @@ MaybeError ValidateCanViewTextureAs(const DeviceBase* device,
     const Format& format = texture->GetFormat();
 
     if (aspect != wgpu::TextureAspect::All) {
-        wgpu::TextureFormat aspectFormat = format.GetAspectInfo(aspect).format;
+        // clang-tidy: misc-const-correctness - declaring 'aspectFormat' as const because it is not
+        // modified.
+        const wgpu::TextureFormat aspectFormat = format.GetAspectInfo(aspect).format;
         if (viewFormat.format == aspectFormat) {
             return {};
-        } else {
-            return DAWN_VALIDATION_ERROR(
-                "The view format (%s) is not compatible with %s of %s (%s).", viewFormat.format,
-                aspect, format.format, aspectFormat);
         }
+        // clang-tidy: readability-else-after-return - removing redundant else after return.
+        return DAWN_VALIDATION_ERROR("The view format (%s) is not compatible with %s of %s (%s).",
+                                     viewFormat.format, aspect, format.format, aspectFormat);
     }
 
     if (format.format == viewFormat.format) {
