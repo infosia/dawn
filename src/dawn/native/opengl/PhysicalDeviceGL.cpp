@@ -278,7 +278,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     // ShaderF16
-    if (mFunctions.IsGLExtensionSupported("GL_AMD_gpu_shader_half_float")) {
+    // Int16 required to support buffer_view conversions
+    if (mFunctions.IsGLExtensionSupported("GL_AMD_gpu_shader_half_float") &&
+        mFunctions.IsGLExtensionSupported("GL_AMD_gpu_shader_int16")) {
         EnableFeature(Feature::ShaderF16);
     }
 

@@ -570,6 +570,10 @@ match workgroup_uniform_storage
   fn bitcast<T: vec2<u16> >(S) -> T
 @must_use @const
   fn bitcast<T: fiu32>(vec2<u16>) -> T
+@must_use @const
+  fn bitcast<T: vec2<fiu32> >(vec4<u16>) -> T
+@must_use @const implicit(S: fiu32)
+  fn bitcast<T: vec4<u16> >(vec2<S>) -> T
 
 @must_use @const
   fn bitcast<T: u64>(vec2<u32>) -> T
