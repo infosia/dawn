@@ -35,7 +35,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// [hlsl-dxc] flags: --hlsl-shader-model 60
+// [hlsl-dxc] flags: --hlsl-shader-model 6.0
 
 
 enable subgroups;
