@@ -183,6 +183,9 @@ Result ValidateUsingDXC(const std::string& dxc_path,
         case HlslShaderModel::kSM_6_6:
             profile += L"6_6";
             break;
+        case HlslShaderModel::kSM_6_10:
+            profile += L"6_10";
+            break;
     }
     std::wstring entry_point = std::wstring(entry_point_name.begin(), entry_point_name.end());
     std::vector<const wchar_t*> args{
