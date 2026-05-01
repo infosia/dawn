@@ -205,7 +205,8 @@ TEST_F(GlslWriterTest, CanGenerate_AtomicStoreMax_Unsupported) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* access = b.Access(ty.ptr<storage, read_write>(ty.atomic(ty.u64())), var, 0_u);
-        b.Call<void>(core::BuiltinFn::kAtomicStoreMax, access, 1_u);
+        b.Call<void>(core::BuiltinFn::kAtomicStoreMax, access,
+                     b.Bitcast(ty.u64(), b.Splat(ty.vec2u(), 1_u)));
         b.Return(func);
     });
 
@@ -230,7 +231,8 @@ TEST_F(GlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* access = b.Access(ty.ptr<storage, read_write>(ty.atomic(ty.u64())), var, 0_u);
-        b.Call<void>(core::BuiltinFn::kAtomicStoreMin, access, 1_u);
+        b.Call<void>(core::BuiltinFn::kAtomicStoreMin, access,
+                     b.Bitcast(ty.u64(), b.Splat(ty.vec2u(), 1_u)));
         b.Return(func);
     });
 

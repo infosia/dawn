@@ -44,6 +44,7 @@
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/u64.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
@@ -106,6 +107,8 @@ struct State {
                     case core::BuiltinFn::kAtomicStore:
                     case core::BuiltinFn::kAtomicExchange:
                     case core::BuiltinFn::kAtomicCompareExchangeWeak:
+                    case core::BuiltinFn::kAtomicStoreMax:
+                    case core::BuiltinFn::kAtomicStoreMin:
                     case core::BuiltinFn::kCountOneBits:
                     case core::BuiltinFn::kDot4I8Packed:
                     case core::BuiltinFn::kDot4U8Packed:
@@ -185,6 +188,9 @@ struct State {
             } else if (dst_deepest->Size() == 2 && dst_type->Is<core::type::Vector>()) {
                 // 32-bit to 16-bit vector bitcast (e.g., u32 -> vec2<f16> or u32 -> vec2<u16>)
                 ReplaceBitcastWithTo16BitPolyfill(bitcast);
+            } else if (src_deepest->Size() == 4 && dst_deepest->Size() == 8) {
+                // 32-bit vec2 to 64-bit bitcast (e.g. vec2<u32> -> u64)
+                ReplaceBitcastWithTo64BitPolyfill(bitcast);
             } else {
                 ReplaceBitcastWithAs(bitcast);
             }
@@ -234,6 +240,12 @@ struct State {
                     break;
                 case core::BuiltinFn::kAtomicCompareExchangeWeak:
                     AtomicCompareExchangeWeak(call);
+                    break;
+                case core::BuiltinFn::kAtomicStoreMax:
+                    AtomicStoreMax(call);
+                    break;
+                case core::BuiltinFn::kAtomicStoreMin:
+                    AtomicStoreMin(call);
                     break;
                 case core::BuiltinFn::kCountOneBits:
                     BitcastToIntOverloadCall(call);  // See crbug.com/tint/1550.
@@ -446,6 +458,13 @@ struct State {
         call->Destroy();
     }
 
+    void InterlockedStore(core::ir::CoreBuiltinCall* call, BuiltinFn fn) {
+        auto args = call->Args();
+        b.InsertBefore(call,
+                       [&] { b.Call<hlsl::ir::BuiltinCall>(ty.void_(), fn, args[0], args[1]); });
+        call->Destroy();
+    }
+
     void AtomicAnd(core::ir::CoreBuiltinCall* call) {
         Interlocked(call, BuiltinFn::kInterlockedAnd);
     }
@@ -462,6 +481,14 @@ struct State {
 
     void AtomicMax(core::ir::CoreBuiltinCall* call) {
         Interlocked(call, BuiltinFn::kInterlockedMax);
+    }
+
+    void AtomicStoreMin(core::ir::CoreBuiltinCall* call) {
+        InterlockedStore(call, BuiltinFn::kInterlockedMin);
+    }
+
+    void AtomicStoreMax(core::ir::CoreBuiltinCall* call) {
+        InterlockedStore(call, BuiltinFn::kInterlockedMax);
     }
 
     void AtomicAdd(core::ir::CoreBuiltinCall* call) {
@@ -821,6 +848,26 @@ struct State {
         auto* f = CreateBitcastTo16Bit(src_type, dst_type);
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
+        bitcast->Destroy();
+    }
+
+    void ReplaceBitcastWithTo64BitPolyfill(core::ir::CoreBuiltinCall* bitcast) {
+        auto* src = bitcast->Args()[0];
+        auto* dst_type = bitcast->Result()->Type();
+        TINT_IR_ASSERT(ir, dst_type->Is<core::type::U64>());
+
+        b.InsertBefore(bitcast, [&] {
+            auto* x = b.Swizzle(ty.u32(), src, {0u});
+            auto* y = b.Swizzle(ty.u32(), src, {1u});
+            auto* x64 = b.Convert(ty.u64(), x);
+            auto* y64 = b.Convert(ty.u64(), y);
+            auto* shifted_x = b.ShiftLeft(x64, b.Constant(u32(32)));
+            auto* result = b.Or(shifted_x, y64);
+
+            auto* final_result = result->Result();
+
+            bitcast->Result()->ReplaceAllUsesWith(final_result);
+        });
         bitcast->Destroy();
     }
 

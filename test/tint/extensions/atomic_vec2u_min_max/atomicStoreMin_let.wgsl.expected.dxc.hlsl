@@ -1,5 +1,8 @@
-SKIP: FAILED
 
-64-bit (vec2u) atomic operations are not yet supported by the HLSL backend
+RWByteAddressBuffer a : register(u0);
+void main() {
+  uint64_t v = uint64_t((0u).xx.x);
+  uint64_t v_1 = 0uLL;
+  a.InterlockedMin(0u, ((v << 32u) | uint64_t((0u).xx.y)), v_1);
+}
 
-tint executable returned error: exit status 1
