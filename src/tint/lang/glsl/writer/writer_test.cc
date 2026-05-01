@@ -302,5 +302,43 @@ TEST_F(GlslWriterTest, CanGenerate_StructMemberPadding_TooLarge) {
     EXPECT_THAT(result.Failure().reason, testing::HasSubstr("is larger than the maximum"));
 }
 
+TEST_F(GlslWriterTest, U16_Via_BufferView) {
+    auto* v = b.Var(ty.ptr(storage, ty.unsized_buffer()));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* ep = b.ComputeFunction("main");
+    b.Append(ep->Block(), [&] {
+        auto* view1 = b.CallExplicit(ty.ptr(storage, ty.f16()), core::BuiltinFn::kBufferView,
+                                     Vector{ty.f16()}, v, 0_u);
+        b.Load(view1);
+        auto* view2 = b.CallExplicit(ty.ptr(storage, ty.u32()), core::BuiltinFn::kBufferView,
+                                     Vector{ty.u32()}, v, 0_u);
+        b.Load(view2);
+        b.Return(ep);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure() << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(#extension GL_AMD_gpu_shader_int16: require
+#extension GL_AMD_gpu_shader_half_float: require
+
+layout(binding = 0, std430)
+buffer tint_symbol_1_ssbo {
+  uint16_t inner[];
+} v;
+uint tint_bitcast_from_16bit(u16vec2 src) {
+  return packFloat2x16(uint16BitsToFloat16(src));
+}
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main() {
+  uint v_1 = ((mix(0u, 0u, ((uint(v.inner.length()) * 2u) < 2u)) * 1u) / 2u);
+  uint16BitsToFloat16(v.inner[v_1]);
+  uint v_2 = ((mix(0u, 0u, ((uint(v.inner.length()) * 2u) < 4u)) * 1u) / 2u);
+  tint_bitcast_from_16bit(u16vec2(v.inner[v_2], v.inner[(v_2 + 1u)]));
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::glsl::writer

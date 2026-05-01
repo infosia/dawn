@@ -49,6 +49,7 @@ type f16
 type f32
 type i32
 type u32
+type u16
 type atomic<T>
 type ptr<S: address_space, T, A: access>
 
@@ -177,10 +178,16 @@ implicit(N: num) fn floatBitsToInt(value: vec<N, f32>) -> vec<N, i32>
 fn floatBitsToUint(value: f32) -> u32
 implicit(N: num) fn floatBitsToUint(value: vec<N, f32>) -> vec<N, u32>
 
+fn float16BitsToUint16(value: f16) -> u16
+implicit(N: num) fn float16BitsToUint16(value: vec<N, f16>) -> vec<N, u16>
+
 fn intBitsToFloat(value: i32) -> f32
 implicit(N: num) fn intBitsToFloat(value: vec<N, i32>) -> vec<N, f32>
 fn uintBitsToFloat(value: u32) -> f32
 implicit(N: num) fn uintBitsToFloat(value: vec<N, u32>) -> vec<N, f32>
+
+fn uint16BitsToFloat16(value: u16) -> f16
+implicit(N: num) fn uint16BitsToFloat16(value: vec<N, u16>) -> vec<N, f16>
 
 implicit(T: iu32) fn bitCount(value: T) -> i32
 implicit(T: iu32, N: num) fn bitCount(value: vec<N, T>) -> vec<N, i32>

@@ -10,12 +10,12 @@ layout(binding = 0, std430)
 buffer f_prevent_dce_block_ssbo {
   uint inner;
 } v;
-uint tint_bitcast_from_f16(f16vec2 src) {
+uint tint_bitcast_from_16bit(f16vec2 src) {
   return packFloat2x16(src);
 }
 uint bitcast_a58b50() {
   f16vec2 arg_0 = f16vec2(1.0hf);
-  uint res = tint_bitcast_from_f16(arg_0);
+  uint res = tint_bitcast_from_16bit(arg_0);
   return res;
 }
 void main() {
@@ -31,12 +31,12 @@ layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
 } v;
-uint tint_bitcast_from_f16(f16vec2 src) {
+uint tint_bitcast_from_16bit(f16vec2 src) {
   return packFloat2x16(src);
 }
 uint bitcast_a58b50() {
   f16vec2 arg_0 = f16vec2(1.0hf);
-  uint res = tint_bitcast_from_f16(arg_0);
+  uint res = tint_bitcast_from_16bit(arg_0);
   return res;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -56,12 +56,12 @@ struct VertexOutput {
 };
 
 layout(location = 0) flat out uint tint_interstage_location0;
-uint tint_bitcast_from_f16(f16vec2 src) {
+uint tint_bitcast_from_16bit(f16vec2 src) {
   return packFloat2x16(src);
 }
 uint bitcast_a58b50() {
   f16vec2 arg_0 = f16vec2(1.0hf);
-  uint res = tint_bitcast_from_f16(arg_0);
+  uint res = tint_bitcast_from_16bit(arg_0);
   return res;
 }
 VertexOutput vertex_main_inner() {

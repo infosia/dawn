@@ -44,12 +44,12 @@ layout(binding = 1, std430)
 buffer s_block_1_ssbo {
   S inner[4];
 } v_1;
-f16vec2 tint_bitcast_to_f16(uint src) {
+f16vec2 tint_bitcast_to_16bit(uint src) {
   return unpackFloat2x16(src);
 }
 f16mat2 v_2(uint start_byte_offset) {
-  f16vec2 v_3 = tint_bitcast_to_f16(v.inner[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
-  return f16mat2(v_3, tint_bitcast_to_f16(v.inner[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]));
+  f16vec2 v_3 = tint_bitcast_to_16bit(v.inner[(start_byte_offset / 16u)][((start_byte_offset & 15u) >> 2u)]);
+  return f16mat2(v_3, tint_bitcast_to_16bit(v.inner[((4u + start_byte_offset) / 16u)][(((4u + start_byte_offset) & 15u) >> 2u)]));
 }
 void tint_store_and_preserve_padding_1(uint target_indices[1], S value_param) {
   v_1.inner[target_indices[0u]].before = value_param.before;
@@ -103,5 +103,5 @@ void main() {
   S v_14 = v_4(256u);
   tint_store_and_preserve_padding_1(uint[1](1u), v_14);
   v_1.inner[3u].m = v_2(260u);
-  v_1.inner[1u].m[0u] = tint_bitcast_to_f16(v.inner[0u].z).yx;
+  v_1.inner[1u].m[0u] = tint_bitcast_to_16bit(v.inner[0u].z).yx;
 }

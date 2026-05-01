@@ -9,17 +9,17 @@ layout(binding = 1, std430)
 buffer s_block_1_ssbo {
   f16mat2x4 inner[4];
 } v_1;
-f16vec2 tint_bitcast_to_f16(uint src) {
+f16vec2 tint_bitcast_to_16bit(uint src) {
   return unpackFloat2x16(src);
 }
-f16vec4 tint_bitcast_to_f16_1(uvec2 src) {
+f16vec4 tint_bitcast_to_16bit_1(uvec2 src) {
   return f16vec4(unpackFloat2x16(src.x), unpackFloat2x16(src.y));
 }
 f16mat2x4 v_2(uint start_byte_offset) {
   uvec4 v_3 = v.inner[(start_byte_offset / 16u)];
-  f16vec4 v_4 = tint_bitcast_to_f16_1(mix(v_3.xy, v_3.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u))));
+  f16vec4 v_4 = tint_bitcast_to_16bit_1(mix(v_3.xy, v_3.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u))));
   uvec4 v_5 = v.inner[((8u + start_byte_offset) / 16u)];
-  return f16mat2x4(v_4, tint_bitcast_to_f16_1(mix(v_5.xy, v_5.zw, bvec2(((((8u + start_byte_offset) & 15u) >> 2u) == 2u)))));
+  return f16mat2x4(v_4, tint_bitcast_to_16bit_1(mix(v_5.xy, v_5.zw, bvec2(((((8u + start_byte_offset) & 15u) >> 2u) == 2u)))));
 }
 f16mat2x4[4] v_6(uint start_byte_offset) {
   f16mat2x4 a[4] = f16mat2x4[4](f16mat2x4(f16vec4(0.0hf), f16vec4(0.0hf)), f16mat2x4(f16vec4(0.0hf), f16vec4(0.0hf)), f16mat2x4(f16vec4(0.0hf), f16vec4(0.0hf)), f16mat2x4(f16vec4(0.0hf), f16vec4(0.0hf)));
@@ -43,7 +43,7 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v_1.inner = v_6(0u);
   v_1.inner[1u] = v_2(32u);
-  v_1.inner[1u][0u] = tint_bitcast_to_f16_1(v.inner[0u].zw).ywxz;
+  v_1.inner[1u][0u] = tint_bitcast_to_16bit_1(v.inner[0u].zw).ywxz;
   uvec4 v_9 = v.inner[0u];
-  v_1.inner[1u][0u].x = tint_bitcast_to_f16(v_9.z).x;
+  v_1.inner[1u][0u].x = tint_bitcast_to_16bit(v_9.z).x;
 }

@@ -13,14 +13,14 @@ uniform u_block_1_ubo {
   uvec4 inner[32];
 } v;
 S p[4] = S[4](S(0, f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), 0), S(0, f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), 0), S(0, f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), 0), S(0, f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), 0));
-f16vec4 tint_bitcast_to_f16(uvec2 src) {
+f16vec4 tint_bitcast_to_16bit(uvec2 src) {
   return f16vec4(unpackFloat2x16(src.x), unpackFloat2x16(src.y));
 }
 f16mat2x3 v_1(uint start_byte_offset) {
   uvec4 v_2 = v.inner[(start_byte_offset / 16u)];
-  f16vec3 v_3 = tint_bitcast_to_f16(mix(v_2.xy, v_2.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u)))).xyz;
+  f16vec3 v_3 = tint_bitcast_to_16bit(mix(v_2.xy, v_2.zw, bvec2((((start_byte_offset & 15u) >> 2u) == 2u)))).xyz;
   uvec4 v_4 = v.inner[((8u + start_byte_offset) / 16u)];
-  return f16mat2x3(v_3, tint_bitcast_to_f16(mix(v_4.xy, v_4.zw, bvec2(((((8u + start_byte_offset) & 15u) >> 2u) == 2u)))).xyz);
+  return f16mat2x3(v_3, tint_bitcast_to_16bit(mix(v_4.xy, v_4.zw, bvec2(((((8u + start_byte_offset) & 15u) >> 2u) == 2u)))).xyz);
 }
 S v_5(uint start_byte_offset) {
   uvec4 v_6 = v.inner[(start_byte_offset / 16u)];
@@ -52,5 +52,5 @@ void main() {
   p = v_10(0u);
   p[1u] = v_5(256u);
   p[3u].m = v_1(264u);
-  p[1u].m[0u] = tint_bitcast_to_f16(v.inner[1u].xy).xyz.zxy;
+  p[1u].m[0u] = tint_bitcast_to_16bit(v.inner[1u].xy).xyz.zxy;
 }
