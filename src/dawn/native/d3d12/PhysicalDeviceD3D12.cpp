@@ -905,6 +905,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+
+    // Enable the use of HLSL 2021 if the corresponding platform feature is enabled.
+    deviceToggles->Default(Toggle::D3D12UseHLSL2021,
+                           platform->IsFeatureEnabled(platform::Features::kWebGPUUseHLSL2021));
 }
 
 uint32_t PhysicalDevice::ComputeSubgroupMaxSize() const {
