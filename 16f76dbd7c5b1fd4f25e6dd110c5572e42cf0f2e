@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5bba450_ee1b975c",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-01T16:13:25Z",
+      "side": 1,
+      "message": "Stable DirectX APIs stay unchanged in Preview branches of the Github repository. So long as the early version of DXC we track uses stable APIs, we should be good. \n\nBeta testing LinAlg in Dawn requires that we move to top-of-tree DXC.",
+      "parentUuid": "d1b472eb_cce55289",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0fd19bf_aca6a84a",
         "filename": "src/dawn/native/d3d12/AgilitySDK.cpp",
         "patchSetId": 8
