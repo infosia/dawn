@@ -834,6 +834,7 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitTernary(StringStream& out, const hlsl::ir::Ternary* t) {
+        TINT_IR_ASSERT(ir_, options_.compiler != Options::Compiler::kDXC);
         out << "((";
         EmitValue(out, t->Cmp());
         out << ") ? (";
