@@ -1,4 +1,4 @@
-// [hlsl-dxc] flags: --hlsl-shader-model 66
+// [hlsl-dxc] flags: --hlsl-shader-model 6.6
 
 enable subgroups;
 enable chromium_experimental_subgroup_size_control;
