@@ -35,7 +35,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-// [hlsl-dxc] flags: --hlsl-shader-model 64
+// [hlsl-dxc] flags: --hlsl-shader-model 6.4
 
 
 @group(0) @binding(0) var<storage, read_write> prevent_dce : i32;

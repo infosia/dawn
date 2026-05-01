@@ -165,7 +165,7 @@ Result<SuccessType> IRFuzzer(core::ir::Module& module,
     }
     auto dxc = tint::Command::LookPath(dxc_path);
     if (dxc.Found()) {
-        uint32_t hlsl_shader_model = 66;
+        auto hlsl_shader_model = validate::HlslShaderModel::kSM_6_6;
         bool require_16bit_types = true;
         [[maybe_unused]] auto validate_res = validate::ValidateUsingDXC(
             dxc.Path(), output.hlsl, output.entry_point_name, output.pipeline_stage,
