@@ -265,8 +265,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
     // doesn't matter as long as it's not used by the shader, so we grab any one of each.
     auto textureIndex =
         ResourceTableDefaultResources::IndexOf(tint::ResourceType::kTexture1d_f32_filterable);
-    auto samplerIndex =
-        ResourceTableDefaultResources::IndexOf(tint::ResourceType::kSampler_filtering);
+    auto samplerIndex = ResourceTableDefaultResources::IndexOf(tint::ResourceType::kSampler);
     auto unusedTextureView = std::get<Ref<TextureViewBase>>(defaultResources[textureIndex]);
     auto unusedSampler = std::get<Ref<SamplerBase>>(defaultResources[samplerIndex]);
 

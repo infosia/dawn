@@ -37,26 +37,32 @@ enum class ResourceType : uint32_t {
 
     kTexture1d_f32_filterable,
     kTexture1d_f32_unfilterable,
+    kTexture1d_f32_unknown_filterable,
     kTexture1d_i32,
     kTexture1d_u32,
     kTexture2d_f32_filterable,
     kTexture2d_f32_unfilterable,
+    kTexture2d_f32_unknown_filterable,
     kTexture2d_i32,
     kTexture2d_u32,
     kTexture2dArray_f32_filterable,
     kTexture2dArray_f32_unfilterable,
+    kTexture2dArray_f32_unknown_filterable,
     kTexture2dArray_i32,
     kTexture2dArray_u32,
     kTexture3d_f32_filterable,
     kTexture3d_f32_unfilterable,
+    kTexture3d_f32_unknown_filterable,
     kTexture3d_i32,
     kTexture3d_u32,
     kTextureCube_f32_filterable,
     kTextureCube_f32_unfilterable,
+    kTextureCube_f32_unknown_filterable,
     kTextureCube_i32,
     kTextureCube_u32,
     kTextureCubeArray_f32_filterable,
     kTextureCubeArray_f32_unfilterable,
+    kTextureCubeArray_f32_unknown_filterable,
     kTextureCubeArray_i32,
     kTextureCubeArray_u32,
 
@@ -70,6 +76,7 @@ enum class ResourceType : uint32_t {
     kTextureDepthCubeArray,
     kTextureDepthMultisampled2d,
 
+    kSampler,
     kSampler_filtering,
     kSampler_non_filtering,
     kSampler_comparison,
@@ -78,6 +85,7 @@ TINT_REFLECT_ENUM_RANGE(tint::ResourceType, kEmpty, kSampler_comparison);
 
 constexpr bool IsSampler(ResourceType res_type) {
     switch (res_type) {
+        case ResourceType::kSampler:
         case ResourceType::kSampler_filtering:
         case ResourceType::kSampler_non_filtering:
         case ResourceType::kSampler_comparison:
