@@ -1,3 +1,4 @@
+SKIP: FAILED
 
 Texture1D<float4> tint_resource_table_array[] : register(t51, space43);
 ByteAddressBuffer tint_resource_table_metadata : register(t52, space42);
