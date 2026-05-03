@@ -6,6 +6,7 @@ enable atomic_vec2u_min_max;
 
 @compute @workgroup_size(1)
 fn compute_main() {
-  atomicStoreMax(&(sb_rw0[0]), vec2<u32>(1u));
-  atomicStoreMax(&(sb_rw1[0]), vec2<u32>(1u));
+  var in_vec = vec2<u32>(1u, 2u);
+  atomicStoreMax(&(sb_rw0[1]), in_vec);
+  atomicStoreMax(&(sb_rw1[1]), in_vec);
 }
