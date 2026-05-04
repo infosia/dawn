@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "603c8938_4dce5df6",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-04T15:43:25Z",
+      "side": 1,
+      "message": "```suggestion\n    // Default to validating against HLSL 6.0.\n```",
+      "revId": "f02bf5abafd0379c729e1dcbfb72fccfe9c78479",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b83c1a47_6dee78e8",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-04T15:43:25Z",
+      "side": 1,
+      "message": "```suggestion\n        \"hlsl-shader-model\", R\"(The D3D Shader Model to compile and validate with.\n```",
+      "revId": "f02bf5abafd0379c729e1dcbfb72fccfe9c78479",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa1fd566_6cf9d455",
+        "filename": "src/tint/lang/hlsl/validate/validate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-04T15:43:25Z",
+      "side": 1,
+      "message": "```suggestion\nenum class HlslShaderModel : uint8_t {\n```",
+      "revId": "f02bf5abafd0379c729e1dcbfb72fccfe9c78479",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
