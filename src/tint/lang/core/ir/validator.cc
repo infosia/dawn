@@ -3498,7 +3498,8 @@ void Validator::CheckVar(const Var* var) {
 
     if (mv->AddressSpace() != AddressSpace::kStorage &&
         mv->AddressSpace() != AddressSpace::kHandle) {
-        if (!capabilities_.Contains(Capability::kMslAllowEntryPointInterface)) {
+        if (mv->AddressSpace() == AddressSpace::kWorkgroup ||
+            !capabilities_.Contains(Capability::kMslAllowEntryPointInterface)) {
             if (!mv->StoreType()->HasFixedFootprint()) {
                 AddResultError(var, 0) << "vars not in the 'storage' or 'handle' address spaces "
                                           "must have a fixed footprint";

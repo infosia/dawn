@@ -1454,4 +1454,16 @@ TEST_F(IR_ValidatorTest, Var_Atomic_NestedArray_Private) {
 )"));
 }
 
+TEST_F(IR_ValidatorTest, WorkgroupVar_RuntimeSizedArray_WithMslCapability) {
+    auto* v = b.Var("v", ty.ptr<workgroup, array<i32>>());
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kMslAllowEntryPointInterface});
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            "vars not in the 'storage' or 'handle' address spaces must have a fixed footprint"));
+}
+
 }  // namespace tint::core::ir
