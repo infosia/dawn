@@ -91,7 +91,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2026-04-24 09:17:47PM
+# Last rolled: 2026-05-04 05:07:19AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1490,7 +1490,6 @@ crbug.com/422215216 [ android-pixel-10 ] webgpu:shader,execution,statement,phony
 crbug.com/422215216 [ android-pixel-10 ] webgpu:shader,execution,statement,swizzle_assignment:* [ Failure ]
 crbug.com/422215216 [ android-pixel-10 ] webgpu:shader,validation,parse,requires:wgsl_matches_api:* [ Failure ]
 crbug.com/422215216 [ android-pixel-10 dawn-no-backend-validation ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,sample_mask:writeMask=0;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";sampleMask=6 [ Failure ]
-
 
 # mapAsync early rejection cases
 crbug.com/487349982 webgpu:api,validation,buffer,mapping:getMappedRange,state,mapped: [ Failure ]
