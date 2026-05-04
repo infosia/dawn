@@ -111,6 +111,10 @@ bool IsASCII(std::string_view);
 /// followed by letters, numbers, or underscores).
 bool IsIdentifier(std::string_view);
 
+/// @returns true if the string is a valid WGSL identifier.
+/// @see https://www.w3.org/TR/WGSL/#identifiers
+bool IsWGSLIdentifier(std::string_view);
+
 }  // namespace utf8
 
 namespace utf16 {

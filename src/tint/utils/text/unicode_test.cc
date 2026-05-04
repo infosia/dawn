@@ -872,5 +872,32 @@ TEST(UnicodeTest, IsIdentifier) {
     EXPECT_FALSE(utf8::IsIdentifier("abc-def"));
 }
 
+TEST(UnicodeTest, IsWGSLIdentifier) {
+    EXPECT_FALSE(utf8::IsWGSLIdentifier(""));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("a"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("_"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("abc"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("_abc"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("abc123"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("_123"));
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("1abc"));
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("abc&"));
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("abc def"));
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("abc-def"));
+
+    // Double underscore rule
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("__"));
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("__abc"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("a__bc"));
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("_a_b_c"));
+
+    // Unicode (Greek 'alpha') - XID_Start
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("\xce\xb1"));
+    // Unicode (Mathematical Bold Capital A) - XID_Start (outside BMP)
+    EXPECT_TRUE(utf8::IsWGSLIdentifier("\xf0\x9d\x90\x80"));
+    // Unicode (Emoji) - Not XID_Start/Continue
+    EXPECT_FALSE(utf8::IsWGSLIdentifier("\xf0\x9f\x98\x80"));
+}
+
 }  // namespace utf16_tests
 }  // namespace tint

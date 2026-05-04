@@ -193,6 +193,12 @@ struct Decoder {
             err_ << kind << " '" << name << "' is longer than 16384 characters\n";
             return false;
         }
+
+        if (DAWN_UNLIKELY(!tint::utf8::IsWGSLIdentifier(name))) {
+            err_ << kind << " '" << name << "' is not a valid WGSL identifier\n";
+            return false;
+        }
+
         return true;
     }
 

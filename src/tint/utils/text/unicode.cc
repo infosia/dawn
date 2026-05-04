@@ -531,6 +531,35 @@ bool IsIdentifier(std::string_view str) {
     return true;
 }
 
+bool IsWGSLIdentifier(std::string_view str) {
+    if (str.empty()) {
+        return false;
+    }
+
+    // Identifiers must not start with two or more underscores.
+    if (str.length() > 1 && str[0] == '_' && str[1] == '_') {
+        return false;
+    }
+
+    // Must begin with an XID_Source unicode character, or underscore
+    auto [first_cp, first_n] = Decode(str);
+    if (first_n == 0 || (first_cp != '_' && !first_cp.IsXIDStart())) {
+        return false;
+    }
+
+    // Must continue with an XID_Continue unicode character
+    str.remove_prefix(first_n);
+    while (!str.empty()) {
+        auto [cp, n] = Decode(str);
+        if (n == 0 || !cp.IsXIDContinue()) {
+            return false;
+        }
+        str.remove_prefix(n);
+    }
+
+    return true;
+}
+
 }  // namespace utf8
 
 namespace utf16 {
