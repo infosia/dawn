@@ -37,7 +37,6 @@ namespace {
 
 using testing::_;
 using testing::InvokeWithoutArgs;
-using testing::Mock;
 using testing::Return;
 
 using WireShaderModuleTestBase = WireFutureTest<wgpu::CompilationInfoCallback<void>*>;

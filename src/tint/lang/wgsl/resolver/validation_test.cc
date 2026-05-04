@@ -33,7 +33,6 @@
 namespace tint::resolver {
 namespace {
 
-using ::testing::HasSubstr;
 
 using ResolverValidationTest = ResolverTest;
 using ResolverValidationDeathTest = ResolverValidationTest;

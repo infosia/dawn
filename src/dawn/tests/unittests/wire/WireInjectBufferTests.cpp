@@ -35,7 +35,6 @@ namespace dawn::wire {
 namespace {
 
 using testing::Mock;
-using testing::Return;
 
 class WireInjectBufferTests : public WireTest {
   public:

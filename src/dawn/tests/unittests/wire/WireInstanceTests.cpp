@@ -55,7 +55,6 @@ using testing::NonEmptySizedString;
 using testing::NotNull;
 using testing::Return;
 using testing::SizedString;
-using testing::StrEq;
 using testing::WithArg;
 
 class WireInstanceBasicTest : public WireTest {};
