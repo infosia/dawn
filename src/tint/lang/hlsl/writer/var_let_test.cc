@@ -806,5 +806,25 @@ void main() {
 )");
 }
 
+TEST_F(HlslWriterTest, Var_SubgroupMatrix_ZeroInit) {
+    auto* func = b.ComputeFunction("main");
+    b.Append(func->Block(), [&] {
+        b.Var("a", function, ty.subgroup_matrix_result(ty.f32(), 16, 8));
+        b.Return(func);
+    });
+
+    auto result = Generate();
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(#include <dx/linalg.h>
+using namespace dx::linalg;
+
+[numthreads(1, 1, 1)]
+void main() {
+  Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave> a = Matrix<ComponentType::F32, 8, 16, MatrixUse::Accumulator, MatrixScope::Wave>::Splat(0);
+}
+
+)");
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer
