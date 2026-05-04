@@ -351,14 +351,21 @@ MaybeError RootCommandVisitor::operator()(const std::monostate&) {
 MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor) {
     auto readHead = GetCommandReadHead();
     auto contentReadHead = GetContentReadHead();
-    visitor.SetContentReadHead(&contentReadHead);
+    return Walk(visitor, &readHead, &contentReadHead);
+}
 
-    while (!readHead.IsDone()) {
+MaybeError CaptureWalker::Walk(RootCommandVisitor& visitor,
+                               ReadHead* readHead,
+                               ReadHead* contentReadHead) {
+    visitor.SetContentReadHead(contentReadHead);
+    visitor.ResetStop();
+
+    while (!readHead->IsDone() && !visitor.ShouldStop()) {
         schema::RootCommand cmd;
-        DAWN_TRY(Deserialize(readHead, &cmd));
+        DAWN_TRY(Deserialize(*readHead, &cmd));
 
         RootCommandVariant v;
-        DAWN_TRY(DeserializeRootCommand(readHead, cmd, &v));
+        DAWN_TRY(DeserializeRootCommand(*readHead, cmd, &v));
         DAWN_TRY(std::visit(visitor, v));
     }
 
