@@ -103,6 +103,24 @@
       "message": "lokokung@ PTAL.",
       "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a1c67e3_164a4d63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-04T18:12:04Z",
+      "side": 1,
+      "message": "I think you need to add:\n`No-Try: true` to the description in order for it to be submittable. I can\u0027t be the one to add it because otherwise my +2 becomes invalid.",
+      "parentUuid": "2cabb4d8_7e9a9b5d",
+      "revId": "f6bd8e57d474292b40e7f9f023b4746bd6c9680c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
