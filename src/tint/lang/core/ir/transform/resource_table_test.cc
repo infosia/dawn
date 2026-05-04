@@ -445,7 +445,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_ResourceTableTest, DISABLED_GetResource_ResourceTexture_ResourceSampler) {
+TEST_F(IR_ResourceTableTest, GetResource_ResourceTexture_ResourceSampler) {
     auto* texture_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
     auto* sampler_ty = ty.sampler();
 
@@ -479,11 +479,129 @@ tint_resource_table_metadata_struct = struct @align(4) {
 }
 
 $B1: {  # root
+  %1:ptr<handle, resource_table<texture_2d<f32>>, read> = var undef @binding_point(0, 1)
+  %2:ptr<handle, resource_table<texture_2d<f32>>, read> = var undef @binding_point(0, 1)
+  %3:ptr<handle, resource_table<texture_3d<i32>>, read> = var undef @binding_point(0, 1)
+  %4:ptr<handle, resource_table<texture_2d_array<u32>>, read> = var undef @binding_point(0, 1)
+  %5:ptr<handle, resource_table<sampler>, read> = var undef @binding_point(0, 1)
+  %6:ptr<handle, resource_table<sampler>, read> = var undef @binding_point(0, 1)
   %tint_resource_table_metadata:ptr<storage, tint_resource_table_metadata_struct, read> = var undef @binding_point(1, 2)
 }
 
 %foo = func():void {
   $B2: {
+    %9:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %10:u32 = load %9
+    %11:bool = lt 1u, %10
+    %12:bool = if %11 [t: $B3, f: $B4] {  # if_1
+      $B3: {  # true
+        %13:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %14:u32 = load %13
+        %15:vec3<u32> = construct %14
+        %16:vec3<u32> = construct 6u, 7u, 34u
+        %17:vec3<bool> = eq %15, %16
+        %18:bool = any %17
+        exit_if %18  # if_1
+      }
+      $B4: {  # false
+        exit_if false  # if_1
+      }
+    }
+    %texture_kind:u32 = if %12 [t: $B5, f: $B6] {  # if_2
+      $B5: {  # true
+        %20:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 1u
+        %21:u32 = load %20
+        exit_if %21  # if_2
+      }
+      $B6: {  # false
+        exit_if 6u  # if_2
+      }
+    }
+    %22:u32 = if %12 [t: $B7, f: $B8] {  # if_3
+      $B7: {  # true
+        exit_if 1u  # if_3
+      }
+      $B8: {  # false
+        %23:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %24:u32 = load %23
+        %25:u32 = add 1u, %24
+        exit_if %25  # if_3
+      }
+    }
+    %26:ptr<handle, texture_2d<f32>, read> = access %1, %22
+    %27:texture_2d<f32> = load %26
+    %28:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+    %29:u32 = load %28
+    %30:bool = lt 2u, %29
+    %31:bool = if %30 [t: $B9, f: $B10] {  # if_4
+      $B9: {  # true
+        %32:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 2u
+        %33:u32 = load %32
+        %34:vec2<u32> = construct %33
+        %35:vec2<u32> = construct 40u, 41u
+        %36:vec2<bool> = eq %34, %35
+        %37:bool = any %36
+        exit_if %37  # if_4
+      }
+      $B10: {  # false
+        exit_if false  # if_4
+      }
+    }
+    %sampler_kind:u32 = if %31 [t: $B11, f: $B12] {  # if_5
+      $B11: {  # true
+        %39:ptr<storage, u32, read> = access %tint_resource_table_metadata, 1u, 2u
+        %40:u32 = load %39
+        exit_if %40  # if_5
+      }
+      $B12: {  # false
+        exit_if 41u  # if_5
+      }
+    }
+    %41:u32 = if %31 [t: $B13, f: $B14] {  # if_6
+      $B13: {  # true
+        exit_if 2u  # if_6
+      }
+      $B14: {  # false
+        %42:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %43:u32 = load %42
+        %44:u32 = add 5u, %43
+        exit_if %44  # if_6
+      }
+    }
+    %45:ptr<handle, sampler, read> = access %5, %41
+    %46:sampler = load %45
+    %sampler_is_filtering:bool = eq %sampler_kind, 40u
+    %use_sampler:bool = if %sampler_is_filtering [t: $B15, f: $B16] {  # if_7
+      $B15: {  # true
+        %texture_is_unfilterable:bool = switch %texture_kind [c: (default, $B17), c: (11u 16u 1u 21u 26u 6u, $B18)] {  # switch_1
+          $B17: {  # case
+            exit_switch false  # switch_1
+          }
+          $B18: {  # case
+            exit_switch true  # switch_1
+          }
+        }
+        exit_if %texture_is_unfilterable  # if_7
+      }
+      $B16: {  # false
+        exit_if true  # if_7
+      }
+    }
+    %50:vec4<f32> = if %use_sampler [t: $B19, f: $B20] {  # if_8
+      $B19: {  # true
+        %51:vec4<f32> = textureSample %27, %46, vec2<f32>(0.0f)
+        exit_if %51  # if_8
+      }
+      $B20: {  # false
+        %52:ptr<storage, u32, read> = access %tint_resource_table_metadata, 0u
+        %53:u32 = load %52
+        %54:u32 = add 5u, %53
+        %55:ptr<handle, sampler, read> = access %5, %54
+        %56:sampler = load %55
+        %57:vec4<f32> = textureSample %27, %56, vec2<f32>(0.0f)
+        exit_if %57  # if_8
+      }
+    }
     ret
   }
 }
@@ -498,9 +616,11 @@ $B1: {  # root
             .storage_buffer_binding = {1, 2},
             .default_binding_type_order =
                 {
-                    ResourceType::kTexture1d_f32_filterable,
+                    ResourceType::kTexture2d_f32_unfilterable,
+                    ResourceType::kTexture2d_f32_filterable,
                     ResourceType::kTexture3d_i32,
                     ResourceType::kTexture2dArray_u32,
+                    ResourceType::kSampler_filtering,
                     ResourceType::kSampler_non_filtering,
                 },
         },
@@ -562,9 +682,11 @@ $B1: {  # root
             .storage_buffer_binding = {1, 2},
             .default_binding_type_order =
                 {
-                    ResourceType::kTexture1d_f32_filterable,
+                    ResourceType::kTexture2d_f32_unfilterable,
+                    ResourceType::kTexture2d_f32_filterable,
                     ResourceType::kTexture3d_i32,
                     ResourceType::kTexture2dArray_u32,
+                    ResourceType::kSampler_filtering,
                     ResourceType::kSampler_non_filtering,
                 },
         },
@@ -627,9 +749,11 @@ $B1: {  # root
             .storage_buffer_binding = {1, 2},
             .default_binding_type_order =
                 {
-                    ResourceType::kTexture1d_f32_filterable,
+                    ResourceType::kTexture2d_f32_unfilterable,
+                    ResourceType::kTexture2d_f32_filterable,
                     ResourceType::kTexture3d_i32,
                     ResourceType::kTexture2dArray_u32,
+                    ResourceType::kSampler_filtering,
                     ResourceType::kSampler_non_filtering,
                 },
         },
@@ -755,7 +879,7 @@ $B1: {  # root
             .storage_buffer_binding = {1, 2},
             .default_binding_type_order =
                 {
-                    ResourceType::kTexture1d_f32_filterable,
+                    ResourceType::kTexture1d_f32_unfilterable,
                     ResourceType::kTexture3d_i32,
                     ResourceType::kTexture2dArray_f32_unfilterable,
                     ResourceType::kTexture2dArray_f32_filterable,
