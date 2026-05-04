@@ -51,8 +51,9 @@ namespace {
 Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& options) {
     // Check for unsupported types.
     for (auto* ty : ir.Types()) {
-        if (ty->Is<core::type::SubgroupMatrix>()) {
-            return Failure("subgroup matrices are not supported by the HLSL backend");
+        if (ty->Is<core::type::SubgroupMatrix>() &&
+            options.compiler != Options::Compiler::kDXC_2021) {
+            return Failure("subgroup matrices support requires DXC with HLSL 2021");
         }
         if (ty->Is<core::type::TexelBuffer>()) {
             // TODO(crbug/382544164): Prototype texel buffer feature
