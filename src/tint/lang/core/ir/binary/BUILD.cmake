@@ -85,6 +85,7 @@ if(TINT_BUILD_IR_BINARY)
 # Condition: TINT_BUILD_IR_BINARY
 ################################################################################
 tint_add_target(tint_lang_core_ir_binary_test test
+  lang/core/ir/binary/decode_test.cc
   lang/core/ir/binary/roundtrip_test.cc
 )
 
@@ -117,6 +118,7 @@ tint_target_add_external_dependencies(tint_lang_core_ir_binary_test test
 if(TINT_BUILD_IR_BINARY)
   tint_target_add_dependencies(tint_lang_core_ir_binary_test test
     tint_lang_core_ir_binary
+    tint_utils_protos_ir_proto
   )
 endif(TINT_BUILD_IR_BINARY)
 
