@@ -38,9 +38,7 @@ namespace {
 using testing::_;
 using testing::Exactly;
 using testing::InvokeWithoutArgs;
-using testing::MockCallback;
 using testing::Return;
-using testing::Sequence;
 using testing::SizedString;
 
 class WireDisconnectTests : public WireTest {};

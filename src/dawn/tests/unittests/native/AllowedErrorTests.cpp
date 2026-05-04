@@ -50,13 +50,10 @@ namespace {
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
-using ::testing::MockCallback;
 using ::testing::MockCppCallback;
 using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::SizedStringMatches;
-using ::testing::StrictMock;
-using ::testing::Test;
 
 using MockComputePipelineAsyncCallback =
     MockCppCallback<wgpu::CreateComputePipelineAsyncCallback<void>*>;

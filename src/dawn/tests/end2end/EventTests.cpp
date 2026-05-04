@@ -44,8 +44,6 @@
 namespace dawn {
 namespace {
 
-using testing::AnyOf;
-using testing::Eq;
 
 wgpu::Device CreateExtraDevice(utils::WireHelper* wireHelper, wgpu::Instance instance) {
     // IMPORTANT: DawnTest overrides RequestAdapter and RequestDevice and mixes

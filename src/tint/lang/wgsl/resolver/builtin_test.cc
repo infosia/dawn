@@ -37,7 +37,6 @@
 #include "src/tint/lang/wgsl/sem/variable.h"
 #include "src/tint/utils/text/string_stream.h"
 
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 namespace tint::resolver {

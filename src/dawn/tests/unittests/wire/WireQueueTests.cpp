@@ -46,7 +46,6 @@ namespace {
 using testing::_;
 using testing::EmptySizedString;
 using testing::InvokeWithoutArgs;
-using testing::Ne;
 using testing::NonEmptySizedString;
 using testing::Return;
 using testing::Sequence;

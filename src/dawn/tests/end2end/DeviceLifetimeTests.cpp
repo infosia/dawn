@@ -36,9 +36,7 @@ namespace {
 
 using testing::_;
 using testing::HasSubstr;
-using testing::Invoke;
 using testing::MockCppCallback;
-using testing::Return;
 
 using MockMapAsyncCallback = MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)>;
 

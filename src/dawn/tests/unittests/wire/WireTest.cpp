@@ -35,10 +35,7 @@
 #include "dawn/wire/WireServer.h"
 
 using testing::_;
-using testing::AnyNumber;
-using testing::AtLeast;
 using testing::AtMost;
-using testing::Exactly;
 using testing::Mock;
 using testing::MockCallback;
 using testing::NotNull;

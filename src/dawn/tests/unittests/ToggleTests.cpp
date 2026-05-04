@@ -44,9 +44,6 @@ namespace dawn {
 namespace {
 
 using testing::Contains;
-using testing::MockCallback;
-using testing::NotNull;
-using testing::SaveArg;
 using testing::StrEq;
 
 class ToggleTest : public testing::Test {
