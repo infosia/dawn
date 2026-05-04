@@ -36,7 +36,6 @@
 namespace dawn {
 namespace {
 
-using testing::HasSubstr;
 
 class UnsafeAPIValidationTest : public ValidationTest {
   protected:

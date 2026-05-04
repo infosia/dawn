@@ -38,7 +38,6 @@ using testing::_;
 using testing::HasSubstr;
 using testing::MockCppCallback;
 using testing::TestParamInfo;
-using testing::Values;
 using testing::WithParamInterface;
 
 using MockMapAsyncCallback = MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)>;

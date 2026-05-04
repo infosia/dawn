@@ -44,7 +44,6 @@ namespace dawn::native {
 namespace {
 
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::MockFunction;
 using ::testing::Return;
 using ::testing::StrictMock;

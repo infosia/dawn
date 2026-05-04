@@ -1,0 +1,19 @@
+
+I want to introduce new clang tidy checks into dawn.
+We need to enable them and then fix the code issues that they flag.
+Please do not run ALL the existing checks or try to fix all of them.
+ Try to run and fix only the new checks in the list below
+
+This device has clang-tidy binary installed.
+The entire dawn must be checked for these new tidys.
+
+There is a doc at 'docs/clang-tidy.md' that could/may help understand how this works.
+
+A the end of the day we want all the mininal code fixes and then the clang tidy enabled.
+
+
+List of clang tidy checks to try to add:
+-google-upgrade-googletest-case
+-misc-unused-using-decls
+-modernize-use-constraints
+-modernize-use-override
