@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a9a7ecb_e4e20b7d",
+        "filename": "src/dawn/platform/DawnPlatform.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-04T14:27:45Z",
+      "side": 1,
+      "message": "Note: defaulting to `true` here only affects native, since Chrome overrides this function and returns `false` for any unknown feature. Defaulting to `true` for native gives us immediate test coverage (via Dawn E2E tests) ahead of the Finch rollout.",
+      "revId": "11d6c158d472a5136f43fd66d340db693d0a8916",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
