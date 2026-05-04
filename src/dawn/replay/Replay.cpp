@@ -167,6 +167,9 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
 
     ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
 
+    bool ShouldStop() const override { return mShouldStop; }
+    void ResetStop() override { mShouldStop = false; }
+
     wgpu::Device GetDevice() const { return mDevice; }
     schema::ObjectId GetCurrentResourceId() const { return mCurrentResourceId; }
     const std::string& GetCurrentResourceLabel() const { return mCurrentResourceLabel; }
@@ -269,6 +272,8 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     std::string mCurrentResourceLabel;
 
     ReadHead* mContentReadHead = nullptr;
+
+    bool mShouldStop = false;
 
     std::string kNotFound;
 };
@@ -1455,6 +1460,7 @@ MaybeError DawnRootCommandVisitor::operator()(
     wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
     DAWN_ASSERT(surface);
     surface.Present();
+    mShouldStop = true;
     return {};
 }
 
@@ -1507,7 +1513,10 @@ std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
 }
 
 ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
-    : mVisitor(new DawnRootCommandVisitor(device)), mCapture(std::move(capture)) {
+    : mVisitor(new DawnRootCommandVisitor(device)),
+      mCapture(std::move(capture)),
+      mCommandReadHead(mCapture->GetCommandReadHead()),
+      mContentReadHead(mCapture->GetContentReadHead()) {
     mVisitor->AddResource(schema::kDeviceId, "", device);
 }
 
@@ -1524,10 +1533,24 @@ Capture* ReplayImpl::GetCapture() const {
 }
 
 MaybeError ReplayImpl::Play() {
-    if (mCapture->Walk(*mVisitor)) {
-        return {};
+    while (PlayFrame()) {
     }
-    return DAWN_INTERNAL_ERROR("Capture walk failed");
+    return {};
+}
+
+bool ReplayImpl::PlayFrame() {
+    if (mCommandReadHead.IsDone()) {
+        return false;
+    }
+
+    auto result = mCapture->Walk(*mVisitor, &mCommandReadHead, &mContentReadHead);
+    if (result.IsError()) {
+        result.AcquireError();
+        return false;
+    }
+
+    mVisitor->GetDevice().Tick();
+    return true;
 }
 
 template <typename T>

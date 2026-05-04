@@ -187,6 +187,8 @@ class RootCommandVisitor {
 
     virtual void SetContentReadHead(ReadHead* readHead) = 0;
     virtual ResourceVisitor& GetResourceVisitor() = 0;
+    virtual bool ShouldStop() const = 0;
+    virtual void ResetStop() = 0;
     virtual MaybeError operator()(const CreateResourceData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandWriteBufferCmdData& data) = 0;
     virtual MaybeError operator()(const schema::RootCommandWriteTextureCmdData& data) = 0;
@@ -214,10 +216,12 @@ class CaptureWalker {
   public:
     virtual ~CaptureWalker() = default;
     MaybeError Walk(RootCommandVisitor& visitor);
+    MaybeError Walk(RootCommandVisitor& visitor, ReadHead* readHead, ReadHead* contentReadHead);
 
-  protected:
     virtual ReadHead GetCommandReadHead() const = 0;
     virtual ReadHead GetContentReadHead() const = 0;
+
+  protected:
 };
 
 }  // namespace dawn::replay
