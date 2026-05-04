@@ -83,6 +83,10 @@ class DAWN_REPLAY_EXPORT Replay {
 
     // Returns if play is successful.
     bool Play();
+
+    // Replays up to the next frame boundary.
+    // Returns true if success, and false if error, or if the capture has already finished.
+    bool PlayFrame();
 };
 
 }  // namespace dawn::replay
