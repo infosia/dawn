@@ -100,6 +100,17 @@ bool Replay::Play() {
     return false;
 }
 
+bool Replay::PlayFrame() {
+    if (auto* impl = static_cast<ReplayImpl*>(this)) {
+        auto result = impl->PlayFrame();
+        if (result.IsError()) {
+            return false;
+        }
+        return result.AcquireSuccess();
+    }
+    return false;
+}
+
 #define DAWN_REPLAY_GET_OBJECT_BY_LABEL(NAME) \
     template wgpu::NAME Replay::GetObjectByLabel<wgpu::NAME>(std::string_view label) const;
 DAWN_REPLAY_OBJECT_TYPES(DAWN_REPLAY_GET_OBJECT_BY_LABEL)
@@ -166,6 +177,9 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     MaybeError operator()(const schema::RootCommandEndCmdData& data) override { return {}; }
 
     ResourceVisitor& GetResourceVisitor() override { return mResourceVisitor; }
+
+    bool ShouldStop() const override { return mShouldStop; }
+    void ResetStop() override { mShouldStop = false; }
 
     wgpu::Device GetDevice() const { return mDevice; }
     schema::ObjectId GetCurrentResourceId() const { return mCurrentResourceId; }
@@ -269,6 +283,8 @@ class DawnRootCommandVisitor : public RootCommandVisitor {
     std::string mCurrentResourceLabel;
 
     ReadHead* mContentReadHead = nullptr;
+
+    bool mShouldStop = false;
 
     std::string kNotFound;
 };
@@ -1455,6 +1471,7 @@ MaybeError DawnRootCommandVisitor::operator()(
     wgpu::Surface surface = GetObjectById<wgpu::Surface>(data.surfaceId);
     DAWN_ASSERT(surface);
     surface.Present();
+    mShouldStop = true;
     return {};
 }
 
@@ -1507,7 +1524,10 @@ std::unique_ptr<ReplayImpl> ReplayImpl::Create(wgpu::Device device,
 }
 
 ReplayImpl::ReplayImpl(wgpu::Device device, std::unique_ptr<CaptureImpl> capture)
-    : mVisitor(new DawnRootCommandVisitor(device)), mCapture(std::move(capture)) {
+    : mVisitor(new DawnRootCommandVisitor(device)),
+      mCapture(std::move(capture)),
+      mCommandReadHead(mCapture->GetCommandReadHead()),
+      mContentReadHead(mCapture->GetContentReadHead()) {
     mVisitor->AddResource(schema::kDeviceId, "", device);
 }
 
@@ -1524,10 +1544,21 @@ Capture* ReplayImpl::GetCapture() const {
 }
 
 MaybeError ReplayImpl::Play() {
-    if (mCapture->Walk(*mVisitor)) {
-        return {};
+    bool play = true;
+    while (play) {
+        DAWN_TRY_ASSIGN(play, PlayFrame());
     }
-    return DAWN_INTERNAL_ERROR("Capture walk failed");
+    return {};
+}
+
+ResultOrError<bool> ReplayImpl::PlayFrame() {
+    if (mCommandReadHead.IsDone()) {
+        return false;
+    }
+
+    DAWN_TRY(mCapture->Walk(*mVisitor, &mCommandReadHead, &mContentReadHead));
+
+    return true;
 }
 
 template <typename T>

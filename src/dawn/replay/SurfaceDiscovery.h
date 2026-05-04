@@ -55,6 +55,9 @@ class SurfaceDiscoveryVisitor : public RootCommandVisitor {
     ResourceVisitor& GetResourceVisitor() override;
     void SetContentReadHead(ReadHead* readHead) override;
 
+    bool ShouldStop() const override { return false; }
+    void ResetStop() override {}
+
     std::vector<schema::ObjectId> GetSurfaceIds() const;
     std::vector<SurfaceInfo> GetSurfaceInfos() const;
 
