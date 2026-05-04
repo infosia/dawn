@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ade3c62d_29c47966",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2026-05-04T20:56:24Z",
+      "side": 1,
+      "message": "nit. From what I can tell, this function isn\u0027t used in this CL, so maybe it would make more sense to punt it to the follow up when we do use it?",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 1
+      },
+      "revId": "78a3bb4d27fedf96881346a85612bf4e1099de03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
