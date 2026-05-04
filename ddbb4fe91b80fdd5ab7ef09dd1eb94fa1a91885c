@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a867dd7_535acb86",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-04T14:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01983a12_994ceb37",
+      "revId": "ddbb4fe91b80fdd5ab7ef09dd1eb94fa1a91885c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af12dc93_c42f075c",
@@ -59,6 +77,24 @@
           ]
         }
       ],
+      "revId": "ddbb4fe91b80fdd5ab7ef09dd1eb94fa1a91885c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc7f86c6_1b4baa51",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2026-05-04T14:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af12dc93_c42f075c",
       "revId": "ddbb4fe91b80fdd5ab7ef09dd1eb94fa1a91885c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
