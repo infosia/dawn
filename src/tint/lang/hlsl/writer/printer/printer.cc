@@ -86,6 +86,7 @@
 #include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/i32.h"
+#include "src/tint/lang/core/type/i8.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -99,6 +100,7 @@
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u16.h"
 #include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/core/type/void.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
@@ -201,6 +203,9 @@ class Printer : public tint::TextGenerator {
 
     /// Block to emit for a continuing
     std::function<void()> emit_continuing_;
+
+    /// `true` if the linalg.h header has been included.
+    bool linalg_included = false;
 
     enum LetType : uint8_t {
         kFunction,
@@ -709,7 +714,28 @@ class Printer : public tint::TextGenerator {
     /// @param out the stream to emit too
     /// @param ty the type
     void EmitZeroValue(StringStream& out, const core::type::Type* ty) {
-        EmitConstant(out, ir_.constant_values.Zero(ty));
+        Switch(
+            ty,                                                   //
+            [&](const core::type::Bool*) { out << "false"; },     //
+            [&](const core::type::F32*) { PrintF32(out, 0.f); },  //
+            [&](const core::type::I32*) { PrintI32(out, 0); },    //
+            [&](const core::type::U32*) { out << "0u"; },         //
+            [&](const core::type::Array* a) {
+                out << "(";
+                EmitType(out, a);
+                out << ")0";
+            },
+            [&](const core::type::Struct* s) {
+                EmitStructType(s);
+                out << "(" << StructName(s) << ")0";
+            },
+            [&](const core::type::SubgroupMatrix* sm) {
+                EmitType(out, sm);
+                out << "::Splat(0)";
+            },
+            [&](Default) {  //
+                EmitConstant(out, ir_.constant_values.Zero(ty));
+            });
     }
 
     void EmitLet(const core::ir::Let* l, LetType type) {
@@ -1471,6 +1497,40 @@ class Printer : public tint::TextGenerator {
                 TINT_ASSERT(!name.empty() && name_printed);
                 out << " " << name << "[]";
                 *name_printed = true;
+            },
+            [&](const core::type::SubgroupMatrix* sm) {
+                if (!linalg_included) {
+                    linalg_included = true;
+                    preamble_buffer_.Append("#include <dx/linalg.h>");
+                    preamble_buffer_.Append("using namespace dx::linalg;");
+                }
+
+                const char* component_type = tint::Switch(
+                    sm->Type(),                                    //
+                    [](const core::type::F16*) { return "F16"; },  //
+                    [](const core::type::F32*) { return "F32"; },  //
+                    [](const core::type::I8*) { return "I8"; },    //
+                    [](const core::type::I32*) { return "I32"; },  //
+                    [](const core::type::U8*) { return "U8"; },    //
+                    [](const core::type::U32*) { return "U32"; },  //
+                    TINT_ICE_ON_NO_MATCH);
+                const char* use = nullptr;
+                switch (sm->Kind()) {
+                    case core::SubgroupMatrixKind::kLeft:
+                        use = "A";
+                        break;
+                    case core::SubgroupMatrixKind::kRight:
+                        use = "B";
+                        break;
+                    case core::SubgroupMatrixKind::kResult:
+                        use = "Accumulator";
+                        break;
+                    case core::SubgroupMatrixKind::kUndefined:
+                        break;
+                }
+
+                out << "Matrix<ComponentType::" << component_type << ", " << sm->Rows() << ", "
+                    << sm->Columns() << ", MatrixUse::" << use << ", MatrixScope::Wave>";
             },
             TINT_ICE_ON_NO_MATCH);
     }
