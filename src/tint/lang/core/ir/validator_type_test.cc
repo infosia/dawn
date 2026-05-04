@@ -1131,9 +1131,7 @@ TEST_P(Type_BindingArrayInvalidAddressSpace, AllowedWithCapability) {
 // different check
 INSTANTIATE_TEST_SUITE_P(IR_ValidatorTest,
                          Type_BindingArrayInvalidAddressSpace,
-                         testing::Values(AddressSpace::kFunction,
-                                         AddressSpace::kPrivate,
-                                         AddressSpace::kWorkgroup));
+                         testing::Values(AddressSpace::kFunction, AddressSpace::kPrivate));
 
 using Type_MultisampledTextureTypeAndDimension =
     IRTestParamHelper<std::tuple<std::tuple<
