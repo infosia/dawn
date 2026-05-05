@@ -51,6 +51,7 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -336,6 +337,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     VkFence fence = VK_NULL_HANDLE;
     DAWN_TRY_ASSIGN(fence, GetUnusedFence());
 
+    platform::metrics::DawnHistogramTimer timer(device->GetPlatform());
     TRACE_EVENT_BEGIN0(device->GetPlatform(), Recording, "vkQueueSubmit");
     DAWN_TRY_WITH_CLEANUP(
         CheckVkSuccess(device->fn.QueueSubmit(mQueue, 1, &submitInfo, fence), "vkQueueSubmit"), {
@@ -345,6 +347,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
             mUnusedFences->push_back(fence);
         });
     TRACE_EVENT_END0(device->GetPlatform(), Recording, "vkQueueSubmit");
+    timer.RecordMicroseconds("Vulkan.VkQueueSubmitUS");
 
     // Enqueue the semaphores before incrementing the serial, so that they can be deleted as
     // soon as the current submission is finished.
