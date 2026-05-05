@@ -81,6 +81,34 @@ TEST_F(SpirvWriterTest, CanGenerate_SubgroupMatrixRequiresVulkanMemoryModel) {
                 testing::HasSubstr("using subgroup matrices requires the Vulkan Memory Model"));
 }
 
+TEST_F(SpirvWriterTest, EntryPoint_InputLocation_ExceedsMax) {
+    auto* f = b.FragmentFunction("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.f32());
+    p->SetLocation(4096);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    Options options;
+    options.entry_point_name = "my_func";
+    auto res = Generate(options);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason, "location(4096) exceeds the maximum allowed value of '4095'");
+}
+
+TEST_F(SpirvWriterTest, EntryPoint_OutputLocation_ExceedsMax) {
+    auto* f = b.FragmentFunction("my_func", ty.f32());
+    f->SetReturnLocation(4096);
+
+    b.Append(f->Block(), [&] { b.Return(f, 1.0_f); });
+
+    Options options;
+    options.entry_point_name = "my_func";
+    auto res = Generate(options);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason, "location(4096) exceeds the maximum allowed value of '4095'");
+}
+
 TEST_F(SpirvWriterTest, Unreachable) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
