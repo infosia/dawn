@@ -45,6 +45,7 @@
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/propagate_buffer_sizes.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
@@ -83,6 +84,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     TINT_CHECK_RESULT(
         core::ir::transform::SubstituteOverrides(module, options.substitute_overrides_config));
+
+    TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
 
     // PopulateBindingRelatedOptions must come before PrepareImmediateData so that
     // buffer_sizes_offset is available when configuring immediate data.
@@ -298,6 +301,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     // DecomposeStorageAccess must come after Robustness and DirectVariableAccess
     TINT_CHECK_RESULT(raise::DecomposeStorageAccess(module));
+
+    // DecomposeAccess must come after DecomposeStorageAccess. No address spaces enabled. Just
+    // decompose buffers.
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, {}));
 
     // ArrayOffsetFrom* transforms must come after both DirectVariableAccess and
     // DecomposeStorageAccess, and BEFORE ChangeImmediateToUniform.

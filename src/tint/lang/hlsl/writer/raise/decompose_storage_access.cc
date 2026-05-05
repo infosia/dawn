@@ -94,39 +94,124 @@ struct State {
         }
     }
 
+    void BufferLength(core::ir::Var* var, core::ir::CoreBuiltinCall* call) {
+        auto* buffer_ty = var->Result()->Type()->UnwrapPtr()->As<core::type::Buffer>();
+        TINT_IR_ASSERT(
+            ir,
+            buffer_ty &&
+                (buffer_ty->Count()
+                     ->IsAnyOf<core::type::RuntimeArrayCount, core::type::ConstantArrayCount>()));
+
+        if (call->Args().size() > 1) {
+            // Length was directly encoded by previous passes
+            call->Result()->ReplaceAllUsesWith(call->Args()[1]);
+        } else if (auto* cnst = buffer_ty->Count()->As<core::type::ConstantArrayCount>()) {
+            call->Result()->ReplaceAllUsesWith(b.Constant(u32(cnst->value)));
+        } else {
+            b.InsertBefore(call, [&] {
+                // The `GetDimensions` call uses out parameters for all return values, there is no
+                // return value. This ends up being the result value we care about.
+                //
+                // This creates a var with an access which means that when we emit the HLSL we'll
+                // emit the correct `var` name.
+                core::ir::Instruction* inst = b.Var(ty.ptr(function, ty.u32()));
+                b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions,
+                                                          var, inst->Result());
+
+                // Unlike arrayLength, bufferLength is just the size of the variable in bytes.
+                inst = b.Load(inst);
+                call->Result()->ReplaceAllUsesWith(inst->Result());
+            });
+        }
+        call->Destroy();
+    }
+
+    struct OffsetData {
+        uint32_t byte_offset = 0;
+        Vector<core::ir::Value*, 4> byte_offset_expr{};
+
+        uint32_t byte_struct_offset = 0;
+
+        uint32_t byte_size = 0;
+        core::ir::Value* byte_size_expr = nullptr;
+
+        uint32_t byte_length = 0;
+        core::ir::Value* byte_length_expr = nullptr;
+    };
+
     void ArrayLength(core::ir::Var* var,
                      core::ir::CoreBuiltinCall* call,
                      const core::type::Type* type,
-                     uint32_t offset) {
+                     OffsetData offset) {
         auto* arr_ty = type->As<core::type::Array>();
         // If the `arrayLength` was called directly on the storage buffer then
         // it _must_ be a runtime array.
         TINT_IR_ASSERT(ir, arr_ty && arr_ty->Count()->As<core::type::RuntimeArrayCount>());
 
         b.InsertBefore(call, [&] {
-            // The `GetDimensions` call uses out parameters for all return values, there is no
-            // return value. This ends up being the result value we care about.
-            //
-            // This creates a var with an access which means that when we emit the HLSL we'll emit
-            // the correct `var` name.
-            core::ir::Instruction* inst = b.Var(ty.ptr(function, ty.u32()));
-            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions, var,
-                                                      inst->Result());
+            const bool has_size = HasSizeData(offset);
+            const bool has_length = HasLengthData(offset);
+            core::ir::Value* len = nullptr;
+            if (has_size) {
+                len = SizeToValue(offset);
+            } else if (has_length) {
+                len = LengthToValue(offset);
+            } else {
+                // The `GetDimensions` call uses out parameters for all return values, there is no
+                // return value. This ends up being the result value we care about.
+                //
+                // This creates a var with an access which means that when we emit the HLSL we'll
+                // emit the correct `var` name.
+                core::ir::Instruction* inst = b.Var(ty.ptr(function, ty.u32()));
+                b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions,
+                                                          var, inst->Result());
 
-            inst = b.Load(inst);
-            if (offset > 0) {
-                inst = b.Subtract(inst, u32(offset));
+                len = b.Load(inst)->Result();
             }
-            auto* div = b.Divide(inst, u32(arr_ty->ImplicitStride()));
+
+            core::ir::Value* value = nullptr;
+            TINT_IR_ASSERT(ir, offset.byte_offset_expr.Length() <= 1);
+            if (has_size) {
+                // BufferArrayView call preceded this length. Can't use accumulated offset because
+                // in this case, but any struct member offset is still necessary.
+                if (offset.byte_struct_offset != 0) {
+                    value = b.Constant(u32(offset.byte_struct_offset));
+                }
+            } else {
+                value = OffsetToValue(offset);
+            }
+
+            if (value) {
+                auto* cnst = value->As<core::ir::Constant>();
+                if (!cnst || cnst->Value()->ValueAs<uint32_t>() > 0) {
+                    len = b.Subtract(len, value)->Result();
+                }
+            }
+
+            auto* div = b.Divide(len, u32(arr_ty->ImplicitStride()));
             call->Result()->ReplaceAllUsesWith(div->Result());
         });
         call->Destroy();
     }
 
-    struct OffsetData {
-        uint32_t byte_offset = 0;
-        Vector<core::ir::Value*, 4> expr{};
-    };
+    void BufferView(core::ir::Var* var, core::ir::CoreBuiltinCall* call) {
+        OffsetData offset;
+        b.InsertBefore(call, [&] {
+            // Offset is in bytes
+            UpdateOffsetData(call->Args()[1], 1, &offset);
+            if (call->Func() == core::BuiltinFn::kBufferArrayView) {
+                UpdateSizeData(call->Args()[2], &offset);
+                if (call->Args().size() > 3) {
+                    UpdateLengthData(call->Args()[3], &offset);
+                }
+            } else if (call->Args().size() > 2) {
+                UpdateLengthData(call->Args()[2], &offset);
+            }
+        });
+
+        ReplaceUses(call->Result(), var, offset);
+        call->Destroy();
+    }
 
     void Interlocked(core::ir::Var* var,
                      core::ir::CoreBuiltinCall* call,
@@ -353,11 +438,36 @@ struct State {
                 offset->byte_offset += idx_value->Value()->ValueAs<uint32_t>() * elm_size;
             },
             [&](core::ir::Value* val) {
-                auto* idx = val;
-                if (val->Type() != ty.u32()) {
-                    idx = b.Convert(ty.u32(), val)->Result();
-                }
-                offset->expr.Push(b.Multiply(idx, u32(elm_size))->Result());
+                auto* idx = b.InsertConvertIfNeeded(ty.u32(), val);
+                offset->byte_offset_expr.Push(b.Multiply(idx, u32(elm_size))->Result());
+            },
+            TINT_ICE_ON_NO_MATCH);
+    }
+
+    // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
+    void UpdateSizeData(core::ir::Value* v, OffsetData* offset) {
+        tint::Switch(
+            v,  //
+            [&](core::ir::Constant* idx_value) {
+                offset->byte_size += idx_value->Value()->ValueAs<uint32_t>();
+            },
+            [&](core::ir::Value* val) {
+                TINT_IR_ASSERT(ir, offset->byte_size_expr == nullptr);
+                offset->byte_size_expr = b.InsertConvertIfNeeded(ty.u32(), val);
+            },
+            TINT_ICE_ON_NO_MATCH);
+    }
+
+    // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
+    void UpdateLengthData(core::ir::Value* v, OffsetData* offset) {
+        tint::Switch(
+            v,  //
+            [&](core::ir::Constant* idx_value) {
+                offset->byte_length += idx_value->Value()->ValueAs<uint32_t>();
+            },
+            [&](core::ir::Value* val) {
+                TINT_IR_ASSERT(ir, offset->byte_length_expr == nullptr);
+                offset->byte_length_expr = b.InsertConvertIfNeeded(ty.u32(), val);
             },
             TINT_ICE_ON_NO_MATCH);
     }
@@ -365,10 +475,36 @@ struct State {
     // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
     core::ir::Value* OffsetToValue(const OffsetData& offset) {
         core::ir::Value* val = b.Value(u32(offset.byte_offset));
-        for (core::ir::Value* expr : offset.expr) {
+        for (core::ir::Value* expr : offset.byte_offset_expr) {
             val = b.Add(val, expr)->Result();
         }
         return val;
+    }
+
+    // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
+    core::ir::Value* SizeToValue(const OffsetData& offset) {
+        if (offset.byte_size_expr != nullptr) {
+            TINT_IR_ASSERT(ir, offset.byte_size == 0);
+            return offset.byte_size_expr;
+        }
+        return b.Constant(u32(offset.byte_size));
+    }
+
+    bool HasSizeData(const OffsetData& offset) {
+        return offset.byte_size != 0 || offset.byte_size_expr != nullptr;
+    }
+
+    // Note, must be called inside a builder insert block (Append, InsertBefore, etc)
+    core::ir::Value* LengthToValue(const OffsetData& offset) {
+        if (offset.byte_length_expr != nullptr) {
+            TINT_IR_ASSERT(ir, offset.byte_length == 0);
+            return offset.byte_length_expr;
+        }
+        return b.Constant(u32(offset.byte_length));
+    }
+
+    bool HasLengthData(const OffsetData& offset) {
+        return offset.byte_length != 0 || offset.byte_length_expr != nullptr;
     }
 
     // Creates the appropriate store instructions for the given result type.
@@ -743,6 +879,9 @@ struct State {
                     auto* mem = s->Members()[idx];
                     offset.byte_offset += mem->Offset();
                     obj = mem->Type();
+                    if (!obj->HasFixedFootprint()) {
+                        offset.byte_struct_offset = mem->Offset();
+                    }
                 },
                 TINT_ICE_ON_NO_MATCH);
         }
@@ -782,7 +921,7 @@ struct State {
                         case core::BuiltinFn::kArrayLength:
                             // If this pointer is being used in an `arrayLength` call then it _must_
                             // have resolved to a runtime array.
-                            ArrayLength(var, call, value->Type()->UnwrapPtr(), offset.byte_offset);
+                            ArrayLength(var, call, value->Type()->UnwrapPtr(), offset);
                             break;
                         case core::BuiltinFn::kAtomicAnd:
                             AtomicAnd(var, call, offset);
@@ -828,6 +967,13 @@ struct State {
                             break;
                         case core::BuiltinFn::kSubgroupMatrixLoad:
                             SubgroupMatrixLoad(var, call, offset);
+                            break;
+                        case core::BuiltinFn::kBufferLength:
+                            BufferLength(var, call);
+                            break;
+                        case core::BuiltinFn::kBufferView:
+                        case core::BuiltinFn::kBufferArrayView:
+                            BufferView(var, call);
                             break;
                         default:
                             TINT_IR_UNREACHABLE(ir) << call->Func();

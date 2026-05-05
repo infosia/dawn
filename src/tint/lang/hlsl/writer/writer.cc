@@ -75,9 +75,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
                 return res.Failure();
             }
         }
-        if (ty->Is<core::type::Buffer>()) {
-            return Failure("buffers are not supported by the HLSL backend");
-        }
     }
 
     for (auto* i : ir.Instructions()) {
