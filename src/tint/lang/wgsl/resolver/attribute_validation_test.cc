@@ -2561,6 +2561,13 @@ TEST_P(LocationTest, Negative) {
     EXPECT_EQ(r()->error(), R"(12:34 error: '@location' value must be non-negative)");
 }
 
+TEST_P(LocationTest, ExceedsMax) {
+    Build(Expr(4096_a));
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              R"(12:34 error: '@location'(4096) exceeds the maximum allowed value of '4095')");
+}
+
 TEST_P(LocationTest, F32) {
     Build(Expr(1_f));
     EXPECT_FALSE(r()->Resolve());

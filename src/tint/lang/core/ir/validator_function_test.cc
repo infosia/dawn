@@ -541,6 +541,24 @@ TEST_F(IR_ValidatorTest, EntryPoint_InputLocation_Duplicate_InParams) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, EntryPoint_InputLocation_ExceedsMax) {
+    auto* f = FragmentEntryPoint("my_func");
+    auto* p = b.FunctionParam("p", ty.f32());
+    p->SetLocation(4096);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:1:27 error: location(4096) exceeds the maximum allowed value of '4095'
+%my_func = @fragment func(%p:f32 [@location(4096)]):void {
+                          ^^^^^^
+)")) << res.Failure();
+}
+
 TEST_F(IR_ValidatorTest, EntryPoint_InputLocation_Duplicate_InParamAndMSV) {
     auto* f = FragmentEntryPoint("my_func");
 
