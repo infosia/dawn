@@ -67,6 +67,14 @@ enum class VulkanRenderPassType {
     DynamicRendering,
 };
 
+enum class VulkanFramebufferFetchMode {
+    kDisabled,
+    // Uses VK_EXT_rasterization_order_attachment_access.
+    kCoherentExt,
+    // Uses a subpass self dependency on coherent hardware.
+    kCoherentSelfDep,
+};
+
 class Device final : public DeviceBase {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
@@ -156,7 +164,8 @@ class Device final : public DeviceBase {
     MaybeError PrepareEmptyPassQuerySet(CommandRecordingContext* recordingContext);
     Ref<QuerySetBase> UseEmptyPassQuerySet();
 
-    VulkanRenderPassType GetRenderPassType() { return mRenderPassType; }
+    VulkanRenderPassType GetRenderPassType() const { return mRenderPassType; }
+    VulkanFramebufferFetchMode GetFramebufferFetchMode() const { return mFramebufferFetchMode; }
 
   private:
     Device(AdapterBase* adapter,
@@ -250,6 +259,7 @@ class Device final : public DeviceBase {
     std::atomic<uint64_t> mNextTextureViewId = 1;
 
     VulkanRenderPassType mRenderPassType = VulkanRenderPassType::CreateRenderPass;
+    VulkanFramebufferFetchMode mFramebufferFetchMode = VulkanFramebufferFetchMode::kDisabled;
 
     MaybeError ImportExternalImage(const ExternalImageDescriptorVk* descriptor,
                                    ExternalMemoryHandle memoryHandle,
