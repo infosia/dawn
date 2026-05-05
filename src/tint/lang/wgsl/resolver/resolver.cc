@@ -3661,6 +3661,12 @@ tint::Result<uint32_t> Resolver::LocationAttribute(const ast::LocationAttribute*
         return Failure{};
     }
 
+    if (value >= tint::internal_limits::kMaxLocations) {
+        AddError(attr) << style::Attribute("@location") << "(" << value
+                       << ") exceeds the maximum allowed value";
+        return Failure{};
+    }
+
     return static_cast<uint32_t>(value);
 }
 

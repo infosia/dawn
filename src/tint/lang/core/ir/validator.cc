@@ -3738,6 +3738,11 @@ void Validator::CheckLocation(Hashmap<uint32_t, const CastableBase*, 4>& locatio
                 }
 
                 auto loc = attribute.location.value();
+                if (loc >= tint::internal_limits::kMaxLocations) {
+                    context.validator->AddError(context.target)
+                        << "location(" << loc << ") exceeds the maximum allowed value";
+                }
+
                 if (const auto conflict = context.locations.Get(loc)) {
                     context.validator->AddError(context.target)
                         << "duplicate location(" << loc << ") on entry point "
