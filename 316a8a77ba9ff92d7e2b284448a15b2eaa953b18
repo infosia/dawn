@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb1c37d_4ad46a53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-05T16:36:12Z",
+      "side": 1,
+      "message": "Yes, we will Finch.\n\nI was originally thinking that when we remove HLSL 2018 support we\u0027d just have `kDXC` (which would implicitly mean 2021), so was doing that now to avoid a future rename. But TBH keeping the 2021 in the name even after 2018 is gone is not a bad idea anyway.",
+      "parentUuid": "dde96f4e_9dcfd9e1",
+      "revId": "316a8a77ba9ff92d7e2b284448a15b2eaa953b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9266a9b_9857bad4",
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "316a8a77ba9ff92d7e2b284448a15b2eaa953b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23b5f7ac_a447f3e9",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-05T16:36:12Z",
+      "side": 1,
+      "message": "This one is fine because it\u0027s just reflecting the range of enum values. I\u0027ve updated the test ones though.",
+      "parentUuid": "e9266a9b_9857bad4",
+      "range": {
+        "startLine": 301,
+        "startChar": 63,
+        "endLine": 301,
+        "endChar": 67
+      },
       "revId": "316a8a77ba9ff92d7e2b284448a15b2eaa953b18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
