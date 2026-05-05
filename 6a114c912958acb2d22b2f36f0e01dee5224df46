@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "008a2f34_43aa49cd",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-05T13:10:23Z",
+      "side": 1,
+      "message": "Probably worth a comment explaining this line (or re: previous CL I think this is self-documenting if it\u0027s kDXC_2021 and then would be removed when renamed to kDXC)",
+      "revId": "6a114c912958acb2d22b2f36f0e01dee5224df46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "189a7e2f_b092cc11",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-05T13:10:23Z",
+      "side": 1,
+      "message": "Does that also mean evaluation order is different? Should we extract arg[1] to a var to be evaluated before arg[2]?",
+      "revId": "6a114c912958acb2d22b2f36f0e01dee5224df46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
