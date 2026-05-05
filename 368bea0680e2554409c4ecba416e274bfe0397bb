@@ -34,6 +34,24 @@
       "parentUuid": "0ff5eebe_5f92308a",
       "revId": "368bea0680e2554409c4ecba416e274bfe0397bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65c6a236_3e956956",
+        "filename": "src/tint/lang/core/ir/binary/BUILD.bazel",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-05T18:29:41Z",
+      "side": 1,
+      "message": "That ... seems like something is wrong? That entry didn\u0027t exist before this CL so, why is it getting added?",
+      "parentUuid": "f5bb77d3_93b732df",
+      "revId": "368bea0680e2554409c4ecba416e274bfe0397bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
