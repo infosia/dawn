@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dde96f4e_9dcfd9e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-05T12:56:39Z",
+      "side": 1,
+      "message": "Are you still planning to finch this change? If so, I think kDXC_2021 and kDXC_2018 is probably a little more readable for the time both will persist. If it\u0027s just waterfalling though then ignore this.",
+      "revId": "316a8a77ba9ff92d7e2b284448a15b2eaa953b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9266a9b_9857bad4",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-05T12:56:39Z",
+      "side": 1,
+      "message": "Did you want to change this one too? I also see a couple refs in `src/tint/lang/hlsl/writer/function_test.cc`.",
+      "range": {
+        "startLine": 301,
+        "startChar": 63,
+        "endLine": 301,
+        "endChar": 67
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d7b52f76_1216006d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/common/options.h",
+              "range": {
+                "startLine": 301,
+                "startChar": 0,
+                "endLine": 302,
+                "endChar": 0
+              },
+              "replacement": "TINT_REFLECT_ENUM_RANGE(hlsl::writer::Options::Compiler, kFXC, kDXC_2018);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "316a8a77ba9ff92d7e2b284448a15b2eaa953b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
