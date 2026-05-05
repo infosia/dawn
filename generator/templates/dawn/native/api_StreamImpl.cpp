@@ -116,7 +116,13 @@ void stream::Stream<{{StringViewType}}>::Write(stream::Sink* sink, const {{Strin
 {% endcall %}
 
 {% call render_streaming_impl("dawn cache device descriptor", true, false,
-                              omits=["load data function", "store data function", "function userdata"]) %}
+                              omits=[
+                                "load data function",
+                                "store data function",
+                                "function userdata",
+                                "dawn load cache data callback info",
+                                "dawn store cache data callback info"
+                              ]) %}
 {% endcall %}
 
 {% call render_streaming_impl("extent 3D", true, true) %}
