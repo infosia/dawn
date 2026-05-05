@@ -189,6 +189,9 @@ void RenderPassEncoder::End() {
                                                       std::move(mIndirectDrawMetadata)));
 
             DAWN_TRY(mEndCallback());
+            // Once the end callback has been called explicitly set it to null so that any
+            // references the lambdas may be holding can be dropped.
+            mEndCallback = nullptr;
             return {};
         },
         "encoding %s.End().", this);
