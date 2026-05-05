@@ -52,6 +52,24 @@
       "parentUuid": "f5bb77d3_93b732df",
       "revId": "368bea0680e2554409c4ecba416e274bfe0397bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361dd66e_36b9f49e",
+        "filename": "src/tint/lang/core/ir/binary/BUILD.bazel",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-05T18:41:45Z",
+      "side": 1,
+      "message": "It is probably the proto lib dependency, since that is what got added to the other BUILD files. I don\u0027t think the bazel build defines that dep. There is an alias in src/tint/utils/protos/ir/BUILD.bazel, but no rule for the proto dependency. The other BUILD.* files in that directory do declare a target for the proto.\n\nBen/me probably never added wiring in for the proto dependencies to the Bazel builds...",
+      "parentUuid": "65c6a236_3e956956",
+      "revId": "368bea0680e2554409c4ecba416e274bfe0397bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
