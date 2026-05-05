@@ -43,10 +43,9 @@ namespace tint::core::ir::transform {
 
 /// The capabilities that the transform can support.
 const Capabilities kArrayLengthFromUniformCapabilities{
-    Capability::kAllow8BitIntegers,
-    Capability::kAllow16BitIntegers,
-    Capability::kAllowDuplicateBindings,
-    Capability::kMslAllowEntryPointInterface,
+    Capability::kAllow8BitIntegers,      Capability::kAllow16BitIntegers,
+    Capability::kAllowDuplicateBindings, Capability::kMslAllowEntryPointInterface,
+    Capability::kAllowNonCoreTypes,
 };
 
 /// The result of running the ArrayLengthFromUniform transform.

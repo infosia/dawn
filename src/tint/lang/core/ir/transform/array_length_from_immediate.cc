@@ -154,10 +154,78 @@ struct State {
                     ptr = construct->Operands()[0];
                     continue;
                 }
+                if (auto* builtin = result->Instruction()->As<CoreBuiltinCall>()) {
+                    // Often buffers are decomposed first, but in the HLSL backend some storage
+                    // buffers sizes come from the resource and some come from a uniform buffer.
+                    // This is dependent on whether the binding uses a dynamic offset in the API.
+                    // Therefore, we must handle the buffer case here if necessary.
+                    //
+                    // We know we have come from an array length call. Either the buffer_view call
+                    // produced one directly or it produced a struct containing one as the last
+                    // member.
+                    auto res_ty = builtin->Result()->Type()->UnwrapPtr();
+                    uint32_t struct_offset = 0;
+                    uint32_t stride = 0;
+                    TINT_IR_ASSERT(ir, !res_ty->HasFixedFootprint());
+                    if (auto* str_ty = res_ty->As<type::Struct>()) {
+                        auto last = str_ty->Members().Back();
+                        struct_offset = last->Offset();
+                        stride = last->Type()->As<type::Array>()->ImplicitStride();
+                    } else {
+                        stride = res_ty->As<type::Array>()->ImplicitStride();
+                    }
+                    if (builtin->Func() == BuiltinFn::kBufferView) {
+                        // We want to calculate:
+                        //
+                        //          buffer_size - offset
+                        // length = --------------------
+                        //                 stride
+                        //
+                        // where:
+                        // * buffer_size is computed from the uniform buffer input
+                        // * offset is (struct_offset + offset arg)
+                        // * stride is the implicit stride of the runtime array
+                        Value* length = nullptr;
+                        if (call->Args().size() > 2) {
+                            length = call->Args()[2];
+                        } else {
+                            length = GetComputedLength(builtin->Args()[0], builtin);
+                        }
+                        b.InsertBefore(builtin, [&] {
+                            auto* arg = builtin->Args()[1];
+                            if (auto* cnst = arg->As<Constant>()) {
+                                uint32_t arg_value = cnst->Value()->ValueAs<uint32_t>();
+                                length = b.Subtract(length, u32(arg_value + offset))->Result();
+                            } else {
+                                auto* total_offset = b.InsertBitcastIfNeeded(ty.u32(), arg);
+                                if (offset != 0) {
+                                    total_offset = b.Add(total_offset, u32(offset))->Result();
+                                }
+                                length = b.Subtract(length, total_offset)->Result();
+                            }
+                            length = b.Divide(length, u32(stride))->Result();
+                        });
+                        return length;
+                    } else if (builtin->Func() == BuiltinFn::kBufferArrayView) {
+                        // The size is encoded in the call. We don't need to account for the offset
+                        // arg in the call since it is independent of the size, but we do need to
+                        // subtract the structure offset.
+                        //
+                        //          size - struct_offset
+                        // length = --------------------
+                        //                stride
+                        Value* length = b.InsertBitcastIfNeeded(ty.u32(), builtin->Args()[2]);
+                        b.InsertBefore(builtin, [&] {
+                            if (offset > 0) {
+                                length = b.Subtract(length, u32(struct_offset))->Result();
+                            }
+                            length = b.Divide(length, u32(stride))->Result();
+                        });
+                        return length;
+                    }
+                }
                 if (auto* call = result->Instruction()->As<BuiltinCall>()) {
                     // Various builtins return a pointer:
-                    // * bufferView
-                    // * bufferArrayView
                     // * msl.pointer_offset
                     if (call->Args()[0]->Type()->Is<type::Pointer>()) {
                         ptr = call->Args()[0];
@@ -243,7 +311,15 @@ struct State {
     /// @returns the length of the array, or nullptr if the original builtin should be used
     Value* ComputeArrayLength(Var* var, Instruction* insertion_point) {
         auto binding = var->BindingPoint();
-        TINT_IR_ASSERT(ir, binding);
+        // Array length could be encountered on a workgroup variable via buffer_view.
+        TINT_IR_ASSERT(
+            ir, binding || var->Result()->Type()->As<core::type::Pointer>()->AddressSpace() ==
+                               core::AddressSpace::kWorkgroup);
+
+        if (!binding) {
+            // Must be a workgroup variable, so preserve the arrayLength() call.
+            return nullptr;
+        }
 
         auto idx_it = bindpoint_to_size_index.find(*binding);
         if (idx_it == bindpoint_to_size_index.end()) {

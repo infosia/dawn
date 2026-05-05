@@ -529,9 +529,6 @@ class BufferViewTest : public DawnTest {
 };
 
 TEST_P(BufferViewTest, BufferViewArrayLength) {
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     TestBufferViewArrayLength(128, 0);
     TestBufferViewArrayLength(256, 256);
     TestBufferViewArrayLength(512, 256);
@@ -540,9 +537,6 @@ TEST_P(BufferViewTest, BufferViewArrayLength) {
 }
 
 TEST_P(BufferViewTest, BufferArrayViewArrayLength) {
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     TestBufferArrayViewArrayLength(128, 0);
     TestBufferArrayViewArrayLength(256, 256);
     TestBufferArrayViewArrayLength(512, 256);
@@ -551,9 +545,6 @@ TEST_P(BufferViewTest, BufferArrayViewArrayLength) {
 }
 
 TEST_P(BufferViewTest, ArrayLengthFunctions) {
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     TestArrayLengthFunctions(128);
     TestArrayLengthFunctions(256);
     TestArrayLengthFunctions(512);
@@ -562,16 +553,10 @@ TEST_P(BufferViewTest, ArrayLengthFunctions) {
 }
 
 TEST_P(BufferViewTest, BufferViewBasics) {
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     TestBufferViewBasics();
 }
 
 TEST_P(BufferViewTest, BufferArrayViewBasics) {
-    DAWN_SUPPRESS_TEST_IF(IsD3D11());
-    DAWN_SUPPRESS_TEST_IF(IsD3D12());
-
     TestBufferArrayViewBasics();
 }
 
