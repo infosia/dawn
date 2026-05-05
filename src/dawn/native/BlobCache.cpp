@@ -103,7 +103,9 @@ BlobCache::BlobCache(const dawn::native::DawnCacheDeviceDescriptor& desc, bool e
     : mHashValidation(enableHashValidation),
       mLoadFunction(desc.loadDataFunction),
       mStoreFunction(desc.storeDataFunction),
-      mFunctionUserdata(desc.functionUserdata) {}
+      mFunctionUserdata(desc.functionUserdata),
+      mLoadCallbackInfo(desc.dawnLoadCacheDataCallbackInfo),
+      mStoreCallbackInfo(desc.dawnStoreCacheDataCallbackInfo) {}
 
 ResultOrError<Blob> BlobCache::Load(const CacheKey& key) {
     return LoadInternal(key);
@@ -124,7 +126,11 @@ void BlobCache::StoreInternal(const CacheKey& cacheKey, std::span<const std::byt
     std::string_view key = cacheKey.AsStringView();
 
     auto store = [&](std::span<const std::byte> actualValue) {
-        if (mStoreFunction != nullptr) {
+        if (mStoreCallbackInfo.callback != nullptr) {
+            mStoreCallbackInfo.callback(ToOutputStringView(key), actualValue.size(),
+                                        reinterpret_cast<const uint8_t*>(actualValue.data()),
+                                        mStoreCallbackInfo.userdata1, mStoreCallbackInfo.userdata2);
+        } else if (mStoreFunction != nullptr) {
             mStoreFunction(key.data(), key.size(), actualValue.data(), actualValue.size(),
                            mFunctionUserdata);
         }
@@ -144,7 +150,11 @@ ResultOrError<Blob> BlobCache::LoadInternal(const CacheKey& cacheKey) {
     std::string_view key = cacheKey.AsStringView();
 
     auto load = [&](std::span<std::byte> value) -> size_t {
-        if (mLoadFunction != nullptr) {
+        if (mLoadCallbackInfo.callback != nullptr) {
+            return mLoadCallbackInfo.callback(
+                ToOutputStringView(key), value.size(), reinterpret_cast<uint8_t*>(value.data()),
+                mLoadCallbackInfo.userdata1, mLoadCallbackInfo.userdata2);
+        } else if (mLoadFunction != nullptr) {
             return mLoadFunction(key.data(), key.size(), value.data(), value.size(),
                                  mFunctionUserdata);
         }
