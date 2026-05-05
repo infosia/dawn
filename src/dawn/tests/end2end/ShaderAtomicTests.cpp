@@ -108,10 +108,10 @@ class ShaderAtomicVec2Tests : public DawnTestWithParams<ShaderAtomicVec2TestsPar
     using DawnTestWithParams<ShaderAtomicVec2TestsParams>::GetParam;
     using DawnTestWithParams<ShaderAtomicVec2TestsParams>::SupportsFeatures;
 
-    wgpu::Buffer CreateBuffer(const std::vector<std::array<uint32_t, 2>>& data,
+    wgpu::Buffer CreateBuffer(const std::vector<uint32_t>& data,
                               wgpu::BufferUsage usage = wgpu::BufferUsage::Storage |
                                                         wgpu::BufferUsage::CopySrc) {
-        uint64_t bufferSize = static_cast<uint64_t>(data.size() * sizeof(uint32_t) * 2);
+        uint64_t bufferSize = static_cast<uint64_t>(data.size() * sizeof(uint32_t));
         return utils::CreateBufferFromData(device, data.data(), bufferSize, usage);
     }
 
@@ -142,7 +142,7 @@ class ShaderAtomicVec2Tests : public DawnTestWithParams<ShaderAtomicVec2TestsPar
     }
 };
 
-TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Max) {
+TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2MinMax) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
 
     const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
@@ -175,8 +175,8 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
     wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
 
     wgpu::Buffer atomicBufferMax = CreateBuffer({{0, 0}});
-    wgpu::Buffer atomicBufferMin = CreateBuffer({{0xFFFFFFFF, 0xFFFFFFFF}});
 
+    wgpu::Buffer atomicBufferMin = CreateBuffer({{0xFFFFFFFF, 0xFFFFFFFF}});
     wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
                                                      {{0, atomicBufferMax}, {1, atomicBufferMin}});
 
@@ -197,6 +197,61 @@ fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
     EXPECT_BUFFER_U32_RANGE_EQ(expectedMax.data(), atomicBufferMax, 0, 2);
     std::array<uint32_t, 2> expectedMin = {numInvocations, 0};
     EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 2);
+}
+
+TEST_P(ShaderAtomicVec2Tests, StorageBufferAtomicVec2Simple) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::AtomicVec2uMinMax}));
+
+    const unsigned int workgroupSize = GetParam().mWorkgroupSizeParameter;
+    const unsigned int dispatchSize = GetParam().mDispatchSizeParameter;
+    const unsigned int numInvocations = workgroupSize * dispatchSize;
+
+    std::stringstream code;
+    code << R"(
+
+    enable atomic_vec2u_min_max;
+
+
+@binding(0) @group(0) var<storage, read_write> atomic_storage_buffer_max : atomic<vec2<u32>>;
+@binding(1) @group(0) var<storage, read_write> atomic_storage_buffer_min : atomic<vec2<u32>>;
+
+@compute @workgroup_size()"
+         << workgroupSize << R"()
+fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
+    let i = global_id.x;
+    let num_invocations = )"
+         << numInvocations << R"(u;
+    let val = vec2<u32>(0x12345678, 0x9ABCDEF0);
+    atomicStoreMax(&atomic_storage_buffer_max, val);
+    atomicStoreMin(&atomic_storage_buffer_min, val);
+}
+)";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
+
+    wgpu::Buffer atomicBufferMax = CreateBuffer({0x0, 0x0, 0x12345ABC, 0x12345ABC});
+    wgpu::Buffer atomicBufferMin = CreateBuffer({0xFFFFFFFF, 0xFFFFFFFF, 0x12345ABC, 0x12345ABC});
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, atomicBufferMax}, {1, atomicBufferMin}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(dispatchSize);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+
+    std::array<uint32_t, 4> expectedMax = {0x12345678, 0x9ABCDEF0, 0x12345ABC, 0x12345ABC};
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMax.data(), atomicBufferMax, 0, 4);
+    std::array<uint32_t, 4> expectedMin = {0x12345678, 0x9ABCDEF0, 0x12345ABC, 0x12345ABC};
+    EXPECT_BUFFER_U32_RANGE_EQ(expectedMin.data(), atomicBufferMin, 0, 4);
 }
 
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
@@ -298,7 +353,7 @@ DAWN_INSTANTIATE_TEST_P(ShaderAtomicTests,
                         {ShaderAtomicOp::AtomicAdd, ShaderAtomicOp::AtomicCASFakeAdd});
 
 DAWN_INSTANTIATE_TEST_P(ShaderAtomicVec2Tests,
-                        {VulkanBackend(), MetalBackend()},
+                        {VulkanBackend(), MetalBackend(), D3D12Backend()},
                         {1,  2,  3,  4,  5,  6,   7,   8,   9,   13, 15,
                          16, 31, 32, 53, 64, 111, 128, 137, 173, 256}, /* workgroup size*/
                         {1, 2, 7, 15}                                  /*dispatch size */
