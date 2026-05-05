@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19f76add_20a543eb",
+        "filename": "src/tint/lang/hlsl/validate/validate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-05T16:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c2e69b_a39cfc39",
+      "revId": "4840d75e30e86a5f2fde9683d1b82c49b1dad343",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "537fbeeb_81423059",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-05T14:21:58Z",
       "side": 1,
       "message": "Guessing an else should not be reachable but maybe it should be a return Failure just in case to avoid accidentally skipping validation if a path was missed?",
+      "revId": "4840d75e30e86a5f2fde9683d1b82c49b1dad343",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11344c7f_cdcc28b3",
+        "filename": "src/tint/lang/hlsl/writer/helper_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-05T16:37:20Z",
+      "side": 1,
+      "message": "This is sometimes called for tests that specifically target FXC, where we do want to avoid validating against DXC now since that will sometimes fail due to ternary operators.",
+      "parentUuid": "537fbeeb_81423059",
       "revId": "4840d75e30e86a5f2fde9683d1b82c49b1dad343",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
