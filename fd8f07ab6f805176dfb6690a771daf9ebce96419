@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e83393b2_5d7692fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-05T21:41:00Z",
+      "side": 1,
+      "message": "PTAL! Fixes a \"leak\" that Meta was reporting with WebGPU on their headsets (Qualcomm based, so the AlwaysResolveIntoZeroLevelAndLayer workaround is always active.)",
+      "revId": "fd8f07ab6f805176dfb6690a771daf9ebce96419",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
