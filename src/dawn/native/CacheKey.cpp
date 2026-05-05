@@ -27,7 +27,13 @@
 
 #include "src/dawn/native/CacheKey.h"
 
+#include <string_view>
+
 namespace dawn::native {
+
+std::string_view CacheKey::AsStringView() const {
+    return {reinterpret_cast<const char*>(data()), size()};
+}
 
 template <>
 void stream::Stream<CacheKey>::Write(stream::Sink* sink, const CacheKey& t) {

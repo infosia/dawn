@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_CACHEKEY_H_
 #define SRC_DAWN_NATIVE_CACHEKEY_H_
 
+#include <string_view>
 #include <utility>
 
 #include "src/dawn/native/stream/ByteVectorSink.h"
@@ -38,6 +39,8 @@ namespace dawn::native {
 class CacheKey : public stream::ByteVectorSink {
   public:
     using stream::ByteVectorSink::ByteVectorSink;
+
+    std::string_view AsStringView() const;
 
     enum class Type { ComputePipeline, RenderPipeline, Shader };
 };
