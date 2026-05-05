@@ -69,6 +69,24 @@
       "parentUuid": "537fbeeb_81423059",
       "revId": "4840d75e30e86a5f2fde9683d1b82c49b1dad343",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f016b5f_53e4629f",
+        "filename": "src/tint/lang/hlsl/writer/helper_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2026-05-05T17:34:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "11344c7f_cdcc28b3",
+      "revId": "4840d75e30e86a5f2fde9683d1b82c49b1dad343",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
