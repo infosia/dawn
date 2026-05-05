@@ -1589,33 +1589,27 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(IR_ArrayLengthFromImmediatesTest, BufferView_Unsized_Direct) {
-    auto* buf = ty.unsized_buffer();
-    auto* buf_ptr = ty.ptr(storage, buf);
-
-    auto* arr = ty.runtime_array(ty.u32());
-    auto* arr_ptr = ty.ptr(storage, arr);
-
-    auto* gv = b.Var("gv", buf_ptr);
-    gv->SetBindingPoint(0, 0);
-    mod.root_block->Append(gv);
+TEST_F(IR_ArrayLengthFromImmediatesTest, BufferLength_Operand_Const) {
+    auto* v = b.Var("v", ty.ptr(storage, ty.unsized_buffer()));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
 
     auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
     b.Append(foo->Block(), [&] {
-        auto* offset = b.CallExplicit(arr_ptr, core::BuiltinFn::kBufferView, Vector{arr}, gv, 0_u);
-        b.Call(ty.u32(), core::BuiltinFn::kArrayLength, offset);
+        auto* len = b.Call(ty.u32(), BuiltinFn::kBufferLength, v, 16_u);
+        b.Let("len", len);
         b.Return(foo);
     });
 
     auto* src = R"(
 $B1: {  # root
-  %gv:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
 }
 
 %foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
-    %3:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %gv, 0u
-    %4:u32 = arrayLength %3
+    %3:u32 = bufferLength %v, 16u
+    %len:u32 = let %3
     ret
   }
 }
@@ -1624,6 +1618,321 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
+tint_immediate_data_struct = struct @align(16), @block {
+  tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %len:u32 = let 16u
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    bindpoint_to_index[{0, 0}] = 0;
+
+    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    constexpr uint32_t buffer_size_start_offset = 16;
+    uint32_t num_elements = GetBufferSizesNumElements(bindpoint_to_index);
+    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(
+                  buffer_size_start_offset, mod.symbols.New("tint_storage_buffer_sizes"),
+                  ty.array(ty.vec4u(), num_elements)),
+              Success);
+    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
+    EXPECT_EQ(immediate_data, Success);
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), buffer_size_start_offset, num_elements,
+        bindpoint_to_index);
+
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), 0u, 0u, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ArrayLengthFromImmediatesTest, BufferLength_Operand_NonConst) {
+    auto* v = b.Var("v", ty.ptr(storage, ty.unsized_buffer()));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {
+        auto* len_op = b.Let("op", 16_u);
+        auto* len = b.Call(ty.u32(), BuiltinFn::kBufferLength, v, len_op);
+        b.Let("len", len);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %op:u32 = let 16u
+    %4:u32 = bufferLength %v, %op
+    %len:u32 = let %4
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+tint_immediate_data_struct = struct @align(16), @block {
+  tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %op:u32 = let 16u
+    %len:u32 = let %op
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    bindpoint_to_index[{0, 0}] = 0;
+
+    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    constexpr uint32_t buffer_size_start_offset = 16;
+    uint32_t num_elements = GetBufferSizesNumElements(bindpoint_to_index);
+    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(
+                  buffer_size_start_offset, mod.symbols.New("tint_storage_buffer_sizes"),
+                  ty.array(ty.vec4u(), num_elements)),
+              Success);
+    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
+    EXPECT_EQ(immediate_data, Success);
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), buffer_size_start_offset, num_elements,
+        bindpoint_to_index);
+
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), 0u, 0u, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ArrayLengthFromImmediatesTest, BufferLength_Operand_NonConst_ThroughFunction) {
+    auto* v = b.Var("v", ty.ptr(storage, ty.unsized_buffer()));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* bar = b.Function("bar", ty.void_());
+    auto* p = b.FunctionParam("p", ty.u32());
+    bar->SetParams({p});
+    b.Append(bar->Block(), [&] {
+        auto* len = b.Call(ty.u32(), BuiltinFn::kBufferLength, v, p);
+        b.Let("len", len);
+        b.Return(bar);
+    });
+
+    auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {
+        auto* length = b.Call(ty.u32(), BuiltinFn::kBufferLength, v, 16_u);
+        b.Call(ty.void_(), bar, length);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%bar = func(%p:u32):void {
+  $B2: {
+    %4:u32 = bufferLength %v, %p
+    %len:u32 = let %4
+    ret
+  }
+}
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %7:u32 = bufferLength %v, 16u
+    %8:void = call %bar, %7
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+tint_immediate_data_struct = struct @align(16), @block {
+  tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+}
+
+%bar = func(%p:u32):void {
+  $B2: {
+    %len:u32 = let %p
+    ret
+  }
+}
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B3: {
+    %7:void = call %bar, 16u
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    bindpoint_to_index[{0, 0}] = 0;
+
+    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    constexpr uint32_t buffer_size_start_offset = 16;
+    uint32_t num_elements = GetBufferSizesNumElements(bindpoint_to_index);
+    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(
+                  buffer_size_start_offset, mod.symbols.New("tint_storage_buffer_sizes"),
+                  ty.array(ty.vec4u(), num_elements)),
+              Success);
+    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
+    EXPECT_EQ(immediate_data, Success);
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), buffer_size_start_offset, num_elements,
+        bindpoint_to_index);
+
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), 0u, 0u, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ArrayLengthFromImmediatesTest, BufferLength_Count_Const) {
+    auto* v = b.Var("v", ty.ptr(storage, ty.buffer(16)));
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {
+        auto* len = b.Call(ty.u32(), BuiltinFn::kBufferLength, v);
+        b.Let("len", len);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<storage, buffer<16>, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %3:u32 = bufferLength %v
+    %len:u32 = let %3
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+tint_immediate_data_struct = struct @align(16), @block {
+  tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
+}
+
+$B1: {  # root
+  %v:ptr<storage, buffer<16>, read_write> = var undef @binding_point(0, 0)
+  %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %len:u32 = let 16u
+    ret
+  }
+}
+)";
+
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_index;
+    bindpoint_to_index[{0, 0}] = 0;
+
+    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    constexpr uint32_t buffer_size_start_offset = 16;
+    uint32_t num_elements = GetBufferSizesNumElements(bindpoint_to_index);
+    ASSERT_EQ(immediate_data_config.AddInternalImmediateData(
+                  buffer_size_start_offset, mod.symbols.New("tint_storage_buffer_sizes"),
+                  ty.array(ty.vec4u(), num_elements)),
+              Success);
+    auto immediate_data = PrepareImmediateData(mod, immediate_data_config);
+    EXPECT_EQ(immediate_data, Success);
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), buffer_size_start_offset, num_elements,
+        bindpoint_to_index);
+
+    Run(ArrayLengthFromImmediates, immediate_data.Get(), 0u, 0u, bindpoint_to_index);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_ArrayLengthFromImmediatesTest, BufferView_Unsized_Direct) {
+    auto* buf = ty.unsized_buffer();
+    auto* buf_ptr = ty.ptr(storage, buf);
+
+    auto* arr = ty.runtime_array(ty.u32());
+    auto* arr_ptr = ty.ptr(storage, arr);
+
+    auto* S = ty.Struct(mod.symbols.New("S"), {
+                                                  {mod.symbols.New("a"), ty.u32()},
+                                                  {mod.symbols.New("b"), arr},
+                                              });
+    auto* S_ptr = ty.ptr(storage, S);
+
+    auto* gv = b.Var("gv", buf_ptr);
+    gv->SetBindingPoint(0, 0);
+    mod.root_block->Append(gv);
+
+    auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
+    b.Append(foo->Block(), [&] {
+        auto* offset = b.Let("offset", 16_u);
+        auto* view = b.CallExplicit(S_ptr, core::BuiltinFn::kBufferView, Vector{S}, gv, offset);
+        auto* access = b.Access(arr_ptr, view, 1_u);
+        b.Call(ty.u32(), core::BuiltinFn::kArrayLength, access);
+        b.Return(foo);
+    });
+
+    auto* src = R"(
+S = struct @align(4) {
+  a:u32 @offset(0)
+  b:array<u32> @offset(4)
+}
+
+$B1: {  # root
+  %gv:ptr<storage, buffer, read_write> = var undef @binding_point(0, 0)
+}
+
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %offset:u32 = let 16u
+    %4:ptr<storage, S, read_write> = bufferView<S> %gv, %offset
+    %5:ptr<storage, array<u32>, read_write> = access %4, 1u
+    %6:u32 = arrayLength %5
+    ret
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+S = struct @align(4) {
+  a:u32 @offset(0)
+  b:array<u32> @offset(4)
+}
+
 tint_immediate_data_struct = struct @align(16), @block {
   tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
 }
@@ -1643,8 +1952,13 @@ $B1: {  # root
     %5:ptr<immediate, vec4<u32>, read> = access %4, 0u
     %6:u32 = load_vector_element %5, 0u
     %7:tint_array_lengths_struct = construct %6
-    %8:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %gv, 0u
+    %offset:u32 = let 16u
     %9:u32 = access %7, 0u
+    %10:u32 = add %offset, 4u
+    %11:u32 = sub %9, %10
+    %12:u32 = div %11, 4u
+    %13:ptr<storage, S, read_write> = bufferView<S> %gv, %offset
+    %14:ptr<storage, array<u32>, read_write> = access %13, 1u
     ret
   }
 }
@@ -1682,7 +1996,7 @@ TEST_F(IR_ArrayLengthFromImmediatesTest, BufferArrayView_Sized_Direct) {
     auto* foo = b.ComputeFunction("foo", 1_u, 1_u, 1_u);
     b.Append(foo->Block(), [&] {
         auto* offset = b.CallExplicit(arr_ptr, core::BuiltinFn::kBufferArrayView, Vector{arr}, gv,
-                                      0_u, 128_u, 128_u);
+                                      0_u, 128_u, 256_u);
         b.Call(ty.u32(), core::BuiltinFn::kArrayLength, offset);
         b.Return(foo);
     });
@@ -1694,7 +2008,7 @@ $B1: {  # root
 
 %foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
-    %3:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %gv, 0u, 128u, 128u
+    %3:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %gv, 0u, 128u, 256u
     %4:u32 = arrayLength %3
     ret
   }
@@ -1708,10 +2022,6 @@ tint_immediate_data_struct = struct @align(16), @block {
   tint_storage_buffer_sizes:array<vec4<u32>, 1> @offset(16)
 }
 
-tint_array_lengths_struct = struct @align(4) {
-  tint_array_length_0_0:u32 @offset(0)
-}
-
 $B1: {  # root
   %gv:ptr<storage, buffer<128>, read_write> = var undef @binding_point(0, 0)
   %tint_immediate_data:ptr<immediate, tint_immediate_data_struct, read> = var undef
@@ -1719,12 +2029,8 @@ $B1: {  # root
 
 %foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
-    %4:ptr<immediate, array<vec4<u32>, 1>, read> = access %tint_immediate_data, 0u
-    %5:ptr<immediate, vec4<u32>, read> = access %4, 0u
-    %6:u32 = load_vector_element %5, 0u
-    %7:tint_array_lengths_struct = construct %6
-    %8:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %gv, 0u, 128u, 128u
-    %9:u32 = access %7, 0u
+    %4:u32 = div 128u, 4u
+    %5:ptr<storage, array<u32>, read_write> = bufferArrayView<array<u32>> %gv, 0u, 128u, 256u
     ret
   }
 }
@@ -1868,10 +2174,12 @@ $B1: {  # root
     %14:ptr<immediate, vec4<u32>, read> = access %13, 0u
     %15:u32 = load_vector_element %14, 0u
     %16:tint_array_lengths_struct = construct %15
-    %17:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %gv, 0u
-    %18:buffer_bundle_0 = construct %17, 0u, 0u, 0u, 0u
-    %19:u32 = access %16, 0u
-    %20:void = call %bar, %18, %19
+    %17:u32 = access %16, 0u
+    %18:u32 = sub %17, 0u
+    %19:u32 = div %18, 4u
+    %20:ptr<storage, array<u32>, read_write> = bufferView<array<u32>> %gv, 0u
+    %21:buffer_bundle_0 = construct %20, 0u, 0u, 0u, 0u
+    %22:void = call %bar, %21, %19
     ret
   }
 }

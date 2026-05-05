@@ -94,25 +94,42 @@ struct State {
             block_to_function.Add(func->Block(), func);
         }
 
-        // Look for and replace calls to the array length builtin.
+        // Look for and replace calls to a length builtin.
         for (auto* inst : ir.Instructions()) {
             if (auto* call = inst->As<CoreBuiltinCall>()) {
-                if (call->Func() == BuiltinFn::kArrayLength) {
-                    MaybeReplace(call);
+                if (call->Func() == BuiltinFn::kArrayLength ||
+                    call->Func() == BuiltinFn::kBufferLength) {
+                    MaybeReplace(call, call->Func() == BuiltinFn::kBufferLength);
                 }
             }
         }
 
         // Create the lengths structure and update all of the places that need to use it.
-        // We can only do this after we have replaced all of the array length callsites, now that we
+        // We can only do this after we have replaced all of the length callsites, now that we
         // know all of the structure members that we need.
         CreateLengthsStructure();
     }
 
-    /// Replace a call to an array length builtin, if the variable appears in the bindpoint map.
-    /// @param call the arrayLength call to replace
-    void MaybeReplace(CoreBuiltinCall* call) {
-        if (auto* length = GetComputedLength(call->Args()[0], call)) {
+    /// Replace a call to a length builtin, if the variable appears in the bindpoint map.
+    /// @param call the call to replace
+    /// @param buffer true if call is a bufferLength call (arrayLength otherwise)
+    void MaybeReplace(CoreBuiltinCall* call, bool buffer) {
+        if (buffer) {
+            auto* buffer_ty = call->Args()[0]->Type()->UnwrapPtr()->As<type::Buffer>();
+            if (call->Args().size() > 1) {
+                // Length was encoded directly, so just use it.
+                call->Result()->ReplaceAllUsesWith(call->Args()[1]);
+                call->Destroy();
+                return;
+            }
+            if (auto const_count = buffer_ty->ConstantCount()) {
+                // Constant sized buffer, use its size.
+                call->Result()->ReplaceAllUsesWith(b.Constant(u32(const_count.value())));
+                call->Destroy();
+                return;
+            }
+        }
+        if (auto* length = GetComputedLength(call->Args()[0], call, buffer)) {
             call->Result()->ReplaceAllUsesWith(length);
             call->Destroy();
         }
@@ -121,14 +138,15 @@ struct State {
     /// Get the computed length value for a runtime-sized array pointer.
     /// @param ptr the pointer to the runtime-sized array
     /// @param insertion_point the insertion point for new instructions
+    /// @param buffer true if call is a bufferLength call (arrayLength otherwise)
     /// @returns the computed length, or nullptr if the original builtin should be used
-    Value* GetComputedLength(Value* ptr, Instruction* insertion_point) {
+    Value* GetComputedLength(Value* ptr, Instruction* insertion_point, bool buffer) {
         // Trace back from the value until we reach the originating variable.
         while (true) {
             if (auto* param = ptr->As<FunctionParam>()) {
                 // The length of an array pointer passed as a function parameter will be passed as
                 // an additional parameter to the function.
-                return GetArrayLengthParam(param);
+                return GetArrayLengthParam(param, buffer);
             }
 
             if (auto* result = ptr->As<InstructionResult>()) {
@@ -150,13 +168,87 @@ struct State {
                     ptr = construct->Operands()[0];
                     continue;
                 }
-                if (auto* call = result->Instruction()->As<BuiltinCall>()) {
+                if (auto* call = result->Instruction()->As<CoreBuiltinCall>()) {
+                    // Often buffers are decomposed first, but in the HLSL backend some storage
+                    // buffers sizes come from the resource and some come from a uniform buffer.
+                    // This is dependent on whether the binding uses a dynamic offset in the API.
+                    // Therefore, we must handle the buffer case here if necessary.
+                    //
+                    // We know we have come from an array length call. Either the buffer_view call
+                    // produced one directly or it produced a struct containing one as the last
+                    // member.
+
+                    // bufferView and bufferArrayView handling
+                    //
+                    // We know we have come from an array length call. Either the buffer_view call
+                    // produced one directly or it produced a struct containing one as the last
+                    // member.
+                    // We want to calculate:
+                    //
+                    //          buffer_size - offset
+                    // length = --------------------
+                    //                 stride
+                    //
+                    auto res_ty = call->Result()->Type()->UnwrapPtr();
+                    uint32_t struct_offset = 0;
+                    uint32_t stride = 0;
+                    TINT_IR_ASSERT(ir, !res_ty->HasFixedFootprint());
+                    if (auto* str_ty = res_ty->As<type::Struct>()) {
+                        auto last = str_ty->Members().Back();
+                        struct_offset = last->Offset();
+                        stride = last->Type()->As<type::Array>()->ImplicitStride();
+                    } else {
+                        stride = res_ty->As<type::Array>()->ImplicitStride();
+                    }
+                    if (call->Func() == BuiltinFn::kBufferView) {
+                        // where:
+                        // * buffer_size is computed from the uniform buffer input (or direct
+                        // encoding)
+                        // * offset is (structure offset + offset arg)
+                        // * stride is the implicit stride of the runtime array
+                        Value* length = nullptr;
+                        auto* buffer_ty = call->Args()[0]->Type()->UnwrapPtr()->As<type::Buffer>();
+                        if (call->Args().size() > 2) {
+                            length = call->Args()[2];
+                        } else if (auto const_count = buffer_ty->ConstantCount()) {
+                            length = b.Constant(u32(const_count.value()));
+                        } else {
+                            // Impossible to have come from a bufferLength call.
+                            length = GetComputedLength(call->Args()[0], call, false);
+                            if (!length) {
+                                return nullptr;
+                            }
+                        }
+                        b.InsertBefore(call, [&] {
+                            auto* arg = call->Args()[1];
+                            auto* total_offset = b.InsertBitcastIfNeeded(ty.u32(), arg);
+                            if (struct_offset != 0) {
+                                total_offset = b.Add(total_offset, u32(struct_offset))->Result();
+                            }
+                            length = b.Subtract(length, total_offset)->Result();
+                            length = b.Divide(length, u32(stride))->Result();
+                        });
+                        return length;
+                    } else if (call->Func() == BuiltinFn::kBufferArrayView) {
+                        // Here:
+                        // * buffer_size is the size arg from the call
+                        // * offset is the structure offset (offset arg is not included)
+                        // * stride is the implicit stride of the runtime array
+                        Value* length = b.InsertBitcastIfNeeded(ty.u32(), call->Args()[2]);
+                        b.InsertBefore(call, [&] {
+                            if (struct_offset > 0) {
+                                length = b.Subtract(length, u32(struct_offset))->Result();
+                            }
+                            length = b.Divide(length, u32(stride))->Result();
+                        });
+                        return length;
+                    }
+                }
+                if (auto* builtin = result->Instruction()->As<BuiltinCall>()) {
                     // Various builtins return a pointer:
-                    // * bufferView
-                    // * bufferArrayView
                     // * msl.pointer_offset
-                    if (call->Args()[0]->Type()->Is<type::Pointer>()) {
-                        ptr = call->Args()[0];
+                    if (builtin->Args()[0]->Type()->Is<type::Pointer>()) {
+                        ptr = builtin->Args()[0];
                         continue;
                     }
                 }
@@ -170,8 +262,9 @@ struct State {
 
     /// Get (or create) the array length parameter that corresponds to an array parameter.
     /// @param array_param the array parameter
+    /// @param buffer true if call is a bufferLength call (arrayLength otherwise)
     /// @returns the array length parameter
-    FunctionParam* GetArrayLengthParam(FunctionParam* array_param) {
+    FunctionParam* GetArrayLengthParam(FunctionParam* array_param, bool buffer) {
         return array_param_to_length_param.GetOrAdd(array_param, [&] {
             // Add a new parameter to receive the array length.
             auto* length = b.FunctionParam<u32>("tint_array_length");
@@ -182,12 +275,16 @@ struct State {
                 if (auto* call = use.instruction->As<core::ir::UserCall>()) {
                     // Get the length of the array in the calling function and pass that.
                     auto* arg = call->Args()[array_param->Index()];
-                    auto* len = GetComputedLength(arg, call);
+                    auto* len = GetComputedLength(arg, call, buffer);
                     if (!len) {
                         // The originating variable was not in the bindpoint map, so we need to call
-                        // the original arrayLength builtin as the callee is expecting a value.
+                        // the original builtin as the callee is expecting a value.
                         b.InsertBefore(call, [&] {
-                            len = b.Call<u32>(BuiltinFn::kArrayLength, arg)->Result();
+                            if (buffer) {
+                                len = b.Call<u32>(BuiltinFn::kBufferLength, arg)->Result();
+                            } else {
+                                len = b.Call<u32>(BuiltinFn::kArrayLength, arg)->Result();
+                            }
                         });
                     }
                     call->AppendArg(len);
@@ -239,7 +336,15 @@ struct State {
     /// @returns the length of the array, or nullptr if the original builtin should be used
     Value* ComputeArrayLength(Var* var, Instruction* insertion_point) {
         auto binding = var->BindingPoint();
-        TINT_IR_ASSERT(ir, binding);
+        // Array length could be encountered on a workgroup variable via buffer_view.
+        TINT_IR_ASSERT(
+            ir, binding || var->Result()->Type()->As<core::type::Pointer>()->AddressSpace() ==
+                               core::AddressSpace::kWorkgroup);
+
+        if (!binding) {
+            // Must be a workgroup variable, so preserve the arrayLength() call.
+            return nullptr;
+        }
 
         auto idx_it = bindpoint_to_size_index.find(*binding);
         if (idx_it == bindpoint_to_size_index.end()) {
