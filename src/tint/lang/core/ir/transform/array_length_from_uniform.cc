@@ -239,7 +239,15 @@ struct State {
     /// @returns the length of the array, or nullptr if the original builtin should be used
     Value* ComputeArrayLength(Var* var, Instruction* insertion_point) {
         auto binding = var->BindingPoint();
-        TINT_IR_ASSERT(ir, binding);
+        // Array length could be encountered on a workgroup variable via buffer_view.
+        TINT_IR_ASSERT(
+            ir, binding || var->Result()->Type()->As<core::type::Pointer>()->AddressSpace() ==
+                               core::AddressSpace::kWorkgroup);
+
+        if (!binding) {
+            // Must be a workgroup variable, so preserve the arrayLength() call.
+            return nullptr;
+        }
 
         auto idx_it = bindpoint_to_size_index.find(*binding);
         if (idx_it == bindpoint_to_size_index.end()) {
