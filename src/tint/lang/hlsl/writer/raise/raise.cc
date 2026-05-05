@@ -45,6 +45,7 @@
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/propagate_buffer_sizes.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
@@ -82,6 +83,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     TINT_CHECK_RESULT(
         core::ir::transform::SubstituteOverrides(module, options.substitute_overrides_config));
+
+    TINT_CHECK_RESULT(core::ir::transform::PropagateBufferSizes(module));
 
     // PopulateBindingRelatedOptions must come before PrepareImmediateData so that
     // buffer_sizes_offset is available when configuring immediate data.
@@ -238,29 +241,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         TINT_CHECK_RESULT(raise::ReplaceDefaultOnlySwitch(module));
     }
 
-    // ArrayLength must run after Robustness, which introduces arrayLength calls.
-    // TODO(crbug.com/366291600): Replace ArrayLengthFromUniform with ArrayLengthFromImmediates
-    if (array_length_from_uniform_options.buffer_sizes_offset) {
-        // Use ArrayLengthFromImmediates when buffer_sizes_offset is provided.
-        TINT_ASSERT(!array_length_from_uniform_options.ubo_binding.group &&
-                    !array_length_from_uniform_options.ubo_binding.binding);
-
-        TINT_CHECK_RESULT(core::ir::transform::ArrayLengthFromImmediates(
-            module, immediate_data_layout,
-            array_length_from_uniform_options.buffer_sizes_offset.value(),
-            buffer_sizes_array_elements_num,
-            array_length_from_uniform_options.bindpoint_to_size_index));
-    } else {
-        // Always fall back to ArrayLengthFromUniform when buffer_sizes_offset is not provided.
-        // This preserves the behavior from before ArrayLengthFromImmediates was introduced,
-        // ensuring that arrayLength() calls are properly handled even without explicit options.
-        TINT_CHECK_RESULT(core::ir::transform::ArrayLengthFromUniform(
-            module,
-            BindingPoint{array_length_from_uniform_options.ubo_binding.group,
-                         array_length_from_uniform_options.ubo_binding.binding},
-            array_length_from_uniform_options.bindpoint_to_size_index));
-    }
-
     if (!options.disable_workgroup_init) {
         // Must run before ShaderIO as it may introduce a builtin parameter (local_invocation_index)
         TINT_CHECK_RESULT(core::ir::transform::ZeroInitWorkgroupMemory(module));
@@ -297,6 +277,33 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     // DecomposeStorageAccess must come after Robustness and DirectVariableAccess
     TINT_CHECK_RESULT(raise::DecomposeStorageAccess(module));
+
+    // DecomposeAccess must come after DecomposeStorageAccess. No address spaces enabled. Just
+    // decompose buffers.
+    TINT_CHECK_RESULT(core::ir::transform::DecomposeAccess(module, {}));
+
+    // ArrayLength must run after Robustness, which introduces arrayLength calls.
+    // TODO(crbug.com/366291600): Replace ArrayLengthFromUniform with ArrayLengthFromImmediates
+    if (array_length_from_uniform_options.buffer_sizes_offset) {
+        // Use ArrayLengthFromImmediates when buffer_sizes_offset is provided.
+        TINT_ASSERT(!array_length_from_uniform_options.ubo_binding.group &&
+                    !array_length_from_uniform_options.ubo_binding.binding);
+
+        TINT_CHECK_RESULT(core::ir::transform::ArrayLengthFromImmediates(
+            module, immediate_data_layout,
+            array_length_from_uniform_options.buffer_sizes_offset.value(),
+            buffer_sizes_array_elements_num,
+            array_length_from_uniform_options.bindpoint_to_size_index));
+    } else {
+        // Always fall back to ArrayLengthFromUniform when buffer_sizes_offset is not provided.
+        // This preserves the behavior from before ArrayLengthFromImmediates was introduced,
+        // ensuring that arrayLength() calls are properly handled even without explicit options.
+        TINT_CHECK_RESULT(core::ir::transform::ArrayLengthFromUniform(
+            module,
+            BindingPoint{array_length_from_uniform_options.ubo_binding.group,
+                         array_length_from_uniform_options.ubo_binding.binding},
+            array_length_from_uniform_options.bindpoint_to_size_index));
+    }
 
     // ArrayOffsetFrom* transforms must come after both DirectVariableAccess and
     // DecomposeStorageAccess, and BEFORE ChangeImmediateToUniform.
