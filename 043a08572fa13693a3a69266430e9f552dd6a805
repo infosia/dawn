@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b35fa2_d0b7a978",
+        "filename": "src/dawn/common/Log.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-05T11:23:07Z",
+      "side": 1,
+      "message": "`[[maybe_unused]]`",
+      "revId": "043a08572fa13693a3a69266430e9f552dd6a805",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c4536e_2afbe513",
+        "filename": "src/dawn/native/Sampler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-05T11:23:07Z",
+      "side": 1,
+      "message": "Gemini seems very happy to add unrelated changes that add const declaration (that\u0027s ok but makes it less clear what\u0027s actually needed for clang-tidy and what\u0027s Gemini being overeager).",
+      "revId": "043a08572fa13693a3a69266430e9f552dd6a805",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
