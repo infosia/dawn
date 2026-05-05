@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "458593e5_28d1cb3d",
+        "filename": ".clang-tidy",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-05T13:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e1ebc4_ba7037dc",
+      "revId": "619bff9e76b1901cc449a9f2f0fba5e1f9a19aac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7982250e_18384cd6",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
