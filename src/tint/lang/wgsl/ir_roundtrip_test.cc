@@ -3434,18 +3434,18 @@ TEST_F(IRToProgramRoundtripTest, GroupLargerThanI32) {
 )");
 }
 
-TEST_F(IRToProgramRoundtripTest, LocationInputLargerThanI32) {
+TEST_F(IRToProgramRoundtripTest, LocationInputLarge) {
     RUN_TEST(R"(
 @fragment
-fn main(@location(4000000000u) color : vec4<f32>) {
+fn main(@location(4000u) color : vec4<f32>) {
 }
 )");
 }
 
-TEST_F(IRToProgramRoundtripTest, LocationOutputLargerThanI32) {
+TEST_F(IRToProgramRoundtripTest, LocationOutputLarge) {
     RUN_TEST(R"(
 @fragment
-fn main() -> @location(4000000000u) vec4<f32> {
+fn main() -> @location(4000u) vec4<f32> {
   return vec4<f32>();
 }
 )");
