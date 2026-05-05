@@ -1,4 +1,3 @@
-SKIP: FAILED
 
 cbuffer cbuffer_index : register(b0, space1) {
   uint4 index[1];
@@ -9,17 +8,18 @@ void fs() {
   uint v = index[0u].x;
   bool v_1 = false;
   if ((v < tint_resource_table_metadata.Load(0u))) {
-    v_1 = (tint_resource_table_metadata.Load((4u + (v * 4u))) == 13u);
+    uint2 v_2 = uint2((tint_resource_table_metadata.Load((4u + (v * 4u)))).xx);
+    v_1 = any((v_2 == uint2(16u, 17u)));
   } else {
     v_1 = false;
   }
-  uint v_2 = 0u;
+  uint v_3 = 0u;
   if (v_1) {
-    v_2 = v;
+    v_3 = v;
   } else {
-    v_2 = (0u + tint_resource_table_metadata.Load(0u));
+    v_3 = (0u + tint_resource_table_metadata.Load(0u));
   }
-  uint v_3 = v_2;
-  float4 texture_load = tint_resource_table_array[v_3].Load(int4((int(0)).xxx, int(0)));
+  uint v_4 = v_3;
+  float4 texture_load = tint_resource_table_array[v_4].Load(int4((int(0)).xxx, int(0)));
 }
 
