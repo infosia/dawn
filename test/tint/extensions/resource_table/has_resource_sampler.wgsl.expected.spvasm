@@ -16,6 +16,8 @@
                OpName %tint_resource_table_metadata_struct_tint_explicit_layout "tint_resource_table_metadata_struct_tint_explicit_layout"
                OpName %tint_resource_table_metadata "tint_resource_table_metadata"
                OpName %fs "fs"
+               OpName %tint_storage_metadata_length "tint_storage_metadata_length"
+               OpName %tint_storage_metadata_length_0 "tint_storage_metadata_length"
                OpMemberDecorate %o_block 0 Offset 0
                OpDecorate %o_block Block
                OpDecorate %1 DescriptorSet 0
@@ -58,16 +60,16 @@
       %int_1 = OpConstant %int 1
      %uint_1 = OpConstant %uint 1
      %v2uint = OpTypeVector %uint 2
-    %uint_34 = OpConstant %uint 34
-    %uint_33 = OpConstant %uint 33
+    %uint_40 = OpConstant %uint 40
+    %uint_41 = OpConstant %uint 41
      %v2bool = OpTypeVector %bool 2
 %_ptr_StorageBuffer_uint_0 = OpTypePointer StorageBuffer %uint
-    %uint_35 = OpConstant %uint 35
+    %uint_42 = OpConstant %uint 42
          %fs = OpFunction %void None %18
          %19 = OpLabel
          %20 = OpBitcast %uint %int_0
-         %23 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %26 = OpLoad %uint %23 None
+%tint_storage_metadata_length = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %26 = OpLoad %uint %tint_storage_metadata_length None
          %27 = OpULessThan %bool %20 %26
                OpSelectionMerge %29 None
                OpBranchConditional %27 %30 %31
@@ -75,7 +77,7 @@
          %49 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %20
          %51 = OpLoad %uint %49 None
          %53 = OpCompositeConstruct %v2uint %51 %51
-         %54 = OpCompositeConstruct %v2uint %uint_34 %uint_33
+         %54 = OpCompositeConstruct %v2uint %uint_40 %uint_41
          %57 = OpIEqual %v2bool %53 %54
          %33 = OpAny %bool %57
                OpBranch %29
@@ -94,15 +96,15 @@
                OpBranch %35
          %35 = OpLabel
          %37 = OpBitcast %uint %int_1
-         %39 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
-         %40 = OpLoad %uint %39 None
+%tint_storage_metadata_length_0 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_0
+         %40 = OpLoad %uint %tint_storage_metadata_length_0 None
          %41 = OpULessThan %bool %37 %40
                OpSelectionMerge %42 None
                OpBranchConditional %41 %43 %44
          %43 = OpLabel
          %64 = OpAccessChain %_ptr_StorageBuffer_uint %tint_resource_table_metadata %uint_1 %37
          %65 = OpLoad %uint %64 None
-         %46 = OpIEqual %bool %65 %uint_35
+         %46 = OpIEqual %bool %65 %uint_42
                OpBranch %42
          %44 = OpLabel
                OpBranch %42
