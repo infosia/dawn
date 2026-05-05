@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ee1954_af4e7076",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-05T21:14:52Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "3febde1d_a128baa0",
+      "revId": "b4d246fc1c8b49715af47a7d843f71628d5c759f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c10939b_77aff5de",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-05T16:55:44Z",
       "side": 1,
       "message": "Can this be `exceeds the maximum allowed value of \"yyy\"` ?",
+      "revId": "b4d246fc1c8b49715af47a7d843f71628d5c759f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8db8a98c_bdc0f5a0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3743,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2026-05-05T21:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c10939b_77aff5de",
       "revId": "b4d246fc1c8b49715af47a7d843f71628d5c759f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
