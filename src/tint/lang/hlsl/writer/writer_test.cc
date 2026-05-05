@@ -183,17 +183,25 @@ TEST_F(HlslWriterTest, CanGenerate_AtomicStoreMax_Unsupported) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* access = b.Access(ty.ptr<storage, read_write>(ty.atomic(ty.u64())), var, 0_u);
-        b.Call<void>(core::BuiltinFn::kAtomicStoreMax, access, 1_u);
+        b.Call<void>(core::BuiltinFn::kAtomicStoreMax, access,
+                     b.Bitcast(ty.u64(), b.Splat(ty.vec2u(), 1_u)));
         b.Return(func);
     });
 
     Options options;
     options.entry_point_name = "main";
     auto result = Generate(options);
-    ASSERT_NE(result, Success);
-    EXPECT_THAT(result.Failure().reason,
-                testing::HasSubstr(
-                    "64-bit (vec2u) atomic operations are not yet supported by the HLSL backend"));
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+RWByteAddressBuffer sb : register(u0);
+[numthreads(1, 1, 1)]
+void main() {
+  uint64_t v = uint64_t((1u).xx.x);
+  uint64_t v_1 = uint64_t((1u).xx.y);
+  sb.InterlockedMax64(0u, ((v_1 << uint64_t(32u)) | v));
+}
+
+)");
 }
 
 TEST_F(HlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
@@ -208,17 +216,25 @@ TEST_F(HlslWriterTest, CanGenerate_AtomicStoreMin_Unsupported) {
     auto* func = b.ComputeFunction("main");
     b.Append(func->Block(), [&] {
         auto* access = b.Access(ty.ptr<storage, read_write>(ty.atomic(ty.u64())), var, 0_u);
-        b.Call<void>(core::BuiltinFn::kAtomicStoreMin, access, 1_u);
+        b.Call<void>(core::BuiltinFn::kAtomicStoreMin, access,
+                     b.Bitcast(ty.u64(), b.Splat(ty.vec2u(), 1_u)));
         b.Return(func);
     });
 
     Options options;
     options.entry_point_name = "main";
     auto result = Generate(options);
-    ASSERT_NE(result, Success);
-    EXPECT_THAT(result.Failure().reason,
-                testing::HasSubstr(
-                    "64-bit (vec2u) atomic operations are not yet supported by the HLSL backend"));
+    ASSERT_EQ(result, Success) << result.Failure().reason << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+RWByteAddressBuffer sb : register(u0);
+[numthreads(1, 1, 1)]
+void main() {
+  uint64_t v = uint64_t((1u).xx.x);
+  uint64_t v_1 = uint64_t((1u).xx.y);
+  sb.InterlockedMin64(0u, ((v_1 << uint64_t(32u)) | v));
+}
+
+)");
 }
 
 TEST_F(HlslWriterTest, CanGenerate_StructMemberPadding_TooLarge) {

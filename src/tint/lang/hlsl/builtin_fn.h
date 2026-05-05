@@ -112,6 +112,8 @@ enum class BuiltinFn : uint8_t {
     kGatherGreen,
     kGatherRed,
     kGetDimensions,
+    kInterlockedMax64,
+    kInterlockedMin64,
     kSample,
     kSampleBias,
     kSampleCmp,
