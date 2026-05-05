@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eff866d_b16b80aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2026-05-05T18:12:02Z",
+      "side": 1,
+      "message": "Needs a rubber stamp after rebasing. Code didn\u0027t change.",
+      "revId": "633fa3edc44c64bf058a62376c1c564b371c1077",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
