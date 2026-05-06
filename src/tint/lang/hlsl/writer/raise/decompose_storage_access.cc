@@ -84,115 +84,10 @@ struct State {
         for (auto* var : var_worklist) {
             auto* result = var->Result();
 
-            // Find all the usages of the `var` which is loading or storing.
-            Vector<core::ir::Instruction*, 4> usage_worklist;
-            for (auto& usage : result->UsagesSorted()) {
-                Switch(
-                    usage.instruction,
-                    [&](core::ir::LoadVectorElement* lve) { usage_worklist.Push(lve); },
-                    [&](core::ir::StoreVectorElement* sve) { usage_worklist.Push(sve); },
-                    [&](core::ir::Store* st) { usage_worklist.Push(st); },
-                    [&](core::ir::Load* ld) { usage_worklist.Push(ld); },
-                    [&](core::ir::Access* a) { usage_worklist.Push(a); },
-                    [&](core::ir::Let* l) { usage_worklist.Push(l); },
-                    [&](core::ir::CoreBuiltinCall* call) {
-                        switch (call->Func()) {
-                            case core::BuiltinFn::kArrayLength:
-                            case core::BuiltinFn::kAtomicAnd:
-                            case core::BuiltinFn::kAtomicOr:
-                            case core::BuiltinFn::kAtomicXor:
-                            case core::BuiltinFn::kAtomicMin:
-                            case core::BuiltinFn::kAtomicMax:
-                            case core::BuiltinFn::kAtomicAdd:
-                            case core::BuiltinFn::kAtomicSub:
-                            case core::BuiltinFn::kAtomicExchange:
-                            case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                            case core::BuiltinFn::kAtomicStore:
-                            case core::BuiltinFn::kAtomicLoad:
-                                usage_worklist.Push(call);
-                                break;
-                            default:
-                                TINT_IR_UNREACHABLE(ir) << call->Func();
-                        }
-                    },
-                    //
-                    TINT_ICE_ON_NO_MATCH);
-            }
-
-            auto* var_ty = result->Type()->As<core::type::Pointer>();
-            while (!usage_worklist.IsEmpty()) {
-                auto* inst = usage_worklist.Pop();
-                // Load instructions can be destroyed by the replacing access function
-                if (!inst->Alive()) {
-                    continue;
-                }
-
-                Switch(
-                    inst,
-                    [&](core::ir::LoadVectorElement* l) { LoadVectorElement(l, var, var_ty); },
-                    [&](core::ir::StoreVectorElement* s) { StoreVectorElement(s, var, var_ty); },
-                    [&](core::ir::Store* s) { Store(s, var, s->From(), {}); },
-                    [&](core::ir::Load* l) { Load(l, var, {}); },
-                    [&](core::ir::Access* a) {
-                        OffsetData offset{};
-                        Access(a, var, a->Object()->Type(), offset);
-                    },
-                    [&](core::ir::Let* let) {
-                        // The `let` is, essentially, an alias for the `var` as it's assigned
-                        // directly. Gather all the `let` usages into our worklist, and then replace
-                        // the `let` with the `var` itself.
-                        for (auto& usage : let->Result()->UsagesSorted()) {
-                            usage_worklist.Push(usage.instruction);
-                        }
-                        let->Result()->ReplaceAllUsesWith(result);
-                        let->Destroy();
-                    },
-                    [&](core::ir::CoreBuiltinCall* call) {
-                        switch (call->Func()) {
-                            case core::BuiltinFn::kArrayLength:
-                                ArrayLength(var, call, var_ty->StoreType(), 0);
-                                break;
-                            case core::BuiltinFn::kAtomicAnd:
-                                AtomicAnd(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicOr:
-                                AtomicOr(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicXor:
-                                AtomicXor(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicMin:
-                                AtomicMin(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicMax:
-                                AtomicMax(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicAdd:
-                                AtomicAdd(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicSub:
-                                AtomicSub(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicExchange:
-                                AtomicExchange(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicCompareExchangeWeak:
-                                AtomicCompareExchangeWeak(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicStore:
-                                AtomicStore(var, call, {});
-                                break;
-                            case core::BuiltinFn::kAtomicLoad:
-                                AtomicLoad(var, call, {});
-                                break;
-                            default:
-                                TINT_IR_UNREACHABLE(ir);
-                        }
-                    },
-                    TINT_ICE_ON_NO_MATCH);
-            }
+            ReplaceUses(result, var, {});
 
             // Swap the result type of the `var` to the new HLSL result type
+            auto* var_ty = result->Type()->As<core::type::Pointer>();
             result->SetType(ty.Get<hlsl::type::ByteAddressBuffer>(var_ty->Access()));
         }
     }
@@ -750,62 +645,42 @@ struct State {
                 TINT_ICE_ON_NO_MATCH);
         }
 
+        ReplaceUses(a->Result(), var, offset);
+        a->Destroy();
+    }
+
+    void ReplaceUses(core::ir::Value* value, core::ir::Var* var, OffsetData offset) {
         // Copy the usages into a vector so we can remove items from the hashset.
-        auto usages = a->Result()->UsagesSorted();
+        auto usages = value->UsagesSorted();
         while (!usages.IsEmpty()) {
             auto usage = usages.Pop();
             tint::Switch(
                 usage.instruction,
                 [&](core::ir::Let* let) {
-                    // The `let` is essentially an alias to the `access`. So, add the `let`
-                    // usages into the usage worklist, and replace the let with the access chain
-                    // directly.
+                    // The `let` is essentially an alias to the pointer value. So, add the `let`
+                    // usages into the usage worklist, and replace the let with the pointer value.
                     for (auto& u : let->Result()->UsagesSorted()) {
                         usages.Push(u);
                     }
-                    let->Result()->ReplaceAllUsesWith(a->Result());
+                    let->Result()->ReplaceAllUsesWith(value);
                     let->Destroy();
                 },
-                [&](core::ir::Access* sub_access) {
-                    // Treat an access chain of the access chain as a continuation of the outer
-                    // chain. Pass through the object we stopped at and the current byte_offset
-                    // and then restart the access chain replacement for the new access chain.
-                    Access(sub_access, var, obj, offset);
+                [&](core::ir::Access* a) {
+                    // Treat an access chain as a continuation of the current offset.
+                    Access(a, var, value->Type()->UnwrapPtr(), offset);
                 },
 
-                [&](core::ir::LoadVectorElement* lve) {
-                    a->Result()->RemoveUsage(usage);
-
-                    OffsetData load_offset = offset;
-                    b.InsertBefore(lve, [&] {
-                        UpdateOffsetData(lve->Index(), obj->DeepestElement()->Size(), &load_offset);
-                    });
-                    Load(lve, var, load_offset);
-                },
-                [&](core::ir::Load* ld) {
-                    a->Result()->RemoveUsage(usage);
-                    Load(ld, var, offset);
-                },
-
-                [&](core::ir::StoreVectorElement* sve) {
-                    a->Result()->RemoveUsage(usage);
-
-                    OffsetData store_offset = offset;
-                    b.InsertBefore(sve, [&] {
-                        UpdateOffsetData(sve->Index(), obj->DeepestElement()->Size(),
-                                         &store_offset);
-                    });
-                    Store(sve, var, sve->Value(), store_offset);
-                },
+                [&](core::ir::LoadVectorElement* lve) { LoadVectorElement(lve, var, offset); },
+                [&](core::ir::Load* ld) { Load(ld, var, offset); },
+                [&](core::ir::StoreVectorElement* sve) { StoreVectorElement(sve, var, offset); },
                 [&](core::ir::Store* store) { Store(store, var, store->From(), offset); },
+
                 [&](core::ir::CoreBuiltinCall* call) {
                     switch (call->Func()) {
                         case core::BuiltinFn::kArrayLength:
-                            // If this access chain is being used in an `arrayLength` call then the
-                            // access chain _must_ have resolved to the runtime array member of the
-                            // structure. So, we _must_ have set `obj` to the array member which is
-                            // a runtime array.
-                            ArrayLength(var, call, obj, offset.byte_offset);
+                            // If this pointer is being used in an `arrayLength` call then it _must_
+                            // have resolved to a runtime array.
+                            ArrayLength(var, call, value->Type()->UnwrapPtr(), offset.byte_offset);
                             break;
                         case core::BuiltinFn::kAtomicAnd:
                             AtomicAnd(var, call, offset);
@@ -846,8 +721,6 @@ struct State {
                 },  //
                 TINT_ICE_ON_NO_MATCH);
         }
-
-        a->Destroy();
     }
 
     void Store(core::ir::Instruction* inst,
@@ -876,10 +749,9 @@ struct State {
     // %b:f32 = bitcast %1
     void LoadVectorElement(core::ir::LoadVectorElement* lve,
                            core::ir::Var* var,
-                           const core::type::Pointer* var_ty) {
+                           OffsetData offset) {
         b.InsertBefore(lve, [&] {
-            OffsetData offset{};
-            UpdateOffsetData(lve->Index(), var_ty->StoreType()->DeepestElement()->Size(), &offset);
+            UpdateOffsetData(lve->Index(), lve->Result()->Type()->Size(), &offset);
 
             auto* result =
                 MakeScalarOrVectorLoad(var, lve->Result()->Type(), OffsetToValue(offset));
@@ -896,10 +768,9 @@ struct State {
     // %3:void = v.Store 0u, %2
     void StoreVectorElement(core::ir::StoreVectorElement* sve,
                             core::ir::Var* var,
-                            const core::type::Pointer* var_ty) {
+                            OffsetData offset) {
         b.InsertBefore(sve, [&] {
-            OffsetData offset{};
-            UpdateOffsetData(sve->Index(), var_ty->StoreType()->DeepestElement()->Size(), &offset);
+            UpdateOffsetData(sve->Index(), sve->Value()->Type()->Size(), &offset);
             Store(sve, var, sve->Value(), offset);
         });
     }
