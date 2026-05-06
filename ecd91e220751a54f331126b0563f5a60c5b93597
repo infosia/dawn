@@ -102,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfa78052_ff2dbb8f",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T15:11:04Z",
+      "side": 1,
+      "message": "IIRC it is possible to pass toggles to the \"inner\" WebGPU device though.\n\nI don\u0027t remember exactly how toggles work but isn\u0027t there a way we can force `TimestampQuantization` off for the WebGPU-on-WebGPU backend or fail to create an adapter if it\u0027s enabled?",
+      "parentUuid": "cbc9057c_c7c4cae8",
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d26d04ba_bcd69113",
         "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests.cpp",
         "patchSetId": 3
