@@ -38,11 +38,11 @@ namespace dawn::native::stream {
 
 BlobSource::BlobSource(Blob&& blob) : mBlob(std::move(blob)) {}
 
-MaybeError BlobSource::Read(const void** ptr, size_t bytes) {
+ResultOrError<std::span<const std::byte>> BlobSource::Read(size_t bytes) {
     DAWN_INVALID_IF(bytes > mBlob.Size() - mOffset, "Out of bounds.");
-    *ptr = mBlob.DataPtr() + mOffset;
+    std::span<const std::byte> result = mBlob.Data().subspan(mOffset, bytes);
     mOffset += bytes;
-    return {};
+    return result;
 }
 
 }  // namespace dawn::native::stream
