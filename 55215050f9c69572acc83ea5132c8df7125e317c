@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73061324_f868e33a",
+        "filename": "src/dawn/replay/CaptureWalker.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "Why are these changes needed in this CL?",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33935280_07b4aa90",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "nit: can we move it next to the block for GLFW?",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a53d35f_a64e406e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "ditto, this doesn\u0027t need to be guarded.",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d1aecdd_5d8f5599",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "nit: `!surfaceInfos.empty()`",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73938f8d_94e57e05",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "This can be unconditional since it\u0027s just a forward declaration. It lets us remove the #ifdef guards in this file (`GLFWindowDestroyer` can noop internally if the ifdef is false).",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78c6faa7_cbcc7a98",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3fa171_a5a93bb3",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:23:57Z",
+      "side": 1,
+      "message": "nit: which surface? AFAIU DawnTest should be creating new surfaces and not use mWindow.",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
