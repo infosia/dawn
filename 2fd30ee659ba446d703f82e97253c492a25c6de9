@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c883f69_ea695419",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T18:28:35Z",
+      "side": 1,
+      "message": "PTAL, Dan it should help with the issues you had with filterability CLs.",
+      "revId": "2fd30ee659ba446d703f82e97253c492a25c6de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
