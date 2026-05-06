@@ -1304,6 +1304,13 @@ class Validator {
                                      const IOAttributes& attr,
                                      ShaderIOKind kind);
 
+    /// Validates the attributes of a struct member.
+    /// @param member the struct member
+    /// @param diag a function that creates an error diagnostic
+    /// @returns true if the attributes are valid
+    bool CheckStructMemberAttributes(const core::type::StructMember* member,
+                                     std::function<diag::Diagnostic&()> make_diag);
+
     /// Validates the blend_src attribute for a given type, responsible for traversal of inner types
     /// and checking rules that span across a multiple attribute instances.
     /// @param ctx the blend_src context.
@@ -2162,6 +2169,10 @@ void Validator::CheckType(const core::type::Type* root,
                 for (auto* member : str->Members()) {
                     if (member->Type()->Is<core::type::Void>()) {
                         diag() << "struct member " << member->Index() << " cannot have void type";
+                        return false;
+                    }
+
+                    if (!CheckStructMemberAttributes(member, diag)) {
                         return false;
                     }
 
@@ -3968,26 +3979,10 @@ void Validator::ValidateShaderIOAnnotations(const CastableBase* msg_anchor,
                 return;
             }
 
-            if (mem->Attributes().location.has_value()) {
-                if (capabilities_.Contains(Capability::kAllowLocationForNumericElements)) {
-                    if (!mem->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector() &&
-                        !mem->Type()->UnwrapPtrOrRef()->Is<core::type::Struct>()) {
-                        AddError(msg_anchor)
-                            << ToString(kind)
-                            << " struct member with a location attribute must be a numeric scalar, "
-                               "a numeric vector or a struct, but has type "
-                            << mem->Type()->FriendlyName();
-                        return;
-                    }
-                } else {
-                    if (!mem->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector()) {
-                        AddError(msg_anchor) << ToString(kind)
-                                             << " struct member with a location attribute must be "
-                                                "a numeric scalar or vector, but has type "
-                                             << mem->Type()->FriendlyName();
-                        return;
-                    }
-                }
+            if (!CheckStructMemberAttributes(mem, [&]() -> diag::Diagnostic& {
+                    return AddError(msg_anchor) << ToString(kind) << " ";
+                })) {
+                return;
             }
 
             if (capabilities_.Contains(Capability::kMslAllowEntryPointInterface)) {
@@ -4023,6 +4018,42 @@ void Validator::ValidateShaderIOAnnotations(const CastableBase* msg_anchor,
     }
 }
 
+bool Validator::CheckStructMemberAttributes(const core::type::StructMember* member,
+                                            std::function<diag::Diagnostic&()> make_diag) {
+    const auto checkers = IOAttributeCheckersFor(member->Attributes(), /*skip_builtins*/ false);
+    for (const auto* checker : checkers) {
+        auto res = checker->check(member->Type(), member->Attributes(), capabilities_,
+                                  IOAttributeUsage::kUndefinedUsage);
+        if (res != Success) {
+            make_diag() << res.Failure();
+            return false;
+        }
+        if (!checker->type_check(member->Type(), capabilities_)) {
+            make_diag() << ToString(checker->kind) << " " << checker->type_error;
+            return false;
+        }
+    }
+
+    if (member->Attributes().location.has_value()) {
+        if (capabilities_.Contains(Capability::kAllowLocationForNumericElements)) {
+            if (!member->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector() &&
+                !member->Type()->UnwrapPtrOrRef()->Is<core::type::Struct>()) {
+                make_diag() << "struct member with a location attribute must be a numeric scalar, "
+                               "a numeric vector or a struct, but has type "
+                            << member->Type()->FriendlyName();
+                return false;
+            }
+        } else {
+            if (!member->Type()->UnwrapPtrOrRef()->IsNumericScalarOrVector()) {
+                make_diag() << "struct member with a location attribute must be "
+                               "a numeric scalar or vector, but has type "
+                            << member->Type()->FriendlyName();
+                return false;
+            }
+        }
+    }
+    return true;
+}
 void Validator::CheckLet(const Let* l) {
     if (!CheckResultsAndOperands(l, Let::kNumResults, Let::kNumOperands)) {
         return;

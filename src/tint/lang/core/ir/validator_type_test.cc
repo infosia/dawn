@@ -596,6 +596,24 @@ TEST_F(IR_ValidatorTest, StructMember_Sampler) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, StructMember_InvalidBuiltinType_Unused) {
+    core::IOAttributes attr;
+    attr.builtin = core::BuiltinValue::kPrimitiveIndex;
+    auto* s = ty.Struct(mod.symbols.New("S"), {
+                                                  {
+                                                      mod.symbols.New("m"),
+                                                      ty.f16(),
+                                                      attr,
+                                                  },
+                                              });
+
+    mod.root_block->Append(b.Var("v", ty.ptr<uniform, read>(s)));
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason, testing::HasSubstr("primitive_index must be an u32"));
+}
+
 TEST_F(IR_ValidatorTest, StructMember_Sampler_WithCapability) {
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {

@@ -165,6 +165,7 @@ Result<SuccessType> VectorElementPointer(core::ir::Module& ir) {
                               core::ir::Capability::kAllowLocationForNumericElements,
                               core::ir::Capability::kAllowPointerToHandle,
                               core::ir::Capability::kLoosenValidationForShaderIO,
+                              core::ir::Capability::kAllowPointSizeBuiltin,
                           },
                           "before spirv.VectorElementPointer");
 
