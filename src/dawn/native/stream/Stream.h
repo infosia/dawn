@@ -39,6 +39,7 @@
 #include <limits>
 #include <memory>
 #include <optional>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
@@ -122,11 +123,14 @@ inline MaybeError StreamOut(Source* s) {
 template <typename T>
 class Stream<T, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T& v) { memcpy(s->GetSpace(sizeof(T)), &v, sizeof(T)); }
-    static MaybeError Read(Source* s, T* v) {
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(T)));
-        memcpy(v, ptr, sizeof(T));
+    static void Write(Sink* sink, const T& v) {
+        auto value = std::as_bytes(std::span(&v, 1u));
+        std::ranges::copy(value, sink->GetSpace(sizeof(T)).begin());
+    }
+    static MaybeError Read(Source* source, T* v) {
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->Read(sizeof(T)));
+        std::ranges::copy(ptr, reinterpret_cast<std::byte*>(v));
         return {};
     }
 };
@@ -310,16 +314,16 @@ class Stream<std::optional<T>> {
 template <typename T, size_t N>
 class Stream<T[N], std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T (&t)[N]) {
+    static void Write(Sink* sink, const T (&t)[N]) {
         static_assert(N > 0);
-        memcpy(s->GetSpace(sizeof(t)), &t, sizeof(t));
+        std::ranges::copy(std::as_bytes(std::span(t)), sink->GetSpace(sizeof(T) * N).begin());
     }
 
-    static MaybeError Read(Source* s, T (*t)[N]) {
+    static MaybeError Read(Source* source, T (*t)[N]) {
         static_assert(N > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(*t, ptr, sizeof(*t));
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->Read(sizeof(T) * N));
+        std::ranges::copy(ptr, std::as_writable_bytes(std::span(*t)).begin());
         return {};
     }
 };
@@ -376,16 +380,16 @@ class Stream<std::vector<T>> {
 template <typename T, size_t Size>
 class Stream<std::array<T, Size>, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const std::array<T, Size>& t) {
+    static void Write(Sink* sink, const std::array<T, Size>& t) {
         static_assert(Size > 0);
-        memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t));
+        std::ranges::copy(std::as_bytes(std::span(t)), sink->GetSpace(sizeof(T) * Size).begin());
     }
 
-    static MaybeError Read(Source* s, std::array<T, Size>* t) {
+    static MaybeError Read(Source* source, std::array<T, Size>* t) {
         static_assert(Size > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(t->data(), ptr, sizeof(*t));
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->Read(sizeof(T) * Size));
+        std::ranges::copy(ptr, std::as_writable_bytes(std::span(*t)).begin());
         return {};
     }
 };
@@ -443,6 +447,54 @@ class Stream<std::pair<A, B>> {
         DAWN_TRY(StreamOut(s, &v->first));
         DAWN_TRY(StreamOut(s, &v->second));
         return {};
+    }
+};
+
+template <typename S>
+concept IsStringLike = std::is_same_v<S, std::basic_string<typename S::value_type>> &&
+                       std::is_fundamental_v<typename S::value_type>;
+
+// Stream specialization for std::basic_string types.
+template <IsStringLike StringType>
+class Stream<StringType> {
+  public:
+    static void Write(stream::Sink* sink, const StringType& s) {
+        StreamIn(sink, s.length());
+        if (s.length() > 0) {
+            std::ranges::copy(
+                std::as_bytes(std::span(s)),
+                sink->GetSpace(sizeof(typename StringType::value_type) * s.length()).begin());
+        }
+    }
+    static MaybeError Read(Source* source, StringType* s) {
+        size_t length;
+        DAWN_TRY(StreamOut(source, &length));
+        *s = StringType();
+        if (length != 0) {
+            std::span<const std::byte> ptr;
+            DAWN_TRY_ASSIGN(ptr, source->Read(sizeof(typename StringType::value_type) * length));
+            s->resize(length);
+            std::ranges::copy(ptr, std::as_writable_bytes(std::span(*s)).begin());
+        }
+        return {};
+    }
+};
+
+template <typename S>
+concept IsStringViewLike = std::is_same_v<S, std::basic_string_view<typename S::value_type>> &&
+                           std::is_fundamental_v<typename S::value_type>;
+
+// Stream specialization for std::basic_string_view types.
+template <IsStringViewLike StringViewType>
+class Stream<StringViewType> {
+  public:
+    static void Write(stream::Sink* sink, const StringViewType& s) {
+        StreamIn(sink, s.length());
+        if (s.length() > 0) {
+            std::ranges::copy(
+                std::as_bytes(std::span(s)),
+                sink->GetSpace(sizeof(typename StringViewType::value_type) * s.length()).begin());
+        }
     }
 };
 

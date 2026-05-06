@@ -30,6 +30,7 @@
 
 #include <cstdint>
 #include <functional>
+#include <span>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -45,6 +46,9 @@ class Blob {
   public:
     // Creates a blob of the given size.
     static Blob Create(size_t size);
+
+    // Takes ownership of the original blob, creating a new one that offsets the data by |offset|.
+    static Blob Create(Blob&& original, size_t offset);
 
     template <typename T>
     static Blob Create(std::vector<T> vec)
@@ -73,8 +77,10 @@ class Blob {
     Blob& operator=(Blob&&);
 
     bool Empty() const;
-    const uint8_t* DataPtr() const;
-    uint8_t* DataPtr();
+    std::span<const std::byte> Data() const;
+    std::span<std::byte> Data();
+    const std::byte* DataPtr() const;
+    std::byte* DataPtr();
     size_t Size() const;
 
     bool operator==(const Blob& other) const;
@@ -82,10 +88,9 @@ class Blob {
   private:
     // The constructor should be responsible to take ownership of |data| and releases ownership by
     // calling |deleter|. The deleter function is called at ~Blob() and during std::move.
-    explicit Blob(uint8_t* data, size_t size, std::function<void()> deleter);
+    Blob(std::span<std::byte> data, std::function<void()> deleter);
 
-    raw_ptr<uint8_t> mData;
-    size_t mSize;
+    std::span<std::byte> mData;
     std::function<void()> mDeleter;
 };
 
