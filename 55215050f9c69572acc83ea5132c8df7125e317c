@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec718e11_b3dabb0a",
+        "filename": "src/dawn/replay/CaptureWalker.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Moving `SurfaceDiscoveryVisitor` to DawnTest (parse all capture tests) expose a bug in the walker [link](https://dawn-review.git.corp.google.com/c/dawn/+/302979/comment/71d0769e_cf114cdc/)",
+      "parentUuid": "73061324_f868e33a",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33935280_07b4aa90",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-05-06T14:23:57Z",
       "side": 1,
       "message": "nit: can we move it next to the block for GLFW?",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d4c2714_d8e4f1be",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Seems no.",
+      "parentUuid": "33935280_07b4aa90",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3242ba0_9195d2e3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a53d35f_a64e406e",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d1aecdd_5d8f5599",
@@ -65,6 +119,24 @@
       "writtenOn": "2026-05-06T14:23:57Z",
       "side": 1,
       "message": "nit: `!surfaceInfos.empty()`",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e15916cf_d0b8d96f",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d1aecdd_5d8f5599",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7b18c02_45e5e6c5",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73938f8d_94e57e05",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78c6faa7_cbcc7a98",
@@ -103,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c928bae0_0862f95c",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c6faa7_cbcc7a98",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d3fa171_a5a93bb3",
@@ -116,6 +224,24 @@
       "writtenOn": "2026-05-06T14:23:57Z",
       "side": 1,
       "message": "nit: which surface? AFAIU DawnTest should be creating new surfaces and not use mWindow.",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b64a2c59_c16ea8c3",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T17:35:27Z",
+      "side": 1,
+      "message": "Done (Refine the comment, it\u0027s the surface in test body)",
+      "parentUuid": "2d3fa171_a5a93bb3",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
