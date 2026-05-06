@@ -39,6 +39,46 @@
       },
       "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e02bcc6e_fc17945f",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T13:08:36Z",
+      "side": 1,
+      "message": "Not necessarily true? Depends on the backend settings?\n\nIt doesn\u0027t seem that important to avoid requantizing on WebGPU-on-WebGPU, maybe could just not",
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d26d04ba_bcd69113",
+        "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T13:08:36Z",
+      "side": 1,
+      "message": "µNit: maybe factor out this part of the expression to a variable because it\u0027s confusing that one of these is negative and one is positive",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 67
+      },
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
