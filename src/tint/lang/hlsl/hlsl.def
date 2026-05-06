@@ -37,6 +37,7 @@
 
 import "src/tint/lang/core/address_space.def"
 import "src/tint/lang/core/access.def"
+import "src/tint/lang/core/subgroup_matrix_kind.def"
 import "src/tint/lang/core/texel_format.def"
 import "src/tint/lang/core/filtering_parameters.def"
 
@@ -45,6 +46,8 @@ import "src/tint/lang/core/filtering_parameters.def"
 ////////////////////////////////////////////////////////////////////////////////
 
 type bool
+type i8
+type u8
 type u16
 type i32
 type u32
@@ -103,6 +106,9 @@ type texture_storage_2d_array<F: texel_format, A: access>
 type texture_storage_3d<F: texel_format, A: access>
 
 type rasterizer_ordered_texture_2d<F: texel_format>
+
+type subgroup_matrix<S: subgroup_matrix_kind, T, C: num, R: num>
+type matrix_layout
 
 ////////////////////////////////////////////////////////////////////////////////
 // Type matchers                                                              //
@@ -174,6 +180,11 @@ match u32_texel_format
   | texel_format.rg32uint
   | texel_format.rgba32uint
   | texel_format.rgb10a2uint
+
+match subgroup_matrix_component_types: f32 | i32 | u32 | f16 | i8 | u8
+match subgroup_matrix_kind_left : subgroup_matrix_kind.left
+match subgroup_matrix_kind_right : subgroup_matrix_kind.right
+match subgroup_matrix_kind_result : subgroup_matrix_kind.result
 
 ////////////////////////////////////////////////////////////////////////////////
 // Builtin Functions                                                          //
@@ -1960,3 +1971,10 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
                                 sampler: sampler,
                                  coords: vec4<f32>,
                                   level: f32) -> vec4<f32>
+
+@stage("compute") implicit(K: subgroup_matrix_kind, S: fiu32_f16, C: num, R: num)
+  fn Splat<SM: subgroup_matrix<K, S, C, R> >(value: S) -> SM
+@stage("compute") implicit(K: subgroup_matrix_kind, S: i8, C: num, R: num)
+  fn Splat<SM: subgroup_matrix<K, S, C, R> >(value: i32) -> SM
+@stage("compute") implicit(K: subgroup_matrix_kind, S: u8, C: num, R: num)
+  fn Splat<SM: subgroup_matrix<K, S, C, R> >(value: u32) -> SM

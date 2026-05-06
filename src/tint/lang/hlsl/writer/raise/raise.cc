@@ -72,6 +72,7 @@
 #include "src/tint/lang/hlsl/writer/raise/promote_initializers.h"
 #include "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.h"
 #include "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.h"
+#include "src/tint/lang/hlsl/writer/raise/replace_subgroup_matrix_init.h"
 #include "src/tint/lang/hlsl/writer/raise/resource_table_helper.h"
 #include "src/tint/lang/hlsl/writer/raise/shader_io.h"
 
@@ -372,6 +373,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // ExtractTernaryValues must come after BuiltinPolyfill because that's what introduces the
     // ternary builtins.
     TINT_CHECK_RESULT(raise::ExtractTernaryValues(module));
+
+    TINT_CHECK_RESULT(raise::ReplaceSubgroupMatrixInit(module));
 
     core::ir::transform::BuiltinScalarizeConfig scalarize_config{
         .scalarize_clamp = options.workarounds.scalarize_max_min_clamp,
