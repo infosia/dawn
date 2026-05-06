@@ -887,8 +887,6 @@ source_set("sources") {
       "vulkan/Forward.h",
       "vulkan/FramebufferCache.cpp",
       "vulkan/FramebufferCache.h",
-      "vulkan/FramebufferFetchHelper.cpp",
-      "vulkan/FramebufferFetchHelper.h",
       "vulkan/MemoryTypeSelector.cpp",
       "vulkan/MemoryTypeSelector.h",
       "vulkan/PhysicalDeviceVk.cpp",

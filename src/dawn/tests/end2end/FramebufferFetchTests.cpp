@@ -395,12 +395,7 @@ TEST_P(FramebufferFetchTests, MultisamplingIsSampleRasterization) {
                       {0, 0});
 }
 
-// TODO(crbug.com/42241389): Add a test that uses FramebufferFetch and ResourceTable in the same
-// pipeline.
-
-DAWN_INSTANTIATE_TEST(FramebufferFetchTests,
-                      MetalBackend(),
-                      VulkanBackend({}, {"vulkan_use_dynamic_rendering"}));
+DAWN_INSTANTIATE_TEST(FramebufferFetchTests, MetalBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

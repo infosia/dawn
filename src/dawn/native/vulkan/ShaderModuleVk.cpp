@@ -132,20 +132,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 #if TINT_BUILD_SPV_WRITER
     // Creation of module and spirv is deferred to this point when using tint generator
 
-    // The first VkDescriptorSetLayout is the one for the framebuffer fetch and/or resource table if
-    // needed and pushes the bindings for all other bindgroups.
+    // The first VkDescriptorSetLayout is the one for the resource table if needed and pushes the
+    // bindings for all other bindgroups by 1.
     BindGroupIndex startOfBindGroups{0};
-
-    std::unordered_map<uint32_t, tint::BindingPoint> framebuffer_fetch_bindings;
-    if (in.pipelineUsesFramebufferFetch) {
-        if (in.stage->metadata->fragmentInputMask.any()) {
-            for (uint32_t i = 0; i < kMaxColorAttachments; ++i) {
-                framebuffer_fetch_bindings[i] = {static_cast<uint32_t>(startOfBindGroups), i};
-            }
-        }
-        startOfBindGroups = startOfBindGroups + BindGroupIndex(1);
-    }
-
     std::optional<tint::ResourceTableConfig> resourceTableConfig = std::nullopt;
     if (in.layout->UsesResourceTable()) {
         startOfBindGroups = BindGroupIndex(1);
@@ -259,7 +248,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     };
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.resource_table = std::move(resourceTableConfig);
-    req.tintOptions.colour_index_to_binding_point = std::move(framebuffer_fetch_bindings);
 
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.disable_workgroup_init =

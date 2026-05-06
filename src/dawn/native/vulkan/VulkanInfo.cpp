@@ -369,12 +369,6 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
                             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_5_PROPERTIES);
     }
 
-    if (info.extensions[DeviceExt::RasterizationOrderAttachmentAccess]) {
-        featuresChain.Add(
-            &info.rasterizationOrderAttachmentAccessFeatures,
-            VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_FEATURES_EXT);
-    }
-
     if (info.extensions[DeviceExt::DynamicRendering]) {
         featuresChain.Add(&info.dynamicRenderingFeatures,
                           VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DYNAMIC_RENDERING_FEATURES_KHR);

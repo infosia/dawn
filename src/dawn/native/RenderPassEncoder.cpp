@@ -373,10 +373,6 @@ void RenderPassEncoder::APIExecuteBundles(uint32_t count, RenderBundleBase* cons
                 bundles[i] = renderBundles[i];
 
                 mUsageTracker.MergeResourceUsages(bundles[i]->GetResourceUsage());
-                if (bundles[i]->GetResourceUsage().usesFramebufferFetch) {
-                    mUsageTracker.MarkFramebufferFetchUsed();
-                }
-
                 if (IsValidationEnabled()) {
                     mIndirectDrawMetadata.AddBundle(renderBundles[i]);
                 }
