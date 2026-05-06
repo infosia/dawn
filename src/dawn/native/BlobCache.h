@@ -29,6 +29,8 @@
 #define SRC_DAWN_NATIVE_BLOBCACHE_H_
 
 #include <mutex>
+#include <span>
+#include <vector>
 
 #include "dawn/common/Platform.h"
 #include "dawn/common/Sha3.h"
@@ -46,6 +48,10 @@ namespace dawn::native {
 class CacheKey;
 class InstanceBase;
 
+namespace detail {
+std::vector<std::byte> GenerateHashPrefixedPayload(std::span<const std::byte> value);
+}  // namespace detail
+
 // This class should always be thread-safe because it may be called asynchronously.
 class BlobCache {
   public:
@@ -56,7 +62,7 @@ class BlobCache {
     ResultOrError<Blob> Load(const CacheKey& key);
 
     // Value to store must be non-empty/non-null.
-    void Store(const CacheKey& key, size_t valueSize, const void* value);
+    void Store(const CacheKey& key, std::span<const std::byte> value);
     void Store(const CacheKey& key, const Blob& value);
 
     // Store a CacheResult into the cache if it isn't cached yet.
@@ -70,7 +76,16 @@ class BlobCache {
 
     // Generates a blob that holds the actual stored bytes which may be different depending on
     // whether hash validation is enabled.
-    Blob GenerateActualStoredBlobForTesting(size_t valueSize, const void* value);
+    template <typename T, size_t N>
+    Blob GenerateActualStoredBlobForTesting(std::span<T, N> value) {
+        auto byteSpan = std::as_bytes(std::span{value});
+        if (!mHashValidation) {
+            Blob blob = Blob::Create(byteSpan.size());
+            std::copy(byteSpan.begin(), byteSpan.end(), blob.Begin());
+            return blob;
+        }
+        return Blob::Create(detail::GenerateHashPrefixedPayload(byteSpan));
+    }
 
   private:
     // Non-thread safe internal implementations of load and store. Exposed callers that use
@@ -79,7 +94,7 @@ class BlobCache {
     //   * StoreInternal insert the hash of |value| as prefix,
     //   * LoadInternal validate that the hash of the content after the prefix matches.
     // This hashing and validation is transparent to the caller.
-    void StoreInternal(const CacheKey& key, size_t valueSize, const void* value);
+    void StoreInternal(const CacheKey& cacheKey, std::span<const std::byte> value);
     ResultOrError<Blob> LoadInternal(const CacheKey& key);
 
     // Validates the cache key for this version of Dawn. At the moment, this is naively checking

@@ -122,11 +122,11 @@ inline MaybeError StreamOut(Source* s) {
 template <typename T>
 class Stream<T, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T& v) { memcpy(s->GetSpace(sizeof(T)), &v, sizeof(T)); }
-    static MaybeError Read(Source* s, T* v) {
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(T)));
-        memcpy(v, ptr, sizeof(T));
+    static void Write(Sink* sink, const T& v) { sink->GetSpaceForN<T>(1u)[0] = v; }
+    static MaybeError Read(Source* source, T* v) {
+        std::span<const T> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->ReadN<T>(1u));
+        *v = ptr[0];
         return {};
     }
 };
@@ -310,16 +310,16 @@ class Stream<std::optional<T>> {
 template <typename T, size_t N>
 class Stream<T[N], std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T (&t)[N]) {
+    static void Write(Sink* sink, const T (&t)[N]) {
         static_assert(N > 0);
-        memcpy(s->GetSpace(sizeof(t)), &t, sizeof(t));
+        std::copy(t, t + N, sink->GetSpaceForN<T>(N).begin());
     }
 
-    static MaybeError Read(Source* s, T (*t)[N]) {
+    static MaybeError Read(Source* source, T (*t)[N]) {
         static_assert(N > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(*t, ptr, sizeof(*t));
+        std::span<const T> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->ReadN<T>(N));
+        std::copy(ptr.begin(), ptr.end(), *t);
         return {};
     }
 };
@@ -376,16 +376,16 @@ class Stream<std::vector<T>> {
 template <typename T, size_t Size>
 class Stream<std::array<T, Size>, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const std::array<T, Size>& t) {
+    static void Write(Sink* sink, const std::array<T, Size>& t) {
         static_assert(Size > 0);
-        memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t));
+        std::copy(t.begin(), t.end(), sink->GetSpaceForN<T>(Size).begin());
     }
 
-    static MaybeError Read(Source* s, std::array<T, Size>* t) {
+    static MaybeError Read(Source* source, std::array<T, Size>* t) {
         static_assert(Size > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(t->data(), ptr, sizeof(*t));
+        std::span<const T> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->ReadN<T>(Size));
+        std::copy(ptr.begin(), ptr.end(), t->begin());
         return {};
     }
 };
@@ -443,6 +443,49 @@ class Stream<std::pair<A, B>> {
         DAWN_TRY(StreamOut(s, &v->first));
         DAWN_TRY(StreamOut(s, &v->second));
         return {};
+    }
+};
+
+template <typename S>
+concept IsStringLike = std::is_same_v<S, std::basic_string<typename S::value_type>> &&
+                       std::is_fundamental_v<typename S::value_type>;
+
+// Stream specialization for std::basic_string types.
+template <IsStringLike StringType>
+class Stream<StringType> {
+  public:
+    static void Write(stream::Sink* sink, const StringType& s) {
+        StreamIn(sink, s.length());
+        if (s.length() > 0) {
+            auto space = sink->GetSpaceForN<typename StringType::value_type>(s.length());
+            std::copy(s.begin(), s.end(), space.begin());
+        }
+    }
+    static MaybeError Read(Source* source, StringType* s) {
+        size_t length;
+        DAWN_TRY(StreamOut(source, &length));
+
+        std::span<const typename StringType::value_type> ptr;
+        DAWN_TRY_ASSIGN(ptr, source->ReadN<typename StringType::value_type>(length));
+        *s = StringType(ptr.begin(), ptr.end());
+        return {};
+    }
+};
+
+template <typename S>
+concept IsStringViewLike = std::is_same_v<S, std::basic_string_view<typename S::value_type>> &&
+                           std::is_fundamental_v<typename S::value_type>;
+
+// Stream specialization for std::basic_string_view types.
+template <IsStringViewLike StringViewType>
+class Stream<StringViewType> {
+  public:
+    static void Write(stream::Sink* sink, const StringViewType& s) {
+        StreamIn(sink, s.length());
+        if (s.length() > 0) {
+            auto space = sink->GetSpaceForN<typename StringViewType::value_type>(s.length());
+            std::copy(s.begin(), s.end(), space.begin());
+        }
     }
 };
 

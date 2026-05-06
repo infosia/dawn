@@ -258,7 +258,6 @@ set(sources
     "SharedTextureMemory.cpp"
     "stream/BlobSource.cpp"
     "stream/ByteVectorSink.cpp"
-    "stream/Stream.cpp"
     "Subresource.cpp"
     "Surface.cpp"
     "SwapChain.cpp"

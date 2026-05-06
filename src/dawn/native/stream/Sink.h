@@ -29,15 +29,24 @@
 #define SRC_DAWN_NATIVE_STREAM_SINK_H_
 
 #include <cstddef>
+#include <span>
 
 namespace dawn::native::stream {
 
 // Interface for a serialization sink.
 class Sink {
   public:
-    // Allocate `bytes` space in the sink. Returns the pointer to the start
+    // Allocate `bytes` space in the sink. Returns a span to the start
     // of the allocation.
-    virtual void* GetSpace(size_t bytes) = 0;
+    virtual std::span<std::byte> GetSpace(size_t bytes) = 0;
+
+    // Helper that returns enough space for N instances of T.
+    template <typename T>
+    std::span<T> GetSpaceForN(size_t count) {
+        size_t size = sizeof(T) * count;
+        std::span<std::byte> space = GetSpace(size);
+        return std::span<T>(reinterpret_cast<T*>(space.data()), count);
+    }
 };
 
 }  // namespace dawn::native::stream
