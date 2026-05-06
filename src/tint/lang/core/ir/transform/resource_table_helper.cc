@@ -41,6 +41,7 @@ std::optional<ResourceTableConfig> GenerateResourceTableConfig(Module& mod) {
         .resource_table_binding = BindingPoint{.group = 43, .binding = 51},
         .storage_buffer_binding = BindingPoint{.group = 42, .binding = 52},
         .default_binding_type_order = {},
+        .binding_to_resource_type = {},
     };
 
     std::vector<ResourceType> default_binding_type_order;
