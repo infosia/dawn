@@ -16,6 +16,24 @@
       "message": "There are multiple issues with this change:\n\n - It breaks the logic when running on non-simulator devices because the depth mode can never go back to clip in a command buffer execution.\n - It\u0027s not clear why `UsesFragDepth` is needed.\n - The user is not notified of the functionality not working as expected.\n \nInstead we should gate the support for `unclipped-depth` in `dawn/native/metal/PhysicalDeviceMTL` to not be added when compiling for the simulator. This will require a new entry in `common/Platform.h`. Then here we\u0027d use the same define to skip the call to `setDepthClipMode`.",
       "revId": "e7e09d72d935bc3e712b13e426ced3f12cb07cfb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "541dff0c_18a3aea7",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T10:12:16Z",
+      "side": 1,
+      "message": "It\u0027s odd that a compile-time check seems to be the way to check for iOS simulator, insead of a runtime check. Do apps always have to be recompiled to run under iOS simulator? I guess that\u0027s different from running iOS apps on Apple Silicon Macs?\n\nAnyway, those questions probably don\u0027t matter. From [here](https://github.com/libsdl-org/SDL/issues/11692#issuecomment-2560415330) it sounds like this is a \"hardware\" limitation. If that\u0027s correct (and the iOS simulator exposes this info correctly), it would be more correct to detect this by checking the GPU family with `supportsFeatureSet`. See here for an example:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;l\u003d411-415;drc\u003d5e7097e945bbe4b35361d83438c6fbbb62748e62",
+      "parentUuid": "04bc68c5_ab8e4dcf",
+      "revId": "e7e09d72d935bc3e712b13e426ced3f12cb07cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
