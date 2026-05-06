@@ -1300,13 +1300,14 @@ TEST_P(BufferZeroInitTest, IndirectBufferForDispatchIndirect) {
 
 // Test the buffer will be lazily initialized correctly when its first use is in resolveQuerySet
 TEST_P(BufferZeroInitTest, ResolveQuerySet) {
-    // Timestamp query is not supported on OpenGL
-    DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
+    // Skip if timestamp feature is not supported on device
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TimestampQuery}));
 
     // TODO(crbug.com/dawn/545): Crash occurs if we only call WriteTimestamp in a command encoder
     // without any copy commands on Metal on AMD GPU.
     DAWN_SUPPRESS_TEST_IF(IsMetal() && IsAMD());
 
+<<<<<<< HEAD   (00c09fbe8ff24fda652803186286ea5c5edf4c21 [M144-LTS] [dawn][wire] Ensure that Devices on the Server al)
     // TODO(crbug.com/440123094): Implement QuerySetWGPU
     DAWN_SUPPRESS_TEST_IF(IsWebGPUOnWebGPU());
 
@@ -1315,10 +1316,23 @@ TEST_P(BufferZeroInitTest, ResolveQuerySet) {
 
     // crbug.com/dawn/940: Does not work on Mac 11.0+. Backend validation changed.
     DAWN_TEST_UNSUPPORTED_IF(IsMacOS() && !IsMacOS(10));
+||||||| BASE   (e10184f6962d4ab5fee709c80b45958ca2c83468 [fuzz] Add test file fuzzing + Vulkan)
+    // Skip if timestamp feature is not supported on device
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::TimestampQuery}));
+
+    // crbug.com/dawn/940: Does not work on Mac 11.0+. Backend validation changed.
+    DAWN_TEST_UNSUPPORTED_IF(IsMacOS() && !IsMacOS(10));
+
+    // TODO(crbug.com/451389800): [Capture] implement query set.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+=======
+    // TODO(crbug.com/451389800): [Capture] implement query set.
+    DAWN_SUPPRESS_TEST_IF(IsCaptureReplayCheckingEnabled());
+>>>>>>> CHANGE (b073946efbf0de690e2aeec16ef0d5c68362c951 [dawn][native] Remove incorrect buffer->SetInitialized for t)
 
     constexpr uint64_t kBufferSize = 16u;
     constexpr wgpu::BufferUsage kBufferUsage =
-        wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::CopyDst;
+        wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::CopySrc;
 
     wgpu::QuerySetDescriptor descriptor;
     descriptor.count = 2u;
@@ -1338,6 +1352,25 @@ TEST_P(BufferZeroInitTest, ResolveQuerySet) {
         wgpu::CommandBuffer commands = encoder.Finish();
 
         EXPECT_LAZY_CLEAR(0u, queue.Submit(1, &commands));
+    }
+
+    // Resolve data to the whole buffer requires lazy initialization if the buffer is read without
+    // being submitted.
+    {
+        constexpr uint32_t kQueryCount = 2u;
+        constexpr uint64_t kDestinationOffset = 0u;
+
+        wgpu::Buffer destination = CreateBuffer(kBufferSize, kBufferUsage);
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        encoder.WriteTimestamp(querySet, 0);
+        encoder.WriteTimestamp(querySet, 1);
+        encoder.ResolveQuerySet(querySet, 0, kQueryCount, destination, kDestinationOffset);
+        /* no submit*/ encoder.Finish();
+
+        // Lazy clear occurs on read.
+        constexpr std::array<uint64_t, kQueryCount> kExpectedData = {{0, 0}};
+        EXPECT_LAZY_CLEAR(1u, EXPECT_BUFFER_U64_RANGE_EQ(kExpectedData.data(), destination, 0,
+                                                         kExpectedData.size()));
     }
 
     // Resolve data to partial of the buffer needs lazy initialization.
@@ -1371,15 +1404,38 @@ TEST_P(BufferZeroInitTest, ResolveQuerySet) {
 }
 
 DAWN_INSTANTIATE_TEST(BufferZeroInitTest,
+<<<<<<< HEAD   (00c09fbe8ff24fda652803186286ea5c5edf4c21 [M144-LTS] [dawn][wire] Ensure that Devices on the Server al)
                       D3D11Backend({"nonzero_clear_resources_on_creation_for_testing"}),
                       D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"}),
                       D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"},
+||||||| BASE   (e10184f6962d4ab5fee709c80b45958ca2c83468 [fuzz] Add test file fuzzing + Vulkan)
+                      D3D11Backend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers",
+                                    "nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing"},
+=======
+                      D3D11Backend({"nonzero_clear_resources_on_creation_for_testing",
+                                    "timestamp_query_conversion_even_if_1ns"}),
+                      D3D11Backend({"auto_map_backend_buffer", "d3d11_disable_cpu_buffers",
+                                    "nonzero_clear_resources_on_creation_for_testing",
+                                    "timestamp_query_conversion_even_if_1ns"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing",
+                                    "timestamp_query_conversion_even_if_1ns"}),
+                      D3D12Backend({"nonzero_clear_resources_on_creation_for_testing",
+                                    "timestamp_query_conversion_even_if_1ns"},
+>>>>>>> CHANGE (b073946efbf0de690e2aeec16ef0d5c68362c951 [dawn][native] Remove incorrect buffer->SetInitialized for t)
                                    {"d3d12_create_not_zeroed_heap"}),
-                      MetalBackend({"nonzero_clear_resources_on_creation_for_testing"}),
-                      OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing"}),
-                      OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing"}),
-                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing"}),
-                      WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing"}));
+                      MetalBackend({"nonzero_clear_resources_on_creation_for_testing",
+                                    "timestamp_query_conversion_even_if_1ns"}),
+                      OpenGLBackend({"nonzero_clear_resources_on_creation_for_testing",
+                                     "timestamp_query_conversion_even_if_1ns"}),
+                      OpenGLESBackend({"nonzero_clear_resources_on_creation_for_testing",
+                                       "timestamp_query_conversion_even_if_1ns"}),
+                      VulkanBackend({"nonzero_clear_resources_on_creation_for_testing",
+                                     "timestamp_query_conversion_even_if_1ns"}),
+                      WebGPUBackend({"nonzero_clear_resources_on_creation_for_testing",
+                                     "timestamp_query_conversion_even_if_1ns"}));
 
 }  // anonymous namespace
 }  // namespace dawn

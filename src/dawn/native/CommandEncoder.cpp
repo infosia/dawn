@@ -1061,13 +1061,6 @@ MaybeError EncodeTimestampsToNanosecondsConversion(CommandEncoder* encoder,
 
     DAWN_TRY(device->GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, &params, sizeof(params)));
 
-    // In the internal shader to convert timestamps to nanoseconds, we can ensure no uninitialized
-    // data will be read and the full buffer range will be filled with valid data.
-    if (!destination->IsInitialized() &&
-        destination->IsFullBufferRange(firstQuery, sizeof(uint64_t) * queryCount)) {
-        destination->SetInitialized(true);
-    }
-
     return EncodeConvertTimestampsToNanoseconds(encoder, destination, availabilityBuffer.Get(),
                                                 paramsBuffer.Get());
 }
@@ -2160,7 +2153,16 @@ void CommandEncoder::APIResolveQuerySet(QuerySetBase* querySet,
 
             // Encode internal compute pipeline for timestamp query
             if (querySet->GetQueryType() == wgpu::QueryType::Timestamp &&
+<<<<<<< HEAD   (00c09fbe8ff24fda652803186286ea5c5edf4c21 [M144-LTS] [dawn][wire] Ensure that Devices on the Server al)
                 !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion)) {
+||||||| BASE   (e10184f6962d4ab5fee709c80b45958ca2c83468 [fuzz] Add test file fuzzing + Vulkan)
+                !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
+                GetDevice()->GetTimestampPeriodInNS() != 1.0f) {
+=======
+                !GetDevice()->IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
+                (GetDevice()->GetTimestampPeriodInNS() != 1.0f ||
+                 GetDevice()->IsToggleEnabled(Toggle::TimestampQueryConversionEvenIf1NS))) {
+>>>>>>> CHANGE (b073946efbf0de690e2aeec16ef0d5c68362c951 [dawn][native] Remove incorrect buffer->SetInitialized for t)
                 // The below function might create new resources. Need to lock the Device.
                 // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
                 // Command Submit time, so the locking would be removed from here at that point.
