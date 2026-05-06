@@ -30,19 +30,49 @@
 
 #include <cstdint>
 #include <functional>
+#include <span>
 #include <type_traits>
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Assert.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
+namespace detail {
+// Helper to convert a std::span<std::byte> to a std::span<T> for converting the blob's backing
+// storage for copies and reads. This provides additional checks for the types.
+template <typename T>
+std::span<T> FromBytes(std::span<std::byte> data) {
+    DAWN_CHECK(data.size() % sizeof(T) == 0);
+    return std::span<T>(reinterpret_cast<T*>(data.data()), data.size() / sizeof(T));
+}
+}  // namespace detail
 
 // Blob represents a block of bytes. It may be constructed from
 // various other container types and uses type erasure to take
 // ownership of the container and release its memory on destruction.
 class Blob {
   public:
+    // Creates a blob of the given size.
+    static Blob Create(size_t size);
+
+    // Takes ownership of the original blob, creating a new one that offsets the data by |offset|.
+    static Blob Create(Blob&& original, size_t offset);
+
+    template <typename T>
+    static Blob Create(std::vector<T> vec)
+        requires(std::is_fundamental_v<T> || std::is_same_v<T, std::byte>)
+    {
+        // Move the vector into a new allocation so we can destruct it in the deleter.
+        auto* wrapped_vec = new std::vector<T>(std::move(vec));
+
+        uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
+        size_t size = wrapped_vec->size() * sizeof(T);
+
+        return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
+    }
+
     // This function is used to create Blob with actual data.
     // Make sure the creation and deleter handles the data ownership and lifetime correctly.
     static Blob UnsafeCreateWithDeleter(uint8_t* data, size_t size, std::function<void()> deleter);
@@ -56,9 +86,61 @@ class Blob {
     Blob(Blob&&);
     Blob& operator=(Blob&&);
 
+    // Provide iterators to the underlying span directly for clearer and simpler accessing.
+    template <typename T = std::byte>
+    std::span<T>::iterator Begin() {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.begin();
+        } else {
+            return detail::FromBytes<T>(mData).begin();
+        }
+    }
+    template <typename T = std::byte>
+    std::span<T>::iterator End() {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.end();
+        } else {
+            return detail::FromBytes<T>(mData).end();
+        }
+    }
+    template <typename T = std::byte>
+    std::span<const T>::iterator Begin() const {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.begin();
+        } else {
+            return detail::FromBytes<const T>(mData).begin();
+        }
+    }
+    template <typename T = std::byte>
+    std::span<const T>::iterator End() const {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.end();
+        } else {
+            return detail::FromBytes<const T>(mData).end();
+        }
+    }
+    template <typename T = std::byte>
+    std::span<const T>::iterator ConstBegin() const {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.begin();
+        } else {
+            return detail::FromBytes<const T>(mData).begin();
+        }
+    }
+    template <typename T = std::byte>
+    std::span<const T>::iterator ConstEnd() const {
+        if constexpr (std::is_same_v<T, std::byte>) {
+            return mData.end();
+        } else {
+            return detail::FromBytes<const T>(mData).end();
+        }
+    }
+
     bool Empty() const;
-    const uint8_t* Data() const;
-    uint8_t* Data();
+    std::span<const std::byte> Data() const;
+    std::span<std::byte> Data();
+    const std::byte* DataPtr() const;
+    std::byte* DataPtr();
     size_t Size() const;
 
     bool operator==(const Blob& other) const;
@@ -66,27 +148,11 @@ class Blob {
   private:
     // The constructor should be responsible to take ownership of |data| and releases ownership by
     // calling |deleter|. The deleter function is called at ~Blob() and during std::move.
-    explicit Blob(uint8_t* data, size_t size, std::function<void()> deleter);
+    Blob(std::span<std::byte> data, std::function<void()> deleter);
 
-    raw_ptr<uint8_t> mData;
-    size_t mSize;
+    std::span<std::byte> mData;
     std::function<void()> mDeleter;
 };
-
-Blob CreateBlob(size_t size);
-
-template <typename T>
-Blob CreateBlob(std::vector<T> vec)
-    requires std::is_fundamental_v<T>
-{
-    // Move the vector into a new allocation so we can destruct it in the deleter.
-    auto* wrapped_vec = new std::vector<T>(std::move(vec));
-
-    uint8_t* data = reinterpret_cast<uint8_t*>(wrapped_vec->data());
-    size_t size = wrapped_vec->size() * sizeof(T);
-
-    return Blob::UnsafeCreateWithDeleter(data, size, [wrapped_vec] { delete wrapped_vec; });
-}
 
 }  // namespace dawn::native
 

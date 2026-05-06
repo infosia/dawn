@@ -30,6 +30,7 @@
 #pragma allow_unsafe_buffers
 #endif
 
+#include <algorithm>
 #include <utility>
 
 #include "dawn/common/Math.h"
@@ -44,28 +45,29 @@ namespace {
 TEST(BlobTests, DefaultEmpty) {
     Blob b;
     EXPECT_TRUE(b.Empty());
-    EXPECT_EQ(b.Data(), nullptr);
+    EXPECT_EQ(b.DataPtr(), nullptr);
     EXPECT_EQ(b.Size(), 0u);
 }
 
 // Test that you can create a blob with a size in bytes and write/read its contents.
 TEST(BlobTests, SizedCreation) {
-    Blob b = CreateBlob(10);
+    Blob b = Blob::Create(10);
     EXPECT_FALSE(b.Empty());
     EXPECT_EQ(b.Size(), 10u);
-    ASSERT_NE(b.Data(), nullptr);
+    ASSERT_NE(b.DataPtr(), nullptr);
     // We should be able to copy 10 bytes into the blob.
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-    memcpy(b.Data(), data, sizeof(data));
+    std::ranges::copy(data, b.Begin<char>());
+
     // And retrieve the exact contents back.
-    EXPECT_EQ(memcmp(b.Data(), data, sizeof(data)), 0);
+    EXPECT_EQ(memcmp(b.DataPtr(), data, sizeof(data)), 0);
 }
 
 // Test that you can create a zero-sized blob.
 TEST(BlobTests, EmptySizedCreation) {
-    Blob b = CreateBlob(0);
+    Blob b = Blob::Create(0);
     EXPECT_TRUE(b.Empty());
-    EXPECT_EQ(b.Data(), nullptr);
+    EXPECT_EQ(b.DataPtr(), nullptr);
     EXPECT_EQ(b.Size(), 0u);
 }
 
@@ -80,8 +82,8 @@ TEST(BlobTests, UnsafeCreateWithDeleter) {
         // Check the contents.
         EXPECT_FALSE(b.Empty());
         EXPECT_EQ(b.Size(), sizeof(data));
-        ASSERT_EQ(b.Data(), data);
-        EXPECT_EQ(memcmp(b.Data(), data, sizeof(data)), 0);
+        ASSERT_EQ(b.DataPtr(), reinterpret_cast<std::byte*>(data));
+        EXPECT_EQ(memcmp(b.DataPtr(), data, sizeof(data)), 0);
 
         // |b| is deleted when this scope exits.
         EXPECT_CALL(mockDeleter, Call());
@@ -100,7 +102,7 @@ TEST(BlobTests, UnsafeCreateWithDeleterZeroSize) {
         EXPECT_TRUE(b.Empty());
         EXPECT_EQ(b.Size(), 0u);
         // Data still points to the data.
-        EXPECT_EQ(b.Data(), data);
+        EXPECT_EQ(b.DataPtr(), reinterpret_cast<std::byte*>(data));
 
         // |b| is deleted when this scope exits.
         EXPECT_CALL(mockDeleter, Call());
@@ -117,7 +119,7 @@ TEST(BlobTests, UnsafeCreateWithDeleterEmpty) {
         // Check the contents.
         EXPECT_TRUE(b.Empty());
         EXPECT_EQ(b.Size(), 0u);
-        EXPECT_EQ(b.Data(), nullptr);
+        EXPECT_EQ(b.DataPtr(), nullptr);
 
         // |b| is deleted when this scope exits.
         EXPECT_CALL(mockDeleter, Call());
@@ -127,9 +129,9 @@ TEST(BlobTests, UnsafeCreateWithDeleterEmpty) {
 // Test that move construction moves the data from one blob into the new one.
 TEST(BlobTests, MoveConstruct) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-    memcpy(b1.Data(), data, sizeof(data));
+    std::ranges::copy(data, b1.Begin<char>());
 
     // Move construct b2 from b1.
     Blob b2(std::move(b1));
@@ -137,16 +139,16 @@ TEST(BlobTests, MoveConstruct) {
     // Data should be moved.
     EXPECT_FALSE(b2.Empty());
     EXPECT_EQ(b2.Size(), 10u);
-    ASSERT_NE(b2.Data(), nullptr);
-    EXPECT_EQ(memcmp(b2.Data(), data, sizeof(data)), 0);
+    ASSERT_NE(b2.DataPtr(), nullptr);
+    EXPECT_EQ(memcmp(b2.DataPtr(), data, sizeof(data)), 0);
 }
 
 // Test that move assignment moves the data from one blob into another.
 TEST(BlobTests, MoveAssign) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-    memcpy(b1.Data(), data, sizeof(data));
+    std::ranges::copy(data, b1.Begin<char>());
 
     // Move assign b2 from b1.
     Blob b2;
@@ -155,16 +157,16 @@ TEST(BlobTests, MoveAssign) {
     // Data should be moved.
     EXPECT_FALSE(b2.Empty());
     EXPECT_EQ(b2.Size(), 10u);
-    ASSERT_NE(b2.Data(), nullptr);
-    EXPECT_EQ(memcmp(b2.Data(), data, sizeof(data)), 0);
+    ASSERT_NE(b2.DataPtr(), nullptr);
+    EXPECT_EQ(memcmp(b2.DataPtr(), data, sizeof(data)), 0);
 }
 
 // Test that move assignment can replace the contents of the moved-to blob.
 TEST(BlobTests, MoveAssignOver) {
     // Create the blob.
-    Blob b1 = CreateBlob(10);
+    Blob b1 = Blob::Create(10);
     char data[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-    memcpy(b1.Data(), data, sizeof(data));
+    std::ranges::copy(data, b1.Begin<char>());
 
     // Create another blob with a mock deleter.
     testing::StrictMock<testing::MockFunction<void()>> mockDeleter;
@@ -177,8 +179,35 @@ TEST(BlobTests, MoveAssignOver) {
     // Data should be moved.
     EXPECT_FALSE(b2.Empty());
     EXPECT_EQ(b2.Size(), 10u);
-    ASSERT_NE(b2.Data(), nullptr);
-    EXPECT_EQ(memcmp(b2.Data(), data, sizeof(data)), 0);
+    ASSERT_NE(b2.DataPtr(), nullptr);
+    EXPECT_EQ(memcmp(b2.DataPtr(), data, sizeof(data)), 0);
+}
+
+// Test that the offset factory still calls the deleter, with an offsetted view of the data.
+TEST(BlobTests, OffsetMoveConstructor) {
+    unsigned char data[13] = "hello world!";
+    static constexpr size_t kOffset = 2u;
+    testing::StrictMock<testing::MockFunction<void()>> mockDeleter;
+
+    // Make a blob with a mock deleter.
+    Blob b1 = Blob::UnsafeCreateWithDeleter(data, sizeof(data), [&] { mockDeleter.Call(); });
+    // Check the contents.
+    EXPECT_FALSE(b1.Empty());
+    EXPECT_EQ(b1.Size(), 13u);
+    // Data still points to the data.
+    EXPECT_EQ(b1.DataPtr(), reinterpret_cast<std::byte*>(data));
+
+    {
+        // Move b1 with an offset into b2, check the contents, and verify that the deleter is
+        // called.
+        Blob b2 = Blob::Create(std::move(b1), kOffset);
+        EXPECT_EQ(b2.Size(), 13u - kOffset);
+        // Data still points to the data.
+        EXPECT_EQ(b2.DataPtr(), reinterpret_cast<std::byte*>(data) + kOffset);
+
+        // |b| is deleted when this scope exits.
+        EXPECT_CALL(mockDeleter, Call());
+    }
 }
 
 }  // namespace

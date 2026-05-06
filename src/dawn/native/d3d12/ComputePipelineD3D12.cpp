@@ -91,7 +91,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     DAWN_TRY_ASSIGN(compiledShader, module->Compile(computeStage, SingleShaderStage::Compute,
                                                     ToBackend(GetLayout()), compileFlags,
                                                     /* usedInterstageVariables */ {}));
-    d3dDesc.CS = {compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size()};
+    d3dDesc.CS = {compiledShader.shaderBlob.DataPtr(), compiledShader.shaderBlob.Size()};
 
     StreamIn(&mCacheKey, d3dDesc, ToBackend(GetLayout())->GetRootSignatureBlob());
 
@@ -100,7 +100,7 @@ ResultOrError<Extent3D> ComputePipeline::InitializeImpl() {
     bool cacheHit = !blob.Empty();
     if (cacheHit) {
         // Cache hits, attach cached blob to descriptor.
-        d3dDesc.CachedPSO.pCachedBlob = blob.Data();
+        d3dDesc.CachedPSO.pCachedBlob = blob.DataPtr();
         d3dDesc.CachedPSO.CachedBlobSizeInBytes = blob.Size();
     }
 
