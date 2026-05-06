@@ -68,7 +68,7 @@ void DumpDXCCompiledShader(Device* device,
     dumpedMsg << "/* Dumped disassembled DXIL */\n";
     DxcBuffer dxcBuffer;
     dxcBuffer.Encoding = DXC_CP_UTF8;
-    dxcBuffer.Ptr = shaderBlob.Data();
+    dxcBuffer.Ptr = shaderBlob.Data().data();
     dxcBuffer.Size = shaderBlob.Size();
 
     ComPtr<IDxcResult> dxcResult;

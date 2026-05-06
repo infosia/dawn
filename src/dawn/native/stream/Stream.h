@@ -122,11 +122,15 @@ inline MaybeError StreamOut(Source* s) {
 template <typename T>
 class Stream<T, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
-    static void Write(Sink* s, const T& v) { memcpy(s->GetSpace(sizeof(T)), &v, sizeof(T)); }
+    static void Write(Sink* s, const T& v) {
+        std::span<std::byte> space = s->GetSpace(sizeof(T));
+        std::copy(reinterpret_cast<const std::byte*>(&v),
+                  reinterpret_cast<const std::byte*>(&v) + sizeof(T), space.begin());
+    }
     static MaybeError Read(Source* s, T* v) {
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(T)));
-        memcpy(v, ptr, sizeof(T));
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, s->Read(sizeof(T)));
+        std::copy(ptr.begin(), ptr.end(), reinterpret_cast<std::byte*>(v));
         return {};
     }
 };
@@ -312,14 +316,16 @@ class Stream<T[N], std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
     static void Write(Sink* s, const T (&t)[N]) {
         static_assert(N > 0);
-        memcpy(s->GetSpace(sizeof(t)), &t, sizeof(t));
+        std::span<std::byte> space = s->GetSpace(sizeof(t));
+        std::copy(reinterpret_cast<const std::byte*>(&t),
+                  reinterpret_cast<const std::byte*>(&t) + sizeof(t), space.begin());
     }
 
     static MaybeError Read(Source* s, T (*t)[N]) {
         static_assert(N > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(*t, ptr, sizeof(*t));
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, s->Read(sizeof(*t)));
+        std::copy(ptr.begin(), ptr.end(), reinterpret_cast<std::byte*>(*t));
         return {};
     }
 };
@@ -378,14 +384,16 @@ class Stream<std::array<T, Size>, std::enable_if_t<std::is_fundamental_v<T>>> {
   public:
     static void Write(Sink* s, const std::array<T, Size>& t) {
         static_assert(Size > 0);
-        memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t));
+        std::span<std::byte> space = s->GetSpace(sizeof(t));
+        std::copy(reinterpret_cast<const std::byte*>(t.data()),
+                  reinterpret_cast<const std::byte*>(t.data()) + sizeof(t), space.begin());
     }
 
     static MaybeError Read(Source* s, std::array<T, Size>* t) {
         static_assert(Size > 0);
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
-        memcpy(t->data(), ptr, sizeof(*t));
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, s->Read(sizeof(*t)));
+        std::copy(ptr.begin(), ptr.end(), reinterpret_cast<std::byte*>(t->data()));
         return {};
     }
 };

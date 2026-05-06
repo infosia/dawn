@@ -33,8 +33,12 @@
 #include "dawn/native/BlobCache.h"
 
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
+#include <utility>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/StringViewUtils.h"
 #include "dawn/common/Version_autogen.h"
 #include "dawn/native/CacheKey.h"
 #include "dawn/native/Instance.h"
@@ -46,52 +50,51 @@ namespace details {
 // Hasher for Blob cache validation
 using Hasher = Sha3_224;
 using Hash = Hasher::Output;
-static constexpr const size_t mHashByteSize = sizeof(Hash);
+static constexpr const size_t kHashByteSize = sizeof(Hash);
 
-Blob GenerateHashPrefixedPayload(size_t valueSize, const void* value) {
-    // Create a Blob for holding hash+payload.
-    const size_t byteSizeWithHash = valueSize + mHashByteSize;
-    Blob result = CreateBlob(byteSizeWithHash);
-    Hash* hashHeader = reinterpret_cast<Hash*>(result.Data());
-    uint8_t* payload = result.Data() + mHashByteSize;
-    // Copy the payload into buffer and compute the hash as prefix.
-    memcpy(payload, value, valueSize);
-    *hashHeader = Hasher::Hash(payload, valueSize);
+std::vector<std::byte> GenerateHashPrefixedPayload(std::span<const std::byte> value) {
+    // Create a buffer for holding hash+payload.
+    const size_t byteSizeWithHash = value.size() + kHashByteSize;
+    std::vector<std::byte> result(byteSizeWithHash);
 
+    // Write the hash to the start of the buffer.
+    *reinterpret_cast<Hash*>(result.data()) = Hasher::Hash(value);
+
+    // Write the payload after the hash.
+    std::copy(value.begin(), value.end(), result.begin() + kHashByteSize);
     return result;
 }
 
-ResultOrError<Blob> CheckAndUnpackHashPrefixedPayload(uint8_t* buffer, size_t sizeWithHash) {
+ResultOrError<Blob> CheckAndUnpackHashPrefixedPayload(Blob&& blobWithHash) {
     // Validate the size of the buffer must be larger than the size of hash result.
-    DAWN_INTERNAL_ERROR_IF(!(sizeWithHash > mHashByteSize),
+    const size_t sizeWithHash = blobWithHash.Size();
+    DAWN_INTERNAL_ERROR_IF(!(sizeWithHash > kHashByteSize),
                            "Blob cache hash validation failed. Blob of %zu bytes loaded from cache "
                            "is no larger than size of hash result %zu bytes.",
-                           sizeWithHash, mHashByteSize);
-    // Compute and validate the payload's hash.
-    size_t payloadByteSize = sizeWithHash - mHashByteSize;
-    Hash* expectedHash = (reinterpret_cast<Hash*>(buffer));
-    uint8_t* payload = buffer + mHashByteSize;
-    Hash payloadHash = Hasher::Hash(payload, payloadByteSize);
+                           sizeWithHash, kHashByteSize);
+
+    // Read the expected hash before we hide the hash from the blob.
+    Hash* expectedHash = reinterpret_cast<Hash*>(blobWithHash.Data().data());
+
+    // Create a blob that appears without the hash, but still owns the entire piece of memory.
+    Blob blob = Blob::Create(std::move(blobWithHash), /*offset=*/kHashByteSize);
+    Hash actualHash = Hasher::Hash(blob.Data());
+
     auto printHash = [](const void* hash) {
         std::stringstream ss;
         const uint8_t* hashBytes = static_cast<const uint8_t*>(hash);
-        for (size_t i = 0; i < mHashByteSize; i++) {
+        for (size_t i = 0; i < kHashByteSize; i++) {
             ss << std::uppercase << std::hex << std::setw(2) << std::setfill('0')
                << static_cast<int>(hashBytes[i]);
         }
         return ss.str();
     };
     // Validate the hash matches the expected hash.
-    DAWN_INTERNAL_ERROR_IF(payloadHash != *expectedHash,
+    DAWN_INTERNAL_ERROR_IF(actualHash != *expectedHash,
                            "Blob cache hash validation failed. Loaded blob of size %zu fails the "
                            "hash validation, expected hash: %s, computed hash: %s.",
-                           sizeWithHash, printHash(expectedHash), printHash(&payloadHash));
-
-    // Wrap the buffer as Blob without exposing the hash header.
-    Blob result =
-        Blob::UnsafeCreateWithDeleter(payload, payloadByteSize, [=]() { delete[] buffer; });
-
-    return result;
+                           sizeWithHash, printHash(expectedHash), printHash(&actualHash));
+    return std::move(blob);
 }
 
 }  // namespace details
@@ -100,79 +103,89 @@ BlobCache::BlobCache(const dawn::native::DawnCacheDeviceDescriptor& desc, bool e
     : mHashValidation(enableHashValidation),
       mLoadFunction(desc.loadDataFunction),
       mStoreFunction(desc.storeDataFunction),
-      mFunctionUserdata(desc.functionUserdata) {}
+      mFunctionUserdata(desc.functionUserdata),
+      mLoadCallbackInfo(desc.dawnLoadCacheDataCallbackInfo),
+      mStoreCallbackInfo(desc.dawnStoreCacheDataCallbackInfo) {}
 
 ResultOrError<Blob> BlobCache::Load(const CacheKey& key) {
     return LoadInternal(key);
 }
 
-void BlobCache::Store(const CacheKey& key, size_t valueSize, const void* value) {
-    StoreInternal(key, valueSize, value);
+void BlobCache::Store(const CacheKey& key, std::span<const std::byte> value) {
+    StoreInternal(key, value);
 }
 
 void BlobCache::Store(const CacheKey& key, const Blob& value) {
-    Store(key, value.Size(), value.Data());
+    Store(key, value.Data());
 }
 
-Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void* value) {
-    if (!mHashValidation) {
-        Blob blob = CreateBlob(valueSize);
-        memcpy(blob.Data(), value, valueSize);
-        return blob;
-    }
-    return details::GenerateHashPrefixedPayload(valueSize, value);
-}
+void BlobCache::StoreInternal(const CacheKey& cacheKey, std::span<const std::byte> value) {
+    DAWN_ASSERT(ValidateCacheKey(cacheKey));
+    DAWN_CHECK(value.data() != nullptr);
+    DAWN_CHECK(value.size() > 0);
+    std::string_view key = cacheKey.AsStringView();
 
-void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void* value) {
-    DAWN_ASSERT(ValidateCacheKey(key));
-    DAWN_CHECK(value != nullptr);
-    DAWN_CHECK(valueSize > 0);
-    if (mStoreFunction == nullptr) {
-        return;
-    }
+    auto store = [&](std::span<const std::byte> actualValue) {
+        if (mStoreCallbackInfo.callback != nullptr) {
+            mStoreCallbackInfo.callback(ToOutputStringView(key), actualValue.size(),
+                                        reinterpret_cast<const uint8_t*>(actualValue.data()),
+                                        mStoreCallbackInfo.userdata1, mStoreCallbackInfo.userdata2);
+        } else if (mStoreFunction != nullptr) {
+            mStoreFunction(key.data(), key.size(), actualValue.data(), actualValue.size(),
+                           mFunctionUserdata);
+        }
+    };
 
     // Call the actual store function for actual stored bytes.
     if (!mHashValidation) {
-        mStoreFunction(key.data(), key.size(), value, valueSize, mFunctionUserdata);
+        store(value);
     } else {
-        Blob actualStoredBlob = details::GenerateHashPrefixedPayload(valueSize, value);
-        mStoreFunction(key.data(), key.size(), actualStoredBlob.Data(), actualStoredBlob.Size(),
-                       mFunctionUserdata);
+        std::vector<std::byte> actualStoredData = details::GenerateHashPrefixedPayload(value);
+        store(actualStoredData);
     }
 }
 
-ResultOrError<Blob> BlobCache::LoadInternal(const CacheKey& key) {
-    DAWN_ASSERT(ValidateCacheKey(key));
-    if (mLoadFunction == nullptr) {
-        return Blob();
-    }
-    const size_t expectedSize =
-        mLoadFunction(key.data(), key.size(), nullptr, 0, mFunctionUserdata);
+ResultOrError<Blob> BlobCache::LoadInternal(const CacheKey& cacheKey) {
+    DAWN_ASSERT(ValidateCacheKey(cacheKey));
+    std::string_view key = cacheKey.AsStringView();
+
+    auto load = [&](std::span<std::byte> value) -> size_t {
+        if (mLoadCallbackInfo.callback != nullptr) {
+            return mLoadCallbackInfo.callback(
+                ToOutputStringView(key), value.size(), reinterpret_cast<uint8_t*>(value.data()),
+                mLoadCallbackInfo.userdata1, mLoadCallbackInfo.userdata2);
+        } else if (mLoadFunction != nullptr) {
+            return mLoadFunction(key.data(), key.size(), value.data(), value.size(),
+                                 mFunctionUserdata);
+        }
+        return 0;
+    };
+
+    const size_t expectedSize = load({});
     // Non-zero size indicates cache hit
     if (expectedSize > 0) {
         // Load bytes from cache.
-        uint8_t* buffer = new uint8_t[expectedSize];
-        const size_t actualSize =
-            mLoadFunction(key.data(), key.size(), buffer, expectedSize, mFunctionUserdata);
-        // TODO(crbug.com/469351711): If `mLoadFunction` returns a different size on the second call
-        // (due to external cache eviction, I/O errors, or timeouts), treat it as a cache miss. The
-        // blob cache API should be updated to a single `mLoadFunction` call in the future.
+        Blob result = Blob::Create(expectedSize);
+        const size_t actualSize = load(result.Data());
+        // TODO(crbug.com/469351711): If `mLoadFunction` (or the new callback) returns a different
+        // size on the second call (due to external cache eviction, I/O errors, or timeouts), treat
+        // it as a cache miss. The blob cache API should be updated to a single `mLoadFunction` call
+        // in the future.
         if (expectedSize != actualSize) {
-            delete[] buffer;
             return Blob();
         }
 
         if (!mHashValidation) {
-            return Blob::UnsafeCreateWithDeleter(buffer, actualSize, [=]() { delete[] buffer; });
+            return std::move(result);
         }
-        return details::CheckAndUnpackHashPrefixedPayload(buffer, expectedSize);
+        return details::CheckAndUnpackHashPrefixedPayload(std::move(result));
     }
     return Blob();
 }
 
 bool BlobCache::ValidateCacheKey(const CacheKey& key) {
-    return std::search(key.begin(), key.end(), kDawnVersion.begin(), kDawnVersion.end()) !=
-           key.end();
+    auto versionSpan = std::as_bytes(std::span(kDawnVersion));
+    return std::search(key.begin(), key.end(), versionSpan.begin(), versionSpan.end()) != key.end();
 }
 
 }  // namespace dawn::native

@@ -32,6 +32,7 @@
 
 #include "dawn/native/stream/Stream.h"
 
+#include <algorithm>
 #include <string>
 
 #include "dawn/native/Limits.h"
@@ -43,8 +44,9 @@ void Stream<std::string>::Write(Sink* s, const std::string& t) {
     StreamIn(s, t.length());
     size_t size = t.length() * sizeof(char);
     if (size > 0) {
-        void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        std::span<std::byte> space = s->GetSpace(size);
+        std::copy(reinterpret_cast<const std::byte*>(t.data()),
+                  reinterpret_cast<const std::byte*>(t.data() + t.length()), space.begin());
     }
 }
 
@@ -52,9 +54,9 @@ template <>
 MaybeError Stream<std::string>::Read(Source* s, std::string* t) {
     size_t length;
     DAWN_TRY(StreamOut(s, &length));
-    const void* ptr;
-    DAWN_TRY(s->Read(&ptr, length));
-    *t = std::string(static_cast<const char*>(ptr), length);
+    std::span<const std::byte> ptr;
+    DAWN_TRY_ASSIGN(ptr, s->Read(length));
+    *t = std::string(reinterpret_cast<const char*>(ptr.data()), length);
     return {};
 }
 
@@ -63,8 +65,9 @@ void Stream<std::wstring>::Write(Sink* s, const std::wstring& t) {
     StreamIn(s, t.length());
     size_t size = t.length() * sizeof(wchar_t);
     if (size > 0) {
-        void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        std::span<std::byte> space = s->GetSpace(size);
+        std::copy(reinterpret_cast<const std::byte*>(t.data()),
+                  reinterpret_cast<const std::byte*>(t.data() + t.length()), space.begin());
     }
 }
 
@@ -73,9 +76,9 @@ MaybeError Stream<std::wstring>::Read(Source* s, std::wstring* t) {
     size_t length;
     DAWN_TRY(StreamOut(s, &length));
     size_t size = length * sizeof(wchar_t);
-    const void* ptr;
-    DAWN_TRY(s->Read(&ptr, size));
-    *t = std::wstring(static_cast<const wchar_t*>(ptr), length);
+    std::span<const std::byte> ptr;
+    DAWN_TRY_ASSIGN(ptr, s->Read(size));
+    *t = std::wstring(reinterpret_cast<const wchar_t*>(ptr.data()), length);
     return {};
 }
 
@@ -84,8 +87,9 @@ void Stream<std::string_view>::Write(Sink* s, const std::string_view& t) {
     StreamIn(s, t.length());
     size_t size = t.length() * sizeof(char);
     if (size > 0) {
-        void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        std::span<std::byte> space = s->GetSpace(size);
+        std::copy(reinterpret_cast<const std::byte*>(t.data()),
+                  reinterpret_cast<const std::byte*>(t.data() + t.length()), space.begin());
     }
 }
 
@@ -94,8 +98,9 @@ void Stream<std::wstring_view>::Write(Sink* s, const std::wstring_view& t) {
     StreamIn(s, t.length());
     size_t size = t.length() * sizeof(wchar_t);
     if (size > 0) {
-        void* ptr = s->GetSpace(size);
-        memcpy(ptr, t.data(), size);
+        std::span<std::byte> space = s->GetSpace(size);
+        std::copy(reinterpret_cast<const std::byte*>(t.data()),
+                  reinterpret_cast<const std::byte*>(t.data() + t.length()), space.begin());
     }
 }
 

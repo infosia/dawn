@@ -364,10 +364,10 @@ MaybeError RenderPipeline::InitializeInputLayout(const Blob& vertexShader) {
 
     ID3D11Device* d3d11Device = ToBackend(GetDevice())->GetD3D11Device();
 
-    DAWN_TRY(CheckHRESULT(
-        d3d11Device->CreateInputLayout(inputElementDescriptors.data(), count, vertexShader.Data(),
-                                       vertexShader.Size(), &mInputLayout),
-        "ID3D11Device::CreateInputLayout"));
+    DAWN_TRY(CheckHRESULT(d3d11Device->CreateInputLayout(inputElementDescriptors.data(), count,
+                                                         vertexShader.Data().data(),
+                                                         vertexShader.Size(), &mInputLayout),
+                          "ID3D11Device::CreateInputLayout"));
 
     return {};
 }
