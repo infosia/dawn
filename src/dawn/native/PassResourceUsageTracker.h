@@ -114,6 +114,8 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
     void TrackQueryAvailability(QuerySetBase* querySet, QueryIndex queryIndex);
     const QueryAvailabilityMap& GetQueryAvailabilityMap() const;
 
+    void MarkFramebufferFetchUsed();
+
     RenderPassResourceUsage AcquireResourceUsage();
 
   private:
@@ -123,6 +125,8 @@ class RenderPassResourceUsageTracker : public SyncScopeUsageTracker {
 
     // Tracks queries used in the render pass to validate that they aren't written twice.
     QueryAvailabilityMap mQueryAvailabilities;
+
+    bool mFramebufferFetchUsed = false;
 };
 
 }  // namespace dawn::native

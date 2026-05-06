@@ -67,6 +67,7 @@ class CommandBuffer final : public CommandBufferBase {
                                  const ComputePassResourceUsage& resourceUsages);
     MaybeError RecordRenderPass(CommandRecordingContext* recordingContext,
                                 BeginRenderPassCmd* renderPass,
+                                const RenderPassResourceUsage& usage,
                                 PassIndex renderPassIndex);
     MaybeError RecordCopyImageWithTemporaryBuffer(CommandRecordingContext* recordingContext,
                                                   const TextureCopy& srcCopy,

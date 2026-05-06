@@ -115,6 +115,7 @@ struct PNextChainBuilder : public StackAllocated {
 };
 
 uint32_t ToPushConstantBytes(const ImmediateConstantMask& immediates);
+uint32_t AttachmentCount(const ColorAttachmentMask& mask);
 
 VkCompareOp ToVulkanCompareOp(wgpu::CompareFunction op);
 

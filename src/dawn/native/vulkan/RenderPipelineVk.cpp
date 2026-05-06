@@ -408,9 +408,13 @@ MaybeError RenderPipeline::InitializeImpl() {
     bool buildCacheKey =
         !GetDevice()->GetTogglesState().IsEnabled(Toggle::VulkanMonolithicPipelineCache);
 
-    Specialization specialization = {
-        .layout = {.pushConstantBytes = ToPushConstantBytes(mImmediateMask)},
-    };
+    Specialization specialization = {.layout = {
+                                         .pushConstantBytes = ToPushConstantBytes(mImmediateMask),
+                                     }};
+    if (UsesFramebufferFetch()) {
+        specialization.layout.framebufferFetchAttachmentCount =
+            AttachmentCount(GetColorAttachmentsMask());
+    }
 
     SpecializationResult r;
     DAWN_TRY_ASSIGN(r, InitializeSpecialization(specialization, buildCacheKey));
@@ -425,6 +429,10 @@ ResultOrError<PipelineHandles> RenderPipeline::GetOrCreateSpecializedHandle(
     Specialization&& specializationIn) {
     Specialization specialization = specializationIn;
     specialization.layout.pushConstantBytes = ToPushConstantBytes(mImmediateMask);
+    if (UsesFramebufferFetch()) {
+        specialization.layout.framebufferFetchAttachmentCount =
+            AttachmentCount(GetColorAttachmentsMask());
+    }
 
     if (auto it = mSpecializations.find(specialization); it != mSpecializations.end()) {
         return PipelineHandles{.pipeline = it->second.pipeline->Get(),
@@ -493,6 +501,7 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
         .ycbcrExternalTextures = &specialization.ycbcrExternalTextures,
         .emitPointSize = GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList,
         .polyfillPixelCenter = NeedsPixelCenterPolyfill(),
+        .pipelineUsesFramebufferFetch = UsesFramebufferFetch(),
     }));
 
     // Add the fragment stage if present.
@@ -503,6 +512,7 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
             .immediateMask = GetImmediateMask(),
             .ycbcrExternalTextures = &specialization.ycbcrExternalTextures,
             .polyfillPixelCenter = NeedsPixelCenterPolyfill(),
+            .pipelineUsesFramebufferFetch = UsesFramebufferFetch(),
             .needsMultisampledFramebufferFetch = UseSampleRateShading() && UsesFramebufferFetch(),
         }));
     }
@@ -562,8 +572,8 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
     multisample.pNext = nullptr;
     multisample.flags = 0;
     multisample.rasterizationSamples = VulkanSampleCount(GetSampleCount());
-    multisample.sampleShadingEnable = VK_FALSE;
-    multisample.minSampleShading = 0.0f;
+    multisample.sampleShadingEnable = UsesFramebufferFetch() ? VK_TRUE : VK_FALSE;
+    multisample.minSampleShading = 1.0f;
     // VkPipelineMultisampleStateCreateInfo.pSampleMask is an array of length
     // ceil(rasterizationSamples / 32) and since we're passing a single uint32_t
     // we have to assert that this length is indeed 1.
@@ -605,6 +615,12 @@ ResultOrError<RenderPipeline::SpecializationResult> RenderPipeline::InitializeSp
         colorBlend.sType = VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
         colorBlend.pNext = nullptr;
         colorBlend.flags = 0;
+
+        if (GetStage(SingleShaderStage::Fragment).metadata->fragmentInputMask.any()) {
+            colorBlend.flags |=
+                VK_PIPELINE_COLOR_BLEND_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_BIT_EXT;
+        }
+
         // LogicOp isn't supported so we disable it.
         colorBlend.logicOpEnable = VK_FALSE;
         colorBlend.logicOp = VK_LOGIC_OP_CLEAR;
