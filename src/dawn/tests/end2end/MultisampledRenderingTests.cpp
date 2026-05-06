@@ -1700,6 +1700,10 @@ TEST_P(MultisampledRenderToSingleSampledTest, ClearThenLoadThenDraw) {
 
 // Test multisampled rendering with depth test works correctly.
 TEST_P(MultisampledRenderToSingleSampledTest, DrawWithDepthTest) {
+    // TODO(529411414): This test fails on GLES, since
+    // GL_EXT_multisampled_render_to_texture does not support multisampled depth/stencil
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES());
+
     auto singleSampledTexture =
         CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false);
 
