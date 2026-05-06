@@ -42,12 +42,14 @@ cc_library(
   srcs = [
     "byte_address_buffer.cc",
     "int8_t4_packed.cc",
+    "matrix_layout.cc",
     "rasterizer_ordered_texture_2d.cc",
     "uint8_t4_packed.cc",
   ],
   hdrs = [
     "byte_address_buffer.h",
     "int8_t4_packed.h",
+    "matrix_layout.h",
     "rasterizer_ordered_texture_2d.h",
     "uint8_t4_packed.h",
   ],
@@ -76,6 +78,7 @@ cc_library(
   srcs = [
     "byte_address_buffer_test.cc",
     "int8_t4_packed_test.cc",
+    "matrix_layout_test.cc",
     "uint8_t4_packed_test.cc",
   ],
   deps = [

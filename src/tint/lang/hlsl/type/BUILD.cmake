@@ -43,6 +43,8 @@ tint_add_target(tint_lang_hlsl_type lib
   lang/hlsl/type/byte_address_buffer.h
   lang/hlsl/type/int8_t4_packed.cc
   lang/hlsl/type/int8_t4_packed.h
+  lang/hlsl/type/matrix_layout.cc
+  lang/hlsl/type/matrix_layout.h
   lang/hlsl/type/rasterizer_ordered_texture_2d.cc
   lang/hlsl/type/rasterizer_ordered_texture_2d.h
   lang/hlsl/type/uint8_t4_packed.cc
@@ -76,6 +78,7 @@ tint_target_add_external_dependencies(tint_lang_hlsl_type lib
 tint_add_target(tint_lang_hlsl_type_test test
   lang/hlsl/type/byte_address_buffer_test.cc
   lang/hlsl/type/int8_t4_packed_test.cc
+  lang/hlsl/type/matrix_layout_test.cc
   lang/hlsl/type/uint8_t4_packed_test.cc
 )
 
