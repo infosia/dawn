@@ -61,7 +61,8 @@ config("internal") {
   ]
 }
 
-# Config that adds the @executable_path rpath if needed so that Swiftshader or the Vulkan loader are found.
+# Config that adds the @executable_path rpath if needed so that Swiftshader or
+# the Vulkan loader are found.
 config("vulkan_rpath") {
   if (is_apple && dawn_enable_vulkan &&
       (use_swiftshader || enable_vulkan_loader)) {
@@ -412,7 +413,6 @@ source_set("sources") {
     "stream/ByteVectorSink.h",
     "stream/Sink.h",
     "stream/Source.h",
-    "stream/Stream.cpp",
     "stream/Stream.h",
     "utils/WGPUHelpers.cpp",
     "utils/WGPUHelpers.h",
