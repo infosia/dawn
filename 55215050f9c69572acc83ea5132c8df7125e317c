@@ -262,6 +262,24 @@
       "parentUuid": "b64a2c59_c16ea8c3",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c611e6c3_820d4e7f",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2026-05-06T21:29:35Z",
+      "side": 1,
+      "message": "The `wgpu::Surface surface \u003d CreateTestSurface();` is created in the test local scoped (`TEST_P(...){ /*This scope*/ }`). (This is the surface SurfaceTest is testing, not what the SurfaceTest --check-capture-replay testing)\nWe need this surface to be released, then destroy the window. Because surface holds raw_ptr of the window. and `TearDown` is called after the test scope went out.",
+      "parentUuid": "83142a2a_78ad1208",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
