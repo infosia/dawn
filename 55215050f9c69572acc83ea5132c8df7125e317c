@@ -244,6 +244,24 @@
       "parentUuid": "2d3fa171_a5a93bb3",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83142a2a_78ad1208",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T18:31:20Z",
+      "side": 1,
+      "message": "Then it should be destroyed when this is called, no need to call `TearDown` no? Or I\u0027m still confused about something.",
+      "parentUuid": "b64a2c59_c16ea8c3",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
