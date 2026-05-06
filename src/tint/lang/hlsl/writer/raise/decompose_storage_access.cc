@@ -107,6 +107,8 @@ struct State {
                             case core::BuiltinFn::kAtomicSub:
                             case core::BuiltinFn::kAtomicExchange:
                             case core::BuiltinFn::kAtomicCompareExchangeWeak:
+                            case core::BuiltinFn::kAtomicStoreMax:
+                            case core::BuiltinFn::kAtomicStoreMin:
                             case core::BuiltinFn::kAtomicStore:
                             case core::BuiltinFn::kAtomicLoad:
                                 usage_worklist.Push(call);
@@ -179,6 +181,12 @@ struct State {
                             case core::BuiltinFn::kAtomicCompareExchangeWeak:
                                 AtomicCompareExchangeWeak(var, call, {});
                                 break;
+                            case core::BuiltinFn::kAtomicStoreMax:
+                                AtomicStoreMax(var, call, {});
+                                break;
+                            case core::BuiltinFn::kAtomicStoreMin:
+                                AtomicStoreMin(var, call, {});
+                                break;
                             case core::BuiltinFn::kAtomicStore:
                                 AtomicStore(var, call, {});
                                 break;
@@ -249,6 +257,21 @@ struct State {
         call->Destroy();
     }
 
+    void InterlockedStore(core::ir::Var* var,
+                          core::ir::CoreBuiltinCall* call,
+                          const OffsetData& offset,
+                          BuiltinFn fn) {
+        auto args = call->Args();
+        auto* type = args[1]->Type();
+        b.InsertBefore(call, [&] {
+            TINT_ASSERT(type->Is<core::type::U64>());
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), fn, var, OffsetToValue(offset),
+                                                      args[1]);
+        });
+        call->Destroy();
+    }
+
     void AtomicAnd(core::ir::Var* var, core::ir::CoreBuiltinCall* call, const OffsetData& offset) {
         Interlocked(var, call, offset, BuiltinFn::kInterlockedAnd);
     }
@@ -267,6 +290,18 @@ struct State {
 
     void AtomicMax(core::ir::Var* var, core::ir::CoreBuiltinCall* call, const OffsetData& offset) {
         Interlocked(var, call, offset, BuiltinFn::kInterlockedMax);
+    }
+
+    void AtomicStoreMin(core::ir::Var* var,
+                        core::ir::CoreBuiltinCall* call,
+                        const OffsetData& offset) {
+        InterlockedStore(var, call, offset, BuiltinFn::kInterlockedMin64);
+    }
+
+    void AtomicStoreMax(core::ir::Var* var,
+                        core::ir::CoreBuiltinCall* call,
+                        const OffsetData& offset) {
+        InterlockedStore(var, call, offset, BuiltinFn::kInterlockedMax64);
     }
 
     void AtomicAdd(core::ir::Var* var, core::ir::CoreBuiltinCall* call, const OffsetData& offset) {
@@ -833,6 +868,12 @@ struct State {
                             break;
                         case core::BuiltinFn::kAtomicCompareExchangeWeak:
                             AtomicCompareExchangeWeak(var, call, offset);
+                            break;
+                        case core::BuiltinFn::kAtomicStoreMax:
+                            AtomicStoreMax(var, call, offset);
+                            break;
+                        case core::BuiltinFn::kAtomicStoreMin:
+                            AtomicStoreMin(var, call, offset);
                             break;
                         case core::BuiltinFn::kAtomicStore:
                             AtomicStore(var, call, offset);
