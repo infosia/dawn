@@ -229,7 +229,16 @@ MaybeError FramebufferTextureHelper(const OpenGLFunctions& gl,
                                     GLenum attachment,
                                     GLuint textureHandle,
                                     GLuint mipLevel,
-                                    GLuint arrayLayer) {
+                                    GLuint arrayLayer,
+                                    uint32_t samples) {
+    if (samples > 1) {
+        DAWN_ASSERT(gl.FramebufferTexture2DMultisampleEXT != nullptr);
+        DAWN_ASSERT(textarget == GL_TEXTURE_2D);
+        DAWN_GL_TRY(gl, FramebufferTexture2DMultisampleEXT(target, attachment, textarget,
+                                                           textureHandle, mipLevel, samples));
+        return {};
+    }
+
     switch (textarget) {
         case GL_TEXTURE_2D_ARRAY:
         case GL_TEXTURE_CUBE_MAP_ARRAY:
@@ -430,7 +439,7 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                         continue;
                     }
                     DAWN_TRY(FramebufferTextureHelper(gl, mTarget, GL_DRAW_FRAMEBUFFER, attachment,
-                                                      GetHandle(), level, layer));
+                                                      GetHandle(), level, layer, 1));
                     DAWN_TRY(DoClear(aspectsToClear));
                 }
             }
@@ -540,7 +549,8 @@ MaybeError Texture::ClearTexture(const OpenGLFunctions& gl,
                         }
                     } else {
                         DAWN_TRY(FramebufferTextureHelper(gl, mTarget, GL_DRAW_FRAMEBUFFER,
-                                                          attachment, GetHandle(), level, layer));
+                                                          attachment, GetHandle(), level, layer,
+                                                          1));
                         DAWN_TRY(DoClear());
                     }
 
@@ -720,7 +730,8 @@ GLenum TextureView::GetGLTarget() const {
 MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
                                           GLenum target,
                                           GLenum attachment,
-                                          GLuint depthSlice) {
+                                          GLuint depthSlice,
+                                          uint32_t samples) {
     DAWN_ASSERT(depthSlice <
                 static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
 
@@ -759,7 +770,7 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
     }
 
     return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,
-                                    arrayLayer);
+                                    arrayLayer, samples);
 }
 
 GLenum TextureView::GetInternalFormat() const {
