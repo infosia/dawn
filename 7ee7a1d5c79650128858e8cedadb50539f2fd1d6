@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce958d8_34849c50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T12:12:01Z",
+      "side": 1,
+      "message": "CQ failure is unfortunate. I believe it\u0027s because of an infra migration that we also had to merge back to [M146](https://dawn-review.googlesource.com/c/dawn/+/298095) and M147. Let me ask about it.",
+      "revId": "7ee7a1d5c79650128858e8cedadb50539f2fd1d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da060d76_bc8ebb8a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T12:12:01Z",
+      "side": 1,
+      "message": "This change isn\u0027t needed on M144 because there\u0027s no `GetDevice()-\u003eGetTimestampPeriodInNS() !\u003d 1.0f` check. You can remove the toggle entirely (from Toggles.h/cpp and the `DAWN_INSTANTIATE_TEST` and revert this line.\n\nI have applied this change locally and run the test and it passes on Metal and Vulkan.",
+      "range": {
+        "startLine": 2156,
+        "startChar": 86,
+        "endLine": 2157,
+        "endChar": 87
+      },
+      "revId": "7ee7a1d5c79650128858e8cedadb50539f2fd1d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
