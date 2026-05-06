@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "746884f3_87102fe9",
+        "filename": "src/tint/lang/hlsl/type/matrix_layout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-06T20:31:55Z",
+      "side": 1,
+      "message": "```suggestion\n    kRowMajor \u003d 0,\n    kColMajor \u003d 1,\n```",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "eb678e6b74f1226b9daee9d0ea1d19d5724ea93d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
