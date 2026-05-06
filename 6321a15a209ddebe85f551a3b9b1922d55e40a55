@@ -46,6 +46,30 @@
       },
       "revId": "6321a15a209ddebe85f551a3b9b1922d55e40a55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a62c36ab_11fe6314",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2026-05-06T23:08:28Z",
+      "side": 1,
+      "message": "Seems unfortunate that this validation error prevents us optimizing our clears. We should consider disabling this particular validation error instead of weakening the logic in CommandBufferD3D12.cpp.",
+      "parentUuid": "e1538b06_538feed4",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 69
+      },
+      "revId": "6321a15a209ddebe85f551a3b9b1922d55e40a55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
