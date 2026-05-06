@@ -186,6 +186,8 @@ const char* str(BuiltinFn i) {
             return "SampleGrad";
         case BuiltinFn::kSampleLevel:
             return "SampleLevel";
+        case BuiltinFn::kSplat:
+            return "Splat";
     }
     return "<unknown>";
 }
@@ -265,6 +267,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kPackClampS8:
         case BuiltinFn::kConvert:
         case BuiltinFn::kSign:
+        case BuiltinFn::kSplat:
         case BuiltinFn::kUnpackS8S32:
         case BuiltinFn::kUnpackU8U32:
         case BuiltinFn::kWaveGetLaneIndex:
