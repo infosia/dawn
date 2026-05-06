@@ -325,22 +325,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DualSourceBlending);
     }
 
-    if (mDeviceInfo.HasExt(DeviceExt::RasterizationOrderAttachmentAccess) &&
-        mDeviceInfo.rasterizationOrderAttachmentAccessFeatures
-                .rasterizationOrderColorAttachmentAccess == VK_TRUE) {
-        // There are four possible ways FramebufferFetch can be supported. Currently only #1 is
-        // implemented.
-        //
-        // 1. Coherent with rasterization order extension.
-        // 2. Coherent without rasterization order extension but when GPU architecture supports
-        //    coherent input attachment reads. This needs a subpass self dependency to be added.
-        // 3. Non-coherent. This needs both a subpass self dependency and barriers to be
-        //    inserted before draws that use FramebufferFetch.
-        // 4. When dynamic rendering is used FramebufferFetch requires the dynamic rendering local
-        //    storage extension and barriers to be inserted before draws that use FramebufferFetch.
-        EnableFeature(Feature::FramebufferFetch);
-    }
-
     if (mDeviceInfo.features.shaderClipDistance == VK_TRUE) {
         EnableFeature(Feature::ClipDistances);
     }

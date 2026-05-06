@@ -114,7 +114,6 @@ enum class DeviceExt : uint32_t {
     CooperativeMatrix,
     MultisampledRenderToSingleSampled,
     PhysicalDeviceDrm,
-    RasterizationOrderAttachmentAccess,
 
     // External* extensions
     ExternalMemoryAndroidHardwareBuffer,
