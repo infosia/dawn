@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53855321_3064a5c4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2026-05-06T23:12:06Z",
+      "side": 0,
+      "message": "@xing.xu@intel.com, have a quick question for you. I don\u0027t fully understand why the resolve rect needs to not match both render pass dimensions in order to trigger a clear. Was this by design?",
+      "range": {
+        "startLine": 913,
+        "startChar": 12,
+        "endLine": 914,
+        "endChar": 71
+      },
+      "revId": "3976d41a84871bf115cb784734695c670e955693",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
