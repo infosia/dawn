@@ -683,10 +683,13 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
             flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
         } else {
             flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
-                // Automatically set "input attachment" usage so that the texture would be
-                // used in ExpandResolveTexture subpass.
+
+            // Automatically set "input attachment" usage so that the texture can be used in
+            // ExpandResolveTexture subpass or with framebuffer fetch.
+            bool mayNeedToExpandTexture = !format.IsMultiPlanar() &&
+                                          usage & wgpu::TextureUsage::TextureBinding &&
+                                          device->HasFeature(Feature::DawnLoadResolveTexture);
+            if (mayNeedToExpandTexture || device->HasFeature(Feature::FramebufferFetch)) {
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
             }
         }

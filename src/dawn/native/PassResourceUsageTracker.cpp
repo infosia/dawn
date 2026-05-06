@@ -317,9 +317,13 @@ RenderPassResourceUsageTracker::~RenderPassResourceUsageTracker() = default;
 RenderPassResourceUsageTracker& RenderPassResourceUsageTracker::operator=(
     RenderPassResourceUsageTracker&&) = default;
 
+void RenderPassResourceUsageTracker::MarkFramebufferFetchUsed() {
+    mFramebufferFetchUsed = true;
+}
+
 RenderPassResourceUsage RenderPassResourceUsageTracker::AcquireResourceUsage() {
     RenderPassResourceUsage result;
-    *static_cast<SyncScopeResourceUsage*>(&result) = AcquireSyncScopeUsage();
+    static_cast<SyncScopeResourceUsage&>(result) = AcquireSyncScopeUsage();
 
     result.querySets.reserve(mQueryAvailabilities.size());
     result.queryAvailabilities.reserve(mQueryAvailabilities.size());
@@ -330,6 +334,8 @@ RenderPassResourceUsage RenderPassResourceUsageTracker::AcquireResourceUsage() {
     }
 
     mQueryAvailabilities.clear();
+
+    result.usesFramebufferFetch = mFramebufferFetchUsed;
 
     return result;
 }

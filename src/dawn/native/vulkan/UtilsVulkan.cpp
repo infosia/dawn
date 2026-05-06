@@ -72,6 +72,10 @@ uint32_t ToPushConstantBytes(const ImmediateConstantMask& immediates) {
     return static_cast<uint32_t>(immediates.count()) * kImmediateConstantElementByteSize;
 }
 
+uint32_t AttachmentCount(const ColorAttachmentMask& mask) {
+    return static_cast<uint32_t>(mask.count());
+}
+
 VkCompareOp ToVulkanCompareOp(wgpu::CompareFunction op) {
     switch (op) {
         case wgpu::CompareFunction::Never:

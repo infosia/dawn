@@ -104,6 +104,7 @@ struct RenderPassResourceUsage : public SyncScopeResourceUsage {
     // Storage to track the occlusion queries used during the pass.
     std::vector<QuerySetBase*> querySets;
     std::vector<ityp::vector<QueryIndex, bool>> queryAvailabilities;
+    bool usesFramebufferFetch = false;
 };
 
 using RenderPassUsages = ityp::vector<PassIndex, RenderPassResourceUsage>;
