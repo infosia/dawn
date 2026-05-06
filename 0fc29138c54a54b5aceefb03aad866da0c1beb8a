@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "0fc29138c54a54b5aceefb03aad866da0c1beb8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bd1ae24_188042a0",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-06T18:21:37Z",
+      "side": 1,
+      "message": "you were going to add a default reserve here.\nlike 128 or something.\n\nDont worry for this CL",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 57
+      },
+      "revId": "0fc29138c54a54b5aceefb03aad866da0c1beb8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
