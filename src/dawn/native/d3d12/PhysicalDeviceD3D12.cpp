@@ -205,6 +205,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.supportsWaveOps && mDeviceInfo.highestSupportedShaderModel >= 66) {
         EnableFeature(Feature::SubgroupSizeControl);
     }
+
+    if (mDeviceInfo.supportsInt64Atomics) {
+        EnableFeature(Feature::AtomicVec2uMinMax);
+    }
 #endif
 
     D3D12_FEATURE_DATA_FORMAT_SUPPORT bgra8unormFormatInfo = {};
@@ -448,6 +452,7 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
             case wgpu::FeatureName::Subgroups:
             case wgpu::FeatureName::SubgroupSizeControl:
             case wgpu::FeatureName::ChromiumExperimentalSamplingResourceTable:
+            case wgpu::FeatureName::AtomicVec2uMinMax:
                 return FeatureValidationResult(
                     absl::StrFormat("Feature %s requires DXC for D3D12.", feature));
             default:
@@ -463,6 +468,13 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
             if (!(GetAppliedShaderModelUnderToggles(toggles) >= 62)) {
                 return FeatureValidationResult(absl::StrFormat(
                     "Feature %s requires shader model 6.2 or higher for D3D12.", feature));
+            }
+            break;
+        }
+        case wgpu::FeatureName::AtomicVec2uMinMax: {
+            if (!(GetAppliedShaderModelUnderToggles(toggles) >= 66)) {
+                return FeatureValidationResult(absl::StrFormat(
+                    "Feature %s requires shader model 6.6 or higher for D3D12.", feature));
             }
             break;
         }
