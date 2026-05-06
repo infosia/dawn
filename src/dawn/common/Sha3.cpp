@@ -329,9 +329,17 @@ typename Sha3<OutputLength>::Output Sha3<OutputLength>::Finalize() {
 
 // static
 template <size_t OutputLength>
-typename Sha3<OutputLength>::Output Sha3<OutputLength>::Hash(const void* data, size_t size) {
+Sha3<OutputLength>::Output Sha3<OutputLength>::Hash(const void* data, size_t size) {
     Sha3 sha;
     sha.Update(data, size);
+    return sha.Finalize();
+}
+
+// static
+template <size_t OutputLength>
+Sha3<OutputLength>::Output Sha3<OutputLength>::Hash(std::span<const std::byte> data) {
+    Sha3 sha;
+    sha.Update(data.data(), data.size());
     return sha.Finalize();
 }
 
