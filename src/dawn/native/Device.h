@@ -291,7 +291,7 @@ class DeviceBase : public ErrorSink,
     TextureBase* APICreateTexture(const TextureDescriptor* descriptor);
 
     InternalPipelineStore* GetInternalPipelineStore();
-    ResourceTableDefaultResources* GetResourceTableDefaultResources();
+    ResultOrError<ResourceTableDefaultResources*> GetOrCreateResourceTableDefaultsResource();
 
     // For Dawn Wire
     BufferBase* APICreateErrorBuffer(const BufferDescriptor* desc);

@@ -36,7 +36,7 @@
 namespace dawn::native {
 
 namespace {
-constexpr auto kDefaults = std::array{
+constexpr auto kDefaults = ityp::array<ResourceTableSlot, tint::ResourceType, 35>{
     tint::ResourceType::kTexture1d_f32_filterable,
     tint::ResourceType::kTexture2d_f32_filterable,
     tint::ResourceType::kTexture2dArray_f32_filterable,
@@ -79,17 +79,7 @@ constexpr auto kDefaults = std::array{
     tint::ResourceType::kSampler_non_filtering,
     tint::ResourceType::kSampler_comparison,
 };
-
 constexpr auto kNumDefaultSamplers = ResourceTableSlot{3};
-
-// Mapping of tint::ResourceType to its index in kDefaults, computed at compile time.
-constexpr auto kIndexOfDefault = [] {
-    ityp::array<tint::ResourceType, uint32_t, kDefaults.size()> indices{};
-    for (uint32_t i = 0; i < kDefaults.size(); ++i) {
-        indices[tint::ResourceType(i)] = uint32_t(kDefaults[i]);
-    }
-    return indices;
-}();
 
 // This helper function is used in ASSERTs to check that the default resources are compatible with
 // the typeIds that they will be used as defaults for.
@@ -133,6 +123,14 @@ constexpr auto kIndexOfDefault = [] {
 }  // namespace
 
 // static
+ResultOrError<std::unique_ptr<ResourceTableDefaultResources>> ResourceTableDefaultResources::Create(
+    DeviceBase* device) {
+    auto defaults = std::make_unique<ResourceTableDefaultResources>();
+    DAWN_TRY(defaults->Initialize(device));
+    return defaults;
+}
+
+// static
 ityp::span<ResourceTableSlot, const tint::ResourceType> ResourceTableDefaultResources::GetOrder() {
     return {kDefaults.data(), ResourceTableSlot(uint32_t(kDefaults.size()))};
 }
@@ -152,17 +150,20 @@ ResourceTableSlot ResourceTableDefaultResources::GetNonSamplerCount() {
     return GetCount() - GetSamplerCount();
 }
 
-// static
-ResourceTableSlot ResourceTableDefaultResources::IndexOf(tint::ResourceType resourceType) {
-    return ResourceTableSlot{kIndexOfDefault[resourceType]};
+TextureViewBase* ResourceTableDefaultResources::GetPlaceholderSampleableTexture() const {
+    return mPlaceholderSampleableTexture.Get();
 }
 
-ResultOrError<ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource>>
-ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
-    if (!mDefaultResources.empty()) {
-        return {{mDefaultResources.data(), mDefaultResources.size()}};
-    }
+SamplerBase* ResourceTableDefaultResources::GetPlaceholderSampler() const {
+    return mPlaceholderSampler.Get();
+}
 
+ityp::span<ResourceTableSlot, const ResourceTableDefaultResources::Resource>
+ResourceTableDefaultResources::GetResources() const {
+    return {mDefaultResources.data(), mDefaultResources.size()};
+}
+
+MaybeError ResourceTableDefaultResources::Initialize(DeviceBase* device) {
     // Each resource is added in the order specified by GetOrder()
     auto AddDefaultTextureView = [&](TextureBase* texture, const TextureViewDescriptor* viewDesc =
                                                                nullptr) -> MaybeError {
@@ -237,6 +238,11 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
             DAWN_TRY(AddDefaultTextureView(t2D.Get(), &vDesc));
 
             DAWN_TRY(AddDefaultTextureView(t3D.Get()));
+        }
+
+        if (mPlaceholderSampleableTexture == nullptr) {
+            DAWN_TRY_ASSIGN(mPlaceholderSampleableTexture,
+                            device->CreateTextureView(t2D.Get(), nullptr));
         }
     }
 
@@ -314,6 +320,8 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
             DAWN_TRY_ASSIGN(s, device->CreateSampler(&sDesc));
             AddDefaultSampler(s);  // Filtering
             AddDefaultSampler(s);  // Non-filtering
+
+            mPlaceholderSampler = s;
         }
         // Comparison
         {
@@ -327,7 +335,7 @@ ResourceTableDefaultResources::GetOrCreate(DeviceBase* device) {
         }
     }
 
-    return {{mDefaultResources.data(), mDefaultResources.size()}};
+    return {};
 }
 
 }  // namespace dawn::native

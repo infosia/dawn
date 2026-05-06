@@ -196,11 +196,10 @@ MaybeError ResourceTableBase::InitializeBase() {
     DAWN_TRY(mMetadataBuffer->Unmap());
 
     // Add the default resources at the end of the table.
-    ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource> defaultResources;
-    DAWN_TRY_ASSIGN(defaultResources,
-                    device->GetResourceTableDefaultResources()->GetOrCreate(device));
+    ResourceTableDefaultResources* defaultResources;
+    DAWN_TRY_ASSIGN(defaultResources, device->GetOrCreateResourceTableDefaultsResource());
 
-    for (auto [i, defaultResource] : Enumerate(defaultResources)) {
+    for (auto [i, defaultResource] : Enumerate(defaultResources->GetResources())) {
         BindingResource entryContents;
         MatchVariant(
             defaultResource,

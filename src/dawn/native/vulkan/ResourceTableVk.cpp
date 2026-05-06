@@ -257,18 +257,12 @@ MaybeError ResourceTable::UpdateMetadataBuffer(CommandRecordingContext* recordin
 MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>& diffs) {
     Device* device = ToBackend(GetDevice());
 
-    ityp::span<ResourceTableSlot, ResourceTableDefaultResources::Resource> defaultResources;
-    DAWN_TRY_ASSIGN(defaultResources,
-                    device->GetResourceTableDefaultResources()->GetOrCreate(device));
+    ResourceTableDefaultResources* defaultResources;
+    DAWN_TRY_ASSIGN(defaultResources, device->GetOrCreateResourceTableDefaultsResource());
 
-    // For combined texture samplers, the exact type of texture or sampler we set in the descriptor
-    // doesn't matter as long as it's not used by the shader, so we grab any one of each.
-    auto textureIndex =
-        ResourceTableDefaultResources::IndexOf(tint::ResourceType::kTexture1d_f32_filterable);
-    auto samplerIndex =
-        ResourceTableDefaultResources::IndexOf(tint::ResourceType::kSampler_filtering);
-    auto unusedTextureView = std::get<Ref<TextureViewBase>>(defaultResources[textureIndex]);
-    auto unusedSampler = std::get<Ref<SamplerBase>>(defaultResources[samplerIndex]);
+    TextureView* placeholderTextureView =
+        ToBackend(defaultResources->GetPlaceholderSampleableTexture());
+    Sampler* placeholderSampler = ToBackend(defaultResources->GetPlaceholderSampler());
 
     std::vector<VkDescriptorImageInfo> imageWrites;
     std::vector<uint32_t> arrayElements;
@@ -289,7 +283,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
                 }
 
                 VkDescriptorImageInfo imageWrite = {
-                    .sampler = ToBackend(unusedSampler)->GetHandle(),
+                    .sampler = placeholderSampler->GetHandle(),
                     .imageView = handle,
                     .imageLayout = ToBackend(textureView)
                                        ->VulkanImageLayout(wgpu::TextureUsage::TextureBinding),
@@ -305,7 +299,7 @@ MaybeError ResourceTable::UpdateResourceBindings(const std::vector<ResourceDiff>
 
                 VkDescriptorImageInfo imageWrite = {
                     .sampler = handle,
-                    .imageView = ToBackend(unusedTextureView)->GetHandle(),
+                    .imageView = placeholderTextureView->GetHandle(),
                     .imageLayout = VK_IMAGE_LAYOUT_GENERAL,
                 };
                 imageWrites.push_back(imageWrite);
