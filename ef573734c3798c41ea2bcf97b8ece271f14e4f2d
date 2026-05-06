@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58449e45_a9e1f479",
+        "filename": "src/dawn/tests/end2end/ArchTierLimitsExhaustive.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-06T14:25:56Z",
+      "side": 1,
+      "message": "seems to me that qualcomm is missing here?",
+      "range": {
+        "startLine": 447,
+        "startChar": 269,
+        "endLine": 447,
+        "endChar": 292
+      },
+      "revId": "ef573734c3798c41ea2bcf97b8ece271f14e4f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f3d45f_35a5cabc",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 45
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-06T14:25:56Z",
+      "side": 1,
+      "message": "Note the 64 suffix.\nhttps://microsoft.github.io/DirectX-Specs/d3d/HLSL_SM_6_6_Int64_and_Float_Atomics.html#interlockedmax",
+      "range": {
+        "startLine": 1089,
+        "startChar": 20,
+        "endLine": 1089,
+        "endChar": 36
+      },
+      "revId": "ef573734c3798c41ea2bcf97b8ece271f14e4f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
