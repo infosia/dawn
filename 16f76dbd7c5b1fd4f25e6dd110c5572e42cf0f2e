@@ -349,6 +349,30 @@
       },
       "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ab9ce6d_9143bd2c",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-06T21:56:03Z",
+      "side": 1,
+      "message": "I think we\u0027re going to need to add this nuget package to CIPD (like I\u0027m trying to do with WARP). This way we can pull it in via gclient and DEPS as we normally do, and it will automatically roll in the latest versions.",
+      "parentUuid": "783b3856_dd18e831",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
