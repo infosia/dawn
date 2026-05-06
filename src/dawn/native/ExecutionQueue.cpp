@@ -49,14 +49,14 @@ void PopWaitingTasksInto(ExecutionSerial serial,
 }  // namespace
 
 inline QueuePriority& operator-=(QueuePriority& priority, size_t i) {
-    DAWN_CHECK(static_cast<size_t>(priority) >= i);
+    DAWN_ASSERT(static_cast<size_t>(priority) >= i);
     priority = static_cast<QueuePriority>(static_cast<size_t>(priority) - i);
     return priority;
 }
 
 ExecutionQueueBase::~ExecutionQueueBase() {
     for (QueuePriority p = QueuePriority::Highest; p >= QueuePriority::Lowest; p -= 1) {
-        DAWN_CHECK(mState->mWaitingTasks[p].Empty());
+        DAWN_ASSERT(mState->mWaitingTasks[p].Empty());
     }
 }
 
@@ -153,7 +153,7 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     // Currently waiting for idle for destruction requires the device lock to be held.
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
     mState.Use<NotifyType::None>([](auto state) {
-        DAWN_CHECK(!state->mWaitingForIdle);
+        DAWN_ASSERT(!state->mWaitingForIdle);
         state->mWaitingForIdle = true;
     });
 
@@ -186,7 +186,7 @@ MaybeError ExecutionQueueBase::WaitForIdleForDestruction() {
     });
 
     // Always call the processors before processing individual tasks.
-    DAWN_CHECK(processors);
+    DAWN_ASSERT(processors);
     for (QueuePriority p = QueuePriority::Highest; p >= QueuePriority::Lowest; p -= 1) {
         for (auto& processor : (*processors)[p]) {
             processor->UpdateCompletedSerialTo(serial);
@@ -207,8 +207,8 @@ MaybeError ExecutionQueueBase::CheckPassedSerials() {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
 
-    DAWN_CHECK(completedSerial <=
-               ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
+    DAWN_ASSERT(completedSerial <=
+                ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
 
     // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
     mCompletedSerial.Use(
@@ -220,8 +220,8 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial(QueuePriority priority) {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
 
-    DAWN_CHECK(completedSerial <=
-               ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
+    DAWN_ASSERT(completedSerial <=
+                ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
     UpdateCompletedSerialTo(priority, completedSerial);
     return {};
 }
@@ -229,7 +229,7 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial(QueuePriority priority) {
 void ExecutionQueueBase::RegisterSerialProcessor(QueuePriority priority,
                                                  Ref<SerialProcessor>&& serialProcessor) {
     // Serial processor registration should always happen at queue initialization.
-    DAWN_CHECK(mCompletedSerial.Use<NotifyType::None>([](auto completedSerial) {
+    DAWN_ASSERT(mCompletedSerial.Use<NotifyType::None>([](auto completedSerial) {
         return *completedSerial;
     }) == static_cast<uint64_t>(kBeginningOfGPUTime));
     mState.Use<NotifyType::None>([&](auto state) {
@@ -328,11 +328,11 @@ void ExecutionQueueBase::UpdateCompletedSerialToInternal(QueuePriority priority,
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
-    DAWN_CHECK(serial <= GetPendingCommandSerial());
+    DAWN_ASSERT(serial <= GetPendingCommandSerial());
     if (serial > GetLastSubmittedCommandSerial()) {
         ForceEventualFlushOfCommands();
         DAWN_TRY(SubmitPendingCommands());
-        DAWN_CHECK(serial <= GetLastSubmittedCommandSerial());
+        DAWN_ASSERT(serial <= GetLastSubmittedCommandSerial());
     }
     return {};
 }

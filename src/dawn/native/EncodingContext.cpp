@@ -42,7 +42,7 @@ EncodingContext::EncodingContext(DeviceBase* device, const ApiObjectBase* initia
       mTopLevelEncoder(initialEncoder),
       mCurrentEncoder(initialEncoder),
       mStatus(Status::Open) {
-    DAWN_CHECK(!initialEncoder->IsError());
+    DAWN_ASSERT(!initialEncoder->IsError());
 }
 
 EncodingContext::EncodingContext(DeviceBase* device, ErrorMonad::ErrorTag tag)
@@ -70,7 +70,7 @@ void EncodingContext::Destroy() {
 }
 
 CommandIterator EncodingContext::AcquireCommands() {
-    DAWN_CHECK(!mWereCommandsAcquired);
+    DAWN_ASSERT(!mWereCommandsAcquired);
     mWereCommandsAcquired = true;
 
     CommitCommands(std::move(mPendingCommands));
@@ -111,7 +111,7 @@ void EncodingContext::HandleError(std::unique_ptr<ErrorData> error) {
 }
 
 void EncodingContext::WillBeginRenderPass() {
-    DAWN_CHECK(mCurrentEncoder == mTopLevelEncoder);
+    DAWN_ASSERT(mCurrentEncoder == mTopLevelEncoder);
     if (mDevice->IsValidationEnabled() || mDevice->MayRequireDuplicationOfIndirectParameters()) {
         // When validation is enabled or indirect parameters require duplication, we are going
         // to want to capture all commands encoded between and including BeginRenderPassCmd and
@@ -125,8 +125,8 @@ void EncodingContext::WillBeginRenderPass() {
 
 void EncodingContext::EnterPass(const ApiObjectBase* passEncoder) {
     // Assert we're at the top level.
-    DAWN_CHECK(mCurrentEncoder == mTopLevelEncoder);
-    DAWN_CHECK(passEncoder != nullptr);
+    DAWN_ASSERT(mCurrentEncoder == mTopLevelEncoder);
+    DAWN_ASSERT(passEncoder != nullptr);
 
     mCurrentEncoder = passEncoder;
 }
@@ -135,8 +135,8 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                                            RenderPassResourceUsageTracker usageTracker,
                                            CommandEncoder* commandEncoder,
                                            IndirectDrawMetadata indirectDrawMetadata) {
-    DAWN_CHECK(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_CHECK(mCurrentEncoder == passEncoder);
+    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
+    DAWN_ASSERT(mCurrentEncoder == passEncoder);
 
     mCurrentEncoder = mTopLevelEncoder;
 
@@ -175,8 +175,8 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
 
 void EncodingContext::ExitComputePass(const ApiObjectBase* passEncoder,
                                       ComputePassResourceUsage usages) {
-    DAWN_CHECK(mCurrentEncoder != mTopLevelEncoder);
-    DAWN_CHECK(mCurrentEncoder == passEncoder);
+    DAWN_ASSERT(mCurrentEncoder != mTopLevelEncoder);
+    DAWN_ASSERT(mCurrentEncoder == passEncoder);
 
     mCurrentEncoder = mTopLevelEncoder;
     mComputePassUsages.push_back(std::move(usages));
@@ -192,29 +192,29 @@ void EncodingContext::EnsurePassExited(const ApiObjectBase* passEncoder) {
 }
 
 const RenderPassUsages& EncodingContext::GetRenderPassUsages() const {
-    DAWN_CHECK(!mWereRenderPassUsagesAcquired);
+    DAWN_ASSERT(!mWereRenderPassUsagesAcquired);
     return mRenderPassUsages;
 }
 
 RenderPassUsages EncodingContext::AcquireRenderPassUsages() {
-    DAWN_CHECK(!mWereRenderPassUsagesAcquired);
+    DAWN_ASSERT(!mWereRenderPassUsagesAcquired);
     mWereRenderPassUsagesAcquired = true;
     return std::move(mRenderPassUsages);
 }
 
 const ComputePassUsages& EncodingContext::GetComputePassUsages() const {
-    DAWN_CHECK(!mWereComputePassUsagesAcquired);
+    DAWN_ASSERT(!mWereComputePassUsagesAcquired);
     return mComputePassUsages;
 }
 
 ComputePassUsages EncodingContext::AcquireComputePassUsages() {
-    DAWN_CHECK(!mWereComputePassUsagesAcquired);
+    DAWN_ASSERT(!mWereComputePassUsagesAcquired);
     mWereComputePassUsagesAcquired = true;
     return std::move(mComputePassUsages);
 }
 
 std::vector<IndirectDrawMetadata> EncodingContext::AcquireIndirectDrawMetadata() {
-    DAWN_CHECK(!mWereIndirectDrawMetadataAcquired);
+    DAWN_ASSERT(!mWereIndirectDrawMetadataAcquired);
     mWereIndirectDrawMetadataAcquired = true;
     return std::move(mIndirectDrawMetadata);
 }
