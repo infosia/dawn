@@ -120,6 +120,8 @@ struct State {
                         case BuiltinFn::kInterlockedAdd:
                         case BuiltinFn::kInterlockedMax:
                         case BuiltinFn::kInterlockedMin:
+                        case BuiltinFn::kInterlockedMax64:
+                        case BuiltinFn::kInterlockedMin64:
                         case BuiltinFn::kInterlockedAnd:
                         case BuiltinFn::kInterlockedOr:
                         case BuiltinFn::kInterlockedXor:
