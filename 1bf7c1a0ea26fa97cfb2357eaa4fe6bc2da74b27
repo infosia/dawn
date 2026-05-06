@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dca0afb_1ee3f44d",
+        "filename": "src/tint/lang/hlsl/type/matrix_layout.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-06T20:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c351266_0328e282",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "1bf7c1a0ea26fa97cfb2357eaa4fe6bc2da74b27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7192448e_32b69d87",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ac4421_b0cbb857",
+        "filename": "src/tint/lang/hlsl/type/matrix_layout.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-06T20:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7192448e_32b69d87",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "1bf7c1a0ea26fa97cfb2357eaa4fe6bc2da74b27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b17887d8_2f0e6bee",
@@ -60,6 +108,24 @@
       "writtenOn": "2026-05-06T20:25:10Z",
       "side": 1,
       "message": "```suggestion\n#endif  // SRC_TINT_LANG_HLSL_TYPE_MATRIX_LAYOUT_H_\n```",
+      "revId": "1bf7c1a0ea26fa97cfb2357eaa4fe6bc2da74b27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2bfd472_d06cdb8d",
+        "filename": "src/tint/lang/hlsl/type/matrix_layout.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2026-05-06T20:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17887d8_2f0e6bee",
       "revId": "1bf7c1a0ea26fa97cfb2357eaa4fe6bc2da74b27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
