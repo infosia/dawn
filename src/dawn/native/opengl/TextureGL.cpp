@@ -720,7 +720,8 @@ GLenum TextureView::GetGLTarget() const {
 MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
                                           GLenum target,
                                           GLenum attachment,
-                                          GLuint depthSlice) {
+                                          GLuint depthSlice,
+                                          uint32_t samples) {
     DAWN_ASSERT(depthSlice <
                 static_cast<GLuint>(GetSingleSubresourceVirtualSize().depthOrArrayLayers));
 
@@ -755,6 +756,12 @@ MaybeError TextureView::BindToFramebuffer(const OpenGLFunctions& gl,
     if (ToBackend(GetTexture())->IsRenderbuffer()) {
         DAWN_GL_TRY(gl,
                     FramebufferRenderbuffer(target, attachment, GL_RENDERBUFFER, textureHandle));
+        return {};
+    }
+
+    if (samples > 1) {
+        DAWN_GL_TRY(gl, FramebufferTexture2DMultisampleEXT(target, attachment, textarget,
+                                                           textureHandle, mipLevel, samples));
         return {};
     }
 

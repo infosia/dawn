@@ -1316,9 +1316,16 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             TextureView* textureView = ToBackend(renderPass->colorAttachments[i].view.Get());
             GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
 
+            uint32_t samples = 1;
+            if (renderPass->msaaRenderToSingleSampled &&
+                textureView->GetTexture()->GetSampleCount() == 1) {
+                samples = renderPass->attachmentState->GetSampleCount();
+            }
+
             // Attach color buffers.
             DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment,
-                                                    renderPass->colorAttachments[i].depthSlice));
+                                                    renderPass->colorAttachments[i].depthSlice,
+                                                    samples));
             drawBuffers[i] = glAttachment;
             attachmentCount = i.PlusOne();
         }
@@ -1340,7 +1347,14 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_UNREACHABLE();
             }
 
-            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment));
+            uint32_t samples = 1;
+            if (renderPass->msaaRenderToSingleSampled &&
+                textureView->GetTexture()->GetSampleCount() == 1) {
+                samples = renderPass->attachmentState->GetSampleCount();
+            }
+
+            DAWN_TRY(
+                textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment, 0, samples));
         }
     }
 
