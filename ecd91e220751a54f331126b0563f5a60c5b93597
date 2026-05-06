@@ -136,6 +136,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "573b3836_055ad306",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2026-05-06T16:07:37Z",
+      "side": 1,
+      "message": "Ah I see, actually it looks like _all_ toggles are passed through to the inner device, and only an allowlist of toggles are _also_ used for the outer device.\n\n`TimestampQuantization` is in the allowlist so it\u0027s always either enabled on both or disabled on both so this should be fine.",
+      "parentUuid": "83e8eb21_ea5f3118",
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d26d04ba_bcd69113",
