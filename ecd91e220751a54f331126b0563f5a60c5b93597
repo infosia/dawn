@@ -120,6 +120,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83e8eb21_ea5f3118",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T15:37:45Z",
+      "side": 1,
+      "message": "As far as I can see from `DeviceWGPU`, all the toggles are passed, except ones in a small list that doesn\u0027t contain the ones referenced in this CL. So quantizations should be enabled by default, and be controlled by the toggles.",
+      "parentUuid": "cfa78052_ff2dbb8f",
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d26d04ba_bcd69113",
         "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests.cpp",
         "patchSetId": 3
