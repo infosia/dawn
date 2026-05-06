@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_STREAM_SOURCE_H_
 
 #include <cstddef>
+#include <span>
 
 #include "dawn/native/Error.h"
 
@@ -38,10 +39,15 @@ namespace dawn::native::stream {
 class Source {
   public:
     // Try to read `bytes` space from the source. The data must live as long as `Source.
-    // Returns MaybeError and writes result to |ptr| because ResultOrError uses
-    // a tagged pointer that must be 4-byte aligned. This function writes out |ptr|
-    // which may not be aligned.
-    virtual MaybeError Read(const void** ptr, size_t bytes) = 0;
+    virtual ResultOrError<std::span<const std::byte>> Read(size_t bytes) = 0;
+
+    // Helper that reads N instances of T.
+    template <typename T>
+    ResultOrError<std::span<const T>> ReadN(size_t count) {
+        std::span<const std::byte> data;
+        DAWN_TRY_ASSIGN(data, Read(sizeof(T) * count));
+        return std::span<const T>(reinterpret_cast<const T*>(data.data()), count);
+    }
 };
 
 }  // namespace dawn::native::stream

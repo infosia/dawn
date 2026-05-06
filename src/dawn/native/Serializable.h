@@ -60,7 +60,7 @@ class Serializable {
     Blob ToBlob() const {
         stream::ByteVectorSink sink;
         StreamIn(&sink, static_cast<const Derived&>(*this));
-        return CreateBlob(std::move(sink));
+        return Blob::Create(std::move(sink));
     }
 };
 

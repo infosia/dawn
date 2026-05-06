@@ -32,6 +32,8 @@
 
 #include "dawn/native/Blob.h"
 
+#include <algorithm>
+#include <span>
 #include <utility>
 
 #include "dawn/common/Assert.h"
@@ -40,7 +42,8 @@
 
 namespace dawn::native {
 
-Blob CreateBlob(size_t size) {
+// static
+Blob Blob::Create(size_t size) {
     if (size > 0) {
         uint8_t* ptr = new uint8_t[size];
         return Blob::UnsafeCreateWithDeleter(ptr, size, [=] { delete[] ptr; });
@@ -50,64 +53,75 @@ Blob CreateBlob(size_t size) {
 }
 
 // static
+Blob Blob::Create(Blob&& original, size_t offset) {
+    Blob result(original.mData.subspan(offset), std::move(original.mDeleter));
+    original.mData = {};
+    original.mDeleter = nullptr;
+    return result;
+}
+
+// static
 Blob Blob::UnsafeCreateWithDeleter(uint8_t* data, size_t size, std::function<void()> deleter) {
-    return Blob(data, size, deleter);
+    return Blob({reinterpret_cast<std::byte*>(data), size}, deleter);
 }
 
-Blob::Blob() : mData(nullptr), mSize(0), mDeleter({}) {}
+Blob::Blob() : mData({}), mDeleter({}) {}
 
-Blob::Blob(uint8_t* data, size_t size, std::function<void()> deleter)
-    : mData(data), mSize(size), mDeleter(std::move(deleter)) {
-    // It is invalid to make a blob that has null data unless its size is also zero.
-    DAWN_CHECK(data != nullptr || size == 0);
-}
+Blob::Blob(std::span<std::byte> data, std::function<void()> deleter)
+    : mData(data), mDeleter(std::move(deleter)) {}
 
-Blob::Blob(Blob&& rhs) : mData(rhs.mData), mSize(rhs.mSize) {
+Blob::Blob(Blob&& rhs) : mData(rhs.mData) {
     mDeleter = std::move(rhs.mDeleter);
-    rhs.mData = nullptr;
+    rhs.mData = {};
     rhs.mDeleter = nullptr;
 }
 
 Blob& Blob::operator=(Blob&& rhs) {
-    mData = rhs.mData;
-    mSize = rhs.mSize;
     if (mDeleter) {
         mDeleter();
     }
+    mData = rhs.mData;
     mDeleter = std::move(rhs.mDeleter);
-    rhs.mData = nullptr;
+    rhs.mData = {};
     rhs.mDeleter = nullptr;
     return *this;
 }
 
 Blob::~Blob() {
-    mData = nullptr;
     if (mDeleter) {
         mDeleter();
     }
 }
 
 bool Blob::Empty() const {
-    return mSize == 0;
+    return mData.empty();
 }
 
-const uint8_t* Blob::Data() const {
+std::span<const std::byte> Blob::Data() const {
     return mData;
 }
 
-uint8_t* Blob::Data() {
+std::span<std::byte> Blob::Data() {
     return mData;
+}
+
+const std::byte* Blob::DataPtr() const {
+    return mData.data();
+}
+
+std::byte* Blob::DataPtr() {
+    return mData.data();
 }
 
 size_t Blob::Size() const {
-    return mSize;
+    return mData.size();
 }
 
 bool Blob::operator==(const Blob& other) const {
-    if (other.Size() != Size()) {
+    if (Size() != other.Size()) {
         return false;
     }
-    return 0 == memcmp(Data(), other.Data(), Size());
+    return 0 == memcmp(DataPtr(), other.DataPtr(), Size());
 }
 
 template <>
@@ -115,8 +129,7 @@ void stream::Stream<Blob>::Write(stream::Sink* s, const Blob& b) {
     size_t size = b.Size();
     StreamIn(s, size);
     if (size > 0) {
-        void* ptr = s->GetSpace(size);
-        memcpy(ptr, b.Data(), size);
+        std::copy(b.Begin(), b.End(), s->GetSpace(size).begin());
     }
 }
 
@@ -125,10 +138,10 @@ MaybeError stream::Stream<Blob>::Read(stream::Source* s, Blob* b) {
     size_t size;
     DAWN_TRY(StreamOut(s, &size));
     if (size > 0) {
-        const void* ptr;
-        DAWN_TRY(s->Read(&ptr, size));
-        *b = CreateBlob(size);
-        memcpy(b->Data(), ptr, size);
+        std::span<const std::byte> ptr;
+        DAWN_TRY_ASSIGN(ptr, s->Read(size));
+        *b = Blob::Create(size);
+        std::copy(ptr.begin(), ptr.end(), b->Begin());
     } else {
         *b = Blob();
     }
