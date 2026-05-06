@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04bc68c5_ab8e4dcf",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T07:55:58Z",
+      "side": 1,
+      "message": "There are multiple issues with this change:\n\n - It breaks the logic when running on non-simulator devices because the depth mode can never go back to clip in a command buffer execution.\n - It\u0027s not clear why `UsesFragDepth` is needed.\n - The user is not notified of the functionality not working as expected.\n \nInstead we should gate the support for `unclipped-depth` in `dawn/native/metal/PhysicalDeviceMTL` to not be added when compiling for the simulator. This will require a new entry in `common/Platform.h`. Then here we\u0027d use the same define to skip the call to `setDepthClipMode`.",
+      "revId": "e7e09d72d935bc3e712b13e426ced3f12cb07cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
