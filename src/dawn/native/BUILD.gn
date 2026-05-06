@@ -412,7 +412,6 @@ source_set("sources") {
     "stream/ByteVectorSink.h",
     "stream/Sink.h",
     "stream/Source.h",
-    "stream/Stream.cpp",
     "stream/Stream.h",
     "utils/WGPUHelpers.cpp",
     "utils/WGPUHelpers.h",

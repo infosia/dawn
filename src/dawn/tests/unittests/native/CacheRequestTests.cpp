@@ -253,7 +253,7 @@ TEST_P(CacheRequestTests, CacheHit) {
     static constexpr char kCachedData[] = "hello world!";
     // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
     Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
-        sizeof(kCachedData), kCachedData);
+        std::as_bytes(std::span(kCachedData)));
 
     // Mock a cache hit, and load the cached data.
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
@@ -303,7 +303,7 @@ TEST_P(CacheRequestTests, CacheHitError) {
     static constexpr char kCachedData[] = "hello world!";
     // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
     Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
-        sizeof(kCachedData), kCachedData);
+        std::as_bytes(std::span(kCachedData)));
 
     // Mock a cache hit, and load the cached data.
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
@@ -406,7 +406,7 @@ TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
     static constexpr size_t kCachedDataSize = sizeof(kCachedData);
     // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
     Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
-        kCachedDataSize, kCachedData);
+        std::as_bytes(std::span(kCachedData)));
     const size_t sizeWithHash = actualStoredData.Size();
     // With hash validation enabled, the actual stored data size is larger than kCachedData.
     ASSERT_GT(sizeWithHash, kCachedDataSize);

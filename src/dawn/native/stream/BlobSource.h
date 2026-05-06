@@ -39,7 +39,7 @@ class BlobSource : public Source {
     explicit BlobSource(Blob&& blob);
 
     // stream::Source implementation.
-    MaybeError Read(const void** ptr, size_t bytes) override;
+    ResultOrError<std::span<const std::byte>> Read(size_t bytes) override;
 
   private:
     const Blob mBlob;
