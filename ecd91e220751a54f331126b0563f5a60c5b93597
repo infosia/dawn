@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e73f9d59_70333a7f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6dc5533_4455fe74",
+      "range": {
+        "startLine": 1075,
+        "startChar": 0,
+        "endLine": 1076,
+        "endChar": 0
+      },
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e02bcc6e_fc17945f",
@@ -60,6 +84,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbc9057c_c7c4cae8",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:15:40Z",
+      "side": 1,
+      "message": "This is always true when Dawn runs on Dawn, unless the toggles are passed.\n\nI did this because I remember that Gregg had to disable the conversion shader for some reason on the WebGPU-WebGPU backend, and this CL would otherwise reenable it.",
+      "parentUuid": "e02bcc6e_fc17945f",
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d26d04ba_bcd69113",
         "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests.cpp",
         "patchSetId": 3
@@ -71,6 +113,30 @@
       "writtenOn": "2026-05-06T13:08:36Z",
       "side": 1,
       "message": "µNit: maybe factor out this part of the expression to a variable because it\u0027s confusing that one of these is negative and one is positive",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 67
+      },
+      "revId": "ecd91e220751a54f331126b0563f5a60c5b93597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77dd2403_1aafe37c",
+        "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26d04ba_bcd69113",
       "range": {
         "startLine": 289,
         "startChar": 12,

@@ -16,6 +16,24 @@
       "message": "Was this comment obsolete?",
       "revId": "579447cf71643bde5652e5bd5e81eb55538e1ba0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51035ed3_dd7ae000",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-06T14:15:40Z",
+      "side": 0,
+      "message": "It was an oversight, but since this will no longer be the case once immediates are used for `TimestampParams`, let\u0027s remove it.",
+      "parentUuid": "89dade65_f78ba752",
+      "revId": "579447cf71643bde5652e5bd5e81eb55538e1ba0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
