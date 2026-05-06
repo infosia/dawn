@@ -31,6 +31,7 @@
 #include <functional>
 #include <unordered_map>
 
+#include "dawn/common/MatchVariant.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/BindingInfo.h"
@@ -180,6 +181,8 @@ tint::Bindings GenerateBindingRemapping(const PipelineLayoutBase* layout,
 
     return bindings;
 }
+
+tint::ResourceType BindingLayoutToResourceType(const BindingInfo& bi);
 
 }  // namespace dawn::native
 
