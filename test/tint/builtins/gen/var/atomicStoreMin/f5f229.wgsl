@@ -35,6 +35,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// [hlsl-dxc] flags: --hlsl-shader-model 6.6
 // [msl] flags: --msl-version 2.4
 
 enable atomic_vec2u_min_max;
