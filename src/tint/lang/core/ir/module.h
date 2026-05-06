@@ -35,6 +35,7 @@
 #include "src/tint/lang/core/ir/constant.h"
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/instruction.h"
+#include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/value.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/containers/filtered_iterator.h"
@@ -209,6 +210,9 @@ class Module {
 
     /// An optional callback to receive an ICE generated while processing this module.
     InternalCompilerErrorCallback ice_callback;
+
+    /// The capabilities enabled for the module.
+    Capabilities capabilities;
 
   private:
     /// @returns the next instruction id for this module

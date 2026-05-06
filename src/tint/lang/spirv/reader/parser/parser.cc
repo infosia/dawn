@@ -94,7 +94,9 @@ constexpr auto kTargetEnv = SPV_ENV_VULKAN_1_1;
 /// Validates the SPIR-V module and then parses it to produce a Tint IR module.
 class Parser {
   public:
-    explicit Parser(const Options& options) : options_(options) {}
+    explicit Parser(const Options& options) : options_(options) {
+        ir_.capabilities.Add(core::ir::Capability::kAllowPointSizeBuiltin);
+    }
     ~Parser() = default;
 
     /// @param spirv the SPIR-V binary data

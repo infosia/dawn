@@ -780,7 +780,7 @@ TEST_F(IR_ValidatorTest, Var_Struct_MultipleIOAnnotations) {
 
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
-                                                   {mod.symbols.New("a"), ty.f32(), attr},
+                                                   {mod.symbols.New("a"), ty.vec4<f32>(), attr},
                                                });
     auto* v = b.Var(ty.ptr(AddressSpace::kOut, str_ty, read_write));
     mod.root_block->Append(v);
