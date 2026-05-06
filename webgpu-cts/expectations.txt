@@ -440,6 +440,7 @@ crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,shader_
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:shader,execution,shader_io,vertex_builtins:outputs,clip_distances:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_color_attachment_and_resolve_target:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,canvas,getCurrentTexture:usage_as_texture_binding:* [ Skip ]
+crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,canvas:*canvasType="offscreen";* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_2D_Canvas:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:* [ Skip ]
 crbug.com/507502289 [ android android-pixel-10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:* [ Skip ]
