@@ -136,5 +136,13 @@ TEST_F(EnumeratorTest, ConstContainer) {
     }
 }
 
+// Test that Enumerate(rvalue reference) works.
+TEST_F(EnumeratorTest, RValueReference) {
+    auto F = []() { return ityp::array<Int, uint32_t, 3>{37u, 45u, 67u}; };
+    for ([[maybe_unused]] auto [i, value] : Enumerate(F())) {
+        // nothing, this is just a compile check
+    }
+}
+
 }  // anonymous namespace
 }  // namespace dawn
