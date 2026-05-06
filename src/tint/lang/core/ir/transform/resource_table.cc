@@ -127,9 +127,11 @@ struct State {
             call->Destroy();
         }
         for (auto* call : get_resource_calls) {
-            auto* binding_ty = call->ExplicitTemplateParams()[0];
-            auto* idx = b.InsertConvertIfNeeded(ty.u32(), call->Args()[0]);
-            ReplaceUsages(call->Result(), binding_ty, idx);
+            b.InsertBefore(call, [&] {
+                auto* binding_ty = call->ExplicitTemplateParams()[0];
+                auto* idx = b.InsertConvertIfNeeded(ty.u32(), call->Args()[0]);
+                ReplaceUsages(call->Result(), binding_ty, idx);
+            });
         }
         for (auto& entry : sampled_call_replacements) {
             GenSampledGetResource(entry.key, entry.value);
@@ -161,6 +163,8 @@ struct State {
                         core::ir::Value* idx) {
         // Get the table's API size, which is stored at index 0 in the metadata buffer
         auto* length = b.Access(ty.ptr<storage, u32, read>(), storage_buffer, 0_u);
+        ir.SetName(length, "tint_storage_metadata_length");
+
         auto* len_check = b.LessThan(idx, b.Load(length));
 
         auto* has_check = b.If(len_check);
@@ -170,7 +174,7 @@ struct State {
             auto* metadata_val = GetTypeId(idx);
 
             ir::Value* type_id = nullptr;
-            if (config->get_sampler_index_from_metadata) {
+            if (config->get_sampler_index_from_metadata && IsSampler(binding_type)) {
                 // Type id is in lower 16 bits
                 type_id = b.And(metadata_val, u32(0xFFFF))->Result();
             } else {
@@ -217,16 +221,15 @@ struct State {
                         case core::BuiltinFn::kTextureDimensions:
                         case core::BuiltinFn::kTextureNumLayers:
                         case core::BuiltinFn::kTextureNumLevels:
-                        case core::BuiltinFn::kTextureNumSamples:
-                            b.InsertBefore(call, [&] {
-                                auto* has_result = b.InstructionResult(ty.bool_());
-                                GenHasResource(has_result, binding_type, idx);
+                        case core::BuiltinFn::kTextureNumSamples: {
+                            auto* has_result = b.InstructionResult(ty.bool_());
+                            GenHasResource(has_result, binding_type, idx);
 
-                                ir::InstructionResult* res =
-                                    GenNonSampledGetResource(has_result, binding_type, idx);
-                                call->SetOperand(usage.operand_index, res);
-                            });
+                            ir::InstructionResult* res =
+                                GenNonSampledGetResource(has_result, binding_type, idx);
+                            call->SetOperand(usage.operand_index, res);
                             break;
+                        }
                         case core::BuiltinFn::kTextureGather:
                         case core::BuiltinFn::kTextureGatherCompare:
                         case core::BuiltinFn::kTextureSample:
@@ -309,7 +312,6 @@ struct State {
         return b.Load(access)->Result();
     }
 
-    // Note, assumes it's called inside a builder append block.
     void GenSampledGetResource(ir::CoreBuiltinCall* call, const Vector<Info, 2>& args) {
         // we can get the texture, or the sampler, or both.
         TINT_ASSERT(!args.IsEmpty() && args.Length() <= 2);
