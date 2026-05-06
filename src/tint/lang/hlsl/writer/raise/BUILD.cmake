@@ -63,6 +63,8 @@ tint_add_target(tint_lang_hlsl_writer_raise lib
   lang/hlsl/writer/raise/replace_default_only_switch.h
   lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc
   lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.h
+  lang/hlsl/writer/raise/replace_subgroup_matrix_init.cc
+  lang/hlsl/writer/raise/replace_subgroup_matrix_init.h
   lang/hlsl/writer/raise/resource_table_helper.cc
   lang/hlsl/writer/raise/resource_table_helper.h
   lang/hlsl/writer/raise/shader_io.cc
@@ -115,6 +117,7 @@ tint_add_target(tint_lang_hlsl_writer_raise_test test
   lang/hlsl/writer/raise/promote_initializers_test.cc
   lang/hlsl/writer/raise/replace_default_only_switch_test.cc
   lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores_test.cc
+  lang/hlsl/writer/raise/replace_subgroup_matrix_init_test.cc
   lang/hlsl/writer/raise/shader_io_test.cc
 )
 

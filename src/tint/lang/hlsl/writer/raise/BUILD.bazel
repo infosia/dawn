@@ -52,6 +52,7 @@ cc_library(
     "raise.cc",
     "replace_default_only_switch.cc",
     "replace_non_indexable_mat_vec_stores.cc",
+    "replace_subgroup_matrix_init.cc",
     "resource_table_helper.cc",
     "shader_io.cc",
   ],
@@ -68,6 +69,7 @@ cc_library(
     "raise.h",
     "replace_default_only_switch.h",
     "replace_non_indexable_mat_vec_stores.h",
+    "replace_subgroup_matrix_init.h",
     "resource_table_helper.h",
     "shader_io.h",
   ],
@@ -115,6 +117,7 @@ cc_library(
     "promote_initializers_test.cc",
     "replace_default_only_switch_test.cc",
     "replace_non_indexable_mat_vec_stores_test.cc",
+    "replace_subgroup_matrix_init_test.cc",
     "shader_io_test.cc",
   ],
   deps = [
