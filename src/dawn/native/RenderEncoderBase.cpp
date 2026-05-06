@@ -567,6 +567,10 @@ void RenderEncoderBase::APISetPipeline(RenderPipelineBase* pipeline) {
 
             mCommandBufferState.SetRenderPipeline(pipeline);
 
+            if (pipeline->UsesFramebufferFetch()) {
+                mUsageTracker.MarkFramebufferFetchUsed();
+            }
+
             SetRenderPipelineCmd* cmd =
                 allocator->Allocate<SetRenderPipelineCmd>(Command::SetRenderPipeline);
             cmd->pipeline = pipeline;

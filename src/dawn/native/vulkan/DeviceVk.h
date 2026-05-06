@@ -53,6 +53,7 @@ namespace dawn::native::vulkan {
 class BufferUploader;
 class FencedDeleter;
 class FramebufferCache;
+class FramebufferFetchHelper;
 class RenderPassCache;
 class ResourceMemoryAllocator;
 
@@ -85,6 +86,7 @@ class Device final : public DeviceBase {
     VkDevice GetVkDevice() const;
     uint32_t GetGraphicsQueueFamily() const;
     const VkDescriptorSetLayout& GetResourceTableLayout() const;
+    FramebufferFetchHelper* GetFramebufferFetchHelper();
 
     Ref<FencedDeleter>& GetFencedDeleter();
     FramebufferCache* GetFramebufferCache() const;
@@ -222,6 +224,7 @@ class Device final : public DeviceBase {
     uint32_t mMainQueueFamily = 0;
 
     VkDescriptorSetLayout mResourceTableLayout = VK_NULL_HANDLE;
+    std::unique_ptr<FramebufferFetchHelper> mFramebufferFetchHelper;
 
     // Entries can be appended without holding the device mutex.
     MutexProtected<SerialQueue<ExecutionSerial, Ref<DescriptorSetAllocator>>>
