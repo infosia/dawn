@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8117c831_325750e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2026-05-06T14:00:29Z",
+      "side": 1,
+      "message": "Hold off a full revert for now. \nSee if we can establish the cause.",
+      "revId": "4fce97fa86adaf619d1e5929861c5693ec33afb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
