@@ -298,6 +298,10 @@ fn vertex_main() -> VertexOutput {
 {{-   else if OverloadUsesType $overload "f16"}}
 // flags: --hlsl-shader-model 6.2
 
+{{/* HLSL LinAlg operations require Shader Model 6.10 (DXC) */}}
+{{-   else if (HasPrefix $builtin_name "subgroupMatrix")}}
+// [hlsl-dxc] flags: --hlsl-shader-model 6.10
+
 {{/* HLSL Wave operations require Shader Model 6.0 (DXC) */}}
 {{-   else if or (HasPrefix $builtin_name "subgroup") (HasPrefix $builtin_name "quad")}}
 // [hlsl-dxc] flags: --hlsl-shader-model 6.0
