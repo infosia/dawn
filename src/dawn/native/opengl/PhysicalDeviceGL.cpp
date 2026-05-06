@@ -309,6 +309,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (SupportTextureComponentSwizzle()) {
         EnableFeature(Feature::TextureComponentSwizzle);
     }
+
+    // MSAARenderToSingleSampled
+    if (mFunctions.IsGLExtensionSupported("GL_EXT_multisampled_render_to_texture")) {
+        EnableFeature(Feature::MSAARenderToSingleSampled);
+    }
 }
 
 namespace {
