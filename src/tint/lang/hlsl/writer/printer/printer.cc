@@ -106,6 +106,7 @@
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
 #include "src/tint/lang/hlsl/type/int8_t4_packed.h"
+#include "src/tint/lang/hlsl/type/matrix_layout.h"
 #include "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h"
 #include "src/tint/lang/hlsl/type/uint8_t4_packed.h"
 #include "src/tint/lang/hlsl/writer/common/options.h"
@@ -1299,6 +1300,18 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::Vector* v) { EmitConstantVector(out, c, v); },
             [&](const core::type::Matrix* m) { EmitConstantMatrix(out, c, m); },
             [&](const core::type::Struct* s) { EmitConstantStruct(out, c, s); },  //
+            [&](const type::MatrixLayout*) {
+                switch (static_cast<type::MatrixLayoutEnum>(c->ValueAs<uint32_t>())) {
+                    case type::MatrixLayoutEnum::kRowMajor:
+                        out << "MatrixLayout::RowMajor";
+                        break;
+                    case type::MatrixLayoutEnum::kColMajor:
+                        out << "MatrixLayout::ColumnMajor";
+                        break;
+                    default:
+                        TINT_IR_UNREACHABLE(ir_);
+                }
+            },  //
             TINT_ICE_ON_NO_MATCH);
     }
 
