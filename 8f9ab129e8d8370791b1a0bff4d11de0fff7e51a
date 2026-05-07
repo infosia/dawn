@@ -16,6 +16,23 @@
       "message": "Thanks for all the comments! PTAL again.",
       "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e59b35_6b208a4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2026-05-07T10:26:31Z",
+      "side": 1,
+      "message": "To avoid confusion: I originally marked resolved comments as Acknowledge, but they should have been marked Done instead.",
+      "revId": "8f9ab129e8d8370791b1a0bff4d11de0fff7e51a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
