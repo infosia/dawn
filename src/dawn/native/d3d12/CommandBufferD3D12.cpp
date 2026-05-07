@@ -910,8 +910,8 @@ MaybeError EnsureResolveTargetInitialized(CommandRecordingContext* commandContex
         }
 
         if (renderPass->resolveRect.HasValue() &&
-            renderPass->resolveRect.updateWidth != renderPass->width &&
-            renderPass->resolveRect.updateHeight != renderPass->height) {
+            (renderPass->resolveRect.updateWidth != renderPass->width ||
+             renderPass->resolveRect.updateHeight != renderPass->height)) {
             // The resolve texture also has `RenderAttachment` usage but if there is a
             // resolve rect, the texture would only be partially filled. In this case we
             // need to initialize the texture otherwise the regions outside the resolve
