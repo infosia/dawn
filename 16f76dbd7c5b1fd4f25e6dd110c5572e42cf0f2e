@@ -373,6 +373,30 @@
       },
       "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28dfe2b0_4df411dc",
+        "filename": "tools/fetch_agility_sdk.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2026-05-07T01:28:09Z",
+      "side": 1,
+      "message": "I\u0027m going to work on adding this to CIPD.",
+      "parentUuid": "5ab9ce6d_9143bd2c",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "16f76dbd7c5b1fd4f25e6dd110c5572e42cf0f2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
