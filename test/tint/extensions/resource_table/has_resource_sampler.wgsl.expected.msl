@@ -6,7 +6,7 @@ $B1: {  # root
 
 %fs = @fragment func():void {
   $B2: {
-    %3:bool = hasResource<sampler<non_filtering>> 0i
+    %3:bool = hasResource<sampler> 0i
     if %3 [t: $B3] {  # if_1
       $B3: {  # true
         %4:u32 = load %o
