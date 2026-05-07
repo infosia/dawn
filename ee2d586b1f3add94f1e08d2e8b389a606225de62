@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cff7a46e_c9b28508",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-07T13:07:02Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-parentheses\n\nredundant parentheses around expressio...\n\ncheck: readability-redundant-parentheses\n\nredundant parentheses around expression (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-parentheses.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-parentheses` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c330426_f6a0e61c",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-07T13:07:02Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: readability-redundant-parentheses\n\nredundant parentheses around expressio...\n\ncheck: readability-redundant-parentheses\n\nredundant parentheses around expression (https://clang.llvm.org/extra/clang-tidy/checks/readability/redundant-parentheses.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: readability-redundant-parentheses` footer to the CL description to skip the check)\n\n(Lint observed on `linux-clang-tidy-rel`, but not on `android-clang-tidy-rel`)",
+      "range": {
+        "startLine": 666,
+        "startChar": 0,
+        "endLine": 667,
+        "endChar": 0
+      },
+      "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eec075d8_5e58574e",
+        "filename": "src/tint/utils/containers/vector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-07T13:07:02Z",
+      "side": 1,
+      "message": "I think you need to add `google/explicit-constructor` to this as well as the ones below",
+      "revId": "ee2d586b1f3add94f1e08d2e8b389a606225de62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

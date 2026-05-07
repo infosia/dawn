@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84459867_532947a1",
+        "filename": ".clang-tidy",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-07T13:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781b4241_26d81325",
+      "revId": "501e81c74f6cf3ffbd09b14656d9bfce8c76984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0205cebc_d2b9d0cd",
@@ -31,6 +49,30 @@
       "writtenOn": "2026-05-05T13:57:08Z",
       "side": 1,
       "message": "Remove these instructions prior to submit otherwise it will pollute the main root",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 52
+      },
+      "revId": "501e81c74f6cf3ffbd09b14656d9bfce8c76984b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "985bb842_f62f2154",
+        "filename": "src/dawn/clang_tidy_potential_checks",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2026-05-07T13:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0205cebc_d2b9d0cd",
       "range": {
         "startLine": 2,
         "startChar": 0,
