@@ -76,6 +76,7 @@ type cmdConfig struct {
 	dump            bool
 	fuzzMode        FuzzMode
 	cmdMode         TaskMode // meta-task being requested by the user, may require running multiple tasks internally
+	mesaMode        bool
 	filter          string
 	inputs          string
 	build           string
@@ -116,6 +117,7 @@ func main() {
 	flag.BoolVar(&generate, "generate", false, "generate fuzzing corpus based on -inputs")
 	flag.BoolVar(&c.dump, "dump", false, "dumps shader input/output from fuzzer")
 	flag.BoolVar(&irMode, "ir", false, "runs using IR fuzzer instead of WGSL fuzzer (This feature is a WIP)")
+	flag.BoolVar(&c.mesaMode, "mesa", false, "runs using Mesa fuzzer variants")
 	flag.StringVar(&c.filter, "filter", "", "filter the fuzzing passes run to those with this substring")
 	flag.StringVar(&c.inputs, "corpus", defaultWgslCorpusDir(c.osWrapper), "obsolete, use -inputs instead")
 	flag.StringVar(&c.inputs, "inputs", defaultWgslCorpusDir(c.osWrapper), "the directory that holds the files to use")
@@ -123,6 +125,11 @@ func main() {
 	flag.StringVar(&c.out, "out", "<tmp>", "the directory to store outputs to")
 	flag.IntVar(&c.numProcesses, "j", runtime.NumCPU(), "number of concurrent fuzzers to run")
 	flag.Parse()
+
+	if c.mesaMode && c.filter != "" {
+		fmt.Println("cannot set -mesa and -filter flags at the same time, as Mesa fuzzers only run a single specific pass")
+		os.Exit(1)
+	}
 
 	if check && generate {
 		fmt.Println("cannot set -check and -generate flags at the same time")
@@ -263,6 +270,9 @@ func generateTaskConfig(tm TaskMode, c *cmdConfig) (*taskConfig, error) {
 		fuzzerName := "tint_wgsl_fuzzer"
 		if c.fuzzMode == FuzzModeIr {
 			fuzzerName = "tint_ir_fuzzer"
+		}
+		if c.mesaMode {
+			fuzzerName = strings.Replace(fuzzerName, "_fuzzer", "_mesa_fuzzer", 1)
 		}
 		dependencies = append(dependencies, depConfig{fuzzerName, &t.fuzzer})
 	case TaskModeGenerate:
