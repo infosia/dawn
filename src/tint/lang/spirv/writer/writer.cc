@@ -101,16 +101,11 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     }
 
     // Check for unsupported shader IO attributes.
-    auto check_io_attributes = [&](const core::type::Type* ty,
-                                   const core::IOAttributes& attributes) -> Result<SuccessType> {
+    auto check_io_attributes = [&](const core::IOAttributes& attributes) -> Result<SuccessType> {
         if (attributes.location.has_value() &&
             attributes.location.value() >= tint::internal_limits::kMaxLocations) {
             return Failure("location(" + std::to_string(attributes.location.value()) +
                            ") exceeds the maximum allowed value of '4095'");
-        }
-        if (attributes.color.has_value() && ty->DeepestElement()->Is<core::type::F16>()) {
-            return Failure(
-                "@color attribute on f16 type is not supported by the Vulkan SPIR-V backend");
         }
         return Success;
     };
@@ -119,20 +114,20 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
     for (auto* param : ep_func->Params()) {
         if (auto* str = param->Type()->As<core::type::Struct>()) {
             for (auto* member : str->Members()) {
-                TINT_CHECK_RESULT(check_io_attributes(member->Type(), member->Attributes()));
+                TINT_CHECK_RESULT(check_io_attributes(member->Attributes()));
             }
         } else {
-            TINT_CHECK_RESULT(check_io_attributes(param->Type(), param->Attributes()));
+            TINT_CHECK_RESULT(check_io_attributes(param->Attributes()));
         }
     }
 
     // Check output attributes.
     if (auto* str = ep_func->ReturnType()->As<core::type::Struct>()) {
         for (auto* member : str->Members()) {
-            TINT_CHECK_RESULT(check_io_attributes(member->Type(), member->Attributes()));
+            TINT_CHECK_RESULT(check_io_attributes(member->Attributes()));
         }
     } else {
-        TINT_CHECK_RESULT(check_io_attributes(ep_func->ReturnType(), ep_func->ReturnAttributes()));
+        TINT_CHECK_RESULT(check_io_attributes(ep_func->ReturnAttributes()));
     }
 
     core::ir::ReferencedModuleVars<const core::ir::Module> referenced_module_vars{ir};
