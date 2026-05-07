@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4d6b3ff_16080d02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2026-05-07T17:30:12Z",
+      "side": 1,
+      "message": "\u003eif the resolveRect is the same size as the render pass and the debug layer complained, seems like it should be the debug layer\u0027s bug?\n\nI\u0027m working on creating a reduced repro to hand over to the D3D team so they can take a look. I will follow-up in the bug that Jiawei linked above.\n\nI think it might be the case where the debug layer just doesn\u0027t validate at a fine enough resolution to correctly identify this case. I.e. doesn\u0027t take rect size, offsets into consideration.",
+      "parentUuid": "073fe8c6_3c67e8bf",
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49f82cbf_4d12cd90",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 2
