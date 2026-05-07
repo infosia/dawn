@@ -108,10 +108,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             return Failure("location(" + std::to_string(attributes.location.value()) +
                            ") exceeds the maximum allowed value of '4095'");
         }
-        if (attributes.color.has_value() && ty->DeepestElement()->Is<core::type::F16>()) {
-            return Failure(
-                "@color attribute on f16 type is not supported by the Vulkan SPIR-V backend");
-        }
         return Success;
     };
 
