@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0301560b_6daab5ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4172162
+      },
+      "writtenOn": "2026-05-07T17:10:24Z",
+      "side": 1,
+      "message": "I noticed that there can be a case where the `resolveRect` can be the same size as the `renderPass`, so the we are still not clearing the subresource when we should be.",
+      "parentUuid": "42688190_48137fb4",
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "49f82cbf_4d12cd90",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 2
