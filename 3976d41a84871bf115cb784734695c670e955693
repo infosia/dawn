@@ -22,6 +22,30 @@
       },
       "revId": "3976d41a84871bf115cb784734695c670e955693",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "524db71a_b8b1072c",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2026-05-07T03:08:18Z",
+      "side": 0,
+      "message": "updateWidth !\u003d width \u0026\u0026 updateHeight !\u003d height should be changed to updateWidth !\u003d width || updateHeight !\u003d height, see my new change here:\nhttps://dawn-review.googlesource.com/c/dawn/+/307095\n\nWhy check updateWidth !\u003d width || updateHeight !\u003d height:\nIf the resolve rect covers the full render pass dimensions (updateWidth \u003d\u003d renderPass-\u003ewidth and updateHeight \u003d\u003d renderPass-\u003eheight), the entire texture will be resolved into, so no initialization is needed (same as having no resolveRect at all). The condition ensures we only pay the cost of EnsureSubresourceContentInitialized when the resolve is truly partial.",
+      "parentUuid": "53855321_3064a5c4",
+      "range": {
+        "startLine": 913,
+        "startChar": 12,
+        "endLine": 914,
+        "endChar": 71
+      },
+      "revId": "3976d41a84871bf115cb784734695c670e955693",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
