@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a419fc_bc6e0495",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:33:54Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "900072e4dba764c6321c78a14b50fed0088c7a0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76531d70_327ebeed",
+        "filename": "src/dawn/tests/unittests/replay/CaptureWalkerTests.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:33:54Z",
+      "side": 1,
+      "message": "Any chance that this can use the same helpers that are in `Replay.h`? It would avoid doing the same format by hand.",
+      "revId": "900072e4dba764c6321c78a14b50fed0088c7a0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

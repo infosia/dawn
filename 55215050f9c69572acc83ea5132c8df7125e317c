@@ -280,6 +280,24 @@
       "parentUuid": "83142a2a_78ad1208",
       "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6281aab_038f85fe",
+        "filename": "src/dawn/tests/end2end/SurfaceTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:33:54Z",
+      "side": 1,
+      "message": "Yeah but doesn\u0027t `This scope` end before `Teardown`?",
+      "parentUuid": "c611e6c3_820d4e7f",
+      "revId": "55215050f9c69572acc83ea5132c8df7125e317c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
