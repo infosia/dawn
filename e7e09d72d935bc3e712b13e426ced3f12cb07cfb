@@ -34,6 +34,24 @@
       "parentUuid": "04bc68c5_ab8e4dcf",
       "revId": "e7e09d72d935bc3e712b13e426ced3f12cb07cfb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b460bb3f_ada2cf9e",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 4740261
+      },
+      "writtenOn": "2026-05-07T11:46:19Z",
+      "side": 1,
+      "message": "iOS (iphoneos) and Simulator (iphonesimulator) - even on an ARMV8 Mac - use different toolchains so a compile time check does make sense. That bing said, I will have a look at the suggested files and come back with a proposal.",
+      "parentUuid": "541dff0c_18a3aea7",
+      "revId": "e7e09d72d935bc3e712b13e426ced3f12cb07cfb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
