@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8fad9f_655c2319",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 0,
+      "message": "nit: keep maybe?",
+      "revId": "08d4f8ae2523e38e9c1638bebc040f09694f45d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

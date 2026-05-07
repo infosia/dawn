@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78ab8ed4_4469dfef",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "nit: this and the other method can take a SamplerBase.",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3ce9aee_e7a5b781",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "We should be able to fail gracefully, otherwise it look like inserting 2049 samplers in the pool will cause an assert or crash in `.back/pop_back`.",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c29f0028_45e36f12",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "nit: we can do the ToBackend at [1] only to avoid having to do it separately, since the sampler pool uses `SamplerBase`.",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c10997b7_b785828d",
+        "filename": "src/dawn/native/d3d12/ResourceTableD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "nit: newline maybe to highlight the structure of the code",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ff0a8b3_bb906ca4",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "optional nit: for minimality of the test we don\u0027t need a render pipeline that does something, but even just a compute pipeline is enough to trigger the updating of the resource table. Ditto below.",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94384514_872b8b80",
+        "filename": "src/dawn/tests/end2end/ResourceTableTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2026-05-07T16:22:50Z",
+      "side": 1,
+      "message": "Can we have a test that check what happens when we go over 2048? This way we know a user cannot force us to hit an assert or a UB.",
+      "revId": "102ae90bb3503d06e2fd36c7a3f043df4a690680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
