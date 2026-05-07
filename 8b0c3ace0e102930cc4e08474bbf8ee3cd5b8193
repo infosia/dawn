@@ -16,6 +16,52 @@
       "message": "PTAL",
       "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f82cbf_4d12cd90",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-05-07T07:25:27Z",
+      "side": 1,
+      "message": "Why do we need to verify the clear count?\nCan we just verify that the region outside the resolve rect are zeros? If we verify the pixels then the optional `expectedLazyClearCount` won\u0027t be needed.",
+      "range": {
+        "startLine": 1823,
+        "startChar": 12,
+        "endLine": 1823,
+        "endChar": 34
+      },
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0c3b7bb_fb89188c",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2026-05-07T07:25:27Z",
+      "side": 1,
+      "message": "I don\u0027t see any reason we should only test this on D3D12.\nThe test is useful for other backends as well.",
+      "range": {
+        "startLine": 2930,
+        "startChar": 30,
+        "endLine": 2930,
+        "endChar": 37
+      },
+      "revId": "8b0c3ace0e102930cc4e08474bbf8ee3cd5b8193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
