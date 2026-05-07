@@ -62,6 +62,7 @@ class DAWN_REPLAY_EXPORT Capture {
 
     // Reflections
     virtual std::vector<SurfaceInfo> GetSurfaceInfos() const = 0;
+    virtual uint32_t GetFrameCount() const = 0;
     // TODO(507548342): Reflection API for general RecordableObjects.
 };
 
@@ -80,6 +81,9 @@ class DAWN_REPLAY_EXPORT Replay {
     // TODO(507548342): Move this to class Capture.
     template <typename T>
     T GetObjectByLabel(std::string_view label) const;
+
+    // Resets the replay to the beginning.
+    virtual void Reset() = 0;
 
     // Returns if play is successful.
     bool Play();
