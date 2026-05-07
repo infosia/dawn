@@ -1,7 +1,7 @@
 
 RWByteAddressBuffer o : register(u0);
 SamplerState tint_resource_table_array[] : register(s51, space43);
-SamplerComparisonState tint_resource_table_array_1[] : register(s51, space44);
+SamplerComparisonState tint_resource_table_array_1[] : register(s51, space45);
 ByteAddressBuffer tint_resource_table_metadata : register(t52, space42);
 void fs() {
   uint v = uint(int(0));
