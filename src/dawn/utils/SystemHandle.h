@@ -92,8 +92,10 @@ class SystemHandle : public NonCopyable {
     explicit SystemHandle(ErrorTag tag);
 
     // Constructor when the type does not match the Handle type on this platform.
-    template <typename Arg, typename = std::enable_if_t<!std::is_same_v<Arg, Handle>>>
-    explicit SystemHandle(Arg) : SystemHandle(ErrorTag{}) {}
+    template <typename Arg>
+    explicit SystemHandle(Arg)
+        requires(!std::is_same_v<Arg, Handle>)
+        : SystemHandle(ErrorTag{}) {}
 
     void LogIncorrectHandleType();
 

@@ -39,7 +39,6 @@
 namespace dawn::native {
 namespace {
 
-using ::testing::Test;
 
 class DeviceAsyncTaskTests : public DawnMockTest {};
 

@@ -113,7 +113,6 @@ Checks: "-*,\
           -google-readability-todo,\
           -google-runtime-float,\
           -google-runtime-int,\
-          -google-upgrade-googletest-case,\
           misc-*,\
           -misc-confusable-identifiers,\
           -misc-const-correctness,\
@@ -126,7 +125,6 @@ Checks: "-*,\
           -misc-uniqueptr-reset-release,\
           -misc-unconventional-assign-operator,\
           -misc-unused-parameters,\
-          -misc-unused-using-decls,\
           -misc-use-anonymous-namespace,\
           -misc-use-internal-linkage,\
           modernize-*,\
@@ -145,7 +143,6 @@ Checks: "-*,\
           -modernize-unary-static-assert,\
           -modernize-use-auto,\
           -modernize-use-bool-literals,\
-          -modernize-use-constraints,\
           -modernize-use-default-member-init,\
           -modernize-use-designated-initializers,\
           -modernize-use-emplace,\
@@ -154,7 +151,6 @@ Checks: "-*,\
           -modernize-use-integer-sign-comparison,\
           -modernize-use-nodiscard,\
           -modernize-use-nullptr,\
-          -modernize-use-override,\
           -modernize-use-ranges,\
           -modernize-use-starts-ends-with,\
           -modernize-use-std-numbers,\
@@ -208,6 +204,7 @@ Checks: "-*,\
           -readability-redundant-inline-specifier,\
           -readability-redundant-member-init,\
           -readability-redundant-preprocessor,\
+          -readability-redundant-parentheses,\
           -readability-redundant-smartptr-get,\
           -readability-redundant-string-cstr,\
           -readability-redundant-string-init,\

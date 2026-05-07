@@ -39,14 +39,9 @@ namespace dawn::wire {
 namespace {
 
 using testing::_;
-using testing::DoAll;
 using testing::EmptySizedString;
 using testing::InvokeWithoutArgs;
-using testing::Mock;
-using testing::Return;
-using testing::SaveArg;
 using testing::SizedString;
-using testing::StrictMock;
 
 class WireErrorCallbackTests : public WireTest {};
 

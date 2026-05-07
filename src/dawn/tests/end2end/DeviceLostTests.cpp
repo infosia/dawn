@@ -42,7 +42,6 @@ namespace {
 
 using testing::_;
 using testing::EmptySizedString;
-using testing::Exactly;
 using testing::HasSubstr;
 using testing::MockCppCallback;
 

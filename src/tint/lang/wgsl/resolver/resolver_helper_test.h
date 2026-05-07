@@ -651,9 +651,9 @@ struct DataType<alias<T, ID>> {
     /// @param args the value nested elements will be initialized with
     /// @return a new AST expression of the alias type
     template <bool IS_COMPOSITE = is_composite>
-    static inline std::enable_if_t<!IS_COMPOSITE, const ast::Expression*> Expr(
-        ProgramBuilder& b,
-        VectorRef<Scalar> args) {
+    static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args)
+        requires(!IS_COMPOSITE)
+    {
         // Cast
         return b.Call(AST(b), DataType<T>::Expr(b, std::move(args)));
     }
@@ -662,9 +662,9 @@ struct DataType<alias<T, ID>> {
     /// @param args the value nested elements will be initialized with
     /// @return a new AST expression of the alias type
     template <bool IS_COMPOSITE = is_composite>
-    static inline std::enable_if_t<IS_COMPOSITE, const ast::Expression*> Expr(
-        ProgramBuilder& b,
-        VectorRef<Scalar> args) {
+    static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args)
+        requires(IS_COMPOSITE)
+    {
         // Construct
         return b.Call(AST(b), DataType<T>::ExprArgs(b, std::move(args)));
     }

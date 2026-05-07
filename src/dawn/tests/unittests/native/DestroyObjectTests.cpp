@@ -66,7 +66,6 @@ using testing::MockCppCallback;
 using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::StrictMock;
-using ::testing::Test;
 
 using MockMapAsyncCallback =
     StrictMock<MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)>>;
