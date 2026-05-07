@@ -323,11 +323,16 @@ class Printer {
 
         // Emit RelaxedPrecision decorations.
         auto relaxed_precision_decorations = analysis::GetRelaxedPrecisionDecorations(ir_);
+        Hashset<uint32_t, 32> decorated_ids;
         for (const auto& deco : relaxed_precision_decorations) {
-            module_.PushAnnot(spv::Op::OpDecorate, {
-                                                       Value(deco),
-                                                       U32Operand(SpvDecorationRelaxedPrecision),
-                                                   });
+            uint32_t id = Value(deco);
+            if (decorated_ids.Add(id)) {
+                module_.PushAnnot(spv::Op::OpDecorate,
+                                  {
+                                      id,
+                                      U32Operand(SpvDecorationRelaxedPrecision),
+                                  });
+            }
         }
 
         return Success;

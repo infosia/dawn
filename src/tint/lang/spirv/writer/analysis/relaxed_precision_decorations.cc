@@ -143,7 +143,7 @@ struct State {
             // This covers sampled textures, where we can use relaxed precision if all sample and
             // fetch results are immediately converted to f16 types before use.
             case core::TexelFormat::kUndefined:
-                if (all_usages_support_relaxed_precision) {
+                if (all_usages_support_relaxed_precision && !decorations.Contains(value)) {
                     decorations.Add(value);
                 }
                 break;
@@ -204,11 +204,7 @@ struct State {
             case BuiltinFn::kImageSampleProjDrefExplicitLod:
             case BuiltinFn::kImageSampleDrefImplicitLod:
             case BuiltinFn::kImageSampleDrefExplicitLod: {
-                if (IsConvertedToF16(call->Result())) {
-                    decorations.Add(call->Result());
-                    return true;
-                }
-                return false;
+                return DecorateIfConvertedToF16(call->Result());
             }
 
             // Functions that write texel data can potentially have the texel value decorated as
@@ -216,11 +212,7 @@ struct State {
             // the originating variable cannot be either.
             case BuiltinFn::kImageWrite: {
                 auto* texel = call->Operand(2);
-                if (IsConvertedFromF16(texel)) {
-                    decorations.Add(texel);
-                    return true;
-                }
-                return false;
+                return DecorateIfConvertedFromF16(texel);
             }
 
             // Walk through OpSampledImage to check the sampling operations.
@@ -240,12 +232,16 @@ struct State {
         }
     }
 
-    /// @returns true if @p value is converted to an f16 type before any use
-    bool IsConvertedToF16(core::ir::Value* value) {
+    /// Decorates @p value and its walked usages (lets, swizzles) with RelaxedPrecision if they are
+    /// eventually converted to an f16 type before any other use.
+    /// @returns true if @p value and its usages were decorated.
+    bool DecorateIfConvertedToF16(core::ir::Value* value) {
         // Walk uses of the value.
         Vector<core::ir::Value*, 4> worklist{value};
+        UniqueVector<core::ir::Value*, 4> to_decorate;
         while (!worklist.IsEmpty()) {
             auto* next = worklist.Pop();
+            to_decorate.Add(next);
             for (auto use : next->UsagesUnsorted()) {
                 auto* inst = use->instruction;
                 if (inst->Is<core::ir::Convert>()) {
@@ -262,14 +258,26 @@ struct State {
                 }
             }
         }
+        for (auto* v : to_decorate) {
+            decorations.Add(v);
+        }
         return true;
     }
 
-    /// @returns true if @p value was converted from an f16 type
-    bool IsConvertedFromF16(core::ir::Value* value) {
+    /// Decorates @p value and its source instructions (lets, swizzles) with RelaxedPrecision if it
+    /// was eventually converted from an f16 type.
+    /// @returns true if @p value and its source instructions were decorated.
+    bool DecorateIfConvertedFromF16(core::ir::Value* value) {
         // Walk backwards from the value.
+        UniqueVector<core::ir::Value*, 4> to_decorate;
+        auto* current = value;
         while (true) {
-            auto* result = value->As<core::ir::InstructionResult>();
+            if (decorations.Contains(current)) {
+                return true;
+            }
+            to_decorate.Add(current);
+
+            auto* result = current->As<core::ir::InstructionResult>();
             if (!result) {
                 return false;
             }
@@ -277,10 +285,20 @@ struct State {
             auto* inst = result->Instruction();
             if (inst->IsAnyOf<core::ir::Convert>()) {
                 // Check if we are converting from F16.
-                return IsF16(inst->Operand(0)->Type());
+                if (IsF16(inst->Operand(0)->Type())) {
+                    for (auto* v : to_decorate) {
+                        decorations.Add(v);
+                    }
+                    return true;
+                }
+                return false;
             } else if (auto* let = inst->As<core::ir::Let>()) {
                 // Walk through let instructions.
-                value = let->Value();
+                current = let->Value();
+                continue;
+            } else if (auto* swizzle = inst->As<core::ir::Swizzle>()) {
+                // Walk through swizzle instructions.
+                current = swizzle->Object();
                 continue;
             } else {
                 // Any other instructions halts the analysis.

@@ -38,6 +38,7 @@ class Value;
 
 namespace tint::spirv::writer::analysis {
 
+/// RelaxedPrecisionDecorations is a set of values that should be decorated with RelaxedPrecision.
 using RelaxedPrecisionDecorations = UniqueVector<const core::ir::Value*, 16>;
 
 /// GetRelaxedPrecisionDecorations scans an IR module to find objects that can be decorated with the
